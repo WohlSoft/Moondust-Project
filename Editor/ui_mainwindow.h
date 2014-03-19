@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 19. Mar 12:02:29 2014
+** Created: Wed 19. Mar 16:08:43 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -710,7 +710,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Editor test example - Platformer Game Engine by Wohlstand (Under Construction)", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Editor [Skeleton] - PlatGEnWohl (Under Construction)", 0, QApplication::UnicodeUTF8));
         OpenFile->setText(QApplication::translate("MainWindow", "Open...", 0, QApplication::UnicodeUTF8));
         OpenFile->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0, QApplication::UnicodeUTF8));
         Exit->setText(QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8));

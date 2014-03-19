@@ -23,7 +23,7 @@
    <enum>Qt::NoFocus</enum>
   </property>
   <property name="windowTitle">
-   <string>Editor test example - Platformer Game Engine by Wohlstand (Under Construction)</string>
+   <string>Editor [Skeleton] - PlatGEnWohl (Under Construction)</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
