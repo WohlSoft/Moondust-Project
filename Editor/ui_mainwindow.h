@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed 19. Mar 16:08:43 2014
+** Created: Fri 21. Mar 19:45:25 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,18 +15,27 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
+#include <QtGui/QComboBox>
 #include <QtGui/QDockWidget>
-#include <QtGui/QGridLayout>
+#include <QtGui/QGraphicsView>
+#include <QtGui/QGroupBox>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
+#include <QtGui/QListView>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMdiArea>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
+#include <QtGui/QRadioButton>
 #include <QtGui/QScrollArea>
+#include <QtGui/QSpinBox>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
 #include <QtGui/QToolBar>
+#include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -85,6 +94,7 @@ public:
     QAction *action_No_files;
     QAction *actionSelect;
     QAction *actionEriser;
+    QAction *actionSection_Settings;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -107,32 +117,97 @@ public:
     QWidget *npcscroll;
     QScrollArea *special;
     QWidget *specialscroll;
-    QWidget *gridLayoutWidget;
-    QGridLayout *gridLayout;
-    QPushButton *BTNStartPoints;
-    QPushButton *BTNResize;
+    QWidget *layoutWidget;
+    QVBoxLayout *verticalLayout_2;
     QPushButton *BTNWarpsAndDoors;
+    QGroupBox *groupBox;
+    QGroupBox *groupBox_2;
+    QRadioButton *Entr_left;
+    QRadioButton *Entr_right;
+    QRadioButton *Entr_up;
+    QRadioButton *Entr_down;
+    QComboBox *comboBox;
+    QLabel *label;
+    QGroupBox *groupBox_3;
+    QRadioButton *Exit_left;
+    QRadioButton *Exit_right;
+    QRadioButton *Exit_up;
+    QRadioButton *Exit_down;
+    QLabel *label_2;
+    QLabel *label_3;
+    QComboBox *comboBox_2;
+    QCheckBox *WarpNoYoshi;
+    QCheckBox *checkBox;
+    QCheckBox *checkBox_2;
+    QSpinBox *WarpNeedAStars;
+    QLabel *label_4;
+    QLineEdit *WarpToMapX;
+    QLineEdit *WarpToMapY;
+    QLabel *label_5;
+    QLabel *label_6;
+    QLabel *label_7;
+    QSpinBox *WarpToExitNo;
+    QLabel *label_8;
+    QPushButton *WarpGetXYFromWorldMap;
+    QGroupBox *groupBox_4;
+    QCheckBox *WarpLevelEntrance;
+    QCheckBox *WarpLevelExit;
+    QLineEdit *lineEdit;
+    QLabel *label_11;
+    QPushButton *pushButton;
+    QPushButton *pushButton_4;
     QPushButton *BTNWaterRanges;
-    QPushButton *BTNLevelProps;
+    QPushButton *BTNStartPoints;
     QDockWidget *WorldToolBox;
     QTabWidget *WorldToolBoxTabs;
     QScrollArea *Tiles;
-    QWidget *Tilesscroll;
+    QListView *TilesItemBox;
     QScrollArea *Scenery;
     QWidget *SceneryScroll;
     QScrollArea *Level;
     QWidget *WLDLevelScroll;
     QScrollArea *MusicSet;
     QWidget *WLDMusicScroll;
+    QGroupBox *groupBox_6;
+    QPushButton *pushButton_2;
+    QComboBox *comboBox_3;
+    QLabel *label_12;
+    QPushButton *pushButton_3;
     QToolBar *EditionToolBar;
     QToolBar *LevelSectionsToolBar;
+    QDockWidget *LevelSectionSettings;
+    QWidget *dockWidgetContents_2;
+    QGroupBox *LVLPropMusicGr;
+    QComboBox *LVLPropsMusicNumver_2;
+    QLabel *LVLPropCMusicLbl_2;
+    QLineEdit *LVLPropsMusicCustom_2;
+    QCheckBox *LVLPropsMusicCustonEn_2;
+    QPushButton *LVLPropsMusicCustomBrowse_2;
+    QPushButton *LVLPropsMusicPlay_2;
+    QGroupBox *LVLPropSettingsGrp;
+    QVBoxLayout *verticalLayout_3;
+    QCheckBox *LVLPropsLevelWarp_2;
+    QCheckBox *LVLPropsOffScr_2;
+    QCheckBox *LVLPropsNoTBack_2;
+    QCheckBox *LVLPropsUnderWater_2;
+    QGroupBox *LVLPropStyleGr;
+    QVBoxLayout *verticalLayout;
+    QLabel *LVLPropBckgrClrLbl;
+    QComboBox *LVLPropsBackColor;
+    QLabel *LVLPropBckrImg;
+    QComboBox *LVLPropsBackImage;
+    QGraphicsView *LVLPropsBackImgPreview;
+    QGroupBox *groupBox_5;
+    QLabel *label_9;
+    QLabel *label_10;
+    QPushButton *BTNResize;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->resize(1109, 759);
+        MainWindow->resize(1124, 910);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(4);
         sizePolicy.setVerticalStretch(0);
@@ -398,14 +473,24 @@ public:
         QIcon icon27;
         icon27.addFile(QString::fromUtf8(":/images/rubber.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionEriser->setIcon(icon27);
+        actionSection_Settings = new QAction(MainWindow);
+        actionSection_Settings->setObjectName(QString::fromUtf8("actionSection_Settings"));
+        actionSection_Settings->setCheckable(true);
+        QIcon icon28;
+        icon28.addFile(QString::fromUtf8(":/images/section.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSection_Settings->setIcon(icon28);
+        actionSection_Settings->setVisible(true);
+        actionSection_Settings->setIconVisibleInMenu(false);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
         centralWidget->setAcceptDrops(true);
+        centralWidget->setDocumentMode(true);
+        centralWidget->setTabPosition(QTabWidget::North);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1109, 21));
+        menuBar->setGeometry(QRect(0, 0, 1124, 21));
         menu = new QMenu(menuBar);
         menu->setObjectName(QString::fromUtf8("menu"));
         menuNew = new QMenu(menu);
@@ -438,7 +523,7 @@ public:
         MainWindow->setStatusBar(statusBar);
         LevelToolBox = new QDockWidget(MainWindow);
         LevelToolBox->setObjectName(QString::fromUtf8("LevelToolBox"));
-        LevelToolBox->setEnabled(false);
+        LevelToolBox->setEnabled(true);
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -457,7 +542,7 @@ public:
         Blocks->setWidgetResizable(true);
         blocksscroll = new QWidget();
         blocksscroll->setObjectName(QString::fromUtf8("blocksscroll"));
-        blocksscroll->setGeometry(QRect(0, 0, 230, 356));
+        blocksscroll->setGeometry(QRect(0, 0, 239, 311));
         blocksscroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         Blocks->setWidget(blocksscroll);
         LevelToolBoxTabs->addTab(Blocks, QString());
@@ -468,7 +553,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QString::fromUtf8("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 230, 356));
+        backsscroll->setGeometry(QRect(0, 0, 239, 311));
         backsscroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -479,7 +564,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QString::fromUtf8("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 230, 356));
+        npcscroll->setGeometry(QRect(0, 0, 239, 311));
         npcscroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -490,46 +575,155 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QString::fromUtf8("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 230, 356));
+        specialscroll->setGeometry(QRect(0, 0, 239, 311));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QString::fromUtf8(""));
-        gridLayoutWidget = new QWidget(specialscroll);
-        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 10, 211, 141));
-        gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        BTNStartPoints = new QPushButton(gridLayoutWidget);
-        BTNStartPoints->setObjectName(QString::fromUtf8("BTNStartPoints"));
-
-        gridLayout->addWidget(BTNStartPoints, 3, 0, 1, 1);
-
-        BTNResize = new QPushButton(gridLayoutWidget);
-        BTNResize->setObjectName(QString::fromUtf8("BTNResize"));
-
-        gridLayout->addWidget(BTNResize, 4, 0, 1, 1);
-
-        BTNWarpsAndDoors = new QPushButton(gridLayoutWidget);
+        layoutWidget = new QWidget(specialscroll);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(11, 11, 211, 431));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        BTNWarpsAndDoors = new QPushButton(layoutWidget);
         BTNWarpsAndDoors->setObjectName(QString::fromUtf8("BTNWarpsAndDoors"));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(BTNWarpsAndDoors->sizePolicy().hasHeightForWidth());
         BTNWarpsAndDoors->setSizePolicy(sizePolicy2);
+        BTNWarpsAndDoors->setCheckable(true);
 
-        gridLayout->addWidget(BTNWarpsAndDoors, 0, 0, 1, 1);
+        verticalLayout_2->addWidget(BTNWarpsAndDoors);
 
-        BTNWaterRanges = new QPushButton(gridLayoutWidget);
+        groupBox = new QGroupBox(layoutWidget);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setFlat(false);
+        groupBox_2 = new QGroupBox(groupBox);
+        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        groupBox_2->setGeometry(QRect(10, 140, 51, 51));
+        groupBox_2->setAlignment(Qt::AlignCenter);
+        groupBox_2->setFlat(false);
+        Entr_left = new QRadioButton(groupBox_2);
+        Entr_left->setObjectName(QString::fromUtf8("Entr_left"));
+        Entr_left->setGeometry(QRect(10, 20, 16, 20));
+        Entr_left->setChecked(true);
+        Entr_right = new QRadioButton(groupBox_2);
+        Entr_right->setObjectName(QString::fromUtf8("Entr_right"));
+        Entr_right->setGeometry(QRect(30, 20, 16, 20));
+        Entr_up = new QRadioButton(groupBox_2);
+        Entr_up->setObjectName(QString::fromUtf8("Entr_up"));
+        Entr_up->setGeometry(QRect(20, 10, 16, 20));
+        Entr_up->setChecked(false);
+        Entr_down = new QRadioButton(groupBox_2);
+        Entr_down->setObjectName(QString::fromUtf8("Entr_down"));
+        Entr_down->setGeometry(QRect(20, 30, 16, 20));
+        comboBox = new QComboBox(groupBox);
+        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+        comboBox->setGeometry(QRect(10, 40, 111, 22));
+        label = new QLabel(groupBox);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(10, 20, 111, 16));
+        groupBox_3 = new QGroupBox(groupBox);
+        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        groupBox_3->setGeometry(QRect(70, 140, 51, 51));
+        groupBox_3->setAlignment(Qt::AlignCenter);
+        Exit_left = new QRadioButton(groupBox_3);
+        Exit_left->setObjectName(QString::fromUtf8("Exit_left"));
+        Exit_left->setGeometry(QRect(10, 20, 16, 20));
+        Exit_left->setChecked(true);
+        Exit_right = new QRadioButton(groupBox_3);
+        Exit_right->setObjectName(QString::fromUtf8("Exit_right"));
+        Exit_right->setGeometry(QRect(30, 20, 16, 20));
+        Exit_up = new QRadioButton(groupBox_3);
+        Exit_up->setObjectName(QString::fromUtf8("Exit_up"));
+        Exit_up->setGeometry(QRect(20, 10, 16, 20));
+        Exit_up->setChecked(false);
+        Exit_down = new QRadioButton(groupBox_3);
+        Exit_down->setObjectName(QString::fromUtf8("Exit_down"));
+        Exit_down->setGeometry(QRect(20, 30, 16, 20));
+        label_2 = new QLabel(groupBox);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(10, 120, 111, 16));
+        label_3 = new QLabel(groupBox);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(10, 70, 111, 16));
+        comboBox_2 = new QComboBox(groupBox);
+        comboBox_2->setObjectName(QString::fromUtf8("comboBox_2"));
+        comboBox_2->setGeometry(QRect(10, 90, 111, 22));
+        WarpNoYoshi = new QCheckBox(groupBox);
+        WarpNoYoshi->setObjectName(QString::fromUtf8("WarpNoYoshi"));
+        WarpNoYoshi->setGeometry(QRect(130, 40, 70, 17));
+        checkBox = new QCheckBox(groupBox);
+        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+        checkBox->setGeometry(QRect(130, 60, 70, 17));
+        checkBox_2 = new QCheckBox(groupBox);
+        checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
+        checkBox_2->setGeometry(QRect(130, 80, 70, 17));
+        WarpNeedAStars = new QSpinBox(groupBox);
+        WarpNeedAStars->setObjectName(QString::fromUtf8("WarpNeedAStars"));
+        WarpNeedAStars->setGeometry(QRect(130, 120, 61, 22));
+        label_4 = new QLabel(groupBox);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(130, 100, 61, 16));
+        WarpToMapX = new QLineEdit(groupBox);
+        WarpToMapX->setObjectName(QString::fromUtf8("WarpToMapX"));
+        WarpToMapX->setGeometry(QRect(20, 220, 51, 20));
+        WarpToMapY = new QLineEdit(groupBox);
+        WarpToMapY->setObjectName(QString::fromUtf8("WarpToMapY"));
+        WarpToMapY->setGeometry(QRect(90, 220, 51, 20));
+        label_5 = new QLabel(groupBox);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setGeometry(QRect(10, 220, 16, 16));
+        label_6 = new QLabel(groupBox);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setGeometry(QRect(80, 220, 16, 16));
+        label_7 = new QLabel(groupBox);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_7->setGeometry(QRect(10, 200, 121, 16));
+        WarpToExitNo = new QSpinBox(groupBox);
+        WarpToExitNo->setObjectName(QString::fromUtf8("WarpToExitNo"));
+        WarpToExitNo->setGeometry(QRect(130, 170, 61, 22));
+        label_8 = new QLabel(groupBox);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_8->setGeometry(QRect(130, 150, 61, 16));
+        WarpGetXYFromWorldMap = new QPushButton(groupBox);
+        WarpGetXYFromWorldMap->setObjectName(QString::fromUtf8("WarpGetXYFromWorldMap"));
+        WarpGetXYFromWorldMap->setGeometry(QRect(140, 220, 41, 16));
+        groupBox_4 = new QGroupBox(groupBox);
+        groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
+        groupBox_4->setGeometry(QRect(10, 240, 111, 61));
+        WarpLevelEntrance = new QCheckBox(groupBox_4);
+        WarpLevelEntrance->setObjectName(QString::fromUtf8("WarpLevelEntrance"));
+        WarpLevelEntrance->setGeometry(QRect(10, 40, 91, 17));
+        WarpLevelExit = new QCheckBox(groupBox_4);
+        WarpLevelExit->setObjectName(QString::fromUtf8("WarpLevelExit"));
+        WarpLevelExit->setGeometry(QRect(10, 20, 91, 17));
+        lineEdit = new QLineEdit(groupBox);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setGeometry(QRect(10, 320, 113, 20));
+        label_11 = new QLabel(groupBox);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setGeometry(QRect(10, 300, 111, 16));
+        pushButton = new QPushButton(groupBox);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(120, 320, 21, 20));
+        pushButton_4 = new QPushButton(groupBox);
+        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+        pushButton_4->setGeometry(QRect(150, 280, 41, 23));
+
+        verticalLayout_2->addWidget(groupBox);
+
+        BTNWaterRanges = new QPushButton(layoutWidget);
         BTNWaterRanges->setObjectName(QString::fromUtf8("BTNWaterRanges"));
 
-        gridLayout->addWidget(BTNWaterRanges, 1, 0, 1, 1);
+        verticalLayout_2->addWidget(BTNWaterRanges);
 
-        BTNLevelProps = new QPushButton(gridLayoutWidget);
-        BTNLevelProps->setObjectName(QString::fromUtf8("BTNLevelProps"));
+        BTNStartPoints = new QPushButton(layoutWidget);
+        BTNStartPoints->setObjectName(QString::fromUtf8("BTNStartPoints"));
 
-        gridLayout->addWidget(BTNLevelProps, 5, 0, 1, 1);
+        verticalLayout_2->addWidget(BTNStartPoints);
 
         special->setWidget(specialscroll);
         LevelToolBoxTabs->addTab(special, QString());
@@ -537,7 +731,7 @@ public:
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(2), LevelToolBox);
         WorldToolBox = new QDockWidget(MainWindow);
         WorldToolBox->setObjectName(QString::fromUtf8("WorldToolBox"));
-        WorldToolBox->setEnabled(false);
+        WorldToolBox->setEnabled(true);
         sizePolicy1.setHeightForWidth(WorldToolBox->sizePolicy().hasHeightForWidth());
         WorldToolBox->setSizePolicy(sizePolicy1);
         WorldToolBox->setWindowIcon(icon25);
@@ -546,14 +740,31 @@ public:
         WorldToolBoxTabs->setObjectName(QString::fromUtf8("WorldToolBoxTabs"));
         Tiles = new QScrollArea();
         Tiles->setObjectName(QString::fromUtf8("Tiles"));
-        Tiles->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        Tiles->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        Tiles->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        Tiles->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         Tiles->setWidgetResizable(true);
-        Tilesscroll = new QWidget();
-        Tilesscroll->setObjectName(QString::fromUtf8("Tilesscroll"));
-        Tilesscroll->setGeometry(QRect(0, 0, 230, 193));
-        Tilesscroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
-        Tiles->setWidget(Tilesscroll);
+        TilesItemBox = new QListView();
+        TilesItemBox->setObjectName(QString::fromUtf8("TilesItemBox"));
+        TilesItemBox->setGeometry(QRect(0, 0, 256, 389));
+        TilesItemBox->setStyleSheet(QString::fromUtf8(" Item {\n"
+"   Image {\n"
+"       id: pic\n"
+"   }\n"
+"   Text {\n"
+"       id: label\n"
+"       anchors.horizontalCenter: pic.horizontalCenter\n"
+"       anchors.top: pic.bottom\n"
+"       anchors.topMargin: 5\n"
+"   }\n"
+"}"));
+        TilesItemBox->setDragEnabled(true);
+        TilesItemBox->setResizeMode(QListView::Adjust);
+        TilesItemBox->setGridSize(QSize(128, 128));
+        TilesItemBox->setViewMode(QListView::IconMode);
+        TilesItemBox->setModelColumn(0);
+        TilesItemBox->setUniformItemSizes(true);
+        TilesItemBox->setBatchSize(128);
+        Tiles->setWidget(TilesItemBox);
         WorldToolBoxTabs->addTab(Tiles, QString());
         Scenery = new QScrollArea();
         Scenery->setObjectName(QString::fromUtf8("Scenery"));
@@ -562,8 +773,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QString::fromUtf8("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 230, 193));
-        SceneryScroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        SceneryScroll->setGeometry(QRect(0, 0, 239, 389));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -573,8 +783,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QString::fromUtf8("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 230, 193));
-        WLDLevelScroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 389));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -584,8 +793,24 @@ public:
         MusicSet->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QString::fromUtf8("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 230, 193));
-        WLDMusicScroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 389));
+        groupBox_6 = new QGroupBox(WLDMusicScroll);
+        groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
+        groupBox_6->setGeometry(QRect(10, 10, 141, 131));
+        pushButton_2 = new QPushButton(groupBox_6);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(10, 20, 121, 23));
+        pushButton_2->setCheckable(true);
+        comboBox_3 = new QComboBox(groupBox_6);
+        comboBox_3->setObjectName(QString::fromUtf8("comboBox_3"));
+        comboBox_3->setGeometry(QRect(10, 70, 121, 22));
+        label_12 = new QLabel(groupBox_6);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setGeometry(QRect(10, 50, 121, 16));
+        pushButton_3 = new QPushButton(groupBox_6);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        pushButton_3->setGeometry(QRect(10, 100, 121, 23));
+        pushButton_3->setCheckable(true);
         MusicSet->setWidget(WLDMusicScroll);
         WorldToolBoxTabs->addTab(MusicSet, QString());
         WorldToolBox->setWidget(WorldToolBoxTabs);
@@ -600,10 +825,127 @@ public:
         LevelSectionsToolBar->setAllowedAreas(Qt::BottomToolBarArea|Qt::TopToolBarArea);
         MainWindow->addToolBar(Qt::TopToolBarArea, LevelSectionsToolBar);
         MainWindow->insertToolBarBreak(LevelSectionsToolBar);
-        QWidget::setTabOrder(BTNResize, BTNWarpsAndDoors);
+        LevelSectionSettings = new QDockWidget(MainWindow);
+        LevelSectionSettings->setObjectName(QString::fromUtf8("LevelSectionSettings"));
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(LevelSectionSettings->sizePolicy().hasHeightForWidth());
+        LevelSectionSettings->setSizePolicy(sizePolicy3);
+        LevelSectionSettings->setMinimumSize(QSize(230, 500));
+        LevelSectionSettings->setMaximumSize(QSize(230, 524287));
+        LevelSectionSettings->setWindowIcon(icon28);
+        LevelSectionSettings->setFloating(false);
+        LevelSectionSettings->setFeatures(QDockWidget::AllDockWidgetFeatures);
+        LevelSectionSettings->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
+        dockWidgetContents_2 = new QWidget();
+        dockWidgetContents_2->setObjectName(QString::fromUtf8("dockWidgetContents_2"));
+        LVLPropMusicGr = new QGroupBox(dockWidgetContents_2);
+        LVLPropMusicGr->setObjectName(QString::fromUtf8("LVLPropMusicGr"));
+        LVLPropMusicGr->setGeometry(QRect(0, 150, 221, 131));
+        LVLPropsMusicNumver_2 = new QComboBox(LVLPropMusicGr);
+        LVLPropsMusicNumver_2->setObjectName(QString::fromUtf8("LVLPropsMusicNumver_2"));
+        LVLPropsMusicNumver_2->setGeometry(QRect(10, 20, 101, 20));
+        LVLPropCMusicLbl_2 = new QLabel(LVLPropMusicGr);
+        LVLPropCMusicLbl_2->setObjectName(QString::fromUtf8("LVLPropCMusicLbl_2"));
+        LVLPropCMusicLbl_2->setGeometry(QRect(10, 50, 47, 16));
+        LVLPropCMusicLbl_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        LVLPropsMusicCustom_2 = new QLineEdit(LVLPropMusicGr);
+        LVLPropsMusicCustom_2->setObjectName(QString::fromUtf8("LVLPropsMusicCustom_2"));
+        LVLPropsMusicCustom_2->setGeometry(QRect(10, 70, 133, 21));
+        LVLPropsMusicCustonEn_2 = new QCheckBox(LVLPropMusicGr);
+        LVLPropsMusicCustonEn_2->setObjectName(QString::fromUtf8("LVLPropsMusicCustonEn_2"));
+        LVLPropsMusicCustonEn_2->setGeometry(QRect(120, 20, 88, 17));
+        LVLPropsMusicCustonEn_2->setTristate(false);
+        LVLPropsMusicCustomBrowse_2 = new QPushButton(LVLPropMusicGr);
+        LVLPropsMusicCustomBrowse_2->setObjectName(QString::fromUtf8("LVLPropsMusicCustomBrowse_2"));
+        LVLPropsMusicCustomBrowse_2->setGeometry(QRect(140, 70, 31, 21));
+        LVLPropsMusicPlay_2 = new QPushButton(LVLPropMusicGr);
+        LVLPropsMusicPlay_2->setObjectName(QString::fromUtf8("LVLPropsMusicPlay_2"));
+        LVLPropsMusicPlay_2->setGeometry(QRect(10, 100, 131, 23));
+        LVLPropsMusicPlay_2->setCheckable(true);
+        LVLPropSettingsGrp = new QGroupBox(dockWidgetContents_2);
+        LVLPropSettingsGrp->setObjectName(QString::fromUtf8("LVLPropSettingsGrp"));
+        LVLPropSettingsGrp->setGeometry(QRect(0, 40, 221, 111));
+        verticalLayout_3 = new QVBoxLayout(LVLPropSettingsGrp);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        LVLPropsLevelWarp_2 = new QCheckBox(LVLPropSettingsGrp);
+        LVLPropsLevelWarp_2->setObjectName(QString::fromUtf8("LVLPropsLevelWarp_2"));
+        LVLPropsLevelWarp_2->setTristate(false);
+
+        verticalLayout_3->addWidget(LVLPropsLevelWarp_2);
+
+        LVLPropsOffScr_2 = new QCheckBox(LVLPropSettingsGrp);
+        LVLPropsOffScr_2->setObjectName(QString::fromUtf8("LVLPropsOffScr_2"));
+        LVLPropsOffScr_2->setTristate(false);
+
+        verticalLayout_3->addWidget(LVLPropsOffScr_2);
+
+        LVLPropsNoTBack_2 = new QCheckBox(LVLPropSettingsGrp);
+        LVLPropsNoTBack_2->setObjectName(QString::fromUtf8("LVLPropsNoTBack_2"));
+        LVLPropsNoTBack_2->setTristate(false);
+
+        verticalLayout_3->addWidget(LVLPropsNoTBack_2);
+
+        LVLPropsUnderWater_2 = new QCheckBox(LVLPropSettingsGrp);
+        LVLPropsUnderWater_2->setObjectName(QString::fromUtf8("LVLPropsUnderWater_2"));
+        LVLPropsUnderWater_2->setTristate(false);
+
+        verticalLayout_3->addWidget(LVLPropsUnderWater_2);
+
+        LVLPropStyleGr = new QGroupBox(dockWidgetContents_2);
+        LVLPropStyleGr->setObjectName(QString::fromUtf8("LVLPropStyleGr"));
+        LVLPropStyleGr->setGeometry(QRect(0, 280, 221, 201));
+        verticalLayout = new QVBoxLayout(LVLPropStyleGr);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        LVLPropBckgrClrLbl = new QLabel(LVLPropStyleGr);
+        LVLPropBckgrClrLbl->setObjectName(QString::fromUtf8("LVLPropBckgrClrLbl"));
+        LVLPropBckgrClrLbl->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+
+        verticalLayout->addWidget(LVLPropBckgrClrLbl);
+
+        LVLPropsBackColor = new QComboBox(LVLPropStyleGr);
+        LVLPropsBackColor->setObjectName(QString::fromUtf8("LVLPropsBackColor"));
+
+        verticalLayout->addWidget(LVLPropsBackColor);
+
+        LVLPropBckrImg = new QLabel(LVLPropStyleGr);
+        LVLPropBckrImg->setObjectName(QString::fromUtf8("LVLPropBckrImg"));
+
+        verticalLayout->addWidget(LVLPropBckrImg);
+
+        LVLPropsBackImage = new QComboBox(LVLPropStyleGr);
+        LVLPropsBackImage->setObjectName(QString::fromUtf8("LVLPropsBackImage"));
+
+        verticalLayout->addWidget(LVLPropsBackImage);
+
+        LVLPropsBackImgPreview = new QGraphicsView(LVLPropStyleGr);
+        LVLPropsBackImgPreview->setObjectName(QString::fromUtf8("LVLPropsBackImgPreview"));
+
+        verticalLayout->addWidget(LVLPropsBackImgPreview);
+
+        groupBox_5 = new QGroupBox(dockWidgetContents_2);
+        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        groupBox_5->setGeometry(QRect(0, 0, 91, 41));
+        label_9 = new QLabel(groupBox_5);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+        label_9->setGeometry(QRect(10, 20, 51, 16));
+        label_9->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_10 = new QLabel(groupBox_5);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setGeometry(QRect(70, 20, 16, 16));
+        BTNResize = new QPushButton(dockWidgetContents_2);
+        BTNResize->setObjectName(QString::fromUtf8("BTNResize"));
+        BTNResize->setGeometry(QRect(100, 10, 111, 23));
+        BTNResize->setCheckable(true);
+        LevelSectionSettings->setWidget(dockWidgetContents_2);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), LevelSectionSettings);
         QWidget::setTabOrder(BTNWarpsAndDoors, BTNWaterRanges);
-        QWidget::setTabOrder(BTNWaterRanges, BTNLevelProps);
-        QWidget::setTabOrder(BTNLevelProps, BTNStartPoints);
+        QWidget::setTabOrder(BTNWaterRanges, BTNStartPoints);
 
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menuLevel->menuAction());
@@ -666,6 +1008,7 @@ public:
         menuDisable_characters->addAction(actionWLDNoChar4);
         menuDisable_characters->addAction(actionWLDNoChar5);
         menuWindows->addAction(actionLVLToolBox);
+        menuWindows->addAction(actionSection_Settings);
         menuWindows->addAction(actionWLDToolBox);
         menuWindows->addSeparator();
         menuWindows->addAction(action_No_files);
@@ -676,6 +1019,7 @@ public:
         EditionToolBar->addAction(actionEriser);
         EditionToolBar->addSeparator();
         EditionToolBar->addAction(actionLVLToolBox);
+        EditionToolBar->addAction(actionSection_Settings);
         EditionToolBar->addAction(actionWLDToolBox);
         LevelSectionsToolBar->addAction(actionSection_1);
         LevelSectionsToolBar->addAction(actionSection_2);
@@ -701,7 +1045,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        LevelToolBoxTabs->setCurrentIndex(0);
+        LevelToolBoxTabs->setCurrentIndex(3);
         WorldToolBoxTabs->setCurrentIndex(0);
 
 
@@ -791,6 +1135,7 @@ public:
         actionSelect->setShortcut(QApplication::translate("MainWindow", "S", 0, QApplication::UnicodeUTF8));
         actionEriser->setText(QApplication::translate("MainWindow", "Eriser", 0, QApplication::UnicodeUTF8));
         actionEriser->setShortcut(QApplication::translate("MainWindow", "E", 0, QApplication::UnicodeUTF8));
+        actionSection_Settings->setText(QApplication::translate("MainWindow", "Level Section Settings", 0, QApplication::UnicodeUTF8));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
         menu_2->setTitle(QApplication::translate("MainWindow", "?", 0, QApplication::UnicodeUTF8));
@@ -810,11 +1155,41 @@ public:
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(Blocks), QApplication::translate("MainWindow", "Blocks", 0, QApplication::UnicodeUTF8));
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(backs), QApplication::translate("MainWindow", "Backgrounds", 0, QApplication::UnicodeUTF8));
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(npc), QApplication::translate("MainWindow", "NPC", 0, QApplication::UnicodeUTF8));
-        BTNStartPoints->setText(QApplication::translate("MainWindow", "Player start points", 0, QApplication::UnicodeUTF8));
-        BTNResize->setText(QApplication::translate("MainWindow", "Resize section", 0, QApplication::UnicodeUTF8));
         BTNWarpsAndDoors->setText(QApplication::translate("MainWindow", "Warps and Doors", 0, QApplication::UnicodeUTF8));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Warps and doors", 0, QApplication::UnicodeUTF8));
+        groupBox_2->setTitle(QApplication::translate("MainWindow", "Entrance", 0, QApplication::UnicodeUTF8));
+        comboBox->clear();
+        comboBox->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "Entrance", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8)
+        );
+        label->setText(QApplication::translate("MainWindow", "Placement", 0, QApplication::UnicodeUTF8));
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("MainWindow", "Direction", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("MainWindow", "Warp type", 0, QApplication::UnicodeUTF8));
+        comboBox_2->clear();
+        comboBox_2->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "0 - Instant", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "1 - Pipe", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2 - Door", 0, QApplication::UnicodeUTF8)
+        );
+        WarpNoYoshi->setText(QApplication::translate("MainWindow", "No Yoshi", 0, QApplication::UnicodeUTF8));
+        checkBox->setText(QApplication::translate("MainWindow", "Allow NPC", 0, QApplication::UnicodeUTF8));
+        checkBox_2->setText(QApplication::translate("MainWindow", "Locked", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("MainWindow", "Need stars", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("MainWindow", "X:", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("MainWindow", "Y:", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QApplication::translate("MainWindow", "Warp to World map:", 0, QApplication::UnicodeUTF8));
+        label_8->setText(QApplication::translate("MainWindow", "Warp to", 0, QApplication::UnicodeUTF8));
+        WarpGetXYFromWorldMap->setText(QApplication::translate("MainWindow", "Set", 0, QApplication::UnicodeUTF8));
+        groupBox_4->setTitle(QApplication::translate("MainWindow", "Level", 0, QApplication::UnicodeUTF8));
+        WarpLevelEntrance->setText(QApplication::translate("MainWindow", "Level entrance", 0, QApplication::UnicodeUTF8));
+        WarpLevelExit->setText(QApplication::translate("MainWindow", "Level exit", 0, QApplication::UnicodeUTF8));
+        label_11->setText(QApplication::translate("MainWindow", "Warp to level", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
+        pushButton_4->setText(QApplication::translate("MainWindow", "test", 0, QApplication::UnicodeUTF8));
         BTNWaterRanges->setText(QApplication::translate("MainWindow", "Water Ranges", 0, QApplication::UnicodeUTF8));
-        BTNLevelProps->setText(QApplication::translate("MainWindow", "Level Properties...", 0, QApplication::UnicodeUTF8));
+        BTNStartPoints->setText(QApplication::translate("MainWindow", "Player start points", 0, QApplication::UnicodeUTF8));
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(special), QApplication::translate("MainWindow", "Special", 0, QApplication::UnicodeUTF8));
         WorldToolBox->setWindowTitle(QApplication::translate("MainWindow", "World map tool box", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
@@ -826,9 +1201,52 @@ public:
         WorldToolBoxTabs->setTabText(WorldToolBoxTabs->indexOf(Tiles), QApplication::translate("MainWindow", "Tiles", 0, QApplication::UnicodeUTF8));
         WorldToolBoxTabs->setTabText(WorldToolBoxTabs->indexOf(Scenery), QApplication::translate("MainWindow", "Scenery", 0, QApplication::UnicodeUTF8));
         WorldToolBoxTabs->setTabText(WorldToolBoxTabs->indexOf(Level), QApplication::translate("MainWindow", "Levels", 0, QApplication::UnicodeUTF8));
+        groupBox_6->setTitle(QApplication::translate("MainWindow", "World music", 0, QApplication::UnicodeUTF8));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Set point", 0, QApplication::UnicodeUTF8));
+        comboBox_3->clear();
+        comboBox_3->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "0 - [silence]", 0, QApplication::UnicodeUTF8)
+        );
+        label_12->setText(QApplication::translate("MainWindow", "Music:", 0, QApplication::UnicodeUTF8));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Play", 0, QApplication::UnicodeUTF8));
         WorldToolBoxTabs->setTabText(WorldToolBoxTabs->indexOf(MusicSet), QApplication::translate("MainWindow", "Music Set", 0, QApplication::UnicodeUTF8));
         EditionToolBar->setWindowTitle(QApplication::translate("MainWindow", "Editor", 0, QApplication::UnicodeUTF8));
         LevelSectionsToolBar->setWindowTitle(QApplication::translate("MainWindow", "Level Sections", 0, QApplication::UnicodeUTF8));
+        LevelSectionSettings->setWindowTitle(QApplication::translate("MainWindow", "Section Settings", 0, QApplication::UnicodeUTF8));
+        LVLPropMusicGr->setTitle(QApplication::translate("MainWindow", "Music", 0, QApplication::UnicodeUTF8));
+        LVLPropsMusicNumver_2->clear();
+        LVLPropsMusicNumver_2->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "[Silence]", 0, QApplication::UnicodeUTF8)
+        );
+        LVLPropCMusicLbl_2->setText(QApplication::translate("MainWindow", "Music file:", 0, QApplication::UnicodeUTF8));
+        LVLPropsMusicCustonEn_2->setText(QApplication::translate("MainWindow", "Custom music", 0, QApplication::UnicodeUTF8));
+        LVLPropsMusicCustomBrowse_2->setText(QApplication::translate("MainWindow", "...", 0, QApplication::UnicodeUTF8));
+        LVLPropsMusicPlay_2->setText(QApplication::translate("MainWindow", "Play", 0, QApplication::UnicodeUTF8));
+        LVLPropSettingsGrp->setTitle(QApplication::translate("MainWindow", "Section Settings", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_WHATSTHIS
+        LVLPropsLevelWarp_2->setWhatsThis(QApplication::translate("MainWindow", "Leaving for the screen, the player enters the screen on the other side", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_WHATSTHIS
+        LVLPropsLevelWarp_2->setText(QApplication::translate("MainWindow", "Level warp", 0, QApplication::UnicodeUTF8));
+        LVLPropsOffScr_2->setText(QApplication::translate("MainWindow", "Off screen exit", 0, QApplication::UnicodeUTF8));
+        LVLPropsNoTBack_2->setText(QApplication::translate("MainWindow", "No turn back (disable moving to left)", 0, QApplication::UnicodeUTF8));
+        LVLPropsUnderWater_2->setText(QApplication::translate("MainWindow", "Underwater", 0, QApplication::UnicodeUTF8));
+        LVLPropStyleGr->setTitle(QApplication::translate("MainWindow", "Style", 0, QApplication::UnicodeUTF8));
+        LVLPropBckgrClrLbl->setText(QApplication::translate("MainWindow", "Background color:", 0, QApplication::UnicodeUTF8));
+        LVLPropsBackColor->clear();
+        LVLPropsBackColor->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "Black", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "Blue", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "Turquoise", 0, QApplication::UnicodeUTF8)
+        );
+        LVLPropBckrImg->setText(QApplication::translate("MainWindow", "Background image", 0, QApplication::UnicodeUTF8));
+        LVLPropsBackImage->clear();
+        LVLPropsBackImage->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "[No image]", 0, QApplication::UnicodeUTF8)
+        );
+        groupBox_5->setTitle(QApplication::translate("MainWindow", "Current Section", 0, QApplication::UnicodeUTF8));
+        label_9->setText(QApplication::translate("MainWindow", "Section:", 0, QApplication::UnicodeUTF8));
+        label_10->setText(QApplication::translate("MainWindow", "0", 0, QApplication::UnicodeUTF8));
+        BTNResize->setText(QApplication::translate("MainWindow", "Resize section", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

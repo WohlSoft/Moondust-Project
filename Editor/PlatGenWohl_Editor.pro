@@ -11,13 +11,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    aboutdialog.cpp
+    aboutdialog.cpp \
+    levelprops.cpp \
+    file_formats.cpp
 
 HEADERS  += mainwindow.h \
-    aboutdialog.h
+    aboutdialog.h \
+    levelprops.h \
+    lvl_filedata.h
 
 FORMS    += mainwindow.ui \
-    aboutdialog.ui
+    aboutdialog.ui \
+    levelprops.ui
 
 RC_FILE = platgenw.rc
 
@@ -55,7 +60,8 @@ OTHER_FILES += \
     images/04.png \
     images/03.png \
     images/02.png \
-    images/01.png
+    images/01.png \
+    platgenw.rc
 
 RESOURCES += \
     editor.qrc

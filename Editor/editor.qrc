@@ -31,5 +31,6 @@
         <file>images/level.png</file>
         <file>images/world.png</file>
         <file>mushroom.ico</file>
+        <file>images/section.png</file>
     </qresource>
 </RCC>
