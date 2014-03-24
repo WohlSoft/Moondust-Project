@@ -583,7 +583,7 @@ void npcedit::on_En_IsForeground_clicked()
 
 void npcedit::on_En_GrabSide_clicked()
 {
-    if(ui->En_GrabTop->isChecked())
+    if(ui->En_GrabSide->isChecked())
     {
         ui->GrabSide->setEnabled(true);
         NpcData.en_grabside=true;
@@ -758,7 +758,7 @@ void npcedit::on_En_PlayerBlockTop_clicked()
     }
     else
     {
-        ui->PlayerBlock->setEnabled(false);
+        ui->PlayerBlockTop->setEnabled(false);
         NpcData.playerblocktop=false;
     }
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun 23. Mar 20:19:15 2014
+** Created: Mon 24. Mar 22:02:53 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -410,20 +410,25 @@ public:
         actionLevWarp = new QAction(MainWindow);
         actionLevWarp->setObjectName(QString::fromUtf8("actionLevWarp"));
         actionLevWarp->setCheckable(true);
+        actionLevWarp->setEnabled(false);
         actionLevOffScr = new QAction(MainWindow);
         actionLevOffScr->setObjectName(QString::fromUtf8("actionLevOffScr"));
         actionLevOffScr->setCheckable(true);
+        actionLevOffScr->setEnabled(false);
         actionLevNoBack = new QAction(MainWindow);
         actionLevNoBack->setObjectName(QString::fromUtf8("actionLevNoBack"));
         actionLevNoBack->setCheckable(true);
+        actionLevNoBack->setEnabled(false);
         actionLevUnderW = new QAction(MainWindow);
         actionLevUnderW->setObjectName(QString::fromUtf8("actionLevUnderW"));
         actionLevUnderW->setCheckable(true);
+        actionLevUnderW->setEnabled(false);
         actionExport_to_image = new QAction(MainWindow);
         actionExport_to_image->setObjectName(QString::fromUtf8("actionExport_to_image"));
         actionExport_to_image->setEnabled(false);
         actionLevelProp = new QAction(MainWindow);
         actionLevelProp->setObjectName(QString::fromUtf8("actionLevelProp"));
+        actionLevelProp->setEnabled(false);
         actionWLDDisableMap = new QAction(MainWindow);
         actionWLDDisableMap->setObjectName(QString::fromUtf8("actionWLDDisableMap"));
         actionWLDDisableMap->setCheckable(true);
@@ -504,6 +509,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1124, 21));
+        menuBar->setContextMenuPolicy(Qt::NoContextMenu);
         menu = new QMenu(menuBar);
         menu->setObjectName(QString::fromUtf8("menu"));
         menuNew = new QMenu(menu);
