@@ -9,6 +9,11 @@
 #include <QPoint>
 #include <QString>
 #include <QStringList>
+#include "lvl_filedata.h"
+#include "wld_filedata.h"
+#include "npc_filedata.h"
+#include "childwindow.h"
+#include "npcedit.h"
 
 QT_BEGIN_NAMESPACE
 class QMimeData;
@@ -49,11 +54,17 @@ private slots:
 
     void on_LevelSectionSettings_visibilityChanged(bool visible);
 
-    bool ReadLevelFile(QFile &inf);
+    LevelData ReadLevelFile(QFile &inf);
 
-    bool ReadNpcTXTFile(QFile &inf);
+    NPCConfigFile ReadNpcTXTFile(QFile &inf);
 
-    bool ReadWorldFile(QFile &inf);
+    WorldData ReadWorldFile(QFile &inf);
+
+    void OpenFile(QString FilePath);
+
+    MdiChild *createChild();
+
+    npcedit *createNPCChild();
 
 private:
     Ui::MainWindow *ui;

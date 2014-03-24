@@ -32,5 +32,7 @@
         <file>images/world.png</file>
         <file>mushroom.ico</file>
         <file>images/section.png</file>
+        <file>images/warp_exit.png</file>
+        <file>images/warp_entrance.png</file>
     </qresource>
 </RCC>

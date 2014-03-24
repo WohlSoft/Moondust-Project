@@ -13,8 +13,11 @@
     <height>168</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
   <property name="windowTitle">
-   <string>Level Section Properties</string>
+   <string>Level Properties</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -22,7 +25,7 @@
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowminimumheight="150" columnminimumwidth="300,0">
+  <layout class="QGridLayout" name="gridLayout" rowminimumheight="150" columnminimumwidth="300">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
@@ -54,7 +57,7 @@
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="standardButtons">
-         <set>QDialogButtonBox::Close</set>
+         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
         </property>
        </widget>
       </item>

@@ -13,16 +13,23 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     aboutdialog.cpp \
     levelprops.cpp \
-    file_formats.cpp
+    file_formats.cpp \
+    childwindow.cpp \
+    npcedit.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
     levelprops.h \
-    lvl_filedata.h
+    lvl_filedata.h \
+    wld_filedata.h \
+    npc_filedata.h \
+    childwindow.h \
+    npcedit.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
-    levelprops.ui
+    levelprops.ui \
+    npcedit.ui
 
 RC_FILE = platgenw.rc
 

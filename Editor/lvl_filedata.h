@@ -70,7 +70,7 @@ struct LevelNPC
     QString event_die;
     QString event_talk;
     QString event_nomore;
-    QString attache_layer;
+    QString attach_layer;
 };
 
 struct LevelDoors
@@ -162,6 +162,8 @@ struct LevelEvents
 
 struct LevelData
 {
+    int stars;
+    bool ReadFileValid;
     QString LevelName;
     QVector<LevelSection > sections;       //Sections
     QVector<PlayerPoint > players;         //Players

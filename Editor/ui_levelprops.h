@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'levelprops.ui'
 **
-** Created: Thu 20. Mar 02:38:00 2014
+** Created: Sat 22. Mar 20:28:56 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -45,6 +45,7 @@ public:
             LevelProps->setObjectName(QString::fromUtf8("LevelProps"));
         LevelProps->setWindowModality(Qt::WindowModal);
         LevelProps->resize(318, 168);
+        LevelProps->setContextMenuPolicy(Qt::NoContextMenu);
         LevelProps->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         LevelProps->setModal(false);
         gridLayout = new QGridLayout(LevelProps);
@@ -70,7 +71,7 @@ public:
         LVLPropButtonBox = new QDialogButtonBox(frame);
         LVLPropButtonBox->setObjectName(QString::fromUtf8("LVLPropButtonBox"));
         LVLPropButtonBox->setOrientation(Qt::Horizontal);
-        LVLPropButtonBox->setStandardButtons(QDialogButtonBox::Close);
+        LVLPropButtonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
         gridLayout_2->addWidget(LVLPropButtonBox, 2, 2, 1, 1);
 
@@ -97,7 +98,7 @@ public:
 
     void retranslateUi(QDialog *LevelProps)
     {
-        LevelProps->setWindowTitle(QApplication::translate("LevelProps", "Level Section Properties", 0, QApplication::UnicodeUTF8));
+        LevelProps->setWindowTitle(QApplication::translate("LevelProps", "Level Properties", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("LevelProps", "Level name", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("LevelProps", "Editing", 0, QApplication::UnicodeUTF8));
         checkBox->setText(QApplication::translate("LevelProps", "Autoplay music", 0, QApplication::UnicodeUTF8));
