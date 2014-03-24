@@ -71,8 +71,26 @@ private slots:
 
     void on_En_Speed_clicked();
 
+    void on_En_PlayerBlock_clicked();
+
+    void on_En_PlayerBlockTop_clicked();
+
+    void on_En_NPCBlock_clicked();
+
+    void on_En_NPCBlockTop_clicked();
+
+    void on_En_NoBlockCollision_clicked();
+
+    void on_En_NoGravity_clicked();
+
+    void on_En_TurnCliff_clicked();
+
+    void on_ResetNPCData_clicked();
+
 private:
     Ui::npcedit *ui;
+
+    NPCConfigFile StartNPCData;
 
     bool maybeSave();
     void setCurrentFile(const QString &fileName);

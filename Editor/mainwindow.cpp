@@ -40,6 +40,21 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    ui->centralWidget->closeAllSubWindows();
+
+    /*
+    if (ui->centralWidget->currentSubWindow()) {
+        event->ignore();
+    } else {
+        writeSettings();
+        event->accept();
+    }*/
+
     QString inifile = QApplication::applicationDirPath() + "/" + "plweditor.ini";
 
     QSettings settings(inifile, QSettings::IniFormat);
@@ -48,8 +63,7 @@ MainWindow::~MainWindow()
     settings.setValue("pos", pos());
     settings.setValue("lastpath", LastOpenDir);
     settings.endGroup();
-
-    delete ui;
+    event->accept();
 }
 
 ///////////////////////////////////////////////////////

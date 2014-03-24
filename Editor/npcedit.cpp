@@ -39,261 +39,313 @@ void npcedit::setDataBoxes()
 
     if(!NpcData.en_gfxoffsetx)
     {
+        ui->en_GFXOffsetX->setChecked(false);
         ui->GFXOffSetX->setEnabled(false);
     }
     else
     {
         ui->en_GFXOffsetX->setChecked(true);
+        ui->GFXOffSetX->setEnabled(true);
         ui->GFXOffSetX->setValue(NpcData.gfxoffsetx);
     }
 
     if(!NpcData.en_gfxoffsety)
     {
+        ui->en_GFXOffsetY->setChecked(false);
         ui->GFXOffSetY->setEnabled(false);
     }
     else
     {
         ui->en_GFXOffsetY->setChecked(true);
+        ui->GFXOffSetY->setEnabled(true);
         ui->GFXOffSetY->setValue(NpcData.gfxoffsetx);
     }
 
     if(!NpcData.en_foreground)
     {
+        ui->En_IsForeground->setChecked(false);
         ui->IsForeground->setEnabled(false);
     }
     else
     {
         ui->En_IsForeground->setChecked(true);
+        ui->IsForeground->setEnabled(true);
         ui->IsForeground->setChecked(NpcData.foreground);
     }
 
     if(!NpcData.en_gfxheight)
     {
+        ui->En_GFXh->setChecked(false);
         ui->GFXh->setEnabled(false);
     }
     else
     {
         ui->En_GFXh->setChecked(true);
+        ui->GFXh->setEnabled(true);
         ui->GFXh->setValue(NpcData.gfxheight);
     }
 
     if(!NpcData.en_gfxwidth)
     {
+        ui->En_GFXw->setChecked(false);
         ui->GFXw->setEnabled(false);
     }
     else
     {
         ui->En_GFXw->setChecked(true);
+        ui->GFXw->setEnabled(true);
         ui->GFXw->setValue(NpcData.gfxwidth);
     }
 
     if(!NpcData.en_framestyle)
     {
+        ui->En_Framestyle->setChecked(false);
         ui->FrameStyle->setEnabled(false);
     }
     else
     {
         ui->En_Framestyle->setChecked(true);
+        ui->FrameStyle->setEnabled(true);
         ui->FrameStyle->setCurrentIndex(NpcData.framestyle);
     }
 
     if(!NpcData.en_framespeed)
     {
+        ui->En_Framespeed->setChecked(false);
         ui->Framespeed->setEnabled(false);
     }
     else
     {
         ui->En_Framespeed->setChecked(true);
+        ui->Framespeed->setEnabled(true);
         ui->Framespeed->setValue(NpcData.framespeed);
     }
 
     if(!NpcData.en_frames)
     {
+        ui->En_Frames->setChecked(false);
         ui->Frames->setEnabled(false);
     }
     else
     {
         ui->En_Frames->setChecked(true);
+        ui->Frames->setEnabled(true);
         ui->Frames->setValue(NpcData.frames);
     }
 
     if(!NpcData.en_score)
     {
+        ui->En_Score->setChecked(false);
         ui->Score->setEnabled(false);
     }
     else
     {
         ui->En_Score->setChecked(true);
+        ui->Score->setEnabled(true);
         ui->Score->setCurrentIndex(NpcData.score);
     }
 
     if(!NpcData.en_jumphurt)
     {
+        ui->En_JumpHurt->setChecked(false);
         ui->JumpHurt->setEnabled(false);
     }
     else
     {
         ui->En_JumpHurt->setChecked(true);
+        ui->JumpHurt->setEnabled(true);
         ui->JumpHurt->setChecked(NpcData.jumphurt);
     }
 
     if(!NpcData.en_grabtop)
     {
+        ui->En_GrabTop->setChecked(false);
         ui->GrabTop->setEnabled(false);
     }
     else
     {
         ui->En_GrabTop->setChecked(true);
+        ui->GrabTop->setEnabled(true);
         ui->GrabTop->setChecked(NpcData.grabtop);
     }
 
     if(!NpcData.en_grabside)
     {
+        ui->En_GrabSide->setChecked(false);
         ui->GrabSide->setEnabled(false);
     }
     else
     {
         ui->En_GrabSide->setChecked(true);
+        ui->GrabSide->setEnabled(true);
         ui->GrabSide->setChecked(NpcData.grabside);
     }
 
     if(!NpcData.en_nofireball)
     {
+        ui->En_NoFireball->setChecked(false);
         ui->NoFireball->setEnabled(false);
     }
     else
     {
         ui->En_NoFireball->setChecked(true);
+        ui->NoFireball->setEnabled(true);
         ui->NoFireball->setChecked(NpcData.nofireball);
     }
 
     if(!NpcData.en_nohurt)
     {
+        ui->En_DontHurt->setChecked(false);
         ui->DontHurt->setEnabled(false);
     }
     else
     {
         ui->En_DontHurt->setChecked(true);
+        ui->DontHurt->setEnabled(true);
         ui->DontHurt->setChecked(NpcData.nohurt);
     }
 
     if(!NpcData.en_noyoshi)
     {
+        ui->En_NoEat->setChecked(false);
         ui->NoEat->setEnabled(false);
     }
     else
     {
         ui->En_NoEat->setChecked(true);
+        ui->NoEat->setEnabled(true);
         ui->NoEat->setChecked(NpcData.noyoshi);
     }
 
     if(!NpcData.en_noiceball)
     {
+        ui->En_NoIceball->setChecked(false);
         ui->NoIceball->setEnabled(false);
     }
     else
     {
         ui->En_NoIceball->setChecked(true);
+        ui->NoIceball->setEnabled(true);
         ui->NoIceball->setChecked(NpcData.noiceball);
     }
 
     if(!NpcData.en_height)
     {
+        ui->En_Height->setChecked(false);
         ui->Height->setEnabled(false);
     }
     else
     {
         ui->En_Height->setChecked(true);
+        ui->Height->setEnabled(true);
         ui->Height->setValue(NpcData.height);
     }
 
     if(!NpcData.en_width)
     {
+        ui->En_Width->setChecked(false);
         ui->Width->setEnabled(false);
     }
     else
     {
         ui->En_Width->setChecked(true);
+        ui->Width->setEnabled(true);
         ui->Width->setValue(NpcData.width);
     }
 
     if(!NpcData.en_npcblock)
     {
+        ui->En_NPCBlock->setChecked(false);
         ui->NPCBlock->setEnabled(false);
     }
     else
     {
         ui->En_NPCBlock->setChecked(true);
+        ui->NPCBlock->setEnabled(true);
         ui->NPCBlock->setChecked(NpcData.npcblock);
     }
 
     if(!NpcData.en_npcblocktop)
     {
+        ui->En_NPCBlockTop->setChecked(false);
         ui->NPCBlockTop->setEnabled(false);
     }
     else
     {
         ui->En_NPCBlockTop->setChecked(true);
+        ui->NPCBlockTop->setEnabled(true);
         ui->NPCBlockTop->setChecked(NpcData.npcblocktop);
     }
 
     if(!NpcData.en_speed)
     {
+        ui->En_Speed->setChecked(false);
         ui->Speed->setEnabled(false);
     }
     else
     {
         ui->En_Speed->setChecked(true);
+        ui->Speed->setEnabled(true);
         ui->Speed->setValue(NpcData.speed);
     }
 
     if(!NpcData.en_playerblock)
     {
+        ui->En_PlayerBlock->setChecked(false);
         ui->PlayerBlock->setEnabled(false);
     }
     else
     {
         ui->En_PlayerBlock->setChecked(true);
+        ui->PlayerBlock->setEnabled(true);
         ui->PlayerBlock->setChecked(NpcData.playerblock);
     }
 
     if(!NpcData.en_playerblocktop)
     {
+        ui->En_PlayerBlockTop->setChecked(false);
         ui->PlayerBlockTop->setEnabled(false);
     }
     else
     {
         ui->En_PlayerBlockTop->setChecked(true);
+        ui->PlayerBlockTop->setEnabled(true);
         ui->PlayerBlockTop->setChecked(NpcData.playerblocktop);
     }
 
     if(!NpcData.en_noblockcollision)
     {
+        ui->En_NoBlockCollision->setChecked(false);
         ui->NoBlockCollision->setEnabled(false);
     }
     else
     {
         ui->En_NoBlockCollision->setChecked(true);
+        ui->NoBlockCollision->setEnabled(true);
         ui->NoBlockCollision->setChecked(NpcData.noblockcollision);
     }
 
     if(!NpcData.en_nogravity)
     {
+        ui->En_NoGravity->setChecked(false);
         ui->NoGravity->setEnabled(false);
     }
     else
     {
         ui->En_NoGravity->setChecked(true);
+        ui->NoGravity->setEnabled(true);
         ui->NoGravity->setChecked(NpcData.nogravity);
     }
 
     if(!NpcData.en_cliffturn)
     {
+        ui->En_TurnCliff->setChecked(false);
         ui->TurnCliff->setEnabled(false);
     }
     else
     {
         ui->En_TurnCliff->setChecked(true);
+        ui->TurnCliff->setEnabled(true);
         ui->TurnCliff->setChecked(NpcData.cliffturn);
     }
 
@@ -310,7 +362,7 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
                              .arg(file.errorString()));
         return false;
     }
-
+    StartNPCData = NpcData; //Save current history for made reset
     setDataBoxes();
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -681,4 +733,109 @@ void npcedit::on_En_Speed_clicked()
         ui->Speed->setEnabled(false);
         NpcData.en_speed=false;
     }
+}
+
+void npcedit::on_En_PlayerBlock_clicked()
+{
+    if(ui->En_PlayerBlock->isChecked())
+    {
+        ui->PlayerBlock->setEnabled(true);
+        NpcData.playerblock=true;
+    }
+    else
+    {
+        ui->PlayerBlock->setEnabled(false);
+        NpcData.playerblock=false;
+    }
+}
+
+void npcedit::on_En_PlayerBlockTop_clicked()
+{
+    if(ui->En_PlayerBlockTop->isChecked())
+    {
+        ui->PlayerBlockTop->setEnabled(true);
+        NpcData.playerblocktop=true;
+    }
+    else
+    {
+        ui->PlayerBlock->setEnabled(false);
+        NpcData.playerblocktop=false;
+    }
+}
+
+void npcedit::on_En_NPCBlock_clicked()
+{
+    if(ui->En_NPCBlock->isChecked())
+    {
+        ui->NPCBlock->setEnabled(true);
+        NpcData.npcblock=true;
+    }
+    else
+    {
+        ui->NPCBlock->setEnabled(false);
+        NpcData.npcblock=false;
+    }
+}
+
+void npcedit::on_En_NPCBlockTop_clicked()
+{
+    if(ui->En_NPCBlockTop->isChecked())
+    {
+        ui->NPCBlockTop->setEnabled(true);
+        NpcData.npcblocktop=true;
+    }
+    else
+    {
+        ui->NPCBlockTop->setEnabled(false);
+        NpcData.npcblocktop=false;
+    }
+}
+
+void npcedit::on_En_NoBlockCollision_clicked()
+{
+    if(ui->En_NoBlockCollision->isChecked())
+    {
+        ui->NoBlockCollision->setEnabled(true);
+        NpcData.noblockcollision=true;
+    }
+    else
+    {
+        ui->NoBlockCollision->setEnabled(false);
+        NpcData.noblockcollision=false;
+    }
+}
+
+void npcedit::on_En_NoGravity_clicked()
+{
+    if(ui->En_NoGravity->isChecked())
+    {
+        ui->NoGravity->setEnabled(true);
+        NpcData.nogravity=true;
+    }
+    else
+    {
+        ui->NoGravity->setEnabled(false);
+        NpcData.nogravity=false;
+    }
+}
+
+void npcedit::on_En_TurnCliff_clicked()
+{
+    if(ui->En_TurnCliff->isChecked())
+    {
+        ui->TurnCliff->setEnabled(true);
+        NpcData.cliffturn=true;
+    }
+    else
+    {
+        ui->TurnCliff->setEnabled(false);
+        NpcData.cliffturn=false;
+    }
+}
+
+void npcedit::on_ResetNPCData_clicked()
+{
+    NpcData = StartNPCData; //Restore first version
+    setDataBoxes();
+
 }

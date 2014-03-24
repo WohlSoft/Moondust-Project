@@ -31,6 +31,9 @@ public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
     
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void on_OpenFile_activated();
 

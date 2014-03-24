@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'npcedit.ui'
 **
-** Created: Sun 23. Mar 20:35:59 2014
+** Created: Mon 24. Mar 18:57:49 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,10 +19,10 @@
 #include <QtGui/QComboBox>
 #include <QtGui/QDoubleSpinBox>
 #include <QtGui/QGraphicsView>
-#include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
+#include <QtGui/QPushButton>
 #include <QtGui/QSpinBox>
 #include <QtGui/QWidget>
 
@@ -31,7 +31,6 @@ QT_BEGIN_NAMESPACE
 class Ui_npcedit
 {
 public:
-    QGridLayout *gridLayout;
     QGroupBox *Graphics;
     QLabel *label_2;
     QCheckBox *en_GFXOffsetY;
@@ -100,20 +99,24 @@ public:
     QCheckBox *GrabTop;
     QGroupBox *groupBox_4;
     QGraphicsView *PreviewBox;
+    QPushButton *ResetNPCData;
 
     void setupUi(QWidget *npcedit)
     {
         if (npcedit->objectName().isEmpty())
             npcedit->setObjectName(QString::fromUtf8("npcedit"));
         npcedit->setWindowModality(Qt::NonModal);
-        npcedit->resize(490, 604);
+        npcedit->resize(500, 600);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(npcedit->sizePolicy().hasHeightForWidth());
         npcedit->setSizePolicy(sizePolicy);
-        npcedit->setMinimumSize(QSize(490, 600));
-        npcedit->setBaseSize(QSize(490, 600));
+        npcedit->setMinimumSize(QSize(500, 600));
+        npcedit->setBaseSize(QSize(500, 600));
+        QFont font;
+        font.setFamily(QString::fromUtf8("Liberation Sans"));
+        npcedit->setFont(font);
         npcedit->setContextMenuPolicy(Qt::NoContextMenu);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/images/mushroom.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -122,11 +125,9 @@ public:
         npcedit->setLayoutDirection(Qt::LeftToRight);
         npcedit->setAutoFillBackground(false);
         npcedit->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
-        gridLayout = new QGridLayout(npcedit);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        gridLayout->setSizeConstraint(QLayout::SetFixedSize);
         Graphics = new QGroupBox(npcedit);
         Graphics->setObjectName(QString::fromUtf8("Graphics"));
+        Graphics->setGeometry(QRect(10, 70, 241, 261));
         label_2 = new QLabel(Graphics);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(110, 50, 121, 21));
@@ -213,11 +214,9 @@ public:
         IsForeground = new QCheckBox(Graphics);
         IsForeground->setObjectName(QString::fromUtf8("IsForeground"));
         IsForeground->setGeometry(QRect(30, 230, 201, 21));
-
-        gridLayout->addWidget(Graphics, 0, 0, 1, 1);
-
         Physics = new QGroupBox(npcedit);
         Physics->setObjectName(QString::fromUtf8("Physics"));
+        Physics->setGeometry(QRect(260, 9, 231, 320));
         En_Width = new QCheckBox(Physics);
         En_Width->setObjectName(QString::fromUtf8("En_Width"));
         En_Width->setGeometry(QRect(10, 20, 16, 21));
@@ -294,11 +293,9 @@ public:
         NoBlockCollision = new QCheckBox(Physics);
         NoBlockCollision->setObjectName(QString::fromUtf8("NoBlockCollision"));
         NoBlockCollision->setGeometry(QRect(30, 230, 201, 21));
-
-        gridLayout->addWidget(Physics, 0, 1, 1, 1);
-
         InGame = new QGroupBox(npcedit);
         InGame->setObjectName(QString::fromUtf8("InGame"));
+        InGame->setGeometry(QRect(9, 335, 241, 260));
         GrabSide = new QCheckBox(InGame);
         GrabSide->setObjectName(QString::fromUtf8("GrabSide"));
         GrabSide->setGeometry(QRect(30, 20, 201, 21));
@@ -350,11 +347,9 @@ public:
         GrabTop = new QCheckBox(InGame);
         GrabTop->setObjectName(QString::fromUtf8("GrabTop"));
         GrabTop->setGeometry(QRect(30, 50, 201, 21));
-
-        gridLayout->addWidget(InGame, 1, 0, 1, 1);
-
         groupBox_4 = new QGroupBox(npcedit);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
+        groupBox_4->setGeometry(QRect(260, 335, 231, 260));
         PreviewBox = new QGraphicsView(groupBox_4);
         PreviewBox->setObjectName(QString::fromUtf8("PreviewBox"));
         PreviewBox->setEnabled(false);
@@ -362,13 +357,9 @@ public:
         PreviewBox->setAutoFillBackground(true);
         PreviewBox->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);\n"
 "border-color: rgb(132, 132, 132);"));
-
-        gridLayout->addWidget(groupBox_4, 1, 1, 1, 1);
-
-        gridLayout->setColumnMinimumWidth(0, 225);
-        gridLayout->setColumnMinimumWidth(1, 225);
-        gridLayout->setRowMinimumHeight(0, 320);
-        gridLayout->setRowMinimumHeight(1, 260);
+        ResetNPCData = new QPushButton(npcedit);
+        ResetNPCData->setObjectName(QString::fromUtf8("ResetNPCData"));
+        ResetNPCData->setGeometry(QRect(20, 20, 81, 23));
 
         retranslateUi(npcedit);
 
@@ -471,6 +462,7 @@ public:
         En_NoIceball->setText(QString());
         GrabTop->setText(QApplication::translate("npcedit", "Grab top", 0, QApplication::UnicodeUTF8));
         groupBox_4->setTitle(QApplication::translate("npcedit", "Preview", 0, QApplication::UnicodeUTF8));
+        ResetNPCData->setText(QApplication::translate("npcedit", "Reset", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -81,6 +81,9 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
    <widget class="QMenu" name="menu">
     <property name="title">
      <string>File</string>
@@ -2097,6 +2100,9 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Warp section</string>
    </property>
@@ -2104,6 +2110,9 @@ p, li { white-space: pre-wrap; }
   <action name="actionLevOffScr">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Off screen exit</string>
@@ -2113,6 +2122,9 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>No turn back</string>
    </property>
@@ -2120,6 +2132,9 @@ p, li { white-space: pre-wrap; }
   <action name="actionLevUnderW">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Underwater</string>
@@ -2134,6 +2149,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionLevelProp">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Properties...</string>
    </property>
