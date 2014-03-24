@@ -153,10 +153,10 @@ struct LevelEvents
     bool up;
     bool autostart;
     QString movelayer;
-    long layer_speed_x;
-    long layer_speed_y;
-    long move_camera_x;
-    long move_camera_y;
+    float layer_speed_x;
+    float layer_speed_y;
+    float move_camera_x;
+    float move_camera_y;
     long scrool_section;
 };
 

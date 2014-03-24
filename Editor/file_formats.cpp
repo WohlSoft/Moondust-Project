@@ -361,6 +361,8 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     LevelWater waters;
     LevelLayers layers;
     LevelEvents events;
+    LevelEvents_layers events_layers;
+    LevelEvents_Sets events_sets;
 
 
 
@@ -998,6 +1000,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         {
             if(!qstr.exactMatch(line)) //Event name
                 goto badfile;
+            else events.name=line.replace(Quotes1, Quotes2);
 
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //Event message
@@ -1009,23 +1012,33 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!isint.exactMatch(line)) //PlaySound
                     goto badfile;
+                else events.sound_id  = line.toInt();
             }
+            else events.sound_id  = 0;
 
             str_count++;line = in.readLine();
             if(!isint.exactMatch(line)) //EndGame
                 goto badfile;
+            else events.end_game  = line.toInt();
 
             for(i=0; i<21; i++)
             {
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Hide layer
                     goto badfile;
+                else events_layers.hide=line.replace(Quotes1, Quotes2);
+
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Show layer
                     goto badfile;
+                else events_layers.show=line.replace(Quotes1, Quotes2);
+
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Toggle layer
                     goto badfile;
+                else events_layers.toggle=line.replace(Quotes1, Quotes2);
+
+            events.layers.push_back(events_layers);
             }
 
             for(i=0; i<21; i++)
@@ -1033,21 +1046,33 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Set Music
                     goto badfile;
+                else events_sets.music_id  = line.toInt();
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Set Background
                     goto badfile;
+                else events_sets.background_id = line.toInt();
+
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Set Position to: LEFT
                     goto badfile;
+                else events_sets.position_left = line.toInt();
+
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Set Position to: TOP
                     goto badfile;
+                else events_sets.position_top = line.toInt();
+
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Set Position to: BOTTOM
                     goto badfile;
+                else events_sets.position_bottom = line.toInt();
+
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Set Position to: RIGHT
                     goto badfile;
+                else events_sets.position_right = line.toInt();
+
+            events.sets.push_back(events_sets);
             }
 
             if(file_format>=28)
@@ -1055,43 +1080,83 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Trigger
                     goto badfile;
+                else events.trigger=line.replace(Quotes1, Quotes2);
+
                 str_count++;line = in.readLine();
                 if(!isint.exactMatch(line)) //Start trigger event after x [sec*10]. Etc. 153,2 sec
                     goto badfile;
+                else events.triiger_timer = line.toInt();
 
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //No Smoke
                     goto badfile;
+                else events.nosmoke = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //Hold ALT-JUMP player control
                     goto badfile;
+                else events.altjump = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //ALT-RUN
                     goto badfile;
+                else events.altrun = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //DOWN
                     goto badfile;
+                else events.down = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //DROP
                     goto badfile;
+                else events.drop = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //JUMP
                     goto badfile;
+                else events.jump = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //LEFT
                     goto badfile;
+                else events.left = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //RIGHT
                     goto badfile;
+                else events.right = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //RUN
                     goto badfile;
+                else events.run = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //START
                     goto badfile;
+                else events.start = ((line=="#TRUE#")?true:false);
+
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //UP
                     goto badfile;
+                else events.up = ((line=="#TRUE#")?true:false);
+            }
+            else
+            {
+                events.trigger= "";
+                events.triiger_timer=0;
+                events.nosmoke = false;
+                events.altjump=false;
+                events.altrun=false;
+                events.down=false;
+                events.drop=false;
+                events.jump=false;
+                events.left=false;
+                events.right=false;
+                events.run=false;
+                events.start=false;
+                events.up=false;
             }
 
             if(file_format>=32)
@@ -1099,16 +1164,30 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //Auto start
                     goto badfile;
+                else events.autostart = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Layer for movement
                     goto badfile;
+                else events.movelayer = line.replace(Quotes1, Quotes2);
+
+
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Layer moving speed – horizontal
                     goto badfile;
+                else events.layer_speed_x = line.toFloat();
+
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Layer moving speed – vertical
                     goto badfile;
+                else events.layer_speed_y = line.toFloat();
+            }
+            else
+            {
+                events.autostart = false;
+                events.movelayer = "";
+                events.layer_speed_x = 0;
+                events.layer_speed_x = 0;
             }
 
 
@@ -1117,14 +1196,26 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Move screen horizontal speed
                     goto badfile;
+                else events.move_camera_x = line.toFloat();
+
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Move screen vertical speed
                     goto badfile;
+                else events.move_camera_y = line.toFloat();
+
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Scroll section x, (in file value is x-1)
                     goto badfile;
+                else events.scrool_section = line.toInt();
+            }
+            else
+            {
+                events.move_camera_x = 0;
+                events.move_camera_y = 0;
+                events.scrool_section = 0;
             }
 
+        FileData.events.push_back(events);
         str_count++;line = in.readLine();
         }
     }
