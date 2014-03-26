@@ -2,6 +2,7 @@
 #include "lvl_filedata.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
+#include <QBitmap>
 #include <QApplication>
 #include <QGraphicsItem>
 #include <QProgressDialog>
@@ -19,7 +20,7 @@ void LvlScene::makeSectionBG(int x, int y, int w, int h)
     QPen pen(Qt::NoPen);
     //for (int i = 0; i < 11; i++) {
         QGraphicsItem * item =
-        addRect(QRectF(QPoint(x, y), QSize(w, h)), pen, brush);
+        addRect(QRectF(x, y, (int)fabs(x-w), (int)fabs(y-h)), pen, brush);
         item->setData(0, "BackGround");
     //}
 }
@@ -85,8 +86,10 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
 void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
+    QBitmap mask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
     QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-    for(i=0; i<FileData.blocks.size(); i++)
+    image.setMask(mask);
+    for(i=0; i<FileData.npc.size(); i++)
     {
         placeBlock(FileData.npc[i].x, FileData.npc[i].y, image);
         progress.setValue(progress.value()+1);
