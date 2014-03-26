@@ -23,7 +23,7 @@
    <enum>Qt::NoFocus</enum>
   </property>
   <property name="contextMenuPolicy">
-   <enum>Qt::DefaultContextMenu</enum>
+   <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="acceptDrops">
    <bool>true</bool>
@@ -108,7 +108,7 @@
     <addaction name="separator"/>
     <addaction name="Exit"/>
    </widget>
-   <widget class="QMenu" name="menu_2">
+   <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>?</string>
     </property>
@@ -183,21 +183,25 @@
     <addaction name="separator"/>
     <addaction name="actionWLDProperties"/>
    </widget>
-   <widget class="QMenu" name="menuWindows">
+   <widget class="QMenu" name="menuView">
     <property name="title">
      <string>View</string>
     </property>
     <addaction name="actionLVLToolBox"/>
     <addaction name="actionSection_Settings"/>
     <addaction name="actionWLDToolBox"/>
-    <addaction name="separator"/>
-    <addaction name="action_No_files"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>Window</string>
+    </property>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuLevel"/>
    <addaction name="menuWorld"/>
-   <addaction name="menuWindows"/>
-   <addaction name="menu_2"/>
+   <addaction name="menuView"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <property name="enabled">
@@ -989,6 +993,9 @@ p, li { white-space: pre-wrap; }
    </widget>
   </widget>
   <widget class="QToolBar" name="EditionToolBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
    <property name="windowTitle">
     <string>Editor</string>
    </property>
@@ -2245,14 +2252,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
-   </property>
-  </action>
-  <action name="action_No_files">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>&lt;No files&gt;</string>
    </property>
   </action>
   <action name="actionSelect">

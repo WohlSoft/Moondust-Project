@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon 24. Mar 22:02:53 2014
+** Created: Tue 25. Mar 20:54:55 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -91,7 +91,6 @@ public:
     QAction *actionWLDProperties;
     QAction *actionLVLToolBox;
     QAction *actionWLDToolBox;
-    QAction *action_No_files;
     QAction *actionSelect;
     QAction *actionEriser;
     QAction *actionSection_Settings;
@@ -99,12 +98,13 @@ public:
     QMenuBar *menuBar;
     QMenu *menu;
     QMenu *menuNew;
-    QMenu *menu_2;
+    QMenu *menuHelp;
     QMenu *menuLevel;
     QMenu *menuCurrent_section;
     QMenu *menuWorld;
     QMenu *menuDisable_characters;
-    QMenu *menuWindows;
+    QMenu *menuView;
+    QMenu *menuWindow;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *LevelToolBox;
@@ -218,7 +218,7 @@ public:
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
         MainWindow->setFocusPolicy(Qt::NoFocus);
-        MainWindow->setContextMenuPolicy(Qt::DefaultContextMenu);
+        MainWindow->setContextMenuPolicy(Qt::NoContextMenu);
         MainWindow->setAcceptDrops(true);
         MainWindow->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         MainWindow->setDockOptions(QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks);
@@ -466,9 +466,6 @@ public:
         icon25.addFile(QString::fromUtf8(":/images/world.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionWLDToolBox->setIcon(icon25);
         actionWLDToolBox->setIconVisibleInMenu(false);
-        action_No_files = new QAction(MainWindow);
-        action_No_files->setObjectName(QString::fromUtf8("action_No_files"));
-        action_No_files->setEnabled(false);
         actionSelect = new QAction(MainWindow);
         actionSelect->setObjectName(QString::fromUtf8("actionSelect"));
         actionSelect->setCheckable(true);
@@ -514,8 +511,8 @@ public:
         menu->setObjectName(QString::fromUtf8("menu"));
         menuNew = new QMenu(menu);
         menuNew->setObjectName(QString::fromUtf8("menuNew"));
-        menu_2 = new QMenu(menuBar);
-        menu_2->setObjectName(QString::fromUtf8("menu_2"));
+        menuHelp = new QMenu(menuBar);
+        menuHelp->setObjectName(QString::fromUtf8("menuHelp"));
         menuLevel = new QMenu(menuBar);
         menuLevel->setObjectName(QString::fromUtf8("menuLevel"));
         menuLevel->setEnabled(true);
@@ -527,8 +524,10 @@ public:
         menuWorld->setEnabled(true);
         menuDisable_characters = new QMenu(menuWorld);
         menuDisable_characters->setObjectName(QString::fromUtf8("menuDisable_characters"));
-        menuWindows = new QMenu(menuBar);
-        menuWindows->setObjectName(QString::fromUtf8("menuWindows"));
+        menuView = new QMenu(menuBar);
+        menuView->setObjectName(QString::fromUtf8("menuView"));
+        menuWindow = new QMenu(menuBar);
+        menuWindow->setObjectName(QString::fromUtf8("menuWindow"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -765,6 +764,7 @@ public:
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(2), LevelToolBox);
         EditionToolBar = new QToolBar(MainWindow);
         EditionToolBar->setObjectName(QString::fromUtf8("EditionToolBar"));
+        EditionToolBar->setContextMenuPolicy(Qt::NoContextMenu);
         EditionToolBar->setAllowedAreas(Qt::TopToolBarArea);
         MainWindow->addToolBar(Qt::TopToolBarArea, EditionToolBar);
         LevelSectionsToolBar = new QToolBar(MainWindow);
@@ -986,8 +986,9 @@ public:
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menuLevel->menuAction());
         menuBar->addAction(menuWorld->menuAction());
-        menuBar->addAction(menuWindows->menuAction());
-        menuBar->addAction(menu_2->menuAction());
+        menuBar->addAction(menuView->menuAction());
+        menuBar->addAction(menuWindow->menuAction());
+        menuBar->addAction(menuHelp->menuAction());
         menu->addAction(menuNew->menuAction());
         menu->addAction(OpenFile);
         menu->addAction(actionClose);
@@ -1002,8 +1003,8 @@ public:
         menuNew->addAction(actionNewLevel);
         menuNew->addAction(actionNewWorld_map);
         menuNew->addAction(actionNPC_config);
-        menu_2->addAction(actionContents);
-        menu_2->addAction(actionAbout);
+        menuHelp->addAction(actionContents);
+        menuHelp->addAction(actionAbout);
         menuLevel->addAction(menuCurrent_section->menuAction());
         menuLevel->addSeparator();
         menuLevel->addAction(actionLevWarp);
@@ -1043,11 +1044,9 @@ public:
         menuDisable_characters->addAction(actionWLDNoChar3);
         menuDisable_characters->addAction(actionWLDNoChar4);
         menuDisable_characters->addAction(actionWLDNoChar5);
-        menuWindows->addAction(actionLVLToolBox);
-        menuWindows->addAction(actionSection_Settings);
-        menuWindows->addAction(actionWLDToolBox);
-        menuWindows->addSeparator();
-        menuWindows->addAction(action_No_files);
+        menuView->addAction(actionLVLToolBox);
+        menuView->addAction(actionSection_Settings);
+        menuView->addAction(actionWLDToolBox);
         mainToolBar->addAction(OpenFile);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_as);
@@ -1166,7 +1165,6 @@ public:
         actionWLDProperties->setText(QApplication::translate("MainWindow", "Properties...", 0, QApplication::UnicodeUTF8));
         actionLVLToolBox->setText(QApplication::translate("MainWindow", "Level tool box", 0, QApplication::UnicodeUTF8));
         actionWLDToolBox->setText(QApplication::translate("MainWindow", "World tool box", 0, QApplication::UnicodeUTF8));
-        action_No_files->setText(QApplication::translate("MainWindow", "<No files>", 0, QApplication::UnicodeUTF8));
         actionSelect->setText(QApplication::translate("MainWindow", "Select", 0, QApplication::UnicodeUTF8));
         actionSelect->setShortcut(QApplication::translate("MainWindow", "S", 0, QApplication::UnicodeUTF8));
         actionEriser->setText(QApplication::translate("MainWindow", "Eriser", 0, QApplication::UnicodeUTF8));
@@ -1174,12 +1172,13 @@ public:
         actionSection_Settings->setText(QApplication::translate("MainWindow", "Level Section Settings", 0, QApplication::UnicodeUTF8));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
-        menu_2->setTitle(QApplication::translate("MainWindow", "?", 0, QApplication::UnicodeUTF8));
+        menuHelp->setTitle(QApplication::translate("MainWindow", "?", 0, QApplication::UnicodeUTF8));
         menuLevel->setTitle(QApplication::translate("MainWindow", "Level", 0, QApplication::UnicodeUTF8));
         menuCurrent_section->setTitle(QApplication::translate("MainWindow", "Current section", 0, QApplication::UnicodeUTF8));
         menuWorld->setTitle(QApplication::translate("MainWindow", "World", 0, QApplication::UnicodeUTF8));
         menuDisable_characters->setTitle(QApplication::translate("MainWindow", "Disable characters", 0, QApplication::UnicodeUTF8));
-        menuWindows->setTitle(QApplication::translate("MainWindow", "View", 0, QApplication::UnicodeUTF8));
+        menuView->setTitle(QApplication::translate("MainWindow", "View", 0, QApplication::UnicodeUTF8));
+        menuWindow->setTitle(QApplication::translate("MainWindow", "Window", 0, QApplication::UnicodeUTF8));
         mainToolBar->setWindowTitle(QApplication::translate("MainWindow", "General", 0, QApplication::UnicodeUTF8));
         LevelToolBox->setWindowTitle(QApplication::translate("MainWindow", "Level Tool box", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP

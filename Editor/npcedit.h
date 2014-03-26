@@ -87,10 +87,63 @@ private slots:
 
     void on_ResetNPCData_clicked();
 
+    void on_GFXOffSetX_valueChanged(int arg1);
+
+    void on_GFXOffSetY_valueChanged(int arg1);
+
+    void on_GFXw_valueChanged(int arg1);
+
+    void on_GFXh_valueChanged(int arg1);
+
+    void on_Frames_valueChanged(int arg1);
+
+    void on_Framespeed_valueChanged(int arg1);
+
+    void on_FrameStyle_currentIndexChanged(int index);
+
+    void on_IsForeground_stateChanged(int arg1);
+
+    void on_GrabSide_stateChanged(int arg1);
+
+    void on_GrabTop_stateChanged(int arg1);
+
+    void on_JumpHurt_stateChanged(int arg1);
+
+    void on_DontHurt_stateChanged(int arg1);
+
+    void on_Score_currentIndexChanged(int index);
+
+    void on_NoEat_stateChanged(int arg1);
+
+    void on_NoFireball_stateChanged(int arg1);
+
+    void on_NoIceball_stateChanged(int arg1);
+
+    void on_Width_valueChanged(int arg1);
+
+    void on_Height_valueChanged(int arg1);
+
+    void on_Speed_valueChanged(double arg1);
+
+    void on_PlayerBlock_stateChanged(int arg1);
+
+    void on_PlayerBlockTop_stateChanged(int arg1);
+
+    void on_NPCBlock_stateChanged(int arg1);
+
+    void on_NPCBlockTop_stateChanged(int arg1);
+
+    void on_NoBlockCollision_stateChanged(int arg1);
+
+    void on_NoGravity_stateChanged(int arg1);
+
+    void on_TurnCliff_stateChanged(int arg1);
+
 private:
     Ui::npcedit *ui;
 
     NPCConfigFile StartNPCData;
+    bool isModyfied;
 
     bool maybeSave();
     void setCurrentFile(const QString &fileName);

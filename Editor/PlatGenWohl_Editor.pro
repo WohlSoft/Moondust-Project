@@ -15,7 +15,9 @@ SOURCES += main.cpp\
     levelprops.cpp \
     file_formats.cpp \
     childwindow.cpp \
-    npcedit.cpp
+    npcedit.cpp \
+    leveledit.cpp \
+    lvlscene.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -24,12 +26,15 @@ HEADERS  += mainwindow.h \
     wld_filedata.h \
     npc_filedata.h \
     childwindow.h \
-    npcedit.h
+    npcedit.h \
+    leveledit.h \
+    lvlscene.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
     levelprops.ui \
-    npcedit.ui
+    npcedit.ui \
+    leveledit.ui
 
 RC_FILE = platgenw.rc
 
@@ -68,7 +73,10 @@ OTHER_FILES += \
     images/03.png \
     images/02.png \
     images/01.png \
-    platgenw.rc
+    platgenw.rc \
+    images/unknown_npc.gif \
+    images/unknown_block.gif \
+    images/unknown_bgo.gif
 
 RESOURCES += \
     editor.qrc

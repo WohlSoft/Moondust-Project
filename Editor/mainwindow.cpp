@@ -9,6 +9,7 @@
 #include <QTranslator>
 #include <QLocale>
 #include "childwindow.h"
+#include "leveledit.h"
 #include "npcedit.h"
 
 QString LastOpenDir = ".";
@@ -20,22 +21,40 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     ui->setupUi(this);
 
+    /*
+    connect(mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
+            this, SLOT(updateMenus()));
+
+    windowMapper = new QSignalMapper(this);
+
+    connect(windowMapper, SIGNAL(mapped(QWidget*)),
+            this, SLOT(setActiveSubWindow(QWidget*)));
+            */
+
     QString inifile = QApplication::applicationDirPath() + "/" + "plweditor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
     resize(settings.value("size", size()).toSize());
+
     move(settings.value("pos", pos()).toPoint());
     LastOpenDir = settings.value("lastpath", ".").toString();
+    if(settings.value("maximased", "false")=="true") showMaximized();
     settings.endGroup();
 
     ui->WorldToolBox->hide();
     ui->LevelSectionSettings->hide();
     ui->LevelToolBox->hide();
 
+    ui->menuView->setEnabled(0);
+    ui->menuWindow->setEnabled(0);
+    ui->menuLevel->setEnabled(0);
+    ui->menuWorld->setEnabled(0);
+
     ui->actionLVLToolBox->setVisible(0);
     ui->actionSection_Settings->setVisible(0);
     ui->actionWLDToolBox->setVisible(0);
+
 }
 
 MainWindow::~MainWindow()
@@ -47,23 +66,25 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     ui->centralWidget->closeAllSubWindows();
 
-    /*
+
     if (ui->centralWidget->currentSubWindow()) {
         event->ignore();
-    } else {
-        writeSettings();
-        event->accept();
-    }*/
 
+    }
+    else
+    {
     QString inifile = QApplication::applicationDirPath() + "/" + "plweditor.ini";
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
-    settings.setValue("size", size());
+    if(!isMaximized())
+        settings.setValue("size", size());
     settings.setValue("pos", pos());
     settings.setValue("lastpath", LastOpenDir);
+    settings.setValue("maximased", isMaximized());
     settings.endGroup();
     event->accept();
+    }
 }
 
 ///////////////////////////////////////////////////////
@@ -109,9 +130,9 @@ void MainWindow::OpenFile(QString FilePath)
         LevelData FileData = ReadLevelFile(file); //function in file_formats.cpp
         if( !FileData.ReadFileValid ) return;
 
-        MdiChild *child = createChild();
-        if (child->loadFile(FilePath)) {
-            statusBar()->showMessage(tr("File loaded"), 2000);
+        leveledit *child = createChild();
+        if (child->loadFile(FilePath, FileData)) {
+            statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
         } else {
             child->close();
@@ -123,13 +144,16 @@ void MainWindow::OpenFile(QString FilePath)
         WorldData FileData = ReadWorldFile(file);
         if( !FileData.ReadFileValid ) return;
 
-        MdiChild *child = createChild();
+        /*
+        leveledit *child = createChild();
         if (child->loadFile(FilePath)) {
-            statusBar()->showMessage(tr("File loaded"), 2000);
+            statusBar()->showMessage(tr("World map file loaded"), 2000);
             child->show();
         } else {
             child->close();
         }
+        */
+
     }
     else
     if(in_1.suffix() == "txt")
@@ -139,7 +163,7 @@ void MainWindow::OpenFile(QString FilePath)
 
         npcedit *child = createNPCChild();
         if (child->loadFile(FilePath, FileData)) {
-            statusBar()->showMessage(tr("File loaded"), 2000);
+            statusBar()->showMessage(tr("NPC Config loaded"), 2000);
             child->show();
         } else {
             child->close();
@@ -176,10 +200,10 @@ npcedit *MainWindow::createNPCChild()
     return child;
 }
 
-MdiChild *MainWindow::createChild()
+leveledit *MainWindow::createChild()
 {
-    MdiChild *child = new MdiChild;
-    ui->centralWidget->addSubWindow(child);
+    leveledit *child = new leveledit;
+    ui->centralWidget->addSubWindow(child)->resize(QSize(800, 602));;
 
  /*   connect(child, SIGNAL(copyAvailable(bool)),
             cutAct, SLOT(setEnabled(bool)));
@@ -190,7 +214,88 @@ MdiChild *MainWindow::createChild()
     return child;
 }
 
+QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)
+{
+    QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
 
+    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList()) {
+        leveledit *mdiChild = qobject_cast<leveledit *>(window->widget());
+        if (mdiChild->currentFile() == canonicalFilePath)
+            return window;
+    }
+    return 0;
+}
+
+void MainWindow::setActiveSubWindow(QWidget *window)
+{
+    if (!window)
+        return;
+    ui->centralWidget->setActiveSubWindow(qobject_cast<QMdiSubWindow *>(window));
+}
+
+/*
+void MainWindow::updateMenus()
+{
+    bool hasMdiChild = (activeMdiChild() != 0);
+    saveAct->setEnabled(hasMdiChild);
+    saveAsAct->setEnabled(hasMdiChild);
+    pasteAct->setEnabled(hasMdiChild);
+    closeAct->setEnabled(hasMdiChild);
+    closeAllAct->setEnabled(hasMdiChild);
+    tileAct->setEnabled(hasMdiChild);
+    cascadeAct->setEnabled(hasMdiChild);
+    nextAct->setEnabled(hasMdiChild);
+    previousAct->setEnabled(hasMdiChild);
+    separatorAct->setVisible(hasMdiChild);
+
+    bool hasSelection = (activeMdiChild() &&
+                         activeMdiChild()->textCursor().hasSelection());
+    cutAct->setEnabled(hasSelection);
+    copyAct->setEnabled(hasSelection);
+}
+
+void MainWindow::updateWindowMenu()
+{
+    windowMenu->clear();
+    windowMenu->addAction(closeAct);
+    windowMenu->addAction(closeAllAct);
+    windowMenu->addSeparator();
+    windowMenu->addAction(tileAct);
+    windowMenu->addAction(cascadeAct);
+    windowMenu->addSeparator();
+    windowMenu->addAction(nextAct);
+    windowMenu->addAction(previousAct);
+    windowMenu->addAction(separatorAct);
+
+    QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
+    separatorAct->setVisible(!windows.isEmpty());
+
+    for (int i = 0; i < windows.size(); ++i) {
+        MdiChild *child = qobject_cast<MdiChild *>(windows.at(i)->widget());
+
+        QString text;
+        if (i < 9) {
+            text = tr("&%1 %2").arg(i + 1)
+                               .arg(child->userFriendlyCurrentFile());
+        } else {
+            text = tr("%1 %2").arg(i + 1)
+                              .arg(child->userFriendlyCurrentFile());
+        }
+        QAction *action  = windowMenu->addAction(text);
+        action->setCheckable(true);
+        action ->setChecked(child == activeMdiChild());
+        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
+        windowMapper->setMapping(action, windows.at(i));
+    }
+}
+
+*/
+
+
+
+
+
+//////////////////SLOTS///////////////////////////
 
 //Exit from application
 void MainWindow::on_Exit_activated()
@@ -273,9 +378,6 @@ void MainWindow::on_actionSection_Settings_activated()
     else
         ui->LevelSectionSettings->setVisible(false);
 }
-
-
-
 
 
 //Open Level Properties

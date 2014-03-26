@@ -34,5 +34,8 @@
         <file>images/section.png</file>
         <file>images/warp_exit.png</file>
         <file>images/warp_entrance.png</file>
+        <file alias="unknown_bgo">images/unknown_bgo.gif</file>
+        <file alias="unknown_block">images/unknown_block.gif</file>
+        <file alias="unknown_npc">images/unknown_npc.gif</file>
     </qresource>
 </RCC>
