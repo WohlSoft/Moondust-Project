@@ -641,20 +641,18 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 
          if(!issfloat.exactMatch(line)) //NPC x
              goto badfile;
-         else npcdata.x = (long) round(line.toDouble());
+         else npcdata.x = round(line.toDouble());
 
          str_count++;line = in.readLine();
 
          if(!issfloat.exactMatch(line)) //NPC y
              goto badfile;
-         else npcdata.y = (long) round(line.toDouble());
+         else npcdata.y = round(line.toDouble());
 
          str_count++;line = in.readLine();
          if(!issint.exactMatch(line)) //NPC direction
              goto badfile;
          else npcdata.direct = line.toInt();
-
-
 
          str_count++;line = in.readLine();
          if(!isint.exactMatch(line)) //NPC id

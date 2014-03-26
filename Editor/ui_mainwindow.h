@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue 25. Mar 20:54:55 2014
+** Created: Wed 26. Mar 15:43:14 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -561,7 +561,7 @@ public:
         Blocks->setWidgetResizable(true);
         blocksscroll = new QWidget();
         blocksscroll->setObjectName(QString::fromUtf8("blocksscroll"));
-        blocksscroll->setGeometry(QRect(0, 0, 239, 313));
+        blocksscroll->setGeometry(QRect(0, 0, 81, 28));
         blocksscroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         Blocks->setWidget(blocksscroll);
         LevelToolBoxTabs->addTab(Blocks, QString());
@@ -572,7 +572,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QString::fromUtf8("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 239, 313));
+        backsscroll->setGeometry(QRect(0, 0, 81, 28));
         backsscroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -583,7 +583,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QString::fromUtf8("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 239, 313));
+        npcscroll->setGeometry(QRect(0, 0, 81, 28));
         npcscroll->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -790,7 +790,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QString::fromUtf8("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 256, 389));
+        TilesItemBox->setGeometry(QRect(0, 0, 81, 73));
         TilesItemBox->setStyleSheet(QString::fromUtf8(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -818,7 +818,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QString::fromUtf8("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 239, 389));
+        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -828,7 +828,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QString::fromUtf8("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 389));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -1089,7 +1089,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Editor [Skeleton] - PlatGEnWohl (Under Construction)", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Editor - PlatGEnWohl (Under Construction)", 0, QApplication::UnicodeUTF8));
         OpenFile->setText(QApplication::translate("MainWindow", "Open...", 0, QApplication::UnicodeUTF8));
         OpenFile->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0, QApplication::UnicodeUTF8));
         Exit->setText(QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8));

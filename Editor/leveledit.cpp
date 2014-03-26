@@ -121,17 +121,18 @@ void leveledit::DrawObjects(QProgressDialog &progress)
     for(i=0; i<LvlData.sections.size(); i++)
     {
         if(
-            (LvlData.sections[i].size_bottom!=0)&&
-                (LvlData.sections[i].size_top!=0)&&
-                (LvlData.sections[i].size_left!=0)&&
-                (LvlData.sections[i].size_right!=0)
+            (LvlData.sections[i].size_left!=0) ||
+            (LvlData.sections[i].size_top!=0)||
+            (LvlData.sections[i].size_bottom!=0)||
+            (LvlData.sections[i].size_right!=0)
           )
 
       scene->makeSectionBG(
        LvlData.sections[i].size_left,
        LvlData.sections[i].size_top,
-       fabs(LvlData.sections[i].size_left)-fabs(LvlData.sections[i].size_right),
-       fabs(LvlData.sections[i].size_top)-fabs(LvlData.sections[i].size_bottom) );
+       LvlData.sections[i].size_right,
+       LvlData.sections[i].size_bottom
+      );
         total++;
         progress.setValue(total);
     }
