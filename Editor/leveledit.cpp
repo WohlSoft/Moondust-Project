@@ -32,12 +32,29 @@ void leveledit::newFile()
     static int sequenceNumber = 1;
 
     isUntitled = true;
-    curFile = tr("npc-%1.txt").arg(sequenceNumber++);
+    curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile + "[*]");
 
     /*connect(document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));*/
 }
+
+void leveledit::setCurrentSection(int scId)
+{
+    //Save currentPosition on Section
+    LvlData.sections[LvlData.CurSection].PositionX =
+            ui->graphicsView->horizontalScrollBar()->value();
+    LvlData.sections[LvlData.CurSection].PositionY =
+            ui->graphicsView->verticalScrollBar()->value();
+
+    //Change Current Section
+    LvlData.CurSection = scId;
+
+    //Move to new section position
+    ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionY);
+    ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionX);
+}
+
 
 
 bool leveledit::loadFile(const QString &fileName, LevelData FileData)
@@ -53,7 +70,6 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData)
     }
     StartLvlData = LvlData; //Save current history for made reset
 
-    //QApplication::setOverrideCursor(Qt::WaitCursor);
     //setPlainText(in.readAll());
 
     /*
@@ -82,12 +98,14 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData)
 
     DrawObjects(progress);
 
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
     progress.close();
 
-    ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[0].size_top);
+    ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[0].size_bottom-602);
     ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[0].size_left);
 
-    //QApplication::restoreOverrideCursor();
+    QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
 
@@ -98,24 +116,6 @@ void leveledit::DrawObjects(QProgressDialog &progress)
 {
     scene = new LvlScene;
     int DataSize = progress.maximum();
-
-    /*
-    pScene = new QGraphicsScene (QRectF (0,0,100000000,100000000));
-
-    QGraphicsEllipseItem* ellipse = new QGraphicsEllipseItem;
-    ellipse->setRect(QRectF(50, 50, 20, 20));
-    ellipse->setBrush(QBrush(Qt::darkGreen));
-    ellipse->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
-    pScene->addItem(ellipse);
-
-    QGraphicsPixmapItem * testNpc = pScene->addPixmap(QPixmap("../images/unknown_npc.gif"));
-    testNpc->translate(25.5, 25.5);
-    testNpc->setData(0, "Worker");
-
-    testNpc->setPos(60, 60);
-    //pScene->addItem(testNpc);
-    */
-
     int i, total=0;
 
     for(i=0; i<LvlData.sections.size(); i++)
@@ -140,6 +140,14 @@ void leveledit::DrawObjects(QProgressDialog &progress)
     scene->setBGO(LvlData, progress);
     scene->setNPC(LvlData, progress);
     scene->setBlocks(LvlData, progress);
+
+    /*
+    scene->setSceneRect(LvlData.sections[0].size_left-1000,
+                        LvlData.sections[0].size_top-1000,
+                        LvlData.sections[0].size_right+1000,
+                        LvlData.sections[0].size_bottom+1000);
+    */
+
     ui->graphicsView->setScene(scene);
     progress.setValue(DataSize);
 }
@@ -201,6 +209,13 @@ void leveledit::closeEvent(QCloseEvent *event)
         event->ignore();
     }
 }
+
+/*
+void leveledit::focusInEvent( QFocusEvent * focusInEvent)
+{
+
+}
+*/
 
 void leveledit::documentWasModified()
 {

@@ -29,6 +29,9 @@ public:
     bool saveFile(const QString &fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+
+    void setCurrentSection(int scId);
+
     
 protected:
     void closeEvent(QCloseEvent *event);

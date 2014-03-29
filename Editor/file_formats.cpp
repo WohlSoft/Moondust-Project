@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "lvl_filedata.h"
 #include "wld_filedata.h"
+#include "npcedit.h"
 
 QRegExp isint("\\d+");     //Check "Is Numeric"
 QRegExp boolwords("^(#TRUE#|#FALSE#)$");
@@ -47,6 +48,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
     FileData.en_framespeed=false;
     FileData.en_framestyle=false;
     FileData.en_noiceball=false;
+    FileData.en_nohammer=false;
 
 
     //Read NPC.TXT File config
@@ -151,8 +153,8 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
         {
            if(!booldeg.exactMatch(Params[1]))
               goto badfile;
-           FileData.npcblock=(bool)Params[1].toInt();
-           FileData.en_npcblock=true;
+           FileData.npcblocktop=(bool)Params[1].toInt();
+           FileData.en_npcblocktop=true;
         }
        else
        if(Params[0]=="grabside")
@@ -275,6 +277,22 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
            FileData.en_noiceball=true;
         }
        else
+           if(Params[0]=="nohammer")
+            {
+               if(!booldeg.exactMatch(Params[1]))
+                  goto badfile;
+               FileData.nohammer=(bool)Params[1].toInt();
+               FileData.en_nohammer=true;
+            }
+       else
+           if(Params[0]=="noshell")
+            {
+               if(!booldeg.exactMatch(Params[1]))
+                  goto badfile;
+               FileData.noshell=(bool)Params[1].toInt();
+               FileData.en_noshell=true;
+            }
+       else
        {
               goto badfile;
        }
@@ -291,6 +309,130 @@ BadFileMsg(this, inf.fileName(), str_count, line+Params[0]);
 FileData.ReadFileValid=false;
 return FileData;
 }
+
+
+//Convert NPC Options structore to text for saving
+QString npcedit::WriteNPCTxtFile(NPCConfigFile FileData)
+{
+    QString TextData;
+    if(FileData.en_gfxoffsetx)
+    {
+        TextData += "gfxoffsetx=" + QString::number(FileData.gfxoffsetx) +"\n";
+    }
+    if(FileData.en_gfxoffsety)
+    {
+        TextData += "gfxoffsety=" + QString::number(FileData.gfxoffsety) +"\n";
+    }
+    if(FileData.en_gfxwidth)
+    {
+        TextData += "gfxwidth=" + QString::number(FileData.gfxwidth) +"\n";
+    }
+    if(FileData.en_gfxheight)
+    {
+        TextData += "gfxheight=" + QString::number(FileData.gfxheight) +"\n";
+    }
+    if(FileData.en_foreground)
+    {
+        TextData += "foreground=" + QString::number((int)FileData.foreground) +"\n";
+    }
+    if(FileData.en_width)
+    {
+        TextData += "width=" + QString::number(FileData.width) +"\n";
+    }
+    if(FileData.en_height)
+    {
+        TextData += "height=" + QString::number(FileData.height) +"\n";
+    }
+
+    if(FileData.en_score)
+    {
+        TextData += "score=" + QString::number(FileData.score) +"\n";
+    }
+
+    if(FileData.en_playerblock)
+    {
+        TextData += "playerblock=" + QString::number((int)FileData.playerblock) +"\n";
+    }
+
+    if(FileData.en_playerblocktop)
+    {
+        TextData += "playerblocktop=" + QString::number((int)FileData.playerblocktop) +"\n";
+    }
+
+    if(FileData.en_npcblock)
+    {
+        TextData += "npcblock=" + QString::number((int)FileData.npcblock) +"\n";
+    }
+
+    if(FileData.en_npcblocktop)
+    {
+        TextData += "npcblocktop=" + QString::number((int)FileData.npcblocktop) +"\n";
+    }
+    if(FileData.en_grabside)
+    {
+        TextData += "grabside=" + QString::number((int)FileData.grabside) +"\n";
+    }
+    if(FileData.en_grabtop)
+    {
+        TextData += "grabtop=" + QString::number((int)FileData.grabtop) +"\n";
+    }
+    if(FileData.en_jumphurt)
+    {
+        TextData += "jumphurt=" + QString::number((int)FileData.jumphurt) +"\n";
+    }
+    if(FileData.en_nohurt)
+    {
+        TextData += "nohurt=" + QString::number((int)FileData.nohurt) +"\n";
+    }
+    if(FileData.en_speed)
+    {
+        TextData += "speed=" + QString::number(FileData.speed) +"\n";
+    }
+    if(FileData.en_noblockcollision)
+    {
+        TextData += "noblockcollision=" + QString::number((int)FileData.noblockcollision) +"\n";
+    }
+    if(FileData.en_cliffturn)
+    {
+        TextData += "cliffturn=" + QString::number((int)FileData.cliffturn) +"\n";
+    }
+    if(FileData.en_noyoshi)
+    {
+        TextData += "noyoshi=" + QString::number((int)FileData.noyoshi) +"\n";
+    }
+    if(FileData.en_nofireball)
+    {
+        TextData += "nofireball=" + QString::number((int)FileData.nofireball) +"\n";
+    }
+    if(FileData.en_nohammer)
+    {
+        TextData += "nohammer=" + QString::number((int)FileData.nohammer) +"\n";
+    }
+    if(FileData.en_nogravity)
+    {
+        TextData += "nogravity=" + QString::number((int)FileData.nogravity) +"\n";
+    }
+    if(FileData.en_noiceball)
+    {
+        TextData += "noiceball=" + QString::number((int)FileData.noiceball) +"\n";
+    }
+    if(FileData.en_frames)
+    {
+        TextData += "frames=" + QString::number(FileData.frames) +"\n";
+    }
+    if(FileData.en_framespeed)
+    {
+        TextData += "framespeed=" + QString::number(FileData.framespeed) +"\n";
+    }
+    if(FileData.en_framestyle)
+    {
+        TextData += "framestyle=" + QString::number(FileData.framestyle) +"\n";
+    }
+
+    return TextData;
+
+}
+
 
 
 
@@ -395,13 +537,19 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     else
         sct=6;
 
+    FileData.CurSection=0;
+    FileData.playmusic=0;
+
     ////////////SECTION Data//////////
     for(i=0;i<sct;i++)
     {
         str_count++;line = in.readLine();
         if(!issint.exactMatch(line)) //left
             goto badfile;
-        else section.size_left=line.toInt();
+        else {
+               section.size_left=line.toInt();
+               section.PositionX=line.toInt();
+             }
 
         str_count++;line = in.readLine();
         if(!issint.exactMatch(line)) //top
@@ -411,7 +559,10 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         if(!issint.exactMatch(line)) //bottom
             goto badfile;
-        else section.size_bottom=line.toInt();
+        else {
+               section.size_bottom=line.toInt();
+               section.PositionY=line.toInt()-602;
+             }
 
         str_count++;line = in.readLine();
         if(!issint.exactMatch(line)) //right
@@ -1223,7 +1374,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     return FileData;
 
     badfile:    //If file format not corrects
-    BadFileMsg(this, inf.fileName()+"\nFile format "+file_format, str_count, line);
+    BadFileMsg(this, inf.fileName()+"\nFile format "+QString::number(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }

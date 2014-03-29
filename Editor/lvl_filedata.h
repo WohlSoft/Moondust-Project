@@ -16,6 +16,10 @@ struct LevelSection
     bool noback;
     bool underwater;
     QString music_file;
+
+    //Editing:
+    long PositionX;
+    long PositionY;
 };
 
 struct PlayerPoint
@@ -160,6 +164,7 @@ struct LevelEvents
     long scrool_section;
 };
 
+
 struct LevelData
 {
     int stars;
@@ -175,6 +180,11 @@ struct LevelData
     QVector<LevelLayers > layers;          //Layers
     QVector<LevelEvents > events;          //Events
 
+    //editing:
+    int CurSection;
+    bool playmusic;
 };
+
+
 
 #endif // LVL_FILEDATA_H

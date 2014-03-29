@@ -62,7 +62,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
+     <y>40</y>
      <width>241</width>
      <height>261</height>
     </rect>
@@ -446,7 +446,7 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>9</y>
+     <y>0</y>
      <width>231</width>
      <height>320</height>
     </rect>
@@ -781,10 +781,10 @@
   <widget class="QGroupBox" name="InGame">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>335</y>
+     <x>10</x>
+     <y>300</y>
      <width>241</width>
-     <height>260</height>
+     <height>291</height>
     </rect>
    </property>
    <property name="title">
@@ -1073,14 +1073,40 @@
      <string>Grab top</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="En_NoHammer">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>260</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="NoHammer">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>260</y>
+      <width>201</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Don't kill on hammer</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_4">
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>335</y>
+     <y>330</y>
      <width>231</width>
-     <height>260</height>
+     <height>261</height>
     </rect>
    </property>
    <property name="title">
@@ -1111,7 +1137,7 @@ border-color: rgb(132, 132, 132);</string>
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>20</y>
+     <y>10</y>
      <width>81</width>
      <height>23</height>
     </rect>
@@ -1119,6 +1145,38 @@ border-color: rgb(132, 132, 132);</string>
    <property name="text">
     <string>Reset</string>
    </property>
+  </widget>
+  <widget class="QGroupBox" name="NPC_ID">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>0</y>
+     <width>101</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>NPC ID</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>15</y>
+      <width>81</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources>

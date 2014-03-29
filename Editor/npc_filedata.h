@@ -32,6 +32,8 @@ struct NPCConfigFile
     bool en_framespeed;
     bool en_framestyle;
     bool en_noiceball;
+    bool en_nohammer;
+    bool en_noshell;
     /* Using options flags END */
 
     int gfxoffsetx;
@@ -60,6 +62,9 @@ struct NPCConfigFile
     unsigned int framespeed;
     unsigned int framestyle;
     bool noiceball;
+
+    bool nohammer;
+    bool noshell;
 };
 
 #endif // NPC_FILEDATA_H

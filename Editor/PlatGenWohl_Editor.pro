@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     childwindow.cpp \
     npcedit.cpp \
     leveledit.cpp \
-    lvlscene.cpp
+    lvlscene.cpp \
+    dataconfigs.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -28,7 +29,8 @@ HEADERS  += mainwindow.h \
     childwindow.h \
     npcedit.h \
     leveledit.h \
-    lvlscene.h
+    lvlscene.h \
+    dataconfigs.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \

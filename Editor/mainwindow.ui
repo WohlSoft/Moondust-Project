@@ -299,8 +299,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>313</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -326,8 +326,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>313</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -353,8 +353,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>313</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1107,8 +1107,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>73</height>
+        <width>256</width>
+        <height>389</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1168,8 +1168,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>389</height>
        </rect>
       </property>
      </widget>
@@ -1192,8 +1192,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>389</height>
        </rect>
       </property>
      </widget>

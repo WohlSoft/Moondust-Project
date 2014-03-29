@@ -26,6 +26,7 @@ public:
     bool saveFile(const QString &fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+    QString WriteNPCTxtFile(NPCConfigFile FileData);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -139,11 +140,19 @@ private slots:
 
     void on_TurnCliff_stateChanged(int arg1);
 
+    void on_En_NoHammer_clicked();
+
+    void on_NoHammer_stateChanged(int arg1);
+
 private:
     Ui::npcedit *ui;
 
     NPCConfigFile StartNPCData;
+    NPCConfigFile DefaultNPCData;
+    void setDefaultData(int npc_id);
+
     bool isModyfied;
+
 
     bool maybeSave();
     void setCurrentFile(const QString &fileName);

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'npcedit.ui'
 **
-** Created: Mon 24. Mar 18:57:49 2014
+** Created: Fri 28. Mar 21:47:05 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -97,9 +97,13 @@ public:
     QCheckBox *NoIceball;
     QCheckBox *En_NoIceball;
     QCheckBox *GrabTop;
+    QCheckBox *En_NoHammer;
+    QCheckBox *NoHammer;
     QGroupBox *groupBox_4;
     QGraphicsView *PreviewBox;
     QPushButton *ResetNPCData;
+    QGroupBox *NPC_ID;
+    QLabel *label_12;
 
     void setupUi(QWidget *npcedit)
     {
@@ -127,7 +131,7 @@ public:
         npcedit->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         Graphics = new QGroupBox(npcedit);
         Graphics->setObjectName(QString::fromUtf8("Graphics"));
-        Graphics->setGeometry(QRect(10, 70, 241, 261));
+        Graphics->setGeometry(QRect(10, 40, 241, 261));
         label_2 = new QLabel(Graphics);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(110, 50, 121, 21));
@@ -216,7 +220,7 @@ public:
         IsForeground->setGeometry(QRect(30, 230, 201, 21));
         Physics = new QGroupBox(npcedit);
         Physics->setObjectName(QString::fromUtf8("Physics"));
-        Physics->setGeometry(QRect(260, 9, 231, 320));
+        Physics->setGeometry(QRect(260, 0, 231, 320));
         En_Width = new QCheckBox(Physics);
         En_Width->setObjectName(QString::fromUtf8("En_Width"));
         En_Width->setGeometry(QRect(10, 20, 16, 21));
@@ -295,7 +299,7 @@ public:
         NoBlockCollision->setGeometry(QRect(30, 230, 201, 21));
         InGame = new QGroupBox(npcedit);
         InGame->setObjectName(QString::fromUtf8("InGame"));
-        InGame->setGeometry(QRect(9, 335, 241, 260));
+        InGame->setGeometry(QRect(10, 300, 241, 291));
         GrabSide = new QCheckBox(InGame);
         GrabSide->setObjectName(QString::fromUtf8("GrabSide"));
         GrabSide->setGeometry(QRect(30, 20, 201, 21));
@@ -347,9 +351,15 @@ public:
         GrabTop = new QCheckBox(InGame);
         GrabTop->setObjectName(QString::fromUtf8("GrabTop"));
         GrabTop->setGeometry(QRect(30, 50, 201, 21));
+        En_NoHammer = new QCheckBox(InGame);
+        En_NoHammer->setObjectName(QString::fromUtf8("En_NoHammer"));
+        En_NoHammer->setGeometry(QRect(10, 260, 16, 21));
+        NoHammer = new QCheckBox(InGame);
+        NoHammer->setObjectName(QString::fromUtf8("NoHammer"));
+        NoHammer->setGeometry(QRect(30, 260, 201, 21));
         groupBox_4 = new QGroupBox(npcedit);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(260, 335, 231, 260));
+        groupBox_4->setGeometry(QRect(260, 330, 231, 261));
         PreviewBox = new QGraphicsView(groupBox_4);
         PreviewBox->setObjectName(QString::fromUtf8("PreviewBox"));
         PreviewBox->setEnabled(false);
@@ -359,7 +369,15 @@ public:
 "border-color: rgb(132, 132, 132);"));
         ResetNPCData = new QPushButton(npcedit);
         ResetNPCData->setObjectName(QString::fromUtf8("ResetNPCData"));
-        ResetNPCData->setGeometry(QRect(20, 20, 81, 23));
+        ResetNPCData->setGeometry(QRect(20, 10, 81, 23));
+        NPC_ID = new QGroupBox(npcedit);
+        NPC_ID->setObjectName(QString::fromUtf8("NPC_ID"));
+        NPC_ID->setGeometry(QRect(120, 0, 101, 41));
+        NPC_ID->setAlignment(Qt::AlignCenter);
+        label_12 = new QLabel(NPC_ID);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setGeometry(QRect(10, 15, 81, 21));
+        label_12->setAlignment(Qt::AlignCenter);
 
         retranslateUi(npcedit);
 
@@ -461,8 +479,12 @@ public:
         NoIceball->setText(QApplication::translate("npcedit", "Don't freeze on fireball", 0, QApplication::UnicodeUTF8));
         En_NoIceball->setText(QString());
         GrabTop->setText(QApplication::translate("npcedit", "Grab top", 0, QApplication::UnicodeUTF8));
+        En_NoHammer->setText(QString());
+        NoHammer->setText(QApplication::translate("npcedit", "Don't kill on hammer", 0, QApplication::UnicodeUTF8));
         groupBox_4->setTitle(QApplication::translate("npcedit", "Preview", 0, QApplication::UnicodeUTF8));
         ResetNPCData->setText(QApplication::translate("npcedit", "Reset", 0, QApplication::UnicodeUTF8));
+        NPC_ID->setTitle(QApplication::translate("npcedit", "NPC ID", 0, QApplication::UnicodeUTF8));
+        label_12->setText(QApplication::translate("npcedit", "0", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

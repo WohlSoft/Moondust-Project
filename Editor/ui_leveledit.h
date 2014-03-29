@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'leveledit.ui'
 **
-** Created: Tue 25. Mar 22:35:11 2014
+** Created: Fri 28. Mar 13:52:07 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
