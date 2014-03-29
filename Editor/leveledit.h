@@ -23,7 +23,7 @@ public:
     //QGraphicsScene LvlScene;
 
     void newFile();
-    bool loadFile(const QString &fileName, LevelData FileData);
+    bool loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs);
     bool save();
     bool saveAs();
     bool saveFile(const QString &fileName);
@@ -42,7 +42,7 @@ private:
     Ui::leveledit *ui;
 
     LevelData StartLvlData;
-    void DrawObjects(QProgressDialog &progress);
+    void DrawObjects(QProgressDialog &progress, dataconfigs &configs);
 
     bool isModyfied;
     bool maybeSave();

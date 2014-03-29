@@ -36,8 +36,8 @@ struct LevelBlock
     long y;
     long h;
     long w;
-    long id; //Block ID
-    long npc_id;
+    unsigned long id; //Block ID
+    unsigned long npc_id;
     bool invisible;
     bool slippery;
     QString layer;
@@ -50,7 +50,7 @@ struct LevelBGO
 {
     long x;
     long y;
-    long id; //Block ID
+    unsigned long id; //Block ID
     QString layer;
 };
 
@@ -59,7 +59,7 @@ struct LevelNPC
     long x;
     long y;
     int direct;
-    long id;
+    unsigned long id;
     long special_data;
     bool generator;
     int generator_direct;
@@ -183,6 +183,8 @@ struct LevelData
     //editing:
     int CurSection;
     bool playmusic;
+    QString filename;
+    QString path;
 };
 
 

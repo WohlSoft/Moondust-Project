@@ -37,5 +37,6 @@
         <file alias="unknown_bgo">images/unknown_bgo.gif</file>
         <file alias="unknown_block">images/unknown_block.gif</file>
         <file alias="unknown_npc">images/unknown_npc.gif</file>
+        <file>images/splash.png</file>
     </qresource>
 </RCC>

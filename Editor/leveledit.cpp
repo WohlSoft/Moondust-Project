@@ -8,7 +8,7 @@
 #include "ui_leveledit.h"
 #include "lvl_filedata.h"
 #include "lvlscene.h"
-#include "loadingprocess.h"
+#include "dataconfigs.h"
 
 leveledit::leveledit(QWidget *parent) :
     QWidget(parent),
@@ -57,7 +57,7 @@ void leveledit::setCurrentSection(int scId)
 
 
 
-bool leveledit::loadFile(const QString &fileName, LevelData FileData)
+bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs)
 {
     QFile file(fileName);
     LvlData = FileData;
@@ -85,18 +85,18 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData)
 */
     int DataSize=0;
 
-    DataSize = LvlData.sections.size();
-    DataSize = LvlData.blocks.size();
-    DataSize = LvlData.bgo.size();
-    DataSize = LvlData.npc.size();
+    DataSize += LvlData.sections.size();
+    DataSize += LvlData.blocks.size();
+    DataSize += LvlData.bgo.size()*2;
+    DataSize += LvlData.npc.size();
 
     QProgressDialog progress("Loading level data", "Abort", 0, DataSize, this);
          progress.setWindowTitle("Loading level data");
          progress.setWindowModality(Qt::WindowModal);
-         progress.setWindowFlags(progress.windowFlags() & ~Qt::WindowContextHelpButtonHint & ~Qt::WindowCloseButtonHint);
+         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
          progress.setCancelButton(0);
 
-    DrawObjects(progress);
+    DrawObjects(progress, configs);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -112,7 +112,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData)
     return true;
 }
 
-void leveledit::DrawObjects(QProgressDialog &progress)
+void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 {
     scene = new LvlScene;
     int DataSize = progress.maximum();
@@ -137,9 +137,9 @@ void leveledit::DrawObjects(QProgressDialog &progress)
         progress.setValue(total);
     }
 
-    scene->setBGO(LvlData, progress);
-    scene->setNPC(LvlData, progress);
+    scene->setBGO(LvlData, progress, configs);
     scene->setBlocks(LvlData, progress);
+    scene->setNPC(LvlData, progress);
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,
@@ -204,6 +204,7 @@ QString leveledit::userFriendlyCurrentFile()
 void leveledit::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {
+        scene->clear();
         event->accept();
     } else {
         event->ignore();
