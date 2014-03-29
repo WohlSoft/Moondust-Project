@@ -164,7 +164,7 @@ bool leveledit::save()
 bool leveledit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-                                                    curFile);
+        curFile, tr("SMBX 1.3 Level file (*.lvl)"));
     if (fileName.isEmpty())
         return false;
 
@@ -173,6 +173,8 @@ bool leveledit::saveAs()
 
 bool leveledit::saveFile(const QString &fileName)
 {
+    //Write disabled for safe
+    /*
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("MDI"),
@@ -180,7 +182,8 @@ bool leveledit::saveFile(const QString &fileName)
                              .arg(fileName)
                              .arg(file.errorString()));
         return false;
-    }
+    }*/
+
 
     /*
     QTextStream out(&file);
