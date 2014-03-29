@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 28. Mar 22:51:34 2014
+** Created: Sat 29. Mar 13:52:10 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -94,6 +94,7 @@ public:
     QAction *actionSelect;
     QAction *actionEriser;
     QAction *actionSection_Settings;
+    QAction *actionLoad_configs;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -489,6 +490,8 @@ public:
         actionSection_Settings->setIcon(icon28);
         actionSection_Settings->setVisible(true);
         actionSection_Settings->setIconVisibleInMenu(false);
+        actionLoad_configs = new QAction(MainWindow);
+        actionLoad_configs->setObjectName(QString::fromUtf8("actionLoad_configs"));
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -1000,6 +1003,7 @@ public:
         menu->addAction(actionExport_to_image);
         menu->addSeparator();
         menu->addAction(Exit);
+        menu->addAction(actionLoad_configs);
         menuNew->addAction(actionNewLevel);
         menuNew->addAction(actionNewWorld_map);
         menuNew->addAction(actionNPC_config);
@@ -1170,6 +1174,7 @@ public:
         actionEriser->setText(QApplication::translate("MainWindow", "Eriser", 0, QApplication::UnicodeUTF8));
         actionEriser->setShortcut(QApplication::translate("MainWindow", "E", 0, QApplication::UnicodeUTF8));
         actionSection_Settings->setText(QApplication::translate("MainWindow", "Level Section Settings", 0, QApplication::UnicodeUTF8));
+        actionLoad_configs->setText(QApplication::translate("MainWindow", "Reload configurations", 0, QApplication::UnicodeUTF8));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0, QApplication::UnicodeUTF8));
         menuHelp->setTitle(QApplication::translate("MainWindow", "?", 0, QApplication::UnicodeUTF8));
