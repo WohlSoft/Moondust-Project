@@ -94,6 +94,8 @@ private slots:
     void on_actionSection_20_activated();
     void on_actionSection_21_activated();
 
+    void on_actionLoad_configs_activated();
+
 private:
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);

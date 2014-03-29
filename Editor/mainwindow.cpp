@@ -8,27 +8,31 @@
 #include <QSettings>
 #include <QTranslator>
 #include <QLocale>
+#include <QSplashScreen>
 #include "childwindow.h"
 #include "leveledit.h"
 #include "npcedit.h"
+#include "dataconfigs.h"
 
-
-struct ChWindows
-{
-    QWidget *Window;
-    QString FileName;
-};
-
-QVector<ChWindows > SWindows;
 
 QString LastOpenDir = ".";
+
+dataconfigs configs;
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
 
+    QPixmap splashimg(":/images/splash.png");
+    QSplashScreen splash(splashimg);
+    splash.show();
+
+    configs.loadconfigs();
+
     ui->setupUi(this);
+
+    splash.finish(this);
 
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)),
@@ -43,12 +47,15 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
-    resize(settings.value("size", size()).toSize());
-
-    move(settings.value("pos", pos()).toPoint());
+    //resize(settings.value("size", size()).toSize());
+    //move(settings.value("pos", pos()).toPoint());
     LastOpenDir = settings.value("lastpath", ".").toString();
-    if(settings.value("maximased", "false")=="true") showMaximized();
-    settings.endGroup();
+    //if(settings.value("maximased", "false")=="true") showMaximized();
+    //"lvl-section-view", dockWidgetArea(ui->LevelSectionSettings)
+    //dockWidgetArea();
+
+    restoreGeometry(settings.value("geometry").toByteArray());
+    restoreState(settings.value("windowState").toByteArray());
 
     ui->centralWidget->cascadeSubWindows();
     ui->WorldToolBox->hide();
@@ -63,7 +70,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->actionLVLToolBox->setVisible(0);
     ui->actionSection_Settings->setVisible(0);
     ui->actionWLDToolBox->setVisible(0);
-
 }
 
 MainWindow::~MainWindow()
@@ -219,6 +225,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("pos", pos());
     settings.setValue("lastpath", LastOpenDir);
     settings.setValue("maximased", isMaximized());
+    //settings.setValue("lvl-section-view", dockWidgetArea(ui->LevelSectionSettings) );
+    //settings.setValue("wld-toolbox-view", ui->WorldToolBox->isVisible());
+
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
+
     settings.endGroup();
     event->accept();
     }
@@ -274,8 +286,11 @@ void MainWindow::OpenFile(QString FilePath)
         LevelData FileData = ReadLevelFile(file); //function in file_formats.cpp
         if( !FileData.ReadFileValid ) return;
 
+        FileData.filename = in_1.baseName();
+        FileData.path = in_1.absoluteDir().absolutePath();
+
         leveledit *child = createChild();
-        if (child->loadFile(FilePath, FileData)) {
+        if (child->loadFile(FilePath, FileData, configs)) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
         } else {
@@ -338,6 +353,7 @@ npcedit *MainWindow::createNPCChild()
     npcWindow->setFixedSize(520,640);
     npcWindow->setAttribute(Qt::WA_DeleteOnClose);
     npcWindow->setWindowFlags(Qt::WindowCloseButtonHint);
+    npcWindow->move(rand()%100,rand()%50);
     ui->centralWidget->addSubWindow(npcWindow);
 
  /*   connect(child, SIGNAL(copyAvailable(bool)),
@@ -356,7 +372,7 @@ leveledit *MainWindow::createChild()
 {
     leveledit *child = new leveledit;
     ui->centralWidget->addSubWindow(child)->resize(QSize(800, 602));
-    return child;
+        return child;
 }
 
 
@@ -622,6 +638,16 @@ void MainWindow::on_pushButton_4_clicked()
 
     //ui->TilesItemBox
     //ui->TilesItemBox->model()->setData(  ui->TilesItemBox->model()->index(1, 1),);
+
+    QString first = "file-1.35.gif";
+    QStringList mid1 = first.split(".",QString::SkipEmptyParts);
+    QString second = mid1[0] + "m." + mid1[1];
+
+    QMessageBox::information(this, tr("QRegExp test"),
+       tr(QString("First: "+first+"\nSecond: "+second).toStdString().c_str()),
+     QMessageBox::Ok);
+
+
 }
 
 
@@ -645,7 +671,7 @@ void MainWindow::on_actionSave_all_activated()
     save_all();
 }
 
-// GoTo Section
+//////////////////////////////////// GoTo Section  ///////////////////////////////////////////////
 void MainWindow::on_actionSection_1_activated()
 {
     SetCurrentLevelSection(0);
@@ -750,4 +776,9 @@ void MainWindow::on_actionSection_20_activated()
 void MainWindow::on_actionSection_21_activated()
 {
     SetCurrentLevelSection(20);
+}
+
+void MainWindow::on_actionLoad_configs_activated()
+{
+    configs.loadconfigs();
 }

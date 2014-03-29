@@ -107,6 +107,7 @@
     <addaction name="actionExport_to_image"/>
     <addaction name="separator"/>
     <addaction name="Exit"/>
+    <addaction name="actionLoad_configs"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -2309,6 +2310,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionLoad_configs">
+   <property name="text">
+    <string>Reload configurations</string>
    </property>
   </action>
  </widget>
