@@ -482,7 +482,7 @@ bool npcedit::save()
 bool npcedit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-                                                    curFile);
+      curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
     if (fileName.isEmpty())
         return false;
 
