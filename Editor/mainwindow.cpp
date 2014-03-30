@@ -14,7 +14,6 @@
 #include "npcedit.h"
 #include "dataconfigs.h"
 
-
 QString LastOpenDir = ".";
 
 dataconfigs configs;
@@ -70,6 +69,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->actionLVLToolBox->setVisible(0);
     ui->actionSection_Settings->setVisible(0);
     ui->actionWLDToolBox->setVisible(0);
+
+    setAcceptDrops(true);
 }
 
 MainWindow::~MainWindow()
@@ -204,6 +205,21 @@ void MainWindow::close_sw()
     ui->centralWidget->activeSubWindow()->close();
 }
 
+void MainWindow::dragEnterEvent(QDragEnterEvent *e)
+{
+    if (e->mimeData()->hasUrls()) {
+        e->acceptProposedAction();
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent *e)
+{
+    foreach (const QUrl &url, e->mimeData()->urls()) {
+        const QString &fileName = url.toLocalFile();
+        //qDebug() << "Dropped file:" << fileName;
+        OpenFile(fileName);
+    }
+}
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
