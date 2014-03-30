@@ -38,6 +38,14 @@ class LvlScene : public QGraphicsScene
     Q_OBJECT
 public:
     LvlScene(QObject *parent = 0);
+
+    QGraphicsItemGroup *bgoback;
+    QGraphicsItemGroup *npcback;
+    QGraphicsItemGroup *blocks;
+    QGraphicsItemGroup *npcfore;
+    QGraphicsItemGroup *bgofore;
+    QGraphicsItemGroup *cursor;
+
     void setBlocks(LevelData FileData, QProgressDialog &progress);
     void setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     void setNPC(LevelData FileData, QProgressDialog &progress);

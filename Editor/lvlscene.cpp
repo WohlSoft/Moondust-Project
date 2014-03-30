@@ -43,7 +43,12 @@ void Sprite::nextFrame()
 
 LvlScene::LvlScene(QObject *parent) : QGraphicsScene(parent)
 {
-
+    //bgoback->setZValue(-10);
+    //npcback->setZValue(-9);
+    //blocks->setZValue(0);
+    //npcfore->setZValue(5);
+    //bgofore->setZValue(9);
+    //cursor->setZValue(15);
 }
 
 void LvlScene::makeSectionBG(int x, int y, int w, int h)
@@ -55,6 +60,7 @@ void LvlScene::makeSectionBG(int x, int y, int w, int h)
         QGraphicsItem * item =
         addRect(QRectF(x, y, (int)fabs(x-w), (int)fabs(y-h)), pen, brush);
         item->setData(0, "BackGround");
+        item->setZValue(-30);
     //}
 }
 
@@ -82,25 +88,26 @@ void LvlScene::placeBox(float x, float y)
 
 void LvlScene::placeBlock(float x, float y, QPixmap &img)
 {
-    //QImage bxc(":/images/unknown_block.gif");
     QGraphicsItem *	box = addPixmap(QPixmap(img));
     box->translate(x, y);
     box->setFlag(QGraphicsItem::ItemIsSelectable,true);
-    //if (itemCollidesWith(box))
-    //    removeItem(box);
-    //else
-    //    box->setData(0, "Block");
+    //blocks->addToGroup(box);
 }
 
 void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
+    //QGraphicsItem *	box;
     QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.gif");
-
 
     for(i=0; i<FileData.blocks.size(); i++)
     {
         placeBlock(FileData.blocks[i].x, FileData.blocks[i].y, image);
+        //box = addPixmap(QPixmap(image));
+        //box->translate(FileData.blocks[i].x, FileData.blocks[i].y);
+        //box->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        //blocks->addToGroup(box);
+
         progress.setValue(progress.value()+1);
     }
 
@@ -211,9 +218,15 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
         box->translate(FileData.bgo[i].x, FileData.bgo[i].y);
 
         box->setFlag(QGraphicsItem::ItemIsSelectable, true);
-        //box->setFlag(QGraphicsScene::BackgroundLayer);
         box->setData(0, "BGO");
         box->setData(1, QString::number(FileData.bgo[i].id) );
+
+        if(configs.main_bgo[j].view)
+            box->setZValue(9);
+            //bgoback->addToGroup(box);
+        else
+            box->setZValue(-10);
+            //bgofore->addToGroup(box);
 
         progress.setValue(progress.value()+1);
     }
@@ -223,14 +236,18 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
 void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
+    QGraphicsItem *	box;
     QBitmap mask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
     QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
     image.setMask(mask);
 
-
     for(i=0; i<FileData.npc.size(); i++)
     {
-        placeBlock(FileData.npc[i].x, FileData.npc[i].y, image);
+        box = addPixmap(QPixmap(image));
+        box->translate(FileData.npc[i].x, FileData.npc[i].y);
+        box->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        //npcfore->addToGroup(box);
+        box->setZValue(-9);
         progress.setValue(progress.value()+1);
     }
 
