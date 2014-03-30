@@ -52,6 +52,7 @@ void dataconfigs::loadconfigs()
          progress.setWindowTitle("Loading config...");
          //progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+         progress.setFixedSize(progress.size());
          progress.setCancelButton(0);
 
     bool debug = false;
