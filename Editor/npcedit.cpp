@@ -421,7 +421,7 @@ void npcedit::setDefaultData(int npc_id)
     DefaultNPCData.height=0;
     DefaultNPCData.gfxwidth=0;
     DefaultNPCData.gfxheight=0;
-    DefaultNPCData.score=1;
+    DefaultNPCData.score=0;
     DefaultNPCData.playerblock=0;
     DefaultNPCData.playerblocktop=0;
     DefaultNPCData.npcblock=0;
@@ -449,7 +449,7 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     QFile file(fileName);
     NpcData = FileData;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("MDI"),
+        QMessageBox::warning(this, tr("Load file error"),
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
@@ -493,7 +493,7 @@ bool npcedit::saveFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("MDI"),
+        QMessageBox::warning(this, tr("Write file error"),
                              tr("Cannot write file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
@@ -535,7 +535,7 @@ bool npcedit::maybeSave()
 {
     if (isModyfied) {
     QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, tr("MDI"),
+        ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
                      tr("'%1' has been modified.\n"
                         "Do you want to save your changes?")
                      .arg(userFriendlyCurrentFile()),

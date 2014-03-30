@@ -62,7 +62,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     QFile file(fileName);
     LvlData = FileData;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("MDI"),
+        QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
@@ -94,6 +94,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setWindowTitle("Loading level data");
          progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+         progress.setFixedSize(progress.size());
          progress.setCancelButton(0);
 
     DrawObjects(progress, configs);
@@ -230,7 +231,7 @@ bool leveledit::maybeSave()
 {
     if (isModyfied) {
     QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, tr("MDI"),
+        ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
                      tr("'%1' has been modified.\n"
                         "Do you want to save your changes?")
                      .arg(userFriendlyCurrentFile()),
