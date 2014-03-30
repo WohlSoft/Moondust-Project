@@ -548,7 +548,7 @@ void MainWindow::on_Exit_activated()
 void MainWindow::on_actionAbout_activated()
 {
     aboutDialog about;
-    about.setWindowFlags (about.windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    about.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     about.exec();
 }
 

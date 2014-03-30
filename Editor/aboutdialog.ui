@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>443</height>
+    <height>401</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,14 +21,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
+    <width>401</width>
     <height>0</height>
    </size>
   </property>
   <property name="baseSize">
    <size>
     <width>500</width>
-    <height>300</height>
+    <height>200</height>
    </size>
   </property>
   <property name="font">
@@ -54,24 +54,11 @@
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowminimumheight="0,150,0">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
-   <property name="rightMargin">
-    <number>9</number>
-   </property>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="pushButton">
-     <property name="text">
-      <string>Close</string>
-     </property>
-     <property name="autoRepeat">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
+   <item>
     <widget class="QLabel" name="label">
      <property name="minimumSize">
       <size>
@@ -111,12 +98,18 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item>
     <widget class="QTextEdit" name="textEdit">
      <property name="minimumSize">
       <size>
        <width>480</width>
-       <height>0</height>
+       <height>150</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>150</height>
       </size>
      </property>
      <property name="verticalScrollBarPolicy">
@@ -142,6 +135,16 @@ p, li { white-space: pre-wrap; }
      </property>
      <property name="textInteractionFlags">
       <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Close</string>
+     </property>
+     <property name="autoRepeat">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

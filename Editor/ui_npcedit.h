@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'npcedit.ui'
 **
-** Created: Fri 28. Mar 21:47:05 2014
+** Created: Sun 30. Mar 19:14:54 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -453,7 +453,7 @@ public:
         label_5->setText(QApplication::translate("npcedit", "Score", 0, QApplication::UnicodeUTF8));
         En_NoFireball->setText(QString());
         En_Score->setText(QString());
-        NoEat->setText(QApplication::translate("npcedit", "Can't be eat", 0, QApplication::UnicodeUTF8));
+        NoEat->setText(QApplication::translate("npcedit", "Can't be eaten", 0, QApplication::UnicodeUTF8));
         En_NoEat->setText(QString());
         JumpHurt->setText(QApplication::translate("npcedit", "Jump hurt", 0, QApplication::UnicodeUTF8));
         En_GrabTop->setText(QString());

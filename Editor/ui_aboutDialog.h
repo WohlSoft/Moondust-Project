@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'aboutdialog.ui'
 **
-** Created: Sat 29. Mar 23:25:22 2014
+** Created: Sun 30. Mar 19:16:36 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,11 +16,11 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
-#include <QtGui/QGridLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
 #include <QtGui/QTextEdit>
+#include <QtGui/QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -28,24 +28,24 @@ class Ui_aboutDialog
 {
 public:
     QAction *actionCloseDialog;
-    QGridLayout *gridLayout;
-    QPushButton *pushButton;
+    QVBoxLayout *verticalLayout;
     QLabel *label;
     QTextEdit *textEdit;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *aboutDialog)
     {
         if (aboutDialog->objectName().isEmpty())
             aboutDialog->setObjectName(QString::fromUtf8("aboutDialog"));
         aboutDialog->setWindowModality(Qt::ApplicationModal);
-        aboutDialog->resize(500, 443);
+        aboutDialog->resize(500, 401);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(aboutDialog->sizePolicy().hasHeightForWidth());
         aboutDialog->setSizePolicy(sizePolicy);
-        aboutDialog->setMinimumSize(QSize(500, 0));
-        aboutDialog->setBaseSize(QSize(500, 300));
+        aboutDialog->setMinimumSize(QSize(401, 0));
+        aboutDialog->setBaseSize(QSize(500, 200));
         QFont font;
         font.setFamily(QString::fromUtf8("Liberation Sans"));
         aboutDialog->setFont(font);
@@ -56,16 +56,9 @@ public:
         aboutDialog->setModal(true);
         actionCloseDialog = new QAction(aboutDialog);
         actionCloseDialog->setObjectName(QString::fromUtf8("actionCloseDialog"));
-        gridLayout = new QGridLayout(aboutDialog);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        gridLayout->setSizeConstraint(QLayout::SetFixedSize);
-        gridLayout->setContentsMargins(-1, -1, 9, -1);
-        pushButton = new QPushButton(aboutDialog);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setAutoRepeat(true);
-
-        gridLayout->addWidget(pushButton, 2, 0, 1, 1);
-
+        verticalLayout = new QVBoxLayout(aboutDialog);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
         label = new QLabel(aboutDialog);
         label->setObjectName(QString::fromUtf8("label"));
         label->setMinimumSize(QSize(0, 0));
@@ -75,18 +68,24 @@ public:
         label->setOpenExternalLinks(true);
         label->setTextInteractionFlags(Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse);
 
-        gridLayout->addWidget(label, 0, 0, 1, 1);
+        verticalLayout->addWidget(label);
 
         textEdit = new QTextEdit(aboutDialog);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setMinimumSize(QSize(480, 0));
+        textEdit->setMinimumSize(QSize(480, 150));
+        textEdit->setMaximumSize(QSize(16777215, 150));
         textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         textEdit->setTextInteractionFlags(Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse);
 
-        gridLayout->addWidget(textEdit, 1, 0, 1, 1);
+        verticalLayout->addWidget(textEdit);
 
-        gridLayout->setRowMinimumHeight(1, 150);
+        pushButton = new QPushButton(aboutDialog);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setAutoRepeat(true);
+
+        verticalLayout->addWidget(pushButton);
+
 
         retranslateUi(aboutDialog);
 
@@ -98,7 +97,6 @@ public:
         aboutDialog->setWindowTitle(QApplication::translate("aboutDialog", "About", 0, QApplication::UnicodeUTF8));
         actionCloseDialog->setText(QApplication::translate("aboutDialog", "CloseDialog", 0, QApplication::UnicodeUTF8));
         actionCloseDialog->setShortcut(QApplication::translate("aboutDialog", "Esc", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("aboutDialog", "Close", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("aboutDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -129,6 +127,7 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-style:italic;\">Veudekato<br /></span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:600; text-decoration: underline;\">Big thanks to:<br /></span><span style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-style:italic;\">h2643</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-style:italic;\">FanofSMBX</span></p></body></html>", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("aboutDialog", "Close", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

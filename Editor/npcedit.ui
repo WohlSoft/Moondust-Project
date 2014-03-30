@@ -878,7 +878,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Can't be eat</string>
+     <string>Can't be eaten</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="En_NoEat">
