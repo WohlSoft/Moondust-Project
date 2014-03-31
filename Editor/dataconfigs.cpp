@@ -51,8 +51,9 @@ void dataconfigs::loadconfigs()
     QProgressDialog progress("Loading BGO Data", "Abort", 0, bgo_total);
          progress.setWindowTitle("Loading config...");
          //progress.setWindowModality(Qt::WindowModal);
-         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint| Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
+         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
          progress.setCancelButton(0);
 
     bool debug = false;

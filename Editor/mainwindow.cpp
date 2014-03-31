@@ -565,6 +565,7 @@ void MainWindow::on_actionAbout_activated()
 {
     aboutDialog about;
     about.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    about.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, about.size(), qApp->desktop()->availableGeometry()));
     about.exec();
 }
 

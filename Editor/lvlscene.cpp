@@ -4,6 +4,7 @@
 #include <QGraphicsItemAnimation>
 #include <QKeyEvent>
 #include <QBitmap>
+#include <QMessageBox>
 #include <QApplication>
 #include <QGraphicsItem>
 #include <QProgressDialog>
@@ -55,6 +56,7 @@ void LvlScene::makeSectionBG(int x, int y, int w, int h)
 {
     //float walls[11][4] = {{0, 0, 25, 245}, {25, 0, 425, 25}, {425, 0, 25, 245}, {25, 220, 400, 25}, {25, 60, 75, 25}, {100, 60, 25, 95}, {50, 120, 25, 25}, {175, 60, 25, 100}, {225, 90, 125, 25}, {275, 190, 25, 30}, {325, 115, 25, 30}};
     QBrush brush(QColor(255, 255, 255), QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif"));
+    //QBrush brush(QColor(255, 255, 255));
     QPen pen(Qt::NoPen);
     //for (int i = 0; i < 11; i++) {
         QGraphicsItem * item =

@@ -93,8 +93,9 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     QProgressDialog progress("Loading level data", "Abort", 0, DataSize, this);
          progress.setWindowTitle("Loading level data");
          progress.setWindowModality(Qt::WindowModal);
-         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
+         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
          progress.setCancelButton(0);
 
     DrawObjects(progress, configs);
