@@ -8,11 +8,11 @@ struct LevelSection
     long size_bottom;
     long size_left;
     long size_right;
-    int music_id;
+    unsigned int music_id;
     long bgcolor;
     bool IsWarp;
     bool OffScreenEn;
-    int background;
+    unsigned int background;
     bool noback;
     bool underwater;
     QString music_file;

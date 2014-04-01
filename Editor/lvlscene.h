@@ -49,7 +49,8 @@ public:
     void setBlocks(LevelData FileData, QProgressDialog &progress);
     void setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     void setNPC(LevelData FileData, QProgressDialog &progress);
-    void makeSectionBG(int x, int y, int h, int w);
+    //void makeSectionBG(int x, int y, int h, int w);
+    void makeSectionBG(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
 
 private:
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item);

@@ -118,26 +118,8 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 {
     scene = new LvlScene;
     int DataSize = progress.maximum();
-    int i, total=0;
 
-    for(i=0; i<LvlData.sections.size(); i++)
-    {
-        if(
-            (LvlData.sections[i].size_left!=0) ||
-            (LvlData.sections[i].size_top!=0)||
-            (LvlData.sections[i].size_bottom!=0)||
-            (LvlData.sections[i].size_right!=0)
-          )
-
-      scene->makeSectionBG(
-       LvlData.sections[i].size_left,
-       LvlData.sections[i].size_top,
-       LvlData.sections[i].size_right,
-       LvlData.sections[i].size_bottom
-      );
-        total++;
-        progress.setValue(total);
-    }
+    scene->makeSectionBG(LvlData, progress, configs);
 
     scene->setBGO(LvlData, progress, configs);
     scene->setBlocks(LvlData, progress);
