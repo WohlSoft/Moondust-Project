@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     npcedit.cpp \
     leveledit.cpp \
     lvlscene.cpp \
-    dataconfigs.cpp
+    dataconfigs.cpp \
+    saveimage.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -30,13 +31,15 @@ HEADERS  += mainwindow.h \
     npcedit.h \
     leveledit.h \
     lvlscene.h \
-    dataconfigs.h
+    dataconfigs.h \
+    saveimage.h
 
 FORMS    += mainwindow.ui \
     aboutdialog.ui \
     levelprops.ui \
     npcedit.ui \
-    leveledit.ui
+    leveledit.ui \
+    saveimage.ui
 
 RC_FILE = platgenw.rc
 
