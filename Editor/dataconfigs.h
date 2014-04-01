@@ -4,6 +4,20 @@
 #include <QPixmap>
 #include <QBitmap>
 
+struct DataFolders
+{
+    QString worlds;
+
+    QString music;
+    QString sounds;
+
+    QString glevel;
+    QString gworld;
+    QString gplayble;
+
+    QString gcustom;
+};
+
 struct obj_bgo{
     /*
     [background-1]
@@ -22,20 +36,75 @@ struct obj_bgo{
     QString type;
     unsigned int grid;
     unsigned int view;
-    QBitmap mask;
+    QString image_n;
+    QString mask_n;
     QPixmap image;
+    QBitmap mask;
     bool climbing;
     bool animated;
     unsigned int frames;
     unsigned int framespeed;
 };
 
+struct obj_BG{
+    /*
+[background2-3]
+image="background2-3.gif"//
+name="Hills (3 + 2)"//
+type=double-row//
+repeat-h=2//
+repeat-v=ZR//
+attached=bottom//
+animated=0..
+frames=1..
+magic=0..
+magic-strips=1//
+magic-splits=0//
+magic-speeds=0//
+second-image="background2-2.gif"//
+second-repeat-h=4
+second-repeat-v=ZR
+second-attached=overfirst
+    */
+
+    unsigned long id;
+    QString name;
+
+    QString image_n;
+
+    QPixmap image;
+    unsigned int type;//convert from string
+    float repeat_h;
+    unsigned int repead_v;
+    unsigned int attached;
+    bool animated;
+    unsigned int frames;
+
+    bool magic;
+    unsigned int magic_strips;
+    QString magic_splits;
+    QString magic_speeds;
+
+    QString second_image_n;
+    QPixmap second_image;
+
+    float second_repeat_h;
+    unsigned int second_repead_v;
+    unsigned int second_attached;
+
+};
+
+
 class dataconfigs
 {
 public:
     dataconfigs();
     void loadconfigs();
+    DataFolders dirs;
+
     QVector<obj_bgo > main_bgo;
+    QVector<obj_BG > main_bg;
+
 };
 
 #endif // DATACONFIGS_H

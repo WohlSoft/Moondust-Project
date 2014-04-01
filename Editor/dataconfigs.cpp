@@ -28,27 +28,70 @@ frame-speed=125			; default = 125 ms, etc. 8 frames per sec
 
 void dataconfigs::loadconfigs()
 {
-    obj_bgo sbgo;
-    long bgo_total=0, i, prgs=0;
-    QString bgo_ini = QApplication::applicationDirPath() + "/" +  "configs/SMBX/" + "lvl_bgo.ini";
-    QSettings bgoset(bgo_ini, QSettings::IniFormat);
+    unsigned long total_data=0, i, prgs=0;
+    QString config_dir = QApplication::applicationDirPath() + "/" +  "configs/SMBX/";
 
-    main_bgo.clear();
+    //dirs
+
+    QString dirs_ini = config_dir + "lvl_bgo.ini";
+    QSettings dirset(dirs_ini, QSettings::IniFormat);
+
+    dirset.beginGroup("main");
+        dirs.worlds = QApplication::applicationDirPath() + "/" + dirset.value("worlds", "worlds").toString() + "/";
+
+        dirs.music = QApplication::applicationDirPath() + "/" + dirset.value("music", "data/music").toString() + "/";
+        dirs.sounds = QApplication::applicationDirPath() + "/" + dirset.value("sound", "data/sound").toString() + "/";
+
+        dirs.glevel = QApplication::applicationDirPath() + "/" + dirset.value("graphics-level", "data/graphics/level").toString() + "/";
+        dirs.gworld= QApplication::applicationDirPath() + "/" + dirset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+        dirs.gplayble = QApplication::applicationDirPath() + "/" + dirset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+
+        dirs.gcustom = QApplication::applicationDirPath() + "/" + dirset.value("custom-data", "data-custom").toString() + "/";
+    dirset.endGroup();
+
 
     QBitmap mask;
     //QPixmap image;
 
     QString imgFile, imgFileM;
-
-    QString bgoPath = QApplication::applicationDirPath() + "/" + "data/graphics/level/background/";
-
+    QString tmpstr;
     QStringList tmp;
+
+    ////////////////////////////////Preparing////////////////////////////////////////
+    QString bgoPath = dirs.glevel + "background/";
+    QString BGPath = dirs.glevel + "background2/";
+    //QString blockPath = dirs.glevel + "block/";
+    //QString npcPath = dirs.glevel + "npc/";
+
+    //BackGrounds
+    obj_BG sbg;
+    unsigned long bg_total=0;
+
+    QString bg_ini = config_dir + "lvl_bkgrd.ini";
+    QSettings bgset(bg_ini, QSettings::IniFormat);
+    main_bg.clear();   //Clear old
+
+    bgset.beginGroup("background2-main");
+        bg_total = bgset.value("total", "0").toInt();
+        total_data +=bg_total;
+    bgset.endGroup();
+
+    //qDebug() << "BG Total: "+QString::number(bg_total)+"\nDir: "+BGPath;
+
+    //BGO
+    obj_bgo sbgo;
+    unsigned long bgo_total=0;
+    QString bgo_ini = config_dir + "lvl_bgo.ini";
+    QSettings bgoset(bgo_ini, QSettings::IniFormat);
+    main_bgo.clear();   //Clear old
 
     bgoset.beginGroup("background-main");
         bgo_total = bgoset.value("total", "0").toInt();
+        total_data +=bgo_total;
     bgoset.endGroup();
 
-    QProgressDialog progress("Loading BGO Data", "Abort", 0, bgo_total);
+    //////////////////////////////////////////////////////////////////////////////////
+    QProgressDialog progress("Loading BackGround Data", "Abort", 0, total_data);
          progress.setWindowTitle("Loading config...");
          //progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint| Qt::WindowStaysOnTopHint);
@@ -56,22 +99,114 @@ void dataconfigs::loadconfigs()
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
          progress.setCancelButton(0);
 
-    bool debug = false;
+    ////////////////////////////////Preparing////////////////////////////////////////
+
+     ///////////////////////////////////////BackGround////////////////////////////////////////////
+     progress.setLabelText("Loading BackGround Data");
+
+     for(i=1; i<=bg_total; i++)
+     {
+         bgset.beginGroup( QString("background2-"+QString::number(i)) );
+             sbg.name = bgset.value("name", "").toString();
+             tmpstr = bgoset.value("type", "single-row").toString();
+                 if(tmpstr=="single-row")
+                    sbg.type = 0;
+                 else if(tmpstr=="double-row")
+                    sbg.type = 2;
+                 else if(tmpstr=="tiled")
+                    sbg.type = 2;
+                 else sbg.type = 0;
+             sbg.repeat_h = bgset.value("repeat-h", "2").toInt();
+             tmpstr = bgset.value("repeat-v", "NR").toString();
+                 if(tmpstr=="NR")
+                     sbg.repead_v = 0;
+                 else if(tmpstr=="ZR")
+                     sbg.repead_v = 1;
+                 else if(tmpstr=="RP")
+                     sbg.repead_v = 2;
+                 else if(tmpstr=="RZ")
+                     sbg.repead_v = 3;
+                 else sbg.repead_v = 0;
+
+             imgFile = bgset.value("image", "").toString();
+             sbg.image_n = imgFile;
+             if( (imgFile!="") )
+             {
+                 sbg.image = QPixmap(BGPath + imgFile);
+             }
+             else
+             {
+                 sbg.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
+             }
+
+             sbg.attached = (int)(bgset.value("attached", "bottom").toString()=="top");
+
+             sbg.magic = (bgset.value("magic", "0").toString()=="1");
+             sbg.magic_strips = bgset.value("magic-strips", "1").toInt();
+             sbg.magic_splits = bgset.value("magic-splits", "0").toString();
+             sbg.magic_speeds = bgset.value("magic-speeds", "0").toString();
+
+             sbg.animated = (bgset.value("animated", "0").toString()=="1");//animated
+             sbg.frames = bgset.value("frames", "1").toInt();
+             //frames
+
+             if(sbg.type==2)
+             {
+
+                     imgFile = bgset.value("second-image", "").toString();
+                     sbg.second_image_n = imgFile;
+                     if( (imgFile!="") )
+                     {
+                         sbg.second_image = QPixmap(BGPath + imgFile);
+                     }
+                     else
+                     {
+                         sbg.second_image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
+                     }
+                     sbg.second_repeat_h = bgset.value("second-repeat-h", "2").toInt();
+                     tmpstr = bgset.value("second-repeat-v", "NR").toString();
+                         if(tmpstr=="NR")
+                             sbg.second_repead_v = 0;
+                         else if(tmpstr=="ZR")
+                             sbg.second_repead_v = 1;
+                         else if(tmpstr=="RP")
+                             sbg.second_repead_v = 2;
+                         else if(tmpstr=="RZ")
+                             sbg.second_repead_v = 3;
+                         else sbg.second_repead_v = 0;
+                     tmpstr = bgset.value("second-attached", "overfirst").toString();
+                         if(tmpstr=="overfirst")
+                             sbg.second_repead_v = 0;
+                         else if(tmpstr=="bottom")
+                             sbg.second_repead_v = 1;
+                         else if(tmpstr=="top")
+                             sbg.second_repead_v = 2;
+                         else sbg.second_repead_v = 0;
+             }
+
+             sbg.id = i;
+
+             main_bg.push_back(sbg);
+         bgset.endGroup();
+
+         prgs++;
+         progress.setValue(prgs);
+     }
+     ///////////////////////////////////////BackGround////////////////////////////////////////////
+
+
+    ///////////////////////////////////////BGO////////////////////////////////////////////
+    progress.setLabelText("Loading BGO Data");
 
     for(i=1; i<=bgo_total; i++)
     {
-        if(debug)qDebug() << i << "\n";
         bgoset.beginGroup( QString("background-"+QString::number(i)) );
             sbgo.name = bgoset.value("name", "").toString();
-            if(debug)qDebug() << "name" << "\n";
             sbgo.type = bgoset.value("type", "other").toString();
-            if(debug)qDebug() << "type" << "\n";
             sbgo.grid = bgoset.value("grid", "32").toInt();
-            if(debug)qDebug() << "grid" << "\n";
             sbgo.view = (bgoset.value("view", "background").toString()=="foreground");
-            if(debug)qDebug() << "view" << "\n";
             imgFile = bgoset.value("image", "").toString();
-            if(debug)qDebug() << "imgfile" << "\n";
+            sbgo.image_n = imgFile;
             if( (imgFile!="") )
             {
                 tmp = imgFile.split(".", QString::SkipEmptyParts);
@@ -79,36 +214,30 @@ void dataconfigs::loadconfigs()
                     imgFileM = tmp[0] + "m." + tmp[1];
                 else
                     imgFileM = "";
-                if(debug)qDebug() << "tmp" << "\n";
+                sbgo.mask_n = imgFileM;
                 if(tmp.size()==2) mask = QBitmap(bgoPath + imgFileM);
                 sbgo.mask = mask;
-                if(debug)qDebug() << "mask" << "\n";
                 sbgo.image = QPixmap(bgoPath + imgFile);
-                if(debug)qDebug() << "set image" << "\n";
                 if(tmp.size()==2) sbgo.image.setMask(mask);
-                if(debug)qDebug() << "set mask" << "\n";
-                //sbgo.image = image;
             }
             else
-            sbgo.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
-            if(debug)qDebug() << "image to array" << "\n";
+            {
+                sbgo.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
+                sbgo.mask_n = "";
+            }
             sbgo.climbing = (bgoset.value("climbing", "0").toString()=="1");
-            if(debug)qDebug() << "climb" << "\n";
             sbgo.animated = (bgoset.value("animated", "0").toString()=="1");
-            if(debug)qDebug() << "anim" << "\n";
             sbgo.frames = bgoset.value("frames", "1").toInt();
-            if(debug)qDebug() << "frames" << "\n";
             sbgo.framespeed = bgoset.value("frame-speed", "125").toInt();
-            if(debug)qDebug() << "fr-speed" << "\n";
             sbgo.id = i;
-
             main_bgo.push_back(sbgo);
-            if(debug)qDebug() << "add to array" << "\n";
         bgoset.endGroup();
 
         prgs++;
         progress.setValue(prgs);
     }
+    ///////////////////////////////////////BGO////////////////////////////////////////////
+
 
     progress.close();
 
