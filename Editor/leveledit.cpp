@@ -85,7 +85,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 */
     int DataSize=0;
 
-    DataSize += LvlData.sections.size();
+    DataSize += LvlData.sections.size()*2;
     DataSize += LvlData.blocks.size();
     DataSize += LvlData.bgo.size()*2;
     DataSize += LvlData.npc.size();
