@@ -184,6 +184,10 @@ void dataconfigs::loadconfigs()
                          else sbg.second_repead_v = 0;
              }
 
+             if(sbg.animated)
+             {
+                 sbg.image=sbg.image.copy(0, 0, sbg.image.width(), (int)round(sbg.image.height()/sbg.frames));
+             }
              sbg.id = i;
 
              main_bg.push_back(sbg);
