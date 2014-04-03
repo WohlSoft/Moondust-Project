@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat 29. Mar 13:52:10 2014
+** Created: Thu 3. Apr 15:42:30 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -106,6 +106,7 @@ public:
     QMenu *menuDisable_characters;
     QMenu *menuView;
     QMenu *menuWindow;
+    QMenu *menuTools;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *LevelToolBox;
@@ -251,6 +252,7 @@ public:
         actionSave_as->setIcon(icon2);
         actionClose = new QAction(MainWindow);
         actionClose->setObjectName(QString::fromUtf8("actionClose"));
+        actionClose->setEnabled(false);
         actionSave_all = new QAction(MainWindow);
         actionSave_all->setObjectName(QString::fromUtf8("actionSave_all"));
         actionSave_all->setEnabled(false);
@@ -531,6 +533,8 @@ public:
         menuView->setObjectName(QString::fromUtf8("menuView"));
         menuWindow = new QMenu(menuBar);
         menuWindow->setObjectName(QString::fromUtf8("menuWindow"));
+        menuTools = new QMenu(menuBar);
+        menuTools->setObjectName(QString::fromUtf8("menuTools"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -990,6 +994,7 @@ public:
         menuBar->addAction(menuLevel->menuAction());
         menuBar->addAction(menuWorld->menuAction());
         menuBar->addAction(menuView->menuAction());
+        menuBar->addAction(menuTools->menuAction());
         menuBar->addAction(menuWindow->menuAction());
         menuBar->addAction(menuHelp->menuAction());
         menu->addAction(menuNew->menuAction());
@@ -1003,7 +1008,6 @@ public:
         menu->addAction(actionExport_to_image);
         menu->addSeparator();
         menu->addAction(Exit);
-        menu->addAction(actionLoad_configs);
         menuNew->addAction(actionNewLevel);
         menuNew->addAction(actionNewWorld_map);
         menuNew->addAction(actionNPC_config);
@@ -1051,6 +1055,7 @@ public:
         menuView->addAction(actionLVLToolBox);
         menuView->addAction(actionSection_Settings);
         menuView->addAction(actionWLDToolBox);
+        menuTools->addAction(actionLoad_configs);
         mainToolBar->addAction(OpenFile);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_as);
@@ -1184,6 +1189,7 @@ public:
         menuDisable_characters->setTitle(QApplication::translate("MainWindow", "Disable characters", 0, QApplication::UnicodeUTF8));
         menuView->setTitle(QApplication::translate("MainWindow", "View", 0, QApplication::UnicodeUTF8));
         menuWindow->setTitle(QApplication::translate("MainWindow", "Window", 0, QApplication::UnicodeUTF8));
+        menuTools->setTitle(QApplication::translate("MainWindow", "Tools", 0, QApplication::UnicodeUTF8));
         mainToolBar->setWindowTitle(QApplication::translate("MainWindow", "General", 0, QApplication::UnicodeUTF8));
         LevelToolBox->setWindowTitle(QApplication::translate("MainWindow", "Level Tool box", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP

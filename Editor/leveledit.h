@@ -50,6 +50,9 @@ public:
 
     void setCurrentSection(int scId);
 
+    void ExportToImage();
+
+    LvlScene * scene;
     
 protected:
     void closeEvent(QCloseEvent *event);
@@ -68,12 +71,11 @@ private:
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
     QString curFile;
+    QString latest_export;
     bool isUntitled;
     unsigned int FileType;
 
     //QGraphicsScene* pScene;
-    LvlScene * scene;
-
 };
 
 #endif // LEVELEDIT_H

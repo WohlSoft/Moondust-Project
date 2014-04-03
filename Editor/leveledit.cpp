@@ -28,6 +28,10 @@
 #include "lvlscene.h"
 #include "dataconfigs.h"
 
+
+#include <QDebug>
+
+
 leveledit::leveledit(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::leveledit)
@@ -36,6 +40,7 @@ leveledit::leveledit(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
     isModyfied = false;
+    latest_export = "";
     ui->setupUi(this);
 }
 
@@ -55,6 +60,37 @@ void leveledit::newFile()
 
     /*connect(document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));*/
+}
+
+void leveledit::ExportToImage()
+{
+    long x, y, h, w, th, tw;
+
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
+            latest_export, tr("PNG Image (*.png)"));
+        if (fileName.isEmpty())
+            return;
+
+        latest_export=fileName;
+
+        x=LvlData.sections[LvlData.CurSection].size_left;
+        y=LvlData.sections[LvlData.CurSection].size_top;
+        w=LvlData.sections[LvlData.CurSection].size_right;
+        h=LvlData.sections[LvlData.CurSection].size_bottom;
+        w=(long)fabs(x-w);
+        h=(long)fabs(y-h);
+
+        tw=(long)round(w/2);
+        th=(long)round(h/2);
+        QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
+
+        QPainter p(&img);
+        scene->render(&p, QRectF(0,0,tw,th),QRectF(x,y,w,h));
+        p.end();
+
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+        img.save(fileName);
+        QApplication::restoreOverrideCursor();
 }
 
 void leveledit::setCurrentSection(int scId)

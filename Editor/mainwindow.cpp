@@ -33,6 +33,9 @@
 #include "dataconfigs.h"
 
 QString LastOpenDir = ".";
+bool LevelToolBoxVis = false;
+bool WorldToolBoxVis = false;
+bool SectionToolBoxVis = false;
 
 dataconfigs configs;
 
@@ -67,6 +70,9 @@ MainWindow::MainWindow(QMdiArea *parent) :
     //resize(settings.value("size", size()).toSize());
     //move(settings.value("pos", pos()).toPoint());
     LastOpenDir = settings.value("lastpath", ".").toString();
+    LevelToolBoxVis = settings.value("level-tb-visible", "false").toBool();
+    WorldToolBoxVis = settings.value("world-tb-visible", "false").toBool();
+    SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
     //if(settings.value("maximased", "false")=="true") showMaximized();
     //"lvl-section-view", dockWidgetArea(ui->LevelSectionSettings)
     //dockWidgetArea();
@@ -126,6 +132,7 @@ void MainWindow::updateMenus()
     ui->actionLevOffScr->setEnabled( (WinType==1) );
     ui->actionLevWarp->setEnabled( (WinType==1) );
     ui->actionLevUnderW->setEnabled( (WinType==1) );
+    ui->actionExport_to_image->setEnabled( (WinType==1) );
 
     ui->actionSection_1->setEnabled( (WinType==1) );
     ui->actionSection_2->setEnabled( (WinType==1) );
@@ -254,14 +261,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
-    if(!isMaximized())
-        settings.setValue("size", size());
     settings.setValue("pos", pos());
     settings.setValue("lastpath", LastOpenDir);
-    settings.setValue("maximased", isMaximized());
-    //settings.setValue("lvl-section-view", dockWidgetArea(ui->LevelSectionSettings) );
-    //settings.setValue("wld-toolbox-view", ui->WorldToolBox->isVisible());
-
+    settings.setValue("level-tb-visible", LevelToolBoxVis);
+    settings.setValue("world-tb-visible", WorldToolBoxVis);
+    settings.setValue("section-tb-visible", SectionToolBoxVis);
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
 
@@ -813,7 +817,19 @@ void MainWindow::on_actionSection_21_activated()
     SetCurrentLevelSection(20);
 }
 
+
+
 void MainWindow::on_actionLoad_configs_activated()
 {
     configs.loadconfigs();
+}
+
+
+
+void MainWindow::on_actionExport_to_image_activated()
+{
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->ExportToImage();
+    }
 }

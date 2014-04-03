@@ -116,6 +116,8 @@ private slots:
 
     void on_actionLoad_configs_activated();
 
+    void on_actionExport_to_image_activated();
+
 private:
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);

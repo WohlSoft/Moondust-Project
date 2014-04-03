@@ -107,7 +107,6 @@
     <addaction name="actionExport_to_image"/>
     <addaction name="separator"/>
     <addaction name="Exit"/>
-    <addaction name="actionLoad_configs"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -197,10 +196,17 @@
      <string>Window</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionLoad_configs"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuLevel"/>
    <addaction name="menuWorld"/>
    <addaction name="menuView"/>
+   <addaction name="menuTools"/>
    <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -257,7 +263,7 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="windowIcon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
    </property>
    <property name="styleSheet">
@@ -1065,7 +1071,7 @@ p, li { white-space: pre-wrap; }
     </sizepolicy>
    </property>
    <property name="windowIcon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
    </property>
    <property name="styleSheet">
@@ -1318,7 +1324,7 @@ p, li { white-space: pre-wrap; }
     </size>
    </property>
    <property name="windowIcon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
    </property>
    <property name="styleSheet">
@@ -1625,7 +1631,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -1663,7 +1669,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -1678,7 +1684,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/saveas.png</normaloff>:/images/saveas.png</iconset>
    </property>
    <property name="text">
@@ -1689,6 +1695,9 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionClose">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Close</string>
    </property>
@@ -1734,7 +1743,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/01.png</normaloff>:/images/01.png</iconset>
    </property>
    <property name="text">
@@ -1752,7 +1761,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/02.png</normaloff>:/images/02.png</iconset>
    </property>
    <property name="text">
@@ -1770,7 +1779,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/03.png</normaloff>:/images/03.png</iconset>
    </property>
    <property name="text">
@@ -1788,7 +1797,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/04.png</normaloff>:/images/04.png</iconset>
    </property>
    <property name="text">
@@ -1806,7 +1815,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/05.png</normaloff>:/images/05.png</iconset>
    </property>
    <property name="text">
@@ -1824,7 +1833,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/06.png</normaloff>:/images/06.png</iconset>
    </property>
    <property name="text">
@@ -1842,7 +1851,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/07.png</normaloff>:/images/07.png</iconset>
    </property>
    <property name="text">
@@ -1860,7 +1869,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/08.png</normaloff>:/images/08.png</iconset>
    </property>
    <property name="text">
@@ -1878,7 +1887,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/09.png</normaloff>:/images/09.png</iconset>
    </property>
    <property name="text">
@@ -1896,7 +1905,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/10.png</normaloff>:/images/10.png</iconset>
    </property>
    <property name="text">
@@ -1914,7 +1923,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/11.png</normaloff>:/images/11.png</iconset>
    </property>
    <property name="text">
@@ -1932,7 +1941,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/12.png</normaloff>:/images/12.png</iconset>
    </property>
    <property name="text">
@@ -1950,7 +1959,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/13.png</normaloff>:/images/13.png</iconset>
    </property>
    <property name="text">
@@ -1968,7 +1977,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/14.png</normaloff>:/images/14.png</iconset>
    </property>
    <property name="text">
@@ -1986,7 +1995,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/15.png</normaloff>:/images/15.png</iconset>
    </property>
    <property name="text">
@@ -2004,7 +2013,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/16.png</normaloff>:/images/16.png</iconset>
    </property>
    <property name="text">
@@ -2022,7 +2031,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/17.png</normaloff>:/images/17.png</iconset>
    </property>
    <property name="text">
@@ -2040,7 +2049,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/18.png</normaloff>:/images/18.png</iconset>
    </property>
    <property name="text">
@@ -2058,7 +2067,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/19.png</normaloff>:/images/19.png</iconset>
    </property>
    <property name="text">
@@ -2076,7 +2085,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/20.png</normaloff>:/images/20.png</iconset>
    </property>
    <property name="text">
@@ -2094,7 +2103,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/21.png</normaloff>:/images/21.png</iconset>
    </property>
    <property name="text">
@@ -2230,7 +2239,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
    </property>
    <property name="text">
@@ -2245,7 +2254,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
    </property>
    <property name="text">
@@ -2266,7 +2275,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/arrow.png</normaloff>:/images/arrow.png</iconset>
    </property>
    <property name="text">
@@ -2284,7 +2293,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/rubber.png</normaloff>:/images/rubber.png</iconset>
    </property>
    <property name="text">
@@ -2299,7 +2308,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="editor.qrc">
+    <iconset>
      <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
    </property>
    <property name="text">
@@ -2324,8 +2333,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>BTNWaterRanges</tabstop>
   <tabstop>BTNStartPoints</tabstop>
  </tabstops>
- <resources>
-  <include location="editor.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
