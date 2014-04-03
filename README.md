@@ -1,4 +1,4 @@
-PLatGEnWohl
+PlatGEnWohl
 ===========
 
 Platformet Game Engine by Wohlstand
