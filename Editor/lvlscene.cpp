@@ -393,7 +393,11 @@ void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
         box->translate(FileData.npc[i].x, FileData.npc[i].y);
         box->setFlag(QGraphicsItem::ItemIsSelectable,true);
         //npcfore->addToGroup(box);
-        box->setZValue(-9);
+        if(FileData.npc[i].id==91)
+            box->setZValue(5);
+        else
+            box->setZValue(-9);
+
         progress.setValue(progress.value()+1);
     }
 

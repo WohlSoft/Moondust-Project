@@ -478,7 +478,7 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
 
     StartNPCData = NpcData; //Save current history for made reset
     setDataBoxes();
-    isModyfied  = false;
+    documentNotModified();
     QApplication::setOverrideCursor(Qt::WaitCursor);
     //setPlainText(in.readAll());
     QApplication::restoreOverrideCursor();
@@ -522,7 +522,7 @@ bool npcedit::saveFile(const QString &fileName)
     QApplication::setOverrideCursor(Qt::WaitCursor);
     out << WriteNPCTxtFile(NpcData);
     QApplication::restoreOverrideCursor();
-    isModyfied=false;
+    documentNotModified();
     setCurrentFile(fileName);
 
     return true;
@@ -547,7 +547,15 @@ void npcedit::closeEvent(QCloseEvent *event)
 void npcedit::documentWasModified()
 {
     isModyfied = true;
+    setWindowTitle(userFriendlyCurrentFile() + "[*]");
 }
+
+void npcedit::documentNotModified()
+{
+    isModyfied = false;
+    setWindowTitle(userFriendlyCurrentFile());
+}
+
 
 bool npcedit::maybeSave()
 {
@@ -593,7 +601,7 @@ void npcedit::on_ResetNPCData_clicked()
 {
     NpcData = StartNPCData; //Restore first version
     setDataBoxes();
-    isModyfied = false;
+    documentNotModified();
 }
 
 
@@ -609,7 +617,7 @@ void npcedit::on_en_GFXOffsetX_clicked()
         ui->GFXOffSetX->setEnabled(false);
         NpcData.en_gfxoffsetx=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_en_GFXOffsetY_clicked()
@@ -624,7 +632,7 @@ void npcedit::on_en_GFXOffsetY_clicked()
         ui->GFXOffSetY->setEnabled(false);
         NpcData.en_gfxoffsety=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_GFXw_clicked()
@@ -639,7 +647,7 @@ void npcedit::on_En_GFXw_clicked()
         ui->GFXw->setEnabled(false);
         NpcData.en_gfxwidth=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_GFXh_clicked()
@@ -654,7 +662,7 @@ void npcedit::on_En_GFXh_clicked()
         ui->GFXh->setEnabled(false);
         NpcData.en_gfxheight=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_Frames_clicked()
@@ -669,7 +677,7 @@ void npcedit::on_En_Frames_clicked()
         ui->Frames->setEnabled(false);
         NpcData.en_frames=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_Framespeed_clicked()
@@ -684,7 +692,7 @@ void npcedit::on_En_Framespeed_clicked()
         ui->Framespeed->setEnabled(false);
         NpcData.en_framespeed=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_Framestyle_clicked()
@@ -699,7 +707,7 @@ void npcedit::on_En_Framestyle_clicked()
         ui->FrameStyle->setEnabled(false);
         NpcData.en_framestyle=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_IsForeground_clicked()
@@ -714,7 +722,7 @@ void npcedit::on_En_IsForeground_clicked()
         ui->IsForeground->setEnabled(false);
         NpcData.en_foreground=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_GrabSide_clicked()
@@ -729,7 +737,7 @@ void npcedit::on_En_GrabSide_clicked()
         ui->GrabSide->setEnabled(false);
         NpcData.en_grabside=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_GrabTop_clicked()
@@ -744,7 +752,7 @@ void npcedit::on_En_GrabTop_clicked()
         ui->GrabTop->setEnabled(false);
         NpcData.en_grabtop=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_JumpHurt_clicked()
@@ -759,7 +767,7 @@ void npcedit::on_En_JumpHurt_clicked()
         ui->JumpHurt->setEnabled(false);
         NpcData.en_jumphurt=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_DontHurt_clicked()
@@ -774,7 +782,7 @@ void npcedit::on_En_DontHurt_clicked()
         ui->DontHurt->setEnabled(false);
         NpcData.en_nohurt=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_Score_clicked()
@@ -789,7 +797,7 @@ void npcedit::on_En_Score_clicked()
         ui->Score->setEnabled(false);
         NpcData.en_score=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_NoEat_clicked()
@@ -804,7 +812,7 @@ void npcedit::on_En_NoEat_clicked()
         ui->NoEat->setEnabled(false);
         NpcData.en_noyoshi=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_NoFireball_clicked()
@@ -819,7 +827,7 @@ void npcedit::on_En_NoFireball_clicked()
         ui->NoFireball->setEnabled(false);
         NpcData.en_nofireball=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_NoIceball_clicked()
@@ -834,7 +842,7 @@ void npcedit::on_En_NoIceball_clicked()
         ui->NoIceball->setEnabled(false);
         NpcData.en_noiceball=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_Width_clicked()
@@ -849,7 +857,7 @@ void npcedit::on_En_Width_clicked()
         ui->Width->setEnabled(false);
         NpcData.en_width=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_Height_clicked()
@@ -864,7 +872,7 @@ void npcedit::on_En_Height_clicked()
         ui->Height->setEnabled(false);
         NpcData.en_height=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_Speed_clicked()
@@ -879,7 +887,7 @@ void npcedit::on_En_Speed_clicked()
         ui->Speed->setEnabled(false);
         NpcData.en_speed=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_PlayerBlock_clicked()
@@ -894,7 +902,7 @@ void npcedit::on_En_PlayerBlock_clicked()
         ui->PlayerBlock->setEnabled(false);
         NpcData.en_playerblock=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_PlayerBlockTop_clicked()
@@ -909,7 +917,7 @@ void npcedit::on_En_PlayerBlockTop_clicked()
         ui->PlayerBlockTop->setEnabled(false);
         NpcData.en_playerblocktop=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_NPCBlock_clicked()
@@ -924,7 +932,7 @@ void npcedit::on_En_NPCBlock_clicked()
         ui->NPCBlock->setEnabled(false);
         NpcData.en_npcblock=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_NPCBlockTop_clicked()
@@ -939,7 +947,7 @@ void npcedit::on_En_NPCBlockTop_clicked()
         ui->NPCBlockTop->setEnabled(false);
         NpcData.en_npcblocktop=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_NoBlockCollision_clicked()
@@ -954,7 +962,7 @@ void npcedit::on_En_NoBlockCollision_clicked()
         ui->NoBlockCollision->setEnabled(false);
         NpcData.en_noblockcollision=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_NoGravity_clicked()
@@ -969,7 +977,7 @@ void npcedit::on_En_NoGravity_clicked()
         ui->NoGravity->setEnabled(false);
         NpcData.en_nogravity=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 void npcedit::on_En_TurnCliff_clicked()
@@ -984,7 +992,7 @@ void npcedit::on_En_TurnCliff_clicked()
         ui->TurnCliff->setEnabled(false);
         NpcData.en_cliffturn=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 
@@ -1000,7 +1008,7 @@ void npcedit::on_En_NoHammer_clicked()
         ui->NoHammer->setEnabled(false);
         NpcData.en_nohammer=false;
     }
-    isModyfied = true;
+    documentWasModified();
 }
 
 
@@ -1013,162 +1021,162 @@ void npcedit::on_En_NoHammer_clicked()
 //Changed boxes
 void npcedit::on_GFXOffSetX_valueChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.gfxoffsetx = arg1;
 }
 
 void npcedit::on_GFXOffSetY_valueChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.gfxoffsety = arg1;
 }
 
 void npcedit::on_GFXw_valueChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.gfxwidth = arg1;
 }
 
 void npcedit::on_GFXh_valueChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.gfxheight = arg1;
 }
 
 void npcedit::on_Frames_valueChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.frames = arg1;
 }
 
 void npcedit::on_Framespeed_valueChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.framespeed=arg1;
 }
 
 void npcedit::on_FrameStyle_currentIndexChanged(int index)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.framestyle=index;
 }
 
 void npcedit::on_IsForeground_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.foreground=arg1;
 }
 
 void npcedit::on_GrabSide_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.grabside=arg1;
 }
 
 void npcedit::on_GrabTop_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.grabtop=arg1;
 }
 
 void npcedit::on_JumpHurt_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.jumphurt=arg1;
 }
 
 void npcedit::on_DontHurt_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.nohurt=arg1;
 }
 
 void npcedit::on_Score_currentIndexChanged(int index)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.score=index;
 }
 
 void npcedit::on_NoEat_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.noyoshi=arg1;
 }
 
 void npcedit::on_NoFireball_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.nofireball=arg1;
 }
 
 void npcedit::on_NoIceball_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.noiceball=arg1;
 }
 
 void npcedit::on_Width_valueChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.width=arg1;
 }
 
 void npcedit::on_Height_valueChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.height=arg1;
 }
 
 void npcedit::on_Speed_valueChanged(double arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.speed = arg1;
 }
 
 void npcedit::on_PlayerBlock_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.playerblock=arg1;
 }
 
 void npcedit::on_PlayerBlockTop_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.playerblocktop=arg1;
 }
 
 void npcedit::on_NPCBlock_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.npcblock=arg1;
 }
 
 void npcedit::on_NPCBlockTop_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.npcblocktop=arg1;
 }
 
 void npcedit::on_NoBlockCollision_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.noblockcollision=arg1;
 }
 
 void npcedit::on_NoGravity_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.nogravity=arg1;
 }
 
 void npcedit::on_TurnCliff_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.cliffturn=arg1;
 }
 
 void npcedit::on_NoHammer_stateChanged(int arg1)
 {
-    isModyfied = true;
+    documentWasModified();
     NpcData.nohammer=arg1;
 }

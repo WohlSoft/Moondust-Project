@@ -76,9 +76,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
     //if(settings.value("maximased", "false")=="true") showMaximized();
     //"lvl-section-view", dockWidgetArea(ui->LevelSectionSettings)
     //dockWidgetArea();
-
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
+
+    settings.endGroup();
 
     ui->centralWidget->cascadeSubWindows();
     ui->WorldToolBox->hide();
@@ -117,16 +118,22 @@ void MainWindow::updateMenus()
     ui->actionSelect->setEnabled( (WinType==1) || (WinType==3));
     ui->actionEriser->setEnabled( (WinType==1) || (WinType==3));
 
-    ui->WorldToolBox->setVisible( (WinType==3) );
+    if(!(WinType==3)) WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
+
+    ui->WorldToolBox->setVisible( (WinType==3) && (WorldToolBoxVis)); //Restore saved visible status
     ui->menuWorld->setEnabled(( WinType==3) );
-    ui->actionWLDToolBox->setVisible( (WinType==3) );
+    ui->actionWLDToolBox->setVisible( (WinType==3));
 
 
-    ui->LevelToolBox->setVisible( (WinType==1) );
+    if(!(WinType==1)) LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
+    if(!(WinType==1)) SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
+
+    ui->LevelToolBox->setVisible( (WinType==1) && (LevelToolBoxVis)); //Restore saved visible status
+    ui->LevelSectionSettings->setVisible( (WinType==1) && (SectionToolBoxVis));
+
     ui->actionLVLToolBox->setVisible( (WinType==1) );
     ui->menuLevel->setEnabled( (WinType==1) );
     ui->actionSection_Settings->setVisible( (WinType==1) );
-    ui->LevelSectionSettings->setVisible( (WinType==1) );
     ui->actionLevelProp->setEnabled( (WinType==1) );
     ui->actionLevNoBack->setEnabled( (WinType==1) );
     ui->actionLevOffScr->setEnabled( (WinType==1) );
@@ -662,8 +669,12 @@ void MainWindow::on_actionSection_Settings_activated()
 //Open Level Properties
 void MainWindow::on_actionLevelProp_activated()
 {
-    LevelProps LevProps;
-    LevProps.exec();
+    if(activeChildWindow()==1)
+    {
+        LevelProps LevProps(activeLvlEditWin()->LvlData);
+        LevProps.exec();
+    }
+
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -822,6 +833,10 @@ void MainWindow::on_actionSection_21_activated()
 void MainWindow::on_actionLoad_configs_activated()
 {
     configs.loadconfigs();
+
+    QMessageBox::information(this, tr("Reload configuration"),
+     tr("Configuration succesfully reloaded!"),
+     QMessageBox::Ok);
 }
 
 
@@ -830,6 +845,6 @@ void MainWindow::on_actionExport_to_image_activated()
 {
     if(activeChildWindow()==1)
     {
-        activeLvlEditWin()->ExportToImage();
+        activeLvlEditWin()->ExportToImage_fn();
     }
 }

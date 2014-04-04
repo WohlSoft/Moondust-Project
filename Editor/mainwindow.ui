@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Editor - PlatGEnWohl (Under Construction)</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="editor.qrc">
+    <normaloff>:/images/mushroom16.png</normaloff>:/images/mushroom16.png</iconset>
+  </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>
@@ -263,8 +267,8 @@
     <enum>Qt::NoFocus</enum>
    </property>
    <property name="windowIcon">
-    <iconset>
-     <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/level16.png</normaloff>:/images/level16.png</iconset>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
@@ -1071,8 +1075,8 @@ p, li { white-space: pre-wrap; }
     </sizepolicy>
    </property>
    <property name="windowIcon">
-    <iconset>
-     <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
@@ -1324,8 +1328,8 @@ p, li { white-space: pre-wrap; }
     </size>
    </property>
    <property name="windowIcon">
-    <iconset>
-     <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/section16.png</normaloff>:/images/section16.png</iconset>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
@@ -1631,7 +1635,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/open.png</normaloff>:/images/open.png</iconset>
    </property>
    <property name="text">
@@ -1639,6 +1643,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="Exit">
@@ -1669,7 +1676,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
    </property>
    <property name="text">
@@ -1678,13 +1685,16 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSave_as">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/saveas.png</normaloff>:/images/saveas.png</iconset>
    </property>
    <property name="text">
@@ -1692,6 +1702,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionClose">
@@ -1743,7 +1756,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/01.png</normaloff>:/images/01.png</iconset>
    </property>
    <property name="text">
@@ -1751,6 +1764,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+1</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_2">
@@ -1761,7 +1777,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/02.png</normaloff>:/images/02.png</iconset>
    </property>
    <property name="text">
@@ -1769,6 +1785,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+2</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_3">
@@ -1779,7 +1798,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/03.png</normaloff>:/images/03.png</iconset>
    </property>
    <property name="text">
@@ -1787,6 +1806,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+3</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_4">
@@ -1797,7 +1819,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/04.png</normaloff>:/images/04.png</iconset>
    </property>
    <property name="text">
@@ -1805,6 +1827,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+4</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_5">
@@ -1815,7 +1840,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/05.png</normaloff>:/images/05.png</iconset>
    </property>
    <property name="text">
@@ -1823,6 +1848,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+5</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_6">
@@ -1833,7 +1861,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/06.png</normaloff>:/images/06.png</iconset>
    </property>
    <property name="text">
@@ -1841,6 +1869,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+6</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_7">
@@ -1851,7 +1882,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/07.png</normaloff>:/images/07.png</iconset>
    </property>
    <property name="text">
@@ -1859,6 +1890,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+7</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_8">
@@ -1869,7 +1903,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/08.png</normaloff>:/images/08.png</iconset>
    </property>
    <property name="text">
@@ -1877,6 +1911,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+8</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_9">
@@ -1887,7 +1924,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/09.png</normaloff>:/images/09.png</iconset>
    </property>
    <property name="text">
@@ -1895,6 +1932,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+9</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_10">
@@ -1905,7 +1945,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/10.png</normaloff>:/images/10.png</iconset>
    </property>
    <property name="text">
@@ -1913,6 +1953,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+0</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_11">
@@ -1923,7 +1966,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/11.png</normaloff>:/images/11.png</iconset>
    </property>
    <property name="text">
@@ -1931,6 +1974,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+1</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_12">
@@ -1941,7 +1987,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/12.png</normaloff>:/images/12.png</iconset>
    </property>
    <property name="text">
@@ -1949,6 +1995,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+2</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_13">
@@ -1959,7 +2008,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/13.png</normaloff>:/images/13.png</iconset>
    </property>
    <property name="text">
@@ -1967,6 +2016,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+3</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_14">
@@ -1977,7 +2029,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/14.png</normaloff>:/images/14.png</iconset>
    </property>
    <property name="text">
@@ -1985,6 +2037,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+4</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_15">
@@ -1995,7 +2050,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/15.png</normaloff>:/images/15.png</iconset>
    </property>
    <property name="text">
@@ -2003,6 +2058,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+5</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_16">
@@ -2013,7 +2071,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/16.png</normaloff>:/images/16.png</iconset>
    </property>
    <property name="text">
@@ -2021,6 +2079,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+6</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_17">
@@ -2031,7 +2092,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/17.png</normaloff>:/images/17.png</iconset>
    </property>
    <property name="text">
@@ -2039,6 +2100,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+7</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_18">
@@ -2049,7 +2113,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/18.png</normaloff>:/images/18.png</iconset>
    </property>
    <property name="text">
@@ -2057,6 +2121,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+8</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_19">
@@ -2067,7 +2134,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/19.png</normaloff>:/images/19.png</iconset>
    </property>
    <property name="text">
@@ -2075,6 +2142,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+9</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_20">
@@ -2085,7 +2155,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/20.png</normaloff>:/images/20.png</iconset>
    </property>
    <property name="text">
@@ -2093,6 +2163,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+0</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_21">
@@ -2103,7 +2176,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/21.png</normaloff>:/images/21.png</iconset>
    </property>
    <property name="text">
@@ -2111,6 +2184,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Alt+1</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionLevWarp">
@@ -2122,6 +2198,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Warp section</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionLevOffScr">
@@ -2239,7 +2318,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
    </property>
    <property name="text">
@@ -2254,7 +2333,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
    </property>
    <property name="text">
@@ -2275,7 +2354,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/arrow.png</normaloff>:/images/arrow.png</iconset>
    </property>
    <property name="text">
@@ -2283,6 +2362,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>S</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionEriser">
@@ -2293,7 +2375,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/rubber.png</normaloff>:/images/rubber.png</iconset>
    </property>
    <property name="text">
@@ -2308,7 +2390,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="editor.qrc">
      <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
    </property>
    <property name="text">
@@ -2325,6 +2407,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Reload configurations</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -2333,6 +2418,8 @@ p, li { white-space: pre-wrap; }
   <tabstop>BTNWaterRanges</tabstop>
   <tabstop>BTNStartPoints</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="editor.qrc"/>
+ </resources>
  <connections/>
 </ui>

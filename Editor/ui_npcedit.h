@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'npcedit.ui'
 **
-** Created: Sun 30. Mar 19:14:54 2014
+** Created: Fri 4. Apr 20:35:33 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -123,7 +123,7 @@ public:
         npcedit->setFont(font);
         npcedit->setContextMenuPolicy(Qt::NoContextMenu);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/mushroom.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/images/mushroom16.png"), QSize(), QIcon::Normal, QIcon::Off);
         npcedit->setWindowIcon(icon);
         npcedit->setWindowOpacity(0);
         npcedit->setLayoutDirection(Qt::LeftToRight);
