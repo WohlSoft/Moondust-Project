@@ -20,6 +20,7 @@
 #define LEVELPROPS_H
 
 #include <QDialog>
+#include "lvl_filedata.h"
 
 namespace Ui {
 class LevelProps;
@@ -30,11 +31,12 @@ class LevelProps : public QDialog
     Q_OBJECT
     
 public:
-    explicit LevelProps(QWidget *parent = 0);
+    explicit LevelProps(LevelData &FileData,QWidget *parent = 0);
     ~LevelProps();
     
 private:
     Ui::LevelProps *ui;
+    LevelData currentData;
 };
 
 #endif // LEVELPROPS_H

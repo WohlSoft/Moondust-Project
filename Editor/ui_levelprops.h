@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'levelprops.ui'
 **
-** Created: Fri 28. Mar 13:52:06 2014
+** Created: Fri 4. Apr 20:35:33 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -36,8 +36,8 @@ public:
     QLabel *label;
     QLineEdit *LVLPropLevelTitle;
     QDialogButtonBox *LVLPropButtonBox;
-    QGroupBox *groupBox;
-    QCheckBox *checkBox;
+    QGroupBox *EditingProps;
+    QCheckBox *setAutoplayMusic;
 
     void setupUi(QDialog *LevelProps)
     {
@@ -46,6 +46,9 @@ public:
         LevelProps->setWindowModality(Qt::WindowModal);
         LevelProps->resize(318, 168);
         LevelProps->setContextMenuPolicy(Qt::NoContextMenu);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelProps->setWindowIcon(icon);
         LevelProps->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         LevelProps->setModal(false);
         gridLayout = new QGridLayout(LevelProps);
@@ -75,13 +78,13 @@ public:
 
         gridLayout_2->addWidget(LVLPropButtonBox, 2, 2, 1, 1);
 
-        groupBox = new QGroupBox(frame);
-        groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        checkBox = new QCheckBox(groupBox);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
-        checkBox->setGeometry(QRect(10, 20, 147, 17));
+        EditingProps = new QGroupBox(frame);
+        EditingProps->setObjectName(QString::fromUtf8("EditingProps"));
+        setAutoplayMusic = new QCheckBox(EditingProps);
+        setAutoplayMusic->setObjectName(QString::fromUtf8("setAutoplayMusic"));
+        setAutoplayMusic->setGeometry(QRect(10, 20, 147, 17));
 
-        gridLayout_2->addWidget(groupBox, 1, 1, 1, 2);
+        gridLayout_2->addWidget(EditingProps, 1, 1, 1, 2);
 
 
         gridLayout->addWidget(frame, 0, 0, 1, 1);
@@ -100,8 +103,8 @@ public:
     {
         LevelProps->setWindowTitle(QApplication::translate("LevelProps", "Level Properties", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("LevelProps", "Level name", 0, QApplication::UnicodeUTF8));
-        groupBox->setTitle(QApplication::translate("LevelProps", "Editing", 0, QApplication::UnicodeUTF8));
-        checkBox->setText(QApplication::translate("LevelProps", "Autoplay music", 0, QApplication::UnicodeUTF8));
+        EditingProps->setTitle(QApplication::translate("LevelProps", "Editing", 0, QApplication::UnicodeUTF8));
+        setAutoplayMusic->setText(QApplication::translate("LevelProps", "Autoplay music", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

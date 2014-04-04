@@ -18,12 +18,16 @@
 
 #include "levelprops.h"
 #include "ui_levelprops.h"
+#include "lvl_filedata.h"
 
-LevelProps::LevelProps(QWidget *parent) :
+LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LevelProps)
 {
+    currentData = FileData;
     ui->setupUi(this);
+    ui->LVLPropLevelTitle->setText(currentData.LevelName);
+    ui->setAutoplayMusic->setChecked(currentData.playmusic);
 }
 
 LevelProps::~LevelProps()
