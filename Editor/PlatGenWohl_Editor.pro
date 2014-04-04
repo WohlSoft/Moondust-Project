@@ -81,7 +81,11 @@ OTHER_FILES += \
     platgenw.rc \
     images/unknown_npc.gif \
     images/unknown_block.gif \
-    images/unknown_bgo.gif
+    images/unknown_bgo.gif \
+    images/world16.png \
+    images/section16.png \
+    images/mushroom16.png \
+    images/level16.png
 
 RESOURCES += \
     editor.qrc
