@@ -38,5 +38,9 @@
         <file alias="unknown_block">images/unknown_block.gif</file>
         <file alias="unknown_npc">images/unknown_npc.gif</file>
         <file>images/splash.png</file>
+        <file>images/level16.png</file>
+        <file>images/mushroom16.png</file>
+        <file>images/section16.png</file>
+        <file>images/world16.png</file>
     </qresource>
 </RCC>
