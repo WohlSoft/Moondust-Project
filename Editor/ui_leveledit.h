@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'leveledit.ui'
 **
-** Created: Fri 4. Apr 20:35:34 2014
+** Created: Fri 4. Apr 22:13:48 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -33,7 +33,7 @@ public:
         if (leveledit->objectName().isEmpty())
             leveledit->setObjectName(QString::fromUtf8("leveledit"));
         leveledit->resize(800, 602);
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(leveledit->sizePolicy().hasHeightForWidth());

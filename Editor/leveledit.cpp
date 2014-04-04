@@ -114,7 +114,8 @@ void leveledit::ExportToImage_fn()
         latest_export_path = exported.absoluteDir().path();
         proportion = imgSize[2];
 
-
+        th=imgSize[0];
+        tw=imgSize[1];
 
         QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
 
