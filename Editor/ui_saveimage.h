@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'saveimage.ui'
 **
-** Created: Fri 4. Apr 00:05:11 2014
+** Created: Fri 4. Apr 20:35:34 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -33,7 +33,7 @@ public:
     QSpinBox *imgHeight;
     QLabel *label_3;
     QSpinBox *imgWidth;
-    QCheckBox *checkBox;
+    QCheckBox *SaveProportion;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *ExportToImage)
@@ -45,7 +45,7 @@ public:
         font.setFamily(QString::fromUtf8("Liberation Sans"));
         ExportToImage->setFont(font);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/mushroom.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/images/mushroom16.png"), QSize(), QIcon::Normal, QIcon::Off);
         ExportToImage->setWindowIcon(icon);
         gridLayout = new QGridLayout(ExportToImage);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
@@ -67,6 +67,7 @@ public:
 
         imgHeight = new QSpinBox(ExportToImage);
         imgHeight->setObjectName(QString::fromUtf8("imgHeight"));
+        imgHeight->setMaximum(999999999);
 
         gridLayout->addWidget(imgHeight, 1, 1, 1, 1);
 
@@ -77,13 +78,14 @@ public:
 
         imgWidth = new QSpinBox(ExportToImage);
         imgWidth->setObjectName(QString::fromUtf8("imgWidth"));
+        imgWidth->setMaximum(999999999);
 
         gridLayout->addWidget(imgWidth, 2, 1, 1, 1);
 
-        checkBox = new QCheckBox(ExportToImage);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+        SaveProportion = new QCheckBox(ExportToImage);
+        SaveProportion->setObjectName(QString::fromUtf8("SaveProportion"));
 
-        gridLayout->addWidget(checkBox, 3, 0, 1, 2);
+        gridLayout->addWidget(SaveProportion, 3, 0, 1, 2);
 
         buttonBox = new QDialogButtonBox(ExportToImage);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
@@ -110,7 +112,7 @@ public:
         imgHeight->setSuffix(QApplication::translate("ExportToImage", " px", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("ExportToImage", "Width", 0, QApplication::UnicodeUTF8));
         imgWidth->setSuffix(QApplication::translate("ExportToImage", " px", 0, QApplication::UnicodeUTF8));
-        checkBox->setText(QApplication::translate("ExportToImage", "Save proportion", 0, QApplication::UnicodeUTF8));
+        SaveProportion->setText(QApplication::translate("ExportToImage", "Save proportion", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -50,7 +50,7 @@ public:
 
     void setCurrentSection(int scId);
 
-    void ExportToImage();
+    void ExportToImage_fn();
 
     LvlScene * scene;
     
@@ -72,6 +72,7 @@ private:
     QString strippedName(const QString &fullFileName);
     QString curFile;
     QString latest_export;
+    QString latest_export_path;
     bool isUntitled;
     unsigned int FileType;
 

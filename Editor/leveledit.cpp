@@ -27,6 +27,7 @@
 #include "lvl_filedata.h"
 #include "lvlscene.h"
 #include "dataconfigs.h"
+#include "saveimage.h"
 
 
 #include <QDebug>
@@ -40,7 +41,8 @@ leveledit::leveledit(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
     isModyfied = false;
-    latest_export = "";
+    latest_export = "*.png";
+    latest_export_path = QApplication::applicationDirPath();
     ui->setupUi(this);
 }
 
@@ -62,16 +64,19 @@ void leveledit::newFile()
             this, SLOT(documentWasModified()));*/
 }
 
-void leveledit::ExportToImage()
+void leveledit::ExportToImage_fn()
 {
-    long x, y, h, w, th, tw;
+        long x, y, h, w, th, tw;
 
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
-            latest_export, tr("PNG Image (*.png)"));
-        if (fileName.isEmpty())
-            return;
+        bool proportion;
+        QString inifile = QApplication::applicationDirPath() + "/" + "plweditor.ini";
+        QSettings settings(inifile, QSettings::IniFormat);
+        settings.beginGroup("Main");
+        latest_export = settings.value("export-file", "*.png").toString();
+        latest_export_path = settings.value("export-path", QApplication::applicationDirPath()).toString();
+        proportion = settings.value("export-proportions", false).toBool();
+        settings.endGroup();
 
-        latest_export=fileName;
 
         x=LvlData.sections[LvlData.CurSection].size_left;
         y=LvlData.sections[LvlData.CurSection].size_top;
@@ -80,8 +85,37 @@ void leveledit::ExportToImage()
         w=(long)fabs(x-w);
         h=(long)fabs(y-h);
 
-        tw=(long)round(w/2);
-        th=(long)round(h/2);
+        tw=w;
+        th=h;
+        QVector<long> imgSize;
+
+        imgSize.push_back(th);
+        imgSize.push_back(tw);
+        imgSize.push_back((int)proportion);
+
+        ExportToImage ExportImage(imgSize);
+        ExportImage.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
+        if(ExportImage.exec()!=QDialog::Rejected)
+            imgSize = ExportImage.imageSize;
+        else return;
+
+        if(imgSize.size()>=3)
+            if((imgSize[0]<0)||(imgSize[1]<0))
+                return;
+
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
+            latest_export_path + "/" + latest_export, tr("PNG Image (*.png)"));
+        if (fileName.isEmpty())
+            return;
+
+        QFileInfo exported(fileName);
+        latest_export = exported.fileName();
+        latest_export_path = exported.absoluteDir().path();
+        proportion = imgSize[2];
+
+
+
         QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
 
         QPainter p(&img);
@@ -91,6 +125,12 @@ void leveledit::ExportToImage()
         QApplication::setOverrideCursor(Qt::WaitCursor);
         img.save(fileName);
         QApplication::restoreOverrideCursor();
+
+        settings.beginGroup("Main");
+        settings.setValue("export-file", latest_export);
+        settings.setValue("export-path", latest_export_path);
+        settings.setValue("export-proportions", proportion);
+        settings.endGroup();
 }
 
 void leveledit::setCurrentSection(int scId)

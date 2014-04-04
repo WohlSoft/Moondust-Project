@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'leveledit.ui'
 **
-** Created: Fri 28. Mar 13:52:07 2014
+** Created: Fri 4. Apr 20:35:34 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -41,7 +41,7 @@ public:
         leveledit->setBaseSize(QSize(800, 602));
         leveledit->setContextMenuPolicy(Qt::NoContextMenu);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/level.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
         leveledit->setWindowIcon(icon);
         leveledit->setStyleSheet(QString::fromUtf8(""));
         leveledit->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));

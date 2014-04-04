@@ -30,9 +30,22 @@ class ExportToImage : public QDialog
     Q_OBJECT
     
 public:
-    explicit ExportToImage(QWidget *parent = 0);
+    explicit ExportToImage(QVector<long > &imgSize, QWidget *parent = 0);
+    QVector<long > imageSize;
+
     ~ExportToImage();
     
+private slots:
+    void on_imgHeight_valueChanged(int arg1);
+
+    void on_imgWidth_valueChanged(int arg1);
+
+    void on_buttonBox_accepted();
+
+    void on_SaveProportion_toggled(bool checked);
+
+    void on_buttonBox_rejected();
+
 private:
     Ui::ExportToImage *ui;
 };

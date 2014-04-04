@@ -16,17 +16,62 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
+#include <QtGui>
 #include "saveimage.h"
 #include "ui_saveimage.h"
 
-ExportToImage::ExportToImage(QWidget *parent) :
+ExportToImage::ExportToImage(QVector<long> &imgSize, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ExportToImage)
 {
+    imageSize = imgSize;
     ui->setupUi(this);
+    if(imageSize.size()>=3)
+    {
+        ui->imgHeight->setValue(imageSize[0]);
+        ui->imgWidth->setValue(imageSize[1]);
+        ui->SaveProportion->setChecked((bool)imageSize[2]);
+    }
+
 }
 
 ExportToImage::~ExportToImage()
 {
     delete ui;
+}
+
+void ExportToImage::on_imgHeight_valueChanged(int arg1)
+{
+    if( (ui->SaveProportion->isChecked()) && (ui->imgHeight->hasFocus()) )
+        ui->imgWidth->setValue( (int)round((float)arg1 / ((float)imageSize[0]/(float)imageSize[1])) );
+
+}
+
+void ExportToImage::on_imgWidth_valueChanged(int arg1)
+{
+    if( (ui->SaveProportion->isChecked()) && (ui->imgWidth->hasFocus()) )
+        ui->imgHeight->setValue( (int)round((float)arg1 / ((float)imageSize[1]/(float)imageSize[0])) );
+}
+
+void ExportToImage::on_buttonBox_accepted()
+{
+    imageSize[0]=ui->imgHeight->value();
+    imageSize[1]=ui->imgWidth->value();
+    imageSize[2]= (int)ui->SaveProportion->isChecked();
+    accept();
+}
+
+void ExportToImage::on_SaveProportion_toggled(bool checked)
+{
+    if(checked)
+    {
+        ui->imgWidth->setValue( imageSize[1]);
+        ui->imgHeight->setValue( imageSize[0]);
+    }
+}
+
+
+void ExportToImage::on_buttonBox_rejected()
+{
+    reject();
 }
