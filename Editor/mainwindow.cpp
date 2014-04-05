@@ -37,20 +37,24 @@ bool LevelToolBoxVis = false;
 bool WorldToolBoxVis = false;
 bool SectionToolBoxVis = false;
 
+
 dataconfigs configs;
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    QMenuBar * menuBar = new QMenuBar(0); // test for MacOS X
 
     QPixmap splashimg(":/images/splash.png");
     QSplashScreen splash(splashimg);
     splash.show();
 
     configs.loadconfigs();
-
     ui->setupUi(this);
+
+    menuBar = ui->menuBar; // test for MacOS X
+    setMenuBar(menuBar); // test for MacOS X
 
     splash.finish(this);
 
