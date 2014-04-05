@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri 4. Apr 21:42:02 2014
+** Created: Sat 5. Apr 12:56:39 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -1199,6 +1199,7 @@ public:
         actionLevNoBack->setText(QApplication::translate("MainWindow", "No turn back", 0, QApplication::UnicodeUTF8));
         actionLevUnderW->setText(QApplication::translate("MainWindow", "Underwater", 0, QApplication::UnicodeUTF8));
         actionExport_to_image->setText(QApplication::translate("MainWindow", "Export to image...", 0, QApplication::UnicodeUTF8));
+        actionExport_to_image->setShortcut(QApplication::translate("MainWindow", "F12", 0, QApplication::UnicodeUTF8));
         actionLevelProp->setText(QApplication::translate("MainWindow", "Properties...", 0, QApplication::UnicodeUTF8));
         actionWLDDisableMap->setText(QApplication::translate("MainWindow", "Disable world map", 0, QApplication::UnicodeUTF8));
         actionWLDFailRestart->setText(QApplication::translate("MainWindow", "Restart level after player's fail", 0, QApplication::UnicodeUTF8));
