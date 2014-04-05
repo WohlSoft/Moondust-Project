@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'npcedit.ui'
 **
-** Created: Fri 4. Apr 20:35:33 2014
+** Created: Sat 5. Apr 15:33:00 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -104,6 +104,8 @@ public:
     QPushButton *ResetNPCData;
     QGroupBox *NPC_ID;
     QLabel *label_12;
+    QGroupBox *isModBox;
+    QLabel *isModyfiedL;
 
     void setupUi(QWidget *npcedit)
     {
@@ -372,12 +374,20 @@ public:
         ResetNPCData->setGeometry(QRect(20, 10, 81, 23));
         NPC_ID = new QGroupBox(npcedit);
         NPC_ID->setObjectName(QString::fromUtf8("NPC_ID"));
-        NPC_ID->setGeometry(QRect(120, 0, 101, 41));
+        NPC_ID->setGeometry(QRect(120, 0, 61, 41));
         NPC_ID->setAlignment(Qt::AlignCenter);
         label_12 = new QLabel(NPC_ID);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setGeometry(QRect(10, 15, 81, 21));
+        label_12->setGeometry(QRect(10, 15, 41, 21));
         label_12->setAlignment(Qt::AlignCenter);
+        isModBox = new QGroupBox(npcedit);
+        isModBox->setObjectName(QString::fromUtf8("isModBox"));
+        isModBox->setGeometry(QRect(180, 0, 71, 41));
+        isModBox->setAlignment(Qt::AlignCenter);
+        isModyfiedL = new QLabel(isModBox);
+        isModyfiedL->setObjectName(QString::fromUtf8("isModyfiedL"));
+        isModyfiedL->setGeometry(QRect(5, 9, 61, 31));
+        isModyfiedL->setAlignment(Qt::AlignCenter);
 
         retranslateUi(npcedit);
 
@@ -485,6 +495,8 @@ public:
         ResetNPCData->setText(QApplication::translate("npcedit", "Reset", 0, QApplication::UnicodeUTF8));
         NPC_ID->setTitle(QApplication::translate("npcedit", "NPC ID", 0, QApplication::UnicodeUTF8));
         label_12->setText(QApplication::translate("npcedit", "0", 0, QApplication::UnicodeUTF8));
+        isModBox->setTitle(QApplication::translate("npcedit", "Modyfied", 0, QApplication::UnicodeUTF8));
+        isModyfiedL->setText(QApplication::translate("npcedit", "No", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

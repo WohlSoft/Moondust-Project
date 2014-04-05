@@ -43,6 +43,7 @@ void npcedit::newFile()
     isUntitled = true;
     curFile = tr("npc-%1.txt").arg(sequenceNumber++);
     setWindowTitle(curFile + "[*]");
+    documentWasModified();
 
     /*connect(document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));*/
@@ -478,12 +479,12 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
 
     StartNPCData = NpcData; //Save current history for made reset
     setDataBoxes();
-    documentNotModified();
     QApplication::setOverrideCursor(Qt::WaitCursor);
     //setPlainText(in.readAll());
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
+    documentNotModified();
 
     return true;
 }
@@ -546,14 +547,23 @@ void npcedit::closeEvent(QCloseEvent *event)
 
 void npcedit::documentWasModified()
 {
+    QFont font;
+    font.setWeight( QFont::Bold );
     isModyfied = true;
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
+    ui->isModyfiedL->setText("Yes");
+    ui->isModyfiedL->setFont( font );
 }
 
 void npcedit::documentNotModified()
 {
+    QFont font;
+    font.setWeight( QFont::Normal );
+
     isModyfied = false;
     setWindowTitle(userFriendlyCurrentFile());
+    ui->isModyfiedL->setText("No");
+    ui->isModyfiedL->setFont( font );
 }
 
 
@@ -582,6 +592,7 @@ void npcedit::setCurrentFile(const QString &fileName)
     isUntitled = false;
     //document()->setModified(false);
     setWindowModified(false);
+    documentWasModified();
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
 }
 
