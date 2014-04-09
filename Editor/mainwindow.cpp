@@ -290,7 +290,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 //////////////////////////////////////////////////////
 
-void MainWindow::on_OpenFile_activated()
+void MainWindow::on_OpenFile_triggered()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
         trUtf8("Open file"),LastOpenDir,
@@ -420,7 +420,9 @@ npcedit *MainWindow::createNPCChild()
 leveledit *MainWindow::createChild()
 {
     leveledit *child = new leveledit;
+    //child->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->centralWidget->addSubWindow(child)->resize(QSize(800, 602));
+
         return child;
 }
 
@@ -587,14 +589,14 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
 //////////////////SLOTS///////////////////////////
 
 //Exit from application
-void MainWindow::on_Exit_activated()
+void MainWindow::on_Exit_triggered()
 {
     MainWindow::close();
     exit(0);
 }
 
 //Open About box
-void MainWindow::on_actionAbout_activated()
+void MainWindow::on_actionAbout_triggered()
 {
     aboutDialog about;
     about.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
@@ -617,7 +619,7 @@ void MainWindow::on_LevelToolBox_visibilityChanged(bool visible)
     }
 }
 
-void MainWindow::on_actionLVLToolBox_activated()
+void MainWindow::on_actionLVLToolBox_triggered()
 {
         if(ui->actionLVLToolBox->isChecked())
             ui->LevelToolBox->setVisible(true);
@@ -639,7 +641,7 @@ void MainWindow::on_WorldToolBox_visibilityChanged(bool visible)
     }
 }
 
-void MainWindow::on_actionWLDToolBox_activated()
+void MainWindow::on_actionWLDToolBox_triggered()
 {
     if(ui->actionWLDToolBox->isChecked())
         ui->WorldToolBox->setVisible(true);
@@ -661,7 +663,7 @@ void MainWindow::on_LevelSectionSettings_visibilityChanged(bool visible)
     }
 }
 
-void MainWindow::on_actionSection_Settings_activated()
+void MainWindow::on_actionSection_Settings_triggered()
 {
     if(ui->actionSection_Settings->isChecked())
         ui->LevelSectionSettings->setVisible(true);
@@ -671,7 +673,7 @@ void MainWindow::on_actionSection_Settings_activated()
 
 
 //Open Level Properties
-void MainWindow::on_actionLevelProp_activated()
+void MainWindow::on_actionLevelProp_triggered()
 {
     if(activeChildWindow()==1)
     {
@@ -705,136 +707,136 @@ void MainWindow::on_pushButton_4_clicked()
 }
 
 
-void MainWindow::on_actionSave_activated()
+void MainWindow::on_actionSave_triggered()
 {
     save();
 }
 
-void MainWindow::on_actionSave_as_activated()
+void MainWindow::on_actionSave_as_triggered()
 {
     save_as();
 }
 
-void MainWindow::on_actionClose_activated()
+void MainWindow::on_actionClose_triggered()
 {
     close_sw();
 }
 
-void MainWindow::on_actionSave_all_activated()
+void MainWindow::on_actionSave_all_triggered()
 {
     save_all();
 }
 
 //////////////////////////////////// GoTo Section  ///////////////////////////////////////////////
-void MainWindow::on_actionSection_1_activated()
+void MainWindow::on_actionSection_1_triggered()
 {
     SetCurrentLevelSection(0);
 }
 
-void MainWindow::on_actionSection_2_activated()
+void MainWindow::on_actionSection_2_triggered()
 {
     SetCurrentLevelSection(1);
 }
 
-void MainWindow::on_actionSection_3_activated()
+void MainWindow::on_actionSection_3_triggered()
 {
     SetCurrentLevelSection(2);
 }
 
-void MainWindow::on_actionSection_4_activated()
+void MainWindow::on_actionSection_4_triggered()
 {
     SetCurrentLevelSection(3);
 }
 
-void MainWindow::on_actionSection_5_activated()
+void MainWindow::on_actionSection_5_triggered()
 {
     SetCurrentLevelSection(4);
 }
 
-void MainWindow::on_actionSection_6_activated()
+void MainWindow::on_actionSection_6_triggered()
 {
     SetCurrentLevelSection(5);
 }
 
-void MainWindow::on_actionSection_7_activated()
+void MainWindow::on_actionSection_7_triggered()
 {
     SetCurrentLevelSection(6);
 }
 
-void MainWindow::on_actionSection_8_activated()
+void MainWindow::on_actionSection_8_triggered()
 {
     SetCurrentLevelSection(7);
 }
 
-void MainWindow::on_actionSection_9_activated()
+void MainWindow::on_actionSection_9_triggered()
 {
     SetCurrentLevelSection(8);
 }
 
-void MainWindow::on_actionSection_10_activated()
+void MainWindow::on_actionSection_10_triggered()
 {
     SetCurrentLevelSection(9);
 }
 
-void MainWindow::on_actionSection_11_activated()
+void MainWindow::on_actionSection_11_triggered()
 {
     SetCurrentLevelSection(10);
 }
 
-void MainWindow::on_actionSection_12_activated()
+void MainWindow::on_actionSection_12_triggered()
 {
     SetCurrentLevelSection(11);
 }
 
 
-void MainWindow::on_actionSection_13_activated()
+void MainWindow::on_actionSection_13_triggered()
 {
     SetCurrentLevelSection(12);
 }
 
-void MainWindow::on_actionSection_14_activated()
+void MainWindow::on_actionSection_14_triggered()
 {
     SetCurrentLevelSection(13);
 }
 
-void MainWindow::on_actionSection_15_activated()
+void MainWindow::on_actionSection_15_triggered()
 {
     SetCurrentLevelSection(14);
 }
 
-void MainWindow::on_actionSection_16_activated()
+void MainWindow::on_actionSection_16_triggered()
 {
     SetCurrentLevelSection(15);
 }
 
-void MainWindow::on_actionSection_17_activated()
+void MainWindow::on_actionSection_17_triggered()
 {
     SetCurrentLevelSection(16);
 }
 
-void MainWindow::on_actionSection_18_activated()
+void MainWindow::on_actionSection_18_triggered()
 {
     SetCurrentLevelSection(17);
 }
 
-void MainWindow::on_actionSection_19_activated()
+void MainWindow::on_actionSection_19_triggered()
 {
     SetCurrentLevelSection(18);
 }
 
-void MainWindow::on_actionSection_20_activated()
+void MainWindow::on_actionSection_20_triggered()
 {
     SetCurrentLevelSection(19);
 }
 
-void MainWindow::on_actionSection_21_activated()
+void MainWindow::on_actionSection_21_triggered()
 {
     SetCurrentLevelSection(20);
 }
 
 
 
-void MainWindow::on_actionLoad_configs_activated()
+void MainWindow::on_actionLoad_configs_triggered()
 {
     configs.loadconfigs();
 
@@ -845,7 +847,7 @@ void MainWindow::on_actionLoad_configs_activated()
 
 
 
-void MainWindow::on_actionExport_to_image_activated()
+void MainWindow::on_actionExport_to_image_triggered()
 {
     if(activeChildWindow()==1)
     {

@@ -62,7 +62,6 @@ private slots:
     void save_all();
 
     void SetCurrentLevelSection(int SctId, int open=0);
-
     LevelData ReadLevelFile(QFile &inf);
     NPCConfigFile ReadNpcTXTFile(QFile &inf);
     WorldData ReadWorldFile(QFile &inf);
@@ -77,46 +76,45 @@ private slots:
     void updateMenus();
 
 
-    void on_OpenFile_activated();
-    void on_Exit_activated();
-    void on_actionAbout_activated();
-    void on_LevelToolBox_visibilityChanged(bool visible);
-    void on_actionLVLToolBox_activated();
-    void on_actionWLDToolBox_activated();
-    void on_WorldToolBox_visibilityChanged(bool visible);
-    void on_actionLevelProp_activated();
-    void on_pushButton_4_clicked();
-    void on_actionSection_Settings_activated();
     void on_LevelSectionSettings_visibilityChanged(bool visible);
-    void on_actionSave_activated();
-    void on_actionSave_as_activated();
-    void on_actionClose_activated();
-    void on_actionSave_all_activated();
-    void on_actionSection_1_activated();
-    void on_actionSection_2_activated();
-    void on_actionSection_3_activated();
-    void on_actionSection_4_activated();
-    void on_actionSection_5_activated();
-    void on_actionSection_6_activated();
-    void on_actionSection_7_activated();
-    void on_actionSection_8_activated();
-    void on_actionSection_9_activated();
-    void on_actionSection_10_activated();
-    void on_actionSection_11_activated();
-    void on_actionSection_12_activated();
-    void on_actionSection_13_activated();
-    void on_actionSection_14_activated();
-    void on_actionSection_15_activated();
-    void on_actionSection_16_activated();
-    void on_actionSection_17_activated();
-    void on_actionSection_18_activated();
-    void on_actionSection_19_activated();
-    void on_actionSection_20_activated();
-    void on_actionSection_21_activated();
+    void on_LevelToolBox_visibilityChanged(bool visible);
+	void on_WorldToolBox_visibilityChanged(bool visible);
+	void on_pushButton_4_clicked();
 
-    void on_actionLoad_configs_activated();
-
-    void on_actionExport_to_image_activated();
+    void on_OpenFile_triggered();
+    void on_Exit_triggered();
+    void on_actionAbout_triggered();
+    void on_actionLVLToolBox_triggered();
+    void on_actionWLDToolBox_triggered();
+    void on_actionLevelProp_triggered();
+    void on_actionSection_Settings_triggered();
+    void on_actionSave_triggered();
+    void on_actionSave_as_triggered();
+    void on_actionClose_triggered();
+    void on_actionSave_all_triggered();
+    void on_actionSection_1_triggered();
+    void on_actionSection_2_triggered();
+    void on_actionSection_3_triggered();
+    void on_actionSection_4_triggered();
+    void on_actionSection_5_triggered();
+    void on_actionSection_6_triggered();
+    void on_actionSection_7_triggered();
+    void on_actionSection_8_triggered();
+    void on_actionSection_9_triggered();
+    void on_actionSection_10_triggered();
+    void on_actionSection_11_triggered();
+    void on_actionSection_12_triggered();
+    void on_actionSection_13_triggered();
+    void on_actionSection_14_triggered();
+    void on_actionSection_15_triggered();
+    void on_actionSection_16_triggered();
+    void on_actionSection_17_triggered();
+    void on_actionSection_18_triggered();
+    void on_actionSection_19_triggered();
+    void on_actionSection_20_triggered();
+    void on_actionSection_21_triggered();
+    void on_actionLoad_configs_triggered();
+    void on_actionExport_to_image_triggered();
 
 private:
     Ui::MainWindow *ui;
