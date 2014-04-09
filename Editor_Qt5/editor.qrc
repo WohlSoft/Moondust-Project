@@ -1,0 +1,46 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/new.png</file>
+        <file>images/open.png</file>
+        <file>images/save.png</file>
+        <file>images/saveas.png</file>
+        <file>images/mushroom.png</file>
+        <file>images/arrow.png</file>
+        <file>images/rubber.png</file>
+        <file>images/01.png</file>
+        <file>images/02.png</file>
+        <file>images/03.png</file>
+        <file>images/04.png</file>
+        <file>images/05.png</file>
+        <file>images/06.png</file>
+        <file>images/07.png</file>
+        <file>images/08.png</file>
+        <file>images/09.png</file>
+        <file>images/10.png</file>
+        <file>images/11.png</file>
+        <file>images/12.png</file>
+        <file>images/13.png</file>
+        <file>images/14.png</file>
+        <file>images/15.png</file>
+        <file>images/16.png</file>
+        <file>images/17.png</file>
+        <file>images/18.png</file>
+        <file>images/19.png</file>
+        <file>images/20.png</file>
+        <file>images/21.png</file>
+        <file>images/level.png</file>
+        <file>images/world.png</file>
+        <file>mushroom.ico</file>
+        <file>images/section.png</file>
+        <file>images/warp_exit.png</file>
+        <file>images/warp_entrance.png</file>
+        <file alias="unknown_bgo">images/unknown_bgo.gif</file>
+        <file alias="unknown_block">images/unknown_block.gif</file>
+        <file alias="unknown_npc">images/unknown_npc.gif</file>
+        <file>images/splash.png</file>
+        <file alias="lvl16.png">images/level16.png</file>
+        <file>images/mushroom16.png</file>
+        <file>images/section16.png</file>
+        <file>images/world16.png</file>
+    </qresource>
+</RCC>
