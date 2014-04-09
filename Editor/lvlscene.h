@@ -24,37 +24,10 @@
 #include "lvl_filedata.h"
 #include "dataconfigs.h"
 
-/*
-class Sprite
-{
-public:
-
-    Sprite(QPixmap *image, int frames);
-    void draw( QPainter* painter);
-    QPoint pos() const;
-    void nextFrame();
-    int frm;
-
-private:
-
-    QPixmap* mSpriteImage;
-    int mCurrentFrame;
-    QPoint mPos;
-    int mXDir;
-};
-*/
-
 struct UserBGOs
 {
     QPixmap image;
     QBitmap mask;
-    unsigned long id;
-};
-
-struct UserBGs
-{
-    QPixmap image;
-    QPixmap second_image;
     unsigned long id;
 };
 

@@ -28,7 +28,6 @@
 #include <QProgressDialog>
 #include <QtCore>
 #include "dataconfigs.h"
-#include <QDebug>
 
 /*
 Sprite::Sprite(QPixmap *image, int frames):mPos(0,0),mCurrentFrame(0)
@@ -83,51 +82,8 @@ void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress, data
     QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
 
     int i, j, total=0;
-    bool isUser=false, noimage=false, found=false;
+    bool isUser=false, noimage=false;
     long x,y,h,w;
-
-    QVector<UserBGs > uBGs;
-    UserBGs uBG;
-
-
-    QString uLVLDs = FileData.path + "/" + FileData.filename + "/";
-    QString uLVLD = FileData.path + "/" + FileData.filename;
-    QString uLVLs = FileData.path + "/";
-
-    //Load user images
-    for(i=0; i<FileData.sections.size(); i++) //Add user images
-    {
-        found=false;
-        for(j=0;j<configs.main_bg.size();j++)
-        {
-            if(configs.main_bg[j].id==FileData.sections[i].background)
-            {
-                found=true;
-                break;
-            }
-        }
-
-        if(found)
-        {
-            if((QFile::exists(uLVLD) ) &&
-                  (QFile::exists(uLVLDs + configs.main_bg[j].image_n)) )
-            {
-                uBG.image = QPixmap( uLVLDs + configs.main_bg[j].image_n );
-                uBG.id = configs.main_bg[j].id;
-                uBGs.push_back(uBG);
-            }
-            else
-            if(QFile::exists(uLVLs + configs.main_bg[j].image_n) )
-            {
-                uBG.image = QPixmap( uLVLs + configs.main_bg[j].image_n );
-                uBG.id = configs.main_bg[j].id;
-                uBGs.push_back(uBG);
-            }
-        }
-        total++;
-        progress.setValue(progress.value()+1);
-    }
-
     for(i=0; i<FileData.sections.size(); i++)
     {
         if(
@@ -144,29 +100,18 @@ void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress, data
 
             //float walls[11][4] = {{0, 0, 25, 245}, {25, 0, 425, 25}, {425, 0, 25, 245}, {25, 220, 400, 25}, {25, 60, 75, 25}, {100, 60, 25, 95}, {50, 120, 25, 25}, {175, 60, 25, 100}, {225, 90, 125, 25}, {275, 190, 25, 30}, {325, 115, 25, 30}};
 
-            isUser=false; noimage=true;
-            //Find user image
-            for(j=0;j<uBGs.size();j++)
-            {
-                if(uBGs[j].id==FileData.sections[i].background)
-                {
-                    isUser=true;
-                    noimage=false;
-                    img = uBGs[j].image;
-                    break;
-                }
-            } //If not exist, will be used default
+            isUser=false; noimage=false;
 
             for(j=0;j<configs.main_bg.size();j++)
             {
                 if(configs.main_bg[j].id==FileData.sections[i].background)
                 {
-                    noimage=false;
+                    noimage=true;
                     if(!isUser)
                     img = configs.main_bg[j].image; break;
                 }
             }
-            if((noimage)&&(!isUser))
+            if(!noimage)
             {
                 img=image;
             }
@@ -255,8 +200,7 @@ void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
 /////////////////////SET BackGround Objects/////////////////////////////////////////////
 void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs &configs)
 {
-    int i=0, j;
-    bool noimage=true, found=false;
+    int i=0, j, noimage=1;
     QPixmap img;
     QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
     //QBitmap mask;
@@ -272,66 +216,61 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
     //Load user images
     for(i=0; i<FileData.bgo.size(); i++) //Add user images
     {
-        found=false;
         for(j=0;j<configs.main_bgo.size();j++)
         {
             if(configs.main_bgo[j].id==FileData.bgo[i].id)
-            {found=true; break;}
+                break;
         }
 
-        if(found)
+        if((QFile::exists(uLVLD) ) &&
+              (QFile::exists(uLVLDs + configs.main_bgo[j].image_n)) )
         {
-            if((QFile::exists(uLVLD) ) &&
-                  (QFile::exists(uLVLDs + configs.main_bgo[j].image_n)) )
-            {
-                if(QFile::exists(uLVLDs + configs.main_bgo[j].mask_n))
-                    uBGO.mask = QBitmap(uLVLDs + configs.main_bgo[j].mask_n );
-                else
-                    uBGO.mask = configs.main_bgo[j].mask;
-
-                uBGO.image = QPixmap(uLVLDs + configs.main_bgo[j].image_n );
-
-                if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
-                    uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
-                uBGO.image.setMask(uBGO.mask);
-                uBGO.id = FileData.bgo[i].id;
-                uBGOs.push_back(uBGO);
-            }
+            if(QFile::exists(uLVLDs + configs.main_bgo[j].mask_n))
+                uBGO.mask = QBitmap(uLVLDs + configs.main_bgo[j].mask_n );
             else
-            if(QFile::exists(uLVLs + configs.main_bgo[j].image_n) )
-            {
-                if(QFile::exists(uLVLs + configs.main_bgo[j].mask_n))
-                    uBGO.mask = QBitmap(uLVLs + configs.main_bgo[j].mask_n );
-                else
-                    uBGO.mask = configs.main_bgo[j].mask;
+                uBGO.mask = configs.main_bgo[j].mask;
 
-                uBGO.image = QPixmap(uLVLs + configs.main_bgo[j].image_n );
+            uBGO.image = QPixmap(uLVLDs + configs.main_bgo[j].image_n );
 
-                if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
-                    uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
+            if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
+                uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
+            uBGO.image.setMask(uBGO.mask);
+            uBGO.id = FileData.bgo[i].id;
+            uBGOs.push_back(uBGO);
+        }
+        else
+        if(QFile::exists(uLVLs + configs.main_bgo[j].image_n) )
+        {
+            if(QFile::exists(uLVLs + configs.main_bgo[j].mask_n))
+                uBGO.mask = QBitmap(uLVLs + configs.main_bgo[j].mask_n );
+            else
+                uBGO.mask = configs.main_bgo[j].mask;
 
-                uBGO.image.setMask(uBGO.mask);
-                uBGO.id = FileData.bgo[i].id;
-                uBGOs.push_back(uBGO);
-            }
+            uBGO.image = QPixmap(uLVLs + configs.main_bgo[j].image_n );
+
+            if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
+                uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
+
+            uBGO.image.setMask(uBGO.mask);
+            uBGO.id = FileData.bgo[i].id;
+            uBGOs.push_back(uBGO);
         }
 
         progress.setValue(progress.value()+1);
     }
 
     QGraphicsItem *	box;
-    bool isUser=false;
+    int isUser=0;
 
-    //Applay images to objects
     for(i=0; i<FileData.bgo.size(); i++)
     {
-        noimage=true;
-        isUser=false;
+        noimage=1;
+        isUser=0;
         for(j=0;j<uBGOs.size();j++)
         {
             if(uBGOs[j].id==FileData.bgo[i].id)
             {
-                isUser=true;
+                isUser=1;
                 img = uBGOs[j].image;
                 break;
             }
@@ -341,17 +280,17 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
         {
             if(configs.main_bgo[j].id==FileData.bgo[i].id)
             {
-                noimage=false;
+                noimage=1;
                 if(!isUser)
                 img = configs.main_bgo[j].image; break;
             }
         }
-        if(noimage)
+        if(!noimage)
         {
             img=image;
         }
 
-        if((!noimage) && (configs.main_bgo[j].animated))
+        if((noimage) && (configs.main_bgo[j].animated))
         {
             img=img.copy(0, 0, img.width(), (int)round(img.height()/configs.main_bgo[j].frames));
         }
