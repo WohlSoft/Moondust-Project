@@ -43,6 +43,7 @@ leveledit::leveledit(QWidget *parent) :
     isModyfied = false;
     latest_export = "*.png";
     latest_export_path = QApplication::applicationDirPath();
+    setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);
 }
 

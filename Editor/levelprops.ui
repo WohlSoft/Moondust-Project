@@ -21,7 +21,10 @@
   </property>
   <property name="windowIcon">
    <iconset resource="editor.qrc">
-    <normaloff>:/images/level16.png</normaloff>:/images/level16.png</iconset>
+    <normaloff>:/lvl16.png</normaloff>
+    <normalon>:/lvl16.png</normalon>
+    <activeoff>:/lvl16.png</activeoff>
+    <activeon>:/lvl16.png</activeon>:/lvl16.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>

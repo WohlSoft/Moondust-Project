@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'saveimage.ui'
 **
-** Created: Sat 5. Apr 10:06:42 2014
+** Created: Wed 9. Apr 14:39:50 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
