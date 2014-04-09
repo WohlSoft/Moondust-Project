@@ -31,6 +31,13 @@ struct UserBGOs
     unsigned long id;
 };
 
+struct UserBGs
+{
+    QPixmap image;
+    QPixmap second_image;
+    unsigned long id;
+};
+
 class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
