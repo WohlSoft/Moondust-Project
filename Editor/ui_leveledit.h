@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'leveledit.ui'
 **
-** Created: Fri 28. Mar 13:52:07 2014
+** Created: Wed 9. Apr 14:39:49 2014
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -33,7 +33,7 @@ public:
         if (leveledit->objectName().isEmpty())
             leveledit->setObjectName(QString::fromUtf8("leveledit"));
         leveledit->resize(800, 602);
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(leveledit->sizePolicy().hasHeightForWidth());
@@ -41,7 +41,10 @@ public:
         leveledit->setBaseSize(QSize(800, 602));
         leveledit->setContextMenuPolicy(Qt::NoContextMenu);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/level.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/lvl16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/lvl16.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon.addFile(QString::fromUtf8(":/lvl16.png"), QSize(), QIcon::Active, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/lvl16.png"), QSize(), QIcon::Active, QIcon::On);
         leveledit->setWindowIcon(icon);
         leveledit->setStyleSheet(QString::fromUtf8(""));
         leveledit->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));

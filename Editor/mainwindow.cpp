@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "aboutdialog.h"
@@ -15,6 +33,10 @@
 #include "dataconfigs.h"
 
 QString LastOpenDir = ".";
+bool LevelToolBoxVis = false;
+bool WorldToolBoxVis = false;
+bool SectionToolBoxVis = false;
+
 
 dataconfigs configs;
 
@@ -22,14 +44,17 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    QMenuBar * menuBar = new QMenuBar(0); // test for MacOS X
 
     QPixmap splashimg(":/images/splash.png");
     QSplashScreen splash(splashimg);
     splash.show();
 
     configs.loadconfigs();
-
     ui->setupUi(this);
+
+    menuBar = ui->menuBar; // test for MacOS X
+    setMenuBar(menuBar); // test for MacOS X
 
     splash.finish(this);
 
@@ -49,12 +74,16 @@ MainWindow::MainWindow(QMdiArea *parent) :
     //resize(settings.value("size", size()).toSize());
     //move(settings.value("pos", pos()).toPoint());
     LastOpenDir = settings.value("lastpath", ".").toString();
+    LevelToolBoxVis = settings.value("level-tb-visible", "false").toBool();
+    WorldToolBoxVis = settings.value("world-tb-visible", "false").toBool();
+    SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
     //if(settings.value("maximased", "false")=="true") showMaximized();
     //"lvl-section-view", dockWidgetArea(ui->LevelSectionSettings)
     //dockWidgetArea();
-
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
+
+    settings.endGroup();
 
     ui->centralWidget->cascadeSubWindows();
     ui->WorldToolBox->hide();
@@ -93,21 +122,28 @@ void MainWindow::updateMenus()
     ui->actionSelect->setEnabled( (WinType==1) || (WinType==3));
     ui->actionEriser->setEnabled( (WinType==1) || (WinType==3));
 
-    ui->WorldToolBox->setVisible( (WinType==3) );
+    if(!(WinType==3)) WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
+
+    ui->WorldToolBox->setVisible( (WinType==3) && (WorldToolBoxVis)); //Restore saved visible status
     ui->menuWorld->setEnabled(( WinType==3) );
-    ui->actionWLDToolBox->setVisible( (WinType==3) );
+    ui->actionWLDToolBox->setVisible( (WinType==3));
 
 
-    ui->LevelToolBox->setVisible( (WinType==1) );
+    if(!(WinType==1)) LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
+    if(!(WinType==1)) SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
+
+    ui->LevelToolBox->setVisible( (WinType==1) && (LevelToolBoxVis)); //Restore saved visible status
+    ui->LevelSectionSettings->setVisible( (WinType==1) && (SectionToolBoxVis));
+
     ui->actionLVLToolBox->setVisible( (WinType==1) );
     ui->menuLevel->setEnabled( (WinType==1) );
     ui->actionSection_Settings->setVisible( (WinType==1) );
-    ui->LevelSectionSettings->setVisible( (WinType==1) );
     ui->actionLevelProp->setEnabled( (WinType==1) );
     ui->actionLevNoBack->setEnabled( (WinType==1) );
     ui->actionLevOffScr->setEnabled( (WinType==1) );
     ui->actionLevWarp->setEnabled( (WinType==1) );
     ui->actionLevUnderW->setEnabled( (WinType==1) );
+    ui->actionExport_to_image->setEnabled( (WinType==1) );
 
     ui->actionSection_1->setEnabled( (WinType==1) );
     ui->actionSection_2->setEnabled( (WinType==1) );
@@ -236,14 +272,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
-    if(!isMaximized())
-        settings.setValue("size", size());
     settings.setValue("pos", pos());
     settings.setValue("lastpath", LastOpenDir);
-    settings.setValue("maximased", isMaximized());
-    //settings.setValue("lvl-section-view", dockWidgetArea(ui->LevelSectionSettings) );
-    //settings.setValue("wld-toolbox-view", ui->WorldToolBox->isVisible());
-
+    settings.setValue("level-tb-visible", LevelToolBoxVis);
+    settings.setValue("world-tb-visible", WorldToolBoxVis);
+    settings.setValue("section-tb-visible", SectionToolBoxVis);
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
 
@@ -257,7 +290,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 //////////////////////////////////////////////////////
 
-void MainWindow::on_OpenFile_activated()
+void MainWindow::on_OpenFile_triggered()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
         trUtf8("Open file"),LastOpenDir,
@@ -387,7 +420,9 @@ npcedit *MainWindow::createNPCChild()
 leveledit *MainWindow::createChild()
 {
     leveledit *child = new leveledit;
+    //child->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->centralWidget->addSubWindow(child)->resize(QSize(800, 602));
+
         return child;
 }
 
@@ -554,14 +589,14 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
 //////////////////SLOTS///////////////////////////
 
 //Exit from application
-void MainWindow::on_Exit_activated()
+void MainWindow::on_Exit_triggered()
 {
     MainWindow::close();
     exit(0);
 }
 
 //Open About box
-void MainWindow::on_actionAbout_activated()
+void MainWindow::on_actionAbout_triggered()
 {
     aboutDialog about;
     about.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
@@ -584,7 +619,7 @@ void MainWindow::on_LevelToolBox_visibilityChanged(bool visible)
     }
 }
 
-void MainWindow::on_actionLVLToolBox_activated()
+void MainWindow::on_actionLVLToolBox_triggered()
 {
         if(ui->actionLVLToolBox->isChecked())
             ui->LevelToolBox->setVisible(true);
@@ -606,7 +641,7 @@ void MainWindow::on_WorldToolBox_visibilityChanged(bool visible)
     }
 }
 
-void MainWindow::on_actionWLDToolBox_activated()
+void MainWindow::on_actionWLDToolBox_triggered()
 {
     if(ui->actionWLDToolBox->isChecked())
         ui->WorldToolBox->setVisible(true);
@@ -628,7 +663,7 @@ void MainWindow::on_LevelSectionSettings_visibilityChanged(bool visible)
     }
 }
 
-void MainWindow::on_actionSection_Settings_activated()
+void MainWindow::on_actionSection_Settings_triggered()
 {
     if(ui->actionSection_Settings->isChecked())
         ui->LevelSectionSettings->setVisible(true);
@@ -638,10 +673,14 @@ void MainWindow::on_actionSection_Settings_activated()
 
 
 //Open Level Properties
-void MainWindow::on_actionLevelProp_activated()
+void MainWindow::on_actionLevelProp_triggered()
 {
-    LevelProps LevProps;
-    LevProps.exec();
+    if(activeChildWindow()==1)
+    {
+        LevelProps LevProps(activeLvlEditWin()->LvlData);
+        LevProps.exec();
+    }
+
 }
 
 void MainWindow::on_pushButton_4_clicked()
@@ -668,134 +707,150 @@ void MainWindow::on_pushButton_4_clicked()
 }
 
 
-void MainWindow::on_actionSave_activated()
+void MainWindow::on_actionSave_triggered()
 {
     save();
 }
 
-void MainWindow::on_actionSave_as_activated()
+void MainWindow::on_actionSave_as_triggered()
 {
     save_as();
 }
 
-void MainWindow::on_actionClose_activated()
+void MainWindow::on_actionClose_triggered()
 {
     close_sw();
 }
 
-void MainWindow::on_actionSave_all_activated()
+void MainWindow::on_actionSave_all_triggered()
 {
     save_all();
 }
 
 //////////////////////////////////// GoTo Section  ///////////////////////////////////////////////
-void MainWindow::on_actionSection_1_activated()
+void MainWindow::on_actionSection_1_triggered()
 {
     SetCurrentLevelSection(0);
 }
 
-void MainWindow::on_actionSection_2_activated()
+void MainWindow::on_actionSection_2_triggered()
 {
     SetCurrentLevelSection(1);
 }
 
-void MainWindow::on_actionSection_3_activated()
+void MainWindow::on_actionSection_3_triggered()
 {
     SetCurrentLevelSection(2);
 }
 
-void MainWindow::on_actionSection_4_activated()
+void MainWindow::on_actionSection_4_triggered()
 {
     SetCurrentLevelSection(3);
 }
 
-void MainWindow::on_actionSection_5_activated()
+void MainWindow::on_actionSection_5_triggered()
 {
     SetCurrentLevelSection(4);
 }
 
-void MainWindow::on_actionSection_6_activated()
+void MainWindow::on_actionSection_6_triggered()
 {
     SetCurrentLevelSection(5);
 }
 
-void MainWindow::on_actionSection_7_activated()
+void MainWindow::on_actionSection_7_triggered()
 {
     SetCurrentLevelSection(6);
 }
 
-void MainWindow::on_actionSection_8_activated()
+void MainWindow::on_actionSection_8_triggered()
 {
     SetCurrentLevelSection(7);
 }
 
-void MainWindow::on_actionSection_9_activated()
+void MainWindow::on_actionSection_9_triggered()
 {
     SetCurrentLevelSection(8);
 }
 
-void MainWindow::on_actionSection_10_activated()
+void MainWindow::on_actionSection_10_triggered()
 {
     SetCurrentLevelSection(9);
 }
 
-void MainWindow::on_actionSection_11_activated()
+void MainWindow::on_actionSection_11_triggered()
 {
     SetCurrentLevelSection(10);
 }
 
-void MainWindow::on_actionSection_12_activated()
+void MainWindow::on_actionSection_12_triggered()
 {
     SetCurrentLevelSection(11);
 }
 
 
-void MainWindow::on_actionSection_13_activated()
+void MainWindow::on_actionSection_13_triggered()
 {
     SetCurrentLevelSection(12);
 }
 
-void MainWindow::on_actionSection_14_activated()
+void MainWindow::on_actionSection_14_triggered()
 {
     SetCurrentLevelSection(13);
 }
 
-void MainWindow::on_actionSection_15_activated()
+void MainWindow::on_actionSection_15_triggered()
 {
     SetCurrentLevelSection(14);
 }
 
-void MainWindow::on_actionSection_16_activated()
+void MainWindow::on_actionSection_16_triggered()
 {
     SetCurrentLevelSection(15);
 }
 
-void MainWindow::on_actionSection_17_activated()
+void MainWindow::on_actionSection_17_triggered()
 {
     SetCurrentLevelSection(16);
 }
 
-void MainWindow::on_actionSection_18_activated()
+void MainWindow::on_actionSection_18_triggered()
 {
     SetCurrentLevelSection(17);
 }
 
-void MainWindow::on_actionSection_19_activated()
+void MainWindow::on_actionSection_19_triggered()
 {
     SetCurrentLevelSection(18);
 }
 
-void MainWindow::on_actionSection_20_activated()
+void MainWindow::on_actionSection_20_triggered()
 {
     SetCurrentLevelSection(19);
 }
 
-void MainWindow::on_actionSection_21_activated()
+void MainWindow::on_actionSection_21_triggered()
 {
     SetCurrentLevelSection(20);
 }
 
-void MainWindow::on_actionLoad_configs_activated()
+
+
+void MainWindow::on_actionLoad_configs_triggered()
 {
     configs.loadconfigs();
+
+    QMessageBox::information(this, tr("Reload configuration"),
+     tr("Configuration succesfully reloaded!"),
+     QMessageBox::Ok);
+}
+
+
+
+void MainWindow::on_actionExport_to_image_triggered()
+{
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->ExportToImage_fn();
+    }
 }

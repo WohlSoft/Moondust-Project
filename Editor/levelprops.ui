@@ -19,6 +19,13 @@
   <property name="windowTitle">
    <string>Level Properties</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="editor.qrc">
+    <normaloff>:/lvl16.png</normaloff>
+    <normalon>:/lvl16.png</normalon>
+    <activeoff>:/lvl16.png</activeoff>
+    <activeon>:/lvl16.png</activeon>:/lvl16.png</iconset>
+  </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>
@@ -62,11 +69,11 @@
        </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QGroupBox" name="groupBox">
+       <widget class="QGroupBox" name="EditingProps">
         <property name="title">
          <string>Editing</string>
         </property>
-        <widget class="QCheckBox" name="checkBox">
+        <widget class="QCheckBox" name="setAutoplayMusic">
          <property name="geometry">
           <rect>
            <x>10</x>
@@ -86,7 +93,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="editor.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>LVLPropButtonBox</sender>

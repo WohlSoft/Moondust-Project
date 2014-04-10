@@ -31,6 +31,10 @@
   <property name="windowTitle">
    <string>Editor - PlatGEnWohl (Under Construction)</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="editor.qrc">
+    <normaloff>:/images/mushroom16.png</normaloff>:/images/mushroom16.png</iconset>
+  </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
   </property>
@@ -107,7 +111,6 @@
     <addaction name="actionExport_to_image"/>
     <addaction name="separator"/>
     <addaction name="Exit"/>
-    <addaction name="actionLoad_configs"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -197,10 +200,17 @@
      <string>Window</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionLoad_configs"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuLevel"/>
    <addaction name="menuWorld"/>
    <addaction name="menuView"/>
+   <addaction name="menuTools"/>
    <addaction name="menuWindow"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -258,7 +268,7 @@
    </property>
    <property name="windowIcon">
     <iconset resource="editor.qrc">
-     <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
+     <normaloff>:/images/level16.png</normaloff>:/images/level16.png</iconset>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
@@ -1066,7 +1076,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="windowIcon">
     <iconset resource="editor.qrc">
-     <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
+     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
@@ -1319,7 +1329,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="windowIcon">
     <iconset resource="editor.qrc">
-     <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
+     <normaloff>:/images/section16.png</normaloff>:/images/section16.png</iconset>
    </property>
    <property name="styleSheet">
     <string notr="true">font: 8pt &quot;Liberation Sans&quot;;</string>
@@ -1634,6 +1644,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="Exit">
    <property name="text">
@@ -1672,6 +1685,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSave_as">
    <property name="enabled">
@@ -1687,8 +1703,14 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionClose">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Close</string>
    </property>
@@ -1743,6 +1765,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+1</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_2">
    <property name="checkable">
@@ -1760,6 +1785,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+2</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_3">
@@ -1779,6 +1807,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+3</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_4">
    <property name="checkable">
@@ -1796,6 +1827,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+4</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_5">
@@ -1815,6 +1849,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+5</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_6">
    <property name="checkable">
@@ -1832,6 +1869,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+6</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_7">
@@ -1851,6 +1891,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+7</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_8">
    <property name="checkable">
@@ -1868,6 +1911,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+8</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_9">
@@ -1887,6 +1933,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+9</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_10">
    <property name="checkable">
@@ -1904,6 +1953,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+0</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_11">
@@ -1923,6 +1975,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+Alt+1</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_12">
    <property name="checkable">
@@ -1940,6 +1995,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+2</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_13">
@@ -1959,6 +2017,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+Alt+3</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_14">
    <property name="checkable">
@@ -1976,6 +2037,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+4</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_15">
@@ -1995,6 +2059,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+Alt+5</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_16">
    <property name="checkable">
@@ -2012,6 +2079,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+6</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_17">
@@ -2031,6 +2101,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+Alt+7</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_18">
    <property name="checkable">
@@ -2048,6 +2121,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+8</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_19">
@@ -2067,6 +2143,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Ctrl+Alt+9</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionSection_20">
    <property name="checkable">
@@ -2084,6 +2163,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+0</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionSection_21">
@@ -2103,6 +2185,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>Alt+1</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionLevWarp">
    <property name="checkable">
@@ -2113,6 +2198,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Warp section</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionLevOffScr">
@@ -2154,6 +2242,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Export to image...</string>
+   </property>
+   <property name="shortcut">
+    <string>F12</string>
    </property>
   </action>
   <action name="actionLevelProp">
@@ -2275,6 +2366,9 @@ p, li { white-space: pre-wrap; }
    <property name="shortcut">
     <string>S</string>
    </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actionEriser">
    <property name="checkable">
@@ -2315,6 +2409,9 @@ p, li { white-space: pre-wrap; }
   <action name="actionLoad_configs">
    <property name="text">
     <string>Reload configurations</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>false</bool>
    </property>
   </action>
  </widget>
