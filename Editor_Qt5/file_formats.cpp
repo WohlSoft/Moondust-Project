@@ -44,6 +44,10 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
     QStringList Params;
     QTextStream in(&inf);   //Read File
 
+    in.setAutoDetectUnicode(true); //Test Fix for MacOS
+    in.setLocale(QLocale::system());   //Test Fix for MacOS
+    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+
     NPCConfigFile FileData;
     FileData.en_gfxoffsetx=false;
     FileData.en_gfxoffsety=false;
@@ -477,6 +481,12 @@ WorldData MainWindow::ReadWorldFile(QFile &inf)
     int file_format;        //File format number
     QString line;           //Current Line data
     QTextStream in(&inf);   //Read File
+
+    in.setAutoDetectUnicode(true); //Test Fix for MacOS
+    in.setLocale(QLocale::system());   //Test Fix for MacOS
+    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+
+
     WorldData FileData;
 
     str_count++;line = in.readLine();   //Read first Line
@@ -500,16 +510,15 @@ return FileData;
 
 
 
-
-
-
-
-
-
 //Level File Read
 LevelData MainWindow::ReadLevelFile(QFile &inf)
 {
     QTextStream in(&inf);   //Read File
+
+    in.setAutoDetectUnicode(true); //Test Fix for MacOS
+    in.setLocale(QLocale::system());   //Test Fix for MacOS
+    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+
     int str_count=0;        //Line Counter
     int i;                  //counters
     int file_format=0;        //File format number
