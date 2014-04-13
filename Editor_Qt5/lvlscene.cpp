@@ -125,7 +125,8 @@ void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress, data
             }
         }
         total++;
-        progress.setValue(progress.value()+1);
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
     }
 
     for(i=0; i<FileData.sections.size(); i++)
@@ -182,7 +183,9 @@ void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress, data
         }
     //}
     total++;
-    progress.setValue(total);
+
+    if(!progress.wasCanceled())
+        progress.setValue(total);
     }
 
 }
@@ -246,7 +249,8 @@ void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
         box->setZValue(0);
         //blocks->addToGroup(box);
 
-        progress.setValue(progress.value()+1);
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
     }
 
 }
@@ -316,6 +320,7 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
             }
         }
 
+    if(!progress.wasCanceled())
         progress.setValue(progress.value()+1);
     }
 
@@ -363,14 +368,15 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
         box->setData(0, "BGO");
         box->setData(1, QString::number(FileData.bgo[i].id) );
 
-        if(configs.main_bgo[j].view)
+        if(configs.main_bgo[j].view!=0)
             box->setZValue(9);
             //bgoback->addToGroup(box);
         else
             box->setZValue(-10);
             //bgofore->addToGroup(box);
 
-        progress.setValue(progress.value()+1);
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
     }
 
 }
@@ -398,7 +404,8 @@ void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
         else
             box->setZValue(-9);
 
-        progress.setValue(progress.value()+1);
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
     }
 
 }
