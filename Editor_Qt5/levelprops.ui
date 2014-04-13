@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>168</height>
+    <height>197</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -24,7 +24,8 @@
     <normaloff>:/lvl16.png</normaloff>
     <normalon>:/lvl16.png</normalon>
     <activeoff>:/lvl16.png</activeoff>
-    <activeon>:/lvl16.png</activeon>:/lvl16.png</iconset>
+    <activeon>:/lvl16.png</activeon>
+    <selectedon>:/lvl16.png</selectedon>:/lvl16.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
