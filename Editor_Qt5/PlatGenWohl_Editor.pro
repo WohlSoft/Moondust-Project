@@ -44,6 +44,10 @@ FORMS    += \
 
 RC_FILE = platgenw.rc
 
+macx {
+    ICON = images/mac/mushroom.icns
+}
+
 OTHER_FILES += \
     images/saveas.png \
     images/save.png \
@@ -86,7 +90,9 @@ OTHER_FILES += \
     images/world16.png \
     images/section16.png \
     images/mushroom16.png \
-    images/level16.png
+    images/level16.png \
+    splash.png \
+    mushroom.ico
 
 RESOURCES += \
     editor.qrc
