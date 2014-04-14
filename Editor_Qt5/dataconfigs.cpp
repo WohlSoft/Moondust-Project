@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QPixmap>
 #include <QBitmap>
 #include <QSettings>
@@ -44,7 +44,7 @@ frames = 1			; default = 1
 frame-speed=125			; default = 125 ms, etc. 8 frames per sec
 */
 
-void dataconfigs::loadconfigs()
+void dataconfigs::loadconfigs(QWidget * window, bool nobar)
 {
     unsigned long total_data=0, i, prgs=0;
     QString config_dir = QApplication::applicationDirPath() + "/" +  "configs/SMBX/";
@@ -109,18 +109,24 @@ void dataconfigs::loadconfigs()
     bgoset.endGroup();
 
     //////////////////////////////////////////////////////////////////////////////////
+
+
     QProgressDialog progress("Loading BackGround Data", "Abort", 0, total_data);
+
+    if(!nobar)
+    {
          progress.setWindowTitle("Loading config...");
-         //progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint| Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
-         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(),
+				qApp->desktop()->availableGeometry()));
          progress.setCancelButton(0);
-
     ////////////////////////////////Preparing////////////////////////////////////////
 
      ///////////////////////////////////////BackGround////////////////////////////////////////////
      progress.setLabelText("Loading BackGround Data");
+    }
+    else progress.close();
 
      for(i=1; i<=bg_total; i++)
      {
@@ -212,7 +218,8 @@ void dataconfigs::loadconfigs()
          bgset.endGroup();
 
          prgs++;
-         progress.setValue(prgs);
+         if((!progress.wasCanceled())&&(!nobar))
+             progress.setValue(prgs);
      }
      ///////////////////////////////////////BackGround////////////////////////////////////////////
 
@@ -226,7 +233,7 @@ void dataconfigs::loadconfigs()
             sbgo.name = bgoset.value("name", "").toString();
             sbgo.type = bgoset.value("type", "other").toString();
             sbgo.grid = bgoset.value("grid", "32").toInt();
-            sbgo.view = (bgoset.value("view", "background").toString()=="foreground");
+            sbgo.view = (int)(bgoset.value("view", "background").toString()=="foreground");
             imgFile = bgoset.value("image", "").toString();
             sbgo.image_n = imgFile;
             if( (imgFile!="") )
@@ -256,11 +263,12 @@ void dataconfigs::loadconfigs()
         bgoset.endGroup();
 
         prgs++;
-        progress.setValue(prgs);
+        if((!progress.wasCanceled())&&(!nobar))
+            progress.setValue(prgs);
     }
     ///////////////////////////////////////BGO////////////////////////////////////////////
 
-
-    progress.close();
+    if((!progress.wasCanceled())&&(!nobar))
+        progress.close();
 
 }

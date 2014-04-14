@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QGraphicsItem>
 #include <QPixmap>
 #include <QGraphicsScene>
@@ -166,6 +166,20 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     }
     StartLvlData = LvlData; //Save current history for made reset
 
+    //Data configs exists
+    if(
+            (configs.main_bgo.size()<=0)||
+            (configs.main_bg.size()<=0)
+      )
+    {
+        QMessageBox::warning(this, tr("Configurations not loaded"),
+                             tr("Cannot open level file %1:\nbecause object configurations not loaded\n."
+                                "Please, check the config/SMBX dir for exists the *.INI files with objects settings")
+                             .arg(fileName));
+        return false;
+    }
+
+
     //setPlainText(in.readAll());
 
     /*
@@ -198,7 +212,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    progress.close();
+    if( !progress.wasCanceled() )
+        progress.close();
 
     ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[0].size_bottom-602);
     ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[0].size_left);
@@ -273,6 +288,10 @@ bool leveledit::saveFile(const QString &fileName)
 
     setCurrentFile(fileName);
     */
+
+    QMessageBox::information(this, tr("Dummy"),
+                         tr("File %1 will not be save, saving function in this version of app was not released.")
+                         .arg(fileName));
 
     return true;
 }

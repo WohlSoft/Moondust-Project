@@ -45,17 +45,21 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    QMenuBar * menuBar = new QMenuBar(0); // test for MacOS X
+    //QMenuBar * menuBar = new QMenuBar(0); // test for MacOS X
 
     QPixmap splashimg(":/images/splash.png");
     QSplashScreen splash(splashimg);
     splash.show();
 
-    configs.loadconfigs();
+    configs.loadconfigs(this, true);
     ui->setupUi(this);
 
-    menuBar = ui->menuBar; // test for MacOS X
-    setMenuBar(menuBar); // test for MacOS X
+    #ifdef Q_OS_MAC
+        this->setWindowIcon(QIcon(":/images/mac/mushroom.icns"));
+    #endif
+
+    //menuBar = ui->menuBar; // test for MacOS X
+    //setMenuBar(menuBar); // test for MacOS X
 
     splash.finish(this);
 
@@ -839,7 +843,7 @@ void MainWindow::on_actionSection_21_triggered()
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
-    configs.loadconfigs();
+    configs.loadconfigs(this);
 
     QMessageBox::information(this, tr("Reload configuration"),
      tr("Configuration succesfully reloaded!"),

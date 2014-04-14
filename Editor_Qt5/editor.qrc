@@ -34,13 +34,13 @@
         <file>images/section.png</file>
         <file>images/warp_exit.png</file>
         <file>images/warp_entrance.png</file>
-        <file alias="unknown_bgo">images/unknown_bgo.gif</file>
-        <file alias="unknown_block">images/unknown_block.gif</file>
-        <file alias="unknown_npc">images/unknown_npc.gif</file>
         <file>images/splash.png</file>
         <file alias="lvl16.png">images/level16.png</file>
         <file>images/mushroom16.png</file>
         <file>images/section16.png</file>
         <file>images/world16.png</file>
+        <file>images/coin.png</file>
+        <file>images/mac/mushroom.hqx</file>
+        <file>images/mac/mushroom.icns</file>
     </qresource>
 </RCC>
