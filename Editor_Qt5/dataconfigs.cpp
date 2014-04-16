@@ -78,10 +78,10 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
     ////////////////////////////////Preparing////////////////////////////////////////
     QString bgoPath = dirs.glevel + "background/";
     QString BGPath = dirs.glevel + "background2/";
-    //QString blockPath = dirs.glevel + "block/";
+    QString blockPath = dirs.glevel + "block/";
     //QString npcPath = dirs.glevel + "npc/";
 
-    //BackGrounds
+    //BackGrounds///////////////////////////////////////////
     obj_BG sbg;
     unsigned long bg_total=0;
 
@@ -96,7 +96,7 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
 
     //qDebug() << "BG Total: "+QString::number(bg_total)+"\nDir: "+BGPath;
 
-    //BGO
+    //BGO///////////////////////////////////////////
     obj_bgo sbgo;
     unsigned long bgo_total=0;
     QString bgo_ini = config_dir + "lvl_bgo.ini";
@@ -107,6 +107,18 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
         bgo_total = bgoset.value("total", "0").toInt();
         total_data +=bgo_total;
     bgoset.endGroup();
+
+    //Block///////////////////////////////////////////
+    obj_block sblock;
+    unsigned long block_total=0;
+    QString block_ini = config_dir + "lvl_blocks.ini";
+    QSettings blockset(block_ini, QSettings::IniFormat);
+    main_block.clear();   //Clear old
+
+    blockset.beginGroup("blocks-main");
+        block_total = blockset.value("total", "0").toInt();
+        total_data +=block_total;
+    blockset.endGroup();
 
     //////////////////////////////////////////////////////////////////////////////////
 
@@ -267,6 +279,97 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
             progress.setValue(prgs);
     }
     ///////////////////////////////////////BGO////////////////////////////////////////////
+
+    ///////////////////////////////////////Block////////////////////////////////////////////
+    progress.setLabelText("Loading Block Data");
+
+    for(i=1; i<=block_total; i++)
+    {
+        blockset.beginGroup( QString("block-"+QString::number(i)) );
+            sblock.name = blockset.value("name", "").toString();
+            sblock.type = blockset.value("type", "other").toString();
+
+            imgFile = blockset.value("image", "").toString();
+            sblock.image_n = imgFile;
+            if( (imgFile!="") )
+            {
+                tmp = imgFile.split(".", QString::SkipEmptyParts);
+                if(tmp.size()==2)
+                    imgFileM = tmp[0] + "m." + tmp[1];
+                else
+                    imgFileM = "";
+                sblock.mask_n = imgFileM;
+                if(tmp.size()==2) mask = QBitmap(blockPath + imgFileM);
+                sblock.mask = mask;
+                sblock.image = QPixmap(bgoPath + imgFile);
+                if(tmp.size()==2) sblock.image.setMask(mask);
+            }
+            else
+            {
+                sblock.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
+                sblock.mask_n = "";
+            }
+
+            sblock.sizeble = blockset.value("sizeble", "0").toBool();
+            sblock.danger = blockset.value("danger", "0").toInt();
+            sblock.collision = blockset.value("collision", "1").toInt();
+            sblock.slopeslide = blockset.value("slope-slide", "0").toBool();
+            sblock.fixture = blockset.value("fixture-type", "0").toInt();
+            sblock.lava = blockset.value("lava", "0").toBool();
+            sblock.destruct = blockset.value("destruct", "0").toBool();
+            sblock.dest_bomb = blockset.value("destruct-bomb", "0").toBool();
+            sblock.dest_fire = blockset.value("destruct-fireball", "0").toBool();
+
+            imgFile =  blockset.value("spawn-on-destroy", "0").toString();
+            if(imgFile!="0")
+            {
+                tmp =  imgFile.split("-", QString::SkipEmptyParts);
+                if(tmp.size()==2)
+                {
+                    if(tmp[0]=="npc")
+                        sblock.spawn_obj = 1;
+                    else
+                    if(tmp[0]=="block")
+                         sblock.spawn_obj = 2;
+                    else
+                    if(tmp[0]=="bgo")
+                         sblock.spawn_obj = 3;
+                    // 1 - NPC, 2 - block, 3 - BGO
+                    sblock.spawn_obj_id = tmp[1].toInt();
+                }
+                else // if syntax error in config
+                {
+                    sblock.spawn = false;
+                    sblock.spawn_obj = 0;
+                    sblock.spawn_obj_id = 0;
+                }
+            }
+            else
+            {
+                sblock.spawn = false;
+                sblock.spawn_obj = 0;
+                sblock.spawn_obj_id = 0;
+            }
+
+            sblock.effect= blockset.value("desctruct-effect", "1").toInt();
+
+            sblock.bounce = blockset.value("bounce", "0").toBool();
+            sblock.hitable = blockset.value("hitable", "0").toBool();
+            sblock.onhit = blockset.value("hitable", "0").toBool();
+            sblock.onhit_block= blockset.value("onhit-block", "2").toInt();
+            sblock.algorithm= blockset.value("algorithm", "2").toInt();
+            sblock.animated = (bgoset.value("animated", "0").toString()=="1");
+            sblock.frames = bgoset.value("frames", "1").toInt();
+            sblock.framespeed = bgoset.value("frame-speed", "125").toInt();
+            sblock.id = i;
+            main_block.push_back(sblock);
+        blockset.endGroup();
+
+        prgs++;
+        if((!progress.wasCanceled())&&(!nobar))
+            progress.setValue(prgs);
+    }
+    ///////////////////////////////////////Block////////////////////////////////////////////
 
     if((!progress.wasCanceled())&&(!nobar))
         progress.close();

@@ -64,6 +64,66 @@ struct obj_bgo{
     unsigned int framespeed;
 };
 
+struct obj_block{
+    /*
+    [block-1]
+    image="block-1.gif"
+    name="Wood"
+    type="block"	; Cathegory for sort
+    sizeble=0	; can be resise
+    danger=0	; 0 - none, 1 left, -1 right, 2 top, -2 bottom,
+            ; 3 left-right, -3 top-bottom, 4 - all sides
+    collision=1	; 1 - collision all sides, 2 collision only top side, 0 - no collision
+    slope-slide=0
+    fixture-type=0	; 0 sqear, 1 tringle up-left, -1 tringle up-right, 2 tringle down-left, -2 tringle down-right
+            ; 3 fixture as image form
+    lava=0		; lava fataly to all NPC's, what haven't lava-protection
+    destruct=0	; Can by destruct with shell/head jump
+    destruct-bomb=0	; Destroy on Bomb
+    destruct-fireball=0	; Destroy on fireball
+    spawn-on-destroy="0"	; Object type-ID for spawn after destroy, if 0 - nothing
+    desctruct-effect=1 ; Destructble effect number, 0 - no effect
+    bounce=0	; Jumpble block, if player stay in this block, he bouncing
+    hitable=0	; can be hit with player; if 0, hitable only if block have contains NPC
+    onhit=0		; 0 Nothing, 1 can be hited without contains NPC
+    onhit-block=2	; if onhit=1, transform block to block of number 2,
+            ; if 0, block will not by transoform, even if contains NPC
+    algorithm=0	; Special block algorithm, for example, on/off switcher, invisible block,
+            ; player switch block
+    animate=0	; Enable animation
+    frames=1	; Animation frames
+    framespeed=128	; Delay per frime (ms)
+    */
+    unsigned long id;
+        QString image_n;
+        QString mask_n;
+        QPixmap image;
+        QBitmap mask;
+    QString name;
+    QString type;
+    bool sizeble;
+    int danger;
+    int collision;
+    bool slopeslide;
+    int fixture;
+    bool lava;
+    bool destruct;
+    bool dest_bomb;
+    bool dest_fire;
+    bool spawn; //split string by "-" in != "0"
+        int spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
+        unsigned long spawn_obj_id;
+    unsigned long effect;
+    bool bounce;
+    bool hitable;
+    bool onhit;
+    unsigned long onhit_block;
+    unsigned long algorithm;
+    bool animated;
+    unsigned int frames;
+    int framespeed;
+};
+
 struct obj_BG{
     /*
 [background2-3]
@@ -122,6 +182,7 @@ public:
 
     QVector<obj_bgo > main_bgo;
     QVector<obj_BG > main_bg;
+    QVector<obj_block > main_block;
 
 };
 
