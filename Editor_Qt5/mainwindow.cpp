@@ -54,6 +54,9 @@ MainWindow::MainWindow(QMdiArea *parent) :
     configs.loadconfigs(this, true);
     ui->setupUi(this);
 
+    //Applay objects into tools
+    setTools();
+
     #ifdef Q_OS_MAC
         this->setWindowIcon(QIcon(":/images/mac/mushroom.icns"));
     #endif
@@ -188,6 +191,23 @@ void MainWindow::updateMenus()
     cutAct->setEnabled(hasSelection);
     copyAct->setEnabled(hasSelection);
     */
+}
+
+void MainWindow::setTools()
+{
+    int i;
+    ui->LVLPropsBackImage->clear();
+    ui->LVLPropsMusicNumber->clear();
+
+    ui->LVLPropsBackImage->addItem("[No image]");
+    ui->LVLPropsMusicNumber->addItem("[Silence]");
+
+    for(i=0; i< configs.main_bg.size();i++)
+        ui->LVLPropsBackImage->addItem(configs.main_bg[i].name);
+
+    for(i=0; i< configs.main_music_lvl.size();i++)
+        ui->LVLPropsMusicNumber->addItem(configs.main_music_lvl[i].name);
+
 }
 
 void MainWindow::save()
@@ -347,6 +367,7 @@ void MainWindow::OpenFile(QString FilePath)
         if (child->loadFile(FilePath, FileData, configs)) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
+            SetCurrentLevelSection(0);
         } else {
             child->close();
         }
@@ -587,6 +608,27 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
     if ((WinType==1) && (open==0))
     {
        activeLvlEditWin()->setCurrentSection(SectionId);
+
+       //Set Section Data in menu
+       ui->actionLevNoBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
+       ui->actionLevOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
+       ui->actionLevUnderW->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
+       ui->actionLevWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+
+       //set data in Section Settings Widget
+       ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
+
+       ui->LVLPropsNoTBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
+       ui->LVLPropsOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
+       ui->LVLPropsUnderWater->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
+       ui->LVLPropsLevelWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+
+       ui->LVLPropsMusicCustom->setText(activeLvlEditWin()->LvlData.sections[SectionId].music_file);
+
+       ui->LVLPropsMusicNumber->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].music_id );
+       ui->LVLPropsMusicCustomEn->setChecked( (activeLvlEditWin()->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
+
+       ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
     }
 }
 
@@ -843,7 +885,11 @@ void MainWindow::on_actionSection_21_triggered()
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
+    //Reload configs
     configs.loadconfigs(this);
+
+    //Set tools from loaded configs
+    setTools();
 
     QMessageBox::information(this, tr("Reload configuration"),
      tr("Configuration succesfully reloaded!"),

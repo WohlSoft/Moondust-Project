@@ -74,6 +74,7 @@ private slots:
     void setActiveSubWindow(QWidget *window);
 
     void updateMenus();
+    void setTools();
 
 
     void on_LevelSectionSettings_visibilityChanged(bool visible);

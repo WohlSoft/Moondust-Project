@@ -82,7 +82,7 @@
      <x>0</x>
      <y>0</y>
      <width>1124</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -310,8 +310,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>240</width>
+        <height>320</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -337,8 +337,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>240</width>
+        <height>320</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -364,8 +364,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>240</width>
+        <height>320</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -391,8 +391,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>313</height>
+        <width>240</width>
+        <height>320</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -1118,8 +1118,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>73</height>
+        <width>256</width>
+        <height>393</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1179,8 +1179,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>240</width>
+        <height>393</height>
        </rect>
       </property>
      </widget>
@@ -1203,8 +1203,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>240</width>
+        <height>393</height>
        </rect>
       </property>
      </widget>
@@ -1227,8 +1227,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>389</height>
+        <width>240</width>
+        <height>393</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -1349,7 +1349,7 @@ p, li { white-space: pre-wrap; }
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
-   <widget class="QWidget" name="dockWidgetContents_2">
+   <widget class="QWidget" name="LevelSection">
     <widget class="QGroupBox" name="LVLPropMusicGr">
      <property name="geometry">
       <rect>
@@ -1362,7 +1362,7 @@ p, li { white-space: pre-wrap; }
      <property name="title">
       <string>Music</string>
      </property>
-     <widget class="QComboBox" name="LVLPropsMusicNumver_2">
+     <widget class="QComboBox" name="LVLPropsMusicNumber">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1377,7 +1377,7 @@ p, li { white-space: pre-wrap; }
        </property>
       </item>
      </widget>
-     <widget class="QLabel" name="LVLPropCMusicLbl_2">
+     <widget class="QLabel" name="LVLPropCMusicLbl">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1393,7 +1393,7 @@ p, li { white-space: pre-wrap; }
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="LVLPropsMusicCustom_2">
+     <widget class="QLineEdit" name="LVLPropsMusicCustom">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1403,7 +1403,7 @@ p, li { white-space: pre-wrap; }
        </rect>
       </property>
      </widget>
-     <widget class="QCheckBox" name="LVLPropsMusicCustonEn_2">
+     <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -1419,7 +1419,7 @@ p, li { white-space: pre-wrap; }
        <bool>false</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="LVLPropsMusicCustomBrowse_2">
+     <widget class="QPushButton" name="LVLPropsMusicCustomBrowse">
       <property name="geometry">
        <rect>
         <x>140</x>
@@ -1432,7 +1432,7 @@ p, li { white-space: pre-wrap; }
        <string>...</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="LVLPropsMusicPlay_2">
+     <widget class="QPushButton" name="LVLPropsMusicPlay">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -1463,7 +1463,7 @@ p, li { white-space: pre-wrap; }
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QCheckBox" name="LVLPropsLevelWarp_2">
+       <widget class="QCheckBox" name="LVLPropsLevelWarp">
         <property name="whatsThis">
          <string>Leaving for the screen, the player enters the screen on the other side</string>
         </property>
@@ -1476,7 +1476,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="LVLPropsOffScr_2">
+       <widget class="QCheckBox" name="LVLPropsOffScr">
         <property name="text">
          <string>Off screen exit</string>
         </property>
@@ -1486,7 +1486,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="LVLPropsNoTBack_2">
+       <widget class="QCheckBox" name="LVLPropsNoTBack">
         <property name="text">
          <string>No turn back (disable moving to left)</string>
         </property>
@@ -1496,7 +1496,7 @@ p, li { white-space: pre-wrap; }
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="LVLPropsUnderWater_2">
+       <widget class="QCheckBox" name="LVLPropsUnderWater">
         <property name="text">
          <string>Underwater</string>
         </property>
@@ -1521,7 +1521,7 @@ p, li { white-space: pre-wrap; }
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QLabel" name="LVLPropBckgrClrLbl">
+       <widget class="QLabel" name="LVLPropBckgrClrLabel">
         <property name="text">
          <string>Background color:</string>
         </property>
@@ -1598,7 +1598,7 @@ p, li { white-space: pre-wrap; }
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_10">
+     <widget class="QLabel" name="LVLProp_CurSect">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -1612,7 +1612,7 @@ p, li { white-space: pre-wrap; }
       </property>
      </widget>
     </widget>
-    <widget class="QPushButton" name="BTNResize">
+    <widget class="QPushButton" name="ResizeSection">
      <property name="geometry">
       <rect>
        <x>100</x>

@@ -181,31 +181,31 @@ public:
     QLabel *label_12;
     QPushButton *pushButton_3;
     QDockWidget *LevelSectionSettings;
-    QWidget *dockWidgetContents_2;
+    QWidget *LevelSection;
     QGroupBox *LVLPropMusicGr;
-    QComboBox *LVLPropsMusicNumver_2;
-    QLabel *LVLPropCMusicLbl_2;
-    QLineEdit *LVLPropsMusicCustom_2;
-    QCheckBox *LVLPropsMusicCustonEn_2;
-    QPushButton *LVLPropsMusicCustomBrowse_2;
-    QPushButton *LVLPropsMusicPlay_2;
+    QComboBox *LVLPropsMusicNumber;
+    QLabel *LVLPropCMusicLbl;
+    QLineEdit *LVLPropsMusicCustom;
+    QCheckBox *LVLPropsMusicCustomEn;
+    QPushButton *LVLPropsMusicCustomBrowse;
+    QPushButton *LVLPropsMusicPlay;
     QGroupBox *LVLPropSettingsGrp;
     QVBoxLayout *verticalLayout_3;
-    QCheckBox *LVLPropsLevelWarp_2;
-    QCheckBox *LVLPropsOffScr_2;
-    QCheckBox *LVLPropsNoTBack_2;
-    QCheckBox *LVLPropsUnderWater_2;
+    QCheckBox *LVLPropsLevelWarp;
+    QCheckBox *LVLPropsOffScr;
+    QCheckBox *LVLPropsNoTBack;
+    QCheckBox *LVLPropsUnderWater;
     QGroupBox *LVLPropStyleGr;
     QVBoxLayout *verticalLayout;
-    QLabel *LVLPropBckgrClrLbl;
+    QLabel *LVLPropBckgrClrLabel;
     QComboBox *LVLPropsBackColor;
     QLabel *LVLPropBckrImg;
     QComboBox *LVLPropsBackImage;
     QGraphicsView *LVLPropsBackImgPreview;
     QGroupBox *groupBox_5;
     QLabel *label_9;
-    QLabel *label_10;
-    QPushButton *BTNResize;
+    QLabel *LVLProp_CurSect;
+    QPushButton *ResizeSection;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -539,7 +539,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1124, 21));
+        menuBar->setGeometry(QRect(0, 0, 1124, 18));
         menuBar->setContextMenuPolicy(Qt::NoContextMenu);
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
@@ -599,7 +599,7 @@ public:
         Blocks->setWidgetResizable(true);
         blocksscroll = new QWidget();
         blocksscroll->setObjectName(QStringLiteral("blocksscroll"));
-        blocksscroll->setGeometry(QRect(0, 0, 81, 28));
+        blocksscroll->setGeometry(QRect(0, 0, 240, 320));
         blocksscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         Blocks->setWidget(blocksscroll);
         LevelToolBoxTabs->addTab(Blocks, QString());
@@ -610,7 +610,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 81, 28));
+        backsscroll->setGeometry(QRect(0, 0, 240, 320));
         backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -621,7 +621,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 81, 28));
+        npcscroll->setGeometry(QRect(0, 0, 240, 320));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -632,7 +632,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 239, 313));
+        specialscroll->setGeometry(QRect(0, 0, 240, 320));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -830,7 +830,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 81, 73));
+        TilesItemBox->setGeometry(QRect(0, 0, 256, 393));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -858,7 +858,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
+        SceneryScroll->setGeometry(QRect(0, 0, 240, 393));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -868,7 +868,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 240, 393));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -878,7 +878,7 @@ public:
         MusicSet->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 389));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 240, 393));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -916,75 +916,75 @@ public:
         LevelSectionSettings->setFloating(false);
         LevelSectionSettings->setFeatures(QDockWidget::AllDockWidgetFeatures);
         LevelSectionSettings->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
-        dockWidgetContents_2 = new QWidget();
-        dockWidgetContents_2->setObjectName(QStringLiteral("dockWidgetContents_2"));
-        LVLPropMusicGr = new QGroupBox(dockWidgetContents_2);
+        LevelSection = new QWidget();
+        LevelSection->setObjectName(QStringLiteral("LevelSection"));
+        LVLPropMusicGr = new QGroupBox(LevelSection);
         LVLPropMusicGr->setObjectName(QStringLiteral("LVLPropMusicGr"));
         LVLPropMusicGr->setGeometry(QRect(0, 160, 221, 131));
-        LVLPropsMusicNumver_2 = new QComboBox(LVLPropMusicGr);
-        LVLPropsMusicNumver_2->setObjectName(QStringLiteral("LVLPropsMusicNumver_2"));
-        LVLPropsMusicNumver_2->setGeometry(QRect(10, 20, 101, 20));
-        LVLPropCMusicLbl_2 = new QLabel(LVLPropMusicGr);
-        LVLPropCMusicLbl_2->setObjectName(QStringLiteral("LVLPropCMusicLbl_2"));
-        LVLPropCMusicLbl_2->setGeometry(QRect(10, 50, 47, 16));
-        LVLPropCMusicLbl_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        LVLPropsMusicCustom_2 = new QLineEdit(LVLPropMusicGr);
-        LVLPropsMusicCustom_2->setObjectName(QStringLiteral("LVLPropsMusicCustom_2"));
-        LVLPropsMusicCustom_2->setGeometry(QRect(10, 70, 133, 21));
-        LVLPropsMusicCustonEn_2 = new QCheckBox(LVLPropMusicGr);
-        LVLPropsMusicCustonEn_2->setObjectName(QStringLiteral("LVLPropsMusicCustonEn_2"));
-        LVLPropsMusicCustonEn_2->setGeometry(QRect(120, 20, 88, 17));
-        LVLPropsMusicCustonEn_2->setTristate(false);
-        LVLPropsMusicCustomBrowse_2 = new QPushButton(LVLPropMusicGr);
-        LVLPropsMusicCustomBrowse_2->setObjectName(QStringLiteral("LVLPropsMusicCustomBrowse_2"));
-        LVLPropsMusicCustomBrowse_2->setGeometry(QRect(140, 70, 31, 21));
-        LVLPropsMusicPlay_2 = new QPushButton(LVLPropMusicGr);
-        LVLPropsMusicPlay_2->setObjectName(QStringLiteral("LVLPropsMusicPlay_2"));
-        LVLPropsMusicPlay_2->setGeometry(QRect(10, 100, 131, 23));
-        LVLPropsMusicPlay_2->setCheckable(true);
-        LVLPropSettingsGrp = new QGroupBox(dockWidgetContents_2);
+        LVLPropsMusicNumber = new QComboBox(LVLPropMusicGr);
+        LVLPropsMusicNumber->setObjectName(QStringLiteral("LVLPropsMusicNumber"));
+        LVLPropsMusicNumber->setGeometry(QRect(10, 20, 101, 20));
+        LVLPropCMusicLbl = new QLabel(LVLPropMusicGr);
+        LVLPropCMusicLbl->setObjectName(QStringLiteral("LVLPropCMusicLbl"));
+        LVLPropCMusicLbl->setGeometry(QRect(10, 50, 47, 16));
+        LVLPropCMusicLbl->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        LVLPropsMusicCustom = new QLineEdit(LVLPropMusicGr);
+        LVLPropsMusicCustom->setObjectName(QStringLiteral("LVLPropsMusicCustom"));
+        LVLPropsMusicCustom->setGeometry(QRect(10, 70, 133, 21));
+        LVLPropsMusicCustomEn = new QCheckBox(LVLPropMusicGr);
+        LVLPropsMusicCustomEn->setObjectName(QStringLiteral("LVLPropsMusicCustomEn"));
+        LVLPropsMusicCustomEn->setGeometry(QRect(120, 20, 88, 17));
+        LVLPropsMusicCustomEn->setTristate(false);
+        LVLPropsMusicCustomBrowse = new QPushButton(LVLPropMusicGr);
+        LVLPropsMusicCustomBrowse->setObjectName(QStringLiteral("LVLPropsMusicCustomBrowse"));
+        LVLPropsMusicCustomBrowse->setGeometry(QRect(140, 70, 31, 21));
+        LVLPropsMusicPlay = new QPushButton(LVLPropMusicGr);
+        LVLPropsMusicPlay->setObjectName(QStringLiteral("LVLPropsMusicPlay"));
+        LVLPropsMusicPlay->setGeometry(QRect(10, 100, 131, 23));
+        LVLPropsMusicPlay->setCheckable(true);
+        LVLPropSettingsGrp = new QGroupBox(LevelSection);
         LVLPropSettingsGrp->setObjectName(QStringLiteral("LVLPropSettingsGrp"));
         LVLPropSettingsGrp->setGeometry(QRect(0, 40, 221, 121));
         verticalLayout_3 = new QVBoxLayout(LVLPropSettingsGrp);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        LVLPropsLevelWarp_2 = new QCheckBox(LVLPropSettingsGrp);
-        LVLPropsLevelWarp_2->setObjectName(QStringLiteral("LVLPropsLevelWarp_2"));
-        LVLPropsLevelWarp_2->setTristate(false);
+        LVLPropsLevelWarp = new QCheckBox(LVLPropSettingsGrp);
+        LVLPropsLevelWarp->setObjectName(QStringLiteral("LVLPropsLevelWarp"));
+        LVLPropsLevelWarp->setTristate(false);
 
-        verticalLayout_3->addWidget(LVLPropsLevelWarp_2);
+        verticalLayout_3->addWidget(LVLPropsLevelWarp);
 
-        LVLPropsOffScr_2 = new QCheckBox(LVLPropSettingsGrp);
-        LVLPropsOffScr_2->setObjectName(QStringLiteral("LVLPropsOffScr_2"));
-        LVLPropsOffScr_2->setTristate(false);
+        LVLPropsOffScr = new QCheckBox(LVLPropSettingsGrp);
+        LVLPropsOffScr->setObjectName(QStringLiteral("LVLPropsOffScr"));
+        LVLPropsOffScr->setTristate(false);
 
-        verticalLayout_3->addWidget(LVLPropsOffScr_2);
+        verticalLayout_3->addWidget(LVLPropsOffScr);
 
-        LVLPropsNoTBack_2 = new QCheckBox(LVLPropSettingsGrp);
-        LVLPropsNoTBack_2->setObjectName(QStringLiteral("LVLPropsNoTBack_2"));
-        LVLPropsNoTBack_2->setTristate(false);
+        LVLPropsNoTBack = new QCheckBox(LVLPropSettingsGrp);
+        LVLPropsNoTBack->setObjectName(QStringLiteral("LVLPropsNoTBack"));
+        LVLPropsNoTBack->setTristate(false);
 
-        verticalLayout_3->addWidget(LVLPropsNoTBack_2);
+        verticalLayout_3->addWidget(LVLPropsNoTBack);
 
-        LVLPropsUnderWater_2 = new QCheckBox(LVLPropSettingsGrp);
-        LVLPropsUnderWater_2->setObjectName(QStringLiteral("LVLPropsUnderWater_2"));
-        LVLPropsUnderWater_2->setTristate(false);
+        LVLPropsUnderWater = new QCheckBox(LVLPropSettingsGrp);
+        LVLPropsUnderWater->setObjectName(QStringLiteral("LVLPropsUnderWater"));
+        LVLPropsUnderWater->setTristate(false);
 
-        verticalLayout_3->addWidget(LVLPropsUnderWater_2);
+        verticalLayout_3->addWidget(LVLPropsUnderWater);
 
-        LVLPropStyleGr = new QGroupBox(dockWidgetContents_2);
+        LVLPropStyleGr = new QGroupBox(LevelSection);
         LVLPropStyleGr->setObjectName(QStringLiteral("LVLPropStyleGr"));
         LVLPropStyleGr->setGeometry(QRect(0, 290, 221, 201));
         verticalLayout = new QVBoxLayout(LVLPropStyleGr);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        LVLPropBckgrClrLbl = new QLabel(LVLPropStyleGr);
-        LVLPropBckgrClrLbl->setObjectName(QStringLiteral("LVLPropBckgrClrLbl"));
-        LVLPropBckgrClrLbl->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
+        LVLPropBckgrClrLabel = new QLabel(LVLPropStyleGr);
+        LVLPropBckgrClrLabel->setObjectName(QStringLiteral("LVLPropBckgrClrLabel"));
+        LVLPropBckgrClrLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
-        verticalLayout->addWidget(LVLPropBckgrClrLbl);
+        verticalLayout->addWidget(LVLPropBckgrClrLabel);
 
         LVLPropsBackColor = new QComboBox(LVLPropStyleGr);
         LVLPropsBackColor->setObjectName(QStringLiteral("LVLPropsBackColor"));
@@ -1006,21 +1006,21 @@ public:
 
         verticalLayout->addWidget(LVLPropsBackImgPreview);
 
-        groupBox_5 = new QGroupBox(dockWidgetContents_2);
+        groupBox_5 = new QGroupBox(LevelSection);
         groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
         groupBox_5->setGeometry(QRect(0, 0, 91, 41));
         label_9 = new QLabel(groupBox_5);
         label_9->setObjectName(QStringLiteral("label_9"));
         label_9->setGeometry(QRect(10, 20, 51, 16));
         label_9->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_10 = new QLabel(groupBox_5);
-        label_10->setObjectName(QStringLiteral("label_10"));
-        label_10->setGeometry(QRect(70, 20, 16, 16));
-        BTNResize = new QPushButton(dockWidgetContents_2);
-        BTNResize->setObjectName(QStringLiteral("BTNResize"));
-        BTNResize->setGeometry(QRect(100, 10, 111, 23));
-        BTNResize->setCheckable(true);
-        LevelSectionSettings->setWidget(dockWidgetContents_2);
+        LVLProp_CurSect = new QLabel(groupBox_5);
+        LVLProp_CurSect->setObjectName(QStringLiteral("LVLProp_CurSect"));
+        LVLProp_CurSect->setGeometry(QRect(70, 20, 16, 16));
+        ResizeSection = new QPushButton(LevelSection);
+        ResizeSection->setObjectName(QStringLiteral("ResizeSection"));
+        ResizeSection->setGeometry(QRect(100, 10, 111, 23));
+        ResizeSection->setCheckable(true);
+        LevelSectionSettings->setWidget(LevelSection);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), LevelSectionSettings);
         QWidget::setTabOrder(BTNWarpsAndDoors, BTNWaterRanges);
         QWidget::setTabOrder(BTNWaterRanges, BTNStartPoints);
@@ -1332,24 +1332,24 @@ public:
         WorldToolBoxTabs->setTabText(WorldToolBoxTabs->indexOf(MusicSet), QApplication::translate("MainWindow", "Music Set", 0));
         LevelSectionSettings->setWindowTitle(QApplication::translate("MainWindow", "Section Settings", 0));
         LVLPropMusicGr->setTitle(QApplication::translate("MainWindow", "Music", 0));
-        LVLPropsMusicNumver_2->clear();
-        LVLPropsMusicNumver_2->insertItems(0, QStringList()
+        LVLPropsMusicNumber->clear();
+        LVLPropsMusicNumber->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "[Silence]", 0)
         );
-        LVLPropCMusicLbl_2->setText(QApplication::translate("MainWindow", "Music file:", 0));
-        LVLPropsMusicCustonEn_2->setText(QApplication::translate("MainWindow", "Custom music", 0));
-        LVLPropsMusicCustomBrowse_2->setText(QApplication::translate("MainWindow", "...", 0));
-        LVLPropsMusicPlay_2->setText(QApplication::translate("MainWindow", "Play", 0));
+        LVLPropCMusicLbl->setText(QApplication::translate("MainWindow", "Music file:", 0));
+        LVLPropsMusicCustomEn->setText(QApplication::translate("MainWindow", "Custom music", 0));
+        LVLPropsMusicCustomBrowse->setText(QApplication::translate("MainWindow", "...", 0));
+        LVLPropsMusicPlay->setText(QApplication::translate("MainWindow", "Play", 0));
         LVLPropSettingsGrp->setTitle(QApplication::translate("MainWindow", "Section Settings", 0));
 #ifndef QT_NO_WHATSTHIS
-        LVLPropsLevelWarp_2->setWhatsThis(QApplication::translate("MainWindow", "Leaving for the screen, the player enters the screen on the other side", 0));
+        LVLPropsLevelWarp->setWhatsThis(QApplication::translate("MainWindow", "Leaving for the screen, the player enters the screen on the other side", 0));
 #endif // QT_NO_WHATSTHIS
-        LVLPropsLevelWarp_2->setText(QApplication::translate("MainWindow", "Level warp", 0));
-        LVLPropsOffScr_2->setText(QApplication::translate("MainWindow", "Off screen exit", 0));
-        LVLPropsNoTBack_2->setText(QApplication::translate("MainWindow", "No turn back (disable moving to left)", 0));
-        LVLPropsUnderWater_2->setText(QApplication::translate("MainWindow", "Underwater", 0));
+        LVLPropsLevelWarp->setText(QApplication::translate("MainWindow", "Level warp", 0));
+        LVLPropsOffScr->setText(QApplication::translate("MainWindow", "Off screen exit", 0));
+        LVLPropsNoTBack->setText(QApplication::translate("MainWindow", "No turn back (disable moving to left)", 0));
+        LVLPropsUnderWater->setText(QApplication::translate("MainWindow", "Underwater", 0));
         LVLPropStyleGr->setTitle(QApplication::translate("MainWindow", "Style", 0));
-        LVLPropBckgrClrLbl->setText(QApplication::translate("MainWindow", "Background color:", 0));
+        LVLPropBckgrClrLabel->setText(QApplication::translate("MainWindow", "Background color:", 0));
         LVLPropsBackColor->clear();
         LVLPropsBackColor->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "Black", 0)
@@ -1363,8 +1363,8 @@ public:
         );
         groupBox_5->setTitle(QApplication::translate("MainWindow", "Current Section", 0));
         label_9->setText(QApplication::translate("MainWindow", "Section:", 0));
-        label_10->setText(QApplication::translate("MainWindow", "0", 0));
-        BTNResize->setText(QApplication::translate("MainWindow", "Resize section", 0));
+        LVLProp_CurSect->setText(QApplication::translate("MainWindow", "0", 0));
+        ResizeSection->setText(QApplication::translate("MainWindow", "Resize section", 0));
     } // retranslateUi
 
 };
