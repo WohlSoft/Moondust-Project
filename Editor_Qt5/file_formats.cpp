@@ -538,6 +538,13 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     LevelEvents_layers events_layers;
     LevelEvents_Sets events_sets;
 
+    FileData.blocks_array_id = 0;
+    FileData.bgo_array_id = 0;
+    FileData.npc_array_id = 0;
+    FileData.doors_array_id = 0;
+    FileData.water_array_id = 0;
+    FileData.layers_array_id = 0;
+    FileData.events_array_id = 0;
 
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
@@ -562,11 +569,6 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             goto badfile;
         else FileData.LevelName = (line.remove(0,1)).remove(line.size()-2,1);//remove quotes
     } else FileData.LevelName="";
-
-    /*
-    if(myString.startsWith("\"") myString.remove(0,1);
-    if(myString.endsWith("\"") myString.remove(myString.size()-1,1);
-    */
 
     //total sections
     if(file_format>=8)
@@ -775,6 +777,8 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             blocks.event_no_more="";
         }
 
+        blocks.array_id = FileData.blocks_array_id;
+        FileData.blocks_array_id++;
     FileData.blocks.push_back(blocks); //AddBlock into array
 
     str_count++;line = in.readLine();
@@ -808,6 +812,8 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         }
         else bgodata.layer = "Default";
 
+        bgodata.array_id = FileData.bgo_array_id;
+        FileData.bgo_array_id++;
     FileData.bgo.push_back(bgodata); // Add Background object into array
 
     str_count++;line = in.readLine();
@@ -966,6 +972,9 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              else npcdata.attach_layer = (line.remove(0,1)).remove(line.size()-2,1);
          }  else npcdata.attach_layer = "";
 
+         npcdata.array_id = FileData.npc_array_id;
+         FileData.npc_array_id++;
+
     FileData.npc.push_back(npcdata); //Add NPC into array
     str_count++;line = in.readLine();
     }
@@ -1104,7 +1113,8 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             doors.allownpc=false;
             doors.locked=false;
         }
-
+        doors.array_id = FileData.doors_array_id;
+        FileData.doors_array_id++;
 
     FileData.doors.push_back(doors); //Add NPC into array
     str_count++;line = in.readLine();
@@ -1156,6 +1166,9 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 goto badfile;
             else waters.layer = (line.remove(0,1)).remove(line.size()-2,1);
 
+            waters.array_id = FileData.water_array_id;
+            FileData.water_array_id++;
+
         FileData.water.push_back(waters); //Add Water area into array
         str_count++;line = in.readLine();
         }
@@ -1175,6 +1188,9 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             if(!boolwords.exactMatch(line)) //hidden layer
                 goto badfile;
             else layers.hidden = ((line=="#TRUE#")?true:false);
+
+            layers.array_id = FileData.layers_array_id;
+            FileData.layers_array_id++;
 
         FileData.layers.push_back(layers); //Add Water area into array
         str_count++;line = in.readLine();
@@ -1399,6 +1415,9 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 events.move_camera_y = 0;
                 events.scrool_section = 0;
             }
+
+            events.array_id = FileData.events_array_id;
+            FileData.events_array_id++;
 
         FileData.events.push_back(events);
         str_count++;line = in.readLine();
