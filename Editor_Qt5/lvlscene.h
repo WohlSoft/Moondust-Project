@@ -31,6 +31,13 @@ struct UserBGOs
     unsigned long id;
 };
 
+struct UserBlocks
+{
+    QPixmap image;
+    QBitmap mask;
+    unsigned long id;
+};
+
 struct UserBGs
 {
     QPixmap image;
@@ -51,16 +58,22 @@ public:
     QGraphicsItemGroup *bgofore;
     QGraphicsItemGroup *cursor;
 
-    void setBlocks(LevelData FileData, QProgressDialog &progress);
+    void loadUserData(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
+    void setBlocks(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     void setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     void setNPC(LevelData FileData, QProgressDialog &progress);
+    void setWaters(LevelData FileData, QProgressDialog &progress);
     //void makeSectionBG(int x, int y, int h, int w);
     void makeSectionBG(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
+
+    QVector<UserBGs > uBGs;
+    QVector<UserBGOs > uBGOs;
+    QVector<UserBlocks > uBlocks;
 
 private:
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
     void placeBox(float x, float y);
-    void placeBlock(float x, float y, QPixmap &img);
+    void placeBlock(LevelBlock block, dataconfigs &configs);
 
 };
 

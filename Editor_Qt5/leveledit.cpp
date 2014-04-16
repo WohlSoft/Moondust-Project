@@ -169,7 +169,11 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     //Data configs exists
     if(
             (configs.main_bgo.size()<=0)||
-            (configs.main_bg.size()<=0)
+            (configs.main_bg.size()<=0)||
+            (configs.main_block.size()<=0)||
+            (configs.main_music_lvl.size()<=0)||
+            (configs.main_music_wld.size()<=0)||
+            (configs.main_music_spc.size()<=0)
       )
     {
         QMessageBox::warning(this, tr("Configurations not loaded"),
@@ -179,26 +183,15 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
         return false;
     }
 
-
-    //setPlainText(in.readAll());
-
-    /*
-    LoadingProcess ProgressBar;
-    ProgressBar.setWindowFlags (ProgressBar.windowFlags() &
-                                ~Qt::WindowContextHelpButtonHint &
-                                ~Qt::WindowCloseButtonHint);
-    ProgressBar.thread();
-
-    DrawObjects();
-
-    ProgressBar.close();
-*/
     int DataSize=0;
 
     DataSize += LvlData.sections.size()*2;
+    DataSize += configs.main_bgo.size();
+    DataSize += LvlData.bgo.size();
+    DataSize += configs.main_block.size();
     DataSize += LvlData.blocks.size();
-    DataSize += LvlData.bgo.size()*2;
     DataSize += LvlData.npc.size();
+    DataSize += LvlData.water.size();
 
     QProgressDialog progress("Loading level data", "Abort", 0, DataSize, this);
          progress.setWindowTitle("Loading level data");
@@ -229,12 +222,32 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 {
     scene = new LvlScene;
     int DataSize = progress.maximum();
+    int TotalSteps = 5;
 
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
+
+    scene->loadUserData(LvlData, progress, configs);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("1/%1 Loading Backgrounds").arg(TotalSteps));
     scene->makeSectionBG(LvlData, progress, configs);
 
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("2/%1 Loading BGOs").arg(TotalSteps));
     scene->setBGO(LvlData, progress, configs);
-    scene->setBlocks(LvlData, progress);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("3/%1 Loading Blocks").arg(TotalSteps));
+    scene->setBlocks(LvlData, progress, configs);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("4/%1 Loading NPCs").arg(TotalSteps));
     scene->setNPC(LvlData, progress);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("5/%1 Loading Waters").arg(TotalSteps));
+    scene->setWaters(LvlData, progress);
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,
@@ -244,7 +257,8 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     */
 
     ui->graphicsView->setScene(scene);
-    progress.setValue(DataSize);
+    if(!progress.wasCanceled())
+        progress.setValue(DataSize);
 }
 
 bool leveledit::save()
