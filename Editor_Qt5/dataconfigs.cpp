@@ -120,6 +120,33 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
         total_data +=block_total;
     blockset.endGroup();
 
+    //music///////////////////////////////////////////////
+    obj_music smusic_lvl;
+    obj_music smusic_wld;
+    obj_music smusic_spc;
+
+    unsigned long music_lvl_total=0;
+    unsigned long music_wld_total=0;
+    unsigned long music_spc_total=0;
+
+    QString music_ini = config_dir + "music.ini";
+    QSettings musicset(music_ini, QSettings::IniFormat);
+
+    main_music_lvl.clear();   //Clear old
+    main_music_wld.clear();   //Clear old
+    main_music_spc.clear();   //Clear old
+
+    musicset.beginGroup("music-main");
+        music_lvl_total = musicset.value("total-level", "0").toInt();
+        music_wld_total = musicset.value("total-world", "0").toInt();
+        music_spc_total = musicset.value("total-special", "0").toInt();
+
+        music_custom_id = musicset.value("level-custom-music-id", "24").toInt();
+        total_data +=music_lvl_total;
+        total_data +=music_wld_total;
+        total_data +=music_spc_total;
+    musicset.endGroup();
+
     //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -225,7 +252,6 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
                  sbg.image=sbg.image.copy(0, 0, sbg.image.width(), (int)round(sbg.image.height()/sbg.frames));
              }
              sbg.id = i;
-
              main_bg.push_back(sbg);
          bgset.endGroup();
 
@@ -301,7 +327,7 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
                 sblock.mask_n = imgFileM;
                 if(tmp.size()==2) mask = QBitmap(blockPath + imgFileM);
                 sblock.mask = mask;
-                sblock.image = QPixmap(bgoPath + imgFile);
+                sblock.image = QPixmap(blockPath + imgFile);
                 if(tmp.size()==2) sblock.image.setMask(mask);
             }
             else
@@ -320,7 +346,7 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
             sblock.dest_bomb = blockset.value("destruct-bomb", "0").toBool();
             sblock.dest_fire = blockset.value("destruct-fireball", "0").toBool();
 
-            imgFile =  blockset.value("spawn-on-destroy", "0").toString();
+            imgFile = blockset.value("spawn-on-destroy", "0").toString();
             if(imgFile!="0")
             {
                 tmp =  imgFile.split("-", QString::SkipEmptyParts);
@@ -351,16 +377,17 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
                 sblock.spawn_obj_id = 0;
             }
 
-            sblock.effect= blockset.value("desctruct-effect", "1").toInt();
+            sblock.effect= blockset.value("destruct-effect", "1").toInt();
 
             sblock.bounce = blockset.value("bounce", "0").toBool();
             sblock.hitable = blockset.value("hitable", "0").toBool();
             sblock.onhit = blockset.value("hitable", "0").toBool();
             sblock.onhit_block= blockset.value("onhit-block", "2").toInt();
             sblock.algorithm= blockset.value("algorithm", "2").toInt();
-            sblock.animated = (bgoset.value("animated", "0").toString()=="1");
-            sblock.frames = bgoset.value("frames", "1").toInt();
-            sblock.framespeed = bgoset.value("frame-speed", "125").toInt();
+            sblock.view = (int)(blockset.value("view", "background").toString()=="foreground");
+            sblock.animated = (blockset.value("animated", "0").toString()=="1");
+            sblock.frames = blockset.value("frames", "1").toInt();
+            sblock.framespeed = blockset.value("frame-speed", "125").toInt();
             sblock.id = i;
             main_block.push_back(sblock);
         blockset.endGroup();
@@ -370,6 +397,55 @@ void dataconfigs::loadconfigs(QWidget * window, bool nobar)
             progress.setValue(prgs);
     }
     ///////////////////////////////////////Block////////////////////////////////////////////
+
+    ///////////////////////////////////////Music////////////////////////////////////////////
+    progress.setLabelText("Loading Music Data");
+
+    //World music
+    for(i=1; i<=music_wld_total; i++)
+    {
+        musicset.beginGroup( QString("world-music-"+QString::number(i)) );
+            smusic_wld.name = musicset.value("name", "").toString();
+            smusic_wld.file = musicset.value("file", "").toString();
+            smusic_wld.id = i;
+            main_music_wld.push_back(smusic_wld);
+        musicset.endGroup();
+
+        prgs++;
+        if((!progress.wasCanceled())&&(!nobar))
+            progress.setValue(prgs);
+    }
+
+    //Special music
+    for(i=1; i<=music_spc_total; i++)
+    {
+        musicset.beginGroup( QString("special-music-"+QString::number(i)) );
+            smusic_spc.name = musicset.value("name", "").toString();
+            smusic_spc.file = musicset.value("file", "").toString();
+            smusic_spc.id = i;
+            main_music_spc.push_back(smusic_spc);
+        musicset.endGroup();
+
+        prgs++;
+        if((!progress.wasCanceled())&&(!nobar))
+            progress.setValue(prgs);
+    }
+
+    //Level music
+    for(i=1; i<=music_lvl_total; i++)
+    {
+        musicset.beginGroup( QString("level-music-"+QString::number(i)) );
+            smusic_lvl.name = musicset.value("name", "").toString();
+            smusic_lvl.file = musicset.value("file", "").toString();
+            smusic_lvl.id = i;
+            main_music_lvl.push_back(smusic_lvl);
+        musicset.endGroup();
+
+        prgs++;
+        if((!progress.wasCanceled())&&(!nobar))
+            progress.setValue(prgs);
+    }
+    ///////////////////////////////////////Music////////////////////////////////////////////
 
     if((!progress.wasCanceled())&&(!nobar))
         progress.close();

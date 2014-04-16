@@ -119,6 +119,8 @@ struct obj_block{
     bool onhit;
     unsigned long onhit_block;
     unsigned long algorithm;
+
+    unsigned int view;
     bool animated;
     unsigned int frames;
     int framespeed;
@@ -172,6 +174,12 @@ second-attached=overfirst
 
 };
 
+struct obj_music
+{
+    unsigned long id;
+    QString name;
+    QString file;
+};
 
 class dataconfigs
 {
@@ -183,6 +191,11 @@ public:
     QVector<obj_bgo > main_bgo;
     QVector<obj_BG > main_bg;
     QVector<obj_block > main_block;
+
+    unsigned long music_custom_id;
+    QVector<obj_music > main_music_lvl;
+    QVector<obj_music > main_music_wld;
+    QVector<obj_music > main_music_spc;
 
 };
 
