@@ -58,7 +58,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QSplashScreen splash(splashimg);
     splash.show();
 
-    configs.loadconfigs(this, true);
+    configs.loadconfigs(true);
     ui->setupUi(this);
 
     //Applay objects into tools
@@ -900,7 +900,7 @@ void MainWindow::on_actionSection_21_triggered()
 void MainWindow::on_actionLoad_configs_triggered()
 {
     //Reload configs
-    configs.loadconfigs(this);
+    configs.loadconfigs();
 
     //Set tools from loaded configs
     setTools();
@@ -924,7 +924,15 @@ void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
 {
     unsigned int test = index;
     if(ui->LVLPropsMusicNumber->hasFocus())
+    {
         ui->LVLPropsMusicCustomEn->setChecked(  test == configs.music_custom_id );
+    }
+
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
+    }
+
     setMusic(ui->LVLPropsMusicPlay->isChecked());
 }
 
@@ -933,7 +941,13 @@ void MainWindow::on_LVLPropsMusicCustomEn_toggled(bool checked)
     if(ui->LVLPropsMusicCustomEn->hasFocus())
     {
         if(checked)
+        {
             ui->LVLPropsMusicNumber->setCurrentIndex( configs.music_custom_id );
+            if(activeChildWindow()==1)
+            {
+                activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
+            }
+        }
     }
 }
 
@@ -1022,7 +1036,10 @@ void MainWindow::setMusic(bool checked)
 
 void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
 {
-    arg1.isNull();//Заглушка
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_file = arg1;
+    }
 
     setMusic( ui->LVLPropsMusicPlay->isChecked() );
 }
