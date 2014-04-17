@@ -208,6 +208,14 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
 
     for(i=0;i<FileData.sections.size(); i++)
     {
+
+        if(
+                (FileData.sections[i].size_left==0) &&
+                (FileData.sections[i].size_right==0) &&
+                (FileData.sections[i].size_top==0) &&
+                (FileData.sections[i].size_bottom==0))
+            continue;
+
         if(FileData.sections[i].size_left < l)
             l = FileData.sections[i].size_left;
         if(FileData.sections[i].size_right > r)
