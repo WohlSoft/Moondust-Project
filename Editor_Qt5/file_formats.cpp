@@ -562,7 +562,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         else FileData.stars=line.toInt();   //Number of stars
     } else FileData.stars=0;
 
-    if(file_format >= 63)
+    if(file_format >= 62)
     {
         str_count++;line = in.readLine();   //Read Third Line
         if(!qstr.exactMatch(line)) //LevelTitle
@@ -739,7 +739,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             goto badfile;
         else blocks.invisible = ((line=="#TRUE#")?true:false);
 
-        if(file_format >= 63)
+        if(file_format >= 62)
         {
             str_count++;line = in.readLine();
             if(!boolwords.exactMatch(line)) //Slippery
