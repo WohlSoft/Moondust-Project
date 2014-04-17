@@ -149,6 +149,8 @@ void leveledit::setCurrentSection(int scId)
     //Move to new section position
     ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionY);
     ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionX);
+
+    scene->drawSpace(LvlData);
 }
 
 
@@ -253,6 +255,8 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     if(!progress.wasCanceled())
         progress.setLabelText(tr("6/%1 Loading Doors").arg(TotalSteps));
     scene->setDoors(LvlData, progress);
+
+    scene->drawSpace(LvlData);
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,

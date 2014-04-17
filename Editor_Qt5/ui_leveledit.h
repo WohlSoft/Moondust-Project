@@ -49,13 +49,14 @@ public:
         leveledit->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         verticalLayout = new QVBoxLayout(leveledit);
         verticalLayout->setSpacing(0);
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         graphicsView = new QGraphicsView(leveledit);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setAutoFillBackground(false);
-        graphicsView->setStyleSheet(QStringLiteral("background-color: qlineargradient(spread:pad, x1:0.369, y1:1, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(132, 132, 132, 255));"));
+        graphicsView->setStyleSheet(QStringLiteral("background-color: rgb(98, 98, 98);"));
         graphicsView->setInteractive(true);
+        graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
 
         verticalLayout->addWidget(graphicsView);
 

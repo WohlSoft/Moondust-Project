@@ -58,6 +58,10 @@ public:
     QGraphicsItemGroup *bgofore;
     QGraphicsItemGroup *cursor;
 
+    //void makeSectionBG(int x, int y, int h, int w);
+    void makeSectionBG(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
+    void drawSpace(LevelData FileData);
+
     void loadUserData(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     void setBlocks(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     void setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
@@ -65,8 +69,6 @@ public:
     void setWaters(LevelData FileData, QProgressDialog &progress);
     void setDoors(LevelData FileData, QProgressDialog &progress);
 
-    //void makeSectionBG(int x, int y, int h, int w);
-    void makeSectionBG(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
     void sortBlockArray(QVector<LevelBlock > &blocks);
 

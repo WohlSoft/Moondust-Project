@@ -173,6 +173,85 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
 }
 
 
+void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
+{
+    foreach(QGraphicsItem * spaceItem, items())
+    {
+        if(spaceItem->data(0).toString()=="Space")
+        {
+            removeItem(spaceItem);
+            break;
+        }
+    }
+    foreach(QGraphicsItem * spaceItem, items())
+    {
+        if(spaceItem->data(0).toString()=="SectionBorder")
+        {
+            removeItem(spaceItem);
+            break;
+        }
+    }
+
+    QPolygon bigSpace;
+    QGraphicsItem * item;
+    QGraphicsItem * item2;
+    QVector<QPoint > drawing;
+
+    int i;//, j;
+    long l, r, t, b;
+         //x, y, h, w;
+
+    l = FileData.sections[0].size_left;
+    r = FileData.sections[0].size_right;
+    t = FileData.sections[0].size_top;
+    b = FileData.sections[0].size_bottom;
+
+    for(i=0;i<FileData.sections.size(); i++)
+    {
+        if(FileData.sections[i].size_left < l)
+            l = FileData.sections[i].size_left;
+        if(FileData.sections[i].size_right > r)
+            r = FileData.sections[i].size_right;
+        if(FileData.sections[i].size_top < t)
+            t = FileData.sections[i].size_left;
+        if(FileData.sections[i].size_bottom > b)
+            b = FileData.sections[i].size_right;
+    }
+
+    drawing.clear();
+    drawing.push_back(QPoint(l-1000, t-1000));
+    drawing.push_back(QPoint(r+1000, t-1000));
+    drawing.push_back(QPoint(r+1000, b+1000));
+    drawing.push_back(QPoint(l-1000, b+1000));
+    drawing.push_back(QPoint(l-1000, t+1000));
+
+    bigSpace = QPolygon(drawing);
+
+    l = FileData.sections[FileData.CurSection].size_left;
+    r = FileData.sections[FileData.CurSection].size_right;
+    t = FileData.sections[FileData.CurSection].size_top;
+    b = FileData.sections[FileData.CurSection].size_bottom;
+
+
+    drawing.clear();
+    drawing.push_back(QPoint(l, t));
+    drawing.push_back(QPoint(r, t));
+    drawing.push_back(QPoint(r, b));
+    drawing.push_back(QPoint(l, b));
+    drawing.push_back(QPoint(l, t));
+
+    bigSpace = bigSpace.subtracted(QPolygon(drawing));
+
+    item = addPolygon(bigSpace, QPen(Qt::NoPen), QBrush(Qt::black));//Add inactive space
+    item2 = addPolygon(QPolygon(drawing), QPen(Qt::red, 4));
+    item->setZValue(300);
+    item2->setZValue(310);
+    item->setOpacity(qreal(0.4));
+    item->setData(0, "Space");
+    item2->setData(0, "SectionBorder");
+
+}
+
 ///////////////////////////////BACKGROUND IMAGE/////////////////////////////////////////
 void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress, dataconfigs &configs)
 //void LvlScene::makeSectionBG(int x, int y, int w, int h)
