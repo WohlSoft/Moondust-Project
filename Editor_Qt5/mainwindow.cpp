@@ -26,12 +26,15 @@
 #include <QFile>
 #include <QSettings>
 #include <QTranslator>
+#include <QtMultimedia/QMediaPlayer>
+#include <QMediaPlaylist>
 #include <QLocale>
 #include <QSplashScreen>
 #include "childwindow.h"
 #include "leveledit.h"
 #include "npcedit.h"
 #include "dataconfigs.h"
+#include "musicfilelist.h"
 
 QString LastOpenDir = ".";
 bool LevelToolBoxVis = false;
@@ -41,11 +44,15 @@ bool SectionToolBoxVis = false;
 
 dataconfigs configs;
 
+QMediaPlayer * MusicPlayer;
+
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     //QMenuBar * menuBar = new QMenuBar(0); // test for MacOS X
+
+    MusicPlayer = new QMediaPlayer;
 
     QPixmap splashimg(":/images/splash.png");
     QSplashScreen splash(splashimg);
@@ -175,7 +182,11 @@ void MainWindow::updateMenus()
     ui->actionSection_20->setEnabled( (WinType==1) );
     ui->actionSection_21->setEnabled( (WinType==1) );
 
-    if(WinType==1) SetCurrentLevelSection(0, 1);
+    if(WinType==1)
+    {
+        SetCurrentLevelSection(0, 1);
+        setMusic( ui->LVLPropsMusicPlay->isChecked() );
+    }
 
     ui->menuWindow->setEnabled( (WinType!=0) );
 
@@ -608,27 +619,30 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
     if ((WinType==1) && (open==0))
     {
        activeLvlEditWin()->setCurrentSection(SectionId);
+    }
 
-       //Set Section Data in menu
-       ui->actionLevNoBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
-       ui->actionLevOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
-       ui->actionLevUnderW->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
-       ui->actionLevWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+    if (WinType==1)
+    {
+        //Set Section Data in menu
+        ui->actionLevNoBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
+        ui->actionLevOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
+        ui->actionLevUnderW->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
+        ui->actionLevWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
 
-       //set data in Section Settings Widget
-       ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
+        //set data in Section Settings Widget
+        ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
 
-       ui->LVLPropsNoTBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
-       ui->LVLPropsOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
-       ui->LVLPropsUnderWater->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
-       ui->LVLPropsLevelWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+        ui->LVLPropsNoTBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
+        ui->LVLPropsOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
+        ui->LVLPropsUnderWater->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
+        ui->LVLPropsLevelWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
 
-       ui->LVLPropsMusicCustom->setText(activeLvlEditWin()->LvlData.sections[SectionId].music_file);
+        ui->LVLPropsMusicCustom->setText(activeLvlEditWin()->LvlData.sections[SectionId].music_file);
 
-       ui->LVLPropsMusicNumber->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].music_id );
-       ui->LVLPropsMusicCustomEn->setChecked( (activeLvlEditWin()->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
+        ui->LVLPropsMusicNumber->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].music_id );
+        ui->LVLPropsMusicCustomEn->setChecked( (activeLvlEditWin()->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
 
-       ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
+        ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
     }
 }
 
@@ -904,4 +918,111 @@ void MainWindow::on_actionExport_to_image_triggered()
     {
         activeLvlEditWin()->ExportToImage_fn();
     }
+}
+
+void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
+{
+    unsigned int test = index;
+    if(ui->LVLPropsMusicNumber->hasFocus())
+        ui->LVLPropsMusicCustomEn->setChecked(  test == configs.music_custom_id );
+    setMusic(ui->LVLPropsMusicPlay->isChecked());
+}
+
+void MainWindow::on_LVLPropsMusicCustomEn_toggled(bool checked)
+{
+    if(ui->LVLPropsMusicCustomEn->hasFocus())
+    {
+        if(checked)
+            ui->LVLPropsMusicNumber->setCurrentIndex( configs.music_custom_id );
+    }
+}
+
+void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
+{
+    QString dirPath;
+    if(activeChildWindow()==1)
+    {
+        dirPath = activeLvlEditWin()->LvlData.path;
+    }
+    else return;
+
+    MusicFileList musicList(dirPath);
+    if( musicList.exec() == QDialog::Accepted )
+    {
+        ui->LVLPropsMusicCustom->setText(musicList.SelectedFile);
+    }
+
+}
+
+void MainWindow::on_LVLPropsMusicPlay_toggled(bool checked)
+{
+    setMusic(checked);
+}
+
+void MainWindow::setMusic(bool checked)
+{
+    QString dirPath;
+    QString musicFile;
+    QString musicFilePath;
+    bool silent;
+    unsigned int CurMusNum;
+    QMediaPlaylist * CurrentMusic = new QMediaPlaylist;
+
+    if(activeChildWindow()==1)
+    {
+        dirPath = activeLvlEditWin()->LvlData.path;
+    }
+    else return;
+
+    if(ui->LVLPropsMusicNumber->currentIndex()==0)
+        silent=true;
+    else
+        silent=false;
+
+    if(!silent)
+        CurMusNum = ui->LVLPropsMusicNumber->currentIndex()-1;
+
+
+    if(!silent)
+    {
+        if(CurMusNum==configs.music_custom_id-1)
+        {
+            musicFile = ui->LVLPropsMusicCustom->text();
+            musicFilePath = dirPath + "/" + musicFile;
+        }
+        else
+        {
+            musicFile = configs.main_music_lvl[CurMusNum].file;
+            dirPath = configs.dirs.music;
+            musicFilePath = configs.dirs.music + musicFile;
+            //QMessageBox::information(this, "test", "music is \n"+musicFile+"\n"+QString::number());
+        }
+
+        if(checked)
+        {
+            if(QFile::exists(musicFilePath) )
+            {
+                CurrentMusic->addMedia(QUrl::fromLocalFile( musicFilePath ));
+                CurrentMusic->setPlaybackMode(QMediaPlaylist::Loop);
+                MusicPlayer->stop();
+                MusicPlayer->setPlaylist(CurrentMusic);
+                MusicPlayer->setVolume(100);
+                MusicPlayer->play();
+            }
+        }
+        else
+        {
+            MusicPlayer->stop();
+        }
+    }
+    else MusicPlayer->stop();
+}
+
+
+
+void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
+{
+    arg1.isNull();//Заглушка
+
+    setMusic( ui->LVLPropsMusicPlay->isChecked() );
 }
