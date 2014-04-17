@@ -494,6 +494,7 @@ WorldData MainWindow::ReadWorldFile(QFile &inf)
         goto badfile;
     else file_format=line.toInt();
 
+    QString::number(file_format);//Пустышка
 
 FileData.ReadFileValid=true;
 
