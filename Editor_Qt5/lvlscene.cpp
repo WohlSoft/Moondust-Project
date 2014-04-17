@@ -606,7 +606,21 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
         h = FileData.water[i].h;
         w = FileData.water[i].w;
 
-        box = addRect(x, y, w, h, QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
+        //box = addRect(x, y, w, h, QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
+        QVector<QPoint > points;
+        // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
+        points.push_back(QPoint(x, y));
+        points.push_back(QPoint(x+w, y));
+        points.push_back(QPoint(x+w,y+h));
+        points.push_back(QPoint(x, y+h));
+        points.push_back(QPoint(x, y));
+
+        points.push_back(QPoint(x, y+h));
+        points.push_back(QPoint(x+w,y+h));
+        points.push_back(QPoint(x+w, y));
+        points.push_back(QPoint(x, y));
+
+        box = addPolygon(QPolygon(points), QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4));
 
         box->setFlag(QGraphicsItem::ItemIsSelectable,true);
 
