@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT       += core gui widgets multimedia
 
 TARGET = plweditor
 TEMPLATE = app
@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     leveledit.cpp \
     lvlscene.cpp \
     dataconfigs.cpp \
-    saveimage.cpp
+    saveimage.cpp \
+    musicfilelist.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     leveledit.h \
     lvlscene.h \
     dataconfigs.h \
-    saveimage.h
+    saveimage.h \
+    musicfilelist.h
 
 FORMS    += \
     aboutdialog.ui \
@@ -40,7 +42,8 @@ FORMS    += \
     levelprops.ui \
     mainwindow.ui \
     npcedit.ui \
-    saveimage.ui
+    saveimage.ui \
+    musicfilelist.ui
 
 RC_FILE = platgenw.rc
 
