@@ -63,8 +63,12 @@ public:
     void setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     void setNPC(LevelData FileData, QProgressDialog &progress);
     void setWaters(LevelData FileData, QProgressDialog &progress);
+    void setDoors(LevelData FileData, QProgressDialog &progress);
+
     //void makeSectionBG(int x, int y, int h, int w);
     void makeSectionBG(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
+    QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
+    void sortBlockArray(QVector<LevelBlock > &blocks);
 
     QVector<UserBGs > uBGs;
     QVector<UserBGOs > uBGOs;

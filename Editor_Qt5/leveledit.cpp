@@ -192,6 +192,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     DataSize += LvlData.blocks.size();
     DataSize += LvlData.npc.size();
     DataSize += LvlData.water.size();
+    DataSize += LvlData.doors.size();
 
     QProgressDialog progress("Loading level data", "Abort", 0, DataSize, this);
          progress.setWindowTitle("Loading level data");
@@ -222,7 +223,7 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 {
     scene = new LvlScene;
     int DataSize = progress.maximum();
-    int TotalSteps = 5;
+    int TotalSteps = 6;
 
     if(!progress.wasCanceled())
         progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
@@ -248,6 +249,10 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     if(!progress.wasCanceled())
         progress.setLabelText(tr("5/%1 Loading Waters").arg(TotalSteps));
     scene->setWaters(LvlData, progress);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("6/%1 Loading Doors").arg(TotalSteps));
+    scene->setDoors(LvlData, progress);
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,

@@ -22,6 +22,7 @@
 #include <QGraphicsItemAnimation>
 #include <QKeyEvent>
 #include <QBitmap>
+#include <QPainter>
 #include <QMessageBox>
 #include <QApplication>
 #include <QGraphicsItem>
@@ -235,7 +236,7 @@ void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress, data
 
             item = addRect(QRectF(x, y, (long)fabs(x-w), (long)fabs(y-h)), pen, brush);
             item->setData(0, "BackGround");
-            item->setZValue(-30);
+            item->setZValue(-400);
         }
     //}
     total++;
@@ -275,7 +276,6 @@ void LvlScene::placeBlock(LevelBlock block, dataconfigs &configs)
     bool isUser=false;
     int j;
     QPixmap img;
-
     QGraphicsItem *	box, * npc;
 
     QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.gif");
@@ -312,21 +312,32 @@ void LvlScene::placeBlock(LevelBlock block, dataconfigs &configs)
 
     if((!noimage) && (configs.main_block[j].animated))
     {
-        img=img.copy(0, 0, img.width(), (int)round(img.height()/configs.main_block[j].frames));
+        if(configs.main_block[j].algorithm==1)
+            img = img.copy(0, ((int)round(img.height()/configs.main_block[j].frames))*4,
+                       img.width(), (int)round(img.height()/configs.main_block[j].frames));
+        else
+            img=img.copy(0, 0, img.width(), (int)round(img.height()/configs.main_block[j].frames));
     }
 
-    box = addPixmap(QPixmap(img));
+    if(!configs.main_block[j].sizeble)
+        box = addPixmap(QPixmap(img));
+    else
+    {
+        box = addPixmap(QPixmap( drawSizebleBlock(block.w, block.h, img) ));
+        box->setZValue(-150);
+    }
+
     box->setPos(block.x, block.y);
 
     if(block.invisible)
     box->setOpacity(qreal(0.5));
 
-    if(block.npc_id!=0)
+    if(block.npc_id != 0)
     {
         npc = addPixmap(QPixmap(npci));
         npc->setPos(block.x, block.y);
         npc->setZValue(1);
-        npc->setOpacity(qreal(0.3));
+        npc->setOpacity(qreal(0.4));
     }
 
     box->setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -335,19 +346,128 @@ void LvlScene::placeBlock(LevelBlock block, dataconfigs &configs)
     box->setData(2, QString::number(block.array_id) );
 
     if(configs.main_block[j].sizeble)
-        box->setZValue(-12);
+        box->setZValue(-150);
     else
+    {
     if(configs.main_block[j].view==1)
-        box->setZValue(1);
+        box->setZValue(10);
     else
-        box->setZValue(0);
+        box->setZValue(1);
+    }
 
+}
+
+//Sizeble Block formula
+QPixmap LvlScene::drawSizebleBlock(int w, int h, QPixmap srcimg)
+{
+    int x,y, i, j;
+    int hc, wc;
+    QPixmap img;
+    QPixmap * sizebleImage;
+    QPainter * szblock;
+    x=32;
+    y=32;
+
+    sizebleImage = new QPixmap(QSize(w, h));
+    sizebleImage->fill(Qt::transparent);
+    szblock = new QPainter(sizebleImage);
+
+    //L
+    hc=0;
+    for(i=0; i<((h-2*y) / y); i++ )
+    {
+        szblock->drawPixmap(0, x+hc, x, y, srcimg.copy(QRect(0, y, x, y)));
+            hc+=x;
+    }
+
+    //T
+    hc=0;
+    for(i=0; i<( (w-2*x) / x); i++ )
+    {
+        szblock->drawPixmap(x+hc, 0, x, y, srcimg.copy(QRect(x, 0, x, y)) );
+            hc+=x;
+    }
+
+    //B
+    hc=0;
+    for(i=0; i< ( (w-2*x) / x); i++ )
+    {
+        szblock->drawPixmap(x+hc, h-y, x, y, srcimg.copy(QRect(x, srcimg.width()-y, x, y )) );
+            hc+=x;
+    }
+
+    //R
+    hc=0;
+    for(i=0; i<((h-2*y) / y); i++ )
+    {
+        szblock->drawPixmap(w-x, y+hc, x, y, srcimg.copy(QRect(srcimg.width()-x, y, x, y)));
+            hc+=x;
+    }
+
+    //C
+    hc=0;
+    wc=0;
+    for(i=0; i<((h-2*y) / y); i++ )
+    {
+        hc=0;
+        for(j=0; j<((w-2*x) / x); j++ )
+        {
+        szblock->drawPixmap(x+hc, y+wc, x, y, srcimg.copy(QRect(x, y, x, y)));
+            hc+=x;
+        }
+        wc+=y;
+    }
+
+    //Applay Sizeble formula
+     //1
+    szblock->drawPixmap(0,0,y,x, srcimg.copy(QRect(0,0,y,x)));
+     //2
+    szblock->drawPixmap(w-y, 0, y, x, srcimg.copy(QRect(srcimg.width()-y, 0, y, x)) );
+     //3
+    szblock->drawPixmap(w-y, h-x, y, x, srcimg.copy(QRect(srcimg.width()-y, srcimg.height()-x, y, x)) );
+     //4
+    szblock->drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
+
+    img = QPixmap( * sizebleImage);
+    return img;
+}
+
+void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
+{
+    LevelBlock tmp1;
+    int total = blocks.size();
+    long i;
+    long ymin;
+    long ymini;
+    long sorted = 0;
+
+
+        while(sorted < blocks.size())
+        {
+            ymin = blocks[sorted].y;
+            ymini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( blocks[i].y < ymin )
+                {
+                    ymin = blocks[i].y; ymini = i;
+                }
+            }
+            tmp1 = blocks[ymini];
+            blocks[ymini] = blocks[sorted];
+            blocks[sorted] = tmp1;
+            sorted++;
+        }
 }
 
 /////////////////////SET Block Objects/////////////////////////////////////////////
 void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress, dataconfigs &configs)
 {
     int i=0;
+
+    //Sort block by Y
+    sortBlockArray(FileData.blocks);
 
     //Applay images to objects
     for(i=0; i<FileData.blocks.size(); i++)
@@ -430,8 +550,6 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
             box->setZValue(-10);
             //bgofore->addToGroup(box);
 
-        box->setData(0, "BGO"); // ObjType
-
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
     }
@@ -490,12 +608,56 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
 
         box = addRect(x, y, w, h, QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
 
-        //box->setPos(FileData.water[i].x, FileData.water[i].y);
         box->setFlag(QGraphicsItem::ItemIsSelectable,true);
+
         box->setZValue(10);
+
         box->setData(0, "Water"); // ObjType
         box->setData(1, QString::number(0) );
         box->setData(2, QString::number(FileData.water[i].array_id) );
+
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
+    }
+
+}
+
+/////////////////////////SET Doors/////////////////////////////////
+void LvlScene::setDoors(LevelData FileData, QProgressDialog &progress)
+{
+    int i=0;
+    long ix, iy, ox, oy, h, w;
+    QGraphicsItem *	enter;
+    QGraphicsItem *	exit;
+
+    for(i=0; i<FileData.doors.size(); i++)
+    {
+        if(!progress.wasCanceled())
+            progress.setLabelText("Applayng doors "+QString::number(i)+"/"+QString::number(FileData.doors.size()));
+
+        ix = FileData.doors[i].ix;
+        iy = FileData.doors[i].iy;
+        ox = FileData.doors[i].ox;
+        oy = FileData.doors[i].oy;
+        h = 32;
+        w = 32;
+
+        enter = addRect(ix, iy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
+        exit = addRect(ox, oy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
+
+        enter->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        exit->setFlag(QGraphicsItem::ItemIsSelectable,true);
+
+        enter->setZValue(15);
+        exit->setZValue(15);
+
+        enter->setData(0, "Door_enter"); // ObjType
+        enter->setData(1, QString::number(0) );
+        enter->setData(2, QString::number(FileData.doors[i].array_id) );
+
+        exit->setData(0, "Door_exit"); // ObjType
+        exit->setData(1, QString::number(0) );
+        exit->setData(2, QString::number(FileData.doors[i].array_id) );
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
