@@ -185,7 +185,7 @@ class dataconfigs
 {
 public:
     dataconfigs();
-    void loadconfigs(QWidget *window, bool nobar=false);
+    void loadconfigs(bool nobar=false);
     DataFolders dirs;
 
     QVector<obj_bgo > main_bgo;

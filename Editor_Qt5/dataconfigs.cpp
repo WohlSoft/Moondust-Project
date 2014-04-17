@@ -44,7 +44,7 @@ frames = 1			; default = 1
 frame-speed=125			; default = 125 ms, etc. 8 frames per sec
 */
 
-void dataconfigs::loadconfigs(QWidget * window, bool nobar)
+void dataconfigs::loadconfigs(bool nobar)
 {
     unsigned long total_data=0, i, prgs=0;
     QString config_dir = QApplication::applicationDirPath() + "/" +  "configs/SMBX/";
