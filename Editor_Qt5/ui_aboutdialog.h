@@ -40,7 +40,7 @@ public:
         if (aboutDialog->objectName().isEmpty())
             aboutDialog->setObjectName(QStringLiteral("aboutDialog"));
         aboutDialog->setWindowModality(Qt::ApplicationModal);
-        aboutDialog->resize(500, 402);
+        aboutDialog->resize(500, 404);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -123,12 +123,12 @@ public:
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/images/mushroom.png\" /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-weight:600;\">Platformer Game Engine</span></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; text-decoration: underline;\">By Wohlstand</span><span style=\" font-family:"
-                        "'MS Shell Dlg 2'; font-weight:600;\"><br /></span><span style=\" font-family:'MS Shell Dlg 2'; font-style:italic;\">Pre-Alpha Version 0.0.5</span></p>\n"
+                        "'MS Shell Dlg 2'; font-weight:600;\"><br /></span><span style=\" font-family:'MS Shell Dlg 2'; font-style:italic;\">Pre-Alpha Version 0.0.6</span></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'MS Shell Dlg 2'; font-style:italic;\"><br /></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-style:italic; color:#aa0000;\">Project is Under Construction (Test for Qt5)</span><span style=\" font-family:'MS Shell Dlg 2';\"><br /></span></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2'; font-style:italic; color:#aa0000;\">Project is Under Construction</span><span style=\" font-family:'MS Shell Dlg 2';\"><br /></span></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'MS Shell Dlg 2';\">Our project site:</span></p>\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margi"
-                        "n-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://engine.wohlnet.ru\"><span style=\" text-decoration: underline; color:#0000ff;\">http://engine.wohlnet.ru</span></a></p>\n"
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -q"
+                        "t-block-indent:0; text-indent:0px;\"><a href=\"http://engine.wohlnet.ru\"><span style=\" text-decoration: underline; color:#0000ff;\">http://engine.wohlnet.ru</span></a></p>\n"
 "<p align=\"center\" style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#0000ff;\"><br /></p>\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">This programm is distributed under <a href=\"http://www.gnu.org/licenses/gpl-2.0.html\"><span style=\" text-decoration: underline; color:#0000ff;\">GNU GNLv2</span></a><span style=\" text-decoration: underline;\">.</span></p></body></html>", 0));
         textEdit->setHtml(QApplication::translate("aboutDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
