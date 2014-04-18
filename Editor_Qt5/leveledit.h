@@ -49,6 +49,7 @@ public:
     QString currentFile() { return curFile; }
 
     void setCurrentSection(int scId);
+    void ResetPosition();
 
     void ExportToImage_fn();
 
