@@ -42,5 +42,7 @@
         <file>images/coin.png</file>
         <file>images/mac/mushroom.hqx</file>
         <file>images/mac/mushroom.icns</file>
+        <file>images/grid.png</file>
+        <file>images/reset_pos.png</file>
     </qresource>
 </RCC>
