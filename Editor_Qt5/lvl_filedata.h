@@ -22,6 +22,7 @@
 //////////////////////Level file Data//////////////////////
 struct LevelSection
 {
+    int id;
     long size_top;
     long size_bottom;
     long size_left;
