@@ -656,22 +656,30 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             else section.music_file = (line.remove(0,1)).remove(line.size()-2,1);//remove quotes
         } else section.music_file="";
 
+        section.id=i;
     FileData.sections.push_back(section); //Add Section in main array
     }
     if(file_format<8)
     {
-        section.size_left=0;
-        section.size_top=0;
-        section.size_bottom=0;
-        section.size_right=0;
-        section.music_id=0;
-        section.bgcolor=16291944;
-        section.IsWarp=false;
-        section.OffScreenEn=false;
-        section.background=0;
-        section.noback=false;
-        section.underwater=false;
-        section.music_file="";
+        for(i=i;i<21;i++)
+            {
+            section.size_left=0;
+            section.size_top=0;
+            section.size_bottom=0;
+            section.size_right=0;
+            section.music_id=0;
+            section.bgcolor=16291944;
+            section.IsWarp=false;
+            section.OffScreenEn=false;
+            section.background=0;
+            section.noback=false;
+            section.underwater=false;
+            section.music_file="";
+
+            section.id=i;
+
+        FileData.sections.push_back(section); //Add Section in main array
+        }
     }
 
 
