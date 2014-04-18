@@ -28,6 +28,7 @@
 #include "lvlscene.h"
 #include "dataconfigs.h"
 #include "saveimage.h"
+#include "logger.h"
 
 
 #include <QDebug>
@@ -49,6 +50,7 @@ leveledit::leveledit(QWidget *parent) :
 
 leveledit::~leveledit()
 {
+    //free(scene);
     delete ui;
 }
 
@@ -135,8 +137,24 @@ void leveledit::ExportToImage_fn()
         settings.endGroup();
 }
 
+void leveledit::ResetPosition()
+{
+    LvlData.sections[LvlData.CurSection].PositionX =
+            LvlData.sections[LvlData.CurSection].size_left;
+    LvlData.sections[LvlData.CurSection].PositionY =
+            LvlData.sections[LvlData.CurSection].size_bottom-602;
+
+    ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_bottom-602);
+    ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_left);
+}
+
 void leveledit::setCurrentSection(int scId)
 {
+    WriteToLog(QtDebugMsg, QString("Save current position %1 %2")
+               .arg(ui->graphicsView->horizontalScrollBar()->value())
+               .arg(ui->graphicsView->verticalScrollBar()->value())
+               );
+
     //Save currentPosition on Section
     LvlData.sections[LvlData.CurSection].PositionX =
             ui->graphicsView->horizontalScrollBar()->value();
@@ -146,10 +164,12 @@ void leveledit::setCurrentSection(int scId)
     //Change Current Section
     LvlData.CurSection = scId;
 
+    WriteToLog(QtDebugMsg, QString("Move to current section position"));
     //Move to new section position
     ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionY);
     ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionX);
 
+    WriteToLog(QtDebugMsg, QString("Call to Draw intersection space"));
     scene->drawSpace(LvlData);
 }
 
@@ -214,6 +234,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[0].size_bottom-602);
     ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[0].size_left);
 
+    ResetPosition();
+
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
@@ -223,7 +245,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
 void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 {
-    scene = new LvlScene;
+    scene = new LvlScene(configs, LvlData);
     int DataSize = progress.maximum();
     int TotalSteps = 6;
 
@@ -234,7 +256,7 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 
     if(!progress.wasCanceled())
         progress.setLabelText(tr("1/%1 Loading Backgrounds").arg(TotalSteps));
-    scene->makeSectionBG(LvlData, progress, configs);
+    scene->makeSectionBG(LvlData, progress);
 
     if(!progress.wasCanceled())
         progress.setLabelText(tr("2/%1 Loading BGOs").arg(TotalSteps));
