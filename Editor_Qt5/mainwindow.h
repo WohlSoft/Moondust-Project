@@ -50,6 +50,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
+    dataconfigs *getConfigs();
     
 protected:
     void closeEvent(QCloseEvent *event);
@@ -72,6 +73,7 @@ private slots:
     npcedit *createNPCChild();
 
     leveledit *createChild();
+
     void setActiveSubWindow(QWidget *window);
 
     void updateMenus();
@@ -125,7 +127,19 @@ private slots:
 
     void on_LVLPropsMusicCustom_textChanged(const QString &arg1);
 
+    void on_actionReset_position_triggered();
+
+    void on_actionGridEn_triggered(bool checked);
+
+    void on_actionSelect_triggered();
+
+    void on_actionEriser_triggered();
+
+    void on_LVLPropsBackImage_currentIndexChanged(int index);
+
 private:
+    dataconfigs configs;
+
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;

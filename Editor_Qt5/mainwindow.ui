@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1124</width>
-    <height>910</height>
+    <width>1189</width>
+    <height>1078</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -81,8 +81,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1124</width>
-     <height>18</height>
+     <width>1189</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -263,6 +263,12 @@
      <height>200</height>
     </size>
    </property>
+   <property name="maximumSize">
+    <size>
+     <width>350</width>
+     <height>524287</height>
+    </size>
+   </property>
    <property name="focusPolicy">
     <enum>Qt::NoFocus</enum>
    </property>
@@ -310,8 +316,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>240</width>
-        <height>320</height>
+        <width>239</width>
+        <height>389</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -337,8 +343,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>240</width>
-        <height>320</height>
+        <width>239</width>
+        <height>389</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -364,8 +370,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>240</width>
-        <height>320</height>
+        <width>239</width>
+        <height>389</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -391,8 +397,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>240</width>
-        <height>320</height>
+        <width>239</width>
+        <height>389</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -425,562 +431,6 @@
           <property name="checkable">
            <bool>true</bool>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QGroupBox" name="groupBox">
-          <property name="autoFillBackground">
-           <bool>true</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-color: rgb(0, 0, 0);</string>
-          </property>
-          <property name="title">
-           <string>Warps and doors</string>
-          </property>
-          <property name="flat">
-           <bool>false</bool>
-          </property>
-          <widget class="QGroupBox" name="groupBox_4">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>330</y>
-             <width>111</width>
-             <height>61</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Level</string>
-           </property>
-           <widget class="QCheckBox" name="WarpLevelEntrance">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>40</y>
-              <width>91</width>
-              <height>17</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Level entrance</string>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="WarpLevelExit">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>91</width>
-              <height>17</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Level exit</string>
-            </property>
-           </widget>
-          </widget>
-          <widget class="QGroupBox" name="groupBox_7">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>150</y>
-             <width>211</width>
-             <height>121</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Direction</string>
-           </property>
-           <widget class="QGroupBox" name="groupBox_2">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>10</y>
-              <width>91</width>
-              <height>101</height>
-             </rect>
-            </property>
-            <property name="title">
-             <string>Entrance</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-            <widget class="QRadioButton" name="Entr_Left">
-             <property name="geometry">
-              <rect>
-               <x>70</x>
-               <y>50</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="toolTip">
-              <string>Left</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-            <widget class="QRadioButton" name="Entr_Right">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>50</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="toolTip">
-              <string>Right</string>
-             </property>
-            </widget>
-            <widget class="QRadioButton" name="Entr_Up">
-             <property name="geometry">
-              <rect>
-               <x>40</x>
-               <y>80</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="toolTip">
-              <string>Up</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-            <widget class="QRadioButton" name="Entr_Down">
-             <property name="geometry">
-              <rect>
-               <x>40</x>
-               <y>20</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="toolTip">
-              <string>Down</string>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_2">
-             <property name="geometry">
-              <rect>
-               <x>25</x>
-               <y>38</y>
-               <width>41</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/images/warp_entrance.png&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </widget>
-           <widget class="QGroupBox" name="groupBox_3">
-            <property name="geometry">
-             <rect>
-              <x>110</x>
-              <y>10</y>
-              <width>91</width>
-              <height>101</height>
-             </rect>
-            </property>
-            <property name="title">
-             <string>Exit</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <widget class="QRadioButton" name="Exit_Left">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>50</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="toolTip">
-              <string>Left</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-            <widget class="QRadioButton" name="Exit_Right">
-             <property name="geometry">
-              <rect>
-               <x>70</x>
-               <y>50</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="toolTip">
-              <string>Right</string>
-             </property>
-            </widget>
-            <widget class="QRadioButton" name="Exit_Up">
-             <property name="geometry">
-              <rect>
-               <x>40</x>
-               <y>20</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="toolTip">
-              <string>Up</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-            <widget class="QRadioButton" name="Exit_Down">
-             <property name="geometry">
-              <rect>
-               <x>40</x>
-               <y>80</y>
-               <width>16</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="toolTip">
-              <string>Down</string>
-             </property>
-            </widget>
-            <widget class="QLabel" name="label_7">
-             <property name="geometry">
-              <rect>
-               <x>20</x>
-               <y>37</y>
-               <width>51</width>
-               <height>41</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/images/warp_exit.png&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </widget>
-          </widget>
-          <widget class="QGroupBox" name="groupBox_8">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>280</y>
-             <width>211</width>
-             <height>51</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Warp to World map</string>
-           </property>
-           <widget class="QPushButton" name="WarpGetXYFromWorldMap">
-            <property name="geometry">
-             <rect>
-              <x>150</x>
-              <y>20</y>
-              <width>41</width>
-              <height>21</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Set</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_6">
-            <property name="geometry">
-             <rect>
-              <x>90</x>
-              <y>20</y>
-              <width>16</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Y:</string>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="WarpToMapX">
-            <property name="geometry">
-             <rect>
-              <x>30</x>
-              <y>20</y>
-              <width>51</width>
-              <height>20</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_5">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>16</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>X:</string>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="WarpToMapY">
-            <property name="geometry">
-             <rect>
-              <x>100</x>
-              <y>20</y>
-              <width>51</width>
-              <height>20</height>
-             </rect>
-            </property>
-           </widget>
-          </widget>
-          <widget class="QGroupBox" name="groupBox_9">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>400</y>
-             <width>211</width>
-             <height>71</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Warp to level</string>
-           </property>
-           <widget class="QLabel" name="label_8">
-            <property name="geometry">
-             <rect>
-              <x>140</x>
-              <y>20</y>
-              <width>61</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Warp to</string>
-            </property>
-           </widget>
-           <widget class="QSpinBox" name="WarpToExitNo">
-            <property name="geometry">
-             <rect>
-              <x>140</x>
-              <y>40</y>
-              <width>61</width>
-              <height>22</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QLineEdit" name="lineEdit">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>40</y>
-              <width>101</width>
-              <height>20</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_11">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>111</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Level file</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pushButton">
-            <property name="geometry">
-             <rect>
-              <x>110</x>
-              <y>40</y>
-              <width>21</width>
-              <height>20</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>...</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="pushButton_4">
-            <property name="geometry">
-             <rect>
-              <x>60</x>
-              <y>10</y>
-              <width>61</width>
-              <height>23</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>[some test]</string>
-            </property>
-           </widget>
-          </widget>
-          <widget class="QGroupBox" name="groupBox_10">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>20</y>
-             <width>211</width>
-             <height>121</height>
-            </rect>
-           </property>
-           <property name="title">
-            <string>Main</string>
-           </property>
-           <widget class="QComboBox" name="comboBox_2">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>90</y>
-              <width>101</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <item>
-             <property name="text">
-              <string>0 - Instant</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>1 - Pipe</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>2 - Door</string>
-             </property>
-            </item>
-           </widget>
-           <widget class="QComboBox" name="comboBox">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>40</y>
-              <width>101</width>
-              <height>22</height>
-             </rect>
-            </property>
-            <item>
-             <property name="text">
-              <string>Entrance</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Exit</string>
-             </property>
-            </item>
-           </widget>
-           <widget class="QLabel" name="label_3">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>70</y>
-              <width>101</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Warp type</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>20</y>
-              <width>101</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Placement</string>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="WarpNoYoshi">
-            <property name="geometry">
-             <rect>
-              <x>120</x>
-              <y>10</y>
-              <width>81</width>
-              <height>17</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>No Yoshi</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_4">
-            <property name="geometry">
-             <rect>
-              <x>130</x>
-              <y>70</y>
-              <width>61</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Need stars</string>
-            </property>
-           </widget>
-           <widget class="QSpinBox" name="WarpNeedAStars">
-            <property name="geometry">
-             <rect>
-              <x>130</x>
-              <y>90</y>
-              <width>61</width>
-              <height>22</height>
-             </rect>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="checkBox_2">
-            <property name="geometry">
-             <rect>
-              <x>120</x>
-              <y>50</y>
-              <width>81</width>
-              <height>17</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Locked</string>
-            </property>
-           </widget>
-           <widget class="QCheckBox" name="checkBox">
-            <property name="geometry">
-             <rect>
-              <x>120</x>
-              <y>30</y>
-              <width>81</width>
-              <height>17</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Allow NPC</string>
-            </property>
-           </widget>
-          </widget>
          </widget>
         </item>
         <item>
@@ -1021,6 +471,9 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <addaction name="actionSelect"/>
    <addaction name="actionEriser"/>
+   <addaction name="separator"/>
+   <addaction name="actionReset_position"/>
+   <addaction name="actionGridEn"/>
    <addaction name="separator"/>
    <addaction name="actionLVLToolBox"/>
    <addaction name="actionSection_Settings"/>
@@ -1119,7 +572,7 @@ p, li { white-space: pre-wrap; }
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>393</height>
+        <height>481</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1179,8 +632,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>240</width>
-        <height>393</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
      </widget>
@@ -1203,8 +656,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>240</width>
-        <height>393</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
      </widget>
@@ -1227,8 +680,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>240</width>
-        <height>393</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -1627,6 +1080,593 @@ p, li { white-space: pre-wrap; }
      <property name="checkable">
       <bool>true</bool>
      </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="DoorsToolbox">
+   <property name="minimumSize">
+    <size>
+     <width>230</width>
+     <height>470</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>300</width>
+     <height>524287</height>
+    </size>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>231</width>
+       <height>482</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-color: rgb(0, 0, 0);</string>
+     </property>
+     <property name="title">
+      <string>Warps and doors</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>330</y>
+        <width>111</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Level</string>
+      </property>
+      <widget class="QCheckBox" name="WarpLevelEntrance">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>91</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Level entrance</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="WarpLevelExit">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>91</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Level exit</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>150</y>
+        <width>211</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Direction</string>
+      </property>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>91</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Entrance</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+       <widget class="QRadioButton" name="Entr_Left">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>50</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Left</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="Entr_Right">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Right</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="Entr_Up">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>80</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Up</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="Entr_Down">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>20</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Down</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_2">
+        <property name="geometry">
+         <rect>
+          <x>25</x>
+          <y>38</y>
+          <width>41</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/images/warp_entrance.png&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>10</y>
+         <width>91</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Exit</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <widget class="QRadioButton" name="Exit_Left">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>50</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Left</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="Exit_Right">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>50</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Right</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="Exit_Up">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>20</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Up</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="Exit_Down">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>80</y>
+          <width>16</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>Down</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>37</y>
+          <width>51</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/images/warp_exit.png&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>280</y>
+        <width>211</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Warp to World map</string>
+      </property>
+      <widget class="QPushButton" name="WarpGetXYFromWorldMap">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>20</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>20</y>
+         <width>16</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Y:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="WarpToMapX">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>20</y>
+         <width>51</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>16</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>X:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="WarpToMapY">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>20</y>
+         <width>51</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>400</y>
+        <width>211</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Warp to level</string>
+      </property>
+      <widget class="QLabel" name="label_8">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>20</y>
+         <width>61</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Warp to</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="WarpToExitNo">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>40</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>101</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_11">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Level file</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>40</y>
+         <width>21</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>10</y>
+         <width>61</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>[some test]</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_10">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>211</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Main</string>
+      </property>
+      <widget class="QComboBox" name="comboBox_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>90</y>
+         <width>101</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>0 - Instant</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>1 - Pipe</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>2 - Door</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="comboBox">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>101</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Entrance</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Exit</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Warp type</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Placement</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="WarpNoYoshi">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>10</y>
+         <width>81</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>No Yoshi</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>70</y>
+         <width>61</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Need stars</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="WarpNeedAStars">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>90</y>
+         <width>61</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox_2">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>50</y>
+         <width>81</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Locked</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>30</y>
+         <width>81</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Allow NPC</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -2351,7 +2391,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="enabled">
     <bool>false</bool>
@@ -2412,6 +2452,33 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionReset_position">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset position</string>
+   </property>
+  </action>
+  <action name="actionGridEn">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/grid.png</normaloff>:/images/grid.png</iconset>
+   </property>
+   <property name="text">
+    <string>Attach to grid</string>
    </property>
   </action>
  </widget>

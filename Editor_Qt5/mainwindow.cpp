@@ -35,14 +35,13 @@
 #include "npcedit.h"
 #include "dataconfigs.h"
 #include "musicfilelist.h"
+#include "logger.h"
 
 QString LastOpenDir = ".";
 bool LevelToolBoxVis = false;
 bool WorldToolBoxVis = false;
 bool SectionToolBoxVis = false;
-
-
-dataconfigs configs;
+bool autoPlayMusic = false;
 
 QMediaPlayer * MusicPlayer;
 
@@ -97,13 +96,16 @@ MainWindow::MainWindow(QMdiArea *parent) :
     //dockWidgetArea();
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
-
+    autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
     settings.endGroup();
+
+    ui->LVLPropsMusicPlay->setChecked(autoPlayMusic);
 
     ui->centralWidget->cascadeSubWindows();
     ui->WorldToolBox->hide();
     ui->LevelSectionSettings->hide();
     ui->LevelToolBox->hide();
+    ui->DoorsToolbox->hide();
 
     ui->menuView->setEnabled(0);
     ui->menuWindow->setEnabled(0);
@@ -113,6 +115,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->actionLVLToolBox->setVisible(0);
     ui->actionSection_Settings->setVisible(0);
     ui->actionWLDToolBox->setVisible(0);
+    ui->actionGridEn->setChecked(1);
 
     setAcceptDrops(true);
 }
@@ -120,10 +123,20 @@ MainWindow::MainWindow(QMdiArea *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    WriteToLog(QtDebugMsg, "--> Application closed <--");
+}
+
+dataconfigs * MainWindow::getConfigs()
+{
+    dataconfigs * pointer;
+    pointer = &configs;
+    return pointer;
 }
 
 void MainWindow::updateMenus()
 {
+    WriteToLog(QtDebugMsg, QString("Update menus"));
+
     int WinType = activeChildWindow(); // 1 lvledit, 2 npcedit, 3 wldedit
     bool hasSWindow = (WinType != 0);
 
@@ -181,11 +194,14 @@ void MainWindow::updateMenus()
     ui->actionSection_19->setEnabled( (WinType==1) );
     ui->actionSection_20->setEnabled( (WinType==1) );
     ui->actionSection_21->setEnabled( (WinType==1) );
+    ui->actionReset_position->setEnabled( (WinType==1) );
+    ui->actionGridEn->setEnabled( (WinType==1) );
 
     if(WinType==1)
     {
         SetCurrentLevelSection(0, 1);
         setMusic( ui->LVLPropsMusicPlay->isChecked() );
+        ui->actionSelect->trigger();
     }
 
     ui->menuWindow->setEnabled( (WinType!=0) );
@@ -207,6 +223,7 @@ void MainWindow::updateMenus()
 void MainWindow::setTools()
 {
     int i;
+        WriteToLog(QtDebugMsg, QString("Set toolboxes"));
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
@@ -315,7 +332,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("section-tb-visible", SectionToolBoxVis);
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
-
+    settings.setValue("autoPlayMusic", autoPlayMusic);
     settings.endGroup();
     event->accept();
     }
@@ -373,6 +390,7 @@ void MainWindow::OpenFile(QString FilePath)
 
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
+        FileData.playmusic = autoPlayMusic;
 
         leveledit *child = createChild();
         if (child->loadFile(FilePath, FileData, configs)) {
@@ -487,6 +505,7 @@ npcedit *MainWindow::activeNpcEditWin()
 
 leveledit *MainWindow::activeLvlEditWin()
 {
+    WriteToLog(QtDebugMsg, "set Level editing active window");
     if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
         return qobject_cast<leveledit *>(activeSubWindow->widget());
     return 0;
@@ -589,11 +608,14 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
     int SectionId = SctId;
     int WinType = activeChildWindow();
 
+    WriteToLog(QtDebugMsg, "Set Current Section");
     if ((open==1)&&(WinType==1)) // Only Set Checked section number without section select
     {
+        WriteToLog(QtDebugMsg, "get Current Section");
         SectionId = activeLvlEditWin()->LvlData.CurSection;
     }
 
+    WriteToLog(QtDebugMsg, "Set checkbox to");
     ui->actionSection_1->setChecked( (SectionId==0) );
     ui->actionSection_2->setChecked( (SectionId==1) );
     ui->actionSection_3->setChecked( (SectionId==2) );
@@ -618,30 +640,39 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
 
     if ((WinType==1) && (open==0))
     {
+       WriteToLog(QtDebugMsg, "Call to setCurrentSection()");
        activeLvlEditWin()->setCurrentSection(SectionId);
     }
 
     if (WinType==1)
     {
+        WriteToLog(QtDebugMsg, "Set Section Data in menu");
         //Set Section Data in menu
         ui->actionLevNoBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
         ui->actionLevOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
         ui->actionLevUnderW->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
         ui->actionLevWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
 
+        WriteToLog(QtDebugMsg, "Set text label");
         //set data in Section Settings Widget
         ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
 
+        WriteToLog(QtDebugMsg, "Set ToolBar data");
         ui->LVLPropsNoTBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
         ui->LVLPropsOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
         ui->LVLPropsUnderWater->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
         ui->LVLPropsLevelWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
 
+        WriteToLog(QtDebugMsg, "Set text to custom music file");
         ui->LVLPropsMusicCustom->setText(activeLvlEditWin()->LvlData.sections[SectionId].music_file);
 
+        WriteToLog(QtDebugMsg, "Set standart Music index");
         ui->LVLPropsMusicNumber->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].music_id );
+
+        WriteToLog(QtDebugMsg, "Set Custom music checkbox");
         ui->LVLPropsMusicCustomEn->setChecked( (activeLvlEditWin()->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
 
+        WriteToLog(QtDebugMsg, "Set background index");
         ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
     }
 }
@@ -739,7 +770,12 @@ void MainWindow::on_actionLevelProp_triggered()
     if(activeChildWindow()==1)
     {
         LevelProps LevProps(activeLvlEditWin()->LvlData);
-        LevProps.exec();
+        if(LevProps.exec()==QDialog::Accepted)
+        {
+            activeLvlEditWin()->LvlData.playmusic = LevProps.AutoPlayMusic;
+            activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
+            autoPlayMusic = LevProps.AutoPlayMusic;
+        }
     }
 
 }
@@ -903,7 +939,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     configs.loadconfigs();
 
     //Set tools from loaded configs
-    setTools();
+    //setTools();
 
     QMessageBox::information(this, tr("Reload configuration"),
      tr("Configuration succesfully reloaded!"),
@@ -933,6 +969,7 @@ void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
     }
 
+    WriteToLog(QtDebugMsg, "Call to Set Music if playing");
     setMusic(ui->LVLPropsMusicPlay->isChecked());
 }
 
@@ -970,6 +1007,7 @@ void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
 
 void MainWindow::on_LVLPropsMusicPlay_toggled(bool checked)
 {
+    WriteToLog(QtDebugMsg, "Clicked play music button");
     setMusic(checked);
 }
 
@@ -980,32 +1018,38 @@ void MainWindow::setMusic(bool checked)
     QString musicFilePath;
     bool silent;
     unsigned int CurMusNum;
+
+    WriteToLog(QtDebugMsg, "-> New MediaPlayList");
     QMediaPlaylist * CurrentMusic = new QMediaPlaylist;
 
     if(activeChildWindow()==1)
     {
+        WriteToLog(QtDebugMsg, "het Level File Path");
         dirPath = activeLvlEditWin()->LvlData.path;
     }
     else return;
 
+    WriteToLog(QtDebugMsg, "Check for Sielent");
     if(ui->LVLPropsMusicNumber->currentIndex()==0)
         silent=true;
     else
         silent=false;
 
-    if(!silent)
-        CurMusNum = ui->LVLPropsMusicNumber->currentIndex()-1;
-
+    WriteToLog(QtDebugMsg, "ifNot Sielent, play Music");
 
     if(!silent)
     {
+        CurMusNum = ui->LVLPropsMusicNumber->currentIndex()-1;
+
         if(CurMusNum==configs.music_custom_id-1)
         {
+                WriteToLog(QtDebugMsg, QString("get Custom music path"));
             musicFile = ui->LVLPropsMusicCustom->text();
             musicFilePath = dirPath + "/" + musicFile;
         }
         else
         {
+                WriteToLog(QtDebugMsg, QString("get standart music path"));
             musicFile = configs.main_music_lvl[CurMusNum].file;
             dirPath = configs.dirs.music;
             musicFilePath = configs.dirs.music + musicFile;
@@ -1016,20 +1060,29 @@ void MainWindow::setMusic(bool checked)
         {
             if(QFile::exists(musicFilePath) )
             {
+                WriteToLog(QtDebugMsg, QString("Set music player -> addMedia"));
                 CurrentMusic->addMedia(QUrl::fromLocalFile( musicFilePath ));
                 CurrentMusic->setPlaybackMode(QMediaPlaylist::Loop);
+                WriteToLog(QtDebugMsg, QString("Set music player -> stop Current"));
                 MusicPlayer->stop();
+                WriteToLog(QtDebugMsg, QString("Set music player -> set PlayList"));
                 MusicPlayer->setPlaylist(CurrentMusic);
+                WriteToLog(QtDebugMsg, QString("Set music player -> setVolme and play"));
                 MusicPlayer->setVolume(100);
                 MusicPlayer->play();
             }
         }
         else
         {
+            WriteToLog(QtDebugMsg, QString("Set music player -> Stop"));
             MusicPlayer->stop();
         }
     }
-    else MusicPlayer->stop();
+    else
+    {
+        WriteToLog(QtDebugMsg, QString("Set music player -> Stop"));
+        MusicPlayer->stop();
+    }
 }
 
 
@@ -1042,4 +1095,56 @@ void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
     }
 
     setMusic( ui->LVLPropsMusicPlay->isChecked() );
+}
+
+void MainWindow::on_actionReset_position_triggered()
+{
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->ResetPosition();
+    }
+}
+
+void MainWindow::on_actionGridEn_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->scene->grid = checked;
+    }
+}
+
+void MainWindow::on_actionSelect_triggered()
+{
+    ui->actionSelect->setChecked(1);
+    ui->actionEriser->setChecked(0);
+    if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
+    {
+       activeLvlEditWin()->scene->EditingMode = 0;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+    }
+}
+
+void MainWindow::on_actionEriser_triggered()
+{
+    ui->actionSelect->setChecked(0);
+    ui->actionEriser->setChecked(1);
+    if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
+    {
+       activeLvlEditWin()->scene->EditingMode = 1;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+    }
+}
+
+void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
+{
+    if(ui->LVLPropsBackImage->hasFocus())
+    {
+        ui->LVLPropsBackImage->setEnabled(false);
+        WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
+        if (activeChildWindow()==1)
+        {
+           activeLvlEditWin()->scene->ChangeSectionBG(index, activeLvlEditWin()->LvlData);
+        }
+        ui->LVLPropsBackImage->setEnabled(true);
+    }
 }
