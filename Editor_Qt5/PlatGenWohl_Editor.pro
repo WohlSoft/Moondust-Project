@@ -34,7 +34,8 @@ HEADERS  += mainwindow.h \
     lvlscene.h \
     dataconfigs.h \
     saveimage.h \
-    musicfilelist.h
+    musicfilelist.h \
+    logger.h
 
 FORMS    += \
     aboutdialog.ui \
