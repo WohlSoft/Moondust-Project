@@ -20,7 +20,9 @@
 #define LVLSCENE_H
 
 #include <QGraphicsScene>
+#include <QGraphicsItem>
 #include <QProgressDialog>
+#include <QMenu>
 #include "lvl_filedata.h"
 #include "dataconfigs.h"
 
@@ -49,18 +51,26 @@ class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    LvlScene(QObject *parent = 0);
+    LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
+    ~LvlScene();
 
-    QGraphicsItemGroup *bgoback;
-    QGraphicsItemGroup *npcback;
-    QGraphicsItemGroup *blocks;
-    QGraphicsItemGroup *npcfore;
-    QGraphicsItemGroup *bgofore;
-    QGraphicsItemGroup *cursor;
+//    QGraphicsItemGroup *bgoback;
+//    QGraphicsItemGroup *npcback;
+//    QGraphicsItemGroup *blocks;
+//    QGraphicsItemGroup *npcfore;
+//    QGraphicsItemGroup *bgofore;
+
+    QList<QGraphicsPixmapItem *> BgItem;
+
+    bool grid;
+    int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
+    bool EraserEnabled;
 
     //void makeSectionBG(int x, int y, int h, int w);
-    void makeSectionBG(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
+    void makeSectionBG(LevelData FileData, QProgressDialog &progress);
+
     void drawSpace(LevelData FileData);
+    void ChangeSectionBG(int BG_Id, LevelData &FileData);
 
     void loadUserData(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
     void setBlocks(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
@@ -70,16 +80,61 @@ public:
     void setDoors(LevelData FileData, QProgressDialog &progress);
 
     QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
+    void DrawBG(int x, int y, int w, int h, QPixmap srcimg, obj_BG &bgsetup, QGraphicsPixmapItem * &target);
+
+    //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
+    void sortBGOArray(QVector<LevelBGO > &bgos);
 
     QVector<UserBGs > uBGs;
     QVector<UserBGOs > uBGOs;
     QVector<UserBlocks > uBlocks;
 
+protected:
+    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
 private:
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
+    QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
     void placeBox(float x, float y);
     void placeBlock(LevelBlock block, dataconfigs &configs);
+    void setSectionBG(LevelSection section);
+
+    QGraphicsItem * cursor;
+
+    dataconfigs * pConfigs;
+
+
+    //default objects Z value
+    int blockZ; // standart block
+    int blockZs; // sizeble block
+    int blockZl; // lava block
+    int bgoZf; // foreground BGO
+    int bgoZb; // backround BGO
+    int npcZf; // foreground NPC
+    int npcZb; // standart NPC
+    int doorZ;
+    int waterZ;
+    int bgZ;
+    int spaceZ1; // interSection space layer
+    int spaceZ2;
+
+    int Z;
+    QMenu blockMenu;
+    QMenu bgoMenu;
+    QMenu npcMenu;
+    QMenu waterMenu;
+    QMenu DoorMenu;
+
+    LevelData LvlData;
+
+    // The item being dragged.
+    QGraphicsItem *mDragged;
+    // The distance from the top left of the item to the mouse position.
+    QPointF mDragOffset;
 
 };
 

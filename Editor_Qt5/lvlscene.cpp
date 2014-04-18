@@ -30,16 +30,284 @@
 #include <QtCore>
 #include "dataconfigs.h"
 #include <QDebug>
+#include "logger.h"
 
-LvlScene::LvlScene(QObject *parent) : QGraphicsScene(parent)
+LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
-    //bgoback->setZValue(-10);
-    //npcback->setZValue(-9);
-    //blocks->setZValue(0);
-    //npcfore->setZValue(5);
-    //bgofore->setZValue(9);
-    //cursor->setZValue(15);
+    //Set the background GraphicsItem's points
+    for(int i=0;i<22;i++)
+        BgItem.push_back(new QGraphicsPixmapItem);
+
+    pConfigs = &configs; // Pointer to Main Configs
+
+    LvlData = FileData;
+    grid = true;
+    EditingMode = 0;
+    EraserEnabled = false;
+    Z = 0;
+    QPixmap cur(QSize(1,1));
+    cur.fill(Qt::black);
+    cursor = addPixmap(QPixmap(cur));
+    cursor->setZValue(1000);
+    cursor->hide();
+
+    bgZ = -1000;
+    blockZs = -150; // Sizeble blocks
+    bgoZb = -100; // backround BGO
+    npcZb = -50; // standart NPC
+
+    blockZ = 1; // standart block
+
+    bgoZf = 50; // foreground BGO
+
+    blockZl = 100;
+    npcZf = 150; // foreground NPC
+    waterZ = 500;
+    doorZ = 700;
+    spaceZ1 = 1000; // interSection space layer
+    spaceZ2 = 1020; // section Border
+
+    //blockMenu->addAction("Block");
+    //bgoMenu->addAction("BGO");
+    //npcMenu->addAction("NPC");
+    //waterMenu->addAction("Water");
+    //DoorMenu->addAction("Door");
+
+    //bgoback->s2etZValue(-10);
+    //npcback->s2etZValue(-9);
+    //blocks->se2tZValue(0);
+    //npcfore->s2etZValue(5);
+    //bgofore->s2etZValue(9);
+    //cursor->se2tZValue(15);
 }
+
+LvlScene::~LvlScene()
+{
+    uBGs.clear();
+    uBGOs.clear();
+    uBlocks.clear();
+
+    foreach(QGraphicsPixmapItem * it, BgItem)
+        free(it);
+}
+
+
+void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+        QList<QGraphicsItem*> selectedList = selectedItems();
+
+        cursor->setPos(mouseEvent->scenePos());
+        cursor->show();
+
+        if(EditingMode==1) // if Editing Mode = Esaising
+        {
+            EraserEnabled = true;
+        }
+        if (!selectedList.isEmpty())
+        {
+            for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
+            {
+
+            }
+        }
+        QGraphicsScene::mousePressEvent(mouseEvent);
+}
+
+
+void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    cursor->setPos(mouseEvent->scenePos());
+    QGraphicsItem * findItem;
+    if (EraserEnabled) { // Remove All items, placed under Cursor
+        findItem = itemCollidesCursor(cursor);
+        if(findItem)
+        {
+            removeItem(findItem);
+        }
+        QGraphicsScene::mouseMoveEvent(mouseEvent);
+    } else
+        QGraphicsScene::mouseMoveEvent(mouseEvent);
+}
+
+
+
+void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+    {
+            int gridSize=32, offsetX=0, offsetY=0, gridX, gridY;
+            QPoint sourcePos;
+
+            cursor->hide();
+
+            QList<QGraphicsItem*> selectedList = selectedItems();
+
+            QString ObjType;
+            // check for grid snap
+            if (!selectedList.isEmpty())
+            {
+                // correct selected items' coordinates
+                for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
+                {
+                    if(EraserEnabled)
+                    {
+                        removeItem((*it)); continue;
+                    }
+
+                    gridSize = 32;
+                    ObjType = (*it)->data(0).toString();
+                    //(*it)->setZValue(Z);
+                    if( ObjType == "NPC")
+                    {
+                        gridSize = 1 ;
+                        foreach (LevelNPC findInArr, LvlData.npc)
+                        {
+                            if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
+                            {
+                                sourcePos = QPoint(findInArr.x, findInArr.y); break;
+                            }
+                        }
+                    }
+
+                    if( ObjType == "Block")
+                    {
+                        foreach (LevelBlock findInArr, LvlData.blocks)
+                        {
+                            if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
+                            {
+                                sourcePos = QPoint(findInArr.x, findInArr.y); break;
+                            }
+                        }
+                    }
+
+                    if( ObjType == "BGO")
+                    {
+                        foreach(obj_bgo findGrid, pConfigs->main_bgo)
+                        {
+                            if(findGrid.id == (unsigned)(*it)->data(1).toInt() )
+                            {
+                                gridSize = findGrid.grid; break;
+                            }
+                        }
+                        foreach (LevelBGO findInArr, LvlData.bgo)
+                        {
+                            if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
+                            {
+                                sourcePos = QPoint(findInArr.x, findInArr.y); break;
+                            }
+                        }
+                    }
+
+                    if( (*it)->data(0).toString() == "Door_enter")
+                        gridSize = 16 ;
+
+                    if( (*it)->data(0).toString() == "Door_exit")
+                        gridSize = 16 ;
+
+                    QPointF itemPos = (*it)->scenePos();
+
+                    if(grid)
+                    { //ATTACH TO GRID
+                        gridX = ((int)itemPos.x() - (int)itemPos.x() % gridSize);
+                        gridY = ((int)itemPos.y() - (int)itemPos.y() % gridSize);
+
+                        if((int)itemPos.x()<0)
+                        {
+                            if( (int)itemPos.x() < gridX - (int)(gridSize/2) )
+                                gridX -= gridSize;
+                        }
+                        else
+                        {
+                            if( (int)itemPos.x() > gridX + (int)(gridSize/2) )
+                                gridX += gridSize;
+                        }
+
+                        if((int)itemPos.y()<0)
+                        {if( (int)itemPos.y() < gridY - (int)(gridSize/2) )
+                            gridY -= gridSize;
+                        }
+                        else {if( (int)itemPos.y() > gridY + (int)(gridSize/2) )
+                         gridY += gridSize;
+                        }
+
+                        (*it)->setPos(QPointF(offsetX+gridX, offsetY+gridY));
+                    }
+
+                    //offsetX +
+                    //offsetY +
+
+
+
+                    //if( itemCollidesWith((*it)) )
+                    //    (*it)->setPos(QPointF(sourcePos));
+
+                }
+                EraserEnabled = false;
+
+                QGraphicsScene::mouseReleaseEvent(mouseEvent);
+                return;
+            }
+            EraserEnabled = false;
+            QGraphicsScene::mouseReleaseEvent(mouseEvent);
+    }
+
+
+QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
+{
+    QList<QGraphicsItem *> collisions = collidingItems(item);
+    foreach (QGraphicsItem * it, collisions) {
+            if (it == item)
+                 continue;
+            if(item->data(0).toString()=="Water")
+                return NULL;
+            if(item->data(0).toString()=="Door_exit")
+                return NULL;
+            if(item->data(0).toString()=="Door_enter")
+                return NULL;
+
+        if( item->data(0).toString() ==  it->data(0).toString() )
+            return it;
+    }
+    return NULL;
+}
+
+QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
+{
+    QList<QGraphicsItem *> collisions = collidingItems(item);
+    foreach (QGraphicsItem * it, collisions) {
+            if (it == item)
+                 continue;
+            if(
+                    (it->data(0).toString()=="Block")||
+                    (it->data(0).toString()=="BGO")||
+                    (it->data(0).toString()=="NPC")||
+                    (it->data(0).toString()=="door_exit")||
+                    (it->data(0).toString()=="door_enter")||
+                    (it->data(0).toString()=="water")
+              )
+                return it;
+    }
+    return NULL;
+}
+
+/*
+QGraphicsItem * LvlScene::itemCollidesMouse(QGraphicsItem * item)
+{
+    QList<QGraphicsItem *> collisions = collidingItems(item, Qt::ContainsItemShape);
+    foreach (QGraphicsItem * it, collisions) {
+            if (it == item)
+                 continue;
+            if(item->data(0).toString()=="Water")
+                return NULL;
+            if(item->data(0).toString()=="Door_exit")
+                return NULL;
+            if(item->data(0).toString()=="Door_enter")
+                return NULL;
+
+        if( item->data(0).toString() ==  it->data(0).toString() )
+            return it;
+    }
+    return NULL;
+}
+*/
 
 
 //Search and load custom User's files
@@ -54,7 +322,6 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
     QString uLVLDs = FileData.path + "/" + FileData.filename + "/";
     QString uLVLD = FileData.path + "/" + FileData.filename;
     QString uLVLs = FileData.path + "/";
-
 
     //Backgrounds
     for(i=0; i<configs.main_bg.size(); i++) //Add user images
@@ -172,9 +439,9 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
 
 }
 
-
 void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
 {
+    WriteToLog(QtDebugMsg, QString("Draw intersection space-> Find and remove current"));
     foreach(QGraphicsItem * spaceItem, items())
     {
         if(spaceItem->data(0).toString()=="Space")
@@ -197,14 +464,26 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
     QGraphicsItem * item2;
     QVector<QPoint > drawing;
 
-    int i;//, j;
+    int i, j;
     long l, r, t, b;
          //x, y, h, w;
 
-    l = FileData.sections[0].size_left;
-    r = FileData.sections[0].size_right;
-    t = FileData.sections[0].size_top;
-    b = FileData.sections[0].size_bottom;
+    WriteToLog(QtDebugMsg, QString("Find minimal"));
+    j=-1;
+    do
+    {
+        j++;
+        l = FileData.sections[j].size_left;
+        r = FileData.sections[j].size_right;
+        t = FileData.sections[j].size_top;
+        b = FileData.sections[j].size_bottom;
+    }
+    while(
+          ((FileData.sections[j].size_left==0) &&
+          (FileData.sections[j].size_right==0) &&
+          (FileData.sections[j].size_top==0) &&
+          (FileData.sections[j].size_bottom==0)) && (j<FileData.sections.size())
+          );
 
     for(i=0;i<FileData.sections.size(); i++)
     {
@@ -226,6 +505,8 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
             b = FileData.sections[i].size_right;
     }
 
+    WriteToLog(QtDebugMsg, QString("Draw polygon"));
+
     drawing.clear();
     drawing.push_back(QPoint(l-1000, t-1000));
     drawing.push_back(QPoint(r+1000, t-1000));
@@ -241,6 +522,7 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
     b = FileData.sections[FileData.CurSection].size_bottom;
 
 
+    WriteToLog(QtDebugMsg, QString("Draw editing hole"));
     drawing.clear();
     drawing.push_back(QPoint(l, t));
     drawing.push_back(QPoint(r, t));
@@ -250,10 +532,11 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
 
     bigSpace = bigSpace.subtracted(QPolygon(drawing));
 
+    WriteToLog(QtDebugMsg, QString("add polygon to Item"));
     item = addPolygon(bigSpace, QPen(Qt::NoPen), QBrush(Qt::black));//Add inactive space
     item2 = addPolygon(QPolygon(drawing), QPen(Qt::red, 4));
-    item->setZValue(300);
-    item2->setZValue(310);
+    item->setZValue(spaceZ1);
+    item2->setZValue(spaceZ2);
     item->setOpacity(qreal(0.4));
     item->setData(0, "Space");
     item2->setData(0, "SectionBorder");
@@ -261,39 +544,59 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
 }
 
 ///////////////////////////////BACKGROUND IMAGE/////////////////////////////////////////
-void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress, dataconfigs &configs)
+void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress)
 //void LvlScene::makeSectionBG(int x, int y, int w, int h)
 {
-    QGraphicsItem * item;
-    QBrush brush;
-    QPen pen;
-    QPixmap img;
-    QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
-
-    int i, j, total=0;
-    bool isUser=false, noimage=false;
-    long x,y,h,w;
+    int i, total=0;
+    WriteToLog(QtDebugMsg, QString("Applay Backgrounds"));
 
     //Load Backgrounds
     for(i=0; i<FileData.sections.size(); i++)
     {
-        if(
-            (FileData.sections[i].size_left!=0) ||
-            (FileData.sections[i].size_top!=0)||
-            (FileData.sections[i].size_bottom!=0)||
-            (FileData.sections[i].size_right!=0)
-          )
-        {
-            x=FileData.sections[i].size_left;
-            y=FileData.sections[i].size_top;
-            w=FileData.sections[i].size_right;
-            h=FileData.sections[i].size_bottom;
+        setSectionBG(FileData.sections[i]);
 
-            isUser=false; noimage=true;
+        total++;
+
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
+    }
+
+}
+
+void LvlScene::setSectionBG(LevelSection section)
+{
+    QGraphicsItem * item;
+    QBrush brush;
+    QPen pen;
+    QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
+    QPixmap img;
+    //need a BGitem
+
+    bool isUser=false, noimage=false;
+    long x,y,h,w, j;
+
+    if(
+        (section.size_left!=0) ||
+        (section.size_top!=0)||
+        (section.size_bottom!=0)||
+        (section.size_right!=0)
+      )
+    {
+        x=section.size_left;
+        y=section.size_top;
+        w=section.size_right;
+        h=section.size_bottom;
+
+        WriteToLog(QtDebugMsg, "Check for user images");
+
+        isUser=false; noimage=true;
+        j = 0;
+        if(section.background != 0 )
+        {
             //Find user image
             for(j=0;j<uBGs.size();j++)
             {
-                if(uBGs[j].id==FileData.sections[i].background)
+                if(uBGs[j].id==section.background)
                 {
                     isUser=true;
                     noimage=false;
@@ -302,50 +605,207 @@ void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress, data
                 }
             } //If not exist, will be used default
 
-            for(j=0;j<configs.main_bg.size();j++)
+            for(j=0;j<pConfigs->main_bg.size();j++)
             {
-                if(configs.main_bg[j].id==FileData.sections[i].background)
+                if(pConfigs->main_bg[j].id==section.background)
                 {
                     noimage=false;
                     if(!isUser)
-                    img = configs.main_bg[j].image; break;
+                    img = pConfigs->main_bg[j].image; break;
                 }
             }
             if((noimage)&&(!isUser))
             {
+                WriteToLog(QtWarningMsg, "Image not found");
                 img=image;
             }
-
-            brush = QBrush(QColor(255, 255, 255), img);
-            //QBrush brush(QColor(255, 255, 255));
-            pen = QPen(Qt::NoPen);
-            //for (int i = 0; i < 11; i++) {
-
-            item = addRect(QRectF(x, y, (long)fabs(x-w), (long)fabs(y-h)), pen, brush);
-            item->setData(0, "BackGround");
-            item->setZValue(-400);
         }
-    //}
-    total++;
 
-    if(!progress.wasCanceled())
-        progress.setValue(progress.value()+1);
+        //configs.main_bg[j].type;
+
+        brush = QBrush(QColor(0, 0, 0));
+        //QBrush brush(QColor(255, 255, 255));
+        pen = QPen(Qt::NoPen);
+        //for (int i = 0; i < 11; i++) {
+
+        //item = addRect(QRectF(x, y, , ), pen, brush);
+
+        if(!noimage)
+        {
+            item = addPixmap(image);
+            DrawBG(x, y, w, h, img, pConfigs->main_bg[j], BgItem[section.id]);
+            BgItem[section.id]->setParentItem(item);
+        }
+        else
+            item = addRect(QRectF(x, y, (long)fabs(x-w), (long)fabs(y-h)), pen, brush);
+
+        WriteToLog(QtDebugMsg, QString("Item placed to x=%1 y=%2 h=%3 w=%4").arg(x).arg(y)
+                   .arg((long)fabs(x-w)).arg((long)fabs(y-h)));
+        item->setPos(x, y);
+
+        item->setData(0, "BackGround"+QString::number(section.id) );
+        item->setZValue(bgZ);
     }
 
 }
 
-
-QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
+void LvlScene::DrawBG(int x, int y, int w, int h, QPixmap srcimg, obj_BG &bgsetup, QGraphicsPixmapItem * &BgItem)
 {
-    QList<QGraphicsItem *> collisions = collidingItems(item);
-    foreach (QGraphicsItem * it, collisions) {
-            if (it == item)
-                 continue;
-        return it;
+    QPixmap BackImg;
+    QPainter * BGPaint;
+    QPixmap img;
+    //int i, j;
+    int si_attach, attach;
+    long toX, toY, bgH, bgW;
+
+    WriteToLog(QtDebugMsg, "Draw BG Image");
+    BackImg = QPixmap(QSize( (long)fabs(x-w), (long)fabs(y-h) ));
+    attach = bgsetup.attached;
+    long px = 0;
+
+    if((bgsetup.type==0)&&(!bgsetup.editing_tiled))
+    {   //SingleRow BG
+
+        WriteToLog(QtDebugMsg, "SingleRow BG");
+        if(attach==0)
+            BackImg.fill( srcimg.toImage().pixel(0,0) );
+        else
+            BackImg.fill( srcimg.toImage().pixel(0,(srcimg.height()-1)) );
+        BGPaint = new QPainter(&BackImg);
+
+        px=0;
+        if(attach==0)
+            toY = (long)fabs(y-h)-srcimg.height();
+        else
+            toY = 0;
+        bgW = srcimg.width();
+        bgH = srcimg.height();
+
+        do
+        { //Draw row
+            BGPaint->drawPixmap(px, toY, bgW, bgH, srcimg);
+            px += srcimg.width();
+        }
+        while( px < (long)fabs(x-w) );
+
     }
-    return NULL;
+    else if ((bgsetup.type==1)&&(!bgsetup.editing_tiled))
+    {   //Double BG
+        WriteToLog(QtDebugMsg, "DoubleRow BG");
+
+        si_attach = bgsetup.second_attached; // Second image attach
+
+        //Fill empty space
+        if((!bgsetup.second_image.isNull()) && (si_attach==0))
+            BackImg.fill( bgsetup.second_image.toImage().pixel(0,0) );
+        else
+            BackImg.fill( srcimg.toImage().pixel(0,0) );
+
+        BGPaint = new QPainter(&BackImg);
+
+        WriteToLog(QtDebugMsg, "Draw first row");
+        px=0;
+
+        toY = (long)fabs(y-h)-srcimg.height();
+        bgW = srcimg.width();
+        bgH = srcimg.height();
+
+        //Draw first row
+            do{
+                BGPaint->drawPixmap(px, toY, bgW, bgH, srcimg);
+                px += srcimg.width();
+            } while( px < (long)fabs(x-w) );
+
+        WriteToLog(QtDebugMsg, "Draw second row");
+        px=0;
+
+        if(si_attach==0) // over first
+            toY = (long)fabs(y-h)-srcimg.height()-bgsetup.second_image.height();
+        else
+        if(si_attach==1) // bottom
+            toY = (long)fabs(y-h)-bgsetup.second_image.height();
+
+        bgW = bgsetup.second_image.width();
+        bgH = bgsetup.second_image.height();
+
+        if(!bgsetup.second_image.isNull())
+        {
+            //Draw seconf row if it no null
+            do {
+                BGPaint->drawPixmap(px, toY, bgW, bgH, bgsetup.second_image);
+                px += bgsetup.second_image.width();
+            } while( px < (long)fabs(x-w) );
+        } else WriteToLog(QtDebugMsg, "second image is Null");
+    }
+    else
+    { // Black
+        WriteToLog(QtDebugMsg, "Tiled");
+        BackImg.fill( Qt::black );
+        BGPaint = new QPainter(&BackImg);
+
+        px=0;
+        if(attach==0)
+            toY = (long)fabs(y-h)-srcimg.height();
+        else
+            toY = 0;
+
+        bgW = srcimg.width();
+        bgH = srcimg.height();
+
+        toX = 0;
+
+        do{
+            px=0;
+            do
+            { //Draw row
+                BGPaint->drawPixmap(px, toY + toX*((attach==0)?(-1):1), bgW, bgH, srcimg);
+                px += srcimg.width();
+            }
+            while( px < (long)fabs(x-w) );
+            toX+=srcimg.height();
+        }   while( toX < (long)fabs(y-h) + srcimg.height() );
+
+
+    }
+    BGPaint->end();
+
+    WriteToLog(QtDebugMsg, "Drawed");
+
+    if(!BackImg.isNull())
+        img = BackImg.copy(BackImg.rect());
+    else
+    {
+        WriteToLog(QtDebugMsg, "Drawed PixMap is null");
+        img.fill( Qt::red );
+    }
+    WriteToLog(QtDebugMsg, "Added to QPixmap");
+
+    BgItem->setPixmap(QPixmap(img));
+    //return img;
 }
 
+
+void LvlScene::ChangeSectionBG(int BG_Id, LevelData &FileData)
+{
+
+
+    foreach (QGraphicsItem * findBG, items() )
+    {
+        if(findBG->data(0)=="BackGround"+QString::number(FileData.CurSection) )
+        {
+            WriteToLog(QtDebugMsg, QString("Remove item BackGround"+QString::number(FileData.CurSection)) );
+            removeItem(findBG); break;
+        }
+    }
+    FileData.sections[FileData.CurSection].background = BG_Id;
+
+    WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
+    setSectionBG(FileData.sections[FileData.CurSection]);
+}
+
+
+
+//////////////////Block////////////////////////////////////////////////////////////////////////////////////////
 
 void LvlScene::placeBox(float x, float y)
 {
@@ -363,7 +823,8 @@ void LvlScene::placeBlock(LevelBlock block, dataconfigs &configs)
     bool isUser=false;
     int j;
     QPixmap img;
-    QGraphicsItem *	box, * npc;
+
+    QGraphicsItem *box, *npc;
 
     QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.gif");
     QBitmap npcmask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
@@ -411,36 +872,49 @@ void LvlScene::placeBlock(LevelBlock block, dataconfigs &configs)
     else
     {
         box = addPixmap(QPixmap( drawSizebleBlock(block.w, block.h, img) ));
-        box->setZValue(-150);
+        box->setZValue(blockZs);
     }
 
-    box->setPos(block.x, block.y);
+    //addToGroup(box);
 
-    if(block.invisible)
-    box->setOpacity(qreal(0.5));
-
+    //QPainter npc_p(&img);
     if(block.npc_id != 0)
     {
-        npc = addPixmap(QPixmap(npci));
+        npc = addPixmap( QPixmap(npci) );
         npc->setPos(block.x, block.y);
-        npc->setZValue(1);
+        npc->setZValue(blockZ);
         npc->setOpacity(qreal(0.4));
     }
 
-    box->setFlag(QGraphicsItem::ItemIsSelectable, true);
-    box->setData(0, "Block");
-    box->setData(1, QString::number(block.id) );
-    box->setData(2, QString::number(block.array_id) );
+
+    if(block.invisible)
+        box->setOpacity(qreal(0.5));
+
+    box->setPos(block.x, block.y);
 
     if(configs.main_block[j].sizeble)
-        box->setZValue(-150);
+        box->setZValue(blockZs); // applay Sizeble block Z
     else
     {
     if(configs.main_block[j].view==1)
-        box->setZValue(10);
+        box->setZValue(blockZl); // applay lava block Z
     else
-        box->setZValue(1);
+        box->setZValue(blockZ); // applay standart block Z
     }
+
+    /*QList<QGraphicsItem* > blockData;
+    blockData.push_back(box);
+    blockData.push_back(npc);
+
+    BlockGr = createItemGroup( blockData );
+    */
+    box->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    box->setFlag(QGraphicsItem::ItemIsMovable, true);
+    //box->setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+
+    box->setData(0, "Block");
+    box->setData(1, QString::number(block.id) );
+    box->setData(2, QString::number(block.array_id) );
 
 }
 
@@ -548,6 +1022,35 @@ void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
         }
 }
 
+void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
+{
+    LevelBGO tmp1;
+    int total = bgos.size();
+    long i;
+    unsigned long ymin;
+    unsigned long ymini;
+    long sorted = 0;
+
+
+        while(sorted < bgos.size())
+        {
+            ymin = bgos[sorted].id;
+            ymini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( bgos[i].id < ymin )
+                {
+                    ymin = bgos[i].id; ymini = i;
+                }
+            }
+            tmp1 = bgos[ymini];
+            bgos[ymini] = bgos[sorted];
+            bgos[sorted] = tmp1;
+            sorted++;
+        }
+}
+
 /////////////////////SET Block Objects/////////////////////////////////////////////
 void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress, dataconfigs &configs)
 {
@@ -584,6 +1087,8 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
 
     QGraphicsItem *	box;
     bool isUser=false;
+
+    //sortBGOArray(FileData.bgo); //Sort BGOs
 
     //Applay images to objects
     for(i=0; i<FileData.bgo.size(); i++)
@@ -626,15 +1131,17 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
         box->setPos(FileData.bgo[i].x, FileData.bgo[i].y);
 
         box->setFlag(QGraphicsItem::ItemIsSelectable, true);
+        box->setFlag(QGraphicsItem::ItemIsMovable, true);
+
         box->setData(0, "BGO");
         box->setData(1, QString::number(FileData.bgo[i].id) );
         box->setData(2, QString::number(FileData.bgo[i].array_id) );
 
         if(configs.main_bgo[j].view!=0)
-            box->setZValue(9);
+            box->setZValue(bgoZf + configs.main_bgo[j].zOffset);
             //bgoback->addToGroup(box);
         else
-            box->setZValue(-10);
+            box->setZValue(bgoZb + configs.main_bgo[j].zOffset);
             //bgofore->addToGroup(box);
 
         if(!progress.wasCanceled())
@@ -660,11 +1167,12 @@ void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
         box = addPixmap(QPixmap(image));
         box->setPos(FileData.npc[i].x, FileData.npc[i].y);
         box->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        box->setFlag(QGraphicsItem::ItemIsMovable, true);
         //npcfore->addToGroup(box);
         if(FileData.npc[i].id==91)
-            box->setZValue(5);
+            box->setZValue(npcZf);
         else
-            box->setZValue(-9);
+            box->setZValue(npcZb);
 
         box->setData(0, "NPC"); // ObjType
         box->setData(1, QString::number(FileData.npc[i].id) );
@@ -710,8 +1218,9 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
         box = addPolygon(QPolygon(points), QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4));
 
         box->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        box->setFlag(QGraphicsItem::ItemIsMovable, true);
 
-        box->setZValue(10);
+        box->setZValue(waterZ);
 
         box->setData(0, "Water"); // ObjType
         box->setData(1, QString::number(0) );
@@ -747,10 +1256,12 @@ void LvlScene::setDoors(LevelData FileData, QProgressDialog &progress)
         exit = addRect(ox, oy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
 
         enter->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        enter->setFlag(QGraphicsItem::ItemIsMovable, true);
         exit->setFlag(QGraphicsItem::ItemIsSelectable,true);
+        exit->setFlag(QGraphicsItem::ItemIsMovable, true);
 
-        enter->setZValue(15);
-        exit->setZValue(15);
+        enter->setZValue(doorZ);
+        exit->setZValue(doorZ);
 
         enter->setData(0, "Door_enter"); // ObjType
         enter->setData(1, QString::number(0) );
