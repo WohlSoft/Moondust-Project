@@ -54,6 +54,7 @@ struct obj_bgo{
     QString type;
     unsigned int grid;
     unsigned int view;
+    int zOffset;
     QString image_n;
     QString mask_n;
     QPixmap image;
@@ -157,6 +158,7 @@ second-attached=overfirst
     float repeat_h;
     unsigned int repead_v;
     unsigned int attached;
+    bool editing_tiled;
     bool animated;
     unsigned int frames;
 
@@ -169,7 +171,7 @@ second-attached=overfirst
     QPixmap second_image;
 
     float second_repeat_h;
-    unsigned int second_repead_v;
+    unsigned int second_repeat_v;
     unsigned int second_attached;
 
 };
