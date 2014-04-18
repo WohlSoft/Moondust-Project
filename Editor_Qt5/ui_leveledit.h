@@ -56,7 +56,7 @@ public:
         graphicsView->setAutoFillBackground(false);
         graphicsView->setStyleSheet(QStringLiteral("background-color: rgb(98, 98, 98);"));
         graphicsView->setInteractive(true);
-        graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+        graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
 
         verticalLayout->addWidget(graphicsView);
 
