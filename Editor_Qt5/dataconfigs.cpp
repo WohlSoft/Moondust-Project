@@ -24,6 +24,7 @@
 #include <QApplication>
 #include "dataconfigs.h"
 #include "mainwindow.h"
+#include "logger.h"
 #include <QDebug>
 
 dataconfigs::dataconfigs()
@@ -171,14 +172,17 @@ void dataconfigs::loadconfigs(bool nobar)
      {
          bgset.beginGroup( QString("background2-"+QString::number(i)) );
              sbg.name = bgset.value("name", "").toString();
-             tmpstr = bgoset.value("type", "single-row").toString();
+             tmpstr = bgset.value("type", "single-row").toString();
                  if(tmpstr=="single-row")
                     sbg.type = 0;
                  else if(tmpstr=="double-row")
-                    sbg.type = 2;
+                    sbg.type = 1;
                  else if(tmpstr=="tiled")
                     sbg.type = 2;
                  else sbg.type = 0;
+
+                 WriteToLog(QtDebugMsg, QString("Init BG image %1 with type %2 %3")
+                            .arg(i).arg(tmpstr).arg(sbg.type));
              sbg.repeat_h = bgset.value("repeat-h", "2").toInt();
              tmpstr = bgset.value("repeat-v", "NR").toString();
                  if(tmpstr=="NR")
@@ -203,6 +207,7 @@ void dataconfigs::loadconfigs(bool nobar)
              }
 
              sbg.attached = (int)(bgset.value("attached", "bottom").toString()=="top");
+             sbg.editing_tiled = (bgset.value("tiled-in-editor", "0").toString()=="1");
 
              sbg.magic = (bgset.value("magic", "0").toString()=="1");
              sbg.magic_strips = bgset.value("magic-strips", "1").toInt();
@@ -213,7 +218,7 @@ void dataconfigs::loadconfigs(bool nobar)
              sbg.frames = bgset.value("frames", "1").toInt();
              //frames
 
-             if(sbg.type==2)
+             if(sbg.type==1)
              {
 
                      imgFile = bgset.value("second-image", "").toString();
@@ -229,22 +234,22 @@ void dataconfigs::loadconfigs(bool nobar)
                      sbg.second_repeat_h = bgset.value("second-repeat-h", "2").toInt();
                      tmpstr = bgset.value("second-repeat-v", "NR").toString();
                          if(tmpstr=="NR")
-                             sbg.second_repead_v = 0;
+                             sbg.second_repeat_v = 0;
                          else if(tmpstr=="ZR")
-                             sbg.second_repead_v = 1;
+                             sbg.second_repeat_v = 1;
                          else if(tmpstr=="RP")
-                             sbg.second_repead_v = 2;
+                             sbg.second_repeat_v = 2;
                          else if(tmpstr=="RZ")
-                             sbg.second_repead_v = 3;
-                         else sbg.second_repead_v = 0;
+                             sbg.second_repeat_v = 3;
+                         else sbg.second_repeat_v = 0;
                      tmpstr = bgset.value("second-attached", "overfirst").toString();
                          if(tmpstr=="overfirst")
-                             sbg.second_repead_v = 0;
+                             sbg.second_attached = 0;
                          else if(tmpstr=="bottom")
-                             sbg.second_repead_v = 1;
+                             sbg.second_attached = 1;
                          else if(tmpstr=="top")
-                             sbg.second_repead_v = 2;
-                         else sbg.second_repead_v = 0;
+                             sbg.second_attached = 2;
+                         else sbg.second_repeat_v = 0;
              }
 
              if(sbg.animated)
@@ -272,6 +277,7 @@ void dataconfigs::loadconfigs(bool nobar)
             sbgo.type = bgoset.value("type", "other").toString();
             sbgo.grid = bgoset.value("grid", "32").toInt();
             sbgo.view = (int)(bgoset.value("view", "background").toString()=="foreground");
+            sbgo.zOffset = bgoset.value("z-offset", "0").toInt();
             imgFile = bgoset.value("image", "").toString();
             sbgo.image_n = imgFile;
             if( (imgFile!="") )
