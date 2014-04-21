@@ -120,10 +120,14 @@ private slots:
     void on_actionSection_21_triggered();
     void on_actionLoad_configs_triggered();
     void on_actionExport_to_image_triggered();
+
+
     void on_LVLPropsMusicNumber_currentIndexChanged(int index);
     void on_LVLPropsMusicCustomEn_toggled(bool checked);
     void on_LVLPropsMusicCustomBrowse_clicked();
-    void on_LVLPropsMusicPlay_toggled(bool checked);
+
+    //void on_LVLPropsMusicPlay_toggled(bool checked);
+    void on_actionPlayMusic_triggered(bool checked);
 
     void on_LVLPropsMusicCustom_textChanged(const QString &arg1);
 
