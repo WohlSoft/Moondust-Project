@@ -16,20 +16,29 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include <QtWidgets>
-#include <QTranslator>
-#include <QLocale>
-#include "mainwindow.h"
+#include <QFile>
+#include <QTextStream>
 
-#include "logger.h"
+void WriteToLog(QtMsgType type, QString msg)
+    {
+        QString txt;
+        switch (type) {
+        case QtDebugMsg:
+        txt = QString("Debug: %1").arg(msg);
+        break;
+        case QtWarningMsg:
+        txt = QString("Warning: %1").arg(msg);
+        break;
+        case QtCriticalMsg:
+        txt = QString("Critical: %1").arg(msg);
+        break;
+        case QtFatalMsg:
+        txt = QString("Fatal: %1").arg(msg);
+        abort();
+    }
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-
-    WriteToLog(QtDebugMsg, "--> Application started <--");
-
-    MainWindow w;
-    w.show();
-    return a.exec();
+    QFile outFile("debug_log.txt");
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+    ts << txt << endl;
 }
