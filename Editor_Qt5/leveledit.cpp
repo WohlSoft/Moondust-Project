@@ -46,6 +46,15 @@ leveledit::leveledit(QWidget *parent) :
     latest_export_path = QApplication::applicationDirPath();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);
+
+    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
+    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
+    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
+
+            /*
+             * 	setOptimizationFlags(QGraphicsView::DontClipPainter);
+        setOptimizationFlags(QGraphicsView::DontSavePainterState);
+        setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);*/
 }
 
 leveledit::~leveledit()
@@ -179,6 +188,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
+
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -245,9 +255,9 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
 void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 {
-    scene = new LvlScene(configs, LvlData);
     int DataSize = progress.maximum();
     int TotalSteps = 6;
+    scene = new LvlScene(configs, LvlData);
 
     if(!progress.wasCanceled())
         progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
@@ -288,6 +298,7 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     */
 
     ui->graphicsView->setScene(scene);
+
     if(!progress.wasCanceled())
         progress.setValue(DataSize);
 }
@@ -351,7 +362,11 @@ QString leveledit::userFriendlyCurrentFile()
 void leveledit::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {
+        scene->uBGOs.clear();
+        scene->uBGs.clear();
+        scene->uBlocks.clear();
         scene->clear();
+        //ui->graphicsView->cl
         event->accept();
     } else {
         event->ignore();

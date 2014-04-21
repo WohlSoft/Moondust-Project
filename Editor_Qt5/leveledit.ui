@@ -65,11 +65,20 @@
      <property name="styleSheet">
       <string notr="true">background-color: rgb(98, 98, 98);</string>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
      <property name="interactive">
       <bool>true</bool>
      </property>
      <property name="dragMode">
       <enum>QGraphicsView::RubberBandDrag</enum>
+     </property>
+     <property name="rubberBandSelectionMode">
+      <enum>Qt::IntersectsItemShape</enum>
+     </property>
+     <property name="optimizationFlags">
+      <set>QGraphicsView::DontAdjustForAntialiasing|QGraphicsView::DontClipPainter|QGraphicsView::DontSavePainterState</set>
      </property>
     </widget>
    </item>
