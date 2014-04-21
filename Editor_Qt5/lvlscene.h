@@ -45,6 +45,7 @@ struct UserBGs
     QPixmap image;
     QPixmap second_image;
     unsigned long id;
+    unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
 };
 
 class LvlScene : public QGraphicsScene
@@ -53,12 +54,6 @@ class LvlScene : public QGraphicsScene
 public:
     LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
     ~LvlScene();
-
-//    QGraphicsItemGroup *bgoback;
-//    QGraphicsItemGroup *npcback;
-//    QGraphicsItemGroup *blocks;
-//    QGraphicsItemGroup *npcfore;
-//    QGraphicsItemGroup *bgofore;
 
     QList<QGraphicsPixmapItem *> BgItem;
 
@@ -80,7 +75,7 @@ public:
     void setDoors(LevelData FileData, QProgressDialog &progress);
 
     QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
-    void DrawBG(int x, int y, int w, int h, QPixmap srcimg, obj_BG &bgsetup, QGraphicsPixmapItem * &target);
+    void DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg2, obj_BG &bgsetup, QGraphicsPixmapItem * &target);
 
     //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
@@ -105,6 +100,15 @@ private:
 
     QGraphicsItem * cursor;
 
+    QPixmap uBlockImg;
+
+    QBitmap npcmask;
+    QPixmap uNpcImg;
+
+    QPixmap uBgoImg;
+
+    QPixmap tImg;//Tempotary buffer
+
     dataconfigs * pConfigs;
 
 
@@ -122,14 +126,16 @@ private:
     int spaceZ1; // interSection space layer
     int spaceZ2;
 
-    int Z;
+    QVector<qreal > Z;
+    qreal sbZ;
+
     QMenu blockMenu;
     QMenu bgoMenu;
     QMenu npcMenu;
     QMenu waterMenu;
     QMenu DoorMenu;
 
-    LevelData LvlData;
+    LevelData  * LvlData;
 
     // The item being dragged.
     QGraphicsItem *mDragged;
