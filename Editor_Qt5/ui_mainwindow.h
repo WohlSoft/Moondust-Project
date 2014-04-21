@@ -17,7 +17,6 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDockWidget>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -96,6 +95,14 @@ public:
     QAction *actionLoad_configs;
     QAction *actionReset_position;
     QAction *actionGridEn;
+    QAction *actionLockBlocks;
+    QAction *actionLockBGO;
+    QAction *actionLockNPC;
+    QAction *actionLockDoors;
+    QAction *actionLockWaters;
+    QAction *actionSetFirstPlayer;
+    QAction *actionSetSecondPlayer;
+    QAction *actionPlayMusic;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -150,7 +157,6 @@ public:
     QLineEdit *LVLPropsMusicCustom;
     QCheckBox *LVLPropsMusicCustomEn;
     QPushButton *LVLPropsMusicCustomBrowse;
-    QPushButton *LVLPropsMusicPlay;
     QGroupBox *LVLPropSettingsGrp;
     QVBoxLayout *verticalLayout_3;
     QCheckBox *LVLPropsLevelWarp;
@@ -159,15 +165,13 @@ public:
     QCheckBox *LVLPropsUnderWater;
     QGroupBox *LVLPropStyleGr;
     QVBoxLayout *verticalLayout;
-    QLabel *LVLPropBckgrClrLabel;
-    QComboBox *LVLPropsBackColor;
     QLabel *LVLPropBckrImg;
     QComboBox *LVLPropsBackImage;
-    QGraphicsView *LVLPropsBackImgPreview;
     QGroupBox *groupBox_5;
     QLabel *label_9;
     QLabel *LVLProp_CurSect;
     QPushButton *ResizeSection;
+    QToolBar *LevelObjectToolbar;
     QDockWidget *DoorsToolbox;
     QWidget *dockWidgetContents;
     QGroupBox *groupBox;
@@ -199,7 +203,6 @@ public:
     QLineEdit *lineEdit;
     QLabel *label_11;
     QPushButton *pushButton;
-    QPushButton *pushButton_4;
     QGroupBox *groupBox_10;
     QComboBox *comboBox_2;
     QComboBox *comboBox;
@@ -210,6 +213,7 @@ public:
     QSpinBox *WarpNeedAStars;
     QCheckBox *checkBox_2;
     QCheckBox *checkBox;
+    QPushButton *pushButton_4;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -222,6 +226,7 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
+        MainWindow->setMinimumSize(QSize(0, 508));
         MainWindow->setFocusPolicy(Qt::NoFocus);
         MainWindow->setContextMenuPolicy(Qt::NoContextMenu);
         MainWindow->setAcceptDrops(true);
@@ -540,6 +545,59 @@ public:
         QIcon icon31;
         icon31.addFile(QStringLiteral(":/images/grid.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionGridEn->setIcon(icon31);
+        actionLockBlocks = new QAction(MainWindow);
+        actionLockBlocks->setObjectName(QStringLiteral("actionLockBlocks"));
+        actionLockBlocks->setCheckable(true);
+        QIcon icon32;
+        icon32.addFile(QStringLiteral(":/locks/block_op.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon32.addFile(QStringLiteral(":/locks/block_cl.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionLockBlocks->setIcon(icon32);
+        actionLockBGO = new QAction(MainWindow);
+        actionLockBGO->setObjectName(QStringLiteral("actionLockBGO"));
+        actionLockBGO->setCheckable(true);
+        QIcon icon33;
+        icon33.addFile(QStringLiteral(":/locks/bgo_op.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon33.addFile(QStringLiteral(":/locks/bgo_cl.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionLockBGO->setIcon(icon33);
+        actionLockNPC = new QAction(MainWindow);
+        actionLockNPC->setObjectName(QStringLiteral("actionLockNPC"));
+        actionLockNPC->setCheckable(true);
+        QIcon icon34;
+        icon34.addFile(QStringLiteral(":/locks/npc_op.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon34.addFile(QStringLiteral(":/locks/npc_cl.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionLockNPC->setIcon(icon34);
+        actionLockDoors = new QAction(MainWindow);
+        actionLockDoors->setObjectName(QStringLiteral("actionLockDoors"));
+        actionLockDoors->setCheckable(true);
+        QIcon icon35;
+        icon35.addFile(QStringLiteral(":/locks/door_op.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon35.addFile(QStringLiteral(":/locks/door_cl.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionLockDoors->setIcon(icon35);
+        actionLockWaters = new QAction(MainWindow);
+        actionLockWaters->setObjectName(QStringLiteral("actionLockWaters"));
+        actionLockWaters->setCheckable(true);
+        QIcon icon36;
+        icon36.addFile(QStringLiteral(":/locks/water_op.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon36.addFile(QStringLiteral(":/locks/water_cl.png"), QSize(), QIcon::Normal, QIcon::On);
+        actionLockWaters->setIcon(icon36);
+        actionSetFirstPlayer = new QAction(MainWindow);
+        actionSetFirstPlayer->setObjectName(QStringLiteral("actionSetFirstPlayer"));
+        actionSetFirstPlayer->setCheckable(true);
+        QIcon icon37;
+        icon37.addFile(QStringLiteral(":/images/player1_start.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSetFirstPlayer->setIcon(icon37);
+        actionSetSecondPlayer = new QAction(MainWindow);
+        actionSetSecondPlayer->setObjectName(QStringLiteral("actionSetSecondPlayer"));
+        actionSetSecondPlayer->setCheckable(true);
+        QIcon icon38;
+        icon38.addFile(QStringLiteral(":/images/player2_start.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSetSecondPlayer->setIcon(icon38);
+        actionPlayMusic = new QAction(MainWindow);
+        actionPlayMusic->setObjectName(QStringLiteral("actionPlayMusic"));
+        actionPlayMusic->setCheckable(true);
+        QIcon icon39;
+        icon39.addFile(QStringLiteral(":/images/playmusic.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionPlayMusic->setIcon(icon39);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -603,9 +661,9 @@ public:
         LevelToolBox->setMinimumSize(QSize(255, 200));
         LevelToolBox->setMaximumSize(QSize(350, 524287));
         LevelToolBox->setFocusPolicy(Qt::NoFocus);
-        QIcon icon32;
-        icon32.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelToolBox->setWindowIcon(icon32);
+        QIcon icon40;
+        icon40.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelToolBox->setWindowIcon(icon40);
         LevelToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         LevelToolBoxTabs = new QTabWidget();
@@ -617,7 +675,7 @@ public:
         Blocks->setWidgetResizable(true);
         blocksscroll = new QWidget();
         blocksscroll->setObjectName(QStringLiteral("blocksscroll"));
-        blocksscroll->setGeometry(QRect(0, 0, 239, 389));
+        blocksscroll->setGeometry(QRect(0, 0, 239, 517));
         blocksscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         Blocks->setWidget(blocksscroll);
         LevelToolBoxTabs->addTab(Blocks, QString());
@@ -628,7 +686,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 239, 389));
+        backsscroll->setGeometry(QRect(0, 0, 239, 517));
         backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -639,7 +697,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 239, 389));
+        npcscroll->setGeometry(QRect(0, 0, 239, 517));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -650,7 +708,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 239, 389));
+        specialscroll->setGeometry(QRect(0, 0, 239, 517));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -690,6 +748,7 @@ public:
         EditionToolBar->setObjectName(QStringLiteral("EditionToolBar"));
         EditionToolBar->setContextMenuPolicy(Qt::NoContextMenu);
         EditionToolBar->setAllowedAreas(Qt::TopToolBarArea);
+        EditionToolBar->setIconSize(QSize(24, 24));
         MainWindow->addToolBar(Qt::TopToolBarArea, EditionToolBar);
         LevelSectionsToolBar = new QToolBar(MainWindow);
         LevelSectionsToolBar->setObjectName(QStringLiteral("LevelSectionsToolBar"));
@@ -702,9 +761,9 @@ public:
         WorldToolBox->setEnabled(true);
         sizePolicy1.setHeightForWidth(WorldToolBox->sizePolicy().hasHeightForWidth());
         WorldToolBox->setSizePolicy(sizePolicy1);
-        QIcon icon33;
-        icon33.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        WorldToolBox->setWindowIcon(icon33);
+        QIcon icon41;
+        icon41.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        WorldToolBox->setWindowIcon(icon41);
         WorldToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         WorldToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         WorldToolBoxTabs = new QTabWidget();
@@ -716,7 +775,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 256, 481));
+        TilesItemBox->setGeometry(QRect(0, 0, 256, 353));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -744,7 +803,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 239, 481));
+        SceneryScroll->setGeometry(QRect(0, 0, 239, 353));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -754,7 +813,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 481));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 353));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -764,7 +823,7 @@ public:
         MusicSet->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 481));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 353));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -793,11 +852,11 @@ public:
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(LevelSectionSettings->sizePolicy().hasHeightForWidth());
         LevelSectionSettings->setSizePolicy(sizePolicy3);
-        LevelSectionSettings->setMinimumSize(QSize(230, 500));
-        LevelSectionSettings->setMaximumSize(QSize(230, 524287));
-        QIcon icon34;
-        icon34.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelSectionSettings->setWindowIcon(icon34);
+        LevelSectionSettings->setMinimumSize(QSize(230, 360));
+        LevelSectionSettings->setMaximumSize(QSize(230, 360));
+        QIcon icon42;
+        icon42.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelSectionSettings->setWindowIcon(icon42);
         LevelSectionSettings->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelSectionSettings->setFloating(false);
         LevelSectionSettings->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -806,7 +865,7 @@ public:
         LevelSection->setObjectName(QStringLiteral("LevelSection"));
         LVLPropMusicGr = new QGroupBox(LevelSection);
         LVLPropMusicGr->setObjectName(QStringLiteral("LVLPropMusicGr"));
-        LVLPropMusicGr->setGeometry(QRect(0, 160, 221, 131));
+        LVLPropMusicGr->setGeometry(QRect(0, 160, 221, 101));
         LVLPropsMusicNumber = new QComboBox(LVLPropMusicGr);
         LVLPropsMusicNumber->setObjectName(QStringLiteral("LVLPropsMusicNumber"));
         LVLPropsMusicNumber->setGeometry(QRect(10, 20, 101, 20));
@@ -824,10 +883,6 @@ public:
         LVLPropsMusicCustomBrowse = new QPushButton(LVLPropMusicGr);
         LVLPropsMusicCustomBrowse->setObjectName(QStringLiteral("LVLPropsMusicCustomBrowse"));
         LVLPropsMusicCustomBrowse->setGeometry(QRect(140, 70, 31, 21));
-        LVLPropsMusicPlay = new QPushButton(LVLPropMusicGr);
-        LVLPropsMusicPlay->setObjectName(QStringLiteral("LVLPropsMusicPlay"));
-        LVLPropsMusicPlay->setGeometry(QRect(10, 100, 131, 23));
-        LVLPropsMusicPlay->setCheckable(true);
         LVLPropSettingsGrp = new QGroupBox(LevelSection);
         LVLPropSettingsGrp->setObjectName(QStringLiteral("LVLPropSettingsGrp"));
         LVLPropSettingsGrp->setGeometry(QRect(0, 40, 221, 121));
@@ -861,22 +916,11 @@ public:
 
         LVLPropStyleGr = new QGroupBox(LevelSection);
         LVLPropStyleGr->setObjectName(QStringLiteral("LVLPropStyleGr"));
-        LVLPropStyleGr->setGeometry(QRect(0, 290, 221, 201));
+        LVLPropStyleGr->setGeometry(QRect(0, 260, 221, 71));
         verticalLayout = new QVBoxLayout(LVLPropStyleGr);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        LVLPropBckgrClrLabel = new QLabel(LVLPropStyleGr);
-        LVLPropBckgrClrLabel->setObjectName(QStringLiteral("LVLPropBckgrClrLabel"));
-        LVLPropBckgrClrLabel->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
-
-        verticalLayout->addWidget(LVLPropBckgrClrLabel);
-
-        LVLPropsBackColor = new QComboBox(LVLPropStyleGr);
-        LVLPropsBackColor->setObjectName(QStringLiteral("LVLPropsBackColor"));
-
-        verticalLayout->addWidget(LVLPropsBackColor);
-
         LVLPropBckrImg = new QLabel(LVLPropStyleGr);
         LVLPropBckrImg->setObjectName(QStringLiteral("LVLPropBckrImg"));
 
@@ -886,11 +930,6 @@ public:
         LVLPropsBackImage->setObjectName(QStringLiteral("LVLPropsBackImage"));
 
         verticalLayout->addWidget(LVLPropsBackImage);
-
-        LVLPropsBackImgPreview = new QGraphicsView(LVLPropStyleGr);
-        LVLPropsBackImgPreview->setObjectName(QStringLiteral("LVLPropsBackImgPreview"));
-
-        verticalLayout->addWidget(LVLPropsBackImgPreview);
 
         groupBox_5 = new QGroupBox(LevelSection);
         groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
@@ -908,10 +947,13 @@ public:
         ResizeSection->setCheckable(true);
         LevelSectionSettings->setWidget(LevelSection);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), LevelSectionSettings);
+        LevelObjectToolbar = new QToolBar(MainWindow);
+        LevelObjectToolbar->setObjectName(QStringLiteral("LevelObjectToolbar"));
+        MainWindow->addToolBar(Qt::TopToolBarArea, LevelObjectToolbar);
         DoorsToolbox = new QDockWidget(MainWindow);
         DoorsToolbox->setObjectName(QStringLiteral("DoorsToolbox"));
-        DoorsToolbox->setMinimumSize(QSize(230, 470));
-        DoorsToolbox->setMaximumSize(QSize(300, 524287));
+        DoorsToolbox->setMinimumSize(QSize(230, 508));
+        DoorsToolbox->setMaximumSize(QSize(300, 508));
         DoorsToolbox->setFloating(false);
         DoorsToolbox->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         dockWidgetContents = new QWidget();
@@ -1013,9 +1055,6 @@ public:
         pushButton = new QPushButton(groupBox_9);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setGeometry(QRect(110, 40, 21, 20));
-        pushButton_4 = new QPushButton(groupBox_9);
-        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
-        pushButton_4->setGeometry(QRect(60, 10, 61, 23));
         groupBox_10 = new QGroupBox(groupBox);
         groupBox_10->setObjectName(QStringLiteral("groupBox_10"));
         groupBox_10->setGeometry(QRect(10, 20, 211, 121));
@@ -1046,6 +1085,9 @@ public:
         checkBox = new QCheckBox(groupBox_10);
         checkBox->setObjectName(QStringLiteral("checkBox"));
         checkBox->setGeometry(QRect(120, 30, 81, 17));
+        pushButton_4 = new QPushButton(groupBox);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        pushButton_4->setGeometry(QRect(150, 330, 61, 23));
         DoorsToolbox->setWidget(dockWidgetContents);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), DoorsToolbox);
         QWidget::setTabOrder(BTNWarpsAndDoors, BTNWaterRanges);
@@ -1123,6 +1165,8 @@ public:
         EditionToolBar->addAction(actionSelect);
         EditionToolBar->addAction(actionEriser);
         EditionToolBar->addSeparator();
+        EditionToolBar->addAction(actionPlayMusic);
+        EditionToolBar->addSeparator();
         EditionToolBar->addAction(actionReset_position);
         EditionToolBar->addAction(actionGridEn);
         EditionToolBar->addSeparator();
@@ -1150,6 +1194,14 @@ public:
         LevelSectionsToolBar->addAction(actionSection_19);
         LevelSectionsToolBar->addAction(actionSection_20);
         LevelSectionsToolBar->addAction(actionSection_21);
+        LevelObjectToolbar->addAction(actionSetFirstPlayer);
+        LevelObjectToolbar->addAction(actionSetSecondPlayer);
+        LevelObjectToolbar->addSeparator();
+        LevelObjectToolbar->addAction(actionLockBlocks);
+        LevelObjectToolbar->addAction(actionLockBGO);
+        LevelObjectToolbar->addAction(actionLockNPC);
+        LevelObjectToolbar->addAction(actionLockDoors);
+        LevelObjectToolbar->addAction(actionLockWaters);
 
         retranslateUi(MainWindow);
 
@@ -1164,6 +1216,9 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Editor - PlatGEnWohl (Under Construction)", 0));
         OpenFile->setText(QApplication::translate("MainWindow", "Open...", 0));
+#ifndef QT_NO_TOOLTIP
+        OpenFile->setToolTip(QApplication::translate("MainWindow", "Open (Ctrl+O)", 0));
+#endif // QT_NO_TOOLTIP
         OpenFile->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0));
         Exit->setText(QApplication::translate("MainWindow", "Exit", 0));
         Exit->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+Q", 0));
@@ -1171,62 +1226,140 @@ public:
         actionNewWorld_map->setText(QApplication::translate("MainWindow", "World map...", 0));
         actionNPC_config->setText(QApplication::translate("MainWindow", "NPC config...", 0));
         actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSave->setToolTip(QApplication::translate("MainWindow", "Save (Ctrl+S)", 0));
+#endif // QT_NO_TOOLTIP
         actionSave->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0));
         actionSave_as->setText(QApplication::translate("MainWindow", "Save as...", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSave_as->setToolTip(QApplication::translate("MainWindow", "Save as (Ctrl+Shift+S)", 0));
+#endif // QT_NO_TOOLTIP
         actionSave_as->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+S", 0));
         actionClose->setText(QApplication::translate("MainWindow", "Close", 0));
         actionSave_all->setText(QApplication::translate("MainWindow", "Save all", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSave_all->setToolTip(QApplication::translate("MainWindow", "Save all (Ctrl+Alt+S)", 0));
+#endif // QT_NO_TOOLTIP
         actionSave_all->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+S", 0));
         actionAbout->setText(QApplication::translate("MainWindow", "About", 0));
         actionContents->setText(QApplication::translate("MainWindow", "Contents", 0));
+#ifndef QT_NO_TOOLTIP
+        actionContents->setToolTip(QApplication::translate("MainWindow", "Contents (F1)", 0));
+#endif // QT_NO_TOOLTIP
         actionContents->setShortcut(QApplication::translate("MainWindow", "F1", 0));
         actionSection_1->setText(QApplication::translate("MainWindow", "Section 1", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_1->setToolTip(QApplication::translate("MainWindow", "Section 1 (Ctrl+1)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_1->setShortcut(QApplication::translate("MainWindow", "Ctrl+1", 0));
         actionSection_2->setText(QApplication::translate("MainWindow", "Section 2", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_2->setToolTip(QApplication::translate("MainWindow", "Section 2 (Ctrl+2)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_2->setShortcut(QApplication::translate("MainWindow", "Ctrl+2", 0));
         actionSection_3->setText(QApplication::translate("MainWindow", "Section 3", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_3->setToolTip(QApplication::translate("MainWindow", "Section 3 (Ctrl+3)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_3->setShortcut(QApplication::translate("MainWindow", "Ctrl+3", 0));
         actionSection_4->setText(QApplication::translate("MainWindow", "Section 4", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_4->setToolTip(QApplication::translate("MainWindow", "Section 4 (Ctrl+4)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_4->setShortcut(QApplication::translate("MainWindow", "Ctrl+4", 0));
         actionSection_5->setText(QApplication::translate("MainWindow", "Section 5", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_5->setToolTip(QApplication::translate("MainWindow", "Section 5 (Ctrl+5)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_5->setShortcut(QApplication::translate("MainWindow", "Ctrl+5", 0));
         actionSection_6->setText(QApplication::translate("MainWindow", "Section 6", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_6->setToolTip(QApplication::translate("MainWindow", "Section 6 (Ctrl+6)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_6->setShortcut(QApplication::translate("MainWindow", "Ctrl+6", 0));
         actionSection_7->setText(QApplication::translate("MainWindow", "Section 7", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_7->setToolTip(QApplication::translate("MainWindow", "Section 7 (Ctrl+7)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_7->setShortcut(QApplication::translate("MainWindow", "Ctrl+7", 0));
         actionSection_8->setText(QApplication::translate("MainWindow", "Section 8", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_8->setToolTip(QApplication::translate("MainWindow", "Section 8 (Ctrl+8)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_8->setShortcut(QApplication::translate("MainWindow", "Ctrl+8", 0));
         actionSection_9->setText(QApplication::translate("MainWindow", "Section 9", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_9->setToolTip(QApplication::translate("MainWindow", "Section 9 (Ctrl+9)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_9->setShortcut(QApplication::translate("MainWindow", "Ctrl+9", 0));
         actionSection_10->setText(QApplication::translate("MainWindow", "Section 10", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_10->setToolTip(QApplication::translate("MainWindow", "Section 10 (Ctrl+0)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_10->setShortcut(QApplication::translate("MainWindow", "Ctrl+0", 0));
         actionSection_11->setText(QApplication::translate("MainWindow", "Section 11", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_11->setToolTip(QApplication::translate("MainWindow", "Section 11 (Ctrl+Alt+1)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_11->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+1", 0));
         actionSection_12->setText(QApplication::translate("MainWindow", "Section 12", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_12->setToolTip(QApplication::translate("MainWindow", "Section 12 (Ctrl+Alt+2)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_12->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+2", 0));
         actionSection_13->setText(QApplication::translate("MainWindow", "Section 13", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_13->setToolTip(QApplication::translate("MainWindow", "Section 13 (Ctrl+Alt+3)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_13->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+3", 0));
         actionSection_14->setText(QApplication::translate("MainWindow", "Section 14", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_14->setToolTip(QApplication::translate("MainWindow", "Section 14 (Ctrl+Alt+4)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_14->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+4", 0));
         actionSection_15->setText(QApplication::translate("MainWindow", "Section 15", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_15->setToolTip(QApplication::translate("MainWindow", "Section 15 (Ctrl+Alt+5)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_15->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+5", 0));
         actionSection_16->setText(QApplication::translate("MainWindow", "Section 16", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_16->setToolTip(QApplication::translate("MainWindow", "Section 16 (Ctrl+Alt+6)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_16->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+6", 0));
         actionSection_17->setText(QApplication::translate("MainWindow", "Section 17", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_17->setToolTip(QApplication::translate("MainWindow", "Section 17 (Ctrl+Alt+7)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_17->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+7", 0));
         actionSection_18->setText(QApplication::translate("MainWindow", "Section 18", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_18->setToolTip(QApplication::translate("MainWindow", "Section 18 (Ctrl+Alt+8)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_18->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+8", 0));
         actionSection_19->setText(QApplication::translate("MainWindow", "Section 19", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_19->setToolTip(QApplication::translate("MainWindow", "Section 19 (Ctrl+Alt+9)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_19->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+9", 0));
         actionSection_20->setText(QApplication::translate("MainWindow", "Section 20", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_20->setToolTip(QApplication::translate("MainWindow", "Section 20 (Ctrl+Alt+0)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_20->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+0", 0));
         actionSection_21->setText(QApplication::translate("MainWindow", "Section 21", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSection_21->setToolTip(QApplication::translate("MainWindow", "Section 21 (Alt+1)", 0));
+#endif // QT_NO_TOOLTIP
         actionSection_21->setShortcut(QApplication::translate("MainWindow", "Alt+1", 0));
         actionLevWarp->setText(QApplication::translate("MainWindow", "Warp section", 0));
         actionLevOffScr->setText(QApplication::translate("MainWindow", "Off screen exit", 0));
         actionLevNoBack->setText(QApplication::translate("MainWindow", "No turn back", 0));
         actionLevUnderW->setText(QApplication::translate("MainWindow", "Underwater", 0));
         actionExport_to_image->setText(QApplication::translate("MainWindow", "Export to image...", 0));
+#ifndef QT_NO_TOOLTIP
+        actionExport_to_image->setToolTip(QApplication::translate("MainWindow", "Export current section to image (F12)", 0));
+#endif // QT_NO_TOOLTIP
         actionExport_to_image->setShortcut(QApplication::translate("MainWindow", "F12", 0));
         actionLevelProp->setText(QApplication::translate("MainWindow", "Properties...", 0));
         actionWLDDisableMap->setText(QApplication::translate("MainWindow", "Disable world map", 0));
@@ -1240,13 +1373,37 @@ public:
         actionLVLToolBox->setText(QApplication::translate("MainWindow", "Level tool box", 0));
         actionWLDToolBox->setText(QApplication::translate("MainWindow", "World tool box", 0));
         actionSelect->setText(QApplication::translate("MainWindow", "Select", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSelect->setToolTip(QApplication::translate("MainWindow", "Select (S)", 0));
+#endif // QT_NO_TOOLTIP
         actionSelect->setShortcut(QApplication::translate("MainWindow", "S", 0));
         actionEriser->setText(QApplication::translate("MainWindow", "Eriser", 0));
+#ifndef QT_NO_TOOLTIP
+        actionEriser->setToolTip(QApplication::translate("MainWindow", "Eriser (E)", 0));
+#endif // QT_NO_TOOLTIP
         actionEriser->setShortcut(QApplication::translate("MainWindow", "E", 0));
         actionSection_Settings->setText(QApplication::translate("MainWindow", "Level Section Settings", 0));
         actionLoad_configs->setText(QApplication::translate("MainWindow", "Reload configurations", 0));
         actionReset_position->setText(QApplication::translate("MainWindow", "Reset position", 0));
         actionGridEn->setText(QApplication::translate("MainWindow", "Attach to grid", 0));
+        actionLockBlocks->setText(QApplication::translate("MainWindow", "Lock all Blocks", 0));
+        actionLockBGO->setText(QApplication::translate("MainWindow", "Lock all BGO", 0));
+        actionLockNPC->setText(QApplication::translate("MainWindow", "Lock all NPC", 0));
+        actionLockDoors->setText(QApplication::translate("MainWindow", "Lock all door objects", 0));
+        actionLockWaters->setText(QApplication::translate("MainWindow", "Lock all water squares", 0));
+        actionSetFirstPlayer->setText(QApplication::translate("MainWindow", "Set first player position", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSetFirstPlayer->setToolTip(QApplication::translate("MainWindow", "Set first player start point", 0));
+#endif // QT_NO_TOOLTIP
+        actionSetSecondPlayer->setText(QApplication::translate("MainWindow", "Set second player position", 0));
+#ifndef QT_NO_TOOLTIP
+        actionSetSecondPlayer->setToolTip(QApplication::translate("MainWindow", "Set second player start point", 0));
+#endif // QT_NO_TOOLTIP
+        actionPlayMusic->setText(QApplication::translate("MainWindow", "Play music", 0));
+#ifndef QT_NO_TOOLTIP
+        actionPlayMusic->setToolTip(QApplication::translate("MainWindow", "Play music (F11)", 0));
+#endif // QT_NO_TOOLTIP
+        actionPlayMusic->setShortcut(QApplication::translate("MainWindow", "F11", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "?", 0));
@@ -1302,7 +1459,6 @@ public:
         LVLPropCMusicLbl->setText(QApplication::translate("MainWindow", "Music file:", 0));
         LVLPropsMusicCustomEn->setText(QApplication::translate("MainWindow", "Custom music", 0));
         LVLPropsMusicCustomBrowse->setText(QApplication::translate("MainWindow", "...", 0));
-        LVLPropsMusicPlay->setText(QApplication::translate("MainWindow", "Play", 0));
         LVLPropSettingsGrp->setTitle(QApplication::translate("MainWindow", "Section Settings", 0));
 #ifndef QT_NO_WHATSTHIS
         LVLPropsLevelWarp->setWhatsThis(QApplication::translate("MainWindow", "Leaving for the screen, the player enters the screen on the other side", 0));
@@ -1312,13 +1468,6 @@ public:
         LVLPropsNoTBack->setText(QApplication::translate("MainWindow", "No turn back (disable moving to left)", 0));
         LVLPropsUnderWater->setText(QApplication::translate("MainWindow", "Underwater", 0));
         LVLPropStyleGr->setTitle(QApplication::translate("MainWindow", "Style", 0));
-        LVLPropBckgrClrLabel->setText(QApplication::translate("MainWindow", "Background color:", 0));
-        LVLPropsBackColor->clear();
-        LVLPropsBackColor->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Black", 0)
-         << QApplication::translate("MainWindow", "Blue", 0)
-         << QApplication::translate("MainWindow", "Turquoise", 0)
-        );
         LVLPropBckrImg->setText(QApplication::translate("MainWindow", "Background image", 0));
         LVLPropsBackImage->clear();
         LVLPropsBackImage->insertItems(0, QStringList()
@@ -1328,6 +1477,7 @@ public:
         label_9->setText(QApplication::translate("MainWindow", "Section:", 0));
         LVLProp_CurSect->setText(QApplication::translate("MainWindow", "0", 0));
         ResizeSection->setText(QApplication::translate("MainWindow", "Resize section", 0));
+        LevelObjectToolbar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Warps and doors", 0));
         groupBox_4->setTitle(QApplication::translate("MainWindow", "Level", 0));
         WarpLevelEntrance->setText(QApplication::translate("MainWindow", "Level entrance", 0));
@@ -1377,7 +1527,6 @@ public:
         label_8->setText(QApplication::translate("MainWindow", "Warp to", 0));
         label_11->setText(QApplication::translate("MainWindow", "Level file", 0));
         pushButton->setText(QApplication::translate("MainWindow", "...", 0));
-        pushButton_4->setText(QApplication::translate("MainWindow", "[some test]", 0));
         groupBox_10->setTitle(QApplication::translate("MainWindow", "Main", 0));
         comboBox_2->clear();
         comboBox_2->insertItems(0, QStringList()
@@ -1396,6 +1545,7 @@ public:
         label_4->setText(QApplication::translate("MainWindow", "Need stars", 0));
         checkBox_2->setText(QApplication::translate("MainWindow", "Locked", 0));
         checkBox->setText(QApplication::translate("MainWindow", "Allow NPC", 0));
+        pushButton_4->setText(QApplication::translate("MainWindow", "[some test]", 0));
     } // retranslateUi
 
 };

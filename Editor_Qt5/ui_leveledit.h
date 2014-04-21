@@ -55,8 +55,11 @@ public:
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setAutoFillBackground(false);
         graphicsView->setStyleSheet(QStringLiteral("background-color: rgb(98, 98, 98);"));
+        graphicsView->setFrameShape(QFrame::Box);
         graphicsView->setInteractive(true);
         graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        graphicsView->setRubberBandSelectionMode(Qt::IntersectsItemShape);
+        graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing|QGraphicsView::DontClipPainter|QGraphicsView::DontSavePainterState);
 
         verticalLayout->addWidget(graphicsView);
 
