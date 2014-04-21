@@ -19,6 +19,12 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>508</height>
+   </size>
+  </property>
   <property name="focusPolicy">
    <enum>Qt::NoFocus</enum>
   </property>
@@ -317,7 +323,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>389</height>
+        <height>517</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -344,7 +350,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>389</height>
+        <height>517</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -371,7 +377,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>389</height>
+        <height>517</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -398,7 +404,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>389</height>
+        <height>517</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -463,6 +469,12 @@
    <property name="allowedAreas">
     <set>Qt::TopToolBarArea</set>
    </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -471,6 +483,8 @@
    </attribute>
    <addaction name="actionSelect"/>
    <addaction name="actionEriser"/>
+   <addaction name="separator"/>
+   <addaction name="actionPlayMusic"/>
    <addaction name="separator"/>
    <addaction name="actionReset_position"/>
    <addaction name="actionGridEn"/>
@@ -572,7 +586,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>481</height>
+        <height>353</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -633,7 +647,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>481</height>
+        <height>353</height>
        </rect>
       </property>
      </widget>
@@ -657,7 +671,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>481</height>
+        <height>353</height>
        </rect>
       </property>
      </widget>
@@ -681,7 +695,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>481</height>
+        <height>353</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -771,13 +785,13 @@
    <property name="minimumSize">
     <size>
      <width>230</width>
-     <height>500</height>
+     <height>360</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>230</width>
-     <height>524287</height>
+     <height>360</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -809,7 +823,7 @@
        <x>0</x>
        <y>160</y>
        <width>221</width>
-       <height>131</height>
+       <height>101</height>
       </rect>
      </property>
      <property name="title">
@@ -885,22 +899,6 @@
        <string>...</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="LVLPropsMusicPlay">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>100</y>
-        <width>131</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Play</string>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-     </widget>
     </widget>
     <widget class="QGroupBox" name="LVLPropSettingsGrp">
      <property name="geometry">
@@ -964,44 +962,15 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>290</y>
+       <y>260</y>
        <width>221</width>
-       <height>201</height>
+       <height>71</height>
       </rect>
      </property>
      <property name="title">
       <string>Style</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="LVLPropBckgrClrLabel">
-        <property name="text">
-         <string>Background color:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="LVLPropsBackColor">
-        <item>
-         <property name="text">
-          <string>Black</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Blue</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Turquoise</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item>
        <widget class="QLabel" name="LVLPropBckrImg">
         <property name="text">
@@ -1017,9 +986,6 @@
          </property>
         </item>
        </widget>
-      </item>
-      <item>
-       <widget class="QGraphicsView" name="LVLPropsBackImgPreview"/>
       </item>
      </layout>
     </widget>
@@ -1083,17 +1049,36 @@
     </widget>
    </widget>
   </widget>
+  <widget class="QToolBar" name="LevelObjectToolbar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSetFirstPlayer"/>
+   <addaction name="actionSetSecondPlayer"/>
+   <addaction name="separator"/>
+   <addaction name="actionLockBlocks"/>
+   <addaction name="actionLockBGO"/>
+   <addaction name="actionLockNPC"/>
+   <addaction name="actionLockDoors"/>
+   <addaction name="actionLockWaters"/>
+  </widget>
   <widget class="QDockWidget" name="DoorsToolbox">
    <property name="minimumSize">
     <size>
      <width>230</width>
-     <height>470</height>
+     <height>508</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>300</width>
-     <height>524287</height>
+     <height>508</height>
     </size>
    </property>
    <property name="floating">
@@ -1507,19 +1492,6 @@ p, li { white-space: pre-wrap; }
         <string>...</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_4">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>10</y>
-         <width>61</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>[some test]</string>
-       </property>
-      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_10">
       <property name="geometry">
@@ -1667,6 +1639,19 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </widget>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>330</y>
+        <width>61</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>[some test]</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -1680,6 +1665,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Open...</string>
+   </property>
+   <property name="toolTip">
+    <string>Open (Ctrl+O)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -1722,6 +1710,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Save</string>
    </property>
+   <property name="toolTip">
+    <string>Save (Ctrl+S)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
@@ -1739,6 +1730,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save as (Ctrl+Shift+S)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
@@ -1762,6 +1756,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Save all</string>
    </property>
+   <property name="toolTip">
+    <string>Save all (Ctrl+Alt+S)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Alt+S</string>
    </property>
@@ -1784,6 +1781,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Contents</string>
    </property>
+   <property name="toolTip">
+    <string>Contents (F1)</string>
+   </property>
    <property name="shortcut">
     <string>F1</string>
    </property>
@@ -1801,6 +1801,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 1</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 1 (Ctrl+1)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+1</string>
@@ -1823,6 +1826,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 2</string>
    </property>
+   <property name="toolTip">
+    <string>Section 2 (Ctrl+2)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+2</string>
    </property>
@@ -1843,6 +1849,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 3</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 3 (Ctrl+3)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+3</string>
@@ -1865,6 +1874,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 4</string>
    </property>
+   <property name="toolTip">
+    <string>Section 4 (Ctrl+4)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+4</string>
    </property>
@@ -1885,6 +1897,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 5</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 5 (Ctrl+5)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+5</string>
@@ -1907,6 +1922,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 6</string>
    </property>
+   <property name="toolTip">
+    <string>Section 6 (Ctrl+6)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+6</string>
    </property>
@@ -1927,6 +1945,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 7</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 7 (Ctrl+7)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+7</string>
@@ -1949,6 +1970,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 8</string>
    </property>
+   <property name="toolTip">
+    <string>Section 8 (Ctrl+8)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+8</string>
    </property>
@@ -1969,6 +1993,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 9</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 9 (Ctrl+9)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+9</string>
@@ -1991,6 +2018,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 10</string>
    </property>
+   <property name="toolTip">
+    <string>Section 10 (Ctrl+0)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+0</string>
    </property>
@@ -2011,6 +2041,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 11</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 11 (Ctrl+Alt+1)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+1</string>
@@ -2033,6 +2066,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 12</string>
    </property>
+   <property name="toolTip">
+    <string>Section 12 (Ctrl+Alt+2)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Alt+2</string>
    </property>
@@ -2053,6 +2089,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 13</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 13 (Ctrl+Alt+3)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+3</string>
@@ -2075,6 +2114,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 14</string>
    </property>
+   <property name="toolTip">
+    <string>Section 14 (Ctrl+Alt+4)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Alt+4</string>
    </property>
@@ -2095,6 +2137,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 15</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 15 (Ctrl+Alt+5)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+5</string>
@@ -2117,6 +2162,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 16</string>
    </property>
+   <property name="toolTip">
+    <string>Section 16 (Ctrl+Alt+6)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Alt+6</string>
    </property>
@@ -2137,6 +2185,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 17</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 17 (Ctrl+Alt+7)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+7</string>
@@ -2159,6 +2210,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 18</string>
    </property>
+   <property name="toolTip">
+    <string>Section 18 (Ctrl+Alt+8)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Alt+8</string>
    </property>
@@ -2179,6 +2233,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 19</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 19 (Ctrl+Alt+9)</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+9</string>
@@ -2201,6 +2258,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Section 20</string>
    </property>
+   <property name="toolTip">
+    <string>Section 20 (Ctrl+Alt+0)</string>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Alt+0</string>
    </property>
@@ -2221,6 +2281,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Section 21</string>
+   </property>
+   <property name="toolTip">
+    <string>Section 21 (Alt+1)</string>
    </property>
    <property name="shortcut">
     <string>Alt+1</string>
@@ -2282,6 +2345,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Export to image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export current section to image (F12)</string>
    </property>
    <property name="shortcut">
     <string>F12</string>
@@ -2403,6 +2469,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Select</string>
    </property>
+   <property name="toolTip">
+    <string>Select (S)</string>
+   </property>
    <property name="shortcut">
     <string>S</string>
    </property>
@@ -2423,6 +2492,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Eriser</string>
+   </property>
+   <property name="toolTip">
+    <string>Eriser (E)</string>
    </property>
    <property name="shortcut">
     <string>E</string>
@@ -2479,6 +2551,119 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Attach to grid</string>
+   </property>
+  </action>
+  <action name="actionLockBlocks">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/locks/block_op.png</normaloff>
+     <normalon>:/locks/block_cl.png</normalon>:/locks/block_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock all Blocks</string>
+   </property>
+  </action>
+  <action name="actionLockBGO">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/locks/bgo_op.png</normaloff>
+     <normalon>:/locks/bgo_cl.png</normalon>:/locks/bgo_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock all BGO</string>
+   </property>
+  </action>
+  <action name="actionLockNPC">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/locks/npc_op.png</normaloff>
+     <normalon>:/locks/npc_cl.png</normalon>:/locks/npc_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock all NPC</string>
+   </property>
+  </action>
+  <action name="actionLockDoors">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/locks/door_op.png</normaloff>
+     <normalon>:/locks/door_cl.png</normalon>:/locks/door_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock all door objects</string>
+   </property>
+  </action>
+  <action name="actionLockWaters">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/locks/water_op.png</normaloff>
+     <normalon>:/locks/water_cl.png</normalon>:/locks/water_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock all water squares</string>
+   </property>
+  </action>
+  <action name="actionSetFirstPlayer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/player1_start.png</normaloff>:/images/player1_start.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set first player position</string>
+   </property>
+   <property name="toolTip">
+    <string>Set first player start point</string>
+   </property>
+  </action>
+  <action name="actionSetSecondPlayer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/player2_start.png</normaloff>:/images/player2_start.png</iconset>
+   </property>
+   <property name="text">
+    <string>Set second player position</string>
+   </property>
+   <property name="toolTip">
+    <string>Set second player start point</string>
+   </property>
+  </action>
+  <action name="actionPlayMusic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/playmusic.png</normaloff>:/images/playmusic.png</iconset>
+   </property>
+   <property name="text">
+    <string>Play music</string>
+   </property>
+   <property name="toolTip">
+    <string>Play music (F11)</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
    </property>
   </action>
  </widget>
