@@ -44,5 +44,18 @@
         <file>images/mac/mushroom.icns</file>
         <file>images/grid.png</file>
         <file>images/reset_pos.png</file>
+        <file alias="locks/bgo_cl.png">images/lock_bgo_cl.png</file>
+        <file alias="locks/bgo_op.png">images/lock_bgo_op.png</file>
+        <file alias="locks/block_cl.png">images/lock_block_cl.png</file>
+        <file alias="locks/block_op.png">images/lock_block_op.png</file>
+        <file alias="locks/door_cl.png">images/lock_door_cl.png</file>
+        <file alias="locks/door_op.png">images/lock_door_op.png</file>
+        <file alias="locks/npc_cl.png">images/lock_npc_cl.png</file>
+        <file alias="locks/npc_op.png">images/lock_npc_op.png</file>
+        <file alias="locks/water_cl.png">images/lock_water_cl.png</file>
+        <file alias="locks/water_op.png">images/lock_water_op.png</file>
+        <file>images/player1_start.png</file>
+        <file>images/player2_start.png</file>
+        <file>images/playmusic.png</file>
     </qresource>
 </RCC>
