@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     lvlscene.cpp \
     dataconfigs.cpp \
     saveimage.cpp \
-    musicfilelist.cpp
+    musicfilelist.cpp \
+    logger.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
