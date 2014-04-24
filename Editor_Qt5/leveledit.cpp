@@ -188,7 +188,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
-
+    LvlData.modyfied = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -382,12 +382,12 @@ void leveledit::focusInEvent( QFocusEvent * focusInEvent)
 
 void leveledit::documentWasModified()
 {
-    isModyfied = true;
+    LvlData.modyfied = true;
 }
 
 bool leveledit::maybeSave()
 {
-    if (isModyfied) {
+    if (LvlData.modyfied) {
     QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
                      tr("'%1' has been modified.\n"
