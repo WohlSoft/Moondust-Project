@@ -21,7 +21,11 @@ SOURCES += main.cpp\
     dataconfigs.cpp \
     saveimage.cpp \
     musicfilelist.cpp \
-    logger.cpp
+    logger.cpp \
+    file_npc_txt.cpp \
+    file_wld.cpp \
+    file_lvl.cpp \
+    item_block.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -36,7 +40,9 @@ HEADERS  += mainwindow.h \
     dataconfigs.h \
     saveimage.h \
     musicfilelist.h \
-    logger.h
+    logger.h \
+    file_formats.h \
+    item_block.h
 
 FORMS    += \
     aboutdialog.ui \

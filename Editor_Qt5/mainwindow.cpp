@@ -973,6 +973,7 @@ void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
     if(activeChildWindow()==1)
     {
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
+        activeLvlEditWin()->LvlData.modyfied = true;
     }
 
     WriteToLog(QtDebugMsg, "Call to Set Music if playing");
@@ -989,6 +990,7 @@ void MainWindow::on_LVLPropsMusicCustomEn_toggled(bool checked)
             if(activeChildWindow()==1)
             {
                 activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
+                activeLvlEditWin()->LvlData.modyfied = true;
             }
         }
     }
@@ -1134,6 +1136,7 @@ void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
     if(activeChildWindow()==1)
     {
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_file = arg1;
+        activeLvlEditWin()->LvlData.modyfied = true;
     }
 
     setMusic( ui->actionPlayMusic->isChecked() );

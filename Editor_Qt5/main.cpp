@@ -23,6 +23,9 @@
 
 #include "logger.h"
 
+
+//Regular expressions for File Formats
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
