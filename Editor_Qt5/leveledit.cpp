@@ -269,7 +269,7 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 
     if(!progress.wasCanceled())
         progress.setLabelText(tr("2/%1 Loading BGOs").arg(TotalSteps));
-    scene->setBGO(LvlData, progress, configs);
+    scene->setBGO(LvlData, progress);
 
     if(!progress.wasCanceled())
         progress.setLabelText(tr("3/%1 Loading Blocks").arg(TotalSteps));

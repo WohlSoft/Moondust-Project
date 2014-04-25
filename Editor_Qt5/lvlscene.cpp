@@ -1128,6 +1128,70 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
 }
 
 
+void LvlScene::placeBGO(LevelBGO &bgo)
+{
+    int j;
+    bool noimage=true;//, found=false;
+
+    QGraphicsItem *	box;
+    bool isUser=false;
+
+    noimage=true;
+    isUser=false;
+
+    for(j=0;j<uBGOs.size();j++)
+    {
+        if(uBGOs[j].id==bgo.id)
+        {
+            isUser=true;
+            tImg = uBGOs[j].image;
+            break;
+        }
+    }
+
+    for(j=0;j<pConfigs->main_bgo.size();j++)
+    {
+        if(pConfigs->main_bgo[j].id==bgo.id)
+        {
+            noimage=false;
+            if(!isUser)
+            tImg = pConfigs->main_bgo[j].image; break;
+        }
+    }
+
+    if((noimage)||(tImg.isNull()))
+    {
+        tImg=uBgoImg;
+    }
+
+    if((!noimage) && (pConfigs->main_bgo[j].animated))
+    {
+        tImg=tImg.copy(0, 0, tImg.width(), (int)round(tImg.height()/pConfigs->main_bgo[j].frames));
+    }
+
+    box = addPixmap(QPixmap(tImg));
+    box->setPos(bgo.x, bgo.y);
+
+    box->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    box->setFlag(QGraphicsItem::ItemIsMovable, true);
+
+    box->setData(0, "BGO");
+    box->setData(1, QString::number(bgo.id) );
+    box->setData(2, QString::number(bgo.array_id) );
+
+    box->setData(9, QString::number(tImg.width()) ); //width
+    box->setData(10, QString::number(tImg.height()) ); //height
+
+    if(pConfigs->main_bgo[j].view!=0)
+        box->setZValue(bgoZf + pConfigs->main_bgo[j].zOffset);
+        //bgoback->addToGroup(box);
+    else
+        box->setZValue(bgoZb + pConfigs->main_bgo[j].zOffset);
+        //bgofore->addToGroup(box);
+
+}
+
+
 void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
 {
     LevelBlock tmp1;
@@ -1211,18 +1275,9 @@ void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress, dataconf
 
 
 /////////////////////SET BackGround Objects/////////////////////////////////////////////
-void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs &configs)
+void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
 {
-    int i=0, j;
-    bool noimage=true;//, found=false;
-    //QPixmap tImg;
-
-    //QBitmap mask;
-    //QBitmap mask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
-    //QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-
-    QGraphicsItem *	box;
-    bool isUser=false;
+    int i=0;
 
     //sortBGOArray(FileData.bgo); //Sort BGOs
 
@@ -1233,56 +1288,7 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress, dataconfigs
         //if(!progress.wasCanceled())
         //    progress.setLabelText("Applayng BGOs "+QString::number(i)+"/"+QString::number(FileData.bgo.size()));
 
-        noimage=true;
-        isUser=false;
-        for(j=0;j<uBGOs.size();j++)
-        {
-            if(uBGOs[j].id==FileData.bgo[i].id)
-            {
-                isUser=true;
-                tImg = uBGOs[j].image;
-                break;
-            }
-        }
-
-        for(j=0;j<configs.main_bgo.size();j++)
-        {
-            if(configs.main_bgo[j].id==FileData.bgo[i].id)
-            {
-                noimage=false;
-                if(!isUser)
-                tImg = configs.main_bgo[j].image; break;
-            }
-        }
-        if((noimage)||(tImg.isNull()))
-        {
-            tImg=uBgoImg;
-        }
-
-        if((!noimage) && (configs.main_bgo[j].animated))
-        {
-            tImg=tImg.copy(0, 0, tImg.width(), (int)round(tImg.height()/configs.main_bgo[j].frames));
-        }
-
-        box = addPixmap(QPixmap(tImg));
-        box->setPos(FileData.bgo[i].x, FileData.bgo[i].y);
-
-        box->setFlag(QGraphicsItem::ItemIsSelectable, true);
-        box->setFlag(QGraphicsItem::ItemIsMovable, true);
-
-        box->setData(0, "BGO");
-        box->setData(1, QString::number(FileData.bgo[i].id) );
-        box->setData(2, QString::number(FileData.bgo[i].array_id) );
-
-        box->setData(9, QString::number(tImg.width()) ); //width
-        box->setData(10, QString::number(tImg.height()) ); //height
-
-        if(configs.main_bgo[j].view!=0)
-            box->setZValue(bgoZf + configs.main_bgo[j].zOffset);
-            //bgoback->addToGroup(box);
-        else
-            box->setZValue(bgoZb + configs.main_bgo[j].zOffset);
-            //bgofore->addToGroup(box);
+        placeBGO(FileData.bgo[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
@@ -1333,8 +1339,8 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
 
     for(i=0; i<FileData.water.size(); i++)
     {
-        if(!progress.wasCanceled())
-            progress.setLabelText("Applayng water "+QString::number(i)+"/"+QString::number(FileData.water.size()));
+        //if(!progress.wasCanceled())
+        //    progress.setLabelText("Applayng water "+QString::number(i)+"/"+QString::number(FileData.water.size()));
 
         x = FileData.water[i].x;
         y = FileData.water[i].y;
@@ -1373,44 +1379,73 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
 
 }
 
+
+void LvlScene::placeDoor(LevelDoors &door)
+{
+    long ix, iy, ox, oy, h, w;
+    QGraphicsItem *	enter, *enterTxt;
+    QGraphicsItem *	exit, *exitTxt;
+    QGraphicsItemGroup *enterId, *exitId;
+
+    ix = door.ix;
+    iy = door.iy;
+    ox = door.ox;
+    oy = door.oy;
+    h = 32;
+    w = 32;
+    QFont font;
+    font.setWeight(14);
+    font.setBold(1);
+    font.setPointSize(12);
+    //font.setStyle(QFont::Times);
+    //font.setStyle();
+
+    enter = addRect(ix, iy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
+    exit = addRect(ox, oy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
+
+    enterId = new QGraphicsItemGroup(enter);
+    exitId = new QGraphicsItemGroup(exit);
+
+    enterTxt = addText(QString::number(door.array_id), font);
+    enterTxt->setPos(ix-3, iy);
+    enterId->addToGroup(enterTxt);
+
+    exitTxt = addText(QString::number(door.array_id), font);
+    exitTxt->setPos(ox+12, oy+10);
+    exitId->addToGroup(exitTxt);
+
+    enter->setFlag(QGraphicsItem::ItemIsSelectable,true);
+    enter->setFlag(QGraphicsItem::ItemIsMovable, true);
+    exit->setFlag(QGraphicsItem::ItemIsSelectable,true);
+    exit->setFlag(QGraphicsItem::ItemIsMovable, true);
+
+    enter->setZValue(doorZ);
+    enterTxt->setZValue(doorZ+0.0000001);
+    exit->setZValue(doorZ);
+    exitTxt->setZValue(doorZ+0.0000001);
+
+    enter->setData(0, "Door_enter"); // ObjType
+    enter->setData(1, QString::number(0) );
+    enter->setData(2, QString::number(door.array_id) );
+
+    exit->setData(0, "Door_exit"); // ObjType
+    exit->setData(1, QString::number(0) );
+    exit->setData(2, QString::number(door.array_id) );
+
+}
+
 /////////////////////////SET Doors/////////////////////////////////
 void LvlScene::setDoors(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
-    long ix, iy, ox, oy, h, w;
-    QGraphicsItem *	enter;
-    QGraphicsItem *	exit;
+
 
     for(i=0; i<FileData.doors.size(); i++)
     {
-        if(!progress.wasCanceled())
-            progress.setLabelText("Applayng doors "+QString::number(i)+"/"+QString::number(FileData.doors.size()));
+        //if(!progress.wasCanceled())
+        //    progress.setLabelText("Applayng doors "+QString::number(i)+"/"+QString::number(FileData.doors.size()));
 
-        ix = FileData.doors[i].ix;
-        iy = FileData.doors[i].iy;
-        ox = FileData.doors[i].ox;
-        oy = FileData.doors[i].oy;
-        h = 32;
-        w = 32;
-
-        enter = addRect(ix, iy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
-        exit = addRect(ox, oy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
-
-        enter->setFlag(QGraphicsItem::ItemIsSelectable,true);
-        enter->setFlag(QGraphicsItem::ItemIsMovable, true);
-        exit->setFlag(QGraphicsItem::ItemIsSelectable,true);
-        exit->setFlag(QGraphicsItem::ItemIsMovable, true);
-
-        enter->setZValue(doorZ);
-        exit->setZValue(doorZ);
-
-        enter->setData(0, "Door_enter"); // ObjType
-        enter->setData(1, QString::number(0) );
-        enter->setData(2, QString::number(FileData.doors[i].array_id) );
-
-        exit->setData(0, "Door_exit"); // ObjType
-        exit->setData(1, QString::number(0) );
-        exit->setData(2, QString::number(FileData.doors[i].array_id) );
+           placeDoor(FileData.doors[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
