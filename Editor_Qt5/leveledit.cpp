@@ -33,7 +33,6 @@
 
 #include <QDebug>
 
-
 leveledit::leveledit(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::leveledit)
@@ -289,6 +288,8 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     scene->setDoors(LvlData, progress);
 
     scene->drawSpace(LvlData);
+
+    scene->startBlockAnimation();
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,
