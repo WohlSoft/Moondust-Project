@@ -17,6 +17,8 @@
  */
 
 #include "item_block.h"
+#include "logger.h"
+
 
 
 ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
@@ -29,26 +31,110 @@ ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
 
 ItemBlock::~ItemBlock()
 {
-
+ //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
 }
 
 void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if(animated) nextFrame();
-
+    scene->clearSelection();
+    this->setSelected(1);
     ItemMenu->exec(event->screenPos());
+
 }
+
+/*
+void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    int gridSize=32, offsetX=0, offsetY=0, gridX, gridY, i;
+    QPoint sourcePos;
+
+    sourcePos=QPoint(blockData.x, blockData.y);
+    QPointF itemPos = this->scenePos();
+
+    if((!isSelected())||(sourcePos == itemPos))
+    { QGraphicsPixmapItem::mouseReleaseEvent(event); return;}
+
+    if(scene->grid)
+    { //ATTACH TO GRID
+        gridX = ((int)itemPos.x() - (int)itemPos.x() % gridSize);
+        gridY = ((int)itemPos.y() - (int)itemPos.y() % gridSize);
+
+        if((int)itemPos.x()<0)
+        {
+            if( (int)itemPos.x() < gridX - (int)(gridSize/2) )
+                gridX -= gridSize;
+        }
+        else
+        {
+            if( (int)itemPos.x() > gridX + (int)(gridSize/2) )
+                gridX += gridSize;
+        }
+
+        if((int)itemPos.y()<0)
+        {if( (int)itemPos.y() < gridY - (int)(gridSize/2) )
+            gridY -= gridSize;
+        }
+        else {if( (int)itemPos.y() > gridY + (int)(gridSize/2) )
+         gridY += gridSize;
+        }
+
+        this->setPos(QPointF(offsetX+gridX, offsetY+gridY));
+    }
+
+    //Check collision
+    if( scene->itemCollidesWith(this) )
+    {
+        this->setPos(QPointF(sourcePos));
+        this->setSelected(false);
+        WriteToLog(QtDebugMsg, QString("Moved back %1 %2")
+                   .arg((long)this->scenePos().x())
+                   .arg((long)this->scenePos().y()) );
+    }
+    else
+    {
+        blockData.x=(long)this->scenePos().x();
+        blockData.y=(long)this->scenePos().y();
+
+         for (i=0;i<scene->LvlData->blocks.size();i++)
+            {
+                if(scene->LvlData->blocks[i].array_id == blockData.array_id)
+                {
+                    //Applay move into main array
+                    scene->LvlData->blocks[i].x = (long)this->scenePos().x();
+                    scene->LvlData->blocks[i].y = (long)this->scenePos().y();
+                    scene->LvlData->modyfied = true;
+                    break;
+                }
+            }
+    }
+
+}*/
 
 void ItemBlock::setMainPixmap(const QPixmap &pixmap)
 {
     mainImage = pixmap;
-    this->setPixmap(mainImage);
+    if(!sizeble)
+        this->setPixmap(mainImage);
+    else
+    {
+        frameWidth = blockData.w;
+        frameSize = blockData.h;
+        frameHeight = blockData.h;
+        currentImage = drawSizebleBlock(blockData.w, blockData.h, mainImage);
+        this->setPixmap(currentImage);
+    }
+}
+
+void ItemBlock::setBlockData(LevelBlock inD, bool is_sz)
+{
+    blockData = inD;
+    sizeble = is_sz;
 }
 
 
 QRectF ItemBlock::boundingRect() const
 {
-    if(!animated)
+    if((!animated)&&(!sizeble))
         return QRectF(0,0,mainImage.width(),mainImage.height());
     else
         return QRectF(0,0,frameWidth,frameSize);
@@ -59,19 +145,24 @@ void ItemBlock::setContextMenu(QMenu &menu)
     ItemMenu = &menu;
 }
 
+void ItemBlock::setScenePoint(LvlScene *theScene)
+{
+    scene = theScene;
+}
+
 
 ////////////////Animation///////////////////
 
 
-void ItemBlock::setAnimation(QPixmap &sprite, int frames)
+void ItemBlock::setAnimation(int frames, int framespeed)
 {
     animated = true;
-    farameSet=sprite;
-    framesQ=frames;
+    framesQ = frames;
+    frameSpeed = framespeed;
 
-    frameSize = (int)round(farameSet.height()/frames);
-    frameWidth = farameSet.width();
-    frameHeight = farameSet.height();
+    frameSize = (int)round(mainImage.height()/frames);
+    frameWidth = mainImage.width();
+    frameHeight = mainImage.height();
 
     framePos = QPoint(0,0);
     draw();
@@ -82,12 +173,21 @@ void ItemBlock::setAnimation(QPixmap &sprite, int frames)
                 timer, SIGNAL(timeout()),
                 this,
                 SLOT( nextFrame() ) );
-    timer->start(128);
+}
+
+void ItemBlock::AnimationStart()
+{
+    timer->start(frameSpeed);
+}
+
+void ItemBlock::AnimationStop()
+{
+    timer->stop();
 }
 
 void ItemBlock::draw()
 {
-    currentImage =  farameSet.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
+    currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
 }
 
 QPoint ItemBlock::fPos() const
@@ -121,4 +221,81 @@ void ItemBlock::nextFrame()
     framePos.setY( framePos.y() + frameSize );
     draw();
     this->setPixmap(QPixmap(currentImage));
+}
+
+
+
+//Sizeble Block formula
+QPixmap ItemBlock::drawSizebleBlock(int w, int h, QPixmap srcimg)
+{
+    int x,y, i, j;
+    int hc, wc;
+    QPixmap img;
+    QPixmap * sizebleImage;
+    QPainter * szblock;
+    x=32;
+    y=32;
+
+    sizebleImage = new QPixmap(QSize(w, h));
+    sizebleImage->fill(Qt::transparent);
+    szblock = new QPainter(sizebleImage);
+
+    //L
+    hc=0;
+    for(i=0; i<((h-2*y) / y); i++ )
+    {
+        szblock->drawPixmap(0, x+hc, x, y, srcimg.copy(QRect(0, y, x, y)));
+            hc+=x;
+    }
+
+    //T
+    hc=0;
+    for(i=0; i<( (w-2*x) / x); i++ )
+    {
+        szblock->drawPixmap(x+hc, 0, x, y, srcimg.copy(QRect(x, 0, x, y)) );
+            hc+=x;
+    }
+
+    //B
+    hc=0;
+    for(i=0; i< ( (w-2*x) / x); i++ )
+    {
+        szblock->drawPixmap(x+hc, h-y, x, y, srcimg.copy(QRect(x, srcimg.width()-y, x, y )) );
+            hc+=x;
+    }
+
+    //R
+    hc=0;
+    for(i=0; i<((h-2*y) / y); i++ )
+    {
+        szblock->drawPixmap(w-x, y+hc, x, y, srcimg.copy(QRect(srcimg.width()-x, y, x, y)));
+            hc+=x;
+    }
+
+    //C
+    hc=0;
+    wc=0;
+    for(i=0; i<((h-2*y) / y); i++ )
+    {
+        hc=0;
+        for(j=0; j<((w-2*x) / x); j++ )
+        {
+        szblock->drawPixmap(x+hc, y+wc, x, y, srcimg.copy(QRect(x, y, x, y)));
+            hc+=x;
+        }
+        wc+=y;
+    }
+
+    //Applay Sizeble formula
+     //1
+    szblock->drawPixmap(0,0,y,x, srcimg.copy(QRect(0,0,y,x)));
+     //2
+    szblock->drawPixmap(w-y, 0, y, x, srcimg.copy(QRect(srcimg.width()-y, 0, y, x)) );
+     //3
+    szblock->drawPixmap(w-y, h-x, y, x, srcimg.copy(QRect(srcimg.width()-y, srcimg.height()-x, y, x)) );
+     //4
+    szblock->drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
+
+    img = QPixmap( * sizebleImage);
+    return img;
 }

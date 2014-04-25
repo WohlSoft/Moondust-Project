@@ -31,7 +31,8 @@
 #include <QTimer>
 #include <math.h>
 #include <QMenu>
-
+#include "lvlscene.h"
+#include "lvl_filedata.h"
 
 class ItemBlock : public QObject, public QGraphicsPixmapItem
 {
@@ -41,7 +42,9 @@ public:
     ~ItemBlock();
 
     void setMainPixmap(const QPixmap &pixmap);
+    void setBlockData(LevelBlock inD, bool is_sz);
     void setContextMenu(QMenu &menu);
+    void setScenePoint(LvlScene *theScene);
 
     QRectF boundingRect() const;
 
@@ -51,20 +54,28 @@ public:
 //    QGraphicsPixmapItem * image;
 
     //////Animation////////
-    void setAnimation(QPixmap &sprite, int frames);
+    void setAnimation(int frames, int framespeed);
+    void AnimationStart();
+    void AnimationStop();
     void draw();
     QPoint fPos() const;
     void setFrame(int);
+    LevelBlock blockData;
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
+    //virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
 
 private slots:
     void nextFrame();
 
 private:
     bool animated;
-    QPixmap farameSet;
+    int frameSpeed;
+
+    QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
+    bool sizeble;
+    LvlScene * scene;
     int frameCurrent;
     QTimer * timer;
     QPoint framePos;
