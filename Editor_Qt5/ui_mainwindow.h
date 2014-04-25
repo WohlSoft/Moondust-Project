@@ -675,7 +675,7 @@ public:
         Blocks->setWidgetResizable(true);
         blocksscroll = new QWidget();
         blocksscroll->setObjectName(QStringLiteral("blocksscroll"));
-        blocksscroll->setGeometry(QRect(0, 0, 239, 517));
+        blocksscroll->setGeometry(QRect(0, 0, 81, 28));
         blocksscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         Blocks->setWidget(blocksscroll);
         LevelToolBoxTabs->addTab(Blocks, QString());
@@ -686,7 +686,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 239, 517));
+        backsscroll->setGeometry(QRect(0, 0, 81, 28));
         backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -697,7 +697,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 239, 517));
+        npcscroll->setGeometry(QRect(0, 0, 81, 28));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -708,7 +708,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 239, 517));
+        specialscroll->setGeometry(QRect(0, 0, 239, 389));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -775,7 +775,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 256, 353));
+        TilesItemBox->setGeometry(QRect(0, 0, 81, 73));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -803,7 +803,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 239, 353));
+        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -813,7 +813,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 353));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -823,7 +823,7 @@ public:
         MusicSet->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 353));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 481));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -866,6 +866,7 @@ public:
         LVLPropMusicGr = new QGroupBox(LevelSection);
         LVLPropMusicGr->setObjectName(QStringLiteral("LVLPropMusicGr"));
         LVLPropMusicGr->setGeometry(QRect(0, 160, 221, 101));
+        LVLPropMusicGr->setMinimumSize(QSize(0, 101));
         LVLPropsMusicNumber = new QComboBox(LVLPropMusicGr);
         LVLPropsMusicNumber->setObjectName(QStringLiteral("LVLPropsMusicNumber"));
         LVLPropsMusicNumber->setGeometry(QRect(10, 20, 101, 20));
@@ -886,6 +887,7 @@ public:
         LVLPropSettingsGrp = new QGroupBox(LevelSection);
         LVLPropSettingsGrp->setObjectName(QStringLiteral("LVLPropSettingsGrp"));
         LVLPropSettingsGrp->setGeometry(QRect(0, 40, 221, 121));
+        LVLPropSettingsGrp->setMinimumSize(QSize(0, 121));
         verticalLayout_3 = new QVBoxLayout(LVLPropSettingsGrp);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -916,7 +918,8 @@ public:
 
         LVLPropStyleGr = new QGroupBox(LevelSection);
         LVLPropStyleGr->setObjectName(QStringLiteral("LVLPropStyleGr"));
-        LVLPropStyleGr->setGeometry(QRect(0, 260, 221, 71));
+        LVLPropStyleGr->setGeometry(QRect(0, 260, 221, 70));
+        LVLPropStyleGr->setMinimumSize(QSize(0, 70));
         verticalLayout = new QVBoxLayout(LVLPropStyleGr);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -928,6 +931,7 @@ public:
 
         LVLPropsBackImage = new QComboBox(LVLPropStyleGr);
         LVLPropsBackImage->setObjectName(QStringLiteral("LVLPropsBackImage"));
+        LVLPropsBackImage->setMinimumSize(QSize(0, 25));
 
         verticalLayout->addWidget(LVLPropsBackImage);
 

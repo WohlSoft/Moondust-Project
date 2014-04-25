@@ -322,8 +322,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>517</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -349,8 +349,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>517</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -376,8 +376,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>517</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -404,7 +404,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>517</height>
+        <height>389</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -585,8 +585,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>353</height>
+        <width>81</width>
+        <height>73</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -646,8 +646,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>353</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -670,8 +670,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>353</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -695,7 +695,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>353</height>
+        <height>481</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -826,6 +826,12 @@
        <height>101</height>
       </rect>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>101</height>
+      </size>
+     </property>
      <property name="title">
       <string>Music</string>
      </property>
@@ -909,6 +915,12 @@
        <height>121</height>
       </rect>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>121</height>
+      </size>
+     </property>
      <property name="title">
       <string>Section Settings</string>
      </property>
@@ -964,8 +976,14 @@
        <x>0</x>
        <y>260</y>
        <width>221</width>
-       <height>71</height>
+       <height>70</height>
       </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>70</height>
+      </size>
      </property>
      <property name="title">
       <string>Style</string>
@@ -980,6 +998,12 @@
       </item>
       <item>
        <widget class="QComboBox" name="LVLPropsBackImage">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>25</height>
+         </size>
+        </property>
         <item>
          <property name="text">
           <string>[No image]</string>
