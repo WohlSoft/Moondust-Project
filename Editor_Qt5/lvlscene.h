@@ -23,6 +23,7 @@
 #include <QGraphicsItem>
 #include <QProgressDialog>
 #include <QMenu>
+
 #include "lvl_filedata.h"
 #include "dataconfigs.h"
 
@@ -73,8 +74,9 @@ public:
     void setNPC(LevelData FileData, QProgressDialog &progress);
     void setWaters(LevelData FileData, QProgressDialog &progress);
     void setDoors(LevelData FileData, QProgressDialog &progress);
+    void startBlockAnimation();
 
-    QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
+    //QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
     void DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg2, obj_BG &bgsetup, QGraphicsPixmapItem * &target);
 
     //Array Sort functions
@@ -84,6 +86,11 @@ public:
     QVector<UserBGs > uBGs;
     QVector<UserBGOs > uBGOs;
     QVector<UserBlocks > uBlocks;
+    QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
+
+    LevelData  * LvlData;
+
+    dataconfigs * pConfigs;
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
@@ -92,10 +99,9 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
-    QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
     QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
     void placeBox(float x, float y);
-    void placeBlock(LevelBlock block, dataconfigs &configs);
+    void placeBlock(LevelBlock &block, dataconfigs &configs);
     void setSectionBG(LevelSection section);
 
     QGraphicsItem * cursor;
@@ -108,9 +114,6 @@ private:
     QPixmap uBgoImg;
 
     QPixmap tImg;//Tempotary buffer
-
-    dataconfigs * pConfigs;
-
 
     //default objects Z value
     int blockZ; // standart block
@@ -134,8 +137,6 @@ private:
     QMenu npcMenu;
     QMenu waterMenu;
     QMenu DoorMenu;
-
-    LevelData  * LvlData;
 
     // The item being dragged.
     QGraphicsItem *mDragged;
