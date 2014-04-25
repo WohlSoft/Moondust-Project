@@ -393,7 +393,7 @@ void dataconfigs::loadconfigs(bool nobar)
             sblock.view = (int)(blockset.value("view", "background").toString()=="foreground");
             sblock.animated = (blockset.value("animated", "0").toString()=="1");
             sblock.frames = blockset.value("frames", "1").toInt();
-            sblock.framespeed = blockset.value("frame-speed", "125").toInt();
+            sblock.framespeed = blockset.value("framespeed", "125").toInt();
             sblock.id = i;
             main_block.push_back(sblock);
         blockset.endGroup();
