@@ -211,6 +211,7 @@
      <string>Tools</string>
     </property>
     <addaction name="actionLoad_configs"/>
+    <addaction name="actionReload"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuLevel"/>
@@ -317,17 +318,51 @@
      <attribute name="title">
       <string>Blocks</string>
      </attribute>
-     <widget class="QWidget" name="blocksscroll">
+     <widget class="QListView" name="BlocksItemBox">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
+       <string notr="true"> Item {
+   Image {
+       id: pic
+   }
+   Text {
+       id: label
+       anchors.horizontalCenter: pic.horizontalCenter
+       anchors.top: pic.bottom
+       anchors.topMargin: 5
+   }
+}</string>
+      </property>
+      <property name="dragEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="resizeMode">
+       <enum>QListView::Adjust</enum>
+      </property>
+      <property name="gridSize">
+       <size>
+        <width>128</width>
+        <height>128</height>
+       </size>
+      </property>
+      <property name="viewMode">
+       <enum>QListView::IconMode</enum>
+      </property>
+      <property name="modelColumn">
+       <number>0</number>
+      </property>
+      <property name="uniformItemSizes">
+       <bool>true</bool>
+      </property>
+      <property name="batchSize">
+       <number>128</number>
       </property>
      </widget>
     </widget>
@@ -403,8 +438,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>389</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -416,10 +451,10 @@
       <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>10</y>
+         <x>10</x>
+         <y>0</y>
          <width>241</width>
-         <height>571</height>
+         <height>121</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -446,13 +481,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="BTNStartPoints">
-          <property name="text">
-           <string>Player start points</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
      </widget>
@@ -460,6 +488,9 @@
    </widget>
   </widget>
   <widget class="QToolBar" name="EditionToolBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="contextMenuPolicy">
     <enum>Qt::NoContextMenu</enum>
    </property>
@@ -481,6 +512,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionHandScroll"/>
    <addaction name="actionSelect"/>
    <addaction name="actionEriser"/>
    <addaction name="separator"/>
@@ -489,8 +521,7 @@
    <addaction name="actionReset_position"/>
    <addaction name="actionGridEn"/>
    <addaction name="separator"/>
-   <addaction name="actionLVLToolBox"/>
-   <addaction name="actionSection_Settings"/>
+   <addaction name="actionReload"/>
    <addaction name="actionWLDToolBox"/>
   </widget>
   <widget class="QToolBar" name="LevelSectionsToolBar">
@@ -585,8 +616,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>73</height>
+        <width>273</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -694,8 +725,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>481</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -844,6 +875,9 @@
         <height>20</height>
        </rect>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::WheelFocus</enum>
+      </property>
       <item>
        <property name="text">
         <string>[Silence]</string>
@@ -931,7 +965,7 @@
          <string>Leaving for the screen, the player enters the screen on the other side</string>
         </property>
         <property name="text">
-         <string>Level warp</string>
+         <string>Warp section</string>
         </property>
         <property name="tristate">
          <bool>false</bool>
@@ -1003,6 +1037,9 @@
           <width>0</width>
           <height>25</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::WheelFocus</enum>
         </property>
         <item>
          <property name="text">
@@ -1091,6 +1128,9 @@
    <addaction name="actionLockNPC"/>
    <addaction name="actionLockDoors"/>
    <addaction name="actionLockWaters"/>
+   <addaction name="separator"/>
+   <addaction name="actionLVLToolBox"/>
+   <addaction name="actionSection_Settings"/>
   </widget>
   <widget class="QDockWidget" name="DoorsToolbox">
    <property name="minimumSize">
@@ -1697,7 +1737,7 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+O</string>
    </property>
    <property name="iconVisibleInMenu">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="Exit">
@@ -1741,7 +1781,7 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+S</string>
    </property>
    <property name="iconVisibleInMenu">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionSave_as">
@@ -1762,7 +1802,7 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+Shift+S</string>
    </property>
    <property name="iconVisibleInMenu">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionClose">
@@ -2690,12 +2730,50 @@ p, li { white-space: pre-wrap; }
     <string>F11</string>
    </property>
   </action>
+  <action name="actionReload">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/reload.png</normaloff>:/reload.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reload file data</string>
+   </property>
+   <property name="toolTip">
+    <string>Reload current file data</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionHandScroll">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/hand.png</normaloff>:/hand.png</iconset>
+   </property>
+   <property name="text">
+    <string>Scroll hand</string>
+   </property>
+   <property name="toolTip">
+    <string>Scrolling (D)</string>
+   </property>
+   <property name="shortcut">
+    <string>D</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
   <tabstop>BTNWarpsAndDoors</tabstop>
   <tabstop>BTNWaterRanges</tabstop>
-  <tabstop>BTNStartPoints</tabstop>
  </tabstops>
  <resources>
   <include location="editor.qrc"/>
