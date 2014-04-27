@@ -63,7 +63,9 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(98, 98, 98);</string>
+      <string notr="true">background-color: rgb(98, 98, 98);
+color: rgb(255, 255, 255);
+font: 75 16pt &quot;Cordia New&quot;;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::Box</enum>
