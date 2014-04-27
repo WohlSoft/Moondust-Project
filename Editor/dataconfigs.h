@@ -54,6 +54,8 @@ struct obj_bgo{
     QString type;
     unsigned int grid;
     unsigned int view;
+    int offsetX;
+    int offsetY;
     int zOffset;
     QString image_n;
     QString mask_n;

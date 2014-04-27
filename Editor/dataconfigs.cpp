@@ -277,6 +277,8 @@ void dataconfigs::loadconfigs(bool nobar)
             sbgo.type = bgoset.value("type", "other").toString();
             sbgo.grid = bgoset.value("grid", "32").toInt();
             sbgo.view = (int)(bgoset.value("view", "background").toString()=="foreground");
+            sbgo.offsetX = bgoset.value("offset-x", "0").toInt();
+            sbgo.offsetY = bgoset.value("offset-y", "0").toInt();
             sbgo.zOffset = bgoset.value("z-offset", "0").toInt();
             imgFile = bgoset.value("image", "").toString();
             sbgo.image_n = imgFile;
