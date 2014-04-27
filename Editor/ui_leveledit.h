@@ -54,7 +54,9 @@ public:
         graphicsView = new QGraphicsView(leveledit);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setAutoFillBackground(false);
-        graphicsView->setStyleSheet(QStringLiteral("background-color: rgb(98, 98, 98);"));
+        graphicsView->setStyleSheet(QLatin1String("background-color: rgb(98, 98, 98);\n"
+"color: rgb(255, 255, 255);\n"
+"font: 75 16pt \"Cordia New\";"));
         graphicsView->setFrameShape(QFrame::Box);
         graphicsView->setInteractive(true);
         graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
