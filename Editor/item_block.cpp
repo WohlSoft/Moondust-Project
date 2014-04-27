@@ -25,6 +25,8 @@ ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
     animated = false;
+    frameFirst=0; //from first frame
+    frameLast=-1; //to unlimited frameset
     //image = new QGraphicsPixmapItem;
 }
 
@@ -154,7 +156,7 @@ void ItemBlock::setScenePoint(LvlScene *theScene)
 ////////////////Animation///////////////////
 
 
-void ItemBlock::setAnimation(int frames, int framespeed)
+void ItemBlock::setAnimation(int frames, int framespeed, int algorithm)
 {
     animated = true;
     framesQ = frames;
@@ -166,7 +168,29 @@ void ItemBlock::setAnimation(int frames, int framespeed)
 
     framePos = QPoint(0,0);
     draw();
-    setFrame(0);
+
+    if(algorithm == 1) // Invisible block
+    {
+        frameFirst = 5;
+        frameLast = 6;
+    }
+    else if(algorithm == 3) //Player's character block
+    {
+        frameFirst = 0;
+        frameLast = 1;
+    }
+    else if(algorithm == 4) //Player's character switch
+    {
+        frameFirst = 0;
+        frameLast = 4;
+    }
+    else //Default block
+    {
+        frameFirst = 0;
+        frameLast = -1;
+    }
+
+    setFrame(frameFirst);
 
     timer = new QTimer(this);
     connect(
@@ -198,10 +222,11 @@ QPoint ItemBlock::fPos() const
 void ItemBlock::setFrame(int y)
 {
     frameCurrent = frameSize * y;
-    if (frameCurrent >= frameHeight )
+    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
+         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
         {
-        frameCurrent = 0;
-        framePos.setY( 0 );
+        frameCurrent = frameFirst*frameSize;
+        framePos.setY( frameFirst * frameSize );
         }
     else
     framePos.setY( frameCurrent );
@@ -212,10 +237,11 @@ void ItemBlock::setFrame(int y)
 void ItemBlock::nextFrame()
 {
     frameCurrent += frameSize;
-    if (frameCurrent >= frameHeight )
+    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
+         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
         {
-        frameCurrent = 0;
-        framePos.setY( 0 );
+        frameCurrent = frameFirst*frameSize;
+        framePos.setY( frameFirst * frameSize );
         }
     else
     framePos.setY( framePos.y() + frameSize );

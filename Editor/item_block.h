@@ -54,7 +54,7 @@ public:
 //    QGraphicsPixmapItem * image;
 
     //////Animation////////
-    void setAnimation(int frames, int framespeed);
+    void setAnimation(int frames, int framespeed, int algorithm);
     void AnimationStart();
     void AnimationStop();
     void draw();
@@ -84,6 +84,11 @@ private:
     int frameWidth; // sprite width
     int frameHeight; //sprite height
     QPixmap currentImage;
+
+    //Animation alhorithm
+    int frameFirst;
+    int frameLast;
+
 };
 
 #endif // ITEM_BLOCK_H
