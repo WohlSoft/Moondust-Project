@@ -33,9 +33,9 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
     QRegExp isint("\\d+");     //Check "Is Numeric"
     //QRegExp boolwords("^(#TRUE#|#FALSE#)$");
     QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QRegExp issfloat("^[\\-]?(\\d*)?[\\.]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
+    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
     QRegExp booldeg("^(1|0)$");
-    QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
+    //QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
     //QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
     //QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
 
@@ -254,7 +254,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
         {
            if(!issfloat.exactMatch(Params[1]))
               goto badfile;
-           FileData.speed=Params[1].toFloat();
+           FileData.speed=Params[1].replace(QChar(','), QChar('.')).toFloat();
            FileData.en_speed=true;
         }
        else

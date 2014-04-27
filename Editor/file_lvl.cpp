@@ -17,7 +17,7 @@
  */
 
 #include "mainwindow.h"
-#include "lvl_filedata.h"
+#include "leveledit.h"
 
 #include "file_formats.h"
 
@@ -34,7 +34,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     QRegExp isint("\\d+");     //Check "Is Numeric"
     QRegExp boolwords("^(#TRUE#|#FALSE#)$");
     QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QRegExp issfloat("^[\\-]?(\\d*)?[\\.]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
+    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
     //QRegExp booldeg("^(1|0)$");
     QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
     //QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
@@ -68,7 +68,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     FileData.blocks_array_id = 0;
     FileData.bgo_array_id = 0;
     FileData.npc_array_id = 0;
-    FileData.doors_array_id = 0;
+    FileData.doors_array_id = 1;
     FileData.water_array_id = 0;
     FileData.layers_array_id = 0;
     FileData.events_array_id = 0;
@@ -231,6 +231,8 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         if(!isint.exactMatch(line)) //1 Player h
             goto badfile;
         else players.h=line.toInt();
+
+        players.id = i;
 
     FileData.players.push_back(players);    //Add player in array
     }
@@ -911,12 +913,12 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Layer moving speed – horizontal
                     goto badfile;
-                else events.layer_speed_x = line.toFloat();
+                else events.layer_speed_x = line.replace(QChar(','), QChar('.')).toFloat();
 
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Layer moving speed – vertical
                     goto badfile;
-                else events.layer_speed_y = line.toFloat();
+                else events.layer_speed_y = line.replace(QChar(','), QChar('.')).toFloat();
             }
             else
             {
@@ -932,12 +934,12 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Move screen horizontal speed
                     goto badfile;
-                else events.move_camera_x = line.toFloat();
+                else events.move_camera_x = line.replace(QChar(','), QChar('.')).toFloat();
 
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Move screen vertical speed
                     goto badfile;
-                else events.move_camera_y = line.toFloat();
+                else events.move_camera_y = line.replace(QChar(','), QChar('.')).toFloat();
 
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Scroll section x, (in file value is x-1)
@@ -969,3 +971,14 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     return FileData;
 }
 
+//*********************************************************
+//****************WRITE FILE FORMAT************************
+//*********************************************************
+
+QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
+{
+    QString TextData;
+    TextData = FileData.LevelName;
+
+    return TextData;
+}

@@ -38,7 +38,7 @@ WorldData MainWindow::ReadWorldFile(QFile &inf)
     QRegExp isint("\\d+");     //Check "Is Numeric"
     //QRegExp boolwords("^(#TRUE#|#FALSE#)$");
     //QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    //QRegExp issfloat("^[\\-]?(\\d*)?[\\.]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
+    //QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
     //QRegExp booldeg("^(1|0)$");
     //QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
     //QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
