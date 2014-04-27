@@ -74,7 +74,10 @@ public:
     void setNPC(LevelData FileData, QProgressDialog &progress);
     void setWaters(LevelData FileData, QProgressDialog &progress);
     void setDoors(LevelData FileData, QProgressDialog &progress);
+    void setPlayerPoints();
     void startBlockAnimation();
+
+    void setLocked(int type, bool lock);
 
     //QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
     void DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg2, obj_BG &bgsetup, QGraphicsPixmapItem * &target);
@@ -91,6 +94,12 @@ public:
     LevelData  * LvlData;
 
     dataconfigs * pConfigs;
+
+    bool lock_bgo;
+    bool lock_block;
+    bool lock_npc;
+    bool lock_door;
+    bool lock_water;
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
@@ -122,6 +131,7 @@ private:
     int blockZ; // standart block
     int blockZs; // sizeble block
     int blockZl; // lava block
+    int playerZ; //playerPointZ
     int bgoZf; // foreground BGO
     int bgoZb; // backround BGO
     int npcZf; // foreground NPC

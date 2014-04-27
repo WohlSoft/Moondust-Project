@@ -69,6 +69,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     npcZb = -50; // standart NPC
 
     blockZ = 1; // standart block
+    playerZ = 5; //player Point
 
     bgoZf = 50; // foreground BGO
 
@@ -86,6 +87,11 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     setItemIndexMethod(NoIndex);
 
+    lock_bgo=false;
+    lock_block=false;
+    lock_npc=false;
+    lock_door=false;
+    lock_water=false;
     //bgoMenu->addAction("BGO");
     //npcMenu->addAction("NPC");
     //waterMenu->addAction("Water");
@@ -132,11 +138,28 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     cursor->setPos(mouseEvent->scenePos());
     QGraphicsItem * findItem;
+    bool removeIt=true;
     if (EraserEnabled) { // Remove All items, placed under Cursor
         findItem = itemCollidesCursor(cursor);
         if(findItem)
         {
-            removeItem(findItem);
+            if((findItem->data(0).toString()=="Block")&&(lock_block))
+                removeIt=false;
+            else
+            if((findItem->data(0).toString()=="BGO")&&(lock_bgo))
+                removeIt=false;
+            else
+            if((findItem->data(0).toString()=="NPC")&&(lock_npc))
+                removeIt=false;
+            else
+            if((findItem->data(0).toString()=="Water")&&(lock_water))
+                removeIt=false;
+            else
+            if(((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))&&
+                    (lock_door))
+                removeIt=false;
+
+            if(removeIt) removeItem(findItem);
         }
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     } else
@@ -183,16 +206,34 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         {
                             if(findGrid.id == (unsigned)(*it)->data(1).toInt() )
                             {
-                                gridSize = findGrid.grid; break;
+                                gridSize = findGrid.grid;
+                                offsetX = findGrid.offsetX;
+                                offsetY = findGrid.offsetY;
+                                break;
                             }
                         }
                     }
-
-                    if( (*it)->data(0).toString() == "Door_enter")
+                    if( ObjType == "Water")
+                    {
+                        gridSize = 16;
+                    }
+                    if( ObjType == "Door_enter")
                         gridSize = 16 ;
 
-                    if( (*it)->data(0).toString() == "Door_exit")
+                    if( ObjType == "Door_exit")
                         gridSize = 16 ;
+
+                    if( ObjType == "player1")
+                    {
+                        offsetY = 2;
+                        gridSize = 2 ;
+                    }
+
+                    if( ObjType == "player2")
+                    {
+                        offsetY = 2;
+                        gridSize = 2 ;
+                    }
 
                     QPointF itemPos;
 
@@ -205,20 +246,20 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                         if((int)itemPos.x()<0)
                         {
-                            if( (int)itemPos.x() < gridX - (int)(gridSize/2) )
+                            if( (int)itemPos.x() < offsetX+gridX - (int)(gridSize/2) )
                                 gridX -= gridSize;
                         }
                         else
                         {
-                            if( (int)itemPos.x() > gridX + (int)(gridSize/2) )
+                            if( (int)itemPos.x() > offsetX+gridX + (int)(gridSize/2) )
                                 gridX += gridSize;
                         }
 
                         if((int)itemPos.y()<0)
-                        {if( (int)itemPos.y() < gridY - (int)(gridSize/2) )
+                        {if( (int)itemPos.y() < offsetY+gridY - (int)(gridSize/2) )
                             gridY -= gridSize;
                         }
-                        else {if( (int)itemPos.y() > gridY + (int)(gridSize/2) )
+                        else {if( (int)itemPos.y() > offsetY+gridY + (int)(gridSize/2) )
                          gridY += gridSize;
                         }
 
@@ -266,7 +307,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         }
                     }
 
-                    if( sourcePos == QPoint((long)(*it)->scenePos().x(), (long)(*it)->scenePos().y())) continue;
+                    if( ObjType == "Block")
+                    {
+                        if( sourcePos == QPoint((long)(((ItemBlock *)(*it))->parentItem()->scenePos().x()),
+                                                (long)(((ItemBlock *)(*it))->parentItem()->scenePos().y()))) continue;
+                    }else
+                    {
+                        if( sourcePos == QPoint((long)(*it)->scenePos().x(), (long)(*it)->scenePos().y())) continue;
+                    }
 
 
                         if( itemCollidesWith((*it)) )
@@ -709,17 +757,17 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
 
     WriteToLog(QtDebugMsg, QString("Draw editing hole"));
     drawing.clear();
-    drawing.push_back(QPoint(l, t));
-    drawing.push_back(QPoint(r, t));
-    drawing.push_back(QPoint(r, b));
-    drawing.push_back(QPoint(l, b));
-    drawing.push_back(QPoint(l, t));
+    drawing.push_back(QPoint(l-1, t-1));
+    drawing.push_back(QPoint(r+1, t-1));
+    drawing.push_back(QPoint(r+1, b+1));
+    drawing.push_back(QPoint(l-1, b+1));
+    drawing.push_back(QPoint(l-1, t-1));
 
     bigSpace = bigSpace.subtracted(QPolygon(drawing));
 
     WriteToLog(QtDebugMsg, QString("add polygon to Item"));
     item = addPolygon(bigSpace, QPen(Qt::NoPen), QBrush(Qt::black));//Add inactive space
-    item2 = addPolygon(QPolygon(drawing), QPen(Qt::red, 4));
+    item2 = addPolygon(QPolygon(drawing), QPen(Qt::red, 2));
     item->setZValue(spaceZ1);
     item2->setZValue(spaceZ2);
     item->setOpacity(qreal(0.4));
@@ -1065,7 +1113,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
 
     if((!noimage) && (configs.main_block[j].animated))
     {
-        BlockImage->setAnimation(configs.main_block[j].frames, configs.main_block[j].framespeed);
+        BlockImage->setAnimation(configs.main_block[j].frames, configs.main_block[j].framespeed, configs.main_block[j].algorithm);
         BlockImage->setData(4, "animated");
 
 //        if(configs.main_block[j].algorithm==1)
@@ -1106,8 +1154,8 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     }
 
 
-    BlockImage->setFlag(QGraphicsItem::ItemIsSelectable, true);
-    BlockImage->setFlag(QGraphicsItem::ItemIsMovable, true);
+    BlockImage->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_block));
+    BlockImage->setFlag(QGraphicsItem::ItemIsMovable, (!lock_block));
 
     BlockImage->setData(0, "Block");
     BlockImage->setData(1, QString::number(block.id) );
@@ -1172,8 +1220,8 @@ void LvlScene::placeBGO(LevelBGO &bgo)
     box = addPixmap(QPixmap(tImg));
     box->setPos(bgo.x, bgo.y);
 
-    box->setFlag(QGraphicsItem::ItemIsSelectable, true);
-    box->setFlag(QGraphicsItem::ItemIsMovable, true);
+    box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_bgo));
+    box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_bgo));
 
     box->setData(0, "BGO");
     box->setData(1, QString::number(bgo.id) );
@@ -1309,8 +1357,10 @@ void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
     {
         box = addPixmap(QPixmap(uNpcImg));
         box->setPos(FileData.npc[i].x, FileData.npc[i].y);
-        box->setFlag(QGraphicsItem::ItemIsSelectable,true);
-        box->setFlag(QGraphicsItem::ItemIsMovable, true);
+
+        box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
+        box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
+
         //npcfore->addToGroup(box);
         if(FileData.npc[i].id==91)
             box->setZValue(npcZf);
@@ -1364,8 +1414,8 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
 
         box = addPolygon(QPolygon(points), QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4));
 
-        box->setFlag(QGraphicsItem::ItemIsSelectable,true);
-        box->setFlag(QGraphicsItem::ItemIsMovable, true);
+        box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
+        box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));
 
         box->setZValue(waterZ);
 
@@ -1383,9 +1433,11 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
 void LvlScene::placeDoor(LevelDoors &door)
 {
     long ix, iy, ox, oy, h, w;
-    QGraphicsItem *	enter, *enterTxt;
-    QGraphicsItem *	exit, *exitTxt;
+    QGraphicsItem *	enter;
+    QGraphicsItem *	exit;
     QGraphicsItemGroup *enterId, *exitId;
+    QGraphicsTextItem *enterTxt, *enterTxt_l2;
+    QGraphicsTextItem *exitTxt, *exitTxt_l2;
 
     ix = door.ix;
     iy = door.iy;
@@ -1393,44 +1445,76 @@ void LvlScene::placeDoor(LevelDoors &door)
     oy = door.oy;
     h = 32;
     w = 32;
-    QFont font;
-    font.setWeight(14);
-    font.setBold(1);
-    font.setPointSize(12);
+    QFont font1, font2;
+    font1.setWeight(50);
+    font1.setBold(1);
+    font1.setPointSize(14);
+
+    font2.setWeight(14);
+    font2.setBold(0);
+    font2.setPointSize(12);
+
     //font.setStyle(QFont::Times);
     //font.setStyle();
 
-    enter = addRect(ix, iy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
-    exit = addRect(ox, oy, w, h, QPen(Qt::magenta, 4), Qt::NoBrush);
+    QColor cEnter(Qt::magenta);
+    QColor cExit(Qt::darkMagenta);
+    cEnter.setAlpha(50);
+    cExit.setAlpha(50);
 
-    enterId = new QGraphicsItemGroup(enter);
-    exitId = new QGraphicsItemGroup(exit);
+    if((!door.lvl_o)||(door.lvl_i))
+    {
+        enter = addRect(ix, iy, w, h, QPen(Qt::magenta, 2,Qt::SolidLine), QBrush(cEnter));
+        enterId = new QGraphicsItemGroup(enter);
 
-    enterTxt = addText(QString::number(door.array_id), font);
-    enterTxt->setPos(ix-3, iy);
-    enterId->addToGroup(enterTxt);
+        enterTxt = new QGraphicsTextItem(QString::number(door.array_id));
+        enterTxt->setDefaultTextColor(Qt::black);
+        enterTxt->setFont(font1);
+        enterTxt->setPos(ix-5, iy-2);
+        enterTxt_l2 = new QGraphicsTextItem(QString::number(door.array_id));
+        enterTxt_l2->setDefaultTextColor(Qt::white);
+        enterTxt_l2->setFont(font2);
+        enterTxt_l2->setPos(ix-3, iy);
 
-    exitTxt = addText(QString::number(door.array_id), font);
-    exitTxt->setPos(ox+12, oy+10);
-    exitId->addToGroup(exitTxt);
+        enterId->addToGroup(enterTxt);
+        enterId->addToGroup(enterTxt_l2);
+        enter->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_door));
+        enter->setFlag(QGraphicsItem::ItemIsMovable, (!lock_door));
+        enter->setZValue(doorZ);
 
-    enter->setFlag(QGraphicsItem::ItemIsSelectable,true);
-    enter->setFlag(QGraphicsItem::ItemIsMovable, true);
-    exit->setFlag(QGraphicsItem::ItemIsSelectable,true);
-    exit->setFlag(QGraphicsItem::ItemIsMovable, true);
+        enterTxt->setZValue(doorZ+0.0000001);
+        enterTxt_l2->setZValue(doorZ+0.0000002);
+        enter->setData(0, "Door_enter"); // ObjType
+        enter->setData(1, QString::number(0) );
+        enter->setData(2, QString::number(door.array_id) );
+    }
 
-    enter->setZValue(doorZ);
-    enterTxt->setZValue(doorZ+0.0000001);
-    exit->setZValue(doorZ);
-    exitTxt->setZValue(doorZ+0.0000001);
+    if(!door.lvl_i)
+    {
+        exit = addRect(ox, oy, w, h, QPen(Qt::darkMagenta, 2,Qt::SolidLine), QBrush(cExit));
+        exitId = new QGraphicsItemGroup(exit);
 
-    enter->setData(0, "Door_enter"); // ObjType
-    enter->setData(1, QString::number(0) );
-    enter->setData(2, QString::number(door.array_id) );
+        exitTxt = new QGraphicsTextItem(QString::number(door.array_id));
+        exitTxt->setDefaultTextColor(Qt::black);
+        exitTxt->setFont(font1);
+        exitTxt->setPos(ox+10, oy+8);
+        exitTxt_l2 = new QGraphicsTextItem(QString::number(door.array_id));
+        exitTxt_l2->setDefaultTextColor(Qt::white);
+        exitTxt_l2->setFont(font2);
+        exitTxt_l2->setPos(ox+12, oy+10);
 
-    exit->setData(0, "Door_exit"); // ObjType
-    exit->setData(1, QString::number(0) );
-    exit->setData(2, QString::number(door.array_id) );
+        exitId->addToGroup(exitTxt);
+        exitId->addToGroup(exitTxt_l2);
+        exit->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_door));
+        exit->setFlag(QGraphicsItem::ItemIsMovable, (!lock_door));
+        exit->setZValue(doorZ);
+        exitTxt->setZValue(doorZ+0.0000001);
+        exitTxt_l2->setZValue(doorZ+0.0000002);
+        exit->setData(0, "Door_exit"); // ObjType
+        exit->setData(1, QString::number(0) );
+        exit->setData(2, QString::number(door.array_id) );
+    }
+
 
 }
 
@@ -1453,6 +1537,33 @@ void LvlScene::setDoors(LevelData FileData, QProgressDialog &progress)
 
 }
 
+//////////////////////////SET Player Points/////////////////////////////////
+void LvlScene::setPlayerPoints()
+{
+    int i=0;
+
+    QGraphicsItem *	player;
+    PlayerPoint plr;
+
+    for(i=0; i<LvlData->players.size(); i++)
+    {
+        plr = LvlData->players[i];
+        if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
+        {
+            player = addPixmap(QPixmap(":/player"+QString::number(i+1)+".png"));
+            player->setPos(plr.x, plr.y);
+            player->setZValue(playerZ);
+            player->setData(0, "player"+QString::number(i+1) );
+            player->setFlag(QGraphicsItem::ItemIsSelectable, true);
+            player->setFlag(QGraphicsItem::ItemIsMovable, true);
+        }
+
+    }
+
+}
+
+
+////////////////////////////////////Animator////////////////////////////////
 void LvlScene::startBlockAnimation()
 {
     QList<QGraphicsItem*> ItemList = items();
@@ -1463,6 +1574,78 @@ void LvlScene::startBlockAnimation()
         {
             tmp = (*it);
             ((ItemBlock *)tmp)->AnimationStart();
+        }
+    }
+
+}
+
+
+
+/////////////////////////////////////////////Locks////////////////////////////////
+void LvlScene::setLocked(int type, bool lock)
+{
+    QList<QGraphicsItem*> ItemList = items();
+    // setLock
+    switch(type)
+    {
+    case 1://Block
+        lock_block = lock;
+        break;
+    case 2://BGO
+        lock_bgo = lock;
+        break;
+    case 3://NPC
+        lock_npc = lock;
+        break;
+    case 4://Water
+        lock_water = lock;
+        break;
+    case 5://Doors
+        lock_door = lock;
+        break;
+    default: break;
+    }
+
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        switch(type)
+        {
+        case 1://Block
+            if((*it)->data(0).toString()=="Block")
+            {
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+            }
+            break;
+        case 2://BGO
+            if((*it)->data(0).toString()=="BGO")
+            {
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+            }
+            break;
+        case 3://NPC
+            if((*it)->data(0).toString()=="NPC")
+            {
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+            }
+            break;
+        case 4://Water
+            if((*it)->data(0).toString()=="Water")
+            {
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+            }
+            break;
+        case 5://Doors
+            if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+            {
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+            }
+            break;
+        default: break;
         }
     }
 
