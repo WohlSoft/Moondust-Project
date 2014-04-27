@@ -57,5 +57,10 @@
         <file>images/player1_start.png</file>
         <file>images/player2_start.png</file>
         <file>images/playmusic.png</file>
+        <file alias="reload.png">images/reload_data.png</file>
+        <file alias="cur_rubber.png">images/cur_rubber.png</file>
+        <file alias="hand.png">images/hand.png</file>
+        <file alias="player1.png">images/player1_point.png</file>
+        <file alias="player2.png">images/player2_point.png</file>
     </qresource>
 </RCC>
