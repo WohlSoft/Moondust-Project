@@ -51,9 +51,15 @@ public:
     void setCurrentSection(int scId);
     void ResetPosition();
 
+    void changeCursor(int mode);
+
     void ExportToImage_fn();
 
     LvlScene * scene;
+    QString curFile;
+
+    //Lvl fileformat creation function
+    QString WriteSMBX64LvlFile(LevelData FileData);
     
 protected:
     void closeEvent(QCloseEvent *event);
@@ -63,6 +69,7 @@ private:
     void documentWasModified();
     Ui::leveledit *ui;
 
+    bool sceneCreared;
     LevelData StartLvlData;
     void DrawObjects(QProgressDialog &progress, dataconfigs &configs);
 
@@ -71,7 +78,6 @@ private:
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
-    QString curFile;
     QString latest_export;
     QString latest_export_path;
     bool isUntitled;
