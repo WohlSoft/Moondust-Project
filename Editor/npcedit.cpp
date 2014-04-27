@@ -523,8 +523,9 @@ bool npcedit::saveFile(const QString &fileName)
     QApplication::setOverrideCursor(Qt::WaitCursor);
     out << WriteNPCTxtFile(NpcData);
     QApplication::restoreOverrideCursor();
-    documentNotModified();
     setCurrentFile(fileName);
+
+    documentNotModified();
 
     return true;
 }

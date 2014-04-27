@@ -45,6 +45,8 @@ public:
     bool saveFile(const QString &fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+
+    //file format creation function
     QString WriteNPCTxtFile(NPCConfigFile FileData);
 
 protected:
