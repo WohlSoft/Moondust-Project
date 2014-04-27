@@ -37,6 +37,7 @@ leveledit::leveledit(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::leveledit)
 {
+    sceneCreared = false;
     FileType = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
@@ -188,6 +189,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     QFile file(fileName);
     LvlData = FileData;
     LvlData.modyfied = false;
+
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -248,14 +250,40 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
+    LvlData.modyfied = false;
 
     return true;
+}
+
+void leveledit::changeCursor(int mode)
+{
+    switch(mode)
+    {
+    case (-1):
+        ui->graphicsView->setCursor(Qt::ArrowCursor);
+        ui->graphicsView->setInteractive(false);
+        ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+        break;
+    case 0:
+        ui->graphicsView->setInteractive(true);
+        ui->graphicsView->setCursor(Qt::ArrowCursor);
+        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        break;
+    case 1:
+        ui->graphicsView->setInteractive(true);
+        ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_rubber.png"), 0, 0));
+        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        break;
+    default:
+        break;
+    }
 }
 
 void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 {
     int DataSize = progress.maximum();
     int TotalSteps = 6;
+
     scene = new LvlScene(configs, LvlData);
 
     if(!progress.wasCanceled())
@@ -287,6 +315,8 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
         progress.setLabelText(tr("6/%1 Loading Doors").arg(TotalSteps));
     scene->setDoors(LvlData, progress);
 
+    scene->setPlayerPoints();
+
     scene->drawSpace(LvlData);
 
     scene->startBlockAnimation();
@@ -298,7 +328,11 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
                         LvlData.sections[0].size_bottom+1000);
     */
 
+    if(!sceneCreared)
+    {
     ui->graphicsView->setScene(scene);
+    sceneCreared = true;
+    }
 
     if(!progress.wasCanceled())
         progress.setValue(DataSize);
