@@ -43,6 +43,7 @@ struct LevelSection
 
 struct PlayerPoint
 {
+    unsigned int id;
     long x;
     long y;
     long h;
