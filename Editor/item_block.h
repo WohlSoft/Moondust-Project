@@ -58,6 +58,12 @@ public:
     void AnimationStart();
     void AnimationStop();
     void draw();
+    void setSlippery(bool slip);
+    void setInvisible(bool inv);
+
+    void arrayApply();
+    void removeFromArray();
+
     QPoint fPos() const;
     void setFrame(int);
     LevelBlock blockData;

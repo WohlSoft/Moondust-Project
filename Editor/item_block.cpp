@@ -40,8 +40,78 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
     scene->clearSelection();
     this->setSelected(1);
-    ItemMenu->exec(event->screenPos());
+    ItemMenu->clear();
+    QAction *invis = ItemMenu->addAction("Invisible");
+        invis->setCheckable(1);
+        invis->setChecked( blockData.invisible );
+    QAction *slipp = ItemMenu->addAction("Slippery");
+        slipp->setCheckable(1);
+        slipp->setChecked( blockData.slippery );
 
+    QAction *resize = ItemMenu->addAction("Resize");
+        resize->setVisible( (this->data(3).toString()=="sizeble") );
+
+    QAction *remove = ItemMenu->addAction("Remove");
+
+    QAction *selected = ItemMenu->exec(event->screenPos());
+
+    if(selected==invis)
+    {
+        setInvisible(invis->isChecked());
+    }else
+    if(selected==slipp)
+    {
+        setSlippery(slipp->isChecked());
+    }
+    else
+    if(selected==remove)
+    {
+        removeFromArray();
+        scene->removeItem(this);
+    }
+}
+
+void ItemBlock::setSlippery(bool slip)
+{
+    blockData.slippery=slip;
+    arrayApply(); //Apply changes into array
+}
+
+void ItemBlock::setInvisible(bool inv)
+{
+    blockData.invisible=inv;
+    if(inv)
+        this->setOpacity(0.5);
+    else
+        this->setOpacity(1);
+
+    arrayApply();//Apply changes into array
+
+}
+
+///////////////////MainArray functions/////////////////////////////
+void ItemBlock::arrayApply()
+{
+    //Apply current data in main array
+    foreach(LevelBlock blocks, scene->LvlData->blocks)
+    {
+        if(blocks.array_id == blockData.array_id)
+        {
+            blocks = blockData;
+            break;
+        }
+    }
+}
+
+void ItemBlock::removeFromArray()
+{
+    for(int i=0; i<scene->LvlData->blocks.size(); i++)
+    {
+        if(scene->LvlData->blocks[i].array_id == blockData.array_id)
+        {
+            scene->LvlData->blocks.remove(i); break;
+        }
+    }
 }
 
 /*
