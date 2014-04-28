@@ -41,7 +41,7 @@ leveledit::leveledit(QWidget *parent) :
     FileType = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
-    isModyfied = false;
+    isModified = false;
     latest_export = "*.png";
     latest_export_path = QApplication::applicationDirPath();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
