@@ -673,7 +673,7 @@ public:
         sizePolicy1.setHeightForWidth(LevelToolBox->sizePolicy().hasHeightForWidth());
         LevelToolBox->setSizePolicy(sizePolicy1);
         LevelToolBox->setMinimumSize(QSize(255, 200));
-        LevelToolBox->setMaximumSize(QSize(350, 524287));
+        LevelToolBox->setMaximumSize(QSize(16777215, 524287));
         LevelToolBox->setFocusPolicy(Qt::NoFocus);
         QIcon icon42;
         icon42.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -802,7 +802,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 273, 435));
+        TilesItemBox->setGeometry(QRect(0, 0, 81, 73));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -1241,7 +1241,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        LevelToolBoxTabs->setCurrentIndex(3);
+        LevelToolBoxTabs->setCurrentIndex(0);
         WorldToolBoxTabs->setCurrentIndex(3);
 
 

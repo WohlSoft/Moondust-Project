@@ -272,7 +272,7 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>350</width>
+     <width>524287</width>
      <height>524287</height>
     </size>
    </property>
@@ -297,7 +297,7 @@
    </attribute>
    <widget class="QTabWidget" name="LevelToolBoxTabs">
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QScrollArea" name="Blocks">
      <property name="toolTip">
@@ -384,8 +384,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -411,8 +411,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -677,8 +677,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
      </widget>
@@ -701,8 +701,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
      </widget>
