@@ -47,6 +47,8 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     grid = true;
     EditingMode = 0;
     EraserEnabled = false;
+    IsMoved = false;
+    haveSelected = false;
     sbZ = 0;
 
     QPixmap cur(QSize(1,1));
@@ -116,6 +118,8 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         cursor->setPos(mouseEvent->scenePos());
         cursor->show();
 
+        haveSelected=true;
+
         if(EditingMode==1) // if Editing Mode = Esaising
         {
             EraserEnabled = true;
@@ -139,6 +143,10 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     cursor->setPos(mouseEvent->scenePos());
     QGraphicsItem * findItem;
     bool removeIt=true;
+
+    if(haveSelected)
+        IsMoved = true;
+
     if (EraserEnabled) { // Remove All items, placed under Cursor
         findItem = itemCollidesCursor(cursor);
         if(findItem)
@@ -170,10 +178,12 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
-            int gridSize=32, offsetX=0, offsetY=0, gridX, gridY, i;
+            int gridSize=32, offsetX=0, offsetY=0, gridX, gridY, i=0;
             QPoint sourcePos;
 
             cursor->hide();
+
+            haveSelected = false;
 
             QList<QGraphicsItem*> selectedList = selectedItems();
 
@@ -181,8 +191,9 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
             // check for grid snap
-            if (!selectedList.isEmpty())
+            if ((!selectedList.isEmpty())&&(IsMoved))
             {
+                IsMoved = false;
                 // correct selected items' coordinates
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 {
@@ -265,8 +276,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                         if(ObjType=="Block")
                         {
-                            (*it)->parentItem()->setPos(QPointF(gridX, gridY));
-                            (*it)->setPos(QPointF(0, 0));
+                            (*it)->setPos(QPointF(gridX, gridY));
                         }
                             else
                         (*it)->setPos(QPointF(offsetX+gridX, offsetY+gridY));
@@ -280,6 +290,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     ObjType = (*it)->data(0).toString();
 
+                    WriteToLog(QtDebugMsg, QString(" >>Check collision with \"%1\"").arg(ObjType));
+
                     if( ObjType == "NPC")
                     {
                         foreach (LevelNPC findInArr, LvlData->npc)
@@ -290,12 +302,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             }
                         }
                     }
-
+                    else
                     if( ObjType == "Block")
                     {
-                        sourcePos = QPoint(  ((ItemBlock *)(*it))->blockData.x, ((ItemBlock *)(*it))->blockData.y); break;
+                        sourcePos = QPoint(  ((ItemBlock *)(*it))->blockData.x, ((ItemBlock *)(*it))->blockData.y);
+                        WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
                     }
-
+                    else
                     if( ObjType == "BGO")
                     {
                         foreach (LevelBGO findInArr, LvlData->bgo)
@@ -307,23 +320,16 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         }
                     }
 
-                    if( ObjType == "Block")
+                    //Check position
+                    if( sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y())))
                     {
-                        if( sourcePos == QPoint((long)(((ItemBlock *)(*it))->parentItem()->scenePos().x()),
-                                                (long)(((ItemBlock *)(*it))->parentItem()->scenePos().y()))) continue;
-                    }else
-                    {
-                        if( sourcePos == QPoint((long)(*it)->scenePos().x(), (long)(*it)->scenePos().y())) continue;
+                        WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
+                        continue;
                     }
-
 
                         if( itemCollidesWith((*it)) )
                         {
-                            if( ObjType == "Block")
-                            {
-                            (*it)->parentItem()->setPos(QPointF(sourcePos));
-                            }else { (*it)->setPos(QPointF(sourcePos)); }
-
+                            (*it)->setPos(QPointF(sourcePos));
                             (*it)->setSelected(false);
                             WriteToLog(QtDebugMsg, QString("Moved back %1 %2")
                                        .arg((long)(*it)->scenePos().x())
@@ -333,17 +339,12 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         {
                             if( ObjType == "Block")
                             {
-                                for (i=0;i<LvlData->blocks.size();i++)
-                                {
-                                    if(LvlData->blocks[i].array_id==(unsigned)(*it)->data(2).toInt())
-                                    {
-                                        //Applay move into main array
-                                        LvlData->blocks[i].x = (long)(*it)->parentItem()->scenePos().x();
-                                        LvlData->blocks[i].y = (long)(*it)->parentItem()->scenePos().y();
-                                        LvlData->modyfied = true;
-                                        break;
-                                    }
-                                }
+                                WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
+                                //Applay move into main array
+                                ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
+                                ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
+                                ((ItemBlock *)(*it))->arrayApply();
+                                LvlData->modyfied = true;
                             } else
                             if( ObjType == "BGO")
                             {
@@ -379,7 +380,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
     qlonglong bottomA, bottomB;
     qreal betweenZ;
 
-    QList<QGraphicsItem *> collisions = collidingItems(item);
+    QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
     foreach (QGraphicsItem * it, collisions) {
             if (it == item)
                  continue;
@@ -400,6 +401,9 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
             topB = it->scenePos().y();
             bottomB = it->scenePos().y()+it->data(10).toLongLong();
 
+            if(it->data(0).toString()=="Block")
+                WriteToLog(QtDebugMsg, QString(" >>Collision with block detected"));
+
               if((item->data(0).toString()=="Block")||(item->data(0).toString()=="NPC")
                       ||(item->data(0).toString()=="BGO"))
               {
@@ -412,30 +416,30 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
                       if(it->data(3).toString()=="sizeble")
                       {
                           WriteToLog(QtDebugMsg, QString("Colliding with Sizeble Z: %1 %2")
-                                     .arg(item->parentItem()->zValue()).arg(it->parentItem()->zValue()));
+                                     .arg(item->zValue()).arg(it->zValue()));
 
-                          if( (item->parentItem()->scenePos().y() > it->parentItem()->scenePos().y()) &&
-                          ( item->parentItem()->zValue() <= it->parentItem()->zValue() ) )
+                          if( (item->scenePos().y() > it->scenePos().y()) &&
+                          ( item->zValue() <= it->zValue() ) )
                               {
-                                betweenZ = it->parentItem()->zValue();
-                                it->parentItem()->setZValue(item->parentItem()->zValue());
-                                item->parentItem()->setZValue(betweenZ);
+                                betweenZ = it->zValue();
+                                it->setZValue(item->zValue());
+                                item->setZValue(betweenZ);
 
-                                if(item->parentItem()->zValue() == it->parentItem()->zValue()) item->parentItem()->setZValue(item->parentItem()->zValue() + 0.0000000001);
+                                if(item->zValue() == it->zValue()) item->setZValue(item->zValue() + 0.0000000001);
                                // betweenZ+=0.0000000001;
                                 //item->setZValue(it->zValue() + 0.0000000001);
 
                                 WriteToLog(QtDebugMsg, QString("Sizeble block changed Z-") );
                               }
                           else
-                          if( (item->parentItem()->scenePos().y() < it->parentItem()->scenePos().y() ) &&
-                          ( item->parentItem()->zValue() >= it->parentItem()->zValue() ) )
+                          if( (item->scenePos().y() < it->scenePos().y() ) &&
+                          ( item->zValue() >= it->zValue() ) )
                               {
-                                betweenZ = it->parentItem()->zValue();
-                                it->parentItem()->setZValue(item->parentItem()->zValue());
-                                item->parentItem()->setZValue(betweenZ);
+                                betweenZ = it->zValue();
+                                it->setZValue(item->zValue());
+                                item->setZValue(betweenZ);
 
-                                if(item->parentItem()->zValue() == it->parentItem()->zValue()) item->parentItem()->setZValue(item->parentItem()->zValue() - 0.00000000001);
+                                if(item->zValue() == it->zValue()) item->setZValue(item->zValue() - 0.00000000001);
                                // item->setZValue(it->zValue() + 0.0000000001);
 
                                 WriteToLog(QtDebugMsg, QString("Sizeble block changed Z+") );
@@ -1068,7 +1072,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     bool isUser=false;
     int j;
 
-    QGraphicsItem *box, *npc;
+    QGraphicsItem /*box,*/ *npc;
     QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
 
@@ -1100,14 +1104,16 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
         tImg = uBlockImg;
     }
 
-    box = addPixmap(QPixmap(QSize(0,0)));
+    //box = addPixmap(QPixmap(QSize(0,0)));
 
     //ItemBlock *BlockImage;
 
 
     BlockImage->setBlockData(block, configs.main_block[j].sizeble);
     BlockImage->setMainPixmap(tImg);
-    BlockImage->setParentItem(box);
+    addItem(BlockImage);
+    //BlockImage->setParentItem(box);
+    //BlockImage->set
 
     BlockImage->setContextMenu(blockMenu);
 
@@ -1129,7 +1135,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     if(block.invisible)
         BlockImage->setOpacity(qreal(0.5));
 
-    box->setPos(block.x, block.y);
+    BlockImage->setPos(block.x, block.y);
 
     if(block.npc_id != 0)
     {
@@ -1142,15 +1148,15 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
 
     if(configs.main_block[j].sizeble)
     {
-        box->setZValue(blockZs+sbZ); // applay Sizeble block Z
+        BlockImage->setZValue(blockZs+sbZ); // applay Sizeble block Z
         sbZ += 0.0000000001;
     }
     else
     {
         if(configs.main_block[j].view==1)
-            box->setZValue(blockZl); // applay lava block Z
+            BlockImage->setZValue(blockZl); // applay lava block Z
         else
-            box->setZValue(blockZ); // applay standart block Z
+            BlockImage->setZValue(blockZ); // applay standart block Z
     }
 
 
