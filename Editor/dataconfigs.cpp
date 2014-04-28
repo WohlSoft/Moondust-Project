@@ -45,12 +45,17 @@ frames = 1			; default = 1
 frame-speed=125			; default = 125 ms, etc. 8 frames per sec
 */
 
-void dataconfigs::loadconfigs(bool nobar)
+bool dataconfigs::loadconfigs(bool nobar)
 {
     unsigned long total_data=0, i, prgs=0;
     QString config_dir = QApplication::applicationDirPath() + "/" +  "configs/SMBX/";
 
     //dirs
+    if((!QDir(config_dir).exists())||(QFileInfo(config_dir).isFile()))
+    {
+        WriteToLog(QtCriticalMsg, QString("CONFIG DIR NOT EXIST %1").arg(config_dir));
+        return false;
+    }
 
     QString dirs_ini = config_dir + "lvl_bgo.ini";
     QSettings dirset(dirs_ini, QSettings::IniFormat);
@@ -458,4 +463,5 @@ void dataconfigs::loadconfigs(bool nobar)
     if((!progress.wasCanceled())&&(!nobar))
         progress.close();
 
+    return true;
 }
