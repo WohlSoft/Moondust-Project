@@ -101,6 +101,9 @@ public:
     bool lock_door;
     bool lock_water;
 
+    bool IsMoved;
+    bool haveSelected;
+
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
