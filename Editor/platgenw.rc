@@ -22,12 +22,12 @@ BEGIN
     BEGIN
         VALUE   "CompanyName",      "Wohlhabend Network System\0"
         VALUE   "FileDescription",  "PlatGEnWohl Editor\0"
-        VALUE   "FileVersion",      "0.0.7-preAlpha\0"
+        VALUE   "FileVersion",      "0.0.7-dev Alpha\0"
         VALUE   "InternalName",     "Filename\0"
         VALUE   "LegalCopyright",   "2014 by Wohlstand\0"
         VALUE   "OriginalFilename", "plweditor.exe\0"
         VALUE   "ProductName",      "Platformer Game Engine\0"
-        VALUE   "ProductVersion",   "0.0.7preAlpha\0"
+        VALUE   "ProductVersion",   "0.0.7-dev Alpha\0"
     END
 END
 END

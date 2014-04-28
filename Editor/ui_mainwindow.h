@@ -673,7 +673,7 @@ public:
         sizePolicy1.setHeightForWidth(LevelToolBox->sizePolicy().hasHeightForWidth());
         LevelToolBox->setSizePolicy(sizePolicy1);
         LevelToolBox->setMinimumSize(QSize(255, 200));
-        LevelToolBox->setMaximumSize(QSize(16777215, 524287));
+        LevelToolBox->setMaximumSize(QSize(524287, 524287));
         LevelToolBox->setFocusPolicy(Qt::NoFocus);
         QIcon icon42;
         icon42.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -739,7 +739,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 256, 435));
+        specialscroll->setGeometry(QRect(0, 0, 81, 28));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -774,13 +774,13 @@ public:
         EditionToolBar->setObjectName(QStringLiteral("EditionToolBar"));
         EditionToolBar->setEnabled(true);
         EditionToolBar->setContextMenuPolicy(Qt::NoContextMenu);
-        EditionToolBar->setAllowedAreas(Qt::TopToolBarArea);
+        EditionToolBar->setAllowedAreas(Qt::AllToolBarAreas);
         EditionToolBar->setIconSize(QSize(24, 24));
         MainWindow->addToolBar(Qt::TopToolBarArea, EditionToolBar);
         LevelSectionsToolBar = new QToolBar(MainWindow);
         LevelSectionsToolBar->setObjectName(QStringLiteral("LevelSectionsToolBar"));
         LevelSectionsToolBar->setAcceptDrops(false);
-        LevelSectionsToolBar->setAllowedAreas(Qt::BottomToolBarArea|Qt::TopToolBarArea);
+        LevelSectionsToolBar->setAllowedAreas(Qt::AllToolBarAreas);
         MainWindow->addToolBar(Qt::TopToolBarArea, LevelSectionsToolBar);
         MainWindow->insertToolBarBreak(LevelSectionsToolBar);
         WorldToolBox = new QDockWidget(MainWindow);

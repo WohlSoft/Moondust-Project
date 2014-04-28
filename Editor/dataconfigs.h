@@ -189,7 +189,7 @@ class dataconfigs
 {
 public:
     dataconfigs();
-    void loadconfigs(bool nobar=false);
+    bool loadconfigs(bool nobar=false);
     DataFolders dirs;
 
     QVector<obj_bgo > main_bgo;

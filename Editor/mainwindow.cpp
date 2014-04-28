@@ -61,7 +61,16 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QSplashScreen splash(splashimg);
     splash.show();
 
-    configs.loadconfigs(true);
+    if(!configs.loadconfigs(true))
+    {
+        QMessageBox::critical(this, "Configuration error", "Configuration can't be load.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
+        splash.finish(this);
+        WriteToLog(QtFatalMsg, "<Application emergency closed>");
+        exit(EXIT_FAILURE);
+        return;
+    }
+
+
     ui->setupUi(this);
 
     //ui->BlocksItemBox->;
@@ -207,8 +216,23 @@ void MainWindow::updateMenus()
     ui->actionReset_position->setEnabled( (WinType==1) );
     ui->actionGridEn->setEnabled( (WinType==1) );
 
+    ui->menuWindow->setEnabled( (WinType!=0) );
+
     if(WinType==1)
     {
+        if(
+                (configs.main_bgo.size()<=0)||
+                (configs.main_bg.size()<=0)||
+                (configs.main_block.size()<=0)||
+                (configs.main_music_lvl.size()<=0)||
+                (configs.main_music_wld.size()<=0)||
+                (configs.main_music_spc.size()<=0)
+          )
+        {
+            WriteToLog(QtCriticalMsg, "*.INI Configs not loaded");
+            return;
+        }
+
         SetCurrentLevelSection(0, 1);
         setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
@@ -218,8 +242,6 @@ void MainWindow::updateMenus()
         ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
         ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
     }
-
-    ui->menuWindow->setEnabled( (WinType!=0) );
 
     /*
     closeAllAct->setEnabled(hasSWindow);
@@ -408,12 +430,18 @@ void MainWindow::OpenFile(QString FilePath)
         FileData.playmusic = autoPlayMusic;
 
         leveledit *child = createChild();
-        if (child->loadFile(FilePath, FileData, configs)) {
+        if ( (bool)(child->loadFile(FilePath, FileData, configs)) ) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
             SetCurrentLevelSection(0);
         } else {
-            child->close();
+            WriteToLog(QtDebugMsg, ">>File loading aborted");
+            child->show();
+            WriteToLog(QtDebugMsg, ">>Window showed");
+            if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modyfied = false;
+            WriteToLog(QtDebugMsg, ">>Option seted");
+            ui->centralWidget->activeSubWindow()->close();
+            WriteToLog(QtDebugMsg, ">>Windows closed");
         }
     }
     else
@@ -946,7 +974,6 @@ void MainWindow::on_actionSection_21_triggered()
 }
 
 
-
 void MainWindow::on_actionLoad_configs_triggered()
 {
     //Reload configs
@@ -1045,6 +1072,16 @@ void MainWindow::setMusic(bool checked)
     QString musicFilePath;
     bool silent;
     unsigned int CurMusNum;
+
+    if(
+            (configs.main_music_lvl.size()==0)||
+            (configs.main_music_spc.size()==0)||
+            (configs.main_music_wld.size()==0)
+            )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
+        return;
+    }
 
     if( ( currentMusicId == ui->LVLPropsMusicNumber->currentIndex() ) &&
             (currentCustomMusic == ui->LVLPropsMusicCustom->text()) &&
@@ -1223,6 +1260,12 @@ void MainWindow::on_actionHandScroll_triggered()
 
 void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
+    if(configs.main_bg.size()==0)
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
+        return;
+    }
+
     if((ui->LVLPropsBackImage->hasFocus())||(ui->LVLPropsBackImage->hasMouseTracking()))
     {
         ui->LVLPropsBackImage->setEnabled(false);
@@ -1278,13 +1321,19 @@ void MainWindow::on_actionReload_triggered()
         ui->centralWidget->activeSubWindow()->close();
 
         leveledit *child = createChild();
-        if (child->loadFile(filePath, FileData, configs)) {
+        if ((bool) (child->loadFile(filePath, FileData, configs))) {
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
             SetCurrentLevelSection(0);
         } else {
-            child->close();
+                WriteToLog(QtDebugMsg, ">>File loading aborted");
+            child->show();
+                WriteToLog(QtDebugMsg, ">>Window showed");
+            if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modyfied = false;
+                WriteToLog(QtDebugMsg, ">>Option seted");
+            ui->centralWidget->activeSubWindow()->close();
+                WriteToLog(QtDebugMsg, ">>Windows closed");
         }
     }
 }

@@ -384,8 +384,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -411,8 +411,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -438,8 +438,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -498,7 +498,7 @@
     <string>Editor</string>
    </property>
    <property name="allowedAreas">
-    <set>Qt::TopToolBarArea</set>
+    <set>Qt::AllToolBarAreas</set>
    </property>
    <property name="iconSize">
     <size>
@@ -532,7 +532,7 @@
     <string>Level Sections</string>
    </property>
    <property name="allowedAreas">
-    <set>Qt::BottomToolBarArea|Qt::TopToolBarArea</set>
+    <set>Qt::AllToolBarAreas</set>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -616,8 +616,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>273</width>
-        <height>435</height>
+        <width>81</width>
+        <height>73</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -677,8 +677,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -701,8 +701,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>

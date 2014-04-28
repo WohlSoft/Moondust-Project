@@ -582,6 +582,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
         total++;
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
+        else return;
         }
 
 
@@ -628,6 +629,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
 
     if(!progress.wasCanceled())
         progress.setValue(progress.value()+1);
+    else return;
     }
 
     //Load BGO
@@ -671,6 +673,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
             }
     if(!progress.wasCanceled())
         progress.setValue(progress.value()+1);
+    else return;
     }
 
 }
@@ -796,6 +799,7 @@ void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress)
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
+        else return;
     }
 
 }
@@ -1324,6 +1328,7 @@ void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress, dataconf
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
+        else return;
     }
 }
 
@@ -1346,6 +1351,7 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
+        else return;
     }
 
 }
@@ -1382,6 +1388,7 @@ void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
+        else return;
     }
 
 }
@@ -1431,6 +1438,7 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
+        else return;
     }
 
 }
@@ -1539,6 +1547,8 @@ void LvlScene::setDoors(LevelData FileData, QProgressDialog &progress)
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
+        else
+            return;
     }
 
 }
