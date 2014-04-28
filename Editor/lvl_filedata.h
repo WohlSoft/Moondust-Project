@@ -110,8 +110,12 @@ struct LevelDoors
 {
     long ix;    //Entrance x
     long iy;    //Entrance y
+    bool isSetIn;//Entrance is placed
+
     long ox;    //Exit x
     long oy;    //Exit y
+    bool isSetOut;//Exit is placed
+
     int idirect;
     int odirect;
     int type;
