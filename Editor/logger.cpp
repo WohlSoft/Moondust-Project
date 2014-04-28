@@ -34,7 +34,6 @@ void WriteToLog(QtMsgType type, QString msg)
         break;
         case QtFatalMsg:
         txt = QString("Fatal: %1").arg(msg);
-        abort();
     }
 
     QFile outFile("debug_log.txt");
