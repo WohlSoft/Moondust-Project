@@ -1118,7 +1118,7 @@ void MainWindow::setMusic(bool checked)
 
         if(checked)
         {
-            if(QFile::exists(musicFilePath) )
+            if( (QFile::exists(musicFilePath)) && (QFileInfo(musicFilePath)).isFile() )
             {
                 WriteToLog(QtDebugMsg, QString("Set music player -> addMedia"));
                 CurrentMusic->addMedia(QUrl::fromLocalFile( musicFilePath ));
