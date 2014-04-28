@@ -34,3 +34,15 @@ LevelProps::~LevelProps()
 {
     delete ui;
 }
+
+void LevelProps::on_LVLPropButtonBox_accepted()
+{
+    AutoPlayMusic = ui->setAutoplayMusic->isChecked();
+    LevelTitle = ui->LVLPropLevelTitle->text();
+    accept();
+}
+
+void LevelProps::on_LVLPropButtonBox_rejected()
+{
+    reject();
+}

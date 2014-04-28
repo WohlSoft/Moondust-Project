@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets multimedia
 
 TARGET = plweditor
 TEMPLATE = app
@@ -19,7 +19,13 @@ SOURCES += main.cpp\
     leveledit.cpp \
     lvlscene.cpp \
     dataconfigs.cpp \
-    saveimage.cpp
+    saveimage.cpp \
+    musicfilelist.cpp \
+    logger.cpp \
+    file_npc_txt.cpp \
+    file_wld.cpp \
+    file_lvl.cpp \
+    item_block.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -32,16 +38,26 @@ HEADERS  += mainwindow.h \
     leveledit.h \
     lvlscene.h \
     dataconfigs.h \
-    saveimage.h
+    saveimage.h \
+    musicfilelist.h \
+    logger.h \
+    file_formats.h \
+    item_block.h
 
-FORMS    += mainwindow.ui \
+FORMS    += \
     aboutdialog.ui \
-    levelprops.ui \
-    npcedit.ui \
     leveledit.ui \
-    saveimage.ui
+    levelprops.ui \
+    mainwindow.ui \
+    npcedit.ui \
+    saveimage.ui \
+    musicfilelist.ui
 
 RC_FILE = platgenw.rc
+
+macx {
+    ICON = images/mac/mushroom.icns
+}
 
 OTHER_FILES += \
     images/saveas.png \
@@ -85,7 +101,9 @@ OTHER_FILES += \
     images/world16.png \
     images/section16.png \
     images/mushroom16.png \
-    images/level16.png
+    images/level16.png \
+    splash.png \
+    mushroom.ico
 
 RESOURCES += \
     editor.qrc

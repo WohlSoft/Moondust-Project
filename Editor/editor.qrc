@@ -34,13 +34,33 @@
         <file>images/section.png</file>
         <file>images/warp_exit.png</file>
         <file>images/warp_entrance.png</file>
-        <file alias="unknown_bgo">images/unknown_bgo.gif</file>
-        <file alias="unknown_block">images/unknown_block.gif</file>
-        <file alias="unknown_npc">images/unknown_npc.gif</file>
         <file>images/splash.png</file>
         <file alias="lvl16.png">images/level16.png</file>
         <file>images/mushroom16.png</file>
         <file>images/section16.png</file>
         <file>images/world16.png</file>
+        <file>images/coin.png</file>
+        <file>images/mac/mushroom.hqx</file>
+        <file>images/mac/mushroom.icns</file>
+        <file>images/grid.png</file>
+        <file>images/reset_pos.png</file>
+        <file alias="locks/bgo_cl.png">images/lock_bgo_cl.png</file>
+        <file alias="locks/bgo_op.png">images/lock_bgo_op.png</file>
+        <file alias="locks/block_cl.png">images/lock_block_cl.png</file>
+        <file alias="locks/block_op.png">images/lock_block_op.png</file>
+        <file alias="locks/door_cl.png">images/lock_door_cl.png</file>
+        <file alias="locks/door_op.png">images/lock_door_op.png</file>
+        <file alias="locks/npc_cl.png">images/lock_npc_cl.png</file>
+        <file alias="locks/npc_op.png">images/lock_npc_op.png</file>
+        <file alias="locks/water_cl.png">images/lock_water_cl.png</file>
+        <file alias="locks/water_op.png">images/lock_water_op.png</file>
+        <file>images/player1_start.png</file>
+        <file>images/player2_start.png</file>
+        <file>images/playmusic.png</file>
+        <file alias="reload.png">images/reload_data.png</file>
+        <file alias="cur_rubber.png">images/cur_rubber.png</file>
+        <file alias="hand.png">images/hand.png</file>
+        <file alias="player1.png">images/player1_point.png</file>
+        <file alias="player2.png">images/player2_point.png</file>
     </qresource>
 </RCC>

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QGraphicsItem>
 #include <QPixmap>
 #include <QGraphicsScene>
@@ -28,15 +28,16 @@
 #include "lvlscene.h"
 #include "dataconfigs.h"
 #include "saveimage.h"
+#include "logger.h"
 
 
 #include <QDebug>
-
 
 leveledit::leveledit(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::leveledit)
 {
+    sceneCreared = false;
     FileType = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
@@ -45,10 +46,20 @@ leveledit::leveledit(QWidget *parent) :
     latest_export_path = QApplication::applicationDirPath();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);
+
+    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
+    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
+    ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
+
+            /*
+             * 	setOptimizationFlags(QGraphicsView::DontClipPainter);
+        setOptimizationFlags(QGraphicsView::DontSavePainterState);
+        setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);*/
 }
 
 leveledit::~leveledit()
 {
+    //free(scene);
     delete ui;
 }
 
@@ -135,8 +146,24 @@ void leveledit::ExportToImage_fn()
         settings.endGroup();
 }
 
+void leveledit::ResetPosition()
+{
+    LvlData.sections[LvlData.CurSection].PositionX =
+            LvlData.sections[LvlData.CurSection].size_left;
+    LvlData.sections[LvlData.CurSection].PositionY =
+            LvlData.sections[LvlData.CurSection].size_bottom-602;
+
+    ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_bottom-602);
+    ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_left);
+}
+
 void leveledit::setCurrentSection(int scId)
 {
+    WriteToLog(QtDebugMsg, QString("Save current position %1 %2")
+               .arg(ui->graphicsView->horizontalScrollBar()->value())
+               .arg(ui->graphicsView->verticalScrollBar()->value())
+               );
+
     //Save currentPosition on Section
     LvlData.sections[LvlData.CurSection].PositionX =
             ui->graphicsView->horizontalScrollBar()->value();
@@ -146,9 +173,13 @@ void leveledit::setCurrentSection(int scId)
     //Change Current Section
     LvlData.CurSection = scId;
 
+    WriteToLog(QtDebugMsg, QString("Move to current section position"));
     //Move to new section position
     ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionY);
     ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionX);
+
+    WriteToLog(QtDebugMsg, QString("Call to Draw intersection space"));
+    scene->drawSpace(LvlData);
 }
 
 
@@ -157,6 +188,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
+    LvlData.modyfied = false;
+
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -166,25 +199,33 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     }
     StartLvlData = LvlData; //Save current history for made reset
 
-    //setPlainText(in.readAll());
+    //Data configs exists
+    if(
+            (configs.main_bgo.size()<=0)||
+            (configs.main_bg.size()<=0)||
+            (configs.main_block.size()<=0)||
+            (configs.main_music_lvl.size()<=0)||
+            (configs.main_music_wld.size()<=0)||
+            (configs.main_music_spc.size()<=0)
+      )
+    {
+        QMessageBox::warning(this, tr("Configurations not loaded"),
+                             tr("Cannot open level file %1:\nbecause object configurations not loaded\n."
+                                "Please, check the config/SMBX dir for exists the *.INI files with objects settings")
+                             .arg(fileName));
+        return false;
+    }
 
-    /*
-    LoadingProcess ProgressBar;
-    ProgressBar.setWindowFlags (ProgressBar.windowFlags() &
-                                ~Qt::WindowContextHelpButtonHint &
-                                ~Qt::WindowCloseButtonHint);
-    ProgressBar.thread();
-
-    DrawObjects();
-
-    ProgressBar.close();
-*/
     int DataSize=0;
 
     DataSize += LvlData.sections.size()*2;
+    DataSize += configs.main_bgo.size();
+    DataSize += LvlData.bgo.size();
+    DataSize += configs.main_block.size();
     DataSize += LvlData.blocks.size();
-    DataSize += LvlData.bgo.size()*2;
     DataSize += LvlData.npc.size();
+    DataSize += LvlData.water.size();
+    DataSize += LvlData.doors.size();
 
     QProgressDialog progress("Loading level data", "Abort", 0, DataSize, this);
          progress.setWindowTitle("Loading level data");
@@ -198,28 +239,87 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    progress.close();
+    if( !progress.wasCanceled() )
+        progress.close();
 
     ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[0].size_bottom-602);
     ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[0].size_left);
 
+    ResetPosition();
+
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
+    LvlData.modyfied = false;
 
     return true;
 }
 
+void leveledit::changeCursor(int mode)
+{
+    switch(mode)
+    {
+    case (-1):
+        ui->graphicsView->setCursor(Qt::ArrowCursor);
+        ui->graphicsView->setInteractive(false);
+        ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+        break;
+    case 0:
+        ui->graphicsView->setInteractive(true);
+        ui->graphicsView->setCursor(Qt::ArrowCursor);
+        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        break;
+    case 1:
+        ui->graphicsView->setInteractive(true);
+        ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_rubber.png"), 0, 0));
+        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        break;
+    default:
+        break;
+    }
+}
+
 void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 {
-    scene = new LvlScene;
     int DataSize = progress.maximum();
+    int TotalSteps = 6;
 
-    scene->makeSectionBG(LvlData, progress, configs);
+    scene = new LvlScene(configs, LvlData);
 
-    scene->setBGO(LvlData, progress, configs);
-    scene->setBlocks(LvlData, progress);
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
+
+    scene->loadUserData(LvlData, progress, configs);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("1/%1 Loading Backgrounds").arg(TotalSteps));
+    scene->makeSectionBG(LvlData, progress);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("2/%1 Loading BGOs").arg(TotalSteps));
+    scene->setBGO(LvlData, progress);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("3/%1 Loading Blocks").arg(TotalSteps));
+    scene->setBlocks(LvlData, progress, configs);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("4/%1 Loading NPCs").arg(TotalSteps));
     scene->setNPC(LvlData, progress);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("5/%1 Loading Waters").arg(TotalSteps));
+    scene->setWaters(LvlData, progress);
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("6/%1 Loading Doors").arg(TotalSteps));
+    scene->setDoors(LvlData, progress);
+
+    scene->setPlayerPoints();
+
+    scene->drawSpace(LvlData);
+
+    scene->startBlockAnimation();
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,
@@ -228,8 +328,14 @@ void leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
                         LvlData.sections[0].size_bottom+1000);
     */
 
+    if(!sceneCreared)
+    {
     ui->graphicsView->setScene(scene);
-    progress.setValue(DataSize);
+    sceneCreared = true;
+    }
+
+    if(!progress.wasCanceled())
+        progress.setValue(DataSize);
 }
 
 bool leveledit::save()
@@ -274,6 +380,10 @@ bool leveledit::saveFile(const QString &fileName)
     setCurrentFile(fileName);
     */
 
+    QMessageBox::information(this, tr("Dummy"),
+                         tr("File %1 will not be save, saving function in this version of app was not released.")
+                         .arg(fileName));
+
     return true;
 }
 
@@ -287,7 +397,11 @@ QString leveledit::userFriendlyCurrentFile()
 void leveledit::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {
+        scene->uBGOs.clear();
+        scene->uBGs.clear();
+        scene->uBlocks.clear();
         scene->clear();
+        //ui->graphicsView->cl
         event->accept();
     } else {
         event->ignore();
@@ -303,12 +417,12 @@ void leveledit::focusInEvent( QFocusEvent * focusInEvent)
 
 void leveledit::documentWasModified()
 {
-    isModyfied = true;
+    LvlData.modyfied = true;
 }
 
 bool leveledit::maybeSave()
 {
-    if (isModyfied) {
+    if (LvlData.modyfied) {
     QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
                      tr("'%1' has been modified.\n"

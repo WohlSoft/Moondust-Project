@@ -44,7 +44,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="editor.qrc">
-    <normaloff>:/images/mushroom16.png</normaloff>:/images/mushroom16.png</iconset>
+    <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
   </property>
   <property name="windowOpacity">
    <double>0.000000000000000</double>

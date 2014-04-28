@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>168</height>
+    <height>197</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -24,7 +24,8 @@
     <normaloff>:/lvl16.png</normaloff>
     <normalon>:/lvl16.png</normalon>
     <activeoff>:/lvl16.png</activeoff>
-    <activeon>:/lvl16.png</activeon>:/lvl16.png</iconset>
+    <activeon>:/lvl16.png</activeon>
+    <selectedon>:/lvl16.png</selectedon>:/lvl16.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -32,7 +33,7 @@
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowminimumheight="150" columnminimumwidth="300">
+  <layout class="QGridLayout" name="gridLayout" rowminimumheight="150,0" columnminimumwidth="300">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
@@ -58,16 +59,6 @@
       <item row="0" column="1" colspan="2">
        <widget class="QLineEdit" name="LVLPropLevelTitle"/>
       </item>
-      <item row="2" column="2">
-       <widget class="QDialogButtonBox" name="LVLPropButtonBox">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="standardButtons">
-         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="1" colspan="2">
        <widget class="QGroupBox" name="EditingProps">
         <property name="title">
@@ -89,6 +80,16 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QDialogButtonBox" name="LVLPropButtonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
     </widget>
    </item>
   </layout>

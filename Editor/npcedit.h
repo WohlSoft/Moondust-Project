@@ -21,6 +21,7 @@
 
 #include <QWidget>
 #include <QFile>
+#include <QMessageBox>
 #include "npc_filedata.h"
 
 namespace Ui {
@@ -44,6 +45,8 @@ public:
     bool saveFile(const QString &fileName);
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
+
+    //file format creation function
     QString WriteNPCTxtFile(NPCConfigFile FileData);
 
 protected:

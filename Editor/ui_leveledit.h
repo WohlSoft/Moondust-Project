@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'leveledit.ui'
 **
-** Created: Wed 9. Apr 14:39:49 2014
-**      by: Qt User Interface Compiler version 4.8.1
+** Created by: Qt User Interface Compiler version 5.2.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,13 +11,13 @@
 
 #include <QtCore/QLocale>
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QGraphicsView>
-#include <QtGui/QHeaderView>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -31,7 +30,7 @@ public:
     void setupUi(QWidget *leveledit)
     {
         if (leveledit->objectName().isEmpty())
-            leveledit->setObjectName(QString::fromUtf8("leveledit"));
+            leveledit->setObjectName(QStringLiteral("leveledit"));
         leveledit->resize(800, 602);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
@@ -41,22 +40,28 @@ public:
         leveledit->setBaseSize(QSize(800, 602));
         leveledit->setContextMenuPolicy(Qt::NoContextMenu);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/lvl16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        icon.addFile(QString::fromUtf8(":/lvl16.png"), QSize(), QIcon::Normal, QIcon::On);
-        icon.addFile(QString::fromUtf8(":/lvl16.png"), QSize(), QIcon::Active, QIcon::Off);
-        icon.addFile(QString::fromUtf8(":/lvl16.png"), QSize(), QIcon::Active, QIcon::On);
+        icon.addFile(QStringLiteral(":/lvl16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/lvl16.png"), QSize(), QIcon::Normal, QIcon::On);
+        icon.addFile(QStringLiteral(":/lvl16.png"), QSize(), QIcon::Active, QIcon::Off);
+        icon.addFile(QStringLiteral(":/lvl16.png"), QSize(), QIcon::Active, QIcon::On);
         leveledit->setWindowIcon(icon);
-        leveledit->setStyleSheet(QString::fromUtf8(""));
+        leveledit->setStyleSheet(QStringLiteral(""));
         leveledit->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         verticalLayout = new QVBoxLayout(leveledit);
         verticalLayout->setSpacing(0);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         graphicsView = new QGraphicsView(leveledit);
-        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
         graphicsView->setAutoFillBackground(false);
-        graphicsView->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0.369, y1:1, x2:0, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(132, 132, 132, 255));"));
+        graphicsView->setStyleSheet(QLatin1String("background-color: rgb(98, 98, 98);\n"
+"color: rgb(255, 255, 255);\n"
+"font: 75 16pt \"Cordia New\";"));
+        graphicsView->setFrameShape(QFrame::Box);
         graphicsView->setInteractive(true);
+        graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        graphicsView->setRubberBandSelectionMode(Qt::IntersectsItemShape);
+        graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing|QGraphicsView::DontClipPainter|QGraphicsView::DontSavePainterState);
 
         verticalLayout->addWidget(graphicsView);
 
@@ -68,7 +73,7 @@ public:
 
     void retranslateUi(QWidget *leveledit)
     {
-        leveledit->setWindowTitle(QApplication::translate("leveledit", "Level edit", 0, QApplication::UnicodeUTF8));
+        leveledit->setWindowTitle(QApplication::translate("leveledit", "Level edit", 0));
     } // retranslateUi
 
 };

@@ -20,13 +20,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtGui>
+#include <QtWidgets>
 #include <QPixmap>
 #include <QAbstractListModel>
 #include <QList>
 #include <QPoint>
 #include <QString>
 #include <QStringList>
+#include <QtMultimedia/QMediaPlayer>
 #include "lvl_filedata.h"
 #include "wld_filedata.h"
 #include "npc_filedata.h"
@@ -49,6 +50,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
+    dataconfigs *getConfigs();
     
 protected:
     void closeEvent(QCloseEvent *event);
@@ -56,26 +58,37 @@ protected:
     void dropEvent(QDropEvent *e);
 
 private slots:
+
+    //Common functions
     void save();
     void save_as();
     void close_sw();
     void save_all();
 
-    void SetCurrentLevelSection(int SctId, int open=0);
-    LevelData ReadLevelFile(QFile &inf);
-    NPCConfigFile ReadNpcTXTFile(QFile &inf);
-    WorldData ReadWorldFile(QFile &inf);
-
     void OpenFile(QString FilePath);
 
-    npcedit *createNPCChild();
+    void updateMenus();
+    void setTools();
+    void setMusic(bool checked);
 
+
+    //SubWindow functions
+    npcedit *createNPCChild();
     leveledit *createChild();
     void setActiveSubWindow(QWidget *window);
 
-    void updateMenus();
+
+    //File format read functions
+    LevelData ReadLevelFile(QFile &inf); // SMBX LVL File
+    NPCConfigFile ReadNpcTXTFile(QFile &inf); // SMBX WLD File
+    WorldData ReadWorldFile(QFile &inf); //SMBX NPC.TXT File
 
 
+    //LevelEdit functions
+    void SetCurrentLevelSection(int SctId, int open=0);
+
+
+    //Actions
     void on_LevelSectionSettings_visibilityChanged(bool visible);
     void on_LevelToolBox_visibilityChanged(bool visible);
 	void on_WorldToolBox_visibilityChanged(bool visible);
@@ -116,7 +129,57 @@ private slots:
     void on_actionLoad_configs_triggered();
     void on_actionExport_to_image_triggered();
 
+
+    void on_LVLPropsMusicNumber_currentIndexChanged(int index);
+    void on_LVLPropsMusicCustomEn_toggled(bool checked);
+    void on_LVLPropsMusicCustomBrowse_clicked();
+
+    //void on_LVLPropsMusicPlay_toggled(bool checked);
+    void on_actionPlayMusic_triggered(bool checked);
+
+    void on_LVLPropsMusicCustom_textChanged(const QString &arg1);
+
+    void on_actionReset_position_triggered();
+
+    void on_actionGridEn_triggered(bool checked);
+
+    void on_actionSelect_triggered();
+    void on_actionEriser_triggered();
+    void on_actionHandScroll_triggered();
+
+    void on_LVLPropsBackImage_currentIndexChanged(int index);
+
+    void on_actionReload_triggered();
+
+    void on_actionLockBlocks_triggered(bool checked);
+
+    void on_actionLockBGO_triggered(bool checked);
+
+    void on_actionLockNPC_triggered(bool checked);
+
+    void on_actionLockWaters_triggered(bool checked);
+
+    void on_actionLockDoors_triggered(bool checked);
+
+    void on_LVLPropsLevelWarp_clicked(bool checked);
+
+    void on_actionLevWarp_triggered(bool checked);
+
+    void on_LVLPropsOffScr_clicked(bool checked);
+
+    void on_actionLevOffScr_triggered(bool checked);
+
+    void on_LVLPropsNoTBack_clicked(bool checked);
+
+    void on_actionLevNoBack_triggered(bool checked);
+
+    void on_LVLPropsUnderWater_clicked(bool checked);
+
+    void on_actionLevUnderW_triggered(bool checked);
+
 private:
+    dataconfigs configs;
+
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;

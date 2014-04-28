@@ -21,40 +21,60 @@
 #include "aboutdialog.h"
 #include "levelprops.h"
 #include <QFileDialog>
-#include <QtGui>
+#include <QtWidgets>
+#include <QMdiArea>
 #include <QFile>
 #include <QSettings>
 #include <QTranslator>
+#include <QtMultimedia/QMediaPlayer>
+#include <QMediaPlaylist>
 #include <QLocale>
 #include <QSplashScreen>
 #include "childwindow.h"
 #include "leveledit.h"
 #include "npcedit.h"
 #include "dataconfigs.h"
+#include "musicfilelist.h"
+#include "logger.h"
 
 QString LastOpenDir = ".";
 bool LevelToolBoxVis = false;
 bool WorldToolBoxVis = false;
 bool SectionToolBoxVis = false;
+bool autoPlayMusic = false;
 
+QMediaPlayer * MusicPlayer;
 
-dataconfigs configs;
+QString currentCustomMusic = "";
+long currentMusicId = 0;
+bool musicButtonChecked = false;
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    QMenuBar * menuBar = new QMenuBar(0); // test for MacOS X
+    //QMenuBar * menuBar = new QMenuBar(0); // test for MacOS X
+
+    MusicPlayer = new QMediaPlayer;
 
     QPixmap splashimg(":/images/splash.png");
     QSplashScreen splash(splashimg);
     splash.show();
 
-    configs.loadconfigs();
+    configs.loadconfigs(true);
     ui->setupUi(this);
 
-    menuBar = ui->menuBar; // test for MacOS X
-    setMenuBar(menuBar); // test for MacOS X
+    //ui->BlocksItemBox->;
+
+    //Applay objects into tools
+    setTools();
+
+    #ifdef Q_OS_MAC
+        this->setWindowIcon(QIcon(":/images/mac/mushroom.icns"));
+    #endif
+
+    //menuBar = ui->menuBar; // test for MacOS X
+    //setMenuBar(menuBar); // test for MacOS X
 
     splash.finish(this);
 
@@ -82,22 +102,27 @@ MainWindow::MainWindow(QMdiArea *parent) :
     //dockWidgetArea();
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
-
+    autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
     settings.endGroup();
+
+    ui->actionPlayMusic->setChecked(autoPlayMusic);
 
     ui->centralWidget->cascadeSubWindows();
     ui->WorldToolBox->hide();
     ui->LevelSectionSettings->hide();
     ui->LevelToolBox->hide();
+    ui->DoorsToolbox->hide();
 
     ui->menuView->setEnabled(0);
     ui->menuWindow->setEnabled(0);
     ui->menuLevel->setEnabled(0);
     ui->menuWorld->setEnabled(0);
+    ui->LevelObjectToolbar->setVisible(0);
 
     ui->actionLVLToolBox->setVisible(0);
     ui->actionSection_Settings->setVisible(0);
     ui->actionWLDToolBox->setVisible(0);
+    ui->actionGridEn->setChecked(1);
 
     setAcceptDrops(true);
 }
@@ -105,10 +130,20 @@ MainWindow::MainWindow(QMdiArea *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    WriteToLog(QtDebugMsg, "--> Application closed <--");
+}
+
+dataconfigs * MainWindow::getConfigs()
+{
+    dataconfigs * pointer;
+    pointer = &configs;
+    return pointer;
 }
 
 void MainWindow::updateMenus()
 {
+    WriteToLog(QtDebugMsg, QString("Update menus"));
+
     int WinType = activeChildWindow(); // 1 lvledit, 2 npcedit, 3 wldedit
     bool hasSWindow = (WinType != 0);
 
@@ -121,6 +156,8 @@ void MainWindow::updateMenus()
 
     ui->actionSelect->setEnabled( (WinType==1) || (WinType==3));
     ui->actionEriser->setEnabled( (WinType==1) || (WinType==3));
+    ui->actionHandScroll->setEnabled( (WinType==1) || (WinType==3));
+    ui->actionReload->setEnabled( (WinType==1) || (WinType==3));
 
     if(!(WinType==3)) WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
 
@@ -128,6 +165,7 @@ void MainWindow::updateMenus()
     ui->menuWorld->setEnabled(( WinType==3) );
     ui->actionWLDToolBox->setVisible( (WinType==3));
 
+    ui->LevelObjectToolbar->setVisible( (WinType==1) );
 
     if(!(WinType==1)) LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
     if(!(WinType==1)) SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
@@ -166,8 +204,20 @@ void MainWindow::updateMenus()
     ui->actionSection_19->setEnabled( (WinType==1) );
     ui->actionSection_20->setEnabled( (WinType==1) );
     ui->actionSection_21->setEnabled( (WinType==1) );
+    ui->actionReset_position->setEnabled( (WinType==1) );
+    ui->actionGridEn->setEnabled( (WinType==1) );
 
-    if(WinType==1) SetCurrentLevelSection(0, 1);
+    if(WinType==1)
+    {
+        SetCurrentLevelSection(0, 1);
+        setMusic( ui->actionPlayMusic->isChecked() );
+        ui->actionSelect->trigger();
+        ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
+        ui->actionLockBGO->setChecked(activeLvlEditWin()->scene->lock_bgo);
+        ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
+        ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
+        ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
+    }
 
     ui->menuWindow->setEnabled( (WinType!=0) );
 
@@ -183,6 +233,24 @@ void MainWindow::updateMenus()
     cutAct->setEnabled(hasSelection);
     copyAct->setEnabled(hasSelection);
     */
+}
+
+void MainWindow::setTools()
+{
+    int i;
+        WriteToLog(QtDebugMsg, QString("Set toolboxes"));
+    ui->LVLPropsBackImage->clear();
+    ui->LVLPropsMusicNumber->clear();
+
+    ui->LVLPropsBackImage->addItem("[No image]");
+    ui->LVLPropsMusicNumber->addItem("[Silence]");
+
+    for(i=0; i< configs.main_bg.size();i++)
+        ui->LVLPropsBackImage->addItem(configs.main_bg[i].name);
+
+    for(i=0; i< configs.main_music_lvl.size();i++)
+        ui->LVLPropsMusicNumber->addItem(configs.main_music_lvl[i].name);
+
 }
 
 void MainWindow::save()
@@ -279,7 +347,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("section-tb-visible", SectionToolBoxVis);
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
-
+    settings.setValue("autoPlayMusic", autoPlayMusic);
     settings.endGroup();
     event->accept();
     }
@@ -337,11 +405,13 @@ void MainWindow::OpenFile(QString FilePath)
 
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
+        FileData.playmusic = autoPlayMusic;
 
         leveledit *child = createChild();
         if (child->loadFile(FilePath, FileData, configs)) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
+            SetCurrentLevelSection(0);
         } else {
             child->close();
         }
@@ -552,11 +622,14 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
     int SectionId = SctId;
     int WinType = activeChildWindow();
 
+    WriteToLog(QtDebugMsg, "Set Current Section");
     if ((open==1)&&(WinType==1)) // Only Set Checked section number without section select
     {
+        WriteToLog(QtDebugMsg, "get Current Section");
         SectionId = activeLvlEditWin()->LvlData.CurSection;
     }
 
+    WriteToLog(QtDebugMsg, "Set checkbox to");
     ui->actionSection_1->setChecked( (SectionId==0) );
     ui->actionSection_2->setChecked( (SectionId==1) );
     ui->actionSection_3->setChecked( (SectionId==2) );
@@ -581,7 +654,40 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
 
     if ((WinType==1) && (open==0))
     {
+       WriteToLog(QtDebugMsg, "Call to setCurrentSection()");
        activeLvlEditWin()->setCurrentSection(SectionId);
+    }
+
+    if (WinType==1)
+    {
+        WriteToLog(QtDebugMsg, "Set Section Data in menu");
+        //Set Section Data in menu
+        ui->actionLevNoBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
+        ui->actionLevOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
+        ui->actionLevUnderW->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
+        ui->actionLevWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+
+        WriteToLog(QtDebugMsg, "Set text label");
+        //set data in Section Settings Widget
+        ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
+
+        WriteToLog(QtDebugMsg, "Set ToolBar data");
+        ui->LVLPropsNoTBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
+        ui->LVLPropsOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
+        ui->LVLPropsUnderWater->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
+        ui->LVLPropsLevelWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+
+        WriteToLog(QtDebugMsg, "Set text to custom music file");
+        ui->LVLPropsMusicCustom->setText(activeLvlEditWin()->LvlData.sections[SectionId].music_file);
+
+        WriteToLog(QtDebugMsg, "Set standart Music index");
+        ui->LVLPropsMusicNumber->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].music_id );
+
+        WriteToLog(QtDebugMsg, "Set Custom music checkbox");
+        ui->LVLPropsMusicCustomEn->setChecked( (activeLvlEditWin()->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
+
+        WriteToLog(QtDebugMsg, "Set background index");
+        ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
     }
 }
 
@@ -678,7 +784,12 @@ void MainWindow::on_actionLevelProp_triggered()
     if(activeChildWindow()==1)
     {
         LevelProps LevProps(activeLvlEditWin()->LvlData);
-        LevProps.exec();
+        if(LevProps.exec()==QDialog::Accepted)
+        {
+            activeLvlEditWin()->LvlData.playmusic = LevProps.AutoPlayMusic;
+            activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
+            autoPlayMusic = LevProps.AutoPlayMusic;
+        }
     }
 
 }
@@ -838,7 +949,11 @@ void MainWindow::on_actionSection_21_triggered()
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
+    //Reload configs
     configs.loadconfigs();
+
+    //Set tools from loaded configs
+    //setTools();
 
     QMessageBox::information(this, tr("Reload configuration"),
      tr("Configuration succesfully reloaded!"),
@@ -852,5 +967,443 @@ void MainWindow::on_actionExport_to_image_triggered()
     if(activeChildWindow()==1)
     {
         activeLvlEditWin()->ExportToImage_fn();
+    }
+}
+
+void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
+{
+    unsigned int test = index;
+    if(ui->LVLPropsMusicNumber->hasFocus())
+    {
+        ui->LVLPropsMusicCustomEn->setChecked(  test == configs.music_custom_id );
+    }
+
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
+        activeLvlEditWin()->LvlData.modyfied = true;
+    }
+
+    WriteToLog(QtDebugMsg, "Call to Set Music if playing");
+    setMusic(ui->actionPlayMusic->isChecked());
+}
+
+void MainWindow::on_LVLPropsMusicCustomEn_toggled(bool checked)
+{
+    if(ui->LVLPropsMusicCustomEn->hasFocus())
+    {
+        if(checked)
+        {
+            ui->LVLPropsMusicNumber->setCurrentIndex( configs.music_custom_id );
+            if(activeChildWindow()==1)
+            {
+                activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
+                activeLvlEditWin()->LvlData.modyfied = true;
+            }
+        }
+    }
+}
+
+void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
+{
+    QString dirPath;
+    if(activeChildWindow()==1)
+    {
+        dirPath = activeLvlEditWin()->LvlData.path;
+    }
+    else return;
+
+    MusicFileList musicList(dirPath);
+    if( musicList.exec() == QDialog::Accepted )
+    {
+        ui->LVLPropsMusicCustom->setText(musicList.SelectedFile);
+    }
+
+}
+
+void MainWindow::on_actionPlayMusic_triggered(bool checked)
+{
+    WriteToLog(QtDebugMsg, "Clicked play music button");
+    currentCustomMusic = ui->LVLPropsMusicCustom->text();
+    currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
+    setMusic(checked);
+}
+
+/*
+void MainWindow::on_LVLPropsMusicPlay_toggled(bool checked)
+{
+    WriteToLog(QtDebugMsg, "Clicked play music button");
+    currentCustomMusic = ui->LVLPropsMusicCustom->text();
+    currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
+    setMusic(checked);
+}*/
+
+void MainWindow::setMusic(bool checked)
+{
+    QString dirPath;
+    QString musicFile;
+    QString musicFilePath;
+    bool silent;
+    unsigned int CurMusNum;
+
+    if( ( currentMusicId == ui->LVLPropsMusicNumber->currentIndex() ) &&
+            (currentCustomMusic == ui->LVLPropsMusicCustom->text()) &&
+            (musicButtonChecked == ui->actionPlayMusic->isChecked()) ) return;
+
+    WriteToLog(QtDebugMsg, "-> New MediaPlayList");
+    QMediaPlaylist * CurrentMusic = new QMediaPlaylist;
+
+
+    if(activeChildWindow()!=1)
+    {
+        if(checked)
+        {
+            if(
+                    ((currentMusicId>0)&&(((unsigned long)currentMusicId!=configs.music_custom_id)))||
+                    (((unsigned long)currentMusicId==configs.music_custom_id)&&(currentCustomMusic!=""))
+                    )
+            {
+                MusicPlayer->play();
+                silent=false;
+            }
+            else
+            {
+                silent=true;
+            }
+        }
+        else
+        {
+            WriteToLog(QtDebugMsg, QString("Set music player -> Stop by Checked"));
+                MusicPlayer->stop();
+            silent=true;
+        }
+        return;
+    }
+
+    if(activeChildWindow()==1)
+    {
+        WriteToLog(QtDebugMsg, "Get Level File Path");
+        dirPath = activeLvlEditWin()->LvlData.path;
+    }
+    else
+        return;
+
+    WriteToLog(QtDebugMsg, "Check for Sielent");
+
+    if(ui->LVLPropsMusicNumber->currentIndex() <= 0)
+        silent=true;
+    else
+        silent=false;
+
+    WriteToLog(QtDebugMsg, "ifNot Sielent, play Music");
+
+    if(!silent)
+    {
+        CurMusNum = ui->LVLPropsMusicNumber->currentIndex()-1;
+
+        if(CurMusNum==configs.music_custom_id-1)
+        {
+                WriteToLog(QtDebugMsg, QString("get Custom music path"));
+            musicFile = ui->LVLPropsMusicCustom->text();
+            musicFilePath = dirPath + "/" + musicFile;
+        }
+        else
+        {
+                WriteToLog(QtDebugMsg, QString("get standart music path"));
+            musicFile = configs.main_music_lvl[CurMusNum].file;
+            dirPath = configs.dirs.music;
+            musicFilePath = configs.dirs.music + musicFile;
+            //QMessageBox::information(this, "test", "music is \n"+musicFile+"\n"+QString::number());
+        }
+
+        if(checked)
+        {
+            if( (QFile::exists(musicFilePath)) && (QFileInfo(musicFilePath)).isFile() )
+            {
+                WriteToLog(QtDebugMsg, QString("Set music player -> addMedia"));
+                CurrentMusic->addMedia(QUrl::fromLocalFile( musicFilePath ));
+                CurrentMusic->setPlaybackMode(QMediaPlaylist::Loop);
+                WriteToLog(QtDebugMsg, QString("Set music player -> stop Current"));
+                MusicPlayer->stop();
+                WriteToLog(QtDebugMsg, QString("Set music player -> set PlayList"));
+                MusicPlayer->setPlaylist(CurrentMusic);
+                WriteToLog(QtDebugMsg, QString("Set music player -> setVolme and play"));
+                MusicPlayer->setVolume(100);
+                MusicPlayer->play();
+            }
+            else
+                MusicPlayer->stop();
+        }
+        else
+        {
+            WriteToLog(QtDebugMsg, QString("Set music player -> Stop by checker"));
+            MusicPlayer->stop();
+        }
+    }
+    else
+    {
+        WriteToLog(QtDebugMsg, QString("Set music player -> Stop by sielent"));
+        MusicPlayer->stop();
+    }
+
+    currentCustomMusic = ui->LVLPropsMusicCustom->text();
+    currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
+    musicButtonChecked  = ui->actionPlayMusic->isChecked();
+}
+
+
+
+void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
+{
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_file = arg1;
+    }
+
+    setMusic( ui->actionPlayMusic->isChecked() );
+}
+
+void MainWindow::on_actionReset_position_triggered()
+{
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->ResetPosition();
+    }
+}
+
+void MainWindow::on_actionGridEn_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->scene->grid = checked;
+    }
+}
+
+void MainWindow::on_actionSelect_triggered()
+{
+    ui->actionSelect->setChecked(1);
+    ui->actionEriser->setChecked(0);
+    ui->actionHandScroll->setChecked(0);
+    if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
+    {
+       activeLvlEditWin()->changeCursor(0);
+       activeLvlEditWin()->scene->EditingMode = 0;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+    }
+}
+
+void MainWindow::on_actionEriser_triggered()
+{
+    ui->actionSelect->setChecked(0);
+    ui->actionEriser->setChecked(1);
+    ui->actionHandScroll->setChecked(0);
+    if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
+    {
+       activeLvlEditWin()->changeCursor(1);
+       activeLvlEditWin()->scene->EditingMode = 1;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+    }
+}
+
+
+void MainWindow::on_actionHandScroll_triggered()
+{
+    ui->actionSelect->setChecked(0);
+    ui->actionEriser->setChecked(0);
+    ui->actionHandScroll->setChecked(1);
+    if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
+    {
+       activeLvlEditWin()->scene->clearSelection();
+       activeLvlEditWin()->changeCursor(-1);
+       activeLvlEditWin()->scene->EditingMode = 0;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+    }
+}
+
+
+void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
+{
+    if((ui->LVLPropsBackImage->hasFocus())||(ui->LVLPropsBackImage->hasMouseTracking()))
+    {
+        ui->LVLPropsBackImage->setEnabled(false);
+        WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
+        if (activeChildWindow()==1)
+        {
+           activeLvlEditWin()->scene->ChangeSectionBG(index, activeLvlEditWin()->LvlData);
+        }
+        ui->LVLPropsBackImage->setEnabled(true);
+    }
+    else
+    {
+        if (activeChildWindow()==1)
+        {
+           ui->LVLPropsBackImage->setCurrentIndex(
+                       activeLvlEditWin()->LvlData.sections[
+                       activeLvlEditWin()->LvlData.CurSection].background);
+        }
+    }
+}
+
+
+//Reload opened file data
+void MainWindow::on_actionReload_triggered()
+{
+    LevelData FileData;
+    QString filePath;
+    QRect wnGeom;
+
+    if (activeChildWindow()==1)
+    {
+        filePath = activeLvlEditWin()->curFile;
+
+        QFile fileIn(filePath);
+
+        if (!fileIn.open(QIODevice::ReadOnly)) {
+        QMessageBox::critical(this, tr("File open error"),
+        tr("Can't open the file."), QMessageBox::Ok);
+            return;
+        }
+
+        FileData = ReadLevelFile(fileIn); //function in file_formats.cpp
+        if( !FileData.ReadFileValid ){
+            statusBar()->showMessage(tr("Reloading error"), 2000);
+            return;}
+
+        FileData.filename = QFileInfo(filePath).baseName();
+        FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
+        FileData.playmusic = autoPlayMusic;
+        activeLvlEditWin()->LvlData.modyfied = false;
+        activeLvlEditWin()->close();
+        wnGeom = ui->centralWidget->activeSubWindow()->geometry();
+        ui->centralWidget->activeSubWindow()->close();
+
+        leveledit *child = createChild();
+        if (child->loadFile(filePath, FileData, configs)) {
+            statusBar()->showMessage(tr("Level file reloaded"), 2000);
+            child->show();
+            ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
+            SetCurrentLevelSection(0);
+        } else {
+            child->close();
+        }
+    }
+}
+
+void MainWindow::on_actionLockBlocks_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->setLocked(1, checked);
+    }
+}
+
+void MainWindow::on_actionLockBGO_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->setLocked(2, checked);
+    }
+}
+
+void MainWindow::on_actionLockNPC_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->setLocked(3, checked);
+    }
+}
+
+void MainWindow::on_actionLockWaters_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->setLocked(4, checked);
+    }
+}
+
+void MainWindow::on_actionLockDoors_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->setLocked(5, checked);
+    }
+}
+
+
+// Level Section Settings
+void MainWindow::on_LVLPropsLevelWarp_clicked(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        ui->actionLevWarp->setChecked(checked);
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].IsWarp = checked;
+    }
+}
+
+void MainWindow::on_actionLevWarp_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        ui->LVLPropsLevelWarp->setChecked(checked);
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].IsWarp = checked;
+    }
+}
+
+
+
+void MainWindow::on_LVLPropsOffScr_clicked(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        ui->actionLevOffScr->setChecked(checked);
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].OffScreenEn = checked;
+    }
+}
+
+void MainWindow::on_actionLevOffScr_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        ui->LVLPropsOffScr->setChecked(checked);
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].OffScreenEn = checked;
+    }
+}
+
+
+
+void MainWindow::on_LVLPropsNoTBack_clicked(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        ui->actionLevNoBack->setChecked(checked);
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].noback = checked;
+    }
+}
+
+void MainWindow::on_actionLevNoBack_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        ui->LVLPropsNoTBack->setChecked(checked);
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].noback = checked;
+    }
+}
+
+
+void MainWindow::on_LVLPropsUnderWater_clicked(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        ui->actionLevUnderW->setChecked(checked);
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].underwater = checked;
+    }
+}
+
+void MainWindow::on_actionLevUnderW_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+        ui->LVLPropsUnderWater->setChecked(checked);
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].underwater = checked;
     }
 }

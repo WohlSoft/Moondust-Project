@@ -22,6 +22,7 @@
 //////////////////////Level file Data//////////////////////
 struct LevelSection
 {
+    int id;
     long size_top;
     long size_bottom;
     long size_left;
@@ -42,6 +43,7 @@ struct LevelSection
 
 struct PlayerPoint
 {
+    unsigned int id;
     long x;
     long y;
     long h;
@@ -62,6 +64,9 @@ struct LevelBlock
     QString event_destroy;
     QString event_hit;
     QString event_no_more;
+
+    //editing
+    unsigned int array_id;
 };
 
 struct LevelBGO
@@ -70,6 +75,9 @@ struct LevelBGO
     long y;
     unsigned long id; //Block ID
     QString layer;
+
+    //editing
+    unsigned int array_id;
 };
 
 struct LevelNPC
@@ -93,14 +101,21 @@ struct LevelNPC
     QString event_talk;
     QString event_nomore;
     QString attach_layer;
+
+    //editing
+    unsigned int array_id;
 };
 
 struct LevelDoors
 {
     long ix;    //Entrance x
     long iy;    //Entrance y
+    bool isSetIn;//Entrance is placed
+
     long ox;    //Exit x
     long oy;    //Exit y
+    bool isSetOut;//Exit is placed
+
     int idirect;
     int odirect;
     int type;
@@ -116,6 +131,9 @@ struct LevelDoors
     bool noyoshi;
     bool allownpc;
     bool locked;
+
+    //editing
+    unsigned int array_id;
 };
 
 struct LevelWater
@@ -127,12 +145,18 @@ struct LevelWater
     long unknown;
     bool quicksand;
     QString layer;
+
+    //editing
+    unsigned int array_id;
 };
 
 struct LevelLayers
 {
     QString name;
     bool hidden;
+
+    //editing
+    unsigned int array_id;
 };
 
 struct LevelEvents_layers
@@ -180,6 +204,9 @@ struct LevelEvents
     float move_camera_x;
     float move_camera_y;
     long scrool_section;
+
+    //editing
+    unsigned int array_id;
 };
 
 
@@ -191,16 +218,24 @@ struct LevelData
     QVector<LevelSection > sections;       //Sections
     QVector<PlayerPoint > players;         //Players
     QVector<LevelBlock > blocks;           //Blocks
+    unsigned int blocks_array_id;   //latest array_id
     QVector<LevelBGO > bgo;                //Background objects
+    unsigned int bgo_array_id;   //latest array_id
     QVector<LevelNPC > npc;                //NPCs
+    unsigned int npc_array_id;   //latest array_id
     QVector<LevelDoors > doors;            //Warps and Doors
+    unsigned int doors_array_id;   //latest array_id
     QVector<LevelWater > water;            //Water ranges
+    unsigned int water_array_id;   //latest array_id
     QVector<LevelLayers > layers;          //Layers
+    unsigned int layers_array_id;   //latest array_id
     QVector<LevelEvents > events;          //Events
+    unsigned int events_array_id;   //latest array_id
 
     //editing:
     int CurSection;
     bool playmusic;
+    bool modyfied;
     QString filename;
     QString path;
 };

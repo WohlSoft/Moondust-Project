@@ -16,17 +16,22 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include <QtGui/QApplication>
-#include <QFile>
+#include <QtWidgets>
 #include <QTranslator>
 #include <QLocale>
-#include <QFileDialog>
-//#include <QDebug>
 #include "mainwindow.h"
+
+#include "logger.h"
+
+
+//Regular expressions for File Formats
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    WriteToLog(QtDebugMsg, "--> Application started <--");
+
     MainWindow w;
     w.show();
     return a.exec();

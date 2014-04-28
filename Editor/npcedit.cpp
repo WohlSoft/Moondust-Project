@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include <QtGui>
+#include <QtWidgets>
 #include "npcedit.h"
 #include "ui_npcedit.h"
 
@@ -523,8 +523,9 @@ bool npcedit::saveFile(const QString &fileName)
     QApplication::setOverrideCursor(Qt::WaitCursor);
     out << WriteNPCTxtFile(NpcData);
     QApplication::restoreOverrideCursor();
-    documentNotModified();
     setCurrentFile(fileName);
+
+    documentNotModified();
 
     return true;
 }
