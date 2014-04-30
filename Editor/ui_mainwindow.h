@@ -105,6 +105,10 @@ public:
     QAction *actionPlayMusic;
     QAction *actionReload;
     QAction *actionHandScroll;
+    QAction *actionUndo;
+    QAction *actionRedo;
+    QAction *actionWarpsAndDoors;
+    QAction *actionAnimation;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -117,6 +121,7 @@ public:
     QMenu *menuView;
     QMenu *menuWindow;
     QMenu *menuTools;
+    QMenu *menuEdit;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *LevelToolBox;
@@ -200,20 +205,25 @@ public:
     QLineEdit *WarpToMapY;
     QGroupBox *groupBox_9;
     QLabel *label_8;
-    QSpinBox *WarpToExitNo;
-    QLineEdit *lineEdit;
+    QSpinBox *WarpToExitNu;
+    QLineEdit *WarpLevelFile;
     QLabel *label_11;
-    QPushButton *pushButton;
+    QPushButton *WarpBrowseLevels;
     QGroupBox *groupBox_10;
-    QComboBox *comboBox_2;
-    QComboBox *comboBox;
+    QComboBox *WarpType;
     QLabel *label_3;
-    QLabel *label;
     QCheckBox *WarpNoYoshi;
     QLabel *label_4;
     QSpinBox *WarpNeedAStars;
-    QCheckBox *checkBox_2;
-    QCheckBox *checkBox;
+    QCheckBox *WarpLock;
+    QCheckBox *WarpAllowNPC;
+    QPushButton *WarpSetEntrance;
+    QPushButton *WarpSetExit;
+    QCheckBox *WarpEntrancePlaced;
+    QCheckBox *WarpExitPlaced;
+    QComboBox *WarpList;
+    QPushButton *WarpAdd;
+    QPushButton *WarpRemove;
     QPushButton *pushButton_4;
 
     void setupUi(QMainWindow *MainWindow)
@@ -612,6 +622,17 @@ public:
         QIcon icon41;
         icon41.addFile(QStringLiteral(":/hand.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionHandScroll->setIcon(icon41);
+        actionUndo = new QAction(MainWindow);
+        actionUndo->setObjectName(QStringLiteral("actionUndo"));
+        actionUndo->setEnabled(false);
+        actionRedo = new QAction(MainWindow);
+        actionRedo->setObjectName(QStringLiteral("actionRedo"));
+        actionRedo->setEnabled(false);
+        actionWarpsAndDoors = new QAction(MainWindow);
+        actionWarpsAndDoors->setObjectName(QStringLiteral("actionWarpsAndDoors"));
+        actionAnimation = new QAction(MainWindow);
+        actionAnimation->setObjectName(QStringLiteral("actionAnimation"));
+        actionAnimation->setCheckable(true);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -653,6 +674,8 @@ public:
         menuWindow->setObjectName(QStringLiteral("menuWindow"));
         menuTools = new QMenu(menuBar);
         menuTools->setObjectName(QStringLiteral("menuTools"));
+        menuEdit = new QMenu(menuBar);
+        menuEdit->setObjectName(QStringLiteral("menuEdit"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -717,7 +740,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 81, 28));
+        backsscroll->setGeometry(QRect(0, 0, 256, 435));
         backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -728,7 +751,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 81, 28));
+        npcscroll->setGeometry(QRect(0, 0, 256, 435));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -739,7 +762,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 81, 28));
+        specialscroll->setGeometry(QRect(0, 0, 256, 435));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -802,7 +825,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 81, 73));
+        TilesItemBox->setGeometry(QRect(0, 0, 273, 435));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -830,7 +853,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
+        SceneryScroll->setGeometry(QRect(0, 0, 256, 435));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -840,7 +863,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 256, 435));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -985,30 +1008,30 @@ public:
         MainWindow->addToolBar(Qt::TopToolBarArea, LevelObjectToolbar);
         DoorsToolbox = new QDockWidget(MainWindow);
         DoorsToolbox->setObjectName(QStringLiteral("DoorsToolbox"));
-        DoorsToolbox->setMinimumSize(QSize(230, 508));
-        DoorsToolbox->setMaximumSize(QSize(300, 508));
+        DoorsToolbox->setMinimumSize(QSize(230, 460));
+        DoorsToolbox->setMaximumSize(QSize(300, 460));
         DoorsToolbox->setFloating(false);
         DoorsToolbox->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         dockWidgetContents = new QWidget();
         dockWidgetContents->setObjectName(QStringLiteral("dockWidgetContents"));
         groupBox = new QGroupBox(dockWidgetContents);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(0, 0, 231, 482));
+        groupBox->setGeometry(QRect(0, 0, 231, 431));
         groupBox->setAutoFillBackground(true);
         groupBox->setStyleSheet(QStringLiteral("border-color: rgb(0, 0, 0);"));
         groupBox->setFlat(false);
         groupBox_4 = new QGroupBox(groupBox);
         groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
-        groupBox_4->setGeometry(QRect(10, 330, 111, 61));
+        groupBox_4->setGeometry(QRect(10, 330, 91, 61));
         WarpLevelEntrance = new QCheckBox(groupBox_4);
         WarpLevelEntrance->setObjectName(QStringLiteral("WarpLevelEntrance"));
-        WarpLevelEntrance->setGeometry(QRect(10, 40, 91, 17));
+        WarpLevelEntrance->setGeometry(QRect(10, 40, 71, 17));
         WarpLevelExit = new QCheckBox(groupBox_4);
         WarpLevelExit->setObjectName(QStringLiteral("WarpLevelExit"));
-        WarpLevelExit->setGeometry(QRect(10, 20, 91, 17));
+        WarpLevelExit->setGeometry(QRect(10, 20, 71, 17));
         groupBox_7 = new QGroupBox(groupBox);
         groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
-        groupBox_7->setGeometry(QRect(10, 150, 211, 121));
+        groupBox_7->setGeometry(QRect(10, 160, 211, 121));
         groupBox_2 = new QGroupBox(groupBox_7);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         groupBox_2->setGeometry(QRect(10, 10, 91, 101));
@@ -1017,7 +1040,7 @@ public:
         Entr_Left = new QRadioButton(groupBox_2);
         Entr_Left->setObjectName(QStringLiteral("Entr_Left"));
         Entr_Left->setGeometry(QRect(70, 50, 16, 16));
-        Entr_Left->setChecked(true);
+        Entr_Left->setChecked(false);
         Entr_Right = new QRadioButton(groupBox_2);
         Entr_Right->setObjectName(QStringLiteral("Entr_Right"));
         Entr_Right->setGeometry(QRect(10, 50, 16, 16));
@@ -1028,6 +1051,7 @@ public:
         Entr_Down = new QRadioButton(groupBox_2);
         Entr_Down->setObjectName(QStringLiteral("Entr_Down"));
         Entr_Down->setGeometry(QRect(40, 20, 16, 16));
+        Entr_Down->setChecked(true);
         label_2 = new QLabel(groupBox_2);
         label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(25, 38, 41, 41));
@@ -1038,14 +1062,14 @@ public:
         Exit_Left = new QRadioButton(groupBox_3);
         Exit_Left->setObjectName(QStringLiteral("Exit_Left"));
         Exit_Left->setGeometry(QRect(10, 50, 16, 16));
-        Exit_Left->setChecked(true);
+        Exit_Left->setChecked(false);
         Exit_Right = new QRadioButton(groupBox_3);
         Exit_Right->setObjectName(QStringLiteral("Exit_Right"));
         Exit_Right->setGeometry(QRect(70, 50, 16, 16));
         Exit_Up = new QRadioButton(groupBox_3);
         Exit_Up->setObjectName(QStringLiteral("Exit_Up"));
         Exit_Up->setGeometry(QRect(40, 20, 16, 16));
-        Exit_Up->setChecked(false);
+        Exit_Up->setChecked(true);
         Exit_Down = new QRadioButton(groupBox_3);
         Exit_Down->setObjectName(QStringLiteral("Exit_Down"));
         Exit_Down->setGeometry(QRect(40, 80, 16, 16));
@@ -1072,37 +1096,31 @@ public:
         WarpToMapY->setGeometry(QRect(100, 20, 51, 20));
         groupBox_9 = new QGroupBox(groupBox);
         groupBox_9->setObjectName(QStringLiteral("groupBox_9"));
-        groupBox_9->setGeometry(QRect(10, 400, 211, 71));
+        groupBox_9->setGeometry(QRect(110, 330, 111, 91));
         label_8 = new QLabel(groupBox_9);
         label_8->setObjectName(QStringLiteral("label_8"));
-        label_8->setGeometry(QRect(140, 20, 61, 16));
-        WarpToExitNo = new QSpinBox(groupBox_9);
-        WarpToExitNo->setObjectName(QStringLiteral("WarpToExitNo"));
-        WarpToExitNo->setGeometry(QRect(140, 40, 61, 22));
-        lineEdit = new QLineEdit(groupBox_9);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        lineEdit->setGeometry(QRect(10, 40, 101, 20));
+        label_8->setGeometry(QRect(10, 60, 51, 21));
+        WarpToExitNu = new QSpinBox(groupBox_9);
+        WarpToExitNu->setObjectName(QStringLiteral("WarpToExitNu"));
+        WarpToExitNu->setGeometry(QRect(60, 60, 41, 22));
+        WarpLevelFile = new QLineEdit(groupBox_9);
+        WarpLevelFile->setObjectName(QStringLiteral("WarpLevelFile"));
+        WarpLevelFile->setGeometry(QRect(10, 40, 71, 20));
         label_11 = new QLabel(groupBox_9);
         label_11->setObjectName(QStringLiteral("label_11"));
-        label_11->setGeometry(QRect(10, 20, 111, 16));
-        pushButton = new QPushButton(groupBox_9);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(110, 40, 21, 20));
+        label_11->setGeometry(QRect(10, 20, 91, 16));
+        WarpBrowseLevels = new QPushButton(groupBox_9);
+        WarpBrowseLevels->setObjectName(QStringLiteral("WarpBrowseLevels"));
+        WarpBrowseLevels->setGeometry(QRect(80, 40, 21, 20));
         groupBox_10 = new QGroupBox(groupBox);
         groupBox_10->setObjectName(QStringLiteral("groupBox_10"));
-        groupBox_10->setGeometry(QRect(10, 20, 211, 121));
-        comboBox_2 = new QComboBox(groupBox_10);
-        comboBox_2->setObjectName(QStringLiteral("comboBox_2"));
-        comboBox_2->setGeometry(QRect(10, 90, 101, 22));
-        comboBox = new QComboBox(groupBox_10);
-        comboBox->setObjectName(QStringLiteral("comboBox"));
-        comboBox->setGeometry(QRect(10, 40, 101, 22));
+        groupBox_10->setGeometry(QRect(10, 40, 211, 121));
+        WarpType = new QComboBox(groupBox_10);
+        WarpType->setObjectName(QStringLiteral("WarpType"));
+        WarpType->setGeometry(QRect(10, 90, 101, 22));
         label_3 = new QLabel(groupBox_10);
         label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(10, 70, 101, 16));
-        label = new QLabel(groupBox_10);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(10, 20, 101, 16));
         WarpNoYoshi = new QCheckBox(groupBox_10);
         WarpNoYoshi->setObjectName(QStringLiteral("WarpNoYoshi"));
         WarpNoYoshi->setGeometry(QRect(120, 10, 81, 17));
@@ -1112,20 +1130,44 @@ public:
         WarpNeedAStars = new QSpinBox(groupBox_10);
         WarpNeedAStars->setObjectName(QStringLiteral("WarpNeedAStars"));
         WarpNeedAStars->setGeometry(QRect(130, 90, 61, 22));
-        checkBox_2 = new QCheckBox(groupBox_10);
-        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
-        checkBox_2->setGeometry(QRect(120, 50, 81, 17));
-        checkBox = new QCheckBox(groupBox_10);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
-        checkBox->setGeometry(QRect(120, 30, 81, 17));
+        WarpLock = new QCheckBox(groupBox_10);
+        WarpLock->setObjectName(QStringLiteral("WarpLock"));
+        WarpLock->setGeometry(QRect(120, 50, 81, 17));
+        WarpAllowNPC = new QCheckBox(groupBox_10);
+        WarpAllowNPC->setObjectName(QStringLiteral("WarpAllowNPC"));
+        WarpAllowNPC->setGeometry(QRect(120, 30, 81, 17));
+        WarpSetEntrance = new QPushButton(groupBox_10);
+        WarpSetEntrance->setObjectName(QStringLiteral("WarpSetEntrance"));
+        WarpSetEntrance->setGeometry(QRect(30, 20, 81, 21));
+        WarpSetExit = new QPushButton(groupBox_10);
+        WarpSetExit->setObjectName(QStringLiteral("WarpSetExit"));
+        WarpSetExit->setGeometry(QRect(30, 40, 81, 21));
+        WarpEntrancePlaced = new QCheckBox(groupBox_10);
+        WarpEntrancePlaced->setObjectName(QStringLiteral("WarpEntrancePlaced"));
+        WarpEntrancePlaced->setEnabled(false);
+        WarpEntrancePlaced->setGeometry(QRect(10, 20, 20, 20));
+        WarpExitPlaced = new QCheckBox(groupBox_10);
+        WarpExitPlaced->setObjectName(QStringLiteral("WarpExitPlaced"));
+        WarpExitPlaced->setEnabled(false);
+        WarpExitPlaced->setGeometry(QRect(10, 40, 20, 20));
+        WarpList = new QComboBox(groupBox);
+        WarpList->setObjectName(QStringLiteral("WarpList"));
+        WarpList->setGeometry(QRect(10, 20, 141, 21));
+        WarpAdd = new QPushButton(groupBox);
+        WarpAdd->setObjectName(QStringLiteral("WarpAdd"));
+        WarpAdd->setGeometry(QRect(160, 20, 31, 21));
+        WarpRemove = new QPushButton(groupBox);
+        WarpRemove->setObjectName(QStringLiteral("WarpRemove"));
+        WarpRemove->setGeometry(QRect(190, 20, 31, 21));
         pushButton_4 = new QPushButton(groupBox);
         pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
-        pushButton_4->setGeometry(QRect(150, 330, 61, 23));
+        pushButton_4->setGeometry(QRect(10, 400, 16, 16));
         DoorsToolbox->setWidget(dockWidgetContents);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), DoorsToolbox);
         QWidget::setTabOrder(BTNWarpsAndDoors, BTNWaterRanges);
 
         menuBar->addAction(menu->menuAction());
+        menuBar->addAction(menuEdit->menuAction());
         menuBar->addAction(menuLevel->menuAction());
         menuBar->addAction(menuWorld->menuAction());
         menuBar->addAction(menuView->menuAction());
@@ -1189,9 +1231,15 @@ public:
         menuDisable_characters->addAction(actionWLDNoChar5);
         menuView->addAction(actionLVLToolBox);
         menuView->addAction(actionSection_Settings);
+        menuView->addAction(actionWarpsAndDoors);
+        menuView->addSeparator();
         menuView->addAction(actionWLDToolBox);
+        menuView->addSeparator();
+        menuView->addAction(actionAnimation);
         menuTools->addAction(actionLoad_configs);
         menuTools->addAction(actionReload);
+        menuEdit->addAction(actionUndo);
+        menuEdit->addAction(actionRedo);
         mainToolBar->addAction(OpenFile);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_as);
@@ -1450,6 +1498,13 @@ public:
         actionHandScroll->setToolTip(QApplication::translate("MainWindow", "Scrolling (D)", 0));
 #endif // QT_NO_TOOLTIP
         actionHandScroll->setShortcut(QApplication::translate("MainWindow", "D", 0));
+        actionUndo->setText(QApplication::translate("MainWindow", "Undo", 0));
+        actionRedo->setText(QApplication::translate("MainWindow", "Redo", 0));
+        actionWarpsAndDoors->setText(QApplication::translate("MainWindow", "Warps and doors", 0));
+        actionAnimation->setText(QApplication::translate("MainWindow", "Animation", 0));
+#ifndef QT_NO_TOOLTIP
+        actionAnimation->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Enable animation on animated objects</p><p><span style=\" font-style:italic;\">If map have too many objects, we recommends diable this option</span></p></body></html>", 0));
+#endif // QT_NO_TOOLTIP
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "?", 0));
@@ -1460,6 +1515,7 @@ public:
         menuView->setTitle(QApplication::translate("MainWindow", "View", 0));
         menuWindow->setTitle(QApplication::translate("MainWindow", "Window", 0));
         menuTools->setTitle(QApplication::translate("MainWindow", "Tools", 0));
+        menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0));
         mainToolBar->setWindowTitle(QApplication::translate("MainWindow", "General", 0));
         LevelToolBox->setWindowTitle(QApplication::translate("MainWindow", "Level Tool box", 0));
 #ifndef QT_NO_TOOLTIP
@@ -1524,9 +1580,9 @@ public:
         ResizeSection->setText(QApplication::translate("MainWindow", "Resize section", 0));
         LevelObjectToolbar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Warps and doors", 0));
-        groupBox_4->setTitle(QApplication::translate("MainWindow", "Level", 0));
-        WarpLevelEntrance->setText(QApplication::translate("MainWindow", "Level entrance", 0));
-        WarpLevelExit->setText(QApplication::translate("MainWindow", "Level exit", 0));
+        groupBox_4->setTitle(QApplication::translate("MainWindow", "Level door", 0));
+        WarpLevelEntrance->setText(QApplication::translate("MainWindow", "Entrance", 0));
+        WarpLevelExit->setText(QApplication::translate("MainWindow", "Exit", 0));
         groupBox_7->setTitle(QApplication::translate("MainWindow", "Direction", 0));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Entrance", 0));
 #ifndef QT_NO_TOOLTIP
@@ -1568,29 +1624,29 @@ public:
         WarpGetXYFromWorldMap->setText(QApplication::translate("MainWindow", "Set", 0));
         label_6->setText(QApplication::translate("MainWindow", "Y:", 0));
         label_5->setText(QApplication::translate("MainWindow", "X:", 0));
-        groupBox_9->setTitle(QApplication::translate("MainWindow", "Warp to level", 0));
+        groupBox_9->setTitle(QApplication::translate("MainWindow", "Warp to other level", 0));
         label_8->setText(QApplication::translate("MainWindow", "Warp to", 0));
         label_11->setText(QApplication::translate("MainWindow", "Level file", 0));
-        pushButton->setText(QApplication::translate("MainWindow", "...", 0));
+        WarpBrowseLevels->setText(QApplication::translate("MainWindow", "...", 0));
         groupBox_10->setTitle(QApplication::translate("MainWindow", "Main", 0));
-        comboBox_2->clear();
-        comboBox_2->insertItems(0, QStringList()
+        WarpType->clear();
+        WarpType->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "0 - Instant", 0)
          << QApplication::translate("MainWindow", "1 - Pipe", 0)
          << QApplication::translate("MainWindow", "2 - Door", 0)
         );
-        comboBox->clear();
-        comboBox->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Entrance", 0)
-         << QApplication::translate("MainWindow", "Exit", 0)
-        );
         label_3->setText(QApplication::translate("MainWindow", "Warp type", 0));
-        label->setText(QApplication::translate("MainWindow", "Placement", 0));
         WarpNoYoshi->setText(QApplication::translate("MainWindow", "No Yoshi", 0));
         label_4->setText(QApplication::translate("MainWindow", "Need stars", 0));
-        checkBox_2->setText(QApplication::translate("MainWindow", "Locked", 0));
-        checkBox->setText(QApplication::translate("MainWindow", "Allow NPC", 0));
-        pushButton_4->setText(QApplication::translate("MainWindow", "[some test]", 0));
+        WarpLock->setText(QApplication::translate("MainWindow", "Locked", 0));
+        WarpAllowNPC->setText(QApplication::translate("MainWindow", "Allow NPC", 0));
+        WarpSetEntrance->setText(QApplication::translate("MainWindow", "Set Entrance", 0));
+        WarpSetExit->setText(QApplication::translate("MainWindow", "Set Exit", 0));
+        WarpEntrancePlaced->setText(QString());
+        WarpExitPlaced->setText(QString());
+        WarpAdd->setText(QApplication::translate("MainWindow", "+", 0));
+        WarpRemove->setText(QApplication::translate("MainWindow", "-", 0));
+        pushButton_4->setText(QString());
     } // retranslateUi
 
 };

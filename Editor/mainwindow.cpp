@@ -106,6 +106,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     LevelToolBoxVis = settings.value("level-tb-visible", "false").toBool();
     WorldToolBoxVis = settings.value("world-tb-visible", "false").toBool();
     SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
+    AnimationEnabled = settings.value("animation", "true").toBool();
     //if(settings.value("maximased", "false")=="true") showMaximized();
     //"lvl-section-view", dockWidgetArea(ui->LevelSectionSettings)
     //dockWidgetArea();
@@ -129,6 +130,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->LevelObjectToolbar->setVisible(0);
 
     ui->actionLVLToolBox->setVisible(0);
+    ui->actionWarpsAndDoors->setVisible(0);
     ui->actionSection_Settings->setVisible(0);
     ui->actionWLDToolBox->setVisible(0);
     ui->actionGridEn->setChecked(1);
@@ -183,7 +185,10 @@ void MainWindow::updateMenus()
     ui->LevelSectionSettings->setVisible( (WinType==1) && (SectionToolBoxVis));
 
     ui->actionLVLToolBox->setVisible( (WinType==1) );
+    ui->actionWarpsAndDoors->setVisible( (WinType==1) );
+
     ui->menuLevel->setEnabled( (WinType==1) );
+
     ui->actionSection_Settings->setVisible( (WinType==1) );
     ui->actionLevelProp->setEnabled( (WinType==1) );
     ui->actionLevNoBack->setEnabled( (WinType==1) );
@@ -241,6 +246,8 @@ void MainWindow::updateMenus()
         ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
         ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
         ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
+        AnimationEnabled = activeLvlEditWin()->scene->animationEnabled;
+        ui->actionAnimation->setChecked( AnimationEnabled );
     }
 
     /*
@@ -370,6 +377,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
     settings.setValue("autoPlayMusic", autoPlayMusic);
+    settings.setValue("animation", AnimationEnabled);
     settings.endGroup();
     event->accept();
     }
@@ -1454,5 +1462,20 @@ void MainWindow::on_actionLevUnderW_triggered(bool checked)
     {
         ui->LVLPropsUnderWater->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].underwater = checked;
+    }
+}
+
+void MainWindow::on_actionAnimation_triggered(bool checked)
+{
+    AnimationEnabled = checked;
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->animationEnabled = AnimationEnabled;
+        if(AnimationEnabled)
+        {
+            activeLvlEditWin()->scene->startBlockAnimation();
+        }
+        else
+            activeLvlEditWin()->scene->stopAnimation();
     }
 }

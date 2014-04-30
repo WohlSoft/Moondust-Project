@@ -316,6 +316,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 
         blocks.array_id = FileData.blocks_array_id;
         FileData.blocks_array_id++;
+        blocks.index = FileData.blocks.size();//Apply element index
     FileData.blocks.push_back(blocks); //AddBlock into array
 
     str_count++;line = in.readLine();
@@ -351,6 +352,9 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 
         bgodata.array_id = FileData.bgo_array_id;
         FileData.bgo_array_id++;
+
+        bgodata.index = FileData.bgo.size();//Apply element index
+
     FileData.bgo.push_back(bgodata); // Add Background object into array
 
     str_count++;line = in.readLine();

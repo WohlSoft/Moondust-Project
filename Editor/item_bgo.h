@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#ifndef ITEM_BLOCK_H
-#define ITEM_BLOCK_H
+#ifndef ITEM_BGO_H
+#define ITEM_BGO_H
 
 #include <QGraphicsItem>
 #include <QGraphicsPixmapItem>
@@ -34,15 +34,15 @@
 #include "lvlscene.h"
 #include "lvl_filedata.h"
 
-class ItemBlock : public QObject, public QGraphicsPixmapItem
+class ItemBGO : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    ItemBlock(QGraphicsPixmapItem *parent=0);
-    ~ItemBlock();
+    ItemBGO(QGraphicsPixmapItem *parent=0);
+    ~ItemBGO();
 
     void setMainPixmap(const QPixmap &pixmap);
-    void setBlockData(LevelBlock inD, bool is_sz);
+    void setBGOData(LevelBGO inD);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
@@ -54,19 +54,21 @@ public:
 //    QGraphicsPixmapItem * image;
 
     //////Animation////////
-    void setAnimation(int frames, int framespeed, int algorithm);
+    void setAnimation(int frames, int framespeed);
     void AnimationStart();
     void AnimationStop();
     void draw();
-    void setSlippery(bool slip);
-    void setInvisible(bool inv);
 
     void arrayApply();
     void removeFromArray();
 
     QPoint fPos() const;
     void setFrame(int);
-    LevelBlock blockData;
+    LevelBGO bgoData;
+
+    int gridSize;
+    int gridOffsetX;
+    int gridOffsetY;
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
@@ -78,9 +80,6 @@ private slots:
 private:
     bool animated;
     int frameSpeed;
-
-    QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
-    bool sizable;
     LvlScene * scene;
     int frameCurrent;
     QTimer * timer;
@@ -97,4 +96,4 @@ private:
 
 };
 
-#endif // ITEM_BLOCK_H
+#endif // ITEM_BGO_H

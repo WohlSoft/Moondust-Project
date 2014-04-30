@@ -73,7 +73,7 @@ struct obj_block{
     image="block-1.gif"
     name="Wood"
     type="block"	; Cathegory for sort
-    sizeble=0	; can be resise
+    sizable=0	; can be resise
     danger=0	; 0 - none, 1 left, -1 right, 2 top, -2 bottom,
             ; 3 left-right, -3 top-bottom, 4 - all sides
     collision=1	; 1 - collision all sides, 2 collision only top side, 0 - no collision
@@ -104,7 +104,7 @@ struct obj_block{
         QBitmap mask;
     QString name;
     QString type;
-    bool sizeble;
+    bool sizable;
     int danger;
     int collision;
     bool slopeslide;
@@ -185,6 +185,19 @@ struct obj_music
     QString file;
 };
 
+//////////////Indexing objects////////////////
+struct blocksIndexes
+{
+    unsigned long i; //Target array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+
+struct bgoIndexes
+{
+    unsigned long i; //Target array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+
 class dataconfigs
 {
 public:
@@ -201,6 +214,12 @@ public:
     QVector<obj_music > main_music_wld;
     QVector<obj_music > main_music_spc;
 
+    //Indexes
+    QVector<blocksIndexes > index_blocks;
+    QVector<bgoIndexes > index_bgo;
+
 };
+
+
 
 #endif // DATACONFIGS_H
