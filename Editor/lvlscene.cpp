@@ -32,7 +32,9 @@
 #include "lvl_filedata.h"
 #include "dataconfigs.h"
 #include "logger.h"
+
 #include "item_block.h"
+#include "item_bgo.h"
 
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
@@ -176,7 +178,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
-            int gridSize=32, offsetX=0, offsetY=0, gridX, gridY, i=0;
+            int gridSize=32, offsetX=0, offsetY=0, gridX, gridY;//, i=0;
             QPoint sourcePos;
 
             cursor->hide();
@@ -208,36 +210,29 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     {
                         gridSize = 1;
                     }
-
+                    else
                     if( ObjType == "BGO")
                     {
-                        foreach(obj_bgo findGrid, pConfigs->main_bgo)
-                        {
-                            if(findGrid.id == (unsigned)(*it)->data(1).toInt() )
-                            {
-                                gridSize = findGrid.grid;
-                                offsetX = findGrid.offsetX;
-                                offsetY = findGrid.offsetY;
-                                break;
-                            }
-                        }
-                    }
+                        gridSize = ((ItemBGO *)(*it))->gridSize;
+                        offsetX = ((ItemBGO *)(*it))->gridOffsetX;
+                        offsetY = ((ItemBGO *)(*it))->gridOffsetY;
+                    }else
                     if( ObjType == "Water")
                     {
                         gridSize = 16;
-                    }
+                    }else
                     if( ObjType == "Door_enter")
                         gridSize = 16 ;
-
+                    else
                     if( ObjType == "Door_exit")
                         gridSize = 16 ;
-
+                    else
                     if( ObjType == "player1")
                     {
                         offsetY = 2;
                         gridSize = 2 ;
                     }
-
+                    else
                     if( ObjType == "player2")
                     {
                         offsetY = 2;
@@ -308,13 +303,15 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     else
                     if( ObjType == "BGO")
                     {
+                        sourcePos = QPoint(  ((ItemBGO *)(*it))->bgoData.x, ((ItemBGO *)(*it))->bgoData.y);
+                        /*
                         foreach (LevelBGO findInArr, LvlData->bgo)
                         {
                             if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
                             {
                                 sourcePos = QPoint(findInArr.x, findInArr.y); break;
                             }
-                        }
+                        }*/
                     }
 
                     //Check position
@@ -346,6 +343,15 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             } else
                             if( ObjType == "BGO")
                             {
+                                WriteToLog(QtDebugMsg, QString(" >>BGO Collision passed"));
+                                ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
+                                ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
+                                WriteToLog(QtDebugMsg, QString(" >>Data applayed"));
+                                ((ItemBGO *)(*it))->arrayApply();
+                                WriteToLog(QtDebugMsg, QString(" >>Array applayed"));
+                                LvlData->modyfied = true;
+
+                                /*
                                 for (i=0;i<LvlData->bgo.size();i++)
                                 {
                                     if(LvlData->bgo[i].array_id==(unsigned)(*it)->data(2).toInt())
@@ -356,7 +362,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                         LvlData->modyfied = true;
                                         break;
                                     }
-                                }
+                                }*/
                             }
                         }
                 }
@@ -1088,7 +1094,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     bool isUser=false;
     int j;
 
-    QGraphicsItem /*box,*/ *npc;
+    QGraphicsItem *npc;
     QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
 
@@ -1147,16 +1153,9 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
         tImg = uBlockImg;
     }
 
-    //box = addPixmap(QPixmap(QSize(0,0)));
-
-    //ItemBlock *BlockImage;
-
-
     BlockImage->setBlockData(block, configs.main_block[j].sizeble);
     BlockImage->setMainPixmap(tImg);
     addItem(BlockImage);
-    //BlockImage->setParentItem(box);
-    //BlockImage->set
 
     BlockImage->setContextMenu(blockMenu);
 
@@ -1164,13 +1163,6 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     {
         BlockImage->setAnimation(configs.main_block[j].frames, configs.main_block[j].framespeed, configs.main_block[j].algorithm);
         BlockImage->setData(4, "animated");
-
-//        if(configs.main_block[j].algorithm==1)
-//            tImg = tImg.copy(0, ((int)round(tImg.height()/configs.main_block[j].frames))*4,
-//                       tImg.width(), (int)round(tImg.height()/configs.main_block[j].frames));
-
-//        else
-            //tImg=tImg.copy(0, 0, tImg.width(), (int)round(tImg.height()/configs.main_block[j].frames));
     }
 
     includedNPC = new QGraphicsItemGroup(BlockImage);
@@ -1202,7 +1194,6 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
             BlockImage->setZValue(blockZ); // applay standart block Z
     }
 
-
     BlockImage->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_block));
     BlockImage->setFlag(QGraphicsItem::ItemIsMovable, (!lock_block));
 
@@ -1214,7 +1205,6 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     if(configs.main_block[j].sizeble)
     {
         BlockImage->setData(3, "sizeble" );
-        //GrpBlocksSz->addToGroup(box);
     }
     else
         BlockImage->setData(3, "standart" );
@@ -1230,7 +1220,7 @@ void LvlScene::placeBGO(LevelBGO &bgo)
     int j;
     bool noimage=true, found=false;
 
-    QGraphicsItem *	box;
+    ItemBGO *BGOItem = new ItemBGO;
     bool isUser=false;
 
     noimage=true;
@@ -1287,30 +1277,41 @@ void LvlScene::placeBGO(LevelBGO &bgo)
         tImg=uBgoImg;
     }
 
+    BGOItem->setBGOData(bgo);
+        BGOItem->gridSize = pConfigs->main_bgo[j].grid;
+        BGOItem->gridOffsetX = pConfigs->main_bgo[j].offsetX;
+        BGOItem->gridOffsetY = pConfigs->main_bgo[j].offsetY;
+    BGOItem->setMainPixmap(tImg);
+    BGOItem->setContextMenu(bgoMenu);
+    addItem(BGOItem);
+
+    BGOItem->setPos(bgo.x, bgo.y);
+
     if((!noimage) && (pConfigs->main_bgo[j].animated))
     {
-        tImg=tImg.copy(0, 0, tImg.width(), (int)round(tImg.height()/pConfigs->main_bgo[j].frames));
+        //tImg=tImg.copy(0, 0, tImg.width(), (int)round(tImg.height()/pConfigs->main_bgo[j].frames));
+        BGOItem->setAnimation(pConfigs->main_bgo[j].frames, pConfigs->main_bgo[j].framespeed);
+        BGOItem->setData(4, "animated");
     }
 
-    box = addPixmap(QPixmap(tImg));
-    box->setPos(bgo.x, bgo.y);
+    BGOItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_bgo));
+    BGOItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_bgo));
 
-    box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_bgo));
-    box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_bgo));
+    BGOItem->setData(0, "BGO");
+    BGOItem->setData(1, QString::number(bgo.id) );
+    BGOItem->setData(2, QString::number(bgo.array_id) );
 
-    box->setData(0, "BGO");
-    box->setData(1, QString::number(bgo.id) );
-    box->setData(2, QString::number(bgo.array_id) );
-
-    box->setData(9, QString::number(tImg.width()) ); //width
-    box->setData(10, QString::number(tImg.height()) ); //height
+    BGOItem->setData(9, QString::number(tImg.width()) ); //width
+    BGOItem->setData(10, QString::number(tImg.height()) ); //height
 
     if(pConfigs->main_bgo[j].view!=0)
-        box->setZValue(bgoZf + pConfigs->main_bgo[j].zOffset);
+        BGOItem->setZValue(bgoZf + pConfigs->main_bgo[j].zOffset);
         //bgoback->addToGroup(box);
     else
-        box->setZValue(bgoZb + pConfigs->main_bgo[j].zOffset);
+        BGOItem->setZValue(bgoZb + pConfigs->main_bgo[j].zOffset);
         //bgofore->addToGroup(box);
+
+    BGOItem->setScenePoint(this);
 
 }
 
@@ -1655,6 +1656,12 @@ void LvlScene::startBlockAnimation()
         {
             tmp = (*it);
             ((ItemBlock *)tmp)->AnimationStart();
+        }
+        else
+        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemBGO *)tmp)->AnimationStart();
         }
     }
 
