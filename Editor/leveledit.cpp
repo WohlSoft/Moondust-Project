@@ -188,7 +188,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
-    LvlData. = false;
+    LvlData.modified = false;
 
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
