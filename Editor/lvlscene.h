@@ -108,6 +108,8 @@ public:
     bool IsMoved;
     bool haveSelected;
 
+    bool animationEnabled;
+
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);

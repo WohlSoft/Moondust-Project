@@ -51,7 +51,7 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         slipp->setChecked( blockData.slippery );
 
     QAction *resize = ItemMenu->addAction("Resize");
-        resize->setVisible( (this->data(3).toString()=="sizeble") );
+        resize->setVisible( (this->data(3).toString()=="sizable") );
 
     QAction *remove = ItemMenu->addAction("Remove");
 
@@ -105,15 +105,14 @@ void ItemBlock::arrayApply()
     if(found)
     { //directlry
         scene->LvlData->blocks[blockData.index] = blockData; //apply current blockdata
-        WriteToLog(QtDebugMsg, "Applay block data by index");
     }
     else
-    foreach(LevelBlock blocks, scene->LvlData->blocks)
+    for(int i=0; i<scene->LvlData->blocks.size(); i++)
     { //after find it into array
-        if(blocks.array_id == blockData.array_id)
+        if(scene->LvlData->blocks[i].array_id == blockData.array_id)
         {
-            blocks = blockData;
-            WriteToLog(QtDebugMsg, "Applay block data by touch all in array");
+            blockData.index = i;
+            scene->LvlData->blocks[i] = blockData;
             break;
         }
     }
@@ -121,6 +120,17 @@ void ItemBlock::arrayApply()
 
 void ItemBlock::removeFromArray()
 {
+    bool found=false;
+    if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
+    { //Check index
+        if(blockData.array_id == scene->LvlData->blocks[blockData.index].array_id)
+            found=true;
+    }
+    if(found)
+    { //directlry
+        scene->LvlData->blocks.remove(blockData.index);
+    }
+    else
     for(int i=0; i<scene->LvlData->blocks.size(); i++)
     {
         if(scene->LvlData->blocks[i].array_id == blockData.array_id)
@@ -201,14 +211,14 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 void ItemBlock::setMainPixmap(const QPixmap &pixmap)
 {
     mainImage = pixmap;
-    if(!sizeble)
+    if(!sizable)
         this->setPixmap(mainImage);
     else
     {
         frameWidth = blockData.w;
         frameSize = blockData.h;
         frameHeight = blockData.h;
-        currentImage = drawSizebleBlock(blockData.w, blockData.h, mainImage);
+        currentImage = drawSizableBlock(blockData.w, blockData.h, mainImage);
         this->setPixmap(currentImage);
     }
 }
@@ -216,13 +226,13 @@ void ItemBlock::setMainPixmap(const QPixmap &pixmap)
 void ItemBlock::setBlockData(LevelBlock inD, bool is_sz)
 {
     blockData = inD;
-    sizeble = is_sz;
+    sizable = is_sz;
 }
 
 
 QRectF ItemBlock::boundingRect() const
 {
-    if((!animated)&&(!sizeble))
+    if((!animated)&&(!sizable))
         return QRectF(0,0,mainImage.width(),mainImage.height());
     else
         return QRectF(0,0,frameWidth,frameSize);
@@ -337,20 +347,20 @@ void ItemBlock::nextFrame()
 
 
 
-//Sizeble Block formula
-QPixmap ItemBlock::drawSizebleBlock(int w, int h, QPixmap srcimg)
+//sizable Block formula
+QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
 {
     int x,y, i, j;
     int hc, wc;
     QPixmap img;
-    QPixmap * sizebleImage;
+    QPixmap * sizableImage;
     QPainter * szblock;
     x=32;
     y=32;
 
-    sizebleImage = new QPixmap(QSize(w, h));
-    sizebleImage->fill(Qt::transparent);
-    szblock = new QPainter(sizebleImage);
+    sizableImage = new QPixmap(QSize(w, h));
+    sizableImage->fill(Qt::transparent);
+    szblock = new QPainter(sizableImage);
 
     //L
     hc=0;
@@ -398,7 +408,7 @@ QPixmap ItemBlock::drawSizebleBlock(int w, int h, QPixmap srcimg)
         wc+=y;
     }
 
-    //Applay Sizeble formula
+    //Applay sizable formula
      //1
     szblock->drawPixmap(0,0,y,x, srcimg.copy(QRect(0,0,y,x)));
      //2
@@ -408,6 +418,6 @@ QPixmap ItemBlock::drawSizebleBlock(int w, int h, QPixmap srcimg)
      //4
     szblock->drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
 
-    img = QPixmap( * sizebleImage);
+    img = QPixmap( * sizableImage);
     return img;
 }

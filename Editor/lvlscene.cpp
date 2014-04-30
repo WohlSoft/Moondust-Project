@@ -50,6 +50,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     LvlData = &FileData; //Ad pointer to level data
     grid = true;
+    animationEnabled = true;
     EditingMode = 0;
     EraserEnabled = false;
     IsMoved = false;
@@ -71,7 +72,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     //setZ Indexes
     bgZ = -1000;
-    blockZs = -150; // Sizeble blocks
+    blockZs = -150; // sizable blocks
     bgoZb = -100; // backround BGO
     npcZb = -50; // standart NPC
 
@@ -413,13 +414,13 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
               {
                   if(item->data(0).toString()!=it->data(0).toString()) continue;
 
-                  if(item->data(3).toString()=="sizeble")
-                  {//Sizeble Block
-                      WriteToLog(QtDebugMsg, QString("Sizeble block") );
+                  if(item->data(3).toString()=="sizable")
+                  {//sizable Block
+                      WriteToLog(QtDebugMsg, QString("sizable block") );
                       //Change berween Z-Values
-                      if(it->data(3).toString()=="sizeble")
+                      if(it->data(3).toString()=="sizable")
                       {
-                          WriteToLog(QtDebugMsg, QString("Colliding with Sizeble Z: %1 %2")
+                          WriteToLog(QtDebugMsg, QString("Colliding with sizable Z: %1 %2")
                                      .arg(item->zValue()).arg(it->zValue()));
 
                           if( (item->scenePos().y() > it->scenePos().y()) &&
@@ -433,7 +434,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
                                // betweenZ+=0.0000000001;
                                 //item->setZValue(it->zValue() + 0.0000000001);
 
-                                WriteToLog(QtDebugMsg, QString("Sizeble block changed Z-") );
+                                WriteToLog(QtDebugMsg, QString("sizable block changed Z-") );
                               }
                           else
                           if( (item->scenePos().y() < it->scenePos().y() ) &&
@@ -446,11 +447,11 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
                                 if(item->zValue() == it->zValue()) item->setZValue(item->zValue() - 0.00000000001);
                                // item->setZValue(it->zValue() + 0.0000000001);
 
-                                WriteToLog(QtDebugMsg, QString("Sizeble block changed Z+") );
+                                WriteToLog(QtDebugMsg, QString("sizable block changed Z+") );
                               }
                       }
                       continue;
-                  }//Sizeble Block
+                  }//sizable Block
 
                   if(item->data(0).toString()=="BGO")
                     if(item->data(1).toInt()!=it->data(1).toInt()) continue;
@@ -464,7 +465,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
                      if( leftA >= rightB )
                      { continue; }
 
-                     if(it->data(3).toString()!="sizeble")
+                     if(it->data(3).toString()!="sizable")
                         return it;
               }
 
@@ -1153,7 +1154,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
         tImg = uBlockImg;
     }
 
-    BlockImage->setBlockData(block, configs.main_block[j].sizeble);
+    BlockImage->setBlockData(block, configs.main_block[j].sizable);
     BlockImage->setMainPixmap(tImg);
     addItem(BlockImage);
 
@@ -1181,9 +1182,9 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
         includedNPC->addToGroup(npc);
     }
 
-    if(configs.main_block[j].sizeble)
+    if(configs.main_block[j].sizable)
     {
-        BlockImage->setZValue(blockZs+sbZ); // applay Sizeble block Z
+        BlockImage->setZValue(blockZs+sbZ); // applay sizable block Z
         sbZ += 0.0000000001;
     }
     else
@@ -1202,9 +1203,9 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     BlockImage->setData(2, QString::number(block.array_id) );
 
 
-    if(configs.main_block[j].sizeble)
+    if(configs.main_block[j].sizable)
     {
-        BlockImage->setData(3, "sizeble" );
+        BlockImage->setData(3, "sizable" );
     }
     else
         BlockImage->setData(3, "standart" );

@@ -372,7 +372,7 @@ bool dataconfigs::loadconfigs(bool nobar)
                 sblock.mask_n = "";
             }
 
-            sblock.sizeble = blockset.value("sizeble", "0").toBool();
+            sblock.sizable = blockset.value("sizable", "0").toBool();
             sblock.danger = blockset.value("danger", "0").toInt();
             sblock.collision = blockset.value("collision", "1").toInt();
             sblock.slopeslide = blockset.value("slope-slide", "0").toBool();

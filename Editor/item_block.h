@@ -79,8 +79,8 @@ private:
     bool animated;
     int frameSpeed;
 
-    QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
-    bool sizeble;
+    QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
+    bool sizable;
     LvlScene * scene;
     int frameCurrent;
     QTimer * timer;

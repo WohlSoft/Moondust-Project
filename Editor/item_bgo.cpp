@@ -62,13 +62,11 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 void ItemBGO::arrayApply()
 {
     bool found=false;
-    WriteToLog(QtDebugMsg, QString("BGO Index is %1").arg(bgoData.index));
     if(bgoData.index < (unsigned int)scene->LvlData->bgo.size())
     { //Check index
         if(bgoData.array_id == scene->LvlData->bgo[bgoData.index].array_id)
         {
             found=true;
-            WriteToLog(QtDebugMsg, QString("BGO Index is found"));
         }
     }
 
@@ -76,15 +74,14 @@ void ItemBGO::arrayApply()
     if(found)
     { //directlry
         scene->LvlData->bgo[bgoData.index] = bgoData; //apply current bgoData
-        WriteToLog(QtDebugMsg, "Applay BGO data by index");
     }
     else
-    foreach(LevelBGO bgos, scene->LvlData->bgo)
+    for(int i=0; i<scene->LvlData->bgo.size(); i++)
     { //after find it into array
-        if(bgos.array_id == bgoData.array_id)
+        if(scene->LvlData->bgo[i].array_id == bgoData.array_id)
         {
-            bgos = bgoData;
-            WriteToLog(QtDebugMsg, "Applay BGO data by touch all in array");
+            bgoData.index = i;
+            scene->LvlData->bgo[i] = bgoData;
             break;
         }
     }
@@ -92,6 +89,20 @@ void ItemBGO::arrayApply()
 
 void ItemBGO::removeFromArray()
 {
+    bool found=false;
+    if(bgoData.index < (unsigned int)scene->LvlData->bgo.size())
+    { //Check index
+        if(bgoData.array_id == scene->LvlData->bgo[bgoData.index].array_id)
+        {
+            found=true;
+        }
+    }
+
+    if(found)
+    { //directlry
+        scene->LvlData->bgo.remove(bgoData.index);
+    }
+    else
     for(int i=0; i<scene->LvlData->bgo.size(); i++)
     {
         if(scene->LvlData->bgo[i].array_id == bgoData.array_id)
