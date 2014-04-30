@@ -450,7 +450,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              str_count++;line = in.readLine();
              if(!boolwords.exactMatch(line)) //Friedly NPC
                  goto badfile;
-             else npcdata.fridly = ((line=="#TRUE#")?true:false);
+             else npcdata.friendly = ((line=="#TRUE#")?true:false);
 
              str_count++;line = in.readLine();
              if(!boolwords.exactMatch(line)) //Don't move NPC
@@ -494,7 +494,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             npcdata.generator_direct = -1;
             npcdata.generator_type = -1;
             npcdata.msg = "";
-            npcdata.fridly=false;
+            npcdata.friendly=false;
             npcdata.nomove=false;
             npcdata.legacyboss=false;
             npcdata.layer="Default";
@@ -573,7 +573,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(!isint.exactMatch(line)) //Normal entrance or Warp to other door
                 goto badfile;
-            else doors.waprto= line.toInt();
+            else doors.warpto= line.toInt();
 
             str_count++;line = in.readLine();
             if(!boolwords.exactMatch(line)) //Level Entrance (can not enter)
@@ -598,7 +598,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         else
         {
             doors.lname = "";
-            doors.waprto = 0;
+            doors.warpto = 0;
             doors.lvl_i = false;
             doors.lvl_o = false;
             doors.world_x = -1;
@@ -828,7 +828,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!isint.exactMatch(line)) //Start trigger event after x [sec*10]. Etc. 153,2 sec
                     goto badfile;
-                else events.triiger_timer = line.toInt();
+                else events.trigger_timer = line.toInt();
 
                 str_count++;line = in.readLine();
                 if(!boolwords.exactMatch(line)) //No Smoke
@@ -888,7 +888,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             else
             {
                 events.trigger= "";
-                events.triiger_timer=0;
+                events.trigger_timer=0;
                 events.nosmoke = false;
                 events.altjump=false;
                 events.altrun=false;
@@ -948,13 +948,13 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!issint.exactMatch(line)) //Scroll section x, (in file value is x-1)
                     goto badfile;
-                else events.scrool_section = line.toInt();
+                else events.scroll_section = line.toInt();
             }
             else
             {
                 events.move_camera_x = 0;
                 events.move_camera_y = 0;
-                events.scrool_section = 0;
+                events.scroll_section = 0;
             }
 
             events.array_id = FileData.events_array_id;
