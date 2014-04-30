@@ -188,7 +188,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
-    LvlData.modyfied = false;
+    LvlData. = false;
 
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
@@ -212,9 +212,9 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
         QMessageBox::warning(this, tr("Configurations not loaded"),
                              tr("Cannot open level file %1:\nbecause object configurations not loaded\n."
-                                "Please, check the config/SMBX dir for exists the *.INI files with objects settings")
+                                "Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.")
                              .arg(fileName));
-        LvlData.modyfied = false;
+        LvlData.modified = false;
         return false;
     }
 
@@ -241,7 +241,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     if(! DrawObjects(progress, configs) )
     {
-        LvlData.modyfied = false;
+        LvlData.modified = false;
         this->close();
         return false;
     }
@@ -259,7 +259,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
-    LvlData.modyfied = false;
+    LvlData.modified = false;
 
     return true;
 }
@@ -406,7 +406,7 @@ bool leveledit::saveFile(const QString &fileName)
     */
 
     QMessageBox::information(this, tr("Dummy"),
-                         tr("File %1 will not be save, saving function in this version of app was not released.")
+                         tr("File %1 will not be saved, saving levels is not implemented in this version.")
                          .arg(fileName));
 
     return true;
@@ -442,12 +442,12 @@ void leveledit::focusInEvent( QFocusEvent * focusInEvent)
 
 void leveledit::documentWasModified()
 {
-    LvlData.modyfied = true;
+    LvlData.modified = true;
 }
 
 bool leveledit::maybeSave()
 {
-    if (LvlData.modyfied) {
+    if (LvlData.modified) {
     QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
                      tr("'%1' has been modified.\n"
