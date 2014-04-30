@@ -199,7 +199,11 @@
     </property>
     <addaction name="actionLVLToolBox"/>
     <addaction name="actionSection_Settings"/>
+    <addaction name="actionWarpsAndDoors"/>
+    <addaction name="separator"/>
     <addaction name="actionWLDToolBox"/>
+    <addaction name="separator"/>
+    <addaction name="actionAnimation"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -213,7 +217,15 @@
     <addaction name="actionLoad_configs"/>
     <addaction name="actionReload"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuLevel"/>
    <addaction name="menuWorld"/>
    <addaction name="menuView"/>
@@ -384,8 +396,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -411,8 +423,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -438,8 +450,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -616,8 +628,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>73</height>
+        <width>273</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -677,8 +689,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
      </widget>
@@ -701,8 +713,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
      </widget>
@@ -1136,13 +1148,13 @@
    <property name="minimumSize">
     <size>
      <width>230</width>
-     <height>508</height>
+     <height>460</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>300</width>
-     <height>508</height>
+     <height>460</height>
     </size>
    </property>
    <property name="floating">
@@ -1161,7 +1173,7 @@
        <x>0</x>
        <y>0</y>
        <width>231</width>
-       <height>482</height>
+       <height>431</height>
       </rect>
      </property>
      <property name="autoFillBackground">
@@ -1181,24 +1193,24 @@
        <rect>
         <x>10</x>
         <y>330</y>
-        <width>111</width>
+        <width>91</width>
         <height>61</height>
        </rect>
       </property>
       <property name="title">
-       <string>Level</string>
+       <string>Level door</string>
       </property>
       <widget class="QCheckBox" name="WarpLevelEntrance">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>40</y>
-         <width>91</width>
+         <width>71</width>
          <height>17</height>
         </rect>
        </property>
        <property name="text">
-        <string>Level entrance</string>
+        <string>Entrance</string>
        </property>
       </widget>
       <widget class="QCheckBox" name="WarpLevelExit">
@@ -1206,12 +1218,12 @@
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>91</width>
+         <width>71</width>
          <height>17</height>
         </rect>
        </property>
        <property name="text">
-        <string>Level exit</string>
+        <string>Exit</string>
        </property>
       </widget>
      </widget>
@@ -1219,7 +1231,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>150</y>
+        <y>160</y>
         <width>211</width>
         <height>121</height>
        </rect>
@@ -1258,7 +1270,7 @@
          <string>Left</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
        <widget class="QRadioButton" name="Entr_Right">
@@ -1301,6 +1313,9 @@
         </property>
         <property name="toolTip">
          <string>Down</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QLabel" name="label_2">
@@ -1349,7 +1364,7 @@ p, li { white-space: pre-wrap; }
          <string>Left</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
        <widget class="QRadioButton" name="Exit_Right">
@@ -1378,7 +1393,7 @@ p, li { white-space: pre-wrap; }
          <string>Up</string>
         </property>
         <property name="checked">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QRadioButton" name="Exit_Down">
@@ -1488,44 +1503,44 @@ p, li { white-space: pre-wrap; }
      <widget class="QGroupBox" name="groupBox_9">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>400</y>
-        <width>211</width>
-        <height>71</height>
+        <x>110</x>
+        <y>330</y>
+        <width>111</width>
+        <height>91</height>
        </rect>
       </property>
       <property name="title">
-       <string>Warp to level</string>
+       <string>Warp to other level</string>
       </property>
       <widget class="QLabel" name="label_8">
        <property name="geometry">
         <rect>
-         <x>140</x>
-         <y>20</y>
-         <width>61</width>
-         <height>16</height>
+         <x>10</x>
+         <y>60</y>
+         <width>51</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
         <string>Warp to</string>
        </property>
       </widget>
-      <widget class="QSpinBox" name="WarpToExitNo">
+      <widget class="QSpinBox" name="WarpToExitNu">
        <property name="geometry">
         <rect>
-         <x>140</x>
-         <y>40</y>
-         <width>61</width>
+         <x>60</x>
+         <y>60</y>
+         <width>41</width>
          <height>22</height>
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="WarpLevelFile">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>40</y>
-         <width>101</width>
+         <width>71</width>
          <height>20</height>
         </rect>
        </property>
@@ -1535,7 +1550,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>111</width>
+         <width>91</width>
          <height>16</height>
         </rect>
        </property>
@@ -1543,10 +1558,10 @@ p, li { white-space: pre-wrap; }
         <string>Level file</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="WarpBrowseLevels">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>80</x>
          <y>40</y>
          <width>21</width>
          <height>20</height>
@@ -1561,7 +1576,7 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
+        <y>40</y>
         <width>211</width>
         <height>121</height>
        </rect>
@@ -1569,7 +1584,7 @@ p, li { white-space: pre-wrap; }
       <property name="title">
        <string>Main</string>
       </property>
-      <widget class="QComboBox" name="comboBox_2">
+      <widget class="QComboBox" name="WarpType">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1594,26 +1609,6 @@ p, li { white-space: pre-wrap; }
         </property>
        </item>
       </widget>
-      <widget class="QComboBox" name="comboBox">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>101</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <item>
-        <property name="text">
-         <string>Entrance</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Exit</string>
-        </property>
-       </item>
-      </widget>
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
@@ -1625,19 +1620,6 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="text">
         <string>Warp type</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>101</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Placement</string>
        </property>
       </widget>
       <widget class="QCheckBox" name="WarpNoYoshi">
@@ -1676,7 +1658,7 @@ p, li { white-space: pre-wrap; }
         </rect>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox_2">
+      <widget class="QCheckBox" name="WarpLock">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -1689,7 +1671,7 @@ p, li { white-space: pre-wrap; }
         <string>Locked</string>
        </property>
       </widget>
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="WarpAllowNPC">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -1702,18 +1684,112 @@ p, li { white-space: pre-wrap; }
         <string>Allow NPC</string>
        </property>
       </widget>
+      <widget class="QPushButton" name="WarpSetEntrance">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>20</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set Entrance</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="WarpSetExit">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>40</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Set Exit</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="WarpEntrancePlaced">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="WarpExitPlaced">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>40</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QComboBox" name="WarpList">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>141</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="WarpAdd">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>20</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="WarpRemove">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>20</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>-</string>
+      </property>
      </widget>
      <widget class="QPushButton" name="pushButton_4">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>330</y>
-        <width>61</width>
-        <height>23</height>
+        <x>10</x>
+        <y>400</y>
+        <width>16</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="text">
-       <string>[some test]</string>
+       <string/>
       </property>
      </widget>
     </widget>
@@ -2767,6 +2843,38 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>D</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionWarpsAndDoors">
+   <property name="text">
+    <string>Warps and doors</string>
+   </property>
+  </action>
+  <action name="actionAnimation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Animation</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If map have too many objects, we recommends diable this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>

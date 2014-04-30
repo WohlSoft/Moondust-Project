@@ -114,6 +114,15 @@ bool dataconfigs::loadconfigs(bool nobar)
         total_data +=bgo_total;
     bgoset.endGroup();
 
+    //creation of empty indexes of arrayElements
+        bgoIndexes bgoIndex;
+        for(i=0;i<bgo_total+1; i++)
+        {
+            bgoIndex.i=i;
+            bgoIndex.type=0;
+            index_bgo.push_back(bgoIndex);
+        }
+
     //Block///////////////////////////////////////////
     obj_block sblock;
     unsigned long block_total=0;
@@ -125,6 +134,15 @@ bool dataconfigs::loadconfigs(bool nobar)
         block_total = blockset.value("total", "0").toInt();
         total_data +=block_total;
     blockset.endGroup();
+
+    //creation of empty indexes of arrayElements
+        blocksIndexes blockIndex;
+        for(i=0;i<block_total+1; i++)
+        {
+            blockIndex.i=i;
+            blockIndex.type=0;
+            index_blocks.push_back(blockIndex);
+        }
 
     //music///////////////////////////////////////////////
     obj_music smusic_lvl;
@@ -311,6 +329,11 @@ bool dataconfigs::loadconfigs(bool nobar)
             sbgo.framespeed = bgoset.value("frame-speed", "125").toInt();
             sbgo.id = i;
             main_bgo.push_back(sbgo);
+
+            //Add to Index
+            if(i < (unsigned int)main_bgo.size())
+                index_bgo[i].i = i;
+
         bgoset.endGroup();
 
         prgs++;
@@ -349,7 +372,7 @@ bool dataconfigs::loadconfigs(bool nobar)
                 sblock.mask_n = "";
             }
 
-            sblock.sizeble = blockset.value("sizeble", "0").toBool();
+            sblock.sizable = blockset.value("sizable", "0").toBool();
             sblock.danger = blockset.value("danger", "0").toInt();
             sblock.collision = blockset.value("collision", "1").toInt();
             sblock.slopeslide = blockset.value("slope-slide", "0").toBool();
@@ -403,6 +426,11 @@ bool dataconfigs::loadconfigs(bool nobar)
             sblock.framespeed = blockset.value("framespeed", "125").toInt();
             sblock.id = i;
             main_block.push_back(sblock);
+
+            //Add to Index
+            if(i < (unsigned int)index_blocks.size())
+                index_blocks[i].i = i;
+
         blockset.endGroup();
 
         prgs++;
