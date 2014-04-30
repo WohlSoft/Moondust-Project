@@ -375,7 +375,7 @@ bool leveledit::save()
 bool leveledit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-        curFile, tr("SMBX 1.3 Level file (*.lvl)"));
+        curFile, tr("SMBX64 (1.3) Level file (*.lvl)"));
     if (fileName.isEmpty())
         return false;
 

@@ -1761,3 +1761,4 @@ void LvlScene::setLocked(int type, bool lock)
     }
 
 }
+
