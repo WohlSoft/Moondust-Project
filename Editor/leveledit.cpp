@@ -303,37 +303,37 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("1/%1 Loading Backgrounds").arg(TotalSteps));
+        progress.setLabelText(tr("1/%1 Applyng Backgrounds").arg(TotalSteps));
     scene->makeSectionBG(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("2/%1 Loading BGOs").arg(TotalSteps));
+        progress.setLabelText(tr("2/%1 Applyng BGOs...").arg(TotalSteps));
     scene->setBGO(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("3/%1 Loading Blocks").arg(TotalSteps));
+        progress.setLabelText(tr("3/%1 Applyng Blocks...").arg(TotalSteps));
     scene->setBlocks(LvlData, progress, configs);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("4/%1 Loading NPCs").arg(TotalSteps));
+        progress.setLabelText(tr("4/%1 Applyng NPCs...").arg(TotalSteps));
     scene->setNPC(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("5/%1 Loading Waters").arg(TotalSteps));
+        progress.setLabelText(tr("5/%1 Applyng Waters...").arg(TotalSteps));
     scene->setWaters(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("6/%1 Loading Doors").arg(TotalSteps));
+        progress.setLabelText(tr("6/%1 Applyng Doors...").arg(TotalSteps));
     scene->setDoors(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
@@ -342,7 +342,8 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 
     scene->drawSpace(LvlData);
 
-    scene->startBlockAnimation();
+
+    scene->startBlockAnimation();//Apply block animation
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,

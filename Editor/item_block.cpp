@@ -92,12 +92,26 @@ void ItemBlock::setInvisible(bool inv)
 ///////////////////MainArray functions/////////////////////////////
 void ItemBlock::arrayApply()
 {
+    bool found=false;
+    if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
+    { //Check index
+        if(blockData.id == scene->LvlData->blocks[blockData.index].id)
+            found=true;
+    }
+
     //Apply current data in main array
+    if(found)
+    { //directlry
+        scene->LvlData->blocks[blockData.index] = blockData; //apply current blockdata
+        WriteToLog(QtDebugMsg, "Applay block data by index");
+    }
+    else
     foreach(LevelBlock blocks, scene->LvlData->blocks)
-    {
+    { //after find it into array
         if(blocks.array_id == blockData.array_id)
         {
             blocks = blockData;
+            WriteToLog(QtDebugMsg, "Applay block data by touch all in array");
             break;
         }
     }

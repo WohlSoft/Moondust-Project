@@ -185,6 +185,19 @@ struct obj_music
     QString file;
 };
 
+//////////////Indexing objects////////////////
+struct blocksIndexes
+{
+    unsigned long i; //Target array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+
+struct bgoIndexes
+{
+    unsigned long i; //Target array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+
 class dataconfigs
 {
 public:
@@ -201,6 +214,12 @@ public:
     QVector<obj_music > main_music_wld;
     QVector<obj_music > main_music_spc;
 
+    //Indexes
+    QVector<blocksIndexes > index_blocks;
+    QVector<bgoIndexes > index_bgo;
+
 };
+
+
 
 #endif // DATACONFIGS_H

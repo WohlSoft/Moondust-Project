@@ -43,7 +43,10 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     pConfigs = &configs; // Pointer to Main Configs
 
-    LvlData = &FileData;
+    index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
+    index_bgo = pConfigs->index_bgo;
+
+    LvlData = &FileData; //Ad pointer to level data
     grid = true;
     EditingMode = 0;
     EraserEnabled = false;
@@ -81,11 +84,6 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     doorZ = 700;
     spaceZ1 = 1000; // interSection space layer
     spaceZ2 = 1020; // section Border
-
-    blockMenu.addAction("Invisible");
-    blockMenu.addAction("Slippery");
-    blockMenu.addAction("Resize");
-    blockMenu.addAction("Properties...");
 
     setItemIndexMethod(NoIndex);
 
@@ -281,7 +279,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             else
                         (*it)->setPos(QPointF(offsetX+gridX, offsetY+gridY));
                     }
-
                 }
                 EraserEnabled = false;
 
@@ -306,7 +303,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     if( ObjType == "Block")
                     {
                         sourcePos = QPoint(  ((ItemBlock *)(*it))->blockData.x, ((ItemBlock *)(*it))->blockData.y);
-                        WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
+                        //WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
                     }
                     else
                     if( ObjType == "BGO")
@@ -331,15 +328,16 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         {
                             (*it)->setPos(QPointF(sourcePos));
                             (*it)->setSelected(false);
+                            /*
                             WriteToLog(QtDebugMsg, QString("Moved back %1 %2")
                                        .arg((long)(*it)->scenePos().x())
-                                       .arg((long)(*it)->scenePos().y()) );
+                                       .arg((long)(*it)->scenePos().y()) );*/
                         }
                         else
                         {
                             if( ObjType == "Block")
                             {
-                                WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
+                                //WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
                                 //Applay move into main array
                                 ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
                                 ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
@@ -608,6 +606,13 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
                 uBlock.image.setMask(uBlock.mask);
                 uBlock.id = configs.main_block[i].id;
                 uBlocks.push_back(uBlock);
+
+                //Apply index;
+                if(uBlock.id < (unsigned int)index_blocks.size())
+                {
+                    index_blocks[uBlock.id].type = 1;
+                    index_blocks[uBlock.id].i = (uBlocks.size()-1);
+                }
             }
             else
             if(QFile::exists(uLVLs + configs.main_block[i].image_n) )
@@ -625,6 +630,13 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
                 uBlock.image.setMask(uBlock.mask);
                 uBlock.id = configs.main_block[i].id;
                 uBlocks.push_back(uBlock);
+
+                //Apply index;
+                if(uBlock.id < (unsigned int)index_blocks.size())
+                {
+                    index_blocks[uBlock.id].type = 1;
+                    index_blocks[uBlock.id].i = (uBlocks.size()-1);
+                }
             }
 
     if(!progress.wasCanceled())
@@ -1072,7 +1084,7 @@ void LvlScene::placeBox(float x, float y)
 
 void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
 {
-    bool noimage=true;//, found=false;
+    bool noimage=true, found=false;
     bool isUser=false;
     int j;
 
@@ -1083,23 +1095,50 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     noimage=true;
     isUser=false;
 
-    for(j=0;j<uBlocks.size();j++)
+    //Check Index exists
+    if(block.id < (unsigned int)index_blocks.size())
     {
-        if(uBlocks[j].id == block.id)
-        {
-            isUser=true;
-            tImg = uBlocks[j].image;
-            break;
-        }
+        j = index_blocks[block.id].i;
+
+        if(configs.main_block[j].id == block.id)
+            found=true;
     }
 
-    for(j=0;j<configs.main_block.size();j++)
-    {
-        if(configs.main_block[j].id==block.id)
+    //if Index found
+    if(found)
+    {   //get neccesary element directly
+        if(index_blocks[block.id].type==1)
         {
+            isUser=true;
+            tImg = uBlocks[index_blocks[block.id].i].image;
+        }
+        else
+        {
+            tImg = configs.main_block[index_blocks[block.id].i].image;
             noimage=false;
-            if(!isUser)
-                tImg = configs.main_block[j].image; break;
+        }
+    }
+    else
+    {
+        //found neccesary element in arrays and select
+        for(j=0;j<uBlocks.size();j++)
+        {
+            if(uBlocks[j].id == block.id)
+            {
+                isUser=true;
+                tImg = uBlocks[j].image;
+                break;
+            }
+        }
+
+        for(j=0;j<configs.main_block.size();j++)
+        {
+            if(configs.main_block[j].id==block.id)
+            {
+                noimage=false;
+                if(!isUser)
+                    tImg = configs.main_block[j].image; break;
+            }
         }
     }
 
@@ -1189,7 +1228,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
 void LvlScene::placeBGO(LevelBGO &bgo)
 {
     int j;
-    bool noimage=true;//, found=false;
+    bool noimage=true, found=false;
 
     QGraphicsItem *	box;
     bool isUser=false;
@@ -1197,23 +1236,49 @@ void LvlScene::placeBGO(LevelBGO &bgo)
     noimage=true;
     isUser=false;
 
-    for(j=0;j<uBGOs.size();j++)
+    //Check Index exists
+    if(bgo.id < (unsigned int)index_bgo.size())
     {
-        if(uBGOs[j].id==bgo.id)
-        {
-            isUser=true;
-            tImg = uBGOs[j].image;
-            break;
-        }
+        j = index_bgo[bgo.id].i;
+
+        if(pConfigs->main_bgo[j].id == bgo.id)
+            found=true;
     }
 
-    for(j=0;j<pConfigs->main_bgo.size();j++)
-    {
-        if(pConfigs->main_bgo[j].id==bgo.id)
+    //if Index found
+    if(found)
+    {   //get neccesary element directly
+        if(index_bgo[bgo.id].type==1)
         {
+            isUser=true;
+            tImg = uBGOs[index_bgo[bgo.id].i].image;
+        }
+        else
+        {
+            tImg = pConfigs->main_bgo[index_bgo[bgo.id].i].image;
             noimage=false;
-            if(!isUser)
-            tImg = pConfigs->main_bgo[j].image; break;
+        }
+    }
+    else
+    {
+        for(j=0;j<uBGOs.size();j++)
+        {
+            if(uBGOs[j].id==bgo.id)
+            {
+                isUser=true;
+                tImg = uBGOs[j].image;
+                break;
+            }
+        }
+
+        for(j=0;j<pConfigs->main_bgo.size();j++)
+        {
+            if(pConfigs->main_bgo[j].id==bgo.id)
+            {
+                noimage=false;
+                if(!isUser)
+                tImg = pConfigs->main_bgo[j].image; break;
+            }
         }
     }
 

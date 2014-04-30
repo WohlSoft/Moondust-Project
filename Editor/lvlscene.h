@@ -95,6 +95,10 @@ public:
 
     dataconfigs * pConfigs;
 
+    //Object Indexing:
+    QVector<blocksIndexes > index_blocks;
+    QVector<bgoIndexes > index_bgo;
+
     bool lock_bgo;
     bool lock_block;
     bool lock_npc;

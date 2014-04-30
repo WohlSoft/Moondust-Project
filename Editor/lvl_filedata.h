@@ -67,6 +67,7 @@ struct LevelBlock
 
     //editing
     unsigned int array_id;
+    unsigned int index;
 };
 
 struct LevelBGO
@@ -78,6 +79,7 @@ struct LevelBGO
 
     //editing
     unsigned int array_id;
+    unsigned int index;
 };
 
 struct LevelNPC

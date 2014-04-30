@@ -316,6 +316,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 
         blocks.array_id = FileData.blocks_array_id;
         FileData.blocks_array_id++;
+        blocks.index = FileData.blocks.size();//Apply element index
     FileData.blocks.push_back(blocks); //AddBlock into array
 
     str_count++;line = in.readLine();
