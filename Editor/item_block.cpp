@@ -38,6 +38,8 @@ ItemBlock::~ItemBlock()
 
 void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
+    if(scene->lock_block) return;
+
     scene->clearSelection();
     this->setSelected(1);
     ItemMenu->clear();
@@ -95,7 +97,7 @@ void ItemBlock::arrayApply()
     bool found=false;
     if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
     { //Check index
-        if(blockData.id == scene->LvlData->blocks[blockData.index].id)
+        if(blockData.array_id == scene->LvlData->blocks[blockData.index].array_id)
             found=true;
     }
 
