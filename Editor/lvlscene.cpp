@@ -340,7 +340,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                 ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
                                 ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
                                 ((ItemBlock *)(*it))->arrayApply();
-                                LvlData->modyfied = true;
+                                LvlData->modified = true;
                             } else
                             if( ObjType == "BGO")
                             {
@@ -350,7 +350,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                 WriteToLog(QtDebugMsg, QString(" >>Data applayed"));
                                 ((ItemBGO *)(*it))->arrayApply();
                                 WriteToLog(QtDebugMsg, QString(" >>Array applayed"));
-                                LvlData->modyfied = true;
+                                LvlData->modified = true;
 
                                 /*
                                 for (i=0;i<LvlData->bgo.size();i++)
@@ -360,7 +360,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                         //Applay move into main array
                                         LvlData->bgo[i].x = (long)(*it)->scenePos().x();
                                         LvlData->bgo[i].y = (long)(*it)->scenePos().y();
-                                        LvlData->modyfied = true;
+                                        LvlData->modified = true;
                                         break;
                                     }
                                 }*/
@@ -1069,7 +1069,7 @@ void LvlScene::ChangeSectionBG(int BG_Id, LevelData &FileData)
         }
     }
     FileData.sections[FileData.CurSection].background = BG_Id;
-    FileData.modyfied = true;
+    FileData.modified = true;
 
     WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
     setSectionBG(FileData.sections[FileData.CurSection]);
@@ -1761,4 +1761,3 @@ void LvlScene::setLocked(int type, bool lock)
     }
 
 }
-
