@@ -94,7 +94,7 @@ struct LevelNPC
     int generator_type;
     int generator_period;
     QString msg;
-    bool fridly;
+    bool friendly;
     bool nomove;
     bool legacyboss;
     QString layer;
@@ -122,7 +122,7 @@ struct LevelDoors
     int odirect;
     int type;
     QString lname;
-    long waprto;
+    long warpto;
     bool lvl_i;
     bool lvl_o;
     long world_x;
@@ -187,7 +187,7 @@ struct LevelEvents
     QVector<LevelEvents_layers > layers;
     QVector<LevelEvents_Sets > sets;
     QString trigger;
-    long triiger_timer;
+    long trigger_timer;
     bool nosmoke;
     bool altjump;
     bool altrun;
@@ -205,7 +205,7 @@ struct LevelEvents
     float layer_speed_y;
     float move_camera_x;
     float move_camera_y;
-    long scrool_section;
+    long scroll_section;
 
     //editing
     unsigned int array_id;
@@ -237,7 +237,7 @@ struct LevelData
     //editing:
     int CurSection;
     bool playmusic;
-    bool modyfied;
+    bool modified;
     QString filename;
     QString path;
 };
