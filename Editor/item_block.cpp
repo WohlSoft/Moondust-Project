@@ -303,6 +303,7 @@ void ItemBlock::AnimationStart()
 void ItemBlock::AnimationStop()
 {
     timer->stop();
+    setFrame(frameFirst);
 }
 
 void ItemBlock::draw()
