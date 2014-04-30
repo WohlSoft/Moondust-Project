@@ -73,7 +73,7 @@ private:
     LevelData StartLvlData;
     bool DrawObjects(QProgressDialog &progress, dataconfigs &configs);
 
-    bool isModyfied;
+    bool isModified;
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();

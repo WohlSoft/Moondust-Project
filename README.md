@@ -1,7 +1,7 @@
 PlatGEnWohl
 ===========
 
-Platformet Game Engine by Wohlstand
+Platformer Game Engine by Wohlstand
 
 a free platform for game making
 

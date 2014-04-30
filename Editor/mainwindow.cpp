@@ -446,7 +446,7 @@ void MainWindow::OpenFile(QString FilePath)
             WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
             WriteToLog(QtDebugMsg, ">>Window showed");
-            if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modyfied = false;
+            if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
             WriteToLog(QtDebugMsg, ">>Option seted");
             ui->centralWidget->activeSubWindow()->close();
             WriteToLog(QtDebugMsg, ">>Windows closed");
@@ -1016,7 +1016,7 @@ void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
     if(activeChildWindow()==1)
     {
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
-        activeLvlEditWin()->LvlData.modyfied = true;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 
     WriteToLog(QtDebugMsg, "Call to Set Music if playing");
@@ -1033,7 +1033,7 @@ void MainWindow::on_LVLPropsMusicCustomEn_toggled(bool checked)
             if(activeChildWindow()==1)
             {
                 activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
-                activeLvlEditWin()->LvlData.modyfied = true;
+                activeLvlEditWin()->LvlData.modified = true;
             }
         }
     }
@@ -1323,7 +1323,7 @@ void MainWindow::on_actionReload_triggered()
         FileData.filename = QFileInfo(filePath).baseName();
         FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
         FileData.playmusic = autoPlayMusic;
-        activeLvlEditWin()->LvlData.modyfied = false;
+        activeLvlEditWin()->LvlData.modified = false;
         activeLvlEditWin()->close();
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         ui->centralWidget->activeSubWindow()->close();
@@ -1338,7 +1338,7 @@ void MainWindow::on_actionReload_triggered()
                 WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
                 WriteToLog(QtDebugMsg, ">>Window showed");
-            if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modyfied = false;
+            if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
                 WriteToLog(QtDebugMsg, ">>Option seted");
             ui->centralWidget->activeSubWindow()->close();
                 WriteToLog(QtDebugMsg, ">>Windows closed");
