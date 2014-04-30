@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     file_npc_txt.cpp \
     file_wld.cpp \
     file_lvl.cpp \
-    item_block.cpp
+    item_block.cpp \
+    item_bgo.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -42,7 +43,8 @@ HEADERS  += mainwindow.h \
     musicfilelist.h \
     logger.h \
     file_formats.h \
-    item_block.h
+    item_block.h \
+    item_bgo.h
 
 FORMS    += \
     aboutdialog.ui \
