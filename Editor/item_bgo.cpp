@@ -176,6 +176,7 @@ void ItemBGO::AnimationStart()
 void ItemBGO::AnimationStop()
 {
     timer->stop();
+    setFrame(frameFirst);
 }
 
 void ItemBGO::draw()

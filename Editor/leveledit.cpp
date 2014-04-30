@@ -41,7 +41,7 @@ leveledit::leveledit(QWidget *parent) :
     FileType = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
-    isModyfied = false;
+    isModified = false;
     latest_export = "*.png";
     latest_export_path = QApplication::applicationDirPath();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
@@ -188,7 +188,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
-    LvlData.modyfied = false;
+    LvlData.modified = false;
 
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
@@ -212,9 +212,9 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
         QMessageBox::warning(this, tr("Configurations not loaded"),
                              tr("Cannot open level file %1:\nbecause object configurations not loaded\n."
-                                "Please, check the config/SMBX dir for exists the *.INI files with objects settings")
+                                "Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.")
                              .arg(fileName));
-        LvlData.modyfied = false;
+        LvlData.modified = false;
         return false;
     }
 
@@ -241,7 +241,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     if(! DrawObjects(progress, configs) )
     {
-        LvlData.modyfied = false;
+        LvlData.modified = false;
         this->close();
         return false;
     }
@@ -259,7 +259,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     QApplication::restoreOverrideCursor();
 
     setCurrentFile(fileName);
-    LvlData.modyfied = false;
+    LvlData.modified = false;
 
     return true;
 }
@@ -303,37 +303,37 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("1/%1 Applyng Backgrounds").arg(TotalSteps));
+        progress.setLabelText(tr("1/%1 Applying Backgrounds").arg(TotalSteps));
     scene->makeSectionBG(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("2/%1 Applyng BGOs...").arg(TotalSteps));
+        progress.setLabelText(tr("2/%1 Applying BGOs...").arg(TotalSteps));
     scene->setBGO(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("3/%1 Applyng Blocks...").arg(TotalSteps));
+        progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
     scene->setBlocks(LvlData, progress, configs);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("4/%1 Applyng NPCs...").arg(TotalSteps));
+        progress.setLabelText(tr("4/%1 Applying NPCs...").arg(TotalSteps));
     scene->setNPC(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("5/%1 Applyng Waters...").arg(TotalSteps));
+        progress.setLabelText(tr("5/%1 Applying Waters...").arg(TotalSteps));
     scene->setWaters(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
     if(!progress.wasCanceled())
-        progress.setLabelText(tr("6/%1 Applyng Doors...").arg(TotalSteps));
+        progress.setLabelText(tr("6/%1 Applying Doors...").arg(TotalSteps));
     scene->setDoors(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
@@ -375,7 +375,7 @@ bool leveledit::save()
 bool leveledit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-        curFile, tr("SMBX 1.3 Level file (*.lvl)"));
+        curFile, tr("SMBX64 (1.3) Level file (*.lvl)"));
     if (fileName.isEmpty())
         return false;
 
@@ -406,7 +406,7 @@ bool leveledit::saveFile(const QString &fileName)
     */
 
     QMessageBox::information(this, tr("Dummy"),
-                         tr("File %1 will not be save, saving function in this version of app was not released.")
+                         tr("File %1 will not be saved, saving levels is not implemented in this version.")
                          .arg(fileName));
 
     return true;
@@ -442,12 +442,12 @@ void leveledit::focusInEvent( QFocusEvent * focusInEvent)
 
 void leveledit::documentWasModified()
 {
-    LvlData.modyfied = true;
+    LvlData.modified = true;
 }
 
 bool leveledit::maybeSave()
 {
-    if (LvlData.modyfied) {
+    if (LvlData.modified) {
     QMessageBox::StandardButton ret;
         ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
                      tr("'%1' has been modified.\n"
