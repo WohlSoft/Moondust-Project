@@ -105,7 +105,32 @@ OTHER_FILES += \
     images/mushroom16.png \
     images/level16.png \
     splash.png \
-    mushroom.ico
+    mushroom.ico \
+    images/coin.png \
+    images/cur_rubber.png \
+    images/grid.png \
+    images/hand.png \
+    images/lock_bgo_cl.png \
+    images/lock_bgo_op.png \
+    images/lock_block_cl.png \
+    images/lock_block_op.png \
+    images/lock_door_cl.png \
+    images/lock_door_op.png \
+    images/lock_npc_cl.png \
+    images/lock_npc_op.png \
+    images/lock_water_cl.png \
+    images/lock_water_op.png \
+    images/player1_point.png \
+    images/player1_start.png \
+    images/player2_point.png \
+    images/player2_start.png \
+    images/playmusic.png \
+    images/reload_data.png \
+    images/reset_pos.png \
+    images/section.png \
+    images/splash.png \
+    images/warp_entrance.png \
+    images/warp_exit.png
 
 RESOURCES += \
     editor.qrc

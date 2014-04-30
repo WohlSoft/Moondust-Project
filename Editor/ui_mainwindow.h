@@ -108,6 +108,7 @@ public:
     QAction *actionUndo;
     QAction *actionRedo;
     QAction *actionWarpsAndDoors;
+    QAction *actionAnimation;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -629,6 +630,9 @@ public:
         actionRedo->setEnabled(false);
         actionWarpsAndDoors = new QAction(MainWindow);
         actionWarpsAndDoors->setObjectName(QStringLiteral("actionWarpsAndDoors"));
+        actionAnimation = new QAction(MainWindow);
+        actionAnimation->setObjectName(QStringLiteral("actionAnimation"));
+        actionAnimation->setCheckable(true);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -1231,6 +1235,7 @@ public:
         menuView->addSeparator();
         menuView->addAction(actionWLDToolBox);
         menuView->addSeparator();
+        menuView->addAction(actionAnimation);
         menuTools->addAction(actionLoad_configs);
         menuTools->addAction(actionReload);
         menuEdit->addAction(actionUndo);
@@ -1496,6 +1501,10 @@ public:
         actionUndo->setText(QApplication::translate("MainWindow", "Undo", 0));
         actionRedo->setText(QApplication::translate("MainWindow", "Redo", 0));
         actionWarpsAndDoors->setText(QApplication::translate("MainWindow", "Warps and doors", 0));
+        actionAnimation->setText(QApplication::translate("MainWindow", "Animation", 0));
+#ifndef QT_NO_TOOLTIP
+        actionAnimation->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Enable animation on animated objects</p><p><span style=\" font-style:italic;\">If map have too many objects, we recommends diable this option</span></p></body></html>", 0));
+#endif // QT_NO_TOOLTIP
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "?", 0));

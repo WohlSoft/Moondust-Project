@@ -203,6 +203,7 @@
     <addaction name="separator"/>
     <addaction name="actionWLDToolBox"/>
     <addaction name="separator"/>
+    <addaction name="actionAnimation"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -2863,6 +2864,17 @@ p, li { white-space: pre-wrap; }
   <action name="actionWarpsAndDoors">
    <property name="text">
     <string>Warps and doors</string>
+   </property>
+  </action>
+  <action name="actionAnimation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Animation</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If map have too many objects, we recommends diable this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>

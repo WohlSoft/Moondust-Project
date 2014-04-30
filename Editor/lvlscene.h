@@ -75,7 +75,9 @@ public:
     void setWaters(LevelData FileData, QProgressDialog &progress);
     void setDoors(LevelData FileData, QProgressDialog &progress);
     void setPlayerPoints();
+
     void startBlockAnimation();
+    void stopAnimation();
 
     void setLocked(int type, bool lock);
 

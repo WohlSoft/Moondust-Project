@@ -177,8 +177,11 @@ private slots:
 
     void on_actionLevUnderW_triggered(bool checked);
 
+    void on_actionAnimation_triggered(bool checked);
+
 private:
     dataconfigs configs;
+    bool AnimationEnabled;
 
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);

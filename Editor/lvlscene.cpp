@@ -1668,6 +1668,28 @@ void LvlScene::startBlockAnimation()
 
 }
 
+void LvlScene::stopAnimation()
+{
+    QList<QGraphicsItem*> ItemList = items();
+    QGraphicsItem *tmp;
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemBlock *)tmp)->AnimationStop();
+        }
+        else
+        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemBGO *)tmp)->AnimationStop();
+        }
+    }
+
+}
+
+
 
 
 /////////////////////////////////////////////Locks////////////////////////////////
