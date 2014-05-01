@@ -88,7 +88,7 @@
      <x>0</x>
      <y>0</y>
      <width>1189</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -352,7 +352,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>419</height>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -412,8 +412,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>77</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -439,8 +439,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>77</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -466,8 +466,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>77</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -644,8 +644,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>89</width>
-        <height>89</height>
+        <width>273</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -705,8 +705,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>77</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
      </widget>
@@ -729,8 +729,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>77</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
      </widget>
@@ -754,7 +754,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>419</height>
+        <height>435</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">

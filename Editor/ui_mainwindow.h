@@ -690,7 +690,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1189, 26));
+        menuBar->setGeometry(QRect(0, 0, 1189, 21));
         menuBar->setContextMenuPolicy(Qt::NoContextMenu);
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
@@ -755,7 +755,7 @@ public:
         Blocks->setWidgetResizable(true);
         BlocksItemBox = new QListView();
         BlocksItemBox->setObjectName(QStringLiteral("BlocksItemBox"));
-        BlocksItemBox->setGeometry(QRect(0, 0, 256, 419));
+        BlocksItemBox->setGeometry(QRect(0, 0, 256, 435));
         BlocksItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -783,7 +783,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 77, 28));
+        backsscroll->setGeometry(QRect(0, 0, 256, 435));
         backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -794,7 +794,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 77, 28));
+        npcscroll->setGeometry(QRect(0, 0, 256, 435));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -805,7 +805,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 77, 28));
+        specialscroll->setGeometry(QRect(0, 0, 256, 435));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -868,7 +868,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 89, 89));
+        TilesItemBox->setGeometry(QRect(0, 0, 273, 435));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -896,7 +896,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 77, 28));
+        SceneryScroll->setGeometry(QRect(0, 0, 256, 435));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -906,7 +906,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 77, 28));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 256, 435));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -916,7 +916,7 @@ public:
         MusicSet->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 256, 419));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 256, 435));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
