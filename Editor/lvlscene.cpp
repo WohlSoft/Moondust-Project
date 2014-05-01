@@ -1117,6 +1117,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
         if(index_blocks[block.id].type==1)
         {
             isUser=true;
+            noimage=false;
             tImg = uBlocks[index_blocks[block.id].i].image;
         }
         else
@@ -1133,6 +1134,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
             if(uBlocks[j].id == block.id)
             {
                 isUser=true;
+                noimage=false;
                 tImg = uBlocks[j].image;
                 break;
             }
@@ -1151,6 +1153,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
 
     if((noimage)||(tImg.isNull()))
     {
+        //if(block.id==89) WriteToLog(QtDebugMsg, QString("Block 89 is %1, %2").arg(noimage).arg(tImg.isNull()));
         tImg = uBlockImg;
     }
 
@@ -1242,6 +1245,7 @@ void LvlScene::placeBGO(LevelBGO &bgo)
         if(index_bgo[bgo.id].type==1)
         {
             isUser=true;
+            noimage=false;
             tImg = uBGOs[index_bgo[bgo.id].i].image;
         }
         else
@@ -1257,6 +1261,7 @@ void LvlScene::placeBGO(LevelBGO &bgo)
             if(uBGOs[j].id==bgo.id)
             {
                 isUser=true;
+                noimage=false;
                 tImg = uBGOs[j].image;
                 break;
             }
