@@ -1245,6 +1245,7 @@ void LvlScene::placeBGO(LevelBGO &bgo)
         if(index_bgo[bgo.id].type==1)
         {
             isUser=true;
+            noimage=false;
             tImg = uBGOs[index_bgo[bgo.id].i].image;
         }
         else
@@ -1260,6 +1261,7 @@ void LvlScene::placeBGO(LevelBGO &bgo)
             if(uBGOs[j].id==bgo.id)
             {
                 isUser=true;
+                noimage=false;
                 tImg = uBGOs[j].image;
                 break;
             }
