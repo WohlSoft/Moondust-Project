@@ -106,8 +106,15 @@
      <addaction name="actionNewWorld_map"/>
      <addaction name="actionNPC_config"/>
     </widget>
+    <widget class="QMenu" name="menuOpenRecent">
+     <property name="title">
+      <string>Open Recent</string>
+     </property>
+     <addaction name="action_empty"/>
+    </widget>
     <addaction name="menuNew"/>
     <addaction name="OpenFile"/>
+    <addaction name="menuOpenRecent"/>
     <addaction name="actionClose"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
@@ -2522,7 +2529,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Anthony</string>
+    <string>Character 1</string>
    </property>
   </action>
   <action name="actionWLDNoChar2">
@@ -2530,7 +2537,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Stuwart</string>
+    <string>Character 2</string>
    </property>
   </action>
   <action name="actionWLDNoChar3">
@@ -2538,7 +2545,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Susan</string>
+    <string>Character 3</string>
    </property>
   </action>
   <action name="actionWLDNoChar4">
@@ -2546,7 +2553,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Jose</string>
+    <string>Character 4</string>
    </property>
   </action>
   <action name="actionWLDNoChar5">
@@ -2554,7 +2561,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Yudziro</string>
+    <string>Character 5</string>
    </property>
   </action>
   <action name="actionWLDProperties">
@@ -2875,6 +2882,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If map have too many objects, we recommends diable this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="action_empty">
+   <property name="text">
+    <string>&lt;empty&gt;</string>
    </property>
   </action>
  </widget>

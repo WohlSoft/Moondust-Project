@@ -109,10 +109,12 @@ public:
     QAction *actionRedo;
     QAction *actionWarpsAndDoors;
     QAction *actionAnimation;
+    QAction *action_empty;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
     QMenu *menuNew;
+    QMenu *menuOpenRecent;
     QMenu *menuHelp;
     QMenu *menuLevel;
     QMenu *menuCurrent_section;
@@ -633,6 +635,8 @@ public:
         actionAnimation = new QAction(MainWindow);
         actionAnimation->setObjectName(QStringLiteral("actionAnimation"));
         actionAnimation->setCheckable(true);
+        action_empty = new QAction(MainWindow);
+        action_empty->setObjectName(QStringLiteral("action_empty"));
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -655,6 +659,8 @@ public:
         menu->setObjectName(QStringLiteral("menu"));
         menuNew = new QMenu(menu);
         menuNew->setObjectName(QStringLiteral("menuNew"));
+        menuOpenRecent = new QMenu(menu);
+        menuOpenRecent->setObjectName(QStringLiteral("menuOpenRecent"));
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
         menuLevel = new QMenu(menuBar);
@@ -1176,6 +1182,7 @@ public:
         menuBar->addAction(menuHelp->menuAction());
         menu->addAction(menuNew->menuAction());
         menu->addAction(OpenFile);
+        menu->addAction(menuOpenRecent->menuAction());
         menu->addAction(actionClose);
         menu->addSeparator();
         menu->addAction(actionSave);
@@ -1188,6 +1195,7 @@ public:
         menuNew->addAction(actionNewLevel);
         menuNew->addAction(actionNewWorld_map);
         menuNew->addAction(actionNPC_config);
+        menuOpenRecent->addAction(action_empty);
         menuHelp->addAction(actionContents);
         menuHelp->addAction(actionAbout);
         menuLevel->addAction(menuCurrent_section->menuAction());
@@ -1448,11 +1456,11 @@ public:
         actionLevelProp->setText(QApplication::translate("MainWindow", "Properties...", 0));
         actionWLDDisableMap->setText(QApplication::translate("MainWindow", "Disable world map", 0));
         actionWLDFailRestart->setText(QApplication::translate("MainWindow", "Restart level after player's fail", 0));
-        actionWLDNoChar1->setText(QApplication::translate("MainWindow", "Anthony", 0));
-        actionWLDNoChar2->setText(QApplication::translate("MainWindow", "Stuwart", 0));
-        actionWLDNoChar3->setText(QApplication::translate("MainWindow", "Susan", 0));
-        actionWLDNoChar4->setText(QApplication::translate("MainWindow", "Jose", 0));
-        actionWLDNoChar5->setText(QApplication::translate("MainWindow", "Yudziro", 0));
+        actionWLDNoChar1->setText(QApplication::translate("MainWindow", "Character 1", 0));
+        actionWLDNoChar2->setText(QApplication::translate("MainWindow", "Character 2", 0));
+        actionWLDNoChar3->setText(QApplication::translate("MainWindow", "Character 3", 0));
+        actionWLDNoChar4->setText(QApplication::translate("MainWindow", "Character 4", 0));
+        actionWLDNoChar5->setText(QApplication::translate("MainWindow", "Character 5", 0));
         actionWLDProperties->setText(QApplication::translate("MainWindow", "Properties...", 0));
         actionLVLToolBox->setText(QApplication::translate("MainWindow", "Level tool box", 0));
         actionWLDToolBox->setText(QApplication::translate("MainWindow", "World tool box", 0));
@@ -1505,8 +1513,10 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionAnimation->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Enable animation on animated objects</p><p><span style=\" font-style:italic;\">If map have too many objects, we recommends diable this option</span></p></body></html>", 0));
 #endif // QT_NO_TOOLTIP
+        action_empty->setText(QApplication::translate("MainWindow", "<empty>", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
+        menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "?", 0));
         menuLevel->setTitle(QApplication::translate("MainWindow", "Level", 0));
         menuCurrent_section->setTitle(QApplication::translate("MainWindow", "Current section", 0));
