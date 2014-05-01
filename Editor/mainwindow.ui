@@ -88,7 +88,7 @@
      <x>0</x>
      <y>0</y>
      <width>1189</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -110,7 +110,16 @@
      <property name="title">
       <string>Open Recent</string>
      </property>
-     <addaction name="action_empty"/>
+     <addaction name="action_recent1"/>
+     <addaction name="action_recent2"/>
+     <addaction name="action_recent3"/>
+     <addaction name="action_recent4"/>
+     <addaction name="action_recent5"/>
+     <addaction name="action_recent6"/>
+     <addaction name="action_recent7"/>
+     <addaction name="action_recent8"/>
+     <addaction name="action_recent9"/>
+     <addaction name="action_recent10"/>
     </widget>
     <addaction name="menuNew"/>
     <addaction name="OpenFile"/>
@@ -343,7 +352,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>435</height>
+        <height>419</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -403,8 +412,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>77</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -430,8 +439,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>77</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -457,8 +466,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>77</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -635,8 +644,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>273</width>
-        <height>435</height>
+        <width>89</width>
+        <height>89</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -696,8 +705,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>77</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -720,8 +729,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>77</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -745,7 +754,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>435</height>
+        <height>419</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2884,7 +2893,82 @@ p, li { white-space: pre-wrap; }
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If map have too many objects, we recommends diable this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
-  <action name="action_empty">
+  <action name="action_recent1">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent3">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent4">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent5">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent6">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent7">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent8">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent9">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="action_recent10">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>&lt;empty&gt;</string>
    </property>

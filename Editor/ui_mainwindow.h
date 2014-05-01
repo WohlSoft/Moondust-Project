@@ -109,7 +109,16 @@ public:
     QAction *actionRedo;
     QAction *actionWarpsAndDoors;
     QAction *actionAnimation;
-    QAction *action_empty;
+    QAction *action_recent1;
+    QAction *action_recent2;
+    QAction *action_recent3;
+    QAction *action_recent4;
+    QAction *action_recent5;
+    QAction *action_recent6;
+    QAction *action_recent7;
+    QAction *action_recent8;
+    QAction *action_recent9;
+    QAction *action_recent10;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -635,8 +644,36 @@ public:
         actionAnimation = new QAction(MainWindow);
         actionAnimation->setObjectName(QStringLiteral("actionAnimation"));
         actionAnimation->setCheckable(true);
-        action_empty = new QAction(MainWindow);
-        action_empty->setObjectName(QStringLiteral("action_empty"));
+        action_recent1 = new QAction(MainWindow);
+        action_recent1->setObjectName(QStringLiteral("action_recent1"));
+        action_recent1->setEnabled(false);
+        action_recent2 = new QAction(MainWindow);
+        action_recent2->setObjectName(QStringLiteral("action_recent2"));
+        action_recent2->setEnabled(false);
+        action_recent3 = new QAction(MainWindow);
+        action_recent3->setObjectName(QStringLiteral("action_recent3"));
+        action_recent3->setEnabled(false);
+        action_recent4 = new QAction(MainWindow);
+        action_recent4->setObjectName(QStringLiteral("action_recent4"));
+        action_recent4->setEnabled(false);
+        action_recent5 = new QAction(MainWindow);
+        action_recent5->setObjectName(QStringLiteral("action_recent5"));
+        action_recent5->setEnabled(false);
+        action_recent6 = new QAction(MainWindow);
+        action_recent6->setObjectName(QStringLiteral("action_recent6"));
+        action_recent6->setEnabled(false);
+        action_recent7 = new QAction(MainWindow);
+        action_recent7->setObjectName(QStringLiteral("action_recent7"));
+        action_recent7->setEnabled(false);
+        action_recent8 = new QAction(MainWindow);
+        action_recent8->setObjectName(QStringLiteral("action_recent8"));
+        action_recent8->setEnabled(false);
+        action_recent9 = new QAction(MainWindow);
+        action_recent9->setObjectName(QStringLiteral("action_recent9"));
+        action_recent9->setEnabled(false);
+        action_recent10 = new QAction(MainWindow);
+        action_recent10->setObjectName(QStringLiteral("action_recent10"));
+        action_recent10->setEnabled(false);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -653,7 +690,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1189, 21));
+        menuBar->setGeometry(QRect(0, 0, 1189, 26));
         menuBar->setContextMenuPolicy(Qt::NoContextMenu);
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
@@ -718,7 +755,7 @@ public:
         Blocks->setWidgetResizable(true);
         BlocksItemBox = new QListView();
         BlocksItemBox->setObjectName(QStringLiteral("BlocksItemBox"));
-        BlocksItemBox->setGeometry(QRect(0, 0, 256, 435));
+        BlocksItemBox->setGeometry(QRect(0, 0, 256, 419));
         BlocksItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -746,7 +783,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 256, 435));
+        backsscroll->setGeometry(QRect(0, 0, 77, 28));
         backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -757,7 +794,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 256, 435));
+        npcscroll->setGeometry(QRect(0, 0, 77, 28));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -768,7 +805,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 256, 435));
+        specialscroll->setGeometry(QRect(0, 0, 77, 28));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -831,7 +868,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 273, 435));
+        TilesItemBox->setGeometry(QRect(0, 0, 89, 89));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -859,7 +896,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 256, 435));
+        SceneryScroll->setGeometry(QRect(0, 0, 77, 28));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -869,7 +906,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 256, 435));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 77, 28));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -879,7 +916,7 @@ public:
         MusicSet->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 256, 435));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 256, 419));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -1195,7 +1232,16 @@ public:
         menuNew->addAction(actionNewLevel);
         menuNew->addAction(actionNewWorld_map);
         menuNew->addAction(actionNPC_config);
-        menuOpenRecent->addAction(action_empty);
+        menuOpenRecent->addAction(action_recent1);
+        menuOpenRecent->addAction(action_recent2);
+        menuOpenRecent->addAction(action_recent3);
+        menuOpenRecent->addAction(action_recent4);
+        menuOpenRecent->addAction(action_recent5);
+        menuOpenRecent->addAction(action_recent6);
+        menuOpenRecent->addAction(action_recent7);
+        menuOpenRecent->addAction(action_recent8);
+        menuOpenRecent->addAction(action_recent9);
+        menuOpenRecent->addAction(action_recent10);
         menuHelp->addAction(actionContents);
         menuHelp->addAction(actionAbout);
         menuLevel->addAction(menuCurrent_section->menuAction());
@@ -1513,7 +1559,16 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionAnimation->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Enable animation on animated objects</p><p><span style=\" font-style:italic;\">If map have too many objects, we recommends diable this option</span></p></body></html>", 0));
 #endif // QT_NO_TOOLTIP
-        action_empty->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent1->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent2->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent3->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent4->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent5->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent6->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent7->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent8->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent9->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        action_recent10->setText(QApplication::translate("MainWindow", "<empty>", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));
