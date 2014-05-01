@@ -66,6 +66,8 @@ private slots:
     void save_all();
 
     void OpenFile(QString FilePath);
+    void SyncRecentFiles();
+    void AddToRecentFiles(QString FilePath);
 
     void updateMenus();
     void setTools();
@@ -179,6 +181,26 @@ private slots:
 
     void on_actionAnimation_triggered(bool checked);
 
+    void on_action_recent1_triggered();
+
+    void on_action_recent2_triggered();
+
+    void on_action_recent3_triggered();
+
+    void on_action_recent4_triggered();
+
+    void on_action_recent5_triggered();
+
+    void on_action_recent6_triggered();
+
+    void on_action_recent7_triggered();
+
+    void on_action_recent8_triggered();
+
+    void on_action_recent9_triggered();
+
+    void on_action_recent10_triggered();
+
 private:
     dataconfigs configs;
     bool AnimationEnabled;
@@ -190,6 +212,8 @@ private:
     int activeChildWindow();
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
+
+    QList<QString> recentOpen;
 
 };
 
