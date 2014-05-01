@@ -115,6 +115,19 @@ MainWindow::MainWindow(QMdiArea *parent) :
     autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
     settings.endGroup();
 
+    settings.beginGroup("Recent");
+    recentOpen.push_back(settings.value("recent1","none").toString());
+    recentOpen.push_back(settings.value("recent2","none").toString());
+    recentOpen.push_back(settings.value("recent3","none").toString());
+    recentOpen.push_back(settings.value("recent4","none").toString());
+    recentOpen.push_back(settings.value("recent5","none").toString());
+    recentOpen.push_back(settings.value("recent6","none").toString());
+    recentOpen.push_back(settings.value("recent7","none").toString());
+    recentOpen.push_back(settings.value("recent8","none").toString());
+    recentOpen.push_back(settings.value("recent9","none").toString());
+    recentOpen.push_back(settings.value("recent10","none").toString());
+    settings.endGroup();
+
     ui->actionPlayMusic->setChecked(autoPlayMusic);
 
     ui->centralWidget->cascadeSubWindows();

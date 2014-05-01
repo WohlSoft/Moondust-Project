@@ -191,6 +191,8 @@ private:
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
 
+    QList<QString> recentOpen;
+
 };
 
 void BadFileMsg(MainWindow *window, QString fileName_DATA, int str_count, QString line);
