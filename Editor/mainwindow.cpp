@@ -436,9 +436,6 @@ void MainWindow::OpenFile(QString FilePath)
         return;
     }
 
-    AddToRecentFiles(FilePath);
-    SyncRecentFiles();
-
     QFileInfo in_1(FilePath);
 
     LastOpenDir = in_1.absoluteDir().absolutePath();
@@ -506,6 +503,10 @@ void MainWindow::OpenFile(QString FilePath)
      QMessageBox::Ok);
     return;
     }
+
+    // Add to recent fileList
+    AddToRecentFiles(FilePath);
+    SyncRecentFiles();
 
 /*
 QMessageBox::information(this, tr("File checked"),
