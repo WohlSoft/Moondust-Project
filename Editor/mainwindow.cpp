@@ -143,6 +143,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->actionGridEn->setChecked(1);
 
     setAcceptDrops(true);
+    ui->centralWidget->cascadeSubWindows();
+
 }
 
 MainWindow::~MainWindow()
