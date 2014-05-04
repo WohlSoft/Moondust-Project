@@ -45,12 +45,14 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     pConfigs = &configs; // Pointer to Main Configs
 
+    opts.animationEnabled = true;
+    opts.collisionsEnabled = true;
+
     index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
     index_bgo = pConfigs->index_bgo;
 
     LvlData = &FileData; //Ad pointer to level data
     grid = true;
-    animationEnabled = true;
     EditingMode = 0;
     EraserEnabled = false;
     IsMoved = false;
@@ -189,6 +191,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QList<QGraphicsItem*> selectedList = selectedItems();
 
             QString ObjType;
+            int collisionPassed = false;
 
 
             // check for grid snap
@@ -279,6 +282,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 EraserEnabled = false;
 
                 // Check collisions
+                //Only if collision ckecking enabled
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 {
                     ObjType = (*it)->data(0).toString();
@@ -322,8 +326,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         continue;
                     }
 
+                    if(opts.collisionsEnabled)
+                    { //check Available to collisions checking
                         if( itemCollidesWith((*it)) )
                         {
+                            collisionPassed = false;
                             (*it)->setPos(QPointF(sourcePos));
                             (*it)->setSelected(false);
                             /*
@@ -333,39 +340,31 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         }
                         else
                         {
-                            if( ObjType == "Block")
-                            {
-                                //WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
-                                //Applay move into main array
-                                ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
-                                ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
-                                ((ItemBlock *)(*it))->arrayApply();
-                                LvlData->modified = true;
-                            } else
-                            if( ObjType == "BGO")
-                            {
-                                WriteToLog(QtDebugMsg, QString(" >>BGO Collision passed"));
-                                ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
-                                ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
-                                WriteToLog(QtDebugMsg, QString(" >>Data applayed"));
-                                ((ItemBGO *)(*it))->arrayApply();
-                                WriteToLog(QtDebugMsg, QString(" >>Array applayed"));
-                                LvlData->modified = true;
-
-                                /*
-                                for (i=0;i<LvlData->bgo.size();i++)
-                                {
-                                    if(LvlData->bgo[i].array_id==(unsigned)(*it)->data(2).toInt())
-                                    {
-                                        //Applay move into main array
-                                        LvlData->bgo[i].x = (long)(*it)->scenePos().x();
-                                        LvlData->bgo[i].y = (long)(*it)->scenePos().y();
-                                        LvlData->modified = true;
-                                        break;
-                                    }
-                                }*/
-                            }
+                            collisionPassed = true;
                         }
+                    }
+
+                    if((collisionPassed) || (!opts.collisionsEnabled))
+                    {
+                        if( ObjType == "Block")
+                        {
+                            //WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
+                            //Applay move into main array
+                            ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
+                            ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
+                            ((ItemBlock *)(*it))->arrayApply();
+                            LvlData->modified = true;
+                        }
+                        else
+                        if( ObjType == "BGO")
+                        {
+                            //Applay move into main array
+                            ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
+                            ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
+                            ((ItemBGO *)(*it))->arrayApply();
+                            LvlData->modified = true;
+                        }
+                    }
                 }
 
 
@@ -1427,7 +1426,6 @@ void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
     unsigned long ymini;
     long sorted = 0;
 
-
         while(sorted < bgos.size())
         {
             ymin = bgos[sorted].id;
@@ -1507,27 +1505,6 @@ void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
     for(i=0; i<FileData.npc.size(); i++)
     {
         placeNPC(FileData.npc[i]);
-
-        /*
-        box = addPixmap(QPixmap(uNpcImg));
-        box->setPos(FileData.npc[i].x, FileData.npc[i].y);
-
-        box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
-        box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
-
-        //npcfore->addToGroup(box);
-        if(FileData.npc[i].id==91)
-            box->setZValue(npcZf);
-        else
-            box->setZValue(npcZb);
-
-        box->setData(0, "NPC"); // ObjType
-        box->setData(1, QString::number(FileData.npc[i].id) );
-        box->setData(2, QString::number(FileData.npc[i].array_id) );
-
-        box->setData(9, QString::number(uNpcImg.width()) ); //width
-        box->setData(10, QString::number(uNpcImg.height()) ); //height
-        */
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
