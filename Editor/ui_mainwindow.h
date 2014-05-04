@@ -947,6 +947,13 @@ public:
         LevelSectionSettings->setSizePolicy(sizePolicy3);
         LevelSectionSettings->setMinimumSize(QSize(230, 360));
         LevelSectionSettings->setMaximumSize(QSize(230, 360));
+        QFont font;
+        font.setFamily(QStringLiteral("Liberation Sans"));
+        font.setPointSize(8);
+        font.setBold(false);
+        font.setItalic(false);
+        font.setWeight(50);
+        LevelSectionSettings->setFont(font);
         QIcon icon44;
         icon44.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
         LevelSectionSettings->setWindowIcon(icon44);
@@ -960,52 +967,63 @@ public:
         LVLPropMusicGr->setObjectName(QStringLiteral("LVLPropMusicGr"));
         LVLPropMusicGr->setGeometry(QRect(0, 160, 221, 101));
         LVLPropMusicGr->setMinimumSize(QSize(0, 101));
+        LVLPropMusicGr->setFont(font);
         LVLPropsMusicNumber = new QComboBox(LVLPropMusicGr);
         LVLPropsMusicNumber->setObjectName(QStringLiteral("LVLPropsMusicNumber"));
         LVLPropsMusicNumber->setGeometry(QRect(10, 20, 101, 20));
+        LVLPropsMusicNumber->setFont(font);
         LVLPropsMusicNumber->setFocusPolicy(Qt::WheelFocus);
         LVLPropCMusicLbl = new QLabel(LVLPropMusicGr);
         LVLPropCMusicLbl->setObjectName(QStringLiteral("LVLPropCMusicLbl"));
         LVLPropCMusicLbl->setGeometry(QRect(10, 50, 47, 16));
+        LVLPropCMusicLbl->setFont(font);
         LVLPropCMusicLbl->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         LVLPropsMusicCustom = new QLineEdit(LVLPropMusicGr);
         LVLPropsMusicCustom->setObjectName(QStringLiteral("LVLPropsMusicCustom"));
         LVLPropsMusicCustom->setGeometry(QRect(10, 70, 133, 21));
+        LVLPropsMusicCustom->setFont(font);
         LVLPropsMusicCustomEn = new QCheckBox(LVLPropMusicGr);
         LVLPropsMusicCustomEn->setObjectName(QStringLiteral("LVLPropsMusicCustomEn"));
         LVLPropsMusicCustomEn->setGeometry(QRect(120, 20, 88, 17));
+        LVLPropsMusicCustomEn->setFont(font);
         LVLPropsMusicCustomEn->setTristate(false);
         LVLPropsMusicCustomBrowse = new QPushButton(LVLPropMusicGr);
         LVLPropsMusicCustomBrowse->setObjectName(QStringLiteral("LVLPropsMusicCustomBrowse"));
         LVLPropsMusicCustomBrowse->setGeometry(QRect(140, 70, 31, 21));
+        LVLPropsMusicCustomBrowse->setFont(font);
         LVLPropSettingsGrp = new QGroupBox(LevelSection);
         LVLPropSettingsGrp->setObjectName(QStringLiteral("LVLPropSettingsGrp"));
         LVLPropSettingsGrp->setGeometry(QRect(0, 40, 221, 121));
         LVLPropSettingsGrp->setMinimumSize(QSize(0, 121));
+        LVLPropSettingsGrp->setFont(font);
         verticalLayout_3 = new QVBoxLayout(LVLPropSettingsGrp);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         LVLPropsLevelWarp = new QCheckBox(LVLPropSettingsGrp);
         LVLPropsLevelWarp->setObjectName(QStringLiteral("LVLPropsLevelWarp"));
+        LVLPropsLevelWarp->setFont(font);
         LVLPropsLevelWarp->setTristate(false);
 
         verticalLayout_3->addWidget(LVLPropsLevelWarp);
 
         LVLPropsOffScr = new QCheckBox(LVLPropSettingsGrp);
         LVLPropsOffScr->setObjectName(QStringLiteral("LVLPropsOffScr"));
+        LVLPropsOffScr->setFont(font);
         LVLPropsOffScr->setTristate(false);
 
         verticalLayout_3->addWidget(LVLPropsOffScr);
 
         LVLPropsNoTBack = new QCheckBox(LVLPropSettingsGrp);
         LVLPropsNoTBack->setObjectName(QStringLiteral("LVLPropsNoTBack"));
+        LVLPropsNoTBack->setFont(font);
         LVLPropsNoTBack->setTristate(false);
 
         verticalLayout_3->addWidget(LVLPropsNoTBack);
 
         LVLPropsUnderWater = new QCheckBox(LVLPropSettingsGrp);
         LVLPropsUnderWater->setObjectName(QStringLiteral("LVLPropsUnderWater"));
+        LVLPropsUnderWater->setFont(font);
         LVLPropsUnderWater->setTristate(false);
 
         verticalLayout_3->addWidget(LVLPropsUnderWater);
@@ -1014,18 +1032,21 @@ public:
         LVLPropStyleGr->setObjectName(QStringLiteral("LVLPropStyleGr"));
         LVLPropStyleGr->setGeometry(QRect(0, 260, 221, 70));
         LVLPropStyleGr->setMinimumSize(QSize(0, 70));
+        LVLPropStyleGr->setFont(font);
         verticalLayout = new QVBoxLayout(LVLPropStyleGr);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         LVLPropBckrImg = new QLabel(LVLPropStyleGr);
         LVLPropBckrImg->setObjectName(QStringLiteral("LVLPropBckrImg"));
+        LVLPropBckrImg->setFont(font);
 
         verticalLayout->addWidget(LVLPropBckrImg);
 
         LVLPropsBackImage = new QComboBox(LVLPropStyleGr);
         LVLPropsBackImage->setObjectName(QStringLiteral("LVLPropsBackImage"));
-        LVLPropsBackImage->setMinimumSize(QSize(0, 25));
+        LVLPropsBackImage->setMinimumSize(QSize(0, 15));
+        LVLPropsBackImage->setFont(font);
         LVLPropsBackImage->setFocusPolicy(Qt::WheelFocus);
 
         verticalLayout->addWidget(LVLPropsBackImage);
@@ -1033,16 +1054,20 @@ public:
         groupBox_5 = new QGroupBox(LevelSection);
         groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
         groupBox_5->setGeometry(QRect(0, 0, 91, 41));
+        groupBox_5->setFont(font);
         label_9 = new QLabel(groupBox_5);
         label_9->setObjectName(QStringLiteral("label_9"));
         label_9->setGeometry(QRect(10, 20, 51, 16));
+        label_9->setFont(font);
         label_9->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         LVLProp_CurSect = new QLabel(groupBox_5);
         LVLProp_CurSect->setObjectName(QStringLiteral("LVLProp_CurSect"));
         LVLProp_CurSect->setGeometry(QRect(70, 20, 16, 16));
+        LVLProp_CurSect->setFont(font);
         ResizeSection = new QPushButton(LevelSection);
         ResizeSection->setObjectName(QStringLiteral("ResizeSection"));
         ResizeSection->setGeometry(QRect(100, 10, 111, 23));
+        ResizeSection->setFont(font);
         ResizeSection->setCheckable(true);
         LevelSectionSettings->setWidget(LevelSection);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), LevelSectionSettings);

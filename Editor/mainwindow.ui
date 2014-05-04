@@ -853,6 +853,15 @@
      <height>360</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>8</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="windowIcon">
     <iconset resource="editor.qrc">
      <normaloff>:/images/section16.png</normaloff>:/images/section16.png</iconset>
@@ -891,6 +900,15 @@
        <height>101</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="title">
       <string>Music</string>
      </property>
@@ -902,6 +920,15 @@
         <width>101</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="focusPolicy">
        <enum>Qt::WheelFocus</enum>
@@ -921,6 +948,15 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Music file:</string>
       </property>
@@ -937,6 +973,15 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
      </widget>
      <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
       <property name="geometry">
@@ -946,6 +991,15 @@
         <width>88</width>
         <height>17</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="text">
        <string>Custom music</string>
@@ -962,6 +1016,15 @@
         <width>31</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="text">
        <string>...</string>
@@ -983,12 +1046,30 @@
        <height>121</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="title">
       <string>Section Settings</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QCheckBox" name="LVLPropsLevelWarp">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="whatsThis">
          <string>Leaving for the screen, the player enters the screen on the other side</string>
         </property>
@@ -1002,6 +1083,15 @@
       </item>
       <item>
        <widget class="QCheckBox" name="LVLPropsOffScr">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Off screen exit</string>
         </property>
@@ -1012,6 +1102,15 @@
       </item>
       <item>
        <widget class="QCheckBox" name="LVLPropsNoTBack">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>No turn back (disable moving to left)</string>
         </property>
@@ -1022,6 +1121,15 @@
       </item>
       <item>
        <widget class="QCheckBox" name="LVLPropsUnderWater">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Underwater</string>
         </property>
@@ -1047,12 +1155,30 @@
        <height>70</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="title">
       <string>Style</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="LVLPropBckrImg">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Background image</string>
         </property>
@@ -1063,8 +1189,17 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>25</height>
+          <height>15</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::WheelFocus</enum>
@@ -1087,6 +1222,15 @@
        <height>41</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="title">
       <string>Current Section</string>
      </property>
@@ -1098,6 +1242,15 @@
         <width>51</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="text">
        <string>Section:</string>
@@ -1115,6 +1268,15 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>0</string>
       </property>
@@ -1128,6 +1290,15 @@
        <width>111</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="text">
       <string>Resize section</string>
