@@ -239,6 +239,8 @@
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionCopy"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuEdit"/>
@@ -412,8 +414,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -439,8 +441,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -466,8 +468,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -644,8 +646,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>273</width>
-        <height>435</height>
+        <width>81</width>
+        <height>73</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -705,8 +707,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -729,8 +731,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -3142,6 +3144,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy selected items</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
  </widget>
