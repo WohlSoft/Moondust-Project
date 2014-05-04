@@ -390,14 +390,17 @@ LevelData LvlScene::copy()
         for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
         {
             QString ObjType = (*it)->data(0).toString();
+
             if( ObjType == "Block")
             {
                 copyData.blocks.push_back(((ItemBlock *)(*it))->blockData);
-            }else
+            }
+            else
             if( ObjType == "BGO")
             {
                 copyData.bgo.push_back(((ItemBGO *)(*it))->bgoData);
-            }else
+            }
+            else
             if( ObjType == "NPC")
             {
                 foreach (LevelNPC findInArr, LvlData->npc)
@@ -409,7 +412,8 @@ LevelData LvlScene::copy()
                     }
                 }
             }
-        }
+
+        }//fetch selected items
     }
 
     return copyData;
