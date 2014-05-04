@@ -123,10 +123,13 @@ protected:
 
 private:
     QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
-    void placeBox(float x, float y);
+
+    //void placeBox(float x, float y);//Trash
+
     void placeBlock(LevelBlock &block, dataconfigs &configs);
     void placeBGO(LevelBGO &bgo);
     void placeDoor(LevelDoors &door);
+    void placeNPC(LevelNPC &npc);
 
     void setSectionBG(LevelSection section);
 

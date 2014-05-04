@@ -1122,6 +1122,7 @@ void LvlScene::ChangeSectionBG(int BG_Id, LevelData &FileData)
 
 //////////////////Block////////////////////////////////////////////////////////////////////////////////////////
 
+/* //The Trach
 void LvlScene::placeBox(float x, float y)
 {
     QGraphicsItem *	box = addPixmap(QPixmap(QApplication::applicationDirPath() + "/" + "data/graphics/level/block/block-8.gif"));
@@ -1131,6 +1132,7 @@ void LvlScene::placeBox(float x, float y)
     else
         box->setData(0, "Box");
 }
+*/
 
 void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
 {
@@ -1364,6 +1366,28 @@ void LvlScene::placeBGO(LevelBGO &bgo)
 
 }
 
+void LvlScene::placeNPC(LevelNPC &npc)
+{
+    QGraphicsItem *	box;
+    box = addPixmap(QPixmap(uNpcImg));
+    box->setPos(npc.x, npc.y);
+
+    box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
+    box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
+
+    //npcfore->addToGroup(box);
+    if(npc.id==91)
+        box->setZValue(npcZf);
+    else
+        box->setZValue(npcZb);
+
+    box->setData(0, "NPC"); // ObjType
+    box->setData(1, QString::number(npc.id) );
+    box->setData(2, QString::number(npc.array_id) );
+
+    box->setData(9, QString::number(uNpcImg.width()) ); //width
+    box->setData(10, QString::number(uNpcImg.height()) ); //height
+}
 
 void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
 {
@@ -1478,10 +1502,13 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
 void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
-    QGraphicsItem *	box;
+    //QGraphicsItem *	box;
 
     for(i=0; i<FileData.npc.size(); i++)
     {
+        placeNPC(FileData.npc[i]);
+
+        /*
         box = addPixmap(QPixmap(uNpcImg));
         box->setPos(FileData.npc[i].x, FileData.npc[i].y);
 
@@ -1500,6 +1527,7 @@ void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
 
         box->setData(9, QString::number(uNpcImg.width()) ); //width
         box->setData(10, QString::number(uNpcImg.height()) ); //height
+        */
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
