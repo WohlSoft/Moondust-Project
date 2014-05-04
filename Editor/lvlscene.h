@@ -76,6 +76,8 @@ public:
     void setDoors(LevelData FileData, QProgressDialog &progress);
     void setPlayerPoints();
 
+    LevelData copy();
+
     void startBlockAnimation();
     void stopAnimation();
 
