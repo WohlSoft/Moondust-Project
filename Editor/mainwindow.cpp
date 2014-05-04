@@ -185,6 +185,8 @@ void MainWindow::updateMenus()
     ui->menuWorld->setEnabled(( WinType==3) );
     ui->actionWLDToolBox->setVisible( (WinType==3));
 
+    ui->actionCopy->setEnabled( (WinType==1) || (WinType==3) );
+
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
 
     if(!(WinType==1)) LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
@@ -1587,4 +1589,22 @@ void MainWindow::on_action_recent9_triggered()
 void MainWindow::on_action_recent10_triggered()
 {
     OpenFile(ui->action_recent10->text());
+}
+
+
+
+
+
+void MainWindow::on_actionCopy_triggered()
+{
+    int q1=0, q2=0, q3=0;
+    if (activeChildWindow()==1) //if active window is a levelEditor
+    {
+       LvlBuffer=activeLvlEditWin()->scene->copy();
+       q1 += LvlBuffer.blocks.size();
+       q2 += LvlBuffer.bgo.size();
+       q3 += LvlBuffer.npc.size();
+       statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC items are copied in clipboard").arg(q1).arg(q2).arg(q3), 2000);
+    }
+
 }

@@ -119,6 +119,7 @@ public:
     QAction *action_recent8;
     QAction *action_recent9;
     QAction *action_recent10;
+    QAction *actionCopy;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -674,6 +675,8 @@ public:
         action_recent10 = new QAction(MainWindow);
         action_recent10->setObjectName(QStringLiteral("action_recent10"));
         action_recent10->setEnabled(false);
+        actionCopy = new QAction(MainWindow);
+        actionCopy->setObjectName(QStringLiteral("actionCopy"));
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -783,7 +786,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 256, 435));
+        backsscroll->setGeometry(QRect(0, 0, 81, 28));
         backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -794,7 +797,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 256, 435));
+        npcscroll->setGeometry(QRect(0, 0, 81, 28));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -805,7 +808,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 256, 435));
+        specialscroll->setGeometry(QRect(0, 0, 81, 28));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -868,7 +871,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 273, 435));
+        TilesItemBox->setGeometry(QRect(0, 0, 81, 73));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -896,7 +899,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 256, 435));
+        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -906,7 +909,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 256, 435));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -1319,6 +1322,8 @@ public:
         menuTools->addAction(actionReload);
         menuEdit->addAction(actionUndo);
         menuEdit->addAction(actionRedo);
+        menuEdit->addSeparator();
+        menuEdit->addAction(actionCopy);
         mainToolBar->addAction(OpenFile);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_as);
@@ -1594,6 +1599,11 @@ public:
         action_recent8->setText(QApplication::translate("MainWindow", "<empty>", 0));
         action_recent9->setText(QApplication::translate("MainWindow", "<empty>", 0));
         action_recent10->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        actionCopy->setText(QApplication::translate("MainWindow", "Copy", 0));
+#ifndef QT_NO_TOOLTIP
+        actionCopy->setToolTip(QApplication::translate("MainWindow", "Copy selected items", 0));
+#endif // QT_NO_TOOLTIP
+        actionCopy->setShortcut(QApplication::translate("MainWindow", "Ctrl+C", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));

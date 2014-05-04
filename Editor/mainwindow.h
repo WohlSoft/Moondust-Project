@@ -190,9 +190,13 @@ private slots:
     void on_action_recent9_triggered();
     void on_action_recent10_triggered();
 
+    void on_actionCopy_triggered();
+
 private:
-    dataconfigs configs;
-    bool AnimationEnabled;
+    dataconfigs configs; // Global objects configucrations
+    bool AnimationEnabled; //Animator switch
+
+    LevelData LvlBuffer; // The Clipboarc for Level objects
 
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);
