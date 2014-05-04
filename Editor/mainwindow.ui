@@ -220,6 +220,7 @@
     <addaction name="actionWLDToolBox"/>
     <addaction name="separator"/>
     <addaction name="actionAnimation"/>
+    <addaction name="actionCollisions"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -414,8 +415,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -441,8 +442,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -468,8 +469,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -620,7 +621,7 @@
    </attribute>
    <widget class="QTabWidget" name="WorldToolBoxTabs">
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <widget class="QScrollArea" name="Tiles">
      <property name="toolTip">
@@ -646,8 +647,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>73</height>
+        <width>273</width>
+        <height>435</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -707,8 +708,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
      </widget>
@@ -731,8 +732,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>256</width>
+        <height>435</height>
        </rect>
       </property>
      </widget>
@@ -3063,7 +3064,7 @@ p, li { white-space: pre-wrap; }
     <string>Animation</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If map have too many objects, we recommends diable this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="action_recent1">
@@ -3155,6 +3156,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionCollisions">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Collisions</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
  </widget>

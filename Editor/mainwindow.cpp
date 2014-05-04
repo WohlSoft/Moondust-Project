@@ -1594,7 +1594,7 @@ void MainWindow::on_action_recent10_triggered()
 
 
 
-
+//Copy
 void MainWindow::on_actionCopy_triggered()
 {
     int q1=0, q2=0, q3=0;
