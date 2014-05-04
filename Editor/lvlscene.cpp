@@ -377,6 +377,45 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
 
+LevelData LvlScene::copy()
+{
+
+    //Get Selected Items
+    QList<QGraphicsItem*> selectedList = selectedItems();
+
+    LevelData copyData;
+
+    if (!selectedList.isEmpty())
+    {
+        for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
+        {
+            QString ObjType = (*it)->data(0).toString();
+            if( ObjType == "Block")
+            {
+                copyData.blocks.push_back(((ItemBlock *)(*it))->blockData);
+            }else
+            if( ObjType == "BGO")
+            {
+                copyData.bgo.push_back(((ItemBGO *)(*it))->bgoData);
+            }else
+            if( ObjType == "NPC")
+            {
+                foreach (LevelNPC findInArr, LvlData->npc)
+                {
+                    if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
+                    {
+                        copyData.npc.push_back(findInArr);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    return copyData;
+}
+
+
 QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 {
     qlonglong leftA, leftB;
@@ -1649,6 +1688,7 @@ void LvlScene::setPlayerPoints()
     }
 
 }
+
 
 
 ////////////////////////////////////Animator////////////////////////////////
