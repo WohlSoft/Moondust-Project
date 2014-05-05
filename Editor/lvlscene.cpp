@@ -418,6 +418,52 @@ LevelData LvlScene::copy()
     return copyData;
 }
 
+void LvlScene::paste(LevelData BufferIn, QPoint pos)
+{
+    long baseX, baseY;
+    //set first base
+    if(!BufferIn.blocks.isEmpty()){
+        baseX = BufferIn.blocks[0].x;
+        baseY = BufferIn.blocks[0].y;
+    }else if(!BufferIn.bgo.isEmpty()){
+        baseX = BufferIn.bgo[0].x;
+        baseY = BufferIn.bgo[0].y;
+    }else if(!BufferIn.npc.isEmpty()){
+        baseX = BufferIn.npc[0].x;
+        baseY = BufferIn.npc[0].y;
+    }else{
+        //nothing to copy
+        return;
+    }
+
+
+
+    foreach (LevelBlock block, BufferIn.blocks) {
+        if(block.x<baseX){
+            baseX = block.x;
+        }
+        if(block.y<baseY){
+            baseY = block.y;
+        }
+    }
+    foreach (LevelBGO bgo, BufferIn.bgo){
+        if(bgo.x<baseX){
+            baseX = bgo.x;
+        }
+        if(bgo.y<baseY){
+            baseY = bgo.y;
+        }
+    }
+    foreach (LevelNPC npc, BufferIn.npc){
+        if(npc.x<baseX){
+            baseX = npc.x;
+        }
+        if(bgo.y<baseY){
+            baseY = npc.y;
+        }
+    }
+}
+
 
 QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 {
