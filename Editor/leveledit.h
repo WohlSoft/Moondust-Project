@@ -71,7 +71,7 @@ private:
 
     bool sceneCreared;
     LevelData StartLvlData;
-    bool DrawObjects(QProgressDialog &progress, dataconfigs &configs);
+    bool DrawObjects(QProgressDialog &progress);
 
     bool isModified;
     bool maybeSave();

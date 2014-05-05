@@ -76,8 +76,9 @@ public:
     void drawSpace(LevelData FileData);
     void ChangeSectionBG(int BG_Id, LevelData &FileData);
 
-    void loadUserData(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
-    void setBlocks(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
+    void loadUserData(LevelData FileData, QProgressDialog &progress);
+
+    void setBlocks(LevelData FileData, QProgressDialog &progress);
     void setBGO(LevelData FileData, QProgressDialog &progress);
     void setNPC(LevelData FileData, QProgressDialog &progress);
     void setWaters(LevelData FileData, QProgressDialog &progress);
@@ -130,7 +131,7 @@ protected:
 private:
     QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
 
-    void placeBlock(LevelBlock &block, dataconfigs &configs);
+    void placeBlock(LevelBlock &block);
     void placeBGO(LevelBGO &bgo);
     void placeDoor(LevelDoors &door);
     void placeNPC(LevelNPC &npc);
