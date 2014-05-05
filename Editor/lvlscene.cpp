@@ -478,20 +478,20 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
     foreach (LevelBGO bgo, BufferIn.bgo){
         //Gen Copy of BGO
         LevelBGO dump = bgo;
-        dump.x = (long)pos.x() + block.x - baseX;
-        dump.y = (long)pos.y() + block.y - baseY;
+        dump.x = (long)pos.x() + bgo.x - baseX;
+        dump.y = (long)pos.y() + bgo.y - baseY;
         LvlData->bgo_array_id++;
         dump.array_id = LvlData->bgo_array_id;
         placeBGO(dump);
     }
     foreach (LevelNPC npc, BufferIn.npc){
         //Gen Copy of NPC
-        LevelNPC  dump = bgo;
-        dump.x = (long)pos.x() + block.x - baseX;
-        dump.y = (long)pos.y() + block.y - baseY;
+        LevelNPC  dump = npc;
+        dump.x = (long)pos.x() + npc.x - baseX;
+        dump.y = (long)pos.y() + npc.y - baseY;
         LvlData->npc_array_id++;
         dump.array_id = LvlData->npc_array_id++;
-        placeBGO(dump);
+        placeNPC(dump);
     }
 
 }
