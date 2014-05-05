@@ -62,5 +62,8 @@
         <file alias="hand.png">images/hand.png</file>
         <file alias="player1.png">images/player1_point.png</file>
         <file alias="player2.png">images/player2_point.png</file>
+        <file alias="cur_pasta.png">images/cur_pasta.png</file>
+        <file alias="drawQuickSand.png">images/draw_sand.png</file>
+        <file alias="drawWater.png">images/draw_water.png</file>
     </qresource>
 </RCC>
