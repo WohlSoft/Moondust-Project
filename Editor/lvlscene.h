@@ -123,6 +123,21 @@ public:
     bool IsMoved;
     bool haveSelected;
 
+    //default objects Z value
+    int blockZ; // standart block
+    int blockZs; // sizeble block
+    int blockZl; // lava block
+    int playerZ; //playerPointZ
+    int bgoZf; // foreground BGO
+    int bgoZb; // backround BGO
+    int npcZf; // foreground NPC
+    int npcZb; // standart NPC
+    int doorZ;
+    int waterZ;
+    int bgZ;
+    int spaceZ1; // interSection space layer
+    int spaceZ2;
+
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -150,23 +165,8 @@ private:
 
     QPixmap tImg;//Tempotary buffer
 
-    //default objects Z value
-    int blockZ; // standart block
-    int blockZs; // sizeble block
-    int blockZl; // lava block
-    int playerZ; //playerPointZ
-    int bgoZf; // foreground BGO
-    int bgoZb; // backround BGO
-    int npcZf; // foreground NPC
-    int npcZb; // standart NPC
-    int doorZ;
-    int waterZ;
-    int bgZ;
-    int spaceZ1; // interSection space layer
-    int spaceZ2;
-
     QVector<qreal > Z;
-    qreal sbZ;
+    //qreal sbZ;
 
     QMenu blockMenu;
     QMenu bgoMenu;

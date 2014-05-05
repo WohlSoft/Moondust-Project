@@ -57,7 +57,8 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     EraserEnabled = false;
     IsMoved = false;
     haveSelected = false;
-    sbZ = 0;
+
+    //sbZ = 0;
 
     QPixmap cur(QSize(1,1));
     cur.fill(Qt::black);
@@ -502,7 +503,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
     qlonglong rightA, rightB;
     qlonglong topA, topB;
     qlonglong bottomA, bottomB;
-    qreal betweenZ;
+    //qreal betweenZ;
 
     QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
     foreach (QGraphicsItem * it, collisions) {
@@ -537,6 +538,8 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
                   {//sizable Block
                       WriteToLog(QtDebugMsg, QString("sizable block") );
                       //Change berween Z-Values
+
+                      /* This is trash, because exist better method for Z-Value sorting
                       if(it->data(3).toString()=="sizable")
                       {
                           WriteToLog(QtDebugMsg, QString("Colliding with sizable Z: %1 %2")
@@ -568,7 +571,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 
                                 WriteToLog(QtDebugMsg, QString("sizable block changed Z+") );
                               }
-                      }
+                      } */
                       continue;
                   }//sizable Block
 
@@ -1308,8 +1311,8 @@ void LvlScene::placeBlock(LevelBlock &block)
 
     if(pConfigs->main_block[j].sizable)
     {
-        BlockImage->setZValue(blockZs+sbZ); // applay sizable block Z
-        sbZ += 0.0000000001;
+        BlockImage->setZValue( blockZs + ((double)block.y/(double)100000000000) + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
+        //sbZ += 0.0000000001;
     }
     else
     {
