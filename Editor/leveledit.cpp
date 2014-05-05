@@ -244,7 +244,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
          //progress.setCancelButton(0);
 
-    if(! DrawObjects(progress, configs) )
+    if(! DrawObjects(progress) )
     {
         LvlData.modified = false;
         this->close();
@@ -293,7 +293,7 @@ void leveledit::changeCursor(int mode)
     }
 }
 
-bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
+bool leveledit::DrawObjects(QProgressDialog &progress)
 {
     int DataSize = progress.maximum();
     int TotalSteps = 6;
@@ -301,7 +301,7 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     if(!progress.wasCanceled())
         progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
-    scene->loadUserData(LvlData, progress, configs);
+    scene->loadUserData(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
@@ -319,7 +319,7 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 
     if(!progress.wasCanceled())
         progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
-    scene->setBlocks(LvlData, progress, configs);
+    scene->setBlocks(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
