@@ -66,7 +66,9 @@ public:
 
     bool grid;
     int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
+                     // 3 - drawing water/sand zone, 4 - placing from Buffer
     bool EraserEnabled;
+    bool PasteFromBuffer;
 
     LevelEditingSettings opts;
 
@@ -107,6 +109,8 @@ public:
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
 
     LevelData  * LvlData;
+
+    LevelData LvlBuffer;
 
     dataconfigs * pConfigs;
 

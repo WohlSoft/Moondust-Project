@@ -1326,7 +1326,7 @@
    <addaction name="actionSetFirstPlayer"/>
    <addaction name="actionSetSecondPlayer"/>
    <addaction name="actionDrawWater"/>
-   <addaction name="actionActionDrawSand"/>
+   <addaction name="actionDrawSand"/>
    <addaction name="separator"/>
    <addaction name="actionLockBlocks"/>
    <addaction name="actionLockBGO"/>
@@ -3187,7 +3187,7 @@ p, li { white-space: pre-wrap; }
     <string>Hold mouse button on map and move mouse for draw water zone</string>
    </property>
   </action>
-  <action name="actionActionDrawSand">
+  <action name="actionDrawSand">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -3196,7 +3196,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/drawQuickSand.png</normaloff>:/drawQuickSand.png</iconset>
    </property>
    <property name="text">
-    <string>actionDrawSand</string>
+    <string>Draw QuickSand zone</string>
    </property>
    <property name="toolTip">
     <string>Hold mouse button on map and move mouse for draw quick sand zone</string>

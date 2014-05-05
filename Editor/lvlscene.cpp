@@ -36,6 +36,7 @@
 #include "item_block.h"
 #include "item_bgo.h"
 
+#include "leveledit.h"
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
@@ -44,7 +45,6 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
         BgItem.push_back(new QGraphicsPixmapItem);
 
     pConfigs = &configs; // Pointer to Main Configs
-
     opts.animationEnabled = true;
     opts.collisionsEnabled = true;
 
@@ -55,6 +55,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     grid = true;
     EditingMode = 0;
     EraserEnabled = false;
+    PasteFromBuffer = false;
     IsMoved = false;
     haveSelected = false;
 
@@ -128,6 +129,11 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             EraserEnabled = true;
         }
+        else
+        if(EditingMode==4)
+        {
+            PasteFromBuffer = true;
+        }
         /* if (!selectedList.isEmpty())
         {
 
@@ -194,6 +200,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QString ObjType;
             int collisionPassed = false;
 
+            if(PasteFromBuffer)
+            {
+                paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
+                //changeCursor(0);
+                EditingMode = 0;
+                PasteFromBuffer = false;
+            }
 
             // check for grid snap
             if ((!selectedList.isEmpty())&&(IsMoved))
@@ -282,8 +295,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
                 EraserEnabled = false;
 
+
                 // Check collisions
                 //Only if collision ckecking enabled
+                if(!PasteFromBuffer)
+
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 {
                     ObjType = (*it)->data(0).toString();
@@ -438,8 +454,6 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         //nothing to paste
         return;
     }
-
-
 
     foreach (LevelBlock block, BufferIn.blocks) {
         if(block.x<baseX){

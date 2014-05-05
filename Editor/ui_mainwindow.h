@@ -122,7 +122,7 @@ public:
     QAction *actionCopy;
     QAction *actionCollisions;
     QAction *actionDrawWater;
-    QAction *actionActionDrawSand;
+    QAction *actionDrawSand;
     QAction *actionPaste;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
@@ -690,12 +690,12 @@ public:
         QIcon icon42;
         icon42.addFile(QStringLiteral(":/drawWater.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionDrawWater->setIcon(icon42);
-        actionActionDrawSand = new QAction(MainWindow);
-        actionActionDrawSand->setObjectName(QStringLiteral("actionActionDrawSand"));
-        actionActionDrawSand->setCheckable(true);
+        actionDrawSand = new QAction(MainWindow);
+        actionDrawSand->setObjectName(QStringLiteral("actionDrawSand"));
+        actionDrawSand->setCheckable(true);
         QIcon icon43;
         icon43.addFile(QStringLiteral(":/drawQuickSand.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionActionDrawSand->setIcon(icon43);
+        actionDrawSand->setIcon(icon43);
         actionPaste = new QAction(MainWindow);
         actionPaste->setObjectName(QStringLiteral("actionPaste"));
         centralWidget = new QMdiArea(MainWindow);
@@ -1385,7 +1385,7 @@ public:
         LevelObjectToolbar->addAction(actionSetFirstPlayer);
         LevelObjectToolbar->addAction(actionSetSecondPlayer);
         LevelObjectToolbar->addAction(actionDrawWater);
-        LevelObjectToolbar->addAction(actionActionDrawSand);
+        LevelObjectToolbar->addAction(actionDrawSand);
         LevelObjectToolbar->addSeparator();
         LevelObjectToolbar->addAction(actionLockBlocks);
         LevelObjectToolbar->addAction(actionLockBGO);
@@ -1637,9 +1637,9 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionDrawWater->setToolTip(QApplication::translate("MainWindow", "Hold mouse button on map and move mouse for draw water zone", 0));
 #endif // QT_NO_TOOLTIP
-        actionActionDrawSand->setText(QApplication::translate("MainWindow", "actionDrawSand", 0));
+        actionDrawSand->setText(QApplication::translate("MainWindow", "Draw QuickSand zone", 0));
 #ifndef QT_NO_TOOLTIP
-        actionActionDrawSand->setToolTip(QApplication::translate("MainWindow", "Hold mouse button on map and move mouse for draw quick sand zone", 0));
+        actionDrawSand->setToolTip(QApplication::translate("MainWindow", "Hold mouse button on map and move mouse for draw quick sand zone", 0));
 #endif // QT_NO_TOOLTIP
         actionPaste->setText(QApplication::translate("MainWindow", "Paste", 0));
         actionPaste->setShortcut(QApplication::translate("MainWindow", "Ctrl+V", 0));

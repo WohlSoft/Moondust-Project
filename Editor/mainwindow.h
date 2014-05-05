@@ -188,6 +188,8 @@ private slots:
 
 
 
+    void on_actionPaste_triggered();
+
 private:
     dataconfigs configs; // Global objects configucrations
 
