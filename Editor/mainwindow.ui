@@ -242,6 +242,7 @@
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
     <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuEdit"/>
@@ -1324,6 +1325,8 @@
    </attribute>
    <addaction name="actionSetFirstPlayer"/>
    <addaction name="actionSetSecondPlayer"/>
+   <addaction name="actionDrawWater"/>
+   <addaction name="actionActionDrawSand"/>
    <addaction name="separator"/>
    <addaction name="actionLockBlocks"/>
    <addaction name="actionLockBGO"/>
@@ -3167,6 +3170,44 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionDrawWater">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/drawWater.png</normaloff>:/drawWater.png</iconset>
+   </property>
+   <property name="text">
+    <string>Draw Water zone</string>
+   </property>
+   <property name="toolTip">
+    <string>Hold mouse button on map and move mouse for draw water zone</string>
+   </property>
+  </action>
+  <action name="actionActionDrawSand">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/drawQuickSand.png</normaloff>:/drawQuickSand.png</iconset>
+   </property>
+   <property name="text">
+    <string>actionDrawSand</string>
+   </property>
+   <property name="toolTip">
+    <string>Hold mouse button on map and move mouse for draw quick sand zone</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
  </widget>
