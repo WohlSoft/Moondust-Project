@@ -161,22 +161,16 @@ private slots:
     void on_actionLockDoors_triggered(bool checked);
 
     void on_LVLPropsLevelWarp_clicked(bool checked);
-
     void on_actionLevWarp_triggered(bool checked);
-
     void on_LVLPropsOffScr_clicked(bool checked);
-
     void on_actionLevOffScr_triggered(bool checked);
-
     void on_LVLPropsNoTBack_clicked(bool checked);
-
     void on_actionLevNoBack_triggered(bool checked);
-
     void on_LVLPropsUnderWater_clicked(bool checked);
-
     void on_actionLevUnderW_triggered(bool checked);
 
     void on_actionAnimation_triggered(bool checked);
+    void on_actionCollisions_triggered(bool checked);
 
     //RecentFiles Items
     void on_action_recent1_triggered();
@@ -192,8 +186,12 @@ private slots:
 
     void on_actionCopy_triggered();
 
+
+
 private:
     dataconfigs configs; // Global objects configucrations
+
+    LevelEditingSettings LvlOpts;
     bool AnimationEnabled; //Animator switch
 
     LevelData LvlBuffer; // The Clipboarc for Level objects

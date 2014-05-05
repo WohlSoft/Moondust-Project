@@ -120,6 +120,7 @@ public:
     QAction *action_recent9;
     QAction *action_recent10;
     QAction *actionCopy;
+    QAction *actionCollisions;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -677,6 +678,9 @@ public:
         action_recent10->setEnabled(false);
         actionCopy = new QAction(MainWindow);
         actionCopy->setObjectName(QStringLiteral("actionCopy"));
+        actionCollisions = new QAction(MainWindow);
+        actionCollisions->setObjectName(QStringLiteral("actionCollisions"));
+        actionCollisions->setCheckable(true);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -786,7 +790,7 @@ public:
         backs->setWidgetResizable(true);
         backsscroll = new QWidget();
         backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 81, 28));
+        backsscroll->setGeometry(QRect(0, 0, 256, 435));
         backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         backs->setWidget(backsscroll);
         LevelToolBoxTabs->addTab(backs, QString());
@@ -797,7 +801,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 81, 28));
+        npcscroll->setGeometry(QRect(0, 0, 256, 435));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -808,7 +812,7 @@ public:
         special->setWidgetResizable(true);
         specialscroll = new QWidget();
         specialscroll->setObjectName(QStringLiteral("specialscroll"));
-        specialscroll->setGeometry(QRect(0, 0, 81, 28));
+        specialscroll->setGeometry(QRect(0, 0, 256, 435));
         specialscroll->setAutoFillBackground(true);
         specialscroll->setStyleSheet(QStringLiteral(""));
         layoutWidget = new QWidget(specialscroll);
@@ -871,7 +875,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 81, 73));
+        TilesItemBox->setGeometry(QRect(0, 0, 273, 435));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -899,7 +903,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
+        SceneryScroll->setGeometry(QRect(0, 0, 256, 435));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -909,7 +913,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 256, 435));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -1318,6 +1322,7 @@ public:
         menuView->addAction(actionWLDToolBox);
         menuView->addSeparator();
         menuView->addAction(actionAnimation);
+        menuView->addAction(actionCollisions);
         menuTools->addAction(actionLoad_configs);
         menuTools->addAction(actionReload);
         menuEdit->addAction(actionUndo);
@@ -1374,7 +1379,7 @@ public:
         retranslateUi(MainWindow);
 
         LevelToolBoxTabs->setCurrentIndex(0);
-        WorldToolBoxTabs->setCurrentIndex(3);
+        WorldToolBoxTabs->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1587,7 +1592,7 @@ public:
         actionWarpsAndDoors->setText(QApplication::translate("MainWindow", "Warps and doors", 0));
         actionAnimation->setText(QApplication::translate("MainWindow", "Animation", 0));
 #ifndef QT_NO_TOOLTIP
-        actionAnimation->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Enable animation on animated objects</p><p><span style=\" font-style:italic;\">If map have too many objects, we recommends diable this option</span></p></body></html>", 0));
+        actionAnimation->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Enable animation on animated objects</p><p><span style=\" font-style:italic; color:#aa0000;\">If map have too many objects, recommends to </span><span style=\" font-weight:600; font-style:italic; color:#aa0000;\">diable</span><span style=\" font-style:italic; color:#aa0000;\"> this option</span></p></body></html>", 0));
 #endif // QT_NO_TOOLTIP
         action_recent1->setText(QApplication::translate("MainWindow", "<empty>", 0));
         action_recent2->setText(QApplication::translate("MainWindow", "<empty>", 0));
@@ -1604,6 +1609,10 @@ public:
         actionCopy->setToolTip(QApplication::translate("MainWindow", "Copy selected items", 0));
 #endif // QT_NO_TOOLTIP
         actionCopy->setShortcut(QApplication::translate("MainWindow", "Ctrl+C", 0));
+        actionCollisions->setText(QApplication::translate("MainWindow", "Collisions", 0));
+#ifndef QT_NO_TOOLTIP
+        actionCollisions->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Placing item to simular item Protection</p><p>(If enabeld, the movement operation will be slower)</p></body></html>", 0));
+#endif // QT_NO_TOOLTIP
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));

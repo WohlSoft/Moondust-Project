@@ -184,7 +184,7 @@ void leveledit::setCurrentSection(int scId)
 
 
 
-bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs)
+bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs, LevelEditingSettings options)
 {
     QFile file(fileName);
     LvlData = FileData;
@@ -219,6 +219,11 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     }
 
     WriteToLog(QtDebugMsg, QString(">>Starting load file"));
+
+    //Declaring of the scene
+    scene = new LvlScene(configs, LvlData);
+
+    scene->opts = options;
 
     int DataSize=0;
 
@@ -293,8 +298,6 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     int DataSize = progress.maximum();
     int TotalSteps = 6;
 
-    scene = new LvlScene(configs, LvlData);
-
     if(!progress.wasCanceled())
         progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
@@ -343,7 +346,8 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     scene->drawSpace(LvlData);
 
 
-    scene->startBlockAnimation();//Apply block animation
+    if(scene->opts.animationEnabled)
+        scene->startBlockAnimation();//Apply block animation
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,

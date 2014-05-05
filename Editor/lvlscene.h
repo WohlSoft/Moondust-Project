@@ -49,6 +49,12 @@ struct UserBGs
     unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
 };
 
+struct LevelEditingSettings
+{
+    bool animationEnabled;
+    bool collisionsEnabled;
+};
+
 class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -61,6 +67,8 @@ public:
     bool grid;
     int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
     bool EraserEnabled;
+
+    LevelEditingSettings opts;
 
     //void makeSectionBG(int x, int y, int h, int w);
     void makeSectionBG(LevelData FileData, QProgressDialog &progress);
@@ -113,8 +121,6 @@ public:
     bool IsMoved;
     bool haveSelected;
 
-    bool animationEnabled;
-
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -123,10 +129,11 @@ protected:
 
 private:
     QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
-    void placeBox(float x, float y);
+
     void placeBlock(LevelBlock &block, dataconfigs &configs);
     void placeBGO(LevelBGO &bgo);
     void placeDoor(LevelDoors &door);
+    void placeNPC(LevelNPC &npc);
 
     void setSectionBG(LevelSection section);
 
