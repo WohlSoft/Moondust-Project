@@ -421,6 +421,81 @@ LevelData LvlScene::copy()
     return copyData;
 }
 
+void LvlScene::paste(LevelData BufferIn, QPoint pos)
+{
+    long baseX, baseY;
+    //set first base
+    if(!BufferIn.blocks.isEmpty()){
+        baseX = BufferIn.blocks[0].x;
+        baseY = BufferIn.blocks[0].y;
+    }else if(!BufferIn.bgo.isEmpty()){
+        baseX = BufferIn.bgo[0].x;
+        baseY = BufferIn.bgo[0].y;
+    }else if(!BufferIn.npc.isEmpty()){
+        baseX = BufferIn.npc[0].x;
+        baseY = BufferIn.npc[0].y;
+    }else{
+        //nothing to paste
+        return;
+    }
+
+
+
+    foreach (LevelBlock block, BufferIn.blocks) {
+        if(block.x<baseX){
+            baseX = block.x;
+        }
+        if(block.y<baseY){
+            baseY = block.y;
+        }
+    }
+    foreach (LevelBGO bgo, BufferIn.bgo){
+        if(bgo.x<baseX){
+            baseX = bgo.x;
+        }
+        if(bgo.y<baseY){
+            baseY = bgo.y;
+        }
+    }
+    foreach (LevelNPC npc, BufferIn.npc){
+        if(npc.x<baseX){
+            baseX = npc.x;
+        }
+        if(npc.y<baseY){
+            baseY = npc.y;
+        }
+    }
+
+    foreach (LevelBlock block, BufferIn.blocks){
+        //Gen Copy of Block
+        LevelBlock dump = block;
+        dump.x = (long)pos.x() + block.x - baseX;
+        dump.y = (long)pos.y() + block.y - baseY;
+        LvlData->blocks_array_id++;
+        dump.array_id = LvlData->blocks_array_id;
+        placeBlock(dump);
+    }
+    foreach (LevelBGO bgo, BufferIn.bgo){
+        //Gen Copy of BGO
+        LevelBGO dump = bgo;
+        dump.x = (long)pos.x() + bgo.x - baseX;
+        dump.y = (long)pos.y() + bgo.y - baseY;
+        LvlData->bgo_array_id++;
+        dump.array_id = LvlData->bgo_array_id;
+        placeBGO(dump);
+    }
+    foreach (LevelNPC npc, BufferIn.npc){
+        //Gen Copy of NPC
+        LevelNPC  dump = npc;
+        dump.x = (long)pos.x() + npc.x - baseX;
+        dump.y = (long)pos.y() + npc.y - baseY;
+        LvlData->npc_array_id++;
+        dump.array_id = LvlData->npc_array_id++;
+        placeNPC(dump);
+    }
+
+}
+
 
 QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 {

@@ -87,6 +87,7 @@ public:
 
     //Copy function
     LevelData copy();
+    void paste(LevelData BufferIn, QPoint pos);
 
     void startBlockAnimation();
     void stopAnimation();
