@@ -434,7 +434,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         baseX = BufferIn.npc[0].x;
         baseY = BufferIn.npc[0].y;
     }else{
-        //nothing to copy
+        //nothing to paste
         return;
     }
 
@@ -460,10 +460,39 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         if(npc.x<baseX){
             baseX = npc.x;
         }
-        if(bgo.y<baseY){
+        if(npc.y<baseY){
             baseY = npc.y;
         }
     }
+
+    foreach (LevelBlock block, BufferIn.blocks){
+        //Gen Copy of Block
+        LevelBlock dump = block;
+        dump.x = (long)pos.x() + block.x - baseX;
+        dump.y = (long)pos.y() + block.y - baseY;
+        LvlData->blocks_array_id++;
+        dump.array_id = LvlData->blocks_array_id;
+        placeBlock(dump);
+    }
+    foreach (LevelBGO bgo, BufferIn.bgo){
+        //Gen Copy of BGO
+        LevelBGO dump = bgo;
+        dump.x = (long)pos.x() + block.x - baseX;
+        dump.y = (long)pos.y() + block.y - baseY;
+        LvlData->bgo_array_id++;
+        dump.array_id = LvlData->bgo_array_id;
+        placeBGO(dump);
+    }
+    foreach (LevelNPC npc, BufferIn.npc){
+        //Gen Copy of NPC
+        LevelNPC  dump = bgo;
+        dump.x = (long)pos.x() + block.x - baseX;
+        dump.y = (long)pos.y() + block.y - baseY;
+        LvlData->npc_array_id++;
+        dump.array_id = LvlData->npc_array_id++;
+        placeBGO(dump);
+    }
+
 }
 
 
