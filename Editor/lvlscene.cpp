@@ -177,7 +177,20 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     (lock_door))
                 removeIt=false;
 
-            if(removeIt) removeItem(findItem);
+            if(removeIt)
+            {
+                //remove data from main array before deletion item from scene
+                if( findItem->data(0).toString()=="Block" )
+                {
+                    ((ItemBlock *)findItem)->removeFromArray();
+                }
+                else
+                if( findItem->data(0).toString()=="BGO" )
+                {
+                    ((ItemBGO *)findItem)->removeFromArray();
+                }
+                removeItem(findItem);
+            }
         }
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     } else
@@ -217,6 +230,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(EraserEnabled)
                     {
+                        //remove data from main array before deletion item from scene
+                        if( (*it)->data(0).toString()=="Block" )
+                        {
+                            ((ItemBlock *)(*it))->removeFromArray();
+                        }
+                        else
+                        if( (*it)->data(0).toString()=="BGO" )
+                        {
+                            ((ItemBGO *)(*it))->removeFromArray();
+                        }
+
                         removeItem((*it)); continue;
                     }
 
