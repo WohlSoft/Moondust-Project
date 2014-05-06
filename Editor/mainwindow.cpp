@@ -53,6 +53,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    //MDIConnector.Main_Window = &this;
     //QMenuBar * menuBar = new QMenuBar(0); // test for MacOS X
 
     MusicPlayer = new QMediaPlayer;
@@ -149,6 +150,40 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
 
+    TickTackTimer = new QTimer(this);
+    connect(
+                TickTackTimer, SIGNAL(timeout()),
+                this,
+                SLOT( TickTack() ) );
+
+    TickTackTimer->start(10);
+
+}
+
+
+void MainWindow::TickTack()
+{
+    try
+    {
+        if(activeChildWindow()==1)
+        {
+            if(activeLvlEditWin()->scene->wasPasted)
+            {
+                activeLvlEditWin()->changeCursor(0);
+                activeLvlEditWin()->scene->wasPasted=false;
+            }
+        }
+        /*
+        else
+        if(activeChildWindow()==2)
+        {
+            if(activeNpcEditWin()->NpcData.ReadFileValid);
+        }*/
+    }
+    catch(int e)
+    {
+        WriteToLog(QtWarningMsg, QString("CLASS TYPE MISMATCH IN TIMER ON WINDOWS SWITCH: %1").arg(e));
+    }
 }
 
 MainWindow::~MainWindow()
@@ -629,6 +664,7 @@ leveledit *MainWindow::activeLvlEditWin()
         return qobject_cast<leveledit *>(activeSubWindow->widget());
     return 0;
 }
+
 
 QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)
 {
