@@ -41,7 +41,7 @@ public:
     //QGraphicsScene LvlScene;
 
     void newFile();
-    bool loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs);
+    bool loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs, LevelEditingSettings options);
     bool save();
     bool saveAs();
     bool saveFile(const QString &fileName);
@@ -64,6 +64,8 @@ public:
 protected:
     void closeEvent(QCloseEvent *event);
 
+private slots:
+    virtual void mouseReleaseEvent( QMouseEvent * event );
 
 private:
     void documentWasModified();
@@ -71,7 +73,7 @@ private:
 
     bool sceneCreared;
     LevelData StartLvlData;
-    bool DrawObjects(QProgressDialog &progress, dataconfigs &configs);
+    bool DrawObjects(QProgressDialog &progress);
 
     bool isModified;
     bool maybeSave();

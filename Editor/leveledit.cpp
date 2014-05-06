@@ -57,6 +57,17 @@ leveledit::leveledit(QWidget *parent) :
         setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);*/
 }
 
+void leveledit::mouseReleaseEvent( QMouseEvent * event )
+{
+    /*
+    if(scene->PasteFromBuffer)
+    {
+       changeCursor(0);
+       scene->PasteFromBuffer=false;
+    }*/
+    QWidget::mouseReleaseEvent( event );
+}
+
 leveledit::~leveledit()
 {
     //free(scene);
@@ -184,7 +195,7 @@ void leveledit::setCurrentSection(int scId)
 
 
 
-bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs)
+bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfigs &configs, LevelEditingSettings options)
 {
     QFile file(fileName);
     LvlData = FileData;
@@ -220,6 +231,11 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     WriteToLog(QtDebugMsg, QString(">>Starting load file"));
 
+    //Declaring of the scene
+    scene = new LvlScene(configs, LvlData);
+
+    scene->opts = options;
+
     int DataSize=0;
 
     DataSize += LvlData.sections.size()*2;
@@ -239,7 +255,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
          //progress.setCancelButton(0);
 
-    if(! DrawObjects(progress, configs) )
+    if(! DrawObjects(progress) )
     {
         LvlData.modified = false;
         this->close();
@@ -268,37 +284,51 @@ void leveledit::changeCursor(int mode)
 {
     switch(mode)
     {
-    case (-1):
+    case (-1): // Hand Dragger
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
         break;
-    case 0:
+    case 0:    // Selector
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
         break;
-    case 1:
+    case 1:    // Eriser
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_rubber.png"), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        break;
+    case 2:    // place New item
+        ui->graphicsView->setInteractive(false);
+        ui->graphicsView->setCursor(Qt::CrossCursor);
+        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        break;
+    case 3:    // Draw water zones
+        ui->graphicsView->setInteractive(false);
+        ui->graphicsView->setCursor(Qt::CrossCursor);
+        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        break;
+    case 4:    // paste from Buffer
+        scene->clearSelection();
+        ui->graphicsView->setInteractive(true);
+        ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_pasta.png"), 0, 0));
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         break;
     default:
         break;
     }
 }
 
-bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
+bool leveledit::DrawObjects(QProgressDialog &progress)
 {
     int DataSize = progress.maximum();
     int TotalSteps = 6;
 
-    scene = new LvlScene(configs, LvlData);
-
     if(!progress.wasCanceled())
         progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
-    scene->loadUserData(LvlData, progress, configs);
+    scene->loadUserData(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
@@ -316,7 +346,7 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
 
     if(!progress.wasCanceled())
         progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
-    scene->setBlocks(LvlData, progress, configs);
+    scene->setBlocks(LvlData, progress);
 
     if(progress.wasCanceled()) return false;
 
@@ -343,7 +373,8 @@ bool leveledit::DrawObjects(QProgressDialog &progress, dataconfigs &configs)
     scene->drawSpace(LvlData);
 
 
-    scene->startBlockAnimation();//Apply block animation
+    if(scene->opts.animationEnabled)
+        scene->startBlockAnimation();//Apply block animation
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,

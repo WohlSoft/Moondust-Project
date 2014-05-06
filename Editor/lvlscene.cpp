@@ -36,6 +36,7 @@
 #include "item_block.h"
 #include "item_bgo.h"
 
+#include "leveledit.h"
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
@@ -44,18 +45,21 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
         BgItem.push_back(new QGraphicsPixmapItem);
 
     pConfigs = &configs; // Pointer to Main Configs
+    opts.animationEnabled = true;
+    opts.collisionsEnabled = true;
 
     index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
     index_bgo = pConfigs->index_bgo;
 
     LvlData = &FileData; //Ad pointer to level data
     grid = true;
-    animationEnabled = true;
     EditingMode = 0;
     EraserEnabled = false;
+    PasteFromBuffer = false;
     IsMoved = false;
     haveSelected = false;
-    sbZ = 0;
+
+    //sbZ = 0;
 
     QPixmap cur(QSize(1,1));
     cur.fill(Qt::black);
@@ -125,6 +129,11 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             EraserEnabled = true;
         }
+        else
+        if(EditingMode==4)
+        {
+            PasteFromBuffer = true;
+        }
         /* if (!selectedList.isEmpty())
         {
 
@@ -189,7 +198,15 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QList<QGraphicsItem*> selectedList = selectedItems();
 
             QString ObjType;
+            int collisionPassed = false;
 
+            if(PasteFromBuffer)
+            {
+                paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
+                //changeCursor(0);
+                EditingMode = 0;
+                PasteFromBuffer = false;
+            }
 
             // check for grid snap
             if ((!selectedList.isEmpty())&&(IsMoved))
@@ -278,7 +295,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
                 EraserEnabled = false;
 
+
                 // Check collisions
+                //Only if collision ckecking enabled
+                if(!PasteFromBuffer)
+
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 {
                     ObjType = (*it)->data(0).toString();
@@ -322,8 +343,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         continue;
                     }
 
+                    if(opts.collisionsEnabled)
+                    { //check Available to collisions checking
                         if( itemCollidesWith((*it)) )
                         {
+                            collisionPassed = false;
                             (*it)->setPos(QPointF(sourcePos));
                             (*it)->setSelected(false);
                             /*
@@ -333,39 +357,31 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         }
                         else
                         {
-                            if( ObjType == "Block")
-                            {
-                                //WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
-                                //Applay move into main array
-                                ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
-                                ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
-                                ((ItemBlock *)(*it))->arrayApply();
-                                LvlData->modified = true;
-                            } else
-                            if( ObjType == "BGO")
-                            {
-                                WriteToLog(QtDebugMsg, QString(" >>BGO Collision passed"));
-                                ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
-                                ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
-                                WriteToLog(QtDebugMsg, QString(" >>Data applayed"));
-                                ((ItemBGO *)(*it))->arrayApply();
-                                WriteToLog(QtDebugMsg, QString(" >>Array applayed"));
-                                LvlData->modified = true;
-
-                                /*
-                                for (i=0;i<LvlData->bgo.size();i++)
-                                {
-                                    if(LvlData->bgo[i].array_id==(unsigned)(*it)->data(2).toInt())
-                                    {
-                                        //Applay move into main array
-                                        LvlData->bgo[i].x = (long)(*it)->scenePos().x();
-                                        LvlData->bgo[i].y = (long)(*it)->scenePos().y();
-                                        LvlData->modified = true;
-                                        break;
-                                    }
-                                }*/
-                            }
+                            collisionPassed = true;
                         }
+                    }
+
+                    if((collisionPassed) || (!opts.collisionsEnabled))
+                    {
+                        if( ObjType == "Block")
+                        {
+                            //WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
+                            //Applay move into main array
+                            ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
+                            ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
+                            ((ItemBlock *)(*it))->arrayApply();
+                            LvlData->modified = true;
+                        }
+                        else
+                        if( ObjType == "BGO")
+                        {
+                            //Applay move into main array
+                            ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
+                            ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
+                            ((ItemBGO *)(*it))->arrayApply();
+                            LvlData->modified = true;
+                        }
+                    }
                 }
 
 
@@ -377,13 +393,131 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
 
+
+//Copy selected items into clipboard
+LevelData LvlScene::copy()
+{
+
+    //Get Selected Items
+    QList<QGraphicsItem*> selectedList = selectedItems();
+
+    LevelData copyData;
+
+    if (!selectedList.isEmpty())
+    {
+        for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
+        {
+            QString ObjType = (*it)->data(0).toString();
+
+            if( ObjType == "Block")
+            {
+                copyData.blocks.push_back(((ItemBlock *)(*it))->blockData);
+            }
+            else
+            if( ObjType == "BGO")
+            {
+                copyData.bgo.push_back(((ItemBGO *)(*it))->bgoData);
+            }
+            else
+            if( ObjType == "NPC")
+            {
+                foreach (LevelNPC findInArr, LvlData->npc)
+                {
+                    if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
+                    {
+                        copyData.npc.push_back(findInArr);
+                        break;
+                    }
+                }
+            }
+
+        }//fetch selected items
+    }
+
+    return copyData;
+}
+
+void LvlScene::paste(LevelData BufferIn, QPoint pos)
+{
+    long baseX, baseY;
+    //set first base
+    if(!BufferIn.blocks.isEmpty()){
+        baseX = BufferIn.blocks[0].x;
+        baseY = BufferIn.blocks[0].y;
+    }else if(!BufferIn.bgo.isEmpty()){
+        baseX = BufferIn.bgo[0].x;
+        baseY = BufferIn.bgo[0].y;
+    }else if(!BufferIn.npc.isEmpty()){
+        baseX = BufferIn.npc[0].x;
+        baseY = BufferIn.npc[0].y;
+    }else{
+        //nothing to paste
+        return;
+    }
+
+    foreach (LevelBlock block, BufferIn.blocks) {
+        if(block.x<baseX){
+            baseX = block.x;
+        }
+        if(block.y<baseY){
+            baseY = block.y;
+        }
+    }
+    foreach (LevelBGO bgo, BufferIn.bgo){
+        if(bgo.x<baseX){
+            baseX = bgo.x;
+        }
+        if(bgo.y<baseY){
+            baseY = bgo.y;
+        }
+    }
+    foreach (LevelNPC npc, BufferIn.npc){
+        if(npc.x<baseX){
+            baseX = npc.x;
+        }
+        if(npc.y<baseY){
+            baseY = npc.y;
+        }
+    }
+
+    foreach (LevelBlock block, BufferIn.blocks){
+        //Gen Copy of Block
+        LevelBlock dumpBlock = block;
+        dumpBlock.x = (long)pos.x() + block.x - baseX;
+        dumpBlock.y = (long)pos.y() + block.y - baseY;
+        LvlData->blocks_array_id++;
+        dumpBlock.array_id = LvlData->blocks_array_id;
+        placeBlock(dumpBlock);
+    }
+    foreach (LevelBGO bgo, BufferIn.bgo){
+        //Gen Copy of BGO
+        LevelBGO dumpBGO = bgo;
+        dumpBGO.x = (long)pos.x() + bgo.x - baseX;
+        dumpBGO.y = (long)pos.y() + bgo.y - baseY;
+        LvlData->bgo_array_id++;
+        dumpBGO.array_id = LvlData->bgo_array_id;
+        placeBGO(dumpBGO);
+    }
+    foreach (LevelNPC npc, BufferIn.npc){
+        //Gen Copy of NPC
+        LevelNPC dumpNPC = npc;
+        dumpNPC.x = (long)pos.x() + npc.x - baseX;
+        dumpNPC.y = (long)pos.y() + npc.y - baseY;
+        LvlData->npc_array_id++;
+        dumpNPC.array_id = LvlData->npc_array_id;
+        placeNPC(dumpNPC);
+    }
+
+}
+
+
 QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 {
     qlonglong leftA, leftB;
     qlonglong rightA, rightB;
     qlonglong topA, topB;
     qlonglong bottomA, bottomB;
-    qreal betweenZ;
+    //qreal betweenZ;
 
     QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
     foreach (QGraphicsItem * it, collisions) {
@@ -418,6 +552,8 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
                   {//sizable Block
                       WriteToLog(QtDebugMsg, QString("sizable block") );
                       //Change berween Z-Values
+
+                      /* This is trash, because exist better method for Z-Value sorting
                       if(it->data(3).toString()=="sizable")
                       {
                           WriteToLog(QtDebugMsg, QString("Colliding with sizable Z: %1 %2")
@@ -449,7 +585,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 
                                 WriteToLog(QtDebugMsg, QString("sizable block changed Z+") );
                               }
-                      }
+                      } */
                       continue;
                   }//sizable Block
 
@@ -515,7 +651,7 @@ QGraphicsItem * LvlScene::itemCollidesMouse(QGraphicsItem * item)
 
 
 //Search and load custom User's files
-void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, dataconfigs &configs)
+void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
 {
     int i, total=0;
 
@@ -529,50 +665,50 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
     QString uLVLs = FileData.path + "/";
 
     //Load Backgrounds
-    for(i=0; i<configs.main_bg.size(); i++) //Add user images
+    for(i=0; i<pConfigs->main_bg.size(); i++) //Add user images
         {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User Backgrounds "+QString::number(i)+"/"+QString::number(configs.main_bg.size()));
+            progress.setLabelText("Search User Backgrounds "+QString::number(i)+"/"+QString::number(pConfigs->main_bg.size()));
 
             loaded1 = false;
             loaded2 = false;
 
             //check for first image
             if((QFile::exists(uLVLD) ) &&
-                  (QFile::exists(uLVLDs + configs.main_bg[i].image_n)) )
+                  (QFile::exists(uLVLDs + pConfigs->main_bg[i].image_n)) )
             {
-                uBG.image = QPixmap( uLVLDs + configs.main_bg[i].image_n );
-                uBG.id = configs.main_bg[i].id;
+                uBG.image = QPixmap( uLVLDs + pConfigs->main_bg[i].image_n );
+                uBG.id = pConfigs->main_bg[i].id;
                 loaded1 = true;
             }
             else
-            if(QFile::exists(uLVLs + configs.main_bg[i].image_n) )
+            if(QFile::exists(uLVLs + pConfigs->main_bg[i].image_n) )
             {
-                uBG.image = QPixmap( uLVLs + configs.main_bg[i].image_n );
-                uBG.id = configs.main_bg[i].id;
+                uBG.image = QPixmap( uLVLs + pConfigs->main_bg[i].image_n );
+                uBG.id = pConfigs->main_bg[i].id;
                 loaded1 = true;
             }
 
-            if((loaded1)&&(configs.main_bg[i].animated) )
+            if((loaded1)&&(pConfigs->main_bg[i].animated) )
             {
-                uBG.image=uBG.image.copy(0, 0, uBG.image.width(), (int)round(uBG.image.height()/configs.main_bg[i].frames));
+                uBG.image=uBG.image.copy(0, 0, uBG.image.width(), (int)round(uBG.image.height()/pConfigs->main_bg[i].frames));
             }
 
             //check for second image
-            if(configs.main_bg[i].type == 1)
+            if(pConfigs->main_bg[i].type == 1)
             {
                 if((QFile::exists(uLVLD) ) &&
-                      (QFile::exists(uLVLDs + configs.main_bg[i].second_image_n )) )
+                      (QFile::exists(uLVLDs + pConfigs->main_bg[i].second_image_n )) )
                 {
-                    uBG.second_image = QPixmap( uLVLDs + configs.main_bg[i].second_image_n );
-                    uBG.id = configs.main_bg[i].id;
+                    uBG.second_image = QPixmap( uLVLDs + pConfigs->main_bg[i].second_image_n );
+                    uBG.id = pConfigs->main_bg[i].id;
                     loaded2 = true;
                 }
                 else
-                if(QFile::exists(uLVLs + configs.main_bg[i].second_image_n) )
+                if(QFile::exists(uLVLs + pConfigs->main_bg[i].second_image_n) )
                 {
-                    uBG.second_image = QPixmap( uLVLs + configs.main_bg[i].second_image_n );
-                    uBG.id = configs.main_bg[i].id;
+                    uBG.second_image = QPixmap( uLVLs + pConfigs->main_bg[i].second_image_n );
+                    uBG.id = pConfigs->main_bg[i].id;
                     loaded2 = true;
                 }
             }
@@ -592,26 +728,26 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
 
 
     //Load Blocks
-    for(i=0; i<configs.main_block.size(); i++) //Add user images
+    for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
     {
 
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User Blocks "+QString::number(i)+"/"+QString::number(configs.main_block.size()));
+            progress.setLabelText("Search User Blocks "+QString::number(i)+"/"+QString::number(pConfigs->main_block.size()));
 
             if((QFile::exists(uLVLD) ) &&
-                  (QFile::exists(uLVLDs + configs.main_block[i].image_n)) )
+                  (QFile::exists(uLVLDs + pConfigs->main_block[i].image_n)) )
             {
-                if(QFile::exists(uLVLDs + configs.main_block[i].mask_n))
-                    uBlock.mask = QBitmap(uLVLDs + configs.main_block[i].mask_n );
+                if(QFile::exists(uLVLDs + pConfigs->main_block[i].mask_n))
+                    uBlock.mask = QBitmap(uLVLDs + pConfigs->main_block[i].mask_n );
                 else
-                    uBlock.mask = configs.main_block[i].mask;
+                    uBlock.mask = pConfigs->main_block[i].mask;
 
-                uBlock.image = QPixmap(uLVLDs + configs.main_block[i].image_n );
+                uBlock.image = QPixmap(uLVLDs + pConfigs->main_block[i].image_n );
 
                 if((uBlock.image.height()!=uBlock.mask.height())||(uBlock.image.width()!=uBlock.mask.width()))
                     uBlock.mask = uBlock.mask.copy(0,0,uBlock.image.width(),uBlock.image.height());
                 uBlock.image.setMask(uBlock.mask);
-                uBlock.id = configs.main_block[i].id;
+                uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
 
                 //Apply index;
@@ -622,20 +758,20 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
                 }
             }
             else
-            if(QFile::exists(uLVLs + configs.main_block[i].image_n) )
+            if(QFile::exists(uLVLs + pConfigs->main_block[i].image_n) )
             {
-                if(QFile::exists(uLVLs + configs.main_block[i].mask_n))
-                    uBlock.mask = QBitmap(uLVLs + configs.main_block[i].mask_n );
+                if(QFile::exists(uLVLs + pConfigs->main_block[i].mask_n))
+                    uBlock.mask = QBitmap(uLVLs + pConfigs->main_block[i].mask_n );
                 else
-                    uBlock.mask = configs.main_block[i].mask;
+                    uBlock.mask = pConfigs->main_block[i].mask;
 
-                uBlock.image = QPixmap(uLVLs + configs.main_block[i].image_n );
+                uBlock.image = QPixmap(uLVLs + pConfigs->main_block[i].image_n );
 
                 if((uBlock.image.height()!=uBlock.mask.height())||(uBlock.image.width()!=uBlock.mask.width()))
                     uBlock.mask = uBlock.mask.copy(0,0,uBlock.image.width(),uBlock.image.height());
 
                 uBlock.image.setMask(uBlock.mask);
-                uBlock.id = configs.main_block[i].id;
+                uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
 
                 //Apply index;
@@ -652,42 +788,42 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress, datac
     }
 
     //Load BGO
-    for(i=0; i<configs.main_bgo.size(); i++) //Add user images
+    for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
     {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User BGOs "+QString::number(i)+"/"+QString::number(configs.main_bgo.size()));
+            progress.setLabelText("Search User BGOs "+QString::number(i)+"/"+QString::number(pConfigs->main_bgo.size()));
 
             if((QFile::exists(uLVLD) ) &&
-                  (QFile::exists(uLVLDs + configs.main_bgo[i].image_n)) )
+                  (QFile::exists(uLVLDs + pConfigs->main_bgo[i].image_n)) )
             {
-                if(QFile::exists(uLVLDs + configs.main_bgo[i].mask_n))
-                    uBGO.mask = QBitmap(uLVLDs + configs.main_bgo[i].mask_n );
+                if(QFile::exists(uLVLDs + pConfigs->main_bgo[i].mask_n))
+                    uBGO.mask = QBitmap(uLVLDs + pConfigs->main_bgo[i].mask_n );
                 else
-                    uBGO.mask = configs.main_bgo[i].mask;
+                    uBGO.mask = pConfigs->main_bgo[i].mask;
 
-                uBGO.image = QPixmap(uLVLDs + configs.main_bgo[i].image_n );
+                uBGO.image = QPixmap(uLVLDs + pConfigs->main_bgo[i].image_n );
 
                 if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
                     uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
                 uBGO.image.setMask(uBGO.mask);
-                uBGO.id = configs.main_bgo[i].id;
+                uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
             }
             else
-            if(QFile::exists(uLVLs + configs.main_bgo[i].image_n) )
+            if(QFile::exists(uLVLs + pConfigs->main_bgo[i].image_n) )
             {
-                if(QFile::exists(uLVLs + configs.main_bgo[i].mask_n))
-                    uBGO.mask = QBitmap(uLVLs + configs.main_bgo[i].mask_n );
+                if(QFile::exists(uLVLs + pConfigs->main_bgo[i].mask_n))
+                    uBGO.mask = QBitmap(uLVLs + pConfigs->main_bgo[i].mask_n );
                 else
-                    uBGO.mask = configs.main_bgo[i].mask;
+                    uBGO.mask = pConfigs->main_bgo[i].mask;
 
-                uBGO.image = QPixmap(uLVLs + configs.main_bgo[i].image_n );
+                uBGO.image = QPixmap(uLVLs + pConfigs->main_bgo[i].image_n );
 
                 if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
                     uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
 
                 uBGO.image.setMask(uBGO.mask);
-                uBGO.id = configs.main_bgo[i].id;
+                uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
             }
     if(!progress.wasCanceled())
@@ -890,7 +1026,7 @@ void LvlScene::setSectionBG(LevelSection section)
         }
         else noimage=true;
 
-        //configs.main_bg[j].type;
+        //pConfigs->main_bg[j].type;
 
         brush = QBrush(QColor(0, 0, 0));
         //QBrush brush(QColor(255, 255, 255));
@@ -1079,6 +1215,7 @@ void LvlScene::ChangeSectionBG(int BG_Id, LevelData &FileData)
 
 //////////////////Block////////////////////////////////////////////////////////////////////////////////////////
 
+/* //The Trach
 void LvlScene::placeBox(float x, float y)
 {
     QGraphicsItem *	box = addPixmap(QPixmap(QApplication::applicationDirPath() + "/" + "data/graphics/level/block/block-8.gif"));
@@ -1088,8 +1225,9 @@ void LvlScene::placeBox(float x, float y)
     else
         box->setData(0, "Box");
 }
+*/
 
-void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
+void LvlScene::placeBlock(LevelBlock &block)
 {
     bool noimage=true, found=false;
     bool isUser=false;
@@ -1107,7 +1245,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     {
         j = index_blocks[block.id].i;
 
-        if(configs.main_block[j].id == block.id)
+        if(pConfigs->main_block[j].id == block.id)
             found=true;
     }
 
@@ -1122,7 +1260,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
         }
         else
         {
-            tImg = configs.main_block[index_blocks[block.id].i].image;
+            tImg = pConfigs->main_block[index_blocks[block.id].i].image;
             noimage=false;
         }
     }
@@ -1140,13 +1278,13 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
             }
         }
 
-        for(j=0;j<configs.main_block.size();j++)
+        for(j=0;j<pConfigs->main_block.size();j++)
         {
-            if(configs.main_block[j].id==block.id)
+            if(pConfigs->main_block[j].id==block.id)
             {
                 noimage=false;
                 if(!isUser)
-                    tImg = configs.main_block[j].image; break;
+                    tImg = pConfigs->main_block[j].image; break;
             }
         }
     }
@@ -1157,15 +1295,15 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
         tImg = uBlockImg;
     }
 
-    BlockImage->setBlockData(block, configs.main_block[j].sizable);
+    BlockImage->setBlockData(block, pConfigs->main_block[j].sizable);
     BlockImage->setMainPixmap(tImg);
     addItem(BlockImage);
 
     BlockImage->setContextMenu(blockMenu);
 
-    if((!noimage) && (configs.main_block[j].animated))
+    if((!noimage) && (pConfigs->main_block[j].animated))
     {
-        BlockImage->setAnimation(configs.main_block[j].frames, configs.main_block[j].framespeed, configs.main_block[j].algorithm);
+        BlockImage->setAnimation(pConfigs->main_block[j].frames, pConfigs->main_block[j].framespeed, pConfigs->main_block[j].algorithm);
         BlockImage->setData(4, "animated");
     }
 
@@ -1185,14 +1323,14 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
         includedNPC->addToGroup(npc);
     }
 
-    if(configs.main_block[j].sizable)
+    if(pConfigs->main_block[j].sizable)
     {
-        BlockImage->setZValue(blockZs+sbZ); // applay sizable block Z
-        sbZ += 0.0000000001;
+        BlockImage->setZValue( blockZs + ((double)block.y/(double)100000000000) + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
+        //sbZ += 0.0000000001;
     }
     else
     {
-        if(configs.main_block[j].view==1)
+        if(pConfigs->main_block[j].view==1)
             BlockImage->setZValue(blockZl); // applay lava block Z
         else
             BlockImage->setZValue(blockZ); // applay standart block Z
@@ -1206,7 +1344,7 @@ void LvlScene::placeBlock(LevelBlock &block, dataconfigs &configs)
     BlockImage->setData(2, QString::number(block.array_id) );
 
 
-    if(configs.main_block[j].sizable)
+    if(pConfigs->main_block[j].sizable)
     {
         BlockImage->setData(3, "sizable" );
     }
@@ -1321,6 +1459,28 @@ void LvlScene::placeBGO(LevelBGO &bgo)
 
 }
 
+void LvlScene::placeNPC(LevelNPC &npc)
+{
+    QGraphicsItem *	box;
+    box = addPixmap(QPixmap(uNpcImg));
+    box->setPos(npc.x, npc.y);
+
+    box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
+    box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
+
+    //npcfore->addToGroup(box);
+    if(npc.id==91)
+        box->setZValue(npcZf);
+    else
+        box->setZValue(npcZb);
+
+    box->setData(0, "NPC"); // ObjType
+    box->setData(1, QString::number(npc.id) );
+    box->setData(2, QString::number(npc.array_id) );
+
+    box->setData(9, QString::number(uNpcImg.width()) ); //width
+    box->setData(10, QString::number(uNpcImg.height()) ); //height
+}
 
 void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
 {
@@ -1360,7 +1520,6 @@ void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
     unsigned long ymini;
     long sorted = 0;
 
-
         while(sorted < bgos.size())
         {
             ymin = bgos[sorted].id;
@@ -1381,7 +1540,7 @@ void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
 }
 
 /////////////////////SET Block Objects/////////////////////////////////////////////
-void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress, dataconfigs &configs)
+void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
 
@@ -1396,7 +1555,7 @@ void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress, dataconf
         //    progress.setLabelText("Applayng Blocks "+QString::number(i)+"/"+QString::number(FileData.blocks.size()));
 
         //Add block to scene
-        placeBlock(FileData.blocks[i], configs);
+        placeBlock(FileData.blocks[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
@@ -1435,28 +1594,11 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
 void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
-    QGraphicsItem *	box;
+    //QGraphicsItem *	box;
 
     for(i=0; i<FileData.npc.size(); i++)
     {
-        box = addPixmap(QPixmap(uNpcImg));
-        box->setPos(FileData.npc[i].x, FileData.npc[i].y);
-
-        box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
-        box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
-
-        //npcfore->addToGroup(box);
-        if(FileData.npc[i].id==91)
-            box->setZValue(npcZf);
-        else
-            box->setZValue(npcZb);
-
-        box->setData(0, "NPC"); // ObjType
-        box->setData(1, QString::number(FileData.npc[i].id) );
-        box->setData(2, QString::number(FileData.npc[i].array_id) );
-
-        box->setData(9, QString::number(uNpcImg.width()) ); //width
-        box->setData(10, QString::number(uNpcImg.height()) ); //height
+        placeNPC(FileData.npc[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
@@ -1649,6 +1791,7 @@ void LvlScene::setPlayerPoints()
     }
 
 }
+
 
 
 ////////////////////////////////////Animator////////////////////////////////

@@ -49,6 +49,12 @@ struct UserBGs
     unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
 };
 
+struct LevelEditingSettings
+{
+    bool animationEnabled;
+    bool collisionsEnabled;
+};
+
 class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -60,7 +66,11 @@ public:
 
     bool grid;
     int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
+                     // 3 - drawing water/sand zone, 4 - placing from Buffer
     bool EraserEnabled;
+    bool PasteFromBuffer;
+
+    LevelEditingSettings opts;
 
     //void makeSectionBG(int x, int y, int h, int w);
     void makeSectionBG(LevelData FileData, QProgressDialog &progress);
@@ -68,13 +78,18 @@ public:
     void drawSpace(LevelData FileData);
     void ChangeSectionBG(int BG_Id, LevelData &FileData);
 
-    void loadUserData(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
-    void setBlocks(LevelData FileData, QProgressDialog &progress, dataconfigs &configs);
+    void loadUserData(LevelData FileData, QProgressDialog &progress);
+
+    void setBlocks(LevelData FileData, QProgressDialog &progress);
     void setBGO(LevelData FileData, QProgressDialog &progress);
     void setNPC(LevelData FileData, QProgressDialog &progress);
     void setWaters(LevelData FileData, QProgressDialog &progress);
     void setDoors(LevelData FileData, QProgressDialog &progress);
     void setPlayerPoints();
+
+    //Copy function
+    LevelData copy();
+    void paste(LevelData BufferIn, QPoint pos);
 
     void startBlockAnimation();
     void stopAnimation();
@@ -95,6 +110,8 @@ public:
 
     LevelData  * LvlData;
 
+    LevelData LvlBuffer;
+
     dataconfigs * pConfigs;
 
     //Object Indexing:
@@ -109,34 +126,6 @@ public:
 
     bool IsMoved;
     bool haveSelected;
-
-    bool animationEnabled;
-
-protected:
-    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-
-private:
-    QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
-    void placeBox(float x, float y);
-    void placeBlock(LevelBlock &block, dataconfigs &configs);
-    void placeBGO(LevelBGO &bgo);
-    void placeDoor(LevelDoors &door);
-
-    void setSectionBG(LevelSection section);
-
-    QGraphicsItem * cursor;
-
-    QPixmap uBlockImg;
-
-    QBitmap npcmask;
-    QPixmap uNpcImg;
-
-    QPixmap uBgoImg;
-
-    QPixmap tImg;//Tempotary buffer
 
     //default objects Z value
     int blockZ; // standart block
@@ -153,8 +142,35 @@ private:
     int spaceZ1; // interSection space layer
     int spaceZ2;
 
+protected:
+    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
+private:
+    QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
+
+    void placeBlock(LevelBlock &block);
+    void placeBGO(LevelBGO &bgo);
+    void placeDoor(LevelDoors &door);
+    void placeNPC(LevelNPC &npc);
+
+    void setSectionBG(LevelSection section);
+
+    QGraphicsItem * cursor;
+
+    QPixmap uBlockImg;
+
+    QBitmap npcmask;
+    QPixmap uNpcImg;
+
+    QPixmap uBgoImg;
+
+    QPixmap tImg;//Tempotary buffer
+
     QVector<qreal > Z;
-    qreal sbZ;
+    //qreal sbZ;
 
     QMenu blockMenu;
     QMenu bgoMenu;

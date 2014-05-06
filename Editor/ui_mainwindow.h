@@ -119,6 +119,11 @@ public:
     QAction *action_recent8;
     QAction *action_recent9;
     QAction *action_recent10;
+    QAction *actionCopy;
+    QAction *actionCollisions;
+    QAction *actionDrawWater;
+    QAction *actionDrawSand;
+    QAction *actionPaste;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -674,6 +679,25 @@ public:
         action_recent10 = new QAction(MainWindow);
         action_recent10->setObjectName(QStringLiteral("action_recent10"));
         action_recent10->setEnabled(false);
+        actionCopy = new QAction(MainWindow);
+        actionCopy->setObjectName(QStringLiteral("actionCopy"));
+        actionCollisions = new QAction(MainWindow);
+        actionCollisions->setObjectName(QStringLiteral("actionCollisions"));
+        actionCollisions->setCheckable(true);
+        actionDrawWater = new QAction(MainWindow);
+        actionDrawWater->setObjectName(QStringLiteral("actionDrawWater"));
+        actionDrawWater->setCheckable(true);
+        QIcon icon42;
+        icon42.addFile(QStringLiteral(":/drawWater.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDrawWater->setIcon(icon42);
+        actionDrawSand = new QAction(MainWindow);
+        actionDrawSand->setObjectName(QStringLiteral("actionDrawSand"));
+        actionDrawSand->setCheckable(true);
+        QIcon icon43;
+        icon43.addFile(QStringLiteral(":/drawQuickSand.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDrawSand->setIcon(icon43);
+        actionPaste = new QAction(MainWindow);
+        actionPaste->setObjectName(QStringLiteral("actionPaste"));
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -741,9 +765,9 @@ public:
         LevelToolBox->setMinimumSize(QSize(255, 200));
         LevelToolBox->setMaximumSize(QSize(524287, 524287));
         LevelToolBox->setFocusPolicy(Qt::NoFocus);
-        QIcon icon42;
-        icon42.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelToolBox->setWindowIcon(icon42);
+        QIcon icon44;
+        icon44.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelToolBox->setWindowIcon(icon44);
         LevelToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         LevelToolBoxTabs = new QTabWidget();
@@ -854,9 +878,9 @@ public:
         WorldToolBox->setEnabled(true);
         sizePolicy1.setHeightForWidth(WorldToolBox->sizePolicy().hasHeightForWidth());
         WorldToolBox->setSizePolicy(sizePolicy1);
-        QIcon icon43;
-        icon43.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        WorldToolBox->setWindowIcon(icon43);
+        QIcon icon45;
+        icon45.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        WorldToolBox->setWindowIcon(icon45);
         WorldToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         WorldToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         WorldToolBoxTabs = new QTabWidget();
@@ -947,9 +971,16 @@ public:
         LevelSectionSettings->setSizePolicy(sizePolicy3);
         LevelSectionSettings->setMinimumSize(QSize(230, 360));
         LevelSectionSettings->setMaximumSize(QSize(230, 360));
-        QIcon icon44;
-        icon44.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelSectionSettings->setWindowIcon(icon44);
+        QFont font;
+        font.setFamily(QStringLiteral("Liberation Sans"));
+        font.setPointSize(8);
+        font.setBold(false);
+        font.setItalic(false);
+        font.setWeight(50);
+        LevelSectionSettings->setFont(font);
+        QIcon icon46;
+        icon46.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelSectionSettings->setWindowIcon(icon46);
         LevelSectionSettings->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelSectionSettings->setFloating(false);
         LevelSectionSettings->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -960,52 +991,63 @@ public:
         LVLPropMusicGr->setObjectName(QStringLiteral("LVLPropMusicGr"));
         LVLPropMusicGr->setGeometry(QRect(0, 160, 221, 101));
         LVLPropMusicGr->setMinimumSize(QSize(0, 101));
+        LVLPropMusicGr->setFont(font);
         LVLPropsMusicNumber = new QComboBox(LVLPropMusicGr);
         LVLPropsMusicNumber->setObjectName(QStringLiteral("LVLPropsMusicNumber"));
         LVLPropsMusicNumber->setGeometry(QRect(10, 20, 101, 20));
+        LVLPropsMusicNumber->setFont(font);
         LVLPropsMusicNumber->setFocusPolicy(Qt::WheelFocus);
         LVLPropCMusicLbl = new QLabel(LVLPropMusicGr);
         LVLPropCMusicLbl->setObjectName(QStringLiteral("LVLPropCMusicLbl"));
         LVLPropCMusicLbl->setGeometry(QRect(10, 50, 47, 16));
+        LVLPropCMusicLbl->setFont(font);
         LVLPropCMusicLbl->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         LVLPropsMusicCustom = new QLineEdit(LVLPropMusicGr);
         LVLPropsMusicCustom->setObjectName(QStringLiteral("LVLPropsMusicCustom"));
         LVLPropsMusicCustom->setGeometry(QRect(10, 70, 133, 21));
+        LVLPropsMusicCustom->setFont(font);
         LVLPropsMusicCustomEn = new QCheckBox(LVLPropMusicGr);
         LVLPropsMusicCustomEn->setObjectName(QStringLiteral("LVLPropsMusicCustomEn"));
         LVLPropsMusicCustomEn->setGeometry(QRect(120, 20, 88, 17));
+        LVLPropsMusicCustomEn->setFont(font);
         LVLPropsMusicCustomEn->setTristate(false);
         LVLPropsMusicCustomBrowse = new QPushButton(LVLPropMusicGr);
         LVLPropsMusicCustomBrowse->setObjectName(QStringLiteral("LVLPropsMusicCustomBrowse"));
         LVLPropsMusicCustomBrowse->setGeometry(QRect(140, 70, 31, 21));
+        LVLPropsMusicCustomBrowse->setFont(font);
         LVLPropSettingsGrp = new QGroupBox(LevelSection);
         LVLPropSettingsGrp->setObjectName(QStringLiteral("LVLPropSettingsGrp"));
         LVLPropSettingsGrp->setGeometry(QRect(0, 40, 221, 121));
         LVLPropSettingsGrp->setMinimumSize(QSize(0, 121));
+        LVLPropSettingsGrp->setFont(font);
         verticalLayout_3 = new QVBoxLayout(LVLPropSettingsGrp);
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         LVLPropsLevelWarp = new QCheckBox(LVLPropSettingsGrp);
         LVLPropsLevelWarp->setObjectName(QStringLiteral("LVLPropsLevelWarp"));
+        LVLPropsLevelWarp->setFont(font);
         LVLPropsLevelWarp->setTristate(false);
 
         verticalLayout_3->addWidget(LVLPropsLevelWarp);
 
         LVLPropsOffScr = new QCheckBox(LVLPropSettingsGrp);
         LVLPropsOffScr->setObjectName(QStringLiteral("LVLPropsOffScr"));
+        LVLPropsOffScr->setFont(font);
         LVLPropsOffScr->setTristate(false);
 
         verticalLayout_3->addWidget(LVLPropsOffScr);
 
         LVLPropsNoTBack = new QCheckBox(LVLPropSettingsGrp);
         LVLPropsNoTBack->setObjectName(QStringLiteral("LVLPropsNoTBack"));
+        LVLPropsNoTBack->setFont(font);
         LVLPropsNoTBack->setTristate(false);
 
         verticalLayout_3->addWidget(LVLPropsNoTBack);
 
         LVLPropsUnderWater = new QCheckBox(LVLPropSettingsGrp);
         LVLPropsUnderWater->setObjectName(QStringLiteral("LVLPropsUnderWater"));
+        LVLPropsUnderWater->setFont(font);
         LVLPropsUnderWater->setTristate(false);
 
         verticalLayout_3->addWidget(LVLPropsUnderWater);
@@ -1014,18 +1056,21 @@ public:
         LVLPropStyleGr->setObjectName(QStringLiteral("LVLPropStyleGr"));
         LVLPropStyleGr->setGeometry(QRect(0, 260, 221, 70));
         LVLPropStyleGr->setMinimumSize(QSize(0, 70));
+        LVLPropStyleGr->setFont(font);
         verticalLayout = new QVBoxLayout(LVLPropStyleGr);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         LVLPropBckrImg = new QLabel(LVLPropStyleGr);
         LVLPropBckrImg->setObjectName(QStringLiteral("LVLPropBckrImg"));
+        LVLPropBckrImg->setFont(font);
 
         verticalLayout->addWidget(LVLPropBckrImg);
 
         LVLPropsBackImage = new QComboBox(LVLPropStyleGr);
         LVLPropsBackImage->setObjectName(QStringLiteral("LVLPropsBackImage"));
-        LVLPropsBackImage->setMinimumSize(QSize(0, 25));
+        LVLPropsBackImage->setMinimumSize(QSize(0, 15));
+        LVLPropsBackImage->setFont(font);
         LVLPropsBackImage->setFocusPolicy(Qt::WheelFocus);
 
         verticalLayout->addWidget(LVLPropsBackImage);
@@ -1033,16 +1078,20 @@ public:
         groupBox_5 = new QGroupBox(LevelSection);
         groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
         groupBox_5->setGeometry(QRect(0, 0, 91, 41));
+        groupBox_5->setFont(font);
         label_9 = new QLabel(groupBox_5);
         label_9->setObjectName(QStringLiteral("label_9"));
         label_9->setGeometry(QRect(10, 20, 51, 16));
+        label_9->setFont(font);
         label_9->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         LVLProp_CurSect = new QLabel(groupBox_5);
         LVLProp_CurSect->setObjectName(QStringLiteral("LVLProp_CurSect"));
         LVLProp_CurSect->setGeometry(QRect(70, 20, 16, 16));
+        LVLProp_CurSect->setFont(font);
         ResizeSection = new QPushButton(LevelSection);
         ResizeSection->setObjectName(QStringLiteral("ResizeSection"));
         ResizeSection->setGeometry(QRect(100, 10, 111, 23));
+        ResizeSection->setFont(font);
         ResizeSection->setCheckable(true);
         LevelSectionSettings->setWidget(LevelSection);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), LevelSectionSettings);
@@ -1290,10 +1339,14 @@ public:
         menuView->addAction(actionWLDToolBox);
         menuView->addSeparator();
         menuView->addAction(actionAnimation);
+        menuView->addAction(actionCollisions);
         menuTools->addAction(actionLoad_configs);
         menuTools->addAction(actionReload);
         menuEdit->addAction(actionUndo);
         menuEdit->addAction(actionRedo);
+        menuEdit->addSeparator();
+        menuEdit->addAction(actionCopy);
+        menuEdit->addAction(actionPaste);
         mainToolBar->addAction(OpenFile);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_as);
@@ -1331,6 +1384,8 @@ public:
         LevelSectionsToolBar->addAction(actionSection_21);
         LevelObjectToolbar->addAction(actionSetFirstPlayer);
         LevelObjectToolbar->addAction(actionSetSecondPlayer);
+        LevelObjectToolbar->addAction(actionDrawWater);
+        LevelObjectToolbar->addAction(actionDrawSand);
         LevelObjectToolbar->addSeparator();
         LevelObjectToolbar->addAction(actionLockBlocks);
         LevelObjectToolbar->addAction(actionLockBGO);
@@ -1344,7 +1399,7 @@ public:
         retranslateUi(MainWindow);
 
         LevelToolBoxTabs->setCurrentIndex(0);
-        WorldToolBoxTabs->setCurrentIndex(3);
+        WorldToolBoxTabs->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1557,7 +1612,7 @@ public:
         actionWarpsAndDoors->setText(QApplication::translate("MainWindow", "Warps and doors", 0));
         actionAnimation->setText(QApplication::translate("MainWindow", "Animation", 0));
 #ifndef QT_NO_TOOLTIP
-        actionAnimation->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Enable animation on animated objects</p><p><span style=\" font-style:italic;\">If map have too many objects, we recommends diable this option</span></p></body></html>", 0));
+        actionAnimation->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Enable animation on animated objects</p><p><span style=\" font-style:italic; color:#aa0000;\">If map have too many objects, recommends to </span><span style=\" font-weight:600; font-style:italic; color:#aa0000;\">diable</span><span style=\" font-style:italic; color:#aa0000;\"> this option</span></p></body></html>", 0));
 #endif // QT_NO_TOOLTIP
         action_recent1->setText(QApplication::translate("MainWindow", "<empty>", 0));
         action_recent2->setText(QApplication::translate("MainWindow", "<empty>", 0));
@@ -1569,6 +1624,25 @@ public:
         action_recent8->setText(QApplication::translate("MainWindow", "<empty>", 0));
         action_recent9->setText(QApplication::translate("MainWindow", "<empty>", 0));
         action_recent10->setText(QApplication::translate("MainWindow", "<empty>", 0));
+        actionCopy->setText(QApplication::translate("MainWindow", "Copy", 0));
+#ifndef QT_NO_TOOLTIP
+        actionCopy->setToolTip(QApplication::translate("MainWindow", "Copy selected items", 0));
+#endif // QT_NO_TOOLTIP
+        actionCopy->setShortcut(QApplication::translate("MainWindow", "Ctrl+C", 0));
+        actionCollisions->setText(QApplication::translate("MainWindow", "Collisions", 0));
+#ifndef QT_NO_TOOLTIP
+        actionCollisions->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Placing item to simular item Protection</p><p>(If enabeld, the movement operation will be slower)</p></body></html>", 0));
+#endif // QT_NO_TOOLTIP
+        actionDrawWater->setText(QApplication::translate("MainWindow", "Draw Water zone", 0));
+#ifndef QT_NO_TOOLTIP
+        actionDrawWater->setToolTip(QApplication::translate("MainWindow", "Hold mouse button on map and move mouse for draw water zone", 0));
+#endif // QT_NO_TOOLTIP
+        actionDrawSand->setText(QApplication::translate("MainWindow", "Draw QuickSand zone", 0));
+#ifndef QT_NO_TOOLTIP
+        actionDrawSand->setToolTip(QApplication::translate("MainWindow", "Hold mouse button on map and move mouse for draw quick sand zone", 0));
+#endif // QT_NO_TOOLTIP
+        actionPaste->setText(QApplication::translate("MainWindow", "Paste", 0));
+        actionPaste->setShortcut(QApplication::translate("MainWindow", "Ctrl+V", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));

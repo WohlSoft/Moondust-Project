@@ -57,6 +57,9 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     MusicPlayer = new QMediaPlayer;
 
+    LvlOpts.animationEnabled = true;
+    LvlOpts.collisionsEnabled = true;
+
     QPixmap splashimg(":/images/splash.png");
     QSplashScreen splash(splashimg);
     splash.show();
@@ -106,7 +109,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     LevelToolBoxVis = settings.value("level-tb-visible", "false").toBool();
     WorldToolBoxVis = settings.value("world-tb-visible", "false").toBool();
     SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
-    AnimationEnabled = settings.value("animation", "true").toBool();
+    LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
+    LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
     //if(settings.value("maximased", "false")=="true") showMaximized();
     //"lvl-section-view", dockWidgetArea(ui->LevelSectionSettings)
     //dockWidgetArea();
@@ -143,6 +147,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->actionGridEn->setChecked(1);
 
     setAcceptDrops(true);
+    ui->centralWidget->cascadeSubWindows();
+
 }
 
 MainWindow::~MainWindow()
@@ -182,6 +188,8 @@ void MainWindow::updateMenus()
     ui->WorldToolBox->setVisible( (WinType==3) && (WorldToolBoxVis)); //Restore saved visible status
     ui->menuWorld->setEnabled(( WinType==3) );
     ui->actionWLDToolBox->setVisible( (WinType==3));
+
+    ui->actionCopy->setEnabled( (WinType==1) || (WinType==3) );
 
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
 
@@ -253,8 +261,11 @@ void MainWindow::updateMenus()
         ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
         ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
         ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
-        AnimationEnabled = activeLvlEditWin()->scene->animationEnabled;
-        ui->actionAnimation->setChecked( AnimationEnabled );
+
+        LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
+        LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
+        ui->actionAnimation->setChecked( LvlOpts.animationEnabled );
+        ui->actionCollisions->setChecked( LvlOpts.collisionsEnabled );
     }
 
     /*
@@ -384,7 +395,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
     settings.setValue("autoPlayMusic", autoPlayMusic);
-    settings.setValue("animation", AnimationEnabled);
+    settings.setValue("animation", LvlOpts.animationEnabled);
+    settings.setValue("collisions", LvlOpts.collisionsEnabled);
     settings.endGroup();
 
     settings.beginGroup("Recent");
@@ -451,7 +463,7 @@ void MainWindow::OpenFile(QString FilePath)
         FileData.playmusic = autoPlayMusic;
 
         leveledit *child = createChild();
-        if ( (bool)(child->loadFile(FilePath, FileData, configs)) ) {
+        if ( (bool)(child->loadFile(FilePath, FileData, configs, LvlOpts)) ) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
             SetCurrentLevelSection(0);
@@ -1286,6 +1298,12 @@ void MainWindow::on_actionSelect_triggered()
     ui->actionSelect->setChecked(1);
     ui->actionEriser->setChecked(0);
     ui->actionHandScroll->setChecked(0);
+
+    ui->actionSetFirstPlayer->setChecked(0);
+    ui->actionSetSecondPlayer->setChecked(0);
+    ui->actionDrawWater->setChecked(0);
+    ui->actionDrawSand->setChecked(0);
+
     if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
     {
        activeLvlEditWin()->changeCursor(0);
@@ -1294,11 +1312,45 @@ void MainWindow::on_actionSelect_triggered()
     }
 }
 
+void MainWindow::on_actionPaste_triggered()
+{
+    if
+    (   //if buffer are empty
+            (LvlBuffer.blocks.size()==0)&&
+            (LvlBuffer.bgo.size()==0)&&
+            (LvlBuffer.npc.size()==0)
+    ) return;
+
+    ui->actionSelect->setChecked(1);
+    ui->actionEriser->setChecked(0);
+    ui->actionHandScroll->setChecked(0);
+
+    ui->actionSetFirstPlayer->setChecked(0);
+    ui->actionSetSecondPlayer->setChecked(0);
+    ui->actionDrawWater->setChecked(0);
+    ui->actionDrawSand->setChecked(0);
+
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->changeCursor(4);
+       activeLvlEditWin()->scene->EditingMode = 4;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->LvlBuffer = LvlBuffer;
+    }
+
+}
+
 void MainWindow::on_actionEriser_triggered()
 {
     ui->actionSelect->setChecked(0);
     ui->actionEriser->setChecked(1);
     ui->actionHandScroll->setChecked(0);
+
+    ui->actionSetFirstPlayer->setChecked(0);
+    ui->actionSetSecondPlayer->setChecked(0);
+    ui->actionDrawWater->setChecked(0);
+    ui->actionDrawSand->setChecked(0);
+
     if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
     {
        activeLvlEditWin()->changeCursor(1);
@@ -1313,6 +1365,12 @@ void MainWindow::on_actionHandScroll_triggered()
     ui->actionSelect->setChecked(0);
     ui->actionEriser->setChecked(0);
     ui->actionHandScroll->setChecked(1);
+
+    ui->actionSetFirstPlayer->setChecked(0);
+    ui->actionSetSecondPlayer->setChecked(0);
+    ui->actionDrawWater->setChecked(0);
+    ui->actionDrawSand->setChecked(0);
+
     if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
     {
        activeLvlEditWin()->scene->clearSelection();
@@ -1386,7 +1444,7 @@ void MainWindow::on_actionReload_triggered()
         ui->centralWidget->activeSubWindow()->close();
 
         leveledit *child = createChild();
-        if ((bool) (child->loadFile(filePath, FileData, configs))) {
+        if ((bool) (child->loadFile(filePath, FileData, configs, LvlOpts))) {
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
@@ -1524,11 +1582,11 @@ void MainWindow::on_actionLevUnderW_triggered(bool checked)
 
 void MainWindow::on_actionAnimation_triggered(bool checked)
 {
-    AnimationEnabled = checked;
+    LvlOpts.animationEnabled = checked;
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->animationEnabled = AnimationEnabled;
-        if(AnimationEnabled)
+        activeLvlEditWin()->scene->opts.animationEnabled = LvlOpts.animationEnabled;
+        if(LvlOpts.animationEnabled)
         {
             activeLvlEditWin()->scene->startBlockAnimation();
         }
@@ -1536,6 +1594,18 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
             activeLvlEditWin()->scene->stopAnimation();
     }
 }
+
+
+void MainWindow::on_actionCollisions_triggered(bool checked)
+{
+    LvlOpts.collisionsEnabled = checked;
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->opts.collisionsEnabled = LvlOpts.collisionsEnabled;
+    }
+
+}
+
 
 void MainWindow::on_action_recent1_triggered()
 {
@@ -1586,3 +1656,22 @@ void MainWindow::on_action_recent10_triggered()
 {
     OpenFile(ui->action_recent10->text());
 }
+
+
+
+
+//Copy
+void MainWindow::on_actionCopy_triggered()
+{
+    int q1=0, q2=0, q3=0;
+    if (activeChildWindow()==1) //if active window is a levelEditor
+    {
+       LvlBuffer=activeLvlEditWin()->scene->copy();
+       q1 += LvlBuffer.blocks.size();
+       q2 += LvlBuffer.bgo.size();
+       q3 += LvlBuffer.npc.size();
+       statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC items are copied in clipboard").arg(q1).arg(q2).arg(q3), 2000);
+    }
+
+}
+

@@ -220,6 +220,7 @@
     <addaction name="actionWLDToolBox"/>
     <addaction name="separator"/>
     <addaction name="actionAnimation"/>
+    <addaction name="actionCollisions"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -239,6 +240,9 @@
     </property>
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuEdit"/>
@@ -618,7 +622,7 @@
    </attribute>
    <widget class="QTabWidget" name="WorldToolBoxTabs">
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <widget class="QScrollArea" name="Tiles">
      <property name="toolTip">
@@ -853,6 +857,15 @@
      <height>360</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <family>Liberation Sans</family>
+     <pointsize>8</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="windowIcon">
     <iconset resource="editor.qrc">
      <normaloff>:/images/section16.png</normaloff>:/images/section16.png</iconset>
@@ -891,6 +904,15 @@
        <height>101</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="title">
       <string>Music</string>
      </property>
@@ -902,6 +924,15 @@
         <width>101</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="focusPolicy">
        <enum>Qt::WheelFocus</enum>
@@ -921,6 +952,15 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>Music file:</string>
       </property>
@@ -937,6 +977,15 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
      </widget>
      <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
       <property name="geometry">
@@ -946,6 +995,15 @@
         <width>88</width>
         <height>17</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="text">
        <string>Custom music</string>
@@ -962,6 +1020,15 @@
         <width>31</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="text">
        <string>...</string>
@@ -983,12 +1050,30 @@
        <height>121</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="title">
       <string>Section Settings</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QCheckBox" name="LVLPropsLevelWarp">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="whatsThis">
          <string>Leaving for the screen, the player enters the screen on the other side</string>
         </property>
@@ -1002,6 +1087,15 @@
       </item>
       <item>
        <widget class="QCheckBox" name="LVLPropsOffScr">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Off screen exit</string>
         </property>
@@ -1012,6 +1106,15 @@
       </item>
       <item>
        <widget class="QCheckBox" name="LVLPropsNoTBack">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>No turn back (disable moving to left)</string>
         </property>
@@ -1022,6 +1125,15 @@
       </item>
       <item>
        <widget class="QCheckBox" name="LVLPropsUnderWater">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Underwater</string>
         </property>
@@ -1047,12 +1159,30 @@
        <height>70</height>
       </size>
      </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="title">
       <string>Style</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="LVLPropBckrImg">
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Background image</string>
         </property>
@@ -1063,8 +1193,17 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>25</height>
+          <height>15</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::WheelFocus</enum>
@@ -1087,6 +1226,15 @@
        <height>41</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="title">
       <string>Current Section</string>
      </property>
@@ -1098,6 +1246,15 @@
         <width>51</width>
         <height>16</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="text">
        <string>Section:</string>
@@ -1115,6 +1272,15 @@
         <height>16</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
        <string>0</string>
       </property>
@@ -1128,6 +1294,15 @@
        <width>111</width>
        <height>23</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
      </property>
      <property name="text">
       <string>Resize section</string>
@@ -1150,6 +1325,8 @@
    </attribute>
    <addaction name="actionSetFirstPlayer"/>
    <addaction name="actionSetSecondPlayer"/>
+   <addaction name="actionDrawWater"/>
+   <addaction name="actionDrawSand"/>
    <addaction name="separator"/>
    <addaction name="actionLockBlocks"/>
    <addaction name="actionLockBGO"/>
@@ -2890,7 +3067,7 @@ p, li { white-space: pre-wrap; }
     <string>Animation</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If map have too many objects, we recommends diable this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="action_recent1">
@@ -2971,6 +3148,66 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>&lt;empty&gt;</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy selected items</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionCollisions">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Collisions</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionDrawWater">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/drawWater.png</normaloff>:/drawWater.png</iconset>
+   </property>
+   <property name="text">
+    <string>Draw Water zone</string>
+   </property>
+   <property name="toolTip">
+    <string>Hold mouse button on map and move mouse for draw water zone</string>
+   </property>
+  </action>
+  <action name="actionDrawSand">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/drawQuickSand.png</normaloff>:/drawQuickSand.png</iconset>
+   </property>
+   <property name="text">
+    <string>Draw QuickSand zone</string>
+   </property>
+   <property name="toolTip">
+    <string>Hold mouse button on map and move mouse for draw quick sand zone</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
    </property>
   </action>
  </widget>
