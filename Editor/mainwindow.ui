@@ -216,6 +216,7 @@
     <addaction name="actionLVLToolBox"/>
     <addaction name="actionSection_Settings"/>
     <addaction name="actionWarpsAndDoors"/>
+    <addaction name="actionLayersBox"/>
     <addaction name="separator"/>
     <addaction name="actionWLDToolBox"/>
     <addaction name="separator"/>
@@ -356,7 +357,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>435</height>
+        <height>249</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -416,8 +417,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -443,78 +444,13 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
-     </widget>
-    </widget>
-    <widget class="QScrollArea" name="special">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <attribute name="title">
-      <string>Special</string>
-     </attribute>
-     <widget class="QWidget" name="specialscroll">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>256</width>
-        <height>435</height>
-       </rect>
-      </property>
-      <property name="autoFillBackground">
-       <bool>true</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <widget class="QWidget" name="layoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>0</y>
-         <width>241</width>
-         <height>121</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QPushButton" name="BTNWarpsAndDoors">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Warps and Doors</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="BTNWaterRanges">
-          <property name="text">
-           <string>Water Ranges</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
      </widget>
     </widget>
    </widget>
@@ -622,7 +558,7 @@
    </attribute>
    <widget class="QTabWidget" name="WorldToolBoxTabs">
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QScrollArea" name="Tiles">
      <property name="toolTip">
@@ -649,7 +585,7 @@
         <x>0</x>
         <y>0</y>
         <width>273</width>
-        <height>435</height>
+        <height>250</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -709,8 +645,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -733,8 +669,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -757,8 +693,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>435</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -1317,6 +1253,9 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="floatable">
+    <bool>true</bool>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
@@ -1336,6 +1275,8 @@
    <addaction name="separator"/>
    <addaction name="actionLVLToolBox"/>
    <addaction name="actionSection_Settings"/>
+   <addaction name="actionWarpsAndDoors"/>
+   <addaction name="actionLayersBox"/>
   </widget>
   <widget class="QDockWidget" name="DoorsToolbox">
    <property name="minimumSize">
@@ -1346,7 +1287,7 @@
    </property>
    <property name="maximumSize">
     <size>
-     <width>300</width>
+     <width>230</width>
      <height>460</height>
     </size>
    </property>
@@ -1355,6 +1296,9 @@
    </property>
    <property name="allowedAreas">
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Warps and doors</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -1972,20 +1916,116 @@ p, li { white-space: pre-wrap; }
        <string>-</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_4">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>400</y>
-        <width>16</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
     </widget>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="LevelLayers">
+   <property name="minimumSize">
+    <size>
+     <width>255</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Layers</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="LevelLayersBox">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="1">
+      <widget class="QPushButton" name="RemoveLayer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="AddLayer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="LockLayer">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Lock</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="3">
+      <widget class="QListWidget" name="LvlLayerList">
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::InternalMove</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectItems</enum>
+       </property>
+       <property name="viewMode">
+        <enum>QListView::ListMode</enum>
+       </property>
+       <property name="uniformItemSizes">
+        <bool>false</bool>
+       </property>
+       <property name="currentRow">
+        <number>-1</number>
+       </property>
+       <item>
+        <property name="text">
+         <string>Default</string>
+        </property>
+        <property name="checkState">
+         <enum>Checked</enum>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Destroyed Blocks</string>
+        </property>
+        <property name="checkState">
+         <enum>Unchecked</enum>
+        </property>
+        <property name="flags">
+         <set>ItemIsDragEnabled|ItemIsUserCheckable</set>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Spawned NPCs</string>
+        </property>
+        <property name="checkState">
+         <enum>Checked</enum>
+        </property>
+        <property name="flags">
+         <set>ItemIsDragEnabled|ItemIsUserCheckable</set>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <action name="OpenFile">
@@ -2766,8 +2806,11 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Level tool box</string>
    </property>
+   <property name="toolTip">
+    <string>Level objects tool box</string>
+   </property>
    <property name="iconVisibleInMenu">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionWLDToolBox">
@@ -2848,7 +2891,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="iconVisibleInMenu">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionLoad_configs">
@@ -3055,6 +3098,13 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionWarpsAndDoors">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/doors.png</normaloff>:/doors.png</iconset>
+   </property>
    <property name="text">
     <string>Warps and doors</string>
    </property>
@@ -3068,6 +3118,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
    </property>
   </action>
   <action name="action_recent1">
@@ -3171,6 +3224,9 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
   </action>
   <action name="actionDrawWater">
    <property name="checkable">
@@ -3210,12 +3266,20 @@ p, li { white-space: pre-wrap; }
     <string>Ctrl+V</string>
    </property>
   </action>
+  <action name="actionLayersBox">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/layers.png</normaloff>:/layers.png</iconset>
+   </property>
+   <property name="text">
+    <string>Layers</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <tabstops>
-  <tabstop>BTNWarpsAndDoors</tabstop>
-  <tabstop>BTNWaterRanges</tabstop>
- </tabstops>
  <resources>
   <include location="editor.qrc"/>
  </resources>

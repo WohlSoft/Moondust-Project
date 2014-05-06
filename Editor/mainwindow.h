@@ -90,13 +90,16 @@ private slots:
 
     //LevelEdit functions
     void SetCurrentLevelSection(int SctId, int open=0);
+    void setDoorsToolbox();
+    void setDoorData(long index);
+    void setLayersBox();
 
 
     //Actions
     void on_LevelSectionSettings_visibilityChanged(bool visible);
     void on_LevelToolBox_visibilityChanged(bool visible);
 	void on_WorldToolBox_visibilityChanged(bool visible);
-	void on_pushButton_4_clicked();
+    //void on_pushButton_4_clicked();
 
     void on_OpenFile_triggered();
     void on_Exit_triggered();
@@ -192,6 +195,16 @@ private slots:
 
     void on_actionPaste_triggered();
 
+    void on_actionWarpsAndDoors_triggered(bool checked);
+
+    void on_DoorsToolbox_visibilityChanged(bool visible);
+
+    void on_WarpList_currentIndexChanged(int index);
+
+    void on_LevelLayers_visibilityChanged(bool visible);
+
+    void on_actionLayersBox_triggered(bool checked);
+
 private:
     dataconfigs configs; // Global objects configucrations
 
@@ -209,6 +222,7 @@ private:
     leveledit *activeLvlEditWin();
 
     QTimer * TickTackTimer;
+    bool TickTackLock;
 
     QList<QString> recentOpen;
 
