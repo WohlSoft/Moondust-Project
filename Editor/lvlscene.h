@@ -69,6 +69,11 @@ public:
                      // 3 - drawing water/sand zone, 4 - placing from Buffer
     bool EraserEnabled;
     bool PasteFromBuffer;
+    bool wasPasted;
+
+    //Copy function
+    LevelData copy();
+    void paste(LevelData BufferIn, QPoint pos);
 
     LevelEditingSettings opts;
 
@@ -86,10 +91,6 @@ public:
     void setWaters(LevelData FileData, QProgressDialog &progress);
     void setDoors(LevelData FileData, QProgressDialog &progress);
     void setPlayerPoints();
-
-    //Copy function
-    LevelData copy();
-    void paste(LevelData BufferIn, QPoint pos);
 
     void startBlockAnimation();
     void stopAnimation();
@@ -149,6 +150,7 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
+
     QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
 
     void placeBlock(LevelBlock &block);

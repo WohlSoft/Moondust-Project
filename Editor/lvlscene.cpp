@@ -56,6 +56,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     EditingMode = 0;
     EraserEnabled = false;
     PasteFromBuffer = false;
+    wasPasted = false;
     IsMoved = false;
     haveSelected = false;
 
@@ -114,7 +115,6 @@ LvlScene::~LvlScene()
     foreach(QGraphicsPixmapItem * it, BgItem)
         free(it);
 }
-
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
@@ -214,10 +214,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(PasteFromBuffer)
             {
                 paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
-                //changeCursor(0);
                 EditingMode = 0;
                 PasteFromBuffer = false;
                 IsMoved=true;
+                wasPasted = true; //Set flag for reset pasta cursor to normal select
             }
 
             QList<QGraphicsItem*> selectedList = selectedItems();
