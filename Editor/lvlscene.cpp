@@ -208,8 +208,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             haveSelected = false;
 
-            QList<QGraphicsItem*> selectedList = selectedItems();
-
             QString ObjType;
             int collisionPassed = false;
 
@@ -219,7 +217,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //changeCursor(0);
                 EditingMode = 0;
                 PasteFromBuffer = false;
+                IsMoved=true;
             }
+
+            QList<QGraphicsItem*> selectedList = selectedItems();
 
             // check for grid snap
             if ((!selectedList.isEmpty())&&(IsMoved))
@@ -1378,6 +1379,7 @@ void LvlScene::placeBlock(LevelBlock &block)
     BlockImage->setData(9, QString::number(block.w) ); //width
     BlockImage->setData(10, QString::number(block.h) ); //height
     BlockImage->setScenePoint(this);
+    if(PasteFromBuffer) BlockImage->setSelected(true);
 }
 
 
@@ -1481,6 +1483,7 @@ void LvlScene::placeBGO(LevelBGO &bgo)
 
     BGOItem->setScenePoint(this);
 
+    if(PasteFromBuffer) BGOItem->setSelected(true);
 }
 
 void LvlScene::placeNPC(LevelNPC &npc)
@@ -1504,6 +1507,8 @@ void LvlScene::placeNPC(LevelNPC &npc)
 
     box->setData(9, QString::number(uNpcImg.width()) ); //width
     box->setData(10, QString::number(uNpcImg.height()) ); //height
+
+    if(PasteFromBuffer) box->setSelected(true);
 }
 
 void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
