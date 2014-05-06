@@ -36,6 +36,7 @@
 #include "item_block.h"
 #include "item_bgo.h"
 
+#include "leveledit.h"
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
@@ -44,7 +45,6 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
         BgItem.push_back(new QGraphicsPixmapItem);
 
     pConfigs = &configs; // Pointer to Main Configs
-
     opts.animationEnabled = true;
     opts.collisionsEnabled = true;
 
@@ -55,6 +55,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     grid = true;
     EditingMode = 0;
     EraserEnabled = false;
+    PasteFromBuffer = false;
     IsMoved = false;
     haveSelected = false;
 
@@ -128,6 +129,11 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             EraserEnabled = true;
         }
+        else
+        if(EditingMode==4)
+        {
+            PasteFromBuffer = true;
+        }
         /* if (!selectedList.isEmpty())
         {
 
@@ -171,7 +177,20 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     (lock_door))
                 removeIt=false;
 
-            if(removeIt) removeItem(findItem);
+            if(removeIt)
+            {
+                //remove data from main array before deletion item from scene
+                if( findItem->data(0).toString()=="Block" )
+                {
+                    ((ItemBlock *)findItem)->removeFromArray();
+                }
+                else
+                if( findItem->data(0).toString()=="BGO" )
+                {
+                    ((ItemBGO *)findItem)->removeFromArray();
+                }
+                removeItem(findItem);
+            }
         }
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     } else
@@ -189,11 +208,19 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             haveSelected = false;
 
-            QList<QGraphicsItem*> selectedList = selectedItems();
-
             QString ObjType;
             int collisionPassed = false;
 
+            if(PasteFromBuffer)
+            {
+                paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
+                //changeCursor(0);
+                EditingMode = 0;
+                PasteFromBuffer = false;
+                IsMoved=true;
+            }
+
+            QList<QGraphicsItem*> selectedList = selectedItems();
 
             // check for grid snap
             if ((!selectedList.isEmpty())&&(IsMoved))
@@ -204,6 +231,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(EraserEnabled)
                     {
+                        //remove data from main array before deletion item from scene
+                        if( (*it)->data(0).toString()=="Block" )
+                        {
+                            ((ItemBlock *)(*it))->removeFromArray();
+                        }
+                        else
+                        if( (*it)->data(0).toString()=="BGO" )
+                        {
+                            ((ItemBGO *)(*it))->removeFromArray();
+                        }
+
                         removeItem((*it)); continue;
                     }
 
@@ -282,8 +320,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
                 EraserEnabled = false;
 
+
                 // Check collisions
                 //Only if collision ckecking enabled
+                if(!PasteFromBuffer)
+
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 {
                     ObjType = (*it)->data(0).toString();
@@ -438,8 +479,6 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         //nothing to paste
         return;
     }
-
-
 
     foreach (LevelBlock block, BufferIn.blocks) {
         if(block.x<baseX){
@@ -1340,6 +1379,7 @@ void LvlScene::placeBlock(LevelBlock &block)
     BlockImage->setData(9, QString::number(block.w) ); //width
     BlockImage->setData(10, QString::number(block.h) ); //height
     BlockImage->setScenePoint(this);
+    if(PasteFromBuffer) BlockImage->setSelected(true);
 }
 
 
@@ -1443,6 +1483,7 @@ void LvlScene::placeBGO(LevelBGO &bgo)
 
     BGOItem->setScenePoint(this);
 
+    if(PasteFromBuffer) BGOItem->setSelected(true);
 }
 
 void LvlScene::placeNPC(LevelNPC &npc)
@@ -1466,6 +1507,8 @@ void LvlScene::placeNPC(LevelNPC &npc)
 
     box->setData(9, QString::number(uNpcImg.width()) ); //width
     box->setData(10, QString::number(uNpcImg.height()) ); //height
+
+    if(PasteFromBuffer) box->setSelected(true);
 }
 
 void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)

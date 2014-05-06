@@ -43,15 +43,23 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
     scene->clearSelection();
     this->setSelected(1);
     ItemMenu->clear();
+    QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(blockData.layer));
+        LayerName->setEnabled(false);
+
+    ItemMenu->addSeparator();
+
     QAction *invis = ItemMenu->addAction("Invisible");
         invis->setCheckable(1);
         invis->setChecked( blockData.invisible );
+
     QAction *slipp = ItemMenu->addAction("Slippery");
         slipp->setCheckable(1);
         slipp->setChecked( blockData.slippery );
 
     QAction *resize = ItemMenu->addAction("Resize");
         resize->setVisible( (this->data(3).toString()=="sizable") );
+
+    ItemMenu->addSeparator();
 
     QAction *remove = ItemMenu->addAction("Remove");
 

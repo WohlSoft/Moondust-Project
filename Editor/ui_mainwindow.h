@@ -121,6 +121,9 @@ public:
     QAction *action_recent10;
     QAction *actionCopy;
     QAction *actionCollisions;
+    QAction *actionDrawWater;
+    QAction *actionDrawSand;
+    QAction *actionPaste;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -681,6 +684,20 @@ public:
         actionCollisions = new QAction(MainWindow);
         actionCollisions->setObjectName(QStringLiteral("actionCollisions"));
         actionCollisions->setCheckable(true);
+        actionDrawWater = new QAction(MainWindow);
+        actionDrawWater->setObjectName(QStringLiteral("actionDrawWater"));
+        actionDrawWater->setCheckable(true);
+        QIcon icon42;
+        icon42.addFile(QStringLiteral(":/drawWater.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDrawWater->setIcon(icon42);
+        actionDrawSand = new QAction(MainWindow);
+        actionDrawSand->setObjectName(QStringLiteral("actionDrawSand"));
+        actionDrawSand->setCheckable(true);
+        QIcon icon43;
+        icon43.addFile(QStringLiteral(":/drawQuickSand.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionDrawSand->setIcon(icon43);
+        actionPaste = new QAction(MainWindow);
+        actionPaste->setObjectName(QStringLiteral("actionPaste"));
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -748,9 +765,9 @@ public:
         LevelToolBox->setMinimumSize(QSize(255, 200));
         LevelToolBox->setMaximumSize(QSize(524287, 524287));
         LevelToolBox->setFocusPolicy(Qt::NoFocus);
-        QIcon icon42;
-        icon42.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelToolBox->setWindowIcon(icon42);
+        QIcon icon44;
+        icon44.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelToolBox->setWindowIcon(icon44);
         LevelToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         LevelToolBoxTabs = new QTabWidget();
@@ -861,9 +878,9 @@ public:
         WorldToolBox->setEnabled(true);
         sizePolicy1.setHeightForWidth(WorldToolBox->sizePolicy().hasHeightForWidth());
         WorldToolBox->setSizePolicy(sizePolicy1);
-        QIcon icon43;
-        icon43.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        WorldToolBox->setWindowIcon(icon43);
+        QIcon icon45;
+        icon45.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        WorldToolBox->setWindowIcon(icon45);
         WorldToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         WorldToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         WorldToolBoxTabs = new QTabWidget();
@@ -961,9 +978,9 @@ public:
         font.setItalic(false);
         font.setWeight(50);
         LevelSectionSettings->setFont(font);
-        QIcon icon44;
-        icon44.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelSectionSettings->setWindowIcon(icon44);
+        QIcon icon46;
+        icon46.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelSectionSettings->setWindowIcon(icon46);
         LevelSectionSettings->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelSectionSettings->setFloating(false);
         LevelSectionSettings->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -1329,6 +1346,7 @@ public:
         menuEdit->addAction(actionRedo);
         menuEdit->addSeparator();
         menuEdit->addAction(actionCopy);
+        menuEdit->addAction(actionPaste);
         mainToolBar->addAction(OpenFile);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_as);
@@ -1366,6 +1384,8 @@ public:
         LevelSectionsToolBar->addAction(actionSection_21);
         LevelObjectToolbar->addAction(actionSetFirstPlayer);
         LevelObjectToolbar->addAction(actionSetSecondPlayer);
+        LevelObjectToolbar->addAction(actionDrawWater);
+        LevelObjectToolbar->addAction(actionDrawSand);
         LevelObjectToolbar->addSeparator();
         LevelObjectToolbar->addAction(actionLockBlocks);
         LevelObjectToolbar->addAction(actionLockBGO);
@@ -1613,6 +1633,16 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionCollisions->setToolTip(QApplication::translate("MainWindow", "<html><head/><body><p>Placing item to simular item Protection</p><p>(If enabeld, the movement operation will be slower)</p></body></html>", 0));
 #endif // QT_NO_TOOLTIP
+        actionDrawWater->setText(QApplication::translate("MainWindow", "Draw Water zone", 0));
+#ifndef QT_NO_TOOLTIP
+        actionDrawWater->setToolTip(QApplication::translate("MainWindow", "Hold mouse button on map and move mouse for draw water zone", 0));
+#endif // QT_NO_TOOLTIP
+        actionDrawSand->setText(QApplication::translate("MainWindow", "Draw QuickSand zone", 0));
+#ifndef QT_NO_TOOLTIP
+        actionDrawSand->setToolTip(QApplication::translate("MainWindow", "Hold mouse button on map and move mouse for draw quick sand zone", 0));
+#endif // QT_NO_TOOLTIP
+        actionPaste->setText(QApplication::translate("MainWindow", "Paste", 0));
+        actionPaste->setShortcut(QApplication::translate("MainWindow", "Ctrl+V", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));

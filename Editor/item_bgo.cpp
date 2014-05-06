@@ -46,6 +46,11 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
     this->setSelected(1);
     ItemMenu->clear();
 
+    QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
+        LayerName->setEnabled(false);
+
+    ItemMenu->addSeparator();
+
     QAction *remove = ItemMenu->addAction("Remove");
 
     QAction *selected = ItemMenu->exec(event->screenPos());
