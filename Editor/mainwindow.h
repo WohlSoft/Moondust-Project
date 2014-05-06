@@ -59,6 +59,8 @@ protected:
 
 private slots:
 
+    void TickTack();
+
     //Common functions
     void save();
     void save_as();
@@ -205,6 +207,8 @@ private:
     int activeChildWindow();
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
+
+    QTimer * TickTackTimer;
 
     QList<QString> recentOpen;
 
