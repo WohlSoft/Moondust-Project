@@ -578,12 +578,20 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(!boolwords.exactMatch(line)) //Level Entrance (can not enter)
                 goto badfile;
-            else doors.lvl_i= ((line=="#TRUE#")?true:false);
+            else
+            {
+                doors.lvl_i = ((line=="#TRUE#")?true:false);
+                doors.isSetIn = ((line=="#TRUE#")?false:true);
+            }
 
             str_count++;line = in.readLine();
             if(!boolwords.exactMatch(line)) //Level Exit (End of level)
                 goto badfile;
-            else doors.lvl_o= ((line=="#TRUE#")?true:false);
+            else
+            {
+                doors.lvl_o= ((line=="#TRUE#")?true:false);
+                doors.isSetOut = (((line=="#TRUE#")?false:true) || (doors.lvl_i));
+            }
 
             str_count++;line = in.readLine();
             if(!issint.exactMatch(line)) //WarpTo X

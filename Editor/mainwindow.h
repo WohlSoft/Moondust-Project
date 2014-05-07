@@ -40,8 +40,21 @@
 #include "lvl_filedata.h"
 #include "wld_filedata.h"
 #include "npc_filedata.h"
+
 #include "leveledit.h"
 #include "npcedit.h"
+
+#include "npcedit.h"
+
+#include "aboutdialog.h"
+#include "levelprops.h"
+
+#include "dataconfigs.h"
+
+#include "musicfilelist.h"
+
+#include "logger.h"
+
 
 QT_BEGIN_NAMESPACE
     class QMimeData;
@@ -258,7 +271,16 @@ private:
 
     QList<QString> recentOpen; //Recent files list
 
+    //Application Settings
+    void setDefaults();
+    void setUiDefults();
+
+    void loadSettings();
+    void saveSettings();
+
 };
+
+
 
 void BadFileMsg(MainWindow *window, QString fileName_DATA, int str_count, QString line);
 

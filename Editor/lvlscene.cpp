@@ -1719,7 +1719,7 @@ void LvlScene::placeDoor(LevelDoors &door)
     cEnter.setAlpha(50);
     cExit.setAlpha(50);
 
-    if((!door.lvl_o)||(door.lvl_i))
+    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
     {
         enter = addRect(ix, iy, w, h, QPen(Qt::magenta, 2,Qt::SolidLine), QBrush(cEnter));
         enterId = new QGraphicsItemGroup(enter);
@@ -1746,7 +1746,7 @@ void LvlScene::placeDoor(LevelDoors &door)
         enter->setData(2, QString::number(door.array_id) );
     }
 
-    if(!door.lvl_i)
+    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) )
     {
         exit = addRect(ox, oy, w, h, QPen(Qt::darkMagenta, 2,Qt::SolidLine), QBrush(cExit));
         exitId = new QGraphicsItemGroup(exit);

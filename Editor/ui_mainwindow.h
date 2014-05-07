@@ -207,13 +207,13 @@ public:
     QCheckBox *WarpLevelEntrance;
     QCheckBox *WarpLevelExit;
     QGroupBox *groupBox_7;
-    QGroupBox *groupBox_2;
+    QGroupBox *WarpEntranceGrp;
     QRadioButton *Entr_Left;
     QRadioButton *Entr_Right;
     QRadioButton *Entr_Up;
     QRadioButton *Entr_Down;
     QLabel *label_2;
-    QGroupBox *groupBox_3;
+    QGroupBox *WarpExitGrp;
     QRadioButton *Exit_Left;
     QRadioButton *Exit_Right;
     QRadioButton *Exit_Up;
@@ -1188,48 +1188,49 @@ public:
         groupBox_7 = new QGroupBox(groupBox);
         groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
         groupBox_7->setGeometry(QRect(10, 160, 221, 121));
-        groupBox_2 = new QGroupBox(groupBox_7);
-        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(10, 10, 91, 101));
-        groupBox_2->setAlignment(Qt::AlignCenter);
-        groupBox_2->setFlat(false);
-        Entr_Left = new QRadioButton(groupBox_2);
+        WarpEntranceGrp = new QGroupBox(groupBox_7);
+        WarpEntranceGrp->setObjectName(QStringLiteral("WarpEntranceGrp"));
+        WarpEntranceGrp->setGeometry(QRect(10, 10, 91, 101));
+        WarpEntranceGrp->setAlignment(Qt::AlignCenter);
+        WarpEntranceGrp->setFlat(false);
+        Entr_Left = new QRadioButton(WarpEntranceGrp);
         Entr_Left->setObjectName(QStringLiteral("Entr_Left"));
         Entr_Left->setGeometry(QRect(70, 50, 16, 16));
         Entr_Left->setChecked(false);
-        Entr_Right = new QRadioButton(groupBox_2);
+        Entr_Right = new QRadioButton(WarpEntranceGrp);
         Entr_Right->setObjectName(QStringLiteral("Entr_Right"));
         Entr_Right->setGeometry(QRect(10, 50, 16, 16));
-        Entr_Up = new QRadioButton(groupBox_2);
+        Entr_Up = new QRadioButton(WarpEntranceGrp);
         Entr_Up->setObjectName(QStringLiteral("Entr_Up"));
         Entr_Up->setGeometry(QRect(40, 80, 16, 16));
         Entr_Up->setChecked(false);
-        Entr_Down = new QRadioButton(groupBox_2);
+        Entr_Down = new QRadioButton(WarpEntranceGrp);
         Entr_Down->setObjectName(QStringLiteral("Entr_Down"));
         Entr_Down->setGeometry(QRect(40, 20, 16, 16));
         Entr_Down->setChecked(true);
-        label_2 = new QLabel(groupBox_2);
+        label_2 = new QLabel(WarpEntranceGrp);
         label_2->setObjectName(QStringLiteral("label_2"));
         label_2->setGeometry(QRect(25, 38, 41, 41));
-        groupBox_3 = new QGroupBox(groupBox_7);
-        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        groupBox_3->setGeometry(QRect(120, 10, 91, 101));
-        groupBox_3->setAlignment(Qt::AlignCenter);
-        Exit_Left = new QRadioButton(groupBox_3);
+        WarpExitGrp = new QGroupBox(groupBox_7);
+        WarpExitGrp->setObjectName(QStringLiteral("WarpExitGrp"));
+        WarpExitGrp->setEnabled(true);
+        WarpExitGrp->setGeometry(QRect(120, 10, 91, 101));
+        WarpExitGrp->setAlignment(Qt::AlignCenter);
+        Exit_Left = new QRadioButton(WarpExitGrp);
         Exit_Left->setObjectName(QStringLiteral("Exit_Left"));
         Exit_Left->setGeometry(QRect(10, 50, 16, 16));
         Exit_Left->setChecked(false);
-        Exit_Right = new QRadioButton(groupBox_3);
+        Exit_Right = new QRadioButton(WarpExitGrp);
         Exit_Right->setObjectName(QStringLiteral("Exit_Right"));
         Exit_Right->setGeometry(QRect(70, 50, 16, 16));
-        Exit_Up = new QRadioButton(groupBox_3);
+        Exit_Up = new QRadioButton(WarpExitGrp);
         Exit_Up->setObjectName(QStringLiteral("Exit_Up"));
         Exit_Up->setGeometry(QRect(40, 20, 16, 16));
         Exit_Up->setChecked(true);
-        Exit_Down = new QRadioButton(groupBox_3);
+        Exit_Down = new QRadioButton(WarpExitGrp);
         Exit_Down->setObjectName(QStringLiteral("Exit_Down"));
         Exit_Down->setGeometry(QRect(40, 80, 16, 16));
-        label_7 = new QLabel(groupBox_3);
+        label_7 = new QLabel(WarpExitGrp);
         label_7->setObjectName(QStringLiteral("label_7"));
         label_7->setGeometry(QRect(20, 37, 51, 41));
         groupBox_8 = new QGroupBox(groupBox);
@@ -1864,7 +1865,7 @@ public:
         WarpLevelEntrance->setText(QApplication::translate("MainWindow", "Entrance", 0));
         WarpLevelExit->setText(QApplication::translate("MainWindow", "Exit", 0));
         groupBox_7->setTitle(QApplication::translate("MainWindow", "Pipe direction", 0));
-        groupBox_2->setTitle(QApplication::translate("MainWindow", "Entrance", 0));
+        WarpEntranceGrp->setTitle(QApplication::translate("MainWindow", "Entrance", 0));
 #ifndef QT_NO_TOOLTIP
         Entr_Left->setToolTip(QApplication::translate("MainWindow", "Left", 0));
 #endif // QT_NO_TOOLTIP
@@ -1882,7 +1883,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Liberation Sans'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/images/warp_entrance.png\" /></p></body></html>", 0));
-        groupBox_3->setTitle(QApplication::translate("MainWindow", "Exit", 0));
+        WarpExitGrp->setTitle(QApplication::translate("MainWindow", "Exit", 0));
 #ifndef QT_NO_TOOLTIP
         Exit_Left->setToolTip(QApplication::translate("MainWindow", "Left", 0));
 #endif // QT_NO_TOOLTIP

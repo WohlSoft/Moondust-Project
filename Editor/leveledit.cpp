@@ -508,4 +508,3 @@ QString leveledit::strippedName(const QString &fullFileName)
 {
     return QFileInfo(fullFileName).fileName();
 }
-
