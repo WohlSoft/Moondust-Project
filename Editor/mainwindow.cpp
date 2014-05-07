@@ -30,7 +30,7 @@
 #include <QMediaPlaylist>
 #include <QLocale>
 #include <QSplashScreen>
-#include "childwindow.h"
+//#include "childwindow.h" - trash
 #include "leveledit.h"
 #include "npcedit.h"
 #include "dataconfigs.h"
@@ -38,9 +38,14 @@
 #include "logger.h"
 
 QString LastOpenDir = ".";
-bool LevelToolBoxVis = false;
+
+int lastWinType=0;
+bool LevelToolBoxVis = true; //Level toolbox
+bool SectionToolBoxVis = false; //Section Settings
+bool LevelDoorsBoxVis = false; //Doors box
+bool LevelLayersBoxVis = false; //Layers box
+
 bool WorldToolBoxVis = false;
-bool SectionToolBoxVis = false;
 bool autoPlayMusic = false;
 
 QMediaPlayer * MusicPlayer;
@@ -74,13 +79,13 @@ MainWindow::MainWindow(QMdiArea *parent) :
         return;
     }
 
-
     ui->setupUi(this);
 
     //ui->BlocksItemBox->;
 
     //Applay objects into tools
     setTools();
+    setItemBoxes();
 
     #ifdef Q_OS_MAC
         this->setWindowIcon(QIcon(":/images/mac/mushroom.icns"));
@@ -106,10 +111,14 @@ MainWindow::MainWindow(QMdiArea *parent) :
     settings.beginGroup("Main");
     //resize(settings.value("size", size()).toSize());
     //move(settings.value("pos", pos()).toPoint());
+
     LastOpenDir = settings.value("lastpath", ".").toString();
-    LevelToolBoxVis = settings.value("level-tb-visible", "false").toBool();
-    WorldToolBoxVis = settings.value("world-tb-visible", "false").toBool();
+    LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
+    WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
     SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
+    LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
+    LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
+
     LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
     LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
     //if(settings.value("maximased", "false")=="true") showMaximized();
@@ -131,12 +140,16 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     ui->centralWidget->cascadeSubWindows();
     ui->WorldToolBox->hide();
+
     ui->LevelSectionSettings->hide();
     ui->LevelToolBox->hide();
     ui->DoorsToolbox->hide();
+    ui->LevelLayers->hide();
 
     ui->menuView->setEnabled(0);
-    ui->menuWindow->setEnabled(0);
+
+    ui->menuWindow->setEnabled(1);
+
     ui->menuLevel->setEnabled(0);
     ui->menuWorld->setEnabled(0);
     ui->LevelObjectToolbar->setVisible(0);
@@ -144,11 +157,14 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui->actionLVLToolBox->setVisible(0);
     ui->actionWarpsAndDoors->setVisible(0);
     ui->actionSection_Settings->setVisible(0);
+    ui->actionWarpsAndDoors->setVisible(0);
     ui->actionWLDToolBox->setVisible(0);
     ui->actionGridEn->setChecked(1);
 
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
+
+    TickTackLock = false;
 
     TickTackTimer = new QTimer(this);
     connect(
@@ -163,6 +179,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
 void MainWindow::TickTack()
 {
+    if(TickTackLock) return;
+
+    TickTackLock = true;
+
     try
     {
         if(activeChildWindow()==1)
@@ -184,6 +204,8 @@ void MainWindow::TickTack()
     {
         WriteToLog(QtWarningMsg, QString("CLASS TYPE MISMATCH IN TIMER ON WINDOWS SWITCH: %1").arg(e));
     }
+
+    TickTackLock = false;
 }
 
 MainWindow::~MainWindow()
@@ -225,22 +247,44 @@ void MainWindow::updateMenus()
     ui->actionWLDToolBox->setVisible( (WinType==3));
 
     ui->actionCopy->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionPaste->setEnabled( (WinType==1) || (WinType==3) );
 
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
 
-    if(!(WinType==1)) LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
-    if(!(WinType==1)) SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
 
-    ui->LevelToolBox->setVisible( (WinType==1) && (LevelToolBoxVis)); //Restore saved visible status
-    ui->LevelSectionSettings->setVisible( (WinType==1) && (SectionToolBoxVis));
+
+    if((!(WinType==1))&& (lastWinType == 1) )
+    {
+        LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
+        SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
+        LevelDoorsBoxVis = ui->DoorsToolbox->isVisible();
+        LevelLayersBoxVis = ui->LevelLayers->isVisible();
+
+        ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
+        ui->LevelSectionSettings->setVisible( 0 );
+        ui->DoorsToolbox->setVisible( 0 );
+        ui->LevelLayers->setVisible( 0 );
+    }
+
+    if((lastWinType !=1) && (WinType==1))
+    {
+        ui->LevelToolBox->setVisible( LevelToolBoxVis ); //Restore saved visible status
+        ui->LevelSectionSettings->setVisible( SectionToolBoxVis );
+        ui->DoorsToolbox->setVisible( LevelDoorsBoxVis );
+        ui->LevelLayers->setVisible( LevelLayersBoxVis );
+    }
+    lastWinType =   WinType;
 
     ui->actionLVLToolBox->setVisible( (WinType==1) );
+    ui->actionWarpsAndDoors->setVisible( (WinType==1) );
+    ui->actionSection_Settings->setVisible( (WinType==1) );
+    ui->actionLevelProp->setEnabled( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
 
     ui->menuLevel->setEnabled( (WinType==1) );
 
-    ui->actionSection_Settings->setVisible( (WinType==1) );
-    ui->actionLevelProp->setEnabled( (WinType==1) );
+
+
     ui->actionLevNoBack->setEnabled( (WinType==1) );
     ui->actionLevOffScr->setEnabled( (WinType==1) );
     ui->actionLevWarp->setEnabled( (WinType==1) );
@@ -271,8 +315,6 @@ void MainWindow::updateMenus()
     ui->actionReset_position->setEnabled( (WinType==1) );
     ui->actionGridEn->setEnabled( (WinType==1) );
 
-    ui->menuWindow->setEnabled( (WinType!=0) );
-
     if(WinType==1)
     {
         if(
@@ -289,6 +331,9 @@ void MainWindow::updateMenus()
         }
 
         SetCurrentLevelSection(0, 1);
+        setDoorsToolbox();
+        setLayersBox();
+
         setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
         ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
@@ -315,7 +360,50 @@ void MainWindow::updateMenus()
     cutAct->setEnabled(hasSelection);
     copyAct->setEnabled(hasSelection);
     */
+
+
+
+    //Window menu
+    ui->menuWindow->clear();
+    /*
+        ui->menuWindow->addAction(closeAct);
+        ui->menuWindow->addAction(closeAllAct);
+        ui->menuWindow->addSeparator();
+        ui->menuWindow->addAction(tileAct);
+        ui->menuWindow->addAction(cascadeAct);
+        ui->menuWindow->addSeparator();
+        ui->menuWindow->addAction(nextAct);
+        ui->menuWindow->addAction(previousAct);
+        ui->menuWindow->addAction(separatorAct);
+    */
+
+
+    QAction * empty = ui->menuWindow->addAction( tr("[No opened files]") );
+        empty->setDisabled(1);
+
+    QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
+        empty->setVisible( windows.isEmpty() );
+
+
+    for (int i = 0; i < windows.size(); ++i) {
+        //QM *child = qobject_cast<MdiChild *>(windows.at(i)->widget());
+
+        QString text;
+        if (i < 9) {
+            text = tr("&%1").arg( windows.at(i)->windowTitle() ) ;
+        } else {
+            text = tr("%1").arg( windows.at(i)->windowTitle() ) ;
+        }
+        QAction *action  = ui->menuWindow->addAction(text);
+        action->setCheckable(true);
+        action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
+
+        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
+
+        windowMapper->setMapping(action, windows.at(i));
+    }
 }
+
 
 void MainWindow::setTools()
 {
@@ -324,14 +412,63 @@ void MainWindow::setTools()
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
-    ui->LVLPropsBackImage->addItem("[No image]");
-    ui->LVLPropsMusicNumber->addItem("[Silence]");
+    ui->LVLPropsBackImage->addItem( tr("[No image]") );
+    ui->LVLPropsMusicNumber->addItem( tr("[Silence]") );
 
     for(i=0; i< configs.main_bg.size();i++)
         ui->LVLPropsBackImage->addItem(configs.main_bg[i].name);
 
     for(i=0; i< configs.main_music_lvl.size();i++)
         ui->LVLPropsMusicNumber->addItem(configs.main_music_lvl[i].name);
+
+}
+
+void MainWindow::setItemBoxes()
+{
+        WriteToLog(QtDebugMsg, "BGOTools -> Clear current (disabled)");
+    ui->BGOItemsList->clear();
+    ui->BlockItemsList->clear();
+
+        WriteToLog(QtDebugMsg, "BGOTools -> Declare new");
+    QListWidgetItem * item;
+    QPixmap tmpI;
+
+
+    //set Block item box
+    foreach(obj_block blockItem, configs.main_block)
+    {
+        if(blockItem.animated)
+            tmpI = blockItem.image.copy(0,0,
+                        (int)round(blockItem.image.height() / blockItem.frames),
+                        blockItem.image.width() );
+        else
+            tmpI = blockItem.image;
+
+        item = new QListWidgetItem( blockItem.name );
+        item->setIcon( QIcon( tmpI ) );
+        item->setData(1, QString::number(blockItem.id) );
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+        ui->BlockItemsList->addItem( item );
+    }
+
+    //set BGO item box
+    foreach(obj_bgo bgoItem, configs.main_bgo)
+    {
+        if(bgoItem.animated)
+            tmpI = bgoItem.image.copy(0,0,
+                        (int)round(bgoItem.image.height() / bgoItem.frames),
+                        bgoItem.image.width() );
+        else
+            tmpI = bgoItem.image;
+
+        item = new QListWidgetItem( bgoItem.name );
+        item->setIcon( QIcon( tmpI ) );
+        item->setData(1, QString::number(bgoItem.id) );
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+        ui->BGOItemsList->addItem( item );
+    }
 
 }
 
@@ -424,9 +561,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.beginGroup("Main");
     settings.setValue("pos", pos());
     settings.setValue("lastpath", LastOpenDir);
+
     settings.setValue("level-tb-visible", LevelToolBoxVis);
     settings.setValue("world-tb-visible", WorldToolBoxVis);
     settings.setValue("section-tb-visible", SectionToolBoxVis);
+    settings.setValue("level-layers-vis", LevelLayersBoxVis);
+    settings.setValue("level-doors-vis", LevelDoorsBoxVis);
+
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
     settings.setValue("autoPlayMusic", autoPlayMusic);
@@ -501,7 +642,11 @@ void MainWindow::OpenFile(QString FilePath)
         if ( (bool)(child->loadFile(FilePath, FileData, configs, LvlOpts)) ) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
+
             SetCurrentLevelSection(0);
+            setDoorsToolbox();
+            setLayersBox();
+
         } else {
             WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
@@ -757,6 +902,84 @@ void MainWindow::updateWindowMenu()
 
 */
 
+void MainWindow::setLayersBox()
+{
+    int WinType = activeChildWindow();
+    QListWidgetItem * item;
+
+    ui->LvlLayerList->clear();
+
+    if (WinType==1)
+    {
+        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+        {
+            item = new QListWidgetItem;
+            item->setText(layer.name);
+            item->setFlags(Qt::ItemIsUserCheckable);
+
+            if((layer.name!="Destroyed Blocks")&&(layer.name!="Spawned NPCs"))
+                item->setFlags(item->flags() | Qt::ItemIsEnabled);
+
+            if(layer.name!="Default")
+                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+
+            item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
+            ui->LvlLayerList->addItem( item );
+        }
+
+    }
+}
+
+void MainWindow::setDoorsToolbox()
+{
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        ui->WarpList->clear();
+        foreach(LevelDoors door, activeLvlEditWin()->LvlData.doors)
+        {
+            ui->WarpList->addItem(QString("%1: x%2y%3 <=> x%4y%5")
+           .arg(door.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy),
+                                  door.array_id);
+        }
+    }
+
+}
+
+void MainWindow::setDoorData(long index)
+{
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        if(index<activeLvlEditWin()->LvlData.doors.size())
+        {
+            foreach(LevelDoors door, activeLvlEditWin()->LvlData.doors)
+            {
+                if(door.array_id == (unsigned long)ui->WarpList->currentData().toInt() )
+                {
+                    ui->WarpAllowNPC->setChecked(door.allownpc);
+                    ui->WarpLock->setChecked(door.locked);
+                    ui->WarpNoYoshi->setChecked(door.noyoshi);
+                    ui->WarpType->setCurrentIndex(door.type);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void MainWindow::on_WarpList_currentIndexChanged(int index)
+{
+    setDoorData(index);
+}
+
+
+
+
+
+
+
 
 void MainWindow::SetCurrentLevelSection(int SctId, int open)
 {
@@ -855,68 +1078,77 @@ void MainWindow::on_actionAbout_triggered()
 // Level tool box show/hide
 void MainWindow::on_LevelToolBox_visibilityChanged(bool visible)
 {
-    if(visible)
-    {
-        //MainWindow::menuBar()->actions()->;
-        ui->actionLVLToolBox->setChecked(true);
-    }
-     else
-    {
-        ui->actionLVLToolBox->setChecked(false);
-    }
+    ui->actionLVLToolBox->setChecked(visible);
 }
 
 void MainWindow::on_actionLVLToolBox_triggered()
 {
-        if(ui->actionLVLToolBox->isChecked())
-            ui->LevelToolBox->setVisible(true);
-        else
-            ui->LevelToolBox->setVisible(false);
+    if(ui->actionLVLToolBox->isChecked())
+    {
+        ui->LevelToolBox->setVisible(true);
+        ui->LevelToolBox->raise();
+    }
+    else
+        ui->LevelToolBox->setVisible(false);
 }
 
 // World tool box show/hide
 void MainWindow::on_WorldToolBox_visibilityChanged(bool visible)
 {
-    if(visible)
-    {
-        //MainWindow::menuBar()->actions()->;
-        ui->actionWLDToolBox->setChecked(true);
-    }
-     else
-    {
-        ui->actionWLDToolBox->setChecked(false);
-    }
+        ui->actionWLDToolBox->setChecked(visible);
 }
 
 void MainWindow::on_actionWLDToolBox_triggered()
 {
     if(ui->actionWLDToolBox->isChecked())
+    {
         ui->WorldToolBox->setVisible(true);
+        ui->WorldToolBox->raise();
+    }
     else
         ui->WorldToolBox->setVisible(false);
 }
 
+
 // Level Section tool box show/hide
 void MainWindow::on_LevelSectionSettings_visibilityChanged(bool visible)
 {
-    if(visible)
-    {
-        //MainWindow::menuBar()->actions()->;
-        ui->actionSection_Settings->setChecked(true);
-    }
-     else
-    {
-        ui->actionSection_Settings->setChecked(false);
-    }
+        ui->actionSection_Settings->setChecked(visible);
 }
 
 void MainWindow::on_actionSection_Settings_triggered()
 {
     if(ui->actionSection_Settings->isChecked())
+    {
         ui->LevelSectionSettings->setVisible(true);
+        ui->LevelSectionSettings->raise();
+    }
     else
         ui->LevelSectionSettings->setVisible(false);
 }
+
+void MainWindow::on_DoorsToolbox_visibilityChanged(bool visible)
+{
+    ui->actionWarpsAndDoors->setChecked(visible);
+}
+void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
+{
+    ui->DoorsToolbox->setVisible(checked);
+    if(checked) ui->DoorsToolbox->raise();
+}
+
+
+void MainWindow::on_LevelLayers_visibilityChanged(bool visible)
+{
+    ui->actionLayersBox->setChecked(visible);
+}
+void MainWindow::on_actionLayersBox_triggered(bool checked)
+{
+    ui->LevelLayers->setVisible(checked);
+    if(checked) ui->LevelLayers->raise();
+}
+
+
 
 
 //Open Level Properties
@@ -935,6 +1167,7 @@ void MainWindow::on_actionLevelProp_triggered()
 
 }
 
+/*
 void MainWindow::on_pushButton_4_clicked()
 {
     //ui->xxxxlistWidget->insertItem(1, "test");
@@ -956,7 +1189,7 @@ void MainWindow::on_pushButton_4_clicked()
      QMessageBox::Ok);
 
 
-}
+}*/
 
 
 void MainWindow::on_actionSave_triggered()
