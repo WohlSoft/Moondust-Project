@@ -40,7 +40,7 @@
 QString LastOpenDir = ".";
 
 int lastWinType=0;
-bool LevelToolBoxVis = false; //Level toolbox
+bool LevelToolBoxVis = true; //Level toolbox
 bool SectionToolBoxVis = false; //Section Settings
 bool LevelDoorsBoxVis = false; //Doors box
 bool LevelLayersBoxVis = false; //Layers box
@@ -113,8 +113,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     //move(settings.value("pos", pos()).toPoint());
 
     LastOpenDir = settings.value("lastpath", ".").toString();
-    LevelToolBoxVis = settings.value("level-tb-visible", "false").toBool();
-    WorldToolBoxVis = settings.value("world-tb-visible", "false").toBool();
+    LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
+    WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
     SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
     LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
     LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
@@ -427,11 +427,32 @@ void MainWindow::setItemBoxes()
 {
         WriteToLog(QtDebugMsg, "BGOTools -> Clear current (disabled)");
     ui->BGOItemsList->clear();
+    ui->BlockItemsList->clear();
 
         WriteToLog(QtDebugMsg, "BGOTools -> Declare new");
     QListWidgetItem * item;
     QPixmap tmpI;
 
+
+    //set Block item box
+    foreach(obj_block blockItem, configs.main_block)
+    {
+        if(blockItem.animated)
+            tmpI = blockItem.image.copy(0,0,
+                        (int)round(blockItem.image.height() / blockItem.frames),
+                        blockItem.image.width() );
+        else
+            tmpI = blockItem.image;
+
+        item = new QListWidgetItem( blockItem.name );
+        item->setIcon( QIcon( tmpI ) );
+        item->setData(1, QString::number(blockItem.id) );
+        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+        ui->BlockItemsList->addItem( item );
+    }
+
+    //set BGO item box
     foreach(obj_bgo bgoItem, configs.main_bgo)
     {
         if(bgoItem.animated)
@@ -448,6 +469,7 @@ void MainWindow::setItemBoxes()
 
         ui->BGOItemsList->addItem( item );
     }
+
 }
 
 void MainWindow::save()
@@ -539,9 +561,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.beginGroup("Main");
     settings.setValue("pos", pos());
     settings.setValue("lastpath", LastOpenDir);
+
     settings.setValue("level-tb-visible", LevelToolBoxVis);
     settings.setValue("world-tb-visible", WorldToolBoxVis);
     settings.setValue("section-tb-visible", SectionToolBoxVis);
+    settings.setValue("level-layers-vis", LevelLayersBoxVis);
+    settings.setValue("level-doors-vis", LevelDoorsBoxVis);
+
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
     settings.setValue("autoPlayMusic", autoPlayMusic);
