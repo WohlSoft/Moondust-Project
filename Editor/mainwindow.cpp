@@ -433,14 +433,14 @@ void MainWindow::setItemBoxes()
     QListWidgetItem * item;
     QPixmap tmpI;
 
-
     //set Block item box
     foreach(obj_block blockItem, configs.main_block)
     {
+
         if(blockItem.animated)
             tmpI = blockItem.image.copy(0,0,
-                        (int)round(blockItem.image.height() / blockItem.frames),
-                        blockItem.image.width() );
+                        blockItem.image.width(),
+                        (int)round(blockItem.image.height() / blockItem.frames));
         else
             tmpI = blockItem.image;
 
@@ -457,8 +457,8 @@ void MainWindow::setItemBoxes()
     {
         if(bgoItem.animated)
             tmpI = bgoItem.image.copy(0,0,
-                        (int)round(bgoItem.image.height() / bgoItem.frames),
-                        bgoItem.image.width() );
+                        bgoItem.image.width(),
+                        (int)round(bgoItem.image.height() / bgoItem.frames) );
         else
             tmpI = bgoItem.image;
 
@@ -471,6 +471,19 @@ void MainWindow::setItemBoxes()
     }
 
 }
+
+void MainWindow::on_BGOUniform_clicked(bool checked)
+{
+    ui->BGOItemsList->setUniformItemSizes(checked);
+    setItemBoxes();
+}
+
+void MainWindow::on_BlockUniform_clicked(bool checked)
+{
+    ui->BlockItemsList->setUniformItemSizes(checked);
+    setItemBoxes();
+}
+
 
 void MainWindow::save()
 {
@@ -1324,6 +1337,7 @@ void MainWindow::on_actionLoad_configs_triggered()
 {
     //Reload configs
     configs.loadconfigs();
+    setItemBoxes(); //Apply item boxes from reloaded configs
 
     //Set tools from loaded configs
     //setTools();

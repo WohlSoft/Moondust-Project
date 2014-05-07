@@ -207,6 +207,10 @@ private slots:
 
     void on_actionLayersBox_triggered(bool checked);
 
+    void on_BGOUniform_clicked(bool checked);
+
+    void on_BlockUniform_clicked(bool checked);
+
 private:
     dataconfigs configs; // Global objects configucrations
 
