@@ -21,6 +21,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
+#include <QMdiArea>
 #include <QPixmap>
 #include <QAbstractListModel>
 #include <QList>
@@ -28,15 +29,22 @@
 #include <QString>
 #include <QStringList>
 #include <QtMultimedia/QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QFileDialog>
+#include <QFile>
+#include <QSettings>
+#include <QTranslator>
+#include <QLocale>
+#include <QSplashScreen>
+
 #include "lvl_filedata.h"
 #include "wld_filedata.h"
 #include "npc_filedata.h"
-//#include "childwindow.h" - trash
 #include "leveledit.h"
 #include "npcedit.h"
 
 QT_BEGIN_NAMESPACE
-class QMimeData;
+    class QMimeData;
 QT_END_NAMESPACE
 
 namespace Ui {
@@ -219,6 +227,24 @@ private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
 
+
+    QString LastOpenDir;
+    int lastWinType;
+    bool LevelToolBoxVis; //Level toolbox
+    bool SectionToolBoxVis; //Section Settings
+    bool LevelDoorsBoxVis; //Doors box
+    bool LevelLayersBoxVis; //Layers box
+
+    bool WorldToolBoxVis;
+    bool autoPlayMusic;
+
+    QMediaPlayer * MusicPlayer;
+
+    QString currentCustomMusic;
+    long currentMusicId;
+    bool musicButtonChecked;
+
+
     Ui::MainWindow *ui;
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;
@@ -227,10 +253,10 @@ private:
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
 
-    QTimer * TickTackTimer;
-    bool TickTackLock;
+    QTimer * TickTackTimer; //Scene Events detector
+    bool TickTackLock;      //Scene Events detector locker
 
-    QList<QString> recentOpen;
+    QList<QString> recentOpen; //Recent files list
 
 };
 

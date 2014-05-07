@@ -6,6 +6,7 @@
 
 QT       += core gui widgets multimedia
 
+
 TARGET = plweditor
 TEMPLATE = app
 
@@ -13,7 +14,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     aboutdialog.cpp \
     levelprops.cpp \
-    file_formats.cpp \
     npcedit.cpp \
     leveledit.cpp \
     lvlscene.cpp \
@@ -21,11 +21,13 @@ SOURCES += main.cpp\
     saveimage.cpp \
     musicfilelist.cpp \
     logger.cpp \
-    file_npc_txt.cpp \
-    file_wld.cpp \
-    file_lvl.cpp \
     item_block.cpp \
-    item_bgo.cpp
+    item_bgo.cpp \
+    file_formats/file_formats.cpp \
+    file_formats/file_lvl.cpp \
+    file_formats/file_npc_txt.cpp \
+    file_formats/file_wld.cpp \
+    main_window/recentfiles.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -33,7 +35,6 @@ HEADERS  += mainwindow.h \
     lvl_filedata.h \
     wld_filedata.h \
     npc_filedata.h \
-    childwindow.h \
     npcedit.h \
     leveledit.h \
     lvlscene.h \
@@ -41,9 +42,9 @@ HEADERS  += mainwindow.h \
     saveimage.h \
     musicfilelist.h \
     logger.h \
-    file_formats.h \
     item_block.h \
-    item_bgo.h
+    item_bgo.h \
+    file_formats/file_formats.h
 
 FORMS    += \
     aboutdialog.ui \
