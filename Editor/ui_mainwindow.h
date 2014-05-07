@@ -149,13 +149,15 @@ public:
     QWidget *Blocks;
     QGridLayout *BlocksG;
     QLabel *BlockCatLabel;
-    QComboBox *BlockCatList;
     QListWidget *BlockItemsList;
+    QComboBox *BlockCatList;
+    QCheckBox *BlockUniform;
     QWidget *BGOs;
     QGridLayout *BGOsG;
     QLabel *BGOCatLabel;
     QListWidget *BGOItemsList;
     QComboBox *BGOCatList;
+    QCheckBox *BGOUniform;
     QScrollArea *npc;
     QWidget *npcscroll;
     QToolBar *EditionToolBar;
@@ -808,11 +810,6 @@ public:
 
         BlocksG->addWidget(BlockCatLabel, 0, 0, 1, 1);
 
-        BlockCatList = new QComboBox(Blocks);
-        BlockCatList->setObjectName(QStringLiteral("BlockCatList"));
-
-        BlocksG->addWidget(BlockCatList, 0, 1, 1, 2);
-
         BlockItemsList = new QListWidget(Blocks);
         QIcon icon47;
         icon47.addFile(QStringLiteral(":/images/mushroom.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -820,6 +817,7 @@ public:
         __qlistwidgetitem->setIcon(icon47);
         __qlistwidgetitem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
         BlockItemsList->setObjectName(QStringLiteral("BlockItemsList"));
+        BlockItemsList->setLineWidth(1);
         BlockItemsList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         BlockItemsList->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         BlockItemsList->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -829,18 +827,31 @@ public:
         BlockItemsList->setDragDropMode(QAbstractItemView::DragDrop);
         BlockItemsList->setSelectionMode(QAbstractItemView::SingleSelection);
         BlockItemsList->setSelectionBehavior(QAbstractItemView::SelectItems);
+        BlockItemsList->setIconSize(QSize(48, 48));
         BlockItemsList->setTextElideMode(Qt::ElideNone);
         BlockItemsList->setMovement(QListView::Snap);
         BlockItemsList->setResizeMode(QListView::Adjust);
-        BlockItemsList->setSpacing(10);
+        BlockItemsList->setLayoutMode(QListView::Batched);
+        BlockItemsList->setSpacing(20);
         BlockItemsList->setViewMode(QListView::IconMode);
-        BlockItemsList->setUniformItemSizes(true);
+        BlockItemsList->setUniformItemSizes(false);
+        BlockItemsList->setBatchSize(150);
         BlockItemsList->setWordWrap(true);
         BlockItemsList->setSortingEnabled(true);
 
         BlocksG->addWidget(BlockItemsList, 1, 0, 1, 3);
 
-        BlocksG->setColumnStretch(1, 100);
+        BlockCatList = new QComboBox(Blocks);
+        BlockCatList->setObjectName(QStringLiteral("BlockCatList"));
+
+        BlocksG->addWidget(BlockCatList, 0, 1, 1, 1);
+
+        BlockUniform = new QCheckBox(Blocks);
+        BlockUniform->setObjectName(QStringLiteral("BlockUniform"));
+
+        BlocksG->addWidget(BlockUniform, 0, 2, 1, 1);
+
+        BlocksG->setColumnStretch(1, 90);
         BlocksG->setColumnMinimumWidth(0, 50);
         LevelToolBoxTabs->addTab(Blocks, QString());
         BGOs = new QWidget();
@@ -858,7 +869,9 @@ public:
         BGOItemsList = new QListWidget(BGOs);
         QListWidgetItem *__qlistwidgetitem1 = new QListWidgetItem(BGOItemsList);
         __qlistwidgetitem1->setIcon(icon47);
+        __qlistwidgetitem1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
         BGOItemsList->setObjectName(QStringLiteral("BGOItemsList"));
+        BGOItemsList->setLineWidth(1);
         BGOItemsList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         BGOItemsList->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         BGOItemsList->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -868,12 +881,15 @@ public:
         BGOItemsList->setDragDropMode(QAbstractItemView::DragDrop);
         BGOItemsList->setSelectionMode(QAbstractItemView::SingleSelection);
         BGOItemsList->setSelectionBehavior(QAbstractItemView::SelectItems);
+        BGOItemsList->setIconSize(QSize(48, 48));
         BGOItemsList->setTextElideMode(Qt::ElideNone);
         BGOItemsList->setMovement(QListView::Snap);
         BGOItemsList->setResizeMode(QListView::Adjust);
-        BGOItemsList->setSpacing(10);
+        BGOItemsList->setLayoutMode(QListView::Batched);
+        BGOItemsList->setSpacing(20);
         BGOItemsList->setViewMode(QListView::IconMode);
-        BGOItemsList->setUniformItemSizes(true);
+        BGOItemsList->setUniformItemSizes(false);
+        BGOItemsList->setBatchSize(150);
         BGOItemsList->setWordWrap(true);
         BGOItemsList->setSortingEnabled(true);
 
@@ -884,8 +900,14 @@ public:
 
         BGOsG->addWidget(BGOCatList, 0, 1, 1, 1);
 
-        BGOsG->setColumnStretch(1, 100);
+        BGOUniform = new QCheckBox(BGOs);
+        BGOUniform->setObjectName(QStringLiteral("BGOUniform"));
+
+        BGOsG->addWidget(BGOUniform, 0, 2, 1, 1);
+
+        BGOsG->setColumnStretch(1, 95);
         BGOsG->setColumnMinimumWidth(0, 50);
+        BGOsG->setColumnMinimumWidth(2, 15);
         LevelToolBoxTabs->addTab(BGOs, QString());
         npc = new QScrollArea();
         npc->setObjectName(QStringLiteral("npc"));
@@ -1759,30 +1781,32 @@ public:
         mainToolBar->setWindowTitle(QApplication::translate("MainWindow", "General", 0));
         LevelToolBox->setWindowTitle(QApplication::translate("MainWindow", "Level Tool box", 0));
         BlockCatLabel->setText(QApplication::translate("MainWindow", "Category:", 0));
-        BlockCatList->clear();
-        BlockCatList->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "[all]", 0)
-        );
 
         const bool __sortingEnabled = BlockItemsList->isSortingEnabled();
         BlockItemsList->setSortingEnabled(false);
         QListWidgetItem *___qlistwidgetitem = BlockItemsList->item(0);
-        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "1234", 0));
+        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "The test Icon for blocks", 0));
         BlockItemsList->setSortingEnabled(__sortingEnabled);
 
+        BlockCatList->clear();
+        BlockCatList->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "[all]", 0)
+        );
+        BlockUniform->setText(QString());
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(Blocks), QApplication::translate("MainWindow", "Blocks", 0));
         BGOCatLabel->setText(QApplication::translate("MainWindow", "Category:", 0));
 
         const bool __sortingEnabled1 = BGOItemsList->isSortingEnabled();
         BGOItemsList->setSortingEnabled(false);
         QListWidgetItem *___qlistwidgetitem1 = BGOItemsList->item(0);
-        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "1234", 0));
+        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "The test Icon for backgrounds", 0));
         BGOItemsList->setSortingEnabled(__sortingEnabled1);
 
         BGOCatList->clear();
         BGOCatList->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "[all]", 0)
         );
+        BGOUniform->setText(QString());
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(BGOs), QApplication::translate("MainWindow", "Backgrounds", 0));
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(npc), QApplication::translate("MainWindow", "NPC", 0));
         EditionToolBar->setWindowTitle(QApplication::translate("MainWindow", "Editor", 0));

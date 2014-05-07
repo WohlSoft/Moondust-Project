@@ -340,7 +340,7 @@
      <attribute name="title">
       <string>Blocks</string>
      </attribute>
-     <layout class="QGridLayout" name="BlocksG" columnstretch="0,100,0" columnminimumwidth="50,0,0">
+     <layout class="QGridLayout" name="BlocksG" columnstretch="0,90,0,0" columnminimumwidth="50,0,0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -363,17 +363,11 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1" colspan="2">
-       <widget class="QComboBox" name="BlockCatList">
-        <item>
-         <property name="text">
-          <string>[all]</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item row="1" column="0" colspan="3">
        <widget class="QListWidget" name="BlockItemsList">
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOn</enum>
         </property>
@@ -401,6 +395,12 @@
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectItems</enum>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
         <property name="textElideMode">
          <enum>Qt::ElideNone</enum>
         </property>
@@ -410,14 +410,20 @@
         <property name="resizeMode">
          <enum>QListView::Adjust</enum>
         </property>
+        <property name="layoutMode">
+         <enum>QListView::Batched</enum>
+        </property>
         <property name="spacing">
-         <number>10</number>
+         <number>20</number>
         </property>
         <property name="viewMode">
          <enum>QListView::IconMode</enum>
         </property>
         <property name="uniformItemSizes">
-         <bool>true</bool>
+         <bool>false</bool>
+        </property>
+        <property name="batchSize">
+         <number>150</number>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -427,7 +433,7 @@
         </property>
         <item>
          <property name="text">
-          <string>1234</string>
+          <string>The test Icon for blocks</string>
          </property>
          <property name="icon">
           <iconset resource="editor.qrc">
@@ -439,13 +445,29 @@
         </item>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="BlockCatList">
+        <item>
+         <property name="text">
+          <string>[all]</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="BlockUniform">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QWidget" name="BGOs">
      <attribute name="title">
       <string>Backgrounds</string>
      </attribute>
-     <layout class="QGridLayout" name="BGOsG" columnstretch="0,100,0" columnminimumwidth="50,0,0">
+     <layout class="QGridLayout" name="BGOsG" columnstretch="0,95,0,0" columnminimumwidth="50,0,15,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -470,6 +492,9 @@
       </item>
       <item row="1" column="0" colspan="3">
        <widget class="QListWidget" name="BGOItemsList">
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOn</enum>
         </property>
@@ -497,6 +522,12 @@
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectItems</enum>
         </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
         <property name="textElideMode">
          <enum>Qt::ElideNone</enum>
         </property>
@@ -506,14 +537,20 @@
         <property name="resizeMode">
          <enum>QListView::Adjust</enum>
         </property>
+        <property name="layoutMode">
+         <enum>QListView::Batched</enum>
+        </property>
         <property name="spacing">
-         <number>10</number>
+         <number>20</number>
         </property>
         <property name="viewMode">
          <enum>QListView::IconMode</enum>
         </property>
         <property name="uniformItemSizes">
-         <bool>true</bool>
+         <bool>false</bool>
+        </property>
+        <property name="batchSize">
+         <number>150</number>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -523,11 +560,14 @@
         </property>
         <item>
          <property name="text">
-          <string>1234</string>
+          <string>The test Icon for backgrounds</string>
          </property>
          <property name="icon">
           <iconset resource="editor.qrc">
            <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEnabled</set>
          </property>
         </item>
        </widget>
@@ -539,6 +579,13 @@
           <string>[all]</string>
          </property>
         </item>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="BGOUniform">
+        <property name="text">
+         <string/>
+        </property>
        </widget>
       </item>
      </layout>
