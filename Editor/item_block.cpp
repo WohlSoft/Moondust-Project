@@ -38,46 +38,78 @@ ItemBlock::~ItemBlock()
 
 void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if(scene->lock_block) return;
-
-    scene->clearSelection();
-    this->setSelected(1);
-    ItemMenu->clear();
-    QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(blockData.layer));
-        LayerName->setEnabled(false);
-
-    ItemMenu->addSeparator();
-
-    QAction *invis = ItemMenu->addAction("Invisible");
-        invis->setCheckable(1);
-        invis->setChecked( blockData.invisible );
-
-    QAction *slipp = ItemMenu->addAction("Slippery");
-        slipp->setCheckable(1);
-        slipp->setChecked( blockData.slippery );
-
-    QAction *resize = ItemMenu->addAction("Resize");
-        resize->setVisible( (this->data(3).toString()=="sizable") );
-
-    ItemMenu->addSeparator();
-
-    QAction *remove = ItemMenu->addAction("Remove");
-
-    QAction *selected = ItemMenu->exec(event->screenPos());
-
-    if(selected==invis)
+    if(!scene->lock_block)
     {
-        setInvisible(invis->isChecked());
-    }else
-    if(selected==slipp)
-    {
-        setSlippery(slipp->isChecked());
-    }
-    else
-    if(selected==remove)
-    {
-        removeFromArray();
-        scene->removeItem(this);
+        //Remove selection from non-block items
+        if(this->isSelected())
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()!="Block") SelItem->setSelected(false);
+            }
+        }
+        else
+        {
+            scene->clearSelection();
+            this->setSelected(true);
+        }
+
+
+        this->setSelected(1);
+        ItemMenu->clear();
+        QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(blockData.layer));
+            LayerName->setEnabled(false);
+
+        ItemMenu->addSeparator();
+
+        QAction *invis = ItemMenu->addAction("Invisible");
+            invis->setCheckable(1);
+            invis->setChecked( blockData.invisible );
+
+        QAction *slipp = ItemMenu->addAction("Slippery");
+            slipp->setCheckable(1);
+            slipp->setChecked( blockData.slippery );
+
+        QAction *resize = ItemMenu->addAction("Resize");
+            resize->setVisible( (this->data(3).toString()=="sizable") );
+
+        ItemMenu->addSeparator();
+
+        QAction *remove = ItemMenu->addAction("Remove");
+
+        QAction *selected = ItemMenu->exec(event->screenPos());
+
+        if(selected==invis)
+        {
+            //apply to all selected items.
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="Block")
+                    ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
+            }
+        }
+        else
+        if(selected==slipp)
+        {
+            //apply to all selected items.
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="Block")
+                    ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
+            }
+        }
+        else
+        if(selected==remove)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="Block")
+                {
+                    ((ItemBlock *)SelItem)->removeFromArray();
+                    scene->removeItem(SelItem);
+                }
+            }
+        }
     }
 }
 
