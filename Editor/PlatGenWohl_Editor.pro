@@ -6,7 +6,6 @@
 
 QT       += core gui widgets multimedia
 
-
 TARGET = plweditor
 TEMPLATE = app
 
@@ -27,7 +26,16 @@ SOURCES += main.cpp\
     file_formats/file_lvl.cpp \
     file_formats/file_npc_txt.cpp \
     file_formats/file_wld.cpp \
-    main_window/recentfiles.cpp
+    main_window/recentfiles.cpp \
+    main_window/events.cpp \
+    main_window/main_settings.cpp \
+    main_window/clipboard.cpp \
+    main_window/sub_windows.cpp \
+    main_window/data_configs.cpp \
+    main_window/edit_level.cpp \
+    main_window/edit_world.cpp \
+    main_window/music_player.cpp \
+    main_window/edit_common.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
