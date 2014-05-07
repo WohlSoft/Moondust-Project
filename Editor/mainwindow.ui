@@ -303,7 +303,7 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>255</width>
+     <width>200</width>
      <height>200</height>
     </size>
    </property>
@@ -330,7 +330,7 @@
     <string>Level Tool box</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QTabWidget" name="LevelToolBoxTabs">
     <property name="currentIndex">
@@ -468,15 +468,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1" colspan="2">
-       <widget class="QComboBox" name="BGOCatList">
-        <item>
-         <property name="text">
-          <string>[all]</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item row="1" column="0" colspan="3">
        <widget class="QListWidget" name="BGOItemsList">
         <property name="verticalScrollBarPolicy">
@@ -541,6 +532,15 @@
         </item>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="BGOCatList">
+        <item>
+         <property name="text">
+          <string>[all]</string>
+         </property>
+        </item>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QScrollArea" name="npc">
@@ -561,8 +561,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>249</width>
-        <height>226</height>
+        <width>239</width>
+        <height>389</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -686,6 +686,12 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>119</height>
+    </size>
+   </property>
    <property name="windowIcon">
     <iconset resource="editor.qrc">
      <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
@@ -700,7 +706,7 @@
     <string>World map tool box</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>2</number>
+    <number>1</number>
    </attribute>
    <widget class="QTabWidget" name="WorldToolBoxTabs">
     <property name="currentIndex">
@@ -730,8 +736,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>266</width>
-        <height>284</height>
+        <width>256</width>
+        <height>481</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -791,8 +797,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>249</width>
-        <height>284</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
      </widget>
@@ -815,13 +821,13 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>249</width>
-        <height>284</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
      </widget>
     </widget>
-    <widget class="QScrollArea" name="MusicSet">
+    <widget class="QScrollArea" name="WldMusicBox">
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOn</enum>
      </property>
@@ -832,15 +838,15 @@
       <bool>true</bool>
      </property>
      <attribute name="title">
-      <string>Music Set</string>
+      <string>Music Box</string>
      </attribute>
      <widget class="QWidget" name="WLDMusicScroll">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>249</width>
-        <height>284</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -929,13 +935,13 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>230</width>
+     <width>246</width>
      <height>360</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>230</width>
+     <width>246</width>
      <height>360</height>
     </size>
    </property>
@@ -968,22 +974,22 @@
     <string>Section Settings</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>1</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="LevelSection">
     <widget class="QGroupBox" name="LVLPropMusicGr">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>10</x>
        <y>160</y>
        <width>221</width>
-       <height>101</height>
+       <height>91</height>
       </rect>
      </property>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>101</height>
+       <height>91</height>
       </size>
      </property>
      <property name="font">
@@ -1003,8 +1009,8 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>101</width>
-        <height>20</height>
+        <width>131</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="font">
@@ -1029,7 +1035,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>46</y>
         <width>47</width>
         <height>16</height>
        </rect>
@@ -1054,8 +1060,8 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>70</y>
-        <width>133</width>
+        <y>60</y>
+        <width>171</width>
         <height>21</height>
        </rect>
       </property>
@@ -1072,10 +1078,10 @@
      <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>20</y>
-        <width>88</width>
-        <height>17</height>
+        <width>61</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="font">
@@ -1088,7 +1094,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Custom music</string>
+       <string>Custom</string>
       </property>
       <property name="tristate">
        <bool>false</bool>
@@ -1097,8 +1103,8 @@
      <widget class="QPushButton" name="LVLPropsMusicCustomBrowse">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>70</y>
+        <x>180</x>
+        <y>60</y>
         <width>31</width>
         <height>21</height>
        </rect>
@@ -1120,7 +1126,7 @@
     <widget class="QGroupBox" name="LVLPropSettingsGrp">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>10</x>
        <y>40</y>
        <width>221</width>
        <height>121</height>
@@ -1229,7 +1235,7 @@
     <widget class="QGroupBox" name="LVLPropStyleGr">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>10</x>
        <y>260</y>
        <width>221</width>
        <height>70</height>
@@ -1275,7 +1281,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>15</height>
+          <height>20</height>
          </size>
         </property>
         <property name="font">
@@ -1302,7 +1308,7 @@
     <widget class="QGroupBox" name="groupBox_5">
      <property name="geometry">
       <rect>
-       <x>0</x>
+       <x>10</x>
        <y>0</y>
        <width>91</width>
        <height>41</height>
@@ -1371,7 +1377,7 @@
     <widget class="QPushButton" name="ResizeSection">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>110</x>
        <y>10</y>
        <width>111</width>
        <height>23</height>
@@ -1398,13 +1404,13 @@
   <widget class="QDockWidget" name="DoorsToolbox">
    <property name="minimumSize">
     <size>
-     <width>230</width>
+     <width>246</width>
      <height>460</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>230</width>
+     <width>246</width>
      <height>460</height>
     </size>
    </property>
@@ -1418,7 +1424,7 @@
     <string>Warps and doors</string>
    </property>
    <attribute name="dockWidgetArea">
-    <number>1</number>
+    <number>2</number>
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <widget class="QGroupBox" name="groupBox">
@@ -1426,7 +1432,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>231</width>
+       <width>241</width>
        <height>431</height>
       </rect>
      </property>
@@ -1447,7 +1453,7 @@
        <rect>
         <x>10</x>
         <y>330</y>
-        <width>91</width>
+        <width>101</width>
         <height>61</height>
        </rect>
       </property>
@@ -1486,12 +1492,12 @@
        <rect>
         <x>10</x>
         <y>160</y>
-        <width>211</width>
+        <width>221</width>
         <height>121</height>
        </rect>
       </property>
       <property name="title">
-       <string>Direction</string>
+       <string>Pipe direction</string>
       </property>
       <widget class="QGroupBox" name="groupBox_2">
        <property name="geometry">
@@ -1593,7 +1599,7 @@ p, li { white-space: pre-wrap; }
       <widget class="QGroupBox" name="groupBox_3">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>120</x>
          <y>10</y>
          <width>91</width>
          <height>101</height>
@@ -1687,7 +1693,7 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>10</x>
         <y>280</y>
-        <width>211</width>
+        <width>221</width>
         <height>51</height>
        </rect>
       </property>
@@ -1757,7 +1763,7 @@ p, li { white-space: pre-wrap; }
      <widget class="QGroupBox" name="groupBox_9">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>120</x>
         <y>330</y>
         <width>111</width>
         <height>91</height>
@@ -1831,7 +1837,7 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>10</x>
         <y>40</y>
-        <width>211</width>
+        <width>221</width>
         <height>121</height>
        </rect>
       </property>
@@ -2002,7 +2008,7 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>141</width>
+        <width>161</width>
         <height>21</height>
        </rect>
       </property>
@@ -2010,7 +2016,7 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="WarpAdd">
       <property name="geometry">
        <rect>
-        <x>160</x>
+        <x>170</x>
         <y>20</y>
         <width>31</width>
         <height>21</height>
@@ -2023,7 +2029,7 @@ p, li { white-space: pre-wrap; }
      <widget class="QPushButton" name="WarpRemove">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>200</x>
         <y>20</y>
         <width>31</width>
         <height>21</height>
@@ -2039,7 +2045,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QDockWidget" name="LevelLayers">
    <property name="minimumSize">
     <size>
-     <width>255</width>
+     <width>246</width>
      <height>200</height>
     </size>
    </property>
@@ -2054,6 +2060,21 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <widget class="QWidget" name="LevelLayersBox">
     <layout class="QGridLayout" name="gridLayout">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item row="1" column="1">
       <widget class="QPushButton" name="RemoveLayer">
        <property name="enabled">
