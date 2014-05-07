@@ -16,43 +16,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include "mainwindow.h"
+
 #include "ui_mainwindow.h"
+#include "mainwindow.h"
+
 #include "aboutdialog.h"
 #include "levelprops.h"
-#include <QFileDialog>
-#include <QtWidgets>
-#include <QMdiArea>
-#include <QFile>
-#include <QSettings>
-#include <QTranslator>
-#include <QtMultimedia/QMediaPlayer>
-#include <QMediaPlaylist>
-#include <QLocale>
-#include <QSplashScreen>
-//#include "childwindow.h" - trash
 #include "leveledit.h"
 #include "npcedit.h"
 #include "dataconfigs.h"
 #include "musicfilelist.h"
 #include "logger.h"
 
-QString LastOpenDir = ".";
-
-int lastWinType=0;
-bool LevelToolBoxVis = true; //Level toolbox
-bool SectionToolBoxVis = false; //Section Settings
-bool LevelDoorsBoxVis = false; //Doors box
-bool LevelLayersBoxVis = false; //Layers box
-
-bool WorldToolBoxVis = false;
-bool autoPlayMusic = false;
-
-QMediaPlayer * MusicPlayer;
-
-QString currentCustomMusic = "";
-long currentMusicId = 0;
-bool musicButtonChecked = false;
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
@@ -65,6 +40,22 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     LvlOpts.animationEnabled = true;
     LvlOpts.collisionsEnabled = true;
+
+
+    LastOpenDir = ".";
+    lastWinType=0;
+    LevelToolBoxVis = true; //Level toolbox
+    SectionToolBoxVis = false; //Section Settings
+    LevelDoorsBoxVis = false; //Doors box
+    LevelLayersBoxVis = false; //Layers box
+
+    WorldToolBoxVis = false;
+    autoPlayMusic = false;
+
+    currentCustomMusic = "";
+    currentMusicId = 0;
+    musicButtonChecked = false;
+
 
     QPixmap splashimg(":/images/splash.png");
     QSplashScreen splash(splashimg);
@@ -433,14 +424,14 @@ void MainWindow::setItemBoxes()
     QListWidgetItem * item;
     QPixmap tmpI;
 
-
     //set Block item box
     foreach(obj_block blockItem, configs.main_block)
     {
+
         if(blockItem.animated)
             tmpI = blockItem.image.copy(0,0,
-                        (int)round(blockItem.image.height() / blockItem.frames),
-                        blockItem.image.width() );
+                        blockItem.image.width(),
+                        (int)round(blockItem.image.height() / blockItem.frames));
         else
             tmpI = blockItem.image;
 
@@ -457,8 +448,8 @@ void MainWindow::setItemBoxes()
     {
         if(bgoItem.animated)
             tmpI = bgoItem.image.copy(0,0,
-                        (int)round(bgoItem.image.height() / bgoItem.frames),
-                        bgoItem.image.width() );
+                        bgoItem.image.width(),
+                        (int)round(bgoItem.image.height() / bgoItem.frames) );
         else
             tmpI = bgoItem.image;
 
@@ -471,6 +462,19 @@ void MainWindow::setItemBoxes()
     }
 
 }
+
+void MainWindow::on_BGOUniform_clicked(bool checked)
+{
+    ui->BGOItemsList->setUniformItemSizes(checked);
+    setItemBoxes();
+}
+
+void MainWindow::on_BlockUniform_clicked(bool checked)
+{
+    ui->BlockItemsList->setUniformItemSizes(checked);
+    setItemBoxes();
+}
+
 
 void MainWindow::save()
 {
@@ -708,45 +712,6 @@ QMessageBox::Ok);
 
 }
 
-void MainWindow::SyncRecentFiles()
-{
-    ui->action_recent1->setText(recentOpen[0]);
-    ui->action_recent2->setText(recentOpen[1]);
-    ui->action_recent3->setText(recentOpen[2]);
-    ui->action_recent4->setText(recentOpen[3]);
-    ui->action_recent5->setText(recentOpen[4]);
-    ui->action_recent6->setText(recentOpen[5]);
-    ui->action_recent7->setText(recentOpen[6]);
-    ui->action_recent8->setText(recentOpen[7]);
-    ui->action_recent9->setText(recentOpen[8]);
-    ui->action_recent10->setText(recentOpen[9]);
-
-    ui->action_recent1->setEnabled(!(recentOpen[0]=="<empty>"));
-    ui->action_recent2->setEnabled(!(recentOpen[1]=="<empty>"));
-    ui->action_recent3->setEnabled(!(recentOpen[2]=="<empty>"));
-    ui->action_recent4->setEnabled(!(recentOpen[3]=="<empty>"));
-    ui->action_recent5->setEnabled(!(recentOpen[4]=="<empty>"));
-    ui->action_recent6->setEnabled(!(recentOpen[5]=="<empty>"));
-    ui->action_recent7->setEnabled(!(recentOpen[6]=="<empty>"));
-    ui->action_recent8->setEnabled(!(recentOpen[7]=="<empty>"));
-    ui->action_recent9->setEnabled(!(recentOpen[8]=="<empty>"));
-    ui->action_recent10->setEnabled(!(recentOpen[9]=="<empty>"));
-}
-
-void MainWindow::AddToRecentFiles(QString FilePath)
-{
-    int index;
-    if((index = recentOpen.indexOf(FilePath))!=-1){
-        recentOpen.removeAt(index);
-        recentOpen.push_front(FilePath);
-    }else{
-        //just in case
-        if(recentOpen.size() >= 10){
-            recentOpen.pop_back();
-        }
-        recentOpen.push_front(FilePath);
-    }
-}
 
 //Edit NPC
 npcedit *MainWindow::createNPCChild()
@@ -1324,6 +1289,7 @@ void MainWindow::on_actionLoad_configs_triggered()
 {
     //Reload configs
     configs.loadconfigs();
+    setItemBoxes(); //Apply item boxes from reloaded configs
 
     //Set tools from loaded configs
     //setTools();
@@ -1874,58 +1840,6 @@ void MainWindow::on_actionCollisions_triggered(bool checked)
     }
 
 }
-
-
-void MainWindow::on_action_recent1_triggered()
-{
-    OpenFile(ui->action_recent1->text());
-}
-
-void MainWindow::on_action_recent2_triggered()
-{
-    OpenFile(ui->action_recent2->text());
-}
-
-void MainWindow::on_action_recent3_triggered()
-{
-    OpenFile(ui->action_recent3->text());
-}
-
-void MainWindow::on_action_recent4_triggered()
-{
-    OpenFile(ui->action_recent4->text());
-}
-
-void MainWindow::on_action_recent5_triggered()
-{
-    OpenFile(ui->action_recent5->text());
-}
-
-void MainWindow::on_action_recent6_triggered()
-{
-    OpenFile(ui->action_recent6->text());
-}
-
-void MainWindow::on_action_recent7_triggered()
-{
-    OpenFile(ui->action_recent7->text());
-}
-
-void MainWindow::on_action_recent8_triggered()
-{
-    OpenFile(ui->action_recent8->text());
-}
-
-void MainWindow::on_action_recent9_triggered()
-{
-    OpenFile(ui->action_recent9->text());
-}
-
-void MainWindow::on_action_recent10_triggered()
-{
-    OpenFile(ui->action_recent10->text());
-}
-
 
 
 

@@ -406,6 +406,7 @@ void npcedit::setDataBoxes()
 
 void npcedit::setDefaultData(int npc_id)
 {
+
     DefaultNPCData.en_gfxoffsetx=false;
     DefaultNPCData.en_gfxoffsety=false;
     DefaultNPCData.en_width=false;
@@ -434,7 +435,7 @@ void npcedit::setDefaultData(int npc_id)
     DefaultNPCData.en_noiceball=false;
     DefaultNPCData.en_nohammer=false;
 
-    DefaultNPCData.gfxoffsetx=0;
+    DefaultNPCData.gfxoffsetx=(int)(!npc_id); //dummy
     DefaultNPCData.gfxoffsety=0;
     DefaultNPCData.width=0;
     DefaultNPCData.height=0;
