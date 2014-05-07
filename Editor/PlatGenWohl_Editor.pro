@@ -14,7 +14,6 @@ SOURCES += main.cpp\
     aboutdialog.cpp \
     levelprops.cpp \
     file_formats.cpp \
-    childwindow.cpp \
     npcedit.cpp \
     leveledit.cpp \
     lvlscene.cpp \
