@@ -31,7 +31,7 @@
 #include "lvl_filedata.h"
 #include "wld_filedata.h"
 #include "npc_filedata.h"
-#include "childwindow.h"
+//#include "childwindow.h" - trash
 #include "leveledit.h"
 #include "npcedit.h"
 
@@ -74,6 +74,8 @@ private slots:
     void updateMenus();
     void setTools();
     void setMusic(bool checked);
+
+    void setItemBoxes();
 
 
     //SubWindow functions

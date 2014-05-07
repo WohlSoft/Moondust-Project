@@ -127,6 +127,7 @@ public:
     QAction *actionDrawSand;
     QAction *actionPaste;
     QAction *actionLayersBox;
+    QAction *actionEmpty;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -145,13 +146,20 @@ public:
     QStatusBar *statusBar;
     QDockWidget *LevelToolBox;
     QTabWidget *LevelToolBoxTabs;
-    QScrollArea *Blocks;
-    QListView *BlocksItemBox;
-    QScrollArea *backs;
-    QWidget *backsscroll;
+    QWidget *Blocks;
+    QGridLayout *BlocksG;
+    QLabel *BlockCatLabel;
+    QComboBox *BlockCatList;
+    QListWidget *BlockItemsList;
+    QWidget *BGOs;
+    QGridLayout *BGOsG;
+    QLabel *BGOCatLabel;
+    QComboBox *BGOCatList;
+    QListWidget *BGOItemsList;
     QScrollArea *npc;
     QWidget *npcscroll;
     QToolBar *EditionToolBar;
+    QToolBar *LevelObjectToolbar;
     QToolBar *LevelSectionsToolBar;
     QDockWidget *WorldToolBox;
     QTabWidget *WorldToolBoxTabs;
@@ -190,7 +198,6 @@ public:
     QLabel *label_9;
     QLabel *LVLProp_CurSect;
     QPushButton *ResizeSection;
-    QToolBar *LevelObjectToolbar;
     QDockWidget *DoorsToolbox;
     QWidget *dockWidgetContents;
     QGroupBox *groupBox;
@@ -264,7 +271,8 @@ public:
         icon.addFile(QStringLiteral(":/images/mushroom16.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         MainWindow->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
-        MainWindow->setDockOptions(QMainWindow::AllowNestedDocks|QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks);
+        MainWindow->setTabShape(QTabWidget::Triangular);
+        MainWindow->setDockOptions(QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::ForceTabbedDocks);
         OpenFile = new QAction(MainWindow);
         OpenFile->setObjectName(QStringLiteral("OpenFile"));
         OpenFile->setCheckable(false);
@@ -711,6 +719,9 @@ public:
         QIcon icon45;
         icon45.addFile(QStringLiteral(":/layers.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionLayersBox->setIcon(icon45);
+        actionEmpty = new QAction(MainWindow);
+        actionEmpty->setObjectName(QStringLiteral("actionEmpty"));
+        actionEmpty->setEnabled(false);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -785,45 +796,97 @@ public:
         LevelToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         LevelToolBoxTabs = new QTabWidget();
         LevelToolBoxTabs->setObjectName(QStringLiteral("LevelToolBoxTabs"));
-        Blocks = new QScrollArea();
+        Blocks = new QWidget();
         Blocks->setObjectName(QStringLiteral("Blocks"));
-        Blocks->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        Blocks->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        Blocks->setWidgetResizable(true);
-        BlocksItemBox = new QListView();
-        BlocksItemBox->setObjectName(QStringLiteral("BlocksItemBox"));
-        BlocksItemBox->setGeometry(QRect(0, 0, 256, 249));
-        BlocksItemBox->setStyleSheet(QLatin1String(" Item {\n"
-"   Image {\n"
-"       id: pic\n"
-"   }\n"
-"   Text {\n"
-"       id: label\n"
-"       anchors.horizontalCenter: pic.horizontalCenter\n"
-"       anchors.top: pic.bottom\n"
-"       anchors.topMargin: 5\n"
-"   }\n"
-"}"));
-        BlocksItemBox->setDragEnabled(true);
-        BlocksItemBox->setResizeMode(QListView::Adjust);
-        BlocksItemBox->setGridSize(QSize(128, 128));
-        BlocksItemBox->setViewMode(QListView::IconMode);
-        BlocksItemBox->setModelColumn(0);
-        BlocksItemBox->setUniformItemSizes(true);
-        BlocksItemBox->setBatchSize(128);
-        Blocks->setWidget(BlocksItemBox);
+        BlocksG = new QGridLayout(Blocks);
+        BlocksG->setSpacing(0);
+        BlocksG->setContentsMargins(11, 11, 11, 11);
+        BlocksG->setObjectName(QStringLiteral("BlocksG"));
+        BlocksG->setContentsMargins(0, 0, 0, 0);
+        BlockCatLabel = new QLabel(Blocks);
+        BlockCatLabel->setObjectName(QStringLiteral("BlockCatLabel"));
+
+        BlocksG->addWidget(BlockCatLabel, 0, 0, 1, 1);
+
+        BlockCatList = new QComboBox(Blocks);
+        BlockCatList->setObjectName(QStringLiteral("BlockCatList"));
+
+        BlocksG->addWidget(BlockCatList, 0, 1, 1, 2);
+
+        BlockItemsList = new QListWidget(Blocks);
+        QIcon icon47;
+        icon47.addFile(QStringLiteral(":/images/mushroom.png"), QSize(), QIcon::Normal, QIcon::Off);
+        QListWidgetItem *__qlistwidgetitem = new QListWidgetItem(BlockItemsList);
+        __qlistwidgetitem->setIcon(icon47);
+        __qlistwidgetitem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        BlockItemsList->setObjectName(QStringLiteral("BlockItemsList"));
+        BlockItemsList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        BlockItemsList->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        BlockItemsList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        BlockItemsList->setProperty("showDropIndicator", QVariant(false));
+        BlockItemsList->setDragEnabled(false);
+        BlockItemsList->setDragDropOverwriteMode(false);
+        BlockItemsList->setDragDropMode(QAbstractItemView::DragDrop);
+        BlockItemsList->setSelectionMode(QAbstractItemView::SingleSelection);
+        BlockItemsList->setSelectionBehavior(QAbstractItemView::SelectItems);
+        BlockItemsList->setTextElideMode(Qt::ElideNone);
+        BlockItemsList->setMovement(QListView::Snap);
+        BlockItemsList->setResizeMode(QListView::Adjust);
+        BlockItemsList->setSpacing(10);
+        BlockItemsList->setViewMode(QListView::IconMode);
+        BlockItemsList->setUniformItemSizes(true);
+        BlockItemsList->setWordWrap(true);
+        BlockItemsList->setSortingEnabled(true);
+
+        BlocksG->addWidget(BlockItemsList, 1, 0, 1, 3);
+
+        BlocksG->setColumnStretch(1, 100);
+        BlocksG->setColumnMinimumWidth(0, 50);
         LevelToolBoxTabs->addTab(Blocks, QString());
-        backs = new QScrollArea();
-        backs->setObjectName(QStringLiteral("backs"));
-        backs->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        backs->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        backs->setWidgetResizable(true);
-        backsscroll = new QWidget();
-        backsscroll->setObjectName(QStringLiteral("backsscroll"));
-        backsscroll->setGeometry(QRect(0, 0, 81, 28));
-        backsscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
-        backs->setWidget(backsscroll);
-        LevelToolBoxTabs->addTab(backs, QString());
+        BGOs = new QWidget();
+        BGOs->setObjectName(QStringLiteral("BGOs"));
+        BGOsG = new QGridLayout(BGOs);
+        BGOsG->setSpacing(0);
+        BGOsG->setContentsMargins(11, 11, 11, 11);
+        BGOsG->setObjectName(QStringLiteral("BGOsG"));
+        BGOsG->setContentsMargins(0, 0, 0, 0);
+        BGOCatLabel = new QLabel(BGOs);
+        BGOCatLabel->setObjectName(QStringLiteral("BGOCatLabel"));
+
+        BGOsG->addWidget(BGOCatLabel, 0, 0, 1, 1);
+
+        BGOCatList = new QComboBox(BGOs);
+        BGOCatList->setObjectName(QStringLiteral("BGOCatList"));
+
+        BGOsG->addWidget(BGOCatList, 0, 1, 1, 2);
+
+        BGOItemsList = new QListWidget(BGOs);
+        QListWidgetItem *__qlistwidgetitem1 = new QListWidgetItem(BGOItemsList);
+        __qlistwidgetitem1->setIcon(icon47);
+        BGOItemsList->setObjectName(QStringLiteral("BGOItemsList"));
+        BGOItemsList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        BGOItemsList->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        BGOItemsList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        BGOItemsList->setProperty("showDropIndicator", QVariant(false));
+        BGOItemsList->setDragEnabled(false);
+        BGOItemsList->setDragDropOverwriteMode(false);
+        BGOItemsList->setDragDropMode(QAbstractItemView::DragDrop);
+        BGOItemsList->setSelectionMode(QAbstractItemView::SingleSelection);
+        BGOItemsList->setSelectionBehavior(QAbstractItemView::SelectItems);
+        BGOItemsList->setTextElideMode(Qt::ElideNone);
+        BGOItemsList->setMovement(QListView::Snap);
+        BGOItemsList->setResizeMode(QListView::Adjust);
+        BGOItemsList->setSpacing(10);
+        BGOItemsList->setViewMode(QListView::IconMode);
+        BGOItemsList->setUniformItemSizes(true);
+        BGOItemsList->setWordWrap(true);
+        BGOItemsList->setSortingEnabled(true);
+
+        BGOsG->addWidget(BGOItemsList, 1, 0, 1, 3);
+
+        BGOsG->setColumnStretch(1, 100);
+        BGOsG->setColumnMinimumWidth(0, 50);
+        LevelToolBoxTabs->addTab(BGOs, QString());
         npc = new QScrollArea();
         npc->setObjectName(QStringLiteral("npc"));
         npc->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -831,7 +894,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 81, 28));
+        npcscroll->setGeometry(QRect(0, 0, 249, 226));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -844,6 +907,10 @@ public:
         EditionToolBar->setAllowedAreas(Qt::AllToolBarAreas);
         EditionToolBar->setIconSize(QSize(24, 24));
         MainWindow->addToolBar(Qt::TopToolBarArea, EditionToolBar);
+        LevelObjectToolbar = new QToolBar(MainWindow);
+        LevelObjectToolbar->setObjectName(QStringLiteral("LevelObjectToolbar"));
+        LevelObjectToolbar->setFloatable(true);
+        MainWindow->addToolBar(Qt::TopToolBarArea, LevelObjectToolbar);
         LevelSectionsToolBar = new QToolBar(MainWindow);
         LevelSectionsToolBar->setObjectName(QStringLiteral("LevelSectionsToolBar"));
         LevelSectionsToolBar->setAcceptDrops(false);
@@ -855,9 +922,9 @@ public:
         WorldToolBox->setEnabled(true);
         sizePolicy1.setHeightForWidth(WorldToolBox->sizePolicy().hasHeightForWidth());
         WorldToolBox->setSizePolicy(sizePolicy1);
-        QIcon icon47;
-        icon47.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        WorldToolBox->setWindowIcon(icon47);
+        QIcon icon48;
+        icon48.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        WorldToolBox->setWindowIcon(icon48);
         WorldToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         WorldToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         WorldToolBoxTabs = new QTabWidget();
@@ -869,7 +936,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 273, 250));
+        TilesItemBox->setGeometry(QRect(0, 0, 266, 284));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -897,7 +964,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
+        SceneryScroll->setGeometry(QRect(0, 0, 249, 284));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -907,7 +974,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 249, 284));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         MusicSet = new QScrollArea();
@@ -917,7 +984,7 @@ public:
         MusicSet->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 249, 284));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -955,9 +1022,9 @@ public:
         font.setItalic(false);
         font.setWeight(50);
         LevelSectionSettings->setFont(font);
-        QIcon icon48;
-        icon48.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelSectionSettings->setWindowIcon(icon48);
+        QIcon icon49;
+        icon49.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelSectionSettings->setWindowIcon(icon49);
         LevelSectionSettings->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelSectionSettings->setFloating(false);
         LevelSectionSettings->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -1072,10 +1139,6 @@ public:
         ResizeSection->setCheckable(true);
         LevelSectionSettings->setWidget(LevelSection);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), LevelSectionSettings);
-        LevelObjectToolbar = new QToolBar(MainWindow);
-        LevelObjectToolbar->setObjectName(QStringLiteral("LevelObjectToolbar"));
-        LevelObjectToolbar->setFloatable(true);
-        MainWindow->addToolBar(Qt::TopToolBarArea, LevelObjectToolbar);
         DoorsToolbox = new QDockWidget(MainWindow);
         DoorsToolbox->setObjectName(QStringLiteral("DoorsToolbox"));
         DoorsToolbox->setMinimumSize(QSize(230, 460));
@@ -1233,7 +1296,7 @@ public:
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), DoorsToolbox);
         LevelLayers = new QDockWidget(MainWindow);
         LevelLayers->setObjectName(QStringLiteral("LevelLayers"));
-        LevelLayers->setMinimumSize(QSize(255, 300));
+        LevelLayers->setMinimumSize(QSize(255, 200));
         LevelLayers->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         LevelLayersBox = new QWidget();
         LevelLayersBox->setObjectName(QStringLiteral("LevelLayersBox"));
@@ -1261,14 +1324,14 @@ public:
         gridLayout->addWidget(LockLayer, 1, 2, 1, 1);
 
         LvlLayerList = new QListWidget(LevelLayersBox);
-        QListWidgetItem *__qlistwidgetitem = new QListWidgetItem(LvlLayerList);
-        __qlistwidgetitem->setCheckState(Qt::Checked);
-        QListWidgetItem *__qlistwidgetitem1 = new QListWidgetItem(LvlLayerList);
-        __qlistwidgetitem1->setCheckState(Qt::Unchecked);
-        __qlistwidgetitem1->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable);
         QListWidgetItem *__qlistwidgetitem2 = new QListWidgetItem(LvlLayerList);
         __qlistwidgetitem2->setCheckState(Qt::Checked);
-        __qlistwidgetitem2->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable);
+        QListWidgetItem *__qlistwidgetitem3 = new QListWidgetItem(LvlLayerList);
+        __qlistwidgetitem3->setCheckState(Qt::Unchecked);
+        __qlistwidgetitem3->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable);
+        QListWidgetItem *__qlistwidgetitem4 = new QListWidgetItem(LvlLayerList);
+        __qlistwidgetitem4->setCheckState(Qt::Checked);
+        __qlistwidgetitem4->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable);
         LvlLayerList->setObjectName(QStringLiteral("LvlLayerList"));
         LvlLayerList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         LvlLayerList->setDragDropMode(QAbstractItemView::InternalMove);
@@ -1365,6 +1428,7 @@ public:
         menuView->addSeparator();
         menuView->addAction(actionAnimation);
         menuView->addAction(actionCollisions);
+        menuWindow->addAction(actionEmpty);
         menuTools->addAction(actionLoad_configs);
         menuTools->addAction(actionReload);
         menuEdit->addAction(actionUndo);
@@ -1386,6 +1450,21 @@ public:
         EditionToolBar->addSeparator();
         EditionToolBar->addAction(actionReload);
         EditionToolBar->addAction(actionWLDToolBox);
+        LevelObjectToolbar->addAction(actionSetFirstPlayer);
+        LevelObjectToolbar->addAction(actionSetSecondPlayer);
+        LevelObjectToolbar->addAction(actionDrawWater);
+        LevelObjectToolbar->addAction(actionDrawSand);
+        LevelObjectToolbar->addSeparator();
+        LevelObjectToolbar->addAction(actionLockBlocks);
+        LevelObjectToolbar->addAction(actionLockBGO);
+        LevelObjectToolbar->addAction(actionLockNPC);
+        LevelObjectToolbar->addAction(actionLockDoors);
+        LevelObjectToolbar->addAction(actionLockWaters);
+        LevelObjectToolbar->addSeparator();
+        LevelObjectToolbar->addAction(actionLVLToolBox);
+        LevelObjectToolbar->addAction(actionSection_Settings);
+        LevelObjectToolbar->addAction(actionWarpsAndDoors);
+        LevelObjectToolbar->addAction(actionLayersBox);
         LevelSectionsToolBar->addAction(actionSection_1);
         LevelSectionsToolBar->addAction(actionSection_2);
         LevelSectionsToolBar->addAction(actionSection_3);
@@ -1407,21 +1486,6 @@ public:
         LevelSectionsToolBar->addAction(actionSection_19);
         LevelSectionsToolBar->addAction(actionSection_20);
         LevelSectionsToolBar->addAction(actionSection_21);
-        LevelObjectToolbar->addAction(actionSetFirstPlayer);
-        LevelObjectToolbar->addAction(actionSetSecondPlayer);
-        LevelObjectToolbar->addAction(actionDrawWater);
-        LevelObjectToolbar->addAction(actionDrawSand);
-        LevelObjectToolbar->addSeparator();
-        LevelObjectToolbar->addAction(actionLockBlocks);
-        LevelObjectToolbar->addAction(actionLockBGO);
-        LevelObjectToolbar->addAction(actionLockNPC);
-        LevelObjectToolbar->addAction(actionLockDoors);
-        LevelObjectToolbar->addAction(actionLockWaters);
-        LevelObjectToolbar->addSeparator();
-        LevelObjectToolbar->addAction(actionLVLToolBox);
-        LevelObjectToolbar->addAction(actionSection_Settings);
-        LevelObjectToolbar->addAction(actionWarpsAndDoors);
-        LevelObjectToolbar->addAction(actionLayersBox);
 
         retranslateUi(MainWindow);
 
@@ -1677,6 +1741,7 @@ public:
         actionPaste->setText(QApplication::translate("MainWindow", "Paste", 0));
         actionPaste->setShortcut(QApplication::translate("MainWindow", "Ctrl+V", 0));
         actionLayersBox->setText(QApplication::translate("MainWindow", "Layers", 0));
+        actionEmpty->setText(QApplication::translate("MainWindow", "[No opened files]", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));
@@ -1691,16 +1756,35 @@ public:
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", 0));
         mainToolBar->setWindowTitle(QApplication::translate("MainWindow", "General", 0));
         LevelToolBox->setWindowTitle(QApplication::translate("MainWindow", "Level Tool box", 0));
-#ifndef QT_NO_TOOLTIP
-        Blocks->setToolTip(QString());
-#endif // QT_NO_TOOLTIP
-#ifndef QT_NO_ACCESSIBILITY
-        Blocks->setAccessibleName(QString());
-#endif // QT_NO_ACCESSIBILITY
+        BlockCatLabel->setText(QApplication::translate("MainWindow", "Category:", 0));
+        BlockCatList->clear();
+        BlockCatList->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "[all]", 0)
+        );
+
+        const bool __sortingEnabled = BlockItemsList->isSortingEnabled();
+        BlockItemsList->setSortingEnabled(false);
+        QListWidgetItem *___qlistwidgetitem = BlockItemsList->item(0);
+        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "1234", 0));
+        BlockItemsList->setSortingEnabled(__sortingEnabled);
+
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(Blocks), QApplication::translate("MainWindow", "Blocks", 0));
-        LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(backs), QApplication::translate("MainWindow", "Backgrounds", 0));
+        BGOCatLabel->setText(QApplication::translate("MainWindow", "Category:", 0));
+        BGOCatList->clear();
+        BGOCatList->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "[all]", 0)
+        );
+
+        const bool __sortingEnabled1 = BGOItemsList->isSortingEnabled();
+        BGOItemsList->setSortingEnabled(false);
+        QListWidgetItem *___qlistwidgetitem1 = BGOItemsList->item(0);
+        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "1234", 0));
+        BGOItemsList->setSortingEnabled(__sortingEnabled1);
+
+        LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(BGOs), QApplication::translate("MainWindow", "Backgrounds", 0));
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(npc), QApplication::translate("MainWindow", "NPC", 0));
         EditionToolBar->setWindowTitle(QApplication::translate("MainWindow", "Editor", 0));
+        LevelObjectToolbar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
         LevelSectionsToolBar->setWindowTitle(QApplication::translate("MainWindow", "Level Sections", 0));
         WorldToolBox->setWindowTitle(QApplication::translate("MainWindow", "World map tool box", 0));
 #ifndef QT_NO_TOOLTIP
@@ -1748,7 +1832,6 @@ public:
         label_9->setText(QApplication::translate("MainWindow", "Section:", 0));
         LVLProp_CurSect->setText(QApplication::translate("MainWindow", "0", 0));
         ResizeSection->setText(QApplication::translate("MainWindow", "Resize section", 0));
-        LevelObjectToolbar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
         DoorsToolbox->setWindowTitle(QApplication::translate("MainWindow", "Warps and doors", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Warps and doors", 0));
         groupBox_4->setTitle(QApplication::translate("MainWindow", "Level door", 0));
@@ -1822,15 +1905,15 @@ public:
         AddLayer->setText(QApplication::translate("MainWindow", "Add", 0));
         LockLayer->setText(QApplication::translate("MainWindow", "Lock", 0));
 
-        const bool __sortingEnabled = LvlLayerList->isSortingEnabled();
+        const bool __sortingEnabled2 = LvlLayerList->isSortingEnabled();
         LvlLayerList->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem = LvlLayerList->item(0);
-        ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "Default", 0));
-        QListWidgetItem *___qlistwidgetitem1 = LvlLayerList->item(1);
-        ___qlistwidgetitem1->setText(QApplication::translate("MainWindow", "Destroyed Blocks", 0));
-        QListWidgetItem *___qlistwidgetitem2 = LvlLayerList->item(2);
-        ___qlistwidgetitem2->setText(QApplication::translate("MainWindow", "Spawned NPCs", 0));
-        LvlLayerList->setSortingEnabled(__sortingEnabled);
+        QListWidgetItem *___qlistwidgetitem2 = LvlLayerList->item(0);
+        ___qlistwidgetitem2->setText(QApplication::translate("MainWindow", "Default", 0));
+        QListWidgetItem *___qlistwidgetitem3 = LvlLayerList->item(1);
+        ___qlistwidgetitem3->setText(QApplication::translate("MainWindow", "Destroyed Blocks", 0));
+        QListWidgetItem *___qlistwidgetitem4 = LvlLayerList->item(2);
+        ___qlistwidgetitem4->setText(QApplication::translate("MainWindow", "Spawned NPCs", 0));
+        LvlLayerList->setSortingEnabled(__sortingEnabled2);
 
     } // retranslateUi
 
