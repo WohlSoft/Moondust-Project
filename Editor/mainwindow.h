@@ -207,10 +207,6 @@ private slots:
 
     void on_actionLayersBox_triggered(bool checked);
 
-    void on_UsageOfItemListBlock_clicked(bool checked);
-
-    void on_UsageOfItemListBGO_clicked(bool checked);
-
 private:
     dataconfigs configs; // Global objects configucrations
 

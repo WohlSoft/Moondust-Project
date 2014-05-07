@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>1189</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -334,7 +334,7 @@
    </attribute>
    <widget class="QTabWidget" name="LevelToolBoxTabs">
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Blocks">
      <attribute name="title">
@@ -372,7 +372,7 @@
         </item>
        </widget>
       </item>
-      <item row="2" column="0" colspan="3">
+      <item row="1" column="0" colspan="3">
        <widget class="QListWidget" name="BlockItemsList">
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -439,13 +439,6 @@
         </item>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QCheckBox" name="UsageOfItemListBlock">
-        <property name="text">
-         <string>Use Item List</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
     <widget class="QWidget" name="BGOs">
@@ -475,7 +468,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0" colspan="3">
+      <item row="1" column="0" colspan="3">
        <widget class="QListWidget" name="BGOItemsList">
         <property name="verticalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -548,13 +541,6 @@
         </item>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QCheckBox" name="UsageOfItemListBGO">
-        <property name="text">
-         <string>Use Item List</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
     <widget class="QScrollArea" name="npc">
@@ -575,8 +561,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>235</width>
-        <height>363</height>
+        <width>239</width>
+        <height>389</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -703,7 +689,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>143</height>
+     <height>119</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -751,7 +737,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>469</height>
+        <height>481</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -811,8 +797,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>235</width>
-        <height>469</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
      </widget>
@@ -835,8 +821,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>235</width>
-        <height>469</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
      </widget>
@@ -859,8 +845,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>235</width>
-        <height>469</height>
+        <width>239</width>
+        <height>481</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2059,7 +2045,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QDockWidget" name="LevelLayers">
    <property name="minimumSize">
     <size>
-     <width>279</width>
+     <width>246</width>
      <height>200</height>
     </size>
    </property>

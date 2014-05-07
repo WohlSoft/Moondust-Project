@@ -151,13 +151,11 @@ public:
     QLabel *BlockCatLabel;
     QComboBox *BlockCatList;
     QListWidget *BlockItemsList;
-    QCheckBox *UsageOfItemListBlock;
     QWidget *BGOs;
     QGridLayout *BGOsG;
     QLabel *BGOCatLabel;
     QListWidget *BGOItemsList;
     QComboBox *BGOCatList;
-    QCheckBox *UsageOfItemListBGO;
     QScrollArea *npc;
     QWidget *npcscroll;
     QToolBar *EditionToolBar;
@@ -740,7 +738,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1189, 26));
+        menuBar->setGeometry(QRect(0, 0, 1189, 21));
         menuBar->setContextMenuPolicy(Qt::NoContextMenu);
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
@@ -840,12 +838,7 @@ public:
         BlockItemsList->setWordWrap(true);
         BlockItemsList->setSortingEnabled(true);
 
-        BlocksG->addWidget(BlockItemsList, 2, 0, 1, 3);
-
-        UsageOfItemListBlock = new QCheckBox(Blocks);
-        UsageOfItemListBlock->setObjectName(QStringLiteral("UsageOfItemListBlock"));
-
-        BlocksG->addWidget(UsageOfItemListBlock, 1, 0, 1, 2);
+        BlocksG->addWidget(BlockItemsList, 1, 0, 1, 3);
 
         BlocksG->setColumnStretch(1, 100);
         BlocksG->setColumnMinimumWidth(0, 50);
@@ -884,17 +877,12 @@ public:
         BGOItemsList->setWordWrap(true);
         BGOItemsList->setSortingEnabled(true);
 
-        BGOsG->addWidget(BGOItemsList, 2, 0, 1, 3);
+        BGOsG->addWidget(BGOItemsList, 1, 0, 1, 3);
 
         BGOCatList = new QComboBox(BGOs);
         BGOCatList->setObjectName(QStringLiteral("BGOCatList"));
 
         BGOsG->addWidget(BGOCatList, 0, 1, 1, 1);
-
-        UsageOfItemListBGO = new QCheckBox(BGOs);
-        UsageOfItemListBGO->setObjectName(QStringLiteral("UsageOfItemListBGO"));
-
-        BGOsG->addWidget(UsageOfItemListBGO, 1, 0, 1, 2);
 
         BGOsG->setColumnStretch(1, 100);
         BGOsG->setColumnMinimumWidth(0, 50);
@@ -906,7 +894,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 235, 363));
+        npcscroll->setGeometry(QRect(0, 0, 239, 389));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -934,7 +922,7 @@ public:
         WorldToolBox->setEnabled(true);
         sizePolicy1.setHeightForWidth(WorldToolBox->sizePolicy().hasHeightForWidth());
         WorldToolBox->setSizePolicy(sizePolicy1);
-        WorldToolBox->setMinimumSize(QSize(200, 143));
+        WorldToolBox->setMinimumSize(QSize(200, 119));
         QIcon icon48;
         icon48.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
         WorldToolBox->setWindowIcon(icon48);
@@ -949,7 +937,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 256, 469));
+        TilesItemBox->setGeometry(QRect(0, 0, 256, 481));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -977,7 +965,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 235, 469));
+        SceneryScroll->setGeometry(QRect(0, 0, 239, 481));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -987,7 +975,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 235, 469));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 481));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         WldMusicBox = new QScrollArea();
@@ -997,7 +985,7 @@ public:
         WldMusicBox->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 235, 469));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 481));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -1309,7 +1297,7 @@ public:
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(2), DoorsToolbox);
         LevelLayers = new QDockWidget(MainWindow);
         LevelLayers->setObjectName(QStringLiteral("LevelLayers"));
-        LevelLayers->setMinimumSize(QSize(279, 200));
+        LevelLayers->setMinimumSize(QSize(246, 200));
         LevelLayers->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         LevelLayersBox = new QWidget();
         LevelLayersBox->setObjectName(QStringLiteral("LevelLayersBox"));
@@ -1503,7 +1491,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        LevelToolBoxTabs->setCurrentIndex(1);
+        LevelToolBoxTabs->setCurrentIndex(0);
         WorldToolBoxTabs->setCurrentIndex(0);
         LvlLayerList->setCurrentRow(-1);
 
@@ -1782,7 +1770,6 @@ public:
         ___qlistwidgetitem->setText(QApplication::translate("MainWindow", "1234", 0));
         BlockItemsList->setSortingEnabled(__sortingEnabled);
 
-        UsageOfItemListBlock->setText(QApplication::translate("MainWindow", "Use Item List", 0));
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(Blocks), QApplication::translate("MainWindow", "Blocks", 0));
         BGOCatLabel->setText(QApplication::translate("MainWindow", "Category:", 0));
 
@@ -1796,7 +1783,6 @@ public:
         BGOCatList->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "[all]", 0)
         );
-        UsageOfItemListBGO->setText(QApplication::translate("MainWindow", "Use Item List", 0));
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(BGOs), QApplication::translate("MainWindow", "Backgrounds", 0));
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(npc), QApplication::translate("MainWindow", "NPC", 0));
         EditionToolBar->setWindowTitle(QApplication::translate("MainWindow", "Editor", 0));

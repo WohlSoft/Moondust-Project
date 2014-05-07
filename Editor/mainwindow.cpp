@@ -1944,22 +1944,3 @@ void MainWindow::on_actionCopy_triggered()
 
 }
 
-
-void MainWindow::on_UsageOfItemListBlock_clicked(bool checked)
-{
-    if(checked){
-        ui->BlockItemsList->setViewMode(QListView::ListMode);
-    }else{
-        ui->BlockItemsList->setViewMode(QListView::IconMode);
-    }
-
-}
-
-void MainWindow::on_UsageOfItemListBGO_clicked(bool checked)
-{
-    if(checked){
-        ui->BGOItemsList->setViewMode(QListView::ListMode);
-    }else{
-        ui->BGOItemsList->setViewMode(QListView::IconMode);
-    }
-}
