@@ -446,7 +446,7 @@ void MainWindow::setItemBoxes()
 
         item = new QListWidgetItem( blockItem.name );
         item->setIcon( QIcon( tmpI ) );
-        item->setData(1, QString::number(blockItem.id) );
+        item->setData(3, QString::number(blockItem.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->BlockItemsList->addItem( item );
@@ -464,7 +464,7 @@ void MainWindow::setItemBoxes()
 
         item = new QListWidgetItem( bgoItem.name );
         item->setIcon( QIcon( tmpI ) );
-        item->setData(1, QString::number(bgoItem.id) );
+        item->setData(3, QString::number(bgoItem.id) );
         item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
         ui->BGOItemsList->addItem( item );
