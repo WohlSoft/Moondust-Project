@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     level_scene/lvlscene.cpp \
     level_scene/item_bgo.cpp \
     level_scene/item_block.cpp \
-    level_scene/HistoryManager.cpp
+    level_scene/HistoryManager.cpp \
+    level_scene/lvl_clipboard.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \

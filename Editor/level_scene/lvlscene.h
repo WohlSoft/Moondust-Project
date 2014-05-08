@@ -24,8 +24,23 @@
 #include <QProgressDialog>
 #include <QMenu>
 
+#include <QGraphicsSceneMouseEvent>
+
+#include <QGraphicsItemAnimation>
+
+#include <QKeyEvent>
+#include <QBitmap>
+#include <QPainter>
+#include <QMessageBox>
+#include <QApplication>
+#include <QtCore>
+#include <QDebug>
+
+
 #include "lvl_filedata.h"
 #include "dataconfigs.h"
+
+#include "logger.h"
 
 struct UserBGOs
 {

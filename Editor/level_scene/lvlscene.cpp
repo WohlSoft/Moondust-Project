@@ -16,54 +16,48 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsItemAnimation>
-#include <QKeyEvent>
-#include <QBitmap>
-#include <QPainter>
-#include <QMessageBox>
-#include <QApplication>
-#include <QGraphicsItem>
-#include <QProgressDialog>
-#include <QtCore>
-#include <QDebug>
-
 #include "lvlscene.h"
-#include "lvl_filedata.h"
-#include "dataconfigs.h"
-#include "logger.h"
+#include "../leveledit.h"
 
 #include "item_block.h"
 #include "item_bgo.h"
 
-#include "../leveledit.h"
-
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
+    setItemIndexMethod(NoIndex);
+
     //Set the background GraphicsItem's points
     for(int i=0;i<22;i++)
         BgItem.push_back(new QGraphicsPixmapItem);
 
+    //Pointerss
     pConfigs = &configs; // Pointer to Main Configs
+    LvlData = &FileData; //Ad pointer to level data
+
+
+    //Options
     opts.animationEnabled = true;
     opts.collisionsEnabled = true;
+    grid = true;
 
+    //Indexes
     index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
     index_bgo = pConfigs->index_bgo;
 
-    LvlData = &FileData; //Ad pointer to level data
-    grid = true;
+    //Editing mode
     EditingMode = 0;
     EraserEnabled = false;
     PasteFromBuffer = false;
+
+    //Editing process flags
     IsMoved = false;
     haveSelected = false;
 
-    wasPasted = false;
-    doCopy = false;
-    doCut = false;
+    //Events flags
+    wasPasted = false;  //call to cursor reset to normal select
+    doCopy = false;     //call to copy
+    doCut = false;      //call to cut
 
-    //sbZ = 0;
 
     QPixmap cur(QSize(1,1));
     cur.fill(Qt::black);
@@ -71,14 +65,15 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     cursor->setZValue(1000);
     cursor->hide();
 
+    //set dummy images if target not exist or wrong
     uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.gif");
     npcmask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
     uNpcImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
     uNpcImg.setMask(npcmask);
-
     uBgoImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
 
-    //setZ Indexes
+
+    //set Default Z Indexes
     bgZ = -1000;
     blockZs = -150; // sizable blocks
     bgoZb = -100; // backround BGO
@@ -99,17 +94,12 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     //HistoryIndex
     historyIndex=0;
 
-    setItemIndexMethod(NoIndex);
-
+    //Locks
     lock_bgo=false;
     lock_block=false;
     lock_npc=false;
     lock_door=false;
     lock_water=false;
-    //bgoMenu->addAction("BGO");
-    //npcMenu->addAction("NPC");
-    //waterMenu->addAction("Water");
-    //DoorMenu->addAction("Door");
 }
 
 LvlScene::~LvlScene()
@@ -425,149 +415,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
 
-//Copy selected items into clipboard
-LevelData LvlScene::copy(bool cut)
-{
-
-    //Get Selected Items
-    QList<QGraphicsItem*> selectedList = selectedItems();
-
-    LevelData copyData;
-
-    if (!selectedList.isEmpty())
-    {
-        for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-        {
-            QString ObjType = (*it)->data(0).toString();
-
-            if( ObjType == "Block")
-            {
-                ItemBlock* sourceBlock = (ItemBlock *)(*it);
-                copyData.blocks.push_back(sourceBlock->blockData);
-                if(cut){
-                    sourceBlock->removeFromArray();
-                    removeItem(*it);
-                }
-            }
-            else
-            if( ObjType == "BGO")
-            {
-                ItemBGO* sourceBGO = (ItemBGO *)(*it);
-                copyData.bgo.push_back(sourceBGO->bgoData);
-                if(cut){
-                    sourceBGO->removeFromArray();
-                    removeItem(*it);
-                }
-            }
-            else
-            if( ObjType == "NPC")
-            {
-                foreach (LevelNPC findInArr, LvlData->npc)
-                {
-                    if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
-                    {
-                        copyData.npc.push_back(findInArr);
-                        if(cut){
-                            //remove, will be later implemented as function in the future NPC class
-                            for(int i=0; i<LvlData->npc.size(); i++)
-                            {
-                                if(LvlData->npc[i].array_id == findInArr.array_id)
-                                {
-                                    LvlData->npc.remove(i); break;
-                                }
-                            }
-                            removeItem(*it);
-                        }
-                        break;
-                    }
-                }
-            }
-
-        }//fetch selected items
-    }
-
-    return copyData;
-}
-
-void LvlScene::paste(LevelData BufferIn, QPoint pos)
-{
-    long baseX, baseY;
-    //set first base
-    if(!BufferIn.blocks.isEmpty()){
-        baseX = BufferIn.blocks[0].x;
-        baseY = BufferIn.blocks[0].y;
-    }else if(!BufferIn.bgo.isEmpty()){
-        baseX = BufferIn.bgo[0].x;
-        baseY = BufferIn.bgo[0].y;
-    }else if(!BufferIn.npc.isEmpty()){
-        baseX = BufferIn.npc[0].x;
-        baseY = BufferIn.npc[0].y;
-    }else{
-        //nothing to paste
-        return;
-    }
-
-    foreach (LevelBlock block, BufferIn.blocks) {
-        if(block.x<baseX){
-            baseX = block.x;
-        }
-        if(block.y<baseY){
-            baseY = block.y;
-        }
-    }
-    foreach (LevelBGO bgo, BufferIn.bgo){
-        if(bgo.x<baseX){
-            baseX = bgo.x;
-        }
-        if(bgo.y<baseY){
-            baseY = bgo.y;
-        }
-    }
-    foreach (LevelNPC npc, BufferIn.npc){
-        if(npc.x<baseX){
-            baseX = npc.x;
-        }
-        if(npc.y<baseY){
-            baseY = npc.y;
-        }
-    }
-
-    foreach (LevelBlock block, BufferIn.blocks){
-        //Gen Copy of Block
-        LevelBlock dumpBlock = block;
-        dumpBlock.x = (long)pos.x() + block.x - baseX;
-        dumpBlock.y = (long)pos.y() + block.y - baseY;
-        LvlData->blocks_array_id++;
-        dumpBlock.array_id = LvlData->blocks_array_id;
-        placeBlock(dumpBlock);
-        LvlData->blocks.push_back(dumpBlock);
-    }
-    foreach (LevelBGO bgo, BufferIn.bgo){
-        //Gen Copy of BGO
-        LevelBGO dumpBGO = bgo;
-        dumpBGO.x = (long)pos.x() + bgo.x - baseX;
-        dumpBGO.y = (long)pos.y() + bgo.y - baseY;
-        LvlData->bgo_array_id++;
-        dumpBGO.array_id = LvlData->bgo_array_id;
-        placeBGO(dumpBGO);
-        LvlData->bgo.push_back(dumpBGO);
-    }
-    foreach (LevelNPC npc, BufferIn.npc){
-        //Gen Copy of NPC
-        LevelNPC dumpNPC = npc;
-        dumpNPC.x = (long)pos.x() + npc.x - baseX;
-        dumpNPC.y = (long)pos.y() + npc.y - baseY;
-        LvlData->npc_array_id++;
-        dumpNPC.array_id = LvlData->npc_array_id;
-        placeNPC(dumpNPC);
-        LvlData->npc.push_back(dumpNPC);
-    }
-
-    //refresh Animation control
-    if(opts.animationEnabled) stopAnimation();
-    if(opts.animationEnabled) startBlockAnimation();
-
-}
 
 
 QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
@@ -1545,181 +1392,6 @@ void LvlScene::placeNPC(LevelNPC &npc)
     if(PasteFromBuffer) box->setSelected(true);
 }
 
-void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
-{
-    LevelBlock tmp1;
-    int total = blocks.size();
-    long i;
-    long ymin;
-    long ymini;
-    long sorted = 0;
-
-
-        while(sorted < blocks.size())
-        {
-            ymin = blocks[sorted].y;
-            ymini = sorted;
-
-            for(i = sorted; i < total; i++)
-            {
-                if( blocks[i].y < ymin )
-                {
-                    ymin = blocks[i].y; ymini = i;
-                }
-            }
-            tmp1 = blocks[ymini];
-            blocks[ymini] = blocks[sorted];
-            blocks[sorted] = tmp1;
-            sorted++;
-        }
-}
-
-void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
-{
-    LevelBGO tmp1;
-    int total = bgos.size();
-    long i;
-    unsigned long ymin;
-    unsigned long ymini;
-    long sorted = 0;
-
-        while(sorted < bgos.size())
-        {
-            ymin = bgos[sorted].id;
-            ymini = sorted;
-
-            for(i = sorted; i < total; i++)
-            {
-                if( bgos[i].id < ymin )
-                {
-                    ymin = bgos[i].id; ymini = i;
-                }
-            }
-            tmp1 = bgos[ymini];
-            bgos[ymini] = bgos[sorted];
-            bgos[sorted] = tmp1;
-            sorted++;
-        }
-}
-
-/////////////////////SET Block Objects/////////////////////////////////////////////
-void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
-{
-    int i=0;
-
-    //Sort block by Y
-    sortBlockArray(FileData.blocks);
-
-    //Applay images to objects
-    for(i=0; i<FileData.blocks.size(); i++)
-    {
-        //  this makes loading slow!!!
-        //if(!progress.wasCanceled())
-        //    progress.setLabelText("Applayng Blocks "+QString::number(i)+"/"+QString::number(FileData.blocks.size()));
-
-        //Add block to scene
-        placeBlock(FileData.blocks[i]);
-
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
-    }
-}
-
-
-/////////////////////SET BackGround Objects/////////////////////////////////////////////
-void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
-{
-    int i=0;
-
-    //sortBGOArray(FileData.bgo); //Sort BGOs
-
-    //Applay images to objects
-    for(i=0; i<FileData.bgo.size(); i++)
-    {
-        //  this makes loading slow!!!
-        //if(!progress.wasCanceled())
-        //    progress.setLabelText("Applayng BGOs "+QString::number(i)+"/"+QString::number(FileData.bgo.size()));
-
-        placeBGO(FileData.bgo[i]);
-
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
-    }
-
-}
-
-
-
-
-/////////////////////////SET NonPlayble Characters and Items/////////////////////////////////
-void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
-{
-    int i=0;
-    //QGraphicsItem *	box;
-
-    for(i=0; i<FileData.npc.size(); i++)
-    {
-        placeNPC(FileData.npc[i]);
-
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
-    }
-
-}
-
-/////////////////////////SET Waters/////////////////////////////////
-void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
-{
-    int i=0;
-    long x, y, h, w;
-    QGraphicsItem *	box;
-
-    for(i=0; i<FileData.water.size(); i++)
-    {
-        //if(!progress.wasCanceled())
-        //    progress.setLabelText("Applayng water "+QString::number(i)+"/"+QString::number(FileData.water.size()));
-
-        x = FileData.water[i].x;
-        y = FileData.water[i].y;
-        h = FileData.water[i].h;
-        w = FileData.water[i].w;
-
-        //box = addRect(x, y, w, h, QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
-
-        QVector<QPoint > points;
-        // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
-        points.push_back(QPoint(x, y));
-        points.push_back(QPoint(x+w, y));
-        points.push_back(QPoint(x+w,y+h));
-        points.push_back(QPoint(x, y+h));
-        points.push_back(QPoint(x, y));
-
-        points.push_back(QPoint(x, y+h));
-        points.push_back(QPoint(x+w,y+h));
-        points.push_back(QPoint(x+w, y));
-        points.push_back(QPoint(x, y));
-
-        box = addPolygon(QPolygon(points), QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4));
-
-        box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
-        box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));
-
-        box->setZValue(waterZ);
-
-        box->setData(0, "Water"); // ObjType
-        box->setData(1, QString::number(0) );
-        box->setData(2, QString::number(FileData.water[i].array_id) );
-
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
-    }
-
-}
-
 
 void LvlScene::placeDoor(LevelDoors &door)
 {
@@ -1808,8 +1480,186 @@ void LvlScene::placeDoor(LevelDoors &door)
 
 
 }
+// ////////////////////Sort///////////////////////////
 
-/////////////////////////SET Doors/////////////////////////////////
+void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
+{
+    LevelBlock tmp1;
+    int total = blocks.size();
+    long i;
+    long ymin;
+    long ymini;
+    long sorted = 0;
+
+
+        while(sorted < blocks.size())
+        {
+            ymin = blocks[sorted].y;
+            ymini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( blocks[i].y < ymin )
+                {
+                    ymin = blocks[i].y; ymini = i;
+                }
+            }
+            tmp1 = blocks[ymini];
+            blocks[ymini] = blocks[sorted];
+            blocks[sorted] = tmp1;
+            sorted++;
+        }
+}
+
+void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
+{
+    LevelBGO tmp1;
+    int total = bgos.size();
+    long i;
+    unsigned long ymin;
+    unsigned long ymini;
+    long sorted = 0;
+
+        while(sorted < bgos.size())
+        {
+            ymin = bgos[sorted].id;
+            ymini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( bgos[i].id < ymin )
+                {
+                    ymin = bgos[i].id; ymini = i;
+                }
+            }
+            tmp1 = bgos[ymini];
+            bgos[ymini] = bgos[sorted];
+            bgos[sorted] = tmp1;
+            sorted++;
+        }
+}
+
+// ///////////////////SET Block Objects/////////////////////////////////////////////
+void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
+{
+    int i=0;
+
+    //Sort block by Y
+    sortBlockArray(FileData.blocks);
+
+    //Applay images to objects
+    for(i=0; i<FileData.blocks.size(); i++)
+    {
+        //  this makes loading slow!!!
+        //if(!progress.wasCanceled())
+        //    progress.setLabelText("Applayng Blocks "+QString::number(i)+"/"+QString::number(FileData.blocks.size()));
+
+        //Add block to scene
+        placeBlock(FileData.blocks[i]);
+
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
+        else return;
+    }
+}
+
+
+// ///////////////////SET BackGround Objects/////////////////////////////////////////////
+void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
+{
+    int i=0;
+
+    //sortBGOArray(FileData.bgo); //Sort BGOs
+
+    //Applay images to objects
+    for(i=0; i<FileData.bgo.size(); i++)
+    {
+        //  this makes loading slow!!!
+        //if(!progress.wasCanceled())
+        //    progress.setLabelText("Applayng BGOs "+QString::number(i)+"/"+QString::number(FileData.bgo.size()));
+
+        placeBGO(FileData.bgo[i]);
+
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
+        else return;
+    }
+
+}
+
+
+
+
+// ///////////////////////SET NonPlayble Characters and Items/////////////////////////////////
+void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
+{
+    int i=0;
+    //QGraphicsItem *	box;
+
+    for(i=0; i<FileData.npc.size(); i++)
+    {
+        placeNPC(FileData.npc[i]);
+
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
+        else return;
+    }
+
+}
+
+// ///////////////////////SET Waters/////////////////////////////////
+void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
+{
+    int i=0;
+    long x, y, h, w;
+    QGraphicsItem *	box;
+
+    for(i=0; i<FileData.water.size(); i++)
+    {
+        //if(!progress.wasCanceled())
+        //    progress.setLabelText("Applayng water "+QString::number(i)+"/"+QString::number(FileData.water.size()));
+
+        x = FileData.water[i].x;
+        y = FileData.water[i].y;
+        h = FileData.water[i].h;
+        w = FileData.water[i].w;
+
+        //box = addRect(x, y, w, h, QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
+
+        QVector<QPoint > points;
+        // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
+        points.push_back(QPoint(x, y));
+        points.push_back(QPoint(x+w, y));
+        points.push_back(QPoint(x+w,y+h));
+        points.push_back(QPoint(x, y+h));
+        points.push_back(QPoint(x, y));
+
+        points.push_back(QPoint(x, y+h));
+        points.push_back(QPoint(x+w,y+h));
+        points.push_back(QPoint(x+w, y));
+        points.push_back(QPoint(x, y));
+
+        box = addPolygon(QPolygon(points), QPen(((FileData.water[i].quicksand)?Qt::yellow:Qt::green), 4));
+
+        box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
+        box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));
+
+        box->setZValue(waterZ);
+
+        box->setData(0, "Water"); // ObjType
+        box->setData(1, QString::number(0) );
+        box->setData(2, QString::number(FileData.water[i].array_id) );
+
+        if(!progress.wasCanceled())
+            progress.setValue(progress.value()+1);
+        else return;
+    }
+
+}
+
+
+
+// ///////////////////////SET Doors/////////////////////////////////
 void LvlScene::setDoors(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
@@ -1830,7 +1680,7 @@ void LvlScene::setDoors(LevelData FileData, QProgressDialog &progress)
 
 }
 
-//////////////////////////SET Player Points/////////////////////////////////
+// ////////////////////////SET Player Points/////////////////////////////////
 void LvlScene::setPlayerPoints()
 {
     int i=0;

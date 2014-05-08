@@ -63,11 +63,23 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             LayerName->setEnabled(false);
 
         ItemMenu->addSeparator();
-
+        QAction *copyBGO = ItemMenu->addAction("Copy");
+        QAction *cutBGO = ItemMenu->addAction("Cut");
+        ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction("Remove");
 
         QAction *selected = ItemMenu->exec(event->screenPos());
 
+        if(selected==cutBGO)
+        {
+            scene->doCut = true ;
+        }
+        else
+        if(selected==copyBGO)
+        {
+            scene->doCopy = true ;
+        }
+        else
         if(selected==remove)
         {
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
