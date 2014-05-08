@@ -557,6 +557,10 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         LvlData->npc.push_back(dumpNPC);
     }
 
+    //refresh Animation control
+    stopAnimation();
+    startBlockAnimation();
+
 }
 
 
