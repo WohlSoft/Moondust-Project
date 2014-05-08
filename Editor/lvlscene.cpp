@@ -558,8 +558,8 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
     }
 
     //refresh Animation control
-    stopAnimation();
-    startBlockAnimation();
+    if(opts.animationEnabled) stopAnimation();
+    if(opts.animationEnabled) startBlockAnimation();
 
 }
 
