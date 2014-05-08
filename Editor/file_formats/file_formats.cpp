@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include "mainwindow.h"
-#include "file_formats.h"
+#include "../mainwindow.h"
+//#include "file_formats.h"
 
 /*
 if(myString.startsWith("\"") myString.remove(0,1);
@@ -46,4 +46,12 @@ void BadFileMsg(MainWindow *window, QString fileName_DATA, int str_count, QStrin
                .arg(str_count)
                .toStdString().c_str()),
         QMessageBox::Ok);
+}
+
+
+QString MainWindow::removeQuotes(QString str)
+{
+    QString target = str.remove(0,1);
+    target = target.remove(target.size()-1,1);
+    return target;
 }

@@ -16,10 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include "mainwindow.h"
-#include "npcedit.h"
-
-#include "file_formats.h"
+#include "../mainwindow.h"
+#include "../npcedit.h"
+//#include "file_formats.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
