@@ -278,6 +278,8 @@ private:
     void loadSettings();
     void saveSettings();
 
+    QString removeQuotes(QString str);
+
 };
 
 

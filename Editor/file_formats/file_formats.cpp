@@ -47,3 +47,11 @@ void BadFileMsg(MainWindow *window, QString fileName_DATA, int str_count, QStrin
                .toStdString().c_str()),
         QMessageBox::Ok);
 }
+
+
+QString MainWindow::removeQuotes(QString str)
+{
+    QString target = str.remove(0,1);
+    target = target.remove(target.size()-1,1);
+    return target;
+}
