@@ -18,7 +18,7 @@
 
 #include "../mainwindow.h"
 #include "../leveledit.h"
-//#include "file_formats.h"
+#include "file_formats.h"
 
 
 //*********************************************************
@@ -29,16 +29,6 @@
 //Level File Read
 LevelData MainWindow::ReadLevelFile(QFile &inf)
 {
-    //Regs
-    QRegExp isint("\\d+");     //Check "Is Numeric"
-    QRegExp boolwords("^(#TRUE#|#FALSE#)$");
-    QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    //QRegExp booldeg("^(1|0)$");
-    QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-    //QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
-    //QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
-
     QTextStream in(&inf);   //Read File
 
     in.setAutoDetectUnicode(true); //Test Fix for MacOS
@@ -64,6 +54,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     LevelEvents_layers events_layers;
     LevelEvents_Sets events_sets;
 
+    //Begin all ArrayID's here;
     FileData.blocks_array_id = 0;
     FileData.bgo_array_id = 0;
     FileData.npc_array_id = 0;
@@ -75,7 +66,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
     str_count++;line = in.readLine();   //Read first Line
-    if(!isint.exactMatch(line)) //File format number
+    if( SMBX64::Int(line) ) //File format number
         goto badfile;
 
     else file_format=line.toInt();
@@ -83,7 +74,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     if(file_format >= 17)
     {
         str_count++;line = in.readLine();   //Read second Line
-        if(!isint.exactMatch(line)) //File format number
+        if( SMBX64::Int(line) ) //File format number
             goto badfile;
         else FileData.stars=line.toInt();   //Number of stars
     } else FileData.stars=0;
@@ -91,7 +82,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     if(file_format >= 62)
     {
         str_count++;line = in.readLine();   //Read Third Line
-        if(!qstr.exactMatch(line)) //LevelTitle
+        if( SMBX64::qStr(line) ) //LevelTitle
             goto badfile;
         else FileData.LevelName = removeQuotes(line);//remove quotes
     } else FileData.LevelName="";
@@ -109,7 +100,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     for(i=0;i<sct;i++)
     {
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //left
+        if(SMBX64::sInt(line)) //left
             goto badfile;
         else {
                section.size_left=line.toInt();
@@ -117,12 +108,12 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              }
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //top
+        if(SMBX64::sInt(line)) //top
             goto badfile;
         else section.size_top=line.toInt();
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //bottom
+        if(SMBX64::sInt(line)) //bottom
             goto badfile;
         else {
                section.size_bottom=line.toInt();
@@ -130,44 +121,44 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              }
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //right
+        if(SMBX64::sInt(line)) //right
             goto badfile;
         else section.size_right=line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //music
+        if(SMBX64::Int(line)) //music
             goto badfile;
         else section.music_id=line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //bgcolor
+        if(SMBX64::Int(line)) //bgcolor
             goto badfile;
         else section.bgcolor=line.toInt();
 
         str_count++;line = in.readLine();
-        if(!boolwords.exactMatch(line)) //IsLevelWarp
+        if(SMBX64::wBool(line)) //IsLevelWarp
             goto badfile;
         else section.IsWarp=((line=="#TRUE#")?true:false);
 
         str_count++;line = in.readLine();
-        if(!boolwords.exactMatch(line)) //OffScreen
+        if(SMBX64::wBool(line)) //OffScreen
             goto badfile;
         else section.OffScreenEn=((line=="#TRUE#")?true:false);
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //BackGround id
+        if(SMBX64::Int(line)) //BackGround id
             goto badfile;
         else section.background=line.toInt();
 
         str_count++;line = in.readLine();
-        if(!boolwords.exactMatch(line)) //NoTurnBack
+        if(SMBX64::wBool(line)) //NoTurnBack
             goto badfile;
         else section.noback=((line=="#TRUE#")?true:false);
 
         if(file_format >= 32)
         {
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //UnderWater
+            if(SMBX64::wBool(line)) //UnderWater
                 goto badfile;
             else section.underwater=((line=="#TRUE#")?true:false);
         }
@@ -176,7 +167,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         if(file_format >= 2)
         {
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //Custom Music
+            if(SMBX64::qStr(line)) //Custom Music
                 goto badfile;
             else section.music_file = removeQuotes(line);//remove quotes
         } else section.music_file="";
@@ -212,22 +203,22 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     for(i=0;i<2;i++)
     {
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //1 Player x
+        if(SMBX64::sInt(line)) //1 Player x
             goto badfile;
         else players.x=line.toInt();
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //1 Player y
+        if(SMBX64::sInt(line)) //1 Player y
             goto badfile;
         else players.y=line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //1 Player w
+        if(SMBX64::Int(line)) //1 Player w
             goto badfile;
         else players.w=line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //1 Player h
+        if(SMBX64::Int(line)) //1 Player h
             goto badfile;
         else players.h=line.toInt();
 
@@ -241,44 +232,44 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     str_count++;line = in.readLine();
     while(line!="\"next\"")
     {
-        if(!issint.exactMatch(line)) //Block x
+        if(SMBX64::sInt(line)) //Block x
             goto badfile;
         else blocks.x = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //Block y
+        if(SMBX64::sInt(line)) //Block y
             goto badfile;
         else blocks.y = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //Block h
+        if(SMBX64::Int(line)) //Block h
             goto badfile;
         else blocks.h = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //Block w
+        if(SMBX64::Int(line)) //Block w
             goto badfile;
         else blocks.w = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //Block id
+        if(SMBX64::Int(line)) //Block id
             goto badfile;
         else blocks.id = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //Containing NPC id
+        if(SMBX64::sInt(line)) //Containing NPC id
             goto badfile;
         else blocks.npc_id = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!boolwords.exactMatch(line)) //Invisible
+        if(SMBX64::wBool(line)) //Invisible
             goto badfile;
         else blocks.invisible = ((line=="#TRUE#")?true:false);
 
         if(file_format >= 62)
         {
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //Slippery
+            if(SMBX64::wBool(line)) //Slippery
                 goto badfile;
             else blocks.slippery = ((line=="#TRUE#")?true:false);
         } else blocks.slippery = false;
@@ -286,22 +277,22 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         if(file_format >= 10)
         {
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //layer
+            if(SMBX64::qStr(line)) //layer
                 goto badfile;
             else blocks.layer = removeQuotes(line);
 
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //event destroy
+            if(SMBX64::qStr(line)) //event destroy
                 goto badfile;
             else blocks.event_destroy = removeQuotes(line);
 
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //event hit
+            if(SMBX64::qStr(line)) //event hit
                 goto badfile;
             else blocks.event_hit = removeQuotes(line);
 
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //event no more objects in layer
+            if(SMBX64::qStr(line)) //event no more objects in layer
                 goto badfile;
             else blocks.event_no_more = removeQuotes(line);
         }
@@ -326,24 +317,24 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     str_count++;line = in.readLine();
     while(line!="\"next\"")
     {
-        if(!issint.exactMatch(line)) //BGO x
+        if(SMBX64::sInt(line)) //BGO x
             goto badfile;
         else bgodata.x = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //BGO y
+        if(SMBX64::sInt(line)) //BGO y
             goto badfile;
         else bgodata.y= line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //BGO id
+        if(SMBX64::Int(line)) //BGO id
             goto badfile;
         else bgodata.id= line.toInt();
 
         if(file_format >= 10)
         {
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //layer
+            if(SMBX64::qStr(line)) //layer
                 goto badfile;
             else bgodata.layer = removeQuotes(line);
         }
@@ -373,23 +364,23 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              QMessageBox::Ok);
         */
 
-         if(!issfloat.exactMatch(line)) //NPC x
+         if(SMBX64::sFloat(line)) //NPC x
              goto badfile;
          else npcdata.x = round(line.toDouble());
 
          str_count++;line = in.readLine();
 
-         if(!issfloat.exactMatch(line)) //NPC y
+         if(SMBX64::sFloat(line)) //NPC y
              goto badfile;
          else npcdata.y = round(line.toDouble());
 
          str_count++;line = in.readLine();
-         if(!issint.exactMatch(line)) //NPC direction
+         if(SMBX64::sInt(line)) //NPC direction
              goto badfile;
          else npcdata.direct = line.toInt();
 
          str_count++;line = in.readLine();
-         if(!isint.exactMatch(line)) //NPC id
+         if(SMBX64::Int(line)) //NPC id
              goto badfile;
 
          else npcdata.id = line.toInt();
@@ -399,6 +390,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              npcdata.special_data = -1;
              switch(npcdata.id)
              {
+             //SMBX64 Fixed special options for NPC
              case 283:/*Buble*/ case 91: /*burried*/ case 284: /*SMW Lakitu*/
              case 96: /*egg*/   /*parakoopa*/
              case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
@@ -407,7 +399,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              /*WarpSelection*/ case 288: case 289: /*firebar*/ case 260:
 
                  str_count++;line = in.readLine();
-                 if(!isint.exactMatch(line)) //NPC id
+                 if(SMBX64::Int(line)) //NPC id
                      goto badfile;
                  else npcdata.special_data = line.toInt();
 
@@ -416,7 +408,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              }
 
              str_count++;line = in.readLine();
-             if(!boolwords.exactMatch(line)) //Generator enabled
+             if(SMBX64::wBool(line)) //Generator enabled
                  goto badfile;
              else npcdata.generator = ((line=="#TRUE#")?true:false);
 
@@ -427,62 +419,62 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              {
 
                  str_count++;line = in.readLine();
-                 if(!isint.exactMatch(line)) //Generator direction
+                 if(SMBX64::Int(line)) //Generator direction
                      goto badfile;
                  else npcdata.generator_direct= line.toInt();
 
                  str_count++;line = in.readLine();
-                 if(!isint.exactMatch(line)) //Generator type [1] Warp, [2] Projective
+                 if(SMBX64::Int(line)) //Generator type [1] Warp, [2] Projective
                      goto badfile;
                  else npcdata.generator_type = line.toInt();
                  str_count++;line = in.readLine();
-                 if(!isint.exactMatch(line)) //Generator period ( sec*10 ) [1-600]
+                 if(SMBX64::Int(line)) //Generator period ( sec*10 ) [1-600]
                      goto badfile;
                  else npcdata.generator_period = line.toInt();
              }
 
              str_count++;line = in.readLine();
-             if(!qstr.exactMatch(line)) //Message
+             if(SMBX64::qStr(line)) //Message
                  goto badfile;
              else npcdata.msg = removeQuotes(line);
 
              str_count++;line = in.readLine();
-             if(!boolwords.exactMatch(line)) //Friedly NPC
+             if(SMBX64::wBool(line)) //Friedly NPC
                  goto badfile;
              else npcdata.friendly = ((line=="#TRUE#")?true:false);
 
              str_count++;line = in.readLine();
-             if(!boolwords.exactMatch(line)) //Don't move NPC
+             if(SMBX64::wBool(line)) //Don't move NPC
                  goto badfile;
              else npcdata.nomove = ((line=="#TRUE#")?true:false);
 
              str_count++;line = in.readLine();
-             if(!boolwords.exactMatch(line)) //LegacyBoss
+             if(SMBX64::wBool(line)) //LegacyBoss
                  goto badfile;
              else npcdata.legacyboss = ((line=="#TRUE#")?true:false);
 
              str_count++;line = in.readLine();
-             if(!qstr.exactMatch(line)) //Layer
+             if(SMBX64::qStr(line)) //Layer
                  goto badfile;
              else npcdata.layer = removeQuotes(line);
 
              str_count++;line = in.readLine();
-             if(!qstr.exactMatch(line)) //Activate event
+             if(SMBX64::qStr(line)) //Activate event
                  goto badfile;
              else npcdata.event_activate = removeQuotes(line);
 
              str_count++;line = in.readLine();
-             if(!qstr.exactMatch(line)) //Death event
+             if(SMBX64::qStr(line)) //Death event
                  goto badfile;
              else npcdata.event_die = removeQuotes(line);
 
              str_count++;line = in.readLine();
-             if(!qstr.exactMatch(line)) //Talk event
+             if(SMBX64::qStr(line)) //Talk event
                  goto badfile;
              else npcdata.event_talk = removeQuotes(line);
 
              str_count++;line = in.readLine();
-             if(!qstr.exactMatch(line)) //No more object in layer event
+             if(SMBX64::qStr(line)) //No more object in layer event
                  goto badfile;
              else npcdata.event_nomore = removeQuotes(line);
         }
@@ -507,7 +499,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
          if(file_format >= 63)
          {
              str_count++;line = in.readLine();
-             if(!qstr.exactMatch(line)) //Layer name to attach
+             if(SMBX64::qStr(line)) //Layer name to attach
                  goto badfile;
              else npcdata.attach_layer = removeQuotes(line);
          }  else npcdata.attach_layer = "";
@@ -524,39 +516,39 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     str_count++;line = in.readLine();
     while( ((line!="\"next\"")&&(file_format>=10)) || ((file_format<10)&&(line!="")&&(!line.isNull())))
     {
-        if(!issint.exactMatch(line)) //Entrance x
+        if(SMBX64::sInt(line)) //Entrance x
             goto badfile;
         else doors.ix = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //Entrance y
+        if(SMBX64::sInt(line)) //Entrance y
             goto badfile;
         else doors.iy = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //Exit x
+        if(SMBX64::sInt(line)) //Exit x
             goto badfile;
         else doors.ox = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!issint.exactMatch(line)) //Exit y
+        if(SMBX64::sInt(line)) //Exit y
             goto badfile;
         else doors.oy = line.toInt();
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //Entrance direction: [3] down, [1] up, [2] left, [4] right
+        if(SMBX64::Int(line)) //Entrance direction: [3] down, [1] up, [2] left, [4] right
             goto badfile;
         else doors.idirect= line.toInt();
 
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //Exit direction: [1] down [3] up [4] left [2] right
+        if(SMBX64::Int(line)) //Exit direction: [1] down [3] up [4] left [2] right
             goto badfile;
         else doors.odirect= line.toInt();
 
 
         str_count++;line = in.readLine();
-        if(!isint.exactMatch(line)) //Door type: [1] pipe, [2] door, [0] instant
+        if(SMBX64::Int(line)) //Door type: [1] pipe, [2] door, [0] instant
             goto badfile;
         else doors.type= line.toInt();
 
@@ -564,18 +556,18 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         if(file_format>=8)
         {
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //Warp to level
+            if(SMBX64::qStr(line)) //Warp to level
                 goto badfile;
             else doors.lname = removeQuotes(line);
 
 
             str_count++;line = in.readLine();
-            if(!isint.exactMatch(line)) //Normal entrance or Warp to other door
+            if(SMBX64::Int(line)) //Normal entrance or Warp to other door
                 goto badfile;
             else doors.warpto= line.toInt();
 
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //Level Entrance (can not enter)
+            if(SMBX64::wBool(line)) //Level Entrance (can not enter)
                 goto badfile;
             else
             {
@@ -584,7 +576,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             }
 
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //Level Exit (End of level)
+            if(SMBX64::wBool(line)) //Level Exit (End of level)
                 goto badfile;
             else
             {
@@ -593,12 +585,12 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             }
 
             str_count++;line = in.readLine();
-            if(!issint.exactMatch(line)) //WarpTo X
+            if(SMBX64::sInt(line)) //WarpTo X
                 goto badfile;
             else doors.world_x= line.toInt();
 
             str_count++;line = in.readLine();
-            if(!issint.exactMatch(line)) //WarpTo y
+            if(SMBX64::sInt(line)) //WarpTo y
                 goto badfile;
             else doors.world_y= line.toInt();
         }
@@ -615,7 +607,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         if(file_format>=8)
         {
             str_count++;line = in.readLine();
-            if(!isint.exactMatch(line)) //Need a stars
+            if(SMBX64::Int(line)) //Need a stars
                 goto badfile;
             else doors.stars= line.toInt();
         } else doors.stars=0;
@@ -623,12 +615,12 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         if(file_format>=10)
         {
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //Layer
+            if(SMBX64::qStr(line)) //Layer
                 goto badfile;
             else doors.layer = removeQuotes(line);
 
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //<unused>, always FALSE
+            if(SMBX64::wBool(line)) //<unused>, always FALSE
                 goto badfile;
             else doors.unknown= ((line=="#TRUE#")?true:false);
 
@@ -641,17 +633,17 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         if(file_format>=28)
         {
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //No Yoshi
+            if(SMBX64::wBool(line)) //No Yoshi
                 goto badfile;
             else doors.noyoshi = ((line=="#TRUE#")?true:false);
 
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //Allow NPC
+            if(SMBX64::wBool(line)) //Allow NPC
                 goto badfile;
             else doors.allownpc= ((line=="#TRUE#")?true:false);
 
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //Locked
+            if(SMBX64::wBool(line)) //Locked
                 goto badfile;
             else doors.locked= ((line=="#TRUE#")?true:false);
         }
@@ -674,27 +666,27 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         while(line!="\"next\"")
         {
-            if(!issint.exactMatch(line)) //Water x
+            if(SMBX64::sInt(line)) //Water x
                 goto badfile;
             else waters.x = line.toInt();
 
             str_count++;line = in.readLine();
-            if(!issint.exactMatch(line)) //Water y
+            if(SMBX64::sInt(line)) //Water y
                 goto badfile;
             else waters.y = line.toInt();
 
             str_count++;line = in.readLine();
-            if(!isint.exactMatch(line)) //Water w
+            if(SMBX64::Int(line)) //Water w
                 goto badfile;
             else waters.w = line.toInt();
 
             str_count++;line = in.readLine();
-            if(!isint.exactMatch(line)) //Water h
+            if(SMBX64::Int(line)) //Water h
                 goto badfile;
             else waters.h = line.toInt();
 
             str_count++;line = in.readLine();
-            if(!isint.exactMatch(line)) //Unused
+            if(SMBX64::Int(line)) //Unused
                 goto badfile;
             else waters.unknown = line.toInt();
 
@@ -702,7 +694,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             if(file_format>=63)
             {
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //Quicksand
+                if(SMBX64::wBool(line)) //Quicksand
                     goto badfile;
                 else waters.quicksand = ((line=="#TRUE#")?true:false);
             }
@@ -710,7 +702,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 
 
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //Layer
+            if(SMBX64::qStr(line)) //Layer
                 goto badfile;
             else waters.layer = removeQuotes(line);
 
@@ -728,12 +720,12 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         while(line!="\"next\"")
         {
-            if(!qstr.exactMatch(line)) //Layer name
+            if(SMBX64::qStr(line)) //Layer name
                 goto badfile;
             else layers.name=removeQuotes(line);;
 
             str_count++;line = in.readLine();
-            if(!boolwords.exactMatch(line)) //hidden layer
+            if(SMBX64::wBool(line)) //hidden layer
                 goto badfile;
             else layers.hidden = ((line=="#TRUE#")?true:false);
 
@@ -748,43 +740,43 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         while((line!="")&&(!line.isNull()))
         {
-            if(!qstr.exactMatch(line)) //Event name
+            if(SMBX64::qStr(line)) //Event name
                 goto badfile;
             else events.name=removeQuotes(line);
 
             str_count++;line = in.readLine();
-            if(!qstr.exactMatch(line)) //Event message
+            if(SMBX64::qStr(line)) //Event message
                 goto badfile;
 
 
             if(file_format>=18)
             {
                 str_count++;line = in.readLine();
-                if(!isint.exactMatch(line)) //PlaySound
+                if(SMBX64::Int(line)) //PlaySound
                     goto badfile;
                 else events.sound_id  = line.toInt();
             }
             else events.sound_id  = 0;
 
             str_count++;line = in.readLine();
-            if(!isint.exactMatch(line)) //EndGame
+            if(SMBX64::Int(line)) //EndGame
                 goto badfile;
             else events.end_game  = line.toInt();
 
             for(i=0; i<21; i++)
             {
                 str_count++;line = in.readLine();
-                if(!qstr.exactMatch(line)) //Hide layer
+                if(SMBX64::qStr(line)) //Hide layer
                     goto badfile;
                 else events_layers.hide=removeQuotes(line);
 
                 str_count++;line = in.readLine();
-                if(!qstr.exactMatch(line)) //Show layer
+                if(SMBX64::qStr(line)) //Show layer
                     goto badfile;
                 else events_layers.show=removeQuotes(line);
 
                 str_count++;line = in.readLine();
-                if(!qstr.exactMatch(line)) //Toggle layer
+                if(SMBX64::qStr(line)) //Toggle layer
                     goto badfile;
                 else events_layers.toggle=removeQuotes(line);
 
@@ -794,31 +786,31 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             for(i=0; i<21; i++)
             {
                 str_count++;line = in.readLine();
-                if(!issint.exactMatch(line)) //Set Music
+                if(SMBX64::sInt(line)) //Set Music
                     goto badfile;
                 else events_sets.music_id  = line.toInt();
                 str_count++;line = in.readLine();
-                if(!issint.exactMatch(line)) //Set Background
+                if(SMBX64::sInt(line)) //Set Background
                     goto badfile;
                 else events_sets.background_id = line.toInt();
 
                 str_count++;line = in.readLine();
-                if(!issint.exactMatch(line)) //Set Position to: LEFT
+                if(SMBX64::sInt(line)) //Set Position to: LEFT
                     goto badfile;
                 else events_sets.position_left = line.toInt();
 
                 str_count++;line = in.readLine();
-                if(!issint.exactMatch(line)) //Set Position to: TOP
+                if(SMBX64::sInt(line)) //Set Position to: TOP
                     goto badfile;
                 else events_sets.position_top = line.toInt();
 
                 str_count++;line = in.readLine();
-                if(!issint.exactMatch(line)) //Set Position to: BOTTOM
+                if(SMBX64::sInt(line)) //Set Position to: BOTTOM
                     goto badfile;
                 else events_sets.position_bottom = line.toInt();
 
                 str_count++;line = in.readLine();
-                if(!issint.exactMatch(line)) //Set Position to: RIGHT
+                if(SMBX64::sInt(line)) //Set Position to: RIGHT
                     goto badfile;
                 else events_sets.position_right = line.toInt();
 
@@ -828,67 +820,67 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             if(file_format>=28)
             {
                 str_count++;line = in.readLine();
-                if(!qstr.exactMatch(line)) //Trigger
+                if(SMBX64::qStr(line)) //Trigger
                     goto badfile;
                 else events.trigger=removeQuotes(line);
 
                 str_count++;line = in.readLine();
-                if(!isint.exactMatch(line)) //Start trigger event after x [sec*10]. Etc. 153,2 sec
+                if(SMBX64::Int(line)) //Start trigger event after x [sec*10]. Etc. 153,2 sec
                     goto badfile;
                 else events.trigger_timer = line.toInt();
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //No Smoke
+                if(SMBX64::wBool(line)) //No Smoke
                     goto badfile;
                 else events.nosmoke = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //Hold ALT-JUMP player control
+                if(SMBX64::wBool(line)) //Hold ALT-JUMP player control
                     goto badfile;
                 else events.altjump = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //ALT-RUN
+                if(SMBX64::wBool(line)) //ALT-RUN
                     goto badfile;
                 else events.altrun = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //DOWN
+                if(SMBX64::wBool(line)) //DOWN
                     goto badfile;
                 else events.down = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //DROP
+                if(SMBX64::wBool(line)) //DROP
                     goto badfile;
                 else events.drop = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //JUMP
+                if(SMBX64::wBool(line)) //JUMP
                     goto badfile;
                 else events.jump = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //LEFT
+                if(SMBX64::wBool(line)) //LEFT
                     goto badfile;
                 else events.left = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //RIGHT
+                if(SMBX64::wBool(line)) //RIGHT
                     goto badfile;
                 else events.right = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //RUN
+                if(SMBX64::wBool(line)) //RUN
                     goto badfile;
                 else events.run = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //START
+                if(SMBX64::wBool(line)) //START
                     goto badfile;
                 else events.start = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //UP
+                if(SMBX64::wBool(line)) //UP
                     goto badfile;
                 else events.up = ((line=="#TRUE#")?true:false);
             }
@@ -912,22 +904,22 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             if(file_format>=32)
             {
                 str_count++;line = in.readLine();
-                if(!boolwords.exactMatch(line)) //Auto start
+                if(SMBX64::wBool(line)) //Auto start
                     goto badfile;
                 else events.autostart = ((line=="#TRUE#")?true:false);
 
                 str_count++;line = in.readLine();
-                if(!qstr.exactMatch(line)) //Layer for movement
+                if(SMBX64::qStr(line)) //Layer for movement
                     goto badfile;
                 else events.movelayer = removeQuotes(line);
 
                 str_count++;line = in.readLine();
-                if(!issfloat.exactMatch(line)) //Layer moving speed – horizontal
+                if(SMBX64::sFloat(line)) //Layer moving speed – horizontal
                     goto badfile;
                 else events.layer_speed_x = line.replace(QChar(','), QChar('.')).toFloat();
 
                 str_count++;line = in.readLine();
-                if(!issfloat.exactMatch(line)) //Layer moving speed – vertical
+                if(SMBX64::sFloat(line)) //Layer moving speed – vertical
                     goto badfile;
                 else events.layer_speed_y = line.replace(QChar(','), QChar('.')).toFloat();
             }
@@ -943,17 +935,17 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             if(file_format>=49)
             {
                 str_count++;line = in.readLine();
-                if(!issfloat.exactMatch(line)) //Move screen horizontal speed
+                if(SMBX64::sFloat(line)) //Move screen horizontal speed
                     goto badfile;
                 else events.move_camera_x = line.replace(QChar(','), QChar('.')).toFloat();
 
                 str_count++;line = in.readLine();
-                if(!issfloat.exactMatch(line)) //Move screen vertical speed
+                if(SMBX64::sFloat(line)) //Move screen vertical speed
                     goto badfile;
                 else events.move_camera_y = line.replace(QChar(','), QChar('.')).toFloat();
 
                 str_count++;line = in.readLine();
-                if(!issint.exactMatch(line)) //Scroll section x, (in file value is x-1)
+                if(SMBX64::sInt(line)) //Scroll section x, (in file value is x-1)
                     goto badfile;
                 else events.scroll_section = line.toInt();
             }
@@ -986,10 +978,218 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 //****************WRITE FILE FORMAT************************
 //*********************************************************
 
+
 QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
 {
     QString TextData;
-    TextData = FileData.LevelName;
+    int i, j;
+
+    TextData += SMBX64::IntS(64);                     //Format version 64
+    TextData += SMBX64::IntS(FileData.stars);         //Number of stars
+    TextData += SMBX64::qStrS(FileData.LevelName);  //Level name
+
+
+    //Sections settings
+    for(i=0; i<FileData.sections.size() && i<21; i++)
+    {
+        TextData += SMBX64::IntS(FileData.sections[i].size_left);
+        TextData += SMBX64::IntS(FileData.sections[i].size_top);
+        TextData += SMBX64::IntS(FileData.sections[i].size_bottom);
+        TextData += SMBX64::IntS(FileData.sections[i].size_right);
+        TextData += SMBX64::IntS(FileData.sections[i].music_id);
+        TextData += SMBX64::IntS(FileData.sections[i].bgcolor);
+        TextData += SMBX64::BoolS(FileData.sections[i].IsWarp);
+        TextData += SMBX64::BoolS(FileData.sections[i].OffScreenEn);
+        TextData += SMBX64::IntS(FileData.sections[i].background);
+        TextData += SMBX64::BoolS(FileData.sections[i].noback);
+        TextData += SMBX64::BoolS(FileData.sections[i].underwater);
+        TextData += SMBX64::qStrS(FileData.sections[i].music_file);
+    }
+
+    //Players start point
+    for(i=0; i<FileData.players.size() && i<2; i++ )
+    {
+        TextData += SMBX64::IntS(FileData.players[i].x);
+        TextData += SMBX64::IntS(FileData.players[i].y);
+        TextData += SMBX64::IntS(FileData.players[i].w);
+        TextData += SMBX64::IntS(FileData.players[i].h);
+    }
+
+    //Blocks
+    for(i=0; i<FileData.blocks.size(); i++)
+    {
+        TextData += SMBX64::IntS(FileData.blocks[i].x);
+        TextData += SMBX64::IntS(FileData.blocks[i].y);
+        TextData += SMBX64::IntS(FileData.blocks[i].h);
+        TextData += SMBX64::IntS(FileData.blocks[i].w);
+        TextData += SMBX64::IntS(FileData.blocks[i].id);
+        TextData += SMBX64::IntS(FileData.blocks[i].npc_id);
+        TextData += SMBX64::BoolS(FileData.blocks[i].invisible);
+        TextData += SMBX64::BoolS(FileData.blocks[i].slippery);
+        TextData += SMBX64::qStrS(FileData.blocks[i].layer);
+        TextData += SMBX64::qStrS(FileData.blocks[i].event_destroy);
+        TextData += SMBX64::qStrS(FileData.blocks[i].event_hit);
+        TextData += SMBX64::qStrS(FileData.blocks[i].event_no_more);
+
+    }
+    TextData += "\"next\"\n";//Separator
+
+    //BGOs
+    for(i=0; i<FileData.bgo.size(); i++)
+    {
+        TextData += SMBX64::IntS(FileData.bgo[i].x);
+        TextData += SMBX64::IntS(FileData.bgo[i].y);
+        TextData += SMBX64::IntS(FileData.bgo[i].id);
+        TextData += SMBX64::qStrS(FileData.bgo[i].layer);
+    }
+    TextData += "\"next\"\n";//Separator
+
+    //NPCs
+    for(i=0; i<FileData.npc.size(); i++)
+    {
+        //Section size
+        TextData += SMBX64::IntS(FileData.npc[i].x);
+        TextData += SMBX64::IntS(FileData.npc[i].y);
+        TextData += SMBX64::IntS(FileData.npc[i].direct);
+        TextData += SMBX64::IntS(FileData.npc[i].id);
+
+        switch(FileData.npc[i].id)
+        {
+            //SMBX64 Fixed special options for NPC
+            case 283:/*Buble*/
+            case 91: /*burried*/
+            case 284: /*SMW Lakitu*/
+            case 96: /*egg*/
+            /*parakoopa*/ case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
+            /*paragoomba*/ case 243: case 244:
+            /*Cheep-Cheep*/ case 28: case 229: case 230: case 232: case 233: case 234: case 236:
+            /*WarpSelection*/ case 288: case 289:
+            /*firebar*/ case 260:
+        TextData += SMBX64::IntS(FileData.npc[i].special_data);
+            break;
+            default:
+                break;
+        }
+
+        TextData += SMBX64::BoolS(FileData.npc[i].generator);
+
+        if(FileData.npc[i].generator)
+        {
+            TextData += SMBX64::IntS(FileData.npc[i].generator_direct);
+            TextData += SMBX64::IntS(FileData.npc[i].generator_type);
+            TextData += SMBX64::IntS(FileData.npc[i].generator_period);
+        }
+        TextData += SMBX64::qStrS(FileData.npc[i].msg);
+
+        TextData += SMBX64::BoolS(FileData.npc[i].friendly);
+        TextData += SMBX64::BoolS(FileData.npc[i].nomove);
+        TextData += SMBX64::BoolS(FileData.npc[i].legacyboss);
+
+        TextData += SMBX64::qStrS(FileData.npc[i].layer);
+        TextData += SMBX64::qStrS(FileData.npc[i].event_activate);
+        TextData += SMBX64::qStrS(FileData.npc[i].event_die);
+        TextData += SMBX64::qStrS(FileData.npc[i].event_talk);
+        TextData += SMBX64::qStrS(FileData.npc[i].event_nomore);
+        TextData += SMBX64::qStrS(FileData.npc[i].attach_layer);
+    }
+    TextData += "\"next\"\n";//Separator
+
+
+    //Doors
+    for(i=0; i<FileData.doors.size(); i++)
+    {
+        TextData += SMBX64::IntS(FileData.doors[i].ix);
+        TextData += SMBX64::IntS(FileData.doors[i].iy);
+        TextData += SMBX64::IntS(FileData.doors[i].ox);
+        TextData += SMBX64::IntS(FileData.doors[i].oy);
+        TextData += SMBX64::IntS(FileData.doors[i].idirect);
+        TextData += SMBX64::IntS(FileData.doors[i].odirect);
+        TextData += SMBX64::IntS(FileData.doors[i].type);
+        TextData += SMBX64::qStrS(FileData.doors[i].lname);
+        TextData += SMBX64::IntS(FileData.doors[i].warpto);
+        TextData += SMBX64::BoolS(FileData.doors[i].lvl_i);
+        TextData += SMBX64::BoolS(FileData.doors[i].lvl_o);
+        TextData += SMBX64::IntS(FileData.doors[i].world_x);
+        TextData += SMBX64::IntS(FileData.doors[i].world_y);
+        TextData += SMBX64::IntS(FileData.doors[i].stars);
+        TextData += SMBX64::qStrS(FileData.doors[i].layer);
+        TextData += SMBX64::BoolS(FileData.doors[i].unknown);
+        TextData += SMBX64::BoolS(FileData.doors[i].noyoshi);
+        TextData += SMBX64::BoolS(FileData.doors[i].allownpc);
+        TextData += SMBX64::BoolS(FileData.doors[i].locked);
+    }
+    TextData += "\"next\"\n";//Separator
+
+    //Water
+    for(i=0; i<FileData.water.size(); i++)
+    {
+        TextData += SMBX64::IntS(FileData.water[i].x);
+        TextData += SMBX64::IntS(FileData.water[i].y);
+        TextData += SMBX64::IntS(FileData.water[i].w);
+        TextData += SMBX64::IntS(FileData.water[i].h);
+        TextData += SMBX64::IntS(FileData.water[i].unknown);
+        TextData += SMBX64::BoolS(FileData.water[i].quicksand);
+        TextData += SMBX64::qStrS(FileData.water[i].layer);
+    }
+    TextData += "\"next\"\n";//Separator
+
+    //Layers
+    for(i=0; i<FileData.layers.size(); i++)
+    {
+        TextData += SMBX64::qStrS(FileData.layers[i].name);
+        TextData += SMBX64::BoolS(FileData.layers[i].hidden);
+    }
+    TextData += "\"next\"\n";//Separator
+
+    for(i=0; i<FileData.events.size(); i++)
+    {
+        TextData += SMBX64::qStrS(FileData.events[i].name);
+        TextData += SMBX64::qStrS(FileData.events[i].msg);
+        TextData += SMBX64::IntS(FileData.events[i].sound_id);
+        TextData += SMBX64::IntS(FileData.events[i].end_game);
+
+        for(j=0; j< FileData.events[i].layers.size()  && j<20; j++)
+        {
+            TextData += SMBX64::qStrS(FileData.events[i].layers[j].hide);
+            TextData += SMBX64::qStrS(FileData.events[i].layers[j].show);
+            TextData += SMBX64::qStrS(FileData.events[i].layers[j].toggle);
+        }
+        TextData += "\"\"\n\"\"\n\"\"\n"; //SMBX 1.3 bug protector
+
+        for(j=0; j< FileData.events[i].layers.size()  && j<21; j++)
+        {
+            TextData += SMBX64::IntS(FileData.events[i].sets[j].music_id);
+            TextData += SMBX64::IntS(FileData.events[i].sets[j].background_id);
+            TextData += SMBX64::IntS(FileData.events[i].sets[j].position_left);
+            TextData += SMBX64::IntS(FileData.events[i].sets[j].position_top);
+            TextData += SMBX64::IntS(FileData.events[i].sets[j].position_bottom);
+            TextData += SMBX64::IntS(FileData.events[i].sets[j].position_right);
+        }
+        TextData += SMBX64::qStrS(FileData.events[i].trigger);
+        TextData += SMBX64::IntS(FileData.events[i].trigger_timer);
+
+        TextData += SMBX64::BoolS(FileData.events[i].nosmoke);
+
+        TextData += SMBX64::BoolS(FileData.events[i].altjump);
+        TextData += SMBX64::BoolS(FileData.events[i].altrun);
+        TextData += SMBX64::BoolS(FileData.events[i].down);
+        TextData += SMBX64::BoolS(FileData.events[i].drop);
+        TextData += SMBX64::BoolS(FileData.events[i].jump);
+        TextData += SMBX64::BoolS(FileData.events[i].left);
+        TextData += SMBX64::BoolS(FileData.events[i].right);
+        TextData += SMBX64::BoolS(FileData.events[i].run);
+        TextData += SMBX64::BoolS(FileData.events[i].start);
+        TextData += SMBX64::BoolS(FileData.events[i].up);
+
+        TextData += SMBX64::BoolS(FileData.events[i].autostart);
+
+        TextData += SMBX64::qStrS(FileData.events[i].movelayer);
+        TextData += SMBX64::IntS(FileData.events[i].layer_speed_x);
+        TextData += SMBX64::IntS(FileData.events[i].layer_speed_y);
+        TextData += SMBX64::IntS(FileData.events[i].move_camera_x);
+        TextData += SMBX64::IntS(FileData.events[i].move_camera_y);
+        TextData += SMBX64::IntS(FileData.events[i].scroll_section);
+    }
 
     return TextData;
 }
