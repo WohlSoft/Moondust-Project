@@ -147,6 +147,21 @@ public:
     int spaceZ1; // interSection space layer
     int spaceZ2;
 
+    // ////////////HistoryManager///////////////////
+    struct HistoryOperation{
+        enum HistoryType{
+            LEVELHISTORY_REMOVE = 0
+        };
+        HistoryType type;
+        //used most of Operations
+        LevelData data;
+    };
+    void addRemoveHistory(LevelData removedItems);
+    void historyBack();
+    int getHistroyIndex();
+    void setScenePoint(LvlScene *theScene);
+    // ////////////////////////////////////////////
+
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -188,6 +203,11 @@ private:
     QGraphicsItem *mDragged;
     // The distance from the top left of the item to the mouse position.
     QPointF mDragOffset;
+
+    // ////////////////HistoryManager///////////////////
+    int historyIndex;
+    QList<HistoryOperation> operationList;
+    // /////////////////////////////////////////////////
 
 };
 

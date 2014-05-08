@@ -96,6 +96,9 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     spaceZ1 = 1000; // interSection space layer
     spaceZ2 = 1020; // section Border
 
+    //HistoryIndex
+    historyIndex=0;
+
     setItemIndexMethod(NoIndex);
 
     lock_bgo=false;
