@@ -91,8 +91,9 @@ void MainWindow::setUiDefults()
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
 
-    TickTackLock = false;
 
+    //Start event detector
+    TickTackLock = false;
     TickTackTimer = new QTimer(this);
     connect(
             TickTackTimer, SIGNAL(timeout()),

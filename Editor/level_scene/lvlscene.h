@@ -69,7 +69,11 @@ public:
                      // 3 - drawing water/sand zone, 4 - placing from Buffer
     bool EraserEnabled;
     bool PasteFromBuffer;
+
+    //Event Flags
     bool wasPasted;
+    bool doCopy;
+    bool doCut;
 
     //Copy function
     LevelData copy(bool cut = false);

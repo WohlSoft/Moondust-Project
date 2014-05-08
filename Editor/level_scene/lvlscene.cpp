@@ -56,9 +56,12 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     EditingMode = 0;
     EraserEnabled = false;
     PasteFromBuffer = false;
-    wasPasted = false;
     IsMoved = false;
     haveSelected = false;
+
+    wasPasted = false;
+    doCopy = false;
+    doCut = false;
 
     //sbZ = 0;
 

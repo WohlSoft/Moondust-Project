@@ -74,11 +74,23 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             resize->setVisible( (this->data(3).toString()=="sizable") );
 
         ItemMenu->addSeparator();
-
+        QAction *copyBlock = ItemMenu->addAction("Copy");
+        QAction *cutBlock = ItemMenu->addAction("Cut");
+        ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction("Remove");
 
         QAction *selected = ItemMenu->exec(event->screenPos());
 
+        if(selected==cutBlock)
+        {
+            scene->doCut = true ;
+        }
+        else
+        if(selected==copyBlock)
+        {
+            scene->doCopy = true ;
+        }
+        else
         if(selected==invis)
         {
             //apply to all selected items.

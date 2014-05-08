@@ -48,7 +48,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
 }
 
-
+//Scene Event Detector
 void MainWindow::TickTack()
 {
     if(TickTackLock) return;
@@ -59,11 +59,25 @@ void MainWindow::TickTack()
     {
         if(activeChildWindow()==1)
         {
+            //Capturing flags from active Window
             if(activeLvlEditWin()->scene->wasPasted)
             {
                 activeLvlEditWin()->changeCursor(0);
                 activeLvlEditWin()->scene->wasPasted=false;
             }
+            else
+            if(activeLvlEditWin()->scene->doCut)
+            {
+                on_actionCut_triggered();
+                activeLvlEditWin()->scene->doCut=false;
+            }
+            else
+            if(activeLvlEditWin()->scene->doCopy)
+            {
+                on_actionCopy_triggered();
+                activeLvlEditWin()->scene->doCopy=false;
+            }
+
         }
         /*
         else

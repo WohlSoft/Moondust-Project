@@ -255,6 +255,7 @@ private:
 
 
     Ui::MainWindow *ui;
+
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;
 
