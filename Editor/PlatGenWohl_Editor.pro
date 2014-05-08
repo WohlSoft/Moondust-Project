@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     main_window/edit_level.cpp \
     main_window/edit_world.cpp \
     main_window/music_player.cpp \
-    main_window/edit_common.cpp
+    main_window/edit_common.cpp \
+    historymanager.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -52,7 +53,8 @@ HEADERS  += mainwindow.h \
     logger.h \
     item_block.h \
     item_bgo.h \
-    file_formats/file_formats.h
+    file_formats/file_formats.h \
+    historymanager.h
 
 FORMS    += \
     aboutdialog.ui \

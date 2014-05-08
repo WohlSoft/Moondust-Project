@@ -26,6 +26,8 @@
 
 #include "lvl_filedata.h"
 #include "dataconfigs.h"
+class HistoryManager;
+#include "historymanager.h"
 
 struct UserBGOs
 {
@@ -100,6 +102,12 @@ public:
     //QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
     void DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg2, obj_BG &bgsetup, QGraphicsPixmapItem * &target);
 
+    //place functions
+    void placeBlock(LevelBlock &block);
+    void placeBGO(LevelBGO &bgo);
+    void placeDoor(LevelDoors &door);
+    void placeNPC(LevelNPC &npc);
+
     //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
     void sortBGOArray(QVector<LevelBGO > &bgos);
@@ -112,6 +120,8 @@ public:
     LevelData  * LvlData;
 
     LevelData LvlBuffer;
+
+    HistoryManager* histManager;
 
     dataconfigs * pConfigs;
 
@@ -153,10 +163,6 @@ private:
 
     QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
 
-    void placeBlock(LevelBlock &block);
-    void placeBGO(LevelBGO &bgo);
-    void placeDoor(LevelDoors &door);
-    void placeNPC(LevelNPC &npc);
 
     void setSectionBG(LevelSection section);
 
