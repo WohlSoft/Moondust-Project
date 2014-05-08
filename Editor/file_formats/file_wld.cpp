@@ -19,7 +19,7 @@
 #include "../mainwindow.h"
 #include "../wld_filedata.h"
 
-#include "file_formats.h"
+//#include "file_formats.h"
 
 /*
 if(myString.startsWith("\"") myString.remove(0,1);
