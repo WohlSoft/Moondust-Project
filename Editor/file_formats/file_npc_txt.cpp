@@ -19,7 +19,7 @@
 #include "../mainwindow.h"
 #include "../npcedit.h"
 
-#include "file_formats.h"
+//#include "file_formats.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************

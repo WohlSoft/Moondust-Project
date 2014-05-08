@@ -17,7 +17,7 @@
  */
 
 #include "../mainwindow.h"
-#include "file_formats.h"
+//#include "file_formats.h"
 
 /*
 if(myString.startsWith("\"") myString.remove(0,1);
