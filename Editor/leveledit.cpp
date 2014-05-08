@@ -415,6 +415,27 @@ bool leveledit::saveAs()
 
 bool leveledit::saveFile(const QString &fileName)
 {
+    QFile file(fileName);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this, tr("Write file error"),
+                             tr("Cannot write file %1:\n%2.")
+                             .arg(fileName)
+                             .arg(file.errorString()));
+        return false;
+    }
+
+    QTextStream out(&file);
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    out << WriteSMBX64LvlFile(LvlData);
+
+    QApplication::restoreOverrideCursor();
+    setCurrentFile(fileName);
+
+    LvlData.modified = false;
+
+    return true;
+
     //Write disabled for safe
     /*
     QFile file(fileName);
@@ -435,12 +456,12 @@ bool leveledit::saveFile(const QString &fileName)
 
     setCurrentFile(fileName);
     */
-
+/*
     QMessageBox::information(this, tr("Dummy"),
                          tr("File %1 will not be saved, saving levels is not implemented in this version.")
                          .arg(fileName));
 
-    return true;
+    return true;*/
 }
 
 
