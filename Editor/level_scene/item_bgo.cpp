@@ -40,25 +40,45 @@ ItemBGO::~ItemBGO()
 
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if(scene->lock_bgo) return;
-
-    scene->clearSelection();
-    this->setSelected(1);
-    ItemMenu->clear();
-
-    QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
-        LayerName->setEnabled(false);
-
-    ItemMenu->addSeparator();
-
-    QAction *remove = ItemMenu->addAction("Remove");
-
-    QAction *selected = ItemMenu->exec(event->screenPos());
-
-    if(selected==remove)
+    if(!scene->lock_bgo)
     {
-        removeFromArray();
-        scene->removeItem(this);
+        //Remove selection from non-bgo items
+        if(this->isSelected())
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()!="BGO") SelItem->setSelected(false);
+            }
+        }
+        else
+        {
+            scene->clearSelection();
+            this->setSelected(true);
+        }
+
+        this->setSelected(1);
+        ItemMenu->clear();
+
+        QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
+            LayerName->setEnabled(false);
+
+        ItemMenu->addSeparator();
+
+        QAction *remove = ItemMenu->addAction("Remove");
+
+        QAction *selected = ItemMenu->exec(event->screenPos());
+
+        if(selected==remove)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="BGO")
+                {
+                    ((ItemBGO *)SelItem)->removeFromArray();
+                    scene->removeItem(SelItem);
+                }
+            }
+        }
     }
 }
 
