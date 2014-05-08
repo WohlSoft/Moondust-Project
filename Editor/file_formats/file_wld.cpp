@@ -16,10 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include "mainwindow.h"
-#include "wld_filedata.h"
+#include "../mainwindow.h"
+#include "../wld_filedata.h"
 
-#include "file_formats.h"
+//#include "file_formats.h"
 
 /*
 if(myString.startsWith("\"") myString.remove(0,1);

@@ -340,7 +340,7 @@
      <attribute name="title">
       <string>Blocks</string>
      </attribute>
-     <layout class="QGridLayout" name="BlocksG" columnstretch="0,90,0,0" columnminimumwidth="50,0,0,0">
+     <layout class="QGridLayout" name="BlocksG" columnstretch="0,90,0" columnminimumwidth="50,0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -467,7 +467,7 @@
      <attribute name="title">
       <string>Backgrounds</string>
      </attribute>
-     <layout class="QGridLayout" name="BGOsG" columnstretch="0,95,0,0" columnminimumwidth="50,0,15,0">
+     <layout class="QGridLayout" name="BGOsG" columnstretch="0,95,0" columnminimumwidth="50,0,15">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -1546,7 +1546,7 @@
       <property name="title">
        <string>Pipe direction</string>
       </property>
-      <widget class="QGroupBox" name="groupBox_2">
+      <widget class="QGroupBox" name="WarpEntranceGrp">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -1643,7 +1643,10 @@ p, li { white-space: pre-wrap; }
         </property>
        </widget>
       </widget>
-      <widget class="QGroupBox" name="groupBox_3">
+      <widget class="QGroupBox" name="WarpExitGrp">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>120</x>
