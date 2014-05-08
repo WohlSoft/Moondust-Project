@@ -247,6 +247,7 @@
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
     <addaction name="actionCopy"/>
+    <addaction name="actionCut"/>
     <addaction name="actionPaste"/>
    </widget>
    <addaction name="menu"/>
@@ -3472,6 +3473,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>[No opened files]</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
    </property>
   </action>
  </widget>

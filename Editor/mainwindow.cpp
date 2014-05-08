@@ -574,4 +574,3 @@ void MainWindow::on_actionSave_all_triggered()
 }
 
 
-

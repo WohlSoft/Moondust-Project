@@ -128,6 +128,7 @@ public:
     QAction *actionPaste;
     QAction *actionLayersBox;
     QAction *actionEmpty;
+    QAction *actionCut;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -724,6 +725,8 @@ public:
         actionEmpty = new QAction(MainWindow);
         actionEmpty->setObjectName(QStringLiteral("actionEmpty"));
         actionEmpty->setEnabled(false);
+        actionCut = new QAction(MainWindow);
+        actionCut->setObjectName(QStringLiteral("actionCut"));
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -1460,6 +1463,7 @@ public:
         menuEdit->addAction(actionRedo);
         menuEdit->addSeparator();
         menuEdit->addAction(actionCopy);
+        menuEdit->addAction(actionCut);
         menuEdit->addAction(actionPaste);
         mainToolBar->addAction(OpenFile);
         mainToolBar->addAction(actionSave);
@@ -1767,6 +1771,8 @@ public:
         actionPaste->setShortcut(QApplication::translate("MainWindow", "Ctrl+V", 0));
         actionLayersBox->setText(QApplication::translate("MainWindow", "Layers", 0));
         actionEmpty->setText(QApplication::translate("MainWindow", "[No opened files]", 0));
+        actionCut->setText(QApplication::translate("MainWindow", "Cut", 0));
+        actionCut->setShortcut(QApplication::translate("MainWindow", "Ctrl+X", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));

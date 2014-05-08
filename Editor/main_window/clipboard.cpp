@@ -21,8 +21,6 @@
 #include "../mainwindow.h"
 
 
-
-
 //Copy
 void MainWindow::on_actionCopy_triggered()
 {
@@ -36,6 +34,21 @@ void MainWindow::on_actionCopy_triggered()
        statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC items are copied in clipboard").arg(q1).arg(q2).arg(q3), 2000);
     }
 
+}
+
+
+//Cut
+void MainWindow::on_actionCut_triggered()
+{
+    int q1=0, q2=0, q3=0;
+    if (activeChildWindow()==1) //if active window is a levelEditor
+    {
+       LvlBuffer=activeLvlEditWin()->scene->copy(true);
+       q1 += LvlBuffer.blocks.size();
+       q2 += LvlBuffer.bgo.size();
+       q3 += LvlBuffer.npc.size();
+       statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC items are moved in clipboard").arg(q1).arg(q2).arg(q3), 2000);
+    }
 }
 
 //Paste

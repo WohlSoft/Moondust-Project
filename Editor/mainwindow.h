@@ -212,25 +212,21 @@ private slots:
     void on_action_recent9_triggered();
     void on_action_recent10_triggered();
 
+    //Clipboard
     void on_actionCopy_triggered();
-
-
-
+    void on_actionCut_triggered();
     void on_actionPaste_triggered();
 
     void on_actionWarpsAndDoors_triggered(bool checked);
-
     void on_DoorsToolbox_visibilityChanged(bool visible);
 
     void on_WarpList_currentIndexChanged(int index);
-
     void on_LevelLayers_visibilityChanged(bool visible);
-
     void on_actionLayersBox_triggered(bool checked);
 
     void on_BGOUniform_clicked(bool checked);
-
     void on_BlockUniform_clicked(bool checked);
+
 
 private:
     dataconfigs configs; // Global objects configucrations
