@@ -18,7 +18,6 @@
 
 #include "../mainwindow.h"
 #include "../npcedit.h"
-
 //#include "file_formats.h"
 
 //*********************************************************

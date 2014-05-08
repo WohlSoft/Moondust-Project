@@ -18,7 +18,6 @@
 
 #include "../mainwindow.h"
 #include "../leveledit.h"
-
 //#include "file_formats.h"
 
 
@@ -94,7 +93,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();   //Read Third Line
         if(!qstr.exactMatch(line)) //LevelTitle
             goto badfile;
-        else FileData.LevelName = (line.remove(0,1)).remove(line.size()-1,1);//remove quotes
+        else FileData.LevelName = (line.remove(0,1)).remove(line.size()-2,1);//remove quotes
     } else FileData.LevelName="";
 
     //total sections
@@ -179,7 +178,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //Custom Music
                 goto badfile;
-            else section.music_file = (line.remove(0,1)).remove(line.size()-1,1);//remove quotes
+            else section.music_file = (line.remove(0,1)).remove(line.size()-2,1);//remove quotes
         } else section.music_file="";
 
         section.id=i;
@@ -289,22 +288,22 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //layer
                 goto badfile;
-            else blocks.layer = (line.remove(0,1)).remove(line.size()-1,1);
+            else blocks.layer = (line.remove(0,1)).remove(line.size()-2,1);
 
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //event destroy
                 goto badfile;
-            else blocks.event_destroy = (line.remove(0,1)).remove(line.size()-1,1);
+            else blocks.event_destroy = (line.remove(0,1)).remove(line.size()-2,1);
 
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //event hit
                 goto badfile;
-            else blocks.event_hit = (line.remove(0,1)).remove(line.size()-1,1);
+            else blocks.event_hit = (line.remove(0,1)).remove(line.size()-2,1);
 
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //event no more objects in layer
                 goto badfile;
-            else blocks.event_no_more = (line.remove(0,1)).remove(line.size()-1,1);
+            else blocks.event_no_more = (line.remove(0,1)).remove(line.size()-2,1);
         }
         else
         {  //Set default if loading old file version
@@ -346,7 +345,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //layer
                 goto badfile;
-            else bgodata.layer = (line.remove(0,1)).remove(line.size()-1,1);
+            else bgodata.layer = (line.remove(0,1)).remove(line.size()-2,1);
         }
         else bgodata.layer = "Default";
 
@@ -445,7 +444,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              str_count++;line = in.readLine();
              if(!qstr.exactMatch(line)) //Message
                  goto badfile;
-             else npcdata.msg = (line.remove(0,1)).remove(line.size()-1,1);
+             else npcdata.msg = (line.remove(0,1)).remove(line.size()-2,1);
 
              str_count++;line = in.readLine();
              if(!boolwords.exactMatch(line)) //Friedly NPC
@@ -465,27 +464,27 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              str_count++;line = in.readLine();
              if(!qstr.exactMatch(line)) //Layer
                  goto badfile;
-             else npcdata.layer = (line.remove(0,1)).remove(line.size()-1,1);
+             else npcdata.layer = (line.remove(0,1)).remove(line.size()-2,1);
 
              str_count++;line = in.readLine();
              if(!qstr.exactMatch(line)) //Activate event
                  goto badfile;
-             else npcdata.event_activate = (line.remove(0,1)).remove(line.size()-1,1);
+             else npcdata.event_activate = (line.remove(0,1)).remove(line.size()-2,1);
 
              str_count++;line = in.readLine();
              if(!qstr.exactMatch(line)) //Death event
                  goto badfile;
-             else npcdata.event_die = (line.remove(0,1)).remove(line.size()-1,1);
+             else npcdata.event_die = (line.remove(0,1)).remove(line.size()-2,1);
 
              str_count++;line = in.readLine();
              if(!qstr.exactMatch(line)) //Talk event
                  goto badfile;
-             else npcdata.event_talk = (line.remove(0,1)).remove(line.size()-1,1);
+             else npcdata.event_talk = (line.remove(0,1)).remove(line.size()-2,1);
 
              str_count++;line = in.readLine();
              if(!qstr.exactMatch(line)) //No more object in layer event
                  goto badfile;
-             else npcdata.event_nomore = (line.remove(0,1)).remove(line.size()-1,1);
+             else npcdata.event_nomore = (line.remove(0,1)).remove(line.size()-2,1);
         }
          else
          {
@@ -510,7 +509,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              str_count++;line = in.readLine();
              if(!qstr.exactMatch(line)) //Layer name to attach
                  goto badfile;
-             else npcdata.attach_layer = (line.remove(0,1)).remove(line.size()-1,1);
+             else npcdata.attach_layer = (line.remove(0,1)).remove(line.size()-2,1);
          }  else npcdata.attach_layer = "";
 
          npcdata.array_id = FileData.npc_array_id;
@@ -567,7 +566,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //Warp to level
                 goto badfile;
-            else doors.lname = (line.remove(0,1)).remove(line.size()-1,1);
+            else doors.lname = (line.remove(0,1)).remove(line.size()-2,1);
 
 
             str_count++;line = in.readLine();
@@ -626,7 +625,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //Layer
                 goto badfile;
-            else doors.layer = (line.remove(0,1)).remove(line.size()-1,1);
+            else doors.layer = (line.remove(0,1)).remove(line.size()-2,1);
 
             str_count++;line = in.readLine();
             if(!boolwords.exactMatch(line)) //<unused>, always FALSE
@@ -713,7 +712,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //Layer
                 goto badfile;
-            else waters.layer = (line.remove(0,1)).remove(line.size()-1,1);
+            else waters.layer = (line.remove(0,1)).remove(line.size()-2,1);
 
             waters.array_id = FileData.water_array_id;
             FileData.water_array_id++;
@@ -731,7 +730,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         {
             if(!qstr.exactMatch(line)) //Layer name
                 goto badfile;
-            else layers.name=(line.remove(0,1)).remove(line.size()-1,1);;
+            else layers.name=(line.remove(0,1)).remove(line.size()-2,1);;
 
             str_count++;line = in.readLine();
             if(!boolwords.exactMatch(line)) //hidden layer
@@ -751,7 +750,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         {
             if(!qstr.exactMatch(line)) //Event name
                 goto badfile;
-            else events.name=(line.remove(0,1)).remove(line.size()-1,1);
+            else events.name=(line.remove(0,1)).remove(line.size()-2,1);
 
             str_count++;line = in.readLine();
             if(!qstr.exactMatch(line)) //Event message
@@ -777,17 +776,17 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Hide layer
                     goto badfile;
-                else events_layers.hide=(line.remove(0,1)).remove(line.size()-1,1);
+                else events_layers.hide=(line.remove(0,1)).remove(line.size()-2,1);
 
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Show layer
                     goto badfile;
-                else events_layers.show=(line.remove(0,1)).remove(line.size()-1,1);
+                else events_layers.show=(line.remove(0,1)).remove(line.size()-2,1);
 
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Toggle layer
                     goto badfile;
-                else events_layers.toggle=(line.remove(0,1)).remove(line.size()-1,1);
+                else events_layers.toggle=(line.remove(0,1)).remove(line.size()-2,1);
 
             events.layers.push_back(events_layers);
             }
@@ -831,7 +830,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Trigger
                     goto badfile;
-                else events.trigger=(line.remove(0,1)).remove(line.size()-1,1);
+                else events.trigger=(line.remove(0,1)).remove(line.size()-2,1);
 
                 str_count++;line = in.readLine();
                 if(!isint.exactMatch(line)) //Start trigger event after x [sec*10]. Etc. 153,2 sec
@@ -920,7 +919,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(!qstr.exactMatch(line)) //Layer for movement
                     goto badfile;
-                else events.movelayer = (line.remove(0,1)).remove(line.size()-1,1);
+                else events.movelayer = (line.remove(0,1)).remove(line.size()-2,1);
 
                 str_count++;line = in.readLine();
                 if(!issfloat.exactMatch(line)) //Layer moving speed – horizontal
