@@ -25,7 +25,7 @@
 #include "leveledit.h"
 #include "ui_leveledit.h"
 #include "lvl_filedata.h"
-#include "lvlscene.h"
+#include "level_scene/lvlscene.h"
 #include "dataconfigs.h"
 #include "saveimage.h"
 #include "logger.h"

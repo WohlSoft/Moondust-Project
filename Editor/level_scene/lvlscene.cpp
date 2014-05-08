@@ -36,7 +36,7 @@
 #include "item_block.h"
 #include "item_bgo.h"
 
-#include "leveledit.h"
+#include "../leveledit.h"
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
