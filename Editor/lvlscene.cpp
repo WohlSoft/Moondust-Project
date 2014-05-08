@@ -420,7 +420,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
 //Copy selected items into clipboard
-LevelData LvlScene::copy()
+LevelData LvlScene::copy(bool cut)
 {
 
     //Get Selected Items
@@ -436,12 +436,22 @@ LevelData LvlScene::copy()
 
             if( ObjType == "Block")
             {
-                copyData.blocks.push_back(((ItemBlock *)(*it))->blockData);
+                ItemBlock* sourceBlock = (ItemBlock *)(*it);
+                copyData.blocks.push_back(sourceBlock->blockData);
+                if(cut){
+                    sourceBlock->removeFromArray();
+                    removeItem(*it);
+                }
             }
             else
             if( ObjType == "BGO")
             {
-                copyData.bgo.push_back(((ItemBGO *)(*it))->bgoData);
+                ItemBGO* sourceBGO = (ItemBGO *)(*it);
+                copyData.bgo.push_back(sourceBGO->bgoData);
+                if(cut){
+                    sourceBGO->removeFromArray();
+                    removeItem(*it);
+                }
             }
             else
             if( ObjType == "NPC")
@@ -451,6 +461,17 @@ LevelData LvlScene::copy()
                     if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
                     {
                         copyData.npc.push_back(findInArr);
+                        if(cut){
+                            //remove, will be later implemented as function in the future NPC class
+                            for(int i=0; i<LvlData->npc.size(); i++)
+                            {
+                                if(LvlData->npc[i].array_id == findInArr.array_id)
+                                {
+                                    LvlData->npc.remove(i); break;
+                                }
+                            }
+                            removeItem(*it);
+                        }
                         break;
                     }
                 }

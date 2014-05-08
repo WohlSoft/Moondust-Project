@@ -72,7 +72,7 @@ public:
     bool wasPasted;
 
     //Copy function
-    LevelData copy();
+    LevelData copy(bool cut = false);
     void paste(LevelData BufferIn, QPoint pos);
 
     LevelEditingSettings opts;
