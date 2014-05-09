@@ -207,11 +207,13 @@ void ItemBGO::setAnimation(int frames, int framespeed)
 
 void ItemBGO::AnimationStart()
 {
+    if(!animated) return;
     timer->start(frameSpeed);
 }
 
 void ItemBGO::AnimationStop()
 {
+    if(!animated) return;
     timer->stop();
     setFrame(frameFirst);
 }
