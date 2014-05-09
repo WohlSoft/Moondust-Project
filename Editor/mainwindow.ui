@@ -141,7 +141,15 @@
     <property name="title">
      <string>?</string>
     </property>
+    <widget class="QMenu" name="menuLanguage">
+     <property name="title">
+      <string>Language</string>
+     </property>
+     <addaction name="actionLangEnglish"/>
+    </widget>
     <addaction name="actionContents"/>
+    <addaction name="menuLanguage"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuLevel">
@@ -3455,6 +3463,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
   </action>
   <action name="actionRedo">
    <property name="enabled">
@@ -3462,6 +3473,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Redo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
    </property>
   </action>
   <action name="actionWarpsAndDoors">
@@ -3659,6 +3673,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionLangEnglish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>English</string>
    </property>
   </action>
  </widget>

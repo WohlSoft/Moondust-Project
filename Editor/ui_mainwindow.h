@@ -130,12 +130,14 @@ public:
     QAction *actionLayersBox;
     QAction *actionEmpty;
     QAction *actionCut;
+    QAction *actionLangEnglish;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
     QMenu *menuNew;
     QMenu *menuOpenRecent;
     QMenu *menuHelp;
+    QMenu *menuLanguage;
     QMenu *menuLevel;
     QMenu *menuCurrent_section;
     QMenu *menuWorld;
@@ -732,6 +734,10 @@ public:
         actionEmpty->setEnabled(false);
         actionCut = new QAction(MainWindow);
         actionCut->setObjectName(QStringLiteral("actionCut"));
+        actionLangEnglish = new QAction(MainWindow);
+        actionLangEnglish->setObjectName(QStringLiteral("actionLangEnglish"));
+        actionLangEnglish->setCheckable(true);
+        actionLangEnglish->setChecked(true);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -758,6 +764,8 @@ public:
         menuOpenRecent->setObjectName(QStringLiteral("menuOpenRecent"));
         menuHelp = new QMenu(menuBar);
         menuHelp->setObjectName(QStringLiteral("menuHelp"));
+        menuLanguage = new QMenu(menuHelp);
+        menuLanguage->setObjectName(QStringLiteral("menuLanguage"));
         menuLevel = new QMenu(menuBar);
         menuLevel->setObjectName(QStringLiteral("menuLevel"));
         menuLevel->setEnabled(true);
@@ -1457,7 +1465,10 @@ public:
         menuOpenRecent->addAction(action_recent9);
         menuOpenRecent->addAction(action_recent10);
         menuHelp->addAction(actionContents);
+        menuHelp->addAction(menuLanguage->menuAction());
+        menuHelp->addSeparator();
         menuHelp->addAction(actionAbout);
+        menuLanguage->addAction(actionLangEnglish);
         menuLevel->addAction(menuCurrent_section->menuAction());
         menuLevel->addSeparator();
         menuLevel->addAction(actionLevWarp);
@@ -1782,7 +1793,9 @@ public:
 #endif // QT_NO_TOOLTIP
         actionHandScroll->setShortcut(QApplication::translate("MainWindow", "D", 0));
         actionUndo->setText(QApplication::translate("MainWindow", "Undo", 0));
+        actionUndo->setShortcut(QApplication::translate("MainWindow", "Ctrl+Z", 0));
         actionRedo->setText(QApplication::translate("MainWindow", "Redo", 0));
+        actionRedo->setShortcut(QApplication::translate("MainWindow", "Ctrl+Y", 0));
         actionWarpsAndDoors->setText(QApplication::translate("MainWindow", "Warps and doors", 0));
         actionAnimation->setText(QApplication::translate("MainWindow", "Animation", 0));
 #ifndef QT_NO_TOOLTIP
@@ -1823,10 +1836,12 @@ public:
         actionEmpty->setText(QApplication::translate("MainWindow", "[No opened files]", 0));
         actionCut->setText(QApplication::translate("MainWindow", "Cut", 0));
         actionCut->setShortcut(QApplication::translate("MainWindow", "Ctrl+X", 0));
+        actionLangEnglish->setText(QApplication::translate("MainWindow", "English", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));
         menuHelp->setTitle(QApplication::translate("MainWindow", "?", 0));
+        menuLanguage->setTitle(QApplication::translate("MainWindow", "Language", 0));
         menuLevel->setTitle(QApplication::translate("MainWindow", "Level", 0));
         menuCurrent_section->setTitle(QApplication::translate("MainWindow", "Current section", 0));
         menuWorld->setTitle(QApplication::translate("MainWindow", "World", 0));
