@@ -72,6 +72,7 @@ void MainWindow::setUiDefults()
     ui->LevelToolBox->hide();
     ui->DoorsToolbox->hide();
     ui->LevelLayers->hide();
+    ui->ItemProperties->hide();
 
     ui->menuView->setEnabled(0);
 
