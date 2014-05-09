@@ -72,6 +72,7 @@ public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
     dataconfigs *getConfigs();
+    void openFilesByArgs(QStringList args);
     
 protected:
     void closeEvent(QCloseEvent *event);
@@ -275,6 +276,16 @@ private:
     void loadSettings();
     void saveSettings();
 
+
+    //Miltilanguage
+    void loadLanguage(const QString& rLanguage);
+    QTranslator     m_translator;   /**< contains the translations for this application */
+    QTranslator     m_translatorQt; /**< contains the translations for qt */
+    QString         m_currLang;     /**< contains the currently loaded language */
+    QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+
+
+    //Helps functions
     QString removeQuotes(QString str);
 
 };
