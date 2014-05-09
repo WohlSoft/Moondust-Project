@@ -185,7 +185,7 @@ void MainWindow::on_actionUndo_triggered()
     if (activeChildWindow()==1)
     {
         //Here must be call
-        //activeLvlEditWin()->scene->historyBack();
+        activeLvlEditWin()->scene->historyBack();
     }
 }
 
@@ -194,7 +194,7 @@ void MainWindow::on_actionRedo_triggered()
     if (activeChildWindow()==1)
     {
         //Here must be call
-        //activeLvlEditWin()->scene->historyForward();
+        activeLvlEditWin()->scene->historyForward();
     }
 
 }

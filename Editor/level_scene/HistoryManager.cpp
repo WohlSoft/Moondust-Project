@@ -78,11 +78,15 @@ void LvlScene::historyForward()
             foreach (QGraphicsItem* item, items()){
                 if(item->data(0).toString()=="Block"){
                     QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                    if(item->data(2).toInt()==(*beginItem).array_id){
+                    unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()==currentArrayId){
                         ((ItemBlock*)item)->removeFromArray();
                         removeItem(item);
+                        sortedBlock.erase(beginItem);
+                        if(sortedBlock.size()==0){
+                            break;
+                        }
                     }
-                    sortedBlock.erase(beginItem);
                 }
             }
     }
