@@ -507,6 +507,8 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
          npcdata.array_id = FileData.npc_array_id;
          FileData.npc_array_id++;
 
+         npcdata.index = FileData.npc.size();//Apply element index
+
     FileData.npc.push_back(npcdata); //Add NPC into array
     str_count++;line = in.readLine();
     }
@@ -974,6 +976,13 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     return FileData;
 }
 
+
+
+
+
+
+
+
 //*********************************************************
 //****************WRITE FILE FORMAT************************
 //*********************************************************
@@ -1005,6 +1014,9 @@ QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::BoolS(FileData.sections[i].underwater);
         TextData += SMBX64::qStrS(FileData.sections[i].music_file);
     }
+    for( ; i<21 ; i++) //Protector
+        TextData += "0\n0\n0\n0\n0\n16291944\n#FALSE#\n#FALSE#\n0\n#FALSE#\n#FALSE#\n\"\"\n";
+        //append dummy section data, if array have less than 21
 
     //Players start point
     for(i=0; i<FileData.players.size() && i<2; i++ )
@@ -1014,6 +1026,9 @@ QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::IntS(FileData.players[i].w);
         TextData += SMBX64::IntS(FileData.players[i].h);
     }
+    for( ;i<2; i++ ) //Protector
+        TextData += "0\n0\n0\n0\n";
+
 
     //Blocks
     for(i=0; i<FileData.blocks.size(); i++)
@@ -1154,7 +1169,8 @@ QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
             TextData += SMBX64::qStrS(FileData.events[i].layers[j].show);
             TextData += SMBX64::qStrS(FileData.events[i].layers[j].toggle);
         }
-        TextData += "\"\"\n\"\"\n\"\"\n"; //SMBX 1.3 bug protector
+        for( ; j<21; j++)
+            TextData += "\"\"\n\"\"\n\"\"\n"; //(21th element is SMBX 1.3 bug protector)
 
         for(j=0; j< FileData.events[i].layers.size()  && j<21; j++)
         {
@@ -1165,6 +1181,9 @@ QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
             TextData += SMBX64::IntS(FileData.events[i].sets[j].position_bottom);
             TextData += SMBX64::IntS(FileData.events[i].sets[j].position_right);
         }
+        for( ; j<21; j++) // Protector
+            TextData += "0\n0\n0\n-1\n-1\n-1\n";
+
         TextData += SMBX64::qStrS(FileData.events[i].trigger);
         TextData += SMBX64::IntS(FileData.events[i].trigger_timer);
 

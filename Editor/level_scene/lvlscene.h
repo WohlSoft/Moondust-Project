@@ -24,8 +24,23 @@
 #include <QProgressDialog>
 #include <QMenu>
 
+#include <QGraphicsSceneMouseEvent>
+
+#include <QGraphicsItemAnimation>
+
+#include <QKeyEvent>
+#include <QBitmap>
+#include <QPainter>
+#include <QMessageBox>
+#include <QApplication>
+#include <QtCore>
+#include <QDebug>
+
+
 #include "lvl_filedata.h"
 #include "dataconfigs.h"
+
+#include "logger.h"
 
 struct UserBGOs
 {
@@ -69,7 +84,11 @@ public:
                      // 3 - drawing water/sand zone, 4 - placing from Buffer
     bool EraserEnabled;
     bool PasteFromBuffer;
+
+    //Event Flags
     bool wasPasted;
+    bool doCopy;
+    bool doCut;
 
     //Copy function
     LevelData copy(bool cut = false);
@@ -143,6 +162,21 @@ public:
     int spaceZ1; // interSection space layer
     int spaceZ2;
 
+    // ////////////HistoryManager///////////////////
+    struct HistoryOperation{
+        enum HistoryType{
+            LEVELHISTORY_REMOVE = 0
+        };
+        HistoryType type;
+        //used most of Operations
+        LevelData data;
+    };
+    void addRemoveHistory(LevelData removedItems);
+    void historyBack();
+    int getHistroyIndex();
+    void setScenePoint(LvlScene *theScene);
+    // ////////////////////////////////////////////
+
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -184,6 +218,11 @@ private:
     QGraphicsItem *mDragged;
     // The distance from the top left of the item to the mouse position.
     QPointF mDragOffset;
+
+    // ////////////////HistoryManager///////////////////
+    int historyIndex;
+    QList<HistoryOperation> operationList;
+    // /////////////////////////////////////////////////
 
 };
 

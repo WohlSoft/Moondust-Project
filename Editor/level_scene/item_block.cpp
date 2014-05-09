@@ -57,8 +57,22 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         this->setSelected(1);
         ItemMenu->clear();
-        QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(blockData.layer));
-            LayerName->setEnabled(false);
+        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer));
+
+        QAction *setLayer;
+        QList<QAction *> layerItems;
+        foreach(LevelLayers layer, scene->LvlData->layers)
+        {
+            //Skip system layers
+            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+
+            setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+            setLayer->setData(layer.name);
+            setLayer->setCheckable(true);
+            setLayer->setEnabled(true);
+            setLayer->setChecked( layer.name==blockData.layer );
+            layerItems.push_back(setLayer);
+        }
 
         ItemMenu->addSeparator();
 
@@ -74,11 +88,23 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             resize->setVisible( (this->data(3).toString()=="sizable") );
 
         ItemMenu->addSeparator();
-
+        QAction *copyBlock = ItemMenu->addAction("Copy");
+        QAction *cutBlock = ItemMenu->addAction("Cut");
+        ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction("Remove");
 
         QAction *selected = ItemMenu->exec(event->screenPos());
 
+        if(selected==cutBlock)
+        {
+            scene->doCut = true ;
+        }
+        else
+        if(selected==copyBlock)
+        {
+            scene->doCopy = true ;
+        }
+        else
         if(selected==invis)
         {
             //apply to all selected items.
@@ -110,6 +136,33 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 }
             }
         }
+        else
+        {
+            foreach(QAction * lItem, layerItems)
+            {
+                if(selected==lItem)
+                {
+                    foreach(LevelLayers lr, scene->LvlData->layers)
+                    { //Find layer's settings
+                        if(lr.name==lItem->data().toString())
+                        {
+                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                            {
+
+                                if(SelItem->data(0).toString()=="Block")
+                                {
+                                ((ItemBlock *) SelItem)->blockData.layer = lr.name;
+                                ((ItemBlock *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemBlock *) SelItem)->arrayApply();
+                                }
+                            }
+                        break;
+                        }
+                    }//Find layer's settings
+                 break;
+                }//Find selected layer's item
+            }
+        }
     }
 }
 
@@ -128,6 +181,21 @@ void ItemBlock::setInvisible(bool inv)
         this->setOpacity(1);
 
     arrayApply();//Apply changes into array
+
+}
+
+void ItemBlock::setLayer(QString layer)
+{
+    foreach(LevelLayers lr, scene->LvlData->layers)
+    {
+        if(lr.name==layer)
+        {
+            blockData.layer = layer;
+            this->setVisible(!lr.hidden);
+            arrayApply();
+        break;
+        }
+    }
 
 }
 
@@ -339,11 +407,13 @@ void ItemBlock::setAnimation(int frames, int framespeed, int algorithm)
 
 void ItemBlock::AnimationStart()
 {
+    if(!animated) return;
     timer->start(frameSpeed);
 }
 
 void ItemBlock::AnimationStop()
 {
+    if(!animated) return;
     timer->stop();
     setFrame(frameFirst);
 }

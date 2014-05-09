@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
@@ -48,7 +47,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
 }
 
-
+//Scene Event Detector
 void MainWindow::TickTack()
 {
     if(TickTackLock) return;
@@ -59,11 +58,25 @@ void MainWindow::TickTack()
     {
         if(activeChildWindow()==1)
         {
+            //Capturing flags from active Window
             if(activeLvlEditWin()->scene->wasPasted)
             {
                 activeLvlEditWin()->changeCursor(0);
                 activeLvlEditWin()->scene->wasPasted=false;
             }
+            else
+            if(activeLvlEditWin()->scene->doCut)
+            {
+                on_actionCut_triggered();
+                activeLvlEditWin()->scene->doCut=false;
+            }
+            else
+            if(activeLvlEditWin()->scene->doCopy)
+            {
+                on_actionCopy_triggered();
+                activeLvlEditWin()->scene->doCopy=false;
+            }
+
         }
         /*
         else
@@ -82,6 +95,7 @@ void MainWindow::TickTack()
 
 MainWindow::~MainWindow()
 {
+    TickTackLock = false;
     delete ui;
     WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
@@ -572,6 +586,5 @@ void MainWindow::on_actionSave_all_triggered()
 {
     save_all();
 }
-
 
 
