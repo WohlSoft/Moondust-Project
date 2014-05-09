@@ -127,14 +127,19 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         else
         if(selected==remove)
         {
+            LevelData removedItems;
+            bool deleted=false;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Block")
                 {
+                    removedItems.blocks.push_back(((ItemBlock *)SelItem)->blockData);
                     ((ItemBlock *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    deleted=true;
                 }
             }
+            if(deleted) scene->addRemoveHistory( removedItems );
         }
         else
         {

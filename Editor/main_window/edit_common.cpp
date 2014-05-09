@@ -186,6 +186,8 @@ void MainWindow::on_actionUndo_triggered()
     {
         //Here must be call
         activeLvlEditWin()->scene->historyBack();
+        ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+        ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
     }
 }
 
@@ -195,6 +197,8 @@ void MainWindow::on_actionRedo_triggered()
     {
         //Here must be call
         activeLvlEditWin()->scene->historyForward();
+        ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+        ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
     }
 
 }

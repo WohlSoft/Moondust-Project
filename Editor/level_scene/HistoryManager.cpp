@@ -18,6 +18,7 @@
 
 #include "lvlscene.h"
 #include "item_block.h"
+#include "item_bgo.h"
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -37,13 +38,17 @@ void LvlScene::historyBack()
 {
     historyIndex--;
     HistoryOperation lastOperation = operationList[historyIndex];
+    HistoryOperation newHist;
+    LevelData deletedData;
+    LevelData newData;
     switch( lastOperation.type )
     {
         case HistoryOperation::LEVELHISTORY_REMOVE:
             //revert remove
-            LevelData deletedData = lastOperation.data;
-            LevelData newData;
-            foreach (LevelBlock block, deletedData.blocks) {
+            deletedData = lastOperation.data;
+
+            foreach (LevelBlock block, deletedData.blocks)
+            {
                 //place them back
                 unsigned int newID = (LvlData->blocks_array_id++);
                 block.array_id = newID;
@@ -52,11 +57,24 @@ void LvlScene::historyBack()
                 //use it so redo can find faster via arrayID
                 newData.blocks.push_back(block);
             }
-            HistoryOperation newHist;
+
+            foreach (LevelBGO bgo, deletedData.bgo)
+            {
+                //place them back
+                unsigned int newID = (LvlData->bgo_array_id++);
+                bgo.array_id = newID;
+                LvlData->bgo.push_back(bgo);
+                placeBGO(bgo);
+                //use it so redo can find faster via arrayID
+                newData.bgo.push_back(bgo);
+            }
+
             newHist.type = HistoryOperation::LEVELHISTORY_REMOVE;
             newHist.data = newData;
             operationList.replace(historyIndex, newHist);
             break;
+    default:
+        break;
     }
 
     historyChanged = true;
@@ -71,19 +89,47 @@ void LvlScene::historyForward()
         case HistoryOperation::LEVELHISTORY_REMOVE:
             //redo remove
             LevelData deletedData = lastOperation.data;
+
             QMap<int, LevelBlock> sortedBlock;
-            foreach (LevelBlock block, deletedData.blocks){
+            foreach (LevelBlock block, deletedData.blocks)
+            {
                 sortedBlock[block.array_id] = block;
             }
+
+            QMap<int, LevelBGO> sortedBGO;
+            foreach (LevelBGO bgo, deletedData.bgo)
+            {
+                sortedBGO[bgo.array_id] = bgo;
+            }
+
             foreach (QGraphicsItem* item, items()){
-                if(item->data(0).toString()=="Block"){
+                if(item->data(0).toString()=="Block")
+                {
                     QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
                     unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId){
+                    if((unsigned int)item->data(2).toInt()==currentArrayId)
+                    {
                         ((ItemBlock*)item)->removeFromArray();
                         removeItem(item);
                         sortedBlock.erase(beginItem);
-                        if(sortedBlock.size()==0){
+                        if(sortedBlock.size()==0)
+                        {
+                            break;
+                        }
+                    }
+                }
+                else
+                if(item->data(0).toString()=="BGO")
+                {
+                    QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+                    unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()==currentArrayId)
+                    {
+                        ((ItemBGO *)item)->removeFromArray();
+                        removeItem(item);
+                        sortedBGO.erase(beginItem);
+                        if(sortedBGO.size()==0)
+                        {
                             break;
                         }
                     }
@@ -103,9 +149,11 @@ int LvlScene::getHistroyIndex()
 
 void LvlScene::cleanupRedoElements()
 {
-    if(canRedo()){
+    if(canRedo())
+    {
         int lastSize = operationList.size();
-        for(int i = historyIndex; i < lastSize; i++){
+        for(int i = historyIndex; i < lastSize; i++)
+        {
             operationList.pop_back();
         }
     }
