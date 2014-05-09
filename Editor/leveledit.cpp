@@ -435,33 +435,6 @@ bool leveledit::saveFile(const QString &fileName)
     LvlData.modified = false;
 
     return true;
-
-    //Write disabled for safe
-    /*
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("MDI"),
-                             tr("Cannot write file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
-        return false;
-    }*/
-
-
-    /*
-    QTextStream out(&file);
-    QApplication::setOverrideCursor(Qt::WaitCursor);
-    //out << toPlainText();
-    QApplication::restoreOverrideCursor();
-
-    setCurrentFile(fileName);
-    */
-/*
-    QMessageBox::information(this, tr("Dummy"),
-                         tr("File %1 will not be saved, saving levels is not implemented in this version.")
-                         .arg(fileName));
-
-    return true;*/
 }
 
 
@@ -494,7 +467,7 @@ void leveledit::focusInEvent( QFocusEvent * focusInEvent)
 
 void leveledit::documentWasModified()
 {
-    LvlData.modified = true;
+    //LvlData.modified = true;
 }
 
 bool leveledit::maybeSave()

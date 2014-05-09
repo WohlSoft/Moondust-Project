@@ -76,6 +76,13 @@ void MainWindow::TickTack()
                 on_actionCopy_triggered();
                 activeLvlEditWin()->scene->doCopy=false;
             }
+            else
+            if(activeLvlEditWin()->scene->historyChanged)
+            {
+                ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+                ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+                activeLvlEditWin()->scene->historyChanged = false;
+            }
 
         }
         /*
@@ -229,7 +236,9 @@ void MainWindow::updateMenus()
 
         ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
         ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
-    }else{
+    }
+    else
+    {
         ui->actionUndo->setEnabled(false);
         ui->actionRedo->setEnabled(false);
     }

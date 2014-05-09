@@ -1121,7 +1121,6 @@ void LvlScene::ChangeSectionBG(int BG_Id, LevelData &FileData)
         }
     }
     FileData.sections[FileData.CurSection].background = BG_Id;
-    FileData.modified = true;
 
     WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
     setSectionBG(FileData.sections[FileData.CurSection]);
