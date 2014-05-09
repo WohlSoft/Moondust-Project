@@ -178,6 +178,7 @@ public:
     bool canUndo();
     bool canRedo();
     void setScenePoint(LvlScene *theScene);
+    bool historyChanged;
     // ////////////////////////////////////////////
 
 protected:

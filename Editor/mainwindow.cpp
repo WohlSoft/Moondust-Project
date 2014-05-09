@@ -226,6 +226,12 @@ void MainWindow::updateMenus()
         LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
         ui->actionAnimation->setChecked( LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( LvlOpts.collisionsEnabled );
+
+        ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
+        ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
+    }else{
+        ui->actionUndo->setEnabled(false);
+        ui->actionRedo->setEnabled(false);
     }
 
     /*
