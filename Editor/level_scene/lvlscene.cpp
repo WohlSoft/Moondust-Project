@@ -206,6 +206,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             QString ObjType;
             int collisionPassed = false;
+            LevelData historyBuffer;
 
             if(PasteFromBuffer)
             {
@@ -230,11 +231,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //remove data from main array before deletion item from scene
                         if( (*it)->data(0).toString()=="Block" )
                         {
+                            historyBuffer.blocks.push_back(((ItemBlock*)(*it))->blockData);
                             ((ItemBlock *)(*it))->removeFromArray();
+
                         }
                         else
                         if( (*it)->data(0).toString()=="BGO" )
                         {
+                            historyBuffer.bgo.push_back(((ItemBGO*)(*it))->bgoData);
                             ((ItemBGO *)(*it))->removeFromArray();
                         }
 
@@ -313,6 +317,9 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             else
                         (*it)->setPos(QPointF(offsetX+gridX, offsetY+gridY));
                     }
+                }
+                if(EraserEnabled){
+                    addRemoveHistory(historyBuffer);
                 }
                 EraserEnabled = false;
 
