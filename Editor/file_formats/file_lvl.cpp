@@ -767,6 +767,11 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             else events.end_game  = line.toInt();
 
             events.layers.clear();
+
+            events.layers_hide.clear();
+            events.layers_show.clear();
+            events.layers_toggle.clear();
+
             for(i=0; i<21; i++)
             {
                 str_count++;line = in.readLine();
@@ -779,10 +784,15 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                     goto badfile;
                 else events_layers.show=removeQuotes(line);
 
+
                 str_count++;line = in.readLine();
                 if(SMBX64::qStr(line)) //Toggle layer
                     goto badfile;
                 else events_layers.toggle=removeQuotes(line);
+
+                if(events_layers.hide!="") events.layers_hide.push_back(events_layers.hide);
+                if(events_layers.show!="") events.layers_show.push_back(events_layers.show);
+                if(events_layers.toggle!="") events.layers_toggle.push_back(events_layers.toggle);
 
             events.layers.push_back(events_layers);
             }
@@ -1160,12 +1170,29 @@ QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
     }
     TextData += "\"next\"\n";//Separator
 
+    LevelEvents_layers layerSet;
     for(i=0; i<FileData.events.size(); i++)
     {
         TextData += SMBX64::qStrS(FileData.events[i].name);
         TextData += SMBX64::qStrS(FileData.events[i].msg);
         TextData += SMBX64::IntS(FileData.events[i].sound_id);
         TextData += SMBX64::IntS(FileData.events[i].end_game);
+
+        FileData.events[i].layers.clear();
+        for(j=0; j<20; j++)
+        {
+            layerSet.hide =
+                    ((j<FileData.events[i].layers_hide.size())?
+                      FileData.events[i].layers_hide[j] : "");
+            layerSet.show =
+                    ((j<FileData.events[i].layers_show.size())?
+                      FileData.events[i].layers_show[j] : "");;
+            layerSet.toggle =
+                    ((j<FileData.events[i].layers_toggle.size())?
+                      FileData.events[i].layers_toggle[j] : "");
+
+            FileData.events[i].layers.push_back(layerSet);
+        }
 
         for(j=0; j< FileData.events[i].layers.size()  && j<20; j++)
         {

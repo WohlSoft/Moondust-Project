@@ -20,7 +20,7 @@
 #include <QTextStream>
 #include <QApplication>
 
-QString debugLogFile = QApplication::applicationDirPath() + "/" + "debug_log.txt" ;
+QString debugLogFile = "PGE_debug_log.txt" ;
 
 void WriteToLog(QtMsgType type, QString msg)
     {

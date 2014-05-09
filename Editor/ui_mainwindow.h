@@ -35,6 +35,7 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -253,13 +254,18 @@ public:
     QPushButton *AddLayer;
     QPushButton *LockLayer;
     QListWidget *LvlLayerList;
+    QDockWidget *ItemProperties;
+    QWidget *ItemPropsW;
+    QGridLayout *gridLayout_2;
+    QComboBox *PropsByTypeList;
+    QTreeWidget *ItemPrTree;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->setWindowModality(Qt::NonModal);
-        MainWindow->resize(1189, 1078);
+        MainWindow->resize(1069, 1081);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(4);
         sizePolicy.setVerticalStretch(0);
@@ -742,7 +748,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1189, 21));
+        menuBar->setGeometry(QRect(0, 0, 1069, 21));
         menuBar->setContextMenuPolicy(Qt::NoContextMenu);
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
@@ -918,7 +924,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 239, 389));
+        npcscroll->setGeometry(QRect(0, 0, 81, 28));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -961,7 +967,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 256, 481));
+        TilesItemBox->setGeometry(QRect(0, 0, 256, 248));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -989,7 +995,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 239, 481));
+        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -999,7 +1005,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 481));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         WldMusicBox = new QScrollArea();
@@ -1009,7 +1015,7 @@ public:
         WldMusicBox->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 481));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 81, 28));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -1366,6 +1372,56 @@ public:
 
         LevelLayers->setWidget(LevelLayersBox);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(2), LevelLayers);
+        ItemProperties = new QDockWidget(MainWindow);
+        ItemProperties->setObjectName(QStringLiteral("ItemProperties"));
+        ItemProperties->setMinimumSize(QSize(150, 350));
+        ItemProperties->setFloating(true);
+        ItemPropsW = new QWidget();
+        ItemPropsW->setObjectName(QStringLiteral("ItemPropsW"));
+        gridLayout_2 = new QGridLayout(ItemPropsW);
+        gridLayout_2->setSpacing(0);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        PropsByTypeList = new QComboBox(ItemPropsW);
+        PropsByTypeList->setObjectName(QStringLiteral("PropsByTypeList"));
+
+        gridLayout_2->addWidget(PropsByTypeList, 0, 0, 1, 1);
+
+        ItemPrTree = new QTreeWidget(ItemPropsW);
+        QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem(ItemPrTree);
+        __qtreewidgetitem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem1 = new QTreeWidgetItem(ItemPrTree);
+        __qtreewidgetitem1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem2 = new QTreeWidgetItem(__qtreewidgetitem1);
+        __qtreewidgetitem2->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem3 = new QTreeWidgetItem(__qtreewidgetitem1);
+        __qtreewidgetitem3->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem4 = new QTreeWidgetItem(ItemPrTree);
+        QTreeWidgetItem *__qtreewidgetitem5 = new QTreeWidgetItem(__qtreewidgetitem4);
+        __qtreewidgetitem5->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem6 = new QTreeWidgetItem(__qtreewidgetitem4);
+        __qtreewidgetitem6->setFlags(Qt::ItemIsSelectable|Qt::ItemIsUserCheckable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem7 = new QTreeWidgetItem(ItemPrTree);
+        QTreeWidgetItem *__qtreewidgetitem8 = new QTreeWidgetItem(__qtreewidgetitem7);
+        __qtreewidgetitem8->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem9 = new QTreeWidgetItem(__qtreewidgetitem7);
+        __qtreewidgetitem9->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem10 = new QTreeWidgetItem(ItemPrTree);
+        __qtreewidgetitem10->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem11 = new QTreeWidgetItem(ItemPrTree);
+        QTreeWidgetItem *__qtreewidgetitem12 = new QTreeWidgetItem(__qtreewidgetitem11);
+        __qtreewidgetitem12->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem13 = new QTreeWidgetItem(__qtreewidgetitem11);
+        __qtreewidgetitem13->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+        QTreeWidgetItem *__qtreewidgetitem14 = new QTreeWidgetItem(__qtreewidgetitem11);
+        __qtreewidgetitem14->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEditable|Qt::ItemIsEnabled);
+        ItemPrTree->setObjectName(QStringLiteral("ItemPrTree"));
+
+        gridLayout_2->addWidget(ItemPrTree, 1, 0, 1, 1);
+
+        ItemProperties->setWidget(ItemPropsW);
+        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), ItemProperties);
 
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menuEdit->menuAction());
@@ -1940,6 +1996,54 @@ public:
         QListWidgetItem *___qlistwidgetitem4 = LvlLayerList->item(2);
         ___qlistwidgetitem4->setText(QApplication::translate("MainWindow", "Spawned NPCs", 0));
         LvlLayerList->setSortingEnabled(__sortingEnabled2);
+
+        ItemProperties->setWindowTitle(QApplication::translate("MainWindow", "Item Properties", 0));
+        QTreeWidgetItem *___qtreewidgetitem = ItemPrTree->headerItem();
+        ___qtreewidgetitem->setText(1, QApplication::translate("MainWindow", "Value", 0));
+        ___qtreewidgetitem->setText(0, QApplication::translate("MainWindow", "Parameter", 0));
+
+        const bool __sortingEnabled3 = ItemPrTree->isSortingEnabled();
+        ItemPrTree->setSortingEnabled(false);
+        QTreeWidgetItem *___qtreewidgetitem1 = ItemPrTree->topLevelItem(0);
+        ___qtreewidgetitem1->setText(1, QApplication::translate("MainWindow", "0", 0));
+        ___qtreewidgetitem1->setText(0, QApplication::translate("MainWindow", "ItemID", 0));
+        QTreeWidgetItem *___qtreewidgetitem2 = ItemPrTree->topLevelItem(1);
+        ___qtreewidgetitem2->setText(0, QApplication::translate("MainWindow", "Position", 0));
+        QTreeWidgetItem *___qtreewidgetitem3 = ___qtreewidgetitem2->child(0);
+        ___qtreewidgetitem3->setText(1, QApplication::translate("MainWindow", "0", 0));
+        ___qtreewidgetitem3->setText(0, QApplication::translate("MainWindow", "y", 0));
+        QTreeWidgetItem *___qtreewidgetitem4 = ___qtreewidgetitem2->child(1);
+        ___qtreewidgetitem4->setText(1, QApplication::translate("MainWindow", "0", 0));
+        ___qtreewidgetitem4->setText(0, QApplication::translate("MainWindow", "x", 0));
+        QTreeWidgetItem *___qtreewidgetitem5 = ItemPrTree->topLevelItem(2);
+        ___qtreewidgetitem5->setText(0, QApplication::translate("MainWindow", "Attributes", 0));
+        QTreeWidgetItem *___qtreewidgetitem6 = ___qtreewidgetitem5->child(0);
+        ___qtreewidgetitem6->setText(0, QApplication::translate("MainWindow", "Invisible", 0));
+        QTreeWidgetItem *___qtreewidgetitem7 = ___qtreewidgetitem5->child(1);
+        ___qtreewidgetitem7->setText(0, QApplication::translate("MainWindow", "Slippery", 0));
+        QTreeWidgetItem *___qtreewidgetitem8 = ItemPrTree->topLevelItem(3);
+        ___qtreewidgetitem8->setText(0, QApplication::translate("MainWindow", "Size", 0));
+        QTreeWidgetItem *___qtreewidgetitem9 = ___qtreewidgetitem8->child(0);
+        ___qtreewidgetitem9->setText(1, QApplication::translate("MainWindow", "32", 0));
+        ___qtreewidgetitem9->setText(0, QApplication::translate("MainWindow", "height", 0));
+        QTreeWidgetItem *___qtreewidgetitem10 = ___qtreewidgetitem8->child(1);
+        ___qtreewidgetitem10->setText(1, QApplication::translate("MainWindow", "32", 0));
+        ___qtreewidgetitem10->setText(0, QApplication::translate("MainWindow", "width", 0));
+        QTreeWidgetItem *___qtreewidgetitem11 = ItemPrTree->topLevelItem(4);
+        ___qtreewidgetitem11->setText(1, QApplication::translate("MainWindow", "Default", 0));
+        ___qtreewidgetitem11->setText(0, QApplication::translate("MainWindow", "Layer Name", 0));
+        QTreeWidgetItem *___qtreewidgetitem12 = ItemPrTree->topLevelItem(5);
+        ___qtreewidgetitem12->setText(0, QApplication::translate("MainWindow", "Events", 0));
+        QTreeWidgetItem *___qtreewidgetitem13 = ___qtreewidgetitem12->child(0);
+        ___qtreewidgetitem13->setText(1, QApplication::translate("MainWindow", "[none]", 0));
+        ___qtreewidgetitem13->setText(0, QApplication::translate("MainWindow", "Destroy", 0));
+        QTreeWidgetItem *___qtreewidgetitem14 = ___qtreewidgetitem12->child(1);
+        ___qtreewidgetitem14->setText(1, QApplication::translate("MainWindow", "[none]", 0));
+        ___qtreewidgetitem14->setText(0, QApplication::translate("MainWindow", "Hit", 0));
+        QTreeWidgetItem *___qtreewidgetitem15 = ___qtreewidgetitem12->child(2);
+        ___qtreewidgetitem15->setText(1, QApplication::translate("MainWindow", "[none]", 0));
+        ___qtreewidgetitem15->setText(0, QApplication::translate("MainWindow", "No more objects on layer", 0));
+        ItemPrTree->setSortingEnabled(__sortingEnabled3);
 
     } // retranslateUi
 

@@ -19,6 +19,9 @@
 #ifndef LVL_FILEDATA_H
 #define LVL_FILEDATA_H
 
+#include <QVector>
+#include <QString>
+
 //////////////////////Level file Data//////////////////////
 struct LevelSection
 {
@@ -186,6 +189,11 @@ struct LevelEvents
     long sound_id;
     long end_game;
     QVector<LevelEvents_layers > layers;
+
+    QStringList layers_hide;
+    QStringList layers_show;
+    QStringList layers_toggle;
+
     QVector<LevelEvents_Sets > sets;
     QString trigger;
     long trigger_timer;
