@@ -218,6 +218,11 @@ private slots:
     void on_actionCut_triggered();
     void on_actionPaste_triggered();
 
+    //History
+    void on_actionUndo_triggered();
+    void on_actionRedo_triggered();
+
+
     void on_actionWarpsAndDoors_triggered(bool checked);
     void on_DoorsToolbox_visibilityChanged(bool visible);
 
@@ -227,7 +232,6 @@ private slots:
 
     void on_BGOUniform_clicked(bool checked);
     void on_BlockUniform_clicked(bool checked);
-
 
 private:
     dataconfigs configs; // Global objects configucrations

@@ -924,7 +924,7 @@ public:
         npc->setWidgetResizable(true);
         npcscroll = new QWidget();
         npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 81, 28));
+        npcscroll->setGeometry(QRect(0, 0, 239, 195));
         npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
         npc->setWidget(npcscroll);
         LevelToolBoxTabs->addTab(npc, QString());
@@ -995,7 +995,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
+        SceneryScroll->setGeometry(QRect(0, 0, 239, 248));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -1005,7 +1005,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 248));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         WldMusicBox = new QScrollArea();
@@ -1015,7 +1015,7 @@ public:
         WldMusicBox->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 248));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -1375,7 +1375,7 @@ public:
         ItemProperties = new QDockWidget(MainWindow);
         ItemProperties->setObjectName(QStringLiteral("ItemProperties"));
         ItemProperties->setMinimumSize(QSize(150, 350));
-        ItemProperties->setFloating(true);
+        ItemProperties->setFloating(false);
         ItemPropsW = new QWidget();
         ItemPropsW->setObjectName(QStringLiteral("ItemPropsW"));
         gridLayout_2 = new QGridLayout(ItemPropsW);
