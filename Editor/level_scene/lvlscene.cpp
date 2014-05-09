@@ -1553,8 +1553,8 @@ void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
 
-    //Sort block by Y
-    sortBlockArray(FileData.blocks);
+    //Sort block by Y (not necessary)
+        //sortBlockArray  (FileData.blocks);
 
     //Applay images to objects
     for(i=0; i<FileData.blocks.size(); i++)
