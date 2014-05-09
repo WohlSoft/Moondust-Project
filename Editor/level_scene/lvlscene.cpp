@@ -1496,21 +1496,21 @@ void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
     LevelBlock tmp1;
     int total = blocks.size();
     long i;
-    long ymin;
+    unsigned long ymin;
     long ymini;
     long sorted = 0;
 
 
         while(sorted < blocks.size())
         {
-            ymin = blocks[sorted].y;
+            ymin = blocks[sorted].array_id;
             ymini = sorted;
 
             for(i = sorted; i < total; i++)
             {
-                if( blocks[i].y < ymin )
+                if( blocks[i].array_id < ymin )
                 {
-                    ymin = blocks[i].y; ymini = i;
+                    ymin = blocks[i].array_id; ymini = i;
                 }
             }
             tmp1 = blocks[ymini];
@@ -1531,14 +1531,14 @@ void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
 
         while(sorted < bgos.size())
         {
-            ymin = bgos[sorted].id;
+            ymin = bgos[sorted].array_id;
             ymini = sorted;
 
             for(i = sorted; i < total; i++)
             {
-                if( bgos[i].id < ymin )
+                if( bgos[i].array_id < ymin )
                 {
-                    ymin = bgos[i].id; ymini = i;
+                    ymin = bgos[i].array_id; ymini = i;
                 }
             }
             tmp1 = bgos[ymini];
@@ -1552,9 +1552,6 @@ void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
 void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
 {
     int i=0;
-
-    //Sort block by Y (not necessary)
-        //sortBlockArray  (FileData.blocks);
 
     //Applay images to objects
     for(i=0; i<FileData.blocks.size(); i++)
