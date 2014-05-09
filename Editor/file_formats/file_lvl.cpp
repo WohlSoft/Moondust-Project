@@ -749,6 +749,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(SMBX64::qStr(line)) //Event message
                 goto badfile;
+            else events.msg=removeQuotes(line);
 
 
             if(file_format>=18)
@@ -765,6 +766,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 goto badfile;
             else events.end_game  = line.toInt();
 
+            events.layers.clear();
             for(i=0; i<21; i++)
             {
                 str_count++;line = in.readLine();
@@ -785,6 +787,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             events.layers.push_back(events_layers);
             }
 
+            events.sets.clear();
             for(i=0; i<21; i++)
             {
                 str_count++;line = in.readLine();
@@ -924,6 +927,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
                 if(SMBX64::sFloat(line)) //Layer moving speed – vertical
                     goto badfile;
                 else events.layer_speed_y = line.replace(QChar(','), QChar('.')).toFloat();
+
             }
             else
             {
@@ -1172,7 +1176,7 @@ QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
         for( ; j<21; j++)
             TextData += "\"\"\n\"\"\n\"\"\n"; //(21th element is SMBX 1.3 bug protector)
 
-        for(j=0; j< FileData.events[i].layers.size()  && j<21; j++)
+        for(j=0; j< FileData.events[i].sets.size()  && j<21; j++)
         {
             TextData += SMBX64::IntS(FileData.events[i].sets[j].music_id);
             TextData += SMBX64::IntS(FileData.events[i].sets[j].background_id);
