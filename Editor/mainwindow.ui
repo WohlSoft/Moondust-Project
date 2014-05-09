@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1189</width>
-    <height>1078</height>
+    <width>1069</width>
+    <height>1081</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -90,7 +90,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1189</width>
+     <width>1069</width>
      <height>21</height>
     </rect>
    </property>
@@ -609,8 +609,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>389</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -785,7 +785,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>481</height>
+        <height>248</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -845,8 +845,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>481</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -869,8 +869,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>481</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -893,8 +893,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>481</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2195,6 +2195,200 @@ p, li { white-space: pre-wrap; }
         <property name="flags">
          <set>ItemIsDragEnabled|ItemIsUserCheckable</set>
         </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="ItemProperties">
+   <property name="minimumSize">
+    <size>
+     <width>150</width>
+     <height>350</height>
+    </size>
+   </property>
+   <property name="floating">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>Item Properties</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="ItemPropsW">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QComboBox" name="PropsByTypeList"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QTreeWidget" name="ItemPrTree">
+       <column>
+        <property name="text">
+         <string>Parameter</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>ItemID</string>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+        <property name="flags">
+         <set>ItemIsSelectable|ItemIsEnabled</set>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Position</string>
+        </property>
+        <property name="flags">
+         <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+        </property>
+        <item>
+         <property name="text">
+          <string>y</string>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>x</string>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Attributes</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Invisible</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Slippery</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Size</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>height</string>
+         </property>
+         <property name="text">
+          <string>32</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>width</string>
+         </property>
+         <property name="text">
+          <string>32</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Layer Name</string>
+        </property>
+        <property name="text">
+         <string>Default</string>
+        </property>
+        <property name="flags">
+         <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Events</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Destroy</string>
+         </property>
+         <property name="text">
+          <string>[none]</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Hit</string>
+         </property>
+         <property name="text">
+          <string>[none]</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>No more objects on layer</string>
+         </property>
+         <property name="text">
+          <string>[none]</string>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
+         </property>
+        </item>
        </item>
       </widget>
      </item>
