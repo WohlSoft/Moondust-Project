@@ -94,13 +94,16 @@ void MainWindow::setUiDefults()
 
     //Start event detector
     TickTackLock = false;
+
+    //set timer for event detector loop
     TickTackTimer = new QTimer(this);
     connect(
             TickTackTimer, SIGNAL(timeout()),
             this,
             SLOT( TickTack() ) );
 
-    TickTackTimer->start(10);
+    //start event detection loop
+    TickTackTimer->start(1);
 }
 
 

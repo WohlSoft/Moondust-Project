@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
@@ -96,6 +95,7 @@ void MainWindow::TickTack()
 
 MainWindow::~MainWindow()
 {
+    TickTackLock = false;
     delete ui;
     WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
