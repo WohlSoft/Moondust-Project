@@ -33,7 +33,7 @@ void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
     if(activeChildWindow()==1)
     {
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
-        activeLvlEditWin()->LvlData.modified = true;
+        if(ui->LVLPropsMusicNumber->hasFocus()) activeLvlEditWin()->LvlData.modified = true;
     }
 
     WriteToLog(QtDebugMsg, "Call to Set Music if playing");

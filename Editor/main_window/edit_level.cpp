@@ -498,13 +498,14 @@ void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
         return;
     }
 
-    if((ui->LVLPropsBackImage->hasFocus())||(ui->LVLPropsBackImage->hasMouseTracking()))
+    if(ui->LVLPropsBackImage->hasFocus())
     {
         ui->LVLPropsBackImage->setEnabled(false);
         WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
         if (activeChildWindow()==1)
         {
            activeLvlEditWin()->scene->ChangeSectionBG(index, activeLvlEditWin()->LvlData);
+           activeLvlEditWin()->LvlData.modified = true;
         }
         ui->LVLPropsBackImage->setEnabled(true);
     }
@@ -574,6 +575,7 @@ void MainWindow::on_LVLPropsLevelWarp_clicked(bool checked)
     {
         ui->actionLevWarp->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].IsWarp = checked;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 }
 
@@ -583,6 +585,7 @@ void MainWindow::on_actionLevWarp_triggered(bool checked)
     {
         ui->LVLPropsLevelWarp->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].IsWarp = checked;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 }
 
@@ -593,6 +596,7 @@ void MainWindow::on_LVLPropsOffScr_clicked(bool checked)
     {
         ui->actionLevOffScr->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].OffScreenEn = checked;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 }
 
@@ -602,6 +606,7 @@ void MainWindow::on_actionLevOffScr_triggered(bool checked)
     {
         ui->LVLPropsOffScr->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].OffScreenEn = checked;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 }
 
@@ -613,6 +618,7 @@ void MainWindow::on_LVLPropsNoTBack_clicked(bool checked)
     {
         ui->actionLevNoBack->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].noback = checked;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 }
 
@@ -622,6 +628,7 @@ void MainWindow::on_actionLevNoBack_triggered(bool checked)
     {
         ui->LVLPropsNoTBack->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].noback = checked;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 }
 
@@ -632,6 +639,7 @@ void MainWindow::on_LVLPropsUnderWater_clicked(bool checked)
     {
         ui->actionLevUnderW->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].underwater = checked;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 }
 
@@ -641,5 +649,6 @@ void MainWindow::on_actionLevUnderW_triggered(bool checked)
     {
         ui->LVLPropsUnderWater->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].underwater = checked;
+        activeLvlEditWin()->LvlData.modified = true;
     }
 }

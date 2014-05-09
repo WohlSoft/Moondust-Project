@@ -82,6 +82,8 @@ LevelData LvlScene::copy(bool cut)
             }
 
         }//fetch selected items
+
+        if(cut){ LvlData->modified = true; }
     }
 
     return copyData;
@@ -161,6 +163,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         LvlData->npc.push_back(dumpNPC);
     }
 
+    LvlData->modified = true;
     //refresh Animation control
     if(opts.animationEnabled) stopAnimation();
     if(opts.animationEnabled) startBlockAnimation();
