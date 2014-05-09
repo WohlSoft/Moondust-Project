@@ -104,9 +104,6 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     //npcMenu->addAction("NPC");
     //waterMenu->addAction("Water");
     //DoorMenu->addAction("Door");
-
-    histManager = new HistoryManager();
-
 }
 
 LvlScene::~LvlScene()
