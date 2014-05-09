@@ -23,6 +23,3 @@ Makefile
 # ignore Qt-Makefile
 *.Debug
 *.Release
-
-#git related
-*.swp
