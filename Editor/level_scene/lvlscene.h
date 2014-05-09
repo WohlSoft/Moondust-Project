@@ -174,6 +174,7 @@ public:
     };
     void addRemoveHistory(LevelData removedItems);
     void historyBack();
+    void historyForward();
     int getHistroyIndex();
     void cleanupRedoElements();
     bool canUndo();

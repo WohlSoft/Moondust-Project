@@ -17,6 +17,7 @@
  */
 
 #include "lvlscene.h"
+#include "item_block.h"
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -41,15 +42,56 @@ void LvlScene::historyBack()
         case HistoryOperation::LEVELHISTORY_REMOVE:
             //revert remove
             LevelData deletedData = lastOperation.data;
+            LevelData newData;
             foreach (LevelBlock block, deletedData.blocks) {
                 //place them back
                 unsigned int newID = (LvlData->blocks_array_id++);
                 block.array_id = newID;
                 LvlData->blocks.push_back(block);
                 placeBlock(block);
+                //use it so redo can find faster via arrayID
+                newData.blocks.push_back(block);
             }
+            HistoryOperation newHist;
+            newHist.type = HistoryOperation::LEVELHISTORY_REMOVE;
+            newHist.data = newData;
+            operationList.replace(historyIndex, newHist);
             break;
     }
+
+    historyChanged = true;
+}
+
+void LvlScene::historyForward()
+{
+
+    HistoryOperation lastOperation = operationList[historyIndex];
+    switch( lastOperation.type )
+    {
+        case HistoryOperation::LEVELHISTORY_REMOVE:
+            //redo remove
+            LevelData deletedData = lastOperation.data;
+            QMap<int, LevelBlock> sortedBlock;
+            foreach (LevelBlock block, deletedData.blocks){
+                sortedBlock[block.array_id] = block;
+            }
+            foreach (QGraphicsItem* item, items()){
+                if(item->data(0).toString()=="Block"){
+                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+                    unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()==currentArrayId){
+                        ((ItemBlock*)item)->removeFromArray();
+                        removeItem(item);
+                        sortedBlock.erase(beginItem);
+                        if(sortedBlock.size()==0){
+                            break;
+                        }
+                    }
+                }
+            }
+    }
+
+    historyIndex++;
 
     historyChanged = true;
 }
