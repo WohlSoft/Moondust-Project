@@ -28,6 +28,8 @@ void LvlScene::addRemoveHistory(LevelData removedItems)
     rmOperation.data = removedItems;
     operationList.push_back(rmOperation);
     historyIndex++;
+
+    historyChanged = true;
 }
 
 void LvlScene::historyBack()
@@ -48,6 +50,8 @@ void LvlScene::historyBack()
             }
             break;
     }
+
+    historyChanged = true;
 }
 
 int LvlScene::getHistroyIndex()

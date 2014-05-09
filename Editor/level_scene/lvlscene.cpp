@@ -94,12 +94,15 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     //HistoryIndex
     historyIndex=0;
 
+    historyChanged = false;
+
     //Locks
     lock_bgo=false;
     lock_block=false;
     lock_npc=false;
     lock_door=false;
     lock_water=false;
+
 }
 
 LvlScene::~LvlScene()
