@@ -38,7 +38,9 @@ SOURCES += main.cpp\
     level_scene/item_block.cpp \
     level_scene/HistoryManager.cpp \
     level_scene/lvl_clipboard.cpp \
-    level_scene/item_npc.cpp
+    level_scene/item_npc.cpp \
+    main_window/files_io.cpp \
+    main_window/menubar.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
