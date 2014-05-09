@@ -21,6 +21,9 @@
 #include <QLocale>
 #include "mainwindow.h"
 
+#include <QSharedMemory>
+#include <QSystemSemaphore>
+
 #include "logger.h"
 
 
@@ -30,9 +33,48 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+
+    //Check for runned copy of application//////////////////
+    QSystemSemaphore sema("Plarformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
+    bool isRunning;
+
+    if(sema.acquire())
+    {
+        QSharedMemory shmem("Plarformer Game Engine by Wohlstand fyhj246h46y46836u");
+        shmem.attach();
+    }
+
+    QString sendToMem;
+    foreach(QString str, a.arguments())
+    {
+        sendToMem+= str + "|";
+    }
+
+    QSharedMemory shmem("Plarformer Game Engine by Wohlstand fyhj246h46y46836u");
+    if (shmem.attach())
+    {
+        isRunning = true;
+    }
+    else
+    {
+        shmem.create(1);
+        isRunning = false;
+    }
+    sema.release();
+
+    if(isRunning)
+    {
+        WriteToLog(QtDebugMsg, "--> Application Already runned <--");
+        return 0;
+    }
+
+    // ////////////////////////////////////////////////////
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
     MainWindow w;
     w.show();
+
+    w.openFilesByArgs(a.arguments());
+
     return a.exec();
 }
