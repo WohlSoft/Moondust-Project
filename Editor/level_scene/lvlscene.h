@@ -89,6 +89,7 @@ public:
     bool wasPasted;
     bool doCopy;
     bool doCut;
+    bool historyChanged;
 
     //Copy function
     LevelData copy(bool cut = false);
@@ -177,8 +178,8 @@ public:
     void cleanupRedoElements();
     bool canUndo();
     bool canRedo();
-    void setScenePoint(LvlScene *theScene);
-    bool historyChanged;
+    //void setScenePoint(LvlScene *theScene); //in scene nothing to set pointer to himself :D
+    //bool historyChanged; //In events flag list
     // ////////////////////////////////////////////
 
 protected:
