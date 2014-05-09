@@ -106,6 +106,7 @@ struct LevelNPC
 
     //editing
     unsigned int array_id;
+    unsigned int index;
 };
 
 struct LevelDoors
