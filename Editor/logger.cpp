@@ -18,6 +18,9 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QApplication>
+
+QString debugLogFile = QApplication::applicationDirPath() + "/" + "debug_log.txt" ;
 
 void WriteToLog(QtMsgType type, QString msg)
     {
@@ -36,7 +39,7 @@ void WriteToLog(QtMsgType type, QString msg)
         txt = QString("Fatal: %1").arg(msg);
     }
 
-    QFile outFile("debug_log.txt");
+    QFile outFile(debugLogFile);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << endl;
