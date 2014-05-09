@@ -364,6 +364,14 @@ void MainWindow::on_OpenFile_triggered()
 
 }
 
+void MainWindow::openFilesByArgs(QStringList args)
+{
+    for(int i=1; i<args.size(); i++)
+    {
+        if(QFile::exists(args[i])) OpenFile(args[i]);
+    }
+}
+
 void MainWindow::OpenFile(QString FilePath)
 {
 
