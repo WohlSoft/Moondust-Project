@@ -20,12 +20,13 @@
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
+    //add cleanup redo elements
+    cleanupRedoElements();
+    //add new element
     HistoryOperation rmOperation;
     rmOperation.type = HistoryOperation::LEVELHISTORY_REMOVE;
     rmOperation.data = removedItems;
     operationList.push_back(rmOperation);
-    //add cleanup redo elements
-
     historyIndex++;
 }
 
@@ -52,4 +53,24 @@ void LvlScene::historyBack()
 int LvlScene::getHistroyIndex()
 {
     return historyIndex;
+}
+
+void LvlScene::cleanupRedoElements()
+{
+    if(canRedo()){
+        int lastSize = operationList.size();
+        for(int i = historyIndex; i < lastSize; i++){
+            operationList.pop_back();
+        }
+    }
+}
+
+bool LvlScene::canUndo()
+{
+    return historyIndex > 0;
+}
+
+bool LvlScene::canRedo()
+{
+    return historyIndex < operationList.size();
 }

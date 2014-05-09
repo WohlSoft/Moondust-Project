@@ -174,6 +174,9 @@ public:
     void addRemoveHistory(LevelData removedItems);
     void historyBack();
     int getHistroyIndex();
+    void cleanupRedoElements();
+    bool canUndo();
+    bool canRedo();
     void setScenePoint(LvlScene *theScene);
     // ////////////////////////////////////////////
 
