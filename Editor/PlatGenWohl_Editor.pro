@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     level_scene/item_bgo.cpp \
     level_scene/item_block.cpp \
     level_scene/HistoryManager.cpp \
-    level_scene/lvl_clipboard.cpp
+    level_scene/lvl_clipboard.cpp \
+    level_scene/item_npc.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -51,11 +52,11 @@ HEADERS  += mainwindow.h \
     saveimage.h \
     musicfilelist.h \
     logger.h \
-    item_block.h \
     file_formats/file_formats.h \
     level_scene/item_bgo.h \
     level_scene/item_block.h \
-    level_scene/lvlscene.h
+    level_scene/lvlscene.h \
+    level_scene/item_npc.h
 
 FORMS    += \
     aboutdialog.ui \
