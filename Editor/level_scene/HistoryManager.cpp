@@ -52,42 +52,41 @@ void LvlScene::historyBack()
 {
     historyIndex--;
     HistoryOperation lastOperation = operationList[historyIndex];
-    HistoryOperation newHist;
-    LevelData deletedData;
-    LevelData newData;
 
     switch( lastOperation.type )
     {
     case HistoryOperation::LEVELHISTORY_REMOVE:
         {
             //revert remove
-            deletedData = lastOperation.data;
+            LevelData deletedData = lastOperation.data;
 
             foreach (LevelBlock block, deletedData.blocks)
             {
                 //place them back
-                unsigned int newID = (LvlData->blocks_array_id++);
+                unsigned int newID = (++LvlData->blocks_array_id);
+
+                //use it so redo can find faster via arrayID
+                BlocksArrayIDForwarder[block.array_id] = newID;
+
                 block.array_id = newID;
                 LvlData->blocks.push_back(block);
                 placeBlock(block);
-                //use it so redo can find faster via arrayID
-                newData.blocks.push_back(block);
+
             }
 
             foreach (LevelBGO bgo, deletedData.bgo)
             {
                 //place them back
-                unsigned int newID = (LvlData->bgo_array_id++);
+                unsigned int newID = (++LvlData->bgo_array_id);
+
+                //use it so redo can find faster via arrayID
+                BGOsArrayIDForwarder[bgo.array_id] = newID;
+
                 bgo.array_id = newID;
                 LvlData->bgo.push_back(bgo);
                 placeBGO(bgo);
-                //use it so redo can find faster via arrayID
-                newData.bgo.push_back(bgo);
-            }
 
-            newHist.type = HistoryOperation::LEVELHISTORY_REMOVE;
-            newHist.data = newData;
-            operationList.replace(historyIndex, newHist);
+            }
 
             //refresh Animation control
             if(opts.animationEnabled) stopAnimation();
@@ -99,15 +98,38 @@ void LvlScene::historyBack()
         {
         //revert place
         LevelData placeData = lastOperation.data;
+        //get newest data
+        LevelData updatedData;
+        foreach (LevelBlock oldblock, placeData.blocks)
+        {
+            unsigned int newestArrayID = oldblock.array_id;
+            while(BlocksArrayIDForwarder.contains(newestArrayID))
+            {
+                newestArrayID = BlocksArrayIDForwarder[newestArrayID];
+            }
+            oldblock.array_id = newestArrayID;
+            updatedData.blocks.push_back(oldblock);
+        }
+
+        foreach (LevelBGO oldbgo, placeData.bgo)
+        {
+            unsigned int newestArrayID = oldbgo.array_id;
+            while(BGOsArrayIDForwarder.contains(newestArrayID))
+            {
+                newestArrayID = BGOsArrayIDForwarder[newestArrayID];
+            }
+            oldbgo.array_id = newestArrayID;
+            updatedData.bgo.push_back(oldbgo);
+        }
 
         QMap<int, LevelBlock> sortedBlock;
-        foreach (LevelBlock block, placeData.blocks)
+        foreach (LevelBlock block, updatedData.blocks)
         {
             sortedBlock[block.array_id] = block;
         }
 
         QMap<int, LevelBGO> sortedBGO;
-        foreach (LevelBGO bgo, placeData.bgo)
+        foreach (LevelBGO bgo, updatedData.bgo)
         {
             sortedBGO[bgo.array_id] = bgo;
         }
@@ -122,6 +144,13 @@ void LvlScene::historyBack()
                 {
                 QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedBlock.erase(beginItem);
+                }
+                //but still test if the next blocks, is the block we search!
+                currentArrayId = (*beginItem).array_id;
                 if((unsigned int)item->data(2).toInt()==currentArrayId)
                 {
                     ((ItemBlock*)item)->removeFromArray();
@@ -141,6 +170,13 @@ void LvlScene::historyBack()
                 {
                     QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
                     unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()>currentArrayId)
+                    {
+                        //not found
+                        sortedBGO.erase(beginItem);
+                    }
+                    //but still test if the next blocks, is the block we search!
+                    currentArrayId = (*beginItem).array_id;
                     if((unsigned int)item->data(2).toInt()==currentArrayId)
                     {
                         ((ItemBGO *)item)->removeFromArray();
@@ -179,15 +215,39 @@ void LvlScene::historyForward()
     {
         //redo remove
         LevelData deletedData = lastOperation.data;
+        //get newest data
+        LevelData updatedData;
+        foreach (LevelBlock oldblock, deletedData.blocks)
+        {
+            unsigned int newestArrayID = oldblock.array_id;
+            while(BlocksArrayIDForwarder.contains(newestArrayID))
+            {
+                newestArrayID = BlocksArrayIDForwarder[newestArrayID];
+            }
+            oldblock.array_id = newestArrayID;
+            updatedData.blocks.push_back(oldblock);
+        }
+
+        foreach (LevelBGO oldbgo, deletedData.bgo)
+        {
+            unsigned int newestArrayID = oldbgo.array_id;
+            while(BGOsArrayIDForwarder.contains(newestArrayID))
+            {
+                newestArrayID = BGOsArrayIDForwarder[newestArrayID];
+            }
+            oldbgo.array_id = newestArrayID;
+            updatedData.bgo.push_back(oldbgo);
+        }
+
 
         QMap<int, LevelBlock> sortedBlock;
-        foreach (LevelBlock block, deletedData.blocks)
+        foreach (LevelBlock block, updatedData.blocks)
         {
             sortedBlock[block.array_id] = block;
         }
 
         QMap<int, LevelBGO> sortedBGO;
-        foreach (LevelBGO bgo, deletedData.bgo)
+        foreach (LevelBGO bgo, updatedData.bgo)
         {
             sortedBGO[bgo.array_id] = bgo;
         }
@@ -201,6 +261,13 @@ void LvlScene::historyForward()
                 {
                     QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
                     unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()>currentArrayId)
+                    {
+                        //not found
+                        sortedBlock.erase(beginItem);
+                    }
+                    //but still test if the next blocks, is the block we search!
+                    currentArrayId = (*beginItem).array_id;
                     if((unsigned int)item->data(2).toInt()==currentArrayId)
                     {
                         ((ItemBlock*)item)->removeFromArray();
@@ -220,6 +287,13 @@ void LvlScene::historyForward()
                 {
                     QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
                     unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()>currentArrayId)
+                    {
+                        //not found
+                        sortedBGO.erase(beginItem);
+                    }
+                    //but still test if the next blocks, is the block we search!
+                    currentArrayId = (*beginItem).array_id;
                     if((unsigned int)item->data(2).toInt()==currentArrayId)
                     {
                         ((ItemBGO *)item)->removeFromArray();
@@ -237,40 +311,40 @@ void LvlScene::historyForward()
                 break;
             }
         }
+
+
+
         break;
     }
     case HistoryOperation::LEVELHISTORY_PLACE:
     {
         //redo place
         LevelData placedData = lastOperation.data;
-        HistoryOperation newHist;
-        LevelData newData;
 
         foreach (LevelBlock block, placedData.blocks)
         {
             //place them back
-            unsigned int newID = (LvlData->blocks_array_id++);
+            unsigned int newID = (++LvlData->blocks_array_id);
+
+            //use it so redo can find faster via arrayID
+            BlocksArrayIDForwarder[block.array_id] = newID;
+
             block.array_id = newID;
             LvlData->blocks.push_back(block);
             placeBlock(block);
-            //use it so redo can find faster via arrayID
-            newData.blocks.push_back(block);
         }
 
         foreach (LevelBGO bgo, placedData.bgo)
         {
             //place them back
-            unsigned int newID = (LvlData->bgo_array_id++);
+            unsigned int newID = (++LvlData->bgo_array_id);
+            //use it so redo can find faster via arrayID
+            BGOsArrayIDForwarder[bgo.array_id] = newID;
+
             bgo.array_id = newID;
             LvlData->bgo.push_back(bgo);
             placeBGO(bgo);
-            //use it so redo can find faster via arrayID
-            newData.bgo.push_back(bgo);
         }
-
-        newHist.type = HistoryOperation::LEVELHISTORY_PLACE;
-        newHist.data = newData;
-        operationList.replace(historyIndex, newHist);
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();

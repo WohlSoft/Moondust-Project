@@ -183,6 +183,8 @@ public:
     void cleanupRedoElements();
     bool canUndo();
     bool canRedo();
+    QMap<int,int> BlocksArrayIDForwarder;
+    QMap<int,int> BGOsArrayIDForwarder;
     // ////////////////////////////////////////////
 
 protected:
