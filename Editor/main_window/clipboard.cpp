@@ -61,20 +61,16 @@ void MainWindow::on_actionPaste_triggered()
             (LvlBuffer.npc.size()==0)
     ) return;
 
+    resetEditmodeButtons();
     ui->actionSelect->setChecked(1);
-    ui->actionEriser->setChecked(0);
-    ui->actionHandScroll->setChecked(0);
-
-    ui->actionSetFirstPlayer->setChecked(0);
-    ui->actionSetSecondPlayer->setChecked(0);
-    ui->actionDrawWater->setChecked(0);
-    ui->actionDrawSand->setChecked(0);
 
     if (activeChildWindow()==1)
     {
        activeLvlEditWin()->changeCursor(4);
        activeLvlEditWin()->scene->EditingMode = 4;
        activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->disableMoveItems=true;
+
        activeLvlEditWin()->scene->LvlBuffer = LvlBuffer;
     }
 

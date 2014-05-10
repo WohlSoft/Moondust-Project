@@ -158,6 +158,21 @@ void ItemNPC::setLegacyBoss(bool boss)
     arrayApply();//Apply changes into array
 }
 
+void ItemNPC::changeDirection(int dir)
+{
+    npcData.direct = dir;
+
+    setAnimation(framesQ, frameSpeed, frameStyle, dir,
+    customAnimate,
+        custom_frameFL,
+        custom_frameEL,
+        custom_frameFR,
+        custom_frameER,
+    true);
+
+    arrayApply();
+}
+
 ///////////////////MainArray functions/////////////////////////////
 void ItemNPC::arrayApply()
 {
@@ -208,74 +223,6 @@ void ItemNPC::removeFromArray()
     }
 }
 
-/*
-void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    int gridSize=32, offsetX=0, offsetY=0, gridX, gridY, i;
-    QPoint sourcePos;
-
-    sourcePos=QPoint(npcData.x, npcData.y);
-    QPointF itemPos = this->scenePos();
-
-    if((!isSelected())||(sourcePos == itemPos))
-    { QGraphicsPixmapItem::mouseReleaseEvent(event); return;}
-
-    if(scene->grid)
-    { //ATTACH TO GRID
-        gridX = ((int)itemPos.x() - (int)itemPos.x() % gridSize);
-        gridY = ((int)itemPos.y() - (int)itemPos.y() % gridSize);
-
-        if((int)itemPos.x()<0)
-        {
-            if( (int)itemPos.x() < gridX - (int)(gridSize/2) )
-                gridX -= gridSize;
-        }
-        else
-        {
-            if( (int)itemPos.x() > gridX + (int)(gridSize/2) )
-                gridX += gridSize;
-        }
-
-        if((int)itemPos.y()<0)
-        {if( (int)itemPos.y() < gridY - (int)(gridSize/2) )
-            gridY -= gridSize;
-        }
-        else {if( (int)itemPos.y() > gridY + (int)(gridSize/2) )
-         gridY += gridSize;
-        }
-
-        this->setPos(QPointF(offsetX+gridX, offsetY+gridY));
-    }
-
-    //Check collision
-    if( scene->itemCollidesWith(this) )
-    {
-        this->setPos(QPointF(sourcePos));
-        this->setSelected(false);
-        WriteToLog(QtDebugMsg, QString("Moved back %1 %2")
-                   .arg((long)this->scenePos().x())
-                   .arg((long)this->scenePos().y()) );
-    }
-    else
-    {
-        npcData.x=(long)this->scenePos().x();
-        npcData.y=(long)this->scenePos().y();
-
-         for (i=0;i<scene->LvlData->blocks.size();i++)
-            {
-                if(scene->LvlData->blocks[i].array_id == npcData.array_id)
-                {
-                    //Applay move into main array
-                    scene->LvlData->blocks[i].x = (long)this->scenePos().x();
-                    scene->LvlData->blocks[i].y = (long)this->scenePos().y();
-                    scene->LvlData->modyfied = true;
-                    break;
-                }
-            }
-    }
-
-}*/
-
 void ItemNPC::setMainPixmap(const QPixmap &pixmap)
 {
     mainImage = pixmap;
@@ -311,13 +258,20 @@ void ItemNPC::setScenePoint(LvlScene *theScene)
 
 
 void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direct,
-                           bool customAnimate, int frFL, int frEL, int frFR, int frER, bool edit)
+                           bool customAni, int frFL, int frEL, int frFR, int frER, bool edit)
 {
     animated = true;
     framesQ = frames;
     frameSpeed = framespeed;
     frameStyle = framestyle;
     direction = direct;
+
+    customAnimate = customAni;
+
+    custom_frameFL = frFL;//first left
+    custom_frameEL = frEL;//end left
+    custom_frameFR = frFR;//first right
+    custom_frameER = frER;//enf right
 
     frameSize = (int)round(mainImage.height()/frames);
     frameWidth = mainImage.width();
@@ -339,12 +293,12 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
         switch(dir)
         {
         case -1: //left
-            frameFirst = frFL;
-            frameLast = frEL;
+            frameFirst = custom_frameFL;
+            frameLast = custom_frameEL;
             break;
         case 1: //Right
-            frameFirst = frFR;
-            frameLast = frER;
+            frameFirst = custom_frameFR;
+            frameLast = custom_frameER;
             break;
         default: break;
         }

@@ -36,6 +36,7 @@ void MainWindow::updateMenus()
     ui->menuView->setEnabled( (hasSWindow) && (WinType!=2) );
 
     ui->actionSelect->setEnabled( (WinType==1) || (WinType==3));
+    ui->actionSelectOnly->setEnabled( (WinType==1) || (WinType==3));
     ui->actionEriser->setEnabled( (WinType==1) || (WinType==3));
     ui->actionHandScroll->setEnabled( (WinType==1) || (WinType==3));
     ui->actionReload->setEnabled( (WinType==1) || (WinType==3));

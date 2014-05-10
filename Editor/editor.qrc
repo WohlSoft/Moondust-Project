@@ -67,5 +67,6 @@
         <file alias="drawWater.png">images/draw_water.png</file>
         <file alias="doors.png">images/doors.png</file>
         <file alias="layers.png">images/layers.png</file>
+        <file alias="select_only.png">images/select_only.png</file>
     </qresource>
 </RCC>

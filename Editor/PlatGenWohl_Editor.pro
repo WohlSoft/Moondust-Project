@@ -42,7 +42,9 @@ SOURCES += main.cpp\
     main_window/files_io.cpp \
     main_window/menubar.cpp \
     level_scene/place_new_item.cpp \
-    level_scene/lvl_control.cpp
+    level_scene/lvl_control.cpp \
+    level_scene/lvl_items.cpp \
+    main_window/edit_control.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \

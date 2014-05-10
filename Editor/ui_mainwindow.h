@@ -131,6 +131,7 @@ public:
     QAction *actionEmpty;
     QAction *actionCut;
     QAction *actionLangEnglish;
+    QAction *actionSelectOnly;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -738,6 +739,13 @@ public:
         actionLangEnglish->setObjectName(QStringLiteral("actionLangEnglish"));
         actionLangEnglish->setCheckable(true);
         actionLangEnglish->setChecked(true);
+        actionSelectOnly = new QAction(MainWindow);
+        actionSelectOnly->setObjectName(QStringLiteral("actionSelectOnly"));
+        actionSelectOnly->setCheckable(true);
+        actionSelectOnly->setEnabled(false);
+        QIcon icon46;
+        icon46.addFile(QStringLiteral(":/select_only.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSelectOnly->setIcon(icon46);
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -807,9 +815,9 @@ public:
         LevelToolBox->setMinimumSize(QSize(200, 200));
         LevelToolBox->setMaximumSize(QSize(524287, 524287));
         LevelToolBox->setFocusPolicy(Qt::NoFocus);
-        QIcon icon46;
-        icon46.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelToolBox->setWindowIcon(icon46);
+        QIcon icon47;
+        icon47.addFile(QStringLiteral(":/images/level16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelToolBox->setWindowIcon(icon47);
         LevelToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         LevelToolBoxTabs = new QTabWidget();
@@ -827,10 +835,10 @@ public:
         BlocksG->addWidget(BlockCatLabel, 0, 0, 1, 1);
 
         BlockItemsList = new QListWidget(Blocks);
-        QIcon icon47;
-        icon47.addFile(QStringLiteral(":/images/mushroom.png"), QSize(), QIcon::Normal, QIcon::Off);
+        QIcon icon48;
+        icon48.addFile(QStringLiteral(":/images/mushroom.png"), QSize(), QIcon::Normal, QIcon::Off);
         QListWidgetItem *__qlistwidgetitem = new QListWidgetItem(BlockItemsList);
-        __qlistwidgetitem->setIcon(icon47);
+        __qlistwidgetitem->setIcon(icon48);
         __qlistwidgetitem->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
         BlockItemsList->setObjectName(QStringLiteral("BlockItemsList"));
         BlockItemsList->setLineWidth(1);
@@ -884,7 +892,7 @@ public:
 
         BGOItemsList = new QListWidget(BGOs);
         QListWidgetItem *__qlistwidgetitem1 = new QListWidgetItem(BGOItemsList);
-        __qlistwidgetitem1->setIcon(icon47);
+        __qlistwidgetitem1->setIcon(icon48);
         __qlistwidgetitem1->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
         BGOItemsList->setObjectName(QStringLiteral("BGOItemsList"));
         BGOItemsList->setLineWidth(1);
@@ -961,9 +969,9 @@ public:
         sizePolicy1.setHeightForWidth(WorldToolBox->sizePolicy().hasHeightForWidth());
         WorldToolBox->setSizePolicy(sizePolicy1);
         WorldToolBox->setMinimumSize(QSize(200, 119));
-        QIcon icon48;
-        icon48.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        WorldToolBox->setWindowIcon(icon48);
+        QIcon icon49;
+        icon49.addFile(QStringLiteral(":/images/world16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        WorldToolBox->setWindowIcon(icon49);
         WorldToolBox->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         WorldToolBox->setAllowedAreas(Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         WorldToolBoxTabs = new QTabWidget();
@@ -1061,9 +1069,9 @@ public:
         font.setItalic(false);
         font.setWeight(50);
         LevelSectionSettings->setFont(font);
-        QIcon icon49;
-        icon49.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
-        LevelSectionSettings->setWindowIcon(icon49);
+        QIcon icon50;
+        icon50.addFile(QStringLiteral(":/images/section16.png"), QSize(), QIcon::Normal, QIcon::Off);
+        LevelSectionSettings->setWindowIcon(icon50);
         LevelSectionSettings->setStyleSheet(QStringLiteral("font: 8pt \"Liberation Sans\";"));
         LevelSectionSettings->setFloating(false);
         LevelSectionSettings->setFeatures(QDockWidget::AllDockWidgetFeatures);
@@ -1531,6 +1539,7 @@ public:
         mainToolBar->addAction(actionSave_as);
         EditionToolBar->addAction(actionHandScroll);
         EditionToolBar->addAction(actionSelect);
+        EditionToolBar->addAction(actionSelectOnly);
         EditionToolBar->addAction(actionEriser);
         EditionToolBar->addSeparator();
         EditionToolBar->addAction(actionPlayMusic);
@@ -1750,7 +1759,7 @@ public:
         actionLVLToolBox->setToolTip(QApplication::translate("MainWindow", "Level objects tool box", 0));
 #endif // QT_NO_TOOLTIP
         actionWLDToolBox->setText(QApplication::translate("MainWindow", "World tool box", 0));
-        actionSelect->setText(QApplication::translate("MainWindow", "Select", 0));
+        actionSelect->setText(QApplication::translate("MainWindow", "Select and Move", 0));
 #ifndef QT_NO_TOOLTIP
         actionSelect->setToolTip(QApplication::translate("MainWindow", "Select (S)", 0));
 #endif // QT_NO_TOOLTIP
@@ -1837,6 +1846,8 @@ public:
         actionCut->setText(QApplication::translate("MainWindow", "Cut", 0));
         actionCut->setShortcut(QApplication::translate("MainWindow", "Ctrl+X", 0));
         actionLangEnglish->setText(QApplication::translate("MainWindow", "English", 0));
+        actionSelectOnly->setText(QApplication::translate("MainWindow", "Select only", 0));
+        actionSelectOnly->setShortcut(QApplication::translate("MainWindow", "W", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));

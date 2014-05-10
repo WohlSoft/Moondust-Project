@@ -59,6 +59,10 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
         if(deleted) addRemoveHistory(historyBuffer);
 
         break;
+    case (Qt::Key_Escape):
+        if(!IsMoved)
+            this->clearSelection();
+        break;
 
     default:
         break;
@@ -70,8 +74,6 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-        //QList<QGraphicsItem*> selectedList = selectedItems();
-
         cursor->setPos(mouseEvent->scenePos());
         cursor->show();
 
@@ -80,7 +82,7 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         switch(EditingMode) // if Editing Mode = Esaising
         {
         case 1: //Eriser
-            EraserEnabled = true;
+            //EraserEnabled = true;
             break;
         case 4: //Pasta
             PasteFromBuffer = true;
@@ -88,6 +90,21 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         default:
             break;
         }
+
+        if((disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
+                && (Qt::ControlModifier != QApplication::keyboardModifiers()))
+            { return; }
+
+        QGraphicsScene::mousePressEvent(mouseEvent);
+
+        QList<QGraphicsItem*> selectedList = selectedItems();
+        if(EditingMode==1)
+        if (!selectedList.isEmpty())
+        {
+            removeItemUnderCursor();
+            EraserEnabled=true;
+        }
+
         /* if (!selectedList.isEmpty())
         {
 
@@ -98,72 +115,84 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
         }*/
-        QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
 
 void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     cursor->setPos(mouseEvent->scenePos());
-    QGraphicsItem * findItem;
-    bool removeIt=true;
 
     haveSelected=(!selectedItems().isEmpty());
-    if(haveSelected) IsMoved = true;
-
-    if (EraserEnabled)
-    {   // Remove All items, placed under Cursor
-        findItem = itemCollidesCursor(cursor);
-        if(findItem)
+    if(haveSelected)
+    {
+        if(!IsMoved)
         {
-            if((findItem->data(0).toString()=="Block")&&(lock_block))
-                removeIt=false;
-            else
-            if((findItem->data(0).toString()=="BGO")&&(lock_bgo))
-                removeIt=false;
-            else
-            if((findItem->data(0).toString()=="NPC")&&(lock_npc))
-                removeIt=false;
-            else
-            if((findItem->data(0).toString()=="Water")&&(lock_water))
-                removeIt=false;
-            else
-            if(((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))&&
-                    (lock_door))
-                removeIt=false;
-
-            if(removeIt)
+            /*
+            for (QList<QGraphicsItem*>::iterator it = selectedItems().begin(); it != selectedItems().end(); it++)
             {
-                LevelData removedItems;
-                bool deleted=false;
-                //remove data from main array before deletion item from scene
-                if( findItem->data(0).toString()=="Block" )
-                {
-                    removedItems.blocks.push_back(((ItemBlock *)findItem)->blockData);
-                    ((ItemBlock *)findItem)->removeFromArray();
-                    deleted=true;
-                }
-                else
-                if( findItem->data(0).toString()=="BGO" )
-                {
-                    removedItems.bgo.push_back(((ItemBGO *)findItem)->bgoData);
-                    ((ItemBGO *)findItem)->removeFromArray();
-                    deleted=true;
-                }
-                removeItem(findItem);
-                if(deleted)addRemoveHistory(removedItems);
-            }
+                Z.push_back((*it)->zValue());
+                (*it)->setZValue(1000);
+            }*/
+            IsMoved = true;
         }
-        QGraphicsScene::mouseMoveEvent(mouseEvent);
-    } else
-        QGraphicsScene::mouseMoveEvent(mouseEvent);
+    }
+
+    QGraphicsScene::mouseMoveEvent(mouseEvent);
+
+    if (EraserEnabled)// Remove All items, placed under Cursor
+        removeItemUnderCursor();
 }
 
+void LvlScene::removeItemUnderCursor()
+{
+    QGraphicsItem * findItem;
+    bool removeIt=true;
+    findItem = itemCollidesCursor(cursor);
+    if(findItem)
+    {
+        if((findItem->data(0).toString()=="Block")&&(lock_block))
+            removeIt=false;
+        else
+        if((findItem->data(0).toString()=="BGO")&&(lock_bgo))
+            removeIt=false;
+        else
+        if((findItem->data(0).toString()=="NPC")&&(lock_npc))
+            removeIt=false;
+        else
+        if((findItem->data(0).toString()=="Water")&&(lock_water))
+            removeIt=false;
+        else
+        if(((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))&&
+                (lock_door))
+            removeIt=false;
 
+        if(removeIt)
+        {
+            LevelData removedItems;
+            bool deleted=false;
+            //remove data from main array before deletion item from scene
+            if( findItem->data(0).toString()=="Block" )
+            {
+                removedItems.blocks.push_back(((ItemBlock *)findItem)->blockData);
+                ((ItemBlock *)findItem)->removeFromArray();
+                deleted=true;
+            }
+            else
+            if( findItem->data(0).toString()=="BGO" )
+            {
+                removedItems.bgo.push_back(((ItemBGO *)findItem)->bgoData);
+                ((ItemBGO *)findItem)->removeFromArray();
+                deleted=true;
+            }
+            removeItem(findItem);
+            if(deleted)addRemoveHistory(removedItems);
+        }
+    }
+}
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
-            int gridSize=32, offsetX=0, offsetY=0, gridX, gridY;//, i=0;
+            int gridSize=32, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
             QPoint sourcePos;
 
             cursor->hide();
@@ -181,7 +210,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
                 EditingMode = 0;
                 PasteFromBuffer = false;
-                IsMoved=true;
+                //IsMoved=true;
                 wasPasted = true; //Set flag for reset pasta cursor to normal select
             }
 
@@ -190,11 +219,24 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             // check for grid snap
             if ((!selectedList.isEmpty())&&(IsMoved))
             {
+                /*
+                if(IsMoved)
+                {
+                    for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
+                    {
+                        if(Z.size()>0)
+                        {
+                        (*it)->setZValue(Z[0]);
+                        Z.pop_front();
+                        }
+                    }
+                }*/
                 IsMoved = false;
+
                 // correct selected items' coordinates
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 {
-                    if(EraserEnabled)
+                    if(EditingMode==1)
                     {
 
                         //remove data from main array before deletion item from scene
@@ -216,6 +258,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
 
                     gridSize = 32;
+                    offsetX = 0;
+                    offsetY = 0;
                     ObjType = (*it)->data(0).toString();
 
                     //(*it)->setZValue(Z);
@@ -252,44 +296,18 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         gridSize = 2 ;
                     }
 
-                    QPointF itemPos;
-
-                    itemPos = (*it)->scenePos();
-
-                    if(grid)
-                    { //ATTACH TO GRID
-                        gridX = ((int)itemPos.x() - (int)itemPos.x() % gridSize);
-                        gridY = ((int)itemPos.y() - (int)itemPos.y() % gridSize);
-
-                        if((int)itemPos.x()<0)
-                        {
-                            if( (int)itemPos.x() < offsetX+gridX - (int)(gridSize/2) )
-                                gridX -= gridSize;
-                        }
-                        else
-                        {
-                            if( (int)itemPos.x() > offsetX+gridX + (int)(gridSize/2) )
-                                gridX += gridSize;
-                        }
-
-                        if((int)itemPos.y()<0)
-                        {if( (int)itemPos.y() < offsetY+gridY - (int)(gridSize/2) )
-                            gridY -= gridSize;
-                        }
-                        else {if( (int)itemPos.y() > offsetY+gridY + (int)(gridSize/2) )
-                         gridY += gridSize;
-                        }
-
-                        if(ObjType=="Block")
-                        {
-                            (*it)->setPos(QPointF(gridX, gridY));
-                        }
-                            else
-                        (*it)->setPos(QPointF(offsetX+gridX, offsetY+gridY));
-                    }
+                    ////////////////////Apply to GRID/////////////////////////////////
+                    (*it)->setPos( QPointF(
+                                       applyGrid( (*it)->scenePos().toPoint(),
+                                                      gridSize,
+                                                      QPoint(offsetX, offsetY)
+                                                  )
+                                           )
+                                  );
+                    //////////////////////////////////////////////////////////////////
                 }
 
-                if((EraserEnabled)&&(deleted))
+                if((EditingMode==1)&&(deleted))
                 {
                     addRemoveHistory(historyBuffer);
                 }
