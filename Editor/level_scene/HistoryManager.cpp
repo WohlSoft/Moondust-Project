@@ -72,6 +72,11 @@ void LvlScene::historyBack()
             newHist.type = HistoryOperation::LEVELHISTORY_REMOVE;
             newHist.data = newData;
             operationList.replace(historyIndex, newHist);
+
+            //refresh Animation control
+            if(opts.animationEnabled) stopAnimation();
+            if(opts.animationEnabled) startBlockAnimation();
+
             break;
     default:
         break;
