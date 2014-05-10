@@ -124,8 +124,8 @@ void MainWindow::loadSettings()
 
         LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
-        restoreGeometry(settings.value("geometry").toByteArray());
-        restoreState(settings.value("windowState").toByteArray());
+        restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
+        restoreState(settings.value("windowState", saveState() ).toByteArray());
         autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
     settings.endGroup();
 

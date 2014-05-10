@@ -59,8 +59,22 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         this->setSelected(1);
         ItemMenu->clear();
 
-        QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
-            LayerName->setEnabled(false);
+        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
+
+        QAction *setLayer;
+        QList<QAction *> layerItems;
+        foreach(LevelLayers layer, scene->LvlData->layers)
+        {
+            //Skip system layers
+            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+
+            setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+            setLayer->setData(layer.name);
+            setLayer->setCheckable(true);
+            setLayer->setEnabled(true);
+            setLayer->setChecked( layer.name==bgoData.layer );
+            layerItems.push_back(setLayer);
+        }
 
         ItemMenu->addSeparator();
         QAction *copyBGO = ItemMenu->addAction("Copy");
@@ -82,13 +96,46 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         else
         if(selected==remove)
         {
+            LevelData removedItems;
+            bool deleted=false;
+
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="BGO")
                 {
+                    removedItems.bgo.push_back(((ItemBGO *)SelItem)->bgoData);
                     ((ItemBGO *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    deleted=true;
                 }
+            }
+            if(deleted) scene->addRemoveHistory( removedItems );
+        }
+        else
+        {
+            foreach(QAction * lItem, layerItems)
+            {
+                if(selected==lItem)
+                {
+                    foreach(LevelLayers lr, scene->LvlData->layers)
+                    { //Find layer's settings
+                        if(lr.name==lItem->data().toString())
+                        {
+                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                            {
+
+                                if(SelItem->data(0).toString()=="BGO")
+                                {
+                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
+                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemBGO *) SelItem)->arrayApply();
+                                }
+                            }
+                        break;
+                        }
+                    }//Find layer's settings
+                 break;
+                }//Find selected layer's item
             }
         }
     }
@@ -96,6 +143,20 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
 
 ///////////////////MainArray functions/////////////////////////////
+void ItemBGO::setLayer(QString layer)
+{
+    foreach(LevelLayers lr, scene->LvlData->layers)
+    {
+        if(lr.name==layer)
+        {
+            bgoData.layer = layer;
+            this->setVisible(!lr.hidden);
+            arrayApply();
+        break;
+        }
+    }
+}
+
 void ItemBGO::arrayApply()
 {
     bool found=false;

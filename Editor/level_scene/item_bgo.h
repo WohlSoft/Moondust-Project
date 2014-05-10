@@ -59,6 +59,8 @@ public:
     void AnimationStop();
     void draw();
 
+    void setLayer(QString layer);
+
     void arrayApply();
     void removeFromArray();
 
