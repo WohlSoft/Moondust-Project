@@ -233,6 +233,16 @@ private slots:
     void on_BGOUniform_clicked(bool checked);
     void on_BlockUniform_clicked(bool checked);
 
+    void on_actionSelectOnly_triggered();
+
+    void on_actionSetFirstPlayer_triggered();
+
+    void on_actionSetSecondPlayer_triggered();
+
+    void on_actionDrawWater_triggered();
+
+    void on_actionDrawSand_triggered();
+
 private:
     dataconfigs configs; // Global objects configucrations
 
@@ -276,6 +286,8 @@ private:
     //Application Settings
     void setDefaults();
     void setUiDefults();
+
+    void resetEditmodeButtons();
 
     void loadSettings();
     void saveSettings();
