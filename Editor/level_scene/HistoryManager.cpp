@@ -34,50 +34,131 @@ void LvlScene::addRemoveHistory(LevelData removedItems)
     historyChanged = true;
 }
 
+void LvlScene::addPlaceHistory(LevelData placedItems)
+{
+    //add cleanup redo elements
+    cleanupRedoElements();
+    //add new element
+    HistoryOperation plOperation;
+    plOperation.type = HistoryOperation::LEVELHISTORY_PLACE;
+    plOperation.data = placedItems;
+    operationList.push_back(plOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
     HistoryOperation lastOperation = operationList[historyIndex];
-    HistoryOperation newHist;
-    LevelData deletedData;
-    LevelData newData;
+
     switch( lastOperation.type )
     {
-        case HistoryOperation::LEVELHISTORY_REMOVE:
-            //revert remove
-            deletedData = lastOperation.data;
+    case HistoryOperation::LEVELHISTORY_REMOVE:
+    {
+        //revert remove
+        LevelData deletedData = lastOperation.data;
+        HistoryOperation newHist;
+        LevelData newData;
 
-            foreach (LevelBlock block, deletedData.blocks)
+        foreach (LevelBlock block, deletedData.blocks)
+        {
+            //place them back
+            unsigned int newID = (LvlData->blocks_array_id++);
+            block.array_id = newID;
+            LvlData->blocks.push_back(block);
+            placeBlock(block);
+            //use it so redo can find faster via arrayID
+            newData.blocks.push_back(block);
+        }
+
+        foreach (LevelBGO bgo, deletedData.bgo)
+        {
+            //place them back
+            unsigned int newID = (LvlData->bgo_array_id++);
+            bgo.array_id = newID;
+            LvlData->bgo.push_back(bgo);
+            placeBGO(bgo);
+            //use it so redo can find faster via arrayID
+            newData.bgo.push_back(bgo);
+        }
+
+        newHist.type = HistoryOperation::LEVELHISTORY_REMOVE;
+        newHist.data = newData;
+        operationList.replace(historyIndex, newHist);
+
+        //refresh Animation control
+        if(opts.animationEnabled) stopAnimation();
+        if(opts.animationEnabled) startBlockAnimation();
+
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_PLACE:
+    {
+        //revert place
+        LevelData placeData = lastOperation.data;
+
+        QMap<int, LevelBlock> sortedBlock;
+        foreach (LevelBlock block, placeData.blocks)
+        {
+            sortedBlock[block.array_id] = block;
+        }
+
+        QMap<int, LevelBGO> sortedBGO;
+        foreach (LevelBGO bgo, placeData.bgo)
+        {
+            sortedBGO[bgo.array_id] = bgo;
+        }
+
+        bool blocksFinished = false;
+        bool bgosFinished = false;
+        foreach (QGraphicsItem* item, items()){
+            if(item->data(0).toString()=="Block")
             {
-                //place them back
-                unsigned int newID = (LvlData->blocks_array_id++);
-                block.array_id = newID;
-                LvlData->blocks.push_back(block);
-                placeBlock(block);
-                //use it so redo can find faster via arrayID
-                newData.blocks.push_back(block);
+                if(sortedBlock.size()!=0)
+                {
+                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+                    unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()==currentArrayId)
+                    {
+                        ((ItemBlock*)item)->removeFromArray();
+                        removeItem(item);
+                        sortedBlock.erase(beginItem);
+                    }
+                }
+                else
+                {
+                    blocksFinished = true;
+                }
             }
-
-            foreach (LevelBGO bgo, deletedData.bgo)
+            else
+            if(item->data(0).toString()=="BGO")
             {
-                //place them back
-                unsigned int newID = (LvlData->bgo_array_id++);
-                bgo.array_id = newID;
-                LvlData->bgo.push_back(bgo);
-                placeBGO(bgo);
-                //use it so redo can find faster via arrayID
-                newData.bgo.push_back(bgo);
+                if(sortedBGO.size()!=0)
+                {
+                    QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+                    unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()==currentArrayId)
+                    {
+                        ((ItemBGO *)item)->removeFromArray();
+                        removeItem(item);
+                        sortedBGO.erase(beginItem);
+                    }
+                }
+                else
+                {
+                    bgosFinished = true;
+                }
             }
+            if(blocksFinished&&bgosFinished)
+            {
+                break;
+            }
+        }
 
-            newHist.type = HistoryOperation::LEVELHISTORY_REMOVE;
-            newHist.data = newData;
-            operationList.replace(historyIndex, newHist);
-
-            //refresh Animation control
-            if(opts.animationEnabled) stopAnimation();
-            if(opts.animationEnabled) startBlockAnimation();
-
-            break;
+        break;
+    }
     default:
         break;
     }
@@ -89,69 +170,113 @@ void LvlScene::historyForward()
 {
 
     HistoryOperation lastOperation = operationList[historyIndex];
+
     switch( lastOperation.type )
     {
-        case HistoryOperation::LEVELHISTORY_REMOVE:
-            //redo remove
-            LevelData deletedData = lastOperation.data;
+    case HistoryOperation::LEVELHISTORY_REMOVE:
+    {
+        //redo remove
+        LevelData deletedData = lastOperation.data;
 
-            QMap<int, LevelBlock> sortedBlock;
-            foreach (LevelBlock block, deletedData.blocks)
+        QMap<int, LevelBlock> sortedBlock;
+        foreach (LevelBlock block, deletedData.blocks)
+        {
+            sortedBlock[block.array_id] = block;
+        }
+
+        QMap<int, LevelBGO> sortedBGO;
+        foreach (LevelBGO bgo, deletedData.bgo)
+        {
+            sortedBGO[bgo.array_id] = bgo;
+        }
+
+        bool blocksFinished = false;
+        bool bgosFinished = false;
+        foreach (QGraphicsItem* item, items()){
+            if(item->data(0).toString()=="Block")
             {
-                sortedBlock[block.array_id] = block;
-            }
-
-            QMap<int, LevelBGO> sortedBGO;
-            foreach (LevelBGO bgo, deletedData.bgo)
-            {
-                sortedBGO[bgo.array_id] = bgo;
-            }
-
-            bool blocksFinished = false;
-            bool bgosFinished = false;
-            foreach (QGraphicsItem* item, items()){
-                if(item->data(0).toString()=="Block")
+                if(sortedBlock.size()!=0)
                 {
-                    if(sortedBlock.size()!=0)
+                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+                    unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()==currentArrayId)
                     {
-                        QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                        unsigned int currentArrayId = (*beginItem).array_id;
-                        if((unsigned int)item->data(2).toInt()==currentArrayId)
-                        {
-                            ((ItemBlock*)item)->removeFromArray();
-                            removeItem(item);
-                            sortedBlock.erase(beginItem);
-                        }
-                    }
-                    else
-                    {
-                        blocksFinished = true;
+                        ((ItemBlock*)item)->removeFromArray();
+                        removeItem(item);
+                        sortedBlock.erase(beginItem);
                     }
                 }
                 else
-                if(item->data(0).toString()=="BGO")
                 {
-                    if(sortedBGO.size()!=0)
-                    {
-                        QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-                        unsigned int currentArrayId = (*beginItem).array_id;
-                        if((unsigned int)item->data(2).toInt()==currentArrayId)
-                        {
-                            ((ItemBGO *)item)->removeFromArray();
-                            removeItem(item);
-                            sortedBGO.erase(beginItem);
-                        }
-                    }
-                    else
-                    {
-                        bgosFinished = true;
-                    }
-                }
-                if(blocksFinished&&bgosFinished)
-                {
-                    break;
+                    blocksFinished = true;
                 }
             }
+            else
+            if(item->data(0).toString()=="BGO")
+            {
+                if(sortedBGO.size()!=0)
+                {
+                    QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+                    unsigned int currentArrayId = (*beginItem).array_id;
+                    if((unsigned int)item->data(2).toInt()==currentArrayId)
+                    {
+                        ((ItemBGO *)item)->removeFromArray();
+                        removeItem(item);
+                        sortedBGO.erase(beginItem);
+                    }
+                }
+                else
+                {
+                    bgosFinished = true;
+                }
+            }
+            if(blocksFinished&&bgosFinished)
+            {
+                break;
+            }
+        }
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_PLACE:
+    {
+        //redo place
+        LevelData placedData = lastOperation.data;
+        HistoryOperation newHist;
+        LevelData newData;
+
+        foreach (LevelBlock block, placedData.blocks)
+        {
+            //place them back
+            unsigned int newID = (LvlData->blocks_array_id++);
+            block.array_id = newID;
+            LvlData->blocks.push_back(block);
+            placeBlock(block);
+            //use it so redo can find faster via arrayID
+            newData.blocks.push_back(block);
+        }
+
+        foreach (LevelBGO bgo, placedData.bgo)
+        {
+            //place them back
+            unsigned int newID = (LvlData->bgo_array_id++);
+            bgo.array_id = newID;
+            LvlData->bgo.push_back(bgo);
+            placeBGO(bgo);
+            //use it so redo can find faster via arrayID
+            newData.bgo.push_back(bgo);
+        }
+
+        newHist.type = HistoryOperation::LEVELHISTORY_PLACE;
+        newHist.data = newData;
+        operationList.replace(historyIndex, newHist);
+
+        //refresh Animation control
+        if(opts.animationEnabled) stopAnimation();
+        if(opts.animationEnabled) startBlockAnimation();
+
+    }
+    default:
+        break;
     }
 
     historyIndex++;
