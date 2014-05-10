@@ -48,6 +48,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     EditingMode = 0;
     EraserEnabled = false;
     PasteFromBuffer = false;
+    disableMoveItems = false;
 
     //Editing process flags
     IsMoved = false;

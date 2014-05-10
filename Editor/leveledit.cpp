@@ -302,7 +302,7 @@ void leveledit::changeCursor(int mode)
     case 2:    // place New item
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setCursor(Qt::CrossCursor);
-        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         break;
     case 3:    // Draw water zones
         ui->graphicsView->setInteractive(false);

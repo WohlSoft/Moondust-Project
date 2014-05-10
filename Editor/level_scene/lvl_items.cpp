@@ -59,8 +59,6 @@ QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 
 
 
-
-
 // //////////////////////////////// Place new ////////////////////////////////
 
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)

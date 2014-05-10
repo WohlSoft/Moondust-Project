@@ -85,6 +85,8 @@ public:
     bool EraserEnabled;
     bool PasteFromBuffer;
 
+    bool disableMoveItems;
+
     //Event Flags
     bool wasPasted;
     bool doCopy;
@@ -201,6 +203,8 @@ private:
     void placeDoor(LevelDoors &door, bool toGrid=false);
     void placeNPC(LevelNPC &npc, bool toGrid=false);
     void placeWater(LevelWater &water, bool toGrid=false);
+
+    void removeItemUnderCursor();
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
 
