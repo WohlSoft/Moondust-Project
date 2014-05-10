@@ -83,7 +83,11 @@ LevelData LvlScene::copy(bool cut)
 
         }//fetch selected items
 
-        if(cut){ LvlData->modified = true; }
+        if(cut)
+        {
+            LvlData->modified = true;
+            addRemoveHistory(copyData);
+        }
     }
 
     return copyData;

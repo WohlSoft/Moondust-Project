@@ -107,8 +107,8 @@ void LvlScene::historyForward()
                 sortedBGO[bgo.array_id] = bgo;
             }
 
-            bool blocksFinished;
-            bool bgosFinished;
+            bool blocksFinished = false;
+            bool bgosFinished = false;
             foreach (QGraphicsItem* item, items()){
                 if(item->data(0).toString()=="Block")
                 {
