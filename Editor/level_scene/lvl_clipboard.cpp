@@ -173,6 +173,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
 
     LvlData->modified = true;
     addPlaceHistory(newData);
+
     //refresh Animation control
     if(opts.animationEnabled) stopAnimation();
     if(opts.animationEnabled) startBlockAnimation();

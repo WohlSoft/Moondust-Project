@@ -166,23 +166,23 @@ public:
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
         enum HistoryType{
-            LEVELHISTORY_REMOVE = 0,
-            LEVELHISTORY_PLACE
+            LEVELHISTORY_REMOVE = 0, //Removed from map
+            LEVELHISTORY_PLACE,      //Placed new
+            LEVELHISTORY_MODIFY      //(moved, changed settings of items)
         };
         HistoryType type;
         //used most of Operations
         LevelData data;
+        LevelData data_mod;
     };
     void addRemoveHistory(LevelData removedItems);
-    void addPlaceHistory(LevelData placedItems);
+	void addPlaceHistory(LevelData placedItems);
     void historyBack();
     void historyForward();
     int getHistroyIndex();
     void cleanupRedoElements();
     bool canUndo();
     bool canRedo();
-    //void setScenePoint(LvlScene *theScene); //in scene nothing to set pointer to himself :D
-    //bool historyChanged; //In events flag list
     // ////////////////////////////////////////////
 
 protected:
