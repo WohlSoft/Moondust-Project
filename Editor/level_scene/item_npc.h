@@ -63,6 +63,8 @@ public:
     void setNoMovable(bool stat);
     void setLegacyBoss(bool boss);
 
+    void changeDirection(int dir);
+
     void arrayApply();
     void removeFromArray();
 
@@ -82,6 +84,11 @@ private:
     int frameSpeed;
     int frameStyle;
     int direction;
+    bool customAnimate;
+    int custom_frameFL;//first left
+    int custom_frameEL;//end left
+    int custom_frameFR;//first right
+    int custom_frameER;//enf right
 
     LvlScene * scene;
     int frameCurrent;

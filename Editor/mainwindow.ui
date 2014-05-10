@@ -655,6 +655,7 @@
    </attribute>
    <addaction name="actionHandScroll"/>
    <addaction name="actionSelect"/>
+   <addaction name="actionSelectOnly"/>
    <addaction name="actionEriser"/>
    <addaction name="separator"/>
    <addaction name="actionPlayMusic"/>
@@ -3218,7 +3219,7 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/images/arrow.png</normaloff>:/images/arrow.png</iconset>
    </property>
    <property name="text">
-    <string>Select</string>
+    <string>Select and Move</string>
    </property>
    <property name="toolTip">
     <string>Select (S)</string>
@@ -3684,6 +3685,24 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>English</string>
+   </property>
+  </action>
+  <action name="actionSelectOnly">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/select_only.png</normaloff>:/select_only.png</iconset>
+   </property>
+   <property name="text">
+    <string>Select only</string>
+   </property>
+   <property name="shortcut">
+    <string>W</string>
    </property>
   </action>
  </widget>

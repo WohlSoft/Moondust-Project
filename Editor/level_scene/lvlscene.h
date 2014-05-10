@@ -85,6 +85,8 @@ public:
     bool EraserEnabled;
     bool PasteFromBuffer;
 
+    bool disableMoveItems;
+
     //Event Flags
     bool wasPasted;
     bool doCopy;
@@ -196,10 +198,15 @@ private:
 
     QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
 
-    void placeBlock(LevelBlock &block);
-    void placeBGO(LevelBGO &bgo);
-    void placeDoor(LevelDoors &door);
-    void placeNPC(LevelNPC &npc);
+    void placeBlock(LevelBlock &block, bool toGrid=false);
+    void placeBGO(LevelBGO &bgo, bool toGrid=false);
+    void placeDoor(LevelDoors &door, bool toGrid=false);
+    void placeNPC(LevelNPC &npc, bool toGrid=false);
+    void placeWater(LevelWater &water, bool toGrid=false);
+
+    void removeItemUnderCursor();
+
+    QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
 
     void setSectionBG(LevelSection section);
 
