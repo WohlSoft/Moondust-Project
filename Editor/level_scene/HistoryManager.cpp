@@ -52,50 +52,51 @@ void LvlScene::historyBack()
 {
     historyIndex--;
     HistoryOperation lastOperation = operationList[historyIndex];
+    HistoryOperation newHist;
+    LevelData deletedData;
+    LevelData newData;
 
     switch( lastOperation.type )
     {
     case HistoryOperation::LEVELHISTORY_REMOVE:
-    {
-        //revert remove
-        LevelData deletedData = lastOperation.data;
-        HistoryOperation newHist;
-        LevelData newData;
-
-        foreach (LevelBlock block, deletedData.blocks)
         {
-            //place them back
-            unsigned int newID = (LvlData->blocks_array_id++);
-            block.array_id = newID;
-            LvlData->blocks.push_back(block);
-            placeBlock(block);
-            //use it so redo can find faster via arrayID
-            newData.blocks.push_back(block);
+            //revert remove
+            deletedData = lastOperation.data;
+
+            foreach (LevelBlock block, deletedData.blocks)
+            {
+                //place them back
+                unsigned int newID = (LvlData->blocks_array_id++);
+                block.array_id = newID;
+                LvlData->blocks.push_back(block);
+                placeBlock(block);
+                //use it so redo can find faster via arrayID
+                newData.blocks.push_back(block);
+            }
+
+            foreach (LevelBGO bgo, deletedData.bgo)
+            {
+                //place them back
+                unsigned int newID = (LvlData->bgo_array_id++);
+                bgo.array_id = newID;
+                LvlData->bgo.push_back(bgo);
+                placeBGO(bgo);
+                //use it so redo can find faster via arrayID
+                newData.bgo.push_back(bgo);
+            }
+
+            newHist.type = HistoryOperation::LEVELHISTORY_REMOVE;
+            newHist.data = newData;
+            operationList.replace(historyIndex, newHist);
+
+            //refresh Animation control
+            if(opts.animationEnabled) stopAnimation();
+            if(opts.animationEnabled) startBlockAnimation();
+
+            break;
         }
-
-        foreach (LevelBGO bgo, deletedData.bgo)
-        {
-            //place them back
-            unsigned int newID = (LvlData->bgo_array_id++);
-            bgo.array_id = newID;
-            LvlData->bgo.push_back(bgo);
-            placeBGO(bgo);
-            //use it so redo can find faster via arrayID
-            newData.bgo.push_back(bgo);
-        }
-
-        newHist.type = HistoryOperation::LEVELHISTORY_REMOVE;
-        newHist.data = newData;
-        operationList.replace(historyIndex, newHist);
-
-        //refresh Animation control
-        if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startBlockAnimation();
-
-        break;
-    }
     case HistoryOperation::LEVELHISTORY_PLACE:
-    {
+        {
         //revert place
         LevelData placeData = lastOperation.data;
 
@@ -113,24 +114,25 @@ void LvlScene::historyBack()
 
         bool blocksFinished = false;
         bool bgosFinished = false;
-        foreach (QGraphicsItem* item, items()){
+        foreach (QGraphicsItem* item, items())
+        {
             if(item->data(0).toString()=="Block")
             {
                 if(sortedBlock.size()!=0)
                 {
-                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        ((ItemBlock*)item)->removeFromArray();
-                        removeItem(item);
-                        sortedBlock.erase(beginItem);
-                    }
-                }
-                else
+                QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
                 {
-                    blocksFinished = true;
+                    ((ItemBlock*)item)->removeFromArray();
+                    removeItem(item);
+                    sortedBlock.erase(beginItem);
                 }
+            }
+            else
+            {
+                blocksFinished = true;
+            }
             }
             else
             if(item->data(0).toString()=="BGO")
@@ -158,7 +160,7 @@ void LvlScene::historyBack()
         }
 
         break;
-    }
+        }
     default:
         break;
     }
