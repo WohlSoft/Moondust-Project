@@ -102,37 +102,49 @@ void LvlScene::historyForward()
                 sortedBGO[bgo.array_id] = bgo;
             }
 
+            bool blocksFinished;
+            bool bgosFinished;
             foreach (QGraphicsItem* item, items()){
                 if(item->data(0).toString()=="Block")
                 {
-                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
+                    if(sortedBlock.size()!=0)
                     {
-                        ((ItemBlock*)item)->removeFromArray();
-                        removeItem(item);
-                        sortedBlock.erase(beginItem);
-                        if(sortedBlock.size()==0)
+                        QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+                        unsigned int currentArrayId = (*beginItem).array_id;
+                        if((unsigned int)item->data(2).toInt()==currentArrayId)
                         {
-                            break;
+                            ((ItemBlock*)item)->removeFromArray();
+                            removeItem(item);
+                            sortedBlock.erase(beginItem);
                         }
+                    }
+                    else
+                    {
+                        blocksFinished = true;
                     }
                 }
                 else
                 if(item->data(0).toString()=="BGO")
                 {
-                    QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
+                    if(sortedBGO.size()!=0)
                     {
-                        ((ItemBGO *)item)->removeFromArray();
-                        removeItem(item);
-                        sortedBGO.erase(beginItem);
-                        if(sortedBGO.size()==0)
+                        QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+                        unsigned int currentArrayId = (*beginItem).array_id;
+                        if((unsigned int)item->data(2).toInt()==currentArrayId)
                         {
-                            break;
+                            ((ItemBGO *)item)->removeFromArray();
+                            removeItem(item);
+                            sortedBGO.erase(beginItem);
                         }
                     }
+                    else
+                    {
+                        bgosFinished = true;
+                    }
+                }
+                if(blocksFinished&&bgosFinished)
+                {
+                    break;
                 }
             }
     }
