@@ -166,13 +166,15 @@ public:
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
         enum HistoryType{
-            LEVELHISTORY_REMOVE = 0
+            LEVELHISTORY_REMOVE = 0,
+            LEVELHISTORY_PLACE
         };
         HistoryType type;
         //used most of Operations
         LevelData data;
     };
     void addRemoveHistory(LevelData removedItems);
+    void addPlaceHistory(LevelData placedItems);
     void historyBack();
     void historyForward();
     int getHistroyIndex();

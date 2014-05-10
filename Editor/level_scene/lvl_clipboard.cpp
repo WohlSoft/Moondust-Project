@@ -83,7 +83,11 @@ LevelData LvlScene::copy(bool cut)
 
         }//fetch selected items
 
-        if(cut){ LvlData->modified = true; }
+        if(cut)
+        {
+            LvlData->modified = true;
+            addRemoveHistory(copyData);
+        }
     }
 
     return copyData;
@@ -91,6 +95,7 @@ LevelData LvlScene::copy(bool cut)
 
 void LvlScene::paste(LevelData BufferIn, QPoint pos)
 {
+    LevelData newData;
     long baseX, baseY;
     //set first base
     if(!BufferIn.blocks.isEmpty()){
@@ -141,6 +146,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         dumpBlock.array_id = LvlData->blocks_array_id;
         placeBlock(dumpBlock);
         LvlData->blocks.push_back(dumpBlock);
+        newData.blocks.push_back(dumpBlock);
     }
     foreach (LevelBGO bgo, BufferIn.bgo){
         //Gen Copy of BGO
@@ -151,6 +157,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         dumpBGO.array_id = LvlData->bgo_array_id;
         placeBGO(dumpBGO);
         LvlData->bgo.push_back(dumpBGO);
+        newData.bgo.push_back(dumpBGO);
     }
     foreach (LevelNPC npc, BufferIn.npc){
         //Gen Copy of NPC
@@ -161,9 +168,11 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         dumpNPC.array_id = LvlData->npc_array_id;
         placeNPC(dumpNPC);
         LvlData->npc.push_back(dumpNPC);
+        newData.npc.push_back(dumpNPC);
     }
 
     LvlData->modified = true;
+    addPlaceHistory(newData);
     //refresh Animation control
     if(opts.animationEnabled) stopAnimation();
     if(opts.animationEnabled) startBlockAnimation();
