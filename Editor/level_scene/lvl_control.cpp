@@ -163,7 +163,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
-            int gridSize=32, offsetX=0, offsetY=0, gridX, gridY;//, i=0;
+            int gridSize=32, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
             QPoint sourcePos;
 
             cursor->hide();
@@ -216,6 +216,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
 
                     gridSize = 32;
+                    offsetX = 0;
+                    offsetY = 0;
                     ObjType = (*it)->data(0).toString();
 
                     //(*it)->setZValue(Z);
@@ -252,41 +254,15 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         gridSize = 2 ;
                     }
 
-                    QPointF itemPos;
-
-                    itemPos = (*it)->scenePos();
-
-                    if(grid)
-                    { //ATTACH TO GRID
-                        gridX = ((int)itemPos.x() - (int)itemPos.x() % gridSize);
-                        gridY = ((int)itemPos.y() - (int)itemPos.y() % gridSize);
-
-                        if((int)itemPos.x()<0)
-                        {
-                            if( (int)itemPos.x() < offsetX+gridX - (int)(gridSize/2) )
-                                gridX -= gridSize;
-                        }
-                        else
-                        {
-                            if( (int)itemPos.x() > offsetX+gridX + (int)(gridSize/2) )
-                                gridX += gridSize;
-                        }
-
-                        if((int)itemPos.y()<0)
-                        {if( (int)itemPos.y() < offsetY+gridY - (int)(gridSize/2) )
-                            gridY -= gridSize;
-                        }
-                        else {if( (int)itemPos.y() > offsetY+gridY + (int)(gridSize/2) )
-                         gridY += gridSize;
-                        }
-
-                        if(ObjType=="Block")
-                        {
-                            (*it)->setPos(QPointF(gridX, gridY));
-                        }
-                            else
-                        (*it)->setPos(QPointF(offsetX+gridX, offsetY+gridY));
-                    }
+                    ////////////////////Apply to GRID/////////////////////////////////
+                    (*it)->setPos( QPointF(
+                                       applyGrid( (*it)->scenePos().toPoint(),
+                                                      gridSize,
+                                                      QPoint(offsetX, offsetY)
+                                                  )
+                                           )
+                                  );
+                    //////////////////////////////////////////////////////////////////
                 }
 
                 if((EraserEnabled)&&(deleted))
