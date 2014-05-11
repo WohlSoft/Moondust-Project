@@ -168,14 +168,17 @@ public:
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
         enum HistoryType{
-            LEVELHISTORY_REMOVE = 0, //Removed from map
-            LEVELHISTORY_PLACE,      //Placed new
-            LEVELHISTORY_MODIFY      //(moved, changed settings of items)
+            LEVELHISTORY_REMOVE = 0,               //Removed from map
+            LEVELHISTORY_PLACE,                    //Placed new
+            LEVELHISTORY_MOVE,                     //moved
+            LEVELHISTORY_CHANGEDSETTINGS           //changed settings of items
         };
         HistoryType type;
         //used most of Operations
         LevelData data;
         LevelData data_mod;
+        //for move
+        QPoint targetPos;
     };
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
