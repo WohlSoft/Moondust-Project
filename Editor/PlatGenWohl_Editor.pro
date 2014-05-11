@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     level_scene/place_new_item.cpp \
     level_scene/lvl_control.cpp \
     level_scene/lvl_items.cpp \
-    main_window/edit_control.cpp
+    main_window/edit_control.cpp \
+    level_scene/lvl_usergfx.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
