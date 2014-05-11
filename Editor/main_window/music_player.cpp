@@ -159,7 +159,10 @@ void MainWindow::setMusic(bool checked)
 
     WriteToLog(QtDebugMsg, "Check for Sielent");
 
-    if(ui->LVLPropsMusicNumber->currentIndex() <= 0)
+    if((ui->LVLPropsMusicNumber->currentIndex() <= 0) // Music is sielent
+            ||
+       //Mute, if music ID not exist
+      (ui->LVLPropsMusicNumber->currentIndex()-1 > configs.main_music_lvl.size() ))
         silent=true;
     else
         silent=false;

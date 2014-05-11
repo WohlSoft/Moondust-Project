@@ -454,7 +454,7 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
        activeLvlEditWin()->setCurrentSection(SectionId);
     }
 
-    if (WinType==1)
+    if(WinType==1)
     {
         WriteToLog(QtDebugMsg, "Set Section Data in menu");
         //Set Section Data in menu
