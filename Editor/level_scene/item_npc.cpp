@@ -137,6 +137,10 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             }
         }
     }
+    else
+    {
+        QGraphicsPixmapItem::contextMenuEvent(event);
+    }
 }
 
 //Change arrtibutes
