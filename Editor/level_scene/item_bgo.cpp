@@ -139,6 +139,10 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             }
         }
     }
+    else
+    {
+        QGraphicsPixmapItem::contextMenuEvent(event);
+    }
 }
 
 

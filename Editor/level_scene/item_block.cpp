@@ -169,6 +169,10 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             }
         }
     }
+    else
+    {
+        QGraphicsPixmapItem::contextMenuEvent(event);
+    }
 }
 
 void ItemBlock::setSlippery(bool slip)
