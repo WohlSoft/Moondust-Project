@@ -204,6 +204,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             //History
             LevelData historyBuffer; bool deleted=false;
+            LevelData historySourceBuffer;
 
             if(PasteFromBuffer)
             {
@@ -385,23 +386,28 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         {
                             //WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
                             //Applay move into main array
+                            historySourceBuffer.blocks.push_back(((ItemBlock *)(*it))->blockData);
                             ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
                             ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
                             ((ItemBlock *)(*it))->arrayApply();
+                            historyBuffer.blocks.push_back(((ItemBlock *)(*it))->blockData);
                             LvlData->modified = true;
                         }
                         else
                         if( ObjType == "BGO")
                         {
                             //Applay move into main array
+                            historySourceBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
                             ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
                             ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
                             ((ItemBGO *)(*it))->arrayApply();
+                            historyBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
                             LvlData->modified = true;
                         }
                     }
                 }
 
+                addMoveHistory(historySourceBuffer, historyBuffer);
 
                 QGraphicsScene::mouseReleaseEvent(mouseEvent);
                 return;
