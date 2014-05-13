@@ -204,13 +204,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             //History
             LevelData historyBuffer; bool deleted=false;
+            LevelData historySourceBuffer;
 
             if(PasteFromBuffer)
             {
                 paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
                 EditingMode = 0;
                 PasteFromBuffer = false;
-                //IsMoved=true;
+                IsMoved=false;
                 wasPasted = true; //Set flag for reset pasta cursor to normal select
             }
 
@@ -231,7 +232,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         }
                     }
                 }*/
-                IsMoved = false;
 
                 // correct selected items' coordinates
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
@@ -357,6 +357,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //Check position
                     if( sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y())))
                     {
+                        IsMoved=false;
                         WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
                         continue;
                     }
@@ -385,23 +386,30 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         {
                             //WriteToLog(QtDebugMsg, QString(" >>Collision passed"));
                             //Applay move into main array
+                            historySourceBuffer.blocks.push_back(((ItemBlock *)(*it))->blockData);
                             ((ItemBlock *)(*it))->blockData.x = (long)(*it)->scenePos().x();
                             ((ItemBlock *)(*it))->blockData.y = (long)(*it)->scenePos().y();
                             ((ItemBlock *)(*it))->arrayApply();
+                            historyBuffer.blocks.push_back(((ItemBlock *)(*it))->blockData);
                             LvlData->modified = true;
                         }
                         else
                         if( ObjType == "BGO")
                         {
                             //Applay move into main array
+                            historySourceBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
                             ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
                             ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
                             ((ItemBGO *)(*it))->arrayApply();
+                            historyBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
                             LvlData->modified = true;
                         }
                     }
                 }
 
+                if((EditingMode==0)&&(IsMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
+
+                IsMoved = false;
 
                 QGraphicsScene::mouseReleaseEvent(mouseEvent);
                 return;
