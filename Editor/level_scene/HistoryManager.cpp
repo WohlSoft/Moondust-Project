@@ -53,7 +53,7 @@ void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedI
     cleanupRedoElements();
 
     //calc new Pos:
-    long baseX, baseY;
+    long baseX=0, baseY=0;
 
     //set first base
     if(!targetMovedItems.blocks.isEmpty()){
@@ -504,7 +504,7 @@ void LvlScene::historyForward()
 
             block.array_id = newID;
             LvlData->blocks.push_back(block);
-            placeBlock(block);
+            placeBlock(block, true);
         }
 
         foreach (LevelBGO bgo, placedData.bgo)
@@ -516,7 +516,7 @@ void LvlScene::historyForward()
 
             bgo.array_id = newID;
             LvlData->bgo.push_back(bgo);
-            placeBGO(bgo);
+            placeBGO(bgo, true);
         }
 
         //refresh Animation control
@@ -533,7 +533,7 @@ void LvlScene::historyForward()
         long targetPosY = lastOperation.y;
 
         //calc new Pos:
-        long baseX, baseY;
+        long baseX=0, baseY=0;
 
         //set first base
         if(!movedSourceData.blocks.isEmpty()){
