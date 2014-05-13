@@ -178,10 +178,11 @@ public:
         LevelData data;
         LevelData data_mod;
         //for move
-        QPoint targetPos;
+        long x, y;
     };
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
+    void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
     void historyBack();
     void historyForward();
     int getHistroyIndex();
