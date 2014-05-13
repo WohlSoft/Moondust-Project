@@ -133,6 +133,12 @@ void leveledit::ExportToImage_fn()
             return;
 
         QFileInfo exported(fileName);
+
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+
+        if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
+        scene->clearSelection(); // Clear selection on export
+
         latest_export = exported.fileName();
         latest_export_path = exported.absoluteDir().path();
         proportion = imgSize[2];
@@ -146,8 +152,9 @@ void leveledit::ExportToImage_fn()
         scene->render(&p, QRectF(0,0,tw,th),QRectF(x,y,w,h));
         p.end();
 
-        QApplication::setOverrideCursor(Qt::WaitCursor);
         img.save(fileName);
+
+        if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
         QApplication::restoreOverrideCursor();
 
         settings.beginGroup("Main");
