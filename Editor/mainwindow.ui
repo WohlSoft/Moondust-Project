@@ -617,8 +617,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>195</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -627,6 +627,23 @@
      </widget>
     </widget>
    </widget>
+  </widget>
+  <widget class="QToolBar" name="CommonEditBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="separator"/>
+   <addaction name="actionCopy"/>
+   <addaction name="actionCut"/>
+   <addaction name="actionPaste"/>
   </widget>
   <widget class="QToolBar" name="EditionToolBar">
    <property name="enabled">
@@ -854,8 +871,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -878,8 +895,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -902,8 +919,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -3461,6 +3478,10 @@ p, li { white-space: pre-wrap; }
    <property name="enabled">
     <bool>false</bool>
    </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/edit_undo.png</normaloff>:/images/edit_undo.png</iconset>
+   </property>
    <property name="text">
     <string>Undo</string>
    </property>
@@ -3471,6 +3492,10 @@ p, li { white-space: pre-wrap; }
   <action name="actionRedo">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/edit_redo.png</normaloff>:/images/edit_redo.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -3586,6 +3611,13 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionCopy">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/edit_copy.png</normaloff>:/images/edit_copy.png</iconset>
+   </property>
    <property name="text">
     <string>Copy</string>
    </property>
@@ -3641,6 +3673,13 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionPaste">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/edit_paste.png</normaloff>:/images/edit_paste.png</iconset>
+   </property>
    <property name="text">
     <string>Paste</string>
    </property>
@@ -3669,6 +3708,13 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionCut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="editor.qrc">
+     <normaloff>:/images/edit_cut.png</normaloff>:/images/edit_cut.png</iconset>
+   </property>
    <property name="text">
     <string>Cut</string>
    </property>
