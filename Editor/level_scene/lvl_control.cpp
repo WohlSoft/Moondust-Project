@@ -211,7 +211,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
                 EditingMode = 0;
                 PasteFromBuffer = false;
-                //IsMoved=true;
+                IsMoved=false;
                 wasPasted = true; //Set flag for reset pasta cursor to normal select
             }
 
@@ -232,7 +232,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         }
                     }
                 }*/
-                IsMoved = false;
 
                 // correct selected items' coordinates
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
@@ -358,6 +357,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //Check position
                     if( sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y())))
                     {
+                        IsMoved=false;
                         WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
                         continue;
                     }
@@ -407,7 +407,9 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
 
-                addMoveHistory(historySourceBuffer, historyBuffer);
+                if((EditingMode==0)&&(IsMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
+
+                IsMoved = false;
 
                 QGraphicsScene::mouseReleaseEvent(mouseEvent);
                 return;
