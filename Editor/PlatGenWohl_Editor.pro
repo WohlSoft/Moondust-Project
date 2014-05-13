@@ -15,13 +15,10 @@ SOURCES += main.cpp\
     levelprops.cpp \
     npcedit.cpp \
     leveledit.cpp \
-    lvlscene.cpp \
     dataconfigs.cpp \
     saveimage.cpp \
     musicfilelist.cpp \
     logger.cpp \
-    item_block.cpp \
-    item_bgo.cpp \
     file_formats/file_formats.cpp \
     file_formats/file_lvl.cpp \
     file_formats/file_npc_txt.cpp \
@@ -35,7 +32,20 @@ SOURCES += main.cpp\
     main_window/edit_level.cpp \
     main_window/edit_world.cpp \
     main_window/music_player.cpp \
-    main_window/edit_common.cpp
+    main_window/edit_common.cpp \
+    level_scene/lvlscene.cpp \
+    level_scene/item_bgo.cpp \
+    level_scene/item_block.cpp \
+    level_scene/HistoryManager.cpp \
+    level_scene/lvl_clipboard.cpp \
+    level_scene/item_npc.cpp \
+    main_window/files_io.cpp \
+    main_window/menubar.cpp \
+    level_scene/place_new_item.cpp \
+    level_scene/lvl_control.cpp \
+    level_scene/lvl_items.cpp \
+    main_window/edit_control.cpp \
+    level_scene/lvl_usergfx.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -45,14 +55,15 @@ HEADERS  += mainwindow.h \
     npc_filedata.h \
     npcedit.h \
     leveledit.h \
-    lvlscene.h \
     dataconfigs.h \
     saveimage.h \
     musicfilelist.h \
     logger.h \
-    item_block.h \
-    item_bgo.h \
-    file_formats/file_formats.h
+    file_formats/file_formats.h \
+    level_scene/item_bgo.h \
+    level_scene/item_block.h \
+    level_scene/lvlscene.h \
+    level_scene/item_npc.h
 
 FORMS    += \
     aboutdialog.ui \

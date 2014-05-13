@@ -24,8 +24,23 @@
 #include <QProgressDialog>
 #include <QMenu>
 
+#include <QGraphicsSceneMouseEvent>
+
+#include <QGraphicsItemAnimation>
+
+#include <QKeyEvent>
+#include <QBitmap>
+#include <QPainter>
+#include <QMessageBox>
+#include <QApplication>
+#include <QtCore>
+#include <QDebug>
+
+
 #include "lvl_filedata.h"
 #include "dataconfigs.h"
+
+#include "logger.h"
 
 struct UserBGOs
 {
@@ -69,10 +84,17 @@ public:
                      // 3 - drawing water/sand zone, 4 - placing from Buffer
     bool EraserEnabled;
     bool PasteFromBuffer;
+
+    bool disableMoveItems;
+
+    //Event Flags
     bool wasPasted;
+    bool doCopy;
+    bool doCut;
+    bool historyChanged;
 
     //Copy function
-    LevelData copy();
+    LevelData copy(bool cut = false);
     void paste(LevelData BufferIn, QPoint pos);
 
     LevelEditingSettings opts;
@@ -143,20 +165,50 @@ public:
     int spaceZ1; // interSection space layer
     int spaceZ2;
 
+    // ////////////HistoryManager///////////////////
+    struct HistoryOperation{
+        enum HistoryType{
+            LEVELHISTORY_REMOVE = 0, //Removed from map
+            LEVELHISTORY_PLACE,      //Placed new
+            LEVELHISTORY_MODIFY      //(moved, changed settings of items)
+        };
+        HistoryType type;
+        //used most of Operations
+        LevelData data;
+        LevelData data_mod;
+    };
+    void addRemoveHistory(LevelData removedItems);
+	void addPlaceHistory(LevelData placedItems);
+    void historyBack();
+    void historyForward();
+    int getHistroyIndex();
+    void cleanupRedoElements();
+    bool canUndo();
+    bool canRedo();
+    QMap<int,int> BlocksArrayIDForwarder;
+    QMap<int,int> BGOsArrayIDForwarder;
+    // ////////////////////////////////////////////
+
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void keyReleaseEvent ( QKeyEvent * keyEvent );
 
 private:
 
     QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
 
-    void placeBlock(LevelBlock &block);
-    void placeBGO(LevelBGO &bgo);
-    void placeDoor(LevelDoors &door);
-    void placeNPC(LevelNPC &npc);
+    void placeBlock(LevelBlock &block, bool toGrid=false);
+    void placeBGO(LevelBGO &bgo, bool toGrid=false);
+    void placeDoor(LevelDoors &door, bool toGrid=false);
+    void placeNPC(LevelNPC &npc, bool toGrid=false);
+    void placeWater(LevelWater &water, bool toGrid=false);
+
+    void removeItemUnderCursor();
+
+    QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
 
     void setSectionBG(LevelSection section);
 
@@ -184,6 +236,11 @@ private:
     QGraphicsItem *mDragged;
     // The distance from the top left of the item to the mouse position.
     QPointF mDragOffset;
+
+    // ////////////////HistoryManager///////////////////
+    int historyIndex;
+    QList<HistoryOperation> operationList;
+    // /////////////////////////////////////////////////
 
 };
 

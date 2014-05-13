@@ -16,31 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include <QFile>
-#include <QTextStream>
-#include <QApplication>
+#include "lvlscene.h"
+#include "../leveledit.h"
 
-QString debugLogFile = "PGE_debug_log.txt" ;
+#include "item_block.h"
+#include "item_bgo.h"
 
-void WriteToLog(QtMsgType type, QString msg)
-    {
-        QString txt;
-        switch (type) {
-        case QtDebugMsg:
-        txt = QString("Debug: %1").arg(msg);
-        break;
-        case QtWarningMsg:
-        txt = QString("Warning: %1").arg(msg);
-        break;
-        case QtCriticalMsg:
-        txt = QString("Critical: %1").arg(msg);
-        break;
-        case QtFatalMsg:
-        txt = QString("Fatal: %1").arg(msg);
-    }
 
-    QFile outFile(debugLogFile);
-    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-    QTextStream ts(&outFile);
-    ts << txt << endl;
-}

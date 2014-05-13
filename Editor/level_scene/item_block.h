@@ -60,6 +60,7 @@ public:
     void draw();
     void setSlippery(bool slip);
     void setInvisible(bool inv);
+    void setLayer(QString layer);
 
     void arrayApply();
     void removeFromArray();

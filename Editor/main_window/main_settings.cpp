@@ -72,6 +72,7 @@ void MainWindow::setUiDefults()
     ui->LevelToolBox->hide();
     ui->DoorsToolbox->hide();
     ui->LevelLayers->hide();
+    ui->ItemProperties->hide();
 
     ui->menuView->setEnabled(0);
 
@@ -91,15 +92,19 @@ void MainWindow::setUiDefults()
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
 
+
+    //Start event detector
     TickTackLock = false;
 
+    //set timer for event detector loop
     TickTackTimer = new QTimer(this);
     connect(
             TickTackTimer, SIGNAL(timeout()),
             this,
             SLOT( TickTack() ) );
 
-    TickTackTimer->start(10);
+    //start event detection loop
+    TickTackTimer->start(1);
 }
 
 
@@ -119,8 +124,8 @@ void MainWindow::loadSettings()
 
         LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
-        restoreGeometry(settings.value("geometry").toByteArray());
-        restoreState(settings.value("windowState").toByteArray());
+        restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
+        restoreState(settings.value("windowState", saveState() ).toByteArray());
         autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
     settings.endGroup();
 

@@ -25,7 +25,7 @@
 #include "leveledit.h"
 #include "ui_leveledit.h"
 #include "lvl_filedata.h"
-#include "lvlscene.h"
+#include "level_scene/lvlscene.h"
 #include "dataconfigs.h"
 #include "saveimage.h"
 #include "logger.h"
@@ -133,6 +133,12 @@ void leveledit::ExportToImage_fn()
             return;
 
         QFileInfo exported(fileName);
+
+        QApplication::setOverrideCursor(Qt::WaitCursor);
+
+        if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
+        scene->clearSelection(); // Clear selection on export
+
         latest_export = exported.fileName();
         latest_export_path = exported.absoluteDir().path();
         proportion = imgSize[2];
@@ -146,8 +152,9 @@ void leveledit::ExportToImage_fn()
         scene->render(&p, QRectF(0,0,tw,th),QRectF(x,y,w,h));
         p.end();
 
-        QApplication::setOverrideCursor(Qt::WaitCursor);
         img.save(fileName);
+
+        if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
         QApplication::restoreOverrideCursor();
 
         settings.beginGroup("Main");
@@ -302,7 +309,7 @@ void leveledit::changeCursor(int mode)
     case 2:    // place New item
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setCursor(Qt::CrossCursor);
-        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         break;
     case 3:    // Draw water zones
         ui->graphicsView->setInteractive(false);
@@ -415,30 +422,24 @@ bool leveledit::saveAs()
 
 bool leveledit::saveFile(const QString &fileName)
 {
-    //Write disabled for safe
-    /*
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("MDI"),
+        QMessageBox::warning(this, tr("Write file error"),
                              tr("Cannot write file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
         return false;
-    }*/
+    }
 
-
-    /*
     QTextStream out(&file);
     QApplication::setOverrideCursor(Qt::WaitCursor);
-    //out << toPlainText();
+
+    out << WriteSMBX64LvlFile(LvlData);
+
     QApplication::restoreOverrideCursor();
-
     setCurrentFile(fileName);
-    */
 
-    QMessageBox::information(this, tr("Dummy"),
-                         tr("File %1 will not be saved, saving levels is not implemented in this version.")
-                         .arg(fileName));
+    LvlData.modified = false;
 
     return true;
 }
@@ -473,7 +474,7 @@ void leveledit::focusInEvent( QFocusEvent * focusInEvent)
 
 void leveledit::documentWasModified()
 {
-    LvlData.modified = true;
+    //LvlData.modified = true;
 }
 
 bool leveledit::maybeSave()

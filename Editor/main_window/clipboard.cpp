@@ -21,8 +21,6 @@
 #include "../mainwindow.h"
 
 
-
-
 //Copy
 void MainWindow::on_actionCopy_triggered()
 {
@@ -38,6 +36,21 @@ void MainWindow::on_actionCopy_triggered()
 
 }
 
+
+//Cut
+void MainWindow::on_actionCut_triggered()
+{
+    int q1=0, q2=0, q3=0;
+    if (activeChildWindow()==1) //if active window is a levelEditor
+    {
+       LvlBuffer=activeLvlEditWin()->scene->copy(true);
+       q1 += LvlBuffer.blocks.size();
+       q2 += LvlBuffer.bgo.size();
+       q3 += LvlBuffer.npc.size();
+       statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC items are moved in clipboard").arg(q1).arg(q2).arg(q3), 2000);
+    }
+}
+
 //Paste
 void MainWindow::on_actionPaste_triggered()
 {
@@ -48,20 +61,16 @@ void MainWindow::on_actionPaste_triggered()
             (LvlBuffer.npc.size()==0)
     ) return;
 
+    resetEditmodeButtons();
     ui->actionSelect->setChecked(1);
-    ui->actionEriser->setChecked(0);
-    ui->actionHandScroll->setChecked(0);
-
-    ui->actionSetFirstPlayer->setChecked(0);
-    ui->actionSetSecondPlayer->setChecked(0);
-    ui->actionDrawWater->setChecked(0);
-    ui->actionDrawSand->setChecked(0);
 
     if (activeChildWindow()==1)
     {
        activeLvlEditWin()->changeCursor(4);
        activeLvlEditWin()->scene->EditingMode = 4;
        activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->disableMoveItems=true;
+
        activeLvlEditWin()->scene->LvlBuffer = LvlBuffer;
     }
 

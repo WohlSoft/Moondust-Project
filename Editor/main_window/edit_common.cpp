@@ -91,66 +91,6 @@ void MainWindow::on_actionReset_position_triggered()
 
 
 
-void MainWindow::on_actionSelect_triggered()
-{
-    ui->actionSelect->setChecked(1);
-    ui->actionEriser->setChecked(0);
-    ui->actionHandScroll->setChecked(0);
-
-    ui->actionSetFirstPlayer->setChecked(0);
-    ui->actionSetSecondPlayer->setChecked(0);
-    ui->actionDrawWater->setChecked(0);
-    ui->actionDrawSand->setChecked(0);
-
-    if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
-    {
-       activeLvlEditWin()->changeCursor(0);
-       activeLvlEditWin()->scene->EditingMode = 0;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-    }
-}
-
-void MainWindow::on_actionEriser_triggered()
-{
-    ui->actionSelect->setChecked(0);
-    ui->actionEriser->setChecked(1);
-    ui->actionHandScroll->setChecked(0);
-
-    ui->actionSetFirstPlayer->setChecked(0);
-    ui->actionSetSecondPlayer->setChecked(0);
-    ui->actionDrawWater->setChecked(0);
-    ui->actionDrawSand->setChecked(0);
-
-    if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
-    {
-       activeLvlEditWin()->changeCursor(1);
-       activeLvlEditWin()->scene->EditingMode = 1;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-    }
-}
-
-
-void MainWindow::on_actionHandScroll_triggered()
-{
-    ui->actionSelect->setChecked(0);
-    ui->actionEriser->setChecked(0);
-    ui->actionHandScroll->setChecked(1);
-
-    ui->actionSetFirstPlayer->setChecked(0);
-    ui->actionSetSecondPlayer->setChecked(0);
-    ui->actionDrawWater->setChecked(0);
-    ui->actionDrawSand->setChecked(0);
-
-    if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
-    {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(-1);
-       activeLvlEditWin()->scene->EditingMode = 0;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-    }
-}
-
-
 void MainWindow::on_actionAnimation_triggered(bool checked)
 {
     LvlOpts.animationEnabled = checked;
@@ -179,3 +119,26 @@ void MainWindow::on_actionCollisions_triggered(bool checked)
 
 
 
+// //History Manager
+void MainWindow::on_actionUndo_triggered()
+{
+    if (activeChildWindow()==1)
+    {
+        //Here must be call
+        activeLvlEditWin()->scene->historyBack();
+        ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+        ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+    }
+}
+
+void MainWindow::on_actionRedo_triggered()
+{
+    if (activeChildWindow()==1)
+    {
+        //Here must be call
+        activeLvlEditWin()->scene->historyForward();
+        ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+        ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+    }
+
+}

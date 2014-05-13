@@ -23,7 +23,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include "lvl_filedata.h"
-#include "lvlscene.h"
+#include "level_scene/lvlscene.h"
 
 namespace Ui {
 class leveledit;

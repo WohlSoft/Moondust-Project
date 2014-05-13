@@ -72,6 +72,7 @@ public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
     dataconfigs *getConfigs();
+    void openFilesByArgs(QStringList args);
     
 protected:
     void closeEvent(QCloseEvent *event);
@@ -212,25 +213,35 @@ private slots:
     void on_action_recent9_triggered();
     void on_action_recent10_triggered();
 
+    //Clipboard
     void on_actionCopy_triggered();
-
-
-
+    void on_actionCut_triggered();
     void on_actionPaste_triggered();
 
-    void on_actionWarpsAndDoors_triggered(bool checked);
+    //History
+    void on_actionUndo_triggered();
+    void on_actionRedo_triggered();
 
+
+    void on_actionWarpsAndDoors_triggered(bool checked);
     void on_DoorsToolbox_visibilityChanged(bool visible);
 
     void on_WarpList_currentIndexChanged(int index);
-
     void on_LevelLayers_visibilityChanged(bool visible);
-
     void on_actionLayersBox_triggered(bool checked);
 
     void on_BGOUniform_clicked(bool checked);
-
     void on_BlockUniform_clicked(bool checked);
+
+    void on_actionSelectOnly_triggered();
+
+    void on_actionSetFirstPlayer_triggered();
+
+    void on_actionSetSecondPlayer_triggered();
+
+    void on_actionDrawWater_triggered();
+
+    void on_actionDrawSand_triggered();
 
 private:
     dataconfigs configs; // Global objects configucrations
@@ -259,6 +270,7 @@ private:
 
 
     Ui::MainWindow *ui;
+
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;
 
@@ -275,9 +287,21 @@ private:
     void setDefaults();
     void setUiDefults();
 
+    void resetEditmodeButtons();
+
     void loadSettings();
     void saveSettings();
 
+
+    //Miltilanguage
+    void loadLanguage(const QString& rLanguage);
+    QTranslator     m_translator;   /**< contains the translations for this application */
+    QTranslator     m_translatorQt; /**< contains the translations for qt */
+    QString         m_currLang;     /**< contains the currently loaded language */
+    QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+
+
+    //Helps functions
     QString removeQuotes(QString str);
 
 };
