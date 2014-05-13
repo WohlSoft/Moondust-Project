@@ -392,14 +392,15 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
              {
              //SMBX64 Fixed special options for NPC
              case 283:/*Buble*/ case 91: /*burried*/ case 284: /*SMW Lakitu*/
-             case 96: /*egg*/   /*parakoopa*/
+             case 96: /*egg*/
+             /*parakoopas*/
              case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
              /*paragoomba*/ case 243: case 244:
              /*Cheep-Cheep*/ case 28: case 229: case 230: case 232: case 233: case 234: case 236:
              /*WarpSelection*/ case 288: case 289: /*firebar*/ case 260:
 
                  str_count++;line = in.readLine();
-                 if(SMBX64::Int(line)) //NPC id
+                 if(SMBX64::sInt(line)) //NPC special option
                      goto badfile;
                  else npcdata.special_data = line.toInt();
 

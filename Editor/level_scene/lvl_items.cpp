@@ -317,17 +317,47 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
     QGraphicsItem *	box;
+    QGraphicsTextItem *npcTxt, *npcTxt_l2;
+    QGraphicsItemGroup *npcBox;
+
+    QFont font1, font2;
+    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
+    font1.setBold(1);
+    font1.setPointSize(14);
+
+    font2.setWeight(14);
+    font2.setBold(0);
+    font2.setPointSize(12);
+
     box = addPixmap(QPixmap(uNpcImg));
+    npcBox = new QGraphicsItemGroup(box);
+
     box->setPos(npc.x, npc.y);
+
+    npcTxt = new QGraphicsTextItem(QString::number(npc.id));
+    npcTxt->setDefaultTextColor(Qt::black);
+    npcTxt->setFont(font1);
+    npcTxt->setPos(npc.x-5, npc.y-2);
+    npcTxt_l2 = new QGraphicsTextItem(QString::number(npc.id));
+    npcTxt_l2->setDefaultTextColor(Qt::white);
+    npcTxt_l2->setFont(font2);
+    npcTxt_l2->setPos(npc.x-3, npc.y);
+
+    npcBox->addToGroup(npcTxt);
+    npcBox->addToGroup(npcTxt_l2);
+
+    npcTxt->setZValue(npcZf+0.0000001);
+    npcTxt_l2->setZValue(npcZf+0.0000002);
+
 
     box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
     box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
 
     //npcfore->addToGroup(box);
-    if(npc.id==91)
+    //if(npc.id==91)
         box->setZValue(npcZf);
-    else
-        box->setZValue(npcZb);
+    //else
+    //    box->setZValue(npcZb);
 
     box->setData(0, "NPC"); // ObjType
     box->setData(1, QString::number(npc.id) );
@@ -356,7 +386,7 @@ void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
     h = 32;
     w = 32;
     QFont font1, font2;
-    font1.setWeight(50);
+    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
     font1.setBold(1);
     font1.setPointSize(14);
 
