@@ -343,13 +343,13 @@
    </attribute>
    <widget class="QTabWidget" name="LevelToolBoxTabs">
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="Blocks">
      <attribute name="title">
       <string>Blocks</string>
      </attribute>
-     <layout class="QGridLayout" name="BlocksG" columnstretch="0,90,0" columnminimumwidth="50,0,0">
+     <layout class="QGridLayout" name="BlocksG" columnstretch="0,90,0" columnminimumwidth="50,0,15">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -599,32 +599,132 @@
       </item>
      </layout>
     </widget>
-    <widget class="QScrollArea" name="npc">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
+    <widget class="QWidget" name="NPCs">
      <attribute name="title">
       <string>NPC</string>
      </attribute>
-     <widget class="QWidget" name="npcscroll">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>81</width>
-        <height>28</height>
-       </rect>
+     <layout class="QGridLayout" name="NPCsG" columnstretch="0,95,0" columnminimumwidth="50,0,15">
+      <property name="leftMargin">
+       <number>0</number>
       </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      <property name="topMargin">
+       <number>0</number>
       </property>
-     </widget>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="NPCCatLabel">
+        <property name="text">
+         <string>Category:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <widget class="QListWidget" name="NPCItemsList">
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOn</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="dragEnabled">
+         <bool>false</bool>
+        </property>
+        <property name="dragDropOverwriteMode">
+         <bool>false</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragDrop</enum>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectItems</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>48</width>
+          <height>48</height>
+         </size>
+        </property>
+        <property name="textElideMode">
+         <enum>Qt::ElideNone</enum>
+        </property>
+        <property name="movement">
+         <enum>QListView::Snap</enum>
+        </property>
+        <property name="resizeMode">
+         <enum>QListView::Adjust</enum>
+        </property>
+        <property name="layoutMode">
+         <enum>QListView::Batched</enum>
+        </property>
+        <property name="spacing">
+         <number>20</number>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+        <property name="uniformItemSizes">
+         <bool>false</bool>
+        </property>
+        <property name="batchSize">
+         <number>150</number>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>The test Icon for NPCs</string>
+         </property>
+         <property name="icon">
+          <iconset resource="editor.qrc">
+           <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+         </property>
+         <property name="flags">
+          <set>ItemIsSelectable|ItemIsEnabled</set>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="NPCCatList">
+        <item>
+         <property name="text">
+          <string>[all]</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="NPCUniform">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
@@ -871,8 +971,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
      </widget>
@@ -895,8 +995,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
      </widget>
@@ -919,8 +1019,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">

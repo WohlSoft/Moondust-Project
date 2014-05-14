@@ -83,16 +83,19 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction("Remove");
 
-        QAction *selected = ItemMenu->exec(event->screenPos());
+        scene->contextMenuOpened = true; //bug protector
+QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(selected==cutNpc)
         {
             scene->doCut = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==copyNpc)
         {
             scene->doCopy = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==fri)
@@ -103,6 +106,7 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
             }
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==stat)
@@ -113,6 +117,7 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
             }
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==boss)
@@ -123,6 +128,7 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
             }
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==remove)
@@ -135,6 +141,7 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                     scene->removeItem(SelItem);
                 }
             }
+            scene->contextMenuOpened = false;
         }
     }
     else

@@ -150,9 +150,9 @@ struct obj_npc
     QString mask_n;
     QPixmap image;
     QBitmap mask;
-//    algotytm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
-    int algorythm;
-    //    ;If alhorythm = 0, will using basic parametric alhorythm.
+//    algorithm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
+    int algorithm;
+    //    ;If algorithm = 0, will using basic parametric alhorythm.
 //    ;Else, get alhorythm from list
 //    default-effect=2		;Spawn effect ID on jump-die
     unsigned long effect_1;
@@ -180,7 +180,7 @@ struct obj_npc
     unsigned int frames;
 //    frame-speed=128
     unsigned int framespeed;
-//    foregound=0
+//    foreground=0
     bool foreground;
 //    ; for editor
 //    custom-animation=0

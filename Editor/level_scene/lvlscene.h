@@ -87,6 +87,8 @@ public:
 
     bool disableMoveItems;
 
+    bool contextMenuOpened;
+
     //Event Flags
     bool wasPasted;
     bool doCopy;
@@ -180,15 +182,40 @@ public:
         //for move
         long x, y;
     };
+    struct CallbackData{
+        QGraphicsItem* item;
+        HistoryOperation* hist;
+        //custom data
+        long x, y;
+    };
+
+    //typedefs
+    typedef void (LvlScene::*callBackLevelBlock)(CallbackData, LevelBlock);
+    typedef void (LvlScene::*callBackLevelBGO)(CallbackData, LevelBGO);
+    //add historys
     void addRemoveHistory(LevelData removedItems);
-	void addPlaceHistory(LevelData placedItems);
+    void addPlaceHistory(LevelData placedItems);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
+    //history modifiers
     void historyBack();
     void historyForward();
-    int getHistroyIndex();
     void cleanupRedoElements();
+    //history information
+    int getHistroyIndex();
     bool canUndo();
     bool canRedo();
+    //Callbackfunctions: Move
+    void historyRedoMoveBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
+    void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
+    void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
+    //Callbackfunctions: Remove
+    void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
+    void historyRemoveBGO(CallbackData cbData, LevelBGO data);
+    //History functions requiring callback-functions
+    void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData, callBackLevelBlock clbBlock, callBackLevelBGO clbBgo);
+    //miscellaneous
+    QPoint calcTopLeftCorner(LevelData* data);
     QMap<int,int> BlocksArrayIDForwarder;
     QMap<int,int> BGOsArrayIDForwarder;
     // ////////////////////////////////////////////

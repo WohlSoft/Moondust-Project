@@ -54,6 +54,8 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     IsMoved = false;
     haveSelected = false;
 
+    contextMenuOpened = false;
+
     //Events flags
     wasPasted = false;  //call to cursor reset to normal select
     doCopy = false;     //call to copy

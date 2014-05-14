@@ -193,4 +193,3 @@ void MainWindow::on_actionAbout_triggered()
     about.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, about.size(), qApp->desktop()->availableGeometry()));
     about.exec();
 }
-

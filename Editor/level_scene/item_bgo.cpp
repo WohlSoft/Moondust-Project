@@ -82,16 +82,19 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction("Remove");
 
-        QAction *selected = ItemMenu->exec(event->screenPos());
+        scene->contextMenuOpened = true; //bug protector
+QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(selected==cutBGO)
         {
             scene->doCut = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==copyBGO)
         {
             scene->doCopy = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==remove)
@@ -110,6 +113,7 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 }
             }
             if(deleted) scene->addRemoveHistory( removedItems );
+            scene->contextMenuOpened = false;
         }
         else
         {
@@ -134,6 +138,7 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                         break;
                         }
                     }//Find layer's settings
+                 scene->contextMenuOpened = false;
                  break;
                 }//Find selected layer's item
             }
