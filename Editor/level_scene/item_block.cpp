@@ -99,11 +99,13 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         if(selected==cutBlock)
         {
             scene->doCut = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==copyBlock)
         {
             scene->doCopy = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==invis)
@@ -114,6 +116,7 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 if(SelItem->data(0).toString()=="Block")
                     ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
             }
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==slipp)
@@ -124,6 +127,7 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 if(SelItem->data(0).toString()=="Block")
                     ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
             }
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==remove)
@@ -141,6 +145,7 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 }
             }
             if(deleted) scene->addRemoveHistory( removedItems );
+            scene->contextMenuOpened = false;
         }
         else
         {
@@ -168,6 +173,7 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                  break;
                 }//Find selected layer's item
             }
+            scene->contextMenuOpened = false;
         }
     }
     else
