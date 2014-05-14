@@ -194,7 +194,7 @@ public:
     typedef void (LvlScene::*callBackLevelBGO)(CallbackData, LevelBGO);
     //add historys
     void addRemoveHistory(LevelData removedItems);
-	void addPlaceHistory(LevelData placedItems);
+    void addPlaceHistory(LevelData placedItems);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
     //history modifiers
     void historyBack();
