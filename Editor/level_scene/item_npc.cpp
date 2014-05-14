@@ -89,11 +89,13 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         if(selected==cutNpc)
         {
             scene->doCut = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==copyNpc)
         {
             scene->doCopy = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==fri)
@@ -104,6 +106,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
             }
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==stat)
@@ -114,6 +117,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
             }
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==boss)
@@ -124,6 +128,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
             }
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==remove)
@@ -136,6 +141,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     scene->removeItem(SelItem);
                 }
             }
+            scene->contextMenuOpened = false;
         }
     }
     else

@@ -88,11 +88,13 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         if(selected==cutBGO)
         {
             scene->doCut = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==copyBGO)
         {
             scene->doCopy = true ;
+            scene->contextMenuOpened = false;
         }
         else
         if(selected==remove)
@@ -111,6 +113,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 }
             }
             if(deleted) scene->addRemoveHistory( removedItems );
+            scene->contextMenuOpened = false;
         }
         else
         {
@@ -138,6 +141,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                  break;
                 }//Find selected layer's item
             }
+            scene->contextMenuOpened = false;
         }
     }
     else
