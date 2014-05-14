@@ -23,6 +23,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    thread1 = new QThread;
 
     setDefaults(); // Apply default common settings
 
