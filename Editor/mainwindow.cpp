@@ -23,6 +23,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    thread1 = new QThread;
 
     setDefaults(); // Apply default common settings
 
@@ -31,7 +32,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     splash.setCursor(Qt::ArrowCursor);
     splash.show();
 
-    if(!configs.loadconfigs(true))
+    if(!configs.loadconfigs())
     {
         QMessageBox::critical(this, "Configuration error", "Configuration can't be load.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
         splash.finish(this);

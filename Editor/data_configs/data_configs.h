@@ -22,6 +22,13 @@
 #include <QPixmap>
 #include <QBitmap>
 
+#include <QtWidgets>
+#include <QSettings>
+#include <QProgressDialog>
+#include "logger.h"
+
+#include <QDebug>
+
 struct DataFolders
 {
     QString worlds;
@@ -306,6 +313,33 @@ struct obj_npc
 
 };
 
+struct npc_Markers
+{
+//    ;Defines for SMBX64
+    unsigned long bubble;
+//    bubble=283	; NPC-Container for packed in bubble
+    unsigned long egg;
+//    egg=96		; NPC-Container for packed in egg
+    unsigned long lakitu;
+//    lakitu=284	; NPC-Container for spawn by lakitu
+    unsigned long burred;
+//    burred=91	; NPC-Container for packed in herb
+
+    unsigned long ice_cube;
+//    icecube=263	; NPC-Container for frozen NPCs
+
+//    ;markers
+//    iceball=265
+    unsigned long iceball;
+//    fireball=13
+    unsigned long fireball;
+//    hammer=171
+    unsigned long hammer;
+//    boomerang=292
+    unsigned long boomerang;
+
+};
+
 struct obj_music
 {
     unsigned long id;
@@ -336,14 +370,16 @@ class dataconfigs
 {
 public:
     dataconfigs();
-    bool loadconfigs(bool nobar=false);
+    bool loadconfigs();
     DataFolders dirs;
 
     QVector<obj_BG > main_bg;
 
     QVector<obj_bgo > main_bgo;
     QVector<obj_block > main_block;
+
     QVector<obj_npc > main_npc;
+    npc_Markers marker_npc;
 
     unsigned long music_custom_id;
     QVector<obj_music > main_music_lvl;
@@ -355,6 +391,29 @@ public:
     QVector<bgoIndexes > index_bgo;
     QVector<npcIndexes > index_npc;
 
+private:
+
+    //Buffers
+    QBitmap mask;
+    //QPixmap image;
+    QString imgFile, imgFileM;
+    QString tmpstr;
+    QStringList tmp;
+
+    QString config_dir;
+    unsigned long total_data;
+    QString bgoPath;
+    QString BGPath;
+    QString blockPath;
+    QString npcPath;
+
+
+    void loadLevelBGO();
+    void loadLevelBlocks();
+    void loadLevelNPC();
+    void loadLevelBackgrounds();
+
+    void loadMusic();
 };
 
 

@@ -49,7 +49,7 @@
 #include "aboutdialog.h"
 #include "levelprops.h"
 
-#include "dataconfigs.h"
+#include "data_configs/data_configs.h"
 
 #include "musicfilelist.h"
 
@@ -280,6 +280,8 @@ private:
 
     QTimer * TickTackTimer; //Scene Events detector
     bool TickTackLock;      //Scene Events detector locker
+
+    QThread * thread1;
 
     QList<QString> recentOpen; //Recent files list
 
