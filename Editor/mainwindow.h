@@ -108,7 +108,7 @@ private slots:
 
     //File format read functions
     LevelData ReadLevelFile(QFile &inf); // SMBX LVL File
-    NPCConfigFile ReadNpcTXTFile(QFile &inf); // SMBX WLD File
+    NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); // SMBX WLD File
     WorldData ReadWorldFile(QFile &inf); //SMBX NPC.TXT File
 
 

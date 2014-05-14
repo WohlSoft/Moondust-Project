@@ -26,7 +26,7 @@
 
 
 //NPC file Read
-NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
+NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
 {
     //Regs
     QRegExp isint("\\d+");     //Check "Is Numeric"
@@ -98,7 +98,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
 
        if(Params[0]=="gfxoffsetx")
         {
-           if(!issint.exactMatch(Params[1]))
+           if((!issint.exactMatch(Params[1]))&&(!IgnoreBad))
                goto badfile;
 
            FileData.gfxoffsetx=Params[1].toInt();
@@ -107,7 +107,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="gfxoffsety")
         {
-           if(!issint.exactMatch(Params[1]))
+           if((!issint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.gfxoffsety=Params[1].toInt();
            FileData.en_gfxoffsety=true;
@@ -115,7 +115,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="width")
         {
-           if(!isint.exactMatch(Params[1]))
+           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.width=Params[1].toInt();
            FileData.en_width=true;
@@ -123,7 +123,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="height")
         {
-           if(!isint.exactMatch(Params[1]))
+           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.height=Params[1].toInt();
            FileData.en_height=true;
@@ -131,7 +131,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="gfxwidth")
         {
-           if(!isint.exactMatch(Params[1]))
+           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.gfxwidth=Params[1].toInt();
            FileData.en_gfxwidth=true;
@@ -139,7 +139,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="gfxheight")
         {
-           if(!isint.exactMatch(Params[1]))
+           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.gfxheight=Params[1].toInt();
            FileData.en_gfxheight=true;
@@ -147,7 +147,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="score")
         {
-           if(!isint.exactMatch(Params[1]))
+           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.score=Params[1].toInt();
            FileData.en_score=true;
@@ -155,7 +155,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="playerblock")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.playerblock=(bool)Params[1].toInt();
            FileData.en_playerblock=true;
@@ -163,7 +163,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="playerblocktop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.playerblocktop=(bool)Params[1].toInt();
            FileData.en_playerblocktop=true;
@@ -171,7 +171,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="npcblock")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.npcblock=(bool)Params[1].toInt();
            FileData.en_npcblock=true;
@@ -179,7 +179,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="npcblocktop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.npcblocktop=(bool)Params[1].toInt();
            FileData.en_npcblocktop=true;
@@ -187,7 +187,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="grabside")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.grabside=(bool)Params[1].toInt();
            FileData.en_grabside=true;
@@ -195,7 +195,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="grabtop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.grabtop=(bool)Params[1].toInt();
            FileData.en_grabtop=true;
@@ -203,7 +203,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="jumphurt")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.jumphurt=(bool)Params[1].toInt();
            FileData.en_jumphurt=true;
@@ -211,7 +211,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="nohurt")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.nohurt=(bool)Params[1].toInt();
            FileData.en_nohurt=true;
@@ -219,7 +219,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="noblockcollision")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.noblockcollision=(bool)Params[1].toInt();
            FileData.en_noblockcollision=true;
@@ -227,7 +227,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="cliffturn")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.cliffturn=(bool)Params[1].toInt();
            FileData.en_cliffturn=true;
@@ -235,7 +235,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="noyoshi")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.noyoshi=(bool)Params[1].toInt();
            FileData.en_noyoshi=true;
@@ -243,7 +243,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="foreground")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.foreground=(bool)Params[1].toInt();
            FileData.en_foreground=true;
@@ -251,7 +251,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="speed")
         {
-           if(!issfloat.exactMatch(Params[1]))
+           if((!issfloat.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.speed=Params[1].replace(QChar(','), QChar('.')).toFloat();
            FileData.en_speed=true;
@@ -259,7 +259,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="nofireball")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.nofireball=(bool)Params[1].toInt();
            FileData.en_nofireball=true;
@@ -267,7 +267,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="nogravity")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.nogravity=(bool)Params[1].toInt();
            FileData.en_nogravity=true;
@@ -275,7 +275,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="frames")
         {
-           if(!isint.exactMatch(Params[1]))
+           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.frames=Params[1].toInt();
            FileData.en_frames=true;
@@ -283,7 +283,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="framespeed")
         {
-           if(!isint.exactMatch(Params[1]))
+           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.framespeed=Params[1].toInt();
            FileData.en_framespeed=true;
@@ -291,7 +291,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="framestyle")
         {
-           if(!isint.exactMatch(Params[1]))
+           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.framestyle=Params[1].toInt();
            FileData.en_framestyle=true;
@@ -299,7 +299,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
        if(Params[0]=="noiceball")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
               goto badfile;
            FileData.noiceball=(bool)Params[1].toInt();
            FileData.en_noiceball=true;
@@ -307,7 +307,7 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
            if(Params[0]=="nohammer")
             {
-               if(!booldeg.exactMatch(Params[1]))
+               if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
                   goto badfile;
                FileData.nohammer=(bool)Params[1].toInt();
                FileData.en_nohammer=true;
@@ -315,14 +315,14 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf)
        else
            if(Params[0]=="noshell")
             {
-               if(!booldeg.exactMatch(Params[1]))
+               if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
                   goto badfile;
                FileData.noshell=(bool)Params[1].toInt();
                FileData.en_noshell=true;
             }
        else
        {
-              goto badfile;
+              if(!IgnoreBad) goto badfile;
        }
 
     str_count++;line = in.readLine();
