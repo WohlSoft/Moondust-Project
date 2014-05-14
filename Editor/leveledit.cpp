@@ -26,7 +26,6 @@
 #include "ui_leveledit.h"
 #include "lvl_filedata.h"
 #include "level_scene/lvlscene.h"
-#include "dataconfigs.h"
 #include "saveimage.h"
 #include "logger.h"
 
@@ -134,7 +133,17 @@ void leveledit::ExportToImage_fn()
 
         QFileInfo exported(fileName);
 
-        QApplication::setOverrideCursor(Qt::WaitCursor);
+        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 2, this);
+        progress.setWindowTitle(tr("Please, wait..."));
+        progress.setWindowModality(Qt::WindowModal);
+        progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+        progress.setFixedSize(progress.size());
+        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+        progress.setCancelButton(0);
+
+        progress.show();
+
+        if(!progress.wasCanceled()) progress.setValue(0);
 
         if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
         scene->clearSelection(); // Clear selection on export
@@ -148,14 +157,19 @@ void leveledit::ExportToImage_fn()
 
         QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
 
+        if(!progress.wasCanceled()) progress.setValue(1);
+
         QPainter p(&img);
         scene->render(&p, QRectF(0,0,tw,th),QRectF(x,y,w,h));
         p.end();
 
         img.save(fileName);
+        if(!progress.wasCanceled()) progress.setValue(2);
 
         if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
-        QApplication::restoreOverrideCursor();
+
+        if(!progress.wasCanceled())
+            progress.close();
 
         settings.beginGroup("Main");
         settings.setValue("export-file", latest_export);

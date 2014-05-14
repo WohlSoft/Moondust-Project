@@ -82,7 +82,8 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction("Remove");
 
-        QAction *selected = ItemMenu->exec(event->screenPos());
+        scene->contextMenuOpened = true; //bug protector
+QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(selected==cutBGO)
         {

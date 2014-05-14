@@ -95,6 +95,9 @@ void MainWindow::OpenFile(QString FilePath)
             child->close();
         }
         */
+        QMessageBox::information(this, tr("Dummy"),
+        tr("Sorry, the World Maps support is not inplemented in this version."),
+        QMessageBox::Ok);
 
     }
     else

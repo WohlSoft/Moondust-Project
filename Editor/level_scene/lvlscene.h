@@ -38,7 +38,7 @@
 
 
 #include "lvl_filedata.h"
-#include "dataconfigs.h"
+#include "../data_configs/data_configs.h"
 
 #include "logger.h"
 
@@ -86,6 +86,8 @@ public:
     bool PasteFromBuffer;
 
     bool disableMoveItems;
+
+    bool contextMenuOpened;
 
     //Event Flags
     bool wasPasted;
