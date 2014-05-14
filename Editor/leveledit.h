@@ -24,6 +24,7 @@
 #include <QGraphicsScene>
 #include "lvl_filedata.h"
 #include "level_scene/lvlscene.h"
+#include "data_configs/data_configs.h"
 
 namespace Ui {
 class leveledit;

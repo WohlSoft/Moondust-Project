@@ -68,5 +68,10 @@
         <file alias="doors.png">images/doors.png</file>
         <file alias="layers.png">images/layers.png</file>
         <file alias="select_only.png">images/select_only.png</file>
+        <file>images/edit_copy.png</file>
+        <file>images/edit_cut.png</file>
+        <file>images/edit_paste.png</file>
+        <file>images/edit_redo.png</file>
+        <file>images/edit_undo.png</file>
     </qresource>
 </RCC>

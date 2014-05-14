@@ -49,6 +49,7 @@ void MainWindow::updateMenus()
 
     ui->actionCopy->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionPaste->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionCut->setEnabled( (WinType==1) || (WinType==3) );
 
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
 
@@ -212,4 +213,5 @@ void MainWindow::updateMenus()
         windowMapper->setMapping(action, windows.at(i));
     }
 }
+
 
