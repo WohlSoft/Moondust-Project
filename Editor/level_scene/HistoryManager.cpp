@@ -56,41 +56,9 @@ void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedI
     long baseX=0, baseY=0;
 
     //set first base
-    if(!targetMovedItems.blocks.isEmpty()){
-        baseX = targetMovedItems.blocks[0].x;
-        baseY = targetMovedItems.blocks[0].y;
-    }else if(!targetMovedItems.bgo.isEmpty()){
-        baseX = targetMovedItems.bgo[0].x;
-        baseY = targetMovedItems.bgo[0].y;
-    }else if(!targetMovedItems.npc.isEmpty()){
-        baseX = targetMovedItems.npc[0].x;
-        baseY = targetMovedItems.npc[0].y;
-    }
-
-    foreach (LevelBlock block, targetMovedItems.blocks) {
-        if(block.x<baseX){
-            baseX = block.x;
-        }
-        if(block.y<baseY){
-            baseY = block.y;
-        }
-    }
-    foreach (LevelBGO bgo, targetMovedItems.bgo){
-        if(bgo.x<baseX){
-            baseX = bgo.x;
-        }
-        if(bgo.y<baseY){
-            baseY = bgo.y;
-        }
-    }
-    foreach (LevelNPC npc, targetMovedItems.npc){
-        if(npc.x<baseX){
-            baseX = npc.x;
-        }
-        if(npc.y<baseY){
-            baseY = npc.y;
-        }
-    }
+    QPoint base = calcTopLeftCorner(&targetMovedItems);
+    baseX = (long)base.x();
+    baseY = (long)base.y();
 
     HistoryOperation mvOperation;
     mvOperation.type = HistoryOperation::LEVELHISTORY_MOVE;
@@ -176,81 +144,9 @@ void LvlScene::historyBack()
             oldbgo.array_id = newestArrayID;
             updatedData.bgo.push_back(oldbgo);
         }
+        CallbackData cbData;
+        findGraphicsItem(updatedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO);
 
-        QMap<int, LevelBlock> sortedBlock;
-        foreach (LevelBlock block, updatedData.blocks)
-        {
-            sortedBlock[block.array_id] = block;
-        }
-
-        QMap<int, LevelBGO> sortedBGO;
-        foreach (LevelBGO bgo, updatedData.bgo)
-        {
-            sortedBGO[bgo.array_id] = bgo;
-        }
-
-        bool blocksFinished = false;
-        bool bgosFinished = false;
-        foreach (QGraphicsItem* item, items())
-        {
-            if(item->data(0).toString()=="Block")
-            {
-                if(sortedBlock.size()!=0)
-                {
-                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()>currentArrayId)
-                    {
-                        //not found
-                        sortedBlock.erase(beginItem);
-                    }
-                    //but still test if the next blocks, is the block we search!
-                    beginItem = sortedBlock.begin();
-                    currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        ((ItemBlock*)item)->removeFromArray();
-                        removeItem(item);
-                        sortedBlock.erase(beginItem);
-                    }
-                }
-                else
-                {
-                    blocksFinished = true;
-                }
-            }
-            else
-            if(item->data(0).toString()=="BGO")
-            {
-                if(sortedBGO.size()!=0)
-                {
-                    QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()>currentArrayId)
-                    {
-                        //not found
-                        sortedBGO.erase(beginItem);
-                    }
-                    //but still test if the next blocks, is the block we search!
-                    beginItem = sortedBGO.begin();
-                    currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        ((ItemBGO *)item)->removeFromArray();
-                        removeItem(item);
-                        sortedBGO.erase(beginItem);
-                    }
-                }
-                else
-                {
-                    bgosFinished = true;
-                }
-            }
-            if(blocksFinished&&bgosFinished)
-            {
-                break;
-            }
-        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_MOVE:
@@ -281,88 +177,8 @@ void LvlScene::historyBack()
             oldbgo.array_id = newestArrayID;
             updatedData.bgo.push_back(oldbgo);
         }
-
-        QMap<int, LevelBlock> sortedBlock;
-        foreach (LevelBlock block, updatedData.blocks)
-        {
-            sortedBlock[block.array_id] = block;
-        }
-
-        QMap<int, LevelBGO> sortedBGO;
-        foreach (LevelBGO bgo, updatedData.bgo)
-        {
-            sortedBGO[bgo.array_id] = bgo;
-        }
-
-        bool blocksFinished = false;
-        bool bgosFinished = false;
-        foreach (QGraphicsItem* item, items())
-        {
-            if(item->data(0).toString()=="Block")
-            {
-                if(sortedBlock.size()!=0)
-                {
-                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()>currentArrayId)
-                    {
-                        //not found
-                        sortedBlock.erase(beginItem);
-                    }
-                    //but still test if the next blocks, is the block we search!
-                    beginItem = sortedBlock.begin();
-                    currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        //do move
-                        item->setPos(QPointF((*beginItem).x,(*beginItem).y));
-                        ((ItemBlock *)(item))->blockData.x = (long)item->scenePos().x();
-                        ((ItemBlock *)(item))->blockData.y = (long)item->scenePos().y();
-                        ((ItemBlock *)(item))->arrayApply();
-                    }
-                }
-                else
-                {
-                    blocksFinished = true;
-                }
-            }
-            else
-            if(item->data(0).toString()=="BGO")
-            {
-                if(sortedBGO.size()!=0)
-                {
-                    QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()>currentArrayId)
-                    {
-                        //not found
-                        sortedBGO.erase(beginItem);
-                    }
-                    //but still test if the next blocks, is the block we search!
-                    beginItem = sortedBGO.begin();
-                    currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        //do move
-                        item->setPos(QPointF((*beginItem).x,(*beginItem).y));
-                        ((ItemBGO *)(item))->bgoData.x = (long)item->scenePos().x();
-                        ((ItemBGO *)(item))->bgoData.y = (long)item->scenePos().y();
-                        ((ItemBGO *)(item))->arrayApply();
-                    }
-                }
-                else
-                {
-                    bgosFinished = true;
-                }
-            }
-            if(blocksFinished&&bgosFinished)
-            {
-                break;
-            }
-        }
-
-
-
+        CallbackData cbData;
+        findGraphicsItem(updatedData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO);
 
         break;
     }
@@ -409,83 +225,8 @@ void LvlScene::historyForward()
             oldbgo.array_id = newestArrayID;
             updatedData.bgo.push_back(oldbgo);
         }
-
-
-        QMap<int, LevelBlock> sortedBlock;
-        foreach (LevelBlock block, updatedData.blocks)
-        {
-            sortedBlock[block.array_id] = block;
-        }
-
-        QMap<int, LevelBGO> sortedBGO;
-        foreach (LevelBGO bgo, updatedData.bgo)
-        {
-            sortedBGO[bgo.array_id] = bgo;
-        }
-
-        bool blocksFinished = false;
-        bool bgosFinished = false;
-        foreach (QGraphicsItem* item, items()){
-            if(item->data(0).toString()=="Block")
-            {
-                if(sortedBlock.size()!=0)
-                {
-                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()>currentArrayId)
-                    {
-                        //not found
-                        sortedBlock.erase(beginItem);
-                    }
-                    //but still test if the next blocks, is the block we search!
-                    beginItem = sortedBlock.begin();
-                    currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        ((ItemBlock*)item)->removeFromArray();
-                        removeItem(item);
-                        sortedBlock.erase(beginItem);
-                    }
-                }
-                else
-                {
-                    blocksFinished = true;
-                }
-            }
-            else
-            if(item->data(0).toString()=="BGO")
-            {
-                if(sortedBGO.size()!=0)
-                {
-                    QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()>currentArrayId)
-                    {
-                        //not found
-                        sortedBGO.erase(beginItem);
-                    }
-                    //but still test if the next blocks, is the block we search!
-                    beginItem = sortedBGO.begin();
-                    currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        ((ItemBGO *)item)->removeFromArray();
-                        removeItem(item);
-                        sortedBGO.erase(beginItem);
-                    }
-                }
-                else
-                {
-                    bgosFinished = true;
-                }
-            }
-            if(blocksFinished&&bgosFinished)
-            {
-                break;
-            }
-        }
-
-
+        CallbackData cbData;
+        findGraphicsItem(updatedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO);
 
         break;
     }
@@ -529,48 +270,14 @@ void LvlScene::historyForward()
 
         //revert move
         LevelData movedSourceData = lastOperation.data;
-        long targetPosX = lastOperation.x;
-        long targetPosY = lastOperation.y;
 
         //calc new Pos:
         long baseX=0, baseY=0;
 
         //set first base
-        if(!movedSourceData.blocks.isEmpty()){
-            baseX = movedSourceData.blocks[0].x;
-            baseY = movedSourceData.blocks[0].y;
-        }else if(!movedSourceData.bgo.isEmpty()){
-            baseX = movedSourceData.bgo[0].x;
-            baseY = movedSourceData.bgo[0].y;
-        }else if(!movedSourceData.npc.isEmpty()){
-            baseX = movedSourceData.npc[0].x;
-            baseY = movedSourceData.npc[0].y;
-        }
-
-        foreach (LevelBlock block, movedSourceData.blocks) {
-            if(block.x<baseX){
-                baseX = block.x;
-            }
-            if(block.y<baseY){
-                baseY = block.y;
-            }
-        }
-        foreach (LevelBGO bgo, movedSourceData.bgo){
-            if(bgo.x<baseX){
-                baseX = bgo.x;
-            }
-            if(bgo.y<baseY){
-                baseY = bgo.y;
-            }
-        }
-        foreach (LevelNPC npc, movedSourceData.npc){
-            if(npc.x<baseX){
-                baseX = npc.x;
-            }
-            if(npc.y<baseY){
-                baseY = npc.y;
-            }
-        }
+        QPoint base = calcTopLeftCorner(&movedSourceData);
+        baseX = (long)base.x();
+        baseY = (long)base.y();
 
         //get newest data
         LevelData updatedData;
@@ -595,89 +302,10 @@ void LvlScene::historyForward()
             oldbgo.array_id = newestArrayID;
             updatedData.bgo.push_back(oldbgo);
         }
-
-        QMap<int, LevelBlock> sortedBlock;
-        foreach (LevelBlock block, updatedData.blocks)
-        {
-            sortedBlock[block.array_id] = block;
-        }
-
-        QMap<int, LevelBGO> sortedBGO;
-        foreach (LevelBGO bgo, updatedData.bgo)
-        {
-            sortedBGO[bgo.array_id] = bgo;
-        }
-
-        bool blocksFinished = false;
-        bool bgosFinished = false;
-        foreach (QGraphicsItem* item, items()){
-            if(item->data(0).toString()=="Block")
-            {
-                if(sortedBlock.size()!=0)
-                {
-                    QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()>currentArrayId)
-                    {
-                        //not found
-                        sortedBlock.erase(beginItem);
-                    }
-                    //but still test if the next blocks, is the block we search!
-                    beginItem = sortedBlock.begin();
-                    currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        long diffX = (*beginItem).x - baseX;
-                        long diffY = (*beginItem).y - baseY;
-
-                        item->setPos(QPointF(targetPosX+diffX,targetPosY+diffY));
-                        ((ItemBlock *)(item))->blockData.x = (long)item->scenePos().x();
-                        ((ItemBlock *)(item))->blockData.y = (long)item->scenePos().y();
-                        ((ItemBlock *)(item))->arrayApply();
-
-                    }
-                }
-                else
-                {
-                    blocksFinished = true;
-                }
-            }
-            else
-            if(item->data(0).toString()=="BGO")
-            {
-                if(sortedBGO.size()!=0)
-                {
-                    QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-                    unsigned int currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()>currentArrayId)
-                    {
-                        //not found
-                        sortedBGO.erase(beginItem);
-                    }
-                    //but still test if the next blocks, is the block we search!
-                    beginItem = sortedBGO.begin();
-                    currentArrayId = (*beginItem).array_id;
-                    if((unsigned int)item->data(2).toInt()==currentArrayId)
-                    {
-                        long diffX = (*beginItem).x - baseX;
-                        long diffY = (*beginItem).y - baseY;
-
-                        item->setPos(QPointF(targetPosX+diffX,targetPosY+diffY));
-                        ((ItemBGO *)(item))->bgoData.x = (long)item->scenePos().x();
-                        ((ItemBGO *)(item))->bgoData.y = (long)item->scenePos().y();
-                        ((ItemBGO *)(item))->arrayApply();
-                    }
-                }
-                else
-                {
-                    bgosFinished = true;
-                }
-            }
-            if(blocksFinished&&bgosFinished)
-            {
-                break;
-            }
-        }
+        CallbackData cbData;
+        cbData.x = baseX;
+        cbData.y = baseY;
+        findGraphicsItem(updatedData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO);
         break;
     }
     default:
@@ -714,4 +342,184 @@ bool LvlScene::canUndo()
 bool LvlScene::canRedo()
 {
     return historyIndex < operationList.size();
+}
+
+void LvlScene::historyRedoMoveBlocks(CallbackData cbData, LevelBlock data)
+{
+
+    long diffX = data.x - cbData.x;
+    long diffY = data.y - cbData.y;
+
+    cbData.item->setPos(QPointF(cbData.hist->x+diffX,cbData.hist->y+diffY));
+    ((ItemBlock *)(cbData.item))->blockData.x = (long)cbData.item->scenePos().x();
+    ((ItemBlock *)(cbData.item))->blockData.y = (long)cbData.item->scenePos().y();
+    ((ItemBlock *)(cbData.item))->arrayApply();
+}
+
+void LvlScene::historyRedoMoveBGO(CallbackData cbData, LevelBGO data)
+{
+    long diffX = data.x - cbData.x;
+    long diffY = data.y - cbData.y;
+
+    cbData.item->setPos(QPointF(cbData.hist->x+diffX,cbData.hist->y+diffY));
+    ((ItemBGO *)(cbData.item))->bgoData.x = (long)cbData.item->scenePos().x();
+    ((ItemBGO *)(cbData.item))->bgoData.y = (long)cbData.item->scenePos().y();
+    ((ItemBGO *)(cbData.item))->arrayApply();
+}
+
+void LvlScene::historyUndoMoveBlocks(LvlScene::CallbackData cbData, LevelBlock data)
+{
+    cbData.item->setPos(QPointF(data.x,data.y));
+    ((ItemBlock *)(cbData.item))->blockData.x = (long)cbData.item->scenePos().x();
+    ((ItemBlock *)(cbData.item))->blockData.y = (long)cbData.item->scenePos().y();
+    ((ItemBlock *)(cbData.item))->arrayApply();
+}
+
+void LvlScene::historyUndoMoveBGO(LvlScene::CallbackData cbData, LevelBGO data)
+{
+    cbData.item->setPos(QPointF(data.x,data.y));
+    ((ItemBGO *)(cbData.item))->bgoData.x = (long)cbData.item->scenePos().x();
+    ((ItemBGO *)(cbData.item))->bgoData.y = (long)cbData.item->scenePos().y();
+    ((ItemBGO *)(cbData.item))->arrayApply();
+}
+
+void LvlScene::historyRemoveBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+}
+
+void LvlScene::historyRemoveBGO(LvlScene::CallbackData cbData, LevelBGO /*data*/)
+{
+    ((ItemBGO *)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+}
+
+void LvlScene::findGraphicsItem(LevelData toFind,
+                                HistoryOperation * operation,
+                                CallbackData customData,
+                                callBackLevelBlock clbBlock,
+                                callBackLevelBGO clbBgo)
+{
+    QMap<int, LevelBlock> sortedBlock;
+    foreach (LevelBlock block, toFind.blocks)
+    {
+        sortedBlock[block.array_id] = block;
+    }
+
+    QMap<int, LevelBGO> sortedBGO;
+    foreach (LevelBGO bgo, toFind.bgo)
+    {
+        sortedBGO[bgo.array_id] = bgo;
+    }
+    bool blocksFinished = false;
+    bool bgosFinished = false;
+    CallbackData cbData = customData;
+    cbData.hist = operation;
+    foreach (QGraphicsItem* item, items()){
+        if(item->data(0).toString()=="Block")
+        {
+            if(sortedBlock.size()!=0)
+            {
+                QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedBlock.erase(beginItem);
+                }
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedBlock.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbBlock)(cbData,(*beginItem));
+                    sortedBlock.erase(beginItem);
+                }
+            }
+            else
+            {
+                blocksFinished = true;
+            }
+        }
+        else
+        if(item->data(0).toString()=="BGO")
+        {
+            if(sortedBGO.size()!=0)
+            {
+                QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedBGO.erase(beginItem);
+                }
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedBGO.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbBgo)(cbData,(*beginItem));
+                    sortedBGO.erase(beginItem);
+                }
+            }
+            else
+            {
+                bgosFinished = true;
+            }
+        }
+        if(blocksFinished&&bgosFinished)
+        {
+            break;
+        }
+    }
+
+
+}
+
+QPoint LvlScene::calcTopLeftCorner(LevelData *data)
+{
+    //calc new Pos:
+    int baseX=0, baseY=0;
+
+    //set first base
+    if(!data->blocks.isEmpty()){
+        baseX = (int)data->blocks[0].x;
+        baseY = (int)data->blocks[0].y;
+    }else if(!data->bgo.isEmpty()){
+        baseX = (int)data->bgo[0].x;
+        baseY = (int)data->bgo[0].y;
+    }else if(!data->npc.isEmpty()){
+        baseX = (int)data->npc[0].x;
+        baseY = (int)data->npc[0].y;
+    }
+
+    foreach (LevelBlock block, data->blocks) {
+        if((int)block.x<baseX){
+            baseX = (int)block.x;
+        }
+        if((int)block.y<baseY){
+            baseY = (int)block.y;
+        }
+    }
+    foreach (LevelBGO bgo, data->bgo){
+        if((int)bgo.x<baseX){
+            baseX = (int)bgo.x;
+        }
+        if((int)bgo.y<baseY){
+            baseY = (int)bgo.y;
+        }
+    }
+    foreach (LevelNPC npc, data->npc){
+        if((int)npc.x<baseX){
+            baseX = (int)npc.x;
+        }
+        if((int)npc.y<baseY){
+            baseY = (int)npc.y;
+        }
+    }
+
+    return QPoint(baseX, baseY);
 }
