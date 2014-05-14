@@ -68,35 +68,6 @@ struct obj_bgo{
 };
 
 struct obj_block{
-    /*
-    [block-1]
-    image="block-1.gif"
-    name="Wood"
-    type="block"	; Cathegory for sort
-    sizable=0	; can be resise
-    danger=0	; 0 - none, 1 left, -1 right, 2 top, -2 bottom,
-            ; 3 left-right, -3 top-bottom, 4 - all sides
-    collision=1	; 1 - collision all sides, 2 collision only top side, 0 - no collision
-    slope-slide=0
-    fixture-type=0	; 0 sqear, 1 tringle up-left, -1 tringle up-right, 2 tringle down-left, -2 tringle down-right
-            ; 3 fixture as image form
-    lava=0		; lava fataly to all NPC's, what haven't lava-protection
-    destruct=0	; Can by destruct with shell/head jump
-    destruct-bomb=0	; Destroy on Bomb
-    destruct-fireball=0	; Destroy on fireball
-    spawn-on-destroy="0"	; Object type-ID for spawn after destroy, if 0 - nothing
-    desctruct-effect=1 ; Destructble effect number, 0 - no effect
-    bounce=0	; Jumpble block, if player stay in this block, he bouncing
-    hitable=0	; can be hit with player; if 0, hitable only if block have contains NPC
-    onhit=0		; 0 Nothing, 1 can be hited without contains NPC
-    onhit-block=2	; if onhit=1, transform block to block of number 2,
-            ; if 0, block will not by transoform, even if contains NPC
-    algorithm=0	; Special block algorithm, for example, on/off switcher, invisible block,
-            ; player switch block
-    animate=0	; Enable animation
-    frames=1	; Animation frames
-    framespeed=128	; Delay per frime (ms)
-    */
     unsigned long id;
         QString image_n;
         QString mask_n;
@@ -130,25 +101,6 @@ struct obj_block{
 };
 
 struct obj_BG{
-    /*
-[background2-3]
-image="background2-3.gif"//
-name="Hills (3 + 2)"//
-type=double-row//
-repeat-h=2//
-repeat-v=ZR//
-attached=bottom//
-animated=0..
-frames=1..
-magic=0..
-magic-strips=1//
-magic-splits=0//
-magic-speeds=0//
-second-image="background2-2.gif"//
-second-repeat-h=4
-second-repeat-v=ZR
-second-attached=overfirst
-    */
 
     unsigned long id;
     QString name;
@@ -178,6 +130,182 @@ second-attached=overfirst
 
 };
 
+struct obj_npc
+{
+//    [npc-1]
+    unsigned long id;
+//    name="Goomba"
+    QString name;
+//    category="Enemy"		;The sort category
+    QString category;
+//    image="npc-1.gif"		;NPC Image file
+    QString image_n;
+    QString mask_n;
+    QPixmap image;
+    QBitmap mask;
+//    algotytm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
+    int algorythm;
+    //    ;If alhorythm = 0, will using basic parametric alhorythm.
+//    ;Else, get alhorythm from list
+//    default-effect=2		;Spawn effect ID on jump-die
+    unsigned long effect_1;
+//    shell-effect=4			;effect on kick by shell or other NPC
+    unsigned long effect_2;
+
+//    ; graphics
+    int gfx_offset_x;
+//    gfx-offst-x=0
+    int gfx_offset_y;
+//    gfx-offst-y=2
+    int gfx_h;
+//    gfx-height-y=32
+    int gfx_w;
+//    gfx-width-y=32
+    int grid;
+//    grid=32
+//    grid-offset-x=0
+    int grid_offset_x;
+//    grid-offset-y=0
+    int grid_offset_y;
+//    frame-style=0	; (0-2) This option in some alhoritmes can be ignored
+    int framestyle;
+//    frames=2
+    unsigned int frames;
+//    frame-speed=128
+    unsigned int framespeed;
+//    foregound=0
+    bool foreground;
+//    ; for editor
+//    custom-animation=0
+    bool custom_animate;
+//    ; this option useful for non-standart algorithmic sprites (for example, bosses)
+
+//    ;custom-animation-alg=0		; Custom animation algorithm - 0 simple frame range, 1 - frame Jump
+    int custom_ani_alg;
+//    ;custom-animation-fl=0		; First frame for LEFT
+    int custom_ani_fl;
+//    ;custom-animation-el=0		; end frame for LEFT / Jump step
+    int custom_ani_el;
+//    ;custom-animation-fr=0		; first frame for RIGHT
+    int custom_ani_fr;
+//    ;custom-animation-er=0		; end frame for RIGHT / Jump step
+    int custom_ani_er;
+
+//    container=0			; NPC can containing inside other NPC (need enable special option type 2)
+    bool container;
+
+//    ; Special option
+//    have-special=0			; Special NPC's option, what can used by NPC's algorithm
+    bool special_option;
+//    ;special-name="Cheep-cheep"	; 60
+    QString special_name;
+//    ;special-type=0			; 61 0 combobox, 1 - spin, 2 - npc-id
+    int special_type;
+//    ;special-combobox-size=3		; 62 quantity of options
+    QStringList special_combobox_opts;
+//    ;special-option-0="Swim"		; 63 set title for 0 option combobox
+//    ;special-option-1="Jump"		; 64 set title for 1 option combobox
+//    ;special-option-2="Projective"	; 65 set title for 2 option combobox
+    int special_spin_min;
+//    ;special-spin-min=0		; 66 milimal value of spin
+    int special_spin_max;
+//    ;special-spin-max=25		; 67 maximal value of spin
+
+//    ;game process
+//    score=2				; Add scores to player (value 0-13)
+//    ; 0, 10, 100, 200, 400, 800, 1000, 2000, 4000, 8000, 1up, 2up, 5up, 3up
+    int score;
+//    speed=64			; Default movement speed in px/s
+    int speed;
+//    moving=1			; NPC simply moving right/left
+
+    bool movement;
+//    scenery=0			; NPC as block
+    bool scenery;
+//    immortal=0			; NPC Can't be destroy
+    bool immortal;
+//    yoshicaneat=1			; NPC can be eaten by yoshi
+    bool can_be_eaten;
+//    takeble=0			; NPC destroyble on contact with player
+    bool takable;
+//    grab-side=0			; NPC can be grabbed on side
+    bool grab_side;
+//    grab-top=0			; NPC can be grabbed on top
+    bool grab_top;
+//    grab-any=0			; NPC can be grabbed on any collisions
+    bool grab_any;
+//    default-health=1		; NPC's health value
+    int health;
+//    hurtpalyer=1			; Hurt player on contact
+    bool hurt_player;
+//    hurtnpc=0			; Hurt other npc on contact
+    bool hurt_npc;
+
+//    ;Editor featured
+//    allow-bubble=1			; Allow packable into the bubble
+    bool allow_buble;
+//    allow-egg=1			; Allow packable into the egg
+    bool allow_egg;
+//    allow-lakitu=1			; Allow packable into the SMW Lakitu
+    bool allow_lakitu;
+//    allow-burred=1			; Allow packable under the herb
+    bool allow_burred;
+
+
+//    ; Physics
+//    ; Size of NPC's body (Collision box)
+//    fixture-height=32
+    unsigned int height;
+//    fixture-width=32
+    unsigned int width;
+//    block-npc=1		; NPC is a solid object for NPC's
+    bool block_npc;
+//    block-npc-top=0		; on NPC's top can be stay other NPC's
+    bool block_npc_top;
+//    block-player=0		; NPC is a solid object for player
+    bool block_player;
+//    block-player-top=0	; on NPC's top can be stay player
+    bool block_player_top;
+//    collision-blocks=1	; Enable collisions with blocks
+    bool collision_with_blocks;
+//    gravity=1		; Enable gravitation for this NPC
+    bool gravity;
+//    adhesion=0		; allows to NPC walking on wall and on celling
+    bool adhesion;
+
+//    ;Events
+//    deactivate=1		; Deactivate on state offscreen > 4 sec ago
+    bool deactivation;
+//    kill-slside=1		; Kill on Slope slide
+    bool kill_slide_slope;
+//    kill-onjump=1		; Kill on jump on NPC's head
+    bool kill_on_jump;
+//    kill-bynpc=1		; Kill by contact with other NPC with hurt-npc
+//    ; for example: moving SHELL have "HURT_NPC", and shell kiling ALL NPCs on contact
+    bool kill_by_npc;
+//    kill-fireball=1		; kill on collision with NPC, marked as "fireball"
+    bool kill_by_fireball;
+//    kill-iceball=1		; freeze on collision with NPC, marked as "iceball"
+    bool freeze_by_iceball;
+//    kill-hammer=1		; kill on collision with NPC, marked as "hammer" or "boomerang"
+    bool kill_hammer;
+//    kill-tail=1		; kill on tail attack
+    bool kill_tail;
+//    kill-spin=1		; kill on spin jump
+    bool kill_by_spinjump;
+//    kill-statue=1		; kill on tanooki statue fall
+    bool kill_by_statue;
+//    kill-with-mounted=1	; kill on jump with mounted items
+    bool kill_by_mounted_item;
+//    kill-on-eat=1		; Kill on eat, or transform into other
+    bool kill_on_eat;
+//    cliffturn=0		; NPC turns on cliff
+    bool turn_on_cliff_detect;
+//    lava-protection=0	; NPC will not be burn in lava
+    bool lava_protect;
+
+};
+
 struct obj_music
 {
     unsigned long id;
@@ -198,6 +326,12 @@ struct bgoIndexes
     unsigned int type;//0 - internal GFX, 1 - user defined GFX
 };
 
+struct npcIndexes
+{
+    unsigned long i; //Target array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+
 class dataconfigs
 {
 public:
@@ -205,9 +339,11 @@ public:
     bool loadconfigs(bool nobar=false);
     DataFolders dirs;
 
-    QVector<obj_bgo > main_bgo;
     QVector<obj_BG > main_bg;
+
+    QVector<obj_bgo > main_bgo;
     QVector<obj_block > main_block;
+    QVector<obj_npc > main_npc;
 
     unsigned long music_custom_id;
     QVector<obj_music > main_music_lvl;
@@ -217,6 +353,7 @@ public:
     //Indexes
     QVector<blocksIndexes > index_blocks;
     QVector<bgoIndexes > index_bgo;
+    QVector<npcIndexes > index_npc;
 
 };
 
