@@ -253,9 +253,9 @@ void dataconfigs::loadLevelNPC()
         //    //    yoshicaneat=1			; NPC can be eaten by yoshi
         //        bool can_be_eaten;
             snpc.can_be_eaten = npcset.value("yoshicaneat", "0").toBool();
-        //    //    takeble=0			; NPC destroyble on contact with player
+        //    //    takable=0			; NPC destroyble on contact with player
         //        bool takable;
-            snpc.takeble = npcset.value("takable", "0").toBool();
+            snpc.takable = npcset.value("takable", "0").toBool();
         //    //    grab-side=0			; NPC can be grabbed on side
         //        bool grab_side;
             snpc.grab_side = npcset.value("grab-side", "0").toBool();
@@ -284,40 +284,52 @@ void dataconfigs::loadLevelNPC()
             snpc.allow_egg = npcset.value("allow-egg", "0").toBool();
         //    //    allow-lakitu=1			; Allow packable into the SMW Lakitu
         //        bool allow_lakitu;
-            snpc.allow_lakitu = npcset.value(" allow-lakitu", "0").toBool();
+            snpc.allow_lakitu = npcset.value("allow-lakitu", "0").toBool();
         //    //    allow-burred=1			; Allow packable under the herb
         //        bool allow_burred;
-            snpc.allow_burred = npcset.value(" allow-burred", "0").toBool();
+            snpc.allow_burred = npcset.value("allow-burred", "0").toBool();
 
 
         //    //    ; Physics
         //    //    ; Size of NPC's body (Collision box)
         //    //    fixture-height=32
         //        unsigned int height;
+            snpc.height = npcset.value("fixture-height", "0").toInt();
         //    //    fixture-width=32
         //        unsigned int width;
+            snpc.width = npcset.value("fixture-width", "0").toInt();
         //    //    block-npc=1		; NPC is a solid object for NPC's
         //        bool block_npc;
+            snpc.block_npc = npcset.value("block-npc", "0").toBool();
         //    //    block-npc-top=0		; on NPC's top can be stay other NPC's
         //        bool block_npc_top;
+            snpc.block_npc_top = npcset.value("block-npc-top", "0").toBool();
         //    //    block-player=0		; NPC is a solid object for player
         //        bool block_player;
+            snpc.block_player = npcset.value("block-player", "0").toBool();
         //    //    block-player-top=0	; on NPC's top can be stay player
         //        bool block_player_top;
+            snpc.block_player_top = npcset.value("block-player-top", "0").toBool();
         //    //    collision-blocks=1	; Enable collisions with blocks
         //        bool collision_with_blocks;
+            snpc.collision_with_blocks = npcset.value("collision-blocks", "0").toBool();
         //    //    gravity=1		; Enable gravitation for this NPC
         //        bool gravity;
+            snpc.gravity = npcset.value("gravity", "0").toBool();
         //    //    adhesion=0		; allows to NPC walking on wall and on celling
         //        bool adhesion;
+            snpc.adhesion = npcset.value("adhesion", "0").toBool();
 
         //    //    ;Events
         //    //    deactivate=1		; Deactivate on state offscreen > 4 sec ago
         //        bool deactivation;
+            snpc.deactivation = npcset.value("deactivate", "0").toBool();
         //    //    kill-slside=1		; Kill on Slope slide
         //        bool kill_slide_slope;
+            snpc.kill_slide_slope = npcset.value("kill-slside", "0").toBool();
         //    //    kill-onjump=1		; Kill on jump on NPC's head
         //        bool kill_on_jump;
+            snpc.kill_slide_slope = npcset.value("kill-slside", "0").toBool();
         //    //    kill-bynpc=1		; Kill by contact with other NPC with hurt-npc
         //    //    ; for example: moving SHELL have "HURT_NPC", and shell kiling ALL NPCs on contact
         //        bool kill_by_npc;
