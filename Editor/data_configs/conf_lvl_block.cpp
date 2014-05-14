@@ -1,0 +1,138 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ */
+
+#include "data_configs.h"
+
+void dataconfigs::loadLevelBlocks()
+{
+    unsigned int i;
+
+    obj_block sblock;
+    unsigned long block_total=0;
+    QString block_ini = config_dir + "lvl_blocks.ini";
+    QSettings blockset(block_ini, QSettings::IniFormat);
+    main_block.clear();   //Clear old
+
+    blockset.beginGroup("blocks-main");
+        block_total = blockset.value("total", "0").toInt();
+        total_data +=block_total;
+    blockset.endGroup();
+
+    //creation of empty indexes of arrayElements
+    blocksIndexes blockIndex;
+    for(i=0;i<block_total+1; i++)
+    {
+        blockIndex.i=i;
+        blockIndex.type=0;
+        index_blocks.push_back(blockIndex);
+    }
+
+        for(i=1; i<=block_total; i++)
+        {
+            blockset.beginGroup( QString("block-"+QString::number(i)) );
+                sblock.name = blockset.value("name", "").toString();
+                sblock.type = blockset.value("type", "other").toString();
+
+                imgFile = blockset.value("image", "").toString();
+                sblock.image_n = imgFile;
+                if( (imgFile!="") )
+                {
+                    tmp = imgFile.split(".", QString::SkipEmptyParts);
+                    if(tmp.size()==2)
+                        imgFileM = tmp[0] + "m." + tmp[1];
+                    else
+                        imgFileM = "";
+                    sblock.mask_n = imgFileM;
+                    if(tmp.size()==2) mask = QBitmap(blockPath + imgFileM);
+                    sblock.mask = mask;
+                    sblock.image = QPixmap(blockPath + imgFile);
+                    if(tmp.size()==2) sblock.image.setMask(mask);
+                }
+                else
+                {
+                    sblock.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
+                    sblock.mask_n = "";
+                }
+
+                sblock.sizable = blockset.value("sizable", "0").toBool();
+                sblock.danger = blockset.value("danger", "0").toInt();
+                sblock.collision = blockset.value("collision", "1").toInt();
+                sblock.slopeslide = blockset.value("slope-slide", "0").toBool();
+                sblock.fixture = blockset.value("fixture-type", "0").toInt();
+                sblock.lava = blockset.value("lava", "0").toBool();
+                sblock.destruct = blockset.value("destruct", "0").toBool();
+                sblock.dest_bomb = blockset.value("destruct-bomb", "0").toBool();
+                sblock.dest_fire = blockset.value("destruct-fireball", "0").toBool();
+
+                imgFile = blockset.value("spawn-on-destroy", "0").toString();
+                if(imgFile!="0")
+                {
+                    tmp =  imgFile.split("-", QString::SkipEmptyParts);
+                    if(tmp.size()==2)
+                    {
+                        if(tmp[0]=="npc")
+                            sblock.spawn_obj = 1;
+                        else
+                        if(tmp[0]=="block")
+                             sblock.spawn_obj = 2;
+                        else
+                        if(tmp[0]=="bgo")
+                             sblock.spawn_obj = 3;
+                        // 1 - NPC, 2 - block, 3 - BGO
+                        sblock.spawn_obj_id = tmp[1].toInt();
+                    }
+                    else // if syntax error in config
+                    {
+                        sblock.spawn = false;
+                        sblock.spawn_obj = 0;
+                        sblock.spawn_obj_id = 0;
+                    }
+                }
+                else
+                {
+                    sblock.spawn = false;
+                    sblock.spawn_obj = 0;
+                    sblock.spawn_obj_id = 0;
+                }
+
+                sblock.effect= blockset.value("destruct-effect", "1").toInt();
+
+                sblock.bounce = blockset.value("bounce", "0").toBool();
+                sblock.hitable = blockset.value("hitable", "0").toBool();
+                sblock.onhit = blockset.value("hitable", "0").toBool();
+                sblock.onhit_block= blockset.value("onhit-block", "2").toInt();
+                sblock.algorithm= blockset.value("algorithm", "2").toInt();
+                sblock.view = (int)(blockset.value("view", "background").toString()=="foreground");
+                sblock.animated = (blockset.value("animated", "0").toString()=="1");
+                sblock.frames = blockset.value("frames", "1").toInt();
+                sblock.framespeed = blockset.value("framespeed", "125").toInt();
+                sblock.id = i;
+                main_block.push_back(sblock);
+
+                //Add to Index
+                if(i < (unsigned int)index_blocks.size())
+                    index_blocks[i].i = i;
+
+            blockset.endGroup();
+
+        /*    prgs++;
+            if((!progress.wasCanceled())&&(!nobar))
+                progress.setValue(prgs);*/
+        }
+
+}

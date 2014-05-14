@@ -49,7 +49,7 @@
 #include "aboutdialog.h"
 #include "levelprops.h"
 
-#include "dataconfigs.h"
+#include "data_configs/data_configs.h"
 
 #include "musicfilelist.h"
 
