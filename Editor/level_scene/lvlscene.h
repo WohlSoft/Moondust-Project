@@ -87,6 +87,8 @@ public:
 
     bool disableMoveItems;
 
+    bool contextMenuOpened;
+
     //Event Flags
     bool wasPasted;
     bool doCopy;

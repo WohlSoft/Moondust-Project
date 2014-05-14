@@ -120,6 +120,8 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    if(contextMenuOpened) return;
+
     cursor->setPos(mouseEvent->scenePos());
 
     haveSelected=(!selectedItems().isEmpty());
@@ -192,6 +194,12 @@ void LvlScene::removeItemUnderCursor()
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
+    if(contextMenuOpened)
+    {
+        contextMenuOpened = false; //bug protector
+        return;
+    }
+
             int gridSize=32, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
             QPoint sourcePos;
 
