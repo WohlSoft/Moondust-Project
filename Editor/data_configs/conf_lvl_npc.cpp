@@ -333,26 +333,38 @@ void dataconfigs::loadLevelNPC()
         //    //    kill-bynpc=1		; Kill by contact with other NPC with hurt-npc
         //    //    ; for example: moving SHELL have "HURT_NPC", and shell kiling ALL NPCs on contact
         //        bool kill_by_npc;
+            snpc.kill_by_npc = npcset.value("kill-bynpc", "0").toBool();
         //    //    kill-fireball=1		; kill on collision with NPC, marked as "fireball"
         //        bool kill_by_fireball;
+            snpc.kill_by_fireball = npcset.value("kill-fireball", "0").toBool();
         //    //    kill-iceball=1		; freeze on collision with NPC, marked as "iceball"
         //        bool freeze_by_iceball;
+            snpc.freeze_by_iceball = npcset.value("kill-iceball", "0").toBool();
         //    //    kill-hammer=1		; kill on collision with NPC, marked as "hammer" or "boomerang"
         //        bool kill_hammer;
+            snpc.kill_hammer = npcset.value("kill-hammer", "0").toBool();
         //    //    kill-tail=1		; kill on tail attack
         //        bool kill_tail;
+            snpc.kill_tail = npcset.value("kill-tail", "0").toBool();
         //    //    kill-spin=1		; kill on spin jump
         //        bool kill_by_spinjump;
+            snpc.kill_by_spinjump = npcset.value("kill-spin", "0").toBool();
         //    //    kill-statue=1		; kill on tanooki statue fall
         //        bool kill_by_statue;
+            snpc.kill_by_statue = npcset.value("kill-statue", "0").toBool();
         //    //    kill-with-mounted=1	; kill on jump with mounted items
         //        bool kill_by_mounted_item;
+            snpc.kill_by_mounted_item = npcset.value("kill-with-mounted", "0").toBool();
         //    //    kill-on-eat=1		; Kill on eat, or transform into other
         //        bool kill_on_eat;
+            snpc.kill_on_eat = npcset.value("kill-on-eat", "0").toBool();
         //    //    cliffturn=0		; NPC turns on cliff
         //        bool turn_on_cliff_detect;
+            snpc.turn_on_cliff_detect = npcset.value("cliffturn", "0").toBool();
         //    //    lava-protection=0	; NPC will not be burn in lava
         //        bool lava_protect;
+            snpc.lava_protect = npcset.value("lava-protection", "0").toBool();
+
             main_npc.push_back(snpc);
 
             //Add to Index
