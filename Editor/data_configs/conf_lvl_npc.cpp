@@ -24,7 +24,7 @@ void dataconfigs::loadLevelNPC()
 
     obj_npc snpc;
     unsigned long npc_total=0;
-    QString npc_ini = config_dir + "lvl_blocks.ini";
+    QString npc_ini = config_dir + "lvl_npc.ini";
     QSettings npcset(npc_ini, QSettings::IniFormat);
     main_npc.clear();   //Clear old
 
@@ -60,6 +60,7 @@ void dataconfigs::loadLevelNPC()
 
         for(i=1; i<=npc_total; i++)
         {
+            WriteToLog(QtDebugMsg, QString("NPC Config -> read header data... npc-%1").arg(i));
             npcset.beginGroup( QString("npc-"+QString::number(i)) );
         //    //    [npc-1]
         //        unsigned long id;
@@ -78,6 +79,8 @@ void dataconfigs::loadLevelNPC()
             //        QPixmap image;
             //        QBitmap mask;
 
+            WriteToLog(QtDebugMsg, "NPC Config -> Loading image...");
+
             imgFile = npcset.value("image", "").toString();
             snpc.image_n = imgFile;
             if( (imgFile!="") )
@@ -88,16 +91,18 @@ void dataconfigs::loadLevelNPC()
                 else
                     imgFileM = "";
                 snpc.mask_n = imgFileM;
-                if(tmp.size()==2) mask = QBitmap(blockPath + imgFileM);
+                if(tmp.size()==2) mask = QBitmap(npcPath + imgFileM);
                 snpc.mask = mask;
-                snpc.image = QPixmap(blockPath + imgFile);
+                snpc.image = QPixmap(npcPath + imgFile);
                 if(tmp.size()==2) snpc.image.setMask(mask);
+                WriteToLog(QtDebugMsg, "NPC Config -> Image loaded");
             }
             else
             {
+                WriteToLog(QtWarningMsg, "NPC Config -> Empty image");
                 snpc.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-                snpc.mask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-                snpc.image.setMask(mask);
+                snpc.mask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
+                snpc.image.setMask(snpc.mask);
             }
 
         //    //    algotitm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
@@ -137,32 +142,36 @@ void dataconfigs::loadLevelNPC()
 
         //        int gfx_h;
         //    //    gfx-height-y=32
+            WriteToLog(QtDebugMsg, "NPC Config -> Check framestyle");
             switch(snpc.framestyle)
             {
             case 0:
-                defGFX_h = (int)round(snpc.image.height()/snpc.frames);
+                defGFX_h = (int)round(snpc.image.height() / snpc.frames);
                 break;
             case 1:
-                defGFX_h = (int)round(snpc.image.height()/snpc.frames)/2;
+                defGFX_h = (int)round((snpc.image.height() / snpc.frames)/2 );
                 break;
             case 2:
-                defGFX_h = (int)round(snpc.image.height()/snpc.frames)/4;
+                defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4);
                 break;
             case 3:
-                defGFX_h = (int)round(snpc.image.height()/snpc.frames)/4;
+                defGFX_h = (int)round((snpc.image.height()/snpc.frames)/4);
                 break;
             case 4:
-                defGFX_h = (int)round(snpc.image.height()/snpc.frames)/8;
+                defGFX_h = (int)round((snpc.image.height()/snpc.frames)/8);
                 break;
             default:
+                defGFX_h=0;
                 break;
             }
 
+            WriteToLog(QtDebugMsg, "NPC Config -> calculate GFX size...");
             snpc.gfx_h = npcset.value("gfx-height-y", QString::number(defGFX_h) ).toInt();
         //        int gfx_w;
         //    //    gfx-width-y=32
             snpc.gfx_w = npcset.value("gfx-width-y", QString::number(snpc.image.width()) ).toInt();
 
+            WriteToLog(QtDebugMsg, "NPC Config -> load other params...");
         //    //    frame-speed=128
         //        unsigned int framespeed;
             snpc.framespeed = npcset.value("frame-speed", "128").toInt();
@@ -172,6 +181,7 @@ void dataconfigs::loadLevelNPC()
         //    //    ; for editor
         //    //    custom-animation=0
         //        bool custom_animate;
+            WriteToLog(QtDebugMsg, "NPC Config -> Custom animate...");
             snpc.custom_animate = npcset.value("custom-animation", "0").toBool();
         //    //    ; this option useful for non-standart algorithmic sprites (for example, bosses)
 
@@ -199,6 +209,7 @@ void dataconfigs::loadLevelNPC()
         //    //    ; Special option
         //    //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
         //        bool special_option;
+            WriteToLog(QtDebugMsg, "NPC Config -> Special option...");
             snpc.special_option = npcset.value("have-special", "0").toBool();
 
         //    //    ;special-name="Cheep-cheep"	; 60
@@ -364,12 +375,16 @@ void dataconfigs::loadLevelNPC()
         //    //    lava-protection=0	; NPC will not be burn in lava
         //        bool lava_protect;
             snpc.lava_protect = npcset.value("lava-protection", "0").toBool();
+            WriteToLog(QtDebugMsg, "NPC Config -> Loaded");
 
             main_npc.push_back(snpc);
+
+            WriteToLog(QtDebugMsg, "NPC Config -> Pushed");
 
             //Add to Index
             if(i < (unsigned int)index_npc.size())
                 index_npc[i].i = i;
+            WriteToLog(QtDebugMsg, "NPC Config -> Index added");
 
         npcset.endGroup();
         }
