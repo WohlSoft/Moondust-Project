@@ -21,6 +21,7 @@
 #include <QString>
 #include <QtMsgHandler>
 
+void LoadLogSettings();
 void WriteToLog(QtMsgType type, QString msg);
 
 #endif // LOGGER_H

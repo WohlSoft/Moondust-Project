@@ -19,8 +19,37 @@
 #include <QFile>
 #include <QTextStream>
 #include <QApplication>
+#include <QSettings>
+#include <QDebug>
 
 #include "logger_sets.h"
+
+void LoadLogSettings()
+{
+    QString mainIniFile = QApplication::applicationDirPath() + "/" + "plweditor.ini";
+    QSettings logSettings(mainIniFile, QSettings::IniFormat);
+
+    logSettings.beginGroup("logging");
+        LogWriter::DebugLogFile = logSettings.value("log-path", QApplication::applicationDirPath()+"/PGE_debug_log.txt").toString();
+
+        switch( logSettings.value("log-level", "4").toInt() )
+        {
+            case 4:
+                LogWriter::logLevel=QtDebugMsg; break;
+            case 3:
+                LogWriter::logLevel=QtWarningMsg; break;
+            case 2:
+                LogWriter::logLevel=QtCriticalMsg; break;
+            case 1:
+                LogWriter::logLevel=QtFatalMsg; break;
+            case 0:
+            default:
+                LogWriter::logLevel=QtSystemMsg; break;
+        }
+
+    logSettings.endGroup();
+    qDebug()<< QString("LogLevel %1, log file %2").arg(LogWriter::logLevel).arg(LogWriter::DebugLogFile);
+}
 
 void WriteToLog(QtMsgType type, QString msg)
     {

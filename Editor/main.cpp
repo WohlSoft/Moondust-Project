@@ -26,13 +26,13 @@
 
 #include "common_features/logger.h"
 
-
 //Regular expressions for File Formats
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    LoadLogSettings();
 
     //Check for runned copy of application//////////////////
     QSystemSemaphore sema("Plarformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
