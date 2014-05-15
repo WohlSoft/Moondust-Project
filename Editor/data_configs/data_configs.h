@@ -243,20 +243,20 @@ struct obj_npc
     bool grab_any;
 //    default-health=1		; NPC's health value
     int health;
-//    hurtpalyer=1			; Hurt player on contact
+//    hurtplayer=1			; Hurt player on contact
     bool hurt_player;
 //    hurtnpc=0			; Hurt other npc on contact
     bool hurt_npc;
 
 //    ;Editor featured
 //    allow-bubble=1			; Allow packable into the bubble
-    bool allow_buble;
+    bool allow_bubble;
 //    allow-egg=1			; Allow packable into the egg
     bool allow_egg;
 //    allow-lakitu=1			; Allow packable into the SMW Lakitu
     bool allow_lakitu;
 //    allow-burred=1			; Allow packable under the herb
-    bool allow_burred;
+    bool allow_buried;
 
 
 //    ; Physics
@@ -322,7 +322,7 @@ struct npc_Markers
 //    egg=96		; NPC-Container for packed in egg
     unsigned long lakitu;
 //    lakitu=284	; NPC-Container for spawn by lakitu
-    unsigned long burred;
+    unsigned long buried;
 //    burred=91	; NPC-Container for packed in herb
 
     unsigned long ice_cube;
