@@ -40,6 +40,10 @@ void MainWindow::setDefaults()
     currentCustomMusic = "";
     currentMusicId = 0;
     musicButtonChecked = false;
+
+    cat_blocks="[all]";
+    cat_bgos="[all]";
+    cat_npcs="[all]";
 }
 
 void MainWindow::setUiDefults()

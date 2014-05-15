@@ -163,8 +163,12 @@ public:
     QListWidget *BGOItemsList;
     QComboBox *BGOCatList;
     QCheckBox *BGOUniform;
-    QScrollArea *npc;
-    QWidget *npcscroll;
+    QWidget *NPCs;
+    QGridLayout *NPCsG;
+    QLabel *NPCCatLabel;
+    QListWidget *NPCItemsList;
+    QComboBox *NPCCatList;
+    QCheckBox *NPCUniform;
     QToolBar *CommonEditBar;
     QToolBar *EditionToolBar;
     QToolBar *LevelObjectToolbar;
@@ -896,6 +900,7 @@ public:
 
         BlocksG->setColumnStretch(1, 90);
         BlocksG->setColumnMinimumWidth(0, 50);
+        BlocksG->setColumnMinimumWidth(2, 15);
         LevelToolBoxTabs->addTab(Blocks, QString());
         BGOs = new QWidget();
         BGOs->setObjectName(QStringLiteral("BGOs"));
@@ -952,17 +957,61 @@ public:
         BGOsG->setColumnMinimumWidth(0, 50);
         BGOsG->setColumnMinimumWidth(2, 15);
         LevelToolBoxTabs->addTab(BGOs, QString());
-        npc = new QScrollArea();
-        npc->setObjectName(QStringLiteral("npc"));
-        npc->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-        npc->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        npc->setWidgetResizable(true);
-        npcscroll = new QWidget();
-        npcscroll->setObjectName(QStringLiteral("npcscroll"));
-        npcscroll->setGeometry(QRect(0, 0, 81, 28));
-        npcscroll->setStyleSheet(QStringLiteral("background-color: rgb(255, 255, 255);"));
-        npc->setWidget(npcscroll);
-        LevelToolBoxTabs->addTab(npc, QString());
+        NPCs = new QWidget();
+        NPCs->setObjectName(QStringLiteral("NPCs"));
+        NPCsG = new QGridLayout(NPCs);
+        NPCsG->setSpacing(0);
+        NPCsG->setContentsMargins(11, 11, 11, 11);
+        NPCsG->setObjectName(QStringLiteral("NPCsG"));
+        NPCsG->setContentsMargins(0, 0, 0, 0);
+        NPCCatLabel = new QLabel(NPCs);
+        NPCCatLabel->setObjectName(QStringLiteral("NPCCatLabel"));
+
+        NPCsG->addWidget(NPCCatLabel, 0, 0, 1, 1);
+
+        NPCItemsList = new QListWidget(NPCs);
+        QListWidgetItem *__qlistwidgetitem2 = new QListWidgetItem(NPCItemsList);
+        __qlistwidgetitem2->setIcon(icon53);
+        __qlistwidgetitem2->setFlags(Qt::ItemIsSelectable|Qt::ItemIsEnabled);
+        NPCItemsList->setObjectName(QStringLiteral("NPCItemsList"));
+        NPCItemsList->setLineWidth(1);
+        NPCItemsList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        NPCItemsList->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        NPCItemsList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        NPCItemsList->setProperty("showDropIndicator", QVariant(false));
+        NPCItemsList->setDragEnabled(false);
+        NPCItemsList->setDragDropOverwriteMode(false);
+        NPCItemsList->setDragDropMode(QAbstractItemView::DragDrop);
+        NPCItemsList->setSelectionMode(QAbstractItemView::SingleSelection);
+        NPCItemsList->setSelectionBehavior(QAbstractItemView::SelectItems);
+        NPCItemsList->setIconSize(QSize(48, 48));
+        NPCItemsList->setTextElideMode(Qt::ElideNone);
+        NPCItemsList->setMovement(QListView::Snap);
+        NPCItemsList->setResizeMode(QListView::Adjust);
+        NPCItemsList->setLayoutMode(QListView::Batched);
+        NPCItemsList->setSpacing(20);
+        NPCItemsList->setViewMode(QListView::IconMode);
+        NPCItemsList->setUniformItemSizes(false);
+        NPCItemsList->setBatchSize(150);
+        NPCItemsList->setWordWrap(true);
+        NPCItemsList->setSortingEnabled(true);
+
+        NPCsG->addWidget(NPCItemsList, 1, 0, 1, 3);
+
+        NPCCatList = new QComboBox(NPCs);
+        NPCCatList->setObjectName(QStringLiteral("NPCCatList"));
+
+        NPCsG->addWidget(NPCCatList, 0, 1, 1, 1);
+
+        NPCUniform = new QCheckBox(NPCs);
+        NPCUniform->setObjectName(QStringLiteral("NPCUniform"));
+
+        NPCsG->addWidget(NPCUniform, 0, 2, 1, 1);
+
+        NPCsG->setColumnStretch(1, 95);
+        NPCsG->setColumnMinimumWidth(0, 50);
+        NPCsG->setColumnMinimumWidth(2, 15);
+        LevelToolBoxTabs->addTab(NPCs, QString());
         LevelToolBox->setWidget(LevelToolBoxTabs);
         MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), LevelToolBox);
         CommonEditBar = new QToolBar(MainWindow);
@@ -1033,7 +1082,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
+        SceneryScroll->setGeometry(QRect(0, 0, 239, 248));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -1043,7 +1092,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 248));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         WldMusicBox = new QScrollArea();
@@ -1053,7 +1102,7 @@ public:
         WldMusicBox->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 81, 28));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 248));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));
@@ -1390,14 +1439,14 @@ public:
         gridLayout->addWidget(LockLayer, 1, 2, 1, 1);
 
         LvlLayerList = new QListWidget(LevelLayersBox);
-        QListWidgetItem *__qlistwidgetitem2 = new QListWidgetItem(LvlLayerList);
-        __qlistwidgetitem2->setCheckState(Qt::Checked);
         QListWidgetItem *__qlistwidgetitem3 = new QListWidgetItem(LvlLayerList);
-        __qlistwidgetitem3->setCheckState(Qt::Unchecked);
-        __qlistwidgetitem3->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable);
+        __qlistwidgetitem3->setCheckState(Qt::Checked);
         QListWidgetItem *__qlistwidgetitem4 = new QListWidgetItem(LvlLayerList);
-        __qlistwidgetitem4->setCheckState(Qt::Checked);
+        __qlistwidgetitem4->setCheckState(Qt::Unchecked);
         __qlistwidgetitem4->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable);
+        QListWidgetItem *__qlistwidgetitem5 = new QListWidgetItem(LvlLayerList);
+        __qlistwidgetitem5->setCheckState(Qt::Checked);
+        __qlistwidgetitem5->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable);
         LvlLayerList->setObjectName(QStringLiteral("LvlLayerList"));
         LvlLayerList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         LvlLayerList->setDragDropMode(QAbstractItemView::InternalMove);
@@ -1616,7 +1665,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        LevelToolBoxTabs->setCurrentIndex(0);
+        LevelToolBoxTabs->setCurrentIndex(2);
         WorldToolBoxTabs->setCurrentIndex(0);
         LvlLayerList->setCurrentRow(-1);
 
@@ -1919,7 +1968,20 @@ public:
         );
         BGOUniform->setText(QString());
         LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(BGOs), QApplication::translate("MainWindow", "Backgrounds", 0));
-        LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(npc), QApplication::translate("MainWindow", "NPC", 0));
+        NPCCatLabel->setText(QApplication::translate("MainWindow", "Category:", 0));
+
+        const bool __sortingEnabled2 = NPCItemsList->isSortingEnabled();
+        NPCItemsList->setSortingEnabled(false);
+        QListWidgetItem *___qlistwidgetitem2 = NPCItemsList->item(0);
+        ___qlistwidgetitem2->setText(QApplication::translate("MainWindow", "The test Icon for NPCs", 0));
+        NPCItemsList->setSortingEnabled(__sortingEnabled2);
+
+        NPCCatList->clear();
+        NPCCatList->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "[all]", 0)
+        );
+        NPCUniform->setText(QString());
+        LevelToolBoxTabs->setTabText(LevelToolBoxTabs->indexOf(NPCs), QApplication::translate("MainWindow", "NPC", 0));
         CommonEditBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
         EditionToolBar->setWindowTitle(QApplication::translate("MainWindow", "Editor", 0));
         LevelObjectToolbar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
@@ -2042,22 +2104,22 @@ public:
         AddLayer->setText(QApplication::translate("MainWindow", "Add", 0));
         LockLayer->setText(QApplication::translate("MainWindow", "Lock", 0));
 
-        const bool __sortingEnabled2 = LvlLayerList->isSortingEnabled();
+        const bool __sortingEnabled3 = LvlLayerList->isSortingEnabled();
         LvlLayerList->setSortingEnabled(false);
-        QListWidgetItem *___qlistwidgetitem2 = LvlLayerList->item(0);
-        ___qlistwidgetitem2->setText(QApplication::translate("MainWindow", "Default", 0));
-        QListWidgetItem *___qlistwidgetitem3 = LvlLayerList->item(1);
-        ___qlistwidgetitem3->setText(QApplication::translate("MainWindow", "Destroyed Blocks", 0));
-        QListWidgetItem *___qlistwidgetitem4 = LvlLayerList->item(2);
-        ___qlistwidgetitem4->setText(QApplication::translate("MainWindow", "Spawned NPCs", 0));
-        LvlLayerList->setSortingEnabled(__sortingEnabled2);
+        QListWidgetItem *___qlistwidgetitem3 = LvlLayerList->item(0);
+        ___qlistwidgetitem3->setText(QApplication::translate("MainWindow", "Default", 0));
+        QListWidgetItem *___qlistwidgetitem4 = LvlLayerList->item(1);
+        ___qlistwidgetitem4->setText(QApplication::translate("MainWindow", "Destroyed Blocks", 0));
+        QListWidgetItem *___qlistwidgetitem5 = LvlLayerList->item(2);
+        ___qlistwidgetitem5->setText(QApplication::translate("MainWindow", "Spawned NPCs", 0));
+        LvlLayerList->setSortingEnabled(__sortingEnabled3);
 
         ItemProperties->setWindowTitle(QApplication::translate("MainWindow", "Item Properties", 0));
         QTreeWidgetItem *___qtreewidgetitem = ItemPrTree->headerItem();
         ___qtreewidgetitem->setText(1, QApplication::translate("MainWindow", "Value", 0));
         ___qtreewidgetitem->setText(0, QApplication::translate("MainWindow", "Parameter", 0));
 
-        const bool __sortingEnabled3 = ItemPrTree->isSortingEnabled();
+        const bool __sortingEnabled4 = ItemPrTree->isSortingEnabled();
         ItemPrTree->setSortingEnabled(false);
         QTreeWidgetItem *___qtreewidgetitem1 = ItemPrTree->topLevelItem(0);
         ___qtreewidgetitem1->setText(1, QApplication::translate("MainWindow", "0", 0));
@@ -2098,7 +2160,7 @@ public:
         QTreeWidgetItem *___qtreewidgetitem15 = ___qtreewidgetitem12->child(2);
         ___qtreewidgetitem15->setText(1, QApplication::translate("MainWindow", "[none]", 0));
         ___qtreewidgetitem15->setText(0, QApplication::translate("MainWindow", "No more objects on layer", 0));
-        ItemPrTree->setSortingEnabled(__sortingEnabled3);
+        ItemPrTree->setSortingEnabled(__sortingEnabled4);
 
     } // retranslateUi
 

@@ -99,13 +99,20 @@ void MainWindow::on_actionLayersBox_triggered(bool checked)
 void MainWindow::on_BGOUniform_clicked(bool checked)
 {
     ui->BGOItemsList->setUniformItemSizes(checked);
-    setItemBoxes();
+    setItemBoxes(true);
 }
 
 void MainWindow::on_BlockUniform_clicked(bool checked)
 {
     ui->BlockItemsList->setUniformItemSizes(checked);
-    setItemBoxes();
+    setItemBoxes(true);
+}
+
+
+void MainWindow::on_NPCUniform_clicked(bool checked)
+{
+    ui->NPCItemsList->setUniformItemSizes(checked);
+    setItemBoxes(true);
 }
 
 

@@ -1,3 +1,4 @@
+
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
@@ -37,7 +38,8 @@
 #include <QDebug>
 
 
-#include "lvl_filedata.h"
+#include "../lvl_filedata.h"
+#include "../npc_filedata.h"
 #include "../data_configs/data_configs.h"
 
 #include "logger.h"
@@ -54,6 +56,14 @@ struct UserBlocks
     QPixmap image;
     QBitmap mask;
     unsigned long id;
+};
+
+struct UserNPCs
+{
+    QPixmap image;
+    QBitmap mask;
+    unsigned long id;
+    NPCConfigFile sets;
 };
 
 struct UserBGs
@@ -216,8 +226,6 @@ public:
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData, callBackLevelBlock clbBlock, callBackLevelBGO clbBgo);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
-    QMap<int,int> BlocksArrayIDForwarder;
-    QMap<int,int> BGOsArrayIDForwarder;
     // ////////////////////////////////////////////
 
 protected:

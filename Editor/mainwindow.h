@@ -97,7 +97,7 @@ private slots:
     void setTools();
     void setMusic(bool checked);
 
-    void setItemBoxes();
+    void setItemBoxes(bool setCat=false);
 
 
     //SubWindow functions
@@ -108,7 +108,7 @@ private slots:
 
     //File format read functions
     LevelData ReadLevelFile(QFile &inf); // SMBX LVL File
-    NPCConfigFile ReadNpcTXTFile(QFile &inf); // SMBX WLD File
+    NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); // SMBX WLD File
     WorldData ReadWorldFile(QFile &inf); //SMBX NPC.TXT File
 
 
@@ -243,6 +243,14 @@ private slots:
 
     void on_actionDrawSand_triggered();
 
+    void on_NPCUniform_clicked(bool checked);
+
+    void on_BlockCatList_currentIndexChanged(const QString &arg1);
+
+    void on_BGOCatList_currentIndexChanged(const QString &arg1);
+
+    void on_NPCCatList_currentIndexChanged(const QString &arg1);
+
 private:
     dataconfigs configs; // Global objects configucrations
 
@@ -293,6 +301,11 @@ private:
 
     void loadSettings();
     void saveSettings();
+
+    //CategorySorted
+    QString cat_blocks;
+    QString cat_bgos;
+    QString cat_npcs;
 
 
     //Miltilanguage

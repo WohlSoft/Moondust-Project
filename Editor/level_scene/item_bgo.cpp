@@ -138,10 +138,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                         break;
                         }
                     }//Find layer's settings
+                 scene->contextMenuOpened = false;
                  break;
                 }//Find selected layer's item
             }
-            scene->contextMenuOpened = false;
         }
     }
     else

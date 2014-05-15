@@ -86,13 +86,14 @@ void MainWindow::setTools()
 
 }
 
-void MainWindow::setItemBoxes()
+void MainWindow::setItemBoxes(bool setCat)
 {
-        WriteToLog(QtDebugMsg, "BGOTools -> Clear current (disabled)");
+        WriteToLog(QtDebugMsg, "LevelTools -> Clear current");
     ui->BGOItemsList->clear();
     ui->BlockItemsList->clear();
+    ui->NPCItemsList->clear();
 
-        WriteToLog(QtDebugMsg, "BGOTools -> Declare new");
+        WriteToLog(QtDebugMsg, "LevelTools -> Declare new");
     QListWidgetItem * item;
     QPixmap tmpI;
 
@@ -105,21 +106,6 @@ void MainWindow::setItemBoxes()
     //set Block item box
     foreach(obj_block blockItem, configs.main_block)
     {
-
-        if(blockItem.animated)
-            tmpI = blockItem.image.copy(0,0,
-                        blockItem.image.width(),
-                        (int)round(blockItem.image.height() / blockItem.frames));
-        else
-            tmpI = blockItem.image;
-
-        item = new QListWidgetItem( blockItem.name );
-        item->setIcon( QIcon( tmpI ) );
-        item->setData(3, QString::number(blockItem.id) );
-        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-        ui->BlockItemsList->addItem( item );
-
         //Add category
         found = false;
         if(tmpList.size()!=0)
@@ -127,11 +113,32 @@ void MainWindow::setItemBoxes()
             {   if(blockItem.type==cat)
                 {found =true; break;}  }
         if(!found) tmpList.push_back(blockItem.type);
+
+        if((blockItem.type==cat_blocks)||(cat_blocks=="[all]"))
+        {
+            if(blockItem.animated)
+                tmpI = blockItem.image.copy(0,0,
+                            blockItem.image.width(),
+                            (int)round(blockItem.image.height() / blockItem.frames));
+            else
+                tmpI = blockItem.image;
+
+            item = new QListWidgetItem( blockItem.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(blockItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->BlockItemsList->addItem( item );
+        }
+
     }
 
     //apply category list
-    ui->BlockCatList->clear();
-    ui->BlockCatList->addItems(tmpList);
+    if(!setCat)
+    {
+        ui->BlockCatList->clear();
+        ui->BlockCatList->addItems(tmpList);
+    }
 
     tmpList.clear();
     tmpList.push_back("[all]");
@@ -139,20 +146,6 @@ void MainWindow::setItemBoxes()
     //set BGO item box
     foreach(obj_bgo bgoItem, configs.main_bgo)
     {
-        if(bgoItem.animated)
-            tmpI = bgoItem.image.copy(0,0,
-                        bgoItem.image.width(),
-                        (int)round(bgoItem.image.height() / bgoItem.frames) );
-        else
-            tmpI = bgoItem.image;
-
-        item = new QListWidgetItem( bgoItem.name );
-        item->setIcon( QIcon( tmpI ) );
-        item->setData(3, QString::number(bgoItem.id) );
-        item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-        ui->BGOItemsList->addItem( item );
-
         //Add category
         found = false;
         if(tmpList.size()!=0)
@@ -160,9 +153,83 @@ void MainWindow::setItemBoxes()
             {   if(bgoItem.type==cat)
                 {found =true; break;}  }
         if(!found) tmpList.push_back(bgoItem.type);
+
+        if((bgoItem.type==cat_bgos)||(cat_bgos=="[all]"))
+        {
+            if(bgoItem.animated)
+                tmpI = bgoItem.image.copy(0,0,
+                            bgoItem.image.width(),
+                            (int)round(bgoItem.image.height() / bgoItem.frames) );
+            else
+                tmpI = bgoItem.image;
+
+            item = new QListWidgetItem( bgoItem.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(bgoItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->BGOItemsList->addItem( item );
+        }
     }
     //apply category list
-    ui->BGOCatList->clear();
-    ui->BGOCatList->addItems(tmpList);
+    if(!setCat)
+    {
+        ui->BGOCatList->clear();
+        ui->BGOCatList->addItems(tmpList);
+    }
 
+    tmpList.clear();
+    tmpList.push_back("[all]");
+
+    //set NPC item box
+    foreach(obj_npc npcItem, configs.main_npc)
+    {
+        //Add category
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString cat, tmpList)
+            {   if(npcItem.category==cat)
+                {found = true; break;}  }
+        if(!found) tmpList.push_back(npcItem.category);
+
+        if((npcItem.category==cat_npcs)||(cat_npcs=="[all]"))
+        {
+            tmpI = npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
+
+            item = new QListWidgetItem( npcItem.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(npcItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->NPCItemsList->addItem( item );
+        }
+    }
+    //apply category list
+    if(!setCat)
+    {
+        ui->NPCCatList->clear();
+        ui->NPCCatList->addItems(tmpList);
+    }
+
+}
+
+
+void MainWindow::on_BlockCatList_currentIndexChanged(const QString &arg1)
+{
+    cat_blocks=arg1;
+    setItemBoxes(true);
+}
+
+
+void MainWindow::on_BGOCatList_currentIndexChanged(const QString &arg1)
+{
+    cat_bgos=arg1;
+    setItemBoxes(true);
+}
+
+
+void MainWindow::on_NPCCatList_currentIndexChanged(const QString &arg1)
+{
+    cat_npcs=arg1;
+    setItemBoxes(true);
 }

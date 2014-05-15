@@ -96,6 +96,8 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         scene->contextMenuOpened = true; //bug protector
             QAction *selected = ItemMenu->exec(event->screenPos());
 
+        //WriteToLog(QtDebugMsg, QString("Block ContextMenu");
+
         if(selected==cutBlock)
         {
             scene->doCut = true ;
@@ -170,10 +172,10 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                         break;
                         }
                     }//Find layer's settings
+                 scene->contextMenuOpened = false;
                  break;
                 }//Find selected layer's item
             }
-            scene->contextMenuOpened = false;
         }
     }
     else
