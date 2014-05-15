@@ -161,6 +161,8 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         placeBGO(dumpBGO, true);
 
         LvlData->bgo.push_back(dumpBGO);
+
+        //WriteToLog(QtDebugMsg, QString("History-> added items pos %1 %2").arg(dumpBGO.x).arg(dumpBGO.y));
         newData.bgo.push_back(dumpBGO);
     }
     foreach (LevelNPC npc, BufferIn.npc){
