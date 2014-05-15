@@ -24,7 +24,7 @@
 #include <QSharedMemory>
 #include <QSystemSemaphore>
 
-#include "logger.h"
+#include "common_features/logger.h"
 
 
 //Regular expressions for File Formats

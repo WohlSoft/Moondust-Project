@@ -98,91 +98,145 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
 
        if(Params[0]=="gfxoffsetx")
         {
-           if((!issint.exactMatch(Params[1]))&&(!IgnoreBad))
-               goto badfile;
-
-           FileData.gfxoffsetx=Params[1].toInt();
-           FileData.en_gfxoffsetx=true;
+           if(!issint.exactMatch(Params[1]))
+           {
+               if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.gfxoffsetx=Params[1].toInt();
+               FileData.en_gfxoffsetx=true;
+           }
         }
        else
        if(Params[0]=="gfxoffsety")
         {
-           if((!issint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.gfxoffsety=Params[1].toInt();
-           FileData.en_gfxoffsety=true;
+           if(!issint.exactMatch(Params[1]))
+           {
+               if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.gfxoffsety=Params[1].toInt();
+               FileData.en_gfxoffsety=true;
+           }
         }
        else
        if(Params[0]=="width")
         {
-           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.width=Params[1].toInt();
-           FileData.en_width=true;
+           if(!isint.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.width=Params[1].toInt();
+               FileData.en_width=true;
+           }
         }
        else
        if(Params[0]=="height")
         {
-           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.height=Params[1].toInt();
-           FileData.en_height=true;
+           if(!isint.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.height=Params[1].toInt();
+               FileData.en_height=true;
+           }
         }
        else
        if(Params[0]=="gfxwidth")
         {
-           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.gfxwidth=Params[1].toInt();
-           FileData.en_gfxwidth=true;
+           if(!isint.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.gfxwidth=Params[1].toInt();
+               FileData.en_gfxwidth=true;
+           }
         }
        else
        if(Params[0]=="gfxheight")
         {
-           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.gfxheight=Params[1].toInt();
-           FileData.en_gfxheight=true;
+           if(!isint.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+              FileData.gfxheight=Params[1].toInt();
+              FileData.en_gfxheight=true;
+           }
         }
        else
        if(Params[0]=="score")
         {
-           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.score=Params[1].toInt();
-           FileData.en_score=true;
+           if(!isint.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+              FileData.score=Params[1].toInt();
+              FileData.en_score=true;
+           }
         }
        else
        if(Params[0]=="playerblock")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.playerblock=(bool)Params[1].toInt();
-           FileData.en_playerblock=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+              FileData.playerblock=(bool)Params[1].toInt();
+              FileData.en_playerblock=true;
+           }
         }
        else
        if(Params[0]=="playerblocktop")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.playerblocktop=(bool)Params[1].toInt();
-           FileData.en_playerblocktop=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+              FileData.playerblocktop=(bool)Params[1].toInt();
+              FileData.en_playerblocktop=true;
+           }
         }
        else
        if(Params[0]=="npcblock")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.npcblock=(bool)Params[1].toInt();
-           FileData.en_npcblock=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+               if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.npcblock=(bool)Params[1].toInt();
+               FileData.en_npcblock=true;
+           }
         }
        else
        if(Params[0]=="npcblocktop")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.npcblocktop=(bool)Params[1].toInt();
-           FileData.en_npcblocktop=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+              FileData.npcblocktop=(bool)Params[1].toInt();
+              FileData.en_npcblocktop=true;
+           }
         }
        else
        if(Params[0]=="grabside")

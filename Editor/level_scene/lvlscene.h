@@ -42,7 +42,7 @@
 #include "../npc_filedata.h"
 #include "../data_configs/data_configs.h"
 
-#include "logger.h"
+#include "../common_features/logger.h"
 
 struct UserBGOs
 {

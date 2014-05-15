@@ -19,7 +19,6 @@ SOURCES += main.cpp\
     leveledit.cpp \
     saveimage.cpp \
     musicfilelist.cpp \
-    logger.cpp \
     file_formats/file_formats.cpp \
     file_formats/file_lvl.cpp \
     file_formats/file_npc_txt.cpp \
@@ -52,7 +51,9 @@ SOURCES += main.cpp\
     data_configs/conf_lvl_bkgrd.cpp \
     data_configs/conf_lvl_block.cpp \
     data_configs/conf_lvl_npc.cpp \
-    data_configs/conf_music.cpp
+    data_configs/conf_music.cpp \
+    common_features/timecounter.cpp \
+    common_features/logger.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -64,13 +65,14 @@ HEADERS  += mainwindow.h \
     leveledit.h \
     saveimage.h \
     musicfilelist.h \
-    logger.h \
     file_formats/file_formats.h \
     level_scene/item_bgo.h \
     level_scene/item_block.h \
     level_scene/lvlscene.h \
     level_scene/item_npc.h \
-    data_configs/data_configs.h
+    data_configs/data_configs.h \
+    common_features/timecounter.h \
+    common_features/logger.h
 
 FORMS    += \
     aboutdialog.ui \
