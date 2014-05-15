@@ -190,14 +190,14 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
     foreach (QGraphicsItem * it, collisions) {
             if (it == item)
                  continue;
-            if(
+            if( (
                     (it->data(0).toString()=="Block")||
                     (it->data(0).toString()=="BGO")||
                     (it->data(0).toString()=="NPC")||
                     (it->data(0).toString()=="door_exit")||
                     (it->data(0).toString()=="door_enter")||
                     (it->data(0).toString()=="water")
-              )
+              )&&(it->isVisible() ) )
                 return it;
     }
     return NULL;
