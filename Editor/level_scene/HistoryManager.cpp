@@ -160,14 +160,14 @@ void LvlScene::historyForward()
         {
             //place them back
             LvlData->blocks.push_back(block);
-            placeBlock(block, true);
+            placeBlock(block);
         }
 
         foreach (LevelBGO bgo, placedData.bgo)
         {
             //place them back
             LvlData->bgo.push_back(bgo);
-            placeBGO(bgo, true);
+            placeBGO(bgo);
         }
 
         //refresh Animation control
@@ -299,11 +299,82 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     {
         sortedBGO[bgo.array_id] = bgo;
     }
-    bool blocksFinished = false;
-    bool bgosFinished = false;
+    //bool blocksFinished = false;
+    //bool bgosFinished = false;
     CallbackData cbData = customData;
     cbData.hist = operation;
-    foreach (QGraphicsItem* item, items()){
+    QMap<int, QGraphicsItem*> sortedGraphBlocks;
+    QMap<int, QGraphicsItem*> sortedGraphBGO;
+    foreach (QGraphicsItem* unsortedItem, items())
+    {
+        if(unsortedItem->data(0).toString()=="Block")
+        {
+            sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+        }
+        else
+        if(unsortedItem->data(0).toString()=="BGO")
+        {
+            sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+        }
+    }
+    foreach (QGraphicsItem* item, sortedGraphBlocks)
+    {
+
+        if(sortedBlock.size()!=0)
+        {
+            QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+            unsigned int currentArrayId = (*beginItem).array_id;
+            if((unsigned int)item->data(2).toInt()>currentArrayId)
+            {
+                //not found
+                sortedBlock.erase(beginItem);
+            }
+            //but still test if the next blocks, is the block we search!
+            beginItem = sortedBlock.begin();
+            currentArrayId = (*beginItem).array_id;
+            if((unsigned int)item->data(2).toInt()==currentArrayId)
+            {
+                cbData.item = item;
+                (this->*clbBlock)(cbData,(*beginItem));
+                sortedBlock.erase(beginItem);
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+
+    foreach (QGraphicsItem* item, sortedGraphBGO)
+    {
+        if(sortedBGO.size()!=0)
+        {
+            QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+            unsigned int currentArrayId = (*beginItem).array_id;
+            if((unsigned int)item->data(2).toInt()>currentArrayId)
+            {
+                //not found
+                sortedBGO.erase(beginItem);
+            }
+            //but still test if the next blocks, is the block we search!
+            beginItem = sortedBGO.begin();
+            currentArrayId = (*beginItem).array_id;
+            if((unsigned int)item->data(2).toInt()==currentArrayId)
+            {
+                cbData.item = item;
+                (this->*clbBgo)(cbData,(*beginItem));
+                sortedBGO.erase(beginItem);
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+    /*
+    foreach (QGraphicsItem* item, sortedLevelArray)
+    {
         if(item->data(0).toString()=="Block")
         {
             if(sortedBlock.size()!=0)
@@ -362,7 +433,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             break;
         }
     }
-
+    */
 
 }
 
