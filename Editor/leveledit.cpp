@@ -27,7 +27,7 @@
 #include "lvl_filedata.h"
 #include "level_scene/lvlscene.h"
 #include "saveimage.h"
-#include "logger.h"
+#include "common_features/logger.h"
 
 
 #include <QDebug>
