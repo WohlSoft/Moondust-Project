@@ -86,12 +86,6 @@ void LvlScene::historyBack()
         foreach (LevelBlock block, deletedData.blocks)
         {
             //place them back
-            unsigned int newID = (++LvlData->blocks_array_id);
-
-            //use it so redo can find faster via arrayID
-            BlocksArrayIDForwarder[block.array_id] = newID;
-
-            block.array_id = newID;
             LvlData->blocks.push_back(block);
             placeBlock(block);
 
@@ -100,12 +94,6 @@ void LvlScene::historyBack()
         foreach (LevelBGO bgo, deletedData.bgo)
         {
             //place them back
-            unsigned int newID = (++LvlData->bgo_array_id);
-
-            //use it so redo can find faster via arrayID
-            BGOsArrayIDForwarder[bgo.array_id] = newID;
-
-            bgo.array_id = newID;
             LvlData->bgo.push_back(bgo);
             placeBGO(bgo);
 
@@ -121,31 +109,9 @@ void LvlScene::historyBack()
     {
         //revert place
         LevelData placeData = lastOperation.data;
-        //get newest data
-        LevelData updatedData;
-        foreach (LevelBlock oldblock, placeData.blocks)
-        {
-            unsigned int newestArrayID = oldblock.array_id;
-            while(BlocksArrayIDForwarder.contains(newestArrayID))
-            {
-                newestArrayID = BlocksArrayIDForwarder[newestArrayID];
-            }
-            oldblock.array_id = newestArrayID;
-            updatedData.blocks.push_back(oldblock);
-        }
 
-        foreach (LevelBGO oldbgo, placeData.bgo)
-        {
-            unsigned int newestArrayID = oldbgo.array_id;
-            while(BGOsArrayIDForwarder.contains(newestArrayID))
-            {
-                newestArrayID = BGOsArrayIDForwarder[newestArrayID];
-            }
-            oldbgo.array_id = newestArrayID;
-            updatedData.bgo.push_back(oldbgo);
-        }
         CallbackData cbData;
-        findGraphicsItem(updatedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO);
+        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO);
 
         break;
     }
@@ -154,31 +120,8 @@ void LvlScene::historyBack()
         //revert move
         LevelData movedSourceData = lastOperation.data;
 
-        //get newest data
-        LevelData updatedData;
-        foreach (LevelBlock oldblock, movedSourceData.blocks)
-        {
-            unsigned int newestArrayID = oldblock.array_id;
-            while(BlocksArrayIDForwarder.contains(newestArrayID))
-            {
-                newestArrayID = BlocksArrayIDForwarder[newestArrayID];
-            }
-            oldblock.array_id = newestArrayID;
-            updatedData.blocks.push_back(oldblock);
-        }
-
-        foreach (LevelBGO oldbgo, movedSourceData.bgo)
-        {
-            unsigned int newestArrayID = oldbgo.array_id;
-            while(BGOsArrayIDForwarder.contains(newestArrayID))
-            {
-                newestArrayID = BGOsArrayIDForwarder[newestArrayID];
-            }
-            oldbgo.array_id = newestArrayID;
-            updatedData.bgo.push_back(oldbgo);
-        }
         CallbackData cbData;
-        findGraphicsItem(updatedData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO);
 
         break;
     }
@@ -202,31 +145,9 @@ void LvlScene::historyForward()
     {
         //redo remove
         LevelData deletedData = lastOperation.data;
-        //get newest data
-        LevelData updatedData;
-        foreach (LevelBlock oldblock, deletedData.blocks)
-        {
-            unsigned int newestArrayID = oldblock.array_id;
-            while(BlocksArrayIDForwarder.contains(newestArrayID))
-            {
-                newestArrayID = BlocksArrayIDForwarder[newestArrayID];
-            }
-            oldblock.array_id = newestArrayID;
-            updatedData.blocks.push_back(oldblock);
-        }
 
-        foreach (LevelBGO oldbgo, deletedData.bgo)
-        {
-            unsigned int newestArrayID = oldbgo.array_id;
-            while(BGOsArrayIDForwarder.contains(newestArrayID))
-            {
-                newestArrayID = BGOsArrayIDForwarder[newestArrayID];
-            }
-            oldbgo.array_id = newestArrayID;
-            updatedData.bgo.push_back(oldbgo);
-        }
         CallbackData cbData;
-        findGraphicsItem(updatedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO);
 
         break;
     }
@@ -238,26 +159,15 @@ void LvlScene::historyForward()
         foreach (LevelBlock block, placedData.blocks)
         {
             //place them back
-            unsigned int newID = (++LvlData->blocks_array_id);
-
-            //use it so redo can find faster via arrayID
-            BlocksArrayIDForwarder[block.array_id] = newID;
-
-            block.array_id = newID;
             LvlData->blocks.push_back(block);
-            placeBlock(block, true);
+            placeBlock(block);
         }
 
         foreach (LevelBGO bgo, placedData.bgo)
         {
             //place them back
-            unsigned int newID = (++LvlData->bgo_array_id);
-            //use it so redo can find faster via arrayID
-            BGOsArrayIDForwarder[bgo.array_id] = newID;
-
-            bgo.array_id = newID;
             LvlData->bgo.push_back(bgo);
-            placeBGO(bgo, true);
+            placeBGO(bgo);
         }
 
         //refresh Animation control
@@ -279,33 +189,10 @@ void LvlScene::historyForward()
         baseX = (long)base.x();
         baseY = (long)base.y();
 
-        //get newest data
-        LevelData updatedData;
-        foreach (LevelBlock oldblock, movedSourceData.blocks)
-        {
-            unsigned int newestArrayID = oldblock.array_id;
-            while(BlocksArrayIDForwarder.contains(newestArrayID))
-            {
-                newestArrayID = BlocksArrayIDForwarder[newestArrayID];
-            }
-            oldblock.array_id = newestArrayID;
-            updatedData.blocks.push_back(oldblock);
-        }
-
-        foreach (LevelBGO oldbgo, movedSourceData.bgo)
-        {
-            unsigned int newestArrayID = oldbgo.array_id;
-            while(BGOsArrayIDForwarder.contains(newestArrayID))
-            {
-                newestArrayID = BGOsArrayIDForwarder[newestArrayID];
-            }
-            oldbgo.array_id = newestArrayID;
-            updatedData.bgo.push_back(oldbgo);
-        }
         CallbackData cbData;
         cbData.x = baseX;
         cbData.y = baseY;
-        findGraphicsItem(updatedData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO);
         break;
     }
     default:
@@ -412,11 +299,82 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     {
         sortedBGO[bgo.array_id] = bgo;
     }
-    bool blocksFinished = false;
-    bool bgosFinished = false;
+    //bool blocksFinished = false;
+    //bool bgosFinished = false;
     CallbackData cbData = customData;
     cbData.hist = operation;
-    foreach (QGraphicsItem* item, items()){
+    QMap<int, QGraphicsItem*> sortedGraphBlocks;
+    QMap<int, QGraphicsItem*> sortedGraphBGO;
+    foreach (QGraphicsItem* unsortedItem, items())
+    {
+        if(unsortedItem->data(0).toString()=="Block")
+        {
+            sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+        }
+        else
+        if(unsortedItem->data(0).toString()=="BGO")
+        {
+            sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+        }
+    }
+    foreach (QGraphicsItem* item, sortedGraphBlocks)
+    {
+
+        if(sortedBlock.size()!=0)
+        {
+            QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+            unsigned int currentArrayId = (*beginItem).array_id;
+            if((unsigned int)item->data(2).toInt()>currentArrayId)
+            {
+                //not found
+                sortedBlock.erase(beginItem);
+            }
+            //but still test if the next blocks, is the block we search!
+            beginItem = sortedBlock.begin();
+            currentArrayId = (*beginItem).array_id;
+            if((unsigned int)item->data(2).toInt()==currentArrayId)
+            {
+                cbData.item = item;
+                (this->*clbBlock)(cbData,(*beginItem));
+                sortedBlock.erase(beginItem);
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+
+
+    foreach (QGraphicsItem* item, sortedGraphBGO)
+    {
+        if(sortedBGO.size()!=0)
+        {
+            QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+            unsigned int currentArrayId = (*beginItem).array_id;
+            if((unsigned int)item->data(2).toInt()>currentArrayId)
+            {
+                //not found
+                sortedBGO.erase(beginItem);
+            }
+            //but still test if the next blocks, is the block we search!
+            beginItem = sortedBGO.begin();
+            currentArrayId = (*beginItem).array_id;
+            if((unsigned int)item->data(2).toInt()==currentArrayId)
+            {
+                cbData.item = item;
+                (this->*clbBgo)(cbData,(*beginItem));
+                sortedBGO.erase(beginItem);
+            }
+        }
+        else
+        {
+            break;
+        }
+    }
+    /*
+    foreach (QGraphicsItem* item, sortedLevelArray)
+    {
         if(item->data(0).toString()=="Block")
         {
             if(sortedBlock.size()!=0)
@@ -475,7 +433,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             break;
         }
     }
-
+    */
 
 }
 
