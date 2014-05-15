@@ -288,8 +288,8 @@ void dataconfigs::loadLevelNPC()
 
         //    //    ;Editor featured
         //    //    allow-bubble=1			; Allow packable into the bubble
-        //        bool allow_buble;
-            snpc.allow_buble = npcset.value("allow-bubble", "0").toBool();
+        //        bool allow_bubble;
+            snpc.allow_bubble = npcset.value("allow-bubble", "0").toBool();
         //    //    allow-egg=1			; Allow packable into the egg
         //        bool allow_egg;
             snpc.allow_egg = npcset.value("allow-egg", "0").toBool();
