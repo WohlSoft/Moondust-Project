@@ -43,6 +43,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     //Indexes
     index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
     index_bgo = pConfigs->index_bgo;
+    index_npc = pConfigs->index_npc;
 
     //Editing mode
     EditingMode = 0;
@@ -846,7 +847,37 @@ void LvlScene::stopAnimation()
 
 }
 
-
+void LvlScene::applyLayersVisible()
+{
+    QList<QGraphicsItem*> ItemList = items();
+    QGraphicsItem *tmp;
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        if((*it)->data(0)=="Block")
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemBlock *)tmp)->blockData.layer == layer.name)
+                {
+                    ((ItemBlock *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+        else
+        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemBGO *)tmp)->bgoData.layer == layer.name)
+                {
+                    ((ItemBGO *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+    }
+}
 
 
 /////////////////////////////////////////////Locks////////////////////////////////
