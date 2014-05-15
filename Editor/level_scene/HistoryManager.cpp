@@ -19,6 +19,7 @@
 #include "lvlscene.h"
 #include "item_block.h"
 #include "item_bgo.h"
+#include "../common_features/logger.h"
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -42,6 +43,7 @@ void LvlScene::addPlaceHistory(LevelData placedItems)
     HistoryOperation plOperation;
     plOperation.type = HistoryOperation::LEVELHISTORY_PLACE;
     plOperation.data = placedItems;
+
     operationList.push_back(plOperation);
     historyIndex++;
 
@@ -166,14 +168,20 @@ void LvlScene::historyForward()
         foreach (LevelBGO bgo, placedData.bgo)
         {
             //place them back
+
+            //WriteToLog(QtDebugMsg, QString("History-> placed items pos %1 %2").arg(bgo.x).arg(bgo.y));
+
             LvlData->bgo.push_back(bgo);
+            //WriteToLog(QtDebugMsg, QString("History-> added into the array items pos %1 %2").arg(bgo.x).arg(bgo.y));
             placeBGO(bgo);
+            //WriteToLog(QtDebugMsg, QString("History-> placed on map pos %1 %2").arg(bgo.x).arg(bgo.y));
         }
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
         if(opts.animationEnabled) startBlockAnimation();
 
+        break;
     }
     case HistoryOperation::LEVELHISTORY_MOVE:
     {
@@ -305,6 +313,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     cbData.hist = operation;
     QMap<int, QGraphicsItem*> sortedGraphBlocks;
     QMap<int, QGraphicsItem*> sortedGraphBGO;
+
     foreach (QGraphicsItem* unsortedItem, items())
     {
         if(unsortedItem->data(0).toString()=="Block")
@@ -317,6 +326,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
         }
     }
+
     foreach (QGraphicsItem* item, sortedGraphBlocks)
     {
 
@@ -329,6 +339,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                 //not found
                 sortedBlock.erase(beginItem);
             }
+
             //but still test if the next blocks, is the block we search!
             beginItem = sortedBlock.begin();
             currentArrayId = (*beginItem).array_id;
@@ -357,9 +368,12 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                 //not found
                 sortedBGO.erase(beginItem);
             }
+
             //but still test if the next blocks, is the block we search!
             beginItem = sortedBGO.begin();
+
             currentArrayId = (*beginItem).array_id;
+
             if((unsigned int)item->data(2).toInt()==currentArrayId)
             {
                 cbData.item = item;
