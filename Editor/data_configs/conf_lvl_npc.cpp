@@ -35,7 +35,7 @@ void dataconfigs::loadLevelNPC()
         marker_npc.bubble = npcset.value("bubble", "283").toInt();
         marker_npc.egg = npcset.value("egg", "96").toInt();
         marker_npc.lakitu = npcset.value("lakitu", "284").toInt();
-        marker_npc.burred = npcset.value("burred", "91").toInt();
+        marker_npc.buried = npcset.value("buried", "91").toInt();
         marker_npc.ice_cube = npcset.value("icecube", "91").toInt();
         marker_npc.iceball = npcset.value("iceball", "265").toInt();
         marker_npc.fireball = npcset.value("fireball", "13").toInt();
@@ -105,11 +105,11 @@ void dataconfigs::loadLevelNPC()
                 snpc.image.setMask(snpc.mask);
             }
 
-        //    //    algotitm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
+        //    //    algorithm="0"			;NPC's algorithm. Algorithms have states and events (onDie, onTail, onCollisionWithFlyBlock...)
         //        int algorithm;
             snpc.algorithm = npcset.value("algorithm", "0").toInt();
-        //        //    ;If alhorythm = 0, will using basic parametric alhorythm.
-        //    //    ;Else, get alhorythm from list
+        //        //    ;If algorithm = 0, will using basic parametric algorithm.
+        //    //    ;Else, get algorithm from list
         //    //    default-effect=2		;Spawn effect ID on jump-die
         //        unsigned long effect_1;
             snpc.effect_1 = npcset.value("default-effect", "10").toInt();
@@ -133,7 +133,7 @@ void dataconfigs::loadLevelNPC()
         //    //    grid-offset-y=0
         //        int grid_offset_y;
             snpc.grid_offset_y = npcset.value("grid-offset-y", "0").toInt();
-        //    //    frame-style=0	; (0-2) This option in some alhoritmes can be ignored
+        //    //    frame-style=0	; (0-2) This option in some algorithms can be ignored
         //        int framestyle;
             snpc.framestyle = npcset.value("frame-style", "0").toInt();
         //    //    frames=2
@@ -279,9 +279,9 @@ void dataconfigs::loadLevelNPC()
         //    //    default-health=1		; NPC's health value
         //        int health;
             snpc.health = npcset.value("default-health", "0").toInt();
-        //    //    hurtpalyer=1			; Hurt player on contact
+        //    //    hurtplayer=1			; Hurt player on contact
         //        bool hurt_player;
-            snpc.hurt_player = npcset.value("hurtpalyer", "0").toBool();
+            snpc.hurt_player = npcset.value("hurtplayer", "0").toBool();
         //    //    hurtnpc=0			; Hurt other npc on contact
         //        bool hurt_npc;
             snpc.hurt_npc = npcset.value("hurtnpc", "0").toBool();
@@ -296,9 +296,9 @@ void dataconfigs::loadLevelNPC()
         //    //    allow-lakitu=1			; Allow packable into the SMW Lakitu
         //        bool allow_lakitu;
             snpc.allow_lakitu = npcset.value("allow-lakitu", "0").toBool();
-        //    //    allow-burred=1			; Allow packable under the herb
-        //        bool allow_burred;
-            snpc.allow_burred = npcset.value("allow-burred", "0").toBool();
+        //    //    allow-buried=1			; Allow packable under the herb
+        //        bool allow_buried;
+            snpc.allow_buried = npcset.value("allow-buried", "0").toBool();
 
 
         //    //    ; Physics
