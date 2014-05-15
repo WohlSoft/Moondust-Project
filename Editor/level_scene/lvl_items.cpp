@@ -272,7 +272,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     BGOItem->setContextMenu(bgoMenu);
     addItem(BGOItem);
 
-
+    //WriteToLog(QtDebugMsg, QString("BGO Item-> source data %1 %2").arg(bgo.x).arg(bgo.y));
 
     QPoint newPos = QPoint(bgo.x, bgo.y);
     if(toGrid)
@@ -283,7 +283,13 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
         bgo.y = newPos.y();
     }
 
+    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 1 %1 %2").arg(bgo.x).arg(bgo.y));
+
     BGOItem->setPos( QPointF(newPos) );
+
+    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 2 %1 %2").arg(newPos.x()).arg(newPos.y()));
+    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 3 %1 %2").arg(BGOItem->pos().x()).arg(BGOItem->pos().y()));
+
 
     if((!noimage) && (pConfigs->main_bgo[j].animated))
     {
