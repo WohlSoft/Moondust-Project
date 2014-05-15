@@ -382,12 +382,14 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     str_count++;line = in.readLine();
     }
 
+
+WriteToLog(QtDebugMsg, "NPC.txt -> Successful loaded");
 FileData.ReadFileValid=true;
 return FileData;
 
 
 badfile:    //If file format not corrects
-BadFileMsg(this, inf.fileName(), str_count, line+Params[0]);
+BadFileMsg(inf.fileName(), str_count, line+Params[0]);
 FileData.ReadFileValid=false;
 return FileData;
 }

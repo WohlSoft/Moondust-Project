@@ -20,7 +20,6 @@
 #include "../leveledit.h"
 #include "file_formats.h"
 
-
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
@@ -986,7 +985,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
     return FileData;
 
     badfile:    //If file format not corrects
-    BadFileMsg(this, inf.fileName()+"\nFile format "+QString::number(file_format), str_count, line);
+    BadFileMsg(inf.fileName()+"\nFile format "+QString::number(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }

@@ -69,7 +69,7 @@ FileData.ReadFileValid=true;
 
 return FileData;
 badfile:    //If file format not corrects
-BadFileMsg(this, inf.fileName(), str_count, line);
+BadFileMsg(inf.fileName(), str_count, line);
 FileData.ReadFileValid=false;
 return FileData;
 }
