@@ -72,7 +72,8 @@ HEADERS  += mainwindow.h \
     level_scene/item_npc.h \
     data_configs/data_configs.h \
     common_features/timecounter.h \
-    common_features/logger.h
+    common_features/logger.h \
+    common_features/logger_sets.h
 
 FORMS    += \
     aboutdialog.ui \

@@ -20,26 +20,40 @@
 #include <QTextStream>
 #include <QApplication>
 
-QString debugLogFile = "PGE_debug_log.txt" ;
+#include "logger_sets.h"
 
 void WriteToLog(QtMsgType type, QString msg)
     {
         QString txt;
-        switch (type) {
+
+        switch (type)
+        {
         case QtDebugMsg:
-        txt = QString("Debug: %1").arg(msg);
+            if(LogWriter::logLevel==QtFatalMsg) return;
+        case QtWarningMsg:
+            if(LogWriter::logLevel==QtCriticalMsg) return;
+        case QtCriticalMsg:
+            if(LogWriter::logLevel==QtWarningMsg) return;
+        case QtFatalMsg:
+            break;
+        }
+
+        switch (type)
+        {
+        case QtDebugMsg:
+            txt = QString("Debug: %1").arg(msg);
         break;
         case QtWarningMsg:
-        txt = QString("Warning: %1").arg(msg);
+            txt = QString("Warning: %1").arg(msg);
         break;
         case QtCriticalMsg:
-        txt = QString("Critical: %1").arg(msg);
+            txt = QString("Critical: %1").arg(msg);
         break;
         case QtFatalMsg:
-        txt = QString("Fatal: %1").arg(msg);
-    }
+            txt = QString("Fatal: %1").arg(msg);
+        }
 
-    QFile outFile(debugLogFile);
+    QFile outFile(LogWriter::DebugLogFile);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
     ts << txt << endl;
