@@ -17,7 +17,7 @@
  */
 
 #include "item_bgo.h"
-#include "logger.h"
+#include "common_features/logger.h"
 
 
 ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)

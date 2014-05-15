@@ -53,7 +53,7 @@
 
 #include "musicfilelist.h"
 
-#include "logger.h"
+#include "common_features/logger.h"
 
 
 QT_BEGIN_NAMESPACE

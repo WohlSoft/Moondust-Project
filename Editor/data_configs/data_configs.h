@@ -25,7 +25,7 @@
 #include <QtWidgets>
 #include <QSettings>
 #include <QProgressDialog>
-#include "logger.h"
+#include "../common_features/logger.h"
 
 #include <QDebug>
 
