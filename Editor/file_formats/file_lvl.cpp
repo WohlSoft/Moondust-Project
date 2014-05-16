@@ -1045,21 +1045,31 @@ QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
 
 
     //Blocks
-    for(i=0; i<FileData.blocks.size(); i++)
+    QMap<long, QMap<long, LevelBlock > > sortedBlocks;
+    foreach(LevelBlock block, FileData.blocks)
     {
-        TextData += SMBX64::IntS(FileData.blocks[i].x);
-        TextData += SMBX64::IntS(FileData.blocks[i].y);
-        TextData += SMBX64::IntS(FileData.blocks[i].h);
-        TextData += SMBX64::IntS(FileData.blocks[i].w);
-        TextData += SMBX64::IntS(FileData.blocks[i].id);
-        TextData += SMBX64::IntS(FileData.blocks[i].npc_id);
-        TextData += SMBX64::BoolS(FileData.blocks[i].invisible);
-        TextData += SMBX64::BoolS(FileData.blocks[i].slippery);
-        TextData += SMBX64::qStrS(FileData.blocks[i].layer);
-        TextData += SMBX64::qStrS(FileData.blocks[i].event_destroy);
-        TextData += SMBX64::qStrS(FileData.blocks[i].event_hit);
-        TextData += SMBX64::qStrS(FileData.blocks[i].event_no_more);
+        sortedBlocks[block.x][block.y] = block;
+    }
 
+    //for(i=0; i<FileData.blocks.size(); i++)
+    //{
+    for (QMap<long, QMap<long, LevelBlock > >::iterator bArr = sortedBlocks.begin(); bArr != sortedBlocks.end(); bArr++)
+    {
+        for (QMap<long, LevelBlock >::iterator block = (* bArr).begin(); block != (*bArr).end(); block++)
+        {
+        TextData += SMBX64::IntS((*block).x);
+        TextData += SMBX64::IntS((*block).y);
+        TextData += SMBX64::IntS((*block).h);
+        TextData += SMBX64::IntS((*block).w);
+        TextData += SMBX64::IntS((*block).id);
+        TextData += SMBX64::IntS((*block).npc_id);
+        TextData += SMBX64::BoolS((*block).invisible);
+        TextData += SMBX64::BoolS((*block).slippery);
+        TextData += SMBX64::qStrS((*block).layer);
+        TextData += SMBX64::qStrS((*block).event_destroy);
+        TextData += SMBX64::qStrS((*block).event_hit);
+        TextData += SMBX64::qStrS((*block).event_no_more);
+        }
     }
     TextData += "\"next\"\n";//Separator
 
