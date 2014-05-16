@@ -27,11 +27,14 @@ npcedit *MainWindow::createNPCChild()
     npcedit *child = new npcedit(&configs);
     QMdiSubWindow *npcWindow = new QMdiSubWindow;
     npcWindow->setWidget(child);
-    npcWindow->setFixedSize(520,640);
     npcWindow->setAttribute(Qt::WA_DeleteOnClose);
-    npcWindow->setWindowFlags(Qt::WindowCloseButtonHint);
-    npcWindow->move(rand()%100,rand()%50);
-    ui->centralWidget->addSubWindow(npcWindow);
+
+    QMdiSubWindow * npcWindowP = ui->centralWidget->addSubWindow(npcWindow);
+
+    npcWindowP->setGeometry(
+                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
+                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
+                 520,640);
 
  /*   connect(child, SIGNAL(copyAvailable(bool)),
             cutAct, SLOT(setEnabled(bool)));
@@ -48,10 +51,16 @@ npcedit *MainWindow::createNPCChild()
 leveledit *MainWindow::createChild()
 {
     leveledit *child = new leveledit;
-    //child->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
-    ui->centralWidget->addSubWindow(child)->resize(QSize(800, 602));
 
-        return child;
+    QMdiSubWindow * levelWindow = ui->centralWidget->addSubWindow(child);
+
+    levelWindow->setGeometry(
+                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
+                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
+                             800, 610);
+    levelWindow->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
+
+    return child;
 }
 
 
@@ -117,4 +126,14 @@ void MainWindow::setActiveSubWindow(QWidget *window)
     if (!window)
         return;
     ui->centralWidget->setActiveSubWindow(qobject_cast<QMdiSubWindow *>(window));
+}
+
+void MainWindow::SWCascade()
+{
+    ui->centralWidget->cascadeSubWindows();
+}
+
+void MainWindow::SWTile()
+{
+    ui->centralWidget->tileSubWindows();
 }

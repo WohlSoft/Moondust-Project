@@ -187,6 +187,17 @@ void MainWindow::updateMenus()
         ui->menuWindow->addAction(separatorAct);
     */
 
+    /*
+    QAction * cascade = ui->menuWindow->addAction(tr("Cascade"));
+        connect(cascade, SIGNAL(triggered()), windowMapper, SLOT( SWCascade() ) );
+    QAction * tiledW = ui->menuWindow->addAction(tr("Tiled"));
+        connect(tiledW, SIGNAL(triggered()), windowMapper, SLOT( SWTile() ) );
+    */
+
+    QAction * closeC = ui->menuWindow->addAction(tr("Close current"));
+        connect(closeC, SIGNAL(triggered()), windowMapper, SLOT( on_actionClose_triggered() ) );
+
+        ui->menuWindow->addSeparator();
 
     QAction * empty = ui->menuWindow->addAction( tr("[No opened files]") );
         empty->setDisabled(1);
