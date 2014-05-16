@@ -44,7 +44,10 @@ public:
     void setMainPixmap(const QPixmap &pixmap);
     void setBlockData(LevelBlock inD, bool is_sz);
     void setContextMenu(QMenu &menu);
+
     void setScenePoint(LvlScene *theScene);
+    void setGroupPoint(QGraphicsItemGroup *theGrp);
+    void setNPCItemPoint(QGraphicsItem *includedNPCPnt);
 
     QRectF boundingRect() const;
 
@@ -61,6 +64,8 @@ public:
     void setSlippery(bool slip);
     void setInvisible(bool inv);
     void setLayer(QString layer);
+
+    void setIncludedNPC(int npcID);
 
     void arrayApply();
     void removeFromArray();
@@ -81,6 +86,9 @@ private:
     int frameSpeed;
 
     QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
+    QGraphicsItemGroup * grp;
+    QGraphicsItem * includedNPC;
+
     bool sizable;
     LvlScene * scene;
     int frameCurrent;
