@@ -67,6 +67,7 @@ struct UserNPCs
 
     bool withTxt;
     NPCConfigFile sets;
+    obj_npc merged;
 };
 
 struct UserBGs
@@ -129,6 +130,9 @@ public:
     void setDoors(LevelData FileData, QProgressDialog &progress);
     void setPlayerPoints();
 
+    QPixmap getNPCimg(unsigned long npcID);
+    obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local);
+
     void applyLayersVisible();
 
     void startBlockAnimation();
@@ -141,6 +145,7 @@ public:
 
     //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
+    void sortBlockArrayByPos(QVector<LevelBlock > &blocks);
     void sortBGOArray(QVector<LevelBGO > &bgos);
 
     QVector<UserBGs > uBGs;
@@ -197,14 +202,23 @@ public:
         //used most of Operations
         LevelData data;
         LevelData data_mod;
+        //subtype (if needed)
+        int subtype;
         //for move
         long x, y;
+        //misc
+        QVariant extraData;
     };
     struct CallbackData{
         QGraphicsItem* item;
         HistoryOperation* hist;
         //custom data
         long x, y;
+    };
+
+    enum SettingSubType{
+        SETTING_INVISIBLE = 0, //extraData: bool [Activated?]
+        SETTING_SLIPPERY       //extraData: bool [Activated?]
     };
 
     //typedefs
@@ -214,6 +228,7 @@ public:
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
+    void addChangeSettingsHistory(LevelData modifiedItems, SettingSubType subType, QVariant extraData);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -230,8 +245,15 @@ public:
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
+    //Callbackfunctions: [Change Settings] Hide
+    void historyUndoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: [Change Settings] Invisible
+    void historyUndoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
     //History functions requiring callback-functions
-    void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData, callBackLevelBlock clbBlock, callBackLevelBGO clbBgo);
+    void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
+                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, bool ignoreBlock = false, bool ignoreBGO = false);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////

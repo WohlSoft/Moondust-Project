@@ -107,7 +107,7 @@
      </property>
      <addaction name="actionNewLevel"/>
      <addaction name="actionNewWorld_map"/>
-     <addaction name="actionNPC_config"/>
+     <addaction name="actionNewNPC_config"/>
     </widget>
     <widget class="QMenu" name="menuOpenRecent">
      <property name="title">
@@ -2560,7 +2560,7 @@ p, li { white-space: pre-wrap; }
     <string>World map...</string>
    </property>
   </action>
-  <action name="actionNPC_config">
+  <action name="actionNewNPC_config">
    <property name="text">
     <string>NPC config...</string>
    </property>

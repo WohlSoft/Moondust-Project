@@ -23,50 +23,24 @@
 #include <QString>
 
 //SMBX64 standard data
-namespace SMBX64 {
-
-    QRegExp isint("\\d+");     //Check "Is Numeric"
-    QRegExp boolwords("^(#TRUE#|#FALSE#)$");
-    QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    QRegExp booldeg("^(1|0)$");
-    QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-
-    QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
-    QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
+class SMBX64
+{
+public:
+    SMBX64() {}
 
     // /////////////Validators///////////////
     //returns TRUE on wrong data
-    bool Int(QString in) // UNSIGNED INT
-    {  return !isint.exactMatch(in); }
-
-    bool sInt(QString in) // SIGNED INT
-    {  return !issint.exactMatch(in); }
-
-    bool sFloat(QString in) // SIGNED FLOAT
-    {  return !issfloat.exactMatch(in); }
-
-    bool qStr(QString in) // QUOTED STRING
-    {  return !qstr.exactMatch(in); }
-
-    bool wBool(QString in) //Worded BOOL
-    {  return !boolwords.exactMatch(in); }
-
-    bool dBool(QString in) //Worded BOOL
-    {  return !booldeg.exactMatch(in); }
-
+    static bool Int(QString in); // UNSIGNED INT
+    static bool sInt(QString in); // SIGNED INT
+    static bool sFloat(QString in); // SIGNED FLOAT
+    static bool qStr(QString in); // QUOTED STRING
+    static bool wBool(QString in); //Worded BOOL
+    static bool dBool(QString in); //Worded BOOL
 
     //SMBX64 parameter string generators
-    QString IntS(long input)
-    {  return QString::number(input)+"\n"; }
-
-    QString BoolS(bool input)
-    {  return QString( (input)?"#TRUE#":"#FALSE#" )+"\n"; }
-
-    QString qStrS(QString input)
-    { return QString("\"%1\"\n").arg(input); }
-
-
-}
+    static QString IntS(long input);
+    static QString BoolS(bool input);
+    static QString qStrS(QString input);
+};
 
 #endif // FILE_FORMATS_H

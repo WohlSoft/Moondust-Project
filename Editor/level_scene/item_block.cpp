@@ -19,6 +19,7 @@
 #include "item_block.h"
 #include "common_features/logger.h"
 
+#include "../npc_dialog/npcdialog.h"
 
 
 ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
@@ -88,6 +89,9 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             resize->setVisible( (this->data(3).toString()=="sizable") );
 
         ItemMenu->addSeparator();
+        QAction *chNPC = ItemMenu->addAction("Change included NPC...");
+
+        ItemMenu->addSeparator();
         QAction *copyBlock = ItemMenu->addAction("Copy");
         QAction *cutBlock = ItemMenu->addAction("Cut");
         ItemMenu->addSeparator();
@@ -128,6 +132,37 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             {
                 if(SelItem->data(0).toString()=="Block")
                     ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
+            }
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==chNPC)
+        {
+            NpcDialog * npcList = new NpcDialog(scene->pConfigs);
+            npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+            npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+            npcList->setState(blockData.npc_id);
+            if(npcList->exec()==QDialog::Accepted)
+            {
+                //apply to all selected items.
+                int selected_npc=0;
+                if(npcList->isEmpty)
+                    selected_npc = 0;
+                else
+                if(npcList->isCoin)
+                    selected_npc = npcList->coins;
+                else
+                    selected_npc = npcList->selectedNPC+1000;
+
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if(SelItem->data(0).toString()=="Block")
+                    {
+                        ((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
+                        ((ItemBlock *) SelItem)->arrayApply();
+                        ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
+                    }
+                }
             }
             scene->contextMenuOpened = false;
         }
@@ -215,6 +250,32 @@ void ItemBlock::setLayer(QString layer)
         }
     }
 
+}
+
+void ItemBlock::setIncludedNPC(int npcID)
+{
+    if(includedNPC!=NULL)
+    {
+        grp->removeFromGroup(includedNPC);
+        scene->removeItem(includedNPC);
+        free(includedNPC);
+        includedNPC = NULL;
+    }
+    if(npcID==0) return;
+
+    QPixmap npcImg = QPixmap( scene->getNPCimg( ((npcID > 1000)? (npcID-1000) : scene->pConfigs->marker_npc.coin_in_block ) ) );
+    includedNPC = scene->addPixmap( npcImg );
+
+    includedNPC->setPos(
+                (
+                    blockData.x+((blockData.w-npcImg.width())/2)
+                 ),
+                (
+                    blockData.y+((blockData.h-npcImg.height())/2)
+                 ));
+    includedNPC->setZValue(scene->blockZ + 10);
+    includedNPC->setOpacity(qreal(0.6));
+    grp->addToGroup(includedNPC);
 }
 
 ///////////////////MainArray functions/////////////////////////////
@@ -371,9 +432,21 @@ void ItemBlock::setContextMenu(QMenu &menu)
     ItemMenu = &menu;
 }
 
+
+//global Pointers
 void ItemBlock::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
+}
+
+void ItemBlock::setGroupPoint(QGraphicsItemGroup *theGrp)
+{
+    grp = theGrp;
+}
+
+void ItemBlock::setNPCItemPoint(QGraphicsItem *includedNPCPnt)
+{
+    includedNPC = includedNPCPnt;
 }
 
 

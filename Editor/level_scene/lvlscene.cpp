@@ -88,7 +88,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     bgoZf = 50; // foreground BGO
 
-    blockZl = 100;
+    blockZl = 100; //LavaBlock
     npcZf = 150; // foreground NPC
     waterZ = 500;
     doorZ = 700;
@@ -647,6 +647,35 @@ void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
             }
             tmp1 = blocks[ymini];
             blocks[ymini] = blocks[sorted];
+            blocks[sorted] = tmp1;
+            sorted++;
+        }
+}
+
+void LvlScene::sortBlockArrayByPos(QVector<LevelBlock > &blocks)
+{
+    LevelBlock tmp1;
+    int total = blocks.size();
+    long i;
+    long xmin;
+    long xmini;
+    long sorted = 0;
+
+
+        while(sorted < blocks.size())
+        {
+            xmin = blocks[sorted].x;
+            xmini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( blocks[i].x < xmin )
+                {
+                    xmin = blocks[i].x; xmini = i;
+                }
+            }
+            tmp1 = blocks[xmini];
+            blocks[xmini] = blocks[sorted];
             blocks[sorted] = tmp1;
             sorted++;
         }

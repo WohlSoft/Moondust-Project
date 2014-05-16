@@ -19,6 +19,8 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
+#include "npc_dialog/npcdialog.h"
+
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -192,4 +194,24 @@ void MainWindow::on_actionAbout_triggered()
     about.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     about.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, about.size(), qApp->desktop()->availableGeometry()));
     about.exec();
+}
+
+
+////////////////////////New files templates///////////////////////////
+
+void MainWindow::on_actionNewNPC_config_triggered()
+{
+
+    NpcDialog * npcList = new NpcDialog(&configs);
+    npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+    npcList->setState(0, 1);
+    npcList->setWindowTitle("Create new NPC.txt configuration file");
+    if(npcList->exec()==QDialog::Accepted)
+    {
+        npcedit *child = createNPCChild();
+        child->newFile( npcList->selectedNPC);
+        child->show();
+    }
+
 }

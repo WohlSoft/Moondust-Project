@@ -58,8 +58,229 @@ QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 }
 
 
+QPixmap LvlScene::getNPCimg(unsigned long npcID)
+{
+    bool noimage=true, found=false;
+    bool isUser=false, isUserTxt=false;
+    int j;
+    QPixmap tempI;
+    int gfxH = 0;
 
-// //////////////////////////////// Place new ////////////////////////////////
+    //Check Index exists
+    if(npcID < (unsigned int)index_npc.size())
+    {
+        j = index_npc[npcID].i;
+
+        if(pConfigs->main_npc[j].id == npcID)
+            found=true;
+    }
+
+    //if Index found
+    if(found)
+    {   //get neccesary element directly
+        if(index_npc[npcID].type==1)
+        if(uNPCs[index_npc[npcID].i].withImg)
+        {
+            isUser=true;
+            noimage=false;
+            tempI = uNPCs[index_npc[npcID].i].image;
+        }
+        if(uNPCs[index_npc[npcID].i].withTxt)
+            gfxH = uNPCs[index_npc[npcID].i].merged.gfx_h;
+        else
+            gfxH = pConfigs->main_npc[index_npc[npcID].i].height;
+
+
+        if(!isUser)
+        {
+            tempI = pConfigs->main_npc[index_npc[npcID].i].image;
+            noimage=false;
+        }
+
+    }
+    else
+    {
+        //found neccesary element in arrays and select
+        for(j=0;j<uNPCs.size();j++)
+        {
+            if(uNPCs[j].id == npcID)
+            {
+                if(uNPCs[j].withImg)
+                {
+                    isUser=true;
+                    noimage=false;
+                    tempI = uNPCs[j].image;
+                }
+                if(uNPCs[j].withTxt)
+                {
+                    isUserTxt = true;
+                    gfxH = uNPCs[j].merged.gfx_h;
+                }
+                break;
+            }
+        }
+
+        for(j=0;j<pConfigs->main_npc.size();j++)
+        {
+            if(pConfigs->main_npc[j].id==npcID)
+            {
+                noimage=false;
+                if(!isUser)
+                    tempI = pConfigs->main_npc[j].image;
+                if(!isUserTxt)
+                    gfxH =  pConfigs->main_npc[j].gfx_h;
+                break;
+            }
+        }
+    }
+
+    if((noimage)||(tempI.isNull()))
+    {
+        return uNpcImg;
+    }
+
+    return tempI.copy(0,0, tempI.width(), gfxH );
+}
+
+
+obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
+{
+    obj_npc merged;
+    merged = global;
+    merged.image = QPixmap();   //Clear image values
+    merged.mask = QPixmap();
+
+//    int gfxoffsetx;
+//    bool en_gfxoffsetx;
+    merged.gfx_offset_x = (local.en_gfxoffsetx)?local.gfxoffsetx:global.gfx_offset_x;
+
+//    int gfxoffsety;
+//    bool en_gfxoffsety;
+    merged.gfx_offset_y = (local.en_gfxoffsety)?local.gfxoffsety:global.gfx_offset_y;
+
+//    unsigned int width;
+//    bool en_width;
+    merged.width = (local.en_width)?local.width:global.width;
+
+//    unsigned int height;
+//    bool en_height;
+    //merged. = (local.en_)?local.:global.;
+    merged.health = (local.en_height)?local.height:global.height;
+
+
+//    unsigned int gfxwidth;
+//    bool en_gfxwidth;
+    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:global.gfx_w;
+
+//    unsigned int gfxheight;
+//    bool en_gfxheight;
+    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:global.gfx_h;
+
+
+//    unsigned int score;
+//    bool en_score;
+    merged.score = (local.en_score)?local.score:global.score;
+
+//    bool playerblock;
+//    bool en_playerblock;
+    merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
+
+
+//    bool playerblocktop;
+//    bool en_playerblocktop;
+    merged.block_player_top = (local.en_playerblocktop)?local.playerblocktop:global.block_player_top;
+
+//    bool npcblock;
+//    bool en_npcblock;
+    merged.block_npc = (local.en_npcblock)?local.npcblock:global.block_npc;
+
+//    bool npcblocktop;
+//    bool en_npcblocktop;
+    merged.block_npc_top = (local.en_npcblocktop)?local.npcblocktop:global.block_npc_top;
+
+
+//    bool grabside;
+//    bool en_grabside;
+    merged.grab_side = (local.en_grabside)?local.grabside:global.grab_side;
+
+
+//    bool grabtop;
+//    bool en_grabtop;
+    merged.grab_top = (local.en_grabtop)?local.grabtop:global.grab_top;
+
+
+//    bool jumphurt;
+//    bool en_jumphurt;
+    merged.kill_on_jump = (local.en_jumphurt)? (!local.jumphurt) : global.kill_on_jump ;
+
+//    bool nohurt;
+//    bool en_nohurt;
+    merged.hurt_player = (local.en_nohurt)?!local.nohurt:global.hurt_player;
+
+//    bool noblockcollision;
+//    bool en_noblockcollision;
+    merged.collision_with_blocks = (local.en_noblockcollision)?(!local.noblockcollision):global.collision_with_blocks;
+
+//    bool cliffturn;
+//    bool en_cliffturn;
+    merged.turn_on_cliff_detect = (local.en_cliffturn)?local.cliffturn:global.turn_on_cliff_detect;
+
+
+//    bool noyoshi;
+//    bool en_noyoshi;
+    merged.can_be_eaten = (local.en_noyoshi)?(!local.noyoshi):global.can_be_eaten;
+
+
+//    bool foreground;
+//    bool en_foreground;
+    merged.foreground = (local.en_foreground)?local.foreground:global.foreground;
+
+//    float speed;
+//    bool en_speed;
+    merged.speed = (local.en_speed) ? global.speed * local.speed : global.speed;
+
+
+//    bool nofireball;
+//    bool en_nofireball;
+    merged.kill_by_fireball = (local.en_nofireball)?(!local.nofireball):global.kill_by_fireball;
+
+//    bool nogravity;
+//    bool en_nogravity;
+    merged.gravity = (local.en_nogravity)?(!local.nogravity):global.gravity;
+
+//    unsigned int frames;
+//    bool en_frames;
+    merged.frames = (local.en_frames)?local.frames:global.frames;
+
+
+//    unsigned int framespeed;
+//    bool en_framespeed;
+    merged.framespeed = (local.en_framespeed)? global.framespeed * (int)round( 8 / local.framespeed ) : global.framespeed;
+
+
+//    unsigned int framestyle;
+//    bool en_framestyle;
+    merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
+
+
+//    bool noiceball;
+//    bool en_noiceball;
+    merged.freeze_by_iceball = (local.en_noiceball)?(!local.noiceball):global.freeze_by_iceball;
+
+
+//    bool nohammer;
+//    bool en_nohammer;
+    merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
+
+//    bool noshell;
+//    bool en_noshell;
+    merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
+
+    return merged;
+}
+
+
+////////////////////////////////// Place new ////////////////////////////////
 
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
@@ -67,7 +288,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     bool isUser=false;
     int j;
 
-    QGraphicsItem *npc;
+    QGraphicsItem *npc = NULL;
     QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
 
@@ -143,6 +364,11 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     includedNPC = new QGraphicsItemGroup(BlockImage);
 
+    //Set pointers
+    BlockImage->setScenePoint(this);
+    BlockImage->setGroupPoint(includedNPC);
+    BlockImage->setNPCItemPoint(npc);
+
     if(block.invisible)
         BlockImage->setOpacity(qreal(0.5));
 
@@ -151,19 +377,19 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     {
         newPos = applyGrid(QPoint(block.x, block.y), 32);
         block.x = newPos.x();
+        BlockImage->blockData.x = newPos.x();
         block.y = newPos.y();
+        BlockImage->blockData.y = newPos.y();
     }
 
     BlockImage->setPos(QPointF(newPos));
 
+    //////////////////////////////Included NPC////////////////////////////////////////
     if(block.npc_id != 0)
     {
-        npc = addPixmap( QPixmap(uNpcImg) );
-        npc->setPos(block.x, block.y);
-        npc->setZValue(blockZ);
-        npc->setOpacity(qreal(0.4));
-        includedNPC->addToGroup(npc);
+        BlockImage->setIncludedNPC(block.npc_id);
     }
+    //////////////////////////////////////////////////////////////////////////////////
 
     if(pConfigs->main_block[j].sizable)
     {
@@ -195,7 +421,6 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     BlockImage->setData(9, QString::number(block.w) ); //width
     BlockImage->setData(10, QString::number(block.h) ); //height
-    BlockImage->setScenePoint(this);
     if(PasteFromBuffer) BlockImage->setSelected(true);
 }
 

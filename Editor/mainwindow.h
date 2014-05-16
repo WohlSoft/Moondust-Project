@@ -110,6 +110,9 @@ private slots:
     npcedit *createNPCChild();
     leveledit *createChild();
     void setActiveSubWindow(QWidget *window);
+    void SWCascade();
+    void SWTile();
+
 
     //LevelEdit functions
     void SetCurrentLevelSection(int SctId, int open=0);
@@ -249,6 +252,8 @@ private slots:
     void on_BGOCatList_currentIndexChanged(const QString &arg1);
 
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
+
+    void on_actionNewNPC_config_triggered();
 
 private:
     dataconfigs configs; // Global objects configucrations

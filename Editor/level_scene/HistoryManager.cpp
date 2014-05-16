@@ -21,6 +21,7 @@
 #include "item_bgo.h"
 #include "../common_features/logger.h"
 
+
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
     //add cleanup redo elements
@@ -68,6 +69,21 @@ void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedI
     mvOperation.x = baseX;
     mvOperation.y = baseY;
     operationList.push_back(mvOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
+void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, LvlScene::SettingSubType subType, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation modOperation;
+    modOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS;
+    modOperation.data = modifiedItems;
+    modOperation.subtype = subType;
+    modOperation.extraData = extraData;
+    operationList.push_back(modOperation);
     historyIndex++;
 
     historyChanged = true;
@@ -125,6 +141,20 @@ void LvlScene::historyBack()
         CallbackData cbData;
         findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO);
 
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
+    {
+        LevelData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        if(lastOperation.subtype == SETTING_INVISIBLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsInvisibleBlock, 0, false, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_SLIPPERY){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsSlipperyBlock, 0, false, true);
+        }
         break;
     }
     default:
@@ -201,6 +231,20 @@ void LvlScene::historyForward()
         cbData.x = baseX;
         cbData.y = baseY;
         findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
+    {
+        LevelData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        if(lastOperation.subtype == SETTING_INVISIBLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsInvisibleBlock, 0, false, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_SLIPPERY){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsSlipperyBlock, 0, false, true);
+        }
         break;
     }
     default:
@@ -290,22 +334,47 @@ void LvlScene::historyRemoveBGO(LvlScene::CallbackData cbData, LevelBGO /*data*/
     removeItem(cbData.item);
 }
 
+void LvlScene::historyUndoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->setInvisible(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->setInvisible(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsSlipperyBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->setSlippery(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsSlipperyBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->setSlippery(cbData.hist->extraData.toBool());
+}
+
 void LvlScene::findGraphicsItem(LevelData toFind,
                                 HistoryOperation * operation,
                                 CallbackData customData,
                                 callBackLevelBlock clbBlock,
-                                callBackLevelBGO clbBgo)
+                                callBackLevelBGO clbBgo,
+                                bool ignoreBlock,
+                                bool ignoreBGO)
 {
     QMap<int, LevelBlock> sortedBlock;
-    foreach (LevelBlock block, toFind.blocks)
-    {
-        sortedBlock[block.array_id] = block;
+    if(!ignoreBlock){
+        foreach (LevelBlock block, toFind.blocks)
+        {
+            sortedBlock[block.array_id] = block;
+        }
     }
-
     QMap<int, LevelBGO> sortedBGO;
-    foreach (LevelBGO bgo, toFind.bgo)
-    {
-        sortedBGO[bgo.array_id] = bgo;
+    if(!ignoreBGO){
+        foreach (LevelBGO bgo, toFind.bgo)
+        {
+            sortedBGO[bgo.array_id] = bgo;
+        }
     }
     //bool blocksFinished = false;
     //bool bgosFinished = false;
@@ -318,74 +387,82 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     {
         if(unsortedItem->data(0).toString()=="Block")
         {
-            sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+            if(!ignoreBlock){
+                sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
         }
         else
         if(unsortedItem->data(0).toString()=="BGO")
         {
-            sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+            if(!ignoreBGO){
+                sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
         }
     }
 
-    foreach (QGraphicsItem* item, sortedGraphBlocks)
-    {
-
-        if(sortedBlock.size()!=0)
+    if(!ignoreBlock){
+        foreach (QGraphicsItem* item, sortedGraphBlocks)
         {
-            QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-            unsigned int currentArrayId = (*beginItem).array_id;
-            if((unsigned int)item->data(2).toInt()>currentArrayId)
-            {
-                //not found
-                sortedBlock.erase(beginItem);
-            }
 
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedBlock.begin();
-            currentArrayId = (*beginItem).array_id;
-            if((unsigned int)item->data(2).toInt()==currentArrayId)
+            if(sortedBlock.size()!=0)
             {
-                cbData.item = item;
-                (this->*clbBlock)(cbData,(*beginItem));
-                sortedBlock.erase(beginItem);
+                QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedBlock.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedBlock.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbBlock)(cbData,(*beginItem));
+                    sortedBlock.erase(beginItem);
+                }
             }
-        }
-        else
-        {
-            break;
+            else
+            {
+                break;
+            }
         }
     }
 
-
-    foreach (QGraphicsItem* item, sortedGraphBGO)
-    {
-        if(sortedBGO.size()!=0)
+    if(!ignoreBGO){
+        foreach (QGraphicsItem* item, sortedGraphBGO)
         {
-            QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-            unsigned int currentArrayId = (*beginItem).array_id;
-            if((unsigned int)item->data(2).toInt()>currentArrayId)
+            if(sortedBGO.size()!=0)
             {
-                //not found
-                sortedBGO.erase(beginItem);
+                QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedBGO.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedBGO.begin();
+
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbBgo)(cbData,(*beginItem));
+                    sortedBGO.erase(beginItem);
+                }
             }
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedBGO.begin();
-
-            currentArrayId = (*beginItem).array_id;
-
-            if((unsigned int)item->data(2).toInt()==currentArrayId)
+            else
             {
-                cbData.item = item;
-                (this->*clbBgo)(cbData,(*beginItem));
-                sortedBGO.erase(beginItem);
+                break;
             }
-        }
-        else
-        {
-            break;
         }
     }
+
     /*
     foreach (QGraphicsItem* item, sortedLevelArray)
     {
