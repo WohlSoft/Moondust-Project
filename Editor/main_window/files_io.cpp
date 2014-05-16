@@ -181,7 +181,8 @@ void MainWindow::save_all()
 
 void MainWindow::close_sw()
 {
-    ui->centralWidget->activeSubWindow()->close();
+    if(ui->centralWidget->subWindowList().size()>0)
+        ui->centralWidget->activeSubWindow()->close();
 }
 
 
