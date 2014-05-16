@@ -337,6 +337,8 @@ struct npc_Markers
     unsigned long hammer;
 //    boomerang=292
     unsigned long boomerang;
+//    coin-in-block=10
+    unsigned long coin_in_block;
 
 };
 

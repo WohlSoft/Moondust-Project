@@ -253,6 +253,8 @@ private:
     void placeNPC(LevelNPC &npc, bool toGrid=false);
     void placeWater(LevelWater &water, bool toGrid=false);
 
+    QPixmap getNPCimg(unsigned long npcID);
+
     void removeItemUnderCursor();
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
