@@ -43,6 +43,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     //Indexes
     index_blocks = pConfigs->index_blocks; //Applaying blocks indexes
     index_bgo = pConfigs->index_bgo;
+    index_npc = pConfigs->index_npc;
 
     //Editing mode
     EditingMode = 0;
@@ -87,7 +88,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     bgoZf = 50; // foreground BGO
 
-    blockZl = 100;
+    blockZl = 100; //LavaBlock
     npcZf = 150; // foreground NPC
     waterZ = 500;
     doorZ = 700;
@@ -189,14 +190,14 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
     foreach (QGraphicsItem * it, collisions) {
             if (it == item)
                  continue;
-            if(
+            if( (
                     (it->data(0).toString()=="Block")||
                     (it->data(0).toString()=="BGO")||
                     (it->data(0).toString()=="NPC")||
                     (it->data(0).toString()=="door_exit")||
                     (it->data(0).toString()=="door_enter")||
                     (it->data(0).toString()=="water")
-              )
+              )&&(it->isVisible() ) )
                 return it;
     }
     return NULL;
@@ -846,7 +847,37 @@ void LvlScene::stopAnimation()
 
 }
 
-
+void LvlScene::applyLayersVisible()
+{
+    QList<QGraphicsItem*> ItemList = items();
+    QGraphicsItem *tmp;
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        if((*it)->data(0)=="Block")
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemBlock *)tmp)->blockData.layer == layer.name)
+                {
+                    ((ItemBlock *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+        else
+        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemBGO *)tmp)->bgoData.layer == layer.name)
+                {
+                    ((ItemBGO *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+    }
+}
 
 
 /////////////////////////////////////////////Locks////////////////////////////////

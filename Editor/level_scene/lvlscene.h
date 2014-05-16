@@ -60,9 +60,12 @@ struct UserBlocks
 
 struct UserNPCs
 {
+    bool withImg;
     QPixmap image;
     QBitmap mask;
     unsigned long id;
+
+    bool withTxt;
     NPCConfigFile sets;
 };
 
@@ -126,6 +129,10 @@ public:
     void setDoors(LevelData FileData, QProgressDialog &progress);
     void setPlayerPoints();
 
+    QPixmap getNPCimg(unsigned long npcID);
+
+    void applyLayersVisible();
+
     void startBlockAnimation();
     void stopAnimation();
 
@@ -141,6 +148,8 @@ public:
     QVector<UserBGs > uBGs;
     QVector<UserBGOs > uBGOs;
     QVector<UserBlocks > uBlocks;
+    QVector<UserNPCs > uNPCs;
+
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
 
     LevelData  * LvlData;
@@ -152,6 +161,7 @@ public:
     //Object Indexing:
     QVector<blocksIndexes > index_blocks;
     QVector<bgoIndexes > index_bgo;
+    QVector<npcIndexes > index_npc;
 
     bool lock_bgo;
     bool lock_block;

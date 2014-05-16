@@ -58,8 +58,75 @@ QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 }
 
 
+QPixmap LvlScene::getNPCimg(unsigned long npcID)
+{
+    bool noimage=true, found=false;
+    bool isUser=false;
+    int j;
+    QPixmap tempI;
 
-// //////////////////////////////// Place new ////////////////////////////////
+    //Check Index exists
+    if(npcID < (unsigned int)index_npc.size())
+    {
+        j = index_npc[npcID].i;
+
+        if(pConfigs->main_npc[j].id == npcID)
+            found=true;
+    }
+
+    //if Index found
+    if(found)
+    {   //get neccesary element directly
+        if(index_npc[npcID].type==1)
+        if(uNPCs[index_npc[npcID].i].withImg)
+        {
+            isUser=true;
+            noimage=false;
+            tempI = uNPCs[index_npc[npcID].i].image;
+        }
+
+        if(!isUser)
+        {
+            tempI = pConfigs->main_npc[index_npc[npcID].i].image;
+            noimage=false;
+        }
+
+    }
+    else
+    {
+        //found neccesary element in arrays and select
+        for(j=0;j<uNPCs.size();j++)
+        {
+            if(uNPCs[j].id == npcID)
+            {
+                isUser=true;
+                noimage=false;
+                tempI = uNPCs[j].image;
+                break;
+            }
+        }
+
+        for(j=0;j<pConfigs->main_npc.size();j++)
+        {
+            if(pConfigs->main_npc[j].id==npcID)
+            {
+                noimage=false;
+                if(!isUser)
+                    tempI = pConfigs->main_npc[j].image; break;
+            }
+        }
+    }
+
+    if((noimage)||(tempI.isNull()))
+    {
+        return uNpcImg;
+    }
+
+    return tempI.copy(0,0, tempI.width(), pConfigs->main_npc[j].gfx_h );
+}
+
+
+////////////////////////////////// Place new ////////////////////////////////
 
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
@@ -67,7 +134,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     bool isUser=false;
     int j;
 
-    QGraphicsItem *npc;
+    QGraphicsItem *npc = NULL;
     QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
 
@@ -143,6 +210,11 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     includedNPC = new QGraphicsItemGroup(BlockImage);
 
+    //Set pointers
+    BlockImage->setScenePoint(this);
+    BlockImage->setGroupPoint(includedNPC);
+    BlockImage->setNPCItemPoint(npc);
+
     if(block.invisible)
         BlockImage->setOpacity(qreal(0.5));
 
@@ -151,19 +223,19 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     {
         newPos = applyGrid(QPoint(block.x, block.y), 32);
         block.x = newPos.x();
+        BlockImage->blockData.x = newPos.x();
         block.y = newPos.y();
+        BlockImage->blockData.y = newPos.y();
     }
 
     BlockImage->setPos(QPointF(newPos));
 
+    //////////////////////////////Included NPC////////////////////////////////////////
     if(block.npc_id != 0)
     {
-        npc = addPixmap( QPixmap(uNpcImg) );
-        npc->setPos(block.x, block.y);
-        npc->setZValue(blockZ);
-        npc->setOpacity(qreal(0.4));
-        includedNPC->addToGroup(npc);
+        BlockImage->setIncludedNPC(block.npc_id);
     }
+    //////////////////////////////////////////////////////////////////////////////////
 
     if(pConfigs->main_block[j].sizable)
     {
@@ -195,7 +267,6 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     BlockImage->setData(9, QString::number(block.w) ); //width
     BlockImage->setData(10, QString::number(block.h) ); //height
-    BlockImage->setScenePoint(this);
     if(PasteFromBuffer) BlockImage->setSelected(true);
 }
 

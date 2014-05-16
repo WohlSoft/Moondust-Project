@@ -45,7 +45,7 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         {
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()!="Block") SelItem->setSelected(false);
+                if(SelItem->data(0).toString()!="NPC") SelItem->setSelected(false);
             }
         }
         else
@@ -57,8 +57,23 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         this->setSelected(1);
         ItemMenu->clear();
-        QAction * LayerName = ItemMenu->addAction(tr("Layer: ")+QString("[%1]").arg(npcData.layer));
-            LayerName->setEnabled(false);
+
+        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(npcData.layer));
+
+        QAction *setLayer;
+        QList<QAction *> layerItems;
+        foreach(LevelLayers layer, scene->LvlData->layers)
+        {
+            //Skip system layers
+            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+
+            setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+            setLayer->setData(layer.name);
+            setLayer->setCheckable(true);
+            setLayer->setEnabled(true);
+            setLayer->setChecked( layer.name==npcData.layer );
+            layerItems.push_back(setLayer);
+        }
 
         ItemMenu->addSeparator();
 
@@ -142,6 +157,34 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 }
             }
             scene->contextMenuOpened = false;
+        }
+        else
+        {
+            foreach(QAction * lItem, layerItems)
+            {
+                if(selected==lItem)
+                {
+                    foreach(LevelLayers lr, scene->LvlData->layers)
+                    { //Find layer's settings
+                        if(lr.name==lItem->data().toString())
+                        {
+                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                            {
+
+                                if(SelItem->data(0).toString()=="NPC")
+                                {
+                                ((ItemNPC *) SelItem)->npcData.layer = lr.name;
+                                ((ItemNPC *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemNPC *) SelItem)->arrayApply();
+                                }
+                            }
+                        break;
+                        }
+                    }//Find layer's settings
+                 scene->contextMenuOpened = false;
+                 break;
+                }//Find selected layer's item
+            }
         }
     }
     else
@@ -266,7 +309,6 @@ void ItemNPC::setScenePoint(LvlScene *theScene)
 
 
 ////////////////Animation///////////////////
-
 
 void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direct,
                            bool customAni, int frFL, int frEL, int frFR, int frER, bool edit)

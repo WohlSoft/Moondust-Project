@@ -73,6 +73,12 @@ public:
     ~MainWindow();
     dataconfigs *getConfigs();
     void openFilesByArgs(QStringList args);
+
+    //File format read functions
+    static LevelData ReadLevelFile(QFile &inf); // SMBX LVL File
+    static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); // SMBX WLD File
+    static WorldData ReadWorldFile(QFile &inf); //SMBX NPC.TXT File
+
     
 protected:
     void closeEvent(QCloseEvent *event);
@@ -104,13 +110,6 @@ private slots:
     npcedit *createNPCChild();
     leveledit *createChild();
     void setActiveSubWindow(QWidget *window);
-
-
-    //File format read functions
-    LevelData ReadLevelFile(QFile &inf); // SMBX LVL File
-    NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); // SMBX WLD File
-    WorldData ReadWorldFile(QFile &inf); //SMBX NPC.TXT File
-
 
     //LevelEdit functions
     void SetCurrentLevelSection(int SctId, int open=0);
@@ -251,6 +250,8 @@ private slots:
 
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
 
+    void on_actionNewNPC_config_triggered();
+
 private:
     dataconfigs configs; // Global objects configucrations
 
@@ -317,13 +318,15 @@ private:
 
 
     //Helps functions
-    QString removeQuotes(QString str);
+    static QString removeQuotes(QString str);
+
+    static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
 
 };
 
 
 
-void BadFileMsg(MainWindow *window, QString fileName_DATA, int str_count, QString line);
+
 
 ////////////////////////////////////////////////////////////
 

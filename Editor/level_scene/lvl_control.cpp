@@ -39,6 +39,9 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
         {
 
                 objType=(*it)->data(0).toString();
+
+                if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
+
                 //remove data from main array before deletion item from scene
                 if( objType=="Block" )
                 {
@@ -168,6 +171,9 @@ void LvlScene::removeItemUnderCursor()
                 (lock_door))
             removeIt=false;
 
+        if(!findItem->isVisible()) //Invisible items can't be deleted
+            removeIt=false;
+
         if(removeIt)
         {
             LevelData removedItems;
@@ -246,6 +252,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(EditingMode==1)
                     {
+
+                        if(!(*it)->isVisible()) continue; //Invisible items can't be deleted
 
                         //remove data from main array before deletion item from scene
                         if( (*it)->data(0).toString()=="Block" )

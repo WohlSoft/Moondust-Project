@@ -22,6 +22,7 @@
 #include <QWidget>
 #include <QFile>
 #include <QMessageBox>
+#include "data_configs/data_configs.h"
 #include "npc_filedata.h"
 
 namespace Ui {
@@ -33,12 +34,13 @@ class npcedit : public QWidget
     Q_OBJECT
     
 public:
-    explicit npcedit(QWidget *parent = 0);
+    explicit npcedit(dataconfigs *configs, QWidget *parent = 0);
     ~npcedit();
 
-    void newFile();
+    void newFile(unsigned long npcID);
     bool loadFile(const QString &fileName, NPCConfigFile FileData);
     NPCConfigFile NpcData;
+    unsigned long npc_id;
 
     bool save();
     bool saveAs();
@@ -117,9 +119,10 @@ private slots:
 private:
     Ui::npcedit *ui;
 
+    dataconfigs *pConfigs;
     NPCConfigFile StartNPCData;
     NPCConfigFile DefaultNPCData;
-    void setDefaultData(int npc_id);
+    void setDefaultData(unsigned long npc_id);
 
     bool isModyfied;
 

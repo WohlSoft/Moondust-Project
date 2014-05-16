@@ -41,6 +41,7 @@ void dataconfigs::loadLevelNPC()
         marker_npc.fireball = npcset.value("fireball", "13").toInt();
         marker_npc.hammer = npcset.value("hammer", "171").toInt();
         marker_npc.boomerang = npcset.value("boomerang", "292").toInt();
+        marker_npc.coin_in_block = npcset.value("coin-in-block", "10").toInt();
 
     npcset.endGroup();
 

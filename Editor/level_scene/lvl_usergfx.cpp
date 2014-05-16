@@ -18,7 +18,7 @@
 
 #include "lvlscene.h"
 #include "../leveledit.h"
-
+#include "mainwindow.h"
 
 //Search and load custom User's files
 void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
@@ -28,6 +28,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     UserBGs uBG;
     UserBlocks uBlock;
     UserBGOs uBGO;
+    UserNPCs uNPC;
 
     bool loaded1, loaded2;
     QString uLVLDs = FileData.path + "/" + FileData.filename + "/";
@@ -96,6 +97,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
         else return;
         }
 
+///////////////////////////////////////////////////////////////////////////
 
     //Load Blocks
     for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
@@ -157,6 +159,8 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     else return;
     }
 
+///////////////////////////////////////////////////////////////////////////
+
     //Load BGO
     for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
     {
@@ -178,6 +182,13 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                 uBGO.image.setMask(uBGO.mask);
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
+
+                //Apply index;
+                if(uBGO.id < (unsigned int)index_bgo.size())
+                {
+                    index_bgo[uBGO.id].type = 1;
+                    index_bgo[uBGO.id].i = (uBGOs.size()-1);
+                }
             }
             else
             if(QFile::exists(uLVLs + pConfigs->main_bgo[i].image_n) )
@@ -195,10 +206,109 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                 uBGO.image.setMask(uBGO.mask);
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
+
+
+                //Apply index;
+                if(uBGO.id < (unsigned int)index_bgo.size())
+                {
+                    index_bgo[uBGO.id].type = 1;
+                    index_bgo[uBGO.id].i = (uBGOs.size()-1);
+                }
             }
     if(!progress.wasCanceled())
         progress.setValue(progress.value()+1);
     else return;
     }
+
+///////////////////////////////////////////////////////////////////////////
+
+    //Load NPC
+    for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
+    {
+        if(!progress.wasCanceled())
+            progress.setLabelText("Search User NPCs "+QString::number(i)+"/"+QString::number(pConfigs->main_npc.size()));
+
+             uNPC.withImg = false;
+             uNPC.withTxt = false;
+
+             //Looking for user's GFX
+             if((QFile::exists(uLVLD) ) &&
+                   (QFile::exists(uLVLDs + pConfigs->main_npc[i].image_n)) )
+             {
+                 if(QFile::exists(uLVLDs + pConfigs->main_npc[i].mask_n))
+                     uNPC.mask = QBitmap(uLVLDs + pConfigs->main_npc[i].mask_n );
+                 else
+                     uNPC.mask = pConfigs->main_npc[i].mask;
+
+                 uNPC.image = QPixmap(uLVLDs + pConfigs->main_npc[i].image_n );
+
+                 if((uNPC.image.height()!=uNPC.mask.height())||(uNPC.image.width()!=uNPC.mask.width()))
+                     uNPC.mask = uNPC.mask.copy(0,0,uNPC.image.width(),uNPC.image.height());
+                 uNPC.image.setMask(uNPC.mask);
+                 uNPC.id = pConfigs->main_npc[i].id;
+                 uNPC.withImg = true;
+
+             }
+             else
+             if(QFile::exists(uLVLs + pConfigs->main_npc[i].image_n) )
+             {
+                 if(QFile::exists(uLVLs + pConfigs->main_npc[i].mask_n))
+                     uNPC.mask = QBitmap(uLVLs + pConfigs->main_npc[i].mask_n );
+                 else
+                     uNPC.mask = pConfigs->main_npc[i].mask;
+
+                 uNPC.image = QPixmap(uLVLs + pConfigs->main_npc[i].image_n );
+
+                 if((uNPC.image.height()!=uNPC.mask.height())||(uNPC.image.width()!=uNPC.mask.width()))
+                     uNPC.mask = uNPC.mask.copy(0,0,uNPC.image.width(),uNPC.image.height());
+
+                 uNPC.image.setMask(uNPC.mask);
+                 uNPC.id = pConfigs->main_npc[i].id;
+                 uNPC.withImg = true;
+             }
+
+             //Looking for user's NPC.txt
+             if((QFile::exists(uLVLD) ) &&
+                   (QFile::exists(uLVLDs +
+                      "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt") ) )
+             {
+                QFile file(uLVLDs +
+                           "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt");
+                if(file.open(QIODevice::ReadOnly))
+                {
+                    uNPC.sets = MainWindow::ReadNpcTXTFile(file, true);
+                    uNPC.withTxt = true;
+                }
+             }
+             else
+             if(QFile::exists(uLVLs +
+                              "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt"
+                              ) )
+             {
+                 QFile file(uLVLs +
+                            "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt");
+                 if(file.open(QIODevice::ReadOnly))
+                 {
+                     uNPC.sets = MainWindow::ReadNpcTXTFile(file, true);
+                     uNPC.withTxt = true;
+                 }
+             }
+
+             //Apply only if custom config or image was found
+             if((uNPC.withImg)||(uNPC.withTxt))
+             {
+                 uNPCs.push_back(uNPC);
+                 //Apply index;
+                 if(uNPC.id < (unsigned int)index_npc.size())
+                 {
+                     index_npc[uNPC.id].type = 1;
+                     index_npc[uNPC.id].i = (uNPCs.size()-1);
+                 }
+             }
+
+     if(!progress.wasCanceled())
+         progress.setValue(progress.value()+1);
+     else return;
+     }
 
 }

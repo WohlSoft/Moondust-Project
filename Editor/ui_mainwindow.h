@@ -48,7 +48,7 @@ public:
     QAction *Exit;
     QAction *actionNewLevel;
     QAction *actionNewWorld_map;
-    QAction *actionNPC_config;
+    QAction *actionNewNPC_config;
     QAction *actionSave;
     QAction *actionSave_as;
     QAction *actionClose;
@@ -302,8 +302,8 @@ public:
         actionNewLevel->setObjectName(QStringLiteral("actionNewLevel"));
         actionNewWorld_map = new QAction(MainWindow);
         actionNewWorld_map->setObjectName(QStringLiteral("actionNewWorld_map"));
-        actionNPC_config = new QAction(MainWindow);
-        actionNPC_config->setObjectName(QStringLiteral("actionNPC_config"));
+        actionNewNPC_config = new QAction(MainWindow);
+        actionNewNPC_config->setObjectName(QStringLiteral("actionNewNPC_config"));
         actionSave = new QAction(MainWindow);
         actionSave->setObjectName(QStringLiteral("actionSave"));
         actionSave->setEnabled(false);
@@ -1532,7 +1532,7 @@ public:
         menu->addAction(Exit);
         menuNew->addAction(actionNewLevel);
         menuNew->addAction(actionNewWorld_map);
-        menuNew->addAction(actionNPC_config);
+        menuNew->addAction(actionNewNPC_config);
         menuOpenRecent->addAction(action_recent1);
         menuOpenRecent->addAction(action_recent2);
         menuOpenRecent->addAction(action_recent3);
@@ -1685,7 +1685,7 @@ public:
         Exit->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+Q", 0));
         actionNewLevel->setText(QApplication::translate("MainWindow", "Level...", 0));
         actionNewWorld_map->setText(QApplication::translate("MainWindow", "World map...", 0));
-        actionNPC_config->setText(QApplication::translate("MainWindow", "NPC config...", 0));
+        actionNewNPC_config->setText(QApplication::translate("MainWindow", "NPC config...", 0));
         actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
 #ifndef QT_NO_TOOLTIP
         actionSave->setToolTip(QApplication::translate("MainWindow", "Save (Ctrl+S)", 0));
