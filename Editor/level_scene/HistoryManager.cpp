@@ -21,6 +21,7 @@
 #include "item_bgo.h"
 #include "../common_features/logger.h"
 
+
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
     //add cleanup redo elements
