@@ -652,6 +652,35 @@ void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
         }
 }
 
+void LvlScene::sortBlockArrayByPos(QVector<LevelBlock > &blocks)
+{
+    LevelBlock tmp1;
+    int total = blocks.size();
+    long i;
+    long xmin;
+    long xmini;
+    long sorted = 0;
+
+
+        while(sorted < blocks.size())
+        {
+            xmin = blocks[sorted].x;
+            xmini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( blocks[i].x < xmin )
+                {
+                    xmin = blocks[i].x; xmini = i;
+                }
+            }
+            tmp1 = blocks[xmini];
+            blocks[xmini] = blocks[sorted];
+            blocks[sorted] = tmp1;
+            sorted++;
+        }
+}
+
 void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
 {
     LevelBGO tmp1;

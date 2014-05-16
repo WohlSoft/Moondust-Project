@@ -32,6 +32,8 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 void MainWindow::dropEvent(QDropEvent *e)
 {
     this->raise();
+    this->setFocus(Qt::ActiveWindowFocusReason);
+
     foreach (const QUrl &url, e->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
         //qDebug() << "Dropped file:" << fileName;

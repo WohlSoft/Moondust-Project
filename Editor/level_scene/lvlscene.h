@@ -143,6 +143,7 @@ public:
 
     //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
+    void sortBlockArrayByPos(QVector<LevelBlock > &blocks);
     void sortBGOArray(QVector<LevelBGO > &bgos);
 
     QVector<UserBGs > uBGs;
