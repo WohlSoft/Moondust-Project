@@ -134,7 +134,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     bool isUser=false;
     int j;
 
-    QGraphicsItem *npc;
+    QGraphicsItem *npc = NULL;
     QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
 
@@ -210,6 +210,11 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     includedNPC = new QGraphicsItemGroup(BlockImage);
 
+    //Set pointers
+    BlockImage->setScenePoint(this);
+    BlockImage->setGroupPoint(includedNPC);
+    BlockImage->setNPCItemPoint(npc);
+
     if(block.invisible)
         BlockImage->setOpacity(qreal(0.5));
 
@@ -218,7 +223,9 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     {
         newPos = applyGrid(QPoint(block.x, block.y), 32);
         block.x = newPos.x();
+        BlockImage->blockData.x = newPos.x();
         block.y = newPos.y();
+        BlockImage->blockData.y = newPos.y();
     }
 
     BlockImage->setPos(QPointF(newPos));
@@ -226,20 +233,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     //////////////////////////////Included NPC////////////////////////////////////////
     if(block.npc_id != 0)
     {
-
-        QPixmap npcImg = QPixmap( getNPCimg( ((block.npc_id > 1000)? (block.npc_id-1000) : pConfigs->marker_npc.coin_in_block ) ) );
-        npc = addPixmap( npcImg );
-
-        npc->setPos(
-                    (
-                        block.x+((block.w-npcImg.width())/2)
-                     ),
-                    (
-                        block.y+((block.h-npcImg.height())/2)
-                     ));
-        npc->setZValue(blockZ);
-        npc->setOpacity(qreal(0.6));
-        includedNPC->addToGroup(npc);
+        BlockImage->setIncludedNPC(block.npc_id);
     }
     //////////////////////////////////////////////////////////////////////////////////
 
@@ -273,7 +267,6 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     BlockImage->setData(9, QString::number(block.w) ); //width
     BlockImage->setData(10, QString::number(block.h) ); //height
-    BlockImage->setScenePoint(this);
     if(PasteFromBuffer) BlockImage->setSelected(true);
 }
 

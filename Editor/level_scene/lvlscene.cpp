@@ -88,7 +88,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     bgoZf = 50; // foreground BGO
 
-    blockZl = 100;
+    blockZl = 100; //LavaBlock
     npcZf = 150; // foreground NPC
     waterZ = 500;
     doorZ = 700;

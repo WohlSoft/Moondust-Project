@@ -129,6 +129,8 @@ public:
     void setDoors(LevelData FileData, QProgressDialog &progress);
     void setPlayerPoints();
 
+    QPixmap getNPCimg(unsigned long npcID);
+
     void applyLayersVisible();
 
     void startBlockAnimation();
@@ -252,8 +254,6 @@ private:
     void placeDoor(LevelDoors &door, bool toGrid=false);
     void placeNPC(LevelNPC &npc, bool toGrid=false);
     void placeWater(LevelWater &water, bool toGrid=false);
-
-    QPixmap getNPCimg(unsigned long npcID);
 
     void removeItemUnderCursor();
 

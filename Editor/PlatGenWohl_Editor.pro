@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     data_configs/conf_lvl_npc.cpp \
     data_configs/conf_music.cpp \
     common_features/timecounter.cpp \
-    common_features/logger.cpp
+    common_features/logger.cpp \
+    npc_dialog/npcdialog.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -73,7 +74,8 @@ HEADERS  += mainwindow.h \
     data_configs/data_configs.h \
     common_features/timecounter.h \
     common_features/logger.h \
-    common_features/logger_sets.h
+    common_features/logger_sets.h \
+    npc_dialog/npcdialog.h
 
 FORMS    += \
     aboutdialog.ui \
@@ -82,7 +84,8 @@ FORMS    += \
     mainwindow.ui \
     npcedit.ui \
     saveimage.ui \
-    musicfilelist.ui
+    musicfilelist.ui \
+    npc_dialog/npcdialog.ui
 
 RC_FILE = platgenw.rc
 
