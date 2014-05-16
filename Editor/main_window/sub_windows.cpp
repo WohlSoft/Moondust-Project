@@ -24,7 +24,7 @@
 //Edit NPC
 npcedit *MainWindow::createNPCChild()
 {
-    npcedit *child = new npcedit;
+    npcedit *child = new npcedit(&configs);
     QMdiSubWindow *npcWindow = new QMdiSubWindow;
     npcWindow->setWidget(child);
     npcWindow->setFixedSize(520,640);

@@ -20,15 +20,12 @@ NpcDialog::NpcDialog(dataconfigs *configs, QWidget *parent) :
     foreach(obj_npc npcItem, pConfigs->main_npc)
     {
         //Add category
-
             tmpI = npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
 
             item = new QListWidgetItem( npcItem.name );
             item->setIcon( QIcon( tmpI ) );
             item->setData(3, QString::number(npcItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-            item->setSelected( npcItem.id==1 );
-
             ui->npcList->addItem( item );
     }
 
@@ -37,6 +34,66 @@ NpcDialog::NpcDialog(dataconfigs *configs, QWidget *parent) :
 NpcDialog::~NpcDialog()
 {
     delete ui;
+}
+
+void NpcDialog::setState(int npcID, int mode)
+{
+    isCoin = false;
+    isEmpty=false;
+
+    switch(mode)
+    {
+    case 2: //Disable coin selecting
+        ui->NPCfromList->setChecked(true);
+        ui->coinsNPC->setEnabled(false);
+        ui->coinsNPC->setVisible(false);
+        selectedNPC = npcID;
+        if(selectedNPC==0)
+        {
+            isEmpty=true;
+            ui->emptyNPC->setChecked(true);
+        }
+        break;
+    case 1: //select NPC only
+        ui->NPCfromList->setChecked(true);
+        ui->ContentType->setVisible(false);
+        ui->ContentType->setEnabled(false);
+        selectedNPC = npcID;
+        break;
+    case 0:
+        if(npcID<=0)
+        {
+            isEmpty=true;
+            ui->emptyNPC->setChecked(true);
+        }
+        else
+        if(npcID<1000)
+        {
+            isCoin = true;
+            coins = npcID;
+            ui->coinsNPC->setChecked(true);
+            ui->coinsInBlock->setValue(npcID);
+        }
+        else
+        {
+            coins=0;
+            selectedNPC = npcID-1000;
+            ui->NPCfromList->setChecked(true);
+
+        }
+    default: break;
+    }
+
+  if((!isEmpty)&&(!isCoin))
+  foreach(QListWidgetItem *item, ui->npcList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
+  {
+      if(item->data(3).toInt() == selectedNPC)
+      {
+          item->setSelected(true);
+          ui->npcList->scrollToItem(item);
+      }
+  }
+
 }
 
 void NpcDialog::on_npcList_doubleClicked(const QModelIndex &index)
@@ -72,10 +129,10 @@ void NpcDialog::on_buttonBox_accepted()
         coins=0;
     }
     else
-    if(ui->emptyNPC->isChecked())
+    if(ui->coinsNPC->isChecked())
     {
-        isEmpty = true;
-        isCoin = false;
+        isEmpty = false;
+        isCoin = true;
         selectedNPC = 0;
         coins=ui->coinsInBlock->value();
     }

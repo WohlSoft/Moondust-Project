@@ -141,6 +141,7 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             NpcDialog * npcList = new NpcDialog(scene->pConfigs);
             npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
             npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+            npcList->setState(blockData.npc_id);
             if(npcList->exec()==QDialog::Accepted)
             {
                 //apply to all selected items.

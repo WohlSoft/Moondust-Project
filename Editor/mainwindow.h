@@ -250,6 +250,8 @@ private slots:
 
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
 
+    void on_actionNewNPC_config_triggered();
+
 private:
     dataconfigs configs; // Global objects configucrations
 

@@ -35,6 +35,15 @@
        <height>24</height>
       </size>
      </property>
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="gridSize">
+      <size>
+       <width>30</width>
+       <height>25</height>
+      </size>
+     </property>
      <property name="modelColumn">
       <number>0</number>
      </property>

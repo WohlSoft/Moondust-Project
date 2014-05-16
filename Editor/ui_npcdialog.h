@@ -68,6 +68,8 @@ public:
         npcList->setObjectName(QStringLiteral("npcList"));
         npcList->setMinimumSize(QSize(250, 250));
         npcList->setIconSize(QSize(24, 24));
+        npcList->setSpacing(0);
+        npcList->setGridSize(QSize(30, 25));
         npcList->setModelColumn(0);
         npcList->setUniformItemSizes(true);
 

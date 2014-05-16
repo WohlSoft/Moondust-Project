@@ -54,7 +54,8 @@ SOURCES += main.cpp\
     data_configs/conf_music.cpp \
     common_features/timecounter.cpp \
     common_features/logger.cpp \
-    npc_dialog/npcdialog.cpp
+    npc_dialog/npcdialog.cpp \
+    file_formats/smbx64.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \

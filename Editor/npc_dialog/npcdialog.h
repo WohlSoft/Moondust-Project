@@ -19,6 +19,9 @@ public:
     bool isEmpty;
     bool isCoin;
     int coins;
+    int mode;
+
+    void setState(int npcID, int mode=0);
 
 private slots:
     void on_npcList_doubleClicked(const QModelIndex &index);

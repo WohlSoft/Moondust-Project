@@ -102,7 +102,7 @@ public:
     QGraphicsView *PreviewBox;
     QPushButton *ResetNPCData;
     QGroupBox *NPC_ID;
-    QLabel *label_12;
+    QLabel *CurrentNPCID;
     QGroupBox *isModBox;
     QLabel *isModyfiedL;
 
@@ -375,10 +375,10 @@ public:
         NPC_ID->setObjectName(QStringLiteral("NPC_ID"));
         NPC_ID->setGeometry(QRect(120, 0, 61, 41));
         NPC_ID->setAlignment(Qt::AlignCenter);
-        label_12 = new QLabel(NPC_ID);
-        label_12->setObjectName(QStringLiteral("label_12"));
-        label_12->setGeometry(QRect(10, 15, 41, 21));
-        label_12->setAlignment(Qt::AlignCenter);
+        CurrentNPCID = new QLabel(NPC_ID);
+        CurrentNPCID->setObjectName(QStringLiteral("CurrentNPCID"));
+        CurrentNPCID->setGeometry(QRect(10, 15, 41, 21));
+        CurrentNPCID->setAlignment(Qt::AlignCenter);
         isModBox = new QGroupBox(npcedit);
         isModBox->setObjectName(QStringLiteral("isModBox"));
         isModBox->setGeometry(QRect(180, 0, 71, 41));
@@ -493,7 +493,7 @@ public:
         groupBox_4->setTitle(QApplication::translate("npcedit", "Preview", 0));
         ResetNPCData->setText(QApplication::translate("npcedit", "Reset", 0));
         NPC_ID->setTitle(QApplication::translate("npcedit", "NPC ID", 0));
-        label_12->setText(QApplication::translate("npcedit", "0", 0));
+        CurrentNPCID->setText(QApplication::translate("npcedit", "0", 0));
         isModBox->setTitle(QApplication::translate("npcedit", "Modyfied", 0));
         isModyfiedL->setText(QApplication::translate("npcedit", "No", 0));
     } // retranslateUi
