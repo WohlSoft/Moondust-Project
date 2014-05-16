@@ -110,6 +110,9 @@ private slots:
     npcedit *createNPCChild();
     leveledit *createChild();
     void setActiveSubWindow(QWidget *window);
+    void SWCascade();
+    void SWTile();
+
 
     //LevelEdit functions
     void SetCurrentLevelSection(int SctId, int open=0);
