@@ -236,6 +236,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
             (configs.main_bgo.size()<=0)||
             (configs.main_bg.size()<=0)||
             (configs.main_block.size()<=0)||
+            (configs.main_npc.size()<=0)||
             (configs.main_music_lvl.size()<=0)||
             (configs.main_music_wld.size()<=0)||
             (configs.main_music_spc.size()<=0)
@@ -261,9 +262,12 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     DataSize += LvlData.sections.size()*2;
     DataSize += configs.main_bgo.size();
+
     DataSize += LvlData.bgo.size();
     DataSize += configs.main_block.size();
     DataSize += LvlData.blocks.size();
+
+    DataSize += configs.main_npc.size();
     DataSize += LvlData.npc.size();
     DataSize += LvlData.water.size();
     DataSize += LvlData.doors.size();
@@ -346,48 +350,48 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
     int DataSize = progress.maximum();
     int TotalSteps = 6;
 
-    if(!progress.wasCanceled())
-        progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
     scene->loadUserData(LvlData, progress);
 
-    if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-    if(!progress.wasCanceled())
-        progress.setLabelText(tr("1/%1 Applying Backgrounds").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("1/%1 Applying Backgrounds").arg(TotalSteps));
     scene->makeSectionBG(LvlData, progress);
 
-    if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-    if(!progress.wasCanceled())
-        progress.setLabelText(tr("2/%1 Applying BGOs...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("2/%1 Applying BGOs...").arg(TotalSteps));
     scene->setBGO(LvlData, progress);
 
-    if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-    if(!progress.wasCanceled())
-        progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
     scene->setBlocks(LvlData, progress);
 
-    if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-    if(!progress.wasCanceled())
-        progress.setLabelText(tr("4/%1 Applying NPCs...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("4/%1 Applying NPCs...").arg(TotalSteps));
     scene->setNPC(LvlData, progress);
 
-    if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-    if(!progress.wasCanceled())
-        progress.setLabelText(tr("5/%1 Applying Waters...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("5/%1 Applying Waters...").arg(TotalSteps));
     scene->setWaters(LvlData, progress);
 
-    if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-    if(!progress.wasCanceled())
-        progress.setLabelText(tr("6/%1 Applying Doors...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("6/%1 Applying Doors...").arg(TotalSteps));
     scene->setDoors(LvlData, progress);
 
-    if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
     scene->setPlayerPoints();
 
@@ -396,6 +400,8 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
 
     if(scene->opts.animationEnabled)
         scene->startBlockAnimation();//Apply block animation
+
+    scene->applyLayersVisible();
 
     /*
     scene->setSceneRect(LvlData.sections[0].size_left-1000,
@@ -406,8 +412,8 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
 
     if(!sceneCreared)
     {
-    ui->graphicsView->setScene(scene);
-    sceneCreared = true;
+        ui->graphicsView->setScene(scene);
+        sceneCreared = true;
     }
 
     if(!progress.wasCanceled())

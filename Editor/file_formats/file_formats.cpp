@@ -37,15 +37,18 @@ QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
 */
 
 //Errror for file parsing
-void BadFileMsg(MainWindow *window, QString fileName_DATA, int str_count, QString line)
+void MainWindow::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 {
-    QMessageBox::warning(window, MainWindow::tr("Bad File"),
-    MainWindow::tr(QString("Bad file format\nFile: %1\n"
-               "Line Number: %3\n"         //Print Line With error
-               "Line Data: %2").arg(fileName_DATA.toStdString().c_str(),line)  //Print Bad data string
-               .arg(str_count)
-               .toStdString().c_str()),
-        QMessageBox::Ok);
+    QMessageBox * box = new QMessageBox();
+    box->setWindowTitle( tr("Bad File") );
+    box->setText(
+                QString(tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
+                          +tr("Line Number: %1\n").arg(str_count)         //Print Line With error
+                           +tr("Line Data: %1").arg(line))
+                );
+    box->setStandardButtons(QMessageBox::Ok);
+    box->setIcon(QMessageBox::Warning);
+    box->exec();
 }
 
 
