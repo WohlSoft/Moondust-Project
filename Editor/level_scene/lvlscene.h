@@ -67,6 +67,7 @@ struct UserNPCs
 
     bool withTxt;
     NPCConfigFile sets;
+    obj_npc merged;
 };
 
 struct UserBGs
@@ -130,6 +131,7 @@ public:
     void setPlayerPoints();
 
     QPixmap getNPCimg(unsigned long npcID);
+    obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local);
 
     void applyLayersVisible();
 

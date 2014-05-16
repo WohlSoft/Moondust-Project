@@ -61,9 +61,10 @@ QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 QPixmap LvlScene::getNPCimg(unsigned long npcID)
 {
     bool noimage=true, found=false;
-    bool isUser=false;
+    bool isUser=false, isUserTxt=false;
     int j;
     QPixmap tempI;
+    int gfxH = 0;
 
     //Check Index exists
     if(npcID < (unsigned int)index_npc.size())
@@ -84,6 +85,11 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
             noimage=false;
             tempI = uNPCs[index_npc[npcID].i].image;
         }
+        if(uNPCs[index_npc[npcID].i].withTxt)
+            gfxH = uNPCs[index_npc[npcID].i].merged.gfx_h;
+        else
+            gfxH = pConfigs->main_npc[index_npc[npcID].i].height;
+
 
         if(!isUser)
         {
@@ -99,9 +105,17 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
         {
             if(uNPCs[j].id == npcID)
             {
-                isUser=true;
-                noimage=false;
-                tempI = uNPCs[j].image;
+                if(uNPCs[j].withImg)
+                {
+                    isUser=true;
+                    noimage=false;
+                    tempI = uNPCs[j].image;
+                }
+                if(uNPCs[j].withTxt)
+                {
+                    isUserTxt = true;
+                    gfxH = uNPCs[j].merged.gfx_h;
+                }
                 break;
             }
         }
@@ -112,7 +126,10 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
             {
                 noimage=false;
                 if(!isUser)
-                    tempI = pConfigs->main_npc[j].image; break;
+                    tempI = pConfigs->main_npc[j].image;
+                if(!isUserTxt)
+                    gfxH =  pConfigs->main_npc[j].gfx_h;
+                break;
             }
         }
     }
@@ -122,7 +139,144 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
         return uNpcImg;
     }
 
-    return tempI.copy(0,0, tempI.width(), pConfigs->main_npc[j].gfx_h );
+    return tempI.copy(0,0, tempI.width(), gfxH );
+}
+
+
+obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
+{
+    obj_npc merged;
+    merged = global;
+    merged.image = QPixmap();   //Clear image values
+    merged.mask = QPixmap();
+
+//    int gfxoffsetx;
+//    bool en_gfxoffsetx;
+    merged.gfx_offset_x = (local.en_gfxoffsetx)?local.gfxoffsetx:global.gfx_offset_x;
+
+//    int gfxoffsety;
+//    bool en_gfxoffsety;
+    merged.gfx_offset_y = (local.en_gfxoffsety)?local.gfxoffsety:global.gfx_offset_y;
+
+//    unsigned int width;
+//    bool en_width;
+    merged.width = (local.en_width)?local.width:global.width;
+
+//    unsigned int height;
+//    bool en_height;
+    //merged. = (local.en_)?local.:global.;
+    merged.health = (local.en_height)?local.height:global.height;
+
+
+//    unsigned int gfxwidth;
+//    bool en_gfxwidth;
+    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:global.gfx_w;
+
+//    unsigned int gfxheight;
+//    bool en_gfxheight;
+    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:global.gfx_h;
+
+
+//    unsigned int score;
+//    bool en_score;
+    merged.score = (local.en_score)?local.score:global.score;
+
+//    bool playerblock;
+//    bool en_playerblock;
+    merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
+
+
+//    bool playerblocktop;
+//    bool en_playerblocktop;
+    merged.block_player_top = (local.en_playerblocktop)?local.playerblocktop:global.block_player_top;
+
+//    bool npcblock;
+//    bool en_npcblock;
+    merged.block_npc = (local.en_npcblock)?local.npcblock:global.block_npc;
+
+//    bool npcblocktop;
+//    bool en_npcblocktop;
+    merged.block_npc_top = (local.en_npcblocktop)?local.npcblocktop:global.block_npc_top;
+
+
+//    bool grabside;
+//    bool en_grabside;
+    merged.grab_side = (local.en_grabside)?local.grabside:global.grab_side;
+
+
+//    bool grabtop;
+//    bool en_grabtop;
+    merged.grab_top = (local.en_grabtop)?local.grabtop:global.grab_top;
+
+
+//    bool jumphurt;
+//    bool en_jumphurt;
+    merged.kill_on_jump = (local.en_jumphurt)? (!local.jumphurt) : global.kill_on_jump ;
+
+//    bool nohurt;
+//    bool en_nohurt;
+    merged.hurt_player = (local.en_nohurt)?!local.nohurt:global.hurt_player;
+
+//    bool noblockcollision;
+//    bool en_noblockcollision;
+    merged.collision_with_blocks = (local.en_noblockcollision)?(!local.noblockcollision):global.collision_with_blocks;
+
+//    bool cliffturn;
+//    bool en_cliffturn;
+    merged.turn_on_cliff_detect = (local.en_cliffturn)?local.cliffturn:global.turn_on_cliff_detect;
+
+
+//    bool noyoshi;
+//    bool en_noyoshi;
+    merged.can_be_eaten = (local.en_noyoshi)?(!local.noyoshi):global.can_be_eaten;
+
+
+//    bool foreground;
+//    bool en_foreground;
+    merged.foreground = (local.en_foreground)?local.foreground:global.foreground;
+
+//    float speed;
+//    bool en_speed;
+    merged.speed = (local.en_speed) ? global.speed * local.speed : global.speed;
+
+
+//    bool nofireball;
+//    bool en_nofireball;
+    merged.kill_by_fireball = (local.en_nofireball)?(!local.nofireball):global.kill_by_fireball;
+
+//    bool nogravity;
+//    bool en_nogravity;
+    merged.gravity = (local.en_nogravity)?(!local.nogravity):global.gravity;
+
+//    unsigned int frames;
+//    bool en_frames;
+    merged.frames = (local.en_frames)?local.frames:global.frames;
+
+
+//    unsigned int framespeed;
+//    bool en_framespeed;
+    merged.framespeed = (local.en_framespeed)? global.framespeed * (int)round( 8 / local.framespeed ) : global.framespeed;
+
+
+//    unsigned int framestyle;
+//    bool en_framestyle;
+    merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
+
+
+//    bool noiceball;
+//    bool en_noiceball;
+    merged.freeze_by_iceball = (local.en_noiceball)?(!local.noiceball):global.freeze_by_iceball;
+
+
+//    bool nohammer;
+//    bool en_nohammer;
+    merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
+
+//    bool noshell;
+//    bool en_noshell;
+    merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
+
+    return merged;
 }
 
 
