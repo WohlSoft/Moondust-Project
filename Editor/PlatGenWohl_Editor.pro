@@ -55,7 +55,8 @@ SOURCES += main.cpp\
     common_features/timecounter.cpp \
     common_features/logger.cpp \
     npc_dialog/npcdialog.cpp \
-    file_formats/smbx64.cpp
+    file_formats/smbx64.cpp \
+    level_scene/itemmsgbox.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -76,7 +77,8 @@ HEADERS  += mainwindow.h \
     common_features/timecounter.h \
     common_features/logger.h \
     common_features/logger_sets.h \
-    npc_dialog/npcdialog.h
+    npc_dialog/npcdialog.h \
+    level_scene/itemmsgbox.h
 
 FORMS    += \
     aboutdialog.ui \
@@ -86,7 +88,8 @@ FORMS    += \
     npcedit.ui \
     saveimage.ui \
     musicfilelist.ui \
-    npc_dialog/npcdialog.ui
+    npc_dialog/npcdialog.ui \
+    level_scene/itemmsgbox.ui
 
 RC_FILE = platgenw.rc
 

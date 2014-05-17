@@ -67,7 +67,7 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             //Skip system layers
             if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-            setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+            setLayer = LayerName->addAction( layer.name+((layer.hidden)?tr(" [hidden]"):"") );
             setLayer->setData(layer.name);
             setLayer->setCheckable(true);
             setLayer->setEnabled(true);
@@ -77,25 +77,25 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         ItemMenu->addSeparator();
 
-        QAction *invis = ItemMenu->addAction("Invisible");
+        QAction *invis = ItemMenu->addAction(tr("Invisible"));
             invis->setCheckable(1);
             invis->setChecked( blockData.invisible );
 
-        QAction *slipp = ItemMenu->addAction("Slippery");
+        QAction *slipp = ItemMenu->addAction(tr("Slippery"));
             slipp->setCheckable(1);
             slipp->setChecked( blockData.slippery );
 
-        QAction *resize = ItemMenu->addAction("Resize");
+        QAction *resize = ItemMenu->addAction(tr("Resize"));
             resize->setVisible( (this->data(3).toString()=="sizable") );
 
         ItemMenu->addSeparator();
-        QAction *chNPC = ItemMenu->addAction("Change included NPC...");
+        QAction *chNPC = ItemMenu->addAction(tr("Change included NPC..."));
 
         ItemMenu->addSeparator();
-        QAction *copyBlock = ItemMenu->addAction("Copy");
-        QAction *cutBlock = ItemMenu->addAction("Cut");
+        QAction *copyBlock = ItemMenu->addAction( tr("Copy") );
+        QAction *cutBlock = ItemMenu->addAction( tr("Cut") );
         ItemMenu->addSeparator();
-        QAction *remove = ItemMenu->addAction("Remove");
+        QAction *remove = ItemMenu->addAction( tr("Remove") );
 
         scene->contextMenuOpened = true; //bug protector
             QAction *selected = ItemMenu->exec(event->screenPos());
