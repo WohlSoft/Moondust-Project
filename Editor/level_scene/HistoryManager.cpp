@@ -463,69 +463,6 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         }
     }
 
-    /*
-    foreach (QGraphicsItem* item, sortedLevelArray)
-    {
-        if(item->data(0).toString()=="Block")
-        {
-            if(sortedBlock.size()!=0)
-            {
-                QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
-                {
-                    //not found
-                    sortedBlock.erase(beginItem);
-                }
-                //but still test if the next blocks, is the block we search!
-                beginItem = sortedBlock.begin();
-                currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
-                {
-                    cbData.item = item;
-                    (this->*clbBlock)(cbData,(*beginItem));
-                    sortedBlock.erase(beginItem);
-                }
-            }
-            else
-            {
-                blocksFinished = true;
-            }
-        }
-        else
-        if(item->data(0).toString()=="BGO")
-        {
-            if(sortedBGO.size()!=0)
-            {
-                QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-                unsigned int currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()>currentArrayId)
-                {
-                    //not found
-                    sortedBGO.erase(beginItem);
-                }
-                //but still test if the next blocks, is the block we search!
-                beginItem = sortedBGO.begin();
-                currentArrayId = (*beginItem).array_id;
-                if((unsigned int)item->data(2).toInt()==currentArrayId)
-                {
-                    cbData.item = item;
-                    (this->*clbBgo)(cbData,(*beginItem));
-                    sortedBGO.erase(beginItem);
-                }
-            }
-            else
-            {
-                bgosFinished = true;
-            }
-        }
-        if(blocksFinished&&bgosFinished)
-        {
-            break;
-        }
-    }
-    */
-
 }
 
 QPoint LvlScene::calcTopLeftCorner(LevelData *data)
