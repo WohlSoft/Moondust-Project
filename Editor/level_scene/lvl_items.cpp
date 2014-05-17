@@ -725,7 +725,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     //npcfore->addToGroup(box);
     //if(npc.id==91)
-    if(pConfigs->main_npc[j].foreground)
+    if(NPCItem->localProps.foreground)
         NPCItem->setZValue(npcZf);
     else
         NPCItem->setZValue(npcZb);
