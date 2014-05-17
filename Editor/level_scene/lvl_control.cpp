@@ -297,7 +297,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //(*it)->setZValue(Z);
                     if( ObjType == "NPC")
                     {
-                        gridSize = ((ItemNPC *)(*it))->localProps.grid;
+                        gridSize = ((ItemNPC *)(*it))->gridSize;
                         offsetX = ((ItemNPC *)(*it))->localProps.grid_offset_x;
                         offsetY = ((ItemNPC *)(*it))->localProps.grid_offset_y;
                     }
