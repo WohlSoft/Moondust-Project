@@ -174,6 +174,9 @@ struct obj_npc
     int grid_offset_x;
 //    grid-offset-y=0
     int grid_offset_y;
+
+    int grid_attach_style; //0 - middle, 1 - left side
+
 //    frame-style=0	; (0-2) This option in some alhoritmes can be ignored
     int framestyle;
 //    frames=2
@@ -186,12 +189,15 @@ struct obj_npc
     bool ani_bidir;
 //    animation-direction=0
     bool ani_direct;
+
+    bool ani_directed_direct; //Animation direction will be gotten from NPC's direction
 //    ; for editor
 //    custom-animation=0
     bool custom_animate;
 //    ; this option useful for non-standart algorithmic sprites (for example, bosses)
 
-//    ;custom-animation-alg=0		; Custom animation algorithm - 0 simple frame range, 1 - frame Jump
+//    ;custom-animation-alg=0		; Custom animation algorithm
+    // 0 simple frame range, 1 - frame Jump
     int custom_ani_alg;
 //    ;custom-animation-fl=0		; First frame for LEFT
     int custom_ani_fl;
@@ -253,6 +259,11 @@ struct obj_npc
     bool hurt_npc;
 
 //    ;Editor featured
+    QString direct_alt_title;
+    QString direct_alt_left;
+    QString direct_alt_right;
+    bool direct_disable_random;
+
 //    allow-bubble=1			; Allow packable into the bubble
     bool allow_bubble;
 //    allow-egg=1			; Allow packable into the egg

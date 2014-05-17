@@ -292,10 +292,10 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     if( !progress.wasCanceled() )
         progress.close();
 
-    ui->graphicsView->verticalScrollBar()->setValue(300+LvlData.sections[0].size_bottom-602);
-    ui->graphicsView->horizontalScrollBar()->setValue(400+LvlData.sections[0].size_left);
+    ui->graphicsView->verticalScrollBar()->setValue(265+LvlData.sections[0].size_bottom-602);
+    ui->graphicsView->horizontalScrollBar()->setValue(330+LvlData.sections[0].size_left);
 
-    ResetPosition();
+    //ResetPosition();
 
     QApplication::restoreOverrideCursor();
 

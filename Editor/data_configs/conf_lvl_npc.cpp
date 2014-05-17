@@ -134,8 +134,12 @@ void dataconfigs::loadLevelNPC()
         //    //    grid-offset-y=0
         //        int grid_offset_y;
             snpc.grid_offset_y = npcset.value("grid-offset-y", "0").toInt();
+
+            snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
         //    //    frame-style=0	; (0-2) This option in some algorithms can be ignored
         //        int framestyle;
+
+
             snpc.framestyle = npcset.value("frame-style", "0").toInt();
         //    //    frames=2
         //        unsigned int frames;
@@ -182,6 +186,9 @@ void dataconfigs::loadLevelNPC()
         //    //    animation-direction=0
         //        bool ani_bidir;
             snpc.ani_direct = npcset.value("animation-direction", "0").toBool();
+            snpc.ani_directed_direct = npcset.value("animation-directed-direction", "0").toBool();
+
+
         //    //    animation-bidirectional=0
         //        bool ani_bidir;
             snpc.ani_bidir = npcset.value("animation-bidirectional", "0").toBool();
@@ -297,6 +304,12 @@ void dataconfigs::loadLevelNPC()
         //    //    ;Editor featured
         //    //    allow-bubble=1			; Allow packable into the bubble
         //        bool allow_bubble;
+
+            snpc.direct_alt_title = npcset.value("direction-alt-title", "").toString();
+            snpc.direct_alt_left = npcset.value("direction-alt-left-field", "").toString();
+            snpc.direct_alt_right = npcset.value("direction-alt-right-field", "").toString();
+            snpc.direct_disable_random = npcset.value("direction-no-rand-field", "0").toBool();
+
             snpc.allow_bubble = npcset.value("allow-bubble", "0").toBool();
         //    //    allow-egg=1			; Allow packable into the egg
         //        bool allow_egg;

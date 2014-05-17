@@ -169,13 +169,29 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
     //merged. = (local.en_)?local.:global.;
     merged.height = (local.en_height)?local.height:global.height;
 
+
+    //Copy fixture size to GFX size if that greater
+    if(global.height == (unsigned int)global.gfx_h)
+        merged.gfx_h = merged.height;
+    else
+        merged.gfx_h = global.gfx_h;
+
+    //Copy fixture size to GFX size if that greater
+    if(global.width == (unsigned int)global.gfx_w)
+        merged.gfx_w = merged.width;
+    else
+        merged.gfx_w = global.gfx_w;
+
+    merged.grid_offset_x = -(double)round( (merged.gfx_w % 32)/2 );
+    merged.grid_offset_y = -merged.height % 32;
+
 //    unsigned int gfxwidth;
 //    bool en_gfxwidth;
-    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:global.gfx_w;
+    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
 
 //    unsigned int gfxheight;
 //    bool en_gfxheight;
-    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:global.gfx_h;
+    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
 
 
 //    unsigned int score;
@@ -655,6 +671,12 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
         //WriteToLog(QtDebugMsg, "NPC place -> set Props");
     NPCItem->localProps = mergedSet;
+
+    if(npc.generator)
+        NPCItem->gridSize=16;
+    else
+        NPCItem->gridSize = mergedSet.grid;
+
 
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
     NPCItem->setMainPixmap(tImg);
