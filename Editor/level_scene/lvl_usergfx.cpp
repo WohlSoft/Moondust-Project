@@ -39,7 +39,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     for(i=0; i<pConfigs->main_bg.size(); i++) //Add user images
         {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User Backgrounds "+QString::number(i)+"/"+QString::number(pConfigs->main_bg.size()));
+            progress.setLabelText("Search User Backgrounds "+QString::number(i+1)+"/"+QString::number(pConfigs->main_bg.size()));
 
             loaded1 = false;
             loaded2 = false;
@@ -104,7 +104,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     {
 
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User Blocks "+QString::number(i)+"/"+QString::number(pConfigs->main_block.size()));
+            progress.setLabelText("Search User Blocks "+QString::number(i+1)+"/"+QString::number(pConfigs->main_block.size()));
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_block[i].image_n)) )
@@ -165,7 +165,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
     {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User BGOs "+QString::number(i)+"/"+QString::number(pConfigs->main_bgo.size()));
+            progress.setLabelText("Search User BGOs "+QString::number(i+1)+"/"+QString::number(pConfigs->main_bgo.size()));
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_bgo[i].image_n)) )
@@ -226,7 +226,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
     {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User NPCs "+QString::number(i)+"/"+QString::number(pConfigs->main_npc.size()));
+            progress.setLabelText("Search User NPCs "+QString::number(i+1)+"/"+QString::number(pConfigs->main_npc.size()));
 
              uNPC.withImg = false;
              uNPC.withTxt = false;
@@ -294,6 +294,11 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                  }
              }
 
+             if(uNPC.withTxt)
+             {  //Merge global and user's settings from NPC.txt file
+                 uNPC.merged = mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets);
+             }
+
              //Apply only if custom config or image was found
              if((uNPC.withImg)||(uNPC.withTxt))
              {
@@ -302,6 +307,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                  if(uNPC.id < (unsigned int)index_npc.size())
                  {
                      index_npc[uNPC.id].type = 1;
+                     index_npc[uNPC.id].gi = index_npc[uNPC.id].i; //saving global index
                      index_npc[uNPC.id].i = (uNPCs.size()-1);
                  }
              }

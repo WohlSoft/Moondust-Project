@@ -649,11 +649,11 @@ void npcedit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.cliffturn=0;
         DefaultNPCData.noyoshi=0;
         DefaultNPCData.foreground=0;
-        DefaultNPCData.speed=0;
+        DefaultNPCData.speed=1;
         DefaultNPCData.nofireball=0;
         DefaultNPCData.nogravity=0;
         DefaultNPCData.frames=0;
-        DefaultNPCData.framespeed=0;
+        DefaultNPCData.framespeed=8;
         DefaultNPCData.framestyle=0;
         DefaultNPCData.noiceball=0;
         DefaultNPCData.nohammer=0;
@@ -705,7 +705,7 @@ void npcedit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.cliffturn=(int)pConfigs->main_npc[j].turn_on_cliff_detect;
         DefaultNPCData.noyoshi=(int)(!pConfigs->main_npc[j].can_be_eaten);
         DefaultNPCData.foreground=(int)pConfigs->main_npc[j].foreground;
-        DefaultNPCData.speed=0;
+        DefaultNPCData.speed=1;
         DefaultNPCData.nofireball=(int)(!pConfigs->main_npc[j].kill_by_fireball);
         DefaultNPCData.nogravity=(int)(!pConfigs->main_npc[j].gravity);
         DefaultNPCData.frames=pConfigs->main_npc[j].frames;
