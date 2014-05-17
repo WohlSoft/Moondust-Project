@@ -137,7 +137,7 @@ void LvlScene::historyBack()
         LevelData placeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO);
+        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, 0, false, false, true);
 
         break;
     }
@@ -147,7 +147,7 @@ void LvlScene::historyBack()
         LevelData movedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, 0, false, false, true);
 
         break;
     }
@@ -157,11 +157,11 @@ void LvlScene::historyBack()
 
         CallbackData cbData;
         if(lastOperation.subtype == SETTING_INVISIBLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsInvisibleBlock, 0, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsInvisibleBlock, 0, 0, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_SLIPPERY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsSlipperyBlock, 0, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsSlipperyBlock, 0, 0, false, true, true);
         }
         break;
     }
@@ -187,7 +187,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, 0, false, false, true);
 
         break;
     }
@@ -245,7 +245,7 @@ void LvlScene::historyForward()
         CallbackData cbData;
         cbData.x = baseX;
         cbData.y = baseY;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, 0, false, false , true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
@@ -254,11 +254,11 @@ void LvlScene::historyForward()
 
         CallbackData cbData;
         if(lastOperation.subtype == SETTING_INVISIBLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsInvisibleBlock, 0, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsInvisibleBlock, 0, 0, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_SLIPPERY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsSlipperyBlock, 0, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsSlipperyBlock, 0, 0, false, true, true);
         }
         break;
     }
@@ -373,7 +373,8 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                                 HistoryOperation * operation,
                                 CallbackData customData,
                                 callBackLevelBlock clbBlock,
-                                callBackLevelBGO clbBgo, //Need to add NPC's here
+                                callBackLevelBGO clbBgo,
+                                callBackLevelNPC clbNpc,
                                 bool ignoreBlock,
                                 bool ignoreBGO,
                                 bool ignoreNPC)
@@ -393,9 +394,9 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         }
     }
     QMap<int, LevelNPC> sortedNPC;
-    if(!ignoreBGO){
-        foreach (LevelNPC npc, toFind.npc)
-        {
+    if(!ignoreNPC){
+        foreach (LevelNPC npc, toFind.npc) 
+		{
             sortedNPC[npc.array_id] = npc;
         }
     }
@@ -406,7 +407,6 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     QMap<int, QGraphicsItem*> sortedGraphBlocks;
     QMap<int, QGraphicsItem*> sortedGraphBGO;
     QMap<int, QGraphicsItem*> sortedGraphNPC;
-
     foreach (QGraphicsItem* unsortedItem, items())
     {
         if(unsortedItem->data(0).toString()=="Block")
@@ -422,7 +422,6 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                 sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
-        else
         if(unsortedItem->data(0).toString()=="NPC")
         {
             if(!ignoreNPC){
@@ -478,7 +477,6 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedBGO.begin();
-
                 currentArrayId = (*beginItem).array_id;
 
                 if((unsigned int)item->data(2).toInt()==currentArrayId)
@@ -495,12 +493,11 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         }
     }
 
-    /*  //Template for NPCs
     if(!ignoreNPC)
-    {
-        foreach (QGraphicsItem* item, sortedGraphNPC)
-        {
-            if(sortedBGO.size()!=0)
+	{
+        foreach (QGraphicsItem* item, sortedGraphNPC) 
+		{
+            if(sortedNPC.size()!=0)
             {
                 QMap<int, LevelNPC>::iterator beginItem = sortedNPC.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
@@ -512,7 +509,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedNPC.begin();
-
+				
                 currentArrayId = (*beginItem).array_id;
 
                 if((unsigned int)item->data(2).toInt()==currentArrayId)
@@ -522,13 +519,8 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                     sortedNPC.erase(beginItem);
                 }
             }
-            else
-            {
-                break;
-            }
         }
     }
-    */
 
 }
 

@@ -225,6 +225,7 @@ public:
     //typedefs
     typedef void (LvlScene::*callBackLevelBlock)(CallbackData, LevelBlock);
     typedef void (LvlScene::*callBackLevelBGO)(CallbackData, LevelBGO);
+    typedef void (LvlScene::*callBackLevelNPC)(CallbackData, LevelNPC);
     //add historys
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
@@ -254,9 +255,9 @@ public:
     void historyRedoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
-                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,
+                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,
                           bool ignoreBlock = false,
-                          bool ignoreBGO = false,
+                          bool ignoreBGO = false, 
                           bool ignoreNPC = false);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
