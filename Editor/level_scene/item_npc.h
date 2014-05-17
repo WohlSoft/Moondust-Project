@@ -62,6 +62,7 @@ public:
     void setFriendly(bool fri);
     void setNoMovable(bool stat);
     void setLegacyBoss(bool boss);
+    void setMsg(QString message);
 
     void changeDirection(int dir);
 
@@ -75,6 +76,7 @@ public:
 
     int imgOffsetX;
     int imgOffsetY;
+    int gridSize;
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
