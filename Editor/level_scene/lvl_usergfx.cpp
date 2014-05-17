@@ -247,7 +247,6 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                  uNPC.image.setMask(uNPC.mask);
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;
-
              }
              else
              if(QFile::exists(uLVLs + pConfigs->main_npc[i].image_n) )
@@ -307,7 +306,6 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                  if(uNPC.id < (unsigned int)index_npc.size())
                  {
                      index_npc[uNPC.id].type = 1;
-                     index_npc[uNPC.id].gi = index_npc[uNPC.id].i; //saving global index
                      index_npc[uNPC.id].i = (uNPCs.size()-1);
                  }
              }

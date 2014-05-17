@@ -167,8 +167,7 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 //    unsigned int height;
 //    bool en_height;
     //merged. = (local.en_)?local.:global.;
-    merged.health = (local.en_height)?local.height:global.height;
-
+    merged.height = (local.en_height)?local.height:global.height;
 
 //    unsigned int gfxwidth;
 //    bool en_gfxwidth;
@@ -254,7 +253,6 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 //    bool en_frames;
     merged.frames = (local.en_frames)?local.frames:global.frames;
 
-
 //    unsigned int framespeed;
 //    bool en_framespeed;
     merged.framespeed = (local.en_framespeed)? global.framespeed * (int)round( 8 / local.framespeed ) : global.framespeed;
@@ -264,6 +262,8 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 //    bool en_framestyle;
     merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
 
+    if((local.en_frames)||(local.en_framestyle))
+        merged.ani_bidir = false; //Disable bidirectional animation
 
 //    bool noiceball;
 //    bool en_noiceball;
@@ -575,7 +575,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     //Check Index exists
     if(npc.id < (unsigned int)index_npc.size())
     {
-        j = index_npc[npc.id].i;
+        j = index_npc[npc.id].gi;
 
         if(pConfigs->main_npc[j].id == npc.id)
             found=true;
@@ -604,7 +604,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
         if(!noimage)
         {
-            tImg = pConfigs->main_npc[(isUser) ? index_npc[npc.id].gi : index_npc[npc.id].i].image;
+            tImg = pConfigs->main_npc[ index_npc[npc.id].gi].image;
             noimage=false;
         }
     }
@@ -650,19 +650,19 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         tImg=uNpcImg;
     }
 
-    //WriteToLog(QtDebugMsg, "NPC place -> set Data");
+        //WriteToLog(QtDebugMsg, "NPC place -> set Data");
     NPCItem->setNpcData(npc);
 
-    //WriteToLog(QtDebugMsg, "NPC place -> set Props");
+        //WriteToLog(QtDebugMsg, "NPC place -> set Props");
     NPCItem->localProps = mergedSet;
 
-    //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
+        //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
     NPCItem->setMainPixmap(tImg);
 
-    //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
+        //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
     NPCItem->setContextMenu(npcMenu);
 
-    //WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
+        //WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
     addItem(NPCItem);
 
     NPCItem->setScenePoint(this);
