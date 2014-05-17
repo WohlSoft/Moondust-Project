@@ -201,6 +201,13 @@ void LvlScene::removeItemUnderCursor()
                 ((ItemBGO *)findItem)->removeFromArray();
                 deleted=true;
             }
+            else
+            if( findItem->data(0).toString()=="BGO" )
+            {
+                removedItems.npc.push_back(((ItemNPC *)findItem)->npcData);
+                ((ItemNPC *)findItem)->removeFromArray();
+                deleted=true;
+            }
             removeItem(findItem);
             if(deleted)addRemoveHistory(removedItems);
         }
@@ -365,14 +372,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     if( ObjType == "BGO")
                     {
                         sourcePos = QPoint(  ((ItemBGO *)(*it))->bgoData.x, ((ItemBGO *)(*it))->bgoData.y);
-                        /*
-                        foreach (LevelBGO findInArr, LvlData->bgo)
-                        {
-                            if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
-                            {
-                                sourcePos = QPoint(findInArr.x, findInArr.y); break;
-                            }
-                        }*/
                     }
 
                     //Check position
