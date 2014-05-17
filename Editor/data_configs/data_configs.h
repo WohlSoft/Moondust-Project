@@ -182,6 +182,10 @@ struct obj_npc
     unsigned int framespeed;
 //    foreground=0
     bool foreground;
+//    animation-bidirectional=0
+    bool ani_bidir;
+//    animation-direction=0
+    bool ani_direct;
 //    ; for editor
 //    custom-animation=0
     bool custom_animate;
@@ -365,6 +369,7 @@ struct bgoIndexes
 struct npcIndexes
 {
     unsigned long i; //Target array index
+    unsigned long gi; //Target array index by GlobalConfig
     unsigned int type;//0 - internal GFX, 1 - user defined GFX
 };
 

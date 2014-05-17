@@ -21,6 +21,7 @@
 
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
@@ -81,12 +82,13 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     bgZ = -1000;
     blockZs = -150; // sizable blocks
     bgoZb = -100; // backround BGO
-    npcZb = -50; // standart NPC
 
     blockZ = 1; // standart block
     playerZ = 5; //player Point
 
     bgoZf = 50; // foreground BGO
+
+    npcZb = 30; // standart NPC
 
     blockZl = 100; //LavaBlock
     npcZf = 150; // foreground NPC
@@ -851,6 +853,12 @@ void LvlScene::startBlockAnimation()
             tmp = (*it);
             ((ItemBGO *)tmp)->AnimationStart();
         }
+        else
+        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemNPC *)tmp)->AnimationStart();
+        }
     }
 
 }
@@ -871,6 +879,12 @@ void LvlScene::stopAnimation()
         {
             tmp = (*it);
             ((ItemBGO *)tmp)->AnimationStop();
+        }
+        else
+        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemNPC *)tmp)->AnimationStop();
         }
     }
 
@@ -894,7 +908,7 @@ void LvlScene::applyLayersVisible()
             }
         }
         else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+        if((*it)->data(0)=="BGO")
         {
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
@@ -902,6 +916,18 @@ void LvlScene::applyLayersVisible()
                 if( ((ItemBGO *)tmp)->bgoData.layer == layer.name)
                 {
                     ((ItemBGO *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+        else
+        if((*it)->data(0)=="NPC")
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemNPC *)tmp)->npcData.layer == layer.name)
+                {
+                    ((ItemNPC *)tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }

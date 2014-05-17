@@ -21,12 +21,13 @@
 
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {
     int gridX, gridY;
-    if(grid)
+    if((grid)&&(gridSize>0))
     { //ATTACH TO GRID
         gridX = ((int)source.x() - (int)source.x() % gridSize);
         gridY = ((int)source.y() - (int)source.y() % gridSize);
@@ -79,21 +80,22 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
     if(found)
     {   //get neccesary element directly
         if(index_npc[npcID].type==1)
-        if(uNPCs[index_npc[npcID].i].withImg)
         {
             isUser=true;
-            noimage=false;
-            tempI = uNPCs[index_npc[npcID].i].image;
+            if(uNPCs[index_npc[npcID].i].withImg)
+            {
+                noimage=false;
+                tempI = uNPCs[index_npc[npcID].i].image;
+            }
+            if(uNPCs[index_npc[npcID].i].withTxt)
+                gfxH = uNPCs[index_npc[npcID].i].merged.gfx_h;
+            else
+                gfxH = pConfigs->main_npc[index_npc[npcID].gi].height;
         }
-        if(uNPCs[index_npc[npcID].i].withTxt)
-            gfxH = uNPCs[index_npc[npcID].i].merged.gfx_h;
-        else
-            gfxH = pConfigs->main_npc[index_npc[npcID].i].height;
 
-
-        if(!isUser)
+        if(!noimage)
         {
-            tempI = pConfigs->main_npc[index_npc[npcID].i].image;
+            tempI = pConfigs->main_npc[(isUser) ? index_npc[npcID].gi : index_npc[npcID].i].image;
             noimage=false;
         }
 
@@ -462,6 +464,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     }
     else
     {
+        //fetching arrays
         for(j=0;j<uBGOs.size();j++)
         {
             if(uBGOs[j].id==bgo.id)
@@ -547,24 +550,160 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 
 void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
-    QGraphicsItem *	box;
-    QGraphicsTextItem *npcTxt, *npcTxt_l2;
-    QGraphicsItemGroup *npcBox;
 
-    QFont font1, font2;
-    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
-    font1.setBold(1);
-    font1.setPointSize(14);
+    int j;
+    bool noimage=true, found=false;
+    bool isUser=false;
+    bool isUserTxt=false;
+    obj_npc mergedSet;
 
-    font2.setWeight(14);
-    font2.setBold(0);
-    font2.setPointSize(12);
+    ItemNPC *NPCItem = new ItemNPC;
 
-    box = addPixmap(QPixmap(uNpcImg));
-    npcBox = new QGraphicsItemGroup(box);
+    //QGraphicsItem *	box;
+    //QGraphicsTextItem *npcTxt, *npcTxt_l2;
+    //QGraphicsItemGroup *npcBox;
 
-    box->setPos(npc.x, npc.y);
+    //    QFont font1, font2;
+    //    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
+    //    font1.setBold(1);
+    //    font1.setPointSize(14);
 
+    //    font2.setWeight(14);
+    //    font2.setBold(0);
+    //    font2.setPointSize(12);
+
+    //Check Index exists
+    if(npc.id < (unsigned int)index_npc.size())
+    {
+        j = index_npc[npc.id].i;
+
+        if(pConfigs->main_npc[j].id == npc.id)
+            found=true;
+    }
+
+    //if Index found
+    if(found)
+    {   //get neccesary element directly
+        if(index_npc[npc.id].type==1)
+        {
+            isUser=true;
+            if(uNPCs[index_npc[npc.id].i].withImg)
+            {
+                noimage=false;
+                tImg = uNPCs[index_npc[npc.id].i].image;
+            }
+
+            if(uNPCs[index_npc[npc.id].i].withTxt)
+            {
+                isUserTxt=true;
+                mergedSet = uNPCs[index_npc[npc.id].i].merged;
+            }
+            else
+                mergedSet = pConfigs->main_npc[index_npc[npc.id].gi];
+        }
+
+        if(!noimage)
+        {
+            tImg = pConfigs->main_npc[(isUser) ? index_npc[npc.id].gi : index_npc[npc.id].i].image;
+            noimage=false;
+        }
+    }
+    else
+    {
+        //fetching arrays
+        for(j=0;j<uNPCs.size();j++)
+        {
+            if(uNPCs[j].id==npc.id)
+            {
+                if(uNPCs[j].withImg)
+                {
+                    noimage=false;
+                    isUser=true;
+                    tImg = uNPCs[j].image;
+                }
+
+                if(uNPCs[j].withTxt)
+                {
+                    isUserTxt=true;
+                    mergedSet = uNPCs[j].merged;
+                }
+                break;
+            }
+        }
+
+        for(j=0;j<pConfigs->main_npc.size();j++)
+        {
+            if(pConfigs->main_npc[j].id==npc.id)
+            {
+                noimage=false;
+                if(!isUser)
+                    tImg = pConfigs->main_npc[j].image;
+                if(!isUserTxt)
+                    mergedSet = pConfigs->main_npc[j];
+                break;
+            }
+        }
+    }
+
+    if((noimage)||(tImg.isNull()))
+    {
+        tImg=uNpcImg;
+    }
+
+    //WriteToLog(QtDebugMsg, "NPC place -> set Data");
+    NPCItem->setNpcData(npc);
+
+    //WriteToLog(QtDebugMsg, "NPC place -> set Props");
+    NPCItem->localProps = mergedSet;
+
+    //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
+    NPCItem->setMainPixmap(tImg);
+
+    //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
+    NPCItem->setContextMenu(npcMenu);
+
+    //WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
+    addItem(NPCItem);
+
+    NPCItem->setScenePoint(this);
+
+    QPoint newPos = QPoint(npc.x, npc.y);
+    if(toGrid)
+    {
+        newPos = applyGrid(QPoint(npc.x, npc.y), NPCItem->localProps.grid,
+                           QPoint(NPCItem->localProps.grid_offset_x,
+                                  NPCItem->localProps.grid_offset_y));
+        npc.x = newPos.x();
+        npc.y = newPos.y();
+    }
+
+    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 1 %1 %2").arg(bgo.x).arg(bgo.y));
+
+    //int imgOffsetX = (int)round( (-((double)mergedSet.gfx_w - (double)mergedSet.width ) / 2 ) + (double)mergedSet.gfx_offset_x);
+    //int imgOffsetY = (int)round( - (double)mergedSet.gfx_h + (double)mergedSet.height + (double)mergedSet.gfx_offset_y );
+
+    //QPoint offsettenPos = QPoint(npc.x + imgOffsetX, npc.y+imgOffsetY);
+
+    //NPCItem->setPos( QPointF(offsettenPos) );
+    NPCItem->setPos( QPointF(newPos) );
+
+    NPCItem->setAnimation(NPCItem->localProps.frames,
+                          NPCItem->localProps.framespeed,
+                          NPCItem->localProps.framestyle,
+                          npc.direct,
+                          NPCItem->localProps.custom_animate,
+                          NPCItem->localProps.custom_ani_fl,
+                          NPCItem->localProps.custom_ani_el,
+                          NPCItem->localProps.custom_ani_fr,
+                          NPCItem->localProps.custom_ani_er);
+
+    if(NPCItem->localProps.frames>1)
+        NPCItem->setData(4, "animated");
+
+    //box = addPixmap(QPixmap(uNpcImg));
+    //npcBox = new QGraphicsItemGroup(box);
+
+    /*
     npcTxt = new QGraphicsTextItem(QString::number(npc.id));
     npcTxt->setDefaultTextColor(Qt::black);
     npcTxt->setFont(font1);
@@ -579,25 +718,28 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     npcTxt->setZValue(npcZf+0.0000001);
     npcTxt_l2->setZValue(npcZf+0.0000002);
+    */
 
-
-    box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
-    box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
+    NPCItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
+    NPCItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
 
     //npcfore->addToGroup(box);
     //if(npc.id==91)
-        box->setZValue(npcZf);
+    if(pConfigs->main_npc[j].foreground)
+        NPCItem->setZValue(npcZf);
+    else
+        NPCItem->setZValue(npcZb);
     //else
     //    box->setZValue(npcZb);
 
-    box->setData(0, "NPC"); // ObjType
-    box->setData(1, QString::number(npc.id) );
-    box->setData(2, QString::number(npc.array_id) );
+    NPCItem->setData(0, "NPC"); // ObjType
+    NPCItem->setData(1, QString::number(npc.id) );
+    NPCItem->setData(2, QString::number(npc.array_id) );
 
-    box->setData(9, QString::number(uNpcImg.width()) ); //width
-    box->setData(10, QString::number(uNpcImg.height()) ); //height
+    NPCItem->setData(9, QString::number(NPCItem->localProps.width) ); //width
+    NPCItem->setData(10, QString::number(NPCItem->localProps.height) ); //height
 
-    if(PasteFromBuffer) box->setSelected(true);
+    if(PasteFromBuffer) NPCItem->setSelected(true);
 }
 
 
