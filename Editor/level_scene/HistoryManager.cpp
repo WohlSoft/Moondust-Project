@@ -117,6 +117,14 @@ void LvlScene::historyBack()
 
         }
 
+        foreach (LevelNPC npc, deletedData.npc)
+        {
+            //place them back
+            LvlData->npc.push_back(npc);
+            placeNPC(npc);
+
+        }
+
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
         if(opts.animationEnabled) startBlockAnimation();
@@ -205,6 +213,13 @@ void LvlScene::historyForward()
             //WriteToLog(QtDebugMsg, QString("History-> added into the array items pos %1 %2").arg(bgo.x).arg(bgo.y));
             placeBGO(bgo);
             //WriteToLog(QtDebugMsg, QString("History-> placed on map pos %1 %2").arg(bgo.x).arg(bgo.y));
+        }
+
+        foreach (LevelNPC npc, placedData.npc)
+        {
+            //place them back
+            LvlData->npc.push_back(npc);
+            placeNPC(npc);
         }
 
         //refresh Animation control
@@ -358,9 +373,10 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                                 HistoryOperation * operation,
                                 CallbackData customData,
                                 callBackLevelBlock clbBlock,
-                                callBackLevelBGO clbBgo,
+                                callBackLevelBGO clbBgo, //Need to add NPC's here
                                 bool ignoreBlock,
-                                bool ignoreBGO)
+                                bool ignoreBGO,
+                                bool ignoreNPC)
 {
     QMap<int, LevelBlock> sortedBlock;
     if(!ignoreBlock){
@@ -376,12 +392,20 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             sortedBGO[bgo.array_id] = bgo;
         }
     }
+    QMap<int, LevelNPC> sortedNPC;
+    if(!ignoreBGO){
+        foreach (LevelNPC npc, toFind.npc)
+        {
+            sortedNPC[npc.array_id] = npc;
+        }
+    }
     //bool blocksFinished = false;
     //bool bgosFinished = false;
     CallbackData cbData = customData;
     cbData.hist = operation;
     QMap<int, QGraphicsItem*> sortedGraphBlocks;
     QMap<int, QGraphicsItem*> sortedGraphBGO;
+    QMap<int, QGraphicsItem*> sortedGraphNPC;
 
     foreach (QGraphicsItem* unsortedItem, items())
     {
@@ -396,6 +420,13 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         {
             if(!ignoreBGO){
                 sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="NPC")
+        {
+            if(!ignoreNPC){
+                sortedGraphNPC[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
     }
@@ -431,7 +462,8 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         }
     }
 
-    if(!ignoreBGO){
+    if(!ignoreBGO)
+    {
         foreach (QGraphicsItem* item, sortedGraphBGO)
         {
             if(sortedBGO.size()!=0)
@@ -462,6 +494,41 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             }
         }
     }
+
+    /*  //Template for NPCs
+    if(!ignoreNPC)
+    {
+        foreach (QGraphicsItem* item, sortedGraphNPC)
+        {
+            if(sortedBGO.size()!=0)
+            {
+                QMap<int, LevelNPC>::iterator beginItem = sortedNPC.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedNPC.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedNPC.begin();
+
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbNpc)(cbData,(*beginItem));
+                    sortedNPC.erase(beginItem);
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    */
 
 }
 
