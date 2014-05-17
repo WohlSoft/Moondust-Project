@@ -152,8 +152,6 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
     merged.image = QPixmap();   //Clear image values
     merged.mask = QPixmap();
 
-    merged.ani_bidir = false; //Disable bidirectional animation
-
 //    int gfxoffsetx;
 //    bool en_gfxoffsetx;
     merged.gfx_offset_x = (local.en_gfxoffsetx)?local.gfxoffsetx:global.gfx_offset_x;
@@ -169,8 +167,7 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 //    unsigned int height;
 //    bool en_height;
     //merged. = (local.en_)?local.:global.;
-    merged.health = (local.en_height)?local.height:global.height;
-
+    merged.height = (local.en_height)?local.height:global.height;
 
 //    unsigned int gfxwidth;
 //    bool en_gfxwidth;
@@ -256,7 +253,6 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 //    bool en_frames;
     merged.frames = (local.en_frames)?local.frames:global.frames;
 
-
 //    unsigned int framespeed;
 //    bool en_framespeed;
     merged.framespeed = (local.en_framespeed)? global.framespeed * (int)round( 8 / local.framespeed ) : global.framespeed;
@@ -266,6 +262,8 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 //    bool en_framestyle;
     merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
 
+    if((local.en_frames)||(local.en_framestyle))
+        merged.ani_bidir = false; //Disable bidirectional animation
 
 //    bool noiceball;
 //    bool en_noiceball;
