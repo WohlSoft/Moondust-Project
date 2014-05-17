@@ -21,6 +21,7 @@
 
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
@@ -81,12 +82,13 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     bgZ = -1000;
     blockZs = -150; // sizable blocks
     bgoZb = -100; // backround BGO
-    npcZb = -50; // standart NPC
 
     blockZ = 1; // standart block
     playerZ = 5; //player Point
 
     bgoZf = 50; // foreground BGO
+
+    npcZb = 30; // standart NPC
 
     blockZl = 100; //LavaBlock
     npcZf = 150; // foreground NPC
@@ -652,6 +654,35 @@ void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
         }
 }
 
+void LvlScene::sortBlockArrayByPos(QVector<LevelBlock > &blocks)
+{
+    LevelBlock tmp1;
+    int total = blocks.size();
+    long i;
+    long xmin;
+    long xmini;
+    long sorted = 0;
+
+
+        while(sorted < blocks.size())
+        {
+            xmin = blocks[sorted].x;
+            xmini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( blocks[i].x < xmin )
+                {
+                    xmin = blocks[i].x; xmini = i;
+                }
+            }
+            tmp1 = blocks[xmini];
+            blocks[xmini] = blocks[sorted];
+            blocks[sorted] = tmp1;
+            sorted++;
+        }
+}
+
 void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
 {
     LevelBGO tmp1;
@@ -822,6 +853,12 @@ void LvlScene::startBlockAnimation()
             tmp = (*it);
             ((ItemBGO *)tmp)->AnimationStart();
         }
+        else
+        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemNPC *)tmp)->AnimationStart();
+        }
     }
 
 }
@@ -842,6 +879,12 @@ void LvlScene::stopAnimation()
         {
             tmp = (*it);
             ((ItemBGO *)tmp)->AnimationStop();
+        }
+        else
+        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemNPC *)tmp)->AnimationStop();
         }
     }
 
@@ -865,7 +908,7 @@ void LvlScene::applyLayersVisible()
             }
         }
         else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+        if((*it)->data(0)=="BGO")
         {
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
@@ -873,6 +916,18 @@ void LvlScene::applyLayersVisible()
                 if( ((ItemBGO *)tmp)->bgoData.layer == layer.name)
                 {
                     ((ItemBGO *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+        else
+        if((*it)->data(0)=="NPC")
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemNPC *)tmp)->npcData.layer == layer.name)
+                {
+                    ((ItemNPC *)tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
