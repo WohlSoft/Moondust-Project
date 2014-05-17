@@ -21,6 +21,7 @@
 
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 
 
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
@@ -55,6 +56,14 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 {
                     historyBuffer.bgo.push_back(((ItemBGO*)(*it))->bgoData);
                     ((ItemBGO *)(*it))->removeFromArray();
+                    removeItem((*it));
+                    deleted=true;
+                }
+                else
+                if( objType=="NPC" )
+                {
+                    historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
+                    ((ItemNPC *)(*it))->removeFromArray();
                     removeItem((*it));
                     deleted=true;
                 }
@@ -281,7 +290,9 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //(*it)->setZValue(Z);
                     if( ObjType == "NPC")
                     {
-                        gridSize = 1;
+                        gridSize = ((ItemNPC *)(*it))->localProps.grid;
+                        offsetX = ((ItemNPC *)(*it))->localProps.grid_offset_x;
+                        offsetY = ((ItemNPC *)(*it))->localProps.grid_offset_y;
                     }
                     else
                     if( ObjType == "BGO")
@@ -342,13 +353,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                     if( ObjType == "NPC")
                     {
-                        foreach (LevelNPC findInArr, LvlData->npc)
-                        {
-                            if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
-                            {
-                                sourcePos = QPoint(findInArr.x, findInArr.y); break;
-                            }
-                        }
+                        sourcePos = QPoint(  ((ItemNPC *)(*it))->npcData.x, ((ItemNPC *)(*it))->npcData.y);
                     }
                     else
                     if( ObjType == "Block")
@@ -418,6 +423,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
                             ((ItemBGO *)(*it))->arrayApply();
                             historyBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
+                            LvlData->modified = true;
+                        }
+                        else
+                        if( ObjType == "NPC")
+                        {
+                            //Applay move into main array
+                            historySourceBuffer.npc.push_back(((ItemNPC *)(*it))->npcData);
+                            ((ItemNPC *)(*it))->npcData.x = (long)(*it)->scenePos().x();
+                            ((ItemNPC *)(*it))->npcData.y = (long)(*it)->scenePos().y();
+                            ((ItemNPC *)(*it))->arrayApply();
+                            historyBuffer.npc.push_back(((ItemNPC *)(*it))->npcData);
                             LvlData->modified = true;
                         }
                     }

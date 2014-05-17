@@ -121,10 +121,10 @@ void dataconfigs::loadLevelNPC()
         //    //    ; graphics
         //        int gfx_offset_x;
         //    //    gfx-offst-x=0
-            snpc.gfx_offset_x = npcset.value("gfx-offst-x", "0").toInt();
+            snpc.gfx_offset_x = npcset.value("gfx-offset-x", "0").toInt();
         //        int gfx_offset_y;
         //    //    gfx-offst-y=2
-            snpc.gfx_offset_y = npcset.value("gfx-offst-y", "0").toInt();
+            snpc.gfx_offset_y = npcset.value("gfx-offset-y", "0").toInt();
         //        int grid;
         //    //    grid=32
             snpc.grid = npcset.value("grid", "32").toInt();
@@ -167,10 +167,10 @@ void dataconfigs::loadLevelNPC()
             }
 
             WriteToLog(QtDebugMsg, "NPC Config -> calculate GFX size...");
-            snpc.gfx_h = npcset.value("gfx-height-y", QString::number(defGFX_h) ).toInt();
+            snpc.gfx_h = npcset.value("gfx-height", QString::number(defGFX_h) ).toInt();
         //        int gfx_w;
         //    //    gfx-width-y=32
-            snpc.gfx_w = npcset.value("gfx-width-y", QString::number(snpc.image.width()) ).toInt();
+            snpc.gfx_w = npcset.value("gfx-width", QString::number(snpc.image.width()) ).toInt();
 
             WriteToLog(QtDebugMsg, "NPC Config -> load other params...");
         //    //    frame-speed=128
@@ -179,6 +179,13 @@ void dataconfigs::loadLevelNPC()
         //    //    foreground=0
         //        bool foreground;
             snpc.foreground = npcset.value("foreground", "0").toBool();
+        //    //    animation-direction=0
+        //        bool ani_bidir;
+            snpc.ani_direct = npcset.value("animation-direction", "0").toBool();
+        //    //    animation-bidirectional=0
+        //        bool ani_bidir;
+            snpc.ani_bidir = npcset.value("animation-bidirectional", "0").toBool();
+
         //    //    ; for editor
         //    //    custom-animation=0
         //        bool custom_animate;

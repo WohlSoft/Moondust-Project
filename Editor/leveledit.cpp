@@ -80,7 +80,7 @@ void leveledit::newFile()
 
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
-    setWindowTitle(curFile + "[*]");
+    setWindowTitle(curFile);
 
     /*connect(document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));*/
@@ -292,8 +292,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     if( !progress.wasCanceled() )
         progress.close();
 
-    ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[0].size_bottom-602);
-    ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[0].size_left);
+    ui->graphicsView->verticalScrollBar()->setValue(300+LvlData.sections[0].size_bottom-602);
+    ui->graphicsView->horizontalScrollBar()->setValue(400+LvlData.sections[0].size_left);
 
     ResetPosition();
 
@@ -522,7 +522,7 @@ void leveledit::setCurrentFile(const QString &fileName)
     isUntitled = false;
     //document()->setModified(false);
     setWindowModified(false);
-    setWindowTitle(userFriendlyCurrentFile() + "[*]");
+    setWindowTitle(userFriendlyCurrentFile());
 }
 
 QString leveledit::strippedName(const QString &fullFileName)

@@ -25,6 +25,14 @@ ItemNPC::ItemNPC(QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
     animated = false;
+    aniDirect=false;
+    aniBiDirect=false;
+    curDirect = -1;
+    frameStep = 1;
+
+    imgOffsetX=0;
+    imgOffsetY=0;
+
     frameFirst=0; //from first frame
     frameLast=-1; //to unlimited frameset
     //image = new QGraphicsPixmapItem;
@@ -74,6 +82,21 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setLayer->setChecked( layer.name==npcData.layer );
             layerItems.push_back(setLayer);
         }
+
+        ItemMenu->addSeparator();
+
+        QMenu * chDir = ItemMenu->addMenu(tr("Set direction"));
+        QAction *setLeft = chDir->addAction("Left");
+            setLeft->setCheckable(true);
+            setLeft->setChecked(npcData.direct==-1);
+
+        QAction *setRand = chDir->addAction("Random");
+            setRand->setCheckable(true);
+            setRand->setChecked(npcData.direct==0);
+
+        QAction *setRight = chDir->addAction("Right");;
+            setRight->setCheckable(true);
+            setRight->setChecked(npcData.direct==1);
 
         ItemMenu->addSeparator();
 
@@ -142,6 +165,34 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             {
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
+            }
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==setLeft)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="NPC")
+                    ((ItemNPC *) SelItem)->changeDirection(-1);
+            }
+            scene->contextMenuOpened = false;
+        }
+        if(selected==setRand)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="NPC")
+                    ((ItemNPC *) SelItem)->changeDirection(0);
+            }
+            scene->contextMenuOpened = false;
+        }
+        if(selected==setRight)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="NPC")
+                    ((ItemNPC *) SelItem)->changeDirection(1);
             }
             scene->contextMenuOpened = false;
         }
@@ -216,12 +267,12 @@ void ItemNPC::changeDirection(int dir)
 {
     npcData.direct = dir;
 
-    setAnimation(framesQ, frameSpeed, frameStyle, dir,
-    customAnimate,
-        custom_frameFL,
-        custom_frameEL,
-        custom_frameFR,
-        custom_frameER,
+    setAnimation(localProps.frames, localProps.framespeed, localProps.framestyle, dir,
+    localProps.custom_animate,
+        localProps.custom_ani_fl,
+        localProps.custom_ani_el,
+        localProps.custom_ani_fr,
+        localProps.custom_ani_er,
     true);
 
     arrayApply();
@@ -281,6 +332,11 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
 {
     mainImage = pixmap;
     this->setPixmap(mainImage);
+
+    imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
+    imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y );
+
+    setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
 }
 
 void ItemNPC::setNpcData(LevelNPC inD)
@@ -292,9 +348,9 @@ void ItemNPC::setNpcData(LevelNPC inD)
 QRectF ItemNPC::boundingRect() const
 {
     if(!animated)
-        return QRectF(0,0,mainImage.width(),mainImage.height());
+        return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, mainImage.width(), mainImage.height());
     else
-        return QRectF(0,0,frameWidth,frameSize);
+        return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, mainImage.width(), localProps.gfx_h);
 }
 
 void ItemNPC::setContextMenu(QMenu &menu)
@@ -318,6 +374,11 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     frameSpeed = framespeed;
     frameStyle = framestyle;
     direction = direct;
+    frameStep = 1;
+
+    aniDirect = localProps.ani_direct;
+    aniBiDirect = localProps.ani_bidir;
+    customAniAlg = localProps.custom_ani_alg;
 
     customAnimate = customAni;
 
@@ -326,7 +387,8 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     custom_frameFR = frFR;//first right
     custom_frameER = frER;//enf right
 
-    frameSize = (int)round(mainImage.height()/frames);
+    frameSize = localProps.gfx_h;
+
     frameWidth = mainImage.width();
     frameHeight = mainImage.height();
 
@@ -347,11 +409,27 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
         {
         case -1: //left
             frameFirst = custom_frameFL;
-            frameLast = custom_frameEL;
+            switch(customAniAlg)
+            {
+            case 1:
+                frameStep = custom_frameEL;
+                frameLast = -1; break;
+            case 0:
+            default:
+                frameLast = custom_frameEL; break;
+            }
             break;
         case 1: //Right
             frameFirst = custom_frameFR;
-            frameLast = custom_frameER;
+            switch(customAniAlg)
+            {
+            case 1:
+                frameStep = custom_frameER;
+                frameLast = -1; break;
+            case 0:
+            default:
+                frameLast = custom_frameER; break;
+            }
             break;
         default: break;
         }
@@ -361,30 +439,32 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
         switch(frameStyle)
         {
         case 2: //Left-Right-upper sprite
+            framesQ = frames*4;
             switch(dir)
             {
             case -1: //left
                 frameFirst = 0;
-                frameLast = (int)(frames/4)-1;
+                frameLast = (int)(framesQ-(framesQ/4)*3)-1;
                 break;
             case 1: //Right
-                frameFirst = (int)(frames/4);
-                frameLast = (int)(frames/2)-1;
+                frameFirst = (int)(framesQ-(framesQ/4)*3);
+                frameLast = (int)(framesQ/2)-1;
                 break;
             default: break;
             }
             break;
 
         case 1: //Left-Right sprite
+            framesQ=frames*2;
             switch(dir)
             {
             case -1: //left
                 frameFirst = 0;
-                frameLast = (int)(frames/2)-1;
+                frameLast = (int)(framesQ / 2)-1;
                 break;
             case 1: //Right
-                frameFirst = (int)(frames/2);
-                frameLast = frames;
+                frameFirst = (int)(framesQ / 2);
+                frameLast = framesQ-1;
                 break;
             default: break;
             }
@@ -398,6 +478,9 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
             break;
         }
     }
+
+    curDirect  = dir;
+    setOffset(imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
 
     setFrame(frameFirst);
 
@@ -444,22 +527,56 @@ void ItemNPC::setFrame(int y)
         framePos.setY( frameFirst * frameSize );
         }
     else
-    framePos.setY( frameCurrent );
+        framePos.setY( frameCurrent );
     draw();
     this->setPixmap(QPixmap(currentImage));
 }
 
 void ItemNPC::nextFrame()
 {
-    frameCurrent += frameSize;
+
+    if(!aniDirect)
+    {
+    frameCurrent += frameSize * frameStep;
+
     if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
+         ((frameCurrent > frameLast*frameSize )&&(frameLast>-1)) )
         {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
+            if(!aniBiDirect)
+            {
+            frameCurrent = frameFirst * frameSize;
+            framePos.setY( frameFirst * frameSize );
+            } else
+            {
+            frameCurrent -= frameSize*frameStep*2;
+            framePos.setY( framePos.y() - frameSize*frameStep );
+            aniDirect=!aniDirect;
+            }
         }
     else
-    framePos.setY( framePos.y() + frameSize );
+        framePos.setY( framePos.y() + frameSize*frameStep );
+    }
+    else
+    {
+        frameCurrent -= frameSize * frameStep;
+
+        if (frameCurrent < (frameFirst*frameSize) )
+            {
+                if(!aniBiDirect)
+                {
+                    frameCurrent = ( ((frameLast==-1)? frameHeight : frameLast*frameSize)-frameSize);
+                    framePos.setY( ((frameLast==-1) ? frameHeight : frameLast*frameSize)-frameSize );
+                } else
+                {
+                frameCurrent += frameSize*frameStep*2;
+                framePos.setY( framePos.y() + frameSize*frameStep );
+                aniDirect=!aniDirect;
+                }
+            }
+        else
+            framePos.setY( framePos.y() - frameSize*frameStep );
+    }
+
     draw();
     this->setPixmap(QPixmap(currentImage));
 }
