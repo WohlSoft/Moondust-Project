@@ -391,7 +391,10 @@ void dataconfigs::loadLevelNPC()
 
             //Add to Index
             if(i < (unsigned int)index_npc.size())
+            {
                 index_npc[i].i = i;
+                index_npc[i].gi = i;
+            }
             WriteToLog(QtDebugMsg, "NPC Config -> Index added");
 
         npcset.endGroup();
