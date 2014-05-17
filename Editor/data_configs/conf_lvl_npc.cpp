@@ -183,6 +183,9 @@ void dataconfigs::loadLevelNPC()
         //    //    foreground=0
         //        bool foreground;
             snpc.foreground = npcset.value("foreground", "0").toBool();
+        //    //    background=0
+        //        bool background;
+            snpc.background = npcset.value("background", "0").toBool();
         //    //    animation-direction=0
         //        bool ani_bidir;
             snpc.ani_direct = npcset.value("animation-direction", "0").toBool();

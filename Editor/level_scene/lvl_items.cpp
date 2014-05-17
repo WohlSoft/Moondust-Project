@@ -182,7 +182,11 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
     else
         merged.gfx_w = global.gfx_w;
 
-    merged.grid_offset_x = -(double)round( (merged.gfx_w % 32)/2 );
+    if(merged.grid_attach_style)
+        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % 32)/2 )+16;
+    else
+        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % 32)/2 );
+
     merged.grid_offset_y = -merged.height % 32;
 
 //    unsigned int gfxwidth;
@@ -271,7 +275,7 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 
 //    unsigned int framespeed;
 //    bool en_framespeed;
-    merged.framespeed = (local.en_framespeed)? global.framespeed * (int)round( 8 / local.framespeed ) : global.framespeed;
+    merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / qreal(8 / local.framespeed) ) : global.framespeed;
 
 
 //    unsigned int framestyle;
@@ -750,7 +754,10 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     if(NPCItem->localProps.foreground)
         NPCItem->setZValue(npcZf);
     else
+    if(NPCItem->localProps.background)
         NPCItem->setZValue(npcZb);
+    else
+        NPCItem->setZValue(npcZs);
     //else
     //    box->setZValue(npcZb);
 

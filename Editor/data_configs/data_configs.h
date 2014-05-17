@@ -185,6 +185,8 @@ struct obj_npc
     unsigned int framespeed;
 //    foreground=0
     bool foreground;
+//    background=0
+    bool background;
 //    animation-bidirectional=0
     bool ani_bidir;
 //    animation-direction=0
