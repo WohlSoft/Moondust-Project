@@ -183,7 +183,8 @@ public:
     int bgoZf; // foreground BGO
     int bgoZb; // backround BGO
     int npcZf; // foreground NPC
-    int npcZb; // standart NPC
+    int npcZs; // standart NPC
+    int npcZb; // background NPC (vines)
     int doorZ;
     int waterZ;
     int bgZ;
@@ -253,7 +254,10 @@ public:
     void historyRedoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
-                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, bool ignoreBlock = false, bool ignoreBGO = false);
+                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,
+                          bool ignoreBlock = false,
+                          bool ignoreBGO = false,
+                          bool ignoreNPC = false);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////

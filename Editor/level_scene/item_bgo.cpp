@@ -77,10 +77,10 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         }
 
         ItemMenu->addSeparator();
-        QAction *copyBGO = ItemMenu->addAction("Copy");
-        QAction *cutBGO = ItemMenu->addAction("Cut");
+        QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
+        QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
         ItemMenu->addSeparator();
-        QAction *remove = ItemMenu->addAction("Remove");
+        QAction *remove = ItemMenu->addAction(tr("Remove"));
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
