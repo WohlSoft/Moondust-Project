@@ -169,13 +169,33 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
     //merged. = (local.en_)?local.:global.;
     merged.height = (local.en_height)?local.height:global.height;
 
+
+    //Copy fixture size to GFX size if that greater
+    if(global.height == (unsigned int)global.gfx_h)
+        merged.gfx_h = merged.height;
+    else
+        merged.gfx_h = global.gfx_h;
+
+    //Copy fixture size to GFX size if that greater
+    if(global.width == (unsigned int)global.gfx_w)
+        merged.gfx_w = merged.width;
+    else
+        merged.gfx_w = global.gfx_w;
+
+    if(merged.grid_attach_style)
+        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % 32)/2 )+16;
+    else
+        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % 32)/2 );
+
+    merged.grid_offset_y = -merged.height % 32;
+
 //    unsigned int gfxwidth;
 //    bool en_gfxwidth;
-    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:global.gfx_w;
+    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
 
 //    unsigned int gfxheight;
 //    bool en_gfxheight;
-    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:global.gfx_h;
+    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
 
 
 //    unsigned int score;
@@ -255,7 +275,7 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 
 //    unsigned int framespeed;
 //    bool en_framespeed;
-    merged.framespeed = (local.en_framespeed)? global.framespeed * (int)round( 8 / local.framespeed ) : global.framespeed;
+    merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / qreal(8 / local.framespeed) ) : global.framespeed;
 
 
 //    unsigned int framestyle;
@@ -656,6 +676,12 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         //WriteToLog(QtDebugMsg, "NPC place -> set Props");
     NPCItem->localProps = mergedSet;
 
+    if(npc.generator)
+        NPCItem->gridSize=16;
+    else
+        NPCItem->gridSize = mergedSet.grid;
+
+
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
     NPCItem->setMainPixmap(tImg);
 
@@ -728,7 +754,10 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     if(NPCItem->localProps.foreground)
         NPCItem->setZValue(npcZf);
     else
+    if(NPCItem->localProps.background)
         NPCItem->setZValue(npcZb);
+    else
+        NPCItem->setZValue(npcZs);
     //else
     //    box->setZValue(npcZb);
 

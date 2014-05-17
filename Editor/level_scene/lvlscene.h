@@ -183,7 +183,8 @@ public:
     int bgoZf; // foreground BGO
     int bgoZb; // backround BGO
     int npcZf; // foreground NPC
-    int npcZb; // standart NPC
+    int npcZs; // standart NPC
+    int npcZb; // background NPC (vines)
     int doorZ;
     int waterZ;
     int bgZ;
@@ -255,7 +256,9 @@ public:
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,
-                          bool ignoreBlock = false, bool ignoreBGO = false, bool ignoreNPC = false);
+                          bool ignoreBlock = false,
+                          bool ignoreBGO = false, 
+                          bool ignoreNPC = false);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////

@@ -117,6 +117,14 @@ void LvlScene::historyBack()
 
         }
 
+        foreach (LevelNPC npc, deletedData.npc)
+        {
+            //place them back
+            LvlData->npc.push_back(npc);
+            placeNPC(npc);
+
+        }
+
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
         if(opts.animationEnabled) startBlockAnimation();
@@ -205,6 +213,13 @@ void LvlScene::historyForward()
             //WriteToLog(QtDebugMsg, QString("History-> added into the array items pos %1 %2").arg(bgo.x).arg(bgo.y));
             placeBGO(bgo);
             //WriteToLog(QtDebugMsg, QString("History-> placed on map pos %1 %2").arg(bgo.x).arg(bgo.y));
+        }
+
+        foreach (LevelNPC npc, placedData.npc)
+        {
+            //place them back
+            LvlData->npc.push_back(npc);
+            placeNPC(npc);
         }
 
         //refresh Animation control
@@ -380,7 +395,8 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     }
     QMap<int, LevelNPC> sortedNPC;
     if(!ignoreNPC){
-        foreach (LevelNPC npc, toFind.npc) {
+        foreach (LevelNPC npc, toFind.npc) 
+		{
             sortedNPC[npc.array_id] = npc;
         }
     }
@@ -445,7 +461,8 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         }
     }
 
-    if(!ignoreBGO){
+    if(!ignoreBGO)
+    {
         foreach (QGraphicsItem* item, sortedGraphBGO)
         {
             if(sortedBGO.size()!=0)
@@ -476,8 +493,10 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         }
     }
 
-    if(!ignoreNPC){
-        foreach (QGraphicsItem* item, sortedGraphNPC) {
+    if(!ignoreNPC)
+	{
+        foreach (QGraphicsItem* item, sortedGraphNPC) 
+		{
             if(sortedNPC.size()!=0)
             {
                 QMap<int, LevelNPC>::iterator beginItem = sortedNPC.begin();
@@ -490,6 +509,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedNPC.begin();
+				
                 currentArrayId = (*beginItem).array_id;
 
                 if((unsigned int)item->data(2).toInt()==currentArrayId)
