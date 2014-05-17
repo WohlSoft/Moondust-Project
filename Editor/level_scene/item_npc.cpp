@@ -18,6 +18,7 @@
 
 #include "item_npc.h"
 #include "common_features/logger.h"
+#include "itemmsgbox.h"
 
 
 
@@ -29,6 +30,7 @@ ItemNPC::ItemNPC(QGraphicsPixmapItem *parent)
     aniBiDirect=false;
     curDirect = -1;
     frameStep = 1;
+    gridSize = 1;
 
     imgOffsetX=0;
     imgOffsetY=0;
@@ -85,41 +87,49 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         ItemMenu->addSeparator();
 
-        QMenu * chDir = ItemMenu->addMenu(tr("Set direction"));
-        QAction *setLeft = chDir->addAction("Left");
+        QMenu * chDir = ItemMenu->addMenu(
+                    tr("Set %1").arg(
+                    (localProps.direct_alt_title!="") ?
+                        localProps.direct_alt_title : tr("Direction") ) );
+
+        QAction *setLeft = chDir->addAction( (localProps.direct_alt_left!="") ? localProps.direct_alt_left : tr("Left"));
             setLeft->setCheckable(true);
             setLeft->setChecked(npcData.direct==-1);
 
-        QAction *setRand = chDir->addAction("Random");
+        QAction *setRand = chDir->addAction(tr("Random"));
+            setRand->setVisible( !localProps.direct_disable_random );
             setRand->setCheckable(true);
             setRand->setChecked(npcData.direct==0);
 
-        QAction *setRight = chDir->addAction("Right");;
+        QAction *setRight = chDir->addAction( (localProps.direct_alt_right!="") ? localProps.direct_alt_right : tr("Right") );
             setRight->setCheckable(true);
             setRight->setChecked(npcData.direct==1);
 
         ItemMenu->addSeparator();
 
-        QAction *fri = ItemMenu->addAction("Friendly");
+        QAction *fri = ItemMenu->addAction(tr("Friendly"));
             fri->setCheckable(1);
             fri->setChecked( npcData.friendly );
 
-        QAction *stat = ItemMenu->addAction("Not movable");
+        QAction *stat = ItemMenu->addAction(tr("Not movable"));
             stat->setCheckable(1);
             stat->setChecked( npcData.nomove );
 
+
+        QAction *msg = ItemMenu->addAction(tr("Set message..."));
+
         ItemMenu->addSeparator();
 
-        QAction *boss = ItemMenu->addAction("Legacy boss");
+        QAction *boss = ItemMenu->addAction(tr("Legacy boss"));
             boss->setCheckable(1);
             boss->setChecked( npcData.legacyboss );
 
         ItemMenu->addSeparator();
 
-        QAction *copyNpc = ItemMenu->addAction("Copy");
-        QAction *cutNpc = ItemMenu->addAction("Cut");
+        QAction *copyNpc = ItemMenu->addAction(tr("Copy"));
+        QAction *cutNpc = ItemMenu->addAction(tr("Cut"));
         ItemMenu->addSeparator();
-        QAction *remove = ItemMenu->addAction("Remove");
+        QAction *remove = ItemMenu->addAction(tr("Remove"));
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -158,6 +168,24 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             scene->contextMenuOpened = false;
         }
         else
+            if(selected==msg)
+            {
+                ItemMsgBox * msgBox = new ItemMsgBox(npcData.msg);
+                msgBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+                msgBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, msgBox->size(), qApp->desktop()->availableGeometry()));
+                if(msgBox->exec()==QDialog::Accepted)
+                {
+
+                    //apply to all selected items.
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(0).toString()=="NPC")
+                            ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
+                    }
+                }
+                scene->contextMenuOpened = false;
+            }
+            else
         if(selected==boss)
         {
             //apply to all selected items.
@@ -251,6 +279,12 @@ void ItemNPC::setFriendly(bool fri)
     arrayApply(); //Apply changes into array
 }
 
+void ItemNPC::setMsg(QString message)
+{
+    npcData.msg=message;
+    arrayApply();//Apply changes into array
+}
+
 void ItemNPC::setNoMovable(bool stat)
 {
     npcData.nomove=stat;
@@ -336,6 +370,8 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
     imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y );
 
+    //grid_attach_style
+
     setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
 }
 
@@ -350,7 +386,7 @@ QRectF ItemNPC::boundingRect() const
     if(!animated)
         return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, mainImage.width(), mainImage.height());
     else
-        return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, mainImage.width(), localProps.gfx_h);
+        return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, localProps.gfx_w, localProps.gfx_h);
 }
 
 void ItemNPC::setContextMenu(QMenu &menu)
@@ -376,7 +412,6 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     direction = direct;
     frameStep = 1;
 
-    aniDirect = localProps.ani_direct;
     aniBiDirect = localProps.ani_bidir;
     customAniAlg = localProps.custom_ani_alg;
 
@@ -389,7 +424,8 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
 
     frameSize = localProps.gfx_h;
 
-    frameWidth = mainImage.width();
+    frameWidth = localProps.gfx_w;
+
     frameHeight = mainImage.height();
 
     framePos = QPoint(0,0);
@@ -402,6 +438,10 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
         dir=(((bool)qrand()%2)?-1:1); //set randomly 1 or -1
     }
 
+    if(localProps.ani_directed_direct)
+        aniDirect = (dir==-1);
+    else
+        aniDirect = localProps.ani_direct;
 
     if(customAnimate) // User defined spriteSet (example: boss)
     {
