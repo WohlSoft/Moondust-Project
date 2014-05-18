@@ -172,6 +172,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_BOSS){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsBossNPC, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_NOMOVEABLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsNoMoveableNPC, true, true);
+        }
         break;
     }
     default:
@@ -276,6 +280,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_BOSS){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsBossNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_NOMOVEABLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsNoMoveableNPC, true, true);
         }
         break;
     }
@@ -429,6 +437,16 @@ void LvlScene::historyUndoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNP
 void LvlScene::historyRedoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->setLegacyBoss(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setNoMovable(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setNoMovable(cbData.hist->extraData.toBool());
 }
 
 void LvlScene::findGraphicsItem(LevelData toFind,
