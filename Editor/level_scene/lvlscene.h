@@ -245,11 +245,14 @@ public:
     //Callbackfunctions: Move
     void historyRedoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
+    void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
+    void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
+    void historyRemoveNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: [Change Settings] Hide
     void historyUndoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
     void historyRedoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
