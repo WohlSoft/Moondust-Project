@@ -149,11 +149,14 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         if(selected==fri)
         {
             //apply to all selected items.
+            LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
+                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
             }
+            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_FRIENDLY, QVariant(fri->isChecked()));
             scene->contextMenuOpened = false;
         }
         else
