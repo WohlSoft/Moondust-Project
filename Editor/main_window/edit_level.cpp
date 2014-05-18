@@ -352,10 +352,10 @@ void MainWindow::setDoorData(long index)
                     }
 
                     ui->WarpToMapX->setEnabled(true);
-                    ui->WarpToMapX->setText(QString::number(door.world_x));
+                    ui->WarpToMapX->setText((door.world_x!=-1)?QString::number(door.world_x):"");
 
                     ui->WarpToMapY->setEnabled(true);
-                    ui->WarpToMapY->setText(QString::number(door.world_y));
+                    ui->WarpToMapY->setText((door.world_y!=-1)?QString::number(door.world_y):"");
 
 
                     ui->WarpLevelExit->setEnabled(true);

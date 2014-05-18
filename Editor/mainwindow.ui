@@ -246,6 +246,8 @@
     </property>
     <addaction name="actionLoad_configs"/>
     <addaction name="actionReload"/>
+    <addaction name="separator"/>
+    <addaction name="actionApplication_settings"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -3849,6 +3851,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>W</string>
+   </property>
+  </action>
+  <action name="actionApplication_settings">
+   <property name="text">
+    <string>Application settings</string>
    </property>
   </action>
  </widget>

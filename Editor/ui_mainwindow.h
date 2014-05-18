@@ -132,6 +132,7 @@ public:
     QAction *actionCut;
     QAction *actionLangEnglish;
     QAction *actionSelectOnly;
+    QAction *actionApplication_settings;
     QMdiArea *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -769,6 +770,8 @@ public:
         QIcon icon51;
         icon51.addFile(QStringLiteral(":/select_only.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionSelectOnly->setIcon(icon51);
+        actionApplication_settings = new QAction(MainWindow);
+        actionApplication_settings->setObjectName(QStringLiteral("actionApplication_settings"));
         centralWidget = new QMdiArea(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setContextMenuPolicy(Qt::NoContextMenu);
@@ -1599,6 +1602,8 @@ public:
         menuWindow->addAction(actionEmpty);
         menuTools->addAction(actionLoad_configs);
         menuTools->addAction(actionReload);
+        menuTools->addSeparator();
+        menuTools->addAction(actionApplication_settings);
         menuEdit->addAction(actionUndo);
         menuEdit->addAction(actionRedo);
         menuEdit->addSeparator();
@@ -1925,6 +1930,7 @@ public:
         actionLangEnglish->setText(QApplication::translate("MainWindow", "English", 0));
         actionSelectOnly->setText(QApplication::translate("MainWindow", "Select only", 0));
         actionSelectOnly->setShortcut(QApplication::translate("MainWindow", "W", 0));
+        actionApplication_settings->setText(QApplication::translate("MainWindow", "Application settings", 0));
         menu->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuNew->setTitle(QApplication::translate("MainWindow", "New", 0));
         menuOpenRecent->setTitle(QApplication::translate("MainWindow", "Open Recent", 0));
