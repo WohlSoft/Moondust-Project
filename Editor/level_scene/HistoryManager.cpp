@@ -168,6 +168,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_FRIENDLY){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsFriendlyNPC, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_BOSS){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsBossNPC, true, true);
+        }
         break;
     }
     default:
@@ -268,6 +272,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_FRIENDLY){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsFriendlyNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_BOSS){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsBossNPC, true, true);
         }
         break;
     }
@@ -403,14 +411,24 @@ void LvlScene::historyRedoSettingsSlipperyBlock(LvlScene::CallbackData cbData, L
     ((ItemBlock*)cbData.item)->setSlippery(cbData.hist->extraData.toBool());
 }
 
-void LvlScene::historyUndoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC data)
+void LvlScene::historyUndoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->setFriendly(!cbData.hist->extraData.toBool());
 }
 
-void LvlScene::historyRedoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC data)
+void LvlScene::historyRedoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->setFriendly(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setLegacyBoss(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setLegacyBoss(cbData.hist->extraData.toBool());
 }
 
 void LvlScene::findGraphicsItem(LevelData toFind,

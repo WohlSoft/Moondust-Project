@@ -192,11 +192,14 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         if(selected==boss)
         {
             //apply to all selected items.
+            LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
+                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
             }
+            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BOSS, QVariant(boss->isChecked()));
             scene->contextMenuOpened = false;
         }
         else
