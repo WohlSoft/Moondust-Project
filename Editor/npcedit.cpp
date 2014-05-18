@@ -710,7 +710,7 @@ void npcedit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.nogravity=(int)(!pConfigs->main_npc[j].gravity);
         DefaultNPCData.frames=pConfigs->main_npc[j].frames;
         DefaultNPCData.framespeed=8;
-        DefaultNPCData.framestyle=(int)(!pConfigs->main_npc[j].framestyle);
+        DefaultNPCData.framestyle=pConfigs->main_npc[j].framestyle;
         DefaultNPCData.noiceball=(int)(!pConfigs->main_npc[j].freeze_by_iceball);
         DefaultNPCData.nohammer=(int)(!pConfigs->main_npc[j].kill_hammer);
     }
