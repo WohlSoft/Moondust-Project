@@ -47,8 +47,9 @@ void dataconfigs::loadLevelBackgrounds()
                    sbg.type = 2;
                 else sbg.type = 0;
 
-                WriteToLog(QtDebugMsg, QString("Init BG image %1 with type %2 %3")
-                           .arg(i).arg(tmpstr).arg(sbg.type));
+//                WriteToLog(QtDebugMsg, QString("Init BG image %1 with type %2 %3")
+//                           .arg(i).arg(tmpstr).arg(sbg.type));
+
             sbg.repeat_h = bgset.value("repeat-h", "2").toInt();
             tmpstr = bgset.value("repeat-v", "NR").toString();
                 if(tmpstr=="NR")

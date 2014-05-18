@@ -73,5 +73,7 @@
         <file>images/edit_paste.png</file>
         <file>images/edit_redo.png</file>
         <file>images/edit_undo.png</file>
+        <file alias="npc/proj.png">images/generator_proj.png</file>
+        <file alias="npc/warp.png">images/generator_warp.png</file>
     </qresource>
 </RCC>
