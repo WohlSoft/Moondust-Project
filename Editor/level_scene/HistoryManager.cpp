@@ -176,6 +176,14 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_NOMOVEABLE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsNoMoveableNPC, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_MESSAGE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsMessageNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_DIRECTION){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionNPC, true, true);
+        }
         break;
     }
     default:
@@ -284,6 +292,14 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_NOMOVEABLE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsNoMoveableNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_MESSAGE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsMessageNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_DIRECTION){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionNPC, true, true);
         }
         break;
     }
@@ -447,6 +463,26 @@ void LvlScene::historyUndoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, L
 void LvlScene::historyRedoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->setNoMovable(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsMessageNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setMsg(cbData.hist->extraData.toList()[0].toString());
+}
+
+void LvlScene::historyRedoSettingsMessageNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setMsg(cbData.hist->extraData.toList()[1].toString());
+}
+
+void LvlScene::historyUndoSettingsDirectionNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->changeDirection(cbData.hist->extraData.toList()[0].toInt());
+}
+
+void LvlScene::historyRedoSettingsDirectionNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->changeDirection(cbData.hist->extraData.toList()[1].toInt());
 }
 
 void LvlScene::findGraphicsItem(LevelData toFind,
