@@ -19,6 +19,7 @@
 #include "lvlscene.h"
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 #include "../common_features/logger.h"
 
 
@@ -137,7 +138,7 @@ void LvlScene::historyBack()
         LevelData placeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, 0, false, false, true);
+        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC);
 
         break;
     }
@@ -147,7 +148,7 @@ void LvlScene::historyBack()
         LevelData movedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, 0, false, false, true);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC);
 
         break;
     }
@@ -187,7 +188,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, 0, false, false, true);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC);
 
         break;
     }
@@ -245,7 +246,7 @@ void LvlScene::historyForward()
         CallbackData cbData;
         cbData.x = baseX;
         cbData.y = baseY;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, 0, false, false , true);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC);
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
@@ -321,6 +322,17 @@ void LvlScene::historyRedoMoveBGO(CallbackData cbData, LevelBGO data)
     ((ItemBGO *)(cbData.item))->arrayApply();
 }
 
+void LvlScene::historyRedoMoveNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    long diffX = data.x - cbData.x;
+    long diffY = data.y - cbData.y;
+
+    cbData.item->setPos(QPointF(cbData.hist->x+diffX,cbData.hist->y+diffY));
+    ((ItemNPC *)(cbData.item))->npcData.x = (long)cbData.item->scenePos().x();
+    ((ItemNPC *)(cbData.item))->npcData.y = (long)cbData.item->scenePos().y();
+    ((ItemNPC *)(cbData.item))->arrayApply();
+}
+
 void LvlScene::historyUndoMoveBlocks(LvlScene::CallbackData cbData, LevelBlock data)
 {
     cbData.item->setPos(QPointF(data.x,data.y));
@@ -337,6 +349,14 @@ void LvlScene::historyUndoMoveBGO(LvlScene::CallbackData cbData, LevelBGO data)
     ((ItemBGO *)(cbData.item))->arrayApply();
 }
 
+void LvlScene::historyUndoMoveNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    cbData.item->setPos(QPointF(data.x,data.y));
+    ((ItemNPC *)(cbData.item))->npcData.x = (long)cbData.item->scenePos().x();
+    ((ItemNPC *)(cbData.item))->npcData.y = (long)cbData.item->scenePos().y();
+    ((ItemNPC *)(cbData.item))->arrayApply();
+}
+
 void LvlScene::historyRemoveBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
 {
     ((ItemBlock*)cbData.item)->removeFromArray();
@@ -346,6 +366,12 @@ void LvlScene::historyRemoveBlocks(LvlScene::CallbackData cbData, LevelBlock /*d
 void LvlScene::historyRemoveBGO(LvlScene::CallbackData cbData, LevelBGO /*data*/)
 {
     ((ItemBGO *)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+}
+
+void LvlScene::historyRemoveNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC *)cbData.item)->removeFromArray();
     removeItem(cbData.item);
 }
 
