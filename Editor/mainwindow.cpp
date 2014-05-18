@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 
 #include "npc_dialog/npcdialog.h"
+#include "main_window/appsettings.h"
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
@@ -88,7 +89,12 @@ void MainWindow::TickTack()
                 ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
                 activeLvlEditWin()->scene->historyChanged = false;
             }
-
+            else
+            if(activeLvlEditWin()->scene->resetPosition)
+            {
+                on_actionReset_position_triggered();
+                activeLvlEditWin()->scene->resetPosition = false;
+            }
         }
         /*
         else
@@ -196,6 +202,20 @@ void MainWindow::on_actionAbout_triggered()
     about.exec();
 }
 
+//Application settings
+void MainWindow::on_actionApplication_settings_triggered()
+{
+    AppSettings * appSettings = new AppSettings;
+    appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
+
+    if(appSettings->exec()==QDialog::Accepted)
+    {
+
+    }
+
+}
+
 
 ////////////////////////New files templates///////////////////////////
 
@@ -215,3 +235,5 @@ void MainWindow::on_actionNewNPC_config_triggered()
     }
 
 }
+
+

@@ -108,6 +108,7 @@ public:
     bool doCopy;
     bool doCut;
     bool historyChanged;
+    bool resetPosition;
 
     //Copy function
     LevelData copy(bool cut = false);
@@ -117,6 +118,8 @@ public:
 
     //void makeSectionBG(int x, int y, int h, int w);
     void makeSectionBG(LevelData FileData, QProgressDialog &progress);
+
+    void InitSection(int sect);
 
     void drawSpace(LevelData FileData);
     void ChangeSectionBG(int BG_Id, LevelData &FileData);
