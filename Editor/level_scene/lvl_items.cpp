@@ -183,11 +183,11 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
         merged.gfx_w = global.gfx_w;
 
     if(merged.grid_attach_style)
-        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % 32)/2 )+16;
+        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % merged.grid)/2 )+16;
     else
-        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % 32)/2 );
+        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % merged.grid)/2 );
 
-    merged.grid_offset_y = -merged.height % 32;
+    merged.grid_offset_y = -merged.height % merged.grid;
 
 //    unsigned int gfxwidth;
 //    bool en_gfxwidth;

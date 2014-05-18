@@ -1424,7 +1424,7 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         RemoveLayer = new QPushButton(LevelLayersBox);
         RemoveLayer->setObjectName(QStringLiteral("RemoveLayer"));
-        RemoveLayer->setEnabled(false);
+        RemoveLayer->setEnabled(true);
 
         gridLayout->addWidget(RemoveLayer, 1, 1, 1, 1);
 
