@@ -20,8 +20,6 @@
 #include "common_features/logger.h"
 #include "itemmsgbox.h"
 
-
-
 ItemNPC::ItemNPC(QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
@@ -38,6 +36,8 @@ ItemNPC::ItemNPC(QGraphicsPixmapItem *parent)
     frameFirst=0; //from first frame
     frameLast=-1; //to unlimited frameset
     //image = new QGraphicsPixmapItem;
+
+    isLocked=false;
 }
 
 
@@ -48,7 +48,7 @@ ItemNPC::~ItemNPC()
 
 void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if(!scene->lock_npc)
+    if((!scene->lock_npc)&&(!isLocked))
     {
         //Remove selection from non-block items
         if(this->isSelected())
@@ -604,6 +604,13 @@ void ItemNPC::setFrame(int y)
         framePos.setY( frameCurrent );
     draw();
     this->setPixmap(QPixmap(currentImage));
+}
+
+void ItemNPC::setLocked(bool lock)
+{
+    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+    isLocked = lock;
 }
 
 void ItemNPC::nextFrame()

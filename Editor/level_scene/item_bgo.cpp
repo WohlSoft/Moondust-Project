@@ -29,6 +29,7 @@ ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
+    isLocked=false;
     //image = new QGraphicsPixmapItem;
 }
 
@@ -40,7 +41,7 @@ ItemBGO::~ItemBGO()
 
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if(!scene->lock_bgo)
+    if((!scene->lock_bgo)&&(!isLocked))
     {
         //Remove selection from non-bgo items
         if(this->isSelected())
@@ -311,6 +312,13 @@ void ItemBGO::setFrame(int y)
     framePos.setY( frameCurrent );
     draw();
     this->setPixmap(QPixmap(currentImage));
+}
+
+void ItemBGO::setLocked(bool lock)
+{
+    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+    isLocked = lock;
 }
 
 void ItemBGO::nextFrame()

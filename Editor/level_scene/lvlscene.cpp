@@ -966,22 +966,22 @@ void LvlScene::setLocked(int type, bool lock)
         case 1://Block
             if((*it)->data(0).toString()=="Block")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemBlock *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemBlock *)(*it))->isLocked ) ) );
             }
             break;
         case 2://BGO
             if((*it)->data(0).toString()=="BGO")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemBGO *)(*it))->isLocked ) ));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemBGO *)(*it))->isLocked ) ));
             }
             break;
         case 3://NPC
             if((*it)->data(0).toString()=="NPC")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemNPC *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemNPC *)(*it))->isLocked ) ) );
             }
             break;
         case 4://Water
