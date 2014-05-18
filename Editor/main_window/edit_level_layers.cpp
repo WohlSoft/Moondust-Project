@@ -121,6 +121,7 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                 item->setData(3, QString::number(NewLayer.array_id));
 
                 activeLvlEditWin()->LvlData.layers.push_back(NewLayer);
+                activeLvlEditWin()->LvlData.modified=true;
             }
 
         }//if(item->data(3).toString()=="NewLayer")
@@ -189,6 +190,7 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                     //(*it)->setVisible(layerVisible);
                 }
             }
+            activeLvlEditWin()->LvlData.modified=true;
 
         }
 
@@ -224,3 +226,39 @@ void MainWindow::on_RemoveLayer_clicked()
 
 }
 
+
+
+void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
+{
+    //if(ui->LvlLayerList->selectedItems().isEmpty()) return;
+
+    QMenu layer_menu(tr("Layer context menu"), this);
+    QAction * rename = layer_menu.addAction(tr("Rename layer"));
+
+    layer_menu.addSeparator();
+
+    QAction * removeLayer = layer_menu.addAction(tr("Remove layer with items"));
+    QAction * removeLayerOnly = layer_menu.addAction(tr("Remove layer and save items"));
+
+    QAction *selected = layer_menu.exec(mapToGlobal(pos));
+    if(selected==rename)
+    {
+        ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
+    }
+    else
+    if(selected==removeLayer)
+    {
+        //dummy
+        //delete layer only from array
+        on_RemoveLayer_clicked();
+    }
+    else
+    if(selected==removeLayerOnly)
+    {
+        //dummy
+        //delete layer only from array
+        on_RemoveLayer_clicked();
+    }
+
+
+}

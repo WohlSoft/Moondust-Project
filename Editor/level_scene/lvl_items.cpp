@@ -171,18 +171,18 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
 
 
     //Copy fixture size to GFX size if that greater
-    if(global.height == (unsigned int)global.gfx_h)
+    if(merged.height >= (unsigned int)global.gfx_h)
         merged.gfx_h = merged.height;
     else
         merged.gfx_h = global.gfx_h;
 
     //Copy fixture size to GFX size if that greater
-    if(global.width == (unsigned int)global.gfx_w)
+    if(merged.width >= (unsigned int)global.gfx_w)
         merged.gfx_w = merged.width;
     else
         merged.gfx_w = global.gfx_w;
 
-    if(merged.grid_attach_style)
+    if(merged.grid_attach_style==1)
         merged.grid_offset_x = -qRound( qreal(merged.gfx_w % merged.grid)/2 )+16;
     else
         merged.grid_offset_x = -qRound( qreal(merged.gfx_w % merged.grid)/2 );

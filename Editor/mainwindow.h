@@ -263,6 +263,8 @@ private slots:
 
     void on_RemoveLayer_clicked();
 
+    void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
+
 private:
     dataconfigs configs; // Global objects configucrations
 
