@@ -29,6 +29,7 @@ ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
     frameFirst=0; //from first frame
     frameLast=-1; //to unlimited frameset
     //image = new QGraphicsPixmapItem;
+    isLocked=false;
 }
 
 
@@ -39,7 +40,7 @@ ItemBlock::~ItemBlock()
 
 void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if(!scene->lock_block)
+    if((!scene->lock_block)&&(!isLocked))
     {
         //Remove selection from non-block items
         if(this->isSelected())
@@ -544,6 +545,13 @@ void ItemBlock::setFrame(int y)
     framePos.setY( frameCurrent );
     draw();
     this->setPixmap(QPixmap(currentImage));
+}
+
+void ItemBlock::setLocked(bool lock)
+{
+    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+    isLocked = lock;
 }
 
 void ItemBlock::nextFrame()

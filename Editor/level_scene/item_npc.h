@@ -78,6 +78,10 @@ public:
     int imgOffsetY;
     int gridSize;
 
+    //Locks
+    bool isLocked;
+    void setLocked(bool lock);
+
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     //virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
