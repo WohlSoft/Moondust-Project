@@ -1011,6 +1011,98 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
             layers.name = "Spawned NPCs";
             FileData.layers.push_back(layers);
         }
+
+        //Add system events if not exist
+        //Level - Start
+        //P Switch - Start
+        //P Switch - End
+        bool lstart=false, pstart=false, pend=false;
+        foreach(LevelEvents ev, FileData.events)
+        {
+            if(ev.name=="Level - Start") lstart=true;
+            else
+            if(ev.name=="P Switch - Start") pstart=true;
+            else
+            if(ev.name=="P Switch - End") pend=true;
+        }
+
+        events.msg="";
+        events.sound_id=0;
+        events.end_game=0;
+
+        events.layers.clear();
+        for(int j=0; j< 21; j++)
+        {
+            events_layers.hide="";
+            events_layers.show="";
+            events_layers.toggle="";
+            events.layers.push_back(events_layers);
+        }
+        events.layers_hide.clear();
+        events.layers_show.clear();
+        events.layers_toggle.clear();
+        events.sets.clear();
+        for(int j=0; j< 21; j++)
+        {
+            events_sets.music_id=0;
+            events_sets.background_id=0;
+            events_sets.position_left=0;
+            events_sets.position_top=-1;
+            events_sets.position_bottom=-1;
+            events_sets.position_right=-1;
+            events.sets.push_back(events_sets);
+        }
+
+        events.trigger="";
+        events.trigger_timer=0;
+
+        events.nosmoke=false;
+
+        events.altjump=false;
+        events.altrun=false;
+        events.down=false;
+        events.drop=false;
+        events.jump=false;
+        events.left=false;
+        events.right=false;
+        events.run=false;
+        events.start=false;
+        events.up=false;
+
+        events.autostart=false;
+
+        events.movelayer="";
+        events.layer_speed_x=0;
+        events.layer_speed_y=0;
+        events.move_camera_x=0;
+        events.move_camera_y=0;
+        events.scroll_section=0;
+
+        if(!lstart)
+        {
+            events.array_id = FileData.events_array_id;
+            FileData.events_array_id++;
+
+            events.name = "Level - Start";
+            FileData.events.push_back(events);
+        }
+        if(!pstart)
+        {
+            events.array_id = FileData.events_array_id;
+            FileData.events_array_id++;
+
+            events.name = "P Switch - Start";
+            FileData.events.push_back(events);
+        }
+        if(!pend)
+        {
+            events.array_id = FileData.events_array_id;
+            FileData.events_array_id++;
+
+            events.name = "P Switch - End";
+            FileData.events.push_back(events);
+        }
+
     }
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
