@@ -979,6 +979,39 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         }
     }
+
+    {
+        //Add system layers if not exist
+        bool def=false,desb=false,spawned=false;
+
+        foreach(LevelLayers lr, FileData.layers)
+        {
+            if(lr.name=="Default") def=true;
+            else
+            if(lr.name=="Destroyed Blocks") desb=true;
+            else
+            if(lr.name=="Spawned NPCs") spawned=true;
+        }
+
+        if(!def)
+        {
+            layers.hidden = false;
+            layers.name = "Default";
+            FileData.layers.push_back(layers);
+        }
+        if(!desb)
+        {
+            layers.hidden = true;
+            layers.name = "Destroyed Blocks";
+            FileData.layers.push_back(layers);
+        }
+        if(!spawned)
+        {
+            layers.hidden = false;
+            layers.name = "Spawned NPCs";
+            FileData.layers.push_back(layers);
+        }
+    }
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
     FileData.ReadFileValid=true;
