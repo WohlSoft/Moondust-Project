@@ -285,6 +285,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemBGO *)(*it))->removeFromArray();
                             deleted=true;
                         }
+                        else
+                        if( (*it)->data(0).toString()=="NPC" )
+                        {
+                            historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
+                            ((ItemNPC *)(*it))->removeFromArray();
+                            deleted=true;
+                        }
 
                         removeItem((*it)); continue;
                     }
