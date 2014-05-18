@@ -230,17 +230,19 @@ void MainWindow::on_RemoveLayer_clicked()
 
 void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 {
-    //if(ui->LvlLayerList->selectedItems().isEmpty()) return;
+    qDebug()<< "Layer's context menu called!";
 
-    QMenu layer_menu(tr("Layer context menu"), this);
-    QAction * rename = layer_menu.addAction(tr("Rename layer"));
+    if(ui->LvlLayerList->selectedItems().isEmpty()) return;
 
-    layer_menu.addSeparator();
+    QMenu *layer_menu = new QMenu(this);
+    QAction * rename = layer_menu->addAction(tr("Rename layer"));
 
-    QAction * removeLayer = layer_menu.addAction(tr("Remove layer with items"));
-    QAction * removeLayerOnly = layer_menu.addAction(tr("Remove layer and save items"));
+    layer_menu->addSeparator();
 
-    QAction *selected = layer_menu.exec(mapToGlobal(pos));
+    QAction * removeLayer = layer_menu->addAction(tr("Remove layer with items"));
+    QAction * removeLayerOnly = layer_menu->addAction(tr("Remove layer and save items"));
+
+    QAction *selected = layer_menu->exec(mapToGlobal(pos) );
     if(selected==rename)
     {
         ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
