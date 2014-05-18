@@ -257,6 +257,8 @@ private slots:
 
     void on_actionApplication_settings_triggered();
 
+    void on_AddLayer_clicked();
+
 private:
     dataconfigs configs; // Global objects configucrations
 

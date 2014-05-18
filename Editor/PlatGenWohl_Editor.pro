@@ -58,7 +58,8 @@ SOURCES += main.cpp\
     file_formats/smbx64.cpp \
     level_scene/itemmsgbox.cpp \
     level_scene/lvl_collisions.cpp \
-    main_window/appsettings.cpp
+    main_window/appsettings.cpp \
+    main_window/edit_level_layers.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \

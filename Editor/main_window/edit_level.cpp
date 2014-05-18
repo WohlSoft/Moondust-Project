@@ -84,16 +84,6 @@ void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
 }
 
 
-void MainWindow::on_LevelLayers_visibilityChanged(bool visible)
-{
-    ui->actionLayersBox->setChecked(visible);
-}
-void MainWindow::on_actionLayersBox_triggered(bool checked)
-{
-    ui->LevelLayers->setVisible(checked);
-    if(checked) ui->LevelLayers->raise();
-}
-
 
 
 void MainWindow::on_BGOUniform_clicked(bool checked)
@@ -229,37 +219,6 @@ void MainWindow::on_actionGridEn_triggered(bool checked)
     if (activeChildWindow()==1)
     {
        activeLvlEditWin()->scene->grid = checked;
-    }
-}
-
-
-
-
-void MainWindow::setLayersBox()
-{
-    int WinType = activeChildWindow();
-    QListWidgetItem * item;
-
-    ui->LvlLayerList->clear();
-
-    if (WinType==1)
-    {
-        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
-        {
-            item = new QListWidgetItem;
-            item->setText(layer.name);
-            item->setFlags(Qt::ItemIsUserCheckable);
-
-            if((layer.name!="Destroyed Blocks")&&(layer.name!="Spawned NPCs"))
-                item->setFlags(item->flags() | Qt::ItemIsEnabled);
-
-            if(layer.name!="Default")
-                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-
-            item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
-            ui->LvlLayerList->addItem( item );
-        }
-
     }
 }
 
