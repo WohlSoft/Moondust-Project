@@ -144,6 +144,9 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         else
         if(selected==chNPC)
         {
+            LevelData selData;
+            QList<QVariant> modNPC;
+            modNPC.push_back(QVariant((int)blockData.npc_id));
             NpcDialog * npcList = new NpcDialog(scene->pConfigs);
             npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
             npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
@@ -167,9 +170,12 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                         ((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
                         ((ItemBlock *) SelItem)->arrayApply();
                         ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
+                        selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
                     }
                 }
+                modNPC.push_back(QVariant(selected_npc));
             }
+            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_CHANGENPC, QVariant(modNPC));
             scene->contextMenuOpened = false;
         }
         else
