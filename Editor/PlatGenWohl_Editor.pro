@@ -56,7 +56,9 @@ SOURCES += main.cpp\
     common_features/logger.cpp \
     npc_dialog/npcdialog.cpp \
     file_formats/smbx64.cpp \
-    level_scene/itemmsgbox.cpp
+    level_scene/itemmsgbox.cpp \
+    level_scene/lvl_collisions.cpp \
+    main_window/appsettings.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -78,7 +80,8 @@ HEADERS  += mainwindow.h \
     common_features/logger.h \
     common_features/logger_sets.h \
     npc_dialog/npcdialog.h \
-    level_scene/itemmsgbox.h
+    level_scene/itemmsgbox.h \
+    main_window/appsettings.h
 
 FORMS    += \
     aboutdialog.ui \
@@ -89,7 +92,8 @@ FORMS    += \
     saveimage.ui \
     musicfilelist.ui \
     npc_dialog/npcdialog.ui \
-    level_scene/itemmsgbox.ui
+    level_scene/itemmsgbox.ui \
+    main_window/appsettings.ui
 
 RC_FILE = platgenw.rc
 
