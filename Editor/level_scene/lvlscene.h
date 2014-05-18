@@ -225,7 +225,9 @@ public:
         SETTING_SLIPPERY,      //extraData: bool [Activated?]
         SETTING_FRIENDLY,      //extraData: bool [Activated?]
         SETTING_BOSS,          //extraData: bool [Activated?]
-        SETTING_NOMOVEABLE     //extraData: bool [Activated?]
+        SETTING_NOMOVEABLE,    //extraData: bool [Activated?]
+        SETTING_MESSAGE,       //extraData: QList<QVariant[String]> [Old Text, New Text]
+        SETTING_DIRECTION      //extraData: QList<QVariant[int]> [Old Dir, New Dir]
     };
 
     //typedefs
@@ -271,6 +273,12 @@ public:
     //Callbackfunctions: [Change Settings] NoMoveable
     void historyUndoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Message
+    void historyUndoSettingsMessageNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsMessageNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Direction
+    void historyUndoSettingsDirectionNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsDirectionNPC(CallbackData cbData, LevelNPC data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,
