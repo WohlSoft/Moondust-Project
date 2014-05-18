@@ -8,8 +8,13 @@ QT       += core gui widgets multimedia
 
 CONFIG += static
 
-TARGET = plweditor
+TARGET = pge_editor
 TEMPLATE = app
+
+TRANSLATIONS += languages/pge_editor_en.ts \
+    languages/pge_editor_ru.ts \
+    languages/pge_editor_de.ts \
+    languages/pge_editor_es.ts
 
 SOURCES += main.cpp\
         mainwindow.cpp \
