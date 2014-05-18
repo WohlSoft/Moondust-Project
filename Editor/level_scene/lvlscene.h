@@ -224,7 +224,8 @@ public:
         SETTING_INVISIBLE = 0, //extraData: bool [Activated?]
         SETTING_SLIPPERY,      //extraData: bool [Activated?]
         SETTING_FRIENDLY,      //extraData: bool [Activated?]
-        SETTING_BOSS           //extraData: bool [Activated?]
+        SETTING_BOSS,          //extraData: bool [Activated?]
+        SETTING_NOMOVEABLE     //extraData: bool [Activated?]
     };
 
     //typedefs
@@ -267,6 +268,9 @@ public:
     //Callbackfunctions: [Change Settings] Boss
     void historyUndoSettingsBossNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsBossNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] NoMoveable
+    void historyUndoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,

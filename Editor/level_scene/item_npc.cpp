@@ -163,11 +163,14 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         if(selected==stat)
         {
             //apply to all selected items.
+            LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
                     ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
+                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
             }
+            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_NOMOVEABLE, QVariant(stat->isChecked()));
             scene->contextMenuOpened = false;
         }
         else
