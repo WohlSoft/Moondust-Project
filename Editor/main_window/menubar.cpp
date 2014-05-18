@@ -21,8 +21,10 @@
 
 
 
-void MainWindow::updateMenus()
+void MainWindow::updateMenus(bool force)
 {
+    if(!force) if(!this->isActiveWindow()) return;
+
     WriteToLog(QtDebugMsg, QString("Update menus"));
 
     int WinType = activeChildWindow(); // 1 lvledit, 2 npcedit, 3 wldedit
