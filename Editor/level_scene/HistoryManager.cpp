@@ -184,6 +184,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_DIRECTION){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionNPC, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_CHANGENPC){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, 0, false, true, true);
+        }
         break;
     }
     default:
@@ -300,6 +304,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_DIRECTION){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_CHANGENPC){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, 0, false, true, true);
         }
         break;
     }
@@ -483,6 +491,24 @@ void LvlScene::historyUndoSettingsDirectionNPC(LvlScene::CallbackData cbData, Le
 void LvlScene::historyRedoSettingsDirectionNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->changeDirection(cbData.hist->extraData.toList()[1].toInt());
+}
+
+void LvlScene::historyUndoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ItemBlock* targetItem = (ItemBlock*)cbData.item;
+    int targetNPC_id = cbData.hist->extraData.toList()[0].toInt();
+    targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
+    targetItem->arrayApply();
+    targetItem->setIncludedNPC((unsigned long)targetNPC_id);
+}
+
+void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ItemBlock* targetItem = (ItemBlock*)cbData.item;
+    int targetNPC_id = cbData.hist->extraData.toList()[1].toInt();
+    targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
+    targetItem->arrayApply();
+    targetItem->setIncludedNPC((unsigned long)targetNPC_id);
 }
 
 void LvlScene::findGraphicsItem(LevelData toFind,
