@@ -2241,7 +2241,7 @@ p, li { white-space: pre-wrap; }
      <item row="1" column="1">
       <widget class="QPushButton" name="RemoveLayer">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Remove</string>

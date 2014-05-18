@@ -99,7 +99,7 @@ private slots:
     void SyncRecentFiles();
     void AddToRecentFiles(QString FilePath);
 
-    void updateMenus();
+    void updateMenus(bool force=false);
     void setTools();
     void setMusic(bool checked);
 
@@ -258,6 +258,10 @@ private slots:
     void on_actionApplication_settings_triggered();
 
     void on_AddLayer_clicked();
+
+    void on_LvlLayerList_itemChanged(QListWidgetItem *item);
+
+    void on_RemoveLayer_clicked();
 
 private:
     dataconfigs configs; // Global objects configucrations
