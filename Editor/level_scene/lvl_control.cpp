@@ -164,14 +164,23 @@ void LvlScene::removeItemUnderCursor()
     findItem = itemCollidesCursor(cursor);
     if(findItem)
     {
-        if((findItem->data(0).toString()=="Block")&&(lock_block))
+        if(findItem->data(0).toString()=="Block")
+        {
+            if((lock_block)|| (((ItemBlock *)findItem)->isLocked) )
             removeIt=false;
+        }
         else
-        if((findItem->data(0).toString()=="BGO")&&(lock_bgo))
+        if(findItem->data(0).toString()=="BGO")
+        {
+            if( (lock_bgo) || ((((ItemBGO *)findItem)->isLocked)) )
             removeIt=false;
+        }
         else
-        if((findItem->data(0).toString()=="NPC")&&(lock_npc))
+        if(findItem->data(0).toString()=="NPC")
+        {
+            if( (lock_npc) || ((((ItemNPC *)findItem)->isLocked)) )
             removeIt=false;
+        }
         else
         if((findItem->data(0).toString()=="Water")&&(lock_water))
             removeIt=false;
