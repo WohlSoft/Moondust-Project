@@ -20,6 +20,9 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 
+#include "../level_scene/item_bgo.h"
+#include "../level_scene/item_block.h"
+#include "../level_scene/item_npc.h"
 
 
 void MainWindow::on_LevelLayers_visibilityChanged(bool visible)
@@ -57,6 +60,7 @@ void MainWindow::setLayersBox()
                 item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
 
             item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
+            item->setData(3, QString::number( layer.array_id ) );
             ui->LvlLayerList->addItem( item );
         }
 
@@ -81,3 +85,142 @@ void MainWindow::on_AddLayer_clicked()
     ui->LvlLayerList->editItem( item );
 
 }
+
+
+void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
+{
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        if(item->data(3).toString()=="NewLayer")
+        {
+            bool AlreadyExist=false;
+            foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+            {
+                if( layer.name==item->text() )
+                {
+                    AlreadyExist=true;
+                    break;
+                }
+            }
+
+            if(AlreadyExist)
+            {
+                delete item;
+                return;
+            }
+            else
+            {
+                LevelLayers NewLayer;
+                NewLayer.name = item->text();
+                NewLayer.hidden = (item->checkState() == Qt::Unchecked );
+                activeLvlEditWin()->LvlData.layers_array_id++;
+                NewLayer.array_id = activeLvlEditWin()->LvlData.layers_array_id;
+
+                item->setData(3, QString::number(NewLayer.array_id));
+
+                activeLvlEditWin()->LvlData.layers.push_back(NewLayer);
+            }
+
+        }//if(item->data(3).toString()=="NewLayer")
+        else
+        {
+            QString layerName = item->text();
+            QString oldLayerName = item->text();
+            unsigned int layerArId = (unsigned int)item->data(3).toInt();
+            bool layerVisible = (item->checkState()==Qt::Checked);
+
+            //Find layer enrty in array and apply settings
+            for(int i=0; i < activeLvlEditWin()->LvlData.layers.size(); i++)
+            {
+                if( activeLvlEditWin()->LvlData.layers[i].array_id==layerArId )
+                {
+                    oldLayerName = activeLvlEditWin()->LvlData.layers[i].name;
+                    activeLvlEditWin()->LvlData.layers[i].name = layerName;
+                    activeLvlEditWin()->LvlData.layers[i].hidden = !layerVisible;
+                    break;
+                }
+            }
+
+
+            //Apply layer's name/visibly to all items
+            QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+
+            for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+            {
+                if((*it)->data(0).toString()=="Block")
+                {
+                    if(((ItemBlock *)(*it))->blockData.layer!=oldLayerName)
+                        continue;
+                    ((ItemBlock *)(*it))->blockData.layer = layerName;
+                    (*it)->setVisible(layerVisible);
+                }
+                else
+                if((*it)->data(0).toString()=="BGO")
+                {
+                    if(((ItemBGO *)(*it))->bgoData.layer!=oldLayerName)
+                        continue;
+                    ((ItemBGO *)(*it))->bgoData.layer = layerName;
+                    (*it)->setVisible(layerVisible);
+                }
+                else
+                if((*it)->data(0).toString()=="NPC")
+                {
+                    if(((ItemNPC *)(*it))->npcData.layer!=oldLayerName)
+                        continue;
+                    ((ItemNPC *)(*it))->npcData.layer = layerName;
+                    (*it)->setVisible(layerVisible);
+                }
+                else
+                if((*it)->data(0).toString()=="Water")
+                {
+                    //if(((ItemWater *)(*it))->waterData.layer!=oldLayerName)
+                    //    continue;
+                    //((ItemWater *)(*it))->waterData.layer = layerName;
+                    //(*it)->setVisible(layerVisible);
+                }
+                else
+                if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+                {
+                    //if(((ItemDoor *)(*it))->doorData.layer!=oldLayerName)
+                    //    continue;
+                    //((ItemDoor *)(*it))->doorData.layer = layerName;
+                    //(*it)->setVisible(layerVisible);
+                }
+            }
+
+        }
+
+    }//if WinType==1
+}
+
+
+
+void MainWindow::on_RemoveLayer_clicked()
+{
+   QList<QListWidgetItem * > selected = ui->LvlLayerList->selectedItems();
+
+   if(selected.isEmpty()) return;
+
+   if(selected[0]->text()=="Destroyed Blocks") return;
+   if(selected[0]->text()=="Spawned NPCs") return;
+   if(selected[0]->text()=="Default") return;
+
+   int WinType = activeChildWindow();
+
+   if (WinType==1)
+   {
+       for(int i=0;i< activeLvlEditWin()->LvlData.layers.size(); i++)
+       {
+           if( activeLvlEditWin()->LvlData.layers[i].array_id==(unsigned int)selected[0]->data(3).toInt() )
+           {
+               activeLvlEditWin()->LvlData.layers.remove(i);
+               delete selected[0];
+               break;
+           }
+       }
+   }
+
+}
+

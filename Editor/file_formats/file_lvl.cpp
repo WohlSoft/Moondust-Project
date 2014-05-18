@@ -724,7 +724,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         {
             if(SMBX64::qStr(line)) //Layer name
                 goto badfile;
-            else layers.name=removeQuotes(line);;
+            else layers.name=removeQuotes(line);
 
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //hidden layer
