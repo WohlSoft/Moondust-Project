@@ -255,6 +255,8 @@ private slots:
 
     void on_actionNewNPC_config_triggered();
 
+    void on_actionApplication_settings_triggered();
+
 private:
     dataconfigs configs; // Global objects configucrations
 

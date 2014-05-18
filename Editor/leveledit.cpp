@@ -191,6 +191,10 @@ void leveledit::ResetPosition()
 
 void leveledit::setCurrentSection(int scId)
 {
+    bool sIsNew=false;
+    QPointF center = ui->graphicsView->viewport()->rect().center();
+    center = ui->graphicsView->mapToScene( center.toPoint() );
+
     WriteToLog(QtDebugMsg, QString("Save current position %1 %2")
                .arg(ui->graphicsView->horizontalScrollBar()->value())
                .arg(ui->graphicsView->verticalScrollBar()->value())
@@ -205,13 +209,44 @@ void leveledit::setCurrentSection(int scId)
     //Change Current Section
     LvlData.CurSection = scId;
 
+    //allocate new section zone if empty
+    if(
+        (LvlData.sections[LvlData.CurSection].size_left==0) &&
+        (LvlData.sections[LvlData.CurSection].size_top==0) &&
+        (LvlData.sections[LvlData.CurSection].size_bottom==0) &&
+        (LvlData.sections[LvlData.CurSection].size_right==0)
+      )
+    {
+        scene->InitSection(LvlData.CurSection);
+        sIsNew=true;
+    }
+
+    scene->drawSpace(LvlData);
+
     WriteToLog(QtDebugMsg, QString("Move to current section position"));
+
     //Move to new section position
-    ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionY);
-    ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionX);
+    if(sIsNew)
+    {
+        ui->graphicsView->centerOn(center);
+        ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_top);
+        ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_left);
+    }
+    else
+    {
+        ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionY);
+        ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionX);
+    }
 
     WriteToLog(QtDebugMsg, QString("Call to Draw intersection space"));
-    scene->drawSpace(LvlData);
+
+    scene->update();
+    ui->graphicsView->update();
+
+    update();
+
+    if(sIsNew) scene->resetPosition = true;
+
 }
 
 
