@@ -227,7 +227,8 @@ public:
         SETTING_BOSS,          //extraData: bool [Activated?]
         SETTING_NOMOVEABLE,    //extraData: bool [Activated?]
         SETTING_MESSAGE,       //extraData: QList<QVariant[String]> [Old Text, New Text]
-        SETTING_DIRECTION      //extraData: QList<QVariant[int]> [Old Dir, New Dir]
+        SETTING_DIRECTION,     //extraData: QList<QVariant[int]> [Old Dir, New Dir]
+        SETTING_CHANGENPC      //extraData: QList<QVariant[int]> [Old NPC ID, New NPC ID]
     };
 
     //typedefs
@@ -279,6 +280,9 @@ public:
     //Callbackfunctions: [Change Settings] Direction
     void historyUndoSettingsDirectionNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsDirectionNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Included NPC
+    void historyUndoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,
