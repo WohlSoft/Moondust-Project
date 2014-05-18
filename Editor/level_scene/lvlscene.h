@@ -222,7 +222,10 @@ public:
 
     enum SettingSubType{
         SETTING_INVISIBLE = 0, //extraData: bool [Activated?]
-        SETTING_SLIPPERY       //extraData: bool [Activated?]
+        SETTING_SLIPPERY,      //extraData: bool [Activated?]
+        SETTING_FRIENDLY,      //extraData: bool [Activated?]
+        SETTING_BOSS,          //extraData: bool [Activated?]
+        SETTING_NOMOVEABLE     //extraData: bool [Activated?]
     };
 
     //typedefs
@@ -259,6 +262,15 @@ public:
     //Callbackfunctions: [Change Settings] Invisible
     void historyUndoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
     void historyRedoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: [Change Settings] Friendly
+    void historyUndoSettingsFriendlyNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsFriendlyNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Boss
+    void historyUndoSettingsBossNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsBossNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] NoMoveable
+    void historyUndoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,
