@@ -66,6 +66,7 @@ void MainWindow::OpenFile(QString FilePath)
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
 
+            updateMenus(true);
             SetCurrentLevelSection(0);
             setDoorsToolbox();
             setLayersBox();
@@ -109,6 +110,7 @@ void MainWindow::OpenFile(QString FilePath)
         npcedit *child = createNPCChild();
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
+            updateMenus(true);
             child->show();
         } else {
             child->close();
