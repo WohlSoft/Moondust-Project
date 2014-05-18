@@ -1430,7 +1430,7 @@ public:
 
         AddLayer = new QPushButton(LevelLayersBox);
         AddLayer->setObjectName(QStringLiteral("AddLayer"));
-        AddLayer->setEnabled(false);
+        AddLayer->setEnabled(true);
 
         gridLayout->addWidget(AddLayer, 1, 0, 1, 1);
 

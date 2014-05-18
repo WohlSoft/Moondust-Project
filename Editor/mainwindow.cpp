@@ -236,4 +236,3 @@ void MainWindow::on_actionNewNPC_config_triggered()
 
 }
 
-
