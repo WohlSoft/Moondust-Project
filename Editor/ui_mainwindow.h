@@ -282,7 +282,7 @@ public:
         MainWindow->setSizePolicy(sizePolicy);
         MainWindow->setMinimumSize(QSize(0, 508));
         MainWindow->setFocusPolicy(Qt::NoFocus);
-        MainWindow->setContextMenuPolicy(Qt::NoContextMenu);
+        MainWindow->setContextMenuPolicy(Qt::CustomContextMenu);
         MainWindow->setAcceptDrops(true);
         QIcon icon;
         icon.addFile(QStringLiteral(":/images/mushroom16.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -1164,9 +1164,9 @@ public:
         LVLPropsMusicNumber->setFocusPolicy(Qt::WheelFocus);
         LVLPropCMusicLbl = new QLabel(LVLPropMusicGr);
         LVLPropCMusicLbl->setObjectName(QStringLiteral("LVLPropCMusicLbl"));
-        LVLPropCMusicLbl->setGeometry(QRect(10, 46, 47, 16));
+        LVLPropCMusicLbl->setGeometry(QRect(10, 46, 191, 16));
         LVLPropCMusicLbl->setFont(font);
-        LVLPropCMusicLbl->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        LVLPropCMusicLbl->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
         LVLPropsMusicCustom = new QLineEdit(LVLPropMusicGr);
         LVLPropsMusicCustom->setObjectName(QStringLiteral("LVLPropsMusicCustom"));
         LVLPropsMusicCustom->setGeometry(QRect(10, 60, 171, 21));
@@ -1356,10 +1356,10 @@ public:
         groupBox_4->setGeometry(QRect(10, 320, 101, 91));
         WarpLevelEntrance = new QCheckBox(groupBox_4);
         WarpLevelEntrance->setObjectName(QStringLiteral("WarpLevelEntrance"));
-        WarpLevelEntrance->setGeometry(QRect(10, 42, 71, 17));
+        WarpLevelEntrance->setGeometry(QRect(10, 42, 81, 17));
         WarpLevelExit = new QCheckBox(groupBox_4);
         WarpLevelExit->setObjectName(QStringLiteral("WarpLevelExit"));
-        WarpLevelExit->setGeometry(QRect(10, 22, 71, 17));
+        WarpLevelExit->setGeometry(QRect(10, 22, 81, 17));
         groupBox_7 = new QGroupBox(dockWidgetContents);
         groupBox_7->setObjectName(QStringLiteral("groupBox_7"));
         groupBox_7->setGeometry(QRect(10, 140, 221, 121));
@@ -1381,7 +1381,7 @@ public:
         Entr_Up->setChecked(false);
         Entr_Down = new QRadioButton(WarpEntranceGrp);
         Entr_Down->setObjectName(QStringLiteral("Entr_Down"));
-        Entr_Down->setGeometry(QRect(35, 23, 16, 16));
+        Entr_Down->setGeometry(QRect(35, 25, 16, 16));
         Entr_Down->setChecked(true);
         label_2 = new QLabel(WarpEntranceGrp);
         label_2->setObjectName(QStringLiteral("label_2"));
@@ -1414,9 +1414,11 @@ public:
         LevelLayers->setObjectName(QStringLiteral("LevelLayers"));
         LevelLayers->setMinimumSize(QSize(246, 150));
         LevelLayers->setBaseSize(QSize(246, 250));
+        LevelLayers->setContextMenuPolicy(Qt::CustomContextMenu);
         LevelLayers->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
         LevelLayersBox = new QWidget();
         LevelLayersBox->setObjectName(QStringLiteral("LevelLayersBox"));
+        LevelLayersBox->setContextMenuPolicy(Qt::CustomContextMenu);
         gridLayout = new QGridLayout(LevelLayersBox);
         gridLayout->setSpacing(0);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -1451,6 +1453,7 @@ public:
         __qlistwidgetitem5->setCheckState(Qt::Checked);
         __qlistwidgetitem5->setFlags(Qt::ItemIsDragEnabled|Qt::ItemIsUserCheckable);
         LvlLayerList->setObjectName(QStringLiteral("LvlLayerList"));
+        LvlLayerList->setContextMenuPolicy(Qt::CustomContextMenu);
         LvlLayerList->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         LvlLayerList->setDragDropMode(QAbstractItemView::InternalMove);
         LvlLayerList->setAlternatingRowColors(true);

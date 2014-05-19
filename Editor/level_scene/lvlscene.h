@@ -109,6 +109,7 @@ public:
     bool doCut;
     bool historyChanged;
     bool resetPosition;
+    bool SyncLayerList;
 
     //Copy function
     LevelData copy(bool cut = false);

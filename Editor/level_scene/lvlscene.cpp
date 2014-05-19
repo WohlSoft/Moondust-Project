@@ -64,6 +64,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     wasPasted = false;  //call to cursor reset to normal select
     doCopy = false;     //call to copy
     doCut = false;      //call to cut
+    SyncLayerList = false; //Call to refresh layer list
 
 
     QPixmap cur(QSize(1,1));

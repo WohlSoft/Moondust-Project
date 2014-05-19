@@ -8,8 +8,13 @@ QT       += core gui widgets multimedia
 
 CONFIG += static
 
-TARGET = plweditor
+TARGET = pge_editor
 TEMPLATE = app
+
+TRANSLATIONS += languages/pge_editor_en.ts \
+    languages/pge_editor_ru.ts \
+    languages/pge_editor_de.ts \
+    languages/pge_editor_es.ts
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -59,7 +64,8 @@ SOURCES += main.cpp\
     level_scene/itemmsgbox.cpp \
     level_scene/lvl_collisions.cpp \
     main_window/appsettings.cpp \
-    main_window/edit_level_layers.cpp
+    main_window/edit_level_layers.cpp \
+    level_scene/newlayerbox.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
@@ -82,7 +88,8 @@ HEADERS  += mainwindow.h \
     common_features/logger_sets.h \
     npc_dialog/npcdialog.h \
     level_scene/itemmsgbox.h \
-    main_window/appsettings.h
+    main_window/appsettings.h \
+    level_scene/newlayerbox.h
 
 FORMS    += \
     aboutdialog.ui \
@@ -94,7 +101,8 @@ FORMS    += \
     musicfilelist.ui \
     npc_dialog/npcdialog.ui \
     level_scene/itemmsgbox.ui \
-    main_window/appsettings.ui
+    main_window/appsettings.ui \
+    level_scene/tonewlayerbox.ui
 
 RC_FILE = platgenw.rc
 

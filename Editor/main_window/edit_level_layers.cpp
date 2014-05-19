@@ -121,6 +121,7 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                 item->setData(3, QString::number(NewLayer.array_id));
 
                 activeLvlEditWin()->LvlData.layers.push_back(NewLayer);
+                activeLvlEditWin()->LvlData.modified=true;
             }
 
         }//if(item->data(3).toString()=="NewLayer")
@@ -189,6 +190,7 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                     //(*it)->setVisible(layerVisible);
                 }
             }
+            activeLvlEditWin()->LvlData.modified=true;
 
         }
 
@@ -224,3 +226,125 @@ void MainWindow::on_RemoveLayer_clicked()
 
 }
 
+
+
+void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
+{
+    if(ui->LvlLayerList->selectedItems().isEmpty()) return;
+
+    QPoint globPos = ui->LvlLayerList->mapToGlobal(pos);
+
+    WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2 -> %3 %4")
+               .arg(pos.x()).arg(pos.y())
+               .arg(globPos.x()).arg(globPos.y()));
+
+    QMenu *layer_menu = new QMenu(this);
+    QAction * rename = layer_menu->addAction(tr("Rename layer"));
+
+    layer_menu->addSeparator();
+
+    QAction * removeLayer = layer_menu->addAction(tr("Remove layer with items"));
+    QAction * removeLayerOnly = layer_menu->addAction(tr("Remove layer and save items"));
+
+    QAction *selected = layer_menu->exec( globPos );
+    if(selected==rename)
+    {
+        ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
+    }
+    else
+    if((selected==removeLayer)||(selected==removeLayerOnly))
+    {
+        QString layerName = ui->LvlLayerList->selectedItems()[0]->text();
+        bool layerVisible = true;
+        bool saveItems = (selected==removeLayerOnly);
+
+        if(saveItems)
+        { //Find default layer visibly
+            foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+            {
+                if( layer.name=="Default" )
+                {
+                    layerVisible=!layer.hidden;
+                    break;
+                }
+            }
+        }
+
+
+        //Apply layer's name/visibly to all items
+        QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+
+        for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+        {
+            if((*it)->data(0).toString()=="Block")
+            {
+                if(((ItemBlock *)(*it))->blockData.layer!=layerName)
+                    continue;
+                if(saveItems)
+                {
+                    ((ItemBlock *)(*it))->blockData.layer = "Default";
+                    (*it)->setVisible(layerVisible);
+                }
+                else
+                {
+                    ((ItemBlock *)(*it))->removeFromArray();
+                    activeLvlEditWin()->scene->removeItem((*it));
+                }
+            }
+            else
+            if((*it)->data(0).toString()=="BGO")
+            {
+                if(((ItemBGO *)(*it))->bgoData.layer!=layerName)
+                    continue;
+                if(saveItems)
+                {
+                    ((ItemBGO *)(*it))->bgoData.layer = "Default";
+                    (*it)->setVisible(layerVisible);
+                }
+                else
+                {
+                    ((ItemBGO *)(*it))->removeFromArray();
+                    activeLvlEditWin()->scene->removeItem((*it));
+                }
+            }
+            else
+            if((*it)->data(0).toString()=="NPC")
+            {
+                if(((ItemNPC *)(*it))->npcData.layer!=layerName)
+                    continue;
+                if(saveItems)
+                {
+                    ((ItemNPC *)(*it))->npcData.layer = "Default";
+                    (*it)->setVisible(layerVisible);
+                }
+                else
+                {
+                    ((ItemNPC *)(*it))->removeFromArray();
+                    activeLvlEditWin()->scene->removeItem((*it));
+                }
+            }
+            else
+            if((*it)->data(0).toString()=="Water")
+            {
+                //if(((ItemWater *)(*it))->waterData.layer!=layerName)
+                //    continue;
+                //((ItemWater *)(*it))->waterData.layer = layerName;
+                //(*it)->setVisible(layerVisible);
+            }
+            else
+            if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+            {
+                //if(((ItemDoor *)(*it))->doorData.layer!=layerName)
+                //    continue;
+                //((ItemDoor *)(*it))->doorData.layer = layerName;
+                //(*it)->setVisible(layerVisible);
+            }
+        }
+        activeLvlEditWin()->LvlData.modified=true;
+
+
+        on_RemoveLayer_clicked();
+    }
+
+
+}
