@@ -282,7 +282,9 @@ private:
     void ModifyLayer(QString layerName, bool visible);
     void ModifyLayer(QString layerName, QString newLayerName);
     void ModifyLayer(QString layerName, QString newLayerName, bool visible);
-
+    //Direct List Functions
+    void AddNewLayer(QString layerName, bool setEdited);
+    void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);
     // //////////////////////////////////////////////
     bool WorldToolBoxVis;
     bool autoPlayMusic;
