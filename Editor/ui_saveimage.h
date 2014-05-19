@@ -40,7 +40,7 @@ public:
     {
         if (ExportToImage->objectName().isEmpty())
             ExportToImage->setObjectName(QStringLiteral("ExportToImage"));
-        ExportToImage->resize(300, 156);
+        ExportToImage->resize(241, 156);
         QFont font;
         font.setFamily(QStringLiteral("Liberation Sans"));
         ExportToImage->setFont(font);
@@ -49,7 +49,7 @@ public:
         ExportToImage->setWindowIcon(icon);
         gridLayout = new QGridLayout(ExportToImage);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout->setSizeConstraint(QLayout::SetFixedSize);
+        gridLayout->setSizeConstraint(QLayout::SetMinimumSize);
         imgHeight = new QSpinBox(ExportToImage);
         imgHeight->setObjectName(QStringLiteral("imgHeight"));
         imgHeight->setMaximum(999999999);
