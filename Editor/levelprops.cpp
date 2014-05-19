@@ -24,10 +24,10 @@ LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LevelProps)
 {
-    currentData = FileData;
+    currentData = &FileData;
     ui->setupUi(this);
-    ui->LVLPropLevelTitle->setText(currentData.LevelName);
-    ui->setAutoplayMusic->setChecked(currentData.playmusic);
+    ui->LVLPropLevelTitle->setText(currentData->LevelName);
+    ui->setAutoplayMusic->setChecked(currentData->playmusic);
 }
 
 LevelProps::~LevelProps()
