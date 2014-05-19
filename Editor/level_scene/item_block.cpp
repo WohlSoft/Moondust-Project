@@ -150,6 +150,7 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         else
         if(selected==chNPC)
         {
+            scene->contextMenuOpened = false;
             LevelData selData;
             QList<QVariant> modNPC;
             modNPC.push_back(QVariant((int)blockData.npc_id));
@@ -182,7 +183,6 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
                 modNPC.push_back(QVariant(selected_npc));
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_CHANGENPC, QVariant(modNPC));
-            scene->contextMenuOpened = false;
         }
         else
         if(selected==remove)
