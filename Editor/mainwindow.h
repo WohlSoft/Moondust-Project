@@ -44,7 +44,7 @@
 #include "edit_level/leveledit.h"
 #include "edit_npc/npcedit.h"
 
-#include "aboutdialog.h"
+#include "about_dialog/aboutdialog.h"
 #include "edit_level/levelprops.h"
 
 #include "data_configs/data_configs.h"

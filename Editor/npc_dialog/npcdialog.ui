@@ -14,7 +14,7 @@
    <string>NPC Select dialog</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../editor.qrc">
+   <iconset resource="../_resources/editor.qrc">
     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,10,40,1000" columnstretch="100,0">
@@ -55,7 +55,7 @@
        <string>NPC 1</string>
       </property>
       <property name="icon">
-       <iconset resource="../editor.qrc">
+       <iconset resource="../_resources/editor.qrc">
         <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
       </property>
      </item>
@@ -64,7 +64,7 @@
        <string>NPC 2</string>
       </property>
       <property name="icon">
-       <iconset resource="../editor.qrc">
+       <iconset resource="../_resources/editor.qrc">
         <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
       </property>
      </item>
@@ -73,7 +73,7 @@
        <string>NPC 3</string>
       </property>
       <property name="icon">
-       <iconset resource="../editor.qrc">
+       <iconset resource="../_resources/editor.qrc">
         <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
       </property>
      </item>
@@ -167,7 +167,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../editor.qrc"/>
+  <include location="../_resources/editor.qrc"/>
  </resources>
  <connections>
   <connection>

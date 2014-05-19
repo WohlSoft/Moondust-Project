@@ -43,7 +43,7 @@
    <string>About</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="editor.qrc">
+   <iconset resource="../_resources/editor.qrc">
     <normaloff>:/images/mushroom16.png</normaloff>:/images/mushroom16.png</iconset>
   </property>
   <property name="autoFillBackground">
@@ -215,7 +215,7 @@ p, li { white-space: pre-wrap; }
   </action>
  </widget>
  <resources>
-  <include location="editor.qrc"/>
+  <include location="../_resources/editor.qrc"/>
  </resources>
  <connections/>
 </ui>
