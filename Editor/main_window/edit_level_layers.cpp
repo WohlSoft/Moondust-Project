@@ -263,6 +263,73 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
     }
 }
 
+void MainWindow::AddNewLayer(QString layerName, bool setEdited)
+{
+    QListWidgetItem * item;
+    item = new QListWidgetItem;
+    item->setText(layerName);
+    item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEditable);
+    item->setFlags(item->flags() | Qt::ItemIsEnabled);
+    item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+    item->setCheckState( Qt::Checked );
+    item->setData(3, QString("NewLayer") );
+    ui->LvlLayerList->addItem( item );
+
+    if(setEdited)
+    {
+        ui->LvlLayerList->setFocus();
+        ui->LvlLayerList->editItem( item );
+    }
+    else
+    {
+        bool AlreadyExist=false;
+        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+        {
+            if( layer.name==item->text() )
+            {
+                AlreadyExist=true;
+                break;
+            }
+        }
+
+        if(AlreadyExist)
+        {
+            delete item;
+            return;
+        }
+        else
+        {
+            LevelLayers NewLayer;
+            NewLayer.name = item->text();
+            NewLayer.hidden = (item->checkState() == Qt::Unchecked );
+            activeLvlEditWin()->LvlData.layers_array_id++;
+            NewLayer.array_id = activeLvlEditWin()->LvlData.layers_array_id;
+
+            item->setData(3, QString::number(NewLayer.array_id));
+
+            activeLvlEditWin()->LvlData.layers.push_back(NewLayer);
+            activeLvlEditWin()->LvlData.modified=true;
+        }
+    }
+}
+
+void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible)
+{
+    //Find layer enrty in array and apply settings
+    for(int i=0; i < activeLvlEditWin()->LvlData.layers.size(); i++)
+    {
+        if( activeLvlEditWin()->LvlData.layers[i].array_id==(unsigned int)item->data(3).toInt() )
+        {
+            oldLayerName = activeLvlEditWin()->LvlData.layers[i].name;
+            activeLvlEditWin()->LvlData.layers[i].name = newLayerName;
+            activeLvlEditWin()->LvlData.layers[i].hidden = !visible;
+            break;
+        }
+    }
+    //Apply layer's name/visibly to all items
+    ModifyLayer(oldLayerName, newLayerName, visible);
+}
+
 
 void MainWindow::on_LevelLayers_visibilityChanged(bool visible)
 {
@@ -309,6 +376,8 @@ void MainWindow::setLayersBox()
 
 void MainWindow::on_AddLayer_clicked()
 {
+    AddNewLayer(tr("New Layer %1").arg( ui->LvlLayerList->count()+1 ), true);
+    /*
     QListWidgetItem * item;
     item = new QListWidgetItem;
     item->setText(tr("New Layer %1").arg( ui->LvlLayerList->count()+1 ) );
@@ -321,7 +390,7 @@ void MainWindow::on_AddLayer_clicked()
 
     ui->LvlLayerList->setFocus();
     ui->LvlLayerList->editItem( item );
-
+    */
 }
 
 
@@ -367,11 +436,13 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
         {
             QString layerName = item->text();
             QString oldLayerName = item->text();
-            unsigned int layerArId = (unsigned int)item->data(3).toInt();
+            //unsigned int layerArId = (unsigned int)item->data(3).toInt();
             bool layerVisible = (item->checkState()==Qt::Checked);
 
+            ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
+
             //Find layer enrty in array and apply settings
-            for(int i=0; i < activeLvlEditWin()->LvlData.layers.size(); i++)
+            /*for(int i=0; i < activeLvlEditWin()->LvlData.layers.size(); i++)
             {
                 if( activeLvlEditWin()->LvlData.layers[i].array_id==layerArId )
                 {
@@ -380,9 +451,9 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                     activeLvlEditWin()->LvlData.layers[i].hidden = !layerVisible;
                     break;
                 }
-            }
+            }*/
             //Apply layer's name/visibly to all items
-            ModifyLayer(oldLayerName, layerName, layerVisible);
+            //ModifyLayer(oldLayerName, layerName, layerVisible);
 
             /*
             QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
