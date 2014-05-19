@@ -17,12 +17,14 @@
  */
 
 #include "ui_mainwindow.h"
-#include "mainwindow.h"
+#include "../mainwindow.h"
 
 
 
-void MainWindow::updateMenus()
+void MainWindow::updateMenus(bool force)
 {
+    if(!force) if(!this->isActiveWindow()) return;
+
     WriteToLog(QtDebugMsg, QString("Update menus"));
 
     int WinType = activeChildWindow(); // 1 lvledit, 2 npcedit, 3 wldedit
@@ -187,11 +189,28 @@ void MainWindow::updateMenus()
         ui->menuWindow->addAction(separatorAct);
     */
 
+    QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
+
+
+    QAction * closeC = ui->menuWindow->addAction(tr("Close current"));
+        connect(closeC, SIGNAL(triggered()), this, SLOT( on_actionClose_triggered() ) );
+        closeC->setEnabled( !windows.isEmpty() );
+
+    ui->menuWindow->addSeparator();
+
+    QAction * cascade = ui->menuWindow->addAction(tr("Cascade"));
+        connect(cascade, SIGNAL(triggered()), this, SLOT( SWCascade() ) );
+        cascade->setEnabled( !windows.isEmpty() );
+
+    QAction * tiledW = ui->menuWindow->addAction(tr("Tiled"));
+        connect(tiledW, SIGNAL(triggered()), this, SLOT( SWTile() ) );
+        tiledW->setEnabled( !windows.isEmpty() );
+
+    ui->menuWindow->addSeparator();
 
     QAction * empty = ui->menuWindow->addAction( tr("[No opened files]") );
         empty->setDisabled(1);
 
-    QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
         empty->setVisible( windows.isEmpty() );
 
 

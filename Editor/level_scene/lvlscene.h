@@ -38,8 +38,8 @@
 #include <QDebug>
 
 
-#include "../lvl_filedata.h"
-#include "../npc_filedata.h"
+#include "../file_formats/lvl_filedata.h"
+#include "../file_formats/npc_filedata.h"
 #include "../data_configs/data_configs.h"
 
 #include "../common_features/logger.h"
@@ -67,6 +67,7 @@ struct UserNPCs
 
     bool withTxt;
     NPCConfigFile sets;
+    obj_npc merged;
 };
 
 struct UserBGs
@@ -107,6 +108,8 @@ public:
     bool doCopy;
     bool doCut;
     bool historyChanged;
+    bool resetPosition;
+    bool SyncLayerList;
 
     //Copy function
     LevelData copy(bool cut = false);
@@ -116,6 +119,8 @@ public:
 
     //void makeSectionBG(int x, int y, int h, int w);
     void makeSectionBG(LevelData FileData, QProgressDialog &progress);
+
+    void InitSection(int sect);
 
     void drawSpace(LevelData FileData);
     void ChangeSectionBG(int BG_Id, LevelData &FileData);
@@ -129,6 +134,9 @@ public:
     void setDoors(LevelData FileData, QProgressDialog &progress);
     void setPlayerPoints();
 
+    QPixmap getNPCimg(unsigned long npcID);
+    obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
+
     void applyLayersVisible();
 
     void startBlockAnimation();
@@ -141,6 +149,7 @@ public:
 
     //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
+    void sortBlockArrayByPos(QVector<LevelBlock > &blocks);
     void sortBGOArray(QVector<LevelBGO > &bgos);
 
     QVector<UserBGs > uBGs;
@@ -178,7 +187,8 @@ public:
     int bgoZf; // foreground BGO
     int bgoZb; // backround BGO
     int npcZf; // foreground NPC
-    int npcZb; // standart NPC
+    int npcZs; // standart NPC
+    int npcZb; // background NPC (vines)
     int doorZ;
     int waterZ;
     int bgZ;
@@ -197,8 +207,12 @@ public:
         //used most of Operations
         LevelData data;
         LevelData data_mod;
+        //subtype (if needed)
+        int subtype;
         //for move
         long x, y;
+        //misc
+        QVariant extraData;
     };
     struct CallbackData{
         QGraphicsItem* item;
@@ -207,13 +221,26 @@ public:
         long x, y;
     };
 
+    enum SettingSubType{
+        SETTING_INVISIBLE = 0, //extraData: bool [Activated?]
+        SETTING_SLIPPERY,      //extraData: bool [Activated?]
+        SETTING_FRIENDLY,      //extraData: bool [Activated?]
+        SETTING_BOSS,          //extraData: bool [Activated?]
+        SETTING_NOMOVEABLE,    //extraData: bool [Activated?]
+        SETTING_MESSAGE,       //extraData: QList<QVariant[String]> [Old Text, New Text]
+        SETTING_DIRECTION,     //extraData: QList<QVariant[int]> [Old Dir, New Dir]
+        SETTING_CHANGENPC      //extraData: QList<QVariant[int]> [Old NPC ID, New NPC ID]
+    };
+
     //typedefs
     typedef void (LvlScene::*callBackLevelBlock)(CallbackData, LevelBlock);
     typedef void (LvlScene::*callBackLevelBGO)(CallbackData, LevelBGO);
+    typedef void (LvlScene::*callBackLevelNPC)(CallbackData, LevelNPC);
     //add historys
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
+    void addChangeSettingsHistory(LevelData modifiedItems, SettingSubType subType, QVariant extraData);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -225,13 +252,44 @@ public:
     //Callbackfunctions: Move
     void historyRedoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
+    void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
+    void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
+    void historyRemoveNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Hide
+    void historyUndoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: [Change Settings] Invisible
+    void historyUndoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsSlipperyBlock(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: [Change Settings] Friendly
+    void historyUndoSettingsFriendlyNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsFriendlyNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Boss
+    void historyUndoSettingsBossNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsBossNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] NoMoveable
+    void historyUndoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsNoMoveableNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Message
+    void historyUndoSettingsMessageNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsMessageNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Direction
+    void historyUndoSettingsDirectionNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsDirectionNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Included NPC
+    void historyUndoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
     //History functions requiring callback-functions
-    void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData, callBackLevelBlock clbBlock, callBackLevelBGO clbBgo);
+    void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
+                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,
+                          bool ignoreBlock = false,
+                          bool ignoreBGO = false, 
+                          bool ignoreNPC = false);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////

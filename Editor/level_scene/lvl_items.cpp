@@ -17,16 +17,17 @@
  */
 
 #include "lvlscene.h"
-#include "../leveledit.h"
+#include "../edit_level/leveledit.h"
 
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {
     int gridX, gridY;
-    if(grid)
+    if((grid)&&(gridSize>0))
     { //ATTACH TO GRID
         gridX = ((int)source.x() - (int)source.x() % gridSize);
         gridY = ((int)source.y() - (int)source.y() % gridSize);
@@ -58,8 +59,195 @@ QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 }
 
 
+QPixmap LvlScene::getNPCimg(unsigned long npcID)
+{
+    bool noimage=true, found=false;
+    bool isUser=false, isUserTxt=false;
+    int j;
+    QPixmap tempI;
+    int gfxH = 0;
 
-// //////////////////////////////// Place new ////////////////////////////////
+    //Check Index exists
+    if(npcID < (unsigned int)index_npc.size())
+    {
+        j = index_npc[npcID].i;
+
+        if(pConfigs->main_npc[j].id == npcID)
+            found=true;
+    }
+
+    //if Index found
+    if(found)
+    {   //get neccesary element directly
+        if(index_npc[npcID].type==1)
+        {
+            isUser=true;
+            if(uNPCs[index_npc[npcID].i].withImg)
+            {
+                noimage=false;
+                tempI = uNPCs[index_npc[npcID].i].image;
+            }
+            if(uNPCs[index_npc[npcID].i].withTxt)
+                gfxH = uNPCs[index_npc[npcID].i].merged.gfx_h;
+            else
+                gfxH = pConfigs->main_npc[index_npc[npcID].gi].height;
+        }
+
+        if(!noimage)
+        {
+            tempI = pConfigs->main_npc[(isUser) ? index_npc[npcID].gi : index_npc[npcID].i].image;
+            noimage=false;
+        }
+
+    }
+    else
+    {
+        //found neccesary element in arrays and select
+        for(j=0;j<uNPCs.size();j++)
+        {
+            if(uNPCs[j].id == npcID)
+            {
+                if(uNPCs[j].withImg)
+                {
+                    isUser=true;
+                    noimage=false;
+                    tempI = uNPCs[j].image;
+                }
+                if(uNPCs[j].withTxt)
+                {
+                    isUserTxt = true;
+                    gfxH = uNPCs[j].merged.gfx_h;
+                }
+                break;
+            }
+        }
+
+        for(j=0;j<pConfigs->main_npc.size();j++)
+        {
+            if(pConfigs->main_npc[j].id==npcID)
+            {
+                noimage=false;
+                if(!isUser)
+                    tempI = pConfigs->main_npc[j].image;
+                if(!isUserTxt)
+                    gfxH =  pConfigs->main_npc[j].gfx_h;
+                break;
+            }
+        }
+    }
+
+    if((noimage)||(tempI.isNull()))
+    {
+        return uNpcImg;
+    }
+
+    return tempI.copy(0,0, tempI.width(), gfxH );
+}
+
+
+obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
+{
+    obj_npc merged;
+    merged = global;
+    merged.image = QPixmap();   //Clear image values
+    merged.mask = QPixmap();
+
+    merged.gfx_offset_x = (local.en_gfxoffsetx)?local.gfxoffsetx:global.gfx_offset_x;
+    merged.gfx_offset_y = (local.en_gfxoffsety)?local.gfxoffsety:global.gfx_offset_y;
+
+    merged.width = (local.en_width)?local.width:global.width;
+    merged.height = (local.en_height)?local.height:global.height;
+
+    merged.foreground = (local.en_foreground)?local.foreground:global.foreground;
+
+    merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / qreal(8 / local.framespeed) ) : global.framespeed;
+    merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
+
+    merged.frames = (local.en_frames)?local.frames:global.frames;
+
+    if((local.en_frames)||(local.en_framestyle))
+        merged.ani_bidir = false; //Disable bidirectional animation
+
+    //Copy fixture size to GFX size
+    if((local.en_width)&&
+                (
+                ((merged.width <= (unsigned int)global.gfx_w)&&(merged.framestyle<2)&&(merged.framestyle>0))||
+                ((merged.width != (unsigned int)global.gfx_w)&&(merged.framestyle==0))
+                )
+            )
+        merged.gfx_w = merged.width;
+    else
+    {
+        if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
+            merged.width = captured.width();
+
+        merged.gfx_w = global.gfx_w;
+    }
+
+    //Copy fixture size to GFX size
+    if((local.en_height)&&(global.height <= (unsigned int)global.gfx_h)&&(merged.framestyle<2))
+        merged.gfx_h = merged.height;
+    else
+        merged.gfx_h = global.gfx_h;
+
+    if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
+        merged.gfx_w = captured.width();
+    else
+        merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
+
+    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
+
+
+    if(((int)merged.width>=(int)merged.grid))
+        merged.grid_offset_x = -1 * qRound( qreal((int)merged.width % merged.grid)/2 );
+    else
+        merged.grid_offset_x = qRound( qreal( merged.grid - (int)merged.width )/2 );
+
+    if(merged.grid_attach_style==1) merged.grid_offset_x += 16;
+
+    merged.grid_offset_y = -merged.height % merged.grid;
+
+
+    merged.score = (local.en_score)?local.score:global.score;
+    merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
+    merged.block_player_top = (local.en_playerblocktop)?local.playerblocktop:global.block_player_top;
+    merged.block_npc = (local.en_npcblock)?local.npcblock:global.block_npc;
+    merged.block_npc_top = (local.en_npcblocktop)?local.npcblocktop:global.block_npc_top;
+    merged.grab_side = (local.en_grabside)?local.grabside:global.grab_side;
+    merged.grab_top = (local.en_grabtop)?local.grabtop:global.grab_top;
+    merged.kill_on_jump = (local.en_jumphurt)? (!local.jumphurt) : global.kill_on_jump ;
+    merged.hurt_player = (local.en_nohurt)?!local.nohurt:global.hurt_player;
+    merged.collision_with_blocks = (local.en_noblockcollision)?(!local.noblockcollision):global.collision_with_blocks;
+    merged.turn_on_cliff_detect = (local.en_cliffturn)?local.cliffturn:global.turn_on_cliff_detect;
+    merged.can_be_eaten = (local.en_noyoshi)?(!local.noyoshi):global.can_be_eaten;
+    merged.speed = (local.en_speed) ? global.speed * local.speed : global.speed;
+    merged.kill_by_fireball = (local.en_nofireball)?(!local.nofireball):global.kill_by_fireball;
+    merged.gravity = (local.en_nogravity)?(!local.nogravity):global.gravity;
+    merged.freeze_by_iceball = (local.en_noiceball)?(!local.noiceball):global.freeze_by_iceball;
+    merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
+    merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
+
+    WriteToLog(QtDebugMsg, QString("-------------------------------------"));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge for NPC-ID=%1").arg(merged.id));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Height:   %1").arg(merged.height));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Width:    %1").arg(merged.width));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX h:    %1").arg(merged.gfx_h));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX w:    %1").arg(merged.gfx_w));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Grid size %1").arg(merged.grid));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset x: %1").arg(merged.grid_offset_x));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset y: %1").arg(merged.grid_offset_y));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GridStl:  %1").arg(merged.grid_attach_style));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offX: %1").arg(merged.gfx_offset_x));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offY: %1").arg(merged.gfx_offset_y));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> FrStyle:  %1").arg(merged.framestyle));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Frames:   %1").arg((int)merged.frames));
+    WriteToLog(QtDebugMsg, QString("-------------------------------------"));
+
+    return merged;
+}
+
+
+////////////////////////////////// Place new ////////////////////////////////
 
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
@@ -67,7 +255,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     bool isUser=false;
     int j;
 
-    QGraphicsItem *npc;
+    QGraphicsItem *npc = NULL;
     QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
 
@@ -143,6 +331,11 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     includedNPC = new QGraphicsItemGroup(BlockImage);
 
+    //Set pointers
+    BlockImage->setScenePoint(this);
+    BlockImage->setGroupPoint(includedNPC);
+    BlockImage->setNPCItemPoint(npc);
+
     if(block.invisible)
         BlockImage->setOpacity(qreal(0.5));
 
@@ -151,19 +344,19 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     {
         newPos = applyGrid(QPoint(block.x, block.y), 32);
         block.x = newPos.x();
+        BlockImage->blockData.x = newPos.x();
         block.y = newPos.y();
+        BlockImage->blockData.y = newPos.y();
     }
 
     BlockImage->setPos(QPointF(newPos));
 
+    //////////////////////////////Included NPC////////////////////////////////////////
     if(block.npc_id != 0)
     {
-        npc = addPixmap( QPixmap(uNpcImg) );
-        npc->setPos(block.x, block.y);
-        npc->setZValue(blockZ);
-        npc->setOpacity(qreal(0.4));
-        includedNPC->addToGroup(npc);
+        BlockImage->setIncludedNPC(block.npc_id);
     }
+    //////////////////////////////////////////////////////////////////////////////////
 
     if(pConfigs->main_block[j].sizable)
     {
@@ -195,7 +388,6 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     BlockImage->setData(9, QString::number(block.w) ); //width
     BlockImage->setData(10, QString::number(block.h) ); //height
-    BlockImage->setScenePoint(this);
     if(PasteFromBuffer) BlockImage->setSelected(true);
 }
 
@@ -237,6 +429,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     }
     else
     {
+        //fetching arrays
         for(j=0;j<uBGOs.size();j++)
         {
             if(uBGOs[j].id==bgo.id)
@@ -322,24 +515,166 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 
 void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
-    QGraphicsItem *	box;
-    QGraphicsTextItem *npcTxt, *npcTxt_l2;
-    QGraphicsItemGroup *npcBox;
 
-    QFont font1, font2;
-    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
-    font1.setBold(1);
-    font1.setPointSize(14);
+    int j;
+    bool noimage=true, found=false;
+    bool isUser=false;
+    bool isUserTxt=false;
+    obj_npc mergedSet;
 
-    font2.setWeight(14);
-    font2.setBold(0);
-    font2.setPointSize(12);
+    ItemNPC *NPCItem = new ItemNPC;
 
-    box = addPixmap(QPixmap(uNpcImg));
-    npcBox = new QGraphicsItemGroup(box);
+    //QGraphicsItem *	box;
+    //QGraphicsTextItem *npcTxt, *npcTxt_l2;
+    //QGraphicsItemGroup *npcBox;
 
-    box->setPos(npc.x, npc.y);
+    //    QFont font1, font2;
+    //    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
+    //    font1.setBold(1);
+    //    font1.setPointSize(14);
 
+    //    font2.setWeight(14);
+    //    font2.setBold(0);
+    //    font2.setPointSize(12);
+
+    //Check Index exists
+    if(npc.id < (unsigned int)index_npc.size())
+    {
+        j = index_npc[npc.id].gi;
+
+        if(pConfigs->main_npc[j].id == npc.id)
+            found=true;
+    }
+
+    //if Index found
+    if(found)
+    {   //get neccesary element directly
+        if(index_npc[npc.id].type==1)
+        {
+            isUser=true;
+            if(uNPCs[index_npc[npc.id].i].withImg)
+            {
+                noimage=false;
+                tImg = uNPCs[index_npc[npc.id].i].image;
+            }
+
+            if(uNPCs[index_npc[npc.id].i].withTxt)
+            {
+                isUserTxt=true;
+                mergedSet = uNPCs[index_npc[npc.id].i].merged;
+            }
+            else
+                mergedSet = pConfigs->main_npc[index_npc[npc.id].gi];
+        }
+
+        if(!noimage)
+        {
+            tImg = pConfigs->main_npc[ index_npc[npc.id].gi].image;
+            noimage=false;
+        }
+    }
+    else
+    {
+        //fetching arrays
+        for(j=0;j<uNPCs.size();j++)
+        {
+            if(uNPCs[j].id==npc.id)
+            {
+                if(uNPCs[j].withImg)
+                {
+                    noimage=false;
+                    isUser=true;
+                    tImg = uNPCs[j].image;
+                }
+
+                if(uNPCs[j].withTxt)
+                {
+                    isUserTxt=true;
+                    mergedSet = uNPCs[j].merged;
+                }
+                break;
+            }
+        }
+
+        for(j=0;j<pConfigs->main_npc.size();j++)
+        {
+            if(pConfigs->main_npc[j].id==npc.id)
+            {
+                noimage=false;
+                if(!isUser)
+                    tImg = pConfigs->main_npc[j].image;
+                if(!isUserTxt)
+                    mergedSet = pConfigs->main_npc[j];
+                break;
+            }
+        }
+    }
+
+    if((noimage)||(tImg.isNull()))
+    {
+        tImg=uNpcImg;
+    }
+
+        //WriteToLog(QtDebugMsg, "NPC place -> set Data");
+    NPCItem->setNpcData(npc);
+
+        //WriteToLog(QtDebugMsg, "NPC place -> set Props");
+    NPCItem->localProps = mergedSet;
+
+    if(npc.generator)
+        NPCItem->gridSize=16;
+    else
+        NPCItem->gridSize = mergedSet.grid;
+
+
+        //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
+    NPCItem->setMainPixmap(tImg);
+
+        //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
+    NPCItem->setContextMenu(npcMenu);
+
+        //WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
+    addItem(NPCItem);
+
+    NPCItem->setScenePoint(this);
+
+    QPoint newPos = QPoint(npc.x, npc.y);
+    if(toGrid)
+    {
+        newPos = applyGrid(QPoint(npc.x, npc.y), NPCItem->localProps.grid,
+                           QPoint(NPCItem->localProps.grid_offset_x,
+                                  NPCItem->localProps.grid_offset_y));
+        npc.x = newPos.x();
+        npc.y = newPos.y();
+    }
+
+    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 1 %1 %2").arg(bgo.x).arg(bgo.y));
+
+    //int imgOffsetX = (int)round( (-((double)mergedSet.gfx_w - (double)mergedSet.width ) / 2 ) + (double)mergedSet.gfx_offset_x);
+    //int imgOffsetY = (int)round( - (double)mergedSet.gfx_h + (double)mergedSet.height + (double)mergedSet.gfx_offset_y );
+
+    //QPoint offsettenPos = QPoint(npc.x + imgOffsetX, npc.y+imgOffsetY);
+
+    //NPCItem->setPos( QPointF(offsettenPos) );
+    NPCItem->setPos( QPointF(newPos) );
+
+    NPCItem->setAnimation(NPCItem->localProps.frames,
+                          NPCItem->localProps.framespeed,
+                          NPCItem->localProps.framestyle,
+                          npc.direct,
+                          NPCItem->localProps.custom_animate,
+                          NPCItem->localProps.custom_ani_fl,
+                          NPCItem->localProps.custom_ani_el,
+                          NPCItem->localProps.custom_ani_fr,
+                          NPCItem->localProps.custom_ani_er);
+
+    if(NPCItem->localProps.frames>1)
+        NPCItem->setData(4, "animated");
+
+    //box = addPixmap(QPixmap(uNpcImg));
+    //npcBox = new QGraphicsItemGroup(box);
+
+    /*
     npcTxt = new QGraphicsTextItem(QString::number(npc.id));
     npcTxt->setDefaultTextColor(Qt::black);
     npcTxt->setFont(font1);
@@ -354,25 +689,31 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     npcTxt->setZValue(npcZf+0.0000001);
     npcTxt_l2->setZValue(npcZf+0.0000002);
+    */
 
-
-    box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
-    box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
+    NPCItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
+    NPCItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
 
     //npcfore->addToGroup(box);
     //if(npc.id==91)
-        box->setZValue(npcZf);
+    if(NPCItem->localProps.foreground)
+        NPCItem->setZValue(npcZf);
+    else
+    if(NPCItem->localProps.background)
+        NPCItem->setZValue(npcZb);
+    else
+        NPCItem->setZValue(npcZs);
     //else
     //    box->setZValue(npcZb);
 
-    box->setData(0, "NPC"); // ObjType
-    box->setData(1, QString::number(npc.id) );
-    box->setData(2, QString::number(npc.array_id) );
+    NPCItem->setData(0, "NPC"); // ObjType
+    NPCItem->setData(1, QString::number(npc.id) );
+    NPCItem->setData(2, QString::number(npc.array_id) );
 
-    box->setData(9, QString::number(uNpcImg.width()) ); //width
-    box->setData(10, QString::number(uNpcImg.height()) ); //height
+    NPCItem->setData(9, QString::number(NPCItem->localProps.width) ); //width
+    NPCItem->setData(10, QString::number(NPCItem->localProps.height) ); //height
 
-    if(PasteFromBuffer) box->setSelected(true);
+    if(PasteFromBuffer) NPCItem->setSelected(true);
 }
 
 

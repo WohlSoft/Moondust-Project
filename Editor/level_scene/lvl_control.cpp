@@ -17,10 +17,11 @@
  */
 
 #include "lvlscene.h"
-#include "../leveledit.h"
+#include "../edit_level/leveledit.h"
 
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 
 
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
@@ -58,6 +59,14 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     removeItem((*it));
                     deleted=true;
                 }
+                else
+                if( objType=="NPC" )
+                {
+                    historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
+                    ((ItemNPC *)(*it))->removeFromArray();
+                    removeItem((*it));
+                    deleted=true;
+                }
         }
         if(deleted) addRemoveHistory(historyBuffer);
 
@@ -77,6 +86,8 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+        if(contextMenuOpened) return;
+
         cursor->setPos(mouseEvent->scenePos());
         cursor->show();
 
@@ -150,19 +161,30 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::removeItemUnderCursor()
 {
+    if(contextMenuOpened) return;
+
     QGraphicsItem * findItem;
     bool removeIt=true;
     findItem = itemCollidesCursor(cursor);
     if(findItem)
     {
-        if((findItem->data(0).toString()=="Block")&&(lock_block))
+        if(findItem->data(0).toString()=="Block")
+        {
+            if((lock_block)|| (((ItemBlock *)findItem)->isLocked) )
             removeIt=false;
+        }
         else
-        if((findItem->data(0).toString()=="BGO")&&(lock_bgo))
+        if(findItem->data(0).toString()=="BGO")
+        {
+            if( (lock_bgo) || ((((ItemBGO *)findItem)->isLocked)) )
             removeIt=false;
+        }
         else
-        if((findItem->data(0).toString()=="NPC")&&(lock_npc))
+        if(findItem->data(0).toString()=="NPC")
+        {
+            if( (lock_npc) || ((((ItemNPC *)findItem)->isLocked)) )
             removeIt=false;
+        }
         else
         if((findItem->data(0).toString()=="Water")&&(lock_water))
             removeIt=false;
@@ -192,6 +214,13 @@ void LvlScene::removeItemUnderCursor()
                 ((ItemBGO *)findItem)->removeFromArray();
                 deleted=true;
             }
+            else
+            if( findItem->data(0).toString()=="BGO" )
+            {
+                removedItems.npc.push_back(((ItemNPC *)findItem)->npcData);
+                ((ItemNPC *)findItem)->removeFromArray();
+                deleted=true;
+            }
             removeItem(findItem);
             if(deleted)addRemoveHistory(removedItems);
         }
@@ -203,6 +232,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if(contextMenuOpened)
     {
         contextMenuOpened = false; //bug protector
+        QGraphicsScene::mouseReleaseEvent(mouseEvent);
         return;
     }
 
@@ -269,6 +299,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemBGO *)(*it))->removeFromArray();
                             deleted=true;
                         }
+                        else
+                        if( (*it)->data(0).toString()=="NPC" )
+                        {
+                            historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
+                            ((ItemNPC *)(*it))->removeFromArray();
+                            deleted=true;
+                        }
 
                         removeItem((*it)); continue;
                     }
@@ -281,7 +318,9 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //(*it)->setZValue(Z);
                     if( ObjType == "NPC")
                     {
-                        gridSize = 1;
+                        gridSize = ((ItemNPC *)(*it))->gridSize;
+                        offsetX = ((ItemNPC *)(*it))->localProps.grid_offset_x;
+                        offsetY = ((ItemNPC *)(*it))->localProps.grid_offset_y;
                     }
                     else
                     if( ObjType == "BGO")
@@ -342,13 +381,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                     if( ObjType == "NPC")
                     {
-                        foreach (LevelNPC findInArr, LvlData->npc)
-                        {
-                            if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
-                            {
-                                sourcePos = QPoint(findInArr.x, findInArr.y); break;
-                            }
-                        }
+                        sourcePos = QPoint(  ((ItemNPC *)(*it))->npcData.x, ((ItemNPC *)(*it))->npcData.y);
                     }
                     else
                     if( ObjType == "Block")
@@ -360,14 +393,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     if( ObjType == "BGO")
                     {
                         sourcePos = QPoint(  ((ItemBGO *)(*it))->bgoData.x, ((ItemBGO *)(*it))->bgoData.y);
-                        /*
-                        foreach (LevelBGO findInArr, LvlData->bgo)
-                        {
-                            if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
-                            {
-                                sourcePos = QPoint(findInArr.x, findInArr.y); break;
-                            }
-                        }*/
                     }
 
                     //Check position
@@ -418,6 +443,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
                             ((ItemBGO *)(*it))->arrayApply();
                             historyBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
+                            LvlData->modified = true;
+                        }
+                        else
+                        if( ObjType == "NPC")
+                        {
+                            //Applay move into main array
+                            historySourceBuffer.npc.push_back(((ItemNPC *)(*it))->npcData);
+                            ((ItemNPC *)(*it))->npcData.x = (long)(*it)->scenePos().x();
+                            ((ItemNPC *)(*it))->npcData.y = (long)(*it)->scenePos().y();
+                            ((ItemNPC *)(*it))->arrayApply();
+                            historyBuffer.npc.push_back(((ItemNPC *)(*it))->npcData);
                             LvlData->modified = true;
                         }
                     }

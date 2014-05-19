@@ -84,16 +84,6 @@ void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
 }
 
 
-void MainWindow::on_LevelLayers_visibilityChanged(bool visible)
-{
-    ui->actionLayersBox->setChecked(visible);
-}
-void MainWindow::on_actionLayersBox_triggered(bool checked)
-{
-    ui->LevelLayers->setVisible(checked);
-    if(checked) ui->LevelLayers->raise();
-}
-
 
 
 void MainWindow::on_BGOUniform_clicked(bool checked)
@@ -232,37 +222,6 @@ void MainWindow::on_actionGridEn_triggered(bool checked)
     }
 }
 
-
-
-
-void MainWindow::setLayersBox()
-{
-    int WinType = activeChildWindow();
-    QListWidgetItem * item;
-
-    ui->LvlLayerList->clear();
-
-    if (WinType==1)
-    {
-        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
-        {
-            item = new QListWidgetItem;
-            item->setText(layer.name);
-            item->setFlags(Qt::ItemIsUserCheckable);
-
-            if((layer.name!="Destroyed Blocks")&&(layer.name!="Spawned NPCs"))
-                item->setFlags(item->flags() | Qt::ItemIsEnabled);
-
-            if(layer.name!="Default")
-                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-
-            item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
-            ui->LvlLayerList->addItem( item );
-        }
-
-    }
-}
-
 void MainWindow::setDoorsToolbox()
 {
     int WinType = activeChildWindow();
@@ -352,10 +311,10 @@ void MainWindow::setDoorData(long index)
                     }
 
                     ui->WarpToMapX->setEnabled(true);
-                    ui->WarpToMapX->setText(QString::number(door.world_x));
+                    ui->WarpToMapX->setText((door.world_x!=-1)?QString::number(door.world_x):"");
 
                     ui->WarpToMapY->setEnabled(true);
-                    ui->WarpToMapY->setText(QString::number(door.world_y));
+                    ui->WarpToMapY->setText((door.world_y!=-1)?QString::number(door.world_y):"");
 
 
                     ui->WarpLevelExit->setEnabled(true);
@@ -490,7 +449,10 @@ void MainWindow::SetCurrentLevelSection(int SctId, int open)
         ui->LVLPropsMusicCustomEn->setChecked( (activeLvlEditWin()->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
 
         WriteToLog(QtDebugMsg, "Set background index");
-        ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
+        if(activeLvlEditWin()->LvlData.sections[SectionId].background < (unsigned int)ui->LVLPropsBackImage->count() )
+            ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
+        else
+            ui->LVLPropsBackImage->setCurrentIndex( ui->LVLPropsBackImage->count()-1 );
     }
 }
 

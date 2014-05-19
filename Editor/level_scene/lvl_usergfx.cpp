@@ -17,8 +17,8 @@
  */
 
 #include "lvlscene.h"
-#include "../leveledit.h"
-#include "mainwindow.h"
+#include "../edit_level/leveledit.h"
+#include "../file_formats/file_formats.h"
 
 //Search and load custom User's files
 void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
@@ -39,7 +39,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     for(i=0; i<pConfigs->main_bg.size(); i++) //Add user images
         {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User Backgrounds "+QString::number(i)+"/"+QString::number(pConfigs->main_bg.size()));
+            progress.setLabelText("Search User Backgrounds "+QString::number(i+1)+"/"+QString::number(pConfigs->main_bg.size()));
 
             loaded1 = false;
             loaded2 = false;
@@ -104,7 +104,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     {
 
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User Blocks "+QString::number(i)+"/"+QString::number(pConfigs->main_block.size()));
+            progress.setLabelText("Search User Blocks "+QString::number(i+1)+"/"+QString::number(pConfigs->main_block.size()));
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_block[i].image_n)) )
@@ -165,7 +165,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
     {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User BGOs "+QString::number(i)+"/"+QString::number(pConfigs->main_bgo.size()));
+            progress.setLabelText("Search User BGOs "+QString::number(i+1)+"/"+QString::number(pConfigs->main_bgo.size()));
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_bgo[i].image_n)) )
@@ -226,10 +226,12 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
     {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User NPCs "+QString::number(i)+"/"+QString::number(pConfigs->main_npc.size()));
+            progress.setLabelText("Search User NPCs "+QString::number(i+1)+"/"+QString::number(pConfigs->main_npc.size()));
 
              uNPC.withImg = false;
              uNPC.withTxt = false;
+
+             QSize capturedS = QSize(0,0);
 
              //Looking for user's GFX
              if((QFile::exists(uLVLD) ) &&
@@ -247,7 +249,6 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                  uNPC.image.setMask(uNPC.mask);
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;
-
              }
              else
              if(QFile::exists(uLVLs + pConfigs->main_npc[i].image_n) )
@@ -276,7 +277,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                            "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt");
                 if(file.open(QIODevice::ReadOnly))
                 {
-                    uNPC.sets = MainWindow::ReadNpcTXTFile(file, true);
+                    uNPC.sets = FileFormats::ReadNpcTXTFile(file, true);
                     uNPC.withTxt = true;
                 }
              }
@@ -289,9 +290,58 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                             "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt");
                  if(file.open(QIODevice::ReadOnly))
                  {
-                     uNPC.sets = MainWindow::ReadNpcTXTFile(file, true);
+                     uNPC.sets = FileFormats::ReadNpcTXTFile(file, true);
                      uNPC.withTxt = true;
                  }
+             }
+
+             if(uNPC.withImg)
+             {
+                 capturedS = QSize(uNPC.image.width(), uNPC.image.height());
+             }
+
+             if(uNPC.withTxt)
+             {  //Merge global and user's settings from NPC.txt file
+                 uNPC.merged = mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets, capturedS);
+             }
+             else
+             {
+                 if(uNPC.withImg)
+                 {
+                     NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXTArray();
+
+                     autoConf.gfxwidth = capturedS.width();
+                     //autoConf.en_gfxwidth = true;
+                     unsigned int defGFX_h;
+                     switch(pConfigs->main_npc[i].framestyle)
+                     {
+                     case 0:
+                         defGFX_h = (int)round(capturedS.height() / pConfigs->main_npc[i].frames);
+                         break;
+                     case 1:
+                         defGFX_h = (int)round((capturedS.height() / pConfigs->main_npc[i].frames)/2 );
+                         break;
+                     case 2:
+                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/4);
+                         break;
+                     case 3:
+                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/4);
+                         break;
+                     case 4:
+                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/8);
+                         break;
+                     default:
+                         defGFX_h=0;
+                         break;
+                     }
+
+                     capturedS.setHeight(defGFX_h);
+
+                     uNPC.merged = mergeNPCConfigs(
+                                 pConfigs->main_npc[i],
+                                 autoConf, capturedS);
+                 }
+
              }
 
              //Apply only if custom config or image was found

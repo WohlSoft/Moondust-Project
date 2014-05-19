@@ -37,22 +37,19 @@
 #include <QLocale>
 #include <QSplashScreen>
 
-#include "lvl_filedata.h"
-#include "wld_filedata.h"
-#include "npc_filedata.h"
+#include "file_formats/lvl_filedata.h"
+#include "file_formats/wld_filedata.h"
+#include "file_formats/npc_filedata.h"
 
-#include "leveledit.h"
-#include "npcedit.h"
+#include "edit_level/leveledit.h"
+#include "edit_npc/npcedit.h"
 
-#include "npcedit.h"
-
-#include "aboutdialog.h"
-#include "levelprops.h"
+#include "about_dialog/aboutdialog.h"
+#include "edit_level/levelprops.h"
 
 #include "data_configs/data_configs.h"
 
-#include "musicfilelist.h"
-
+#include "common_features/musicfilelist.h"
 #include "common_features/logger.h"
 
 
@@ -74,12 +71,7 @@ public:
     dataconfigs *getConfigs();
     void openFilesByArgs(QStringList args);
 
-    //File format read functions
-    static LevelData ReadLevelFile(QFile &inf); // SMBX LVL File
-    static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); // SMBX WLD File
-    static WorldData ReadWorldFile(QFile &inf); //SMBX NPC.TXT File
 
-    
 protected:
     void closeEvent(QCloseEvent *event);
     void dragEnterEvent(QDragEnterEvent *e);
@@ -99,7 +91,7 @@ private slots:
     void SyncRecentFiles();
     void AddToRecentFiles(QString FilePath);
 
-    void updateMenus();
+    void updateMenus(bool force=false);
     void setTools();
     void setMusic(bool checked);
 
@@ -110,6 +102,9 @@ private slots:
     npcedit *createNPCChild();
     leveledit *createChild();
     void setActiveSubWindow(QWidget *window);
+    void SWCascade();
+    void SWTile();
+
 
     //LevelEdit functions
     void SetCurrentLevelSection(int SctId, int open=0);
@@ -250,6 +245,20 @@ private slots:
 
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
 
+    void on_actionNewNPC_config_triggered();
+
+    void on_actionApplication_settings_triggered();
+
+    void on_AddLayer_clicked();
+
+    void on_LvlLayerList_itemChanged(QListWidgetItem *item);
+
+    void on_RemoveLayer_clicked();
+
+    void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
+
+    void on_MainWindow_customContextMenuRequested(const QPoint &pos);
+
 private:
     dataconfigs configs; // Global objects configucrations
 
@@ -266,6 +275,17 @@ private:
     bool LevelDoorsBoxVis; //Doors box
     bool LevelLayersBoxVis; //Layers box
 
+    // ////////////Layer Functions///////////////////
+    void RemoveCurrentLayer(bool moveToDefault);
+    void RemoveLayerItems(QString layerName);
+    void RemoveLayerFromListAndData(QListWidgetItem * layerItem);
+    void ModifyLayer(QString layerName, bool visible);
+    void ModifyLayer(QString layerName, QString newLayerName);
+    void ModifyLayer(QString layerName, QString newLayerName, bool visible);
+    //Direct List Functions
+    void AddNewLayer(QString layerName, bool setEdited);
+    void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);
+    // //////////////////////////////////////////////
     bool WorldToolBoxVis;
     bool autoPlayMusic;
 
@@ -313,12 +333,6 @@ private:
     QTranslator     m_translatorQt; /**< contains the translations for qt */
     QString         m_currLang;     /**< contains the currently loaded language */
     QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
-
-
-    //Helps functions
-    static QString removeQuotes(QString str);
-
-    static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
 
 };
 

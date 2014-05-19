@@ -17,7 +17,7 @@
  */
 
 #include "../mainwindow.h"
-#include "../leveledit.h"
+#include "../edit_level/leveledit.h"
 #include "file_formats.h"
 
 //*********************************************************
@@ -26,7 +26,7 @@
 
 
 //Level File Read
-LevelData MainWindow::ReadLevelFile(QFile &inf)
+LevelData FileFormats::ReadLevelFile(QFile &inf)
 {
     QTextStream in(&inf);   //Read File
 
@@ -724,7 +724,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         {
             if(SMBX64::qStr(line)) //Layer name
                 goto badfile;
-            else layers.name=removeQuotes(line);;
+            else layers.name=removeQuotes(line);
 
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //hidden layer
@@ -979,6 +979,131 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         }
     }
+
+    {
+        //Add system layers if not exist
+        bool def=false,desb=false,spawned=false;
+
+        foreach(LevelLayers lr, FileData.layers)
+        {
+            if(lr.name=="Default") def=true;
+            else
+            if(lr.name=="Destroyed Blocks") desb=true;
+            else
+            if(lr.name=="Spawned NPCs") spawned=true;
+        }
+
+        if(!def)
+        {
+            layers.hidden = false;
+            layers.name = "Default";
+            FileData.layers.push_back(layers);
+        }
+        if(!desb)
+        {
+            layers.hidden = true;
+            layers.name = "Destroyed Blocks";
+            FileData.layers.push_back(layers);
+        }
+        if(!spawned)
+        {
+            layers.hidden = false;
+            layers.name = "Spawned NPCs";
+            FileData.layers.push_back(layers);
+        }
+
+        //Add system events if not exist
+        //Level - Start
+        //P Switch - Start
+        //P Switch - End
+        bool lstart=false, pstart=false, pend=false;
+        foreach(LevelEvents ev, FileData.events)
+        {
+            if(ev.name=="Level - Start") lstart=true;
+            else
+            if(ev.name=="P Switch - Start") pstart=true;
+            else
+            if(ev.name=="P Switch - End") pend=true;
+        }
+
+        events.msg="";
+        events.sound_id=0;
+        events.end_game=0;
+
+        events.layers.clear();
+        for(int j=0; j< 21; j++)
+        {
+            events_layers.hide="";
+            events_layers.show="";
+            events_layers.toggle="";
+            events.layers.push_back(events_layers);
+        }
+        events.layers_hide.clear();
+        events.layers_show.clear();
+        events.layers_toggle.clear();
+        events.sets.clear();
+        for(int j=0; j< 21; j++)
+        {
+            events_sets.music_id=0;
+            events_sets.background_id=0;
+            events_sets.position_left=0;
+            events_sets.position_top=-1;
+            events_sets.position_bottom=-1;
+            events_sets.position_right=-1;
+            events.sets.push_back(events_sets);
+        }
+
+        events.trigger="";
+        events.trigger_timer=0;
+
+        events.nosmoke=false;
+
+        events.altjump=false;
+        events.altrun=false;
+        events.down=false;
+        events.drop=false;
+        events.jump=false;
+        events.left=false;
+        events.right=false;
+        events.run=false;
+        events.start=false;
+        events.up=false;
+
+        events.autostart=false;
+
+        events.movelayer="";
+        events.layer_speed_x=0;
+        events.layer_speed_y=0;
+        events.move_camera_x=0;
+        events.move_camera_y=0;
+        events.scroll_section=0;
+
+        if(!lstart)
+        {
+            events.array_id = FileData.events_array_id;
+            FileData.events_array_id++;
+
+            events.name = "Level - Start";
+            FileData.events.push_back(events);
+        }
+        if(!pstart)
+        {
+            events.array_id = FileData.events_array_id;
+            FileData.events_array_id++;
+
+            events.name = "P Switch - Start";
+            FileData.events.push_back(events);
+        }
+        if(!pend)
+        {
+            events.array_id = FileData.events_array_id;
+            FileData.events_array_id++;
+
+            events.name = "P Switch - End";
+            FileData.events.push_back(events);
+        }
+
+    }
     ///////////////////////////////////////EndFile///////////////////////////////////////
 
     FileData.ReadFileValid=true;
@@ -1002,7 +1127,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 //*********************************************************
 
 
-QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
+QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
 {
     QString TextData;
     int i, j;
@@ -1045,21 +1170,31 @@ QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
 
 
     //Blocks
-    for(i=0; i<FileData.blocks.size(); i++)
+    QMap<long, QMap<long, LevelBlock > > sortedBlocks;
+    foreach(LevelBlock block, FileData.blocks)
     {
-        TextData += SMBX64::IntS(FileData.blocks[i].x);
-        TextData += SMBX64::IntS(FileData.blocks[i].y);
-        TextData += SMBX64::IntS(FileData.blocks[i].h);
-        TextData += SMBX64::IntS(FileData.blocks[i].w);
-        TextData += SMBX64::IntS(FileData.blocks[i].id);
-        TextData += SMBX64::IntS(FileData.blocks[i].npc_id);
-        TextData += SMBX64::BoolS(FileData.blocks[i].invisible);
-        TextData += SMBX64::BoolS(FileData.blocks[i].slippery);
-        TextData += SMBX64::qStrS(FileData.blocks[i].layer);
-        TextData += SMBX64::qStrS(FileData.blocks[i].event_destroy);
-        TextData += SMBX64::qStrS(FileData.blocks[i].event_hit);
-        TextData += SMBX64::qStrS(FileData.blocks[i].event_no_more);
+        sortedBlocks[block.x][block.y] = block;
+    }
 
+    //for(i=0; i<FileData.blocks.size(); i++)
+    //{
+    for (QMap<long, QMap<long, LevelBlock > >::iterator bArr = sortedBlocks.begin(); bArr != sortedBlocks.end(); bArr++)
+    {
+        for (QMap<long, LevelBlock >::iterator block = (* bArr).begin(); block != (*bArr).end(); block++)
+        {
+        TextData += SMBX64::IntS((*block).x);
+        TextData += SMBX64::IntS((*block).y);
+        TextData += SMBX64::IntS((*block).h);
+        TextData += SMBX64::IntS((*block).w);
+        TextData += SMBX64::IntS((*block).id);
+        TextData += SMBX64::IntS((*block).npc_id);
+        TextData += SMBX64::BoolS((*block).invisible);
+        TextData += SMBX64::BoolS((*block).slippery);
+        TextData += SMBX64::qStrS((*block).layer);
+        TextData += SMBX64::qStrS((*block).event_destroy);
+        TextData += SMBX64::qStrS((*block).event_hit);
+        TextData += SMBX64::qStrS((*block).event_no_more);
+        }
     }
     TextData += "\"next\"\n";//Separator
 
