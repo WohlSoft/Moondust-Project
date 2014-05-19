@@ -29,7 +29,7 @@
    <enum>Qt::NoFocus</enum>
   </property>
   <property name="contextMenuPolicy">
-   <enum>Qt::CustomContextMenu</enum>
+   <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="acceptDrops">
    <bool>true</bool>
@@ -95,7 +95,7 @@
     </rect>
    </property>
    <property name="contextMenuPolicy">
-    <enum>Qt::NoContextMenu</enum>
+    <enum>Qt::CustomContextMenu</enum>
    </property>
    <widget class="QMenu" name="menu">
     <property name="title">
@@ -278,6 +278,9 @@
      <width>0</width>
      <height>0</height>
     </size>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
    </property>
    <property name="windowTitle">
     <string>General</string>
@@ -731,6 +734,9 @@
    </widget>
   </widget>
   <widget class="QToolBar" name="CommonEditBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
@@ -752,7 +758,7 @@
     <bool>true</bool>
    </property>
    <property name="contextMenuPolicy">
-    <enum>Qt::NoContextMenu</enum>
+    <enum>Qt::CustomContextMenu</enum>
    </property>
    <property name="windowTitle">
     <string>Editor</string>
@@ -786,6 +792,9 @@
    <addaction name="actionWLDToolBox"/>
   </widget>
   <widget class="QToolBar" name="LevelObjectToolbar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
@@ -815,6 +824,9 @@
    <addaction name="actionLayersBox"/>
   </widget>
   <widget class="QToolBar" name="LevelSectionsToolBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
    <property name="acceptDrops">
     <bool>false</bool>
    </property>

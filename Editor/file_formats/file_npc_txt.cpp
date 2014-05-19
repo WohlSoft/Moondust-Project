@@ -241,139 +241,224 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="grabside")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.grabside=(bool)Params[1].toInt();
-           FileData.en_grabside=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+             if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.grabside=(bool)Params[1].toInt();
+               FileData.en_grabside=true;
+           }
         }
        else
        if(Params[0]=="grabtop")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.grabtop=(bool)Params[1].toInt();
-           FileData.en_grabtop=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if (!IgnoreBad)goto badfile;
+           }
+           else
+           {
+               FileData.grabtop=(bool)Params[1].toInt();
+               FileData.en_grabtop=true;
+           }
         }
        else
        if(Params[0]=="jumphurt")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.jumphurt=(bool)Params[1].toInt();
-           FileData.en_jumphurt=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.jumphurt=(bool)Params[1].toInt();
+               FileData.en_jumphurt=true;
+           }
         }
        else
        if(Params[0]=="nohurt")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.nohurt=(bool)Params[1].toInt();
-           FileData.en_nohurt=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.nohurt=(bool)Params[1].toInt();
+               FileData.en_nohurt=true;
+           }
         }
        else
        if(Params[0]=="noblockcollision")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.noblockcollision=(bool)Params[1].toInt();
-           FileData.en_noblockcollision=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.noblockcollision=(bool)Params[1].toInt();
+               FileData.en_noblockcollision=true;
+           }
         }
        else
        if(Params[0]=="cliffturn")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.cliffturn=(bool)Params[1].toInt();
-           FileData.en_cliffturn=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.cliffturn=(bool)Params[1].toInt();
+               FileData.en_cliffturn=true;
+           }
         }
        else
        if(Params[0]=="noyoshi")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.noyoshi=(bool)Params[1].toInt();
-           FileData.en_noyoshi=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.noyoshi=(bool)Params[1].toInt();
+               FileData.en_noyoshi=true;
+           }
         }
        else
        if(Params[0]=="foreground")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.foreground=(bool)Params[1].toInt();
-           FileData.en_foreground=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.foreground=(bool)Params[1].toInt();
+               FileData.en_foreground=true;
+           }
         }
        else
        if(Params[0]=="speed")
         {
-           if((!issfloat.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.speed=Params[1].replace(QChar(','), QChar('.')).toFloat();
-           FileData.en_speed=true;
+           if(!issfloat.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.speed=Params[1].replace(QChar(','), QChar('.')).toFloat();
+               FileData.en_speed=true;
+           }
         }
        else
        if(Params[0]=="nofireball")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.nofireball=(bool)Params[1].toInt();
-           FileData.en_nofireball=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.nofireball=(bool)Params[1].toInt();
+               FileData.en_nofireball=true;
+           }
         }
        else
        if(Params[0]=="nogravity")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.nogravity=(bool)Params[1].toInt();
-           FileData.en_nogravity=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.nogravity=(bool)Params[1].toInt();
+               FileData.en_nogravity=true;
+           }
         }
        else
        if(Params[0]=="frames")
         {
-           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.frames=Params[1].toInt();
-           FileData.en_frames=true;
+           if(!isint.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.frames=Params[1].toInt();
+               FileData.en_frames=true;
+           }
         }
        else
        if(Params[0]=="framespeed")
         {
-           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.framespeed=Params[1].toInt();
-           FileData.en_framespeed=true;
+           if(!isint.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.framespeed=Params[1].toInt();
+               FileData.en_framespeed=true;
+           }
         }
        else
        if(Params[0]=="framestyle")
         {
-           if((!isint.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.framestyle=Params[1].toInt();
-           FileData.en_framestyle=true;
+           if(!isint.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.framestyle=Params[1].toInt();
+               FileData.en_framestyle=true;
+           }
         }
        else
        if(Params[0]=="noiceball")
         {
-           if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-              goto badfile;
-           FileData.noiceball=(bool)Params[1].toInt();
-           FileData.en_noiceball=true;
+           if(!booldeg.exactMatch(Params[1]))
+           {
+              if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
+               FileData.noiceball=(bool)Params[1].toInt();
+               FileData.en_noiceball=true;
+           }
         }
-       else
-           if(Params[0]=="nohammer")
-            {
-               if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-                  goto badfile;
+       else // Non SMBX64 parameters (not working in SMBX <=1.3)
+       if(Params[0]=="nohammer")
+        {
+           if(!booldeg.exactMatch(Params[1]))
+           {
+               if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
                FileData.nohammer=(bool)Params[1].toInt();
                FileData.en_nohammer=true;
-            }
+           }
+        }
        else
-           if(Params[0]=="noshell")
-            {
-               if((!booldeg.exactMatch(Params[1]))&&(!IgnoreBad))
-                  goto badfile;
+       if(Params[0]=="noshell")
+        {
+           if(!booldeg.exactMatch(Params[1]))
+           {
+               if(!IgnoreBad) goto badfile;
+           }
+           else
+           {
                FileData.noshell=(bool)Params[1].toInt();
                FileData.en_noshell=true;
-            }
+           }
+        }
        else
        {
               if(!IgnoreBad) goto badfile;
