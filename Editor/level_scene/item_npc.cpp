@@ -537,7 +537,7 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     }
 
     if(localProps.ani_directed_direct)
-        aniDirect = (dir==-1);
+        aniDirect = (dir==-1) ^ (localProps.ani_direct);
     else
         aniDirect = localProps.ani_direct;
 
