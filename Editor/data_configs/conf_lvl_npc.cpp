@@ -41,6 +41,7 @@ void dataconfigs::loadLevelNPC()
         marker_npc.fireball = npcset.value("fireball", "13").toInt();
         marker_npc.hammer = npcset.value("hammer", "171").toInt();
         marker_npc.boomerang = npcset.value("boomerang", "292").toInt();
+        marker_npc.coin_in_block = npcset.value("coin-in-block", "10").toInt();
 
     npcset.endGroup();
 
@@ -60,7 +61,7 @@ void dataconfigs::loadLevelNPC()
 
         for(i=1; i<=npc_total; i++)
         {
-            WriteToLog(QtDebugMsg, QString("NPC Config -> read header data... npc-%1").arg(i));
+            //WriteToLog(QtDebugMsg, QString("NPC Config -> read header data... npc-%1").arg(i));
             npcset.beginGroup( QString("npc-"+QString::number(i)) );
         //    //    [npc-1]
         //        unsigned long id;
@@ -79,7 +80,7 @@ void dataconfigs::loadLevelNPC()
             //        QPixmap image;
             //        QBitmap mask;
 
-            WriteToLog(QtDebugMsg, "NPC Config -> Loading image...");
+            //WriteToLog(QtDebugMsg, "NPC Config -> Loading image...");
 
             imgFile = npcset.value("image", "").toString();
             snpc.image_n = imgFile;
@@ -95,11 +96,11 @@ void dataconfigs::loadLevelNPC()
                 snpc.mask = mask;
                 snpc.image = QPixmap(npcPath + imgFile);
                 if(tmp.size()==2) snpc.image.setMask(mask);
-                WriteToLog(QtDebugMsg, "NPC Config -> Image loaded");
+                //WriteToLog(QtDebugMsg, "NPC Config -> Image loaded");
             }
             else
             {
-                WriteToLog(QtWarningMsg, "NPC Config -> Empty image");
+                //WriteToLog(QtWarningMsg, "NPC Config -> Empty image");
                 snpc.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
                 snpc.mask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
                 snpc.image.setMask(snpc.mask);
@@ -120,10 +121,10 @@ void dataconfigs::loadLevelNPC()
         //    //    ; graphics
         //        int gfx_offset_x;
         //    //    gfx-offst-x=0
-            snpc.gfx_offset_x = npcset.value("gfx-offst-x", "0").toInt();
+            snpc.gfx_offset_x = npcset.value("gfx-offset-x", "0").toInt();
         //        int gfx_offset_y;
         //    //    gfx-offst-y=2
-            snpc.gfx_offset_y = npcset.value("gfx-offst-y", "0").toInt();
+            snpc.gfx_offset_y = npcset.value("gfx-offset-y", "0").toInt();
         //        int grid;
         //    //    grid=32
             snpc.grid = npcset.value("grid", "32").toInt();
@@ -133,8 +134,12 @@ void dataconfigs::loadLevelNPC()
         //    //    grid-offset-y=0
         //        int grid_offset_y;
             snpc.grid_offset_y = npcset.value("grid-offset-y", "0").toInt();
+
+            snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
         //    //    frame-style=0	; (0-2) This option in some algorithms can be ignored
         //        int framestyle;
+
+
             snpc.framestyle = npcset.value("frame-style", "0").toInt();
         //    //    frames=2
         //        unsigned int frames;
@@ -142,7 +147,7 @@ void dataconfigs::loadLevelNPC()
 
         //        int gfx_h;
         //    //    gfx-height-y=32
-            WriteToLog(QtDebugMsg, "NPC Config -> Check framestyle");
+            //WriteToLog(QtDebugMsg, "NPC Config -> Check framestyle");
             switch(snpc.framestyle)
             {
             case 0:
@@ -165,23 +170,36 @@ void dataconfigs::loadLevelNPC()
                 break;
             }
 
-            WriteToLog(QtDebugMsg, "NPC Config -> calculate GFX size...");
-            snpc.gfx_h = npcset.value("gfx-height-y", QString::number(defGFX_h) ).toInt();
+           // WriteToLog(QtDebugMsg, "NPC Config -> calculate GFX size...");
+            snpc.gfx_h = npcset.value("gfx-height", QString::number(defGFX_h) ).toInt();
         //        int gfx_w;
         //    //    gfx-width-y=32
-            snpc.gfx_w = npcset.value("gfx-width-y", QString::number(snpc.image.width()) ).toInt();
+            snpc.gfx_w = npcset.value("gfx-width", QString::number(snpc.image.width()) ).toInt();
 
-            WriteToLog(QtDebugMsg, "NPC Config -> load other params...");
+          //  WriteToLog(QtDebugMsg, "NPC Config -> load other params...");
         //    //    frame-speed=128
         //        unsigned int framespeed;
             snpc.framespeed = npcset.value("frame-speed", "128").toInt();
         //    //    foreground=0
         //        bool foreground;
             snpc.foreground = npcset.value("foreground", "0").toBool();
+        //    //    background=0
+        //        bool background;
+            snpc.background = npcset.value("background", "0").toBool();
+        //    //    animation-direction=0
+        //        bool ani_bidir;
+            snpc.ani_direct = npcset.value("animation-direction", "0").toBool();
+            snpc.ani_directed_direct = npcset.value("animation-directed-direction", "0").toBool();
+
+
+        //    //    animation-bidirectional=0
+        //        bool ani_bidir;
+            snpc.ani_bidir = npcset.value("animation-bidirectional", "0").toBool();
+
         //    //    ; for editor
         //    //    custom-animation=0
         //        bool custom_animate;
-            WriteToLog(QtDebugMsg, "NPC Config -> Custom animate...");
+           // WriteToLog(QtDebugMsg, "NPC Config -> Custom animate...");
             snpc.custom_animate = npcset.value("custom-animation", "0").toBool();
         //    //    ; this option useful for non-standart algorithmic sprites (for example, bosses)
 
@@ -209,7 +227,7 @@ void dataconfigs::loadLevelNPC()
         //    //    ; Special option
         //    //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
         //        bool special_option;
-            WriteToLog(QtDebugMsg, "NPC Config -> Special option...");
+          //  WriteToLog(QtDebugMsg, "NPC Config -> Special option...");
             snpc.special_option = npcset.value("have-special", "0").toBool();
 
         //    //    ;special-name="Cheep-cheep"	; 60
@@ -289,6 +307,12 @@ void dataconfigs::loadLevelNPC()
         //    //    ;Editor featured
         //    //    allow-bubble=1			; Allow packable into the bubble
         //        bool allow_bubble;
+
+            snpc.direct_alt_title = npcset.value("direction-alt-title", "").toString();
+            snpc.direct_alt_left = npcset.value("direction-alt-left-field", "").toString();
+            snpc.direct_alt_right = npcset.value("direction-alt-right-field", "").toString();
+            snpc.direct_disable_random = npcset.value("direction-no-rand-field", "0").toBool();
+
             snpc.allow_bubble = npcset.value("allow-bubble", "0").toBool();
         //    //    allow-egg=1			; Allow packable into the egg
         //        bool allow_egg;
@@ -375,16 +399,19 @@ void dataconfigs::loadLevelNPC()
         //    //    lava-protection=0	; NPC will not be burn in lava
         //        bool lava_protect;
             snpc.lava_protect = npcset.value("lava-protection", "0").toBool();
-            WriteToLog(QtDebugMsg, "NPC Config -> Loaded");
+          //  WriteToLog(QtDebugMsg, "NPC Config -> Loaded");
 
             main_npc.push_back(snpc);
 
-            WriteToLog(QtDebugMsg, "NPC Config -> Pushed");
+           // WriteToLog(QtDebugMsg, "NPC Config -> Pushed");
 
             //Add to Index
             if(i < (unsigned int)index_npc.size())
+            {
                 index_npc[i].i = i;
-            WriteToLog(QtDebugMsg, "NPC Config -> Index added");
+                index_npc[i].gi = i;
+            }
+           // WriteToLog(QtDebugMsg, "NPC Config -> Index added");
 
         npcset.endGroup();
         }

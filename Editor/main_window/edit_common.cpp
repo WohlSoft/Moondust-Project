@@ -20,6 +20,7 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 
+#include "../file_formats/file_formats.h"
 
 
 //Reload opened file data
@@ -41,7 +42,7 @@ void MainWindow::on_actionReload_triggered()
             return;
         }
 
-        FileData = ReadLevelFile(fileIn); //function in file_formats.cpp
+        FileData = FileFormats::ReadLevelFile(fileIn); //function in file_formats.cpp
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}

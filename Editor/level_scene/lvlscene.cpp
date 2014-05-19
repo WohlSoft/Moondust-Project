@@ -17,10 +17,11 @@
  */
 
 #include "lvlscene.h"
-#include "../leveledit.h"
+#include "../edit_level/leveledit.h"
 
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
@@ -55,12 +56,15 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     IsMoved = false;
     haveSelected = false;
 
+    resetPosition = false;
+
     contextMenuOpened = false;
 
     //Events flags
     wasPasted = false;  //call to cursor reset to normal select
     doCopy = false;     //call to copy
     doCut = false;      //call to cut
+    SyncLayerList = false; //Call to refresh layer list
 
 
     QPixmap cur(QSize(1,1));
@@ -81,14 +85,17 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     bgZ = -1000;
     blockZs = -150; // sizable blocks
     bgoZb = -100; // backround BGO
-    npcZb = -50; // standart NPC
 
     blockZ = 1; // standart block
     playerZ = 5; //player Point
 
     bgoZf = 50; // foreground BGO
 
-    blockZl = 100;
+    npcZb = 20; // background NPC
+
+    npcZs = 30; // standart NPC
+
+    blockZl = 100; //LavaBlock
     npcZf = 150; // foreground NPC
     waterZ = 500;
     doorZ = 700;
@@ -121,113 +128,11 @@ LvlScene::~LvlScene()
 
 
 
-QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
-{
-    qlonglong leftA, leftB;
-    qlonglong rightA, rightB;
-    qlonglong topA, topB;
-    qlonglong bottomA, bottomB;
-    //qreal betweenZ;
-
-    QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
-    foreach (QGraphicsItem * it, collisions) {
-            if (it == item)
-                 continue;
-            if(item->data(0).toString()=="Water")
-                return NULL;
-            if(item->data(0).toString()=="Door_exit")
-                return NULL;
-            if(item->data(0).toString()=="Door_enter")
-                return NULL;
-
-            leftA = item->scenePos().x();
-            rightA = item->scenePos().x()+item->data(9).toLongLong();
-            topA = item->scenePos().y();
-            bottomA = item->scenePos().y()+item->data(10).toLongLong();
-
-            leftB = it->scenePos().x();
-            rightB = it->scenePos().x()+it->data(9).toLongLong();
-            topB = it->scenePos().y();
-            bottomB = it->scenePos().y()+it->data(10).toLongLong();
-
-            if(it->data(0).toString()=="Block")
-                WriteToLog(QtDebugMsg, QString(" >>Collision with block detected"));
-
-              if((item->data(0).toString()=="Block")||(item->data(0).toString()=="NPC")
-                      ||(item->data(0).toString()=="BGO"))
-              {
-                  if(item->data(0).toString()!=it->data(0).toString()) continue;
-
-                  if(item->data(3).toString()=="sizable")
-                  {//sizable Block
-                      WriteToLog(QtDebugMsg, QString("sizable block") );
-                      continue;
-                  }
-
-                  if(item->data(0).toString()=="BGO")
-                    if(item->data(1).toInt()!=it->data(1).toInt()) continue;
-
-                     if( bottomA <= topB )
-                     { continue; }
-                     if( topA >= bottomB )
-                     { continue; }
-                     if( rightA <= leftB )
-                     { continue; }
-                     if( leftA >= rightB )
-                     { continue; }
-
-                     if(it->data(3).toString()!="sizable")
-                        return it;
-              }
-
-    }
-    return NULL;
-}
-
-QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
-{
-    QList<QGraphicsItem *> collisions = collidingItems(item);
-    foreach (QGraphicsItem * it, collisions) {
-            if (it == item)
-                 continue;
-            if( (
-                    (it->data(0).toString()=="Block")||
-                    (it->data(0).toString()=="BGO")||
-                    (it->data(0).toString()=="NPC")||
-                    (it->data(0).toString()=="door_exit")||
-                    (it->data(0).toString()=="door_enter")||
-                    (it->data(0).toString()=="water")
-              )&&(it->isVisible() ) )
-                return it;
-    }
-    return NULL;
-}
-
-/*
-QGraphicsItem * LvlScene::itemCollidesMouse(QGraphicsItem * item)
-{
-    QList<QGraphicsItem *> collisions = collidingItems(item, Qt::ContainsItemShape);
-    foreach (QGraphicsItem * it, collisions) {
-            if (it == item)
-                 continue;
-            if(item->data(0).toString()=="Water")
-                return NULL;
-            if(item->data(0).toString()=="Door_exit")
-                return NULL;
-            if(item->data(0).toString()=="Door_enter")
-                return NULL;
-
-        if( item->data(0).toString() ==  it->data(0).toString() )
-            return it;
-    }
-    return NULL;
-}
-*/
-
-
 
 void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
 {
+    const long padding = 400000;
+
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> Find and remove current"));
     foreach(QGraphicsItem * spaceItem, items())
     {
@@ -295,11 +200,11 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
     WriteToLog(QtDebugMsg, QString("Draw polygon"));
 
     drawing.clear();
-    drawing.push_back(QPoint(l-1000, t-1000));
-    drawing.push_back(QPoint(r+1000, t-1000));
-    drawing.push_back(QPoint(r+1000, b+1000));
-    drawing.push_back(QPoint(l-1000, b+1000));
-    drawing.push_back(QPoint(l-1000, t+1000));
+    drawing.push_back(QPoint(l-padding, t-padding));
+    drawing.push_back(QPoint(r+padding, t-padding));
+    drawing.push_back(QPoint(r+padding, b+padding));
+    drawing.push_back(QPoint(l-padding, b+padding));
+    drawing.push_back(QPoint(l-padding, t+padding));
 
     bigSpace = QPolygon(drawing);
 
@@ -350,6 +255,103 @@ void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress)
         else return;
     }
 
+}
+
+void LvlScene::InitSection(int sect)
+{
+    long leftA, leftB;
+    long rightA, rightB;
+    long topA, topB;
+    long bottomA, bottomB;
+    int i=0;
+    bool collided=true;
+
+    if( (sect >= LvlData->sections.size()) && (sect<0) )
+        return; //Protector
+    long x,y,h,w;
+
+    if(
+        (LvlData->sections[sect].size_left==0) &&
+        (LvlData->sections[sect].size_top==0) &&
+        (LvlData->sections[sect].size_bottom==0) &&
+        (LvlData->sections[sect].size_right==0)
+      )
+    {
+       //set section size/position values
+       x = -200000 + 20000*sect;//left
+       y = -200600 + 20000*sect;//top
+
+       h = -200000 + 20000*sect;//bottom
+
+       w = -199200 + 20000*sect;//right
+
+
+       bool found=false;
+
+       WriteToLog(QtDebugMsg, QString("InitSection -> Checking for collisions with other sections"));
+
+       //Looking for optimal section position
+       while(collided)
+       {
+           leftA = x;
+           topA = y;
+           rightA = w;
+           bottomA = h;
+
+           found=false;
+
+           //check crossing with other sections
+           for(i=0;i<LvlData->sections.size(); i++)
+           {
+               if(i == sect) continue;
+
+               leftB = LvlData->sections[i].size_left;
+               rightB = LvlData->sections[i].size_right;
+               topB = LvlData->sections[i].size_top;
+               bottomB = LvlData->sections[i].size_bottom;
+
+               if( bottomA <= topB )
+               { continue; }
+               if( topA >= bottomB )
+               { continue; }
+               if( rightA <= leftB )
+               { continue; }
+               if( leftA >= rightB )
+               { continue; }
+
+               WriteToLog(QtDebugMsg, QString("InitSection -> Collision found!"));
+               found=true;
+           }
+
+        if(found) //If collision found, move section right and try check agan
+        {
+            x += 20000; // move section right
+            w += 20000; // move section right
+        }
+            else
+        { //end loop
+            WriteToLog(QtDebugMsg, QString("InitSection -> Collision pass"));
+            collided=false;
+        }
+
+       }
+
+       //Apply section's data values
+       LvlData->sections[sect].size_left = x;
+       LvlData->sections[sect].size_top = y;
+       LvlData->sections[sect].size_right = w;
+       LvlData->sections[sect].size_bottom = h;
+
+       //set position to initialized section
+       LvlData->sections[sect].PositionY = y;
+       LvlData->sections[sect].PositionX = x;
+
+       LvlData->sections[sect].bgcolor = 16291944;
+
+       WriteToLog(QtDebugMsg, QString("InitSection -> Data was applyed X%1 Y%2 W%3 H%4")
+                  .arg(x).arg(y).arg(w).arg(h));
+    }
+    setSectionBG( LvlData->sections[sect] );
 }
 
 void LvlScene::setSectionBG(LevelSection section)
@@ -652,6 +654,35 @@ void LvlScene::sortBlockArray(QVector<LevelBlock > &blocks)
         }
 }
 
+void LvlScene::sortBlockArrayByPos(QVector<LevelBlock > &blocks)
+{
+    LevelBlock tmp1;
+    int total = blocks.size();
+    long i;
+    long xmin;
+    long xmini;
+    long sorted = 0;
+
+
+        while(sorted < blocks.size())
+        {
+            xmin = blocks[sorted].x;
+            xmini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( blocks[i].x < xmin )
+                {
+                    xmin = blocks[i].x; xmini = i;
+                }
+            }
+            tmp1 = blocks[xmini];
+            blocks[xmini] = blocks[sorted];
+            blocks[sorted] = tmp1;
+            sorted++;
+        }
+}
+
 void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
 {
     LevelBGO tmp1;
@@ -822,6 +853,12 @@ void LvlScene::startBlockAnimation()
             tmp = (*it);
             ((ItemBGO *)tmp)->AnimationStart();
         }
+        else
+        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemNPC *)tmp)->AnimationStart();
+        }
     }
 
 }
@@ -842,6 +879,12 @@ void LvlScene::stopAnimation()
         {
             tmp = (*it);
             ((ItemBGO *)tmp)->AnimationStop();
+        }
+        else
+        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+        {
+            tmp = (*it);
+            ((ItemNPC *)tmp)->AnimationStop();
         }
     }
 
@@ -865,7 +908,7 @@ void LvlScene::applyLayersVisible()
             }
         }
         else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+        if((*it)->data(0)=="BGO")
         {
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
@@ -873,6 +916,18 @@ void LvlScene::applyLayersVisible()
                 if( ((ItemBGO *)tmp)->bgoData.layer == layer.name)
                 {
                     ((ItemBGO *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+        else
+        if((*it)->data(0)=="NPC")
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemNPC *)tmp)->npcData.layer == layer.name)
+                {
+                    ((ItemNPC *)tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -912,22 +967,22 @@ void LvlScene::setLocked(int type, bool lock)
         case 1://Block
             if((*it)->data(0).toString()=="Block")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemBlock *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemBlock *)(*it))->isLocked ) ) );
             }
             break;
         case 2://BGO
             if((*it)->data(0).toString()=="BGO")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemBGO *)(*it))->isLocked ) ));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemBGO *)(*it))->isLocked ) ));
             }
             break;
         case 3://NPC
             if((*it)->data(0).toString()=="NPC")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!lock));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!lock));
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemNPC *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemNPC *)(*it))->isLocked ) ) );
             }
             break;
         case 4://Water

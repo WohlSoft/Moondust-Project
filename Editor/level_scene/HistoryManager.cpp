@@ -19,7 +19,9 @@
 #include "lvlscene.h"
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
 #include "../common_features/logger.h"
+
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -73,6 +75,21 @@ void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedI
     historyChanged = true;
 }
 
+void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, LvlScene::SettingSubType subType, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation modOperation;
+    modOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS;
+    modOperation.data = modifiedItems;
+    modOperation.subtype = subType;
+    modOperation.extraData = extraData;
+    operationList.push_back(modOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -101,6 +118,14 @@ void LvlScene::historyBack()
 
         }
 
+        foreach (LevelNPC npc, deletedData.npc)
+        {
+            //place them back
+            LvlData->npc.push_back(npc);
+            placeNPC(npc);
+
+        }
+
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
         if(opts.animationEnabled) startBlockAnimation();
@@ -113,7 +138,7 @@ void LvlScene::historyBack()
         LevelData placeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO);
+        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC);
 
         break;
     }
@@ -123,8 +148,46 @@ void LvlScene::historyBack()
         LevelData movedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC);
 
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
+    {
+        LevelData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        if(lastOperation.subtype == SETTING_INVISIBLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsInvisibleBlock, 0, 0, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_SLIPPERY){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsSlipperyBlock, 0, 0, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_FRIENDLY){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsFriendlyNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_BOSS){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsBossNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_NOMOVEABLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsNoMoveableNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_MESSAGE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsMessageNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_DIRECTION){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_CHANGENPC){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, 0, false, true, true);
+        }
         break;
     }
     default:
@@ -149,7 +212,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC);
 
         break;
     }
@@ -177,6 +240,13 @@ void LvlScene::historyForward()
             //WriteToLog(QtDebugMsg, QString("History-> placed on map pos %1 %2").arg(bgo.x).arg(bgo.y));
         }
 
+        foreach (LevelNPC npc, placedData.npc)
+        {
+            //place them back
+            LvlData->npc.push_back(npc);
+            placeNPC(npc);
+        }
+
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
         if(opts.animationEnabled) startBlockAnimation();
@@ -200,7 +270,45 @@ void LvlScene::historyForward()
         CallbackData cbData;
         cbData.x = baseX;
         cbData.y = baseY;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
+    {
+        LevelData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        if(lastOperation.subtype == SETTING_INVISIBLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsInvisibleBlock, 0, 0, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_SLIPPERY){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsSlipperyBlock, 0, 0, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_FRIENDLY){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsFriendlyNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_BOSS){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsBossNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_NOMOVEABLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsNoMoveableNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_MESSAGE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsMessageNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_DIRECTION){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionNPC, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_CHANGENPC){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, 0, false, true, true);
+        }
         break;
     }
     default:
@@ -262,6 +370,17 @@ void LvlScene::historyRedoMoveBGO(CallbackData cbData, LevelBGO data)
     ((ItemBGO *)(cbData.item))->arrayApply();
 }
 
+void LvlScene::historyRedoMoveNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    long diffX = data.x - cbData.x;
+    long diffY = data.y - cbData.y;
+
+    cbData.item->setPos(QPointF(cbData.hist->x+diffX,cbData.hist->y+diffY));
+    ((ItemNPC *)(cbData.item))->npcData.x = (long)cbData.item->scenePos().x();
+    ((ItemNPC *)(cbData.item))->npcData.y = (long)cbData.item->scenePos().y();
+    ((ItemNPC *)(cbData.item))->arrayApply();
+}
+
 void LvlScene::historyUndoMoveBlocks(LvlScene::CallbackData cbData, LevelBlock data)
 {
     cbData.item->setPos(QPointF(data.x,data.y));
@@ -278,6 +397,14 @@ void LvlScene::historyUndoMoveBGO(LvlScene::CallbackData cbData, LevelBGO data)
     ((ItemBGO *)(cbData.item))->arrayApply();
 }
 
+void LvlScene::historyUndoMoveNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    cbData.item->setPos(QPointF(data.x,data.y));
+    ((ItemNPC *)(cbData.item))->npcData.x = (long)cbData.item->scenePos().x();
+    ((ItemNPC *)(cbData.item))->npcData.y = (long)cbData.item->scenePos().y();
+    ((ItemNPC *)(cbData.item))->arrayApply();
+}
+
 void LvlScene::historyRemoveBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
 {
     ((ItemBlock*)cbData.item)->removeFromArray();
@@ -290,22 +417,130 @@ void LvlScene::historyRemoveBGO(LvlScene::CallbackData cbData, LevelBGO /*data*/
     removeItem(cbData.item);
 }
 
+void LvlScene::historyRemoveNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC *)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+}
+
+void LvlScene::historyUndoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->setInvisible(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->setInvisible(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsSlipperyBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->setSlippery(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsSlipperyBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->setSlippery(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setFriendly(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setFriendly(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setLegacyBoss(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setLegacyBoss(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setNoMovable(!cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyRedoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setNoMovable(cbData.hist->extraData.toBool());
+}
+
+void LvlScene::historyUndoSettingsMessageNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setMsg(cbData.hist->extraData.toList()[0].toString());
+}
+
+void LvlScene::historyRedoSettingsMessageNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setMsg(cbData.hist->extraData.toList()[1].toString());
+}
+
+void LvlScene::historyUndoSettingsDirectionNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->changeDirection(cbData.hist->extraData.toList()[0].toInt());
+}
+
+void LvlScene::historyRedoSettingsDirectionNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->changeDirection(cbData.hist->extraData.toList()[1].toInt());
+}
+
+void LvlScene::historyUndoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ItemBlock* targetItem = (ItemBlock*)cbData.item;
+    int targetNPC_id = cbData.hist->extraData.toList()[0].toInt();
+    targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
+    targetItem->arrayApply();
+    targetItem->setIncludedNPC((unsigned long)targetNPC_id);
+}
+
+void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ItemBlock* targetItem = (ItemBlock*)cbData.item;
+    int targetNPC_id = cbData.hist->extraData.toList()[1].toInt();
+    targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
+    targetItem->arrayApply();
+    targetItem->setIncludedNPC((unsigned long)targetNPC_id);
+}
+
 void LvlScene::findGraphicsItem(LevelData toFind,
                                 HistoryOperation * operation,
                                 CallbackData customData,
                                 callBackLevelBlock clbBlock,
-                                callBackLevelBGO clbBgo)
+                                callBackLevelBGO clbBgo,
+                                callBackLevelNPC clbNpc,
+                                bool ignoreBlock,
+                                bool ignoreBGO,
+                                bool ignoreNPC)
 {
     QMap<int, LevelBlock> sortedBlock;
-    foreach (LevelBlock block, toFind.blocks)
-    {
-        sortedBlock[block.array_id] = block;
+    if(!ignoreBlock){
+        foreach (LevelBlock block, toFind.blocks)
+        {
+            sortedBlock[block.array_id] = block;
+        }
     }
-
     QMap<int, LevelBGO> sortedBGO;
-    foreach (LevelBGO bgo, toFind.bgo)
-    {
-        sortedBGO[bgo.array_id] = bgo;
+    if(!ignoreBGO){
+        foreach (LevelBGO bgo, toFind.bgo)
+        {
+            sortedBGO[bgo.array_id] = bgo;
+        }
+    }
+    QMap<int, LevelNPC> sortedNPC;
+    if(!ignoreNPC){
+        foreach (LevelNPC npc, toFind.npc) 
+		{
+            sortedNPC[npc.array_id] = npc;
+        }
     }
     //bool blocksFinished = false;
     //bool bgosFinished = false;
@@ -313,84 +548,34 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     cbData.hist = operation;
     QMap<int, QGraphicsItem*> sortedGraphBlocks;
     QMap<int, QGraphicsItem*> sortedGraphBGO;
-
+    QMap<int, QGraphicsItem*> sortedGraphNPC;
     foreach (QGraphicsItem* unsortedItem, items())
     {
         if(unsortedItem->data(0).toString()=="Block")
         {
-            sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+            if(!ignoreBlock){
+                sortedGraphBlocks[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
         }
         else
         if(unsortedItem->data(0).toString()=="BGO")
         {
-            sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+            if(!ignoreBGO){
+                sortedGraphBGO[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        if(unsortedItem->data(0).toString()=="NPC")
+        {
+            if(!ignoreNPC){
+                sortedGraphNPC[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
         }
     }
 
-    foreach (QGraphicsItem* item, sortedGraphBlocks)
-    {
-
-        if(sortedBlock.size()!=0)
+    if(!ignoreBlock){
+        foreach (QGraphicsItem* item, sortedGraphBlocks)
         {
-            QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
-            unsigned int currentArrayId = (*beginItem).array_id;
-            if((unsigned int)item->data(2).toInt()>currentArrayId)
-            {
-                //not found
-                sortedBlock.erase(beginItem);
-            }
 
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedBlock.begin();
-            currentArrayId = (*beginItem).array_id;
-            if((unsigned int)item->data(2).toInt()==currentArrayId)
-            {
-                cbData.item = item;
-                (this->*clbBlock)(cbData,(*beginItem));
-                sortedBlock.erase(beginItem);
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
-
-
-    foreach (QGraphicsItem* item, sortedGraphBGO)
-    {
-        if(sortedBGO.size()!=0)
-        {
-            QMap<int, LevelBGO>::iterator beginItem = sortedBGO.begin();
-            unsigned int currentArrayId = (*beginItem).array_id;
-            if((unsigned int)item->data(2).toInt()>currentArrayId)
-            {
-                //not found
-                sortedBGO.erase(beginItem);
-            }
-
-            //but still test if the next blocks, is the block we search!
-            beginItem = sortedBGO.begin();
-
-            currentArrayId = (*beginItem).array_id;
-
-            if((unsigned int)item->data(2).toInt()==currentArrayId)
-            {
-                cbData.item = item;
-                (this->*clbBgo)(cbData,(*beginItem));
-                sortedBGO.erase(beginItem);
-            }
-        }
-        else
-        {
-            break;
-        }
-    }
-    /*
-    foreach (QGraphicsItem* item, sortedLevelArray)
-    {
-        if(item->data(0).toString()=="Block")
-        {
             if(sortedBlock.size()!=0)
             {
                 QMap<int, LevelBlock>::iterator beginItem = sortedBlock.begin();
@@ -400,6 +585,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                     //not found
                     sortedBlock.erase(beginItem);
                 }
+
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedBlock.begin();
                 currentArrayId = (*beginItem).array_id;
@@ -412,11 +598,14 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             }
             else
             {
-                blocksFinished = true;
+                break;
             }
         }
-        else
-        if(item->data(0).toString()=="BGO")
+    }
+
+    if(!ignoreBGO)
+    {
+        foreach (QGraphicsItem* item, sortedGraphBGO)
         {
             if(sortedBGO.size()!=0)
             {
@@ -427,9 +616,11 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                     //not found
                     sortedBGO.erase(beginItem);
                 }
+
                 //but still test if the next blocks, is the block we search!
                 beginItem = sortedBGO.begin();
                 currentArrayId = (*beginItem).array_id;
+
                 if((unsigned int)item->data(2).toInt()==currentArrayId)
                 {
                     cbData.item = item;
@@ -439,15 +630,39 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             }
             else
             {
-                bgosFinished = true;
+                break;
             }
         }
-        if(blocksFinished&&bgosFinished)
-        {
-            break;
+    }
+
+    if(!ignoreNPC)
+	{
+        foreach (QGraphicsItem* item, sortedGraphNPC) 
+		{
+            if(sortedNPC.size()!=0)
+            {
+                QMap<int, LevelNPC>::iterator beginItem = sortedNPC.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedNPC.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedNPC.begin();
+				
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbNpc)(cbData,(*beginItem));
+                    sortedNPC.erase(beginItem);
+                }
+            }
         }
     }
-    */
 
 }
 

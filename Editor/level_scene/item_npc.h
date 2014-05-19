@@ -31,8 +31,9 @@
 #include <QTimer>
 #include <math.h>
 #include <QMenu>
+
 #include "lvlscene.h"
-#include "lvl_filedata.h"
+#include "../file_formats/lvl_filedata.h"
 
 class ItemNPC : public QObject, public QGraphicsPixmapItem
 {
@@ -62,6 +63,7 @@ public:
     void setFriendly(bool fri);
     void setNoMovable(bool stat);
     void setLegacyBoss(bool boss);
+    void setMsg(QString message);
 
     void changeDirection(int dir);
 
@@ -71,6 +73,15 @@ public:
     QPoint fPos() const;
     void setFrame(int);
     LevelNPC npcData;
+    obj_npc localProps;
+
+    int imgOffsetX;
+    int imgOffsetY;
+    int gridSize;
+
+    //Locks
+    bool isLocked;
+    void setLocked(bool lock);
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
@@ -84,12 +95,19 @@ private:
     int frameSpeed;
     int frameStyle;
     int direction;
-    bool customAnimate;
-    int custom_frameFL;//first left
-    int custom_frameEL;//end left
-    int custom_frameFR;//first right
-    int custom_frameER;//enf right
 
+    bool aniDirect;
+    bool aniBiDirect;
+
+    int curDirect;
+    int frameStep;
+
+    bool customAnimate;
+    int customAniAlg; //custom animation algorythm 0 - forward, 1 - frameJump
+    int custom_frameFL;//first left
+    int custom_frameEL;//end left / jump step
+    int custom_frameFR;//first right
+    int custom_frameER;//enf right / jump step
     LvlScene * scene;
     int frameCurrent;
     QTimer * timer;

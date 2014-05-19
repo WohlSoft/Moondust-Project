@@ -17,7 +17,9 @@
  */
 
 #include "item_bgo.h"
-#include "common_features/logger.h"
+#include "../common_features/logger.h"
+
+#include "newlayerbox.h"
 
 
 ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
@@ -29,6 +31,7 @@ ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
+    isLocked=false;
     //image = new QGraphicsPixmapItem;
 }
 
@@ -40,7 +43,7 @@ ItemBGO::~ItemBGO()
 
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if(!scene->lock_bgo)
+    if((!scene->lock_bgo)&&(!isLocked))
     {
         //Remove selection from non-bgo items
         if(this->isSelected())
@@ -63,6 +66,10 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         QAction *setLayer;
         QList<QAction *> layerItems;
+
+        QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+        LayerName->addSeparator();
+
         foreach(LevelLayers layer, scene->LvlData->layers)
         {
             //Skip system layers
@@ -77,13 +84,21 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         }
 
         ItemMenu->addSeparator();
-        QAction *copyBGO = ItemMenu->addAction("Copy");
-        QAction *cutBGO = ItemMenu->addAction("Cut");
+        QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
+        QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
         ItemMenu->addSeparator();
-        QAction *remove = ItemMenu->addAction("Remove");
+        QAction *remove = ItemMenu->addAction(tr("Remove"));
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
+
+        if(!selected)
+        {
+            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            scene->contextMenuOpened = true;
+            return;
+        }
+        event->accept();
 
         if(selected==cutBGO)
         {
@@ -117,31 +132,88 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         else
         {
+            bool itemIsFound=false;
+            QString lName;
+            if(selected==newLayer)
+            {
+                scene->contextMenuOpened = false;
+                ToNewLayerBox * layerBox = new ToNewLayerBox(scene->LvlData);
+                layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+                layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
+                if(layerBox->exec()==QDialog::Accepted)
+                {
+                    itemIsFound=true;
+                    lName = layerBox->lName;
+
+                    //Store new layer into array
+                    LevelLayers nLayer;
+                    nLayer.name = lName;
+                    nLayer.hidden = layerBox->lHidden;
+                    scene->LvlData->layers_array_id++;
+                    nLayer.array_id = scene->LvlData->layers_array_id;
+                    scene->LvlData->layers.push_back(nLayer);
+
+                    scene->SyncLayerList=true; //Refresh layer list
+                }
+            }
+            else
             foreach(QAction * lItem, layerItems)
             {
                 if(selected==lItem)
                 {
-                    foreach(LevelLayers lr, scene->LvlData->layers)
-                    { //Find layer's settings
-                        if(lr.name==lItem->data().toString())
-                        {
-                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                            {
-
-                                if(SelItem->data(0).toString()=="BGO")
-                                {
-                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
-                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
-                                ((ItemBGO *) SelItem)->arrayApply();
-                                }
-                            }
-                        break;
-                        }
-                    }//Find layer's settings
-                 scene->contextMenuOpened = false;
+                    itemIsFound=true;
+                    lName = lItem->data().toString();
+                    //FOUND!!!
                  break;
                 }//Find selected layer's item
             }
+
+            if(itemIsFound)
+            {
+                foreach(LevelLayers lr, scene->LvlData->layers)
+                { //Find layer's settings
+                    if(lr.name==lName)
+                    {
+                        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                        {
+
+                            if(SelItem->data(0).toString()=="BGO")
+                            {
+                            ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
+                            ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
+                            ((ItemBGO *) SelItem)->arrayApply();
+                            }
+                        }
+                    break;
+                    }
+                }//Find layer's settings
+             scene->contextMenuOpened = false;
+            }
+//            foreach(QAction * lItem, layerItems)
+//            {
+//                if(selected==lItem)
+//                {
+//                    foreach(LevelLayers lr, scene->LvlData->layers)
+//                    { //Find layer's settings
+//                        if(lr.name==lItem->data().toString())
+//                        {
+//                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+//                            {
+
+//                                if(SelItem->data(0).toString()=="BGO")
+//                                {
+//                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
+//                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
+//                                ((ItemBGO *) SelItem)->arrayApply();
+//                                }
+//                            }
+//                        break;
+//                        }
+//                    }//Find layer's settings
+//                 scene->contextMenuOpened = false;
+//                 break;
+//                }//Find selected layer's item
+//            }
         }
     }
     else
@@ -311,6 +383,13 @@ void ItemBGO::setFrame(int y)
     framePos.setY( frameCurrent );
     draw();
     this->setPixmap(QPixmap(currentImage));
+}
+
+void ItemBGO::setLocked(bool lock)
+{
+    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+    isLocked = lock;
 }
 
 void ItemBGO::nextFrame()

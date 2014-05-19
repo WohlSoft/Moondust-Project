@@ -21,52 +21,59 @@
 
 #include <QRegExp>
 #include <QString>
+#include <QFile>
+
+
+#include "lvl_filedata.h"
+#include "npc_filedata.h"
+#include "wld_filedata.h"
+
+
 
 //SMBX64 standard data
-namespace SMBX64 {
-
-    QRegExp isint("\\d+");     //Check "Is Numeric"
-    QRegExp boolwords("^(#TRUE#|#FALSE#)$");
-    QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    QRegExp booldeg("^(1|0)$");
-    QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-
-    QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
-    QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
+class SMBX64
+{
+public:
+    SMBX64() {}
 
     // /////////////Validators///////////////
     //returns TRUE on wrong data
-    bool Int(QString in) // UNSIGNED INT
-    {  return !isint.exactMatch(in); }
-
-    bool sInt(QString in) // SIGNED INT
-    {  return !issint.exactMatch(in); }
-
-    bool sFloat(QString in) // SIGNED FLOAT
-    {  return !issfloat.exactMatch(in); }
-
-    bool qStr(QString in) // QUOTED STRING
-    {  return !qstr.exactMatch(in); }
-
-    bool wBool(QString in) //Worded BOOL
-    {  return !boolwords.exactMatch(in); }
-
-    bool dBool(QString in) //Worded BOOL
-    {  return !booldeg.exactMatch(in); }
-
+    static bool Int(QString in); // UNSIGNED INT
+    static bool sInt(QString in); // SIGNED INT
+    static bool sFloat(QString in); // SIGNED FLOAT
+    static bool qStr(QString in); // QUOTED STRING
+    static bool wBool(QString in); //Worded BOOL
+    static bool dBool(QString in); //Worded BOOL
 
     //SMBX64 parameter string generators
-    QString IntS(long input)
-    {  return QString::number(input)+"\n"; }
-
-    QString BoolS(bool input)
-    {  return QString( (input)?"#TRUE#":"#FALSE#" )+"\n"; }
-
-    QString qStrS(QString input)
-    { return QString("\"%1\"\n").arg(input); }
+    static QString IntS(long input);
+    static QString BoolS(bool input);
+    static QString qStrS(QString input);
+};
 
 
-}
+class FileFormats
+{
+public:
+    //File format read functions
+    // SMBX64 LVL File
+    static LevelData ReadLevelFile(QFile &inf);             //read
+    static QString WriteSMBX64LvlFile(LevelData FileData);  //write
+
+    // SMBX64 NPC.TXT File
+    static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); //read
+    static QString WriteNPCTxtFile(NPCConfigFile FileData);                //write
+
+    static NPCConfigFile CreateEmpytNpcTXTArray();
+
+    // SMBX64 WLD File
+    static WorldData ReadWorldFile(QFile &inf); //read
+
+
+
+    //common
+    static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
+    static QString removeQuotes(QString str); // Remove quotes from begin and end
+};
 
 #endif // FILE_FORMATS_H

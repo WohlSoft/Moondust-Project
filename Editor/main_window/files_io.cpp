@@ -18,6 +18,7 @@
 
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
+#include "../file_formats/file_formats.h"
 
 
 void MainWindow::openFilesByArgs(QStringList args)
@@ -54,7 +55,7 @@ void MainWindow::OpenFile(QString FilePath)
     if(in_1.suffix() == "lvl")
     {
 
-        LevelData FileData = ReadLevelFile(file); //function in file_formats.cpp
+        LevelData FileData = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
         if( !FileData.ReadFileValid ) return;
 
         FileData.filename = in_1.baseName();
@@ -66,6 +67,7 @@ void MainWindow::OpenFile(QString FilePath)
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
 
+            updateMenus(true);
             SetCurrentLevelSection(0);
             setDoorsToolbox();
             setLayersBox();
@@ -83,7 +85,7 @@ void MainWindow::OpenFile(QString FilePath)
     else
     if(in_1.suffix() == "wld")
     {
-        WorldData FileData = ReadWorldFile(file);
+        WorldData FileData = FileFormats::ReadWorldFile(file);
         if( !FileData.ReadFileValid ) return;
 
         /*
@@ -103,12 +105,13 @@ void MainWindow::OpenFile(QString FilePath)
     else
     if(in_1.suffix() == "txt")
     {
-        NPCConfigFile FileData = ReadNpcTXTFile(file);
+        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(file);
         if( !FileData.ReadFileValid ) return;
 
         npcedit *child = createNPCChild();
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
+            updateMenus(true);
             child->show();
         } else {
             child->close();
@@ -181,7 +184,8 @@ void MainWindow::save_all()
 
 void MainWindow::close_sw()
 {
-    ui->centralWidget->activeSubWindow()->close();
+    if(ui->centralWidget->subWindowList().size()>0)
+        ui->centralWidget->activeSubWindow()->close();
 }
 
 

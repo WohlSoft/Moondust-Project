@@ -31,8 +31,9 @@
 #include <QTimer>
 #include <math.h>
 #include <QMenu>
+
 #include "lvlscene.h"
-#include "lvl_filedata.h"
+#include "../file_formats/lvl_filedata.h"
 
 class ItemBGO : public QObject, public QGraphicsPixmapItem
 {
@@ -71,6 +72,10 @@ public:
     int gridSize;
     int gridOffsetX;
     int gridOffsetY;
+
+    //Locks
+    bool isLocked;
+    void setLocked(bool lock);
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
