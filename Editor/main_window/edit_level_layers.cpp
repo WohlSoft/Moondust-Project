@@ -381,9 +381,10 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                     break;
                 }
             }
-
-
             //Apply layer's name/visibly to all items
+            ModifyLayer(oldLayerName, layerName, layerVisible);
+
+            /*
             QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
 
             for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
@@ -428,8 +429,8 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                     //(*it)->setVisible(layerVisible);
                 }
             }
+            */
             activeLvlEditWin()->LvlData.modified=true;
-
         }
 
     }//if WinType==1
@@ -439,6 +440,8 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
 
 void MainWindow::on_RemoveLayer_clicked()
 {
+    RemoveCurrentLayer(true);
+   /*
    QList<QListWidgetItem * > selected = ui->LvlLayerList->selectedItems();
 
    if(selected.isEmpty()) return;
@@ -461,7 +464,7 @@ void MainWindow::on_RemoveLayer_clicked()
            }
        }
    }
-
+    */
 }
 
 
@@ -492,6 +495,13 @@ void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     else
     if((selected==removeLayer)||(selected==removeLayerOnly))
     {
+        if(selected==removeLayerOnly){
+            RemoveCurrentLayer(true);
+        }else
+        if(selected==removeLayer){
+            RemoveCurrentLayer(false);
+        }
+        /*
         QString layerName = ui->LvlLayerList->selectedItems()[0]->text();
         bool layerVisible = true;
         bool saveItems = (selected==removeLayerOnly);
@@ -582,6 +592,7 @@ void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
 
         on_RemoveLayer_clicked();
+        */
     }
 
 
