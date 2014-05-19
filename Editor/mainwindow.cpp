@@ -218,3 +218,9 @@ void MainWindow::on_actionNewNPC_config_triggered()
 }
 
 
+//Toolbar context menu
+void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
+{
+    WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2").arg(pos.x()).arg(pos.y()));
+
+}
