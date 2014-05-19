@@ -86,6 +86,8 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+        if(contextMenuOpened) return;
+
         cursor->setPos(mouseEvent->scenePos());
         cursor->show();
 
@@ -159,6 +161,8 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::removeItemUnderCursor()
 {
+    if(contextMenuOpened) return;
+
     QGraphicsItem * findItem;
     bool removeIt=true;
     findItem = itemCollidesCursor(cursor);
@@ -228,6 +232,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if(contextMenuOpened)
     {
         contextMenuOpened = false; //bug protector
+        QGraphicsScene::mouseReleaseEvent(mouseEvent);
         return;
     }
 
