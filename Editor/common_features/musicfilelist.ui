@@ -14,7 +14,7 @@
    <string>Select Custom music</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="editor.qrc">
+   <iconset resource="../_resources/editor.qrc">
     <normaloff>:/lvl16.png</normaloff>:/lvl16.png</iconset>
   </property>
   <property name="locale">
@@ -57,7 +57,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="editor.qrc"/>
+  <include location="../_resources/editor.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -43,7 +43,7 @@
    <string>NPC Configuration edit</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="editor.qrc">
+   <iconset resource="../_resources/editor.qrc">
     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -1212,7 +1212,7 @@ border-color: rgb(132, 132, 132);</string>
   </widget>
  </widget>
  <resources>
-  <include location="editor.qrc"/>
+  <include location="../_resources/editor.qrc"/>
  </resources>
  <connections/>
 </ui>

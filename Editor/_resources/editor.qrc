@@ -40,8 +40,6 @@
         <file>images/section16.png</file>
         <file>images/world16.png</file>
         <file>images/coin.png</file>
-        <file>images/mac/mushroom.hqx</file>
-        <file>images/mac/mushroom.icns</file>
         <file>images/grid.png</file>
         <file>images/reset_pos.png</file>
         <file alias="locks/bgo_cl.png">images/lock_bgo_cl.png</file>
@@ -75,5 +73,8 @@
         <file>images/edit_undo.png</file>
         <file alias="npc/proj.png">images/generator_proj.png</file>
         <file alias="npc/warp.png">images/generator_warp.png</file>
+        <file alias="images/mac/mushroom.hqx">mushroom.hqx</file>
+        <file alias="images/mac/mushroom.icns">mushroom.icns</file>
+        <file>splash.png</file>
     </qresource>
 </RCC>
