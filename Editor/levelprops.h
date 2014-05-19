@@ -43,7 +43,7 @@ private slots:
 
 private:
     Ui::LevelProps *ui;
-    LevelData currentData;
+    LevelData *currentData;
 };
 
 #endif // LEVELPROPS_H
