@@ -17,7 +17,7 @@
  */
 
 #include "../mainwindow.h"
-//#include "file_formats.h"
+#include "file_formats.h"
 
 /*
 if(myString.startsWith("\"") myString.remove(0,1);
@@ -37,14 +37,16 @@ QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
 */
 
 //Errror for file parsing
-void MainWindow::BadFileMsg(QString fileName_DATA, int str_count, QString line)
+
+
+void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 {
     QMessageBox * box = new QMessageBox();
-    box->setWindowTitle( tr("Bad File") );
+    box->setWindowTitle( QTranslator::tr("Bad File") );
     box->setText(
-                QString(tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
-                          +tr("Line Number: %1\n").arg(str_count)         //Print Line With error
-                           +tr("Line Data: %1").arg(line))
+                QString( QTranslator::tr("Bad file format\nFile: %1\n").arg(fileName_DATA)  //Print Bad data string
+                          +QTranslator::tr("Line Number: %1\n").arg(str_count)         //Print Line With error
+                           +QTranslator::tr("Line Data: %1").arg(line))
                 );
     box->setStandardButtons(QMessageBox::Ok);
     box->setIcon(QMessageBox::Warning);
@@ -52,7 +54,7 @@ void MainWindow::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 }
 
 
-QString MainWindow::removeQuotes(QString str)
+QString FileFormats::removeQuotes(QString str)
 {
     QString target = str.remove(0,1);
     target = target.remove(target.size()-1,1);

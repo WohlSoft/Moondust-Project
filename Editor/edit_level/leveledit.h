@@ -22,9 +22,10 @@
 #include <QtWidgets>
 #include <QGraphicsView>
 #include <QGraphicsScene>
-#include "lvl_filedata.h"
-#include "level_scene/lvlscene.h"
-#include "data_configs/data_configs.h"
+
+#include "../file_formats/lvl_filedata.h"
+#include "../level_scene/lvlscene.h"
+#include "../data_configs/data_configs.h"
 
 namespace Ui {
 class leveledit;
@@ -58,9 +59,6 @@ public:
 
     LvlScene * scene;
     QString curFile;
-
-    //Lvl fileformat creation function
-    QString WriteSMBX64LvlFile(LevelData FileData);
     
 protected:
     void closeEvent(QCloseEvent *event);

@@ -19,15 +19,11 @@ TRANSLATIONS += languages/pge_editor_en.ts \
 SOURCES += main.cpp\
         mainwindow.cpp \
     aboutdialog.cpp \
-    levelprops.cpp \
-    npcedit.cpp \
-    leveledit.cpp \
-    saveimage.cpp \
-    musicfilelist.cpp \
     file_formats/file_formats.cpp \
     file_formats/file_lvl.cpp \
     file_formats/file_npc_txt.cpp \
     file_formats/file_wld.cpp \
+    file_formats/smbx64.cpp \
     main_window/recentfiles.cpp \
     main_window/events.cpp \
     main_window/main_settings.cpp \
@@ -38,19 +34,24 @@ SOURCES += main.cpp\
     main_window/edit_world.cpp \
     main_window/music_player.cpp \
     main_window/edit_common.cpp \
+    main_window/files_io.cpp \
+    main_window/menubar.cpp \
+    main_window/edit_control.cpp \
+    main_window/appsettings.cpp \
+    main_window/edit_level_layers.cpp \
     level_scene/lvlscene.cpp \
     level_scene/item_bgo.cpp \
     level_scene/item_block.cpp \
     level_scene/HistoryManager.cpp \
     level_scene/lvl_clipboard.cpp \
     level_scene/item_npc.cpp \
-    main_window/files_io.cpp \
-    main_window/menubar.cpp \
     level_scene/place_new_item.cpp \
     level_scene/lvl_control.cpp \
     level_scene/lvl_items.cpp \
-    main_window/edit_control.cpp \
     level_scene/lvl_usergfx.cpp \
+    level_scene/itemmsgbox.cpp \
+    level_scene/lvl_collisions.cpp \
+    level_scene/newlayerbox.cpp \
     data_configs/configs_main.cpp \
     data_configs/conf_lvl_bgo.cpp \
     data_configs/conf_lvl_bkgrd.cpp \
@@ -59,24 +60,21 @@ SOURCES += main.cpp\
     data_configs/conf_music.cpp \
     common_features/timecounter.cpp \
     common_features/logger.cpp \
+    common_features/musicfilelist.cpp \
+    edit_npc/npcedit.cpp \
     npc_dialog/npcdialog.cpp \
-    file_formats/smbx64.cpp \
-    level_scene/itemmsgbox.cpp \
-    level_scene/lvl_collisions.cpp \
-    main_window/appsettings.cpp \
-    main_window/edit_level_layers.cpp \
-    level_scene/newlayerbox.cpp
+    edit_level/leveledit.cpp \
+    edit_level/levelprops.cpp \
+    edit_level/saveimage.cpp \
+    edit_level/lvl_files_io.cpp \
+    edit_level/lvl_draw.cpp \
+    edit_level/lvl_edit_control.cpp \
+    edit_npc/npctxt_files_io.cpp \
+    edit_npc/npc_data_sets.cpp \
+    edit_npc/npctxt_controls.cpp
 
 HEADERS  += mainwindow.h \
     aboutdialog.h \
-    levelprops.h \
-    lvl_filedata.h \
-    wld_filedata.h \
-    npc_filedata.h \
-    npcedit.h \
-    leveledit.h \
-    saveimage.h \
-    musicfilelist.h \
     file_formats/file_formats.h \
     level_scene/item_bgo.h \
     level_scene/item_block.h \
@@ -86,23 +84,31 @@ HEADERS  += mainwindow.h \
     common_features/timecounter.h \
     common_features/logger.h \
     common_features/logger_sets.h \
+    common_features/musicfilelist.h \
     npc_dialog/npcdialog.h \
     level_scene/itemmsgbox.h \
     main_window/appsettings.h \
-    level_scene/newlayerbox.h
+    level_scene/newlayerbox.h \
+    file_formats/lvl_filedata.h \
+    file_formats/npc_filedata.h \
+    file_formats/wld_filedata.h \
+    edit_level/leveledit.h \
+    edit_level/levelprops.h \
+    edit_level/saveimage.h \
+    edit_npc/npcedit.h
 
 FORMS    += \
     aboutdialog.ui \
-    leveledit.ui \
-    levelprops.ui \
     mainwindow.ui \
-    npcedit.ui \
-    saveimage.ui \
-    musicfilelist.ui \
     npc_dialog/npcdialog.ui \
     level_scene/itemmsgbox.ui \
     main_window/appsettings.ui \
-    level_scene/tonewlayerbox.ui
+    level_scene/tonewlayerbox.ui \
+    common_features/musicfilelist.ui \
+    edit_level/leveledit.ui \
+    edit_level/levelprops.ui \
+    edit_level/saveimage.ui \
+    edit_npc/npcedit.ui
 
 RC_FILE = platgenw.rc
 

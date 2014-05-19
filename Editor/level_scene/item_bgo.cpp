@@ -17,7 +17,7 @@
  */
 
 #include "item_bgo.h"
-#include "common_features/logger.h"
+#include "../common_features/logger.h"
 
 #include "newlayerbox.h"
 

@@ -2,7 +2,7 @@
 #define NPCDIALOG_H
 
 #include <QDialog>
-#include "data_configs/data_configs.h"
+#include "../data_configs/data_configs.h"
 
 namespace Ui {
 class NpcDialog;
