@@ -29,7 +29,7 @@
    <enum>Qt::NoFocus</enum>
   </property>
   <property name="contextMenuPolicy">
-   <enum>Qt::NoContextMenu</enum>
+   <enum>Qt::CustomContextMenu</enum>
   </property>
   <property name="acceptDrops">
    <bool>true</bool>
@@ -1212,7 +1212,7 @@
        <rect>
         <x>10</x>
         <y>46</y>
-        <width>47</width>
+        <width>191</width>
         <height>16</height>
        </rect>
       </property>
@@ -1229,7 +1229,7 @@
        <string>Music file:</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
      <widget class="QLineEdit" name="LVLPropsMusicCustom">
@@ -1971,7 +1971,7 @@
        <rect>
         <x>10</x>
         <y>42</y>
-        <width>71</width>
+        <width>81</width>
         <height>17</height>
        </rect>
       </property>
@@ -1984,7 +1984,7 @@
        <rect>
         <x>10</x>
         <y>22</y>
-        <width>71</width>
+        <width>81</width>
         <height>17</height>
        </rect>
       </property>
@@ -2072,7 +2072,7 @@
        <property name="geometry">
         <rect>
          <x>35</x>
-         <y>23</y>
+         <y>25</y>
          <width>16</width>
          <height>16</height>
         </rect>
@@ -2212,6 +2212,9 @@ p, li { white-space: pre-wrap; }
      <height>250</height>
     </size>
    </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
    <property name="allowedAreas">
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
@@ -2222,6 +2225,9 @@ p, li { white-space: pre-wrap; }
     <number>2</number>
    </attribute>
    <widget class="QWidget" name="LevelLayersBox">
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
     <layout class="QGridLayout" name="gridLayout">
      <property name="leftMargin">
       <number>0</number>
@@ -2273,6 +2279,9 @@ p, li { white-space: pre-wrap; }
      </item>
      <item row="0" column="0" colspan="3">
       <widget class="QListWidget" name="LvlLayerList">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <property name="verticalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOn</enum>
        </property>

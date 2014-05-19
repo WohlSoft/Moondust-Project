@@ -19,6 +19,8 @@
 #include "item_bgo.h"
 #include "common_features/logger.h"
 
+#include "newlayerbox.h"
+
 
 ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
@@ -64,6 +66,10 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         QAction *setLayer;
         QList<QAction *> layerItems;
+
+        QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+        LayerName->addSeparator();
+
         foreach(LevelLayers layer, scene->LvlData->layers)
         {
             //Skip system layers
@@ -118,31 +124,88 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         else
         {
+            bool itemIsFound=false;
+            QString lName;
+            if(selected==newLayer)
+            {
+                scene->contextMenuOpened = false;
+                ToNewLayerBox * layerBox = new ToNewLayerBox(scene->LvlData);
+                layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+                layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
+                if(layerBox->exec()==QDialog::Accepted)
+                {
+                    itemIsFound=true;
+                    lName = layerBox->lName;
+
+                    //Store new layer into array
+                    LevelLayers nLayer;
+                    nLayer.name = lName;
+                    nLayer.hidden = layerBox->lHidden;
+                    scene->LvlData->layers_array_id++;
+                    nLayer.array_id = scene->LvlData->layers_array_id;
+                    scene->LvlData->layers.push_back(nLayer);
+
+                    scene->SyncLayerList=true; //Refresh layer list
+                }
+            }
+            else
             foreach(QAction * lItem, layerItems)
             {
                 if(selected==lItem)
                 {
-                    foreach(LevelLayers lr, scene->LvlData->layers)
-                    { //Find layer's settings
-                        if(lr.name==lItem->data().toString())
-                        {
-                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                            {
-
-                                if(SelItem->data(0).toString()=="BGO")
-                                {
-                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
-                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
-                                ((ItemBGO *) SelItem)->arrayApply();
-                                }
-                            }
-                        break;
-                        }
-                    }//Find layer's settings
-                 scene->contextMenuOpened = false;
+                    itemIsFound=true;
+                    lName = lItem->data().toString();
+                    //FOUND!!!
                  break;
                 }//Find selected layer's item
             }
+
+            if(itemIsFound)
+            {
+                foreach(LevelLayers lr, scene->LvlData->layers)
+                { //Find layer's settings
+                    if(lr.name==lName)
+                    {
+                        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                        {
+
+                            if(SelItem->data(0).toString()=="BGO")
+                            {
+                            ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
+                            ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
+                            ((ItemBGO *) SelItem)->arrayApply();
+                            }
+                        }
+                    break;
+                    }
+                }//Find layer's settings
+             scene->contextMenuOpened = false;
+            }
+//            foreach(QAction * lItem, layerItems)
+//            {
+//                if(selected==lItem)
+//                {
+//                    foreach(LevelLayers lr, scene->LvlData->layers)
+//                    { //Find layer's settings
+//                        if(lr.name==lItem->data().toString())
+//                        {
+//                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+//                            {
+
+//                                if(SelItem->data(0).toString()=="BGO")
+//                                {
+//                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
+//                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
+//                                ((ItemBGO *) SelItem)->arrayApply();
+//                                }
+//                            }
+//                        break;
+//                        }
+//                    }//Find layer's settings
+//                 scene->contextMenuOpened = false;
+//                 break;
+//                }//Find selected layer's item
+//            }
         }
     }
     else

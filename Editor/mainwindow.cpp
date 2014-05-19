@@ -48,6 +48,51 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     ui->setupUi(this);
 
+    /*
+     * //Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
+     *
+       QString defaultLocale = QLocale::system().name();
+       defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
+
+       m_langPath = QApplication::applicationDirPath();
+       m_langPath.append("/languages");
+       QDir dir(m_langPath);
+       QStringList fileNames = dir.entryList(QStringList("pge_editor_*.qm"));
+
+       for (int i = 0; i < fileNames.size(); ++i)
+           {
+               // get locale extracted by filename
+               QString locale;
+               locale = fileNames[i];                  // "TranslationExample_de.qm"
+               locale.truncate(locale.lastIndexOf('.'));   // "TranslationExample_de"
+               locale.remove(0, locale.indexOf('_') + 1);   // "de"
+
+               QString lang = QLocale::languageToString(QLocale(locale).language());
+               QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
+
+               QAction *action = new QAction(ico, lang, this);
+               action->setCheckable(true);
+               action->setData(locale);
+
+               ui->menuLanguage->addAction(action);
+
+               // set default translators and language checked
+               if (defaultLocale == locale)
+               {
+                   action->setChecked(true);
+               }
+           }
+
+       m_currLang = "ru";
+       QLocale locale = QLocale(m_currLang);
+       QLocale::setDefault(locale);
+
+       if(m_translator.load("pge_editor_ru.qm"))
+        qApp->installTranslator(&m_translator);
+
+       ui->retranslateUi(this);
+    */
+
     setUiDefults(); //Apply default UI settings
 
 }
@@ -95,6 +140,12 @@ void MainWindow::TickTack()
                 on_actionReset_position_triggered();
                 activeLvlEditWin()->scene->resetPosition = false;
             }
+            else
+            if(activeLvlEditWin()->scene->SyncLayerList)
+            {
+                setLayersBox();
+                activeLvlEditWin()->scene->SyncLayerList = false;
+            }
         }
         /*
         else
@@ -118,70 +169,6 @@ MainWindow::~MainWindow()
     WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
 
-
-
-///////////////////////////////////////////////////////
-
-
-//////////////////////////////////////////////////////
-
-/*
-void MainWindow::updateMenus()
-{
-    bool hasMdiChild = (activeMdiChild() != 0);
-    saveAct->setEnabled(hasMdiChild);
-    saveAsAct->setEnabled(hasMdiChild);
-    pasteAct->setEnabled(hasMdiChild);
-    closeAct->setEnabled(hasMdiChild);
-    closeAllAct->setEnabled(hasMdiChild);
-    tileAct->setEnabled(hasMdiChild);
-    cascadeAct->setEnabled(hasMdiChild);
-    nextAct->setEnabled(hasMdiChild);
-    previousAct->setEnabled(hasMdiChild);
-    separatorAct->setVisible(hasMdiChild);
-
-    bool hasSelection = (activeMdiChild() &&
-                         activeMdiChild()->textCursor().hasSelection());
-    cutAct->setEnabled(hasSelection);
-    copyAct->setEnabled(hasSelection);
-}
-
-void MainWindow::updateWindowMenu()
-{
-    windowMenu->clear();
-    windowMenu->addAction(closeAct);
-    windowMenu->addAction(closeAllAct);
-    windowMenu->addSeparator();
-    windowMenu->addAction(tileAct);
-    windowMenu->addAction(cascadeAct);
-    windowMenu->addSeparator();
-    windowMenu->addAction(nextAct);
-    windowMenu->addAction(previousAct);
-    windowMenu->addAction(separatorAct);
-
-    QList<QMdiSubWindow *> windows = mdiArea->subWindowList();
-    separatorAct->setVisible(!windows.isEmpty());
-
-    for (int i = 0; i < windows.size(); ++i) {
-        MdiChild *child = qobject_cast<MdiChild *>(windows.at(i)->widget());
-
-        QString text;
-        if (i < 9) {
-            text = tr("&%1 %2").arg(i + 1)
-                               .arg(child->userFriendlyCurrentFile());
-        } else {
-            text = tr("%1 %2").arg(i + 1)
-                              .arg(child->userFriendlyCurrentFile());
-        }
-        QAction *action  = windowMenu->addAction(text);
-        action->setCheckable(true);
-        action ->setChecked(child == activeMdiChild());
-        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-        windowMapper->setMapping(action, windows.at(i));
-    }
-}
-
-*/
 
 
 //////////////////SLOTS///////////////////////////
@@ -236,3 +223,10 @@ void MainWindow::on_actionNewNPC_config_triggered()
 
 }
 
+
+//Toolbar context menu
+void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
+{
+    WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2").arg(pos.x()).arg(pos.y()));
+
+}
