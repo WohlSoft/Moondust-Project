@@ -152,151 +152,88 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
     merged.image = QPixmap();   //Clear image values
     merged.mask = QPixmap();
 
-//    int gfxoffsetx;
-//    bool en_gfxoffsetx;
     merged.gfx_offset_x = (local.en_gfxoffsetx)?local.gfxoffsetx:global.gfx_offset_x;
-
-//    int gfxoffsety;
-//    bool en_gfxoffsety;
     merged.gfx_offset_y = (local.en_gfxoffsety)?local.gfxoffsety:global.gfx_offset_y;
 
-//    unsigned int width;
-//    bool en_width;
     merged.width = (local.en_width)?local.width:global.width;
-
-//    unsigned int height;
-//    bool en_height;
-    //merged. = (local.en_)?local.:global.;
     merged.height = (local.en_height)?local.height:global.height;
 
-
-    //Copy fixture size to GFX size if that greater
-    if(merged.height >= (unsigned int)global.gfx_h)
-        merged.gfx_h = merged.height;
-    else
-        merged.gfx_h = global.gfx_h;
-
-    //Copy fixture size to GFX size if that greater
-    if(merged.width >= (unsigned int)global.gfx_w)
-        merged.gfx_w = merged.width;
-    else
-        merged.gfx_w = global.gfx_w;
-
-    if(merged.grid_attach_style==1)
-        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % merged.grid)/2 )+16;
-    else
-        merged.grid_offset_x = -qRound( qreal(merged.gfx_w % merged.grid)/2 );
-
-    merged.grid_offset_y = -merged.height % merged.grid;
-
-//    unsigned int gfxwidth;
-//    bool en_gfxwidth;
-    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
-
-//    unsigned int gfxheight;
-//    bool en_gfxheight;
-    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
-
-
-//    unsigned int score;
-//    bool en_score;
-    merged.score = (local.en_score)?local.score:global.score;
-
-//    bool playerblock;
-//    bool en_playerblock;
-    merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
-
-
-//    bool playerblocktop;
-//    bool en_playerblocktop;
-    merged.block_player_top = (local.en_playerblocktop)?local.playerblocktop:global.block_player_top;
-
-//    bool npcblock;
-//    bool en_npcblock;
-    merged.block_npc = (local.en_npcblock)?local.npcblock:global.block_npc;
-
-//    bool npcblocktop;
-//    bool en_npcblocktop;
-    merged.block_npc_top = (local.en_npcblocktop)?local.npcblocktop:global.block_npc_top;
-
-
-//    bool grabside;
-//    bool en_grabside;
-    merged.grab_side = (local.en_grabside)?local.grabside:global.grab_side;
-
-
-//    bool grabtop;
-//    bool en_grabtop;
-    merged.grab_top = (local.en_grabtop)?local.grabtop:global.grab_top;
-
-
-//    bool jumphurt;
-//    bool en_jumphurt;
-    merged.kill_on_jump = (local.en_jumphurt)? (!local.jumphurt) : global.kill_on_jump ;
-
-//    bool nohurt;
-//    bool en_nohurt;
-    merged.hurt_player = (local.en_nohurt)?!local.nohurt:global.hurt_player;
-
-//    bool noblockcollision;
-//    bool en_noblockcollision;
-    merged.collision_with_blocks = (local.en_noblockcollision)?(!local.noblockcollision):global.collision_with_blocks;
-
-//    bool cliffturn;
-//    bool en_cliffturn;
-    merged.turn_on_cliff_detect = (local.en_cliffturn)?local.cliffturn:global.turn_on_cliff_detect;
-
-
-//    bool noyoshi;
-//    bool en_noyoshi;
-    merged.can_be_eaten = (local.en_noyoshi)?(!local.noyoshi):global.can_be_eaten;
-
-
-//    bool foreground;
-//    bool en_foreground;
     merged.foreground = (local.en_foreground)?local.foreground:global.foreground;
 
-//    float speed;
-//    bool en_speed;
-    merged.speed = (local.en_speed) ? global.speed * local.speed : global.speed;
-
-
-//    bool nofireball;
-//    bool en_nofireball;
-    merged.kill_by_fireball = (local.en_nofireball)?(!local.nofireball):global.kill_by_fireball;
-
-//    bool nogravity;
-//    bool en_nogravity;
-    merged.gravity = (local.en_nogravity)?(!local.nogravity):global.gravity;
-
-//    unsigned int frames;
-//    bool en_frames;
-    merged.frames = (local.en_frames)?local.frames:global.frames;
-
-//    unsigned int framespeed;
-//    bool en_framespeed;
     merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / qreal(8 / local.framespeed) ) : global.framespeed;
-
-
-//    unsigned int framestyle;
-//    bool en_framestyle;
     merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
+
+    merged.frames = (local.en_frames)?local.frames:global.frames;
 
     if((local.en_frames)||(local.en_framestyle))
         merged.ani_bidir = false; //Disable bidirectional animation
 
-//    bool noiceball;
-//    bool en_noiceball;
+    //Copy fixture size to GFX size
+    if((local.en_width)&&
+                (
+                ((merged.width <= (unsigned int)global.gfx_w)&&(merged.framestyle<2)&&(merged.framestyle>0))||
+                ((merged.width != (unsigned int)global.gfx_w)&&(merged.framestyle==0))
+                )
+            )
+        merged.gfx_w = merged.width;
+    else
+        merged.gfx_w = global.gfx_w;
+
+    //Copy fixture size to GFX size
+    if((local.en_height)&&(global.height <= (unsigned int)global.gfx_h)&&(merged.framestyle<2))
+        merged.gfx_h = merged.height;
+    else
+        merged.gfx_h = global.gfx_h;
+
+    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
+    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
+
+
+    qreal sign=((int)merged.width>=merged.grid)? -1 : 1;
+
+    if(merged.grid_attach_style==1)
+        merged.grid_offset_x = sign * qRound( qreal((int)merged.width % merged.grid)/2 )+16;
+    else
+        merged.grid_offset_x = sign * qRound( qreal((int)merged.width % merged.grid)/2 );
+
+    merged.grid_offset_y = -merged.height % merged.grid;
+
+
+    merged.score = (local.en_score)?local.score:global.score;
+    merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
+    merged.block_player_top = (local.en_playerblocktop)?local.playerblocktop:global.block_player_top;
+    merged.block_npc = (local.en_npcblock)?local.npcblock:global.block_npc;
+    merged.block_npc_top = (local.en_npcblocktop)?local.npcblocktop:global.block_npc_top;
+    merged.grab_side = (local.en_grabside)?local.grabside:global.grab_side;
+    merged.grab_top = (local.en_grabtop)?local.grabtop:global.grab_top;
+    merged.kill_on_jump = (local.en_jumphurt)? (!local.jumphurt) : global.kill_on_jump ;
+    merged.hurt_player = (local.en_nohurt)?!local.nohurt:global.hurt_player;
+    merged.collision_with_blocks = (local.en_noblockcollision)?(!local.noblockcollision):global.collision_with_blocks;
+    merged.turn_on_cliff_detect = (local.en_cliffturn)?local.cliffturn:global.turn_on_cliff_detect;
+    merged.can_be_eaten = (local.en_noyoshi)?(!local.noyoshi):global.can_be_eaten;
+    merged.speed = (local.en_speed) ? global.speed * local.speed : global.speed;
+    merged.kill_by_fireball = (local.en_nofireball)?(!local.nofireball):global.kill_by_fireball;
+    merged.gravity = (local.en_nogravity)?(!local.nogravity):global.gravity;
     merged.freeze_by_iceball = (local.en_noiceball)?(!local.noiceball):global.freeze_by_iceball;
-
-
-//    bool nohammer;
-//    bool en_nohammer;
     merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
-
-//    bool noshell;
-//    bool en_noshell;
     merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
+
+    WriteToLog(QtDebugMsg, QString("-------------------------------------"));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge for NPC-ID=%1").arg(merged.id));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Height:   %1").arg(merged.height));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Width:    %1").arg(merged.width));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX h:    %1").arg(merged.gfx_h));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX w:    %1").arg(merged.gfx_w));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Grid size %1").arg(merged.grid));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset x: %1").arg(merged.grid_offset_x));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset y: %1").arg(merged.grid_offset_y));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX sign: %1").arg(sign));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GridStl:  %1").arg(merged.grid_attach_style));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offX: %1").arg(merged.gfx_offset_x));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offY: %1").arg(merged.gfx_offset_y));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> FrStyle:  %1").arg(merged.framestyle));
+    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Frames:   %1").arg((int)merged.frames));
+    WriteToLog(QtDebugMsg, QString("-------------------------------------"));
 
     return merged;
 }
