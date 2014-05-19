@@ -229,4 +229,14 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
 {
     WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2").arg(pos.x()).arg(pos.y()));
 
+    QMenu *cu = new QMenu(this);
+    QAction *test= cu->addAction("Nothing");
+    test->setEnabled(false);
+    QAction *test2= cu->addAction("Nothing");
+    test2->setEnabled(false);
+    QAction *test3= cu->addAction("Nothing");
+    test3->setEnabled(false);
+
+    cu->exec(pos);
+
 }
