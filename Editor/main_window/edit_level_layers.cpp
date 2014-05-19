@@ -230,9 +230,13 @@ void MainWindow::on_RemoveLayer_clicked()
 
 void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 {
-    qDebug()<< "Layer's context menu called!";
-
     if(ui->LvlLayerList->selectedItems().isEmpty()) return;
+
+    QPoint globPos = ui->LvlLayerList->mapToGlobal(pos);
+
+    WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2 -> %3 %4")
+               .arg(pos.x()).arg(pos.y())
+               .arg(globPos.x()).arg(globPos.y()));
 
     QMenu *layer_menu = new QMenu(this);
     QAction * rename = layer_menu->addAction(tr("Rename layer"));
@@ -242,7 +246,7 @@ void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
     QAction * removeLayer = layer_menu->addAction(tr("Remove layer with items"));
     QAction * removeLayerOnly = layer_menu->addAction(tr("Remove layer and save items"));
 
-    QAction *selected = layer_menu->exec(mapToGlobal(pos) );
+    QAction *selected = layer_menu->exec( globPos );
     if(selected==rename)
     {
         ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
