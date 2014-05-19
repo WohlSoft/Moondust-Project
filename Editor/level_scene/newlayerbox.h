@@ -2,7 +2,7 @@
 #define NEWLAYERBOX_H
 
 #include <QDialog>
-#include "lvl_filedata.h"
+#include "../file_formats/lvl_filedata.h"
 
 namespace Ui {
 class ToNewLayerBox;

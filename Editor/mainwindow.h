@@ -37,22 +37,19 @@
 #include <QLocale>
 #include <QSplashScreen>
 
-#include "lvl_filedata.h"
-#include "wld_filedata.h"
-#include "npc_filedata.h"
+#include "file_formats/lvl_filedata.h"
+#include "file_formats/wld_filedata.h"
+#include "file_formats/npc_filedata.h"
 
-#include "leveledit.h"
-#include "npcedit.h"
-
-#include "npcedit.h"
+#include "edit_level/leveledit.h"
+#include "edit_npc/npcedit.h"
 
 #include "aboutdialog.h"
-#include "levelprops.h"
+#include "edit_level/levelprops.h"
 
 #include "data_configs/data_configs.h"
 
-#include "musicfilelist.h"
-
+#include "common_features/musicfilelist.h"
 #include "common_features/logger.h"
 
 
@@ -74,12 +71,7 @@ public:
     dataconfigs *getConfigs();
     void openFilesByArgs(QStringList args);
 
-    //File format read functions
-    static LevelData ReadLevelFile(QFile &inf); // SMBX LVL File
-    static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); // SMBX WLD File
-    static WorldData ReadWorldFile(QFile &inf); //SMBX NPC.TXT File
 
-    
 protected:
     void closeEvent(QCloseEvent *event);
     void dragEnterEvent(QDragEnterEvent *e);
@@ -339,12 +331,6 @@ private:
     QTranslator     m_translatorQt; /**< contains the translations for qt */
     QString         m_currLang;     /**< contains the currently loaded language */
     QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
-
-
-    //Helps functions
-    static QString removeQuotes(QString str);
-
-    static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
 
 };
 

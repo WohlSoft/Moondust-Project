@@ -17,7 +17,7 @@
  */
 
 #include "item_block.h"
-#include "common_features/logger.h"
+#include "../common_features/logger.h"
 
 #include "../npc_dialog/npcdialog.h"
 #include "newlayerbox.h"

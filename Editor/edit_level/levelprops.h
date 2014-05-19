@@ -16,10 +16,35 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#ifndef LEVELPROPS_H
+#define LEVELPROPS_H
 
-#include "item_block.h"
-#include "item_bgo.h"
+#include <QDialog>
 
+#include "../file_formats/lvl_filedata.h"
 
+namespace Ui {
+class LevelProps;
+}
+
+class LevelProps : public QDialog
+{
+    Q_OBJECT
+    
+public:
+    explicit LevelProps(LevelData &FileData,QWidget *parent = 0);
+    ~LevelProps();
+    bool AutoPlayMusic;
+    QString LevelTitle;
+    
+private slots:
+    void on_LVLPropButtonBox_accepted();
+
+    void on_LVLPropButtonBox_rejected();
+
+private:
+    Ui::LevelProps *ui;
+    LevelData *currentData;
+};
+
+#endif // LEVELPROPS_H
