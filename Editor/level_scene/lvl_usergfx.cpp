@@ -17,8 +17,8 @@
  */
 
 #include "lvlscene.h"
-#include "../leveledit.h"
-#include "mainwindow.h"
+#include "../edit_level/leveledit.h"
+#include "../file_formats/file_formats.h"
 
 //Search and load custom User's files
 void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
@@ -275,7 +275,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                            "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt");
                 if(file.open(QIODevice::ReadOnly))
                 {
-                    uNPC.sets = MainWindow::ReadNpcTXTFile(file, true);
+                    uNPC.sets = FileFormats::ReadNpcTXTFile(file, true);
                     uNPC.withTxt = true;
                 }
              }
@@ -288,7 +288,7 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                             "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt");
                  if(file.open(QIODevice::ReadOnly))
                  {
-                     uNPC.sets = MainWindow::ReadNpcTXTFile(file, true);
+                     uNPC.sets = FileFormats::ReadNpcTXTFile(file, true);
                      uNPC.withTxt = true;
                  }
              }

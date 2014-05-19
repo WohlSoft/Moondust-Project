@@ -16,34 +16,37 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#ifndef LEVELPROPS_H
-#define LEVELPROPS_H
+#include <QtWidgets>
 
-#include <QDialog>
-#include "lvl_filedata.h"
+#include "npcedit.h"
+#include "../ui_npcedit.h"
+#include "../file_formats/file_formats.h"
 
-namespace Ui {
-class LevelProps;
+npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::npcedit)
+{
+    pConfigs = configs;
+    npc_id = 0;
+    FileType = 2;
+    isUntitled = true;
+    isModyfied  = false;
+    ui->setupUi(this);
 }
 
-class LevelProps : public QDialog
+npcedit::~npcedit()
 {
-    Q_OBJECT
-    
-public:
-    explicit LevelProps(LevelData &FileData,QWidget *parent = 0);
-    ~LevelProps();
-    bool AutoPlayMusic;
-    QString LevelTitle;
-    
-private slots:
-    void on_LVLPropButtonBox_accepted();
+    delete ui;
+}
 
-    void on_LVLPropButtonBox_rejected();
 
-private:
-    Ui::LevelProps *ui;
-    LevelData *currentData;
-};
 
-#endif // LEVELPROPS_H
+void npcedit::closeEvent(QCloseEvent *event)
+{
+    if (maybeSave()) {
+        event->accept();
+    } else {
+        event->ignore();
+    }
+}
+

@@ -17,7 +17,7 @@
  */
 
 #include "../mainwindow.h"
-#include "../leveledit.h"
+#include "../edit_level/leveledit.h"
 #include "file_formats.h"
 
 //*********************************************************
@@ -26,7 +26,7 @@
 
 
 //Level File Read
-LevelData MainWindow::ReadLevelFile(QFile &inf)
+LevelData FileFormats::ReadLevelFile(QFile &inf)
 {
     QTextStream in(&inf);   //Read File
 
@@ -1127,7 +1127,7 @@ LevelData MainWindow::ReadLevelFile(QFile &inf)
 //*********************************************************
 
 
-QString leveledit::WriteSMBX64LvlFile(LevelData FileData)
+QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
 {
     QString TextData;
     int i, j;

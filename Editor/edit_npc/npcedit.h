@@ -22,8 +22,9 @@
 #include <QWidget>
 #include <QFile>
 #include <QMessageBox>
-#include "data_configs/data_configs.h"
-#include "npc_filedata.h"
+
+#include "../data_configs/data_configs.h"
+#include "../file_formats/npc_filedata.h"
 
 namespace Ui {
 class npcedit;
@@ -48,13 +49,12 @@ public:
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
 
-    //file format creation function
-    QString WriteNPCTxtFile(NPCConfigFile FileData);
-
 protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
+    void on_ResetNPCData_clicked();
+
     void documentWasModified();
     void documentNotModified();
 
@@ -84,8 +84,6 @@ private slots:
     void on_En_NoBlockCollision_clicked();
     void on_En_NoGravity_clicked();
     void on_En_TurnCliff_clicked();
-
-    void on_ResetNPCData_clicked();
 
     void on_GFXOffSetX_valueChanged(int arg1);
     void on_GFXOffSetY_valueChanged(int arg1);
@@ -125,7 +123,6 @@ private:
     void setDefaultData(unsigned long npc_id);
 
     bool isModyfied;
-
 
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
