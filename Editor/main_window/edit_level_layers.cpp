@@ -25,17 +25,255 @@
 #include "../level_scene/item_npc.h"
 
 
+void MainWindow::RemoveCurrentLayer(bool moveToDefault)
+{
+    bool layerVisible = true;
+    //Remove from List
+    QList<QListWidgetItem * > selected = ui->LvlLayerList->selectedItems();
+
+    if(moveToDefault)
+    { //Find default layer visibly
+        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+        {
+            if( layer.name=="Default" )
+            {
+                layerVisible=!layer.hidden;
+                break;
+            }
+        }
+    }
+
+    if(moveToDefault)
+    {
+        ModifyLayer(selected[0]->text(), "Default", layerVisible);
+    }
+    else
+    {
+        RemoveLayerItems(selected[0]->text());
+    }
+
+
+    if(selected.isEmpty()) return;
+
+    RemoveLayerFromListAndData(selected[0]);
+
+
+}
+
+void MainWindow::RemoveLayerItems(QString layerName)
+{
+    QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        if((*it)->data(0).toString()=="Block")
+        {
+            if(((ItemBlock *)(*it))->blockData.layer==layerName)
+            {
+                ((ItemBlock *)(*it))->removeFromArray();
+                activeLvlEditWin()->scene->removeItem((*it));
+            }
+
+        }
+        else
+        if((*it)->data(0).toString()=="BGO")
+        {
+            if(((ItemBGO *)(*it))->bgoData.layer==layerName)
+            {
+                ((ItemBGO *)(*it))->removeFromArray();
+                activeLvlEditWin()->scene->removeItem((*it));
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="NPC")
+        {
+            if(((ItemNPC *)(*it))->npcData.layer==layerName)
+            {
+                ((ItemNPC *)(*it))->removeFromArray();
+                activeLvlEditWin()->scene->removeItem((*it));
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="Water")
+        {
+            //TODO
+        }
+        else
+        if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+        {
+            //TODO
+        }
+    }
+}
+
+void MainWindow::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
+{
+
+    if(layerItem->text()=="Destroyed Blocks") return;
+    if(layerItem->text()=="Spawned NPCs") return;
+    if(layerItem->text()=="Default") return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        for(int i=0;i< activeLvlEditWin()->LvlData.layers.size(); i++)
+        {
+            if( activeLvlEditWin()->LvlData.layers[i].array_id==(unsigned int)layerItem->data(3).toInt() )
+            {
+                activeLvlEditWin()->LvlData.layers.remove(i);
+                delete layerItem;
+                break;
+            }
+        }
+    }
+}
+
+void MainWindow::ModifyLayer(QString layerName, bool visible)
+{
+    //Apply layer's visibly to all items
+    QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        if((*it)->data(0).toString()=="Block")
+        {
+            if(((ItemBlock *)(*it))->blockData.layer==layerName)
+            {
+                (*it)->setVisible(visible);
+            }
+
+        }
+        else
+        if((*it)->data(0).toString()=="BGO")
+        {
+            if(((ItemBGO *)(*it))->bgoData.layer==layerName)
+            {
+                (*it)->setVisible(visible);
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="NPC")
+        {
+            if(((ItemNPC *)(*it))->npcData.layer==layerName)
+            {
+                (*it)->setVisible(visible);
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="Water")
+        {
+            //TODO
+        }
+        else
+        if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+        {
+            //TODO
+        }
+    }
+}
+
+void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
+{
+    //Apply layer's name to all items
+    QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        if((*it)->data(0).toString()=="Block")
+        {
+            if(((ItemBlock *)(*it))->blockData.layer==layerName)
+            {
+                ((ItemBlock *)(*it))->blockData.layer = newLayerName;
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="BGO")
+        {
+            if(((ItemBGO *)(*it))->bgoData.layer==layerName)
+            {
+                ((ItemBGO *)(*it))->bgoData.layer = newLayerName;
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="NPC")
+        {
+            if(((ItemNPC *)(*it))->npcData.layer==layerName)
+            {
+                ((ItemNPC *)(*it))->npcData.layer = newLayerName;
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="Water")
+        {
+            //TODO
+        }
+        else
+        if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+        {
+            //TODO
+        }
+    }
+}
+
+void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visible)
+{
+    //Apply layer's name/visibly to all items
+    QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        if((*it)->data(0).toString()=="Block")
+        {
+            if(((ItemBlock *)(*it))->blockData.layer==layerName)
+            {
+                ((ItemBlock *)(*it))->blockData.layer = newLayerName;
+                (*it)->setVisible(visible);
+            }
+
+        }
+        else
+        if((*it)->data(0).toString()=="BGO")
+        {
+            if(((ItemBGO *)(*it))->bgoData.layer==layerName)
+            {
+                ((ItemBGO *)(*it))->bgoData.layer = newLayerName;
+                (*it)->setVisible(visible);
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="NPC")
+        {
+            if(((ItemNPC *)(*it))->npcData.layer==layerName)
+            {
+                ((ItemNPC *)(*it))->npcData.layer = newLayerName;
+                (*it)->setVisible(visible);
+            }
+        }
+        else
+        if((*it)->data(0).toString()=="Water")
+        {
+            //TODO
+        }
+        else
+        if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
+        {
+            //TODO
+        }
+    }
+}
+
+
 void MainWindow::on_LevelLayers_visibilityChanged(bool visible)
 {
     ui->actionLayersBox->setChecked(visible);
 }
+
 void MainWindow::on_actionLayersBox_triggered(bool checked)
 {
     ui->LevelLayers->setVisible(checked);
     if(checked) ui->LevelLayers->raise();
 }
-
-
 
 
 void MainWindow::setLayersBox()
