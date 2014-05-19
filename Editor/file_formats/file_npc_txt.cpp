@@ -17,8 +17,9 @@
  */
 
 #include "../mainwindow.h"
-#include "../npcedit.h"
-//#include "file_formats.h"
+
+#include "file_formats.h"
+#include "../edit_npc/npcedit.h"
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
@@ -26,29 +27,9 @@
 
 
 //NPC file Read
-NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
+
+NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()
 {
-    //Regs
-    QRegExp isint("\\d+");     //Check "Is Numeric"
-    //QRegExp boolwords("^(#TRUE#|#FALSE#)$");
-    QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    QRegExp booldeg("^(1|0)$");
-    //QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-    //QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
-    //QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
-
-
-    int str_count=0;        //Line Counter
-    //int i;                  //counters
-    QString line;           //Current Line data
-    QStringList Params;
-    QTextStream in(&inf);   //Read File
-
-    in.setAutoDetectUnicode(true); //Test Fix for MacOS
-    in.setLocale(QLocale::system());   //Test Fix for MacOS
-    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
-
     NPCConfigFile FileData;
     FileData.en_gfxoffsetx=false;
     FileData.en_gfxoffsety=false;
@@ -77,7 +58,33 @@ NPCConfigFile MainWindow::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     FileData.en_framestyle=false;
     FileData.en_noiceball=false;
     FileData.en_nohammer=false;
+    return FileData;
+}
 
+NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
+{
+    //Regs
+    QRegExp isint("\\d+");     //Check "Is Numeric"
+    //QRegExp boolwords("^(#TRUE#|#FALSE#)$");
+    QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
+    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
+    QRegExp booldeg("^(1|0)$");
+    //QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
+    //QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
+    //QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
+
+
+    int str_count=0;        //Line Counter
+    //int i;                  //counters
+    QString line;           //Current Line data
+    QStringList Params;
+    QTextStream in(&inf);   //Read File
+
+    in.setAutoDetectUnicode(true); //Test Fix for MacOS
+    in.setLocale(QLocale::system());   //Test Fix for MacOS
+    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+
+    NPCConfigFile FileData = CreateEmpytNpcTXTArray();
 
     //Read NPC.TXT File config
 
@@ -487,7 +494,7 @@ return FileData;
 //*********************************************************
 
 //Convert NPC Options structore to text for saving
-QString npcedit::WriteNPCTxtFile(NPCConfigFile FileData)
+QString FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
 {
 
     QString TextData;

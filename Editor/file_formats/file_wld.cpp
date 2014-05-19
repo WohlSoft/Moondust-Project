@@ -17,9 +17,9 @@
  */
 
 #include "../mainwindow.h"
-#include "../wld_filedata.h"
+#include "wld_filedata.h"
 
-//#include "file_formats.h"
+#include "file_formats.h"
 
 /*
 if(myString.startsWith("\"") myString.remove(0,1);
@@ -32,7 +32,7 @@ if(myString.endsWith("\"") myString.remove(myString.size()-1,1);
 //*********************************************************
 
 //World file Read
-WorldData MainWindow::ReadWorldFile(QFile &inf)
+WorldData FileFormats::ReadWorldFile(QFile &inf)
 {
     //Regs
     QRegExp isint("\\d+");     //Check "Is Numeric"

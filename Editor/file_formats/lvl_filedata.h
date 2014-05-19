@@ -21,6 +21,7 @@
 
 #include <QVector>
 #include <QString>
+#include <QStringList>
 
 //////////////////////Level file Data//////////////////////
 struct LevelSection

@@ -38,8 +38,8 @@
 #include <QDebug>
 
 
-#include "../lvl_filedata.h"
-#include "../npc_filedata.h"
+#include "../file_formats/lvl_filedata.h"
+#include "../file_formats/npc_filedata.h"
 #include "../data_configs/data_configs.h"
 
 #include "../common_features/logger.h"

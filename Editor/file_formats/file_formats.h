@@ -21,6 +21,14 @@
 
 #include <QRegExp>
 #include <QString>
+#include <QFile>
+
+
+#include "lvl_filedata.h"
+#include "npc_filedata.h"
+#include "wld_filedata.h"
+
+
 
 //SMBX64 standard data
 class SMBX64
@@ -41,6 +49,31 @@ public:
     static QString IntS(long input);
     static QString BoolS(bool input);
     static QString qStrS(QString input);
+};
+
+
+class FileFormats
+{
+public:
+    //File format read functions
+    // SMBX64 LVL File
+    static LevelData ReadLevelFile(QFile &inf);             //read
+    static QString WriteSMBX64LvlFile(LevelData FileData);  //write
+
+    // SMBX64 NPC.TXT File
+    static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); //read
+    static QString WriteNPCTxtFile(NPCConfigFile FileData);                //write
+
+    static NPCConfigFile CreateEmpytNpcTXTArray();
+
+    // SMBX64 WLD File
+    static WorldData ReadWorldFile(QFile &inf); //read
+
+
+
+    //common
+    static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
+    static QString removeQuotes(QString str); // Remove quotes from begin and end
 };
 
 #endif // FILE_FORMATS_H
