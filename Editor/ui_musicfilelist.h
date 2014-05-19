@@ -35,13 +35,14 @@ public:
     {
         if (MusicFileList->objectName().isEmpty())
             MusicFileList->setObjectName(QStringLiteral("MusicFileList"));
-        MusicFileList->resize(281, 364);
+        MusicFileList->resize(278, 366);
         QIcon icon;
         icon.addFile(QStringLiteral(":/lvl16.png"), QSize(), QIcon::Normal, QIcon::Off);
         MusicFileList->setWindowIcon(icon);
         MusicFileList->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
         verticalLayout = new QVBoxLayout(MusicFileList);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setSizeConstraint(QLayout::SetMinimumSize);
         SelectedFolder = new QLabel(MusicFileList);
         SelectedFolder->setObjectName(QStringLiteral("SelectedFolder"));
         SelectedFolder->setLocale(QLocale(QLocale::English, QLocale::UnitedStates));
@@ -50,6 +51,7 @@ public:
 
         FileList = new QListWidget(MusicFileList);
         FileList->setObjectName(QStringLiteral("FileList"));
+        FileList->setMinimumSize(QSize(260, 300));
         FileList->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed);
 
         verticalLayout->addWidget(FileList);
