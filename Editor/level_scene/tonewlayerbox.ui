@@ -14,7 +14,7 @@
    <string>Add to new layer</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../editor.qrc">
+   <iconset resource="../_resources/editor.qrc">
     <normaloff>:/layers.png</normaloff>:/layers.png</iconset>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -58,7 +58,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../editor.qrc"/>
+  <include location="../_resources/editor.qrc"/>
  </resources>
  <connections>
   <connection>

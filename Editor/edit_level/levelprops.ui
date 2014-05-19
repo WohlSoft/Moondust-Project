@@ -20,7 +20,7 @@
    <string>Level Properties</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="editor.qrc">
+   <iconset resource="../_resources/editor.qrc">
     <normaloff>:/lvl16.png</normaloff>
     <normalon>:/lvl16.png</normalon>
     <activeoff>:/lvl16.png</activeoff>
@@ -95,7 +95,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="editor.qrc"/>
+  <include location="../_resources/editor.qrc"/>
  </resources>
  <connections>
   <connection>

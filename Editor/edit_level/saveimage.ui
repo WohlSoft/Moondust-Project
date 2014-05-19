@@ -19,7 +19,7 @@
    <string>Export to image</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="editor.qrc">
+   <iconset resource="../_resources/editor.qrc">
     <normaloff>:/lvl16.png</normaloff>:/lvl16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -118,7 +118,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="editor.qrc"/>
+  <include location="../_resources/editor.qrc"/>
  </resources>
  <connections/>
 </ui>

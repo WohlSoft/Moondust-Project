@@ -1061,7 +1061,7 @@ public:
         Tiles->setWidgetResizable(true);
         TilesItemBox = new QListView();
         TilesItemBox->setObjectName(QStringLiteral("TilesItemBox"));
-        TilesItemBox->setGeometry(QRect(0, 0, 256, 248));
+        TilesItemBox->setGeometry(QRect(0, 0, 256, 247));
         TilesItemBox->setStyleSheet(QLatin1String(" Item {\n"
 "   Image {\n"
 "       id: pic\n"
@@ -1089,7 +1089,7 @@ public:
         Scenery->setWidgetResizable(true);
         SceneryScroll = new QWidget();
         SceneryScroll->setObjectName(QStringLiteral("SceneryScroll"));
-        SceneryScroll->setGeometry(QRect(0, 0, 239, 248));
+        SceneryScroll->setGeometry(QRect(0, 0, 81, 28));
         Scenery->setWidget(SceneryScroll);
         WorldToolBoxTabs->addTab(Scenery, QString());
         Level = new QScrollArea();
@@ -1099,7 +1099,7 @@ public:
         Level->setWidgetResizable(true);
         WLDLevelScroll = new QWidget();
         WLDLevelScroll->setObjectName(QStringLiteral("WLDLevelScroll"));
-        WLDLevelScroll->setGeometry(QRect(0, 0, 239, 248));
+        WLDLevelScroll->setGeometry(QRect(0, 0, 81, 28));
         Level->setWidget(WLDLevelScroll);
         WorldToolBoxTabs->addTab(Level, QString());
         WldMusicBox = new QScrollArea();
@@ -1109,7 +1109,7 @@ public:
         WldMusicBox->setWidgetResizable(true);
         WLDMusicScroll = new QWidget();
         WLDMusicScroll->setObjectName(QStringLiteral("WLDMusicScroll"));
-        WLDMusicScroll->setGeometry(QRect(0, 0, 239, 248));
+        WLDMusicScroll->setGeometry(QRect(0, 0, 81, 28));
         groupBox_6 = new QGroupBox(WLDMusicScroll);
         groupBox_6->setObjectName(QStringLiteral("groupBox_6"));
         groupBox_6->setGeometry(QRect(10, 10, 141, 131));

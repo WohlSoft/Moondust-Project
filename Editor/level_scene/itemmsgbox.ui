@@ -22,7 +22,7 @@
    <string>Set message box</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../editor.qrc">
+   <iconset resource="../_resources/editor.qrc">
     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -80,7 +80,7 @@ Message limits: max line lenth is 28 characters</string>
   </layout>
  </widget>
  <resources>
-  <include location="../editor.qrc"/>
+  <include location="../_resources/editor.qrc"/>
  </resources>
  <connections>
   <connection>
