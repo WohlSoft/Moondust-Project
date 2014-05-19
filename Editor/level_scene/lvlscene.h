@@ -135,7 +135,7 @@ public:
     void setPlayerPoints();
 
     QPixmap getNPCimg(unsigned long npcID);
-    obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local);
+    obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
     void applyLayersVisible();
 
