@@ -15,6 +15,7 @@
 *.pro.user
 *.pro.user.*
 moc_*.cpp
+ui_*.h
 qrc_*.cpp
 Makefile
 *-build-*
