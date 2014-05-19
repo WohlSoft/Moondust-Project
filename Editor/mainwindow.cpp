@@ -140,6 +140,12 @@ void MainWindow::TickTack()
                 on_actionReset_position_triggered();
                 activeLvlEditWin()->scene->resetPosition = false;
             }
+            else
+            if(activeLvlEditWin()->scene->SyncLayerList)
+            {
+                setLayersBox();
+                activeLvlEditWin()->scene->SyncLayerList = false;
+            }
         }
         /*
         else
