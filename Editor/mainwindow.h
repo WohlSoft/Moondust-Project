@@ -228,36 +228,27 @@ private slots:
     void on_BlockUniform_clicked(bool checked);
 
     void on_actionSelectOnly_triggered();
-
     void on_actionSetFirstPlayer_triggered();
-
     void on_actionSetSecondPlayer_triggered();
-
     void on_actionDrawWater_triggered();
-
     void on_actionDrawSand_triggered();
-
     void on_NPCUniform_clicked(bool checked);
-
     void on_BlockCatList_currentIndexChanged(const QString &arg1);
-
     void on_BGOCatList_currentIndexChanged(const QString &arg1);
-
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
-
     void on_actionNewNPC_config_triggered();
-
     void on_actionApplication_settings_triggered();
-
     void on_AddLayer_clicked();
-
     void on_LvlLayerList_itemChanged(QListWidgetItem *item);
-
     void on_RemoveLayer_clicked();
-
     void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
-
     void on_MainWindow_customContextMenuRequested(const QPoint &pos);
+    void on_ResizeSection_clicked();
+
+
+    void on_applyResize_clicked();
+
+    void on_cancelResize_clicked();
 
 private:
     dataconfigs configs; // Global objects configucrations

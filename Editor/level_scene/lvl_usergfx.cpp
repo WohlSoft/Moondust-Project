@@ -21,7 +21,7 @@
 #include "../file_formats/file_formats.h"
 
 //Search and load custom User's files
-void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
+void LvlScene::loadUserData(QProgressDialog &progress)
 {
     int i, total=0;
 
@@ -31,9 +31,9 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     UserNPCs uNPC;
 
     bool loaded1, loaded2;
-    QString uLVLDs = FileData.path + "/" + FileData.filename + "/";
-    QString uLVLD = FileData.path + "/" + FileData.filename;
-    QString uLVLs = FileData.path + "/";
+    QString uLVLDs = LvlData->path + "/" + LvlData->filename + "/";
+    QString uLVLD = LvlData->path + "/" + LvlData->filename;
+    QString uLVLs = LvlData->path + "/";
 
     //Load Backgrounds
     for(i=0; i<pConfigs->main_bg.size(); i++) //Add user images

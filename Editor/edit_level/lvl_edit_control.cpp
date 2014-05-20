@@ -33,7 +33,6 @@
 #include <QDebug>
 
 
-
 void leveledit::mouseReleaseEvent( QMouseEvent * event )
 {
     /*
@@ -43,6 +42,12 @@ void leveledit::mouseReleaseEvent( QMouseEvent * event )
        scene->PasteFromBuffer=false;
     }*/
     QWidget::mouseReleaseEvent( event );
+}
+
+void leveledit::leaveEvent(QEvent * leaveEvent)
+{
+   // scene->setSectionResizer(false, false);
+    leaveEvent->accept();
 }
 
 leveledit::~leveledit()
@@ -96,7 +101,7 @@ void leveledit::setCurrentSection(int scId)
         sIsNew=true;
     }
 
-    scene->drawSpace(LvlData);
+    scene->drawSpace();
 
     WriteToLog(QtDebugMsg, QString("Move to current section position"));
 
