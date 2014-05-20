@@ -840,6 +840,17 @@ void LvlScene::setPlayerPoints()
 ////////////////////////////////////Animator////////////////////////////////
 void LvlScene::startBlockAnimation()
 {
+    long q = LvlData->blocks.size();
+    q+= LvlData->bgo.size();
+    q+= LvlData->npc.size();
+
+    if(q>15000)
+    {
+        WriteToLog(QtWarningMsg,
+           QString("Can't start animation: too many items on map: %1").arg(q));
+        return;
+    }
+
     QList<QGraphicsItem*> ItemList = items();
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
