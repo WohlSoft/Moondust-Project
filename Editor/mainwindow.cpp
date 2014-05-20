@@ -146,6 +146,14 @@ void MainWindow::TickTack()
                 setLayersBox();
                 activeLvlEditWin()->scene->SyncLayerList = false;
             }
+            else
+            if(activeLvlEditWin()->scene->resetResizingSection)
+            {
+                ui->ResizeSection->setVisible(true);
+                ui->applyResize->setVisible(false);
+                ui->cancelResize->setVisible(false);
+                activeLvlEditWin()->scene->resetResizingSection = false;
+            }
         }
         /*
         else

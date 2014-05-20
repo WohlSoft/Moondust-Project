@@ -925,7 +925,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>247</height>
+        <height>248</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -985,8 +985,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
      </widget>
@@ -1009,8 +1009,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
      </widget>
@@ -1033,8 +1033,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -1567,7 +1567,7 @@
       <rect>
        <x>110</x>
        <y>10</y>
-       <width>111</width>
+       <width>121</width>
        <height>23</height>
       </rect>
      </property>
@@ -1584,7 +1584,33 @@
       <string>Resize section</string>
      </property>
      <property name="checkable">
-      <bool>true</bool>
+      <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="applyResize">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>10</y>
+       <width>61</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="cancelResize">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>10</y>
+       <width>61</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cancel</string>
      </property>
     </widget>
    </widget>

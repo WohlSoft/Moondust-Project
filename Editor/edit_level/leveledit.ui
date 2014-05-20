@@ -76,6 +76,9 @@ font: 75 16pt &quot;Cordia New&quot;;</string>
      <property name="dragMode">
       <enum>QGraphicsView::RubberBandDrag</enum>
      </property>
+     <property name="viewportUpdateMode">
+      <enum>QGraphicsView::BoundingRectViewportUpdate</enum>
+     </property>
      <property name="rubberBandSelectionMode">
       <enum>Qt::IntersectsItemShape</enum>
      </property>

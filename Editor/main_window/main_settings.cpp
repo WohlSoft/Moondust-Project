@@ -73,6 +73,10 @@ void MainWindow::setUiDefults()
     ui->WorldToolBox->hide();
 
     ui->LevelSectionSettings->hide();
+
+    ui->applyResize->setVisible(false);
+    ui->cancelResize->setVisible(false);
+
     ui->LevelToolBox->hide();
     ui->DoorsToolbox->hide();
     ui->LevelLayers->hide();

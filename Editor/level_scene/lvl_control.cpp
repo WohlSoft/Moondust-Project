@@ -74,6 +74,14 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     case (Qt::Key_Escape):
         if(!IsMoved)
             this->clearSelection();
+        if(pResizer!=NULL )
+            setSectionResizer(false, false);
+        break;
+    case (Qt::Key_Enter):
+    case (Qt::Key_Return):
+
+        if(pResizer!=NULL )
+            setSectionResizer(false, true);
         break;
 
     default:
@@ -90,6 +98,13 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         cursor->setPos(mouseEvent->scenePos());
         cursor->show();
+
+        if(DrawMode)
+        {
+            QGraphicsScene::mousePressEvent(mouseEvent);
+            //Here must be started drawing of Rect ot placed first item
+            return;
+        }
 
         haveSelected=(!selectedItems().isEmpty());
 
@@ -138,6 +153,14 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     cursor->setPos(mouseEvent->scenePos());
 
+    if(DrawMode)
+    {
+        this->clearSelection();
+        QGraphicsScene::mouseMoveEvent(mouseEvent);
+        //Here must be drawing functions
+        return;
+    }
+
     haveSelected=(!selectedItems().isEmpty());
     if(haveSelected)
     {
@@ -159,76 +182,8 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         removeItemUnderCursor();
 }
 
-void LvlScene::removeItemUnderCursor()
-{
-    if(contextMenuOpened) return;
-
-    QGraphicsItem * findItem;
-    bool removeIt=true;
-    findItem = itemCollidesCursor(cursor);
-    if(findItem)
-    {
-        if(findItem->data(0).toString()=="Block")
-        {
-            if((lock_block)|| (((ItemBlock *)findItem)->isLocked) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="BGO")
-        {
-            if( (lock_bgo) || ((((ItemBGO *)findItem)->isLocked)) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="NPC")
-        {
-            if( (lock_npc) || ((((ItemNPC *)findItem)->isLocked)) )
-            removeIt=false;
-        }
-        else
-        if((findItem->data(0).toString()=="Water")&&(lock_water))
-            removeIt=false;
-        else
-        if(((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))&&
-                (lock_door))
-            removeIt=false;
-
-        if(!findItem->isVisible()) //Invisible items can't be deleted
-            removeIt=false;
-
-        if(removeIt)
-        {
-            LevelData removedItems;
-            bool deleted=false;
-            //remove data from main array before deletion item from scene
-            if( findItem->data(0).toString()=="Block" )
-            {
-                removedItems.blocks.push_back(((ItemBlock *)findItem)->blockData);
-                ((ItemBlock *)findItem)->removeFromArray();
-                deleted=true;
-            }
-            else
-            if( findItem->data(0).toString()=="BGO" )
-            {
-                removedItems.bgo.push_back(((ItemBGO *)findItem)->bgoData);
-                ((ItemBGO *)findItem)->removeFromArray();
-                deleted=true;
-            }
-            else
-            if( findItem->data(0).toString()=="BGO" )
-            {
-                removedItems.npc.push_back(((ItemNPC *)findItem)->npcData);
-                ((ItemNPC *)findItem)->removeFromArray();
-                deleted=true;
-            }
-            removeItem(findItem);
-            if(deleted)addRemoveHistory(removedItems);
-        }
-    }
-}
-
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-    {
+{
     if(contextMenuOpened)
     {
         contextMenuOpened = false; //bug protector
@@ -236,7 +191,16 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
+    if(DrawMode)
+    {
+        QGraphicsScene::mouseReleaseEvent(mouseEvent);
+
+        //Here must be ended drawing of item
+        return;
+    }
+
             int gridSize=32, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
+
             QPoint sourcePos;
 
             cursor->hide();
@@ -465,7 +429,122 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 QGraphicsScene::mouseReleaseEvent(mouseEvent);
                 return;
+           }
+     EraserEnabled = false;
+     QGraphicsScene::mouseReleaseEvent(mouseEvent);
+}
+
+
+
+void LvlScene::removeItemUnderCursor()
+{
+    if(contextMenuOpened) return;
+
+    QGraphicsItem * findItem;
+    bool removeIt=true;
+    findItem = itemCollidesCursor(cursor);
+    if(findItem)
+    {
+        if(findItem->data(0).toString()=="Block")
+        {
+            if((lock_block)|| (((ItemBlock *)findItem)->isLocked) )
+            removeIt=false;
+        }
+        else
+        if(findItem->data(0).toString()=="BGO")
+        {
+            if( (lock_bgo) || ((((ItemBGO *)findItem)->isLocked)) )
+            removeIt=false;
+        }
+        else
+        if(findItem->data(0).toString()=="NPC")
+        {
+            if( (lock_npc) || ((((ItemNPC *)findItem)->isLocked)) )
+            removeIt=false;
+        }
+        else
+        if((findItem->data(0).toString()=="Water")&&(lock_water))
+            removeIt=false;
+        else
+        if(((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))&&
+                (lock_door))
+            removeIt=false;
+
+        if(!findItem->isVisible()) //Invisible items can't be deleted
+            removeIt=false;
+
+        if(removeIt)
+        {
+            LevelData removedItems;
+            bool deleted=false;
+            //remove data from main array before deletion item from scene
+            if( findItem->data(0).toString()=="Block" )
+            {
+                removedItems.blocks.push_back(((ItemBlock *)findItem)->blockData);
+                ((ItemBlock *)findItem)->removeFromArray();
+                deleted=true;
             }
-            EraserEnabled = false;
-            QGraphicsScene::mouseReleaseEvent(mouseEvent);
+            else
+            if( findItem->data(0).toString()=="BGO" )
+            {
+                removedItems.bgo.push_back(((ItemBGO *)findItem)->bgoData);
+                ((ItemBGO *)findItem)->removeFromArray();
+                deleted=true;
+            }
+            else
+            if( findItem->data(0).toString()=="BGO" )
+            {
+                removedItems.npc.push_back(((ItemNPC *)findItem)->npcData);
+                ((ItemNPC *)findItem)->removeFromArray();
+                deleted=true;
+            }
+            removeItem(findItem);
+            if(deleted)addRemoveHistory(removedItems);
+        }
     }
+}
+
+
+void LvlScene::setSectionResizer(bool enabled, bool accept)
+{
+    if((enabled)&&(pResizer==NULL))
+    {
+        int x = LvlData->sections[LvlData->CurSection].size_left;
+        int y = LvlData->sections[LvlData->CurSection].size_top;
+        int w = LvlData->sections[LvlData->CurSection].size_right;
+        int h = LvlData->sections[LvlData->CurSection].size_bottom;
+
+        pResizer = new ItemResizer( QSize((long)fabs(x-w), (long)fabs(y-h)), Qt::green, 32 );
+        this->addItem(pResizer);
+        pResizer->setPos(x, y);
+        pResizer->type=0;
+        pResizer->_minSize = QSizeF(800,600);
+        this->setFocus(Qt::ActiveWindowFocusReason);
+        DrawMode=true;
+    }
+    else
+    {
+        if(pResizer!=NULL)
+        {
+            if(accept)
+            {
+                WriteToLog(QtDebugMsg, QString("SECTION RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
+                long l = pResizer->pos().x();
+                long t = pResizer->pos().y();
+                long r = l+pResizer->_width;
+                long b = t+pResizer->_height;
+                LvlData->sections[LvlData->CurSection].size_left = l;
+                LvlData->sections[LvlData->CurSection].size_right = r;
+                LvlData->sections[LvlData->CurSection].size_top = t;
+                LvlData->sections[LvlData->CurSection].size_bottom = b;
+
+                ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
+                drawSpace();
+            }
+            delete pResizer;
+            pResizer = NULL;
+            resetResizingSection=true;
+        }
+        DrawMode=false;
+    }
+}

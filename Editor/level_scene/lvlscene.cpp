@@ -35,7 +35,6 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     pConfigs = &configs; // Pointer to Main Configs
     LvlData = &FileData; //Ad pointer to level data
 
-
     //Options
     opts.animationEnabled = true;
     opts.collisionsEnabled = true;
@@ -51,12 +50,14 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     EraserEnabled = false;
     PasteFromBuffer = false;
     disableMoveItems = false;
+    DrawMode=false;
 
     //Editing process flags
     IsMoved = false;
     haveSelected = false;
 
     resetPosition = false;
+    pResizer = NULL;
 
     contextMenuOpened = false;
 
@@ -65,6 +66,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     doCopy = false;     //call to copy
     doCut = false;      //call to cut
     SyncLayerList = false; //Call to refresh layer list
+    resetResizingSection = false; //Reset resizing applying buttons
 
 
     QPixmap cur(QSize(1,1));
@@ -129,7 +131,7 @@ LvlScene::~LvlScene()
 
 
 
-void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
+void LvlScene::drawSpace()
 {
     const long padding = 400000;
 
@@ -165,36 +167,36 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
     do
     {
         j++;
-        l = FileData.sections[j].size_left;
-        r = FileData.sections[j].size_right;
-        t = FileData.sections[j].size_top;
-        b = FileData.sections[j].size_bottom;
+        l = LvlData->sections[j].size_left;
+        r = LvlData->sections[j].size_right;
+        t = LvlData->sections[j].size_top;
+        b = LvlData->sections[j].size_bottom;
     }
     while(
-          ((FileData.sections[j].size_left==0) &&
-          (FileData.sections[j].size_right==0) &&
-          (FileData.sections[j].size_top==0) &&
-          (FileData.sections[j].size_bottom==0)) && (j<FileData.sections.size())
+          ((LvlData->sections[j].size_left==0) &&
+          (LvlData->sections[j].size_right==0) &&
+          (LvlData->sections[j].size_top==0) &&
+          (LvlData->sections[j].size_bottom==0)) && (j<LvlData->sections.size())
     );
 
-    for(i=0;i<FileData.sections.size(); i++)
+    for(i=0;i<LvlData->sections.size(); i++)
     {
 
         if(
-                (FileData.sections[i].size_left==0) &&
-                (FileData.sections[i].size_right==0) &&
-                (FileData.sections[i].size_top==0) &&
-                (FileData.sections[i].size_bottom==0))
+                (LvlData->sections[i].size_left==0) &&
+                (LvlData->sections[i].size_right==0) &&
+                (LvlData->sections[i].size_top==0) &&
+                (LvlData->sections[i].size_bottom==0))
             continue;
 
-        if(FileData.sections[i].size_left < l)
-            l = FileData.sections[i].size_left;
-        if(FileData.sections[i].size_right > r)
-            r = FileData.sections[i].size_right;
-        if(FileData.sections[i].size_top < t)
-            t = FileData.sections[i].size_top;
-        if(FileData.sections[i].size_bottom > b)
-            b = FileData.sections[i].size_bottom;
+        if(LvlData->sections[i].size_left < l)
+            l = LvlData->sections[i].size_left;
+        if(LvlData->sections[i].size_right > r)
+            r = LvlData->sections[i].size_right;
+        if(LvlData->sections[i].size_top < t)
+            t = LvlData->sections[i].size_top;
+        if(LvlData->sections[i].size_bottom > b)
+            b = LvlData->sections[i].size_bottom;
     }
 
     WriteToLog(QtDebugMsg, QString("Draw polygon"));
@@ -209,10 +211,10 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
     bigSpace = QPolygon(drawing);
 
 
-    l = FileData.sections[FileData.CurSection].size_left;
-    r = FileData.sections[FileData.CurSection].size_right;
-    t = FileData.sections[FileData.CurSection].size_top;
-    b = FileData.sections[FileData.CurSection].size_bottom;
+    l = LvlData->sections[LvlData->CurSection].size_left;
+    r = LvlData->sections[LvlData->CurSection].size_right;
+    t = LvlData->sections[LvlData->CurSection].size_top;
+    b = LvlData->sections[LvlData->CurSection].size_bottom;
 
 
     WriteToLog(QtDebugMsg, QString("Draw editing hole"));
@@ -237,16 +239,16 @@ void LvlScene::drawSpace(LevelData FileData/*, dataconfigs &configs*/)
 }
 
 ///////////////////////////////BACKGROUND IMAGE/////////////////////////////////////////
-void LvlScene::makeSectionBG(LevelData FileData, QProgressDialog &progress)
+void LvlScene::makeSectionBG(QProgressDialog &progress)
 //void LvlScene::makeSectionBG(int x, int y, int w, int h)
 {
     int i, total=0;
     WriteToLog(QtDebugMsg, QString("Applay Backgrounds"));
 
     //Load Backgrounds
-    for(i=0; i<FileData.sections.size(); i++)
+    for(i=0; i<LvlData->sections.size(); i++)
     {
-        setSectionBG(FileData.sections[i]);
+        setSectionBG(LvlData->sections[i]);
 
         total++;
 
@@ -587,24 +589,24 @@ void LvlScene::DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg
 }
 
 
-void LvlScene::ChangeSectionBG(int BG_Id, LevelData &FileData)
+void LvlScene::ChangeSectionBG(int BG_Id)
 {
 
 
     foreach (QGraphicsItem * findBG, items() )
     {
-        if(findBG->data(0)=="BackGround"+QString::number(FileData.CurSection) )
+        if(findBG->data(0)=="BackGround"+QString::number(LvlData->CurSection) )
         {
-            WriteToLog(QtDebugMsg, QString("Remove item BackGround"+QString::number(FileData.CurSection)) );
+            WriteToLog(QtDebugMsg, QString("Remove item BackGround"+QString::number(LvlData->CurSection)) );
             removeItem(findBG); break;
         }
     }
 
     if((BG_Id>=0) && (BG_Id <= pConfigs->main_bg.size() )) // Deny unexist ID
-            FileData.sections[FileData.CurSection].background = BG_Id;
+            LvlData->sections[LvlData->CurSection].background = BG_Id;
 
     WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
-    setSectionBG(FileData.sections[FileData.CurSection]);
+    setSectionBG(LvlData->sections[LvlData->CurSection]);
 }
 
 
@@ -712,15 +714,15 @@ void LvlScene::sortBGOArray(QVector<LevelBGO > &bgos)
 }
 
 // ///////////////////SET Block Objects/////////////////////////////////////////////
-void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
+void LvlScene::setBlocks(QProgressDialog &progress)
 {
     int i=0;
 
     //Applay images to objects
-    for(i=0; i<FileData.blocks.size(); i++)
+    for(i=0; i<LvlData->blocks.size(); i++)
     {
         //Add block to scene
-        placeBlock(FileData.blocks[i]);
+        placeBlock(LvlData->blocks[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
@@ -730,17 +732,17 @@ void LvlScene::setBlocks(LevelData FileData, QProgressDialog &progress)
 
 
 // ///////////////////SET BackGround Objects/////////////////////////////////////////////
-void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
+void LvlScene::setBGO(QProgressDialog &progress)
 {
     int i=0;
 
     //sortBGOArray(FileData.bgo); //Sort BGOs
 
     //Applay images to objects
-    for(i=0; i<FileData.bgo.size(); i++)
+    for(i=0; i<LvlData->bgo.size(); i++)
     {
         //add BGO to scene
-        placeBGO(FileData.bgo[i]);
+        placeBGO(LvlData->bgo[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
@@ -751,15 +753,15 @@ void LvlScene::setBGO(LevelData FileData, QProgressDialog &progress)
 
 
 // ///////////////////////SET NonPlayble Characters and Items/////////////////////////////////
-void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
+void LvlScene::setNPC(QProgressDialog &progress)
 {
     int i=0;
     //QGraphicsItem *	box;
 
-    for(i=0; i<FileData.npc.size(); i++)
+    for(i=0; i<LvlData->npc.size(); i++)
     {
         //add NPC to scene
-        placeNPC(FileData.npc[i]);
+        placeNPC(LvlData->npc[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
@@ -769,14 +771,14 @@ void LvlScene::setNPC(LevelData FileData, QProgressDialog &progress)
 }
 
 // ///////////////////////SET Waters/////////////////////////////////
-void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
+void LvlScene::setWaters(QProgressDialog &progress)
 {
     int i=0;
 
-    for(i=0; i<FileData.water.size(); i++)
+    for(i=0; i<LvlData->water.size(); i++)
     {
         //add Water to scene
-        placeWater(FileData.water[i]);
+        placeWater(LvlData->water[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
@@ -788,16 +790,16 @@ void LvlScene::setWaters(LevelData FileData, QProgressDialog &progress)
 
 
 // ///////////////////////SET Doors/////////////////////////////////
-void LvlScene::setDoors(LevelData FileData, QProgressDialog &progress)
+void LvlScene::setDoors(QProgressDialog &progress)
 {
     int i=0;
 
 
-    for(i=0; i<FileData.doors.size(); i++)
+    for(i=0; i<LvlData->doors.size(); i++)
     {
 
         //add Doors points to scene
-        placeDoor(FileData.doors[i]);
+        placeDoor(LvlData->doors[i]);
 
         if(!progress.wasCanceled())
             progress.setValue(progress.value()+1);
