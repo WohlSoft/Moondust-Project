@@ -65,6 +65,7 @@ protected:
 
 private slots:
     virtual void mouseReleaseEvent( QMouseEvent * event );
+    virtual void leaveEvent(QEvent * leaveEvent);
 
 private:
     void documentWasModified();

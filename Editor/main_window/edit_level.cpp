@@ -473,7 +473,7 @@ void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
         WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
         if (activeChildWindow()==1)
         {
-           activeLvlEditWin()->scene->ChangeSectionBG(index, activeLvlEditWin()->LvlData);
+           activeLvlEditWin()->scene->ChangeSectionBG(index);
            activeLvlEditWin()->LvlData.modified = true;
         }
         ui->LVLPropsBackImage->setEnabled(true);
@@ -619,5 +619,43 @@ void MainWindow::on_actionLevUnderW_triggered(bool checked)
         ui->LVLPropsUnderWater->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].underwater = checked;
         activeLvlEditWin()->LvlData.modified = true;
+    }
+}
+
+
+
+
+///////////////////////////////////////Resize section/////////////////////////////////////
+void MainWindow::on_ResizeSection_clicked()
+{
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->setFocus();
+        activeLvlEditWin()->scene->setSectionResizer(true);
+        ui->ResizeSection->setVisible(false);
+        ui->applyResize->setVisible(true);
+        ui->cancelResize->setVisible(true);
+    }
+}
+
+void MainWindow::on_applyResize_clicked()
+{
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->setSectionResizer(false, true);
+        ui->ResizeSection->setVisible(true);
+        ui->applyResize->setVisible(false);
+        ui->cancelResize->setVisible(false);
+    }
+}
+
+void MainWindow::on_cancelResize_clicked()
+{
+    if (activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->setSectionResizer(false, false);
+        ui->ResizeSection->setVisible(true);
+        ui->applyResize->setVisible(false);
+        ui->cancelResize->setVisible(false);
     }
 }

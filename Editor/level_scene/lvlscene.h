@@ -44,6 +44,8 @@
 
 #include "../common_features/logger.h"
 
+#include "resizer/item_resizer.h"
+
 struct UserBGOs
 {
     QPixmap image;
@@ -99,6 +101,8 @@ public:
     bool EraserEnabled;
     bool PasteFromBuffer;
 
+    bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
+
     bool disableMoveItems;
 
     bool contextMenuOpened;
@@ -110,6 +114,7 @@ public:
     bool historyChanged;
     bool resetPosition;
     bool SyncLayerList;
+    bool resetResizingSection;
 
     //Copy function
     LevelData copy(bool cut = false);
@@ -118,24 +123,24 @@ public:
     LevelEditingSettings opts;
 
     //void makeSectionBG(int x, int y, int h, int w);
-    void makeSectionBG(LevelData FileData, QProgressDialog &progress);
+    void makeSectionBG(QProgressDialog &progress);
 
     void InitSection(int sect);
 
-    void drawSpace(LevelData FileData);
-    void ChangeSectionBG(int BG_Id, LevelData &FileData);
+    void drawSpace();
+    void ChangeSectionBG(int BG_Id);
 
-    void loadUserData(LevelData FileData, QProgressDialog &progress);
+    void loadUserData(QProgressDialog &progress);
 
-    void setBlocks(LevelData FileData, QProgressDialog &progress);
-    void setBGO(LevelData FileData, QProgressDialog &progress);
-    void setNPC(LevelData FileData, QProgressDialog &progress);
-    void setWaters(LevelData FileData, QProgressDialog &progress);
-    void setDoors(LevelData FileData, QProgressDialog &progress);
+    void setBlocks(QProgressDialog &progress);
+    void setBGO(QProgressDialog &progress);
+    void setNPC(QProgressDialog &progress);
+    void setWaters(QProgressDialog &progress);
+    void setDoors(QProgressDialog &progress);
     void setPlayerPoints();
 
     QPixmap getNPCimg(unsigned long npcID);
-    obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local);
+    obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
     void applyLayersVisible();
 
@@ -194,6 +199,10 @@ public:
     int bgZ;
     int spaceZ1; // interSection space layer
     int spaceZ2;
+
+    ////////////////////////Resizer////////////////////////
+    ItemResizer * pResizer; //reisizer pointer
+    void setSectionResizer(bool enabled, bool accept=false);
 
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{

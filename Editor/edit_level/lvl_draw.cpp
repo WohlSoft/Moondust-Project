@@ -41,49 +41,49 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
         if(!progress.wasCanceled())
             progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
-    scene->loadUserData(LvlData, progress);
+    scene->loadUserData(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("1/%1 Applying Backgrounds").arg(TotalSteps));
-    scene->makeSectionBG(LvlData, progress);
+    scene->makeSectionBG(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("2/%1 Applying BGOs...").arg(TotalSteps));
-    scene->setBGO(LvlData, progress);
+    scene->setBGO(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
-    scene->setBlocks(LvlData, progress);
+    scene->setBlocks(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("4/%1 Applying NPCs...").arg(TotalSteps));
-    scene->setNPC(LvlData, progress);
+    scene->setNPC(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("5/%1 Applying Waters...").arg(TotalSteps));
-    scene->setWaters(LvlData, progress);
+    scene->setWaters(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("6/%1 Applying Doors...").arg(TotalSteps));
-    scene->setDoors(LvlData, progress);
+    scene->setDoors(progress);
 
         if(progress.wasCanceled()) return false;
 
     scene->setPlayerPoints();
 
-    scene->drawSpace(LvlData);
+    scene->drawSpace();
 
 
     if(scene->opts.animationEnabled)

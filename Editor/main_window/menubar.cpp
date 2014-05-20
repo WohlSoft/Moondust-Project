@@ -61,6 +61,7 @@ void MainWindow::updateMenus(bool force)
     {
         LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
         SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
+
         LevelDoorsBoxVis = ui->DoorsToolbox->isVisible();
         LevelLayersBoxVis = ui->LevelLayers->isVisible();
 
@@ -133,6 +134,23 @@ void MainWindow::updateMenus(bool force)
             WriteToLog(QtCriticalMsg, "*.INI Configs not loaded");
             return;
         }
+
+        if(activeLvlEditWin()->scene->pResizer==NULL)
+        {
+            ui->ResizeSection->setVisible(true);
+            ui->applyResize->setVisible(false);
+            ui->cancelResize->setVisible(false);
+        }
+        else
+        {
+            if(activeLvlEditWin()->scene->pResizer->type == 0)
+            {
+                ui->ResizeSection->setVisible(false);
+                ui->applyResize->setVisible(true);
+                ui->cancelResize->setVisible(true);
+            }
+        }
+
 
         SetCurrentLevelSection(0, 1);
         setDoorsToolbox();

@@ -145,7 +145,7 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
 }
 
 
-obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
+obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
 {
     obj_npc merged;
     merged = global;
@@ -177,7 +177,12 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
             )
         merged.gfx_w = merged.width;
     else
+    {
+        if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
+            merged.width = captured.width();
+
         merged.gfx_w = global.gfx_w;
+    }
 
     //Copy fixture size to GFX size
     if((local.en_height)&&(global.height <= (unsigned int)global.gfx_h)&&(merged.framestyle<2))
@@ -185,16 +190,20 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
     else
         merged.gfx_h = global.gfx_h;
 
-    merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
+    if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
+        merged.gfx_w = captured.width();
+    else
+        merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
+
     merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
 
 
-    qreal sign=((int)merged.width>=merged.grid)? -1 : 1;
-
-    if(merged.grid_attach_style==1)
-        merged.grid_offset_x = sign * qRound( qreal((int)merged.width % merged.grid)/2 )+16;
+    if(((int)merged.width>=(int)merged.grid))
+        merged.grid_offset_x = -1 * qRound( qreal((int)merged.width % merged.grid)/2 );
     else
-        merged.grid_offset_x = sign * qRound( qreal((int)merged.width % merged.grid)/2 );
+        merged.grid_offset_x = qRound( qreal( merged.grid - (int)merged.width )/2 );
+
+    if(merged.grid_attach_style==1) merged.grid_offset_x += 16;
 
     merged.grid_offset_y = -merged.height % merged.grid;
 
@@ -227,7 +236,6 @@ obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local)
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> Grid size %1").arg(merged.grid));
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset x: %1").arg(merged.grid_offset_x));
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset y: %1").arg(merged.grid_offset_y));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX sign: %1").arg(sign));
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> GridStl:  %1").arg(merged.grid_attach_style));
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offX: %1").arg(merged.gfx_offset_x));
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offY: %1").arg(merged.gfx_offset_y));
