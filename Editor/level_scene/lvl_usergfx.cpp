@@ -21,7 +21,7 @@
 #include "../file_formats/file_formats.h"
 
 //Search and load custom User's files
-void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
+void LvlScene::loadUserData(QProgressDialog &progress)
 {
     int i, total=0;
 
@@ -31,9 +31,9 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
     UserNPCs uNPC;
 
     bool loaded1, loaded2;
-    QString uLVLDs = FileData.path + "/" + FileData.filename + "/";
-    QString uLVLD = FileData.path + "/" + FileData.filename;
-    QString uLVLs = FileData.path + "/";
+    QString uLVLDs = LvlData->path + "/" + LvlData->filename + "/";
+    QString uLVLD = LvlData->path + "/" + LvlData->filename;
+    QString uLVLs = LvlData->path + "/";
 
     //Load Backgrounds
     for(i=0; i<pConfigs->main_bg.size(); i++) //Add user images
@@ -231,6 +231,8 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
              uNPC.withImg = false;
              uNPC.withTxt = false;
 
+             QSize capturedS = QSize(0,0);
+
              //Looking for user's GFX
              if((QFile::exists(uLVLD) ) &&
                    (QFile::exists(uLVLDs + pConfigs->main_npc[i].image_n)) )
@@ -293,9 +295,53 @@ void LvlScene::loadUserData(LevelData FileData, QProgressDialog &progress)
                  }
              }
 
+             if(uNPC.withImg)
+             {
+                 capturedS = QSize(uNPC.image.width(), uNPC.image.height());
+             }
+
              if(uNPC.withTxt)
              {  //Merge global and user's settings from NPC.txt file
-                 uNPC.merged = mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets);
+                 uNPC.merged = mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets, capturedS);
+             }
+             else
+             {
+                 if(uNPC.withImg)
+                 {
+                     NPCConfigFile autoConf = FileFormats::CreateEmpytNpcTXTArray();
+
+                     autoConf.gfxwidth = capturedS.width();
+                     //autoConf.en_gfxwidth = true;
+                     unsigned int defGFX_h;
+                     switch(pConfigs->main_npc[i].framestyle)
+                     {
+                     case 0:
+                         defGFX_h = (int)round(capturedS.height() / pConfigs->main_npc[i].frames);
+                         break;
+                     case 1:
+                         defGFX_h = (int)round((capturedS.height() / pConfigs->main_npc[i].frames)/2 );
+                         break;
+                     case 2:
+                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/4);
+                         break;
+                     case 3:
+                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/4);
+                         break;
+                     case 4:
+                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/8);
+                         break;
+                     default:
+                         defGFX_h=0;
+                         break;
+                     }
+
+                     capturedS.setHeight(defGFX_h);
+
+                     uNPC.merged = mergeNPCConfigs(
+                                 pConfigs->main_npc[i],
+                                 autoConf, capturedS);
+                 }
+
              }
 
              //Apply only if custom config or image was found

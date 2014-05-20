@@ -104,7 +104,15 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         QAction *remove = ItemMenu->addAction( tr("Remove") );
 
         scene->contextMenuOpened = true; //bug protector
-            QAction *selected = ItemMenu->exec(event->screenPos());
+QAction *selected = ItemMenu->exec(event->screenPos());
+
+        if(!selected)
+        {
+            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            scene->contextMenuOpened = true;
+            return;
+        }
+        event->accept();
 
         //WriteToLog(QtDebugMsg, QString("Block ContextMenu");
 

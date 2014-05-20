@@ -141,6 +141,14 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
 
+        if(!selected)
+        {
+            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            scene->contextMenuOpened = true;
+            return;
+        }
+        event->accept();
+
         if(selected==cutNpc)
         {
             scene->doCut = true ;
