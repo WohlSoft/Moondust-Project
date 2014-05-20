@@ -844,7 +844,7 @@ void LvlScene::startBlockAnimation()
     q+= LvlData->bgo.size();
     q+= LvlData->npc.size();
 
-    if(q>15000)
+    if(q > 10000)
     {
         WriteToLog(QtWarningMsg,
            QString("Can't start animation: too many items on map: %1").arg(q));
