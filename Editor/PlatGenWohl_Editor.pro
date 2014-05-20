@@ -71,7 +71,10 @@ SOURCES += main.cpp\
     edit_npc/npctxt_files_io.cpp \
     edit_npc/npc_data_sets.cpp \
     edit_npc/npctxt_controls.cpp \
-    about_dialog/aboutdialog.cpp
+    about_dialog/aboutdialog.cpp \
+    level_scene/resizer/cornergrabber.cpp \
+    level_scene/resizer/item_resizer.cpp \
+    common_features/grid.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -95,7 +98,10 @@ HEADERS  += mainwindow.h \
     edit_level/levelprops.h \
     edit_level/saveimage.h \
     edit_npc/npcedit.h \
-    about_dialog/aboutdialog.h
+    about_dialog/aboutdialog.h \
+    level_scene/resizer/item_resizer.h \
+    level_scene/resizer/corner_grabber.h \
+    common_features/grid.h
 
 FORMS    += \
     mainwindow.ui \
@@ -113,7 +119,7 @@ FORMS    += \
 RC_FILE = _resources/pge_editor.rc
 
 macx {
-    ICON = images/mac/mushroom.icns
+    ICON = _resources/mushroom.icns
 }
 
 RESOURCES += \
