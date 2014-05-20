@@ -61,6 +61,7 @@ void MainWindow::on_actionReload_triggered()
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
             SetCurrentLevelSection(0);
+            updateMenus(true);
         } else {
                 WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
