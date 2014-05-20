@@ -204,6 +204,14 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
 
+    appSettings->autoPlayMusic = autoPlayMusic;
+    appSettings->Animation = LvlOpts.animationEnabled;
+    appSettings->Collisions = LvlOpts.collisionsEnabled;
+    //appSettings->loglevel = LogWriter::logLevel;
+    //appSettings->logfile = LogWriter::DebugLogFile;
+
+    appSettings->applySettings();
+
     if(appSettings->exec()==QDialog::Accepted)
     {
 

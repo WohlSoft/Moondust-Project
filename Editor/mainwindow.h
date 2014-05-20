@@ -237,7 +237,9 @@ private slots:
     void on_BGOCatList_currentIndexChanged(const QString &arg1);
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
     void on_actionNewNPC_config_triggered();
+
     void on_actionApplication_settings_triggered();
+
     void on_AddLayer_clicked();
     void on_LvlLayerList_itemChanged(QListWidgetItem *item);
     void on_RemoveLayer_clicked();
@@ -250,6 +252,8 @@ private slots:
 
     void on_cancelResize_clicked();
 
+    void on_BlockItemsList_itemClicked(QListWidgetItem *item);
+
 private:
     dataconfigs configs; // Global objects configucrations
 
@@ -258,6 +262,7 @@ private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
 
+    long animatorItemsLimit;
 
     QString LastOpenDir;
     int lastWinType;

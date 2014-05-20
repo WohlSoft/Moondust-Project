@@ -41,6 +41,8 @@ void MainWindow::setDefaults()
     currentMusicId = 0;
     musicButtonChecked = false;
 
+    animatorItemsLimit=10000;
+
     cat_blocks="[all]";
     cat_bgos="[all]";
     cat_npcs="[all]";
@@ -135,6 +137,9 @@ void MainWindow::loadSettings()
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
+
+        animatorItemsLimit = settings.value("animation-item-limit", 10000).toInt();
+
     settings.endGroup();
 
     settings.beginGroup("Recent");
