@@ -135,22 +135,24 @@ void MainWindow::updateMenus(bool force)
             return;
         }
 
-        if(activeLvlEditWin()->scene->pResizer==NULL)
+        if(activeLvlEditWin()->sceneCreared)
         {
-            ui->ResizeSection->setVisible(true);
-            ui->applyResize->setVisible(false);
-            ui->cancelResize->setVisible(false);
-        }
-        else
-        {
-            if(activeLvlEditWin()->scene->pResizer->type == 0)
+            if(activeLvlEditWin()->scene->pResizer==NULL)
             {
-                ui->ResizeSection->setVisible(false);
-                ui->applyResize->setVisible(true);
-                ui->cancelResize->setVisible(true);
+                ui->ResizeSection->setVisible(true);
+                ui->applyResize->setVisible(false);
+                ui->cancelResize->setVisible(false);
+            }
+            else
+            {
+                if(activeLvlEditWin()->scene->pResizer->type == 0)
+                {
+                    ui->ResizeSection->setVisible(false);
+                    ui->applyResize->setVisible(true);
+                    ui->cancelResize->setVisible(true);
+                }
             }
         }
-
 
         SetCurrentLevelSection(0, 1);
         setDoorsToolbox();
@@ -158,19 +160,23 @@ void MainWindow::updateMenus(bool force)
 
         setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
-        ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
-        ui->actionLockBGO->setChecked(activeLvlEditWin()->scene->lock_bgo);
-        ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
-        ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
-        ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
 
-        LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
-        LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
+
+        if(activeLvlEditWin()->sceneCreared)
+        {
+            ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
+            ui->actionLockBGO->setChecked(activeLvlEditWin()->scene->lock_bgo);
+            ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
+            ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
+            ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
+
+            LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
+            LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
+            ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
+            ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
+        }
         ui->actionAnimation->setChecked( LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( LvlOpts.collisionsEnabled );
-
-        ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
-        ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
     }
     else
     {
