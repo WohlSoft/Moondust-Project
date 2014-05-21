@@ -51,6 +51,7 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
 
     QString dirs_ini = config_dir + "main.ini";
     QSettings dirset(dirs_ini, QSettings::IniFormat);
+    dirset.setIniCodec("UTF-8");
 
     dirset.beginGroup("main");
         dirs.worlds = QApplication::applicationDirPath() + "/" + dirset.value("worlds", "worlds").toString() + "/";

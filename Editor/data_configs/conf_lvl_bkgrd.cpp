@@ -33,6 +33,8 @@ void dataconfigs::loadLevelBackgrounds()
     }
 
     QSettings bgset(bg_ini, QSettings::IniFormat);
+    bgset.setIniCodec("UTF-8");
+
     main_bg.clear();   //Clear old
 
     bgset.beginGroup("background2-main");
