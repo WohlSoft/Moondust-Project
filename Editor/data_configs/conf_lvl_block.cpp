@@ -43,11 +43,6 @@ void dataconfigs::loadLevelBlocks()
         total_data +=block_total;
     blockset.endGroup();
 
-    /*
-    if( blockset.status() != QSettings::NoError )
-    {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (get total value: %2)").arg(blockset.status()).arg(total_data));
-    }*/
 
     //creation of empty indexes of arrayElements
     blocksIndexes blockIndex;
@@ -64,14 +59,9 @@ void dataconfigs::loadLevelBlocks()
             int errNum=0;
             blockset.beginGroup( QString("block-%1").arg(i) );
 
-                if( blockset.status() != QSettings::NoError ) { errNum=1; goto ReadError;}
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
-                if( blockset.status() != QSettings::NoError ) { errNum=2; goto ReadError;}
                 sblock.type = blockset.value("type", "Other").toString();
-                if( blockset.status() != QSettings::NoError ) { errNum=3; goto ReadError;}
-
                 imgFile = blockset.value("image", "").toString();
-                if( blockset.status() != QSettings::NoError ) { errNum=4; goto ReadError;}
 
                 sblock.image_n = imgFile;
                 if( (imgFile!="") )
@@ -156,15 +146,16 @@ void dataconfigs::loadLevelBlocks()
 
             blockset.endGroup();
 
-          continue;
-         ReadError:
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (block-%2) bug #%3").arg(blockset.status()).arg(i).arg(errNum));
+          if( blockset.status()!=QSettings::NoError)
+          {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
             break;
+          }
        }
 
-        if((unsigned int)main_block.size()<block_total)
-        {
-                WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF Blocks: total:%1, loaded: %2)").arg(block_total).arg(main_block.size()));
-        }
+       if((unsigned int)main_block.size()<block_total)
+       {
+           WriteToLog(QtWarningMsg, QString("Not all blocks loaded: total:%1, loaded: %2)").arg(block_total).arg(main_block.size()));
+       }
 
 }
