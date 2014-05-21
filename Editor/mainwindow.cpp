@@ -45,18 +45,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
         return;
     }
 
-    WriteToLog(QtDebugMsg, QString("-------------------------"));
-    WriteToLog(QtDebugMsg, QString("Congifs status 2"));
-    WriteToLog(QtDebugMsg, QString("-------------------------"));
-
-    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1").arg(configs.main_block.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1").arg(configs.main_bgo.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1").arg(configs.main_npc.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1").arg(configs.main_bg.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1").arg(configs.main_music_lvl.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1").arg(configs.main_music_spc.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded World musics    %1").arg(configs.main_music_wld.size()));
-
     splash.finish(this);
 
     ui->setupUi(this);
@@ -107,19 +95,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
     */
 
     setUiDefults(); //Apply default UI settings
-
-    WriteToLog(QtDebugMsg, QString("-------------------------"));
-    WriteToLog(QtDebugMsg, QString("Congifs status 3"));
-    WriteToLog(QtDebugMsg, QString("-------------------------"));
-
-    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1").arg(configs.main_block.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1").arg(configs.main_bgo.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1").arg(configs.main_npc.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1").arg(configs.main_bg.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1").arg(configs.main_music_lvl.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1").arg(configs.main_music_spc.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded World musics    %1").arg(configs.main_music_wld.size()));
-
 
 }
 
