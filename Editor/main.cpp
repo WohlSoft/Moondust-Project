@@ -34,13 +34,13 @@ int main(int argc, char *argv[])
 
     LoadLogSettings();
 
-    //Check for runned copy of application//////////////////
-    QSystemSemaphore sema("Plarformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
+    //Check if application is already running//////////////////
+    QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
     bool isRunning;
 
     if(sema.acquire())
     {
-        QSharedMemory shmem("Plarformer Game Engine by Wohlstand fyhj246h46y46836u");
+        QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
         shmem.attach();
     }
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
         sendToMem+= str + "|";
     }
 
-    QSharedMemory shmem("Plarformer Game Engine by Wohlstand fyhj246h46y46836u");
+    QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
     if (shmem.attach())
     {
         isRunning = true;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
     if(isRunning)
     {
-        WriteToLog(QtDebugMsg, "--> Application Already runned <--");
+        WriteToLog(QtDebugMsg, "--> Application Already running, aborting <--");
         return 0;
     }
 
