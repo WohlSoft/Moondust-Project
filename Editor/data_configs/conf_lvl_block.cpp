@@ -35,6 +35,7 @@ void dataconfigs::loadLevelBlocks()
     }
 
     QSettings blockset(block_ini, QSettings::IniFormat);
+    blockset.setIniCodec("UTF-8");
 
     main_block.clear();   //Clear old
 

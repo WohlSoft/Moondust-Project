@@ -39,6 +39,7 @@ void dataconfigs::loadMusic()
     }
 
     QSettings musicset(music_ini, QSettings::IniFormat);
+    musicset.setIniCodec("UTF-8");
 
     main_music_lvl.clear();   //Clear old
     main_music_wld.clear();   //Clear old

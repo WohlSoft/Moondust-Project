@@ -33,6 +33,8 @@ void dataconfigs::loadLevelNPC()
     }
 
     QSettings npcset(npc_ini, QSettings::IniFormat);
+    npcset.setIniCodec("UTF-8");
+
     main_npc.clear();   //Clear old
 
     npcset.beginGroup("npc-main");

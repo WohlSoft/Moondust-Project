@@ -34,6 +34,8 @@ void dataconfigs::loadLevelBGO()
 
 
     QSettings bgoset(bgo_ini, QSettings::IniFormat);
+    bgoset.setIniCodec("UTF-8");
+
     main_bgo.clear();   //Clear old
 
     bgoset.beginGroup("background-main");
