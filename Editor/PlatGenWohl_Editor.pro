@@ -75,7 +75,8 @@ SOURCES += main.cpp\
     level_scene/resizer/cornergrabber.cpp \
     level_scene/resizer/item_resizer.cpp \
     common_features/grid.cpp \
-    common_features/mainwinconnect.cpp
+    common_features/mainwinconnect.cpp \
+    level_scene/item_water.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -105,7 +106,8 @@ HEADERS  += mainwindow.h \
     common_features/grid.h \
     main_window/app_settings.h \
     main_window/music_player.h \
-    common_features/mainwinconnect.h
+    common_features/mainwinconnect.h \
+    level_scene/item_water.h
 
 FORMS    += \
     mainwindow.ui \
