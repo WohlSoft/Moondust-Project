@@ -21,6 +21,13 @@
 #include "../mainwindow.h"
 #include "../common_features/logger_sets.h"
 
+#include "music_player.h"
+
+QString LvlMusPlay::currentCustomMusic;
+long LvlMusPlay::currentMusicId;
+bool LvlMusPlay::musicButtonChecked;
+
+
 void MainWindow::setDefaults()
 {
     MusicPlayer = new QMediaPlayer;
@@ -38,9 +45,9 @@ void MainWindow::setDefaults()
     WorldToolBoxVis = false;
     autoPlayMusic = false;
 
-    currentCustomMusic = "";
-    currentMusicId = 0;
-    musicButtonChecked = false;
+    LvlMusPlay::currentCustomMusic = "";
+    LvlMusPlay::currentMusicId = 0;
+    LvlMusPlay::musicButtonChecked = false;
 
     animatorItemsLimit=10000;
 
@@ -190,16 +197,15 @@ void MainWindow::saveSettings()
             switch(LogWriter::logLevel)
             {
             case QtDebugMsg:
-                settings.setValue("log-level", "4");
+                settings.setValue("log-level", "4"); break;
             case QtWarningMsg:
-                settings.setValue("log-level", "3");
+                settings.setValue("log-level", "3"); break;
             case QtCriticalMsg:
-                settings.setValue("log-level", "2");
+                settings.setValue("log-level", "2"); break;
             case QtFatalMsg:
-                settings.setValue("log-level", "1");
+                settings.setValue("log-level", "1"); break;
             }
         else
             settings.setValue("log-level", "0");
-
     settings.endGroup();
 }
