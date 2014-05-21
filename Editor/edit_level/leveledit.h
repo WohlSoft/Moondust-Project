@@ -80,7 +80,6 @@ private:
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
-    QString latest_export;
     QString latest_export_path;
     bool isUntitled;
     unsigned int FileType;
