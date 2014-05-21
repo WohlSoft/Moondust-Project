@@ -74,7 +74,8 @@ SOURCES += main.cpp\
     about_dialog/aboutdialog.cpp \
     level_scene/resizer/cornergrabber.cpp \
     level_scene/resizer/item_resizer.cpp \
-    common_features/grid.cpp
+    common_features/grid.cpp \
+    common_features/mainwinconnect.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -103,7 +104,8 @@ HEADERS  += mainwindow.h \
     level_scene/resizer/corner_grabber.h \
     common_features/grid.h \
     main_window/app_settings.h \
-    main_window/music_player.h
+    main_window/music_player.h \
+    common_features/mainwinconnect.h
 
 FORMS    += \
     mainwindow.ui \
