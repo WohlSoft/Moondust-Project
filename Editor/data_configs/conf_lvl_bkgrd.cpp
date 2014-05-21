@@ -25,6 +25,13 @@ void dataconfigs::loadLevelBackgrounds()
     unsigned long bg_total=0;
 
     QString bg_ini = config_dir + "lvl_bkgrd.ini";
+
+    if(!QFile::exists(bg_ini))
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bkgrd.ini: file not exist"));
+          return;
+    }
+
     QSettings bgset(bg_ini, QSettings::IniFormat);
     main_bg.clear();   //Clear old
 

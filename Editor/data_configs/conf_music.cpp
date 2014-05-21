@@ -31,6 +31,13 @@ void dataconfigs::loadMusic()
     unsigned long music_spc_total=0;
 
     QString music_ini = config_dir + "music.ini";
+
+    if(!QFile::exists(music_ini))
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini: file not exist"));
+          return;
+    }
+
     QSettings musicset(music_ini, QSettings::IniFormat);
 
     main_music_lvl.clear();   //Clear old
@@ -64,6 +71,7 @@ void dataconfigs::loadMusic()
         if( musicset.status() != QSettings::NoError )
         {
             WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (world music %2)").arg(musicset.status()).arg(i));
+            break;
         }
     }
 
@@ -80,6 +88,7 @@ void dataconfigs::loadMusic()
         if( musicset.status() != QSettings::NoError )
         {
             WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i));
+            break;
         }
     }
 
@@ -96,6 +105,7 @@ void dataconfigs::loadMusic()
         if( musicset.status() != QSettings::NoError )
         {
             WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i));
+            break;
         }
     }
 
