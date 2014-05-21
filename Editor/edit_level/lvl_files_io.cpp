@@ -38,12 +38,11 @@ void leveledit::ExportToImage_fn()
         long x, y, h, w, th, tw;
 
         bool proportion;
-        QString inifile = QApplication::applicationDirPath() + "/" + "plweditor.ini";
+        QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        latest_export = settings.value("export-file", "*.png").toString();
         latest_export_path = settings.value("export-path", QApplication::applicationDirPath()).toString();
-        proportion = settings.value("export-proportions", false).toBool();
+        proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 
 
@@ -74,7 +73,8 @@ void leveledit::ExportToImage_fn()
                 return;
 
         QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
-            latest_export_path + "/" + latest_export, tr("PNG Image (*.png)"));
+            latest_export_path + "/" +
+            QString("%1_Section_%2.png").arg( QFileInfo(curFile).baseName() ).arg(LvlData.CurSection+1), tr("PNG Image (*.png)"));
         if (fileName.isEmpty())
             return;
 
@@ -95,7 +95,6 @@ void leveledit::ExportToImage_fn()
         if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
         scene->clearSelection(); // Clear selection on export
 
-        latest_export = exported.fileName();
         latest_export_path = exported.absoluteDir().path();
         proportion = imgSize[2];
 
@@ -119,9 +118,8 @@ void leveledit::ExportToImage_fn()
             progress.close();
 
         settings.beginGroup("Main");
-        settings.setValue("export-file", latest_export);
-        settings.setValue("export-path", latest_export_path);
-        settings.setValue("export-proportions", proportion);
+            settings.setValue("export-path", latest_export_path);
+            settings.setValue("export-proportions", proportion);
         settings.endGroup();
 }
 
