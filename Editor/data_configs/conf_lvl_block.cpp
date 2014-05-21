@@ -56,7 +56,6 @@ void dataconfigs::loadLevelBlocks()
 
         for(i=1; i<=block_total; i++)
         {
-            int errNum=0;
             blockset.beginGroup( QString("block-%1").arg(i) );
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
@@ -84,9 +83,7 @@ void dataconfigs::loadLevelBlocks()
                 }
 
                 sblock.sizable = blockset.value("sizable", "0").toBool();
-                    if( blockset.status() != QSettings::NoError ) { errNum=5; goto ReadError;}
                 sblock.danger = blockset.value("danger", "0").toInt();
-                    if( blockset.status() != QSettings::NoError ) { errNum=6; goto ReadError;}
                 sblock.collision = blockset.value("collision", "1").toInt();
                 sblock.slopeslide = blockset.value("slope-slide", "0").toBool();
                 sblock.fixture = blockset.value("fixture-type", "0").toInt();
