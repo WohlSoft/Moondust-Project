@@ -101,7 +101,9 @@ HEADERS  += mainwindow.h \
     about_dialog/aboutdialog.h \
     level_scene/resizer/item_resizer.h \
     level_scene/resizer/corner_grabber.h \
-    common_features/grid.h
+    common_features/grid.h \
+    main_window/app_settings.h \
+    main_window/music_player.h
 
 FORMS    += \
     mainwindow.ui \

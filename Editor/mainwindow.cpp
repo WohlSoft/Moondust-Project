@@ -22,6 +22,7 @@
 #include "npc_dialog/npcdialog.h"
 #include "main_window/appsettings.h"
 
+
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -43,6 +44,18 @@ MainWindow::MainWindow(QMdiArea *parent) :
         exit(EXIT_FAILURE);
         return;
     }
+
+    WriteToLog(QtDebugMsg, QString("-------------------------"));
+    WriteToLog(QtDebugMsg, QString("Congifs status 2"));
+    WriteToLog(QtDebugMsg, QString("-------------------------"));
+
+    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1").arg(configs.main_block.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1").arg(configs.main_bgo.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1").arg(configs.main_npc.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1").arg(configs.main_bg.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1").arg(configs.main_music_lvl.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1").arg(configs.main_music_spc.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded World musics    %1").arg(configs.main_music_wld.size()));
 
     splash.finish(this);
 
@@ -95,6 +108,19 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     setUiDefults(); //Apply default UI settings
 
+    WriteToLog(QtDebugMsg, QString("-------------------------"));
+    WriteToLog(QtDebugMsg, QString("Congifs status 3"));
+    WriteToLog(QtDebugMsg, QString("-------------------------"));
+
+    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1").arg(configs.main_block.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1").arg(configs.main_bgo.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1").arg(configs.main_npc.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1").arg(configs.main_bg.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1").arg(configs.main_music_lvl.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1").arg(configs.main_music_spc.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded World musics    %1").arg(configs.main_music_wld.size()));
+
+
 }
 
 //Scene Event Detector
@@ -108,51 +134,54 @@ void MainWindow::TickTack()
     {
         if(activeChildWindow()==1)
         {
-            //Capturing flags from active Window
-            if(activeLvlEditWin()->scene->wasPasted)
+            if(activeLvlEditWin()->sceneCreared)
             {
-                activeLvlEditWin()->changeCursor(0);
-                activeLvlEditWin()->scene->wasPasted=false;
-                activeLvlEditWin()->scene->disableMoveItems=false;
-            }
-            else
-            if(activeLvlEditWin()->scene->doCut)
-            {
-                on_actionCut_triggered();
-                activeLvlEditWin()->scene->doCut=false;
-            }
-            else
-            if(activeLvlEditWin()->scene->doCopy)
-            {
-                on_actionCopy_triggered();
-                activeLvlEditWin()->scene->doCopy=false;
-            }
-            else
-            if(activeLvlEditWin()->scene->historyChanged)
-            {
-                ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-                ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-                activeLvlEditWin()->scene->historyChanged = false;
-            }
-            else
-            if(activeLvlEditWin()->scene->resetPosition)
-            {
-                on_actionReset_position_triggered();
-                activeLvlEditWin()->scene->resetPosition = false;
-            }
-            else
-            if(activeLvlEditWin()->scene->SyncLayerList)
-            {
-                setLayersBox();
-                activeLvlEditWin()->scene->SyncLayerList = false;
-            }
-            else
-            if(activeLvlEditWin()->scene->resetResizingSection)
-            {
-                ui->ResizeSection->setVisible(true);
-                ui->applyResize->setVisible(false);
-                ui->cancelResize->setVisible(false);
-                activeLvlEditWin()->scene->resetResizingSection = false;
+                //Capturing flags from active Window
+                if(activeLvlEditWin()->scene->wasPasted)
+                {
+                    activeLvlEditWin()->changeCursor(0);
+                    activeLvlEditWin()->scene->wasPasted=false;
+                    activeLvlEditWin()->scene->disableMoveItems=false;
+                }
+                else
+                if(activeLvlEditWin()->scene->doCut)
+                {
+                    on_actionCut_triggered();
+                    activeLvlEditWin()->scene->doCut=false;
+                }
+                else
+                if(activeLvlEditWin()->scene->doCopy)
+                {
+                    on_actionCopy_triggered();
+                    activeLvlEditWin()->scene->doCopy=false;
+                }
+                else
+                if(activeLvlEditWin()->scene->historyChanged)
+                {
+                    ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+                    ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+                    activeLvlEditWin()->scene->historyChanged = false;
+                }
+                else
+                if(activeLvlEditWin()->scene->resetPosition)
+                {
+                    on_actionReset_position_triggered();
+                    activeLvlEditWin()->scene->resetPosition = false;
+                }
+                else
+                if(activeLvlEditWin()->scene->SyncLayerList)
+                {
+                    setLayersBox();
+                    activeLvlEditWin()->scene->SyncLayerList = false;
+                }
+                else
+                if(activeLvlEditWin()->scene->resetResizingSection)
+                {
+                    ui->ResizeSection->setVisible(true);
+                    ui->applyResize->setVisible(false);
+                    ui->cancelResize->setVisible(false);
+                    activeLvlEditWin()->scene->resetResizingSection = false;
+                }
             }
         }
         /*
@@ -207,14 +236,23 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->autoPlayMusic = autoPlayMusic;
     appSettings->Animation = LvlOpts.animationEnabled;
     appSettings->Collisions = LvlOpts.collisionsEnabled;
-    //appSettings->loglevel = LogWriter::logLevel;
-    //appSettings->logfile = LogWriter::DebugLogFile;
+    appSettings->AnimationItemLimit = animatorItemsLimit;
 
     appSettings->applySettings();
 
     if(appSettings->exec()==QDialog::Accepted)
     {
+        autoPlayMusic = appSettings->autoPlayMusic;
+        animatorItemsLimit = appSettings->AnimationItemLimit;
+        LvlOpts.animationEnabled = appSettings->Animation;
+        LvlOpts.collisionsEnabled = appSettings->Collisions;
 
+        ui->actionAnimation->setChecked(LvlOpts.animationEnabled);
+        on_actionAnimation_triggered(LvlOpts.animationEnabled);
+        ui->actionCollisions->setChecked(LvlOpts.collisionsEnabled);
+        on_actionCollisions_triggered(LvlOpts.collisionsEnabled);
+
+        saveSettings();
     }
 
 }

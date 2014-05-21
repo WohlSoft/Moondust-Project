@@ -25,6 +25,14 @@ void dataconfigs::loadLevelBGO()
     obj_bgo sbgo;
     unsigned long bgo_total=0;
     QString bgo_ini = config_dir + "lvl_bgo.ini";
+
+    if(!QFile::exists(bgo_ini))
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgo.ini: file not exist"));
+          return;
+    }
+
+
     QSettings bgoset(bgo_ini, QSettings::IniFormat);
     main_bgo.clear();   //Clear old
 
@@ -85,9 +93,15 @@ void dataconfigs::loadLevelBGO()
                 index_bgo[i].i = i;
 
         bgoset.endGroup();
-/*
-        prgs++;
-        if((!progress.wasCanceled())&&(!nobar))
-            progress.setValue(prgs);*/
+
+        if( bgoset.status() != QSettings::NoError )
+        {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i));
+        }
+    }
+
+    if((unsigned int)main_bgo.size()<bgo_total)
+    {
+        WriteToLog(QtWarningMsg, QString("Not all BGOs loaded: total:%1, loaded: %2)").arg(bgo_total).arg(main_bgo.size()));
     }
 }

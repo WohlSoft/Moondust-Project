@@ -117,8 +117,6 @@ private slots:
     void on_LevelSectionSettings_visibilityChanged(bool visible);
     void on_LevelToolBox_visibilityChanged(bool visible);
 	void on_WorldToolBox_visibilityChanged(bool visible);
-    //void on_pushButton_4_clicked();
-
     void on_OpenFile_triggered();
     void on_Exit_triggered();
     void on_actionAbout_triggered();
@@ -158,6 +156,8 @@ private slots:
     void on_LVLPropsMusicNumber_currentIndexChanged(int index);
     void on_LVLPropsMusicCustomEn_toggled(bool checked);
     void on_LVLPropsMusicCustomBrowse_clicked();
+
+    void on_actionApplication_settings_triggered();
 
     //void on_LVLPropsMusicPlay_toggled(bool checked);
     void on_actionPlayMusic_triggered(bool checked);
@@ -238,8 +238,6 @@ private slots:
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
     void on_actionNewNPC_config_triggered();
 
-    void on_actionApplication_settings_triggered();
-
     void on_AddLayer_clicked();
     void on_LvlLayerList_itemChanged(QListWidgetItem *item);
     void on_RemoveLayer_clicked();
@@ -270,6 +268,9 @@ private:
     bool SectionToolBoxVis; //Section Settings
     bool LevelDoorsBoxVis; //Doors box
     bool LevelLayersBoxVis; //Layers box
+    bool WorldToolBoxVis;
+    bool autoPlayMusic;
+
 
     // ////////////Layer Functions///////////////////
     void RemoveCurrentLayer(bool moveToDefault);
@@ -282,15 +283,8 @@ private:
     void AddNewLayer(QString layerName, bool setEdited);
     void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);
     // //////////////////////////////////////////////
-    bool WorldToolBoxVis;
-    bool autoPlayMusic;
 
     QMediaPlayer * MusicPlayer;
-
-    QString currentCustomMusic;
-    long currentMusicId;
-    bool musicButtonChecked;
-
 
     Ui::MainWindow *ui;
 
