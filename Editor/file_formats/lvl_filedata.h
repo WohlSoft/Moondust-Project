@@ -141,6 +141,7 @@ struct LevelDoors
 
     //editing
     unsigned int array_id;
+    unsigned int index;
 };
 
 struct LevelWater
@@ -155,6 +156,7 @@ struct LevelWater
 
     //editing
     unsigned int array_id;
+    unsigned int index;
 };
 
 struct LevelLayers
