@@ -19,6 +19,7 @@
 
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
+#include "../common_features/logger_sets.h"
 
 void MainWindow::setDefaults()
 {
@@ -121,7 +122,7 @@ void MainWindow::setUiDefults()
 //////////Load settings from INI file///////////////
 void MainWindow::loadSettings()
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "plweditor.ini";
+    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
@@ -138,7 +139,7 @@ void MainWindow::loadSettings()
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
 
-        animatorItemsLimit = settings.value("animation-item-limit", 10000).toInt();
+        animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
     settings.endGroup();
 
@@ -153,7 +154,7 @@ void MainWindow::loadSettings()
 //////////Save settings into INI file///////////////
 void MainWindow::saveSettings()
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "plweditor.ini";
+    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
@@ -168,14 +169,37 @@ void MainWindow::saveSettings()
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
+
     settings.setValue("autoPlayMusic", autoPlayMusic);
+
     settings.setValue("animation", LvlOpts.animationEnabled);
     settings.setValue("collisions", LvlOpts.collisionsEnabled);
+    settings.setValue("animation-item-limit", QString::number(animatorItemsLimit));
     settings.endGroup();
 
     settings.beginGroup("Recent");
     for(int i = 1; i<=10;i++){
         settings.setValue("recent"+QString::number(i),recentOpen[i-1]);
     }
+    settings.endGroup();
+
+    settings.beginGroup("logging");
+        settings.setValue("log-path", LogWriter::DebugLogFile);
+
+        if(LogWriter::enabled)
+            switch(LogWriter::logLevel)
+            {
+            case QtDebugMsg:
+                settings.setValue("log-level", "4");
+            case QtWarningMsg:
+                settings.setValue("log-level", "3");
+            case QtCriticalMsg:
+                settings.setValue("log-level", "2");
+            case QtFatalMsg:
+                settings.setValue("log-level", "1");
+            }
+        else
+            settings.setValue("log-level", "0");
+
     settings.endGroup();
 }
