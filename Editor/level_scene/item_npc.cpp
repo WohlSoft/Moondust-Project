@@ -51,6 +51,19 @@ ItemNPC::~ItemNPC()
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
 }
 
+
+void ItemNPC::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+{
+    if(scene->DrawMode)
+    {
+        unsetCursor();
+        ungrabMouse();
+        this->setSelected(false);
+        return;
+    }
+    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
+}
+
 void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
     if((!scene->lock_npc)&&(!isLocked))

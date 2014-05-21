@@ -43,6 +43,18 @@ ItemBGO::~ItemBGO()
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
 }
 
+void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+{
+    if(scene->DrawMode)
+    {
+        unsetCursor();
+        ungrabMouse();
+        this->setSelected(false);
+        return;
+    }
+    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
+}
+
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
     if((!scene->lock_bgo)&&(!isLocked))
