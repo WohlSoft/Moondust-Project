@@ -30,6 +30,8 @@ bool LvlMusPlay::musicButtonChecked;
 
 void MainWindow::setDefaults()
 {
+    setPointer();
+
     MusicPlayer = new QMediaPlayer;
 
     LvlOpts.animationEnabled = true;

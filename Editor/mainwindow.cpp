@@ -109,10 +109,10 @@ void MainWindow::TickTack()
     {
         if(activeChildWindow()==1)
         {
-            if(activeLvlEditWin()->sceneCreared)
+            if(activeLvlEditWin()->sceneCreated)
             {
                 //Capturing flags from active Window
-                if(activeLvlEditWin()->scene->wasPasted)
+                /*if(activeLvlEditWin()->scene->wasPasted)
                 {
                     activeLvlEditWin()->changeCursor(0);
                     activeLvlEditWin()->scene->wasPasted=false;
@@ -130,7 +130,7 @@ void MainWindow::TickTack()
                     on_actionCopy_triggered();
                     activeLvlEditWin()->scene->doCopy=false;
                 }
-                else
+                else*/
                 if(activeLvlEditWin()->scene->historyChanged)
                 {
                     ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
@@ -143,6 +143,7 @@ void MainWindow::TickTack()
                     on_actionReset_position_triggered();
                     activeLvlEditWin()->scene->resetPosition = false;
                 }
+                /*
                 else
                 if(activeLvlEditWin()->scene->SyncLayerList)
                 {
@@ -156,7 +157,7 @@ void MainWindow::TickTack()
                     ui->applyResize->setVisible(false);
                     ui->cancelResize->setVisible(false);
                     activeLvlEditWin()->scene->resetResizingSection = false;
-                }
+                }*/
             }
         }
         /*

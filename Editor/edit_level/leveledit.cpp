@@ -37,7 +37,7 @@ leveledit::leveledit(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::leveledit)
 {
-    sceneCreared = false;
+    sceneCreated = false;
     FileType = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
