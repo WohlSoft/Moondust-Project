@@ -211,11 +211,17 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
       )
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
+
         QMessageBox::warning(this, tr("Configurations not loaded"),
                              tr("Cannot open level file %1:\nbecause object configurations not loaded\n."
                                 "Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.")
                              .arg(fileName));
-        LvlData.modified = false;
+
+        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
+
+        this->close();
+
+        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
         return false;
     }
 
@@ -307,7 +313,13 @@ QString leveledit::userFriendlyCurrentFile()
 
 void leveledit::closeEvent(QCloseEvent *event)
 {
-    if (maybeSave()) {
+    if(!sceneCreared)
+    {
+        event->accept();
+        return;
+    }
+
+    if(maybeSave()) {
         scene->uBGOs.clear();
         scene->uBGs.clear();
         scene->uBlocks.clear();

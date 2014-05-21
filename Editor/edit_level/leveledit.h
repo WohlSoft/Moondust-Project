@@ -58,6 +58,9 @@ public:
     void ExportToImage_fn();
 
     LvlScene * scene;
+
+    bool sceneCreared;
+
     QString curFile;
     
 protected:
@@ -71,7 +74,6 @@ private:
     void documentWasModified();
     Ui::leveledit *ui;
 
-    bool sceneCreared;
     LevelData StartLvlData;
     bool DrawObjects(QProgressDialog &progress);
 
