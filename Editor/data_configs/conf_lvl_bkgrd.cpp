@@ -127,10 +127,11 @@ void dataconfigs::loadLevelBackgrounds()
             main_bg.push_back(sbg);
         bgset.endGroup();
 
-        /*
-        prgs++;
-        if((!progress.wasCanceled())&&(!nobar))
-            progress.setValue(prgs);*/
+
+        if( bgset.status() != QSettings::NoError )
+        {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i));
+        }
     }
 
 }
