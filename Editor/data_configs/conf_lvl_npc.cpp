@@ -414,6 +414,12 @@ void dataconfigs::loadLevelNPC()
            // WriteToLog(QtDebugMsg, "NPC Config -> Index added");
 
         npcset.endGroup();
+
+
+        if( npcset.status() != QSettings::NoError )
+        {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i));
+        }
         }
 
 }

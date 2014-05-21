@@ -61,9 +61,10 @@ void dataconfigs::loadMusic()
             main_music_wld.push_back(smusic_wld);
         musicset.endGroup();
 
-        /*prgs++;
-        if((!progress.wasCanceled())&&(!nobar))
-            progress.setValue(prgs);*/
+        if( musicset.status() != QSettings::NoError )
+        {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (world music %2)").arg(musicset.status()).arg(i));
+        }
     }
 
     //Special music
@@ -76,9 +77,10 @@ void dataconfigs::loadMusic()
             main_music_spc.push_back(smusic_spc);
         musicset.endGroup();
 
-        /*prgs++;
-        if((!progress.wasCanceled())&&(!nobar))
-            progress.setValue(prgs);*/
+        if( musicset.status() != QSettings::NoError )
+        {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i));
+        }
     }
 
     //Level music
@@ -91,9 +93,10 @@ void dataconfigs::loadMusic()
             main_music_lvl.push_back(smusic_lvl);
         musicset.endGroup();
 
-        /*prgs++;
-        if((!progress.wasCanceled())&&(!nobar))
-            progress.setValue(prgs);*/
+        if( musicset.status() != QSettings::NoError )
+        {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i));
+        }
     }
 
 

@@ -24,14 +24,30 @@ void dataconfigs::loadLevelBlocks()
 
     obj_block sblock;
     unsigned long block_total=0;
+
+
     QString block_ini = config_dir + "lvl_blocks.ini";
+
+    if(!QFile::exists(block_ini))
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini: file not exist"));
+          return;
+    }
+
     QSettings blockset(block_ini, QSettings::IniFormat);
+
     main_block.clear();   //Clear old
 
     blockset.beginGroup("blocks-main");
         block_total = blockset.value("total", "0").toInt();
         total_data +=block_total;
     blockset.endGroup();
+
+    /*
+    if( blockset.status() != QSettings::NoError )
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (get total value: %2)").arg(blockset.status()).arg(total_data));
+    }*/
 
     //creation of empty indexes of arrayElements
     blocksIndexes blockIndex;
@@ -42,13 +58,21 @@ void dataconfigs::loadLevelBlocks()
         index_blocks.push_back(blockIndex);
     }
 
+
         for(i=1; i<=block_total; i++)
         {
-            blockset.beginGroup( QString("block-"+QString::number(i)) );
-                sblock.name = blockset.value("name", "").toString();
-                sblock.type = blockset.value("type", "other").toString();
+            int errNum=0;
+            blockset.beginGroup( QString("block-%1").arg(i) );
+
+                if( blockset.status() != QSettings::NoError ) { errNum=1; goto ReadError;}
+                sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
+                if( blockset.status() != QSettings::NoError ) { errNum=2; goto ReadError;}
+                sblock.type = blockset.value("type", "Other").toString();
+                if( blockset.status() != QSettings::NoError ) { errNum=3; goto ReadError;}
 
                 imgFile = blockset.value("image", "").toString();
+                if( blockset.status() != QSettings::NoError ) { errNum=4; goto ReadError;}
+
                 sblock.image_n = imgFile;
                 if( (imgFile!="") )
                 {
@@ -70,7 +94,9 @@ void dataconfigs::loadLevelBlocks()
                 }
 
                 sblock.sizable = blockset.value("sizable", "0").toBool();
+                    if( blockset.status() != QSettings::NoError ) { errNum=5; goto ReadError;}
                 sblock.danger = blockset.value("danger", "0").toInt();
+                    if( blockset.status() != QSettings::NoError ) { errNum=6; goto ReadError;}
                 sblock.collision = blockset.value("collision", "1").toInt();
                 sblock.slopeslide = blockset.value("slope-slide", "0").toBool();
                 sblock.fixture = blockset.value("fixture-type", "0").toInt();
@@ -130,9 +156,15 @@ void dataconfigs::loadLevelBlocks()
 
             blockset.endGroup();
 
-        /*    prgs++;
-            if((!progress.wasCanceled())&&(!nobar))
-                progress.setValue(prgs);*/
+          continue;
+         ReadError:
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (block-%2) bug #%3").arg(blockset.status()).arg(i).arg(errNum));
+            break;
+       }
+
+        if((unsigned int)main_block.size()<block_total)
+        {
+                WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF Blocks: total:%1, loaded: %2)").arg(block_total).arg(main_block.size()));
         }
 
 }

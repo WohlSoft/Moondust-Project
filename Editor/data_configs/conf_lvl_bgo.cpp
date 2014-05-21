@@ -85,6 +85,11 @@ void dataconfigs::loadLevelBGO()
                 index_bgo[i].i = i;
 
         bgoset.endGroup();
+
+        if( bgoset.status() != QSettings::NoError )
+        {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i));
+        }
 /*
         prgs++;
         if((!progress.wasCanceled())&&(!nobar))
