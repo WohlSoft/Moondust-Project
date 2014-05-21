@@ -268,6 +268,9 @@ private:
     bool SectionToolBoxVis; //Section Settings
     bool LevelDoorsBoxVis; //Doors box
     bool LevelLayersBoxVis; //Layers box
+    bool WorldToolBoxVis;
+    bool autoPlayMusic;
+
 
     // ////////////Layer Functions///////////////////
     void RemoveCurrentLayer(bool moveToDefault);
@@ -280,15 +283,8 @@ private:
     void AddNewLayer(QString layerName, bool setEdited);
     void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);
     // //////////////////////////////////////////////
-    bool WorldToolBoxVis;
-    bool autoPlayMusic;
 
     QMediaPlayer * MusicPlayer;
-
-    QString currentCustomMusic;
-    long currentMusicId;
-    bool musicButtonChecked;
-
 
     Ui::MainWindow *ui;
 
