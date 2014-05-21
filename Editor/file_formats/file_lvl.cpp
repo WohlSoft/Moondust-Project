@@ -657,6 +657,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         }
         doors.array_id = FileData.doors_array_id;
         FileData.doors_array_id++;
+        doors.index = FileData.doors.size();//Apply element index
 
     FileData.doors.push_back(doors); //Add NPC into array
     str_count++;line = in.readLine();
@@ -710,6 +711,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
             waters.array_id = FileData.water_array_id;
             FileData.water_array_id++;
+
+            waters.index = FileData.water.size();//Apply element index
 
         FileData.water.push_back(waters); //Add Water area into array
         str_count++;line = in.readLine();
