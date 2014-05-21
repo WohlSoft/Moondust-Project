@@ -165,6 +165,11 @@ void leveledit::changeCursor(int mode)
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_pasta.png"), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         break;
+    case 5:    // Resizing mode
+        ui->graphicsView->setInteractive(true);
+        ui->graphicsView->setCursor(Qt::ArrowCursor);
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+        break;
     default:
         break;
     }

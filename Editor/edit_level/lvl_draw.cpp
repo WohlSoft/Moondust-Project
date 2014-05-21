@@ -98,10 +98,10 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
                         LvlData.sections[0].size_bottom+1000);
     */
 
-    if(!sceneCreared)
+    if(!sceneCreated)
     {
         ui->graphicsView->setScene(scene);
-        sceneCreared = true;
+        sceneCreated = true;
     }
 
     if(!progress.wasCanceled())

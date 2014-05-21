@@ -135,7 +135,7 @@ void MainWindow::updateMenus(bool force)
             return;
         }
 
-        if(activeLvlEditWin()->sceneCreared)
+        if(activeLvlEditWin()->sceneCreated)
         {
             if(activeLvlEditWin()->scene->pResizer==NULL)
             {
@@ -162,7 +162,7 @@ void MainWindow::updateMenus(bool force)
         ui->actionSelect->trigger();
 
 
-        if(activeLvlEditWin()->sceneCreared)
+        if(activeLvlEditWin()->sceneCreated)
         {
             ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
             ui->actionLockBGO->setChecked(activeLvlEditWin()->scene->lock_bgo);

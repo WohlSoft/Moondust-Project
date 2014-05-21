@@ -108,13 +108,13 @@ public:
     bool contextMenuOpened;
 
     //Event Flags
-    bool wasPasted;
-    bool doCopy;
-    bool doCut;
+    //bool wasPasted;  Now is trash
+    //bool doCopy;
+    //bool doCut;
     bool historyChanged;
     bool resetPosition;
-    bool SyncLayerList;
-    bool resetResizingSection;
+    //bool SyncLayerList;
+    //bool resetResizingSection;
 
     //Copy function
     LevelData copy(bool cut = false);

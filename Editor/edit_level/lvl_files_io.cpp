@@ -313,7 +313,7 @@ QString leveledit::userFriendlyCurrentFile()
 
 void leveledit::closeEvent(QCloseEvent *event)
 {
-    if(!sceneCreared)
+    if(!sceneCreated)
     {
         event->accept();
         return;

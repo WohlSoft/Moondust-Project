@@ -56,18 +56,19 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     IsMoved = false;
     haveSelected = false;
 
-    resetPosition = false;
     pResizer = NULL;
 
     contextMenuOpened = false;
 
     //Events flags
+    resetPosition = false;
+    /*
     wasPasted = false;  //call to cursor reset to normal select
     doCopy = false;     //call to copy
     doCut = false;      //call to cut
     SyncLayerList = false; //Call to refresh layer list
     resetResizingSection = false; //Reset resizing applying buttons
-
+    */
 
     QPixmap cur(QSize(1,1));
     cur.fill(Qt::black);

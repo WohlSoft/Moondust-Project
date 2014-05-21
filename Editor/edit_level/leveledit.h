@@ -59,7 +59,7 @@ public:
 
     LvlScene * scene;
 
-    bool sceneCreared;
+    bool sceneCreated;
 
     QString curFile;
     

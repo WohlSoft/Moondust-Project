@@ -23,6 +23,8 @@
 
 #include "newlayerbox.h"
 
+#include "../common_features/mainwinconnect.h"
+
 ItemNPC::ItemNPC(QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
@@ -127,7 +129,7 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         ItemMenu->addSeparator();
 
-        QAction *boss = ItemMenu->addAction(tr("Legacy boss"));
+        QAction *boss = ItemMenu->addAction(tr("Set as Boss"));
             boss->setCheckable(1);
             boss->setChecked( npcData.legacyboss );
 
@@ -151,13 +153,15 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(selected==cutNpc)
         {
-            scene->doCut = true ;
+            //scene->doCut = true ;
+            MainWinConnect::pMainWin->on_actionCut_triggered();
             scene->contextMenuOpened = false;
         }
         else
         if(selected==copyNpc)
         {
-            scene->doCopy = true ;
+            //scene->doCopy = true ;
+            MainWinConnect::pMainWin->on_actionCopy_triggered();
             scene->contextMenuOpened = false;
         }
         else
@@ -309,7 +313,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     nLayer.array_id = scene->LvlData->layers_array_id;
                     scene->LvlData->layers.push_back(nLayer);
 
-                    scene->SyncLayerList=true; //Refresh layer list
+                    //scene->SyncLayerList=true; //Refresh layer list
+                    MainWinConnect::pMainWin->setLayersBox();
                 }
             }
             else
