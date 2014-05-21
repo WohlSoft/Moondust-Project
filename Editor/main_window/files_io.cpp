@@ -20,6 +20,8 @@
 #include "../mainwindow.h"
 #include "../file_formats/file_formats.h"
 
+#include "music_player.h"
+
 
 void MainWindow::openFilesByArgs(QStringList args)
 {
@@ -72,7 +74,9 @@ void MainWindow::OpenFile(QString FilePath)
             setLayersBox();
 
             if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-            musicButtonChecked=true;
+            LvlMusPlay::currentCustomMusic="";
+            LvlMusPlay::currentMusicId=0;
+            LvlMusPlay::musicButtonChecked=true;
             setMusic(false);
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
@@ -81,7 +85,7 @@ void MainWindow::OpenFile(QString FilePath)
             child->show();
             WriteToLog(QtDebugMsg, ">>Window showed");
             if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
-            WriteToLog(QtDebugMsg, ">>Option seted");
+            WriteToLog(QtDebugMsg, ">> Option seted");
             ui->centralWidget->activeSubWindow()->close();
             WriteToLog(QtDebugMsg, ">>Windows closed");
         }
