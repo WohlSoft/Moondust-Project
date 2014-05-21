@@ -30,6 +30,8 @@
 #include "saveimage.h"
 #include "../common_features/logger.h"
 
+#include "../common_features/mainwinconnect.h"
+
 #include <QDebug>
 
 
@@ -324,6 +326,7 @@ void leveledit::closeEvent(QCloseEvent *event)
         scene->uBGs.clear();
         scene->uBlocks.clear();
         scene->clear();
+        MainWinConnect::pMainWin->updateMenus(true);
         //ui->graphicsView->cl
         event->accept();
     } else {
