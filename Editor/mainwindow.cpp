@@ -207,14 +207,23 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->autoPlayMusic = autoPlayMusic;
     appSettings->Animation = LvlOpts.animationEnabled;
     appSettings->Collisions = LvlOpts.collisionsEnabled;
-    //appSettings->loglevel = LogWriter::logLevel;
-    //appSettings->logfile = LogWriter::DebugLogFile;
+    appSettings->AnimationItemLimit = animatorItemsLimit;
 
     appSettings->applySettings();
 
     if(appSettings->exec()==QDialog::Accepted)
     {
+        autoPlayMusic = appSettings->autoPlayMusic;
+        animatorItemsLimit = appSettings->AnimationItemLimit;
+        LvlOpts.animationEnabled = appSettings->Animation;
+        LvlOpts.collisionsEnabled = appSettings->Collisions;
 
+        ui->actionAnimation->setChecked(LvlOpts.animationEnabled);
+        on_actionAnimation_triggered(LvlOpts.animationEnabled);
+        ui->actionCollisions->setChecked(LvlOpts.collisionsEnabled);
+        on_actionCollisions_triggered(LvlOpts.collisionsEnabled);
+
+        saveSettings();
     }
 
 }
