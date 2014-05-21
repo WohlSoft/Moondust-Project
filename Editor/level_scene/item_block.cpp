@@ -40,6 +40,18 @@ ItemBlock::~ItemBlock()
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
 }
 
+void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+{
+    if(scene->DrawMode)
+    {
+        unsetCursor();
+        ungrabMouse();
+        this->setSelected(false);
+        return;
+    }
+    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
+}
+
 void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
     if((!scene->lock_block)&&(!isLocked))

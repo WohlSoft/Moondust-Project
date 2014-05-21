@@ -82,6 +82,7 @@ public:
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     //virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private slots:
     void nextFrame();
