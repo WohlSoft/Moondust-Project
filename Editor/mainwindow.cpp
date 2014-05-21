@@ -137,13 +137,13 @@ void MainWindow::TickTack()
                     ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
                     activeLvlEditWin()->scene->historyChanged = false;
                 }
+                /*
                 else
                 if(activeLvlEditWin()->scene->resetPosition)
                 {
                     on_actionReset_position_triggered();
                     activeLvlEditWin()->scene->resetPosition = false;
                 }
-                /*
                 else
                 if(activeLvlEditWin()->scene->SyncLayerList)
                 {
