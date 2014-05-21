@@ -29,6 +29,8 @@
 #include "../level_scene/lvlscene.h"
 #include "../common_features/logger.h"
 
+#include "../common_features/mainwinconnect.h"
+
 
 #include <QDebug>
 
@@ -125,7 +127,7 @@ void leveledit::setCurrentSection(int scId)
 
     update();
 
-    if(sIsNew) scene->resetPosition = true;
+    if(sIsNew) MainWinConnect::pMainWin->on_actionReset_position_triggered();
 
 }
 
