@@ -58,6 +58,9 @@ public:
     void ExportToImage_fn();
 
     LvlScene * scene;
+
+    bool sceneCreared;
+
     QString curFile;
     
 protected:
@@ -71,7 +74,6 @@ private:
     void documentWasModified();
     Ui::leveledit *ui;
 
-    bool sceneCreared;
     LevelData StartLvlData;
     bool DrawObjects(QProgressDialog &progress);
 
@@ -80,7 +82,6 @@ private:
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
-    QString latest_export;
     QString latest_export_path;
     bool isUntitled;
     unsigned int FileType;

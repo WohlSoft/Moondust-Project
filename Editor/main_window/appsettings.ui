@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="mainSettings">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabSet">
       <attribute name="title">
@@ -138,7 +138,7 @@
         <widget class="QComboBox" name="logLevel">
          <item>
           <property name="text">
-           <string>Disable logging</string>
+           <string>Disable loggig</string>
           </property>
          </item>
          <item>

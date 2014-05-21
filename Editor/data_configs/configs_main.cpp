@@ -65,6 +65,10 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
         dirs.gcustom = QApplication::applicationDirPath() + "/" + dirset.value("custom-data", "data-custom").toString() + "/";
     dirset.endGroup();
 
+    if( dirset.status() != QSettings::NoError )
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF main.ini N:%1").arg(dirset.status()));
+    }
 
     ////////////////////////////////Preparing////////////////////////////////////////
     bgoPath =   dirs.glevel +  "background/";
@@ -120,6 +124,17 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
 
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/
+
+    WriteToLog(QtDebugMsg, QString("-------------------------"));
+    WriteToLog(QtDebugMsg, QString("Congifs status 1"));
+    WriteToLog(QtDebugMsg, QString("-------------------------"));
+    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1").arg(main_block.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1").arg(main_bgo.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1").arg(main_npc.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1").arg(main_bg.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1").arg(main_music_lvl.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1").arg(main_music_spc.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded World musics    %1").arg(main_music_wld.size()));
 
     return true;
 }

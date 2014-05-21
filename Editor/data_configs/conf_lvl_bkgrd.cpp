@@ -25,6 +25,13 @@ void dataconfigs::loadLevelBackgrounds()
     unsigned long bg_total=0;
 
     QString bg_ini = config_dir + "lvl_bkgrd.ini";
+
+    if(!QFile::exists(bg_ini))
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bkgrd.ini: file not exist"));
+          return;
+    }
+
     QSettings bgset(bg_ini, QSettings::IniFormat);
     main_bg.clear();   //Clear old
 
@@ -127,10 +134,11 @@ void dataconfigs::loadLevelBackgrounds()
             main_bg.push_back(sbg);
         bgset.endGroup();
 
-        /*
-        prgs++;
-        if((!progress.wasCanceled())&&(!nobar))
-            progress.setValue(prgs);*/
+
+        if( bgset.status() != QSettings::NoError )
+        {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i));
+        }
     }
 
 }

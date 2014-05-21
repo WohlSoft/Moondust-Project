@@ -24,14 +24,25 @@ void dataconfigs::loadLevelBlocks()
 
     obj_block sblock;
     unsigned long block_total=0;
+
+
     QString block_ini = config_dir + "lvl_blocks.ini";
+
+    if(!QFile::exists(block_ini))
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini: file not exist"));
+          return;
+    }
+
     QSettings blockset(block_ini, QSettings::IniFormat);
+
     main_block.clear();   //Clear old
 
     blockset.beginGroup("blocks-main");
         block_total = blockset.value("total", "0").toInt();
         total_data +=block_total;
     blockset.endGroup();
+
 
     //creation of empty indexes of arrayElements
     blocksIndexes blockIndex;
@@ -42,13 +53,15 @@ void dataconfigs::loadLevelBlocks()
         index_blocks.push_back(blockIndex);
     }
 
+
         for(i=1; i<=block_total; i++)
         {
-            blockset.beginGroup( QString("block-"+QString::number(i)) );
-                sblock.name = blockset.value("name", "").toString();
-                sblock.type = blockset.value("type", "other").toString();
+            blockset.beginGroup( QString("block-%1").arg(i) );
 
+                sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
+                sblock.type = blockset.value("type", "Other").toString();
                 imgFile = blockset.value("image", "").toString();
+
                 sblock.image_n = imgFile;
                 if( (imgFile!="") )
                 {
@@ -130,9 +143,16 @@ void dataconfigs::loadLevelBlocks()
 
             blockset.endGroup();
 
-        /*    prgs++;
-            if((!progress.wasCanceled())&&(!nobar))
-                progress.setValue(prgs);*/
-        }
+          if( blockset.status()!=QSettings::NoError)
+          {
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
+            break;
+          }
+       }
+
+       if((unsigned int)main_block.size()<block_total)
+       {
+           WriteToLog(QtWarningMsg, QString("Not all blocks loaded: total:%1, loaded: %2)").arg(block_total).arg(main_block.size()));
+       }
 
 }
