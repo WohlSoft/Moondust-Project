@@ -795,7 +795,6 @@ void LvlScene::setDoors(QProgressDialog &progress)
 {
     int i=0;
 
-
     for(i=0; i<LvlData->doors.size(); i++)
     {
 
