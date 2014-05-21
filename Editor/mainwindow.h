@@ -117,8 +117,6 @@ private slots:
     void on_LevelSectionSettings_visibilityChanged(bool visible);
     void on_LevelToolBox_visibilityChanged(bool visible);
 	void on_WorldToolBox_visibilityChanged(bool visible);
-    //void on_pushButton_4_clicked();
-
     void on_OpenFile_triggered();
     void on_Exit_triggered();
     void on_actionAbout_triggered();
@@ -158,6 +156,8 @@ private slots:
     void on_LVLPropsMusicNumber_currentIndexChanged(int index);
     void on_LVLPropsMusicCustomEn_toggled(bool checked);
     void on_LVLPropsMusicCustomBrowse_clicked();
+
+    void on_actionApplication_settings_triggered();
 
     //void on_LVLPropsMusicPlay_toggled(bool checked);
     void on_actionPlayMusic_triggered(bool checked);
@@ -237,8 +237,6 @@ private slots:
     void on_BGOCatList_currentIndexChanged(const QString &arg1);
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
     void on_actionNewNPC_config_triggered();
-
-    void on_actionApplication_settings_triggered();
 
     void on_AddLayer_clicked();
     void on_LvlLayerList_itemChanged(QListWidgetItem *item);
