@@ -66,11 +66,15 @@ void MainWindow::OpenFile(QString FilePath)
         if ( (bool)(child->loadFile(FilePath, FileData, configs, LvlOpts)) ) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
-
             updateMenus(true);
             SetCurrentLevelSection(0);
             setDoorsToolbox();
             setLayersBox();
+
+            if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+            musicButtonChecked=true;
+            setMusic(false);
+            on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
         } else {
             WriteToLog(QtDebugMsg, ">>File loading aborted");
