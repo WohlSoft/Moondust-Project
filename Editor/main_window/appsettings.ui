@@ -138,7 +138,7 @@
         <widget class="QComboBox" name="logLevel">
          <item>
           <property name="text">
-           <string>Disable loggig</string>
+           <string>Disable logging</string>
           </property>
          </item>
          <item>
