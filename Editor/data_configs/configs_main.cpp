@@ -18,6 +18,19 @@
 
 #include "data_configs.h"
 
+#include "../main_window/global_settings.h"
+
+long ConfStatus::total_blocks=0;
+long ConfStatus::total_bgo=0;
+long ConfStatus::total_bg=0;
+long ConfStatus::total_npc=0;
+
+long ConfStatus::total_music_lvl=0;
+long ConfStatus::total_music_wld=0;
+long ConfStatus::total_music_spc=0;
+
+QString ConfStatus::configName="";
+
 dataconfigs::dataconfigs()
 {
 
