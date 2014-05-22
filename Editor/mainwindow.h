@@ -99,6 +99,8 @@ public slots:
     void AddToRecentFiles(QString FilePath);
 
     void updateMenus(bool force=false);
+    void updateWindowMenu();
+
     void setTools();
     void setMusic(bool checked);
 
@@ -325,7 +327,8 @@ private:
     //Miltilanguage
     void loadLanguage(const QString& rLanguage);
     void setDefLang();
-    void switchTranslator(QTranslator &translator, const QString &filename);
+    bool switchTranslator(QTranslator &translator, const QString &filename);
+    void langListSync();
     QTranslator     m_translator;   /**< contains the translations for this application */
     QTranslator     m_translatorQt; /**< contains the translations for qt */
     QString         m_currLang;     /**< contains the currently loaded language */
