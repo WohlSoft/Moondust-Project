@@ -22,7 +22,6 @@
 #include "item_block.h"
 #include "item_bgo.h"
 
-
 //Copy selected items into clipboard
 LevelData LvlScene::copy(bool cut)
 {

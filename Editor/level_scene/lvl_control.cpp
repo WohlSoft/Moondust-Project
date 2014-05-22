@@ -23,6 +23,8 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 
+#include "../common_features/mainwinconnect.h"
+
 
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 {
@@ -75,13 +77,15 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
         if(!IsMoved)
             this->clearSelection();
         if(pResizer!=NULL )
-            setSectionResizer(false, false);
+            MainWinConnect::pMainWin->on_cancelResize_clicked();
+            //setSectionResizer(false, false);
         break;
     case (Qt::Key_Enter):
     case (Qt::Key_Return):
 
         if(pResizer!=NULL )
-            setSectionResizer(false, true);
+            MainWinConnect::pMainWin->on_applyResize_clicked();
+            //setSectionResizer(false, true);
         break;
 
     default:
@@ -220,7 +224,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 EditingMode = 0;
                 PasteFromBuffer = false;
                 IsMoved=false;
-                wasPasted = true; //Set flag for reset pasta cursor to normal select
+
+                MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(0);
+
+                //activeLvlEditWin()->scene->wasPasted=false;
+                //activeLvlEditWin()->scene->disableMoveItems=false;
+                disableMoveItems=false;
+                //wasPasted = true; //Set flag for reset pasta cursor to normal select
             }
 
             QList<QGraphicsItem*> selectedList = selectedItems();
@@ -521,6 +531,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         pResizer->_minSize = QSizeF(800,600);
         this->setFocus(Qt::ActiveWindowFocusReason);
         DrawMode=true;
+        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
     }
     else
     {
@@ -543,7 +554,8 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
             }
             delete pResizer;
             pResizer = NULL;
-            resetResizingSection=true;
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            //resetResizingSection=true;
         }
         DrawMode=false;
     }

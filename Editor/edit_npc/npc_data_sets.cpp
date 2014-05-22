@@ -19,7 +19,7 @@
 #include <QtWidgets>
 
 #include "npcedit.h"
-#include "../ui_npcedit.h"
+#include "./ui_npcedit.h"
 #include "../file_formats/npc_filedata.h"
 
 

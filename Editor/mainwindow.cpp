@@ -22,6 +22,7 @@
 #include "npc_dialog/npcdialog.h"
 #include "main_window/appsettings.h"
 
+
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -46,55 +47,13 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     splash.finish(this);
 
+    WriteToLog(QtDebugMsg, QString("Set UI..."));
     ui->setupUi(this);
 
-    /*
-     * //Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
-     *
-       QString defaultLocale = QLocale::system().name();
-       defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
-
-       m_langPath = QApplication::applicationDirPath();
-       m_langPath.append("/languages");
-       QDir dir(m_langPath);
-       QStringList fileNames = dir.entryList(QStringList("pge_editor_*.qm"));
-
-       for (int i = 0; i < fileNames.size(); ++i)
-           {
-               // get locale extracted by filename
-               QString locale;
-               locale = fileNames[i];                  // "TranslationExample_de.qm"
-               locale.truncate(locale.lastIndexOf('.'));   // "TranslationExample_de"
-               locale.remove(0, locale.indexOf('_') + 1);   // "de"
-
-               QString lang = QLocale::languageToString(QLocale(locale).language());
-               QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
-
-               QAction *action = new QAction(ico, lang, this);
-               action->setCheckable(true);
-               action->setData(locale);
-
-               ui->menuLanguage->addAction(action);
-
-               // set default translators and language checked
-               if (defaultLocale == locale)
-               {
-                   action->setChecked(true);
-               }
-           }
-
-       m_currLang = "ru";
-       QLocale locale = QLocale(m_currLang);
-       QLocale::setDefault(locale);
-
-       if(m_translator.load("pge_editor_ru.qm"))
-        qApp->installTranslator(&m_translator);
-
-       ui->retranslateUi(this);
-    */
+    WriteToLog(QtDebugMsg, QString("Setting Lang..."));
+    setDefLang();
 
     setUiDefults(); //Apply default UI settings
-
 }
 
 //Scene Event Detector
@@ -108,51 +67,55 @@ void MainWindow::TickTack()
     {
         if(activeChildWindow()==1)
         {
-            //Capturing flags from active Window
-            if(activeLvlEditWin()->scene->wasPasted)
+            if(activeLvlEditWin()->sceneCreated)
             {
-                activeLvlEditWin()->changeCursor(0);
-                activeLvlEditWin()->scene->wasPasted=false;
-                activeLvlEditWin()->scene->disableMoveItems=false;
-            }
-            else
-            if(activeLvlEditWin()->scene->doCut)
-            {
-                on_actionCut_triggered();
-                activeLvlEditWin()->scene->doCut=false;
-            }
-            else
-            if(activeLvlEditWin()->scene->doCopy)
-            {
-                on_actionCopy_triggered();
-                activeLvlEditWin()->scene->doCopy=false;
-            }
-            else
-            if(activeLvlEditWin()->scene->historyChanged)
-            {
-                ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-                ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-                activeLvlEditWin()->scene->historyChanged = false;
-            }
-            else
-            if(activeLvlEditWin()->scene->resetPosition)
-            {
-                on_actionReset_position_triggered();
-                activeLvlEditWin()->scene->resetPosition = false;
-            }
-            else
-            if(activeLvlEditWin()->scene->SyncLayerList)
-            {
-                setLayersBox();
-                activeLvlEditWin()->scene->SyncLayerList = false;
-            }
-            else
-            if(activeLvlEditWin()->scene->resetResizingSection)
-            {
-                ui->ResizeSection->setVisible(true);
-                ui->applyResize->setVisible(false);
-                ui->cancelResize->setVisible(false);
-                activeLvlEditWin()->scene->resetResizingSection = false;
+                //Capturing flags from active Window
+                /*if(activeLvlEditWin()->scene->wasPasted)
+                {
+                    activeLvlEditWin()->changeCursor(0);
+                    activeLvlEditWin()->scene->wasPasted=false;
+                    activeLvlEditWin()->scene->disableMoveItems=false;
+                }
+                else
+                if(activeLvlEditWin()->scene->doCut)
+                {
+                    on_actionCut_triggered();
+                    activeLvlEditWin()->scene->doCut=false;
+                }
+                else
+                if(activeLvlEditWin()->scene->doCopy)
+                {
+                    on_actionCopy_triggered();
+                    activeLvlEditWin()->scene->doCopy=false;
+                }
+                else*/
+                if(activeLvlEditWin()->scene->historyChanged)
+                {
+                    ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+                    ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+                    activeLvlEditWin()->scene->historyChanged = false;
+                }
+                /*
+                else
+                if(activeLvlEditWin()->scene->resetPosition)
+                {
+                    on_actionReset_position_triggered();
+                    activeLvlEditWin()->scene->resetPosition = false;
+                }
+                else
+                if(activeLvlEditWin()->scene->SyncLayerList)
+                {
+                    setLayersBox();
+                    activeLvlEditWin()->scene->SyncLayerList = false;
+                }
+                else
+                if(activeLvlEditWin()->scene->resetResizingSection)
+                {
+                    ui->ResizeSection->setVisible(true);
+                    ui->applyResize->setVisible(false);
+                    ui->cancelResize->setVisible(false);
+                    activeLvlEditWin()->scene->resetResizingSection = false;
+                }*/
             }
         }
         /*
@@ -204,9 +167,26 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
 
+    appSettings->autoPlayMusic = autoPlayMusic;
+    appSettings->Animation = LvlOpts.animationEnabled;
+    appSettings->Collisions = LvlOpts.collisionsEnabled;
+    appSettings->AnimationItemLimit = animatorItemsLimit;
+
+    appSettings->applySettings();
+
     if(appSettings->exec()==QDialog::Accepted)
     {
+        autoPlayMusic = appSettings->autoPlayMusic;
+        animatorItemsLimit = appSettings->AnimationItemLimit;
+        LvlOpts.animationEnabled = appSettings->Animation;
+        LvlOpts.collisionsEnabled = appSettings->Collisions;
 
+        ui->actionAnimation->setChecked(LvlOpts.animationEnabled);
+        on_actionAnimation_triggered(LvlOpts.animationEnabled);
+        ui->actionCollisions->setChecked(LvlOpts.collisionsEnabled);
+        on_actionCollisions_triggered(LvlOpts.collisionsEnabled);
+
+        saveSettings();
     }
 
 }

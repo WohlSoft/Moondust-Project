@@ -72,14 +72,21 @@ public:
     void openFilesByArgs(QStringList args);
 
 
+    //Sub Windows
+    int activeChildWindow();
+    npcedit *activeNpcEditWin();
+    leveledit *activeLvlEditWin();
+
 protected:
     void closeEvent(QCloseEvent *event);
     void dragEnterEvent(QDragEnterEvent *e);
     void dropEvent(QDropEvent *e);
 
-private slots:
-
-    void TickTack();
+public slots:
+    //Clipboard
+    void on_actionCopy_triggered();
+    void on_actionCut_triggered();
+    void on_actionPaste_triggered();
 
     //Common functions
     void save();
@@ -92,6 +99,8 @@ private slots:
     void AddToRecentFiles(QString FilePath);
 
     void updateMenus(bool force=false);
+    void updateWindowMenu();
+
     void setTools();
     void setMusic(bool checked);
 
@@ -112,13 +121,41 @@ private slots:
     void setDoorData(long index);
     void setLayersBox();
 
+    void on_ResizeSection_clicked();
+    void on_applyResize_clicked();
+    void on_cancelResize_clicked();
+
+
+    //EditMode switch
+    void on_actionSelect_triggered();
+    void on_actionSelectOnly_triggered();
+    void on_actionEriser_triggered();
+    void on_actionHandScroll_triggered();
+
+    void on_actionSetFirstPlayer_triggered();
+    void on_actionSetSecondPlayer_triggered();
+
+    void on_actionDrawWater_triggered();
+    void on_actionDrawSand_triggered();
+
+
+    //void on_LVLPropsMusicPlay_toggled(bool checked);
+    void on_actionPlayMusic_triggered(bool checked);
+    void on_LVLPropsMusicCustom_textChanged(const QString &arg1);
+    void on_actionReset_position_triggered();
+    void on_actionGridEn_triggered(bool checked);
+    void on_LVLPropsBackImage_currentIndexChanged(int index);
+
+    void on_actionReload_triggered();
+
+private slots:
+
+    void TickTack();
 
     //Actions
     void on_LevelSectionSettings_visibilityChanged(bool visible);
     void on_LevelToolBox_visibilityChanged(bool visible);
 	void on_WorldToolBox_visibilityChanged(bool visible);
-    //void on_pushButton_4_clicked();
-
     void on_OpenFile_triggered();
     void on_Exit_triggered();
     void on_actionAbout_triggered();
@@ -159,22 +196,8 @@ private slots:
     void on_LVLPropsMusicCustomEn_toggled(bool checked);
     void on_LVLPropsMusicCustomBrowse_clicked();
 
-    //void on_LVLPropsMusicPlay_toggled(bool checked);
-    void on_actionPlayMusic_triggered(bool checked);
+    void on_actionApplication_settings_triggered();
 
-    void on_LVLPropsMusicCustom_textChanged(const QString &arg1);
-
-    void on_actionReset_position_triggered();
-
-    void on_actionGridEn_triggered(bool checked);
-
-    void on_actionSelect_triggered();
-    void on_actionEriser_triggered();
-    void on_actionHandScroll_triggered();
-
-    void on_LVLPropsBackImage_currentIndexChanged(int index);
-
-    void on_actionReload_triggered();
 
     //Locks
     void on_actionLockBlocks_triggered(bool checked);
@@ -207,11 +230,6 @@ private slots:
     void on_action_recent9_triggered();
     void on_action_recent10_triggered();
 
-    //Clipboard
-    void on_actionCopy_triggered();
-    void on_actionCut_triggered();
-    void on_actionPaste_triggered();
-
     //History
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
@@ -227,28 +245,25 @@ private slots:
     void on_BGOUniform_clicked(bool checked);
     void on_BlockUniform_clicked(bool checked);
 
-    void on_actionSelectOnly_triggered();
-    void on_actionSetFirstPlayer_triggered();
-    void on_actionSetSecondPlayer_triggered();
-    void on_actionDrawWater_triggered();
-    void on_actionDrawSand_triggered();
     void on_NPCUniform_clicked(bool checked);
     void on_BlockCatList_currentIndexChanged(const QString &arg1);
     void on_BGOCatList_currentIndexChanged(const QString &arg1);
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
+
     void on_actionNewNPC_config_triggered();
-    void on_actionApplication_settings_triggered();
+
     void on_AddLayer_clicked();
     void on_LvlLayerList_itemChanged(QListWidgetItem *item);
+
     void on_RemoveLayer_clicked();
+
     void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
+
     void on_MainWindow_customContextMenuRequested(const QPoint &pos);
-    void on_ResizeSection_clicked();
 
+    void on_BlockItemsList_itemClicked(QListWidgetItem *item);
 
-    void on_applyResize_clicked();
-
-    void on_cancelResize_clicked();
+    void slotLanguageChanged(QAction *action);
 
 private:
     dataconfigs configs; // Global objects configucrations
@@ -258,6 +273,7 @@ private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
 
+    long animatorItemsLimit;
 
     QString LastOpenDir;
     int lastWinType;
@@ -265,6 +281,9 @@ private:
     bool SectionToolBoxVis; //Section Settings
     bool LevelDoorsBoxVis; //Doors box
     bool LevelLayersBoxVis; //Layers box
+    bool WorldToolBoxVis;
+    bool autoPlayMusic;
+
 
     // ////////////Layer Functions///////////////////
     void RemoveCurrentLayer(bool moveToDefault);
@@ -277,24 +296,11 @@ private:
     void AddNewLayer(QString layerName, bool setEdited);
     void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);
     // //////////////////////////////////////////////
-    bool WorldToolBoxVis;
-    bool autoPlayMusic;
 
     QMediaPlayer * MusicPlayer;
 
-    QString currentCustomMusic;
-    long currentMusicId;
-    bool musicButtonChecked;
-
-
-    Ui::MainWindow *ui;
-
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;
-
-    int activeChildWindow();
-    npcedit *activeNpcEditWin();
-    leveledit *activeLvlEditWin();
 
     QTimer * TickTackTimer; //Scene Events detector
     bool TickTackLock;      //Scene Events detector locker
@@ -320,10 +326,18 @@ private:
 
     //Miltilanguage
     void loadLanguage(const QString& rLanguage);
+    void setDefLang();
+    bool switchTranslator(QTranslator &translator, const QString &filename);
+    void langListSync();
     QTranslator     m_translator;   /**< contains the translations for this application */
     QTranslator     m_translatorQt; /**< contains the translations for qt */
     QString         m_currLang;     /**< contains the currently loaded language */
     QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
+
+
+    void setPointer();
+
+    Ui::MainWindow *ui;
 
 };
 

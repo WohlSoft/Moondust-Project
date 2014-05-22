@@ -18,6 +18,19 @@
 
 #include "data_configs.h"
 
+#include "../main_window/global_settings.h"
+
+long ConfStatus::total_blocks=0;
+long ConfStatus::total_bgo=0;
+long ConfStatus::total_bg=0;
+long ConfStatus::total_npc=0;
+
+long ConfStatus::total_music_lvl=0;
+long ConfStatus::total_music_wld=0;
+long ConfStatus::total_music_spc=0;
+
+QString ConfStatus::configName="";
+
 dataconfigs::dataconfigs()
 {
 
@@ -51,6 +64,7 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
 
     QString dirs_ini = config_dir + "main.ini";
     QSettings dirset(dirs_ini, QSettings::IniFormat);
+    dirset.setIniCodec("UTF-8");
 
     dirset.beginGroup("main");
         dirs.worlds = QApplication::applicationDirPath() + "/" + dirset.value("worlds", "worlds").toString() + "/";
@@ -65,6 +79,10 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
         dirs.gcustom = QApplication::applicationDirPath() + "/" + dirset.value("custom-data", "data-custom").toString() + "/";
     dirset.endGroup();
 
+    if( dirset.status() != QSettings::NoError )
+    {
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF main.ini N:%1").arg(dirset.status()));
+    }
 
     ////////////////////////////////Preparing////////////////////////////////////////
     bgoPath =   dirs.glevel +  "background/";
@@ -120,6 +138,17 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
 
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/
+
+    WriteToLog(QtDebugMsg, QString("-------------------------"));
+    WriteToLog(QtDebugMsg, QString("Congifs status 1"));
+    WriteToLog(QtDebugMsg, QString("-------------------------"));
+    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1").arg(main_block.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1").arg(main_bgo.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1").arg(main_npc.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1").arg(main_bg.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1").arg(main_music_lvl.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1").arg(main_music_spc.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded World musics    %1").arg(main_music_wld.size()));
 
     return true;
 }

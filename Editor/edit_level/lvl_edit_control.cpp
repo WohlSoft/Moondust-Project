@@ -29,6 +29,8 @@
 #include "../level_scene/lvlscene.h"
 #include "../common_features/logger.h"
 
+#include "../common_features/mainwinconnect.h"
+
 
 #include <QDebug>
 
@@ -125,7 +127,7 @@ void leveledit::setCurrentSection(int scId)
 
     update();
 
-    if(sIsNew) scene->resetPosition = true;
+    if(sIsNew) MainWinConnect::pMainWin->on_actionReset_position_triggered();
 
 }
 
@@ -163,6 +165,11 @@ void leveledit::changeCursor(int mode)
         scene->clearSelection();
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_pasta.png"), 0, 0));
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+        break;
+    case 5:    // Resizing mode
+        ui->graphicsView->setInteractive(true);
+        ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         break;
     default:
