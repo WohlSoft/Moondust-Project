@@ -65,7 +65,7 @@
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="141"/>
-        <source>Disable loggig</source>
+        <source>Disable logging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -141,27 +141,27 @@
 <context>
     <name>ItemBGO</name>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="65"/>
+        <location filename="../level_scene/item_bgo.cpp" line="79"/>
         <source>Layer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="70"/>
+        <location filename="../level_scene/item_bgo.cpp" line="84"/>
         <source>Add to new layer...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="87"/>
+        <location filename="../level_scene/item_bgo.cpp" line="101"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="88"/>
+        <location filename="../level_scene/item_bgo.cpp" line="102"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="90"/>
+        <location filename="../level_scene/item_bgo.cpp" line="104"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -169,52 +169,52 @@
 <context>
     <name>ItemBlock</name>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="63"/>
+        <location filename="../level_scene/item_block.cpp" line="76"/>
         <source>Layer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="68"/>
+        <location filename="../level_scene/item_block.cpp" line="81"/>
         <source>Add to new layer...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="76"/>
+        <location filename="../level_scene/item_block.cpp" line="89"/>
         <source> [hidden]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="86"/>
+        <location filename="../level_scene/item_block.cpp" line="99"/>
         <source>Invisible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="90"/>
+        <location filename="../level_scene/item_block.cpp" line="103"/>
         <source>Slippery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="94"/>
+        <location filename="../level_scene/item_block.cpp" line="107"/>
         <source>Resize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="98"/>
+        <location filename="../level_scene/item_block.cpp" line="111"/>
         <source>Change included NPC...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="101"/>
+        <location filename="../level_scene/item_block.cpp" line="114"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="102"/>
+        <location filename="../level_scene/item_block.cpp" line="115"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="104"/>
+        <location filename="../level_scene/item_block.cpp" line="117"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -236,72 +236,100 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="74"/>
+        <location filename="../level_scene/item_npc.cpp" line="89"/>
         <source>Layer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="79"/>
+        <location filename="../level_scene/item_npc.cpp" line="94"/>
         <source>Add to new layer...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="98"/>
+        <location filename="../level_scene/item_npc.cpp" line="113"/>
         <source>Set %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="100"/>
+        <location filename="../level_scene/item_npc.cpp" line="115"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="102"/>
+        <location filename="../level_scene/item_npc.cpp" line="117"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="106"/>
+        <location filename="../level_scene/item_npc.cpp" line="121"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="111"/>
+        <location filename="../level_scene/item_npc.cpp" line="126"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="117"/>
+        <location filename="../level_scene/item_npc.cpp" line="132"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="121"/>
+        <location filename="../level_scene/item_npc.cpp" line="136"/>
         <source>Not movable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="126"/>
+        <location filename="../level_scene/item_npc.cpp" line="141"/>
         <source>Set message...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="130"/>
+        <location filename="../level_scene/item_npc.cpp" line="145"/>
         <source>Set as Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="136"/>
+        <location filename="../level_scene/item_npc.cpp" line="151"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="137"/>
+        <location filename="../level_scene/item_npc.cpp" line="152"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="139"/>
+        <location filename="../level_scene/item_npc.cpp" line="154"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemWater</name>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="75"/>
+        <source>Layer: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="80"/>
+        <source>Add to new layer...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="97"/>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="98"/>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="100"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1776,22 +1804,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_layers.cpp" line="379"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="386"/>
         <source>New Layer %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_layers.cpp" line="554"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="561"/>
         <source>Rename layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_layers.cpp" line="558"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="565"/>
         <source>Remove layer with items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_layers.cpp" line="559"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="566"/>
         <source>Remove layer and save items</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2063,53 +2091,53 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="135"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="137"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="75"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="77"/>
         <source>Export current section to image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="77"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="79"/>
         <source>PNG Image (*.png)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="83"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="85"/>
         <source>Saving section image...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="83"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="85"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="84"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="86"/>
         <source>Please, wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="194"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="196"/>
         <source>Read file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="195"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="197"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="215"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="217"/>
         <source>Configurations not loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="216"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="218"/>
         <source>Cannot open level file %1:
 because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -2151,33 +2179,33 @@ because object configurations not loaded
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="154"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="156"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="155"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="157"/>
         <source>SMBX64 (1.3) Level file (*.lvl)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="166"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="168"/>
         <source>Write file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="167"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="169"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="292"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="294"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="293"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="295"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
