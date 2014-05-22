@@ -233,9 +233,9 @@ void MainWindow::updateWindowMenu()
 
         QString text;
         if (i < 9) {
-            text = tr("&%1").arg( windows.at(i)->windowTitle() ) ;
+            text = QString("&%1").arg( windows.at(i)->windowTitle() ) ;
         } else {
-            text = tr("%1").arg( windows.at(i)->windowTitle() ) ;
+            text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
         }
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
