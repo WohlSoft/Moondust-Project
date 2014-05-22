@@ -154,7 +154,7 @@ bool leveledit::save()
 bool leveledit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-        curFile, tr("SMBX64 (1.3) Level file (*.lvl)"));
+        curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
     if (fileName.isEmpty())
         return false;
 
@@ -248,8 +248,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     DataSize += LvlData.water.size();
     DataSize += LvlData.doors.size();
 
-    QProgressDialog progress("Loading level data", "Abort", 0, DataSize, this);
-         progress.setWindowTitle("Loading level data");
+    QProgressDialog progress(tr("Loading level data"), tr("Abort"), 0, DataSize, this);
+         progress.setWindowTitle(tr("Loading level data"));
          progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
