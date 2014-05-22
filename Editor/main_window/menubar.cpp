@@ -196,26 +196,16 @@ void MainWindow::updateMenus(bool force)
     cutAct->setEnabled(hasSelection);
     copyAct->setEnabled(hasSelection);
     */
+    updateWindowMenu();
+
+}
 
 
-
+void MainWindow::updateWindowMenu()
+{
     //Window menu
     ui->menuWindow->clear();
-    /*
-        ui->menuWindow->addAction(closeAct);
-        ui->menuWindow->addAction(closeAllAct);
-        ui->menuWindow->addSeparator();
-        ui->menuWindow->addAction(tileAct);
-        ui->menuWindow->addAction(cascadeAct);
-        ui->menuWindow->addSeparator();
-        ui->menuWindow->addAction(nextAct);
-        ui->menuWindow->addAction(previousAct);
-        ui->menuWindow->addAction(separatorAct);
-    */
-
     QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
-
-
     QAction * closeC = ui->menuWindow->addAction(tr("Close current"));
         connect(closeC, SIGNAL(triggered()), this, SLOT( on_actionClose_triggered() ) );
         closeC->setEnabled( !windows.isEmpty() );
@@ -252,9 +242,6 @@ void MainWindow::updateMenus(bool force)
         action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-
         windowMapper->setMapping(action, windows.at(i));
     }
 }
-
-
