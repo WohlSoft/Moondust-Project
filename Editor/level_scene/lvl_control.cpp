@@ -528,7 +528,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         this->addItem(pResizer);
         pResizer->setPos(x, y);
         pResizer->type=0;
-        pResizer->_minSize = QSizeF(800,600);
+        pResizer->_minSize = QSizeF(800, 608);
         this->setFocus(Qt::ActiveWindowFocusReason);
         DrawMode=true;
         MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
