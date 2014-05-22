@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets multimedia
-
-CONFIG += static
+QT       += core gui widgets multimedia opengl
 
 TARGET = pge_editor
 TEMPLATE = app
@@ -14,7 +12,8 @@ TEMPLATE = app
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
     languages/editor_de.ts \
-    languages/editor_es.ts
+    languages/editor_es.ts \
+    languages/editor_fr.ts
 
 SOURCES += main.cpp\
         mainwindow.cpp \

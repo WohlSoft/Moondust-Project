@@ -139,7 +139,7 @@
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>?</string>
+     <string notr="true">&amp;?</string>
     </property>
     <widget class="QMenu" name="menuLanguage">
      <property name="title">
@@ -738,7 +738,7 @@
     <enum>Qt::CustomContextMenu</enum>
    </property>
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>CommonEdit Bar</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -761,7 +761,7 @@
     <enum>Qt::CustomContextMenu</enum>
    </property>
    <property name="windowTitle">
-    <string>Editor</string>
+    <string>EditingTools</string>
    </property>
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
@@ -796,7 +796,7 @@
     <enum>Qt::CustomContextMenu</enum>
    </property>
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>LevelObj Tools</string>
    </property>
    <property name="floatable">
     <bool>true</bool>
@@ -831,7 +831,7 @@
     <bool>false</bool>
    </property>
    <property name="windowTitle">
-    <string>Level Sections</string>
+    <string>Level Sections Switch</string>
    </property>
    <property name="allowedAreas">
     <set>Qt::AllToolBarAreas</set>
@@ -1307,7 +1307,7 @@
        </font>
       </property>
       <property name="text">
-       <string>...</string>
+       <string notr="true">...</string>
       </property>
      </widget>
     </widget>
@@ -1558,7 +1558,7 @@
        </font>
       </property>
       <property name="text">
-       <string>0</string>
+       <string notr="true">0</string>
       </property>
      </widget>
     </widget>
@@ -1651,7 +1651,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>-</string>
+      <string notr="true">-</string>
      </property>
     </widget>
     <widget class="QGroupBox" name="groupBox_8">
@@ -1887,7 +1887,7 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string notr="true"/>
       </property>
      </widget>
      <widget class="QCheckBox" name="WarpExitPlaced">
@@ -1903,7 +1903,7 @@
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string notr="true"/>
       </property>
      </widget>
     </widget>
@@ -1917,7 +1917,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>+</string>
+      <string notr="true">+</string>
      </property>
     </widget>
     <widget class="QGroupBox" name="groupBox_9">
@@ -1988,7 +1988,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>...</string>
+       <string notr="true">...</string>
       </property>
      </widget>
     </widget>
@@ -2131,8 +2131,11 @@
          <height>41</height>
         </rect>
        </property>
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2225,8 +2228,11 @@ p, li { white-space: pre-wrap; }
          <height>41</height>
         </rect>
        </property>
+       <property name="toolTip">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2343,7 +2349,7 @@ p, li { white-space: pre-wrap; }
        </property>
        <item>
         <property name="text">
-         <string>Default</string>
+         <string notr="true">Default</string>
         </property>
         <property name="checkState">
          <enum>Checked</enum>
@@ -2351,7 +2357,7 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <property name="text">
-         <string>Destroyed Blocks</string>
+         <string notr="true">Destroyed Blocks</string>
         </property>
         <property name="checkState">
          <enum>Unchecked</enum>
@@ -2362,7 +2368,7 @@ p, li { white-space: pre-wrap; }
        </item>
        <item>
         <property name="text">
-         <string>Spawned NPCs</string>
+         <string notr="true">Spawned NPCs</string>
         </property>
         <property name="checkState">
          <enum>Checked</enum>
@@ -2424,147 +2430,6 @@ p, li { white-space: pre-wrap; }
          <string>Value</string>
         </property>
        </column>
-       <item>
-        <property name="text">
-         <string>ItemID</string>
-        </property>
-        <property name="text">
-         <string>0</string>
-        </property>
-        <property name="flags">
-         <set>ItemIsSelectable|ItemIsEnabled</set>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Position</string>
-        </property>
-        <property name="flags">
-         <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
-        </property>
-        <item>
-         <property name="text">
-          <string>y</string>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>x</string>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
-         </property>
-        </item>
-       </item>
-       <item>
-        <property name="text">
-         <string>Attributes</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>Invisible</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Slippery</string>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsUserCheckable|ItemIsEnabled</set>
-         </property>
-        </item>
-       </item>
-       <item>
-        <property name="text">
-         <string>Size</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>height</string>
-         </property>
-         <property name="text">
-          <string>32</string>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>width</string>
-         </property>
-         <property name="text">
-          <string>32</string>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
-         </property>
-        </item>
-       </item>
-       <item>
-        <property name="text">
-         <string>Layer Name</string>
-        </property>
-        <property name="text">
-         <string>Default</string>
-        </property>
-        <property name="flags">
-         <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Events</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>Destroy</string>
-         </property>
-         <property name="text">
-          <string>[none]</string>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Hit</string>
-         </property>
-         <property name="text">
-          <string>[none]</string>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>No more objects on layer</string>
-         </property>
-         <property name="text">
-          <string>[none]</string>
-         </property>
-         <property name="flags">
-          <set>ItemIsSelectable|ItemIsEditable|ItemIsEnabled</set>
-         </property>
-        </item>
-       </item>
       </widget>
      </item>
     </layout>
@@ -2585,7 +2450,7 @@ p, li { white-space: pre-wrap; }
     <string>Open (Ctrl+O)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+O</string>
+    <string notr="true">Ctrl+O</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -2596,7 +2461,7 @@ p, li { white-space: pre-wrap; }
     <string>Exit</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+Q</string>
+    <string notr="true">Ctrl+Alt+Q</string>
    </property>
   </action>
   <action name="actionNewLevel">
@@ -2629,7 +2494,7 @@ p, li { white-space: pre-wrap; }
     <string>Save (Ctrl+S)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+S</string>
+    <string notr="true">Ctrl+S</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -2650,7 +2515,7 @@ p, li { white-space: pre-wrap; }
     <string>Save as (Ctrl+Shift+S)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+S</string>
+    <string notr="true">Ctrl+Shift+S</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -2675,7 +2540,7 @@ p, li { white-space: pre-wrap; }
     <string>Save all (Ctrl+Alt+S)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+S</string>
+    <string notr="true">Ctrl+Alt+S</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -2700,7 +2565,7 @@ p, li { white-space: pre-wrap; }
     <string>Contents (F1)</string>
    </property>
    <property name="shortcut">
-    <string>F1</string>
+    <string notr="true">F1</string>
    </property>
   </action>
   <action name="actionSection_1">
@@ -2721,7 +2586,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 1 (Ctrl+1)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+1</string>
+    <string notr="true">Ctrl+1</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2745,7 +2610,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 2 (Ctrl+2)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+2</string>
+    <string notr="true">Ctrl+2</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2769,7 +2634,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 3 (Ctrl+3)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+3</string>
+    <string notr="true">Ctrl+3</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2793,7 +2658,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 4 (Ctrl+4)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+4</string>
+    <string notr="true">Ctrl+4</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2817,7 +2682,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 5 (Ctrl+5)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+5</string>
+    <string notr="true">Ctrl+5</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2841,7 +2706,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 6 (Ctrl+6)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+6</string>
+    <string notr="true">Ctrl+6</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2865,7 +2730,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 7 (Ctrl+7)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+7</string>
+    <string notr="true">Ctrl+7</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2889,7 +2754,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 8 (Ctrl+8)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+8</string>
+    <string notr="true">Ctrl+8</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2913,7 +2778,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 9 (Ctrl+9)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+9</string>
+    <string notr="true">Ctrl+9</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2937,7 +2802,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 10 (Ctrl+0)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+0</string>
+    <string notr="true">Ctrl+0</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2961,7 +2826,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 11 (Ctrl+Alt+1)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+1</string>
+    <string notr="true">Ctrl+Alt+1</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -2985,7 +2850,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 12 (Ctrl+Alt+2)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+2</string>
+    <string notr="true">Ctrl+Alt+2</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3009,7 +2874,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 13 (Ctrl+Alt+3)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+3</string>
+    <string notr="true">Ctrl+Alt+3</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3033,7 +2898,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 14 (Ctrl+Alt+4)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+4</string>
+    <string notr="true">Ctrl+Alt+4</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3057,7 +2922,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 15 (Ctrl+Alt+5)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+5</string>
+    <string notr="true">Ctrl+Alt+5</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3081,7 +2946,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 16 (Ctrl+Alt+6)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+6</string>
+    <string notr="true">Ctrl+Alt+6</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3105,7 +2970,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 17 (Ctrl+Alt+7)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+7</string>
+    <string notr="true">Ctrl+Alt+7</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3129,7 +2994,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 18 (Ctrl+Alt+8)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+8</string>
+    <string notr="true">Ctrl+Alt+8</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3153,7 +3018,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 19 (Ctrl+Alt+9)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+9</string>
+    <string notr="true">Ctrl+Alt+9</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3177,7 +3042,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 20 (Ctrl+Alt+0)</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Alt+0</string>
+    <string notr="true">Ctrl+Alt+0</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3201,7 +3066,7 @@ p, li { white-space: pre-wrap; }
     <string>Section 21 (Alt+1)</string>
    </property>
    <property name="shortcut">
-    <string>Alt+1</string>
+    <string notr="true">Alt+1</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3265,7 +3130,7 @@ p, li { white-space: pre-wrap; }
     <string>Export current section to image (F12)</string>
    </property>
    <property name="shortcut">
-    <string>F12</string>
+    <string notr="true">F12</string>
    </property>
   </action>
   <action name="actionLevelProp">
@@ -3297,7 +3162,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Character 1</string>
+    <string notr="true">Character 1</string>
    </property>
   </action>
   <action name="actionWLDNoChar2">
@@ -3305,7 +3170,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Character 2</string>
+    <string notr="true">Character 2</string>
    </property>
   </action>
   <action name="actionWLDNoChar3">
@@ -3313,7 +3178,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Character 3</string>
+    <string notr="true">Character 3</string>
    </property>
   </action>
   <action name="actionWLDNoChar4">
@@ -3321,7 +3186,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Character 4</string>
+    <string notr="true">Character 4</string>
    </property>
   </action>
   <action name="actionWLDNoChar5">
@@ -3329,7 +3194,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Character 5</string>
+    <string notr="true">Character 5</string>
    </property>
   </action>
   <action name="actionWLDProperties">
@@ -3804,7 +3669,7 @@ p, li { white-space: pre-wrap; }
     <string>Copy selected items</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+C</string>
+    <string notr="true">Ctrl+C</string>
    </property>
   </action>
   <action name="actionCollisions">
@@ -3818,7 +3683,7 @@ p, li { white-space: pre-wrap; }
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
-    <string>F9</string>
+    <string notr="true">F9</string>
    </property>
   </action>
   <action name="actionDrawWater">
@@ -3863,7 +3728,7 @@ p, li { white-space: pre-wrap; }
     <string>Paste</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+V</string>
+    <string notr="true">Ctrl+V</string>
    </property>
   </action>
   <action name="actionLayersBox">
@@ -3901,7 +3766,7 @@ p, li { white-space: pre-wrap; }
     <string>Cut</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+X</string>
+    <string notr="true">Ctrl+X</string>
    </property>
   </action>
   <action name="actionLangEnglish">
@@ -3912,7 +3777,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>English</string>
+    <string notr="true">English</string>
    </property>
   </action>
   <action name="actionSelectOnly">
@@ -3930,7 +3795,7 @@ p, li { white-space: pre-wrap; }
     <string>Select only</string>
    </property>
    <property name="shortcut">
-    <string>W</string>
+    <string notr="true">W</string>
    </property>
   </action>
   <action name="actionApplication_settings">
