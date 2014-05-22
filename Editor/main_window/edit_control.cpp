@@ -130,6 +130,8 @@ void MainWindow::on_actionDrawSand_triggered()
 
 void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
 {
+    item->checkState();//dummy (warning protection)
+
    //placeBlock
     //item->data(3).toInt();
 }

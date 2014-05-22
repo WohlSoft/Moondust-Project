@@ -25,6 +25,6 @@ ItemMsgBox::~ItemMsgBox()
 
 void ItemMsgBox::on_buttonBox_accepted()
 {
-    currentText = ui->msgTextBox->toPlainText();
+    currentText = ui->msgTextBox->toPlainText().simplified().remove('\"');
     accept();
 }
