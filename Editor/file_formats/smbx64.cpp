@@ -67,4 +67,4 @@ QString SMBX64::BoolS(bool input)
 {  return QString( (input)?"#TRUE#":"#FALSE#" )+"\n"; }
 
 QString SMBX64::qStrS(QString input)
-{ return QString("\"%1\"\n").arg(input); }
+{ return QString("\"%1\"\n").arg(input.simplified().remove('\"') ); }
