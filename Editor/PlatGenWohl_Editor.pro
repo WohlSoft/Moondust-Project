@@ -11,10 +11,10 @@ CONFIG += static
 TARGET = pge_editor
 TEMPLATE = app
 
-TRANSLATIONS += languages/pge_editor_en.ts \
-    languages/pge_editor_ru.ts \
-    languages/pge_editor_de.ts \
-    languages/pge_editor_es.ts
+TRANSLATIONS += languages/editor_en.ts \
+    languages/editor_ru.ts \
+    languages/editor_de.ts \
+    languages/editor_es.ts
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -104,10 +104,10 @@ HEADERS  += mainwindow.h \
     level_scene/resizer/item_resizer.h \
     level_scene/resizer/corner_grabber.h \
     common_features/grid.h \
-    main_window/app_settings.h \
     main_window/music_player.h \
     common_features/mainwinconnect.h \
-    level_scene/item_water.h
+    level_scene/item_water.h \
+    main_window/global_settings.h
 
 FORMS    += \
     mainwindow.ui \

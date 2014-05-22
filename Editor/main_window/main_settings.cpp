@@ -22,10 +22,162 @@
 #include "../common_features/logger_sets.h"
 
 #include "music_player.h"
+#include "global_settings.h"
+
+QString GlobalSettings::locale="";
 
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId;
 bool LvlMusPlay::musicButtonChecked;
+bool LvlMusPlay::musicForceReset=false;
+
+
+void MainWindow::setDefLang()
+{
+    /*
+     * //Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
+     */
+    WriteToLog(QtDebugMsg, QString("Lang->Translator loaging...."));
+
+    QString defaultLocale = QLocale::system().name();
+    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
+
+    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QSettings settings(inifile, QSettings::IniFormat);
+
+    settings.beginGroup("Main");
+            GlobalSettings::locale = settings.value("language", defaultLocale).toString();
+    settings.endGroup();
+
+    WriteToLog(QtDebugMsg, QString("Lang->config was loaded"));
+      // format systems language
+       ui->menuLanguage->clear();
+
+    WriteToLog(QtDebugMsg, QString("Lang->Setting slot...."));
+    connect(ui->menuLanguage, SIGNAL(triggered(QAction *)), this, SLOT(slotLanguageChanged(QAction *)));
+    WriteToLog(QtDebugMsg, QString("Lang->seted"));
+
+       m_langPath = QApplication::applicationDirPath();
+       m_langPath.append("/languages");
+       QDir dir(m_langPath);
+       QStringList fileNames = dir.entryList(QStringList("editor_*.qm"));
+
+       for (int i = 0; i < fileNames.size(); ++i)
+           {
+               // get locale extracted by filename
+               QString locale;
+               locale = fileNames[i];                  // "TranslationExample_de.qm"
+               locale.truncate(locale.lastIndexOf('.'));   // "TranslationExample_de"
+               locale.remove(0, locale.indexOf('_') + 1);   // "de"
+
+               QString lang = QLocale::languageToString(QLocale(locale).language());
+               QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
+
+               QAction *action = new QAction(ico, lang, this);
+               action->setCheckable(true);
+               action->setData(locale);
+
+               WriteToLog(QtDebugMsg, QString("Locale: %1 %2").arg(m_langPath).arg(locale));
+
+               ui->menuLanguage->addAction(action);
+
+               if (GlobalSettings::locale == locale)
+               {
+                   action->setChecked(true);
+               }
+           }
+
+       m_currLang = GlobalSettings::locale;
+       QLocale locale = QLocale(m_currLang);
+       QLocale::setDefault(locale);
+
+       bool ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
+                WriteToLog(QtDebugMsg, QString("Translation: %1").arg((int)ok));
+
+       switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(m_currLang));
+
+       if(ok)
+        qApp->installTranslator(&m_translator);
+
+       ui->retranslateUi(this);
+}
+
+void MainWindow::slotLanguageChanged(QAction* action)
+{
+    WriteToLog(QtDebugMsg, QString("Translation->SlotStarted"));
+    if(0 != action)
+    {
+        // load the language dependant on the action content
+        GlobalSettings::locale = m_currLang;
+        loadLanguage(action->data().toString());
+    }
+}
+
+void MainWindow::switchTranslator(QTranslator& translator, const QString& filename)
+{
+    // remove the old translator
+    qApp->removeTranslator(&translator);
+     // load the new translator
+    bool ok = translator.load(filename);
+    WriteToLog(QtDebugMsg, QString("Translation: %1 %2").arg((int)ok).arg(filename));
+
+    if(ok)
+        qApp->installTranslator(&translator);
+    WriteToLog(QtDebugMsg, QString("Translation->changed"));
+}
+
+void MainWindow::loadLanguage(const QString& rLanguage)
+{
+    if(m_currLang != rLanguage)
+    {
+        m_currLang = rLanguage;
+        QLocale locale = QLocale(m_currLang);
+        GlobalSettings::locale = m_currLang;
+
+        QLocale::setDefault(locale);
+
+        QString languageName = QLocale::languageToString(locale.language());
+        switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
+        switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(rLanguage));
+
+        WriteToLog(QtDebugMsg, QString("Translation->try to retranslate"));
+
+        ui->retranslateUi(this);
+
+        WriteToLog(QtDebugMsg, QString("Translation->done"));
+
+        ui->statusBar->showMessage(tr("Current Language changed to %1").arg(languageName));
+    }
+}
+
+/*
+void MainWindow::changeEvent(QEvent* event)
+{
+    if(NULL != event)
+    {
+        switch(event->type())
+        {
+        // this event is send if a translator is loaded
+        case QEvent::LanguageChange:
+            ui->retranslateUi(this);
+            break;
+        // this event is send, if the system, language changes
+        case QEvent::LocaleChange:
+            {
+                QString locale = QLocale::system().name();
+                locale.truncate(locale.lastIndexOf('_'));
+                loadLanguage(locale);
+            }
+            break;
+        default:
+            break;
+        }
+    }
+
+    QMainWindow::changeEvent(event);
+}*/
+
+
 
 
 void MainWindow::setDefaults()
@@ -68,6 +220,7 @@ void MainWindow::setUiDefults()
     setTools();
     setItemBoxes();
 
+    loadSettings();
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)),
         this, SLOT(updateMenus()));
@@ -76,8 +229,6 @@ void MainWindow::setUiDefults()
 
     connect(windowMapper, SIGNAL(mapped(QWidget*)),
         this, SLOT(setActiveSubWindow(QWidget*)));
-
-    loadSettings();
 
     ui->actionPlayMusic->setChecked(autoPlayMusic);
 
@@ -184,6 +335,9 @@ void MainWindow::saveSettings()
     settings.setValue("animation", LvlOpts.animationEnabled);
     settings.setValue("collisions", LvlOpts.collisionsEnabled);
     settings.setValue("animation-item-limit", QString::number(animatorItemsLimit));
+
+    settings.setValue("language", GlobalSettings::locale);
+
     settings.endGroup();
 
     settings.beginGroup("Recent");
