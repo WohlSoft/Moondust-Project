@@ -98,7 +98,7 @@ void CornerGrabber::hoverEnterEvent ( QGraphicsSceneHoverEvent * )
 
 QRectF CornerGrabber::boundingRect() const
 {
-    return QRectF(0,0,_width,_height);
+    return QRectF(-20,-20,_width+20,_height+20);
 }
 
 

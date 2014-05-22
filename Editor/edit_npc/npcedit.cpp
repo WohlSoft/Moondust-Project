@@ -19,8 +19,8 @@
 #include <QtWidgets>
 
 #include "npcedit.h"
-#include "../ui_npcedit.h"
-#include "../file_formats/file_formats.h"
+#include "./ui_npcedit.h"
+#include "./file_formats/file_formats.h"
 
 npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
     QWidget(parent),

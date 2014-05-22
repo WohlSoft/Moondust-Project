@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include "item_bgo.h"
+#include "item_water.h"
 #include "../common_features/logger.h"
 
 #include "newlayerbox.h"
@@ -24,26 +24,22 @@
 #include "../common_features/mainwinconnect.h"
 
 
-ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
-    : QGraphicsPixmapItem(parent)
+ItemWater::ItemWater(QGraphicsPolygonItem *parent)
+    : QGraphicsPolygonItem(parent)
 {
-    animated = false;
-    frameFirst=0; //from first frame
-    frameLast=-1; //to unlimited frameset
-    gridSize=32;
-    gridOffsetX=0;
-    gridOffsetY=0;
+
     isLocked=false;
-    //image = new QGraphicsPixmapItem;
+    waterSize = QSize(32,32);
+    //image = new QGraphicsPolygonItem;
 }
 
 
-ItemBGO::~ItemBGO()
+ItemWater::~ItemWater()
 {
- //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+ //   WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
 }
 
-void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
     if(scene->DrawMode)
     {
@@ -52,19 +48,19 @@ void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
-    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
+    QGraphicsPolygonItem::mousePressEvent(mouseEvent);
 }
 
-void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_bgo)&&(!isLocked))
+    if((!scene->lock_water)&&(!isLocked))
     {
         //Remove selection from non-bgo items
         if(this->isSelected())
         {
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()!="BGO") SelItem->setSelected(false);
+                if(SelItem->data(0).toString()!="Water") SelItem->setSelected(false);
             }
         }
         else
@@ -76,7 +72,7 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         this->setSelected(1);
         ItemMenu->clear();
 
-        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
+        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer));
 
         QAction *setLayer;
         QList<QAction *> layerItems;
@@ -93,13 +89,13 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setLayer->setData(layer.name);
             setLayer->setCheckable(true);
             setLayer->setEnabled(true);
-            setLayer->setChecked( layer.name==bgoData.layer );
+            setLayer->setChecked( layer.name==waterData.layer );
             layerItems.push_back(setLayer);
         }
 
         ItemMenu->addSeparator();
-        QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
-        QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
+        QAction *copyWater = ItemMenu->addAction(tr("Copy"));
+        QAction *cutWater = ItemMenu->addAction(tr("Cut"));
         ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction(tr("Remove"));
 
@@ -114,14 +110,14 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         event->accept();
 
-        if(selected==cutBGO)
+        if(selected==cutWater)
         {
             //scene->doCut = true ;
             MainWinConnect::pMainWin->on_actionCut_triggered();
             scene->contextMenuOpened = false;
         }
         else
-        if(selected==copyBGO)
+        if(selected==copyWater)
         {
             //scene->doCopy = true ;
             MainWinConnect::pMainWin->on_actionCopy_triggered();
@@ -135,10 +131,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()=="BGO")
+                if(SelItem->data(0).toString()=="Water")
                 {
-                    removedItems.bgo.push_back(((ItemBGO *)SelItem)->bgoData);
-                    ((ItemBGO *)SelItem)->removeFromArray();
+                    removedItems.water.push_back(((ItemWater *)SelItem)->waterData);
+                    ((ItemWater *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
                     deleted=true;
                 }
@@ -194,11 +190,11 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                         foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                         {
 
-                            if(SelItem->data(0).toString()=="BGO")
+                            if(SelItem->data(0).toString()=="Water")
                             {
-                            ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
-                            ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
-                            ((ItemBGO *) SelItem)->arrayApply();
+                            ((ItemWater *) SelItem)->waterData.layer = lr.name;
+                            ((ItemWater *) SelItem)->setVisible(!lr.hidden);
+                            ((ItemWater *) SelItem)->arrayApply();
                             }
                         }
                     break;
@@ -206,48 +202,23 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 }//Find layer's settings
              scene->contextMenuOpened = false;
             }
-//            foreach(QAction * lItem, layerItems)
-//            {
-//                if(selected==lItem)
-//                {
-//                    foreach(LevelLayers lr, scene->LvlData->layers)
-//                    { //Find layer's settings
-//                        if(lr.name==lItem->data().toString())
-//                        {
-//                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-//                            {
-
-//                                if(SelItem->data(0).toString()=="BGO")
-//                                {
-//                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
-//                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
-//                                ((ItemBGO *) SelItem)->arrayApply();
-//                                }
-//                            }
-//                        break;
-//                        }
-//                    }//Find layer's settings
-//                 scene->contextMenuOpened = false;
-//                 break;
-//                }//Find selected layer's item
-//            }
         }
     }
     else
     {
-        QGraphicsPixmapItem::contextMenuEvent(event);
+        QGraphicsPolygonItem::contextMenuEvent(event);
     }
 }
 
 
 ///////////////////MainArray functions/////////////////////////////
-void ItemBGO::setLayer(QString layer)
+void ItemWater::setLayer(QString layer)
 {
     foreach(LevelLayers lr, scene->LvlData->layers)
     {
         if(lr.name==layer)
         {
-            bgoData.layer = layer;
+            waterData.layer = layer;
             this->setVisible(!lr.hidden);
             arrayApply();
         break;
@@ -255,12 +226,12 @@ void ItemBGO::setLayer(QString layer)
     }
 }
 
-void ItemBGO::arrayApply()
+void ItemWater::arrayApply()
 {
     bool found=false;
-    if(bgoData.index < (unsigned int)scene->LvlData->bgo.size())
+    if(waterData.index < (unsigned int)scene->LvlData->water.size())
     { //Check index
-        if(bgoData.array_id == scene->LvlData->bgo[bgoData.index].array_id)
+        if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
         {
             found=true;
         }
@@ -269,26 +240,26 @@ void ItemBGO::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->LvlData->bgo[bgoData.index] = bgoData; //apply current bgoData
+        scene->LvlData->water[waterData.index] = waterData; //apply current bgoData
     }
     else
-    for(int i=0; i<scene->LvlData->bgo.size(); i++)
+    for(int i=0; i<scene->LvlData->water.size(); i++)
     { //after find it into array
-        if(scene->LvlData->bgo[i].array_id == bgoData.array_id)
+        if(scene->LvlData->water[i].array_id == waterData.array_id)
         {
-            bgoData.index = i;
-            scene->LvlData->bgo[i] = bgoData;
+            waterData.index = i;
+            scene->LvlData->water[i] = waterData;
             break;
         }
     }
 }
 
-void ItemBGO::removeFromArray()
+void ItemWater::removeFromArray()
 {
     bool found=false;
-    if(bgoData.index < (unsigned int)scene->LvlData->bgo.size())
+    if(waterData.index < (unsigned int)scene->LvlData->bgo.size())
     { //Check index
-        if(bgoData.array_id == scene->LvlData->bgo[bgoData.index].array_id)
+        if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
         {
             found=true;
         }
@@ -296,130 +267,45 @@ void ItemBGO::removeFromArray()
 
     if(found)
     { //directlry
-        scene->LvlData->bgo.remove(bgoData.index);
+        scene->LvlData->water.remove(waterData.index);
     }
     else
-    for(int i=0; i<scene->LvlData->bgo.size(); i++)
+    for(int i=0; i<scene->LvlData->water.size(); i++)
     {
-        if(scene->LvlData->bgo[i].array_id == bgoData.array_id)
+        if(scene->LvlData->water[i].array_id == waterData.array_id)
         {
-            scene->LvlData->bgo.remove(i); break;
+            scene->LvlData->water.remove(i); break;
         }
     }
 }
 
-void ItemBGO::setMainPixmap(const QPixmap &pixmap)
+void ItemWater::setSize(QSize sz)
 {
-    mainImage = pixmap;
-    this->setPixmap(mainImage);
-}
-
-void ItemBGO::setBGOData(LevelBGO inD)
-{
-    bgoData = inD;
+    waterSize = sz;
+    waterData.w = sz.width();
+    waterData.h = sz.height();
+    arrayApply();
 }
 
 
-QRectF ItemBGO::boundingRect() const
+void ItemWater::setWaterData(LevelWater inD)
 {
-    if(!animated)
-        return QRectF(0,0,mainImage.width(),mainImage.height());
-    else
-        return QRectF(0,0,frameWidth,frameSize);
+    waterData = inD;
 }
 
-void ItemBGO::setContextMenu(QMenu &menu)
+
+QRectF ItemWater::boundingRect() const
+{
+    return QRectF(0,0,waterSize.width(),waterSize.height());
+}
+
+void ItemWater::setContextMenu(QMenu &menu)
 {
     ItemMenu = &menu;
 }
 
-void ItemBGO::setScenePoint(LvlScene *theScene)
+void ItemWater::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
 }
 
-
-////////////////Animation///////////////////
-
-
-void ItemBGO::setAnimation(int frames, int framespeed)
-{
-    animated = true;
-    framesQ = frames;
-    frameSpeed = framespeed;
-
-    frameSize = (int)round(mainImage.height()/frames);
-    frameWidth = mainImage.width();
-    frameHeight = mainImage.height();
-
-    framePos = QPoint(0,0);
-    draw();
-
-    setFrame(frameFirst);
-
-    timer = new QTimer(this);
-    connect(
-                timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
-}
-
-void ItemBGO::AnimationStart()
-{
-    if(!animated) return;
-    timer->start(frameSpeed);
-}
-
-void ItemBGO::AnimationStop()
-{
-    if(!animated) return;
-    timer->stop();
-    setFrame(frameFirst);
-}
-
-void ItemBGO::draw()
-{
-    currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-}
-
-QPoint ItemBGO::fPos() const
-{
-    return framePos;
-}
-
-void ItemBGO::setFrame(int y)
-{
-    frameCurrent = frameSize * y;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( frameCurrent );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
-}
-
-void ItemBGO::setLocked(bool lock)
-{
-    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
-}
-
-void ItemBGO::nextFrame()
-{
-    frameCurrent += frameSize;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( framePos.y() + frameSize );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
-}

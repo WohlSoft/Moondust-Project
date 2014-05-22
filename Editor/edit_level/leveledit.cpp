@@ -37,12 +37,11 @@ leveledit::leveledit(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::leveledit)
 {
-    sceneCreared = false;
+    sceneCreated = false;
     FileType = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
     isModified = false;
-    latest_export = "*.png";
     latest_export_path = QApplication::applicationDirPath();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);

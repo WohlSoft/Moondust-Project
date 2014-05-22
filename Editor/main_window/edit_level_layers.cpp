@@ -185,6 +185,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
             {
                 ((ItemBlock *)(*it))->blockData.layer = newLayerName;
+                ((ItemBlock *)(*it))->arrayApply();
             }
         }
         else
@@ -193,6 +194,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
             if(((ItemBGO *)(*it))->bgoData.layer==layerName)
             {
                 ((ItemBGO *)(*it))->bgoData.layer = newLayerName;
+                ((ItemBGO *)(*it))->arrayApply();
             }
         }
         else
@@ -201,6 +203,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
             if(((ItemNPC *)(*it))->npcData.layer==layerName)
             {
                 ((ItemNPC *)(*it))->npcData.layer = newLayerName;
+                ((ItemNPC *)(*it))->arrayApply();
             }
         }
         else
@@ -229,6 +232,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             {
                 ((ItemBlock *)(*it))->blockData.layer = newLayerName;
                 (*it)->setVisible(visible);
+                ((ItemBlock *)(*it))->arrayApply();
             }
 
         }
@@ -239,6 +243,8 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             {
                 ((ItemBGO *)(*it))->bgoData.layer = newLayerName;
                 (*it)->setVisible(visible);
+                ((ItemBGO *)(*it))->arrayApply();
+
             }
         }
         else
@@ -248,6 +254,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             {
                 ((ItemNPC *)(*it))->npcData.layer = newLayerName;
                 (*it)->setVisible(visible);
+                ((ItemNPC *)(*it))->arrayApply();
             }
         }
         else
