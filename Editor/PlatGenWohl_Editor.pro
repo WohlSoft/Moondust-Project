@@ -11,6 +11,7 @@ TEMPLATE = app
 
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
+    languages/editor_uk.ts \
     languages/editor_de.ts \
     languages/editor_es.ts \
     languages/editor_fr.ts
