@@ -200,7 +200,7 @@ void MainWindow::on_OpenFile_triggered()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
         trUtf8("Open file"),LastOpenDir,
-        tr("All SMBX files (*.LVL *.WLD npc-*.TXT *.INI)\n"
+        QString("All SMBX files (*.LVL *.WLD npc-*.TXT *.INI)\n"
         "SMBX Level (*.LVL)\n"
         "SMBX World (*.WLD)\n"
         "SMBX NPC Config (npc-*.TXT)\n"

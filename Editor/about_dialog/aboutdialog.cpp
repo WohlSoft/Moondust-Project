@@ -35,9 +35,3 @@ void aboutDialog::on_pushButton_clicked()
 {
     this->close();
 }
-/*
-void aboutDialog::on_actionCloseDialog_activated()
-{
-    this->close();
-}
-*/
