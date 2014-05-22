@@ -346,16 +346,6 @@ Message limits: max line lenth is 28 characters</source>
         <source>Level name</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../edit_level/levelprops.ui" line="65"/>
-        <source>Editing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../edit_level/levelprops.ui" line="77"/>
-        <source>Autoplay music</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -367,7 +357,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="102"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fichero</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="106"/>
@@ -387,7 +377,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="160"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nivel</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="167"/>
@@ -422,7 +412,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="254"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Redacción</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="286"/>
@@ -1459,15 +1449,6 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="203"/>
-        <source>All SMBX files (*.LVL *.WLD npc-*.TXT *.INI)
-SMBX Level (*.LVL)
-SMBX World (*.WLD)
-SMBX NPC Config (npc-*.TXT)
-All Files (*.*)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/menubar.cpp" line="209"/>
         <source>Close current</source>
         <translation type="unfinished"></translation>
@@ -1601,59 +1582,8 @@ File: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../about_dialog/aboutdialog.ui" line="87"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Liberation Sans&apos;; font-size:13pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;img src=&quot;:/images/mushroom.png&quot; /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Platformer Game Engine&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline;&quot;&gt;By Wohlstand&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;Version 0.0.8 Alpha&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400; font-style:italic;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; font-style:italic; color:#aa0000;&quot;&gt;Project is Under Construction&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Our project site:&lt;/span&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://engine.wohlnet.ru&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#0000ff;&quot;&gt;http://engine.wohlnet.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:400; text-decoration: underline; color:#0000ff;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;This program is distributed under &lt;/span&gt;&lt;a href=&quot;http://www.gnu.org/licenses/gpl-2.0.html&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline; color:#0000ff;&quot;&gt;GNU GNLv2&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt; font-weight:400; text-decoration: underline;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../about_dialog/aboutdialog.ui" line="153"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../about_dialog/aboutdialog.ui" line="187"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-weight:600; text-decoration: underline;&quot;&gt;Main developers:&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; text-decoration: underline;&quot;&gt;Engine, Editor, Configs, Graphics, Documents, Logo:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;&amp;quot;Wohlstand&amp;quot; - Vitaly Novichkov&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;;&quot;&gt; &amp;lt;&lt;/span&gt;&lt;a href=&quot;mailto:admin@wohlnet.ru&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;admin@wohlnet.ru&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;;&quot;&gt;&amp;gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; text-decoration: underline;&quot;&gt;Editor (Recent files module, internal clipboard, history manager), Configs&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;&amp;quot;Kevsoft&amp;quot; - Kevin Waldock &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;a href=&quot;mailto:kevin.waldock@gmail.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;kevin.waldock@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Liberation Sans&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic; text-decoration: underline;&quot;&gt;Mac OS X Test and Build, Debug, Spell check:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;&amp;quot;CaptainSwag101&amp;quot;  - James Pelster&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; text-decoration: underline;&quot;&gt;Graphics, Documents, Spell check:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;Veudekato&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-weight:600; text-decoration: underline;&quot;&gt;Big thanks to:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Liberation Sans&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;Natsu - help with logo&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-weight:600; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;h2643&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;FanofSMBX&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Liberation Sans&apos;; font-style:italic;&quot;&gt;Luigifan2010&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../about_dialog/aboutdialog.ui" line="216"/>
-        <source>CloseDialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../about_dialog/aboutdialog.ui" line="219"/>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1686,6 +1616,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="85"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="251"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1758,11 +1689,6 @@ because object configurations not loaded
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="157"/>
-        <source>SMBX64 (1.3) Level file (*.lvl)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="168"/>
         <source>Write file error</source>
         <translation type="unfinished"></translation>
@@ -1771,6 +1697,12 @@ because object configurations not loaded
         <location filename="../edit_level/lvl_files_io.cpp" line="169"/>
         <source>Cannot write file %1:
 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="251"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="252"/>
+        <source>Loading level data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

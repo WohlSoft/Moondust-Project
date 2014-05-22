@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>197</height>
+    <height>127</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -33,7 +33,7 @@
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowminimumheight="150,0" columnminimumwidth="300">
+  <layout class="QGridLayout" name="gridLayout" rowminimumheight="80,0" columnminimumwidth="300">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
@@ -58,26 +58,6 @@
       </item>
       <item row="0" column="1" colspan="2">
        <widget class="QLineEdit" name="LVLPropLevelTitle"/>
-      </item>
-      <item row="1" column="1" colspan="2">
-       <widget class="QGroupBox" name="EditingProps">
-        <property name="title">
-         <string>Editing</string>
-        </property>
-        <widget class="QCheckBox" name="setAutoplayMusic">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>20</y>
-           <width>147</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Autoplay music</string>
-         </property>
-        </widget>
-       </widget>
       </item>
      </layout>
     </widget>

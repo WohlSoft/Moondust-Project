@@ -28,7 +28,6 @@ LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
     currentData = &FileData;
     ui->setupUi(this);
     ui->LVLPropLevelTitle->setText(currentData->LevelName);
-    ui->setAutoplayMusic->setChecked(currentData->playmusic);
 }
 
 LevelProps::~LevelProps()
@@ -38,8 +37,7 @@ LevelProps::~LevelProps()
 
 void LevelProps::on_LVLPropButtonBox_accepted()
 {
-    AutoPlayMusic = ui->setAutoplayMusic->isChecked();
-    LevelTitle = ui->LVLPropLevelTitle->text();
+    LevelTitle = ui->LVLPropLevelTitle->text().simplified().remove('\"');
     accept();
 }
 
