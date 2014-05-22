@@ -20,6 +20,8 @@
 #include "../mainwindow.h"
 #include "../file_formats/file_formats.h"
 
+#include "music_player.h"
+
 
 void MainWindow::openFilesByArgs(QStringList args)
 {
@@ -66,18 +68,21 @@ void MainWindow::OpenFile(QString FilePath)
         if ( (bool)(child->loadFile(FilePath, FileData, configs, LvlOpts)) ) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
-
             updateMenus(true);
             SetCurrentLevelSection(0);
             setDoorsToolbox();
             setLayersBox();
+
+            if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+            LvlMusPlay::musicForceReset=true; //reset musics
+            on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
         } else {
             WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
             WriteToLog(QtDebugMsg, ">>Window showed");
             if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
-            WriteToLog(QtDebugMsg, ">>Option seted");
+            WriteToLog(QtDebugMsg, ">> Option seted");
             ui->centralWidget->activeSubWindow()->close();
             WriteToLog(QtDebugMsg, ">>Windows closed");
         }

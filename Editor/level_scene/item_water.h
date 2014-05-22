@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#ifndef ITEM_BGO_H
-#define ITEM_BGO_H
+#ifndef ITEM_WATER_H
+#define ITEM_WATER_H
 
 #include <QGraphicsItem>
-#include <QGraphicsPixmapItem>
+#include <QGraphicsPolygonItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QString>
@@ -35,43 +35,35 @@
 #include "lvlscene.h"
 #include "../file_formats/lvl_filedata.h"
 
-class ItemBGO : public QObject, public QGraphicsPixmapItem
+class ItemWater : public QObject, public QGraphicsPolygonItem
 {
     Q_OBJECT
 public:
-    ItemBGO(QGraphicsPixmapItem *parent=0);
-    ~ItemBGO();
+    ItemWater(QGraphicsPolygonItem *parent=0);
+    ~ItemWater();
 
-    void setMainPixmap(const QPixmap &pixmap);
-    void setBGOData(LevelBGO inD);
+    void setSize(QSize sz);
+    void setWaterData(LevelWater inD);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
     QRectF boundingRect() const;
 
-    QPixmap mainImage;
     QMenu *ItemMenu;
 //    QGraphicsScene * scene;
-//    QGraphicsPixmapItem * image;
-
-    //////Animation////////
-    void setAnimation(int frames, int framespeed);
-    void AnimationStart();
-    void AnimationStop();
-    void draw();
+//    QGraphicsPolygonItem * image;
 
     void setLayer(QString layer);
 
     void arrayApply();
     void removeFromArray();
 
-    QPoint fPos() const;
-    void setFrame(int);
-    LevelBGO bgoData;
+    LevelWater waterData;
 
     int gridSize;
     int gridOffsetX;
     int gridOffsetY;
+    QSize waterSize;
 
     //Locks
     bool isLocked;
@@ -82,26 +74,8 @@ protected:
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     //virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
 
-private slots:
-    void nextFrame();
-
 private:
-    bool animated;
-    int frameSpeed;
     LvlScene * scene;
-    int frameCurrent;
-    QTimer * timer;
-    QPoint framePos;
-    int framesQ;
-    int frameSize; // size of one frame
-    int frameWidth; // sprite width
-    int frameHeight; //sprite height
-    QPixmap currentImage;
-
-    //Animation alhorithm
-    int frameFirst;
-    int frameLast;
-
 };
 
-#endif // ITEM_BGO_H
+#endif // ITEM_WATER_H

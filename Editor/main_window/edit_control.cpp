@@ -127,3 +127,9 @@ void MainWindow::on_actionDrawSand_triggered()
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
+
+void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
+{
+   //placeBlock
+    //item->data(3).toInt();
+}

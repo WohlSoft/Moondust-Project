@@ -463,7 +463,7 @@ void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
     if(configs.main_bg.size()==0)
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for backgrounds not loaded"));
         return;
     }
 

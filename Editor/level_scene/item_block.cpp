@@ -22,6 +22,7 @@
 #include "../npc_dialog/npcdialog.h"
 #include "newlayerbox.h"
 
+#include "../common_features/mainwinconnect.h"
 
 ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
@@ -37,6 +38,18 @@ ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
 ItemBlock::~ItemBlock()
 {
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+}
+
+void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+{
+    if(scene->DrawMode)
+    {
+        unsetCursor();
+        ungrabMouse();
+        this->setSelected(false);
+        return;
+    }
+    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
 }
 
 void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
@@ -118,13 +131,15 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(selected==cutBlock)
         {
-            scene->doCut = true ;
+            //scene->doCut = true ;
+            MainWinConnect::pMainWin->on_actionCut_triggered();
             scene->contextMenuOpened = false;
         }
         else
         if(selected==copyBlock)
         {
-            scene->doCopy = true ;
+            //scene->doCopy = true ;
+            MainWinConnect::pMainWin->on_actionCopy_triggered();
             scene->contextMenuOpened = false;
         }
         else
@@ -232,7 +247,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     scene->LvlData->layers_array_id++;
                     nLayer.array_id = scene->LvlData->layers_array_id;
                     scene->LvlData->layers.push_back(nLayer);
-                    scene->SyncLayerList=true; //Refresh layer list
+                    //scene->SyncLayerList=true; //Refresh layer list
+                    MainWinConnect::pMainWin->setLayersBox();
                 }
             }
             else

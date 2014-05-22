@@ -4,12 +4,17 @@
 #include <QString>
 #include <QtMsgHandler>
 
-namespace LogWriter
+class LogWriter
 {
-    QString DebugLogFile="PGE_debug_log.txt";
-    QtMsgType logLevel = QtDebugMsg;
-    void WriteToLog(QtMsgType type, QString msg);
-}
+public:
+    static QString DebugLogFile;
+    static QtMsgType logLevel;
+    static bool   enabled;
+
+    static void WriteToLog(QtMsgType type, QString msg);
+    static void LoadLogSettings();
+
+};
 
 
 #endif // LOGGER_SETS_H

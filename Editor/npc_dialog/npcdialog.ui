@@ -52,7 +52,7 @@
      </property>
      <item>
       <property name="text">
-       <string>NPC 1</string>
+       <string notr="true">NPC 1</string>
       </property>
       <property name="icon">
        <iconset resource="../_resources/editor.qrc">
@@ -61,7 +61,7 @@
      </item>
      <item>
       <property name="text">
-       <string>NPC 2</string>
+       <string notr="true">NPC 2</string>
       </property>
       <property name="icon">
        <iconset resource="../_resources/editor.qrc">
@@ -70,7 +70,7 @@
      </item>
      <item>
       <property name="text">
-       <string>NPC 3</string>
+       <string notr="true">NPC 3</string>
       </property>
       <property name="icon">
        <iconset resource="../_resources/editor.qrc">

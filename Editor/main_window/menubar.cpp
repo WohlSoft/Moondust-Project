@@ -135,22 +135,24 @@ void MainWindow::updateMenus(bool force)
             return;
         }
 
-        if(activeLvlEditWin()->scene->pResizer==NULL)
+        if(activeLvlEditWin()->sceneCreated)
         {
-            ui->ResizeSection->setVisible(true);
-            ui->applyResize->setVisible(false);
-            ui->cancelResize->setVisible(false);
-        }
-        else
-        {
-            if(activeLvlEditWin()->scene->pResizer->type == 0)
+            if(activeLvlEditWin()->scene->pResizer==NULL)
             {
-                ui->ResizeSection->setVisible(false);
-                ui->applyResize->setVisible(true);
-                ui->cancelResize->setVisible(true);
+                ui->ResizeSection->setVisible(true);
+                ui->applyResize->setVisible(false);
+                ui->cancelResize->setVisible(false);
+            }
+            else
+            {
+                if(activeLvlEditWin()->scene->pResizer->type == 0)
+                {
+                    ui->ResizeSection->setVisible(false);
+                    ui->applyResize->setVisible(true);
+                    ui->cancelResize->setVisible(true);
+                }
             }
         }
-
 
         SetCurrentLevelSection(0, 1);
         setDoorsToolbox();
@@ -158,19 +160,23 @@ void MainWindow::updateMenus(bool force)
 
         setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
-        ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
-        ui->actionLockBGO->setChecked(activeLvlEditWin()->scene->lock_bgo);
-        ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
-        ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
-        ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
 
-        LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
-        LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
+
+        if(activeLvlEditWin()->sceneCreated)
+        {
+            ui->actionLockBlocks->setChecked(activeLvlEditWin()->scene->lock_block);
+            ui->actionLockBGO->setChecked(activeLvlEditWin()->scene->lock_bgo);
+            ui->actionLockNPC->setChecked(activeLvlEditWin()->scene->lock_npc);
+            ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
+            ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
+
+            LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
+            LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
+            ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
+            ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
+        }
         ui->actionAnimation->setChecked( LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( LvlOpts.collisionsEnabled );
-
-        ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
-        ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
     }
     else
     {
@@ -190,26 +196,16 @@ void MainWindow::updateMenus(bool force)
     cutAct->setEnabled(hasSelection);
     copyAct->setEnabled(hasSelection);
     */
+    updateWindowMenu();
+
+}
 
 
-
+void MainWindow::updateWindowMenu()
+{
     //Window menu
     ui->menuWindow->clear();
-    /*
-        ui->menuWindow->addAction(closeAct);
-        ui->menuWindow->addAction(closeAllAct);
-        ui->menuWindow->addSeparator();
-        ui->menuWindow->addAction(tileAct);
-        ui->menuWindow->addAction(cascadeAct);
-        ui->menuWindow->addSeparator();
-        ui->menuWindow->addAction(nextAct);
-        ui->menuWindow->addAction(previousAct);
-        ui->menuWindow->addAction(separatorAct);
-    */
-
     QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
-
-
     QAction * closeC = ui->menuWindow->addAction(tr("Close current"));
         connect(closeC, SIGNAL(triggered()), this, SLOT( on_actionClose_triggered() ) );
         closeC->setEnabled( !windows.isEmpty() );
@@ -237,18 +233,15 @@ void MainWindow::updateMenus(bool force)
 
         QString text;
         if (i < 9) {
-            text = tr("&%1").arg( windows.at(i)->windowTitle() ) ;
+            text = QString("&%1").arg( windows.at(i)->windowTitle() ) ;
         } else {
-            text = tr("%1").arg( windows.at(i)->windowTitle() ) ;
+            text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
         }
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
         action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-
         windowMapper->setMapping(action, windows.at(i));
     }
 }
-
-

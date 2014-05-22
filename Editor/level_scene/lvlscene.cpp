@@ -56,18 +56,19 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     IsMoved = false;
     haveSelected = false;
 
-    resetPosition = false;
     pResizer = NULL;
 
     contextMenuOpened = false;
 
     //Events flags
+    resetPosition = false;
+    /*
     wasPasted = false;  //call to cursor reset to normal select
     doCopy = false;     //call to copy
     doCut = false;      //call to cut
     SyncLayerList = false; //Call to refresh layer list
     resetResizingSection = false; //Reset resizing applying buttons
-
+    */
 
     QPixmap cur(QSize(1,1));
     cur.fill(Qt::black);
@@ -794,7 +795,6 @@ void LvlScene::setDoors(QProgressDialog &progress)
 {
     int i=0;
 
-
     for(i=0; i<LvlData->doors.size(); i++)
     {
 
@@ -840,6 +840,17 @@ void LvlScene::setPlayerPoints()
 ////////////////////////////////////Animator////////////////////////////////
 void LvlScene::startBlockAnimation()
 {
+    long q = LvlData->blocks.size();
+    q+= LvlData->bgo.size();
+    q+= LvlData->npc.size();
+
+    if(q > 10000)
+    {
+        WriteToLog(QtWarningMsg,
+           QString("Can't start animation: too many items on map: %1").arg(q));
+        return;
+    }
+
     QList<QGraphicsItem*> ItemList = items();
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
