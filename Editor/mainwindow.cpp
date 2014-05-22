@@ -47,55 +47,13 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     splash.finish(this);
 
+    WriteToLog(QtDebugMsg, QString("Set UI..."));
     ui->setupUi(this);
 
-    /*
-     * //Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
-     *
-       QString defaultLocale = QLocale::system().name();
-       defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
-
-       m_langPath = QApplication::applicationDirPath();
-       m_langPath.append("/languages");
-       QDir dir(m_langPath);
-       QStringList fileNames = dir.entryList(QStringList("pge_editor_*.qm"));
-
-       for (int i = 0; i < fileNames.size(); ++i)
-           {
-               // get locale extracted by filename
-               QString locale;
-               locale = fileNames[i];                  // "TranslationExample_de.qm"
-               locale.truncate(locale.lastIndexOf('.'));   // "TranslationExample_de"
-               locale.remove(0, locale.indexOf('_') + 1);   // "de"
-
-               QString lang = QLocale::languageToString(QLocale(locale).language());
-               QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
-
-               QAction *action = new QAction(ico, lang, this);
-               action->setCheckable(true);
-               action->setData(locale);
-
-               ui->menuLanguage->addAction(action);
-
-               // set default translators and language checked
-               if (defaultLocale == locale)
-               {
-                   action->setChecked(true);
-               }
-           }
-
-       m_currLang = "ru";
-       QLocale locale = QLocale(m_currLang);
-       QLocale::setDefault(locale);
-
-       if(m_translator.load("pge_editor_ru.qm"))
-        qApp->installTranslator(&m_translator);
-
-       ui->retranslateUi(this);
-    */
+    WriteToLog(QtDebugMsg, QString("Setting Lang..."));
+    setDefLang();
 
     setUiDefults(); //Apply default UI settings
-
 }
 
 //Scene Event Detector
