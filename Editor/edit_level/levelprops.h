@@ -34,7 +34,6 @@ class LevelProps : public QDialog
 public:
     explicit LevelProps(LevelData &FileData,QWidget *parent = 0);
     ~LevelProps();
-    bool AutoPlayMusic;
     QString LevelTitle;
     
 private slots:
