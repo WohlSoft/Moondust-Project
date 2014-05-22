@@ -53,7 +53,7 @@ bool SMBX64::wBool(QString in) //Worded BOOL
     return !boolwords.exactMatch(in);
 }
 
-bool SMBX64::dBool(QString in) //Worded BOOL
+bool SMBX64::dBool(QString in) //Digital BOOL
 {
     return !booldeg.exactMatch(in);
 }
