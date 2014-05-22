@@ -74,10 +74,7 @@ void MainWindow::OpenFile(QString FilePath)
             setLayersBox();
 
             if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
-            LvlMusPlay::currentCustomMusic="";
-            LvlMusPlay::currentMusicId=0;
-            LvlMusPlay::musicButtonChecked=true;
-            setMusic(false);
+            LvlMusPlay::musicForceReset=true; //reset musics
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
         } else {

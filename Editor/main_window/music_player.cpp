@@ -114,9 +114,13 @@ void MainWindow::setMusic(bool checked)
         return;
     }
 
+    if(!LvlMusPlay::musicForceReset)
+    {
     if( ( LvlMusPlay::currentMusicId == ui->LVLPropsMusicNumber->currentIndex() ) &&
             (LvlMusPlay::currentCustomMusic == ui->LVLPropsMusicCustom->text()) &&
             (LvlMusPlay::musicButtonChecked == ui->actionPlayMusic->isChecked()) ) return;
+    } else LvlMusPlay::musicForceReset=false;
+
 
     WriteToLog(QtDebugMsg, "-> New MediaPlayList");
     QMediaPlaylist * CurrentMusic = new QMediaPlaylist;
