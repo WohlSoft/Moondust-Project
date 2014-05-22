@@ -898,7 +898,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="2562"/>
         <source>Contents</source>
-        <translation>Содержание</translation>
+        <translation>Contents</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2565"/>
@@ -1524,6 +1524,11 @@ File: %1</translation>
         <source>Current Language changed to %1</source>
         <translation>Current Language changed to %1</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="204"/>
+        <source>Create new NPC.txt configuration file</source>
+        <translation>Create new NPC.txt configuration file</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -1768,7 +1773,7 @@ because object configurations not loaded
         <location filename="../edit_level/lvl_files_io.cpp" line="251"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="252"/>
         <source>Loading level data</source>
-        <translation>Loading level data</translation>
+        <translation>Loading of level data</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="294"/>
@@ -1798,12 +1803,12 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="83"/>
         <source>offset y</source>
-        <translation>Offset Y</translation>
+        <translation>Offset by Y</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="109"/>
         <source>offset x</source>
-        <translation>Offset X</translation>
+        <translation>Offset by X</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="138"/>
