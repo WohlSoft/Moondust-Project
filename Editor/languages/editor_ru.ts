@@ -1785,7 +1785,7 @@ because object configurations not loaded
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="73"/>
         <source>5/%1 Applying Waters...</source>
-        <translation>5/%1 Применение  воды...</translation>
+        <translation>5/%1 Применение воды...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="79"/>

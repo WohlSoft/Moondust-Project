@@ -76,7 +76,8 @@ SOURCES += main.cpp\
     level_scene/resizer/item_resizer.cpp \
     common_features/grid.cpp \
     common_features/mainwinconnect.cpp \
-    level_scene/item_water.cpp
+    level_scene/item_water.cpp \
+    level_scene/lvl_setup.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

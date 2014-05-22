@@ -21,10 +21,13 @@
 #include "../mainwindow.h"
 #include "../common_features/logger_sets.h"
 
+#include "appsettings.h"
+
 #include "music_player.h"
 #include "global_settings.h"
 
 QString GlobalSettings::locale="";
+long GlobalSettings::animatorItemsLimit=10000;
 
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId;
@@ -230,8 +233,6 @@ void MainWindow::setDefaults()
     LvlMusPlay::currentMusicId = 0;
     LvlMusPlay::musicButtonChecked = false;
 
-    animatorItemsLimit=10000;
-
     cat_blocks="[all]";
     cat_bgos="[all]";
     cat_npcs="[all]";
@@ -326,7 +327,7 @@ void MainWindow::loadSettings()
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
 
-        animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
+        GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
     settings.endGroup();
 
@@ -361,7 +362,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("animation", LvlOpts.animationEnabled);
     settings.setValue("collisions", LvlOpts.collisionsEnabled);
-    settings.setValue("animation-item-limit", QString::number(animatorItemsLimit));
+    settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
     settings.setValue("language", GlobalSettings::locale);
 
@@ -391,4 +392,37 @@ void MainWindow::saveSettings()
         else
             settings.setValue("log-level", "0");
     settings.endGroup();
+}
+
+
+//Application settings
+void MainWindow::on_actionApplication_settings_triggered()
+{
+    AppSettings * appSettings = new AppSettings;
+    appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
+
+    appSettings->autoPlayMusic = autoPlayMusic;
+    appSettings->Animation = LvlOpts.animationEnabled;
+    appSettings->Collisions = LvlOpts.collisionsEnabled;
+
+    appSettings->AnimationItemLimit = GlobalSettings::animatorItemsLimit;
+
+    appSettings->applySettings();
+
+    if(appSettings->exec()==QDialog::Accepted)
+    {
+        autoPlayMusic = appSettings->autoPlayMusic;
+        GlobalSettings::animatorItemsLimit = appSettings->AnimationItemLimit;
+        LvlOpts.animationEnabled = appSettings->Animation;
+        LvlOpts.collisionsEnabled = appSettings->Collisions;
+
+        ui->actionAnimation->setChecked(LvlOpts.animationEnabled);
+        on_actionAnimation_triggered(LvlOpts.animationEnabled);
+        ui->actionCollisions->setChecked(LvlOpts.collisionsEnabled);
+        on_actionCollisions_triggered(LvlOpts.collisionsEnabled);
+
+        saveSettings();
+    }
+
 }
