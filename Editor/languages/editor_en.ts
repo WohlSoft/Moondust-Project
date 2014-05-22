@@ -457,16 +457,8 @@ Message limits: max line lenth is 28 characters</translation>
         <translation>Category:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="450"/>
-        <source>The test Icon for blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="466"/>
-        <location filename="../mainwindow.ui" line="593"/>
-        <location filename="../mainwindow.ui" line="720"/>
         <source>[all]</source>
-        <translation>[all]</translation>
+        <translation type="vanished">[all]</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="482"/>
@@ -474,19 +466,9 @@ Message limits: max line lenth is 28 characters</translation>
         <translation>Backgrounds</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="577"/>
-        <source>The test Icon for backgrounds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="609"/>
         <source>NPC</source>
         <translation>NPC</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="704"/>
-        <source>The test Icon for NPCs</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="741"/>
@@ -566,7 +548,6 @@ Message limits: max line lenth is 28 characters</translation>
         <translation>Music</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1218"/>
         <location filename="../main_window/data_configs.cpp" line="80"/>
         <source>[Silence]</source>
         <translation>[Silence]</translation>
@@ -626,7 +607,6 @@ Message limits: max line lenth is 28 characters</translation>
         <translation>Background image</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1489"/>
         <location filename="../main_window/data_configs.cpp" line="79"/>
         <source>[No image]</source>
         <translation>[No image]</translation>
@@ -837,7 +817,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2260"/>
-        <location filename="../mainwindow.ui" line="3848"/>
+        <location filename="../mainwindow.ui" line="3878"/>
         <source>Layers</source>
         <translation>Layers</translation>
     </message>
@@ -895,7 +875,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="2440"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2447"/>
@@ -1482,8 +1462,8 @@ p, li { white-space: pre-wrap; }
         <translation>Select (S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3394"/>
-        <source>S</source>
+        <location filename="../mainwindow.ui" line="3851"/>
+        <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1495,11 +1475,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../mainwindow.ui" line="3415"/>
         <source>Eriser (E)</source>
         <translation>Eriser</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3418"/>
-        <source>E</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3430"/>
@@ -1577,11 +1552,6 @@ p, li { white-space: pre-wrap; }
         <translation>Play music (F11)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3584"/>
-        <source>F11</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3596"/>
         <source>Reload file data</source>
         <translation>Reload file data</translation>
@@ -1590,11 +1560,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../mainwindow.ui" line="3599"/>
         <source>Reload current file data</source>
         <translation>Reload current file data</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3602"/>
-        <source>F5</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3617"/>
@@ -1607,29 +1572,14 @@ p, li { white-space: pre-wrap; }
         <translation>Scrolling (D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3623"/>
-        <source>D</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3635"/>
         <source>Undo</source>
         <translation>Undo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3638"/>
-        <source>Ctrl+Z</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3650"/>
         <source>Redo</source>
         <translation>Redo</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3653"/>
-        <source>Ctrl+Y</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3673"/>
@@ -1642,117 +1592,107 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3679"/>
-        <source>F10</source>
+        <location filename="../mainwindow.ui" line="3687"/>
+        <location filename="../mainwindow.ui" line="3698"/>
+        <location filename="../mainwindow.ui" line="3709"/>
+        <location filename="../mainwindow.ui" line="3720"/>
+        <location filename="../mainwindow.ui" line="3731"/>
+        <location filename="../mainwindow.ui" line="3742"/>
+        <location filename="../mainwindow.ui" line="3753"/>
+        <location filename="../mainwindow.ui" line="3764"/>
+        <location filename="../mainwindow.ui" line="3775"/>
+        <location filename="../mainwindow.ui" line="3786"/>
+        <source>&lt;empty&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3687"/>
-        <location filename="../mainwindow.ui" line="3695"/>
-        <location filename="../mainwindow.ui" line="3703"/>
-        <location filename="../mainwindow.ui" line="3711"/>
-        <location filename="../mainwindow.ui" line="3719"/>
-        <location filename="../mainwindow.ui" line="3727"/>
-        <location filename="../mainwindow.ui" line="3735"/>
-        <location filename="../mainwindow.ui" line="3743"/>
-        <location filename="../mainwindow.ui" line="3751"/>
-        <location filename="../mainwindow.ui" line="3759"/>
-        <source>&lt;empty&gt;</source>
-        <translation>&lt;empty&gt;</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3771"/>
+        <location filename="../mainwindow.ui" line="3801"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3774"/>
+        <location filename="../mainwindow.ui" line="3804"/>
         <source>Copy selected items</source>
         <translation>Copy selected items</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3777"/>
+        <location filename="../mainwindow.ui" line="3807"/>
         <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3785"/>
+        <location filename="../mainwindow.ui" line="3815"/>
         <source>Collisions</source>
         <translation>Collisions</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3788"/>
+        <location filename="../mainwindow.ui" line="3818"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3791"/>
+        <location filename="../mainwindow.ui" line="3821"/>
         <source>F9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3803"/>
+        <location filename="../mainwindow.ui" line="3833"/>
         <source>Draw Water zone</source>
         <translation>Draw Water zone</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3806"/>
+        <location filename="../mainwindow.ui" line="3836"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3818"/>
+        <location filename="../mainwindow.ui" line="3848"/>
         <source>Draw QuickSand zone</source>
         <translation>Draw QuickSand zone</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3821"/>
-        <source>Hold mouse button on map and move mouse for draw quick sand zone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3833"/>
+        <location filename="../mainwindow.ui" line="3863"/>
         <source>Paste</source>
         <translation type="unfinished">Paste</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3836"/>
+        <location filename="../mainwindow.ui" line="3866"/>
         <source>Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3856"/>
+        <location filename="../mainwindow.ui" line="3886"/>
         <location filename="../main_window/menubar.cpp" line="235"/>
         <source>[No opened files]</source>
         <translation>[No opened files]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3868"/>
+        <location filename="../mainwindow.ui" line="3901"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3871"/>
+        <location filename="../mainwindow.ui" line="3904"/>
         <source>Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3882"/>
+        <location filename="../mainwindow.ui" line="3915"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3897"/>
+        <location filename="../mainwindow.ui" line="3930"/>
         <source>Select only</source>
         <translation>Select only</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3900"/>
+        <location filename="../mainwindow.ui" line="3933"/>
         <source>W</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3905"/>
+        <location filename="../mainwindow.ui" line="3938"/>
         <source>Application settings</source>
         <translation>Application settings</translation>
     </message>
@@ -1919,7 +1859,7 @@ All Files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/main_settings.cpp" line="147"/>
+        <location filename="../main_window/main_settings.cpp" line="153"/>
         <source>Current Language changed to %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1943,21 +1883,6 @@ All Files (*.*)</source>
         <location filename="../npc_dialog/npcdialog.ui" line="14"/>
         <source>NPC Select dialog</source>
         <translation>NPC Select</translation>
-    </message>
-    <message>
-        <location filename="../npc_dialog/npcdialog.ui" line="55"/>
-        <source>NPC 1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../npc_dialog/npcdialog.ui" line="64"/>
-        <source>NPC 2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../npc_dialog/npcdialog.ui" line="73"/>
-        <source>NPC 3</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="85"/>
