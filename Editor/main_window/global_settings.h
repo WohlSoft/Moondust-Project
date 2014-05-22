@@ -1,12 +1,12 @@
-#ifndef APP_SETTINGS_H
-#define APP_SETTINGS_H
+#ifndef GLOBAL_SETTINGS_H
+#define GLOBAL_SETTINGS_H
 
 #include <QString>
 
-class AppSettings
+class GlobalSettings
 {
 public:
-
+    static QString locale;
 
 };
 
@@ -23,8 +23,8 @@ public:
     static long total_music_wld;
     static long total_music_spc;
 
-    QString configName;
+    static QString configName;
 
 };
 
-#endif // APP_SETTINGS_H
+#endif // GLOBAL_SETTINGS_H
