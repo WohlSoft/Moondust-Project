@@ -29,9 +29,7 @@ void MainWindow::on_actionLevelProp_triggered()
         LevelProps LevProps(activeLvlEditWin()->LvlData);
         if(LevProps.exec()==QDialog::Accepted)
         {
-            activeLvlEditWin()->LvlData.playmusic = LevProps.AutoPlayMusic;
             activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
-            autoPlayMusic = LevProps.AutoPlayMusic;
         }
     }
 
