@@ -657,6 +657,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         }
         doors.array_id = FileData.doors_array_id;
         FileData.doors_array_id++;
+        doors.index = FileData.doors.size();//Apply element index
 
     FileData.doors.push_back(doors); //Add NPC into array
     str_count++;line = in.readLine();
@@ -710,6 +711,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
             waters.array_id = FileData.water_array_id;
             FileData.water_array_id++;
+
+            waters.index = FileData.water.size();//Apply element index
 
         FileData.water.push_back(waters); //Add Water area into array
         str_count++;line = in.readLine();
@@ -1170,17 +1173,18 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
 
 
     //Blocks
-    QMap<long, QMap<long, LevelBlock > > sortedBlocks;
+    QMap<long, QMap<long, QMap<long, LevelBlock > > > sortedBlocks;
     foreach(LevelBlock block, FileData.blocks)
     {
-        sortedBlocks[block.x][block.y] = block;
+        sortedBlocks[block.x][block.y][block.array_id] = block;
     }
 
     //for(i=0; i<FileData.blocks.size(); i++)
     //{
-    for (QMap<long, QMap<long, LevelBlock > >::iterator bArr = sortedBlocks.begin(); bArr != sortedBlocks.end(); bArr++)
+    for (QMap<long, QMap<long, QMap<long, LevelBlock > > >::iterator bArr = sortedBlocks.begin(); bArr != sortedBlocks.end(); bArr++)
     {
-        for (QMap<long, LevelBlock >::iterator block = (* bArr).begin(); block != (*bArr).end(); block++)
+      for (QMap<long, QMap<long, LevelBlock > >::iterator bBrr = (* bArr).begin(); bBrr != (* bArr).end(); bBrr++)
+        for (QMap<long, LevelBlock >::iterator block = (* bBrr).begin(); block != (*bBrr).end(); block++)
         {
         TextData += SMBX64::IntS((*block).x);
         TextData += SMBX64::IntS((*block).y);
@@ -1198,13 +1202,24 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
     }
     TextData += "\"next\"\n";//Separator
 
+
     //BGOs
-    for(i=0; i<FileData.bgo.size(); i++)
+    QMap<long, QMap<long, LevelBGO > > sortedBGO;
+    foreach(LevelBGO bgo1, FileData.bgo)
     {
-        TextData += SMBX64::IntS(FileData.bgo[i].x);
-        TextData += SMBX64::IntS(FileData.bgo[i].y);
-        TextData += SMBX64::IntS(FileData.bgo[i].id);
-        TextData += SMBX64::qStrS(FileData.bgo[i].layer);
+        sortedBGO[bgo1.x][bgo1.array_id] = bgo1;
+    }
+
+    //for(i=0; i<FileData.bgo.size(); i++)
+    for (QMap<long, QMap<long, LevelBGO > >::iterator bYrr = sortedBGO.begin(); bYrr != sortedBGO.end(); bYrr++)
+    {
+        for (QMap<long, LevelBGO >::iterator bgo = (* bYrr).begin(); bgo != (*bYrr).end(); bgo++)
+        {
+        TextData += SMBX64::IntS( (*bgo).x);
+        TextData += SMBX64::IntS( (*bgo).y);
+        TextData += SMBX64::IntS( (*bgo).id);
+        TextData += SMBX64::qStrS( (*bgo).layer);
+        }
     }
     TextData += "\"next\"\n";//Separator
 

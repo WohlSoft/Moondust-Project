@@ -22,6 +22,7 @@
 #include "../mainwindow.h"
 
 
+
 dataconfigs * MainWindow::getConfigs()
 {
     dataconfigs * pointer;

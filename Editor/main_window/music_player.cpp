@@ -19,6 +19,7 @@
 
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
+#include "music_player.h"
 
 
 
@@ -76,8 +77,8 @@ void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
 {
     WriteToLog(QtDebugMsg, "Clicked play music button");
-    currentCustomMusic = ui->LVLPropsMusicCustom->text();
-    currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
+    LvlMusPlay::currentCustomMusic = ui->LVLPropsMusicCustom->text();
+    LvlMusPlay::currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
     setMusic(checked);
 }
 
@@ -91,8 +92,6 @@ void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
 
     setMusic( ui->actionPlayMusic->isChecked() );
 }
-
-
 
 
 
@@ -111,13 +110,17 @@ void MainWindow::setMusic(bool checked)
             (configs.main_music_wld.size()==0)
             )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for music not loaded"));
         return;
     }
 
-    if( ( currentMusicId == ui->LVLPropsMusicNumber->currentIndex() ) &&
-            (currentCustomMusic == ui->LVLPropsMusicCustom->text()) &&
-            (musicButtonChecked == ui->actionPlayMusic->isChecked()) ) return;
+    if(!LvlMusPlay::musicForceReset)
+    {
+    if( ( LvlMusPlay::currentMusicId == ui->LVLPropsMusicNumber->currentIndex() ) &&
+            (LvlMusPlay::currentCustomMusic == ui->LVLPropsMusicCustom->text()) &&
+            (LvlMusPlay::musicButtonChecked == ui->actionPlayMusic->isChecked()) ) return;
+    } else LvlMusPlay::musicForceReset=false;
+
 
     WriteToLog(QtDebugMsg, "-> New MediaPlayList");
     QMediaPlaylist * CurrentMusic = new QMediaPlaylist;
@@ -128,9 +131,15 @@ void MainWindow::setMusic(bool checked)
         if(checked)
         {
             if(
-                    ((currentMusicId>0)&&(((unsigned long)currentMusicId!=configs.music_custom_id)))||
-                    (((unsigned long)currentMusicId==configs.music_custom_id)&&(currentCustomMusic!=""))
-                    )
+                    (
+                        (LvlMusPlay::currentMusicId>0)&&
+                        (((unsigned long)LvlMusPlay::currentMusicId!=configs.music_custom_id))
+                    )||
+                     (
+                         ((unsigned long)LvlMusPlay::currentMusicId == configs.music_custom_id)
+                         &&(LvlMusPlay::currentCustomMusic!="")
+                     )
+              )
             {
                 MusicPlayer->play();
                 silent=false;
@@ -218,8 +227,8 @@ void MainWindow::setMusic(bool checked)
         MusicPlayer->stop();
     }
 
-    currentCustomMusic = ui->LVLPropsMusicCustom->text();
-    currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
-    musicButtonChecked  = ui->actionPlayMusic->isChecked();
+    LvlMusPlay::currentCustomMusic = ui->LVLPropsMusicCustom->text();
+    LvlMusPlay::currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
+    LvlMusPlay::musicButtonChecked  = ui->actionPlayMusic->isChecked();
 }
 
