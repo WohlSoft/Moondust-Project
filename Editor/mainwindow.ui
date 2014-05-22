@@ -447,7 +447,7 @@
         </property>
         <item>
          <property name="text">
-          <string>The test Icon for blocks</string>
+          <string notr="true">The test Icon for blocks</string>
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
@@ -463,7 +463,7 @@
        <widget class="QComboBox" name="BlockCatList">
         <item>
          <property name="text">
-          <string>[all]</string>
+          <string notr="true">[all]</string>
          </property>
         </item>
        </widget>
@@ -574,7 +574,7 @@
         </property>
         <item>
          <property name="text">
-          <string>The test Icon for backgrounds</string>
+          <string notr="true">The test Icon for backgrounds</string>
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
@@ -590,7 +590,7 @@
        <widget class="QComboBox" name="BGOCatList">
         <item>
          <property name="text">
-          <string>[all]</string>
+          <string notr="true">[all]</string>
          </property>
         </item>
        </widget>
@@ -701,7 +701,7 @@
         </property>
         <item>
          <property name="text">
-          <string>The test Icon for NPCs</string>
+          <string notr="true">The test Icon for NPCs</string>
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
@@ -717,7 +717,7 @@
        <widget class="QComboBox" name="NPCCatList">
         <item>
          <property name="text">
-          <string>[all]</string>
+          <string notr="true">[all]</string>
          </property>
         </item>
        </widget>
@@ -1215,7 +1215,7 @@
       </property>
       <item>
        <property name="text">
-        <string>[Silence]</string>
+        <string notr="true">[Silence]</string>
        </property>
       </item>
      </widget>
@@ -1486,7 +1486,7 @@
         </property>
         <item>
          <property name="text">
-          <string>[No image]</string>
+          <string notr="true">[No image]</string>
          </property>
         </item>
        </widget>
@@ -3391,7 +3391,7 @@ p, li { white-space: pre-wrap; }
     <string>Select (S)</string>
    </property>
    <property name="shortcut">
-    <string>S</string>
+    <string notr="true">S</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -3415,7 +3415,7 @@ p, li { white-space: pre-wrap; }
     <string>Eriser (E)</string>
    </property>
    <property name="shortcut">
-    <string>E</string>
+    <string notr="true">E</string>
    </property>
   </action>
   <action name="actionSection_Settings">
@@ -3581,7 +3581,7 @@ p, li { white-space: pre-wrap; }
     <string>Play music (F11)</string>
    </property>
    <property name="shortcut">
-    <string>F11</string>
+    <string notr="true">F11</string>
    </property>
   </action>
   <action name="actionReload">
@@ -3599,7 +3599,7 @@ p, li { white-space: pre-wrap; }
     <string>Reload current file data</string>
    </property>
    <property name="shortcut">
-    <string>F5</string>
+    <string notr="true">F5</string>
    </property>
   </action>
   <action name="actionHandScroll">
@@ -3620,7 +3620,7 @@ p, li { white-space: pre-wrap; }
     <string>Scrolling (D)</string>
    </property>
    <property name="shortcut">
-    <string>D</string>
+    <string notr="true">D</string>
    </property>
   </action>
   <action name="actionUndo">
@@ -3635,7 +3635,7 @@ p, li { white-space: pre-wrap; }
     <string>Undo</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Z</string>
+    <string notr="true">Ctrl+Z</string>
    </property>
   </action>
   <action name="actionRedo">
@@ -3650,7 +3650,7 @@ p, li { white-space: pre-wrap; }
     <string>Redo</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Y</string>
+    <string notr="true">Ctrl+Y</string>
    </property>
   </action>
   <action name="actionWarpsAndDoors">
@@ -3676,7 +3676,7 @@ p, li { white-space: pre-wrap; }
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
-    <string>F10</string>
+    <string notr="true">F10</string>
    </property>
   </action>
   <action name="action_recent1">
@@ -3686,6 +3686,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>&lt;empty&gt;</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
   </action>
   <action name="action_recent2">
    <property name="enabled">
@@ -3693,6 +3696,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>&lt;empty&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
   <action name="action_recent3">
@@ -3702,6 +3708,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>&lt;empty&gt;</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
   </action>
   <action name="action_recent4">
    <property name="enabled">
@@ -3709,6 +3718,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>&lt;empty&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
   <action name="action_recent5">
@@ -3718,6 +3730,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>&lt;empty&gt;</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
   </action>
   <action name="action_recent6">
    <property name="enabled">
@@ -3725,6 +3740,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>&lt;empty&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
   <action name="action_recent7">
@@ -3734,6 +3752,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>&lt;empty&gt;</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
   </action>
   <action name="action_recent8">
    <property name="enabled">
@@ -3741,6 +3762,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>&lt;empty&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
   <action name="action_recent9">
@@ -3750,6 +3774,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>&lt;empty&gt;</string>
    </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
   </action>
   <action name="action_recent10">
    <property name="enabled">
@@ -3757,6 +3784,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>&lt;empty&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
   <action name="actionCopy">
@@ -3818,7 +3848,7 @@ p, li { white-space: pre-wrap; }
     <string>Draw QuickSand zone</string>
    </property>
    <property name="toolTip">
-    <string>Hold mouse button on map and move mouse for draw quick sand zone</string>
+    <string>Hold mouse button on map and move mouse for draw quicksand zone</string>
    </property>
   </action>
   <action name="actionPaste">
@@ -3854,6 +3884,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>[No opened files]</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
   <action name="actionCut">
@@ -3903,6 +3936,9 @@ p, li { white-space: pre-wrap; }
   <action name="actionApplication_settings">
    <property name="text">
     <string>Application settings</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
    </property>
   </action>
  </widget>
