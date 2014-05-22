@@ -261,6 +261,8 @@ private slots:
 
     void on_BlockItemsList_itemClicked(QListWidgetItem *item);
 
+    void slotLanguageChanged(QAction *action);
+
 private:
     dataconfigs configs; // Global objects configucrations
 
@@ -322,14 +324,18 @@ private:
 
     //Miltilanguage
     void loadLanguage(const QString& rLanguage);
+    void setDefLang();
+    void switchTranslator(QTranslator &translator, const QString &filename);
     QTranslator     m_translator;   /**< contains the translations for this application */
     QTranslator     m_translatorQt; /**< contains the translations for qt */
     QString         m_currLang;     /**< contains the currently loaded language */
     QString         m_langPath;     /**< Path of language files. This is always fixed to /languages. */
 
+
     void setPointer();
 
     Ui::MainWindow *ui;
+
 };
 
 
