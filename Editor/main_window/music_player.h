@@ -15,6 +15,7 @@ public:
     static QString currentCustomMusic;
     static long currentMusicId;
     static bool musicButtonChecked;
+    static bool musicForceReset;
 };
 
 #endif // MUSIC_PLAYER_H
