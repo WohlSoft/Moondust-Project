@@ -1565,6 +1565,11 @@ File: %1
         <source>Current Language changed to %1</source>
         <translation>Текущий язык изменён на %1</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="204"/>
+        <source>Create new NPC.txt configuration file</source>
+        <translation>Создать новый файл конфигурации нПИ</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
