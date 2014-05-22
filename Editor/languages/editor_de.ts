@@ -562,7 +562,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1218"/>
-        <location filename="../main_window/data_configs.cpp" line="79"/>
+        <location filename="../main_window/data_configs.cpp" line="80"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -622,7 +622,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1489"/>
-        <location filename="../main_window/data_configs.cpp" line="78"/>
+        <location filename="../main_window/data_configs.cpp" line="79"/>
         <source>[No image]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1762,22 +1762,22 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="39"/>
+        <location filename="../main_window/data_configs.cpp" line="40"/>
         <source>Reloading configurations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="39"/>
+        <location filename="../main_window/data_configs.cpp" line="40"/>
         <source>Abort</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="63"/>
+        <location filename="../main_window/data_configs.cpp" line="64"/>
         <source>Reload configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="64"/>
+        <location filename="../main_window/data_configs.cpp" line="65"/>
         <source>Configuration succesfully reloaded!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1829,43 +1829,43 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="108"/>
+        <location filename="../main_window/files_io.cpp" line="105"/>
         <source>Dummy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="109"/>
+        <location filename="../main_window/files_io.cpp" line="106"/>
         <source>Sorry, the World Maps support is not inplemented in this version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="121"/>
+        <location filename="../main_window/files_io.cpp" line="118"/>
         <source>NPC Config loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="130"/>
+        <location filename="../main_window/files_io.cpp" line="127"/>
         <source>Bad file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="131"/>
+        <location filename="../main_window/files_io.cpp" line="128"/>
         <source>This file have unknown extension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="153"/>
-        <location filename="../main_window/files_io.cpp" line="168"/>
+        <location filename="../main_window/files_io.cpp" line="150"/>
+        <location filename="../main_window/files_io.cpp" line="165"/>
         <source>File saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="205"/>
+        <location filename="../main_window/files_io.cpp" line="202"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/files_io.cpp" line="206"/>
+        <location filename="../main_window/files_io.cpp" line="203"/>
         <source>All SMBX files (*.LVL *.WLD npc-*.TXT *.INI)
 SMBX Level (*.LVL)
 SMBX World (*.WLD)
@@ -1896,6 +1896,11 @@ All Files (*.*)</source>
     <message>
         <location filename="../main_window/menubar.cpp" line="248"/>
         <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/main_settings.cpp" line="147"/>
+        <source>Current Language changed to %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2024,7 +2029,7 @@ File: %1
     <message>
         <location filename="../about_dialog/aboutdialog.ui" line="43"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Über</translation>
     </message>
     <message>
         <location filename="../about_dialog/aboutdialog.ui" line="87"/>
@@ -2113,7 +2118,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="85"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Abbrechen</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="86"/>
