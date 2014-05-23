@@ -54,6 +54,7 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
         _drawingOrigenY( 0 )
 {
     _dragStart = QPointF(0,0);
+    type = 0;
 
     _resizerColor = color;
 
@@ -233,7 +234,7 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
         if ( newWidth < _minSize.width() ) newWidth  = _minSize.width();
 
         int newHeight = _height + (YaxisSign * yMoved) ;
-        if ( newHeight < _minSize.height() ) newHeight = _minSize.height();
+        if ( newHeight < _minSize.height() ) newHeight = _minSize.height()-((type==0)?8:0);
 
         int deltaWidth  =   newWidth - _width ;
         int deltaHeight =   newHeight - _height ;
@@ -245,8 +246,9 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 
         if ( corner->getCorner() == 0 )
         {
+            //left-top
             int newXpos = this->pos().x() + deltaWidth;
-            int newYpos = this->pos().y() + deltaHeight;
+            int newYpos = this->pos().y() + deltaHeight; //(allow height-8 if <min)
 
             this->setPos( QPointF( Grid::applyGrid(QPoint(newXpos, newYpos), _grid )));
 
@@ -254,13 +256,14 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
         }
         else   if ( corner->getCorner() == 1 )
         {
-            int newYpos = this->pos().y() + deltaHeight;
+            //right-top
+            int newYpos = this->pos().y() + deltaHeight; //(allow height-8 if <min)
             //this->setPos(this->pos().x(), newYpos);
             this->setPos( QPointF( Grid::applyGrid(QPoint(this->pos().x(), newYpos), _grid )));
             this->setRect(0, 0, _width, _height);
         }
         else   if ( corner->getCorner() == 3 )
-        {
+        { //left-bottom
             int newXpos = this->pos().x() + deltaWidth;
             //this->setPos(newXpos, this->pos().y());
 
@@ -269,14 +272,14 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
             this->setRect(0, 0, _width, _height);
         }
         else   if ( corner->getCorner() == 4 )
-        {
-            int newYpos = this->pos().y() + deltaHeight;
+        {   //top
+            int newYpos = this->pos().y() + deltaHeight; //(allow height-8 if <min)
             //this->setPos(this->pos().x(), newYpos);
             this->setPos( QPointF( Grid::applyGrid(QPoint(this->pos().x(), newYpos), _grid )));
             this->setRect(0, 0, _width, _height);
         }
         if ( corner->getCorner() == 5 )
-        {
+        { //Left
             int newXpos = this->pos().x() + deltaWidth;
             int newYpos = this->pos().y() + deltaHeight;
             //this->setPos(newXpos, newYpos);
@@ -284,7 +287,7 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
             this->setRect(0, 0, _width, _height);
         }
         else   if ( corner->getCorner() == 6 )
-        {
+        { //Bottom
             int newXpos = this->pos().x() + deltaWidth;
             //this->setPos(newXpos, this->pos().y());
             this->setPos( QPointF( Grid::applyGrid(QPoint(newXpos, this->pos().y()), _grid )));

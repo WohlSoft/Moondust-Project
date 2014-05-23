@@ -11,6 +11,7 @@ TEMPLATE = app
 
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
+    languages/editor_uk.ts \
     languages/editor_de.ts \
     languages/editor_es.ts \
     languages/editor_fr.ts
@@ -75,7 +76,9 @@ SOURCES += main.cpp\
     level_scene/resizer/item_resizer.cpp \
     common_features/grid.cpp \
     common_features/mainwinconnect.cpp \
-    level_scene/item_water.cpp
+    level_scene/item_water.cpp \
+    level_scene/lvl_setup.cpp \
+    level_scene/item_door.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -106,7 +109,8 @@ HEADERS  += mainwindow.h \
     main_window/music_player.h \
     common_features/mainwinconnect.h \
     level_scene/item_water.h \
-    main_window/global_settings.h
+    main_window/global_settings.h \
+    level_scene/item_door.h
 
 FORMS    += \
     mainwindow.ui \

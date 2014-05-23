@@ -1468,6 +1468,11 @@ Message limits: max line lenth is 28 characters</source>
         <source>Tiled</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="204"/>
+        <source>Create new NPC.txt configuration file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>

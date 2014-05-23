@@ -273,8 +273,6 @@ private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
 
-    long animatorItemsLimit;
-
     QString LastOpenDir;
     int lastWinType;
     bool LevelToolBoxVis; //Level toolbox

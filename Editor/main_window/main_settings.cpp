@@ -21,10 +21,13 @@
 #include "../mainwindow.h"
 #include "../common_features/logger_sets.h"
 
+#include "appsettings.h"
+
 #include "music_player.h"
 #include "global_settings.h"
 
 QString GlobalSettings::locale="";
+long GlobalSettings::animatorItemsLimit=10000;
 
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId;
@@ -66,9 +69,13 @@ void MainWindow::setDefLang()
 
        bool ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
                 WriteToLog(QtDebugMsg, QString("Translation: %1").arg((int)ok));
-
        if(ok)
         qApp->installTranslator(&m_translator);
+
+       ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
+                WriteToLog(QtDebugMsg, QString("QT Translation: %1").arg((int)ok));
+       if(ok)
+        qApp->installTranslator(&m_translatorQt);
 
        ui->retranslateUi(this);
 }
@@ -104,6 +111,14 @@ void MainWindow::langListSync()
                 action->setChecked(true);
             }
         }
+
+    if(fileNames.size()==0)
+    {
+        QAction *action = ui->menuLanguage->addAction("[translates was not loaded!]");
+        action->setCheckable(false);
+        action->setDisabled(true);
+    }
+
 }
 
 void MainWindow::slotLanguageChanged(QAction* action)
@@ -127,7 +142,7 @@ bool MainWindow::switchTranslator(QTranslator& translator, const QString& filena
 
     if(ok)
         qApp->installTranslator(&translator);
-    WriteToLog(QtDebugMsg, QString("Translation->changed"));
+    WriteToLog(QtDebugMsg, QString("Translation-> changed"));
     return ok;
 }
 
@@ -142,8 +157,9 @@ void MainWindow::loadLanguage(const QString& rLanguage)
         QLocale::setDefault(locale);
 
         QString languageName = QLocale::languageToString(locale.language());
-        bool ok = switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-        //switchTranslator(m_translatorQt, QString("qt_%1.qm").arg(rLanguage));
+
+        bool ok = switchTranslator(m_translatorQt, m_langPath + QString("/qt_%1.qm").arg(m_currLang));
+             ok = switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
 
         WriteToLog(QtDebugMsg, QString("Translation->try to retranslate"));
 
@@ -216,8 +232,6 @@ void MainWindow::setDefaults()
     LvlMusPlay::currentCustomMusic = "";
     LvlMusPlay::currentMusicId = 0;
     LvlMusPlay::musicButtonChecked = false;
-
-    animatorItemsLimit=10000;
 
     cat_blocks="[all]";
     cat_bgos="[all]";
@@ -313,7 +327,7 @@ void MainWindow::loadSettings()
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
 
-        animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
+        GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
     settings.endGroup();
 
@@ -348,7 +362,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("animation", LvlOpts.animationEnabled);
     settings.setValue("collisions", LvlOpts.collisionsEnabled);
-    settings.setValue("animation-item-limit", QString::number(animatorItemsLimit));
+    settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
     settings.setValue("language", GlobalSettings::locale);
 
@@ -378,4 +392,37 @@ void MainWindow::saveSettings()
         else
             settings.setValue("log-level", "0");
     settings.endGroup();
+}
+
+
+//Application settings
+void MainWindow::on_actionApplication_settings_triggered()
+{
+    AppSettings * appSettings = new AppSettings;
+    appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
+
+    appSettings->autoPlayMusic = autoPlayMusic;
+    appSettings->Animation = LvlOpts.animationEnabled;
+    appSettings->Collisions = LvlOpts.collisionsEnabled;
+
+    appSettings->AnimationItemLimit = GlobalSettings::animatorItemsLimit;
+
+    appSettings->applySettings();
+
+    if(appSettings->exec()==QDialog::Accepted)
+    {
+        autoPlayMusic = appSettings->autoPlayMusic;
+        GlobalSettings::animatorItemsLimit = appSettings->AnimationItemLimit;
+        LvlOpts.animationEnabled = appSettings->Animation;
+        LvlOpts.collisionsEnabled = appSettings->Collisions;
+
+        ui->actionAnimation->setChecked(LvlOpts.animationEnabled);
+        on_actionAnimation_triggered(LvlOpts.animationEnabled);
+        ui->actionCollisions->setChecked(LvlOpts.collisionsEnabled);
+        on_actionCollisions_triggered(LvlOpts.collisionsEnabled);
+
+        saveSettings();
+    }
+
 }
