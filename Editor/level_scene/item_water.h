@@ -43,7 +43,9 @@ public:
     ~ItemWater();
 
     void setSize(QSize sz);
+    void setType(int tp);
     void setWaterData(LevelWater inD);
+
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
@@ -76,6 +78,8 @@ protected:
 
 private:
     LvlScene * scene;
+
+    void drawWater();
 };
 
 #endif // ITEM_WATER_H
