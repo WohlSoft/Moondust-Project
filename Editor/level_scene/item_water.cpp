@@ -78,7 +78,7 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         QList<QAction *> layerItems;
 
         QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-        LayerName->addSeparator();
+            LayerName->addSeparator();
 
         foreach(LevelLayers layer, scene->LvlData->layers)
         {
@@ -94,8 +94,21 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         }
 
         ItemMenu->addSeparator();
+
+        QMenu * WaterType = ItemMenu->addMenu(tr("Environment type"));
+
+        QAction *setAsWater = WaterType->addAction(tr("Water"));
+            setAsWater->setCheckable(true);
+            setAsWater->setChecked(!waterData.quicksand);
+
+        QAction *setAsQuicksand = WaterType->addAction(tr("Quicksand"));
+            setAsQuicksand->setCheckable(true);
+            setAsQuicksand->setChecked(waterData.quicksand);
+
+        ItemMenu->addSeparator();
         QAction *copyWater = ItemMenu->addAction(tr("Copy"));
         QAction *cutWater = ItemMenu->addAction(tr("Cut"));
+
         ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction(tr("Remove"));
 
@@ -121,6 +134,30 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         {
             //scene->doCopy = true ;
             MainWinConnect::pMainWin->on_actionCopy_triggered();
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==setAsWater)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="Water")
+                {
+                    ((ItemWater *)SelItem)->setType(0);
+                }
+            }
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==setAsQuicksand)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="Water")
+                {
+                    ((ItemWater *)SelItem)->setType(1);
+                }
+            }
             scene->contextMenuOpened = false;
         }
         else
@@ -279,11 +316,30 @@ void ItemWater::removeFromArray()
     }
 }
 
+void ItemWater::setType(int tp)
+{
+    switch(tp)
+    {
+    case 1://Quicksand
+        waterData.quicksand=true;
+        this->setPen(QPen(Qt::yellow));
+        break;
+    case 0://Water
+    default:
+        this->setPen(QPen(Qt::green));
+        waterData.quicksand=false;
+        break;
+    }
+    arrayApply();
+}
+
+
 void ItemWater::setSize(QSize sz)
 {
     waterSize = sz;
     waterData.w = sz.width();
     waterData.h = sz.height();
+    drawWater();
     arrayApply();
 }
 
@@ -291,6 +347,35 @@ void ItemWater::setSize(QSize sz)
 void ItemWater::setWaterData(LevelWater inD)
 {
     waterData = inD;
+    drawWater();
+}
+
+void ItemWater::drawWater()
+{
+    long x, y, h, w;
+
+    x = waterData.x;
+    y = waterData.y;
+    h = waterData.h;
+    w = waterData.w;
+
+    //box = addRect(x, y, w, h, QPen(((water.quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
+    QVector<QPoint > points;
+
+    // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
+    points.push_back(QPoint(x, y));
+    points.push_back(QPoint(x+w, y));
+    points.push_back(QPoint(x+w,y+h));
+    points.push_back(QPoint(x, y+h));
+    points.push_back(QPoint(x, y));
+
+    points.push_back(QPoint(x, y+h));
+    points.push_back(QPoint(x+w,y+h));
+    points.push_back(QPoint(x+w, y));
+    points.push_back(QPoint(x, y));
+
+    this->setPolygon(QPolygon(points));
+    this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
 }
 
 
