@@ -129,6 +129,7 @@ public:
 
     void drawSpace();
     void ChangeSectionBG(int BG_Id);
+    void ChangeSectionBG(int BG_Id, int SectionID);
 
     void loadUserData(QProgressDialog &progress);
 
@@ -210,7 +211,8 @@ public:
             LEVELHISTORY_REMOVE = 0,               //Removed from map
             LEVELHISTORY_PLACE,                    //Placed new
             LEVELHISTORY_MOVE,                     //moved
-            LEVELHISTORY_CHANGEDSETTINGS           //changed settings of items
+            LEVELHISTORY_CHANGEDSETTINGS,          //changed settings of items
+            LEVELHISTORY_RESIZESECTION
         };
         HistoryType type;
         //used most of Operations
@@ -250,6 +252,8 @@ public:
 	void addPlaceHistory(LevelData placedItems);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
     void addChangeSettingsHistory(LevelData modifiedItems, SettingSubType subType, QVariant extraData);
+    void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
+                                 long newLeft, long newTop, long newRight, long newBottom);
     //history modifiers
     void historyBack();
     void historyForward();

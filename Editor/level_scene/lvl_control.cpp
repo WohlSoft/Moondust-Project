@@ -544,10 +544,16 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
                 long t = pResizer->pos().y();
                 long r = l+pResizer->_width;
                 long b = t+pResizer->_height;
+                long oldL = LvlData->sections[LvlData->CurSection].size_left;
+                long oldR = LvlData->sections[LvlData->CurSection].size_right;
+                long oldT = LvlData->sections[LvlData->CurSection].size_top;
+                long oldB = LvlData->sections[LvlData->CurSection].size_bottom;
                 LvlData->sections[LvlData->CurSection].size_left = l;
                 LvlData->sections[LvlData->CurSection].size_right = r;
                 LvlData->sections[LvlData->CurSection].size_top = t;
                 LvlData->sections[LvlData->CurSection].size_bottom = b;
+
+                addResizeSectionHistory(LvlData->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
 
                 ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 drawSpace();
