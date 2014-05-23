@@ -610,6 +610,24 @@ void LvlScene::ChangeSectionBG(int BG_Id)
     setSectionBG(LvlData->sections[LvlData->CurSection]);
 }
 
+void LvlScene::ChangeSectionBG(int BG_Id, int SectionID)
+{
+    foreach (QGraphicsItem * findBG, items() )
+    {
+        if(findBG->data(0)=="BackGround"+QString::number(SectionID) )
+        {
+            WriteToLog(QtDebugMsg, QString("Remove item BackGround"+QString::number(SectionID)) );
+            removeItem(findBG); break;
+        }
+    }
+
+    if((BG_Id>=0) && (BG_Id <= pConfigs->main_bg.size() )) // Deny unexist ID
+            LvlData->sections[SectionID].background = BG_Id;
+
+    WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
+    setSectionBG(LvlData->sections[SectionID]);
+}
+
 
 
 //////////////////Block////////////////////////////////////////////////////////////////////////////////////////
