@@ -128,8 +128,8 @@ public:
     void InitSection(int sect);
 
     void drawSpace();
-    void ChangeSectionBG(int BG_Id);
-    void ChangeSectionBG(int BG_Id, int SectionID);
+    void ChangeSectionBG(int BG_Id, int SectionID=-1);
+    //void ChangeSectionBG(int BG_Id);
 
     void loadUserData(QProgressDialog &progress);
 
