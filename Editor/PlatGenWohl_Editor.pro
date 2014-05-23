@@ -77,7 +77,8 @@ SOURCES += main.cpp\
     common_features/grid.cpp \
     common_features/mainwinconnect.cpp \
     level_scene/item_water.cpp \
-    level_scene/lvl_setup.cpp
+    level_scene/lvl_setup.cpp \
+    level_scene/item_door.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -108,7 +109,8 @@ HEADERS  += mainwindow.h \
     main_window/music_player.h \
     common_features/mainwinconnect.h \
     level_scene/item_water.h \
-    main_window/global_settings.h
+    main_window/global_settings.h \
+    level_scene/item_door.h
 
 FORMS    += \
     mainwindow.ui \
