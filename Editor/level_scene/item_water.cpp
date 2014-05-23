@@ -27,10 +27,9 @@
 ItemWater::ItemWater(QGraphicsPolygonItem *parent)
     : QGraphicsPolygonItem(parent)
 {
-
     isLocked=false;
-    waterSize = QSize(32,32);
-    //image = new QGraphicsPolygonItem;
+    waterSize = QSize(32,3);
+    this->setPen(QPen(Qt::darkBlue, 4));
 }
 
 
@@ -347,7 +346,8 @@ void ItemWater::setSize(QSize sz)
 void ItemWater::setWaterData(LevelWater inD)
 {
     waterData = inD;
-    drawWater();
+    waterSize = QSize(waterData.w, waterData.h);
+    //drawWater();
 }
 
 void ItemWater::drawWater()
@@ -356,32 +356,42 @@ void ItemWater::drawWater()
 
     x = waterData.x;
     y = waterData.y;
-    h = waterData.h;
     w = waterData.w;
+    h = waterData.h;
 
     //box = addRect(x, y, w, h, QPen(((water.quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
-    QVector<QPoint > points;
-
+    QVector<QPointF > points;
     // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
-    points.push_back(QPoint(x, y));
-    points.push_back(QPoint(x+w, y));
-    points.push_back(QPoint(x+w,y+h));
-    points.push_back(QPoint(x, y+h));
-    points.push_back(QPoint(x, y));
+    points.push_back(QPointF(x, y));
+    points.push_back(QPointF(x+w, y));
+    points.push_back(QPointF(x+w,y+h));
+    points.push_back(QPointF(x, y+h));
+    points.push_back(QPointF(x, y));
 
-    points.push_back(QPoint(x, y+h));
-    points.push_back(QPoint(x+w,y+h));
-    points.push_back(QPoint(x+w, y));
-    points.push_back(QPoint(x, y));
+    points.push_back(QPointF(x, y+h));
+    points.push_back(QPointF(x+w,y+h));
+    points.push_back(QPointF(x+w, y));
+    points.push_back(QPointF(x, y));
 
-    this->setPolygon(QPolygon(points));
     this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
+    this->setPolygon( QPolygonF(points) );
+    this->setPos(x, y);
+
+    WriteToLog(QtDebugMsg, "WaterDraw -> ============================");
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> x=%1").arg(waterData.x));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> y=%1").arg(waterData.y));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> w=%1").arg(waterData.w));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> h=%1").arg(waterData.h));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> sand %1").arg((int)waterData.quicksand));
+
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> Drawesd x=%1").arg(this->pos().x()));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> Drawesd y=%1").arg(this->pos().y()));
 }
 
 
 QRectF ItemWater::boundingRect() const
 {
-    return QRectF(0,0,waterSize.width(),waterSize.height());
+    return QRectF(-10,-10,waterSize.width()+10,waterSize.height()+10);
 }
 
 void ItemWater::setContextMenu(QMenu &menu)

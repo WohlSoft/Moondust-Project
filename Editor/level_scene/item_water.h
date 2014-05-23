@@ -49,6 +49,8 @@ public:
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
+    void drawWater();
+
     QRectF boundingRect() const;
 
     QMenu *ItemMenu;
@@ -78,8 +80,6 @@ protected:
 
 private:
     LvlScene * scene;
-
-    void drawWater();
 };
 
 #endif // ITEM_WATER_H
