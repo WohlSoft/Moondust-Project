@@ -1565,6 +1565,11 @@ File: %1
         <source>Current Language changed to %1</source>
         <translation>Текущий язык изменён на %1</translation>
     </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="204"/>
+        <source>Create new NPC.txt configuration file</source>
+        <translation>Создать новый файл конфигурации нПИ</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -1780,7 +1785,7 @@ because object configurations not loaded
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="73"/>
         <source>5/%1 Applying Waters...</source>
-        <translation>5/%1 Применение  воды...</translation>
+        <translation>5/%1 Применение воды...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="79"/>

@@ -16,11 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#ifndef ITEM_WATER_H
-#define ITEM_WATER_H
+#ifndef ITEM_DOOR_H
+#define ITEM_DOOR_H
 
 #include <QGraphicsItem>
-#include <QGraphicsPolygonItem>
+#include <QGraphicsRectItem>
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QString>
@@ -35,17 +35,14 @@
 #include "lvlscene.h"
 #include "../file_formats/lvl_filedata.h"
 
-class ItemWater : public QObject, public QGraphicsPolygonItem
+class ItemDoor : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    ItemWater(QGraphicsPolygonItem *parent=0);
-    ~ItemWater();
+    ItemDoor(QGraphicsRectItem *parent=0);
+    ~ItemDoor();
 
-    void setSize(QSize sz);
-    void setType(int tp);
-    void setWaterData(LevelWater inD);
-
+    void setDoorData(LevelDoors inD);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
@@ -53,14 +50,14 @@ public:
 
     QMenu *ItemMenu;
 //    QGraphicsScene * scene;
-//    QGraphicsPolygonItem * image;
+//    QGraphicsRectItem * image;
 
     void setLayer(QString layer);
 
     void arrayApply();
     void removeFromArray();
 
-    LevelWater waterData;
+    LevelDoors doorData;
 
     int gridSize;
     int gridOffsetX;
@@ -78,8 +75,6 @@ protected:
 
 private:
     LvlScene * scene;
-
-    void drawWater();
 };
 
-#endif // ITEM_WATER_H
+#endif // ITEM_DOOR_H
