@@ -18,6 +18,8 @@
 
 #include "data_configs.h"
 
+#include "../main_window/global_settings.h"
+
 void dataconfigs::loadLevelBGO()
 {
     unsigned int i;
@@ -42,6 +44,8 @@ void dataconfigs::loadLevelBGO()
         bgo_total = bgoset.value("total", "0").toInt();
         total_data +=bgo_total;
     bgoset.endGroup();
+
+    ConfStatus::total_bgo = bgo_total;
 
     //creation of empty indexes of arrayElements
         bgoIndexes bgoIndex;
