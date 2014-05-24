@@ -7,6 +7,7 @@ class GlobalSettings
 {
 public:
     static QString locale;
+    static long animatorItemsLimit;
 
 };
 

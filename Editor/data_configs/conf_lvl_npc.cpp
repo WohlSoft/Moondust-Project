@@ -18,6 +18,8 @@
 
 #include "data_configs.h"
 
+#include "../main_window/global_settings.h"
+
 void dataconfigs::loadLevelNPC()
 {
     unsigned int i;
@@ -54,9 +56,11 @@ void dataconfigs::loadLevelNPC()
 
     npcset.endGroup();
 
+    ConfStatus::total_npc = npc_total;
+
     //creation of empty indexes of arrayElements
         npcIndexes npcIndex;
-        for(i=0;i<npc_total+1; i++)
+        for(i=0;i<=npc_total; i++)
         {
             npcIndex.i=i;
             npcIndex.type=0;

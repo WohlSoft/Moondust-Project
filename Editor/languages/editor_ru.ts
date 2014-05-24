@@ -222,6 +222,44 @@
     </message>
 </context>
 <context>
+    <name>ItemDoor</name>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="75"/>
+        <source>Layer: </source>
+        <translation>Слой: </translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="80"/>
+        <source>Add to new layer...</source>
+        <translation>Добавить на новый слой...</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="101"/>
+        <source>Jump to exit</source>
+        <translation>Перейти к выходу</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="107"/>
+        <source>Jump to entrance</source>
+        <translation>Перейти ко входу</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="112"/>
+        <source>Copy</source>
+        <translation>Копировать</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="113"/>
+        <source>Cut</source>
+        <translation>Вырезать</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="116"/>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
     <name>ItemMsgBox</name>
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="22"/>
@@ -317,27 +355,42 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemWater</name>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="75"/>
+        <location filename="../level_scene/item_water.cpp" line="80"/>
         <source>Layer: </source>
         <translation>Слой: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="80"/>
+        <location filename="../level_scene/item_water.cpp" line="85"/>
         <source>Add to new layer...</source>
         <translation>Добавить на новый слой...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="97"/>
+        <location filename="../level_scene/item_water.cpp" line="103"/>
+        <source>Environment type</source>
+        <translation>Тип среды</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="105"/>
+        <source>Water</source>
+        <translation>Вода</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="109"/>
+        <source>Quicksand</source>
+        <translation>Зыбучий песок</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="114"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="98"/>
+        <location filename="../level_scene/item_water.cpp" line="115"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="100"/>
+        <location filename="../level_scene/item_water.cpp" line="118"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -353,6 +406,29 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../edit_level/levelprops.ui" line="55"/>
         <source>Level name</source>
         <translation>Название уровня</translation>
+    </message>
+</context>
+<context>
+    <name>LvlScene</name>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="43"/>
+        <source>Search User Backgrounds %1</source>
+        <translation>Поиск польз. фонов %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="110"/>
+        <source>Search User Blocks %1</source>
+        <translation>Поиск польз. блоков %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="173"/>
+        <source>Search User BGOs %1</source>
+        <translation>Поикс польз. фон.об. %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="236"/>
+        <source>Search User NPCs %1</source>
+        <translation>Поиск польз. нИП %1</translation>
     </message>
 </context>
 <context>
@@ -456,7 +532,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="609"/>
         <source>NPC</source>
-        <translation>Н.и. Персонажи</translation>
+        <translation>иНП</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -1433,14 +1509,22 @@ File: %1
         <translation type="obsolete">Данные в строке: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</source>
-        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП скопировано в буфер обмена</translation>
+        <translation type="vanished">%1 блоков, %2 Фоновых объектов, %3 нИП скопировано в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="50"/>
+        <location filename="../main_window/clipboard.cpp" line="35"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
+        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон скопировано в буфер обмена</translation>
+    </message>
+    <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are moved in clipboard</source>
-        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП перемещено в буфер обмена</translation>
+        <translation type="vanished">%1 блоков, %2 Фоновых объектов, %3 нИП перемещено в буфер обмена</translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="53"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
+        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон перемещено в буфер обмена</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="40"/>
@@ -1561,9 +1645,14 @@ File: %1
         <translation>Окна рядом</translation>
     </message>
     <message>
-        <location filename="../main_window/main_settings.cpp" line="163"/>
+        <location filename="../main_window/main_settings.cpp" line="179"/>
         <source>Current Language changed to %1</source>
         <translation>Текущий язык изменён на %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="172"/>
+        <source>Create new NPC.txt configuration file</source>
+        <translation>Создать новый файл конфигурации нПИ</translation>
     </message>
 </context>
 <context>
@@ -1780,7 +1869,7 @@ because object configurations not loaded
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="73"/>
         <source>5/%1 Applying Waters...</source>
-        <translation>5/%1 Применение  воды...</translation>
+        <translation>5/%1 Применение воды...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="79"/>

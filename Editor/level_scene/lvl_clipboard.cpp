@@ -21,6 +21,8 @@
 
 #include "item_block.h"
 #include "item_bgo.h"
+#include "item_npc.h"
+#include "item_water.h"
 
 //Copy selected items into clipboard
 LevelData LvlScene::copy(bool cut)
@@ -59,24 +61,21 @@ LevelData LvlScene::copy(bool cut)
             else
             if( ObjType == "NPC")
             {
-                foreach (LevelNPC findInArr, LvlData->npc)
-                {
-                    if(findInArr.array_id==(unsigned)(*it)->data(2).toInt())
-                    {
-                        copyData.npc.push_back(findInArr);
-                        if(cut){
-                            //remove, will be later implemented as function in the future NPC class
-                            for(int i=0; i<LvlData->npc.size(); i++)
-                            {
-                                if(LvlData->npc[i].array_id == findInArr.array_id)
-                                {
-                                    LvlData->npc.remove(i); break;
-                                }
-                            }
-                            removeItem(*it);
-                        }
-                        break;
-                    }
+                ItemNPC* sourceNPC = (ItemNPC *)(*it);
+                copyData.npc.push_back(sourceNPC->npcData);
+                if(cut){
+                    sourceNPC->removeFromArray();
+                    removeItem(*it);
+                }
+            }
+            else
+            if( ObjType == "Water")
+            {
+                ItemWater* sourceWater = (ItemWater *)(*it);
+                copyData.water.push_back(sourceWater->waterData);
+                if(cut){
+                    sourceWater->removeFromArray();
+                    removeItem(*it);
                 }
             }
 
@@ -106,6 +105,9 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
     }else if(!BufferIn.npc.isEmpty()){
         baseX = BufferIn.npc[0].x;
         baseY = BufferIn.npc[0].y;
+    }else if(!BufferIn.water.isEmpty()){
+        baseX = BufferIn.water[0].x;
+        baseY = BufferIn.water[0].y;
     }else{
         //nothing to paste
         return;
@@ -133,6 +135,14 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         }
         if(npc.y<baseY){
             baseY = npc.y;
+        }
+    }
+    foreach (LevelWater water, BufferIn.water){
+        if(water.x<baseX){
+            baseX = water.x;
+        }
+        if(water.y<baseY){
+            baseY = water.y;
         }
     }
 
@@ -174,6 +184,17 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         placeNPC(dumpNPC, true);
         LvlData->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
+    }
+    foreach (LevelWater water, BufferIn.water){
+        //Gen Copy of Water
+        LevelWater dumpWater = water;
+        dumpWater.x = (long)pos.x() + water.x - baseX;
+        dumpWater.y = (long)pos.y() + water.y - baseY;
+        LvlData->npc_array_id++;
+        dumpWater.array_id = LvlData->npc_array_id;
+        placeWater(dumpWater, true);
+        LvlData->water.push_back(dumpWater);
+        newData.water.push_back(dumpWater);
     }
 
     LvlData->modified = true;
