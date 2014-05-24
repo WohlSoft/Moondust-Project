@@ -22,6 +22,7 @@
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
+#include "item_water.h"
 
 #include "../common_features/mainwinconnect.h"
 
@@ -66,6 +67,14 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 {
                     historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
                     ((ItemNPC *)(*it))->removeFromArray();
+                    removeItem((*it));
+                    deleted=true;
+                }
+                else
+                if( objType=="Water" )
+                {
+                    historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                    ((ItemWater *)(*it))->removeFromArray();
                     removeItem((*it));
                     deleted=true;
                 }
@@ -368,6 +377,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     {
                         sourcePos = QPoint(  ((ItemBGO *)(*it))->bgoData.x, ((ItemBGO *)(*it))->bgoData.y);
                     }
+                    else
+                    if( ObjType == "Water")
+                    {
+                        sourcePos = QPoint(  ((ItemWater *)(*it))->waterData.x, ((ItemWater *)(*it))->waterData.y);
+                    }
 
                     //Check position
                     if( sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y())))
@@ -430,6 +444,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             historyBuffer.npc.push_back(((ItemNPC *)(*it))->npcData);
                             LvlData->modified = true;
                         }
+                        else
+                        if( ObjType == "Water")
+                        {
+                            //Applay move into main array
+                            historySourceBuffer.water.push_back(((ItemWater *)(*it))->waterData);
+                            ((ItemWater *)(*it))->waterData.x = (long)(*it)->scenePos().x();
+                            ((ItemWater *)(*it))->waterData.y = (long)(*it)->scenePos().y();
+                            ((ItemWater *)(*it))->arrayApply();
+                            historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
+                            LvlData->modified = true;
+                        }
                     }
                 }
 
@@ -473,8 +498,11 @@ void LvlScene::removeItemUnderCursor()
             removeIt=false;
         }
         else
-        if((findItem->data(0).toString()=="Water")&&(lock_water))
+        if(findItem->data(0).toString()=="Water")
+        {
+            if( (lock_water) || ((((ItemWater *)findItem)->isLocked)) )
             removeIt=false;
+        }
         else
         if(((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))&&
                 (lock_door))
@@ -528,7 +556,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         this->addItem(pResizer);
         pResizer->setPos(x, y);
         pResizer->type=0;
-        pResizer->_minSize = QSizeF(800,600);
+        pResizer->_minSize = QSizeF(800, 608);
         this->setFocus(Qt::ActiveWindowFocusReason);
         DrawMode=true;
         MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
@@ -544,10 +572,16 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
                 long t = pResizer->pos().y();
                 long r = l+pResizer->_width;
                 long b = t+pResizer->_height;
+                long oldL = LvlData->sections[LvlData->CurSection].size_left;
+                long oldR = LvlData->sections[LvlData->CurSection].size_right;
+                long oldT = LvlData->sections[LvlData->CurSection].size_top;
+                long oldB = LvlData->sections[LvlData->CurSection].size_bottom;
                 LvlData->sections[LvlData->CurSection].size_left = l;
                 LvlData->sections[LvlData->CurSection].size_right = r;
                 LvlData->sections[LvlData->CurSection].size_top = t;
                 LvlData->sections[LvlData->CurSection].size_bottom = b;
+
+                addResizeSectionHistory(LvlData->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
 
                 ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 drawSpace();

@@ -18,6 +18,8 @@
 
 #include "data_configs.h"
 
+#include "../main_window/global_settings.h"
+
 void dataconfigs::loadMusic()
 {
     unsigned int i;
@@ -55,6 +57,10 @@ void dataconfigs::loadMusic()
         total_data +=music_wld_total;
         total_data +=music_spc_total;
     musicset.endGroup();
+
+    ConfStatus::total_music_lvl = music_lvl_total;
+    ConfStatus::total_music_wld = music_wld_total;
+    ConfStatus::total_music_spc = music_spc_total;
 
 
     //////////////////////////////

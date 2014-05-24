@@ -128,7 +128,8 @@ public:
     void InitSection(int sect);
 
     void drawSpace();
-    void ChangeSectionBG(int BG_Id);
+    void ChangeSectionBG(int BG_Id, int SectionID=-1);
+    //void ChangeSectionBG(int BG_Id);
 
     void loadUserData(QProgressDialog &progress);
 
@@ -210,7 +211,8 @@ public:
             LEVELHISTORY_REMOVE = 0,               //Removed from map
             LEVELHISTORY_PLACE,                    //Placed new
             LEVELHISTORY_MOVE,                     //moved
-            LEVELHISTORY_CHANGEDSETTINGS           //changed settings of items
+            LEVELHISTORY_CHANGEDSETTINGS,          //changed settings of items
+            LEVELHISTORY_RESIZESECTION
         };
         HistoryType type;
         //used most of Operations
@@ -245,11 +247,14 @@ public:
     typedef void (LvlScene::*callBackLevelBlock)(CallbackData, LevelBlock);
     typedef void (LvlScene::*callBackLevelBGO)(CallbackData, LevelBGO);
     typedef void (LvlScene::*callBackLevelNPC)(CallbackData, LevelNPC);
+    typedef void (LvlScene::*callBackLevelWater)(CallbackData, LevelWater);
     //add historys
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
     void addChangeSettingsHistory(LevelData modifiedItems, SettingSubType subType, QVariant extraData);
+    void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
+                                 long newLeft, long newTop, long newRight, long newBottom);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -262,13 +267,16 @@ public:
     void historyRedoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoMoveWater(CallbackData cbData, LevelWater data);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
+    void historyUndoMoveWater(CallbackData cbData, LevelWater data);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
     void historyRemoveNPC(CallbackData cbData, LevelNPC data);
+    void historyRemoveWater(CallbackData cbData, LevelWater data);
     //Callbackfunctions: [Change Settings] Hide
     void historyUndoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
     void historyRedoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
@@ -295,10 +303,12 @@ public:
     void historyRedoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
-                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,
+                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,
+                          callBackLevelNPC clbNpc, callBackLevelWater clbWater,
                           bool ignoreBlock = false,
                           bool ignoreBGO = false, 
-                          bool ignoreNPC = false);
+                          bool ignoreNPC = false,
+                          bool ignoreWater = false);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////

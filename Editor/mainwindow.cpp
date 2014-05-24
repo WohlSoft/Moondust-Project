@@ -20,8 +20,6 @@
 #include "mainwindow.h"
 
 #include "npc_dialog/npcdialog.h"
-#include "main_window/appsettings.h"
-
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
@@ -160,36 +158,6 @@ void MainWindow::on_actionAbout_triggered()
     about.exec();
 }
 
-//Application settings
-void MainWindow::on_actionApplication_settings_triggered()
-{
-    AppSettings * appSettings = new AppSettings;
-    appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
-
-    appSettings->autoPlayMusic = autoPlayMusic;
-    appSettings->Animation = LvlOpts.animationEnabled;
-    appSettings->Collisions = LvlOpts.collisionsEnabled;
-    appSettings->AnimationItemLimit = animatorItemsLimit;
-
-    appSettings->applySettings();
-
-    if(appSettings->exec()==QDialog::Accepted)
-    {
-        autoPlayMusic = appSettings->autoPlayMusic;
-        animatorItemsLimit = appSettings->AnimationItemLimit;
-        LvlOpts.animationEnabled = appSettings->Animation;
-        LvlOpts.collisionsEnabled = appSettings->Collisions;
-
-        ui->actionAnimation->setChecked(LvlOpts.animationEnabled);
-        on_actionAnimation_triggered(LvlOpts.animationEnabled);
-        ui->actionCollisions->setChecked(LvlOpts.collisionsEnabled);
-        on_actionCollisions_triggered(LvlOpts.collisionsEnabled);
-
-        saveSettings();
-    }
-
-}
 
 
 ////////////////////////New files templates///////////////////////////
@@ -201,7 +169,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
     npcList->setState(0, 1);
-    npcList->setWindowTitle("Create new NPC.txt configuration file");
+    npcList->setWindowTitle(tr("Create new NPC.txt configuration file"));
     if(npcList->exec()==QDialog::Accepted)
     {
         npcedit *child = createNPCChild();

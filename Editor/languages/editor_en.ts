@@ -220,6 +220,44 @@
     </message>
 </context>
 <context>
+    <name>ItemDoor</name>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="75"/>
+        <source>Layer: </source>
+        <translation>Layer: </translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="80"/>
+        <source>Add to new layer...</source>
+        <translation>Add to new layer...</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="101"/>
+        <source>Jump to exit</source>
+        <translation>Jump to exit</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="107"/>
+        <source>Jump to entrance</source>
+        <translation>Jump to entrance</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="112"/>
+        <source>Copy</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="113"/>
+        <source>Cut</source>
+        <translation>Cut</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="116"/>
+        <source>Remove</source>
+        <translation>Remove</translation>
+    </message>
+</context>
+<context>
     <name>ItemMsgBox</name>
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="22"/>
@@ -314,27 +352,42 @@ Message limits: max line lenth is 28 characters</translation>
 <context>
     <name>ItemWater</name>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="75"/>
+        <location filename="../level_scene/item_water.cpp" line="80"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="80"/>
+        <location filename="../level_scene/item_water.cpp" line="85"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="97"/>
+        <location filename="../level_scene/item_water.cpp" line="103"/>
+        <source>Environment type</source>
+        <translation>Environment type</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="105"/>
+        <source>Water</source>
+        <translation>Water</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="109"/>
+        <source>Quicksand</source>
+        <translation>Quicksand</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="114"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="98"/>
+        <location filename="../level_scene/item_water.cpp" line="115"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="100"/>
+        <location filename="../level_scene/item_water.cpp" line="118"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -350,6 +403,29 @@ Message limits: max line lenth is 28 characters</translation>
         <location filename="../edit_level/levelprops.ui" line="55"/>
         <source>Level name</source>
         <translation>Level name</translation>
+    </message>
+</context>
+<context>
+    <name>LvlScene</name>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="43"/>
+        <source>Search User Backgrounds %1</source>
+        <translation>Search User Backgrounds %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="110"/>
+        <source>Search User Blocks %1</source>
+        <translation>Search User Blocks %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="173"/>
+        <source>Search User BGOs %1</source>
+        <translation>Search User BGOs %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="236"/>
+        <source>Search User NPCs %1</source>
+        <translation>Search User NPCs %1</translation>
     </message>
 </context>
 <context>
@@ -898,7 +974,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="2562"/>
         <source>Contents</source>
-        <translation>Содержание</translation>
+        <translation>Contents</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2565"/>
@@ -1392,14 +1468,22 @@ File: %1</translation>
         <translation type="obsolete">Line Data: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</source>
-        <translation>%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</translation>
+        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="50"/>
+        <location filename="../main_window/clipboard.cpp" line="35"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
+        <translation>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</translation>
+    </message>
+    <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are moved in clipboard</source>
-        <translation>%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</translation>
+        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="53"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
+        <translation>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="40"/>
@@ -1520,9 +1604,14 @@ File: %1</translation>
         <translation>Tiled</translation>
     </message>
     <message>
-        <location filename="../main_window/main_settings.cpp" line="163"/>
+        <location filename="../main_window/main_settings.cpp" line="179"/>
         <source>Current Language changed to %1</source>
         <translation>Current Language changed to %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="172"/>
+        <source>Create new NPC.txt configuration file</source>
+        <translation>Create new NPC.txt configuration file</translation>
     </message>
 </context>
 <context>
@@ -1768,7 +1857,7 @@ because object configurations not loaded
         <location filename="../edit_level/lvl_files_io.cpp" line="251"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="252"/>
         <source>Loading level data</source>
-        <translation>Loading level data</translation>
+        <translation>Loading of level data</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="294"/>
@@ -1798,12 +1887,12 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="83"/>
         <source>offset y</source>
-        <translation>Offset Y</translation>
+        <translation>Offset by Y</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="109"/>
         <source>offset x</source>
-        <translation>Offset X</translation>
+        <translation>Offset by X</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="138"/>

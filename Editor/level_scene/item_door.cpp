@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#include "item_water.h"
+#include "item_door.h"
 #include "../common_features/logger.h"
 
 #include "newlayerbox.h"
@@ -24,34 +24,22 @@
 #include "../common_features/mainwinconnect.h"
 
 
-ItemWater::ItemWater(QGraphicsPolygonItem *parent)
-    : QGraphicsPolygonItem(parent)
+ItemDoor::ItemDoor(QGraphicsRectItem *parent)
+    : QGraphicsRectItem(parent)
 {
+
     isLocked=false;
     waterSize = QSize(32,32);
-    penWidth=2;
-
-    _pen.setColor(Qt::darkBlue);
-    _pen.setWidth(penWidth);
-    _pen.setCapStyle(Qt::SquareCap);
-    _pen.setJoinStyle(Qt::MiterJoin);
-    _pen.setMiterLimit(0);
-    this->setPen(_pen);
-
-    waterData.w=32;
-    waterData.h=32;
-    waterData.x=this->pos().x();
-    waterData.y=this->pos().y();
-    waterData.quicksand=false;
+    //image = new QGraphicsRectItem;
 }
 
 
-ItemWater::~ItemWater()
+ItemDoor::~ItemDoor()
 {
  //   WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
 }
 
-void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+void ItemDoor::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
     if(scene->DrawMode)
     {
@@ -60,10 +48,10 @@ void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
-    QGraphicsPolygonItem::mousePressEvent(mouseEvent);
+    QGraphicsRectItem::mousePressEvent(mouseEvent);
 }
 
-void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
     if((!scene->lock_water)&&(!isLocked))
     {
@@ -84,7 +72,7 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         this->setSelected(1);
         ItemMenu->clear();
 
-        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer));
+        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer));
 
         QAction *setLayer;
         QList<QAction *> layerItems;
@@ -101,25 +89,28 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setLayer->setData(layer.name);
             setLayer->setCheckable(true);
             setLayer->setEnabled(true);
-            setLayer->setChecked( layer.name==waterData.layer );
+            setLayer->setChecked( layer.name==doorData.layer );
             layerItems.push_back(setLayer);
         }
 
         ItemMenu->addSeparator();
 
-        QMenu * WaterType = ItemMenu->addMenu(tr("Environment type"));
-
-        QAction *setAsWater = WaterType->addAction(tr("Water"));
-            setAsWater->setCheckable(true);
-            setAsWater->setChecked(!waterData.quicksand);
-
-        QAction *setAsQuicksand = WaterType->addAction(tr("Quicksand"));
-            setAsQuicksand->setCheckable(true);
-            setAsQuicksand->setChecked(waterData.quicksand);
+        QAction *jumpTo=NULL;
+        if(this->data(0).toString()=="Door_enter")
+        {
+            jumpTo = ItemMenu->addAction(tr("Jump to exit"));
+            jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
+        }
+        else
+        if(this->data(0).toString()=="Door_exit")
+        {
+            jumpTo = ItemMenu->addAction(tr("Jump to entrance"));
+            jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
+        }
 
         ItemMenu->addSeparator();
-        QAction *copyWater = ItemMenu->addAction(tr("Copy"));
-        QAction *cutWater = ItemMenu->addAction(tr("Cut"));
+        QAction *copyDoor = ItemMenu->addAction(tr("Copy"));
+        QAction *cutDoor = ItemMenu->addAction(tr("Cut"));
 
         ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction(tr("Remove"));
@@ -135,41 +126,17 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         event->accept();
 
-        if(selected==cutWater)
+        if(selected==cutDoor)
         {
             //scene->doCut = true ;
             MainWinConnect::pMainWin->on_actionCut_triggered();
             scene->contextMenuOpened = false;
         }
         else
-        if(selected==copyWater)
+        if(selected==copyDoor)
         {
             //scene->doCopy = true ;
             MainWinConnect::pMainWin->on_actionCopy_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==setAsWater)
-        {
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()=="Water")
-                {
-                    ((ItemWater *)SelItem)->setType(0);
-                }
-            }
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==setAsQuicksand)
-        {
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()=="Water")
-                {
-                    ((ItemWater *)SelItem)->setType(1);
-                }
-            }
             scene->contextMenuOpened = false;
         }
         else
@@ -177,12 +144,13 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         {
             LevelData removedItems;
             bool deleted=false;
+
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()=="Water")
+                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
                 {
-                    removedItems.water.push_back(((ItemWater *)SelItem)->waterData);
-                    ((ItemWater *)SelItem)->removeFromArray();
+                    removedItems.doors.push_back(((ItemDoor *)SelItem)->doorData);
+                    ((ItemDoor *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
                     deleted=true;
                 }
@@ -240,9 +208,9 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
                             if(SelItem->data(0).toString()=="Water")
                             {
-                            ((ItemWater *) SelItem)->waterData.layer = lr.name;
-                            ((ItemWater *) SelItem)->setVisible(!lr.hidden);
-                            ((ItemWater *) SelItem)->arrayApply();
+                            ((ItemDoor *) SelItem)->doorData.layer = lr.name;
+                            ((ItemDoor *) SelItem)->setVisible(!lr.hidden);
+                            ((ItemDoor *) SelItem)->arrayApply();
                             }
                         }
                     break;
@@ -254,19 +222,19 @@ QAction *selected = ItemMenu->exec(event->screenPos());
     }
     else
     {
-        QGraphicsPolygonItem::contextMenuEvent(event);
+        QGraphicsRectItem::contextMenuEvent(event);
     }
 }
 
 
 ///////////////////MainArray functions/////////////////////////////
-void ItemWater::setLayer(QString layer)
+void ItemDoor::setLayer(QString layer)
 {
     foreach(LevelLayers lr, scene->LvlData->layers)
     {
         if(lr.name==layer)
         {
-            waterData.layer = layer;
+            doorData.layer = layer;
             this->setVisible(!lr.hidden);
             arrayApply();
         break;
@@ -274,12 +242,12 @@ void ItemWater::setLayer(QString layer)
     }
 }
 
-void ItemWater::arrayApply()
+void ItemDoor::arrayApply()
 {
     bool found=false;
-    if(waterData.index < (unsigned int)scene->LvlData->water.size())
+    if(doorData.index < (unsigned int)scene->LvlData->doors.size())
     { //Check index
-        if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
+        if(doorData.array_id == scene->LvlData->doors[doorData.index].array_id)
         {
             found=true;
         }
@@ -288,26 +256,26 @@ void ItemWater::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->LvlData->water[waterData.index] = waterData; //apply current bgoData
+        scene->LvlData->doors[doorData.index] = doorData; //apply current bgoData
     }
     else
-    for(int i=0; i<scene->LvlData->water.size(); i++)
+    for(int i=0; i<scene->LvlData->doors.size(); i++)
     { //after find it into array
-        if(scene->LvlData->water[i].array_id == waterData.array_id)
+        if(scene->LvlData->doors[i].array_id == doorData.array_id)
         {
-            waterData.index = i;
-            scene->LvlData->water[i] = waterData;
+            doorData.index = i;
+            scene->LvlData->doors[i] = doorData;
             break;
         }
     }
 }
 
-void ItemWater::removeFromArray()
+void ItemDoor::removeFromArray()
 {
     bool found=false;
-    if(waterData.index < (unsigned int)scene->LvlData->water.size())
+    if(doorData.index < (unsigned int)scene->LvlData->bgo.size())
     { //Check index
-        if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
+        if(doorData.array_id == scene->LvlData->doors[doorData.index].array_id)
         {
             found=true;
         }
@@ -315,111 +283,35 @@ void ItemWater::removeFromArray()
 
     if(found)
     { //directlry
-        scene->LvlData->water.remove(waterData.index);
+        scene->LvlData->doors.remove(doorData.index);
     }
     else
-    for(int i=0; i<scene->LvlData->water.size(); i++)
+    for(int i=0; i<scene->LvlData->doors.size(); i++)
     {
-        if(scene->LvlData->water[i].array_id == waterData.array_id)
+        if(scene->LvlData->doors[i].array_id == doorData.array_id)
         {
-            scene->LvlData->water.remove(i); break;
+            scene->LvlData->doors.remove(i); break;
         }
     }
 }
 
-void ItemWater::setType(int tp)
+void ItemDoor::setDoorData(LevelDoors inD)
 {
-    switch(tp)
-    {
-    case 1://Quicksand
-        waterData.quicksand=true;
-        _pen.setColor(Qt::yellow);
-        this->setPen(_pen);
-        break;
-    case 0://Water
-    default:
-        waterData.quicksand=false;
-        _pen.setColor(Qt::green);
-        this->setPen(_pen);
-        break;
-    }
-    arrayApply();
+    doorData = inD;
 }
 
 
-void ItemWater::setSize(QSize sz)
+QRectF ItemDoor::boundingRect() const
 {
-    waterSize = sz;
-    waterData.w = sz.width();
-    waterData.h = sz.height();
-    drawWater();
-    arrayApply();
+    return QRectF(0,0,waterSize.width(),waterSize.height());
 }
 
-
-void ItemWater::setWaterData(LevelWater inD)
-{
-    waterData = inD;
-    waterSize = QSize(waterData.w, waterData.h);
-    //drawWater();
-}
-
-void ItemWater::drawWater()
-{
-    long x, y, h, w;
-
-    x = penWidth;//waterData.x;
-    y = penWidth;//waterData.y;
-    w = waterData.w-penWidth;
-    h = waterData.h-penWidth;
-
-    _pen.setColor(((waterData.quicksand)?Qt::yellow:Qt::green));
-    this->setPen(_pen);
-
-    //this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
-    //this->setBrush(Qt::NoBrush);
-    //this->setRect(x, y, w, h);
-
-    QVector<QPointF > points;
-    points.clear();
-    // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
-    points.push_back(QPointF(x, y));
-    points.push_back(QPointF(x+w, y));
-    points.push_back(QPointF(x+w,y+h));
-    points.push_back(QPointF(x, y+h));
-    points.push_back(QPointF(x, y));
-
-    points.push_back(QPointF(x, y+h));
-    points.push_back(QPointF(x+w,y+h));
-    points.push_back(QPointF(x+w, y));
-    points.push_back(QPointF(x, y));
-
-    this->setPolygon( QPolygonF(points) );
-/*
-    WriteToLog(QtDebugMsg, "WaterDraw -> ============================");
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> x=%1").arg(waterData.x));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> y=%1").arg(waterData.y));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> w=%1").arg(waterData.w));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> h=%1").arg(waterData.h));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> sand %1").arg((int)waterData.quicksand));
-
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> Drawesd x=%1").arg(this->pos().x()));
-    WriteToLog(QtDebugMsg, QString("WaterDraw -> Drawesd y=%1").arg(this->pos().y()));
- */
-}
-
-
-QRectF ItemWater::boundingRect() const
-{
-    return QRectF(0,0,waterSize.width()+penWidth,waterSize.height()+penWidth);
-}
-
-void ItemWater::setContextMenu(QMenu &menu)
+void ItemDoor::setContextMenu(QMenu &menu)
 {
     ItemMenu = &menu;
 }
 
-void ItemWater::setScenePoint(LvlScene *theScene)
+void ItemDoor::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
 }
