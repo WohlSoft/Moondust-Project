@@ -247,6 +247,7 @@ public:
     typedef void (LvlScene::*callBackLevelBlock)(CallbackData, LevelBlock);
     typedef void (LvlScene::*callBackLevelBGO)(CallbackData, LevelBGO);
     typedef void (LvlScene::*callBackLevelNPC)(CallbackData, LevelNPC);
+    typedef void (LvlScene::*callBackLevelWater)(CallbackData, LevelWater);
     //add historys
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
@@ -266,13 +267,16 @@ public:
     void historyRedoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoMoveWater(CallbackData cbData, LevelWater data);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
+    void historyUndoMoveWater(CallbackData cbData, LevelWater data);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
     void historyRemoveNPC(CallbackData cbData, LevelNPC data);
+    void historyRemoveWater(CallbackData cbData, LevelWater data);
     //Callbackfunctions: [Change Settings] Hide
     void historyUndoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
     void historyRedoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
@@ -299,10 +303,12 @@ public:
     void historyRedoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
-                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo, callBackLevelNPC clbNpc,
+                          callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,
+                          callBackLevelNPC clbNpc, callBackLevelWater clbWater,
                           bool ignoreBlock = false,
                           bool ignoreBGO = false, 
-                          bool ignoreNPC = false);
+                          bool ignoreNPC = false,
+                          bool ignoreWater = false);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////
