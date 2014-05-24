@@ -39,7 +39,7 @@ class ItemWater : public QObject, public QGraphicsPolygonItem
 {
     Q_OBJECT
 public:
-    ItemWater();
+    ItemWater(QGraphicsPolygonItem *parent=0);
     ~ItemWater();
 
     void setSize(QSize sz);
