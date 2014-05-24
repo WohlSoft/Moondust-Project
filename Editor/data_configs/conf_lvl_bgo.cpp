@@ -45,7 +45,7 @@ void dataconfigs::loadLevelBGO()
 
     //creation of empty indexes of arrayElements
         bgoIndexes bgoIndex;
-        for(i=0;i<bgo_total+1; i++)
+        for(i=0;i<bgo_total; i++)
         {
             bgoIndex.i=i;
             bgoIndex.type=0;
