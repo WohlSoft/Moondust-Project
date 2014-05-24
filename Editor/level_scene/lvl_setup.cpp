@@ -22,6 +22,7 @@
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
+#include "item_water.h"
 #include "../main_window/global_settings.h"
 
 ////////////////////////////////////Animator////////////////////////////////
@@ -128,6 +129,18 @@ void LvlScene::applyLayersVisible()
                 if( ((ItemNPC *)tmp)->npcData.layer == layer.name)
                 {
                     ((ItemNPC *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+        else
+        if((*it)->data(0)=="Water")
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemWater *)tmp)->waterData.layer == layer.name)
+                {
+                    ((ItemWater *)tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }

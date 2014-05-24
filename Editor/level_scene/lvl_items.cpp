@@ -719,8 +719,8 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
 void LvlScene::placeWater(LevelWater &water, bool toGrid)
 {
-    ItemWater *WATERItem = new ItemWater;
-    //QGraphicsItem *	box;
+    ItemWater *WATERItem = new ItemWater();
+    //QGraphicsPolygonItem *	WATERItem;
     //if(!progress.wasCanceled())
     //    progress.setLabelText("Applayng water "+QString::number(i)+"/"+QString::number(FileData.water.size()));
 
@@ -736,7 +736,11 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
     WATERItem->setWaterData(water);
     WATERItem->drawWater();
 
-    this->addItem(WATERItem);
+    this->addItem( WATERItem );
+    WATERItem->setPos(QPointF(newPos));
+
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> Scene x=%1").arg(WATERItem->pos().x()));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> Scene y=%1").arg(WATERItem->pos().y()));
 
     WATERItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
     WATERItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));
@@ -746,26 +750,6 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
     WATERItem->setData(0, "Water"); // ObjType
     WATERItem->setData(1, QString::number(0) );
     WATERItem->setData(2, QString::number(water.array_id) );
-
-/*
-    //box = addRect(x, y, w, h, QPen(((water.quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
-
-    QVector<QPoint > points;
-    // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
-    points.push_back(QPoint(x, y));
-    points.push_back(QPoint(x+w, y));
-    points.push_back(QPoint(x+w,y+h));
-    points.push_back(QPoint(x, y+h));
-    points.push_back(QPoint(x, y));
-
-    points.push_back(QPoint(x, y+h));
-    points.push_back(QPoint(x+w,y+h));
-    points.push_back(QPoint(x+w, y));
-    points.push_back(QPoint(x, y));
-
-    box = addPolygon(QPolygon(points), QPen(((water.quicksand)?Qt::yellow:Qt::green), 4));
-*/
-
 }
 
 

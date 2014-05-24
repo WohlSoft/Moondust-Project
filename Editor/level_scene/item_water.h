@@ -39,7 +39,7 @@ class ItemWater : public QObject, public QGraphicsPolygonItem
 {
     Q_OBJECT
 public:
-    ItemWater(QGraphicsPolygonItem *parent=0);
+    ItemWater();
     ~ItemWater();
 
     void setSize(QSize sz);
@@ -68,6 +68,7 @@ public:
     int gridOffsetX;
     int gridOffsetY;
     QSize waterSize;
+    int penWidth;
 
     //Locks
     bool isLocked;
