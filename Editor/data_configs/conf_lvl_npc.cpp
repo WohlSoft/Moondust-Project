@@ -18,6 +18,8 @@
 
 #include "data_configs.h"
 
+#include "../main_window/global_settings.h"
+
 void dataconfigs::loadLevelNPC()
 {
     unsigned int i;
@@ -53,6 +55,8 @@ void dataconfigs::loadLevelNPC()
         marker_npc.coin_in_block = npcset.value("coin-in-block", "10").toInt();
 
     npcset.endGroup();
+
+    ConfStatus::total_npc = npc_total;
 
     //creation of empty indexes of arrayElements
         npcIndexes npcIndex;

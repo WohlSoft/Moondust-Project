@@ -18,6 +18,8 @@
 
 #include "data_configs.h"
 
+#include "../main_window/global_settings.h"
+
 void dataconfigs::loadLevelBlocks()
 {
     unsigned int i;
@@ -44,6 +46,7 @@ void dataconfigs::loadLevelBlocks()
         total_data +=block_total;
     blockset.endGroup();
 
+    ConfStatus::total_blocks = block_total;
 
     //creation of empty indexes of arrayElements
     blocksIndexes blockIndex;
