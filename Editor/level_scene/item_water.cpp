@@ -24,13 +24,18 @@
 #include "../common_features/mainwinconnect.h"
 
 
-ItemWater::ItemWater(QGraphicsPolygonItem *parent)
-    : QGraphicsPolygonItem(parent)
+ItemWater::ItemWater()
 {
-
     isLocked=false;
     waterSize = QSize(32,32);
-    //image = new QGraphicsPolygonItem;
+    penWidth=2;
+
+    this->setPen(QPen(Qt::darkBlue, penWidth));
+    waterData.w=32;
+    waterData.h=32;
+    waterData.x=this->pos().x();
+    waterData.y=this->pos().y();
+    waterData.quicksand=false;
 }
 
 
@@ -322,11 +327,11 @@ void ItemWater::setType(int tp)
     {
     case 1://Quicksand
         waterData.quicksand=true;
-        this->setPen(QPen(Qt::yellow));
+        this->setPen(QPen(Qt::yellow, penWidth));
         break;
     case 0://Water
     default:
-        this->setPen(QPen(Qt::green));
+        this->setPen(QPen(Qt::green, penWidth));
         waterData.quicksand=false;
         break;
     }
@@ -347,35 +352,51 @@ void ItemWater::setSize(QSize sz)
 void ItemWater::setWaterData(LevelWater inD)
 {
     waterData = inD;
-    drawWater();
+    waterSize = QSize(waterData.w, waterData.h);
+    //drawWater();
 }
 
 void ItemWater::drawWater()
 {
     long x, y, h, w;
 
-    x = waterData.x;
-    y = waterData.y;
-    h = waterData.h;
-    w = waterData.w;
+    x = penWidth;//waterData.x;
+    y = penWidth;//waterData.y;
+    w = waterData.w-penWidth;
+    h = waterData.h-penWidth;
 
-    //box = addRect(x, y, w, h, QPen(((water.quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
-    QVector<QPoint > points;
+    this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), penWidth));
 
+    //this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
+    //this->setBrush(Qt::NoBrush);
+    //this->setRect(x, y, w, h);
+
+    QVector<QPointF > points;
+    points.clear();
     // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
-    points.push_back(QPoint(x, y));
-    points.push_back(QPoint(x+w, y));
-    points.push_back(QPoint(x+w,y+h));
-    points.push_back(QPoint(x, y+h));
-    points.push_back(QPoint(x, y));
+    points.push_back(QPointF(x, y));
+    points.push_back(QPointF(x+w, y));
+    points.push_back(QPointF(x+w,y+h));
+    points.push_back(QPointF(x, y+h));
+    points.push_back(QPointF(x, y));
 
-    points.push_back(QPoint(x, y+h));
-    points.push_back(QPoint(x+w,y+h));
-    points.push_back(QPoint(x+w, y));
-    points.push_back(QPoint(x, y));
+    points.push_back(QPointF(x, y+h));
+    points.push_back(QPointF(x+w,y+h));
+    points.push_back(QPointF(x+w, y));
+    points.push_back(QPointF(x, y));
 
-    this->setPolygon(QPolygon(points));
-    this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
+    this->setPolygon( QPolygonF(points) );
+/*
+    WriteToLog(QtDebugMsg, "WaterDraw -> ============================");
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> x=%1").arg(waterData.x));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> y=%1").arg(waterData.y));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> w=%1").arg(waterData.w));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> h=%1").arg(waterData.h));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> sand %1").arg((int)waterData.quicksand));
+
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> Drawesd x=%1").arg(this->pos().x()));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> Drawesd y=%1").arg(this->pos().y()));
+ */
 }
 
 

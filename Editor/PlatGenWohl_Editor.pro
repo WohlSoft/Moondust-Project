@@ -78,7 +78,9 @@ SOURCES += main.cpp\
     common_features/mainwinconnect.cpp \
     level_scene/item_water.cpp \
     level_scene/lvl_setup.cpp \
-    level_scene/item_door.cpp
+    level_scene/item_door.cpp \
+    level_scene/lvl_init_filedata.cpp \
+    level_scene/lvl_section.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

@@ -22,6 +22,7 @@
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
+#include "item_water.h"
 
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
@@ -615,6 +616,9 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         tImg=uNpcImg;
     }
 
+
+    NPCItem->setScenePoint(this);
+
         //WriteToLog(QtDebugMsg, "NPC place -> set Data");
     NPCItem->setNpcData(npc);
 
@@ -625,8 +629,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         NPCItem->gridSize=16;
     else
         NPCItem->gridSize = mergedSet.grid;
-
-
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
     NPCItem->setMainPixmap(tImg);
 
@@ -634,9 +636,8 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setContextMenu(npcMenu);
 
         //WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
-    addItem(NPCItem);
 
-    NPCItem->setScenePoint(this);
+    addItem(NPCItem);
 
     QPoint newPos = QPoint(npc.x, npc.y);
     if(toGrid)
@@ -656,6 +657,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     //QPoint offsettenPos = QPoint(npc.x + imgOffsetX, npc.y+imgOffsetY);
 
     //NPCItem->setPos( QPointF(offsettenPos) );
+
     NPCItem->setPos( QPointF(newPos) );
 
     NPCItem->setAnimation(NPCItem->localProps.frames,
@@ -667,9 +669,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
                           NPCItem->localProps.custom_ani_el,
                           NPCItem->localProps.custom_ani_fr,
                           NPCItem->localProps.custom_ani_er);
-
-    if(NPCItem->localProps.frames>1)
-        NPCItem->setData(4, "animated");
 
     //box = addPixmap(QPixmap(uNpcImg));
     //npcBox = new QGraphicsItemGroup(box);
@@ -695,7 +694,10 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
 
     //npcfore->addToGroup(box);
-    //if(npc.id==91)
+
+    if(NPCItem->localProps.frames>1)
+        NPCItem->setData(4, "animated");
+
     if(NPCItem->localProps.foreground)
         NPCItem->setZValue(npcZf);
     else
@@ -703,8 +705,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         NPCItem->setZValue(npcZb);
     else
         NPCItem->setZValue(npcZs);
-    //else
-    //    box->setZValue(npcZb);
 
     NPCItem->setData(0, "NPC"); // ObjType
     NPCItem->setData(1, QString::number(npc.id) );
@@ -714,6 +714,42 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setData(10, QString::number(NPCItem->localProps.height) ); //height
 
     if(PasteFromBuffer) NPCItem->setSelected(true);
+}
+
+
+void LvlScene::placeWater(LevelWater &water, bool toGrid)
+{
+    ItemWater *WATERItem = new ItemWater();
+    //QGraphicsPolygonItem *	WATERItem;
+    //if(!progress.wasCanceled())
+    //    progress.setLabelText("Applayng water "+QString::number(i)+"/"+QString::number(FileData.water.size()));
+
+    QPoint newPos = QPoint(water.x, water.y);
+    if(toGrid)
+    {
+        newPos = applyGrid(QPoint(water.x, water.y), 16);
+        water.x = newPos.x();
+        water.y = newPos.y();
+    }
+    WATERItem->setScenePoint(this);
+    WATERItem->setContextMenu(waterMenu);
+    WATERItem->setWaterData(water);
+    WATERItem->drawWater();
+
+    this->addItem( WATERItem );
+    WATERItem->setPos(QPointF(newPos));
+
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> Scene x=%1").arg(WATERItem->pos().x()));
+    WriteToLog(QtDebugMsg, QString("WaterDraw -> Scene y=%1").arg(WATERItem->pos().y()));
+
+    WATERItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
+    WATERItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));
+
+    WATERItem->setZValue(waterZ);
+
+    WATERItem->setData(0, "Water"); // ObjType
+    WATERItem->setData(1, QString::number(0) );
+    WATERItem->setData(2, QString::number(water.array_id) );
 }
 
 
@@ -802,55 +838,5 @@ void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
         exit->setData(2, QString::number(door.array_id) );
     }
 
-
-}
-
-
-void LvlScene::placeWater(LevelWater &water, bool toGrid)
-{
-    long x, y, h, w;
-    QGraphicsItem *	box;
-    //if(!progress.wasCanceled())
-    //    progress.setLabelText("Applayng water "+QString::number(i)+"/"+QString::number(FileData.water.size()));
-
-    QPoint newPos = QPoint(water.x, water.y);
-
-    if(toGrid)
-    {
-        newPos = applyGrid(QPoint(water.x, water.y), 16);
-        water.x = newPos.x();
-        water.y = newPos.y();
-    }
-
-    x = newPos.x();
-    y = newPos.y();
-    h = water.h;
-    w = water.w;
-
-    //box = addRect(x, y, w, h, QPen(((water.quicksand)?Qt::yellow:Qt::green), 4), Qt::NoBrush);
-
-    QVector<QPoint > points;
-    // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
-    points.push_back(QPoint(x, y));
-    points.push_back(QPoint(x+w, y));
-    points.push_back(QPoint(x+w,y+h));
-    points.push_back(QPoint(x, y+h));
-    points.push_back(QPoint(x, y));
-
-    points.push_back(QPoint(x, y+h));
-    points.push_back(QPoint(x+w,y+h));
-    points.push_back(QPoint(x+w, y));
-    points.push_back(QPoint(x, y));
-
-    box = addPolygon(QPolygon(points), QPen(((water.quicksand)?Qt::yellow:Qt::green), 4));
-
-    box->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
-    box->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));
-
-    box->setZValue(waterZ);
-
-    box->setData(0, "Water"); // ObjType
-    box->setData(1, QString::number(0) );
-    box->setData(2, QString::number(water.array_id) );
 
 }

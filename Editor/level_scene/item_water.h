@@ -39,7 +39,7 @@ class ItemWater : public QObject, public QGraphicsPolygonItem
 {
     Q_OBJECT
 public:
-    ItemWater(QGraphicsPolygonItem *parent=0);
+    ItemWater();
     ~ItemWater();
 
     void setSize(QSize sz);
@@ -48,6 +48,8 @@ public:
 
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
+
+    void drawWater();
 
     QRectF boundingRect() const;
 
@@ -66,6 +68,7 @@ public:
     int gridOffsetX;
     int gridOffsetY;
     QSize waterSize;
+    int penWidth;
 
     //Locks
     bool isLocked;
@@ -78,8 +81,6 @@ protected:
 
 private:
     LvlScene * scene;
-
-    void drawWater();
 };
 
 #endif // ITEM_WATER_H
