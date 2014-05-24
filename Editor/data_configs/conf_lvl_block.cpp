@@ -47,7 +47,7 @@ void dataconfigs::loadLevelBlocks()
 
     //creation of empty indexes of arrayElements
     blocksIndexes blockIndex;
-    for(i=0;i<block_total; i++)
+    for(i=0;i<=block_total; i++)
     {
         blockIndex.i=i;
         blockIndex.type=0;

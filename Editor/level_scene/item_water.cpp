@@ -30,7 +30,13 @@ ItemWater::ItemWater()
     waterSize = QSize(32,32);
     penWidth=2;
 
-    this->setPen(QPen(Qt::darkBlue, penWidth));
+    _pen.setColor(Qt::darkBlue);
+    _pen.setWidth(penWidth);
+    _pen.setCapStyle(Qt::SquareCap);
+    _pen.setJoinStyle(Qt::MiterJoin);
+    _pen.setMiterLimit(0);
+    this->setPen(_pen);
+
     waterData.w=32;
     waterData.h=32;
     waterData.x=this->pos().x();
@@ -170,7 +176,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         {
             LevelData removedItems;
             bool deleted=false;
-
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Water")
@@ -327,12 +332,14 @@ void ItemWater::setType(int tp)
     {
     case 1://Quicksand
         waterData.quicksand=true;
-        this->setPen(QPen(Qt::yellow, penWidth));
+        _pen.setColor(Qt::yellow);
+        this->setPen(_pen);
         break;
     case 0://Water
     default:
-        this->setPen(QPen(Qt::green, penWidth));
         waterData.quicksand=false;
+        _pen.setColor(Qt::green);
+        this->setPen(_pen);
         break;
     }
     arrayApply();
@@ -365,7 +372,8 @@ void ItemWater::drawWater()
     w = waterData.w-penWidth;
     h = waterData.h-penWidth;
 
-    this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), penWidth));
+    _pen.setColor(((waterData.quicksand)?Qt::yellow:Qt::green));
+    this->setPen(_pen);
 
     //this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
     //this->setBrush(Qt::NoBrush);
@@ -402,7 +410,7 @@ void ItemWater::drawWater()
 
 QRectF ItemWater::boundingRect() const
 {
-    return QRectF(0,0,waterSize.width(),waterSize.height());
+    return QRectF(0,0,waterSize.width()+penWidth,waterSize.height()+penWidth);
 }
 
 void ItemWater::setContextMenu(QMenu &menu)
