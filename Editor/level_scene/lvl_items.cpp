@@ -72,9 +72,11 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
     if(npcID < (unsigned int)index_npc.size())
     {
         j = index_npc[npcID].i;
-
-        if(pConfigs->main_npc[j].id == npcID)
-            found=true;
+        if(j<pConfigs->main_npc.size())
+        {
+            if(pConfigs->main_npc[j].id == npcID)
+                found=true;
+        }
     }
 
     //if Index found
@@ -268,8 +270,11 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     {
         j = index_blocks[block.id].i;
 
+        if(j<pConfigs->main_block.size())
+        {
         if(pConfigs->main_block[j].id == block.id)
             found=true;
+        }
     }
 
     //if Index found
@@ -409,8 +414,11 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     {
         j = index_bgo[bgo.id].i;
 
+        if(j<pConfigs->main_bgo.size())
+        {
         if(pConfigs->main_bgo[j].id == bgo.id)
             found=true;
+        }
     }
 
     //if Index found
@@ -543,8 +551,11 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     {
         j = index_npc[npc.id].gi;
 
+        if(j<pConfigs->main_npc.size())
+        {
         if(pConfigs->main_npc[j].id == npc.id)
             found=true;
+        }
     }
 
     //if Index found
