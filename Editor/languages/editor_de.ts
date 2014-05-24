@@ -220,6 +220,44 @@
     </message>
 </context>
 <context>
+    <name>ItemDoor</name>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="75"/>
+        <source>Layer: </source>
+        <translation>Ebene: </translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="80"/>
+        <source>Add to new layer...</source>
+        <translation>Zu neuer Ebene hinzufügen...</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="101"/>
+        <source>Jump to exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="107"/>
+        <source>Jump to entrance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="112"/>
+        <source>Copy</source>
+        <translation>Kopieren</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="113"/>
+        <source>Cut</source>
+        <translation>Ausschneiden</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="116"/>
+        <source>Remove</source>
+        <translation>Löschen</translation>
+    </message>
+</context>
+<context>
     <name>ItemMsgBox</name>
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="22"/>
@@ -310,27 +348,42 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
 <context>
     <name>ItemWater</name>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="75"/>
+        <location filename="../level_scene/item_water.cpp" line="78"/>
         <source>Layer: </source>
         <translation>Ebene: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="80"/>
+        <location filename="../level_scene/item_water.cpp" line="83"/>
         <source>Add to new layer...</source>
         <translation>Zu neuer Ebene hinzufügen...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="97"/>
+        <location filename="../level_scene/item_water.cpp" line="101"/>
+        <source>Environment type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="103"/>
+        <source>Water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="107"/>
+        <source>Quicksand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="112"/>
         <source>Copy</source>
         <translation>Kopieren</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="98"/>
+        <location filename="../level_scene/item_water.cpp" line="113"/>
         <source>Cut</source>
         <translation>Ausschneiden</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="100"/>
+        <location filename="../level_scene/item_water.cpp" line="116"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
@@ -354,6 +407,29 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <source>Autoplay music</source>
         <translation type="vanished">Musik automatisch abspielen</translation>
+    </message>
+</context>
+<context>
+    <name>LvlScene</name>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="43"/>
+        <source>Search User Backgrounds %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="110"/>
+        <source>Search User Blocks %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="173"/>
+        <source>Search User BGOs %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="236"/>
+        <source>Search User NPCs %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1345,14 +1421,22 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <translation>Anwendungseinstellungen</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</source>
-        <translation>%1 Blöcke, %2 Hintergründe, %3 NPCs wurden in der Zwischenablage gespeichert</translation>
+        <translation type="vanished">%1 Blöcke, %2 Hintergründe, %3 NPCs wurden in der Zwischenablage gespeichert</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="50"/>
+        <location filename="../main_window/clipboard.cpp" line="35"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are moved in clipboard</source>
-        <translation>%1 Blöcke, %2 Hintergründe, %3 NPCs wurden in der Zwischenablage verschoben</translation>
+        <translation type="vanished">%1 Blöcke, %2 Hintergründe, %3 NPCs wurden in der Zwischenablage verschoben</translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="53"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="40"/>
@@ -1485,12 +1569,12 @@ Alle Datein (*.*)</translation>
         <translation>Gefließt</translation>
     </message>
     <message>
-        <location filename="../main_window/main_settings.cpp" line="163"/>
+        <location filename="../main_window/main_settings.cpp" line="179"/>
         <source>Current Language changed to %1</source>
         <translation>Aktuelle Sprache ändern zu %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="204"/>
+        <location filename="../mainwindow.cpp" line="172"/>
         <source>Create new NPC.txt configuration file</source>
         <translation type="unfinished">Erstellen Sie neue NPC.txt Konfigurationsdatei</translation>
     </message>
@@ -1747,7 +1831,7 @@ Bitte Überprüfe ob die Konfiguationsdatein (*.INI-Datein)/SMBX Ordner mit dein
         <location filename="../edit_level/lvl_files_io.cpp" line="251"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="252"/>
         <source>Loading level data</source>
-        <translation type="unfinished">Laden der Level-Daten</translation>
+        <translation>Laden der Level-Daten</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="294"/>
