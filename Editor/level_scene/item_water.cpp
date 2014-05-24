@@ -24,7 +24,8 @@
 #include "../common_features/mainwinconnect.h"
 
 
-ItemWater::ItemWater()
+ItemWater::ItemWater(QGraphicsPolygonItem *parent)
+    : QGraphicsPolygonItem(parent)
 {
     isLocked=false;
     waterSize = QSize(32,32);
