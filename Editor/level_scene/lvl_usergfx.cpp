@@ -39,7 +39,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     for(i=0; i<pConfigs->main_bg.size(); i++) //Add user images
         {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User Backgrounds "+QString::number(i+1)+"/"+QString::number(pConfigs->main_bg.size()));
+            progress.setLabelText(
+                        tr("Search User Backgrounds %1")
+                        .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_bg.size()) ) );
 
             loaded1 = false;
             loaded2 = false;
@@ -104,7 +106,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     {
 
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User Blocks "+QString::number(i+1)+"/"+QString::number(pConfigs->main_block.size()));
+            progress.setLabelText(
+                        tr("Search User Blocks %1")
+                        .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_block.size()) ) );
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_block[i].image_n)) )
@@ -165,7 +169,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
     {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User BGOs "+QString::number(i+1)+"/"+QString::number(pConfigs->main_bgo.size()));
+            progress.setLabelText(
+                        tr("Search User BGOs %1")
+                        .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_bgo.size()) ) );
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_bgo[i].image_n)) )
@@ -226,7 +232,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
     {
         if(!progress.wasCanceled())
-            progress.setLabelText("Search User NPCs "+QString::number(i+1)+"/"+QString::number(pConfigs->main_npc.size()));
+            progress.setLabelText(
+                        tr("Search User NPCs %1")
+                        .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_npc.size()) ) );
 
              uNPC.withImg = false;
              uNPC.withTxt = false;
