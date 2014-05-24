@@ -70,6 +70,8 @@ public:
     QSize waterSize;
     int penWidth;
 
+    QPen _pen;
+
     //Locks
     bool isLocked;
     void setLocked(bool lock);
