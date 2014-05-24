@@ -234,12 +234,12 @@
     <message>
         <location filename="../level_scene/item_door.cpp" line="101"/>
         <source>Jump to exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Springe zu Ausgang</translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="107"/>
         <source>Jump to entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Springe zu Eingang</translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="112"/>
@@ -360,17 +360,17 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/item_water.cpp" line="101"/>
         <source>Environment type</source>
-        <translation type="unfinished"></translation>
+        <translation>Umgebungs Typ</translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="103"/>
         <source>Water</source>
-        <translation type="unfinished"></translation>
+        <translation>Wasser</translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="107"/>
         <source>Quicksand</source>
-        <translation type="unfinished"></translation>
+        <translation>Quicksand</translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="112"/>
@@ -414,22 +414,22 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="43"/>
         <source>Search User Backgrounds %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche benutzerdefinierte Hintergründe %1</translation>
     </message>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="110"/>
         <source>Search User Blocks %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche benutzerdefinierte Blöcke %1</translation>
     </message>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="173"/>
         <source>Search User BGOs %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Benutzerdefinierte BGOs %1</translation>
     </message>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="236"/>
         <source>Search User NPCs %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche benutzerdefinierte NPCs %1</translation>
     </message>
 </context>
 <context>
@@ -807,7 +807,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <location filename="../mainwindow.ui" line="2159"/>
         <location filename="../mainwindow.ui" line="2461"/>
         <source>Exit</source>
-        <translation>Ausgang</translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2044"/>
@@ -1403,7 +1403,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <location filename="../mainwindow.ui" line="3751"/>
         <location filename="../main_window/menubar.cpp" line="225"/>
         <source>[No opened files]</source>
-        <translation>[Keine Offnen Datein]</translation>
+        <translation type="unfinished">[Keine Offnen Dateien]</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3766"/>
@@ -1427,7 +1427,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../main_window/clipboard.cpp" line="35"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Blöcke, %2 Hintergründe, %3 NPCs, %4 Wasseritems wurden in der Zwischenablage gespeichert</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are moved in clipboard</source>
@@ -1436,7 +1436,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../main_window/clipboard.cpp" line="53"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Blöcke, %2 Hintergründe, %3 NPCs, %4 Wasseritems wurden in der Zwischenablage verschoben</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="40"/>
@@ -1576,7 +1576,7 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../mainwindow.cpp" line="172"/>
         <source>Create new NPC.txt configuration file</source>
-        <translation type="unfinished">Erstellen Sie neue NPC.txt Konfigurationsdatei</translation>
+        <translation>Erstelle neue NPC.txt Konfigurationsdatei</translation>
     </message>
 </context>
 <context>
