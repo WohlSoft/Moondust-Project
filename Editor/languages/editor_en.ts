@@ -352,42 +352,42 @@ Message limits: max line lenth is 28 characters</translation>
 <context>
     <name>ItemWater</name>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="78"/>
+        <location filename="../level_scene/item_water.cpp" line="80"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="83"/>
+        <location filename="../level_scene/item_water.cpp" line="85"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="101"/>
+        <location filename="../level_scene/item_water.cpp" line="103"/>
         <source>Environment type</source>
         <translation>Environment type</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="103"/>
+        <location filename="../level_scene/item_water.cpp" line="105"/>
         <source>Water</source>
         <translation>Water</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="107"/>
+        <location filename="../level_scene/item_water.cpp" line="109"/>
         <source>Quicksand</source>
         <translation>Quicksand</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="112"/>
+        <location filename="../level_scene/item_water.cpp" line="114"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="113"/>
+        <location filename="../level_scene/item_water.cpp" line="115"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="116"/>
+        <location filename="../level_scene/item_water.cpp" line="118"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
