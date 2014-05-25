@@ -30,6 +30,8 @@ npcedit *MainWindow::createNPCChild()
     npcWindow->setAttribute(Qt::WA_DeleteOnClose);
 
     QMdiSubWindow * npcWindowP = ui->centralWidget->addSubWindow(npcWindow);
+    npcWindowP->setAttribute(Qt::WA_DeleteOnClose);
+
 
     npcWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
@@ -57,6 +59,7 @@ leveledit *MainWindow::createChild()
     levelWindow->setAttribute(Qt::WA_DeleteOnClose);
 
     QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(levelWindow);
+    levelWindowP->setAttribute(Qt::WA_DeleteOnClose);
 
     levelWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
