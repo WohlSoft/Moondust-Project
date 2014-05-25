@@ -344,6 +344,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
             if(itemIsFound)
             {
+                LevelData modData;
                 foreach(LevelLayers lr, scene->LvlData->layers)
                 { //Find layer's settings
                     if(lr.name==lName)
@@ -353,14 +354,16 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
                             if(SelItem->data(0).toString()=="NPC")
                             {
-                            ((ItemNPC *) SelItem)->npcData.layer = lr.name;
-                            ((ItemNPC *) SelItem)->setVisible(!lr.hidden);
-                            ((ItemNPC *) SelItem)->arrayApply();
+                                modData.npc.push_back(((ItemNPC*) SelItem)->npcData);
+                                ((ItemNPC *) SelItem)->npcData.layer = lr.name;
+                                ((ItemNPC *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemNPC *) SelItem)->arrayApply();
                             }
                         }
                     break;
                     }
                 }//Find layer's settings
+                scene->addChangedLayerHistory(modData, lName);
              scene->contextMenuOpened = false;
             }
 
