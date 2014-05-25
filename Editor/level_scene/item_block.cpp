@@ -32,12 +32,14 @@ ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
     frameLast=-1; //to unlimited frameset
     //image = new QGraphicsPixmapItem;
     isLocked=false;
+    timer=NULL;
 }
 
 
 ItemBlock::~ItemBlock()
 {
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+    if(timer) delete timer;
 }
 
 void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )

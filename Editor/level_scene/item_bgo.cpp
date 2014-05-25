@@ -35,12 +35,14 @@ ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
     gridOffsetY=0;
     isLocked=false;
     //image = new QGraphicsPixmapItem;
+    timer=NULL;
 }
 
 
 ItemBGO::~ItemBGO()
 {
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+    if(timer) delete timer;
 }
 
 void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )

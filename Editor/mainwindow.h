@@ -110,7 +110,7 @@ public slots:
 
     //SubWindow functions
     npcedit *createNPCChild();
-    leveledit *createChild();
+    leveledit *createLvlChild();
     void setActiveSubWindow(QWidget *window);
     void SWCascade();
     void SWTile();

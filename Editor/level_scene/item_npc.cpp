@@ -43,12 +43,15 @@ ItemNPC::ItemNPC(QGraphicsPixmapItem *parent)
     //image = new QGraphicsPixmapItem;
 
     isLocked=false;
+
+    timer=NULL;
 }
 
 
 ItemNPC::~ItemNPC()
 {
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+    if(timer) delete timer;
 }
 
 
@@ -655,6 +658,7 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
 
     if(!edit)
     {
+        if(timer) delete timer;
         timer = new QTimer(this);
         connect(
                     timer, SIGNAL(timeout()),

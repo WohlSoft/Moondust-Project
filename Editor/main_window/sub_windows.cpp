@@ -30,6 +30,8 @@ npcedit *MainWindow::createNPCChild()
     npcWindow->setAttribute(Qt::WA_DeleteOnClose);
 
     QMdiSubWindow * npcWindowP = ui->centralWidget->addSubWindow(npcWindow);
+    npcWindowP->setAttribute(Qt::WA_DeleteOnClose);
+
 
     npcWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
@@ -48,17 +50,22 @@ npcedit *MainWindow::createNPCChild()
 
 
 //Edit LEVEL
-leveledit *MainWindow::createChild()
+leveledit *MainWindow::createLvlChild()
 {
     leveledit *child = new leveledit;
+    QMdiSubWindow *levelWindow = new QMdiSubWindow;
 
-    QMdiSubWindow * levelWindow = ui->centralWidget->addSubWindow(child);
+    levelWindow->setWidget(child);
+    levelWindow->setAttribute(Qt::WA_DeleteOnClose);
 
-    levelWindow->setGeometry(
+    QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(levelWindow);
+    levelWindowP->setAttribute(Qt::WA_DeleteOnClose);
+
+    levelWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                              800, 610);
-    levelWindow->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
+    levelWindowP->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
 
     return child;
 }

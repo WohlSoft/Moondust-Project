@@ -64,7 +64,7 @@ void MainWindow::OpenFile(QString FilePath)
         FileData.path = in_1.absoluteDir().absolutePath();
         FileData.playmusic = autoPlayMusic;
 
-        leveledit *child = createChild();
+        leveledit *child = createLvlChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, LvlOpts)) ) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
@@ -94,7 +94,7 @@ void MainWindow::OpenFile(QString FilePath)
         if( !FileData.ReadFileValid ) return;
 
         /*
-        leveledit *child = createChild();
+        leveledit *child = createLvlChild();
         if (child->loadFile(FilePath)) {
             statusBar()->showMessage(tr("World map file loaded"), 2000);
             child->show();
