@@ -151,25 +151,31 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         else
         if(selected==setAsWater)
         {
+            LevelData modData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Water")
                 {
+                    modData.water.push_back(((ItemWater *)SelItem)->waterData);
                     ((ItemWater *)SelItem)->setType(0);
                 }
             }
+            scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(true));
             scene->contextMenuOpened = false;
         }
         else
         if(selected==setAsQuicksand)
         {
+            LevelData modData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Water")
                 {
+                    modData.water.push_back(((ItemWater *)SelItem)->waterData);
                     ((ItemWater *)SelItem)->setType(1);
                 }
             }
+            scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(false));
             scene->contextMenuOpened = false;
         }
         else
