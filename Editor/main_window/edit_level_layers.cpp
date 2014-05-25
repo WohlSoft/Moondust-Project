@@ -356,6 +356,13 @@ void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QS
     ModifyLayer(oldLayerName, newLayerName, visible);
 }
 
+void MainWindow::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
+{
+    WriteToLog(QtDebugMsg, "Row Change at" + QString::number(sourceStart) +
+               " " + QString::number(sourceEnd) +
+               " to " + QString::number(destinationRow));
+}
+
 
 void MainWindow::on_LevelLayers_visibilityChanged(bool visible)
 {
