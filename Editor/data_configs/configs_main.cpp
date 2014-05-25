@@ -142,13 +142,13 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
     WriteToLog(QtDebugMsg, QString("-------------------------"));
     WriteToLog(QtDebugMsg, QString("Congifs status 1"));
     WriteToLog(QtDebugMsg, QString("-------------------------"));
-    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1").arg(main_block.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1").arg(main_bgo.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1").arg(main_npc.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1").arg(main_bg.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1").arg(main_music_lvl.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1").arg(main_music_spc.size()));
-    WriteToLog(QtDebugMsg, QString("Loaded World musics    %1").arg(main_music_wld.size()));
+    WriteToLog(QtDebugMsg, QString("Loaded blocks          %1/%2").arg(main_block.size()).arg(ConfStatus::total_blocks));
+    WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1/%2").arg(main_bgo.size()).arg(ConfStatus::total_bgo));
+    WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1/%2").arg(main_npc.size()).arg(ConfStatus::total_npc));
+    WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1/%2").arg(main_bg.size()).arg(ConfStatus::total_bg));
+    WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1/%2").arg(main_music_lvl.size()).arg(ConfStatus::total_music_lvl));
+    WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1/%2").arg(main_music_spc.size()).arg(ConfStatus::total_music_spc));
+    WriteToLog(QtDebugMsg, QString("Loaded World musics    %1/%2").arg(main_music_wld.size()).arg(ConfStatus::total_music_wld));
 
     return true;
 }

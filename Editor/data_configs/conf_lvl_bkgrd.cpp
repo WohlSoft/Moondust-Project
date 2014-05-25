@@ -18,6 +18,8 @@
 
 #include "data_configs.h"
 
+#include "../main_window/global_settings.h"
+
 void dataconfigs::loadLevelBackgrounds()
 {
     unsigned int i;
@@ -42,6 +44,7 @@ void dataconfigs::loadLevelBackgrounds()
         total_data +=bg_total;
     bgset.endGroup();
 
+    ConfStatus::total_bg = bg_total;
 
     for(i=1; i<=bg_total; i++)
     {

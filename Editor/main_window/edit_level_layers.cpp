@@ -23,10 +23,13 @@
 #include "../level_scene/item_bgo.h"
 #include "../level_scene/item_block.h"
 #include "../level_scene/item_npc.h"
+#include "../level_scene/item_water.h"
 
 
 void MainWindow::RemoveCurrentLayer(bool moveToDefault)
 {
+    if(activeChildWindow()!=1) return;
+
     bool layerVisible = true;
     //Remove from List
     QList<QListWidgetItem * > selected = ui->LvlLayerList->selectedItems();
@@ -96,7 +99,11 @@ void MainWindow::RemoveLayerItems(QString layerName)
         else
         if((*it)->data(0).toString()=="Water")
         {
-            //TODO
+            if(((ItemWater *)(*it))->waterData.layer==layerName)
+            {
+                ((ItemWater *)(*it))->removeFromArray();
+                activeLvlEditWin()->scene->removeItem((*it));
+            }
         }
         else
         if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
@@ -163,7 +170,10 @@ void MainWindow::ModifyLayer(QString layerName, bool visible)
         else
         if((*it)->data(0).toString()=="Water")
         {
-            //TODO
+            if(((ItemWater *)(*it))->waterData.layer==layerName)
+            {
+                (*it)->setVisible(visible);
+            }
         }
         else
         if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
@@ -209,7 +219,11 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
         else
         if((*it)->data(0).toString()=="Water")
         {
-            //TODO
+            if(((ItemWater *)(*it))->waterData.layer==layerName)
+            {
+                ((ItemWater *)(*it))->waterData.layer = newLayerName;
+                ((ItemWater *)(*it))->arrayApply();
+            }
         }
         else
         if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
@@ -260,7 +274,12 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
         else
         if((*it)->data(0).toString()=="Water")
         {
-            //TODO
+            if(((ItemWater *)(*it))->waterData.layer==layerName)
+            {
+                ((ItemWater *)(*it))->waterData.layer = newLayerName;
+                (*it)->setVisible(visible);
+                ((ItemWater *)(*it))->arrayApply();
+            }
         }
         else
         if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))

@@ -24,7 +24,8 @@
 #include "../common_features/mainwinconnect.h"
 
 
-ItemWater::ItemWater()
+ItemWater::ItemWater(QGraphicsPolygonItem *parent)
+    : QGraphicsPolygonItem(parent)
 {
     isLocked=false;
     waterSize = QSize(32,32);
@@ -304,7 +305,7 @@ void ItemWater::arrayApply()
 void ItemWater::removeFromArray()
 {
     bool found=false;
-    if(waterData.index < (unsigned int)scene->LvlData->bgo.size())
+    if(waterData.index < (unsigned int)scene->LvlData->water.size())
     { //Check index
         if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
         {
