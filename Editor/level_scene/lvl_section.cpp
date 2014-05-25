@@ -438,21 +438,41 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
      WriteToLog(QtDebugMsg, "Draw BG -> Style: Tiled");
 
+     R1W = srcimg.width();
+     R1H = srcimg.height();
         if(attach==0)
-            toY = sctH-R1H; //arrach to Bottom
+        {
+            //Attached to Bottom
+            RectPlus = sctH % R1H;
+
+            toY = (sctH>R1H)? sctH-R1H : 0;
+
+            //R1Hc = R1H-RectPlus; // Crop height from bottom/Offset from top
+
+            item = addRect(0, 0, sctW, RectPlus, Qt::NoPen,
+                           QBrush(srcimg.copy(0, R1H-RectPlus, R1W, RectPlus))
+                           );
+            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setPos(x,y);
+            item->setZValue(bgZ);
+
+            if(sctH > R1H)
+            {
+                item = addRect(0, 0, sctW, sctH-RectPlus, Qt::NoPen, QBrush(srcimg));
+                item->setData(0, "BackGround"+QString::number(sctID) );
+                item->setPos(x,y+RectPlus);
+                item->setZValue(bgZ);
+            }
+
+        }
         else
-            toY = 0; //attach to Top
-
-        toY = (sctH>R1H)? sctH-R1H : 0;
-        R1Hc = ((R1H>sctH) ? R1H-sctH : 0); //Crop height from bottom
-        R1Ho = R1Hc; //Offset from top
-        RectPlus=0;
-
-        //Attached to Top (now only top)
-        item = addRect(0, 0, sctW, sctH, Qt::NoPen, QBrush(srcimg));
-        item->setData(0, "BackGround"+QString::number(sctID) );
-        item->setPos(x,y);
-        item->setZValue(bgZ);
+        {
+            //Attached to Top
+            item = addRect(0, 0, sctW, sctH, Qt::NoPen, QBrush(srcimg));
+            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setPos(x,y);
+            item->setZValue(bgZ);
+        }
     }
 
     WriteToLog(QtDebugMsg, "Draw BG -> Drawed");
