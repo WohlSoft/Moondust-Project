@@ -21,6 +21,7 @@
 #include "../mainwindow.h"
 #include "music_player.h"
 
+QMediaPlaylist GlobalMusicPlayer::CurrentMusic;
 
 
 void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
@@ -123,7 +124,7 @@ void MainWindow::setMusic(bool checked)
 
 
     WriteToLog(QtDebugMsg, "-> New MediaPlayList");
-    QMediaPlaylist * CurrentMusic = new QMediaPlaylist;
+    GlobalMusicPlayer::CurrentMusic.clear();
 
 
     if(activeChildWindow()!=1)
@@ -202,14 +203,14 @@ void MainWindow::setMusic(bool checked)
             if( (QFile::exists(musicFilePath)) && (QFileInfo(musicFilePath)).isFile() )
             {
                 WriteToLog(QtDebugMsg, QString("Set music player -> addMedia"));
-                CurrentMusic->addMedia(QUrl::fromLocalFile( musicFilePath ));
-                CurrentMusic->setPlaybackMode(QMediaPlaylist::Loop);
+                GlobalMusicPlayer::CurrentMusic.addMedia(QUrl::fromLocalFile( musicFilePath ));
+                GlobalMusicPlayer::CurrentMusic.setPlaybackMode(QMediaPlaylist::Loop);
                 WriteToLog(QtDebugMsg, QString("Set music player -> stop Current"));
                 MusicPlayer->stop();
                 WriteToLog(QtDebugMsg, QString("Set music player -> set PlayList"));
-                MusicPlayer->setPlaylist(CurrentMusic);
+                MusicPlayer->setPlaylist(&(GlobalMusicPlayer::CurrentMusic));
                 WriteToLog(QtDebugMsg, QString("Set music player -> setVolme and play"));
-                MusicPlayer->setVolume(100);
+                MusicPlayer->setVolume(75);
                 MusicPlayer->play();
             }
             else
