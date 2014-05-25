@@ -237,6 +237,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
             if(itemIsFound)
             {
+                LevelData modData;
                 foreach(LevelLayers lr, scene->LvlData->layers)
                 { //Find layer's settings
                     if(lr.name==lName)
@@ -246,14 +247,16 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
                             if(SelItem->data(0).toString()=="Water")
                             {
-                            ((ItemWater *) SelItem)->waterData.layer = lr.name;
-                            ((ItemWater *) SelItem)->setVisible(!lr.hidden);
-                            ((ItemWater *) SelItem)->arrayApply();
+                                modData.water.push_back(((ItemWater*) SelItem)->waterData);
+                                ((ItemWater *) SelItem)->waterData.layer = lr.name;
+                                ((ItemWater *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemWater *) SelItem)->arrayApply();
                             }
                         }
                     break;
                     }
                 }//Find layer's settings
+                scene->addChangedLayerHistory(modData, lName);
              scene->contextMenuOpened = false;
             }
         }
