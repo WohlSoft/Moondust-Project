@@ -301,9 +301,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
          R2Hc=0, //Crop height from bottom
          R2Ho=0, //Offset from top
          RectPlus=0,
-         toX, //Placing position X
          toY; //Placing position Y 0 - top
-    long px = 0; //Current draw pisitin
 
     sctW = (long)fabs(x-w);
     sctH = (long)fabs(y-h);
@@ -312,11 +310,11 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
     attach = bgsetup.attached;
 
+// ///////////////////SingleRow BG///////////////////////////
     if((bgsetup.type==0)&&(!bgsetup.editing_tiled))
-    {   // ///////////////////SingleRow BG///////////////////////////
+    {
         WriteToLog(QtDebugMsg, "Draw BG -> Style: SingleRow BG");
 
-        px=0;
         R1W = srcimg.width();
         R1H = srcimg.height();
 
@@ -341,23 +339,11 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         }
 
         // /////////////////////Draw row//////////////////
-        while( R1W+px < sctW )
-        {
-            item = addPixmap( srcimg.copy(0, R1Ho, R1W, R1H-R1Hc) );
-            item->setPos(x+px, y+toY);
-            item->setData(0, "BackGround"+QString::number(sctID) );
-            item->setZValue(bgZ);
-            px += R1W;
-        }
 
-        if((sctW-px)>0) //Last croped item
-        {
-            item = addPixmap( srcimg.copy(0, R1Ho, (sctW-px), R1H-R1Hc) );
-            item->setPos(x+px, y+toY);
-            item->setData(0, "BackGround"+QString::number(sctID) );
-            item->setZValue(bgZ);
-        }
-        // /////////////////////Draw row//////////////////
+        item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
+        item->setData(0, "BackGround"+QString::number(sctID) );
+        item->setPos(x, y+toY);
+        item->setZValue(bgZ);
 
         if(R1H < sctH)
         {
@@ -368,13 +354,15 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         }
 
     }
-    else if((bgsetup.type==1)&&(!bgsetup.editing_tiled))
-    {   // ///////////////////DoubleRow BG////////////////////////
+    else
+
+// ///////////////////DoubleRow BG////////////////////////
+    if((bgsetup.type==1)&&(!bgsetup.editing_tiled))
+    {
         WriteToLog(QtDebugMsg, "Draw BG -> Style: DoubleRow BG");
 
         si_attach = bgsetup.second_attached; // Second image attach
 
-        px=0;
         R1W = srcimg.width();
         R1H = srcimg.height();
 
@@ -384,8 +372,6 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         else
             FillColor = QColor( srcimg.toImage().pixel(0,0) );
 
-        px=0;
-
         toY = (sctH>R1H)? sctH-R1H : 0;
         R1Hc = ((R1H>sctH) ? R1H-sctH : 0); //Crop height from bottom
         R1Ho = R1Hc; //Offset from top
@@ -394,27 +380,13 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         WriteToLog(QtDebugMsg, QString("Draw BG -> Draw first row, params: "));
 
         // /////////////////////Draw first row//////////////////
-        while( R1W+px < sctW )
-        {
-            item = addPixmap( srcimg.copy(0, R1Ho, R1W, R1H-R1Hc) );
-            item->setPos(x+px, y+toY);
-            item->setData(0, "BackGround"+QString::number(sctID) );
-            item->setZValue(bgZ);
-            px += R1W;
-        }
-
-        if((sctW-px)>0) //Last croped item
-        {
-            item = addPixmap( srcimg.copy(0, R1Ho, (sctW-px), R1H-R1Hc) );
-            item->setPos(x+px, y+toY);
-            item->setData(0, "BackGround"+QString::number(sctID) );
-            item->setZValue(bgZ);
-        }
+        item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
+        item->setData(0, "BackGround"+QString::number(sctID) );
+        item->setPos(x, y+toY);
+        item->setZValue(bgZ);
         // /////////////////////Draw first row//////////////////
 
-
         WriteToLog(QtDebugMsg, "Draw BG -> Draw second row");
-        px=0;
 
         R2W = srcimg2.width();
         R2H = srcimg2.height();
@@ -439,22 +411,10 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         {
 
             // /////////////////////Draw second row//////////////////
-            while( R2W+px < sctW )
-            {
-                item = addPixmap( srcimg2.copy(0, R2Ho, R2W, R2H-R2Hc) );
-                item->setPos(x+px, y+toY);
-                item->setData(0, "BackGround"+QString::number(sctID) );
-                item->setZValue(bgZ+0.0000000001);
-                px += R2W;
-            }
-
-            if((sctW-px)>0) //Last croped item
-            {
-                item = addPixmap( srcimg2.copy(0, R2Ho, (sctW-px), R2H-R2Hc) );
-                item->setPos(x+px, y+toY);
-                item->setData(0, "BackGround"+QString::number(sctID) );
-                item->setZValue(bgZ+0.0000000001);
-            }
+            item = addRect(0, 0, sctW, R2H-R2Hc, Qt::NoPen, QBrush( srcimg2.copy(0, R2Ho, R2W, R2H-R2Hc) ));
+            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setPos(x, y+toY);
+            item->setZValue(bgZ+0.0000000001);
             // /////////////////////Draw second row//////////////////
 
         } else
@@ -472,53 +432,30 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
     }
     else
-    { // ///////////////////////////////Tiled BG///////////////////////////////
-     /*   WriteToLog(QtDebugMsg, "Draw BG -> Style: Tiled");
-        BackImg.fill( Qt::black );
-        BGPaint = new QPainter(&BackImg);
 
-        px=0;
+// ///////////////////////////////Tiled BG///////////////////////////////
+    {
+
+     WriteToLog(QtDebugMsg, "Draw BG -> Style: Tiled");
+
         if(attach==0)
-            toY = (long)fabs(y-h)-srcimg.height();
+            toY = sctH-R1H; //arrach to Bottom
         else
-            toY = 0;
+            toY = 0; //attach to Top
 
-        bgW = srcimg.width();
-        bgH = srcimg.height();
+        toY = (sctH>R1H)? sctH-R1H : 0;
+        R1Hc = ((R1H>sctH) ? R1H-sctH : 0); //Crop height from bottom
+        R1Ho = R1Hc; //Offset from top
+        RectPlus=0;
 
-        toX = 0;
-
-        do{ // Draw colomn
-            px=0;
-            do
-            { //Draw row
-                BGPaint->drawPixmap(px, toY + toX*((attach==0)?(-1):1), bgW, bgH, srcimg);
-                px += srcimg.width();
-            }
-            while( px < (long)fabs(x-w) );
-            toX+=srcimg.height();
-        }   while( toX < (long)fabs(y-h) + srcimg.height() );
-
-    */
+        //Attached to Top (now only top)
+        item = addRect(0, 0, sctW, sctH, Qt::NoPen, QBrush(srcimg));
+        item->setData(0, "BackGround"+QString::number(sctID) );
+        item->setPos(x,y);
+        item->setZValue(bgZ);
     }
-    //BGPaint->end();
-
-    //delete BGPaint;
 
     WriteToLog(QtDebugMsg, "Draw BG -> Drawed");
-    /*
-    if(!BackImg.isNull())
-        img = BackImg.copy(BackImg.rect());
-    else
-    {
-        WriteToLog(QtDebugMsg, "Draw BG -> Drawed PixMap is null");
-        img.fill( Qt::red );
-    }
-    */
-    //WriteToLog(QtDebugMsg, "Draw BG -> Added to QPixmap");
-
-    //BgItem->setPixmap(QPixmap(img));
-    //return img;
 }
 
 
