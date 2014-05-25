@@ -93,8 +93,6 @@ public:
     LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
     ~LvlScene();
 
-    QList<QGraphicsPixmapItem *> BgItem;
-
     bool grid;
     int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
                      // 3 - drawing water/sand zone, 4 - placing from Buffer
@@ -129,7 +127,7 @@ public:
 
     void drawSpace();
     void ChangeSectionBG(int BG_Id, int SectionID=-1);
-    //void ChangeSectionBG(int BG_Id);
+    void DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg2, obj_BG &bgsetup, QGraphicsPixmapItem * target=0);
 
     void loadUserData(QProgressDialog &progress);
 
@@ -149,9 +147,6 @@ public:
     void stopAnimation();
 
     void setLocked(int type, bool lock);
-
-    //QPixmap drawSizebleBlock(int w, int h, QPixmap srcimg);
-    void DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg2, obj_BG &bgsetup, QGraphicsPixmapItem * &target);
 
     //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
@@ -201,9 +196,10 @@ public:
     int spaceZ1; // interSection space layer
     int spaceZ2;
 
-    ////////////////////////Resizer////////////////////////
+    // //////////////////////Resizer////////////////////////
     ItemResizer * pResizer; //reisizer pointer
     void setSectionResizer(bool enabled, bool accept=false);
+
 
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
