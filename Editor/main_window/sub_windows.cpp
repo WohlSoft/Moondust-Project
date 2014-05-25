@@ -50,7 +50,7 @@ npcedit *MainWindow::createNPCChild()
 
 
 //Edit LEVEL
-leveledit *MainWindow::createChild()
+leveledit *MainWindow::createLvlChild()
 {
     leveledit *child = new leveledit;
     QMdiSubWindow *levelWindow = new QMdiSubWindow;
