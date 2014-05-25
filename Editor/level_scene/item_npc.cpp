@@ -299,6 +299,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 {
                     ((ItemNPC *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    delete SelItem;
                 }
             }
             scene->contextMenuOpened = false;

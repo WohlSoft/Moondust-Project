@@ -219,6 +219,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     removedItems.blocks.push_back(((ItemBlock *)SelItem)->blockData);
                     ((ItemBlock *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    delete SelItem;
                     deleted=true;
                 }
             }

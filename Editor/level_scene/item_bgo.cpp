@@ -140,6 +140,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     removedItems.bgo.push_back(((ItemBGO *)SelItem)->bgoData);
                     ((ItemBGO *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    delete SelItem;
                     deleted=true;
                 }
             }
