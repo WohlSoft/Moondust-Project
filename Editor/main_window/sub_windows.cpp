@@ -51,14 +51,18 @@ npcedit *MainWindow::createNPCChild()
 leveledit *MainWindow::createChild()
 {
     leveledit *child = new leveledit;
+    QMdiSubWindow *levelWindow = new QMdiSubWindow;
 
-    QMdiSubWindow * levelWindow = ui->centralWidget->addSubWindow(child);
+    levelWindow->setWidget(child);
+    levelWindow->setAttribute(Qt::WA_DeleteOnClose);
 
-    levelWindow->setGeometry(
+    QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(levelWindow);
+
+    levelWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                              800, 610);
-    levelWindow->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
+    levelWindowP->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
 
     return child;
 }
