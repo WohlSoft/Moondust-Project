@@ -237,6 +237,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_CHANGENPC){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, 0, 0, false, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_WATERTYPE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoSettingsTypeWater, true, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -394,6 +398,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, 0, 0, false, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_WATERTYPE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoSettingsTypeWater, true, true, true);
         }
         break;
     }
@@ -649,6 +657,16 @@ void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
     targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
     targetItem->arrayApply();
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
+}
+
+void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+{
+    ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 1 : 0);
+}
+
+void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+{
+    ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 0 : 1);
 }
 
 void LvlScene::historyUndoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock data)
