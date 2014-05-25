@@ -152,6 +152,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     removedItems.doors.push_back(((ItemDoor *)SelItem)->doorData);
                     ((ItemDoor *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    delete SelItem;
                     deleted=true;
                 }
             }

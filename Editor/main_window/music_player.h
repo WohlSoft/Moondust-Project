@@ -2,10 +2,12 @@
 #define MUSIC_PLAYER_H
 
 #include <QString>
+#include <QMediaPlayer>
 
 class GlobalMusicPlayer
 {
     public:
+        static QMediaPlaylist CurrentMusic;
 
 };
 

@@ -32,12 +32,14 @@ ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
     frameLast=-1; //to unlimited frameset
     //image = new QGraphicsPixmapItem;
     isLocked=false;
+    timer=NULL;
 }
 
 
 ItemBlock::~ItemBlock()
 {
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+    if(timer) delete timer;
 }
 
 void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -219,6 +221,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     removedItems.blocks.push_back(((ItemBlock *)SelItem)->blockData);
                     ((ItemBlock *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    delete SelItem;
                     deleted=true;
                 }
             }
@@ -265,6 +268,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
             if(itemIsFound)
             {
+                LevelData modData;
                 foreach(LevelLayers lr, scene->LvlData->layers)
                 { //Find layer's settings
                     if(lr.name==lName)
@@ -274,14 +278,16 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
                             if(SelItem->data(0).toString()=="Block")
                             {
-                            ((ItemBlock *) SelItem)->blockData.layer = lr.name;
-                            ((ItemBlock *) SelItem)->setVisible(!lr.hidden);
-                            ((ItemBlock *) SelItem)->arrayApply();
+                                modData.blocks.push_back(((ItemBlock*) SelItem)->blockData);
+                                ((ItemBlock *) SelItem)->blockData.layer = lr.name;
+                                ((ItemBlock *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemBlock *) SelItem)->arrayApply();
                             }
                         }
                     break;
                     }
                 }//Find layer's settings
+                scene->addChangedLayerHistory(modData, lName);
              scene->contextMenuOpened = false;
             }
 
