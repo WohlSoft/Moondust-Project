@@ -127,7 +127,7 @@ public:
 
     void drawSpace();
     void ChangeSectionBG(int BG_Id, int SectionID=-1);
-    void DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg2, obj_BG &bgsetup, QGraphicsPixmapItem * target=0);
+    void DrawBG(int x, int y, int w, int h, int sctID, QPixmap &srcimg, QPixmap &srcimg2, obj_BG &bgsetup);
 
     void loadUserData(QProgressDialog &progress);
 

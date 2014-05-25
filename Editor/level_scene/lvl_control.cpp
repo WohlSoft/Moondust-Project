@@ -51,7 +51,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 {
                     historyBuffer.blocks.push_back(((ItemBlock*)(*it))->blockData);
                     ((ItemBlock *)(*it))->removeFromArray();
-                    removeItem((*it));
+                    if((*it)) delete (*it);
                     deleted=true;
                 }
                 else
@@ -59,7 +59,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 {
                     historyBuffer.bgo.push_back(((ItemBGO*)(*it))->bgoData);
                     ((ItemBGO *)(*it))->removeFromArray();
-                    removeItem((*it));
+                    if((*it)) delete (*it);
                     deleted=true;
                 }
                 else
@@ -67,7 +67,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 {
                     historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
                     ((ItemNPC *)(*it))->removeFromArray();
-                    removeItem((*it));
+                    if((*it)) delete (*it);
                     deleted=true;
                 }
                 else
@@ -75,7 +75,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 {
                     historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
                     ((ItemWater *)(*it))->removeFromArray();
-                    removeItem((*it));
+                    if((*it)) delete (*it);
                     deleted=true;
                 }
         }
@@ -289,8 +289,15 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemNPC *)(*it))->removeFromArray();
                             deleted=true;
                         }
-
-                        removeItem((*it)); continue;
+                        else
+                        if( (*it)->data(0).toString()=="Water" )
+                        {
+                            historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                            ((ItemWater *)(*it))->removeFromArray();
+                            deleted=true;
+                        }
+                        removeItem((*it));
+                        continue;
                     }
 
                     gridSize = 32;
@@ -537,6 +544,7 @@ void LvlScene::removeItemUnderCursor()
                 deleted=true;
             }
             removeItem(findItem);
+            delete findItem;
             if(deleted)addRemoveHistory(removedItems);
         }
     }

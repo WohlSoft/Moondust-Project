@@ -190,6 +190,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     removedItems.water.push_back(((ItemWater *)SelItem)->waterData);
                     ((ItemWater *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    delete SelItem;
                     deleted=true;
                 }
             }
