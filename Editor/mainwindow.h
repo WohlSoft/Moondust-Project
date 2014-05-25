@@ -106,10 +106,11 @@ public slots:
 
     void setItemBoxes(bool setCat=false);
 
+    void DragAndDroppedLayer(QModelIndex sourceParent,int sourceStart,int sourceEnd,QModelIndex destinationParent,int destinationRow);
 
     //SubWindow functions
     npcedit *createNPCChild();
-    leveledit *createChild();
+    leveledit *createLvlChild();
     void setActiveSubWindow(QWidget *window);
     void SWCascade();
     void SWTile();

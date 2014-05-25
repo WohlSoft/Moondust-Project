@@ -118,6 +118,20 @@ void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop,
     historyChanged = true;
 }
 
+void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerName)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chLaOperation;
+    chLaOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDLAYER;
+    chLaOperation.extraData = QVariant(newLayerName);
+    chLaOperation.data = changedItems;
+    operationList.push_back(chLaOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -223,6 +237,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_CHANGENPC){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, 0, 0, false, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_WATERTYPE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoSettingsTypeWater, true, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -245,6 +263,14 @@ void LvlScene::historyBack()
             drawSpace();
         }
 
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDLAYER:
+    {
+        LevelData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater);
         break;
     }
     default:
@@ -373,6 +399,10 @@ void LvlScene::historyForward()
         if(lastOperation.subtype == SETTING_CHANGENPC){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, 0, 0, false, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_WATERTYPE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoSettingsTypeWater, true, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -394,6 +424,14 @@ void LvlScene::historyForward()
         if(sectionID == LvlData->CurSection){
             drawSpace();
         }
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDLAYER:
+    {
+        LevelData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater);
         break;
     }
     default:
@@ -619,6 +657,136 @@ void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
     targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
     targetItem->arrayApply();
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
+}
+
+void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+{
+    ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 1 : 0);
+}
+
+void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+{
+    ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 0 : 1);
+}
+
+void LvlScene::historyUndoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock data)
+{
+    ItemBlock* targetItem = (ItemBlock*)cbData.item;
+    QString oldLayer = data.layer;
+    targetItem->blockData.layer = oldLayer;
+    foreach(LevelLayers lr, LvlData->layers)
+    {
+        if(lr.name == oldLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
+void LvlScene::historyUndoChangeLayerBGO(LvlScene::CallbackData cbData, LevelBGO data)
+{
+    ItemBGO* targetItem = (ItemBGO*)cbData.item;
+    QString oldLayer = data.layer;
+    targetItem->bgoData.layer = oldLayer;
+    foreach(LevelLayers lr, LvlData->layers)
+    {
+        if(lr.name == oldLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
+void LvlScene::historyUndoChangeLayerNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ItemNPC* targetItem = (ItemNPC*)cbData.item;
+    QString oldLayer = data.layer;
+    targetItem->npcData.layer = oldLayer;
+    foreach(LevelLayers lr, LvlData->layers)
+    {
+        if(lr.name == oldLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
+void LvlScene::historyUndoChangeLayerWater(LvlScene::CallbackData cbData, LevelWater data)
+{
+    ItemWater* targetItem = (ItemWater*)cbData.item;
+    QString oldLayer = data.layer;
+    targetItem->waterData.layer = oldLayer;
+    foreach(LevelLayers lr, LvlData->layers)
+    {
+        if(lr.name == oldLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
+void LvlScene::historyRedoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ItemBlock* targetItem = (ItemBlock*)cbData.item;
+    QString newLayer = cbData.hist->extraData.toString();
+    targetItem->blockData.layer = newLayer;
+    foreach(LevelLayers lr, LvlData->layers)
+    {
+        if(lr.name == newLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
+void LvlScene::historyRedoChangeLayerBGO(LvlScene::CallbackData cbData, LevelBGO /*data*/)
+{
+    ItemBGO* targetItem = (ItemBGO*)cbData.item;
+    QString newLayer = cbData.hist->extraData.toString();
+    targetItem->bgoData.layer = newLayer;
+    foreach(LevelLayers lr, LvlData->layers)
+    {
+        if(lr.name == newLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
+void LvlScene::historyRedoChangeLayerNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ItemNPC* targetItem = (ItemNPC*)cbData.item;
+    QString newLayer = cbData.hist->extraData.toString();
+    targetItem->npcData.layer = newLayer;
+    foreach(LevelLayers lr, LvlData->layers)
+    {
+        if(lr.name == newLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
+void LvlScene::historyRedoChangeLayerWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+{
+    ItemWater* targetItem = (ItemWater*)cbData.item;
+    QString newLayer = cbData.hist->extraData.toString();
+    targetItem->waterData.layer = newLayer;
+    foreach(LevelLayers lr, LvlData->layers)
+    {
+        if(lr.name == newLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
 }
 
 void LvlScene::findGraphicsItem(LevelData toFind,

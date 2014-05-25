@@ -1285,7 +1285,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="3716"/>
         <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
-        <translation>Утерживайте кнопку и двигайте мышью, чтобы нарисовать область зыбучего песка</translation>
+        <translation>Удерживайте кнопку и двигайте мышью, чтобы нарисовать область зыбучего песка</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3277"/>
@@ -1345,12 +1345,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="3413"/>
         <source>Set first player position</source>
-        <translation>Установить  позицию второго  игрока</translation>
+        <translation>Установить позицию первого игрока</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3416"/>
         <source>Set first player start point</source>
-        <translation>Установить начальную позицию второго  игрока</translation>
+        <translation>Установить начальную позицию первого игрока</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3428"/>
@@ -1454,7 +1454,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="3701"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
-        <translation>Утерживайте кнопку и двигайте мышью, чтобы нарисовать зону воды</translation>
+        <translation>Удерживайте кнопку и двигайте мышью, чтобы нарисовать зону воды</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3713"/>

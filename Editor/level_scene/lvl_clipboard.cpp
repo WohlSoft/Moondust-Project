@@ -46,6 +46,7 @@ LevelData LvlScene::copy(bool cut)
                 if(cut){
                     sourceBlock->removeFromArray();
                     removeItem(*it);
+                    delete (*it);
                 }
             }
             else
@@ -56,6 +57,7 @@ LevelData LvlScene::copy(bool cut)
                 if(cut){
                     sourceBGO->removeFromArray();
                     removeItem(*it);
+                    delete (*it);
                 }
             }
             else
@@ -66,6 +68,7 @@ LevelData LvlScene::copy(bool cut)
                 if(cut){
                     sourceNPC->removeFromArray();
                     removeItem(*it);
+                    delete (*it);
                 }
             }
             else
@@ -76,6 +79,7 @@ LevelData LvlScene::copy(bool cut)
                 if(cut){
                     sourceWater->removeFromArray();
                     removeItem(*it);
+                    delete (*it);
                 }
             }
 

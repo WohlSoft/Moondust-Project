@@ -27,10 +27,6 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 {
     setItemIndexMethod(NoIndex);
 
-    //Set the background GraphicsItem's points
-    for(int i=0;i<22;i++)
-        BgItem.push_back(new QGraphicsPixmapItem);
-
     //Pointerss
     pConfigs = &configs; // Pointer to Main Configs
     LvlData = &FileData; //Ad pointer to level data
@@ -124,9 +120,6 @@ LvlScene::~LvlScene()
     uBGs.clear();
     uBGOs.clear();
     uBlocks.clear();
-
-    foreach(QGraphicsPixmapItem * it, BgItem)
-        free(it);
 }
 
 

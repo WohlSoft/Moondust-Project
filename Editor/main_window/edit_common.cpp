@@ -55,7 +55,7 @@ void MainWindow::on_actionReload_triggered()
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         ui->centralWidget->activeSubWindow()->close();
 
-        leveledit *child = createChild();
+        leveledit *child = createLvlChild();
         if ((bool) (child->loadFile(filePath, FileData, configs, LvlOpts))) {
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
             child->show();

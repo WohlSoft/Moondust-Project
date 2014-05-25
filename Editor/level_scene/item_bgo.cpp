@@ -35,12 +35,14 @@ ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
     gridOffsetY=0;
     isLocked=false;
     //image = new QGraphicsPixmapItem;
+    timer=NULL;
 }
 
 
 ItemBGO::~ItemBGO()
 {
  //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+    if(timer) delete timer;
 }
 
 void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -140,6 +142,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     removedItems.bgo.push_back(((ItemBGO *)SelItem)->bgoData);
                     ((ItemBGO *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    delete SelItem;
                     deleted=true;
                 }
             }
@@ -187,6 +190,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
             if(itemIsFound)
             {
+                LevelData modData;
                 foreach(LevelLayers lr, scene->LvlData->layers)
                 { //Find layer's settings
                     if(lr.name==lName)
@@ -196,14 +200,16 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
                             if(SelItem->data(0).toString()=="BGO")
                             {
-                            ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
-                            ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
-                            ((ItemBGO *) SelItem)->arrayApply();
+                                modData.bgo.push_back(((ItemBGO*) SelItem)->bgoData);
+                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
+                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemBGO *) SelItem)->arrayApply();
                             }
                         }
                     break;
                     }
                 }//Find layer's settings
+                scene->addChangedLayerHistory(modData, lName);
              scene->contextMenuOpened = false;
             }
 //            foreach(QAction * lItem, layerItems)

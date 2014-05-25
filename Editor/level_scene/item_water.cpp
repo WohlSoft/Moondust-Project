@@ -151,25 +151,31 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         else
         if(selected==setAsWater)
         {
+            LevelData modData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Water")
                 {
+                    modData.water.push_back(((ItemWater *)SelItem)->waterData);
                     ((ItemWater *)SelItem)->setType(0);
                 }
             }
+            scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(true));
             scene->contextMenuOpened = false;
         }
         else
         if(selected==setAsQuicksand)
         {
+            LevelData modData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Water")
                 {
+                    modData.water.push_back(((ItemWater *)SelItem)->waterData);
                     ((ItemWater *)SelItem)->setType(1);
                 }
             }
+            scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(false));
             scene->contextMenuOpened = false;
         }
         else
@@ -184,6 +190,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     removedItems.water.push_back(((ItemWater *)SelItem)->waterData);
                     ((ItemWater *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
+                    delete SelItem;
                     deleted=true;
                 }
             }
@@ -231,6 +238,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
             if(itemIsFound)
             {
+                LevelData modData;
                 foreach(LevelLayers lr, scene->LvlData->layers)
                 { //Find layer's settings
                     if(lr.name==lName)
@@ -240,14 +248,16 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
                             if(SelItem->data(0).toString()=="Water")
                             {
-                            ((ItemWater *) SelItem)->waterData.layer = lr.name;
-                            ((ItemWater *) SelItem)->setVisible(!lr.hidden);
-                            ((ItemWater *) SelItem)->arrayApply();
+                                modData.water.push_back(((ItemWater*) SelItem)->waterData);
+                                ((ItemWater *) SelItem)->waterData.layer = lr.name;
+                                ((ItemWater *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemWater *) SelItem)->arrayApply();
                             }
                         }
                     break;
                     }
                 }//Find layer's settings
+                scene->addChangedLayerHistory(modData, lName);
              scene->contextMenuOpened = false;
             }
         }

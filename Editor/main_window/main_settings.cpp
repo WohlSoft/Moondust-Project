@@ -304,6 +304,8 @@ void MainWindow::setUiDefults()
 
     //start event detection loop
     TickTackTimer->start(1);
+
+    connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
 }
 
 
