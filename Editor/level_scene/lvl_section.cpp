@@ -150,6 +150,7 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID)
         {
             WriteToLog(QtDebugMsg, QString("Remove items BackGround"+QString::number(SectionID)) );
             removeItem(findBG);
+            if(findBG) delete findBG;
         }
     }
 
@@ -164,7 +165,7 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID)
 // ////////////////////////Apply section background/////////////////////////////
 void LvlScene::setSectionBG(LevelSection section)
 {
-    QGraphicsPixmapItem * item=NULL;
+    //QGraphicsPixmapItem * item=NULL;
     QGraphicsRectItem * itemRect=NULL;
     QBrush brush;
     QPen pen;
@@ -242,11 +243,12 @@ void LvlScene::setSectionBG(LevelSection section)
         if((!noimage)&&(!img.isNull()))
         {
             //item = addPixmap(image);
-            item = new QGraphicsPixmapItem;
-            DrawBG(x, y, w, h, img, img2, pConfigs->main_bg[j], item);
+            //item = new QGraphicsPixmapItem;
+            DrawBG(x, y, w, h, section.id, img, img2, pConfigs->main_bg[j]);
             //BgItem[section.id]->setParentItem(item);
-            addItem(item);
-            item->setPos(x, y);
+            //addItem(item);
+            //item->setData(0, "BackGround"+QString::number(section.id) );
+            //item->setPos(x, y);
         }
         else
         {
@@ -261,11 +263,6 @@ void LvlScene::setSectionBG(LevelSection section)
                    .arg((long)fabs(x-w)).arg((long)fabs(y-h)));
         //
 
-        if(item!=NULL)
-        {
-            item->setData(0, "BackGround"+QString::number(section.id) );
-            item->setZValue(bgZ);
-        }
         if(itemRect!=NULL)
         {
             itemRect->setData(0, "BackGround"+QString::number(section.id) );
@@ -277,56 +274,108 @@ void LvlScene::setSectionBG(LevelSection section)
 }
 
 
-
-
 // ////////////////////////////////////Draw BG image/////////////////////////////////////////////////
-void LvlScene::DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg2, obj_BG &bgsetup, QGraphicsPixmapItem * BgItem)
+void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
+                      QPixmap &srcimg, QPixmap &srcimg2, obj_BG &bgsetup)
 {
     /* Old Algorith */
-    QPixmap BackImg;
-    QPainter * BGPaint;
-    QPixmap img;
+    //QPixmap BackImg;
+    //QPainter * BGPaint;
+    //QPixmap img;
     int si_attach, attach;
-    long toX, toY, bgH, bgW;
+    long toX, //Placing position X
+         toY, //Placing position Y 0 - top
+
+         bgH, //srcImageHeight
+         bgW; //srcImageWidth
 
     /* New Algorith */
-    QGraphicsPixmapItem * itemP=NULL;
-    QGraphicsRectItem * itemR=NULL;
+    QGraphicsItem * item;
+    //QGraphicsRectItem * itemR=NULL;
 
+    QColor FillColor; //Fill undrawed space with color
+
+    long sctW,//Section Width
+         sctH,//Section Height
+         R1W, //Img Width  (Row1)
+         R1H, //Img Height (Row1)
+         R1Hc=0, //Crop height from bottom
+         R1Ho=0, //Offset from top
+         RectPlus=0;
+    long px = 0; //Current draw pisitin
+
+    sctW = (long)fabs(x-w);
+    sctH = (long)fabs(y-h);
 
     WriteToLog(QtDebugMsg, "Draw BG -> Draw BG Image");
-    BackImg = QPixmap(QSize( (long)fabs(x-w), (long)fabs(y-h) ));
+
+    /*
+    if(!((bgsetup.type==0)&&(!bgsetup.editing_tiled))) //Leave for old alg
+        BackImg = QPixmap(QSize( (long)fabs(x-w), (long)fabs(y-h) ));
+    else
+        BackImg = QPixmap();
+    */
+
     attach = bgsetup.attached;
-    long px = 0;
 
     if((bgsetup.type==0)&&(!bgsetup.editing_tiled))
     {   // ///////////////////SingleRow BG///////////////////////////
-
         WriteToLog(QtDebugMsg, "Draw BG -> Style: SingleRow BG");
-        if(attach==0) // Get Pixel size
-            BackImg.fill( srcimg.toImage().pixel(0,0) );
-        else
-            BackImg.fill( srcimg.toImage().pixel(0,(srcimg.height()-1)) );
-        BGPaint = new QPainter(&BackImg);
+
+        //BGPaint = new QPainter(&BackImg);
 
         px=0;
-        if(attach==0)
-            toY = (long)fabs(y-h)-srcimg.height();
-        else
-            toY = 0;
-        bgW = srcimg.width();
-        bgH = srcimg.height();
+        R1W = srcimg.width();
+        R1H = srcimg.height();
 
-        do
-        { //Draw row
-            BGPaint->drawPixmap(px, toY, bgW, bgH, srcimg);
-            px += srcimg.width();
+        if(attach==0) // Get Pixel color (0 - bottom, 1 - top)
+            FillColor = QColor( srcimg.toImage().pixel(0,0) ); // from top
+        else
+            FillColor = QColor( srcimg.toImage().pixel(0,(R1H-1)) ); //from bottom
+
+        if(attach==0)
+        { // 0 - bottom
+            toY = (sctH>R1H)? sctH-R1H : 0;
+            R1Hc = ((R1H>sctH) ? R1H-sctH : 0); //Crop height from bottom
+            R1Ho = R1Hc; //Offset from top
+            RectPlus=0;
         }
-        while( px < (long)fabs(x-w) );
+        else
+        { // 1 - top
+            toY = 0;
+            R1Hc = ((R1H>sctH) ? R1H-sctH : 0); //Crop height from bottom
+            R1Ho = 0; //Offset from top
+            RectPlus=R1H;
+        }
+
+        while( R1W+px < sctW )
+        { //Draw row
+            item = addPixmap( srcimg.copy(0, R1Ho, R1W, R1H-R1Hc) );
+            item->setPos(x+px, y+toY);
+            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setZValue(bgZ);
+            px += R1W;
+        }
+
+        if((sctW-px)>0)
+        {
+            item = addPixmap( srcimg.copy(0, R1Ho, (sctW-px), R1H-R1Hc) );
+            item->setPos(x+px, y+toY);
+            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setZValue(bgZ);
+        }
+
+        if(R1H < sctH)
+        {
+            item = addRect(0, 0, sctW, sctH-R1H, Qt::NoPen, QBrush(FillColor));
+            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setPos(x,y+RectPlus);
+            item->setZValue(bgZ);
+        }
 
     }
     else if((bgsetup.type==1)&&(!bgsetup.editing_tiled))
-    {   // ///////////////////DoubleRow BG////////////////////////
+    {/*   // ///////////////////DoubleRow BG////////////////////////
         WriteToLog(QtDebugMsg, "Draw BG -> Style: DoubleRow BG");
 
         si_attach = bgsetup.second_attached; // Second image attach
@@ -373,10 +422,11 @@ void LvlScene::DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg
                 px += srcimg2.width();
             } while( px < (long)fabs(x-w) );
         } else WriteToLog(QtDebugMsg, "Draw BG -> second image is Null");
+     */
     }
     else
     { // ///////////////////////////////Tiled BG///////////////////////////////
-        WriteToLog(QtDebugMsg, "Draw BG -> Style: Tiled");
+     /*   WriteToLog(QtDebugMsg, "Draw BG -> Style: Tiled");
         BackImg.fill( Qt::black );
         BGPaint = new QPainter(&BackImg);
 
@@ -402,12 +452,14 @@ void LvlScene::DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg
             toX+=srcimg.height();
         }   while( toX < (long)fabs(y-h) + srcimg.height() );
 
-
+    */
     }
-    BGPaint->end();
+    //BGPaint->end();
+
+    //delete BGPaint;
 
     WriteToLog(QtDebugMsg, "Draw BG -> Drawed");
-
+    /*
     if(!BackImg.isNull())
         img = BackImg.copy(BackImg.rect());
     else
@@ -415,9 +467,10 @@ void LvlScene::DrawBG(int x, int y, int w, int h, QPixmap srcimg, QPixmap srcimg
         WriteToLog(QtDebugMsg, "Draw BG -> Drawed PixMap is null");
         img.fill( Qt::red );
     }
-    WriteToLog(QtDebugMsg, "Draw BG -> Added to QPixmap");
+    */
+    //WriteToLog(QtDebugMsg, "Draw BG -> Added to QPixmap");
 
-    BgItem->setPixmap(QPixmap(img));
+    //BgItem->setPixmap(QPixmap(img));
     //return img;
 }
 
@@ -437,16 +490,13 @@ void LvlScene::drawSpace()
     {
         if(spaceItem->data(0).toString()=="Space")
         {
-            removeItem(spaceItem);
-            break;
+            removeItem(spaceItem); delete spaceItem;
+            continue;
         }
-    }
-    foreach(QGraphicsItem * spaceItem, items())
-    {
         if(spaceItem->data(0).toString()=="SectionBorder")
         {
-            removeItem(spaceItem);
-            break;
+            removeItem(spaceItem); delete spaceItem;
+            continue;
         }
     }
 
