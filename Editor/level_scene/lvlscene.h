@@ -94,15 +94,26 @@ public:
     ~LvlScene();
 
     bool grid;
+
+    void SwitchEditingMode(int EdtMode);
     int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
                      // 3 - drawing water/sand zone, 4 - placing from Buffer
+    bool EraserEnabled;
+    bool PasteFromBuffer;
+
+    bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
+    bool disableMoveItems;
+    bool contextMenuOpened;
+
     enum EditMode
     {
         MODE_Selecting=0,
         MODE_Erasing,
         MODE_PlacingNew,
         MODE_DrawSquare,
-        MODE_PasteFromClip
+        MODE_PasteFromClip,
+        MODE_Resizing,
+        MODE_SelectingOnly
     };
 
 
@@ -124,15 +135,6 @@ public:
     void resetCursor();
 
     // //////////////////////////////////
-
-    bool EraserEnabled;
-    bool PasteFromBuffer;
-
-    bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
-
-    bool disableMoveItems;
-
-    bool contextMenuOpened;
 
     //Event Flags
     //bool wasPasted;  Now is trash
@@ -352,7 +354,6 @@ public:
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////
-
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
