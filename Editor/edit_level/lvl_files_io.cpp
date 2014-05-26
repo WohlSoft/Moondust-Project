@@ -320,12 +320,15 @@ void leveledit::closeEvent(QCloseEvent *event)
         event->accept();
         return;
     }
+    else
+        MainWinConnect::pMainWin->on_actionSelect_triggered();
 
     if(maybeSave()) {
         scene->uBGOs.clear();
         scene->uBGs.clear();
         scene->uBlocks.clear();
         scene->clear();
+        sceneCreated=false;
         MainWinConnect::pMainWin->updateMenus(true);
         //ui->graphicsView->cl
         event->accept();

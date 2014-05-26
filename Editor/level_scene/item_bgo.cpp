@@ -59,7 +59,7 @@ void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_bgo)&&(!isLocked))
+    if((!scene->lock_bgo)&&(!scene->DrawMode)&&(!isLocked))
     {
         //Remove selection from non-bgo items
         if(this->isSelected())
