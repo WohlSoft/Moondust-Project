@@ -96,6 +96,35 @@ public:
     bool grid;
     int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
                      // 3 - drawing water/sand zone, 4 - placing from Buffer
+    enum EditMode
+    {
+        MODE_Selecting=0,
+        MODE_Erasing,
+        MODE_PlacingNew,
+        MODE_DrawSquare,
+        MODE_PasteFromClip
+    };
+
+
+    // ////////////ItemPlacers///////////
+    void setItemPlacer(int itemType, unsigned long itemID=1, int dType=0);
+    void setSquareDrawer();
+    enum placingItemType
+    {
+        PLC_Block=0,
+        PLC_BGO,
+        PLC_NPC,
+        PLC_Water,
+        PLC_Door,
+        PLC_PlayerPoint
+    };
+    int placingItem;
+    QGraphicsItem * cursor;
+    void placeItemUnderCursor();
+    void resetCursor();
+
+    // //////////////////////////////////
+
     bool EraserEnabled;
     bool PasteFromBuffer;
 
@@ -324,6 +353,7 @@ public:
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////
 
+
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -346,8 +376,6 @@ private:
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
 
     void setSectionBG(LevelSection section);
-
-    QGraphicsItem * cursor;
 
     QPixmap uBlockImg;
 

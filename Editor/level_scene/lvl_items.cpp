@@ -265,6 +265,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     noimage=true;
     isUser=false;
 
+
     //Check Index exists
     if(block.id < (unsigned int)index_blocks.size())
     {
@@ -274,8 +275,10 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
         {
         if(pConfigs->main_block[j].id == block.id)
             found=true;
+        //WriteToLog(QtDebugMsg, QString("ItemPlacer -> Index: %1[i=%2], value: %3").arg(block.id).arg(j).arg(pConfigs->main_block[j].id));
         }
     }
+
 
     //if Index found
     if(found)
@@ -291,6 +294,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
             tImg = pConfigs->main_block[index_blocks[block.id].i].image;
             noimage=false;
         }
+       // WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Index %1").arg(block.id));
     }
     else
     {
@@ -315,6 +319,8 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
                     tImg = pConfigs->main_block[j].image; break;
             }
         }
+
+        //WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Fetch %1").arg(j));
     }
 
     if((noimage)||(tImg.isNull()))
