@@ -63,6 +63,7 @@ void dataconfigs::loadLevelNPC()
         for(i=0;i<=npc_total; i++)
         {
             npcIndex.i=i;
+            npcIndex.gi=i;
             npcIndex.type=0;
             index_npc.push_back(npcIndex);
         }

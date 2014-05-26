@@ -52,6 +52,8 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     IsMoved = false;
     haveSelected = false;
 
+    placingItem=0;
+
     pResizer = NULL;
 
     contextMenuOpened = false;
@@ -65,12 +67,8 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     SyncLayerList = false; //Call to refresh layer list
     resetResizingSection = false; //Reset resizing applying buttons
     */
-
-    QPixmap cur(QSize(1,1));
-    cur.fill(Qt::black);
-    cursor = addPixmap(QPixmap(cur));
-    cursor->setZValue(1000);
-    cursor->hide();
+    cursor = NULL;
+    resetCursor();
 
     //set dummy images if target not exist or wrong
     uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.gif");

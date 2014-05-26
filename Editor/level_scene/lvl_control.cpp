@@ -25,6 +25,7 @@
 #include "item_water.h"
 
 #include "../common_features/mainwinconnect.h"
+#include "lvl_item_placing.h"
 
 
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
@@ -107,26 +108,49 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    WriteToLog(QtDebugMsg, QString("Mouse pressed -> [%1, %2] contextMenuOpened=%3, DrawMode=%4").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y())
+               .arg(contextMenuOpened).arg(DrawMode));
+
         if(contextMenuOpened) return;
 
-        cursor->setPos(mouseEvent->scenePos());
-        cursor->show();
+        if(cursor){
+
+            if(EditingMode==MODE_PlacingNew)
+            cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                               LvlPlacingItems::gridSz,
+                                               LvlPlacingItems::gridOffset)));
+                else
+            cursor->setPos(mouseEvent->scenePos());
+
+            cursor->show();
+        }
 
         if(DrawMode)
         {
-            QGraphicsScene::mousePressEvent(mouseEvent);
             //Here must be started drawing of Rect ot placed first item
+            if( ( EditingMode==MODE_PlacingNew) && ( mouseEvent->buttons() & Qt::RightButton ))
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+            }
+            else
+            {
+                placeItemUnderCursor();
+                QGraphicsScene::mousePressEvent(mouseEvent);
+            }
             return;
         }
+
+        WriteToLog(QtDebugMsg, QString("Mouse press passed -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
 
         haveSelected=(!selectedItems().isEmpty());
 
         switch(EditingMode) // if Editing Mode = Esaising
         {
-        case 1: //Eriser
+        case MODE_Erasing: //Eriser
             //EraserEnabled = true;
             break;
-        case 4: //Pasta
+        case MODE_PasteFromClip: //Pasta
             PasteFromBuffer = true;
             break;
         default:
@@ -140,7 +164,7 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QGraphicsScene::mousePressEvent(mouseEvent);
 
         QList<QGraphicsItem*> selectedList = selectedItems();
-        if(EditingMode==1)
+        if( EditingMode==MODE_Erasing )
         if (!selectedList.isEmpty())
         {
             removeItemUnderCursor();
@@ -162,15 +186,30 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if(contextMenuOpened) return;
+    //WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
 
-    cursor->setPos(mouseEvent->scenePos());
+    if(contextMenuOpened) return;
+    if(cursor)
+    {
+        if(EditingMode==MODE_PlacingNew)
+        {
+        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                           LvlPlacingItems::gridSz,
+                                           LvlPlacingItems::gridOffset)));
+        cursor->show();
+        }
+            else
+        cursor->setPos(mouseEvent->scenePos());
+    }
 
     if(DrawMode)
     {
         this->clearSelection();
-        QGraphicsScene::mouseMoveEvent(mouseEvent);
-        //Here must be drawing functions
+        if(!pResizer)
+        {
+        if( mouseEvent->buttons() & Qt::LeftButton ) placeItemUnderCursor();
+            QGraphicsScene::mouseMoveEvent(mouseEvent);
+        }
         return;
     }
 
@@ -230,7 +269,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(PasteFromBuffer)
             {
                 paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
-                EditingMode = 0;
+                EditingMode = MODE_Selecting;
                 PasteFromBuffer = false;
                 IsMoved=false;
 
@@ -263,7 +302,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 // correct selected items' coordinates
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 {
-                    if(EditingMode==1)
+                    if(EditingMode==MODE_Erasing)
                     {
 
                         if(!(*it)->isVisible()) continue; //Invisible items can't be deleted
@@ -352,7 +391,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //////////////////////////////////////////////////////////////////
                 }
 
-                if((EditingMode==1)&&(deleted))
+                if((EditingMode==MODE_Erasing)&&(deleted))
                 {
                     addRemoveHistory(historyBuffer);
                 }
@@ -465,7 +504,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
 
-                if((EditingMode==0)&&(IsMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
+                if((EditingMode==MODE_Selecting)&&(IsMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
 
                 IsMoved = false;
 
@@ -476,6 +515,66 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
      QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
+
+void LvlScene::placeItemUnderCursor()
+{
+    LevelData newData;
+    bool wasPlaced=false;
+    if( itemCollidesWith(cursor) )
+    {
+        return;
+    }
+    else
+    {
+        if(placingItem == PLC_Block)
+        {
+            LvlPlacingItems::blockSet.x = cursor->scenePos().x();
+            LvlPlacingItems::blockSet.y = cursor->scenePos().y();
+
+            LvlData->blocks_array_id++;
+            LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+
+            LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+            placeBlock(LvlPlacingItems::blockSet, true);
+            newData.blocks.push_back(LvlPlacingItems::blockSet);
+            wasPlaced=true;
+        }
+        else
+        if(placingItem == PLC_BGO)
+        {
+            LvlPlacingItems::bgoSet.x = cursor->scenePos().x();
+            LvlPlacingItems::bgoSet.y = cursor->scenePos().y();
+
+            LvlData->bgo_array_id++;
+            LvlPlacingItems::bgoSet.array_id = LvlData->bgo_array_id;
+
+            LvlData->bgo.push_back(LvlPlacingItems::bgoSet);
+            placeBGO(LvlPlacingItems::bgoSet, true);
+            newData.bgo.push_back(LvlPlacingItems::bgoSet);
+            wasPlaced=true;
+        }
+        else
+        if(placingItem == PLC_NPC)
+        {
+            LvlPlacingItems::npcSet.x = cursor->scenePos().x();
+            LvlPlacingItems::npcSet.y = cursor->scenePos().y();
+
+            LvlData->npc_array_id++;
+            LvlPlacingItems::npcSet.array_id = LvlData->npc_array_id;
+
+            LvlData->npc.push_back(LvlPlacingItems::npcSet);
+            placeNPC(LvlPlacingItems::npcSet, true);
+            newData.npc.push_back(LvlPlacingItems::npcSet);
+            wasPlaced=true;
+        }
+    }
+    if(wasPlaced)
+    {
+        LvlData->modified = true;
+        addPlaceHistory(newData);
+    }
+
+}
 
 
 void LvlScene::removeItemUnderCursor()
