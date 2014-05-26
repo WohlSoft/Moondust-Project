@@ -69,6 +69,8 @@ void MainWindow::RemoveLayerItems(QString layerName)
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
+        if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
+
         if((*it)->data(0).toString()=="Block")
         {
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
@@ -143,6 +145,8 @@ void MainWindow::ModifyLayer(QString layerName, bool visible)
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
+        if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
+
         if((*it)->data(0).toString()=="Block")
         {
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
@@ -190,6 +194,8 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
+        if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
+
         if((*it)->data(0).toString()=="Block")
         {
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
@@ -240,6 +246,8 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
+        if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
+
         if((*it)->data(0).toString()=="Block")
         {
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
