@@ -77,6 +77,11 @@ public:
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
 
+    void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc);
+    long blockPtr; //ArrayID of editing item (-1 - use system)
+    long bgoPtr; //ArrayID of editing item
+    long npcPtr; //ArrayID of editing item
+
 protected:
     void closeEvent(QCloseEvent *event);
     void dragEnterEvent(QDragEnterEvent *e);
@@ -121,6 +126,8 @@ public slots:
     void setDoorsToolbox();
     void setDoorData(long index);
     void setLayersBox();
+    void setLayerLists();
+    void EventListsSync();
 
     void on_ResizeSection_clicked();
     void on_applyResize_clicked();

@@ -104,6 +104,53 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     QGraphicsScene::keyReleaseEvent(keyEvent);
 }
 
+void LvlScene::openProps()
+{
+    LevelBlock dummyBlock;
+    dummyBlock.array_id=0;
+
+    LevelBGO dummyBgo;
+    dummyBgo.array_id=0;
+
+    LevelNPC dummyNPC;
+    dummyNPC.array_id=0;
+
+    QList<QGraphicsItem * > items = this->selectedItems();
+    if((!items.isEmpty())&&(items.size()==1))
+    {
+        if(items.first()->data(0).toString()=="Block")
+        {
+            MainWinConnect::pMainWin->LvlItemProps(0,
+                          ((ItemBlock *)items.first())->blockData,
+                          dummyBgo,
+                          dummyNPC);
+        }
+        else
+        if(items.first()->data(0).toString()=="BGO")
+        {
+            MainWinConnect::pMainWin->LvlItemProps(1,
+                              dummyBlock,
+                              ((ItemBGO *)items.first())->bgoData,
+                              dummyNPC);
+        }
+        else
+        if(items.first()->data(0).toString()=="NPC")
+        {
+            MainWinConnect::pMainWin->LvlItemProps(2,
+                              dummyBlock,
+                              dummyBgo,
+                              ((ItemNPC *)items.first())->npcData);
+        }
+        else
+        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
+    }
+    else
+    {
+        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
+    }
+
+    QGraphicsScene::selectionChanged();
+}
 
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -732,7 +779,6 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     case MODE_PasteFromClip:
         resetCursor();
         setSectionResizer(false, false);
-        DrawMode=true;
         disableMoveItems=true;
         break;
 
