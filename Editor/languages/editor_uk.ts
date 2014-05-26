@@ -6,97 +6,97 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="20"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="34"/>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>Основні</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="40"/>
         <source>Music player</source>
-        <translation type="unfinished"></translation>
+        <translation>Музичний програвач</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="46"/>
         <source>Autoplay music on file open</source>
-        <translation type="unfinished"></translation>
+        <translation>Автовмикання музики</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="56"/>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation>Швидкодія</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="62"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Анімація</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="79"/>
         <source>Animation Items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Межа об&apos;єктів</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="86"/>
         <source>Collision detection</source>
-        <translation type="unfinished"></translation>
+        <translation>Знаходження колізій</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="110"/>
         <source>Loging</source>
-        <translation type="unfinished"></translation>
+        <translation>Журнал</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="116"/>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень звіту</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="126"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Огляд</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="133"/>
         <source>Log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл звіту</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="141"/>
         <source>Disable logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнути ведення звітів</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="146"/>
         <source>Fatal</source>
-        <translation type="unfinished"></translation>
+        <translation>Фатальні помилки</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="151"/>
         <source>Crytical</source>
-        <translation type="unfinished"></translation>
+        <translation>Критичні помилки</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="156"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередження</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="161"/>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Налагодження</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="53"/>
         <source>Set log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір файла звіту</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="54"/>
         <source>Text files (*.txt *.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстові файли (*.txt *.log)</translation>
     </message>
 </context>
 <context>
@@ -104,38 +104,39 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="19"/>
         <source>Export to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт в зображення</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="32"/>
         <location filename="../edit_level/saveimage.ui" line="64"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="47"/>
         <source>Please, select target image size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь-ласка, вкажіть розмір
+зображення для збереження:</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="57"/>
         <source>Save proportion</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти пропорції</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="74"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="94"/>
         <source>Export current section to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Зробити знімок секції у файл</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="104"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Висота</translation>
     </message>
 </context>
 <context>
@@ -143,27 +144,27 @@
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="79"/>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Шар: </translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="84"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати на новий шар...</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="101"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="102"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирізати</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="104"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
 </context>
 <context>
@@ -171,52 +172,52 @@
     <message>
         <location filename="../level_scene/item_block.cpp" line="76"/>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Шар: </translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="81"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати на новий шар...</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="89"/>
         <source> [hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation> [Прихований]</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="99"/>
         <source>Invisible</source>
-        <translation type="unfinished"></translation>
+        <translation>Невидимий</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="103"/>
         <source>Slippery</source>
-        <translation type="unfinished"></translation>
+        <translation>Слизький</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="107"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити розмір</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="111"/>
         <source>Change included NPC...</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити вміст блока...</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="114"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="115"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирізати</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="117"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
 </context>
 <context>
