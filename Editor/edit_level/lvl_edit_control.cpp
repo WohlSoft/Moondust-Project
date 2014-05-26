@@ -31,7 +31,6 @@
 
 #include "../common_features/mainwinconnect.h"
 
-
 #include <QDebug>
 
 
@@ -140,37 +139,45 @@ void leveledit::changeCursor(int mode)
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+        if(sceneCreated) scene->resetCursor();
         break;
     case 0:    // Selector
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        if(sceneCreated) scene->resetCursor();
         break;
     case 1:    // Eriser
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_rubber.png"), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        if(sceneCreated) scene->resetCursor();
         break;
     case 2:    // place New item
-        ui->graphicsView->setInteractive(false);
+        ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::CrossCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+        ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
+        ui->graphicsView->viewport()->setMouseTracking(true);
         break;
     case 3:    // Draw water zones
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setCursor(Qt::CrossCursor);
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        if(sceneCreated) scene->resetCursor();
         break;
     case 4:    // paste from Buffer
         scene->clearSelection();
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_pasta.png"), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+        if(sceneCreated) scene->resetCursor();
         break;
     case 5:    // Resizing mode
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+        if(sceneCreated) scene->resetCursor();
         break;
     default:
         break;

@@ -48,6 +48,7 @@ void MainWindow::on_actionSelect_triggered()
        activeLvlEditWin()->scene->EditingMode = 0;
        activeLvlEditWin()->scene->disableMoveItems=false;
        activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->DrawMode=false;
     }
 }
 
@@ -64,6 +65,7 @@ void MainWindow::on_actionSelectOnly_triggered()
        activeLvlEditWin()->scene->EditingMode = 0;
        activeLvlEditWin()->scene->disableMoveItems=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->DrawMode=false;
     }
 }
 
@@ -79,6 +81,7 @@ void MainWindow::on_actionEriser_triggered()
        activeLvlEditWin()->scene->EditingMode = 1;
        activeLvlEditWin()->scene->disableMoveItems=false;
        activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->DrawMode=false;
     }
 }
 
@@ -95,6 +98,7 @@ void MainWindow::on_actionHandScroll_triggered()
        activeLvlEditWin()->scene->EditingMode = 0;
        activeLvlEditWin()->scene->disableMoveItems=false;
        activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->DrawMode=false;
     }
 }
 
@@ -116,7 +120,6 @@ void MainWindow::on_actionDrawWater_triggered()
 {
     resetEditmodeButtons();
     ui->actionDrawWater->setChecked(1);
-
 }
 
 void MainWindow::on_actionDrawSand_triggered()
@@ -130,8 +133,53 @@ void MainWindow::on_actionDrawSand_triggered()
 
 void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
 {
-    item->checkState();//dummy (warning protection)
-
+    resetEditmodeButtons();
    //placeBlock
-    //item->data(3).toInt();
+
+    if ((activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
+    {
+       activeLvlEditWin()->scene->clearSelection();
+       activeLvlEditWin()->changeCursor(2);
+       activeLvlEditWin()->scene->EditingMode = 2;
+       activeLvlEditWin()->scene->disableMoveItems=false;
+       activeLvlEditWin()->scene->DrawMode=true;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
+    }
+}
+
+void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
+{
+    resetEditmodeButtons();
+   //placeBGO
+
+    if ((activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
+    {
+       activeLvlEditWin()->scene->clearSelection();
+       activeLvlEditWin()->changeCursor(2);
+       activeLvlEditWin()->scene->EditingMode = 2;
+       activeLvlEditWin()->scene->disableMoveItems=false;
+       activeLvlEditWin()->scene->DrawMode=true;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
+    }
+
+}
+
+void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
+{
+    resetEditmodeButtons();
+
+    //placeNPC
+    if ((activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
+    {
+       activeLvlEditWin()->scene->clearSelection();
+       activeLvlEditWin()->changeCursor(2);
+       activeLvlEditWin()->scene->EditingMode = 2;
+       activeLvlEditWin()->scene->disableMoveItems=false;
+       activeLvlEditWin()->scene->DrawMode=true;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+       activeLvlEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
+    }
+
 }

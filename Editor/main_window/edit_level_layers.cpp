@@ -358,9 +358,22 @@ void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QS
 
 void MainWindow::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
 {
-    WriteToLog(QtDebugMsg, "Row Change at" + QString::number(sourceStart) +
+    WriteToLog(QtDebugMsg, "Row Change at " + QString::number(sourceStart) +
                " " + QString::number(sourceEnd) +
                " to " + QString::number(destinationRow));
+
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        LevelLayers buffer;
+        if(sourceStart<activeLvlEditWin()->LvlData.layers.size())
+        {
+            buffer = activeLvlEditWin()->LvlData.layers[sourceStart];
+            activeLvlEditWin()->LvlData.layers.remove(sourceStart);
+            activeLvlEditWin()->LvlData.layers.insert(((destinationRow>sourceStart)?destinationRow-1:destinationRow), buffer);
+        }
+    }
+
 }
 
 

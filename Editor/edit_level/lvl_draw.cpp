@@ -91,19 +91,11 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
 
     scene->applyLayersVisible();
 
-    /*
-    scene->setSceneRect(LvlData.sections[0].size_left-1000,
-                        LvlData.sections[0].size_top-1000,
-                        LvlData.sections[0].size_right+1000,
-                        LvlData.sections[0].size_bottom+1000);
-    */
-
     if(!sceneCreated)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
     }
-
     if(!progress.wasCanceled())
         progress.setValue(DataSize);
     return true;

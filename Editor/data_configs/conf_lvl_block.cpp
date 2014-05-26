@@ -143,7 +143,7 @@ void dataconfigs::loadLevelBlocks()
 
                 //Add to Index
                 if(i < (unsigned int)index_blocks.size())
-                    index_blocks[i].i = i;
+                    index_blocks[i].i = i-1;
 
             blockset.endGroup();
 

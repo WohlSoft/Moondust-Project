@@ -30,6 +30,11 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     UserBGOs uBGO;
     UserNPCs uNPC;
 
+    uBGOs.clear();
+    uBlocks.clear();
+    uNPCs.clear();
+    uBGs.clear();
+
     bool loaded1, loaded2;
     QString uLVLDs = LvlData->path + "/" + LvlData->filename + "/";
     QString uLVLD = LvlData->path + "/" + LvlData->filename;

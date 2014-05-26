@@ -266,6 +266,10 @@ private slots:
 
     void slotLanguageChanged(QAction *action);
 
+    void on_BGOItemsList_itemClicked(QListWidgetItem *item);
+
+    void on_NPCItemsList_itemClicked(QListWidgetItem *item);
+
 private:
     dataconfigs configs; // Global objects configucrations
 
