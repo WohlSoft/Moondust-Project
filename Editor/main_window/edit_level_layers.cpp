@@ -113,6 +113,7 @@ void MainWindow::RemoveLayerItems(QString layerName)
             //TODO
         }
     }
+    setLayerLists();  //Sync comboboxes in properties
 }
 
 void MainWindow::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
@@ -136,6 +137,7 @@ void MainWindow::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
             }
         }
     }
+    setLayerLists();  //Sync comboboxes in properties
 }
 
 void MainWindow::ModifyLayer(QString layerName, bool visible)
@@ -185,6 +187,7 @@ void MainWindow::ModifyLayer(QString layerName, bool visible)
             //TODO
         }
     }
+    setLayerLists();  //Sync comboboxes in properties
 }
 
 void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
@@ -237,6 +240,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
             //TODO
         }
     }
+    setLayerLists();  //Sync comboboxes in properties
 }
 
 void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visible)
@@ -295,6 +299,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             //TODO
         }
     }
+    setLayerLists();  //Sync comboboxes in properties
 }
 
 void MainWindow::AddNewLayer(QString layerName, bool setEdited)
@@ -345,6 +350,9 @@ void MainWindow::AddNewLayer(QString layerName, bool setEdited)
             activeLvlEditWin()->LvlData.modified=true;
         }
     }
+
+    setLayerLists();  //Sync comboboxes in properties
+
 }
 
 void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible)
@@ -362,6 +370,8 @@ void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QS
     }
     //Apply layer's name/visibly to all items
     ModifyLayer(oldLayerName, newLayerName, visible);
+
+    setLayerLists();  //Sync comboboxes in properties
 }
 
 void MainWindow::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
@@ -382,6 +392,7 @@ void MainWindow::DragAndDroppedLayer(QModelIndex /*sourceParent*/,int sourceStar
         }
     }
 
+    setLayerLists();  //Sync comboboxes in properties
 }
 
 
@@ -426,6 +437,30 @@ void MainWindow::setLayersBox()
     }
 }
 
+void MainWindow::setLayerLists()
+{
+    int WinType = activeChildWindow();
+
+    ui->PROPS_BGOLayer->clear();
+    ui->PROPS_NpcLayer->clear();
+    ui->PROPS_BlockLayer->clear();
+    ui->PROPS_NpcAttachLayer->clear();
+    ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
+
+    if (WinType==1)
+    {
+        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+        {
+            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs"))
+                continue;
+            ui->PROPS_BGOLayer->addItem(layer.name);
+            ui->PROPS_NpcLayer->addItem(layer.name);
+            ui->PROPS_BlockLayer->addItem(layer.name);
+            ui->PROPS_NpcAttachLayer->addItem(layer.name);
+        }
+    }
+
+}
 
 
 void MainWindow::on_AddLayer_clicked()

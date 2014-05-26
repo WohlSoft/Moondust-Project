@@ -80,7 +80,8 @@ SOURCES += main.cpp\
     level_scene/lvl_setup.cpp \
     level_scene/item_door.cpp \
     level_scene/lvl_init_filedata.cpp \
-    level_scene/lvl_section.cpp
+    level_scene/lvl_section.cpp \
+    main_window/edit_level_events.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
