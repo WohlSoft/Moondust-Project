@@ -71,7 +71,7 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
     //Check Index exists
     if(npcID < (unsigned int)index_npc.size())
     {
-        j = index_npc[npcID].i;
+        j = index_npc[npcID].gi;
         if(j<pConfigs->main_npc.size())
         {
             if(pConfigs->main_npc[j].id == npcID)

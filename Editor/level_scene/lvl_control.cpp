@@ -111,106 +111,117 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     WriteToLog(QtDebugMsg, QString("Mouse pressed -> [%1, %2] contextMenuOpened=%3, DrawMode=%4").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y())
                .arg(contextMenuOpened).arg(DrawMode));
 
-        if(contextMenuOpened) return;
+if(contextMenuOpened) return;
 
-        if(cursor){
-
-            if(EditingMode==MODE_PlacingNew)
-            cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
-                                               LvlPlacingItems::gridSz,
-                                               LvlPlacingItems::gridOffset)));
-                else
-            cursor->setPos(mouseEvent->scenePos());
-
-            cursor->show();
-        }
-
-        if(DrawMode)
+    switch(EditingMode)
+    {
+        case MODE_PlacingNew:
         {
-            //Here must be started drawing of Rect ot placed first item
-            if( ( EditingMode==MODE_PlacingNew) && ( mouseEvent->buttons() & Qt::RightButton ))
+            if( mouseEvent->buttons() & Qt::RightButton )
             {
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
                 return;
             }
-            else
-            {
-                placeItemUnderCursor();
-                QGraphicsScene::mousePressEvent(mouseEvent);
+
+            if(cursor){
+                cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                                   LvlPlacingItems::gridSz,
+                                                   LvlPlacingItems::gridOffset)));
             }
+            placeItemUnderCursor();
+            QGraphicsScene::mousePressEvent(mouseEvent);
+            return;
+            break;
+        }
+        case MODE_Resizing:
+        {
+            QGraphicsScene::mousePressEvent(mouseEvent);
             return;
         }
-
-        WriteToLog(QtDebugMsg, QString("Mouse press passed -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
-
-        haveSelected=(!selectedItems().isEmpty());
-
-        switch(EditingMode) // if Editing Mode = Esaising
+        case MODE_Erasing:
         {
-        case MODE_Erasing: //Eriser
-            //EraserEnabled = true;
-            break;
-        case MODE_PasteFromClip: //Pasta
-            PasteFromBuffer = true;
-            break;
-        default:
+            if( mouseEvent->buttons() & Qt::RightButton )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+            }
+
+            if(cursor){
+               cursor->show();
+               cursor->setPos(mouseEvent->scenePos());
+            }
+
+            QGraphicsScene::mousePressEvent(mouseEvent);
+
+            QList<QGraphicsItem*> selectedList = selectedItems();
+            if (!selectedList.isEmpty())
+            {
+                removeItemUnderCursor();
+                EraserEnabled=true;
+            }
             break;
         }
-
-        if((disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
+        case MODE_PasteFromClip: //Pasta
+        {
+            if( mouseEvent->buttons() & Qt::RightButton )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+            }
+            PasteFromBuffer = true;
+            break;
+        }
+        default:
+        {
+            if((disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
                 && (Qt::ControlModifier != QApplication::keyboardModifiers()))
             { return; }
 
-        QGraphicsScene::mousePressEvent(mouseEvent);
+            QGraphicsScene::mousePressEvent(mouseEvent);
 
-        QList<QGraphicsItem*> selectedList = selectedItems();
-        if( EditingMode==MODE_Erasing )
-        if (!selectedList.isEmpty())
-        {
-            removeItemUnderCursor();
-            EraserEnabled=true;
+            break;
         }
+    }
+    haveSelected=(!selectedItems().isEmpty());
 
-        /* if (!selectedList.isEmpty())
-        {
-
-            for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-            {
-                // Z.push_back((*it)->zValue());
-                // (*it)->setZValue(1000);
-            }
-
-        }*/
 }
 
 
 void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     //WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
-
     if(contextMenuOpened) return;
-    if(cursor)
-    {
-        if(EditingMode==MODE_PlacingNew)
-        {
-        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
-                                           LvlPlacingItems::gridSz,
-                                           LvlPlacingItems::gridOffset)));
-        cursor->show();
-        }
-            else
-        cursor->setPos(mouseEvent->scenePos());
-    }
 
-    if(DrawMode)
+    switch(EditingMode)
     {
-        this->clearSelection();
-        if(!pResizer)
+    case MODE_PlacingNew:
         {
-        if( mouseEvent->buttons() & Qt::LeftButton ) placeItemUnderCursor();
+            this->clearSelection();
+            if(cursor) cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                                         LvlPlacingItems::gridSz,
+                                                         LvlPlacingItems::gridOffset)));
+                       cursor->show();
+            if( mouseEvent->buttons() & Qt::LeftButton ) placeItemUnderCursor();
             QGraphicsScene::mouseMoveEvent(mouseEvent);
+            break;
         }
-        return;
+    case MODE_Resizing:
+        {
+            this->clearSelection();
+            QGraphicsScene::mouseMoveEvent(mouseEvent);
+            return;
+        break;
+        }
+    case MODE_Erasing:
+        {
+            if(cursor) cursor->setPos(mouseEvent->scenePos());
+            if (EraserEnabled)// Remove All items, placed under Cursor
+                removeItemUnderCursor();
+            break;
+        }
+    default:
+        if(cursor) cursor->setPos(mouseEvent->scenePos());
+        break;
     }
 
     haveSelected=(!selectedItems().isEmpty());
@@ -218,20 +229,10 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if(!IsMoved)
         {
-            /*
-            for (QList<QGraphicsItem*>::iterator it = selectedItems().begin(); it != selectedItems().end(); it++)
-            {
-                Z.push_back((*it)->zValue());
-                (*it)->setZValue(1000);
-            }*/
             IsMoved = true;
         }
     }
-
     QGraphicsScene::mouseMoveEvent(mouseEvent);
-
-    if (EraserEnabled)// Remove All items, placed under Cursor
-        removeItemUnderCursor();
 }
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -246,8 +247,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if(DrawMode)
     {
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
-
-        //Here must be ended drawing of item
         return;
     }
 
@@ -269,35 +268,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(PasteFromBuffer)
             {
                 paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
-                EditingMode = MODE_Selecting;
                 PasteFromBuffer = false;
                 IsMoved=false;
-
-                MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(0);
-
-                //activeLvlEditWin()->scene->wasPasted=false;
-                //activeLvlEditWin()->scene->disableMoveItems=false;
-                disableMoveItems=false;
-                //wasPasted = true; //Set flag for reset pasta cursor to normal select
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
             }
+
 
             QList<QGraphicsItem*> selectedList = selectedItems();
 
             // check for grid snap
             if ((!selectedList.isEmpty())&&(IsMoved))
             {
-                /*
-                if(IsMoved)
-                {
-                    for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-                    {
-                        if(Z.size()>0)
-                        {
-                        (*it)->setZValue(Z[0]);
-                        Z.pop_front();
-                        }
-                    }
-                }*/
 
                 // correct selected items' coordinates
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
@@ -639,10 +620,17 @@ void LvlScene::removeItemUnderCursor()
                 deleted=true;
             }
             else
-            if( findItem->data(0).toString()=="BGO" )
+            if( findItem->data(0).toString()=="NPC" )
             {
                 removedItems.npc.push_back(((ItemNPC *)findItem)->npcData);
                 ((ItemNPC *)findItem)->removeFromArray();
+                deleted=true;
+            }
+            else
+            if( findItem->data(0).toString()=="Water" )
+            {
+                removedItems.water.push_back(((ItemWater *)findItem)->waterData);
+                ((ItemWater *)findItem)->removeFromArray();
                 deleted=true;
             }
             removeItem(findItem);
@@ -668,7 +656,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         pResizer->type=0;
         pResizer->_minSize = QSizeF(800, 608);
         this->setFocus(Qt::ActiveWindowFocusReason);
-        DrawMode=true;
+        //DrawMode=true;
         MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
     }
     else
@@ -703,4 +691,67 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         }
         DrawMode=false;
     }
+}
+
+void LvlScene::SwitchEditingMode(int EdtMode)
+{
+    //int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
+                     // 3 - drawing water/sand zone, 4 - placing from Buffer
+    //bool EraserEnabled;
+    //bool PasteFromBuffer;
+
+    //bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
+
+    //bool disableMoveItems;
+
+    //bool contextMenuOpened;
+    EraserEnabled=false;
+    PasteFromBuffer=false;
+    DrawMode=false;
+    disableMoveItems=false;
+
+    switch(EdtMode)
+    {
+    case MODE_PlacingNew:
+        DrawMode=true;
+        setSectionResizer(false, false);
+
+        break;
+    case MODE_DrawSquare:
+        resetCursor();
+        setSectionResizer(false, false);
+        DrawMode=true;
+        break;
+
+    case MODE_Resizing:
+        resetCursor();
+        DrawMode=true;
+        disableMoveItems=true;
+        break;
+
+    case MODE_PasteFromClip:
+        resetCursor();
+        setSectionResizer(false, false);
+        DrawMode=true;
+        disableMoveItems=true;
+        break;
+
+    case MODE_Erasing:
+        resetCursor();
+        setSectionResizer(false, false);
+        break;
+
+    case MODE_SelectingOnly:
+        resetCursor();
+        setSectionResizer(false, false);
+        disableMoveItems=true;
+        break;
+    case MODE_Selecting:
+    default:
+        resetCursor();
+        setSectionResizer(false, false);
+        break;
+    }
+    EditingMode = EdtMode;
+
 }

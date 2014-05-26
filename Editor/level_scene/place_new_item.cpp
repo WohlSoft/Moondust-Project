@@ -144,7 +144,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                             ( (pConfigs->main_block[j].animated)?
                                 pConfigs->main_block[j].frames:1
                             );
-
+            LvlPlacingItems::blockSet.layer = "Default";
 
             cursor = addPixmap(tImg.copy(0,0,
                                          LvlPlacingItems::blockSet.w,
@@ -156,6 +156,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             if(pConfigs->main_block[j].sizable) cursor->setData(3, "sizable");
             cursor->setData(9, QString::number(LvlPlacingItems::blockSet.w));
             cursor->setData(10, QString::number(LvlPlacingItems::blockSet.h));
+            cursor->setData(25, "CURSOR");
             cursor->setZValue(7000);
             cursor->setOpacity( 0.8 );
             cursor->setVisible(true);
@@ -245,6 +246,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setData(1, QString::number(itemID));
         cursor->setData(9, QString::number(w));
         cursor->setData(10, QString::number(h));
+        cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(true);
@@ -337,8 +339,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         cursor->setData(0, "NPC");
         cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(tImg.width()));
-        cursor->setData(10, QString::number(tImg.height()));
+        cursor->setData(9, QString::number(mergedSet.width));
+        cursor->setData(10, QString::number(mergedSet.height));
+        cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(true);
