@@ -53,7 +53,7 @@ void ItemDoor::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 
 void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_water)&&(!isLocked))
+    if((!scene->lock_water)&&(!scene->DrawMode)&&(!isLocked))
     {
         //Remove selection from non-bgo items
         if(this->isSelected())
