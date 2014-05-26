@@ -354,6 +354,7 @@ public:
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////
+    void openProps();
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
