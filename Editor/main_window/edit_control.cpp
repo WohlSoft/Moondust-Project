@@ -145,6 +145,7 @@ void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
+       activeLvlEditWin()->setFocus();
     }
 }
 
@@ -162,6 +163,7 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
+       activeLvlEditWin()->setFocus();
     }
 
 }
@@ -180,6 +182,7 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
+       activeLvlEditWin()->setFocus();
     }
 
 }

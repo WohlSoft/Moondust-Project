@@ -117,6 +117,8 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         QAction *cutBlock = ItemMenu->addAction( tr("Cut") );
         ItemMenu->addSeparator();
         QAction *remove = ItemMenu->addAction( tr("Remove") );
+        ItemMenu->addSeparator();
+        QAction *props = ItemMenu->addAction(tr("Properties..."));
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -227,6 +229,11 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             }
             if(deleted) scene->addRemoveHistory( removedItems );
             scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==props)
+        {
+            scene->openProps();
         }
         else
         {

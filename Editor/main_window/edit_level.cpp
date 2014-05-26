@@ -657,3 +657,123 @@ void MainWindow::on_cancelResize_clicked()
         ui->cancelResize->setVisible(false);
     }
 }
+
+
+
+
+
+void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc)
+{
+    ui->blockProp->hide();
+    ui->bgoProps->hide();
+    ui->npcProps->hide();
+
+    setLayerLists();
+
+    /*
+    long blockPtr; //ArrayID of editing item (-1 - use system)
+    long bgoPtr; //ArrayID of editing item
+    long npcPtr; //ArrayID of editing item
+    */
+    switch(Type)
+    {
+    case 0:
+    {
+        ui->ItemProperties->show();
+        ui->ItemProperties->raise();
+        ui->blockProp->show();
+        ui->blockProp->raise();
+        ui->ItemProps->setCurrentIndex(0);
+        blockPtr = block.array_id;
+
+        bool found=false;
+        int j;
+
+        //Check Index exists
+        if(block.id < (unsigned int)configs.index_blocks.size())
+        {
+            j = configs.index_blocks[block.id].i;
+
+            if(j<configs.main_block.size())
+            {
+            if(configs.main_block[j].id == block.id)
+                found=true;
+            }
+        }
+        //if Index found
+        if(!found)
+        {
+            for(j=0;j<configs.main_block.size();j++)
+            {
+                if(configs.main_block[j].id==block.id)
+                    break;
+            }
+        }
+
+        ui->PROPS_blockPos->setText( tr("Position: [%1, %2]").arg(block.x).arg(block.y) );
+        ui->PROPS_BlockResize->setVisible( configs.main_block[j].sizable );
+        ui->PROPS_BlockInvis->setChecked( block.invisible );
+        ui->PROPS_BlkSlippery->setChecked( block.slippery );
+        ui->PROPS_BlockIncludes->setText(
+                    ((block.npc_id>0)?
+                         ((block.npc_id>1000)?QString("NPC-%1").arg(block.npc_id-1000):tr("%1 coins").arg(block.npc_id))
+                       :tr("[empty]")
+                         ) );
+
+        ui->PROPS_BlockLayer->setCurrentIndex(0);
+        for(int i=0; i<ui->PROPS_BlockLayer->count();i++)
+        {
+            if(ui->PROPS_BlockLayer->itemText(i)==block.layer)
+            {ui->PROPS_BlockLayer->setCurrentIndex(i); break;}
+        }
+
+        ui->PROPS_BlkEventDestroy->setCurrentIndex(0);
+        for(int i=0; i<ui->PROPS_BlkEventDestroy->count();i++)
+        {
+            if(ui->PROPS_BlkEventDestroy->itemText(i)==block.event_destroy)
+            {ui->PROPS_BlkEventDestroy->setCurrentIndex(i); break;}
+        }
+
+        ui->PROPS_BlkEventHited->setCurrentIndex(0);
+        for(int i=0; i<ui->PROPS_BlkEventHited->count();i++)
+        {
+            if(ui->PROPS_BlkEventHited->itemText(i)==block.event_hit)
+            {ui->PROPS_BlkEventHited->setCurrentIndex(i); break;}
+        }
+
+        ui->PROPS_BlkEventLayerEmpty->setCurrentIndex(0);
+        for(int i=0; i<ui->PROPS_BlkEventLayerEmpty->count();i++)
+        {
+            if(ui->PROPS_BlkEventLayerEmpty->itemText(i)==block.event_no_more)
+            {ui->PROPS_BlkEventLayerEmpty->setCurrentIndex(i); break;}
+        }
+
+        break;
+    }
+    case 1:
+        ui->ItemProperties->show();
+        ui->ItemProperties->raise();
+        ui->bgoProps->show();
+        ui->bgoProps->raise();
+        bgoPtr = bgo.array_id;
+        ui->ItemProps->setCurrentIndex(1);
+
+
+        break;
+    case 2:
+        ui->ItemProperties->show();
+        ui->ItemProperties->raise();
+        ui->npcProps->show();
+        ui->npcProps->raise();
+        npcPtr = npc.array_id;
+        ui->ItemProps->setCurrentIndex(2);
+
+
+        break;
+
+    case -1: //Nothing to edit
+    default:
+        ui->ItemProperties->hide();
+    }
+
+}
