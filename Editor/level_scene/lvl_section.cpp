@@ -482,8 +482,6 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
 
 
-
-
 //  ////////////////////////////Drawing the inactive intersection space////////////////////////////////////
 void LvlScene::drawSpace()
 {

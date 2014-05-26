@@ -69,7 +69,7 @@ void ItemNPC::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 
 void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_npc)&&(!isLocked))
+    if((!scene->lock_npc)&&(!scene->DrawMode)&&(!isLocked))
     {
         //Remove selection from non-block items
         if(this->isSelected())

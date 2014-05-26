@@ -138,7 +138,6 @@ void LvlScene::setDoors(QProgressDialog &progress)
 
     for(i=0; i<LvlData->doors.size(); i++)
     {
-
         //add Doors points to scene
         placeDoor(LvlData->doors[i]);
 
@@ -147,7 +146,6 @@ void LvlScene::setDoors(QProgressDialog &progress)
         else
             return;
     }
-
 }
 
 // ////////////////////////SET Player Points/////////////////////////////////

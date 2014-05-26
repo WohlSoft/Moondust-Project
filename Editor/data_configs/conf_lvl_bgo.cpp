@@ -96,7 +96,7 @@ void dataconfigs::loadLevelBGO()
 
             //Add to Index
             if(i < (unsigned int)main_bgo.size())
-                index_bgo[i].i = i;
+                index_bgo[i].i = i-1;
 
         bgoset.endGroup();
 
