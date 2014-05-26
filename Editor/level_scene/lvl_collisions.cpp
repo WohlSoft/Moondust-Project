@@ -38,6 +38,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
     foreach (QGraphicsItem * it, collisions) {
             if (it == item)
                  continue;
+            if(!it->isVisible()) continue;
             if(item->data(0).toString()=="Water")
                 return NULL;
             if(item->data(0).toString()=="Door_exit")
