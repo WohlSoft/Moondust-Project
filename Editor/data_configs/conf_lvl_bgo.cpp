@@ -53,6 +53,7 @@ void dataconfigs::loadLevelBGO()
         {
             bgoIndex.i=i;
             bgoIndex.type=0;
+            bgoIndex.smbx64_sp=0;
             index_bgo.push_back(bgoIndex);
         }
 
@@ -95,8 +96,12 @@ void dataconfigs::loadLevelBGO()
             main_bgo.push_back(sbgo);
 
             //Add to Index
-            if(i < (unsigned int)main_bgo.size())
+            if(i <= (unsigned int)index_bgo.size())
+            {
                 index_bgo[i].i = i-1;
+                index_bgo[i].smbx64_sp = bgoset.value("smbx64-sort-priory", "0").toLongLong();
+                //WriteToLog(QtDebugMsg, QString("Gotten BGO SMBX64 Sort priory -> %1").arg( index_bgo[i].smbx64_sp ) );
+            }
 
         bgoset.endGroup();
 
