@@ -383,6 +383,10 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
 void LvlScene::setSquareDrawer()
 {
+    if(cursor)
+        {delete cursor;
+        cursor=NULL;}
+
     cursor = addRect(0,0,1,1, QPen(Qt::green, 2), QBrush(Qt::darkGreen));
 
     cursor->setData(0, "Square");
