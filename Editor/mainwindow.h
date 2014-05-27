@@ -68,9 +68,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QMdiArea *parent = 0);
     ~MainWindow();
-    dataconfigs *getConfigs();
+    //dataconfigs *getConfigs();
     void openFilesByArgs(QStringList args);
 
+    dataconfigs configs; // Global objects configucrations
 
     //Sub Windows
     int activeChildWindow();
@@ -278,7 +279,6 @@ private slots:
     void on_NPCItemsList_itemClicked(QListWidgetItem *item);
 
 private:
-    dataconfigs configs; // Global objects configucrations
 
     LevelEditingSettings LvlOpts;
     bool AnimationEnabled; //Animator switch

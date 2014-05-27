@@ -22,16 +22,6 @@
 #include "../mainwindow.h"
 
 
-
-dataconfigs * MainWindow::getConfigs()
-{
-    dataconfigs * pointer;
-    pointer = &configs;
-    return pointer;
-}
-
-
-
 void MainWindow::on_actionLoad_configs_triggered()
 {
     thread1->start();
