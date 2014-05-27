@@ -162,9 +162,11 @@ void leveledit::changeCursor(int mode)
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
         break;
     case 3:    // Draw water zones
-        ui->graphicsView->setInteractive(false);
+        ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::CrossCursor);
-        ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+        ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
+        ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
+        ui->graphicsView->viewport()->setMouseTracking(true);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_DrawSquare);
         break;
     case 4:    // paste from Buffer
