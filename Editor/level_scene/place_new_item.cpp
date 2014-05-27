@@ -39,7 +39,7 @@ LevelBlock  LvlPlacingItems::blockSet=
 };
 LevelBGO    LvlPlacingItems::bgoSet=
 {
-    0,0,0,"Default",0,0
+    0,0,0,"Default",0,0,0
 };
 LevelWater  LvlPlacingItems::waterSet=
 {
