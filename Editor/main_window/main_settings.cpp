@@ -245,7 +245,7 @@ void MainWindow::setUiDefults()
     #endif
 
     //Applay objects into tools
-    setTools();
+    setLevelSectionData();
     setItemBoxes();
 
     loadSettings();
@@ -271,7 +271,9 @@ void MainWindow::setUiDefults()
     ui->LevelToolBox->hide();
     ui->DoorsToolbox->hide();
     ui->LevelLayers->hide();
+
     ui->ItemProperties->hide();
+    ui->ItemProperties->setFloating(true);
 
     ui->menuView->setEnabled(0);
 

@@ -54,6 +54,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionCut->setEnabled( (WinType==1) || (WinType==3) );
 
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
+    ui->ItemProperties->setVisible(false);
 
 
 
@@ -157,6 +158,10 @@ void MainWindow::updateMenus(bool force)
         SetCurrentLevelSection(0, 1);
         setDoorsToolbox();
         setLayersBox();
+
+        //Sync lists in properties windows
+        EventListsSync();
+        setLayerLists();
 
         setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();

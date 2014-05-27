@@ -107,12 +107,23 @@ void MainWindow::on_actionSetFirstPlayer_triggered()
 {
     resetEditmodeButtons();
     ui->actionSetFirstPlayer->setChecked(1);
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->changeCursor(2);
+        activeLvlEditWin()->scene->setItemPlacer( 5, 0 );
+    }
+
 }
 
 void MainWindow::on_actionSetSecondPlayer_triggered()
 {
     resetEditmodeButtons();
     ui->actionSetSecondPlayer->setChecked(1);
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->changeCursor(2);
+        activeLvlEditWin()->scene->setItemPlacer( 5, 1 );
+    }
 
 }
 
@@ -120,66 +131,22 @@ void MainWindow::on_actionDrawWater_triggered()
 {
     resetEditmodeButtons();
     ui->actionDrawWater->setChecked(1);
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->changeCursor(3);
+        activeLvlEditWin()->scene->setItemPlacer( 3, 0 );
+    }
 }
 
 void MainWindow::on_actionDrawSand_triggered()
 {
     resetEditmodeButtons();
     ui->actionDrawSand->setChecked(1);
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->changeCursor(3);
+        activeLvlEditWin()->scene->setItemPlacer( 3, 1 );
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-
-
-void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
-{
-    resetEditmodeButtons();
-   //placeBlock
-
-    if ((activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
-    {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(2);
-       activeLvlEditWin()->scene->EditingMode = 2;
-       activeLvlEditWin()->scene->disableMoveItems=false;
-       activeLvlEditWin()->scene->DrawMode=true;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
-    }
-}
-
-void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
-{
-    resetEditmodeButtons();
-   //placeBGO
-
-    if ((activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
-    {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(2);
-       activeLvlEditWin()->scene->EditingMode = 2;
-       activeLvlEditWin()->scene->disableMoveItems=false;
-       activeLvlEditWin()->scene->DrawMode=true;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
-    }
-
-}
-
-void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
-{
-    resetEditmodeButtons();
-
-    //placeNPC
-    if ((activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
-    {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(2);
-       activeLvlEditWin()->scene->EditingMode = 2;
-       activeLvlEditWin()->scene->disableMoveItems=false;
-       activeLvlEditWin()->scene->DrawMode=true;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       activeLvlEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
-    }
-
-}
