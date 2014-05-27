@@ -361,6 +361,17 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 5: //PlayerPoint
         placingItem=PLC_PlayerPoint;
         LvlPlacingItems::playerID = itemID;
+
+        LvlPlacingItems::gridSz=2;
+        LvlPlacingItems::gridOffset = QPoint(0,2);
+
+        cursor = addPixmap(QString(":/player%1.png").arg(itemID+1));
+        cursor->setData(25, "CURSOR");
+        cursor->setZValue(7000);
+        cursor->setOpacity( 0.8 );
+        cursor->setVisible(true);
+        cursor->setEnabled(true);
+
         break;
         default: break;
     }
