@@ -290,7 +290,15 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                    LvlPlacingItems::gridOffset);
 
             QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
-            if(cursor) ((QGraphicsRectItem *)cursor)->setRect(0,0, hs.width(), hs.height());
+
+            if(cursor)
+            {
+                ((QGraphicsRectItem *)cursor)->setRect(0,0, hs.width(), hs.height());
+                ((QGraphicsRectItem *)cursor)->setPos(
+                            ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
+                            ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
+                            );
+            }
         }
     case MODE_Resizing:
         {
