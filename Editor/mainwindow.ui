@@ -931,7 +931,7 @@
         <x>0</x>
         <y>0</y>
         <width>238</width>
-        <height>224</height>
+        <height>231</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -992,7 +992,7 @@
         <x>0</x>
         <y>0</y>
         <width>221</width>
-        <height>224</height>
+        <height>231</height>
        </rect>
       </property>
      </widget>
@@ -1016,7 +1016,7 @@
         <x>0</x>
         <y>0</y>
         <width>221</width>
-        <height>224</height>
+        <height>231</height>
        </rect>
       </property>
      </widget>
@@ -1040,7 +1040,7 @@
         <x>0</x>
         <y>0</y>
         <width>221</width>
-        <height>224</height>
+        <height>231</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2432,8 +2432,14 @@ p, li { white-space: pre-wrap; }
      </property>
      <item row="0" column="0">
       <widget class="QToolBox" name="ItemProps">
+       <property name="maximumSize">
+        <size>
+         <width>246</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="blockProp">
         <property name="geometry">
@@ -2441,7 +2447,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>246</width>
-          <height>367</height>
+          <height>355</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2605,7 +2611,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>246</width>
-          <height>367</height>
+          <height>355</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2646,20 +2652,13 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>229</width>
-          <height>572</height>
+          <height>628</height>
          </rect>
         </property>
         <attribute name="label">
          <string>NPC</string>
         </attribute>
         <layout class="QFormLayout" name="formLayout_3">
-         <item row="0" column="0">
-          <widget class="QLabel" name="PROPS_NpcPos">
-           <property name="text">
-            <string notr="true">Pos: [x. y]</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0" colspan="2">
           <widget class="QGroupBox" name="PROPS_NpcDir">
            <property name="title">
@@ -2697,72 +2696,28 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
-          <widget class="QPushButton" name="PROPS_NPCContaiter">
-           <property name="text">
-            <string notr="true">Contaiter</string>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="PROPS_NpcSpinLabel">
-           <property name="text">
-            <string notr="true">SpecialSpin</string>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="1">
-          <widget class="QSpinBox" name="PROPS_NPCSpecialSpin"/>
-         </item>
-         <item row="8" column="0">
-          <widget class="QLabel" name="PROPS_NPCBoxLabel">
-           <property name="text">
-            <string notr="true">SpecialBox</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="1">
-          <widget class="QComboBox" name="PROPS_NPCSpecialBox">
-           <property name="currentText">
-            <string notr="true"/>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="0" colspan="2">
+         <item row="14" column="0" colspan="2">
           <widget class="Line" name="line_5">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
-         <item row="10" column="0">
-          <widget class="QCheckBox" name="PROPS_NpcGenerator">
-           <property name="font">
-            <font>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Generator</string>
-           </property>
-          </widget>
-         </item>
-         <item row="12" column="0" colspan="2">
+         <item row="17" column="0" colspan="2">
           <widget class="Line" name="line_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
-         <item row="13" column="0">
+         <item row="18" column="0">
           <widget class="QLabel" name="NpcLayerLabel">
            <property name="text">
             <string>Layer:</string>
            </property>
           </widget>
          </item>
-         <item row="13" column="1">
+         <item row="18" column="1">
           <widget class="QComboBox" name="PROPS_NpcLayer">
            <property name="currentText">
             <string notr="true">CurrentLayer</string>
@@ -2774,14 +2729,14 @@ p, li { white-space: pre-wrap; }
            </item>
           </widget>
          </item>
-         <item row="14" column="0">
+         <item row="19" column="0">
           <widget class="QLabel" name="NpcLayerAttach">
            <property name="text">
             <string>Attach to:</string>
            </property>
           </widget>
          </item>
-         <item row="14" column="1">
+         <item row="19" column="1">
           <widget class="QComboBox" name="PROPS_NpcAttachLayer">
            <property name="currentText">
             <string notr="true">[none]</string>
@@ -2793,21 +2748,21 @@ p, li { white-space: pre-wrap; }
            </item>
           </widget>
          </item>
-         <item row="15" column="0" colspan="2">
+         <item row="20" column="0" colspan="2">
           <widget class="Line" name="line_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
-         <item row="16" column="0">
+         <item row="21" column="0">
           <widget class="QLabel" name="NpcEventActivate">
            <property name="text">
             <string>Activate:</string>
            </property>
           </widget>
          </item>
-         <item row="16" column="1">
+         <item row="21" column="1">
           <widget class="QComboBox" name="PROPS_NpcEventDeath">
            <property name="currentText">
             <string notr="true">[none]</string>
@@ -2819,14 +2774,14 @@ p, li { white-space: pre-wrap; }
            </item>
           </widget>
          </item>
-         <item row="17" column="0">
+         <item row="22" column="0">
           <widget class="QLabel" name="NpcEventDeath">
            <property name="text">
             <string>Death:</string>
            </property>
           </widget>
          </item>
-         <item row="17" column="1">
+         <item row="22" column="1">
           <widget class="QComboBox" name="PROPS_NpcEventActivate">
            <property name="currentText">
             <string notr="true">[none]</string>
@@ -2838,14 +2793,14 @@ p, li { white-space: pre-wrap; }
            </item>
           </widget>
          </item>
-         <item row="18" column="0">
+         <item row="23" column="0">
           <widget class="QLabel" name="NpcEventTalk">
            <property name="text">
             <string>Talk:</string>
            </property>
           </widget>
          </item>
-         <item row="18" column="1">
+         <item row="23" column="1">
           <widget class="QComboBox" name="PROPS_NpcEventTalk">
            <property name="currentText">
             <string notr="true">[none]</string>
@@ -2857,14 +2812,14 @@ p, li { white-space: pre-wrap; }
            </item>
           </widget>
          </item>
-         <item row="19" column="0">
+         <item row="24" column="0">
           <widget class="QLabel" name="NpcEventTalk_2">
            <property name="text">
             <string>Layer empty:</string>
            </property>
           </widget>
          </item>
-         <item row="19" column="1">
+         <item row="24" column="1">
           <widget class="QComboBox" name="PROPS_NpcEventEmptyLayer">
            <property name="currentText">
             <string notr="true">[none]</string>
@@ -2897,7 +2852,7 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="11" column="0" colspan="2">
+         <item row="16" column="0" colspan="2">
           <widget class="QGroupBox" name="PROPS_NPCGenBox">
            <property name="title">
             <string>Generator</string>
@@ -3017,6 +2972,57 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item row="15" column="0" colspan="2">
+          <widget class="QCheckBox" name="PROPS_NpcGenerator">
+           <property name="font">
+            <font>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Generator</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="PROPS_NpcPos">
+           <property name="text">
+            <string notr="true">Pos: [x. y]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0" colspan="2">
+          <widget class="QPushButton" name="PROPS_NPCContaiter">
+           <property name="text">
+            <string notr="true">Contaiter</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="2">
+          <widget class="QLabel" name="PROPS_NpcSpinLabel">
+           <property name="text">
+            <string notr="true">SpecialSpin</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0" colspan="2">
+          <widget class="QSpinBox" name="PROPS_NPCSpecialSpin"/>
+         </item>
+         <item row="10" column="0" colspan="2">
+          <widget class="QComboBox" name="PROPS_NPCSpecialBox">
+           <property name="currentText">
+            <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0" colspan="2">
+          <widget class="QLabel" name="PROPS_NPCBoxLabel">
+           <property name="text">
+            <string notr="true">SpecialBox</string>
+           </property>
           </widget>
          </item>
         </layout>
