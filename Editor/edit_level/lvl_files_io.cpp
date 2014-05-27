@@ -173,9 +173,23 @@ bool leveledit::saveFile(const QString &fileName)
     }
 
     QTextStream out(&file);
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+
+    // ////////////////////// Write SMBX64 LVL //////////////////////////////
+
+    //set SMBX64 specified option to BGO
+    for(int q=0; q< LvlData.bgo.size(); q++)
+    {
+        if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
+        LvlData.bgo[q].smbx64_sp = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
+        //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
+    }
+
+
     out << FileFormats::WriteSMBX64LvlFile(LvlData);
+    // //////////////////////////////////////////////////////////////////////
 
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
