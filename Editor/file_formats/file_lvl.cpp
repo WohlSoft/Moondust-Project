@@ -339,6 +339,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         }
         else bgodata.layer = "Default";
 
+        bgodata.smbx64_sp = 0;
+
         bgodata.array_id = FileData.bgo_array_id;
         FileData.bgo_array_id++;
 
@@ -1204,22 +1206,24 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
 
 
     //BGOs
-    QMap<long, QMap<long, LevelBGO > > sortedBGO;
+    QMap<long, QMap<long, QMap<long, QMap<long, LevelBGO > > > > sortedBGO;
     foreach(LevelBGO bgo1, FileData.bgo)
     {
-        sortedBGO[bgo1.x][bgo1.array_id] = bgo1;
+        sortedBGO[bgo1.smbx64_sp][bgo1.x][bgo1.y][bgo1.array_id] = bgo1;
     }
 
     //for(i=0; i<FileData.bgo.size(); i++)
-    for (QMap<long, QMap<long, LevelBGO > >::iterator bYrr = sortedBGO.begin(); bYrr != sortedBGO.end(); bYrr++)
+    for (QMap<long, QMap<long, QMap<long, QMap<long, LevelBGO > > > >::iterator sArr = sortedBGO.begin(); sArr != sortedBGO.end(); sArr++)
     {
-        for (QMap<long, LevelBGO >::iterator bgo = (* bYrr).begin(); bgo != (*bYrr).end(); bgo++)
-        {
-        TextData += SMBX64::IntS( (*bgo).x);
-        TextData += SMBX64::IntS( (*bgo).y);
-        TextData += SMBX64::IntS( (*bgo).id);
-        TextData += SMBX64::qStrS( (*bgo).layer);
-        }
+        for (QMap<long, QMap<long, QMap<long, LevelBGO > > >::iterator bArr = (* sArr).begin(); bArr != (* sArr).end(); bArr++)
+          for (QMap<long, QMap<long, LevelBGO > >::iterator bBrr = (* bArr).begin(); bBrr != (* bArr).end(); bBrr++)
+            for (QMap<long, LevelBGO >::iterator bgo = (* bBrr).begin(); bgo != (*bBrr).end(); bgo++)
+            {
+            TextData += SMBX64::IntS( (*bgo).x);
+            TextData += SMBX64::IntS( (*bgo).y);
+            TextData += SMBX64::IntS( (*bgo).id);
+            TextData += SMBX64::qStrS( (*bgo).layer);
+            }
     }
     TextData += "\"next\"\n";//Separator
 

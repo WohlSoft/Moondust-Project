@@ -82,6 +82,7 @@ struct LevelBGO
     QString layer;
 
     //editing
+    long smbx64_sp;
     unsigned int array_id;
     unsigned int index;
 };
