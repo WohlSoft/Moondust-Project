@@ -106,7 +106,7 @@ public slots:
     void updateMenus(bool force=false);
     void updateWindowMenu();
 
-    void setTools();
+    void setLevelSectionData();
     void setMusic(bool checked);
 
     void setItemBoxes(bool setCat=false);
