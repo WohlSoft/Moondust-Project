@@ -18,6 +18,7 @@
 
 #include "lvlscene.h"
 #include "../edit_level/leveledit.h"
+#include <QtMath>
 
 #include "item_block.h"
 #include "item_bgo.h"
@@ -152,6 +153,7 @@ void LvlScene::openProps()
     QGraphicsScene::selectionChanged();
 }
 
+static QPointF drawStartPos = QPoint(0,0);
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
@@ -179,6 +181,34 @@ if(contextMenuOpened) return;
             QGraphicsScene::mousePressEvent(mouseEvent);
             return;
             break;
+        }
+        case MODE_DrawSquare:
+        {
+            if( mouseEvent->buttons() & Qt::RightButton )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+            }
+
+            if(cursor){
+                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                                  LvlPlacingItems::gridSz,
+                                                  LvlPlacingItems::gridOffset));
+                cursor->setPos( drawStartPos );
+                cursor->setVisible(true);
+
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       LvlPlacingItems::gridSz,
+                                       LvlPlacingItems::gridOffset);
+
+                QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
+                ((QGraphicsRectItem *)cursor)->setRect(0,0, hs.width(), hs.height());
+            }
+
+            QGraphicsScene::mousePressEvent(mouseEvent);
+            return;
+            break;
+
         }
         case MODE_Resizing:
         {
@@ -252,6 +282,24 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QGraphicsScene::mouseMoveEvent(mouseEvent);
             break;
         }
+    case MODE_DrawSquare:
+        {
+
+            QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                   LvlPlacingItems::gridSz,
+                                   LvlPlacingItems::gridOffset);
+
+            QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
+
+            if(cursor)
+            {
+                ((QGraphicsRectItem *)cursor)->setRect(0,0, hs.width(), hs.height());
+                ((QGraphicsRectItem *)cursor)->setPos(
+                            ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
+                            ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
+                            );
+            }
+        }
     case MODE_Resizing:
         {
             this->clearSelection();
@@ -290,6 +338,42 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
         return;
     }
+
+    switch(EditingMode)
+    {
+    case MODE_DrawSquare:
+        {
+
+        if(cursor)
+        {
+            if(placingItem==PLC_Water)
+            {
+                LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
+
+                LvlPlacingItems::waterSet.x = cursor->scenePos().x();
+                LvlPlacingItems::waterSet.y = cursor->scenePos().y();
+                LvlPlacingItems::waterSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
+                LvlPlacingItems::waterSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
+                //here define placing water item.
+                LvlData->water_array_id++;
+
+                LvlPlacingItems::waterSet.array_id = LvlData->water_array_id;
+                LvlData->water.push_back(LvlPlacingItems::waterSet);
+
+                placeWater(LvlPlacingItems::waterSet, true);
+                LevelData plWater;
+                plWater.water.push_back(LvlPlacingItems::waterSet);
+                addPlaceHistory(plWater);
+
+            }
+        cursor->hide();
+        }
+        break;
+        }
+    default:
+        break;
+    }
+
 
     if(DrawMode)
     {

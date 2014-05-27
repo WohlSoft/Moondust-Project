@@ -43,7 +43,7 @@ LevelBGO    LvlPlacingItems::bgoSet=
 };
 LevelWater  LvlPlacingItems::waterSet=
 {
-    0,0,0,0,0,false,"",0,0
+    0,0,0,0,0,false,"Default",0,0
 };
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
@@ -352,6 +352,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 3: //water
         placingItem=PLC_Water;
         LvlPlacingItems::waterType = itemID;
+        LvlPlacingItems::gridSz = 16;
+        LvlPlacingItems::gridOffset = QPoint(0,0);
         setSquareDrawer(); return;
         break;
     case 4: //doorPoint
@@ -381,8 +383,22 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 }
 
 
+
 void LvlScene::setSquareDrawer()
 {
+    if(cursor)
+        {delete cursor;
+        cursor=NULL;}
+
+    cursor = addRect(0,0,1,1, QPen(Qt::green, 2), QBrush(Qt::darkGreen));
+
+    cursor->setData(0, "Square");
+    cursor->setData(25, "CURSOR");
+    cursor->setZValue(7000);
+    cursor->setOpacity( 0.5 );
+    cursor->setVisible(false);
+    cursor->setEnabled(true);
+
     EditingMode = MODE_DrawSquare;
     DrawMode=true;
 }
