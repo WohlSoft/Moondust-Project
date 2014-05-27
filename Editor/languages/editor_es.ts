@@ -1563,22 +1563,22 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="40"/>
+        <location filename="../main_window/data_configs.cpp" line="30"/>
         <source>Reloading configurations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="40"/>
+        <location filename="../main_window/data_configs.cpp" line="30"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="64"/>
+        <location filename="../main_window/data_configs.cpp" line="54"/>
         <source>Reload configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="65"/>
+        <location filename="../main_window/data_configs.cpp" line="55"/>
         <source>Configuration succesfully reloaded!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1862,7 +1862,7 @@ File: %1
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="85"/>
-        <location filename="../edit_level/lvl_files_io.cpp" line="251"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="265"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1872,23 +1872,23 @@ File: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="196"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="210"/>
         <source>Read file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="197"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="211"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="217"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="231"/>
         <source>Configurations not loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="218"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="232"/>
         <source>Cannot open level file %1:
 because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -1946,18 +1946,18 @@ because object configurations not loaded
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="251"/>
-        <location filename="../edit_level/lvl_files_io.cpp" line="252"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="265"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="266"/>
         <source>Loading level data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="294"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="308"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="295"/>
+        <location filename="../edit_level/lvl_files_io.cpp" line="309"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
