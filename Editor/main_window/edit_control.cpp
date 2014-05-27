@@ -107,12 +107,23 @@ void MainWindow::on_actionSetFirstPlayer_triggered()
 {
     resetEditmodeButtons();
     ui->actionSetFirstPlayer->setChecked(1);
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->changeCursor(2);
+        activeLvlEditWin()->scene->setItemPlacer( 5, 0 );
+    }
+
 }
 
 void MainWindow::on_actionSetSecondPlayer_triggered()
 {
     resetEditmodeButtons();
     ui->actionSetSecondPlayer->setChecked(1);
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->changeCursor(2);
+        activeLvlEditWin()->scene->setItemPlacer( 5, 1 );
+    }
 
 }
 
@@ -120,12 +131,22 @@ void MainWindow::on_actionDrawWater_triggered()
 {
     resetEditmodeButtons();
     ui->actionDrawWater->setChecked(1);
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->changeCursor(3);
+        activeLvlEditWin()->scene->setItemPlacer( 3, 0 );
+    }
 }
 
 void MainWindow::on_actionDrawSand_triggered()
 {
     resetEditmodeButtons();
     ui->actionDrawSand->setChecked(1);
+    if((activeChildWindow()==1))
+    {
+        activeLvlEditWin()->changeCursor(3);
+        activeLvlEditWin()->scene->setItemPlacer( 3, 1 );
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
