@@ -377,6 +377,7 @@ struct bgoIndexes
 {
     unsigned long i; //Target array index
     unsigned int type;//0 - internal GFX, 1 - user defined GFX
+    long smbx64_sp;//smbx64-sort-priory, array sorting priory, need for compatible with SMBX 1.3
 };
 
 struct npcIndexes
