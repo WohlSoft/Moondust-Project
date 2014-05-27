@@ -353,6 +353,9 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 LvlData->water.push_back(LvlPlacingItems::waterSet);
 
                 placeWater(LvlPlacingItems::waterSet, true);
+                LevelData plWater;
+                plWater.water.push_back(LvlPlacingItems::waterSet);
+                addPlaceHistory(plWater);
 
             }
         cursor->hide();
