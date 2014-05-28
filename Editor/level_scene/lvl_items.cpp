@@ -771,21 +771,50 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
 
 void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 {
-    QGraphicsItem *	player;
+    QGraphicsItem *	player = NULL;
+    bool found=false;
     if(!init)
     {
-
+        foreach(QGraphicsItem * plrt, this->items())
+        {
+            if( plrt->data(0).toString()=="player"+QString::number(plr.id) )
+            {
+                player = plrt;
+                found=true;
+                break;
+            }
+        }
     }
 
-    if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
+    if(found)
     {
-        player = addPixmap(QPixmap(":/player"+QString::number(plr.id)+".png"));
         player->setPos(plr.x, plr.y);
-        player->setZValue(playerZ);
-        player->setData(0, "player"+QString::number(plr.id) );
-        player->setData(2, QString::number(plr.id));
-        player->setFlag(QGraphicsItem::ItemIsSelectable, true);
-        player->setFlag(QGraphicsItem::ItemIsMovable, true);
+        for(int i=0; i<LvlData->players.size(); i++)
+        {
+         if(LvlData->players[i].id == plr.id)
+         { LvlData->players[i] = plr; break; }
+        }
+    }
+    else
+    {
+        if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
+        {
+            player = addPixmap(QPixmap(":/player"+QString::number(plr.id)+".png"));
+            player->setPos(plr.x, plr.y);
+            player->setZValue(playerZ);
+            player->setData(0, "player"+QString::number(plr.id) );
+            player->setData(2, QString::number(plr.id));
+            player->setFlag(QGraphicsItem::ItemIsSelectable, true);
+            //player->setFlag(QGraphicsItem::ItemIsMovable, true);
+            if(!init)
+            {
+                for(int i=0; i<LvlData->players.size(); i++)
+                {
+                 if(LvlData->players[i].id == plr.id)
+                 { LvlData->players[i] = plr; break; }
+                }
+            }
+        }
     }
 
 }
