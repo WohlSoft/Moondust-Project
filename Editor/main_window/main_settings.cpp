@@ -261,19 +261,21 @@ void MainWindow::setUiDefults()
     ui->actionPlayMusic->setChecked(autoPlayMusic);
 
     ui->centralWidget->cascadeSubWindows();
-    ui->WorldToolBox->hide();
-
-    ui->LevelSectionSettings->hide();
 
     ui->applyResize->setVisible(false);
     ui->cancelResize->setVisible(false);
 
+
+    ui->WorldToolBox->hide();
     ui->LevelToolBox->hide();
+
+
     ui->DoorsToolbox->hide();
     ui->LevelLayers->hide();
+    ui->LevelSectionSettings->hide();
 
     ui->ItemProperties->hide();
-    ui->ItemProperties->setFloating(true);
+
 
     ui->menuView->setEnabled(0);
 
@@ -331,6 +333,16 @@ void MainWindow::loadSettings()
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
 
+        ui->DoorsToolbox->setFloating(settings.value("doors-tool-box-float", true).toBool());
+        ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
+        ui->LevelLayers->setFloating(settings.value("level-layers-float", true).toBool());
+        ui->ItemProperties->setFloating(settings.value("item-props-box-float", true).toBool());
+
+        ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
+        ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
+        ui->LevelLayers->restoreGeometry(settings.value("level-layers-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
+        ui->ItemProperties->restoreGeometry(settings.value("item-props-box-geometry", ui->ItemProperties->saveGeometry()).toByteArray());
+
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
     settings.endGroup();
@@ -358,6 +370,16 @@ void MainWindow::saveSettings()
     settings.setValue("section-tb-visible", SectionToolBoxVis);
     settings.setValue("level-layers-vis", LevelLayersBoxVis);
     settings.setValue("level-doors-vis", LevelDoorsBoxVis);
+
+    settings.setValue("doors-tool-box-float", ui->DoorsToolbox->isFloating());
+    settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
+    settings.setValue("level-layers-float", ui->LevelLayers->isFloating());
+    settings.setValue("item-props-box-float", ui->ItemProperties->isFloating());
+
+    settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
+    settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
+    settings.setValue("level-layers-geometry", ui->LevelLayers->saveGeometry());
+    settings.setValue("item-props-box-geometry", ui->ItemProperties->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
