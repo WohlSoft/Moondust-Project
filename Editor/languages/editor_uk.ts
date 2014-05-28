@@ -115,7 +115,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="47"/>
         <source>Please, select target image size:</source>
-        <translation>Будь-ласка, вкажіть розмір
+        <translation type="unfinished">Будь ласка, вкажіть розмір
 зображення для збереження:</translation>
     </message>
     <message>
