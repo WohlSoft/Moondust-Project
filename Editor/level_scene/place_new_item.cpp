@@ -146,6 +146,11 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                             );
             LvlPlacingItems::blockSet.layer = "Default";
 
+            if(pConfigs->main_block[j].sizable)
+            {
+                setSquareDrawer(); return;
+            }
+
             cursor = addPixmap(tImg.copy(0,0,
                                          LvlPlacingItems::blockSet.w,
                                          LvlPlacingItems::blockSet.h
@@ -390,7 +395,31 @@ void LvlScene::setSquareDrawer()
         {delete cursor;
         cursor=NULL;}
 
-    cursor = addRect(0,0,1,1, QPen(Qt::green, 2), QBrush(Qt::darkGreen));
+    QPen pen;
+    QBrush brush;
+
+    switch(placingItem)
+    {
+    case PLC_Water:
+        if(LvlPlacingItems::waterType==1)
+        {
+            pen = QPen(Qt::yellow, 2);
+            brush = QBrush(Qt::darkYellow);
+        }
+        else
+        {
+            pen = QPen(Qt::green, 2);
+            brush = QBrush(Qt::darkGreen);
+        }
+        break;
+    case PLC_Block:
+    default:
+        pen = QPen(Qt::gray, 2);
+        brush = QBrush(Qt::darkGray);
+        break;
+    }
+
+    cursor = addRect(0,0,1,1, pen, brush);
 
     cursor->setData(0, "Square");
     cursor->setData(25, "CURSOR");
