@@ -284,20 +284,23 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
     case MODE_DrawSquare:
         {
-
-            QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
-                                   LvlPlacingItems::gridSz,
-                                   LvlPlacingItems::gridOffset);
-
-            QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
-
             if(cursor)
             {
+                if(cursor->isVisible())
+                {
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       LvlPlacingItems::gridSz,
+                                       LvlPlacingItems::gridOffset);
+
+                QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
+
+
                 ((QGraphicsRectItem *)cursor)->setRect(0,0, hs.width(), hs.height());
                 ((QGraphicsRectItem *)cursor)->setPos(
                             ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                             ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                             );
+                }
             }
         }
     case MODE_Resizing:
@@ -346,6 +349,16 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         if(cursor)
         {
+
+            // /////////// Don't draw with zero width or height //////////////
+            if( (((QGraphicsRectItem *)cursor)->rect().width()==0) ||
+              (((QGraphicsRectItem *)cursor)->rect().height()==0))
+            {
+                cursor->hide();
+                break;
+            }
+            // ///////////////////////////////////////////////////////////////
+
             switch(placingItem)
             {
             case PLC_Water:
