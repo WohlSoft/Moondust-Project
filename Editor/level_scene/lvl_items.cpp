@@ -769,6 +769,26 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
     WATERItem->setData(2, QString::number(water.array_id) );
 }
 
+void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
+{
+    QGraphicsItem *	player;
+    if(!init)
+    {
+
+    }
+
+    if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
+    {
+        player = addPixmap(QPixmap(":/player"+QString::number(plr.id)+".png"));
+        player->setPos(plr.x, plr.y);
+        player->setZValue(playerZ);
+        player->setData(0, "player"+QString::number(plr.id) );
+        player->setData(2, QString::number(plr.id));
+        player->setFlag(QGraphicsItem::ItemIsSelectable, true);
+        player->setFlag(QGraphicsItem::ItemIsMovable, true);
+    }
+
+}
 
 void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
 {

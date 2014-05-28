@@ -53,6 +53,9 @@ int LvlPlacingItems::playerID=0;
 int LvlPlacingItems::gridSz=1;
 QPoint LvlPlacingItems::gridOffset=QPoint(0,0);
 
+bool LvlPlacingItems::sizableBlock=false;
+bool LvlPlacingItems::fillingMode=false;
+
 
 void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 {
@@ -61,6 +64,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor=NULL;}
 
     WriteToLog(QtDebugMsg, QString("ItemPlacer -> set to type-%1 for ID-%2").arg(itemType).arg(itemID));
+
+    LvlPlacingItems::sizableBlock=false;
 
     switch(itemType)
     {
@@ -145,6 +150,18 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                                 pConfigs->main_block[j].frames:1
                             );
             LvlPlacingItems::blockSet.layer = "Default";
+
+            if(pConfigs->main_block[j].sizable)
+            {
+                LvlPlacingItems::sizableBlock=true;
+                LvlPlacingItems::fillingMode=false;
+                setSquareDrawer(); return;
+            }
+
+            if(LvlPlacingItems::fillingMode)
+            {
+                setSquareDrawer(); return;
+            }
 
             cursor = addPixmap(tImg.copy(0,0,
                                          LvlPlacingItems::blockSet.w,
@@ -390,7 +407,31 @@ void LvlScene::setSquareDrawer()
         {delete cursor;
         cursor=NULL;}
 
-    cursor = addRect(0,0,1,1, QPen(Qt::green, 2), QBrush(Qt::darkGreen));
+    QPen pen;
+    QBrush brush;
+
+    switch(placingItem)
+    {
+    case PLC_Water:
+        if(LvlPlacingItems::waterType==1)
+        {
+            pen = QPen(Qt::yellow, 2);
+            brush = QBrush(Qt::darkYellow);
+        }
+        else
+        {
+            pen = QPen(Qt::green, 2);
+            brush = QBrush(Qt::darkGreen);
+        }
+        break;
+    case PLC_Block:
+    default:
+        pen = QPen(Qt::gray, 2);
+        brush = QBrush(Qt::darkGray);
+        break;
+    }
+
+    cursor = addRect(0,0,1,1, pen, brush);
 
     cursor->setData(0, "Square");
     cursor->setData(25, "CURSOR");

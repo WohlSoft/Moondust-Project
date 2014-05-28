@@ -372,6 +372,7 @@ private:
     void placeDoor(LevelDoors &door, bool toGrid=false);
     void placeNPC(LevelNPC &npc, bool toGrid=false);
     void placeWater(LevelWater &water, bool toGrid=false);
+    void placePlayerPoint(PlayerPoint plr, bool init=false);
 
     void removeItemUnderCursor();
 

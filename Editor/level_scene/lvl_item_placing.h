@@ -7,6 +7,10 @@ class LvlPlacingItems
 public:
     static LevelNPC npcSet;
     static LevelBlock blockSet;
+
+    static bool sizableBlock;
+    static bool fillingMode;
+
     static LevelBGO bgoSet;
     static LevelWater waterSet;
 
