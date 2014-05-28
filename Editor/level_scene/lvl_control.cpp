@@ -431,6 +431,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
             }
+
         cursor->hide();
         }
         break;
@@ -970,3 +971,4 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     EditingMode = EdtMode;
 
 }
+
