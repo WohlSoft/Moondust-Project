@@ -346,26 +346,50 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         if(cursor)
         {
-            if(placingItem==PLC_Water)
+            switch(placingItem)
             {
-                LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
+            case PLC_Water:
+                {
+                    LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
 
-                LvlPlacingItems::waterSet.x = cursor->scenePos().x();
-                LvlPlacingItems::waterSet.y = cursor->scenePos().y();
-                LvlPlacingItems::waterSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
-                LvlPlacingItems::waterSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
-                //here define placing water item.
-                LvlData->water_array_id++;
+                    LvlPlacingItems::waterSet.x = cursor->scenePos().x();
+                    LvlPlacingItems::waterSet.y = cursor->scenePos().y();
+                    LvlPlacingItems::waterSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
+                    LvlPlacingItems::waterSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
+                    //here define placing water item.
+                    LvlData->water_array_id++;
 
-                LvlPlacingItems::waterSet.array_id = LvlData->water_array_id;
-                LvlData->water.push_back(LvlPlacingItems::waterSet);
+                    LvlPlacingItems::waterSet.array_id = LvlData->water_array_id;
+                    LvlData->water.push_back(LvlPlacingItems::waterSet);
 
-                placeWater(LvlPlacingItems::waterSet, true);
-                LevelData plWater;
-                plWater.water.push_back(LvlPlacingItems::waterSet);
-                addPlaceHistory(plWater);
+                    placeWater(LvlPlacingItems::waterSet, true);
+                    LevelData plWater;
+                    plWater.water.push_back(LvlPlacingItems::waterSet);
+                    addPlaceHistory(plWater);
+                    break;
+                }
+            case PLC_Block:
+                {
+                    //LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
 
+                    LvlPlacingItems::blockSet.x = cursor->scenePos().x();
+                    LvlPlacingItems::blockSet.y = cursor->scenePos().y();
+                    LvlPlacingItems::blockSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
+                    LvlPlacingItems::blockSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
+                    //here define placing water item.
+                    LvlData->blocks_array_id++;
+
+                    LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+                    LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+
+                    placeBlock(LvlPlacingItems::blockSet, true);
+                    LevelData plSzBlock;
+                    plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);
+                    addPlaceHistory(plSzBlock);
+                    break;
+                }
             }
+
         cursor->hide();
         }
         break;
