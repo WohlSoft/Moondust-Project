@@ -53,6 +53,9 @@ int LvlPlacingItems::playerID=0;
 int LvlPlacingItems::gridSz=1;
 QPoint LvlPlacingItems::gridOffset=QPoint(0,0);
 
+bool LvlPlacingItems::sizableBlock=false;
+bool LvlPlacingItems::fillingMode=false;
+
 
 void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 {
@@ -61,6 +64,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor=NULL;}
 
     WriteToLog(QtDebugMsg, QString("ItemPlacer -> set to type-%1 for ID-%2").arg(itemType).arg(itemID));
+
+    LvlPlacingItems::sizableBlock=false;
 
     switch(itemType)
     {
@@ -147,6 +152,13 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::blockSet.layer = "Default";
 
             if(pConfigs->main_block[j].sizable)
+            {
+                LvlPlacingItems::sizableBlock=true;
+                LvlPlacingItems::fillingMode=false;
+                setSquareDrawer(); return;
+            }
+
+            if(LvlPlacingItems::fillingMode)
             {
                 setSquareDrawer(); return;
             }

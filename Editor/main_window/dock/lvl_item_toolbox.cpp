@@ -20,6 +20,7 @@
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
 
+#include "../../level_scene/lvl_item_placing.h"
 
 
 void MainWindow::setItemBoxes(bool setCat)
@@ -207,7 +208,21 @@ void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->disableMoveItems=false;
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
+       LvlPlacingItems::fillingMode = false;
+
        activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
+
+       LevelBlock dummyBlock;
+       dummyBlock.array_id=0;
+       LevelBGO dummyBgo;
+       dummyBgo.array_id=0;
+       LevelNPC dummyNPC;
+       dummyNPC.array_id=0;
+
+       LvlItemProps(0,LvlPlacingItems::blockSet,
+                                 dummyBgo,
+                                 dummyNPC, true);
+
        activeLvlEditWin()->setFocus();
     }
 }

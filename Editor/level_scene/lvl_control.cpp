@@ -371,22 +371,51 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             case PLC_Block:
                 {
                     //LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
+                    if(LvlPlacingItems::sizableBlock)
+                    {
+                        LvlPlacingItems::blockSet.x = cursor->scenePos().x();
+                        LvlPlacingItems::blockSet.y = cursor->scenePos().y();
+                        LvlPlacingItems::blockSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
+                        LvlPlacingItems::blockSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
+                        //here define placing water item.
+                        LvlData->blocks_array_id++;
 
-                    LvlPlacingItems::blockSet.x = cursor->scenePos().x();
-                    LvlPlacingItems::blockSet.y = cursor->scenePos().y();
-                    LvlPlacingItems::blockSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
-                    LvlPlacingItems::blockSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
-                    //here define placing water item.
-                    LvlData->blocks_array_id++;
+                        LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+                        LvlData->blocks.push_back(LvlPlacingItems::blockSet);
 
-                    LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
-                    LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+                        placeBlock(LvlPlacingItems::blockSet, true);
+                        LevelData plSzBlock;
+                        plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);
+                        addPlaceHistory(plSzBlock);
+                        break;
+                    }
+                    else
+                    {
+                        long x = cursor->scenePos().x();
+                        long y = cursor->scenePos().y();
+                        long width = ((QGraphicsRectItem *)cursor)->rect().width();
+                        long height = ((QGraphicsRectItem *)cursor)->rect().height();
+                        int repWidth = width/LvlPlacingItems::blockSet.w;
+                        int repHeight = height/LvlPlacingItems::blockSet.h;
 
-                    placeBlock(LvlPlacingItems::blockSet, true);
-                    LevelData plSzBlock;
-                    plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);
-                    addPlaceHistory(plSzBlock);
-                    break;
+                        LevelData plSqBlock;
+                        for(int i = 0; i < repWidth; i++){
+                            for(int j = 0; j < repHeight; j++){
+                                LvlPlacingItems::blockSet.x = x + i * LvlPlacingItems::blockSet.w;
+                                LvlPlacingItems::blockSet.y = y + j * LvlPlacingItems::blockSet.h;
+
+                                LvlData->blocks_array_id++;
+
+                                LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+
+                                LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+                                placeBlock(LvlPlacingItems::blockSet, true);
+                                plSqBlock.blocks.push_back(LvlPlacingItems::blockSet);
+                            }
+                        }
+                        if(plSqBlock.blocks.size() > 0)
+                            addPlaceHistory(plSqBlock);
+                    }
                 }
             }
 
