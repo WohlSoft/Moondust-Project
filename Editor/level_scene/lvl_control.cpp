@@ -744,6 +744,26 @@ void LvlScene::placeItemUnderCursor()
             newData.npc.push_back(LvlPlacingItems::npcSet);
             wasPlaced=true;
         }
+        else
+        if(placingItem == PLC_PlayerPoint)
+        {
+            foreach(PlayerPoint pnt, LvlData->players)
+            {
+             if(pnt.id == (unsigned int)LvlPlacingItems::playerID+1)
+             {
+                 pnt.x = cursor->scenePos().x();
+                 pnt.y = cursor->scenePos().y();
+                 pnt.w = 24;
+                 if(LvlPlacingItems::playerID==0)
+                    pnt.h = 54;
+                 else
+                    pnt.h = 60;
+                 placePlayerPoint(pnt);
+                 break;
+             }
+            }
+
+        }
     }
     if(wasPlaced)
     {
