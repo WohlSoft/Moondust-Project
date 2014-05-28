@@ -221,7 +221,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             goto badfile;
         else players.h=line.toInt();
 
-        players.id = i;
+        players.id = i+1;
 
     FileData.players.push_back(players);    //Add player in array
     }
