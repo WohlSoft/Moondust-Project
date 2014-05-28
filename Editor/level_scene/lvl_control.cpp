@@ -427,7 +427,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             }
                         }
                         if(plSqBlock.blocks.size() > 0)
+                        {
                             addPlaceHistory(plSqBlock);
+                            //restart Animation
+                            if(opts.animationEnabled) stopAnimation();
+                            if(opts.animationEnabled) startBlockAnimation();
+
+                        }
                     }
                 }
             }
