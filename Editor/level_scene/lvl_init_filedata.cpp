@@ -153,24 +153,9 @@ void LvlScene::setPlayerPoints()
 {
     int i=0;
 
-    QGraphicsItem *	player;
-    PlayerPoint plr;
-
     for(i=0; i<LvlData->players.size(); i++)
     {
-        plr = LvlData->players[i];
-        if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
-        {
-            player = addPixmap(QPixmap(":/player"+QString::number(i+1)+".png"));
-            player->setPos(plr.x, plr.y);
-            player->setZValue(playerZ);
-            player->setData(0, "player"+QString::number(i+1) );
-            player->setData(2, QString::number(plr.id));
-            player->setFlag(QGraphicsItem::ItemIsSelectable, true);
-            player->setFlag(QGraphicsItem::ItemIsMovable, true);
-        }
-
+       placePlayerPoint(LvlData->players[i], true);
     }
-
 }
 

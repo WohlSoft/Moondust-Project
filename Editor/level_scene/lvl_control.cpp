@@ -284,20 +284,23 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
     case MODE_DrawSquare:
         {
-
-            QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
-                                   LvlPlacingItems::gridSz,
-                                   LvlPlacingItems::gridOffset);
-
-            QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
-
             if(cursor)
             {
+                if(cursor->isVisible())
+                {
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       LvlPlacingItems::gridSz,
+                                       LvlPlacingItems::gridOffset);
+
+                QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
+
+
                 ((QGraphicsRectItem *)cursor)->setRect(0,0, hs.width(), hs.height());
                 ((QGraphicsRectItem *)cursor)->setPos(
                             ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                             ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                             );
+                }
             }
         }
     case MODE_Resizing:
@@ -346,45 +349,85 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         if(cursor)
         {
-            if(placingItem==PLC_Water)
+
+            // /////////// Don't draw with zero width or height //////////////
+            if( (((QGraphicsRectItem *)cursor)->rect().width()==0) ||
+              (((QGraphicsRectItem *)cursor)->rect().height()==0))
             {
-                LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
-
-                LvlPlacingItems::waterSet.x = cursor->scenePos().x();
-                LvlPlacingItems::waterSet.y = cursor->scenePos().y();
-                LvlPlacingItems::waterSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
-                LvlPlacingItems::waterSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
-                //here define placing water item.
-                LvlData->water_array_id++;
-
-                LvlPlacingItems::waterSet.array_id = LvlData->water_array_id;
-                LvlData->water.push_back(LvlPlacingItems::waterSet);
-
-                placeWater(LvlPlacingItems::waterSet, true);
-                LevelData plWater;
-                plWater.water.push_back(LvlPlacingItems::waterSet);
-                addPlaceHistory(plWater);
-
+                cursor->hide();
+                break;
             }
-            else
-            if(placingItem==PLC_Block){
-                long x = cursor->scenePos().x();
-                long y = cursor->scenePos().y();
-                long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                int repWidth = width/32;
-                int repHeight = height/32;
-                for(int i = 0; i < repWidth; i++){
-                    for(int j = 0; j < repHeight; j++){
-                        LvlPlacingItems::blockSet.x = x + i * 32;
-                        LvlPlacingItems::blockSet.y = y + i * 32;
+            // ///////////////////////////////////////////////////////////////
 
+            switch(placingItem)
+            {
+            case PLC_Water:
+                {
+                    LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
+
+                    LvlPlacingItems::waterSet.x = cursor->scenePos().x();
+                    LvlPlacingItems::waterSet.y = cursor->scenePos().y();
+                    LvlPlacingItems::waterSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
+                    LvlPlacingItems::waterSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
+                    //here define placing water item.
+                    LvlData->water_array_id++;
+
+                    LvlPlacingItems::waterSet.array_id = LvlData->water_array_id;
+                    LvlData->water.push_back(LvlPlacingItems::waterSet);
+
+                    placeWater(LvlPlacingItems::waterSet, true);
+                    LevelData plWater;
+                    plWater.water.push_back(LvlPlacingItems::waterSet);
+                    addPlaceHistory(plWater);
+                    break;
+                }
+            case PLC_Block:
+                {
+                    //LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
+                    if(LvlPlacingItems::sizableBlock)
+                    {
+                        LvlPlacingItems::blockSet.x = cursor->scenePos().x();
+                        LvlPlacingItems::blockSet.y = cursor->scenePos().y();
+                        LvlPlacingItems::blockSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
+                        LvlPlacingItems::blockSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
+                        //here define placing water item.
                         LvlData->blocks_array_id++;
 
                         LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
-
                         LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+
                         placeBlock(LvlPlacingItems::blockSet, true);
+                        LevelData plSzBlock;
+                        plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);
+                        addPlaceHistory(plSzBlock);
+                        break;
+                    }
+                    else
+                    {
+                        long x = cursor->scenePos().x();
+                        long y = cursor->scenePos().y();
+                        long width = ((QGraphicsRectItem *)cursor)->rect().width();
+                        long height = ((QGraphicsRectItem *)cursor)->rect().height();
+                        int repWidth = width/LvlPlacingItems::blockSet.w;
+                        int repHeight = height/LvlPlacingItems::blockSet.h;
+
+                        LevelData plSqBlock;
+                        for(int i = 0; i < repWidth; i++){
+                            for(int j = 0; j < repHeight; j++){
+                                LvlPlacingItems::blockSet.x = x + i * LvlPlacingItems::blockSet.w;
+                                LvlPlacingItems::blockSet.y = y + j * LvlPlacingItems::blockSet.h;
+
+                                LvlData->blocks_array_id++;
+
+                                LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+
+                                LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+                                placeBlock(LvlPlacingItems::blockSet, true);
+                                plSqBlock.blocks.push_back(LvlPlacingItems::blockSet);
+                            }
+                        }
+                        if(plSqBlock.blocks.size() > 0)
+                            addPlaceHistory(plSqBlock);
                     }
                 }
             }
