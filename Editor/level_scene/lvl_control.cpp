@@ -366,6 +366,28 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 addPlaceHistory(plWater);
 
             }
+            else
+            if(placingItem==PLC_Block){
+                long x = cursor->scenePos().x();
+                long y = cursor->scenePos().y();
+                long width = ((QGraphicsRectItem *)cursor)->rect().width();
+                long height = ((QGraphicsRectItem *)cursor)->rect().height();
+                int repWidth = width/32;
+                int repHeight = height/32;
+                for(int i = 0; i < repWidth; i++){
+                    for(int j = 0; j < repHeight; j++){
+                        LvlPlacingItems::blockSet.x = x + i * 32;
+                        LvlPlacingItems::blockSet.y = y + i * 32;
+
+                        LvlData->blocks_array_id++;
+
+                        LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+
+                        LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+                        placeBlock(LvlPlacingItems::blockSet, true);
+                    }
+                }
+            }
         cursor->hide();
         }
         break;
