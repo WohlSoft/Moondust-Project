@@ -173,6 +173,11 @@ void LvlScene::openProps()
     QGraphicsScene::selectionChanged();
 }
 
+void LvlScene::selectionChanged()
+{
+    WriteToLog(QtDebugMsg, "Selection Changed!");
+}
+
 static QPointF drawStartPos = QPoint(0,0);
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
