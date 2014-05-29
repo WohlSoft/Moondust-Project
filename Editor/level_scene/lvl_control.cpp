@@ -175,6 +175,20 @@ void LvlScene::openProps()
 
 void LvlScene::selectionChanged()
 {
+    if(this->selectedItems().isEmpty())
+    {
+        LevelBlock dummyBlock;
+        dummyBlock.array_id=0;
+
+        LevelBGO dummyBgo;
+        dummyBgo.array_id=0;
+
+        LevelNPC dummyNPC;
+        dummyNPC.array_id=0;
+
+        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
+    }
+
     WriteToLog(QtDebugMsg, "Selection Changed!");
 }
 
