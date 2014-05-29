@@ -97,7 +97,7 @@
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -800,7 +800,6 @@
    <addaction name="separator"/>
    <addaction name="actionPlayMusic"/>
    <addaction name="separator"/>
-   <addaction name="actionReset_position"/>
    <addaction name="actionGridEn"/>
    <addaction name="separator"/>
    <addaction name="actionReload"/>
@@ -857,6 +856,9 @@
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
+   <addaction name="actionReset_position"/>
+   <addaction name="actionGo_to_Section"/>
+   <addaction name="separator"/>
    <addaction name="actionSection_1"/>
    <addaction name="actionSection_2"/>
    <addaction name="actionSection_3"/>
@@ -878,7 +880,6 @@
    <addaction name="actionSection_19"/>
    <addaction name="actionSection_20"/>
    <addaction name="actionSection_21"/>
-   <addaction name="actionGo_to_Section"/>
   </widget>
   <widget class="QDockWidget" name="WorldToolBox">
    <property name="enabled">
@@ -941,7 +942,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>230</height>
+        <height>248</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1001,8 +1002,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>235</width>
-        <height>230</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
      </widget>
@@ -1025,8 +1026,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>235</width>
-        <height>230</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
      </widget>
@@ -1049,8 +1050,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>235</width>
-        <height>230</height>
+        <width>239</width>
+        <height>248</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2339,7 +2340,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>314</height>
+          <height>326</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2537,7 +2538,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>314</height>
+          <height>326</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2589,8 +2590,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>243</width>
-          <height>573</height>
+          <width>247</width>
+          <height>517</height>
          </rect>
         </property>
         <attribute name="label">
