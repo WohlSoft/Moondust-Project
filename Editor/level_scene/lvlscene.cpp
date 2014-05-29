@@ -111,6 +111,8 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     lock_door=false;
     lock_water=false;
 
+    connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
+
 }
 
 LvlScene::~LvlScene()

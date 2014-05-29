@@ -357,6 +357,8 @@ public:
     // ////////////////////////////////////////////
     void openProps();
 
+public slots:
+    void selectionChanged();
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
