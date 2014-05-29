@@ -64,6 +64,7 @@ public:
     void setNoMovable(bool stat);
     void setLegacyBoss(bool boss);
     void setMsg(QString message);
+    void setIncludedNPC(int npcID);
 
     void changeDirection(int dir);
 
@@ -93,6 +94,10 @@ private slots:
     void nextFrame();
 
 private:
+
+    QGraphicsItemGroup * grp;
+    QGraphicsItem * includedNPC;
+
     bool animated;
     int frameSpeed;
     int frameStyle;

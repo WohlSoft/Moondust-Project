@@ -42,9 +42,15 @@ public:
     ItemDoor(QGraphicsRectItem *parent=0);
     ~ItemDoor();
 
-    void setDoorData(LevelDoors inD);
+    void setDoorData(LevelDoors inD, int doorDir, bool init=false);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
+
+    int direction;
+    enum doorDirect{
+        D_Entrance=0,
+        D_Exit
+    };
 
     QRectF boundingRect() const;
 
@@ -75,6 +81,10 @@ protected:
 
 private:
     LvlScene * scene;
+
+    QGraphicsItemGroup * grp;
+    QGraphicsTextItem * doorLabel;
+
 };
 
 #endif // ITEM_DOOR_H

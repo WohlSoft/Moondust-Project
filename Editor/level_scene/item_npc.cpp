@@ -451,6 +451,34 @@ void ItemNPC::changeDirection(int dir)
     arrayApply();
 }
 
+void ItemNPC::setIncludedNPC(int npcID)
+{
+    if(includedNPC!=NULL)
+    {
+        grp->removeFromGroup(includedNPC);
+        scene->removeItem(includedNPC);
+        free(includedNPC);
+        includedNPC = NULL;
+    }
+    if(npcID==0) return;
+
+    QPixmap npcImg = QPixmap( scene->getNPCimg( npcID) );
+    includedNPC = scene->addPixmap( npcImg );
+
+
+    //Default included NPC pos
+    includedNPC->setPos(
+                (
+                    npcData.x+((localProps.width-npcImg.width())/2)
+                 ),
+                (
+                    npcData.y+((localProps.height-npcImg.height())/2)
+                 ));
+    includedNPC->setZValue(scene->npcZs + 10);
+    includedNPC->setOpacity(qreal(0.6));
+    grp->addToGroup(includedNPC);
+}
+
 ///////////////////MainArray functions/////////////////////////////
 void ItemNPC::arrayApply()
 {
@@ -501,6 +529,7 @@ void ItemNPC::removeFromArray()
     }
 }
 
+
 void ItemNPC::setMainPixmap(const QPixmap &pixmap)
 {
     mainImage = pixmap;
@@ -536,6 +565,8 @@ void ItemNPC::setContextMenu(QMenu &menu)
 void ItemNPC::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
+    grp = new QGraphicsItemGroup(this);
+    includedNPC = NULL;
 }
 
 

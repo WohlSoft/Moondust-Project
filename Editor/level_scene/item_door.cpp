@@ -296,9 +296,14 @@ void ItemDoor::removeFromArray()
     }
 }
 
-void ItemDoor::setDoorData(LevelDoors inD)
+void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
 {
     doorData = inD;
+    direction = doorDir;
+    if(!init)
+    {
+
+    }
 }
 
 
