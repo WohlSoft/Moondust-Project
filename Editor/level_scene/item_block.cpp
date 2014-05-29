@@ -523,6 +523,7 @@ void ItemBlock::setBlockSize(QRect rect)
         this->setPixmap(currentImage);
         this->setPos(blockData.x, blockData.y);
     }
+    setIncludedNPC(blockData.npc_id);
     arrayApply();
 }
 
