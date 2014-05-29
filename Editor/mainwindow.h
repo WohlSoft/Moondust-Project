@@ -289,6 +289,8 @@ private slots:
 
     void on_actionGo_to_Section_triggered();
 
+    void on_goToWarpDoor_clicked();
+
 private:
 
     LevelEditingSettings LvlOpts;

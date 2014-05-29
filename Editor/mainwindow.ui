@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1300</width>
-    <height>1081</height>
+    <width>1293</width>
+    <height>1145</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -96,8 +96,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1300</width>
-     <height>21</height>
+     <width>1293</width>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -942,7 +942,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>248</height>
+        <height>261</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1002,8 +1002,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>235</width>
+        <height>261</height>
        </rect>
       </property>
      </widget>
@@ -1026,8 +1026,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>235</width>
+        <height>261</height>
        </rect>
       </property>
      </widget>
@@ -1050,8 +1050,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>235</width>
+        <height>261</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -1642,13 +1642,13 @@
    <property name="minimumSize">
     <size>
      <width>246</width>
-     <height>440</height>
+     <height>480</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>246</width>
-     <height>440</height>
+     <height>480</height>
     </size>
    </property>
    <property name="floating">
@@ -2279,6 +2279,19 @@ p, li { white-space: pre-wrap; }
       </widget>
      </widget>
     </widget>
+    <widget class="QPushButton" name="goToWarpDoor">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>410</y>
+       <width>101</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Go To...</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QDockWidget" name="ItemProperties">
@@ -2340,7 +2353,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>326</height>
+          <height>344</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2538,7 +2551,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>326</height>
+          <height>344</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2590,8 +2603,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>247</width>
-          <height>517</height>
+          <width>243</width>
+          <height>573</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3060,7 +3073,7 @@ p, li { white-space: pre-wrap; }
    <property name="minimumSize">
     <size>
      <width>279</width>
-     <height>150</height>
+     <height>130</height>
     </size>
    </property>
    <property name="baseSize">

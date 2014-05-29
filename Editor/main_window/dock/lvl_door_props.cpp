@@ -176,3 +176,20 @@ void MainWindow::on_WarpList_currentIndexChanged(int index)
 {
     setDoorData(index);
 }
+
+
+void MainWindow::on_goToWarpDoor_clicked()
+{
+    int WinType = activeChildWindow();
+    if(WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+        unsigned int doorID = ui->WarpList->currentData().toInt();
+        foreach (LevelDoors door, edit->LvlData.doors) {
+            if(doorID == door.array_id){
+                edit->goTo(door.ix-300, door.iy-300);
+            }
+        }
+    }
+
+}

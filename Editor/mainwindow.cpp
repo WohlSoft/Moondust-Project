@@ -196,3 +196,4 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
     cu->exec(pos);
 
 }
+
