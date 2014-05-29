@@ -46,6 +46,8 @@ public:
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
+    void setLocked(bool lock);
+
     int direction;
     enum doorDirect{
         D_Entrance=0,
@@ -68,11 +70,10 @@ public:
     int gridSize;
     int gridOffsetX;
     int gridOffsetY;
-    QSize waterSize;
+    QSize itemSize;
 
     //Locks
     bool isLocked;
-    void setLocked(bool lock);
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
@@ -84,6 +85,7 @@ private:
 
     QGraphicsItemGroup * grp;
     QGraphicsTextItem * doorLabel;
+    QGraphicsTextItem * doorLabel_shadow;
 
 };
 

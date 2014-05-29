@@ -419,6 +419,14 @@ void ItemWater::drawWater()
 }
 
 
+void ItemWater::setLocked(bool lock)
+{
+    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+    isLocked = lock;
+}
+
+
 QRectF ItemWater::boundingRect() const
 {
     return QRectF(0,0,waterSize.width()+penWidth,waterSize.height()+penWidth);
