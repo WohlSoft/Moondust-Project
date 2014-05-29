@@ -49,6 +49,8 @@ public:
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
+    void setLocked(bool lock);
+
     void drawWater();
 
     QRectF boundingRect() const;
@@ -74,7 +76,6 @@ public:
 
     //Locks
     bool isLocked;
-    void setLocked(bool lock);
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );

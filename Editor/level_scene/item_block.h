@@ -47,8 +47,8 @@ public:
     void setContextMenu(QMenu &menu);
 
     void setScenePoint(LvlScene *theScene);
-    void setGroupPoint(QGraphicsItemGroup *theGrp);
-    void setNPCItemPoint(QGraphicsItem *includedNPCPnt);
+    //void setGroupPoint(QGraphicsItemGroup *theGrp);
+    //void setNPCItemPoint(QGraphicsItem *includedNPCPnt);
 
     QRectF boundingRect() const;
 
@@ -65,6 +65,7 @@ public:
     void setSlippery(bool slip);
     void setInvisible(bool inv);
     void setLayer(QString layer);
+    void setBlockSize(QRect rect);
 
     void setIncludedNPC(int npcID);
 

@@ -66,8 +66,20 @@ void leveledit::ResetPosition()
     LvlData.sections[LvlData.CurSection].PositionY =
             LvlData.sections[LvlData.CurSection].size_bottom-602;
 
-    ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_bottom-602);
-    ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_left);
+    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-602);
+}
+
+void leveledit::goTo(long x, long y)
+{
+
+    ui->graphicsView->horizontalScrollBar()->setValue(x);
+    ui->graphicsView->verticalScrollBar()->setValue(y);
+
+    scene->update();
+    ui->graphicsView->update();
+
+    update();
+
 }
 
 void leveledit::setCurrentSection(int scId)
@@ -110,13 +122,13 @@ void leveledit::setCurrentSection(int scId)
     if(sIsNew)
     {
         ui->graphicsView->centerOn(center);
-        ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_top);
-        ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_left);
+        goTo(LvlData.sections[LvlData.CurSection].size_left,
+                LvlData.sections[LvlData.CurSection].size_top);
     }
     else
     {
-        ui->graphicsView->verticalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionY);
-        ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].PositionX);
+        goTo( LvlData.sections[LvlData.CurSection].PositionX,
+        LvlData.sections[LvlData.CurSection].PositionY );
     }
 
     WriteToLog(QtDebugMsg, QString("Call to Draw intersection space"));

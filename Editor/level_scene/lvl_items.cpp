@@ -23,6 +23,7 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 #include "item_water.h"
+#include "item_door.h"
 
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
@@ -258,8 +259,8 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     bool isUser=false;
     int j;
 
-    QGraphicsItem *npc = NULL;
-    QGraphicsItemGroup *includedNPC;
+    //QGraphicsItem *npc = NULL;
+    //QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
 
     noimage=true;
@@ -341,12 +342,12 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
         BlockImage->setData(4, "animated");
     }
 
-    includedNPC = new QGraphicsItemGroup(BlockImage);
+    //includedNPC = new QGraphicsItemGroup(BlockImage);
 
     //Set pointers
     BlockImage->setScenePoint(this);
-    BlockImage->setGroupPoint(includedNPC);
-    BlockImage->setNPCItemPoint(npc);
+    //BlockImage->setGroupPoint(includedNPC);
+    //BlockImage->setNPCItemPoint(npc);
 
     if(block.invisible)
         BlockImage->setOpacity(qreal(0.5));
@@ -539,19 +540,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     ItemNPC *NPCItem = new ItemNPC;
 
-    //QGraphicsItem *	box;
-    //QGraphicsTextItem *npcTxt, *npcTxt_l2;
-    //QGraphicsItemGroup *npcBox;
-
-    //    QFont font1, font2;
-    //    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
-    //    font1.setBold(1);
-    //    font1.setPointSize(14);
-
-    //    font2.setWeight(14);
-    //    font2.setBold(0);
-    //    font2.setPointSize(12);
-
     //Check Index exists
     if(npc.id < (unsigned int)index_npc.size())
     {
@@ -666,14 +654,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         npc.y = newPos.y();
     }
 
-    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 1 %1 %2").arg(bgo.x).arg(bgo.y));
-
-    //int imgOffsetX = (int)round( (-((double)mergedSet.gfx_w - (double)mergedSet.width ) / 2 ) + (double)mergedSet.gfx_offset_x);
-    //int imgOffsetY = (int)round( - (double)mergedSet.gfx_h + (double)mergedSet.height + (double)mergedSet.gfx_offset_y );
-
-    //QPoint offsettenPos = QPoint(npc.x + imgOffsetX, npc.y+imgOffsetY);
-
-    //NPCItem->setPos( QPointF(offsettenPos) );
 
     NPCItem->setPos( QPointF(newPos) );
 
@@ -687,25 +667,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
                           NPCItem->localProps.custom_ani_fr,
                           NPCItem->localProps.custom_ani_er);
 
-    //box = addPixmap(QPixmap(uNpcImg));
-    //npcBox = new QGraphicsItemGroup(box);
-
-    /*
-    npcTxt = new QGraphicsTextItem(QString::number(npc.id));
-    npcTxt->setDefaultTextColor(Qt::black);
-    npcTxt->setFont(font1);
-    npcTxt->setPos(npc.x-5, npc.y-2);
-    npcTxt_l2 = new QGraphicsTextItem(QString::number(npc.id));
-    npcTxt_l2->setDefaultTextColor(Qt::white);
-    npcTxt_l2->setFont(font2);
-    npcTxt_l2->setPos(npc.x-3, npc.y);
-
-    npcBox->addToGroup(npcTxt);
-    npcBox->addToGroup(npcTxt_l2);
-
-    npcTxt->setZValue(npcZf+0.0000001);
-    npcTxt_l2->setZValue(npcZf+0.0000002);
-    */
 
     NPCItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
     NPCItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
@@ -769,90 +730,93 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
     WATERItem->setData(2, QString::number(water.array_id) );
 }
 
+void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
+{
+    QGraphicsItem *	player = NULL;
+    bool found=false;
+    if(!init)
+    {
+        foreach(QGraphicsItem * plrt, this->items())
+        {
+            if( plrt->data(0).toString()=="player"+QString::number(plr.id) )
+            {
+                player = plrt;
+                found=true;
+                break;
+            }
+        }
+    }
+
+    if(found)
+    {
+        player->setPos(plr.x, plr.y);
+        for(int i=0; i<LvlData->players.size(); i++)
+        {
+         if(LvlData->players[i].id == plr.id)
+         { LvlData->players[i] = plr; break; }
+        }
+    }
+    else
+    {
+        if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
+        {
+            player = addPixmap(QPixmap(":/player"+QString::number(plr.id)+".png"));
+            player->setPos(plr.x, plr.y);
+            player->setZValue(playerZ);
+            player->setData(0, "player"+QString::number(plr.id) );
+            player->setData(2, QString::number(plr.id));
+            player->setFlag(QGraphicsItem::ItemIsSelectable, true);
+            //player->setFlag(QGraphicsItem::ItemIsMovable, true);
+            if(!init)
+            {
+                for(int i=0; i<LvlData->players.size(); i++)
+                {
+                 if(LvlData->players[i].id == plr.id)
+                 { LvlData->players[i] = plr; break; }
+                }
+            }
+        }
+    }
+
+}
 
 void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
 {
-    long ix, iy, ox, oy, h, w;
-    QGraphicsItem *	enter;
-    QGraphicsItem *	exit;
-    QGraphicsItemGroup *enterId, *exitId;
-    QGraphicsTextItem *enterTxt, *enterTxt_l2;
-    QGraphicsTextItem *exitTxt, *exitTxt_l2;
 
-    ix = door.ix;
-    iy = door.iy;
-    ox = door.ox;
-    oy = door.oy;
-    h = 32;
-    w = 32;
-    QFont font1, font2;
-    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
-    font1.setBold(1);
-    font1.setPointSize(14);
-
-    font2.setWeight(14);
-    font2.setBold(0);
-    font2.setPointSize(12);
-
-    //font.setStyle(QFont::Times);
-    //font.setStyle();
-
-    QColor cEnter(Qt::magenta);
-    QColor cExit(Qt::darkMagenta);
-    cEnter.setAlpha(50);
-    cExit.setAlpha(50);
+    ItemDoor * doorItemEntrance;
+    QPoint newPosI = QPoint(door.ix, door.iy);
 
     if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
     {
-        enter = addRect(ix, iy, w, h, QPen(Qt::magenta, 2,Qt::SolidLine), QBrush(cEnter));
-        enterId = new QGraphicsItemGroup(enter);
-
-        enterTxt = new QGraphicsTextItem(QString::number(door.array_id));
-        enterTxt->setDefaultTextColor(Qt::black);
-        enterTxt->setFont(font1);
-        enterTxt->setPos(ix-5, iy-2);
-        enterTxt_l2 = new QGraphicsTextItem(QString::number(door.array_id));
-        enterTxt_l2->setDefaultTextColor(Qt::white);
-        enterTxt_l2->setFont(font2);
-        enterTxt_l2->setPos(ix-3, iy);
-
-        enterId->addToGroup(enterTxt);
-        enterId->addToGroup(enterTxt_l2);
-        enter->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_door));
-        enter->setFlag(QGraphicsItem::ItemIsMovable, (!lock_door));
-        enter->setZValue(doorZ);
-
-        enterTxt->setZValue(doorZ+0.0000001);
-        enterTxt_l2->setZValue(doorZ+0.0000002);
-        enter->setData(0, "Door_enter"); // ObjType
-        enter->setData(1, QString::number(0) );
-        enter->setData(2, QString::number(door.array_id) );
+        doorItemEntrance = new ItemDoor;
+        doorItemEntrance->setScenePoint(this);
+        doorItemEntrance->setContextMenu(DoorMenu);
+        if(toGrid)
+        {
+            newPosI = applyGrid(QPoint(door.ix, door.iy), 16);
+            door.ix = newPosI.x();
+            door.iy = newPosI.y();
+        }
+        addItem(doorItemEntrance);
+        doorItemEntrance->setDoorData(door, ItemDoor::D_Entrance, true);
     }
 
+
+    ItemDoor * doorItemExit;
+    QPoint newPosO = QPoint(door.ox, door.oy);
     if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) )
     {
-        exit = addRect(ox, oy, w, h, QPen(Qt::darkMagenta, 2,Qt::SolidLine), QBrush(cExit));
-        exitId = new QGraphicsItemGroup(exit);
-
-        exitTxt = new QGraphicsTextItem(QString::number(door.array_id));
-        exitTxt->setDefaultTextColor(Qt::black);
-        exitTxt->setFont(font1);
-        exitTxt->setPos(ox+10, oy+8);
-        exitTxt_l2 = new QGraphicsTextItem(QString::number(door.array_id));
-        exitTxt_l2->setDefaultTextColor(Qt::white);
-        exitTxt_l2->setFont(font2);
-        exitTxt_l2->setPos(ox+12, oy+10);
-
-        exitId->addToGroup(exitTxt);
-        exitId->addToGroup(exitTxt_l2);
-        exit->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_door));
-        exit->setFlag(QGraphicsItem::ItemIsMovable, (!lock_door));
-        exit->setZValue(doorZ);
-        exitTxt->setZValue(doorZ+0.0000001);
-        exitTxt_l2->setZValue(doorZ+0.0000002);
-        exit->setData(0, "Door_exit"); // ObjType
-        exit->setData(1, QString::number(0) );
-        exit->setData(2, QString::number(door.array_id) );
+        doorItemExit = new ItemDoor;
+        doorItemExit->setScenePoint(this);
+        doorItemExit->setContextMenu(DoorMenu);
+        if(toGrid)
+        {
+            newPosO = applyGrid(QPoint(door.ox, door.oy), 16);
+            door.ox = newPosO.x();
+            door.oy = newPosO.y();
+        }
+        addItem(doorItemExit);
+        doorItemExit->setDoorData(door, ItemDoor::D_Exit, true);
     }
 
 

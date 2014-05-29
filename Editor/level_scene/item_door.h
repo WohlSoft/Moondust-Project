@@ -42,9 +42,17 @@ public:
     ItemDoor(QGraphicsRectItem *parent=0);
     ~ItemDoor();
 
-    void setDoorData(LevelDoors inD);
+    void setDoorData(LevelDoors inD, int doorDir, bool init=false);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
+
+    void setLocked(bool lock);
+
+    int direction;
+    enum doorDirect{
+        D_Entrance=0,
+        D_Exit
+    };
 
     QRectF boundingRect() const;
 
@@ -62,11 +70,10 @@ public:
     int gridSize;
     int gridOffsetX;
     int gridOffsetY;
-    QSize waterSize;
+    QSize itemSize;
 
     //Locks
     bool isLocked;
-    void setLocked(bool lock);
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
@@ -75,6 +82,11 @@ protected:
 
 private:
     LvlScene * scene;
+
+    QGraphicsItemGroup * grp;
+    QGraphicsTextItem * doorLabel;
+    QGraphicsTextItem * doorLabel_shadow;
+
 };
 
 #endif // ITEM_DOOR_H

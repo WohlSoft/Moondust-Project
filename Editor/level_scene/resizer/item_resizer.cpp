@@ -62,6 +62,7 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
 
     this->setRect(0,0,_width,_height);
     this->setZValue(50000);
+    targetItem = NULL;
 
     QBrush brush;
     brush.setStyle(Qt::DiagCrossPattern);

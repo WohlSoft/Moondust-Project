@@ -78,7 +78,7 @@ public:
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
 
-    void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc);
+    void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
     long blockPtr; //ArrayID of editing item (-1 - use system)
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
@@ -275,8 +275,21 @@ private slots:
     void slotLanguageChanged(QAction *action);
 
     void on_BGOItemsList_itemClicked(QListWidgetItem *item);
-
     void on_NPCItemsList_itemClicked(QListWidgetItem *item);
+    void on_PROPS_BlockResize_clicked();
+
+    void on_PROPS_BlockSquareFill_clicked(bool checked);
+    void on_PROPS_BlockInvis_clicked(bool checked);
+    void on_PROPS_BlkSlippery_clicked(bool checked);
+    void on_PROPS_BlockIncludes_clicked();
+    void on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1);
+    void on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1);
+    void on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1);
+    void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1);
+
+    void on_actionGo_to_Section_triggered();
+
+    void on_goToWarpDoor_clicked();
 
 private:
 

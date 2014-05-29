@@ -88,14 +88,34 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
         if(!IsMoved)
             this->clearSelection();
         if(pResizer!=NULL )
-            MainWinConnect::pMainWin->on_cancelResize_clicked();
+        {
+            switch(pResizer->type)
+            {
+            case 2:
+                setBlockResizer(NULL, false, false);
+                break;
+            case 0:
+            default:
+                MainWinConnect::pMainWin->on_cancelResize_clicked();
+            }
+        }
             //setSectionResizer(false, false);
         break;
     case (Qt::Key_Enter):
     case (Qt::Key_Return):
 
         if(pResizer!=NULL )
-            MainWinConnect::pMainWin->on_applyResize_clicked();
+        {
+            switch(pResizer->type)
+            {
+            case 2:
+                setBlockResizer(NULL, false, true);
+                break;
+            case 0:
+            default:
+                MainWinConnect::pMainWin->on_applyResize_clicked();
+            }
+        }
             //setSectionResizer(false, true);
         break;
 
@@ -151,6 +171,25 @@ void LvlScene::openProps()
     }
 
     QGraphicsScene::selectionChanged();
+}
+
+void LvlScene::selectionChanged()
+{
+    if(this->selectedItems().isEmpty())
+    {
+        LevelBlock dummyBlock;
+        dummyBlock.array_id=0;
+
+        LevelBGO dummyBgo;
+        dummyBgo.array_id=0;
+
+        LevelNPC dummyNPC;
+        dummyNPC.array_id=0;
+
+        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
+    }
+
+    WriteToLog(QtDebugMsg, "Selection Changed!");
 }
 
 static QPointF drawStartPos = QPoint(0,0);
@@ -284,20 +323,23 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
     case MODE_DrawSquare:
         {
-
-            QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
-                                   LvlPlacingItems::gridSz,
-                                   LvlPlacingItems::gridOffset);
-
-            QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
-
             if(cursor)
             {
+                if(cursor->isVisible())
+                {
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       LvlPlacingItems::gridSz,
+                                       LvlPlacingItems::gridOffset);
+
+                QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
+
+
                 ((QGraphicsRectItem *)cursor)->setRect(0,0, hs.width(), hs.height());
                 ((QGraphicsRectItem *)cursor)->setPos(
                             ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                             ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                             );
+                }
             }
         }
     case MODE_Resizing:
@@ -346,26 +388,95 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         if(cursor)
         {
-            if(placingItem==PLC_Water)
+
+            // /////////// Don't draw with zero width or height //////////////
+            if( (((QGraphicsRectItem *)cursor)->rect().width()==0) ||
+              (((QGraphicsRectItem *)cursor)->rect().height()==0))
             {
-                LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
-
-                LvlPlacingItems::waterSet.x = cursor->scenePos().x();
-                LvlPlacingItems::waterSet.y = cursor->scenePos().y();
-                LvlPlacingItems::waterSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
-                LvlPlacingItems::waterSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
-                //here define placing water item.
-                LvlData->water_array_id++;
-
-                LvlPlacingItems::waterSet.array_id = LvlData->water_array_id;
-                LvlData->water.push_back(LvlPlacingItems::waterSet);
-
-                placeWater(LvlPlacingItems::waterSet, true);
-                LevelData plWater;
-                plWater.water.push_back(LvlPlacingItems::waterSet);
-                addPlaceHistory(plWater);
-
+                cursor->hide();
+                break;
             }
+            // ///////////////////////////////////////////////////////////////
+
+            switch(placingItem)
+            {
+            case PLC_Water:
+                {
+                    LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
+
+                    LvlPlacingItems::waterSet.x = cursor->scenePos().x();
+                    LvlPlacingItems::waterSet.y = cursor->scenePos().y();
+                    LvlPlacingItems::waterSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
+                    LvlPlacingItems::waterSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
+                    //here define placing water item.
+                    LvlData->water_array_id++;
+
+                    LvlPlacingItems::waterSet.array_id = LvlData->water_array_id;
+                    LvlData->water.push_back(LvlPlacingItems::waterSet);
+
+                    placeWater(LvlPlacingItems::waterSet, true);
+                    LevelData plWater;
+                    plWater.water.push_back(LvlPlacingItems::waterSet);
+                    addPlaceHistory(plWater);
+                    break;
+                }
+            case PLC_Block:
+                {
+                    //LvlPlacingItems::waterSet.quicksand = (LvlPlacingItems::waterType==1);
+                    if(LvlPlacingItems::sizableBlock)
+                    {
+                        LvlPlacingItems::blockSet.x = cursor->scenePos().x();
+                        LvlPlacingItems::blockSet.y = cursor->scenePos().y();
+                        LvlPlacingItems::blockSet.w = ((QGraphicsRectItem *)cursor)->rect().width();
+                        LvlPlacingItems::blockSet.h = ((QGraphicsRectItem *)cursor)->rect().height();
+                        //here define placing water item.
+                        LvlData->blocks_array_id++;
+
+                        LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+                        LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+
+                        placeBlock(LvlPlacingItems::blockSet, true);
+                        LevelData plSzBlock;
+                        plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);
+                        addPlaceHistory(plSzBlock);
+                        break;
+                    }
+                    else
+                    {
+                        long x = cursor->scenePos().x();
+                        long y = cursor->scenePos().y();
+                        long width = ((QGraphicsRectItem *)cursor)->rect().width();
+                        long height = ((QGraphicsRectItem *)cursor)->rect().height();
+                        int repWidth = width/LvlPlacingItems::blockSet.w;
+                        int repHeight = height/LvlPlacingItems::blockSet.h;
+
+                        LevelData plSqBlock;
+                        for(int i = 0; i < repWidth; i++){
+                            for(int j = 0; j < repHeight; j++){
+                                LvlPlacingItems::blockSet.x = x + i * LvlPlacingItems::blockSet.w;
+                                LvlPlacingItems::blockSet.y = y + j * LvlPlacingItems::blockSet.h;
+
+                                LvlData->blocks_array_id++;
+
+                                LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+
+                                LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+                                placeBlock(LvlPlacingItems::blockSet, true);
+                                plSqBlock.blocks.push_back(LvlPlacingItems::blockSet);
+                            }
+                        }
+                        if(plSqBlock.blocks.size() > 0)
+                        {
+                            addPlaceHistory(plSqBlock);
+                            //restart Animation
+                            if(opts.animationEnabled) stopAnimation();
+                            if(opts.animationEnabled) startBlockAnimation();
+
+                        }
+                    }
+                }
+            }
+
         cursor->hide();
         }
         break;
@@ -679,6 +790,26 @@ void LvlScene::placeItemUnderCursor()
             newData.npc.push_back(LvlPlacingItems::npcSet);
             wasPlaced=true;
         }
+        else
+        if(placingItem == PLC_PlayerPoint)
+        {
+            foreach(PlayerPoint pnt, LvlData->players)
+            {
+             if(pnt.id == (unsigned int)LvlPlacingItems::playerID+1)
+             {
+                 pnt.x = cursor->scenePos().x();
+                 pnt.y = cursor->scenePos().y();
+                 pnt.w = 24;
+                 if(LvlPlacingItems::playerID==0)
+                    pnt.h = 54;
+                 else
+                    pnt.h = 60;
+                 placePlayerPoint(pnt);
+                 break;
+             }
+            }
+
+        }
     }
     if(wasPlaced)
     {
@@ -814,6 +945,63 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
 
                 ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 drawSpace();
+                LvlData->modified = true;
+            }
+            delete pResizer;
+            pResizer = NULL;
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            //resetResizingSection=true;
+        }
+        DrawMode=false;
+    }
+}
+
+void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool accept)
+{
+    if((enabled)&&(pResizer==NULL))
+    {
+        int x = ((ItemBlock *)targetBlock)->blockData.x;
+        int y = ((ItemBlock *)targetBlock)->blockData.y;
+        int w = ((ItemBlock *)targetBlock)->blockData.w;
+        int h = ((ItemBlock *)targetBlock)->blockData.h;
+
+        pResizer = new ItemResizer( QSize(w, h), Qt::blue, 32 );
+        this->addItem(pResizer);
+        pResizer->setPos(x, y);
+        pResizer->type=2;
+        pResizer->targetItem = targetBlock;
+        pResizer->_minSize = QSizeF(64, 64);
+        this->setFocus(Qt::ActiveWindowFocusReason);
+        //DrawMode=true;
+        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+    }
+    else
+    {
+        if(pResizer!=NULL)
+        {
+            if(accept)
+            {
+                WriteToLog(QtDebugMsg, QString("BLOCK RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
+                long x = pResizer->pos().x();
+                long y = pResizer->pos().y();
+                long w = pResizer->_width;
+                long h = pResizer->_height;
+                //long oldX = ((ItemBlock *)pResizer->targetItem)->blockData.x;
+                //long oldY = ((ItemBlock *)pResizer->targetItem)->blockData.y;
+                //long oldW = ((ItemBlock *)pResizer->targetItem)->blockData.w;
+                //long oldH = ((ItemBlock *)pResizer->targetItem)->blockData.h;
+                ((ItemBlock *)pResizer->targetItem)->blockData.x = x;
+                ((ItemBlock *)pResizer->targetItem)->blockData.y = y;
+                ((ItemBlock *)pResizer->targetItem)->blockData.w = w;
+                ((ItemBlock *)pResizer->targetItem)->blockData.h = h;
+
+                ((ItemBlock *)pResizer->targetItem)->setBlockSize( QRect(x,y,w,h) );
+                LvlData->modified = true;
+
+                //addResizeSectionHistory(LvlData->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
+
+                //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
+                //drawSpace();
             }
             delete pResizer;
             pResizer = NULL;

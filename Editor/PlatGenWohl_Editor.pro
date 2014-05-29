@@ -9,6 +9,8 @@ QT       += core gui widgets multimedia opengl
 TARGET = pge_editor
 TEMPLATE = app
 
+# CONFIG += static
+
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
     languages/editor_uk.ts \

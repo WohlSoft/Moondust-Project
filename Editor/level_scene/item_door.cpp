@@ -29,7 +29,7 @@ ItemDoor::ItemDoor(QGraphicsRectItem *parent)
 {
 
     isLocked=false;
-    waterSize = QSize(32,32);
+    itemSize = QSize(32,32);
     //image = new QGraphicsRectItem;
 }
 
@@ -53,7 +53,7 @@ void ItemDoor::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 
 void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_water)&&(!scene->DrawMode)&&(!isLocked))
+    if((!scene->lock_door)&&(!scene->DrawMode)&&(!isLocked))
     {
         //Remove selection from non-bgo items
         if(this->isSelected())
@@ -110,10 +110,12 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         ItemMenu->addSeparator();
         QAction *copyDoor = ItemMenu->addAction(tr("Copy"));
+            copyDoor->setDisabled(true);
         QAction *cutDoor = ItemMenu->addAction(tr("Cut"));
+            cutDoor->setDisabled(true);
 
         ItemMenu->addSeparator();
-        QAction *remove = ItemMenu->addAction(tr("Remove"));
+            QAction *remove = ItemMenu->addAction(tr("Remove"));
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -126,6 +128,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         event->accept();
 
+        /*
         if(selected==cutDoor)
         {
             //scene->doCut = true ;
@@ -140,23 +143,24 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             scene->contextMenuOpened = false;
         }
         else
+        */
         if(selected==remove)
         {
-            LevelData removedItems;
-            bool deleted=false;
+            //LevelData removedItems;
+            //bool deleted=false;
 
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
                 {
-                    removedItems.doors.push_back(((ItemDoor *)SelItem)->doorData);
+                   // removedItems.doors.push_back(((ItemDoor *)SelItem)->doorData);
                     ((ItemDoor *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
                     delete SelItem;
-                    deleted=true;
+                  //  deleted=true;
                 }
             }
-            if(deleted) scene->addRemoveHistory( removedItems );
+            /* if(deleted) scene->addRemoveHistory( removedItems );*/
             scene->contextMenuOpened = false;
         }
         else
@@ -273,6 +277,21 @@ void ItemDoor::arrayApply()
 
 void ItemDoor::removeFromArray()
 {
+
+    if(direction==D_Entrance)
+    {
+        doorData.isSetIn=false;
+        doorData.ix = 0;
+        doorData.iy = 0;
+    }
+    else
+    {
+        doorData.isSetOut=false;
+        doorData.ox = 0;
+        doorData.oy = 0;
+    }
+    arrayApply();
+    /*
     bool found=false;
     if(doorData.index < (unsigned int)scene->LvlData->bgo.size())
     { //Check index
@@ -281,6 +300,7 @@ void ItemDoor::removeFromArray()
             found=true;
         }
     }
+
 
     if(found)
     { //directlry
@@ -293,18 +313,139 @@ void ItemDoor::removeFromArray()
         {
             scene->LvlData->doors.remove(i); break;
         }
+    }*/
+}
+
+void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
+{
+    doorData = inD;
+    direction = doorDir;
+
+    long ix, iy, ox, oy;
+    QColor cEnter(Qt::magenta);
+    QColor cExit(Qt::darkMagenta);
+    cEnter.setAlpha(50);
+    cExit.setAlpha(50);
+
+    ix = doorData.ix;
+    iy = doorData.iy;
+    ox = doorData.ox;
+    oy = doorData.oy;
+
+    QFont font1, font2;
+    font1.setWeight(50);
+    font1.setBold(1);
+    font1.setPointSize(14);
+
+    font2.setWeight(14);
+    font2.setBold(0);
+    font2.setPointSize(12);
+
+    setRect(0, 0, itemSize.width(), itemSize.height());
+
+    doorLabel_shadow = new QGraphicsTextItem(QString::number(doorData.array_id));
+    doorLabel = new QGraphicsTextItem(QString::number(doorData.array_id));
+    if(direction==D_Entrance)
+    {
+        setBrush(QBrush(cEnter));
+        setPen(QPen(Qt::magenta, 2,Qt::SolidLine));
+
+        doorLabel_shadow->setDefaultTextColor(Qt::black);
+        doorLabel_shadow->setFont(font1);
+        doorLabel_shadow->setPos(ix-5, iy-2);
+        doorLabel->setDefaultTextColor(Qt::white);
+        doorLabel->setFont(font2);
+        doorLabel->setPos(ix-3, iy);
+
+        this->setPos(ix, iy);
+
+        this->setData(0, "Door_enter"); // ObjType
+    }
+    else
+    {
+        setBrush(QBrush(cExit));
+        setPen( QPen(Qt::darkMagenta, 2,Qt::SolidLine) );
+
+        doorLabel_shadow->setDefaultTextColor(Qt::black);
+        doorLabel_shadow->setFont(font1);
+        doorLabel_shadow->setPos(ox+10, oy+8);
+        doorLabel->setDefaultTextColor(Qt::white);
+        doorLabel->setFont(font2);
+        doorLabel->setPos(ox+12, oy+10);
+
+        this->setPos(ox, oy);
+
+        this->setData(0, "Door_exit"); // ObjType
+    }
+    grp->addToGroup(doorLabel);
+    grp->addToGroup(doorLabel_shadow);
+
+    this->setFlag(QGraphicsItem::ItemIsSelectable, (!scene->lock_door));
+    this->setFlag(QGraphicsItem::ItemIsMovable, (!scene->lock_door));
+
+    doorLabel_shadow->setZValue(scene->doorZ+0.0000001);
+    doorLabel->setZValue(scene->doorZ+0.0000002);
+
+    this->setData(1, QString::number(0) );
+    this->setData(2, QString::number(doorData.array_id) );
+
+    this->setZValue(scene->doorZ);
+
+    if(!init)
+    {
+        /*
+        _______________________________¶¶¶¶
+        _____________________¶¶¶¶¶¶¶_¶¶___¶¶¶¶¶¶
+        ___________________¶¶¶_____¶¶¶___¶¶¶___¶¶¶
+        __________________¶¶_______¶¶____¶¶¶¶¶¶¶¶¶
+        ________________¶¶¶¶¶_______¶_____¶______¶¶
+        ____________¶¶¶¶¶__¶¶_______¶____¶¶_______¶
+        ___________¶¶_______¶_______¶¶___¶¶_¶¶¶¶__¶
+        _______¶¶¶¶¶________¶¶______¶¶___¶_¶___¶¶_¶
+        _____¶¶¶___¶¶________¶_______¶___¶_¶¶___¶¶¶
+        ___¶¶_______¶¶¶______¶¶______¶¶¶¶¶¶__¶¶¶¶¶
+        __¶¶_________¶¶______¶¶_¶¶¶¶¶¶____¶¶¶¶¶¶¶
+        _¶¶__¶________¶¶______¶__¶¶_¶¶_______¶¶
+        ¶¶¶¶¶¶¶________¶_____¶¶_____¶¶_______¶¶
+        ¶____¶¶¶__¶¶¶¶¶¶_¶¶¶¶_¶_¶¶¶¶¶¶¶¶______¶¶
+        ¶_____¶¶¶______¶______¶¶__¶¶¶_¶¶¶_____¶¶
+        ¶¶¶¶¶¶¶¶¶¶___¶¶¶___¶__¶¶¶¶¶_____¶¶¶____¶¶
+        ¶_______¶¶__¶¶¶¶_¶¶¶¶¶¶¶¶__________¶¶__¶¶
+        ¶________¶¶¶¶¶¶¶¶¶__¶¶¶_____________¶__¶¶
+        ¶__________¶¶¶¶¶¶¶¶¶¶_________________¶¶¶
+        ¶¶_______________¶¶¶__________________¶¶
+        ¶¶______________¶¶¶__________________¶¶
+        ¶¶_____________¶¶¶¶_________________¶¶¶
+        _¶¶____________¶_¶¶_________________¶¶
+        _¶¶___________¶¶_¶_________________¶¶
+        __¶¶_____________¶________________¶¶
+        __¶¶_____________¶_______________¶¶¶
+        ___¶¶___________________________¶¶¶
+        ____¶__________________________¶¶¶
+        _____¶¶___________¶_¶¶¶______¶¶¶
+        ______¶¶¶¶¶¶¶¶¶¶¶¶¶_¶¶¶¶¶¶¶¶¶¶¶
+        ______¶¶¶¶¶¶¶¶¶¶¶¶¶_¶¶¶_¶¶¶¶¶
+        ______¶¶________¶_¶_¶___¶_¶¶¶
+        ______¶¶_______¶¶_¶_¶___¶_¶¶¶
+        ______¶¶_______¶¶_¶_¶___¶¶_¶¶
+        ______¶¶_______¶¶_¶____¶_¶_¶¶
+        ______¶¶______¶¶¶_¶____¶¶¶¶¶¶
+        ______¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
+        */
     }
 }
 
-void ItemDoor::setDoorData(LevelDoors inD)
+void ItemDoor::setLocked(bool lock)
 {
-    doorData = inD;
+    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+    isLocked = lock;
 }
 
 
 QRectF ItemDoor::boundingRect() const
 {
-    return QRectF(0,0,waterSize.width(),waterSize.height());
+    return QRectF(0,0,itemSize.width(),itemSize.height());
 }
 
 void ItemDoor::setContextMenu(QMenu &menu)
@@ -315,5 +456,8 @@ void ItemDoor::setContextMenu(QMenu &menu)
 void ItemDoor::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
+    grp = new QGraphicsItemGroup(this);
+    doorLabel = NULL;
+    doorLabel_shadow = NULL;
 }
 

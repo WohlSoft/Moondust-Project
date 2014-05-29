@@ -175,6 +175,12 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             scene->contextMenuOpened = false;
         }
         else
+        if(selected==resize)
+        {
+            scene->setBlockResizer(this, true);
+            scene->contextMenuOpened = false;
+        }
+        else
         if(selected==chNPC)
         {
             scene->contextMenuOpened = false;
@@ -499,6 +505,29 @@ void ItemBlock::setMainPixmap(const QPixmap &pixmap)
     }
 }
 
+void ItemBlock::setBlockSize(QRect rect)
+{
+    if(!sizable)
+        this->setPixmap(mainImage);
+    else
+    {
+        blockData.x = rect.x();
+        blockData.y = rect.y();
+        blockData.w = rect.width();
+        blockData.h = rect.height();
+
+        frameWidth = blockData.w;
+        frameSize = blockData.h;
+        frameHeight = blockData.h;
+        currentImage = drawSizableBlock(blockData.w, blockData.h, mainImage);
+        this->setPixmap(currentImage);
+        this->setPos(blockData.x, blockData.y);
+    }
+    setIncludedNPC(blockData.npc_id);
+    arrayApply();
+}
+
+
 void ItemBlock::setBlockData(LevelBlock inD, bool is_sz)
 {
     blockData = inD;
@@ -524,8 +553,11 @@ void ItemBlock::setContextMenu(QMenu &menu)
 void ItemBlock::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
+    grp = new QGraphicsItemGroup(this);
+    includedNPC = NULL;
 }
 
+/*
 void ItemBlock::setGroupPoint(QGraphicsItemGroup *theGrp)
 {
     grp = theGrp;
@@ -535,7 +567,7 @@ void ItemBlock::setNPCItemPoint(QGraphicsItem *includedNPCPnt)
 {
     includedNPC = includedNPCPnt;
 }
-
+*/
 
 ////////////////Animation///////////////////
 

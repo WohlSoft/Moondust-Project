@@ -118,7 +118,11 @@ void MainWindow::updateMenus(bool force)
     ui->actionSection_19->setEnabled( (WinType==1) );
     ui->actionSection_20->setEnabled( (WinType==1) );
     ui->actionSection_21->setEnabled( (WinType==1) );
+
     ui->actionReset_position->setEnabled( (WinType==1) );
+
+    ui->actionGo_to_Section->setEnabled( (WinType==1) );
+
     ui->actionGridEn->setEnabled( (WinType==1) );
 
     if(WinType==1)
