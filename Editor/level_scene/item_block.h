@@ -47,8 +47,8 @@ public:
     void setContextMenu(QMenu &menu);
 
     void setScenePoint(LvlScene *theScene);
-    void setGroupPoint(QGraphicsItemGroup *theGrp);
-    void setNPCItemPoint(QGraphicsItem *includedNPCPnt);
+    //void setGroupPoint(QGraphicsItemGroup *theGrp);
+    //void setNPCItemPoint(QGraphicsItem *includedNPCPnt);
 
     QRectF boundingRect() const;
 

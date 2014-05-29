@@ -553,8 +553,11 @@ void ItemBlock::setContextMenu(QMenu &menu)
 void ItemBlock::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
+    grp = new QGraphicsItemGroup(this);
+    includedNPC = NULL;
 }
 
+/*
 void ItemBlock::setGroupPoint(QGraphicsItemGroup *theGrp)
 {
     grp = theGrp;
@@ -564,7 +567,7 @@ void ItemBlock::setNPCItemPoint(QGraphicsItem *includedNPCPnt)
 {
     includedNPC = includedNPCPnt;
 }
-
+*/
 
 ////////////////Animation///////////////////
 

@@ -258,8 +258,8 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     bool isUser=false;
     int j;
 
-    QGraphicsItem *npc = NULL;
-    QGraphicsItemGroup *includedNPC;
+    //QGraphicsItem *npc = NULL;
+    //QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
 
     noimage=true;
@@ -341,12 +341,12 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
         BlockImage->setData(4, "animated");
     }
 
-    includedNPC = new QGraphicsItemGroup(BlockImage);
+    //includedNPC = new QGraphicsItemGroup(BlockImage);
 
     //Set pointers
     BlockImage->setScenePoint(this);
-    BlockImage->setGroupPoint(includedNPC);
-    BlockImage->setNPCItemPoint(npc);
+    //BlockImage->setGroupPoint(includedNPC);
+    //BlockImage->setNPCItemPoint(npc);
 
     if(block.invisible)
         BlockImage->setOpacity(qreal(0.5));
@@ -539,19 +539,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     ItemNPC *NPCItem = new ItemNPC;
 
-    //QGraphicsItem *	box;
-    //QGraphicsTextItem *npcTxt, *npcTxt_l2;
-    //QGraphicsItemGroup *npcBox;
-
-    //    QFont font1, font2;
-    //    font1.setWeight((toGrid)?50:50); //dummy expresson fo fix warning
-    //    font1.setBold(1);
-    //    font1.setPointSize(14);
-
-    //    font2.setWeight(14);
-    //    font2.setBold(0);
-    //    font2.setPointSize(12);
-
     //Check Index exists
     if(npc.id < (unsigned int)index_npc.size())
     {
@@ -666,14 +653,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         npc.y = newPos.y();
     }
 
-    //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 1 %1 %2").arg(bgo.x).arg(bgo.y));
-
-    //int imgOffsetX = (int)round( (-((double)mergedSet.gfx_w - (double)mergedSet.width ) / 2 ) + (double)mergedSet.gfx_offset_x);
-    //int imgOffsetY = (int)round( - (double)mergedSet.gfx_h + (double)mergedSet.height + (double)mergedSet.gfx_offset_y );
-
-    //QPoint offsettenPos = QPoint(npc.x + imgOffsetX, npc.y+imgOffsetY);
-
-    //NPCItem->setPos( QPointF(offsettenPos) );
 
     NPCItem->setPos( QPointF(newPos) );
 
@@ -687,25 +666,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
                           NPCItem->localProps.custom_ani_fr,
                           NPCItem->localProps.custom_ani_er);
 
-    //box = addPixmap(QPixmap(uNpcImg));
-    //npcBox = new QGraphicsItemGroup(box);
-
-    /*
-    npcTxt = new QGraphicsTextItem(QString::number(npc.id));
-    npcTxt->setDefaultTextColor(Qt::black);
-    npcTxt->setFont(font1);
-    npcTxt->setPos(npc.x-5, npc.y-2);
-    npcTxt_l2 = new QGraphicsTextItem(QString::number(npc.id));
-    npcTxt_l2->setDefaultTextColor(Qt::white);
-    npcTxt_l2->setFont(font2);
-    npcTxt_l2->setPos(npc.x-3, npc.y);
-
-    npcBox->addToGroup(npcTxt);
-    npcBox->addToGroup(npcTxt_l2);
-
-    npcTxt->setZValue(npcZf+0.0000001);
-    npcTxt_l2->setZValue(npcZf+0.0000002);
-    */
 
     NPCItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
     NPCItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
