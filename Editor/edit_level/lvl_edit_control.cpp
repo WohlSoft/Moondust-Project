@@ -70,6 +70,19 @@ void leveledit::ResetPosition()
     ui->graphicsView->horizontalScrollBar()->setValue(LvlData.sections[LvlData.CurSection].size_left);
 }
 
+void leveledit::goTo(long x, long y)
+{
+
+    ui->graphicsView->verticalScrollBar()->setValue(y);
+    ui->graphicsView->horizontalScrollBar()->setValue(x);
+
+    scene->update();
+    ui->graphicsView->update();
+
+    update();
+
+}
+
 void leveledit::setCurrentSection(int scId)
 {
     bool sIsNew=false;
