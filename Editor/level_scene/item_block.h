@@ -65,6 +65,7 @@ public:
     void setSlippery(bool slip);
     void setInvisible(bool inv);
     void setLayer(QString layer);
+    void setBlockSize(QRect rect);
 
     void setIncludedNPC(int npcID);
 

@@ -127,7 +127,8 @@ public:
         PLC_NPC,
         PLC_Water,
         PLC_Door,
-        PLC_PlayerPoint
+        PLC_PlayerPoint,
+        PLC_Section
     };
     int placingItem;
     QGraphicsItem * cursor;
@@ -230,7 +231,7 @@ public:
     // //////////////////////Resizer////////////////////////
     ItemResizer * pResizer; //reisizer pointer
     void setSectionResizer(bool enabled, bool accept=false);
-
+    void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
 
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
@@ -355,6 +356,7 @@ public:
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////
     void openProps();
+
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
