@@ -20,7 +20,7 @@
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
 #include "../../level_scene/lvl_item_placing.h"
-
+#include "../../npc_dialog/npcdialog.h"
 
 
 
@@ -391,21 +391,85 @@ void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
 }
 void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
 {
+    if(blockPtr<1)
+    {
+        LvlPlacingItems::blockSet.invisible = checked;
+    }
 
 }
 void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
 {
+    if(blockPtr<1)
+    {
+        LvlPlacingItems::blockSet.slippery = checked;
+    }
 
 }
 
 void MainWindow::on_PROPS_BlockIncludes_clicked()
 {
+    int npcID=0;
+    if(blockPtr<1)
+    {
+        npcID = LvlPlacingItems::blockSet.npc_id;
+    }
+
+    //LevelData selData;
+    //QList<QVariant> modNPC;
+
+    NpcDialog * npcList = new NpcDialog(&configs);
+    npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+    npcList->setState(npcID);
+
+    if(npcList->exec()==QDialog::Accepted)
+    {
+        //apply to all selected items.
+        int selected_npc=0;
+        if(npcList->isEmpty)
+            selected_npc = 0;
+        else
+        if(npcList->isCoin)
+            selected_npc = npcList->coins;
+        else
+            selected_npc = npcList->selectedNPC+1000;
+
+
+        ui->PROPS_BlockIncludes->setText(
+                    ((selected_npc>0)?
+                         ((selected_npc>1000)?QString("NPC-%1").arg(selected_npc-1000):tr("%1 coins").arg(selected_npc))
+                       :tr("[empty]")
+                         ) );
+
+        if(blockPtr<1)
+        {
+            LvlPlacingItems::blockSet.npc_id = selected_npc;
+        }
+
+        /*
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(0).toString()=="Block")
+            {
+                ((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
+                ((ItemBlock *) SelItem)->arrayApply();
+                ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
+                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+            }
+        }
+        modNPC.push_back(QVariant(selected_npc));
+        */
+    }
 
 }
 
 
 void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 {
+    if(blockPtr<1)
+    {
+        LvlPlacingItems::blockSet.layer = arg1;
+    }
 
 }
 
@@ -413,13 +477,35 @@ void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1)
 {
 
+    if(blockPtr<1)
+    {
+        if(ui->PROPS_BlkEventDestroy->currentIndex()>0)
+            LvlPlacingItems::blockSet.event_destroy = arg1;
+        else
+            LvlPlacingItems::blockSet.event_destroy = "";
+    }
+
 }
 void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
 {
+    if(blockPtr<1)
+    {
+        if(ui->PROPS_BlkEventHited->currentIndex()>0)
+            LvlPlacingItems::blockSet.event_hit = arg1;
+        else
+            LvlPlacingItems::blockSet.event_hit = "";
+    }
 
 }
 void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1)
 {
+    if(blockPtr<1)
+    {
+        if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
+            LvlPlacingItems::blockSet.event_no_more = arg1;
+        else
+            LvlPlacingItems::blockSet.event_no_more = "";
+    }
 
 }
 
