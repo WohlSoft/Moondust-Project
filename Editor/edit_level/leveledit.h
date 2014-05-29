@@ -52,6 +52,7 @@ public:
 
     void setCurrentSection(int scId);
     void ResetPosition();
+    void goTo(long x, long y);
 
     void changeCursor(int mode);
 

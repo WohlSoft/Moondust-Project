@@ -287,6 +287,8 @@ private slots:
     void on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1);
     void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1);
 
+    void on_actionGo_to_Section_triggered();
+
 private:
 
     LevelEditingSettings LvlOpts;

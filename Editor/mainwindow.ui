@@ -97,7 +97,7 @@
      <x>0</x>
      <y>0</y>
      <width>1300</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -878,6 +878,7 @@
    <addaction name="actionSection_19"/>
    <addaction name="actionSection_20"/>
    <addaction name="actionSection_21"/>
+   <addaction name="actionGo_to_Section"/>
   </widget>
   <widget class="QDockWidget" name="WorldToolBox">
    <property name="enabled">
@@ -892,7 +893,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>119</height>
+     <height>141</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -940,7 +941,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>248</height>
+        <height>230</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1000,8 +1001,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>235</width>
+        <height>230</height>
        </rect>
       </property>
      </widget>
@@ -1024,8 +1025,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>235</width>
+        <height>230</height>
        </rect>
       </property>
      </widget>
@@ -1048,8 +1049,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>248</height>
+        <width>235</width>
+        <height>230</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2338,7 +2339,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>326</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2536,7 +2537,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>326</height>
+          <height>314</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2588,8 +2589,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>247</width>
-          <height>517</height>
+          <width>243</width>
+          <height>573</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3057,7 +3058,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QDockWidget" name="LevelLayers">
    <property name="minimumSize">
     <size>
-     <width>246</width>
+     <width>279</width>
      <height>150</height>
     </size>
    </property>
@@ -4565,6 +4566,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string notr="true"/>
+   </property>
+  </action>
+  <action name="actionGo_to_Section">
+   <property name="text">
+    <string>Go to Section</string>
    </property>
   </action>
  </widget>
