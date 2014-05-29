@@ -17,9 +17,8 @@
  */
 
 #include <QtWidgets>
-#include <QTranslator>
-#include <QLocale>
 #include "mainwindow.h"
+#include <QDebug>
 
 #include <QSharedMemory>
 #include <QSystemSemaphore>

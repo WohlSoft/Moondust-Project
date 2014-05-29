@@ -195,15 +195,13 @@ void MainWindow::on_actionSection_21_triggered()
 void MainWindow::on_actionGo_to_Section_triggered()
 {
     int WinType = activeChildWindow();
-    if(WinType==1){
-        if (activeChildWindow()==1)
-        {
+    if(WinType==1)
+    {
             leveledit* edit = activeLvlEditWin();
             int SectionId = edit->LvlData.CurSection;
             int xb = edit->LvlData.sections[SectionId].size_left;
             int yb = edit->LvlData.sections[SectionId].size_top;
-            edit->goTo(xb-10,yb-10);
-        }
+            edit->goTo(xb-10, yb-10);
     }
 }
 
