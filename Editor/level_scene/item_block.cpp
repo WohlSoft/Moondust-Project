@@ -175,6 +175,12 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             scene->contextMenuOpened = false;
         }
         else
+        if(selected==resize)
+        {
+            scene->setBlockResizer(this, true);
+            scene->contextMenuOpened = false;
+        }
+        else
         if(selected==chNPC)
         {
             scene->contextMenuOpened = false;
@@ -498,6 +504,28 @@ void ItemBlock::setMainPixmap(const QPixmap &pixmap)
         this->setPixmap(currentImage);
     }
 }
+
+void ItemBlock::setBlockSize(QRect rect)
+{
+    if(!sizable)
+        this->setPixmap(mainImage);
+    else
+    {
+        blockData.x = rect.x();
+        blockData.y = rect.y();
+        blockData.w = rect.width();
+        blockData.h = rect.height();
+
+        frameWidth = blockData.w;
+        frameSize = blockData.h;
+        frameHeight = blockData.h;
+        currentImage = drawSizableBlock(blockData.w, blockData.h, mainImage);
+        this->setPixmap(currentImage);
+        this->setPos(blockData.x, blockData.y);
+    }
+    arrayApply();
+}
+
 
 void ItemBlock::setBlockData(LevelBlock inD, bool is_sz)
 {

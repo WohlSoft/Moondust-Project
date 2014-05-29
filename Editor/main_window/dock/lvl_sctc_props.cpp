@@ -119,10 +119,13 @@ void MainWindow::on_ResizeSection_clicked()
     if (activeChildWindow()==1)
     {
         activeLvlEditWin()->setFocus();
-        activeLvlEditWin()->scene->setSectionResizer(true);
-        ui->ResizeSection->setVisible(false);
-        ui->applyResize->setVisible(true);
-        ui->cancelResize->setVisible(true);
+        if(activeLvlEditWin()->scene->pResizer==NULL)
+        {
+            activeLvlEditWin()->scene->setSectionResizer(true);
+            ui->ResizeSection->setVisible(false);
+            ui->applyResize->setVisible(true);
+            ui->cancelResize->setVisible(true);
+        }
     }
 }
 
