@@ -27,6 +27,7 @@ public:
 
     int type; //Resizer Type: 0 - Section, 1 - selecting of position, 2 - item size
     QSizeF _minSize;
+    QGraphicsItem * targetItem;
 
     private:
 

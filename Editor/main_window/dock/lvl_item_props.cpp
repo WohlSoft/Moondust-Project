@@ -19,11 +19,12 @@
 
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
+#include "../../level_scene/lvl_item_placing.h"
+#include "../../npc_dialog/npcdialog.h"
 
 
 
-
-void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc)
+void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
     ui->blockProp->hide();
     ui->bgoProps->hide();
@@ -36,6 +37,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
     */
+
     switch(Type)
     {
     case 0:
@@ -45,7 +47,11 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->blockProp->show();
         ui->blockProp->raise();
         ui->ItemProps->setCurrentIndex(0);
-        blockPtr = block.array_id;
+
+        if(newItem)
+            blockPtr = -1;
+        else
+            blockPtr = block.array_id;
 
         bool found=false;
         int j;
@@ -75,6 +81,10 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->PROPS_BlockResize->setVisible( configs.main_block[j].sizable );
         ui->PROPS_BlockInvis->setChecked( block.invisible );
         ui->PROPS_BlkSlippery->setChecked( block.slippery );
+
+        ui->PROPS_BlockSquareFill->setVisible( newItem );
+        ui->PROPS_BlockSquareFill->setChecked(LvlPlacingItems::fillingMode);
+
         ui->PROPS_BlockIncludes->setText(
                     ((block.npc_id>0)?
                          ((block.npc_id>1000)?QString("NPC-%1").arg(block.npc_id-1000):tr("%1 coins").arg(block.npc_id))
@@ -117,7 +127,10 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->ItemProperties->raise();
         ui->bgoProps->show();
         ui->bgoProps->raise();
-        bgoPtr = bgo.array_id;
+        if(newItem)
+            bgoPtr = -1;
+        else
+            bgoPtr = bgo.array_id;
         ui->ItemProps->setCurrentIndex(1);
 
 
@@ -138,7 +151,12 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->ItemProperties->raise();
         ui->npcProps->show();
         ui->npcProps->raise();
-        npcPtr = npc.array_id;
+
+        if(newItem)
+            npcPtr = -1;
+        else
+            npcPtr = npc.array_id;
+
         ui->ItemProps->setCurrentIndex(2);
 
         bool found=false;
@@ -338,3 +356,156 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     }
 
 }
+
+
+
+
+// ///////////BLOCKS///////////////////////////
+
+void MainWindow::on_PROPS_BlockResize_clicked()
+{
+
+}
+
+
+
+
+void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
+{
+    resetEditmodeButtons();
+   //placeBlock
+
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->scene->clearSelection();
+       activeLvlEditWin()->changeCursor(2);
+       activeLvlEditWin()->scene->EditingMode = 2;
+       activeLvlEditWin()->scene->disableMoveItems=false;
+       activeLvlEditWin()->scene->DrawMode=true;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+       LvlPlacingItems::fillingMode = checked;
+       activeLvlEditWin()->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
+       WriteToLog(QtDebugMsg, QString("Block Square draw -> %1").arg(checked));
+       activeLvlEditWin()->setFocus();
+    }
+}
+void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
+{
+    if(blockPtr<1)
+    {
+        LvlPlacingItems::blockSet.invisible = checked;
+    }
+
+}
+void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
+{
+    if(blockPtr<1)
+    {
+        LvlPlacingItems::blockSet.slippery = checked;
+    }
+
+}
+
+void MainWindow::on_PROPS_BlockIncludes_clicked()
+{
+    int npcID=0;
+    if(blockPtr<1)
+    {
+        npcID = LvlPlacingItems::blockSet.npc_id;
+    }
+
+    //LevelData selData;
+    //QList<QVariant> modNPC;
+
+    NpcDialog * npcList = new NpcDialog(&configs);
+    npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+    npcList->setState(npcID);
+
+    if(npcList->exec()==QDialog::Accepted)
+    {
+        //apply to all selected items.
+        int selected_npc=0;
+        if(npcList->isEmpty)
+            selected_npc = 0;
+        else
+        if(npcList->isCoin)
+            selected_npc = npcList->coins;
+        else
+            selected_npc = npcList->selectedNPC+1000;
+
+
+        ui->PROPS_BlockIncludes->setText(
+                    ((selected_npc>0)?
+                         ((selected_npc>1000)?QString("NPC-%1").arg(selected_npc-1000):tr("%1 coins").arg(selected_npc))
+                       :tr("[empty]")
+                         ) );
+
+        if(blockPtr<1)
+        {
+            LvlPlacingItems::blockSet.npc_id = selected_npc;
+        }
+
+        /*
+        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        {
+            if(SelItem->data(0).toString()=="Block")
+            {
+                ((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
+                ((ItemBlock *) SelItem)->arrayApply();
+                ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
+                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+            }
+        }
+        modNPC.push_back(QVariant(selected_npc));
+        */
+    }
+
+}
+
+
+void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
+{
+    if(blockPtr<1)
+    {
+        LvlPlacingItems::blockSet.layer = arg1;
+    }
+
+}
+
+
+void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1)
+{
+
+    if(blockPtr<1)
+    {
+        if(ui->PROPS_BlkEventDestroy->currentIndex()>0)
+            LvlPlacingItems::blockSet.event_destroy = arg1;
+        else
+            LvlPlacingItems::blockSet.event_destroy = "";
+    }
+
+}
+void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
+{
+    if(blockPtr<1)
+    {
+        if(ui->PROPS_BlkEventHited->currentIndex()>0)
+            LvlPlacingItems::blockSet.event_hit = arg1;
+        else
+            LvlPlacingItems::blockSet.event_hit = "";
+    }
+
+}
+void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1)
+{
+    if(blockPtr<1)
+    {
+        if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
+            LvlPlacingItems::blockSet.event_no_more = arg1;
+        else
+            LvlPlacingItems::blockSet.event_no_more = "";
+    }
+
+}
+

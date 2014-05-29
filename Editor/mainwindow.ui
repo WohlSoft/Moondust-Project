@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1300</width>
-    <height>1081</height>
+    <width>1293</width>
+    <height>1145</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -96,7 +96,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1300</width>
+     <width>1293</width>
      <height>21</height>
     </rect>
    </property>
@@ -800,7 +800,6 @@
    <addaction name="separator"/>
    <addaction name="actionPlayMusic"/>
    <addaction name="separator"/>
-   <addaction name="actionReset_position"/>
    <addaction name="actionGridEn"/>
    <addaction name="separator"/>
    <addaction name="actionReload"/>
@@ -857,6 +856,9 @@
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
+   <addaction name="actionReset_position"/>
+   <addaction name="actionGo_to_Section"/>
+   <addaction name="separator"/>
    <addaction name="actionSection_1"/>
    <addaction name="actionSection_2"/>
    <addaction name="actionSection_3"/>
@@ -892,7 +894,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>119</height>
+     <height>141</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -940,7 +942,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>151</height>
+        <height>267</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1000,8 +1002,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>151</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1024,8 +1026,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>151</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1048,8 +1050,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>151</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -1640,13 +1642,13 @@
    <property name="minimumSize">
     <size>
      <width>246</width>
-     <height>440</height>
+     <height>480</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
      <width>246</width>
-     <height>440</height>
+     <height>480</height>
     </size>
    </property>
    <property name="floating">
@@ -2277,6 +2279,19 @@ p, li { white-space: pre-wrap; }
       </widget>
      </widget>
     </widget>
+    <widget class="QPushButton" name="goToWarpDoor">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>410</y>
+       <width>101</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Go To...</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QDockWidget" name="ItemProperties">
@@ -2289,7 +2304,7 @@ p, li { white-space: pre-wrap; }
    <property name="maximumSize">
     <size>
      <width>500</width>
-     <height>16777215</height>
+     <height>524287</height>
     </size>
    </property>
    <property name="floating">
@@ -2338,7 +2353,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>333</height>
+          <height>354</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2518,6 +2533,16 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="PROPS_BlockSquareFill">
+           <property name="text">
+            <string>Square fill</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="bgoProps">
@@ -2525,8 +2550,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>333</height>
+          <width>137</width>
+          <height>39</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2577,8 +2602,8 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-184</y>
-          <width>247</width>
+          <y>0</y>
+          <width>194</width>
           <height>517</height>
          </rect>
         </property>
@@ -3047,8 +3072,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QDockWidget" name="LevelLayers">
    <property name="minimumSize">
     <size>
-     <width>246</width>
-     <height>150</height>
+     <width>279</width>
+     <height>130</height>
     </size>
    </property>
    <property name="baseSize">
@@ -4555,6 +4580,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string notr="true"/>
+   </property>
+  </action>
+  <action name="actionGo_to_Section">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Go to Section</string>
    </property>
   </action>
  </widget>

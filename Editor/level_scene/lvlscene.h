@@ -127,7 +127,8 @@ public:
         PLC_NPC,
         PLC_Water,
         PLC_Door,
-        PLC_PlayerPoint
+        PLC_PlayerPoint,
+        PLC_Section
     };
     int placingItem;
     QGraphicsItem * cursor;
@@ -230,7 +231,7 @@ public:
     // //////////////////////Resizer////////////////////////
     ItemResizer * pResizer; //reisizer pointer
     void setSectionResizer(bool enabled, bool accept=false);
-
+    void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
 
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
@@ -356,6 +357,9 @@ public:
     // ////////////////////////////////////////////
     void openProps();
 
+public slots:
+    void selectionChanged();
+
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
@@ -372,6 +376,7 @@ private:
     void placeDoor(LevelDoors &door, bool toGrid=false);
     void placeNPC(LevelNPC &npc, bool toGrid=false);
     void placeWater(LevelWater &water, bool toGrid=false);
+    void placePlayerPoint(PlayerPoint plr, bool init=false);
 
     void removeItemUnderCursor();
 
