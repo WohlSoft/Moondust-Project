@@ -79,14 +79,14 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
 
     this->setAcceptHoverEvents(true);
 
-    _corners[0] = new CornerGrabber(this,0);
-    _corners[1] = new CornerGrabber(this,1);
-    _corners[2] = new CornerGrabber(this,2);
-    _corners[3] = new CornerGrabber(this,3);
-    _corners[4] = new CornerGrabber(this,4);
-    _corners[5] = new CornerGrabber(this,5);
-    _corners[6] = new CornerGrabber(this,6);
-    _corners[7] = new CornerGrabber(this,7);
+    _corners[0] = new CornerGrabber(this,0,_resizerColor);
+    _corners[1] = new CornerGrabber(this,1,_resizerColor);
+    _corners[2] = new CornerGrabber(this,2,_resizerColor);
+    _corners[3] = new CornerGrabber(this,3,_resizerColor);
+    _corners[4] = new CornerGrabber(this,4,_resizerColor);
+    _corners[5] = new CornerGrabber(this,5,_resizerColor);
+    _corners[6] = new CornerGrabber(this,6,_resizerColor);
+    _corners[7] = new CornerGrabber(this,7,_resizerColor);
 
     _minSize = QSizeF(64, 64); //set Default minimal size
 
@@ -108,25 +108,25 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
  *
  */
 
-void ItemResizer::adjustSize(int x, int y)
-{
-    _width += x;
-    _height += y;
-    qreal _x = this->pos().x();
-    qreal _y = this->pos().y();
-    QPoint relativePos = QPoint(_x + _width , _y + _height );
+//void ItemResizer::adjustSize(int x, int y)
+//{
+//    _width += x;
+//    _height += y;
+//    qreal _x = this->pos().x();
+//    qreal _y = this->pos().y();
+//    QPoint relativePos = QPoint(_x + _width , _y + _height );
 
-    QPoint sz = Grid::applyGrid(relativePos, _grid );
+//    QPoint sz = Grid::applyGrid(relativePos, _grid );
 
-    _width = fabs( _x-sz.x() );
-    _height = fabs( _y-sz.y() );
+//    _width = fabs( _x-sz.x() );
+//    _height = fabs( _y-sz.y() );
 
-    _drawingWidth =  _width;
-    _drawingHeight=  _height;
+//    _drawingWidth =  _width;
+//    _drawingHeight=  _height;
 
-    this->setRect(0,0,_drawingWidth,_drawingHeight);
+//    this->setRect(0,0,_drawingWidth,_drawingHeight);
 
-}
+//}
 
 /**
   * This scene event filter has been registered with all four corner grabber items.
@@ -134,6 +134,7 @@ void ItemResizer::adjustSize(int x, int y)
   * event.  A dynamic_cast is used to determine if the event type is one of the events
   * we are interrested in.
   */
+
 
 bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 {
@@ -199,8 +200,17 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
         WriteToLog(QtDebugMsg, QString("Resizer -> StartPos -> %1 %2 size %3x%4").arg(cXY.x()).arg(cXY.y()).arg(cWH.x()).arg(cWH.y()) );
         WriteToLog(QtDebugMsg, QString("Resizer -> mouse XY %1-%2 corner %3").arg(mevent->scenePos().x()).arg(mevent->scenePos().y()).arg(corner->getCorner()) );
 
-        bool DeltaSize=false;
-        bool DeltaPos=false;
+        bool DeltaSize=false; //Size was changed
+        bool DeltaPos=false;  //Position was changed
+
+        bool P_onlyX=false; //Change only X position
+        bool P_onlyY=false; //Change only Y position
+        bool S_onlyX=false; //Change only X size
+        bool S_onlyY=false; //Change only Y size
+
+        bool validX=false;
+        bool validY=false;
+
         switch(corner->getCorner())
         {
         case 0:
@@ -212,6 +222,8 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
             cWH = QPoint(mevent->scenePos().x(), sWH.y());
             DeltaPos=true;
             DeltaSize=true;
+            P_onlyY=true;
+            S_onlyX=true;
             break;
         case 2:
             cWH = QPoint(mevent->scenePos().x(), mevent->scenePos().y());
@@ -222,22 +234,28 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
             cWH = QPoint(sWH.x(), mevent->scenePos().y());
             DeltaPos=true;
             DeltaSize=true;
+            P_onlyX=true;
+            S_onlyY=true;
             break;
         case 4:
             cXY = QPoint(sXY.x(), mevent->scenePos().y());
             DeltaPos=true;
+            P_onlyY=true;
             break;
         case 5:
             cXY = QPoint(mevent->scenePos().x(), sXY.y());
             DeltaPos=true;
+            P_onlyX=true;
             break;
         case 6:
             cWH = QPoint(sWH.x(), mevent->scenePos().y());
             DeltaSize=true;
+            S_onlyY=true;
             break;
         case 7:
             cWH = QPoint(mevent->scenePos().x(), sWH.y());
             DeltaSize=true;
+            P_onlyY=true;
             break;
         default:
             break;
@@ -253,19 +271,60 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
         else
             cWH = sWH;
 
-        _width = fabs( cXY.x()-cWH.x() );
-        _height = fabs( cXY.y()-cWH.y() );
+        if(P_onlyX) cXY.setY(oXY.y());
+        if(P_onlyY) cXY.setX(oXY.x());
+        if(S_onlyX) cWH.setY(cWH.y());
+        if(S_onlyY) cWH.setX(oWH.x());
 
-        if ( _width < _minSize.width() )
-            {cXY = oXY; cWH = oWH;
-            _width=_drawingWidth;}
-         //   _width  = _minSize.width();
-        if ( _height < _minSize.height() )
+
+        if(cXY.x() < cWH.x())
+            validX=true;
+        if(cXY.y() < cWH.y())
+            validY=true;
+
+        if(validX)
+        {
+            qreal t_width = fabs( cXY.x()-cWH.x() );
+            if(t_width < _minSize.width())
             {
-            cXY = oXY; cWH = oWH;
-            _height=_drawingHeight;
+                cXY.setX(oXY.x());
+                cWH.setX(oWH.x());
+                _width=_drawingWidth;
             }
-            //_height = _minSize.height()-((type<2)?8:0);
+            else
+            {
+                _width = t_width;
+            }
+
+        }
+        else
+        {
+            cXY.setX(oXY.x());
+            cWH.setX(oWH.x());
+            _width=_drawingWidth;
+        }
+
+        if(validY)
+        {
+            qreal t_height = fabs( cXY.y()-cWH.y() );
+            if(t_height < _minSize.height())
+            {
+                cXY.setY(oXY.y());
+                cWH.setY(oWH.y());
+                _height=_drawingHeight;
+            }
+            else
+            {
+                _height = t_height;
+            }
+
+        }
+        else
+        {
+            cXY.setY(oXY.y());
+            cWH.setY(oWH.y());
+            _height=_drawingHeight;
+        }
 
         _drawingWidth  =  _width;
         _drawingHeight =  _height;

@@ -18,7 +18,7 @@ class CornerGrabber : public QGraphicsItem
 {
 
 public:
-    explicit CornerGrabber(QGraphicsItem *parent = 0,  int corner=0);
+    explicit CornerGrabber(QGraphicsItem *parent = 0,  int corner=0, QColor cOLoR=Qt::green, qreal w=10, qreal h=10);
 
     int  getCorner(); ///< allows the owner to find out which coner this is
     void setMouseState(int); ///< allows the owner to record the current mouse state
@@ -49,13 +49,14 @@ private:
     virtual void mousePressEvent(QGraphicsSceneDragDropEvent *event);
     virtual void mouseReleaseEvent (QGraphicsSceneMouseEvent * event );
 
+    QColor _defColor; ///< Default grabber color
     QColor _outterborderColor; ///< the hover event handlers will toggle this between red and black
     QPen _outterborderPen; ///< the pen is used to paint the red/black border
 
     qreal   _width;
     qreal   _height;
 
-    int _corner;// 0,1,2,3  - starting at x=0,y=0 and moving clockwise around the box
+    int _corner;// 0,1,2,3,4,5,6,7  - starting at x=0,y=0 and moving clockwise around the box
 
 
     int _mouseButtonState;
