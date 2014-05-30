@@ -19,14 +19,15 @@
 
 #include "corner_grabber.h"
 
-CornerGrabber::CornerGrabber(QGraphicsItem *parent,  int corner) :
+CornerGrabber::CornerGrabber(QGraphicsItem *parent,  int corner, QColor cOLoR, qreal w, qreal h) :
     QGraphicsItem(parent),
     mouseDownX(0),
     mouseDownY(0),
-    _outterborderColor(Qt::green),
+    _defColor(cOLoR),
+    _outterborderColor(cOLoR),
     _outterborderPen(),
-    _width(10),
-    _height(10),
+    _width(w),
+    _height(h),
     _corner(corner),
     _mouseButtonState(kMouseReleased)
 {
@@ -86,7 +87,7 @@ void CornerGrabber::mouseMoveEvent ( QGraphicsSceneMouseEvent * event )
 
 void CornerGrabber::hoverLeaveEvent ( QGraphicsSceneHoverEvent * )
 {
-    _outterborderColor = Qt::green;
+    _outterborderColor = _defColor;
     this->update(0,0,_width,_height);
 }
 
