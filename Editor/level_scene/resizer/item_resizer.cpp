@@ -24,6 +24,7 @@
 
 #include <math.h>
 #include "../../common_features/grid.h"
+#include "../../common_features/logger.h"
 
 /**
   *  This box can be re-sized and it can be moved. For moving, we capture
@@ -78,48 +79,18 @@ ItemResizer::ItemResizer(QSize size, QColor color, int grid):
 
     this->setAcceptHoverEvents(true);
 
-    _corners[0] = new CornerGrabber(this,0);
-    _corners[1] = new CornerGrabber(this,1);
-    _corners[2] = new CornerGrabber(this,2);
-    _corners[3] = new CornerGrabber(this,3);
-    _corners[4] = new CornerGrabber(this,4);
-    _corners[5] = new CornerGrabber(this,5);
-    _corners[6] = new CornerGrabber(this,6);
-    _corners[7] = new CornerGrabber(this,7);
+    _corners[0] = new CornerGrabber(this,0,_resizerColor);
+    _corners[1] = new CornerGrabber(this,1,_resizerColor);
+    _corners[2] = new CornerGrabber(this,2,_resizerColor);
+    _corners[3] = new CornerGrabber(this,3,_resizerColor);
+    _corners[4] = new CornerGrabber(this,4,_resizerColor);
+    _corners[5] = new CornerGrabber(this,5,_resizerColor);
+    _corners[6] = new CornerGrabber(this,6,_resizerColor);
+    _corners[7] = new CornerGrabber(this,7,_resizerColor);
 
     _minSize = QSizeF(64, 64); //set Default minimal size
 
     setCornerPositions();
-
-}
-
-/**
- *  To allow the user to grab the corners to re-size, we need to get a hover
- *  indication. But if the mouse pointer points to the left, then when the mouse
- *  tip is to the left but just outsize the box, we will not get the hover.
- *  So the solution is to tell the graphics scene the box is larger than
- *  what the painter actually paints in. This way when the user gets the mouse
- *  within a few pixels of what appears to be the edge of the box, we get
- *  the hover indication.
-
- *  So the cornerGrabBuffer is a few pixel wide buffer zone around the outside
- *  edge of the box.
- *
- */
-
-void ItemResizer::adjustSize(int x, int y)
-{
-    _width += x;
-    _height += y;
-
-    QPoint sz = Grid::applyGrid(QPoint(_width, _height), _grid );
-    _width = sz.x();
-    _height = sz.y();
-
-    _drawingWidth =  _width;
-    _drawingHeight=  _height;
-
-    this->setRect(0,0,_drawingWidth,_drawingHeight);
 
 }
 
@@ -130,8 +101,13 @@ void ItemResizer::adjustSize(int x, int y)
   * we are interrested in.
   */
 
+
 bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
 {
+    static QPoint sXY;
+    static QPoint sWH;
+
+
     CornerGrabber * corner = dynamic_cast<CornerGrabber *>(watched);
     if ( corner == NULL) return false; // not expected to get here
 
@@ -148,9 +124,12 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
             // if the mouse went down, record the x,y coords of the press, record it inside the corner object
         case QEvent::GraphicsSceneMousePress:
             {
+                sXY = this->scenePos().toPoint();
+                sWH = QPoint( sXY.x() + this->rect().width(), sXY.y() + this->rect().height());
+
                 corner->setMouseState(CornerGrabber::kMouseDown);
-                corner->mouseDownX = mevent->pos().x();
-                corner->mouseDownY = mevent->pos().y();
+                corner->mouseDownX = mevent->scenePos().x();
+                corner->mouseDownY = mevent->scenePos().y();
             }
             break;
 
@@ -176,124 +155,157 @@ bool ItemResizer::sceneEventFilter ( QGraphicsItem * watched, QEvent * event )
     if ( corner->getMouseState() == CornerGrabber::kMouseMoving )
     {
 
-        qreal x = mevent->pos().x(), y = mevent->pos().y();
-         prepareGeometryChange();
+        //Current XY (left-top corner)
+        QPoint cXY = this->scenePos().toPoint();
+        //Current HeightWidth point (right-bottom corner)
+        QPoint cWH = QPoint( cXY.x() + this->rect().width(), cXY.y() + this->rect().height() );
 
-        // depending on which corner has been grabbed, we want to move the position
-        // of the item as it grows/shrinks accordingly. so we need to eitehr add
-        // or subtract the offsets based on which corner this is.
+        QPoint oXY = cXY; //BackUP
+        QPoint oWH = cWH;
 
-        int onlyX=1;
-        int onlyY=1;
+        WriteToLog(QtDebugMsg, QString("Resizer -> StartPos -> %1 %2 size %3x%4").arg(cXY.x()).arg(cXY.y()).arg(cWH.x()).arg(cWH.y()) );
+        WriteToLog(QtDebugMsg, QString("Resizer -> mouse XY %1-%2 corner %3").arg(mevent->scenePos().x()).arg(mevent->scenePos().y()).arg(corner->getCorner()) );
 
-        int XaxisSign = 0;
-        int YaxisSign = 0;
-        switch( corner->getCorner() )
+        bool DeltaSize=false; //Size was changed
+        bool DeltaPos=false;  //Position was changed
+
+        bool P_onlyX=false; //Change only X position
+        bool P_onlyY=false; //Change only Y position
+        bool S_onlyX=false; //Change only X size
+        bool S_onlyY=false; //Change only Y size
+
+        bool validX=false;
+        bool validY=false;
+
+        switch(corner->getCorner())
         {
-        case 5:
-            onlyX=0;
         case 0:
-            {
-                XaxisSign = +1;
-                YaxisSign = +1;
-            }
+            cXY = QPoint(mevent->scenePos().x(), mevent->scenePos().y());
+            DeltaPos=true;
+            break;
+        case 1:
+            cXY = QPoint(sXY.x(), mevent->scenePos().y());
+            cWH = QPoint(mevent->scenePos().x(), sWH.y());
+            DeltaPos=true;
+            DeltaSize=true;
+            P_onlyY=true;
+            S_onlyX=true;
+            break;
+        case 2:
+            cWH = QPoint(mevent->scenePos().x(), mevent->scenePos().y());
+            DeltaSize=true;
+            break;
+        case 3:
+            cXY = QPoint(mevent->scenePos().x(), sXY.y());
+            cWH = QPoint(sWH.x(), mevent->scenePos().y());
+            DeltaPos=true;
+            DeltaSize=true;
+            P_onlyX=true;
+            S_onlyY=true;
             break;
         case 4:
-            onlyY=0;
-        case 1:
-            {
-                XaxisSign = -1;
-                YaxisSign = +1;
-            }
+            cXY = QPoint(sXY.x(), mevent->scenePos().y());
+            DeltaPos=true;
+            P_onlyY=true;
             break;
-        case 7:
-            onlyX=0;
-        case 2:
-            {
-                XaxisSign = -1;
-                YaxisSign = -1;
-            }
+        case 5:
+            cXY = QPoint(mevent->scenePos().x(), sXY.y());
+            DeltaPos=true;
+            P_onlyX=true;
             break;
         case 6:
-            onlyY=0;
-        case 3:
-            {
-                XaxisSign = +1;
-                YaxisSign = -1;
-            }
+            cWH = QPoint(sWH.x(), mevent->scenePos().y());
+            DeltaSize=true;
+            S_onlyY=true;
             break;
-
+        case 7:
+            cWH = QPoint(mevent->scenePos().x(), sWH.y());
+            DeltaSize=true;
+            P_onlyY=true;
+            break;
+        default:
+            break;
         }
 
-        // if the mouse is being dragged, calculate a new size and also re-position
-        // the box to give the appearance of dragging the corner out/in to resize the box
+        if(DeltaPos)
+            cXY = Grid::applyGrid(cXY, _grid );
+        else
+            cXY = sXY;
 
-        int xMoved = (corner->mouseDownX - x)*onlyY;
-        int yMoved = (corner->mouseDownY - y)*onlyX;
+        if(DeltaSize)
+            cWH = Grid::applyGrid(cWH, _grid );
+        else
+            cWH = sWH;
 
-        int newWidth = _width + ( XaxisSign * xMoved);
-        if ( newWidth < _minSize.width() ) newWidth  = _minSize.width();
+        if(P_onlyX) cXY.setY(oXY.y());
+        if(P_onlyY) cXY.setX(oXY.x());
+        if(S_onlyX) cWH.setY(cWH.y());
+        if(S_onlyY) cWH.setX(oWH.x());
 
-        int newHeight = _height + (YaxisSign * yMoved) ;
-        if ( newHeight < _minSize.height() ) newHeight = _minSize.height()-((type==0)?8:0);
 
-        int deltaWidth  =   newWidth - _width ;
-        int deltaHeight =   newHeight - _height ;
+        if(cXY.x() < cWH.x())
+            validX=true;
+        if(cXY.y() < cWH.y())
+            validY=true;
 
-        adjustSize(  deltaWidth ,   deltaHeight);
-
-        deltaWidth *= (-1);
-        deltaHeight *= (-1);
-
-        if ( corner->getCorner() == 0 )
+        if(validX)
         {
-            //left-top
-            int newXpos = this->pos().x() + deltaWidth;
-            int newYpos = this->pos().y() + deltaHeight; //(allow height-8 if <min)
+            qreal t_width = fabs( cXY.x()-cWH.x() );
+            if(t_width < _minSize.width())
+            {
+                cXY.setX(oXY.x());
+                cWH.setX(oWH.x());
+                _width=_drawingWidth;
+            }
+            else
+            {
+                _width = t_width;
+            }
 
-            this->setPos( QPointF( Grid::applyGrid(QPoint(newXpos, newYpos), _grid )));
-
-            this->setRect(0, 0, _width, _height);
         }
-        else   if ( corner->getCorner() == 1 )
+        else
         {
-            //right-top
-            int newYpos = this->pos().y() + deltaHeight; //(allow height-8 if <min)
-            //this->setPos(this->pos().x(), newYpos);
-            this->setPos( QPointF( Grid::applyGrid(QPoint(this->pos().x(), newYpos), _grid )));
-            this->setRect(0, 0, _width, _height);
+            cXY.setX(oXY.x());
+            cWH.setX(oWH.x());
+            _width=_drawingWidth;
         }
-        else   if ( corner->getCorner() == 3 )
-        { //left-bottom
-            int newXpos = this->pos().x() + deltaWidth;
-            //this->setPos(newXpos, this->pos().y());
 
-            this->setPos( QPointF( Grid::applyGrid(QPoint(newXpos, this->pos().y()), _grid )));
+        if(validY)
+        {
+            qreal t_height = fabs( cXY.y()-cWH.y() );
+            if(t_height < _minSize.height())
+            {
+                cXY.setY(
+                            ((type>=2)||
+                             ((corner->getCorner()!=0)&&
+                              (corner->getCorner()!=1)&&
+                              (corner->getCorner()!=4)))?
+                                oXY.y():
+                              (oWH.y()-_minSize.height()) );
+                cWH.setY(oWH.y());
+                _drawingHeight = fabs( cXY.y()-cWH.y() );
+                _height=_drawingHeight;
+            }
+            else
+            {
+                _height = t_height;
+            }
 
-            this->setRect(0, 0, _width, _height);
         }
-        else   if ( corner->getCorner() == 4 )
-        {   //top
-            int newYpos = this->pos().y() + deltaHeight; //(allow height-8 if <min)
-            //this->setPos(this->pos().x(), newYpos);
-            this->setPos( QPointF( Grid::applyGrid(QPoint(this->pos().x(), newYpos), _grid )));
-            this->setRect(0, 0, _width, _height);
+        else
+        {
+            cXY.setY(oXY.y());
+            cWH.setY(oWH.y());
+            _height=_drawingHeight;
         }
-        if ( corner->getCorner() == 5 )
-        { //Left
-            int newXpos = this->pos().x() + deltaWidth;
-            int newYpos = this->pos().y() + deltaHeight;
-            //this->setPos(newXpos, newYpos);
-            this->setPos( QPointF( Grid::applyGrid(QPoint(newXpos, newYpos), _grid )));
-            this->setRect(0, 0, _width, _height);
-        }
-        else   if ( corner->getCorner() == 6 )
-        { //Bottom
-            int newXpos = this->pos().x() + deltaWidth;
-            //this->setPos(newXpos, this->pos().y());
-            this->setPos( QPointF( Grid::applyGrid(QPoint(newXpos, this->pos().y()), _grid )));
-            this->setRect(0, 0, _width, _height);
-        }
+
+        _drawingWidth  =  _width;
+        _drawingHeight =  _height;
+
+        WriteToLog(QtDebugMsg, QString("Resizer -> TargetPos %1x%2 size %3x%4").arg(cXY.x()).arg(cXY.y()).arg(cWH.x()).arg(cWH.y()));
+
+        this->setPos( QPointF( cXY ) );
+        this->setRect(0, 0, _width, _height);
 
         setCornerPositions();
     }
