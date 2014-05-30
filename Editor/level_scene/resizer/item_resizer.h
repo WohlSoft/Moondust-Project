@@ -45,11 +45,6 @@ public:
     virtual bool sceneEventFilter (QGraphicsItem *watched, QEvent * event ) ;
 
     void setCornerPositions();
-    void adjustSize(int x, int y);
-
-
-    //QColor _outterborderColor; ///< the hover event handlers will toggle this between red and black
-    //QPen _outterborderPen; ///< the pen is used to paint the red/black border
 
     QPointF _location;
 
