@@ -241,7 +241,8 @@ public:
             LEVELHISTORY_MOVE,                     //moved
             LEVELHISTORY_CHANGEDSETTINGS,          //changed settings of items
             LEVELHISTORY_RESIZESECTION,
-            LEVELHISTORY_CHANGEDLAYER
+            LEVELHISTORY_CHANGEDLAYER,
+            LEVELHISTORY_RESIZEBLOCK
         };
         HistoryType type;
         //used most of Operations
@@ -286,6 +287,8 @@ public:
     void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                  long newLeft, long newTop, long newRight, long newBottom);
     void addChangedLayerHistory(LevelData changedItems, QString newLayerName);
+    void addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom,
+                               long newLeft, long newTop, long newRight, long newBottom);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -344,6 +347,9 @@ public:
     void historyRedoChangeLayerBGO(CallbackData cbData, LevelBGO data);
     void historyRedoChangeLayerNPC(CallbackData cbData, LevelNPC data);
     void historyRedoChangeLayerWater(CallbackData cbData, LevelWater data);
+    //Callbackfunctions: Change sizeable Block size
+    void historyUndoResizeBlock(CallbackData cbData, LevelBlock data);
+    void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,

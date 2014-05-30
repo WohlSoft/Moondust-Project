@@ -986,10 +986,10 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
                 long y = pResizer->pos().y();
                 long w = pResizer->_width;
                 long h = pResizer->_height;
-                //long oldX = ((ItemBlock *)pResizer->targetItem)->blockData.x;
-                //long oldY = ((ItemBlock *)pResizer->targetItem)->blockData.y;
-                //long oldW = ((ItemBlock *)pResizer->targetItem)->blockData.w;
-                //long oldH = ((ItemBlock *)pResizer->targetItem)->blockData.h;
+                long oldX = ((ItemBlock *)pResizer->targetItem)->blockData.x;
+                long oldY = ((ItemBlock *)pResizer->targetItem)->blockData.y;
+                long oldW = ((ItemBlock *)pResizer->targetItem)->blockData.w;
+                long oldH = ((ItemBlock *)pResizer->targetItem)->blockData.h;
                 ((ItemBlock *)pResizer->targetItem)->blockData.x = x;
                 ((ItemBlock *)pResizer->targetItem)->blockData.y = y;
                 ((ItemBlock *)pResizer->targetItem)->blockData.w = w;
@@ -998,7 +998,7 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
                 ((ItemBlock *)pResizer->targetItem)->setBlockSize( QRect(x,y,w,h) );
                 LvlData->modified = true;
 
-                //addResizeSectionHistory(LvlData->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
+                addResizeBlockHistory(((ItemBlock *)pResizer->targetItem)->blockData, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
 
                 //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 //drawSpace();
