@@ -455,9 +455,23 @@ void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
 void MainWindow::on_PROPS_BlockIncludes_clicked()
 {
     int npcID=0;
+
     if(blockPtr<1)
     {
         npcID = LvlPlacingItems::blockSet.npc_id;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items1 = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * targetItem, items1)
+        {
+            if((targetItem->data(0).toString()=="Block")&&((targetItem->data(2).toInt()==blockPtr)))
+            {
+                npcID = ((ItemBlock*)targetItem)->blockData.npc_id;
+                break;
+            }
+        }
     }
 
     //LevelData selData;
@@ -499,7 +513,9 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
             {
                 if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
                 {
-                    ((ItemBlock*)item)->setIncludedNPC(selected_npc);
+                    ((ItemBlock *)item)->blockData.npc_id = selected_npc;
+                    ((ItemBlock *)item)->arrayApply();
+                    ((ItemBlock *)item)->setIncludedNPC(selected_npc);
                     break;
                 }
             }
@@ -511,6 +527,7 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
 
 void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 {
+    //if(!ui->PROPS_BlockLayer->hasFocus()) return;
     if(blockPtr<1)
     {
         LvlPlacingItems::blockSet.layer = arg1;
@@ -534,6 +551,7 @@ void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1)
 {
+    //if(!ui->PROPS_BlkEventDestroy->hasFocus()) return;
 
     if(blockPtr<1)
     {
@@ -563,6 +581,8 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
 }
 void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
 {
+    //if(!ui->PROPS_BlkEventHited->hasFocus()) return;
+
     if(blockPtr<1)
     {
         if(ui->PROPS_BlkEventHited->currentIndex()>0)
@@ -591,6 +611,8 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
 }
 void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1)
 {
+    //if(!ui->PROPS_BlkEventLayerEmpty->hasFocus()) return;
+
     if(blockPtr<1)
     {
         if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
@@ -631,7 +653,9 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
 
 void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
 {
-    if(blockPtr<1)
+    //if(!ui->PROPS_BGOLayer->hasFocus()) return;
+
+    if(bgoPtr<1)
     {
         LvlPlacingItems::bgoSet.layer = arg1;
     }
@@ -641,7 +665,7 @@ void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="BGO")&&((item->data(2).toInt()==blockPtr)))
+            if((item->data(0).toString()=="BGO")&&((item->data(2).toInt()==bgoPtr)))
             {
                 ((ItemBGO*)item)->setLayer(arg1);
                 break;
