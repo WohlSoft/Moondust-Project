@@ -32,6 +32,7 @@ npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
     npcPreview=NULL;
     npc_id = 0;
     FileType = 2;
+    direction = -1;
     isUntitled = true;
     isModyfied  = false;
     ui->setupUi(this);
