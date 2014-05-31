@@ -39,13 +39,13 @@ class ItemNPC : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    ItemNPC(QGraphicsPixmapItem *parent=0);
+    ItemNPC(bool noScene=false, QGraphicsPixmapItem *parent=0);
     ~ItemNPC();
 
     void setMainPixmap(const QPixmap &pixmap);
     void setNpcData(LevelNPC inD);
     void setContextMenu(QMenu &menu);
-    void setScenePoint(LvlScene *theScene);
+    void setScenePoint(LvlScene *theScene=NULL);
 
     QRectF boundingRect() const;
 
@@ -95,8 +95,11 @@ private slots:
 
 private:
 
+    bool DisableScene;
+
     QGraphicsItemGroup * grp;
     QGraphicsItem * includedNPC;
+
 
     bool animated;
     int frameSpeed;
