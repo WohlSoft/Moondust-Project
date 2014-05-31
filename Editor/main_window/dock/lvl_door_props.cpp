@@ -45,7 +45,7 @@ void MainWindow::setDoorData(long index)
     int WinType = activeChildWindow();
     if (WinType==1)
     {
-        if(index<activeLvlEditWin()->LvlData.doors.size())
+        if( (activeLvlEditWin()->LvlData.doors.size() > 0) && (index < activeLvlEditWin()->LvlData.doors.size()) )
         {
             foreach(LevelDoors door, activeLvlEditWin()->LvlData.doors)
             {
