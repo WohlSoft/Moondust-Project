@@ -656,3 +656,10 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
     NpcData.nohammer=arg1;
 }
 ////////////////////////////////////////////////////////////////
+
+void npcedit::loadPreview()
+{
+    npcPreview = new ItemNPC();
+
+}
+
