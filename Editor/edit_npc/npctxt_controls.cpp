@@ -47,6 +47,7 @@ void npcedit::on_en_GFXOffsetX_clicked()
         ui->GFXOffSetX->setEnabled(false);
         NpcData.en_gfxoffsetx=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -63,6 +64,7 @@ void npcedit::on_en_GFXOffsetY_clicked()
         ui->GFXOffSetY->setEnabled(false);
         NpcData.en_gfxoffsety=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -79,6 +81,7 @@ void npcedit::on_En_GFXw_clicked()
         ui->GFXw->setEnabled(false);
         NpcData.en_gfxwidth=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -95,6 +98,7 @@ void npcedit::on_En_GFXh_clicked()
         ui->GFXh->setEnabled(false);
         NpcData.en_gfxheight=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -111,6 +115,7 @@ void npcedit::on_En_Frames_clicked()
         ui->Frames->setEnabled(false);
         NpcData.en_frames=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -127,6 +132,7 @@ void npcedit::on_En_Framespeed_clicked()
         ui->Framespeed->setEnabled(false);
         NpcData.en_framespeed=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -143,6 +149,7 @@ void npcedit::on_En_Framestyle_clicked()
         ui->FrameStyle->setEnabled(false);
         NpcData.en_framestyle=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -303,6 +310,7 @@ void npcedit::on_En_Width_clicked()
         ui->Width->setEnabled(false);
         NpcData.en_width=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -319,6 +327,7 @@ void npcedit::on_En_Height_clicked()
         ui->Height->setEnabled(false);
         NpcData.en_height=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -471,6 +480,7 @@ void npcedit::on_GFXOffSetX_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxoffsetx = arg1;
+    updatePreview();
 }
 
 
@@ -479,6 +489,7 @@ void npcedit::on_GFXOffSetY_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxoffsety = arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -486,6 +497,7 @@ void npcedit::on_GFXw_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxwidth = arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -493,6 +505,7 @@ void npcedit::on_GFXh_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxheight = arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -500,6 +513,7 @@ void npcedit::on_Frames_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.frames = arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -507,6 +521,7 @@ void npcedit::on_Framespeed_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.framespeed=arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -514,6 +529,7 @@ void npcedit::on_FrameStyle_currentIndexChanged(int index)
 {
     documentWasModified();
     NpcData.framestyle=index;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -740,7 +756,7 @@ void npcedit::loadPreview()
         npcImage = targetNPC.image;
 
 
-    targetNPC = FileFormats::mergeNPCConfigs(defaultNPC, NpcData);
+    targetNPC = FileFormats::mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
 
 
     npcPreview->localProps = targetNPC;
@@ -788,7 +804,7 @@ void npcedit::updatePreview()
     if(!physics || !npcPreview)
         return;
 
-
+    npcPreview->localProps = FileFormats::mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
 
     //update PhysicsBox
     physics->setRect(0,0, NpcData.width, NpcData.height);
@@ -802,7 +818,7 @@ void npcedit::updatePreview()
                           npcPreview->localProps.custom_ani_fl,
                           npcPreview->localProps.custom_ani_el,
                           npcPreview->localProps.custom_ani_fr,
-                          npcPreview->localProps.custom_ani_er);
+                          npcPreview->localProps.custom_ani_er, true);
     npcPreview->AnimationStart();
 
 }
