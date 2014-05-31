@@ -16,6 +16,7 @@ TRANSLATIONS += languages/editor_en.ts \
     languages/editor_uk.ts \
     languages/editor_de.ts \
     languages/editor_es.ts \
+    languages/editor_nl.ts \
     languages/editor_fr.ts
 
 SOURCES += main.cpp\
