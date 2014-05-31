@@ -503,7 +503,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="260"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Korrektion</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="292"/>
