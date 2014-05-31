@@ -19,6 +19,7 @@
 #include "lvlscene.h"
 #include "../edit_level/leveledit.h"
 
+#include "../file_formats/file_formats.h"
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
@@ -26,25 +27,19 @@
 
 #include "lvl_item_placing.h"
 
+/*
+    static LevelNPC dummyLvlNpc();
+    static LevelBlock dummyLvlBlock();
+    static LevelBGO dummyLvlBgo();
+    static LevelWater dummyLvlWater();
+    static LevelEvents dummyLvlEvent();
+*/
 
 //Default dataSets
-LevelNPC    LvlPlacingItems::npcSet={
-    0, 0, 0,  0, 0,false, 0, 0, 0, "", false,false,
-    false,"Default","", "","","", "",0,0
-};
-LevelBlock  LvlPlacingItems::blockSet=
-{
-    0,0,0,0,0,0,false,false,
-    "Default","","","",0,0
-};
-LevelBGO    LvlPlacingItems::bgoSet=
-{
-    0,0,0,"Default",0,0,0
-};
-LevelWater  LvlPlacingItems::waterSet=
-{
-    0,0,0,0,0,false,"Default",0,0
-};
+LevelNPC    LvlPlacingItems::npcSet=FileFormats::dummyLvlNpc();
+LevelBlock  LvlPlacingItems::blockSet=FileFormats::dummyLvlBlock();
+LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
+LevelWater  LvlPlacingItems::waterSet=FileFormats::dummyLvlWater();
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
 int LvlPlacingItems::waterType=0; //0 - Water, 1 - QuickSand
