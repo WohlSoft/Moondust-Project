@@ -28,6 +28,7 @@
 #include "npc_filedata.h"
 #include "wld_filedata.h"
 
+#include "../data_configs/obj_npc.h"
 
 
 //SMBX64 standard data
@@ -73,6 +74,7 @@ public:
     static QString WriteNPCTxtFile(NPCConfigFile FileData);                //write
 
     static NPCConfigFile CreateEmpytNpcTXTArray();
+    static obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
     // SMBX64 WLD File
     static WorldData ReadWorldFile(QFile &inf); //read
