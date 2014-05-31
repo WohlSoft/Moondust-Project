@@ -661,7 +661,9 @@ void npcedit::loadPreview()
 {
     npcPreview = new ItemNPC();
     npcPreview->setScenePoint();
-    LevelNPC npcData;
+    LevelNPC npcData = FileFormats::dummyLvlNpc();
+    npcData.id = npc_id;
+    npcPreview->setNpcData(npcData);
     obj_npc targetNPC;
     //npcData.id = npc_id;
     bool found = false;
@@ -679,6 +681,26 @@ void npcedit::loadPreview()
     npcPreview->localProps = targetNPC;
     npcPreview->setPixmap(targetNPC.image);
 
+    QGraphicsScene * sc = new QGraphicsScene();
+    ui->PreviewBox->setScene(sc);
+    ui->PreviewBox->scene()->addItem(npcPreview);
+
+    npcPreview->setPos(QPointF(10.0F, 10.0F));
+    npcPreview->setAnimation(npcPreview->localProps.frames,
+                          npcPreview->localProps.framespeed,
+                          npcPreview->localProps.framestyle,
+                          0,
+                          npcPreview->localProps.custom_animate,
+                          npcPreview->localProps.custom_ani_fl,
+                          npcPreview->localProps.custom_ani_el,
+                          npcPreview->localProps.custom_ani_fr,
+                          npcPreview->localProps.custom_ani_er);
+
+    npcPreview->setFlag(QGraphicsItem::ItemIsSelectable, false);
+    npcPreview->setFlag(QGraphicsItem::ItemIsMovable, false);
+
+    if(npcPreview->localProps.frames>1)
+        npcPreview->setData(4, "animated");
 
 
 
