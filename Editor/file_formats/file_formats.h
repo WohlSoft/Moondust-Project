@@ -60,8 +60,13 @@ public:
     static LevelData ReadLevelFile(QFile &inf);             //read
     static QString WriteSMBX64LvlFile(LevelData FileData);  //write
 
-    // SMBX64 Lvl Data
+    // Lvl Data
     static LevelNPC dummyLvlNpc();
+    static LevelBlock dummyLvlBlock();
+    static LevelBGO dummyLvlBgo();
+    static LevelWater dummyLvlWater();
+    static LevelEvents dummyLvlEvent();
+    static LevelSection dummyLvlSection();
 
     // SMBX64 NPC.TXT File
     static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); //read

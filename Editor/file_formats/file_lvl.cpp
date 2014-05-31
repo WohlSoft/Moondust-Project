@@ -50,28 +50,118 @@ LevelNPC    FileFormats::dummyLvlNpc()
     dummyNPC.event_talk="";
     dummyNPC.event_nomore="";
     dummyNPC.attach_layer="";
+
     dummyNPC.array_id=0;
     dummyNPC.index=0;
     return dummyNPC;
 }
-/*
+
+
 LevelBlock  FileFormats::dummyLvlBlock()
 {
-    0,0,0,0,0,0,false,false,
-    "Default","","","",0,0
+    LevelBlock dummyBlock;
+    dummyBlock.x = 0;
+    dummyBlock.y = 0;
+    dummyBlock.w = 0;
+    dummyBlock.h = 0;
+    dummyBlock.id = 0;
+    dummyBlock.npc_id = 0;
+    dummyBlock.invisible = false;
+    dummyBlock.slippery = false;
+    dummyBlock.layer = "Default";
+    dummyBlock.event_destroy = "";
+    dummyBlock.event_hit = "";
+    dummyBlock.event_no_more = "";
+
+    dummyBlock.array_id = 0;
+    dummyBlock.index = 0;
+    return dummyBlock;
 }
-LevelBGO    FileFormats::dummyLvlBgo()
+
+LevelBGO FileFormats::dummyLvlBgo()
 {
-    0,0,0,"Default",0,0,0
+    LevelBGO dummyBGO;
+    dummyBGO.x = 0;
+    dummyBGO.y = 0;
+    dummyBGO.id = 0;
+    dummyBGO.layer = "Default";
+    dummyBGO.smbx64_sp = 0;
+
+    dummyBGO.array_id  = 0;
+    dummyBGO.index = 0;
+    return dummyBGO;
 }
-LevelWater  FileFormats::dummyLvlWater()
+
+
+LevelWater FileFormats::dummyLvlWater()
 {
-    0,0,0,0,0,false,"Default",0,0
+    LevelWater dummyWater;
+    dummyWater.x  = 0;
+    dummyWater.y = 0;
+    dummyWater.w = 0;
+    dummyWater.h = 0;
+    dummyWater.unknown = 0;
+    dummyWater.quicksand = false;
+    dummyWater.layer = "Default";
+
+    dummyWater.array_id = 0;
+    dummyWater.index = 0;
+    return dummyWater;
 }
-*/
+
+LevelEvents FileFormats::dummyLvlEvent()
+{
+    LevelEvents dummyEvent;
+
+    dummyEvent.name="";
+    dummyEvent.msg="";
+    dummyEvent.sound_id=0;
+    dummyEvent.end_game=0;
+    dummyEvent.trigger="";
+    dummyEvent.trigger_timer=0;
+    dummyEvent.nosmoke=false;
+    dummyEvent.altjump=false;
+    dummyEvent.altrun=false;
+    dummyEvent.down=false;
+    dummyEvent.drop=false;
+    dummyEvent.jump=false;
+    dummyEvent.left=false;
+    dummyEvent.right=false;
+    dummyEvent.run=false;
+    dummyEvent.start=false;
+    dummyEvent.up=false;
+    dummyEvent.autostart=false;
+    dummyEvent.movelayer="";
+    dummyEvent.layer_speed_x=0;
+    dummyEvent.layer_speed_y=0;
+    dummyEvent.move_camera_x=0;
+    dummyEvent.move_camera_y=0;
+    dummyEvent.scroll_section=0;
+
+    dummyEvent.array_id=0;
+    return dummyEvent;
+}
 
 
+LevelSection FileFormats::dummyLvlSection()
+{
+    LevelSection dummySection;
+    dummySection.id = 0;
+    dummySection.size_top=0;
+    dummySection.size_bottom=0;
+    dummySection.size_left=0;
+    dummySection.size_right=0;
+    dummySection.music_id=0;
+    dummySection.bgcolor=0;
+    dummySection.IsWarp=false;
+    dummySection.OffScreenEn=false;
+    dummySection.background=0;
+    dummySection.noback=false;
+    dummySection.underwater=false;
+    dummySection.music_file="";
 
+    return dummySection;
+}
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
