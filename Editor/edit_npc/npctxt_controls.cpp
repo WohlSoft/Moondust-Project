@@ -694,14 +694,14 @@ void npcedit::on_DirectRight_clicked()
 }
 ////////////////////////////////////////////////////////////////
 
-
-
 void npcedit::loadPreview()
 {
     if(npc_id==0) return;
 
     if(PreviewScene==NULL) PreviewScene = new QGraphicsScene();
     if(physics==NULL) physics = new QGraphicsRectItem();
+
+    PreviewScene->setSceneRect(0,0, ui->PreviewBox->width()-20, ui->PreviewBox->height()-20);
 
     if(npcPreview==NULL)
     {
@@ -710,6 +710,8 @@ void npcedit::loadPreview()
     }
     LevelNPC npcData = FileFormats::dummyLvlNpc();
     npcData.id = npc_id;
+    npcData.x = 10;
+    npcData.y = 10;
     npcPreview->setNpcData(npcData);
     obj_npc targetNPC;
 
@@ -737,34 +739,14 @@ void npcedit::loadPreview()
 
     defaultNPC = targetNPC;
 
-    QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
-
-    if(QFile::exists(imagePath + targetNPC.image_n))
-    {
-        if(QFile::exists(imagePath + targetNPC.mask_n))
-            npcMask = QBitmap(imagePath + targetNPC.mask_n );
-        else
-            npcMask = targetNPC.mask;
-
-        npcImage = QPixmap( imagePath + targetNPC.image_n );
-
-        if((npcImage.height()!=npcMask.height())||(npcImage.width()!=npcMask.width()))
-            npcMask = npcMask.copy(0,0,npcImage.width(),npcImage.height());
-        npcImage.setMask(npcMask);
-    }
-    else
-        npcImage = targetNPC.image;
-
-
     targetNPC = FileFormats::mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
-
-
     npcPreview->localProps = targetNPC;
+
+    loadImageFile();
     npcPreview->setMainPixmap(npcImage);
 
     PreviewScene->addItem(npcPreview);
 
-    npcPreview->setPos(QPointF(0, 0));
     npcPreview->setAnimation(npcPreview->localProps.frames,
                           npcPreview->localProps.framespeed,
                           npcPreview->localProps.framestyle,
@@ -791,10 +773,19 @@ void npcedit::loadPreview()
 
     PreviewScene->addItem(physics);
 
-    physics->setPos(0,0);
     physics->setZValue(777);
     ui->PreviewBox->setScene(PreviewScene);
     ui->PreviewBox->setBackgroundBrush(Qt::white);
+
+    npcPreview->setPos(
+                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                );
+    physics->setPos(
+                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                );
+
 
     //npcPreview
 }
@@ -807,9 +798,9 @@ void npcedit::updatePreview()
     npcPreview->localProps = FileFormats::mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
 
     //update PhysicsBox
-    physics->setRect(0,0, NpcData.width, NpcData.height);
     //update Dir
     npcPreview->AnimationStop();
+    npcPreview->setMainPixmap(npcImage);
     npcPreview->setAnimation(npcPreview->localProps.frames,
                           npcPreview->localProps.framespeed,
                           npcPreview->localProps.framestyle,
@@ -821,5 +812,52 @@ void npcedit::updatePreview()
                           npcPreview->localProps.custom_ani_er, true);
     npcPreview->AnimationStart();
 
+    physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
+
+    npcPreview->setPos(
+                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                );
+    physics->setPos(
+                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                );
+
 }
 
+
+void npcedit::loadImageFile()
+{
+    QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
+
+    if(QFile::exists(imagePath + defaultNPC.image_n))
+    {
+        if(QFile::exists(imagePath + defaultNPC.mask_n))
+            npcMask = QBitmap(imagePath + defaultNPC.mask_n );
+        else
+            npcMask = defaultNPC.mask;
+
+        npcImage = QPixmap( imagePath + defaultNPC.image_n );
+
+        if((npcImage.height()!=npcMask.height())||(npcImage.width()!=npcMask.width()))
+            npcMask = npcMask.copy(0,0,npcImage.width(),npcImage.height());
+        npcImage.setMask(npcMask);
+
+        WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+    }
+    else
+    {
+        npcImage = defaultNPC.image;
+        WriteToLog(QtDebugMsg, QString("System image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+    }
+
+    WriteToLog(QtDebugMsg, QString("path %1").arg(imagePath + defaultNPC.image_n));
+
+}
+
+void npcedit::refreshImageFile()
+{
+    loadImageFile();
+    npcPreview->AnimationStop();
+    npcPreview->setMainPixmap(npcImage);
+}

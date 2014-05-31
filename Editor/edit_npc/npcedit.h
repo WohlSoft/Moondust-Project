@@ -131,6 +131,10 @@ private:
 
     void loadPreview();
     void updatePreview();
+
+    void loadImageFile();
+    void refreshImageFile();
+
     ItemNPC* npcPreview;
     QGraphicsRectItem * physics;
 
