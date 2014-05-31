@@ -250,6 +250,33 @@ private slots:
 
     void on_WarpList_currentIndexChanged(int index); //Door list
 
+    void on_WarpAdd_clicked();
+    void on_WarpRemove_clicked();
+    void on_WarpSetEntrance_clicked();
+    void on_WarpSetExit_clicked();
+    void on_WarpNoYoshi_clicked(bool checked);
+    void on_WarpAllowNPC_clicked(bool checked);
+    void on_WarpLock_clicked(bool checked);
+    void on_WarpType_currentIndexChanged(int index);
+    void on_WarpNeedAStars_valueChanged(int arg1);
+    void on_Entr_Down_clicked();
+    void on_Entr_Right_clicked();
+    void on_Entr_Up_clicked();
+    void on_Entr_Left_clicked();
+    void on_Exit_Up_clicked();
+    void on_Exit_Left_clicked();
+    void on_Exit_Right_clicked();
+    void on_Exit_Down_clicked();
+    void on_WarpToMapX_textEdited(const QString &arg1);
+    void on_WarpToMapY_textEdited(const QString &arg1);
+    void on_WarpGetXYFromWorldMap_clicked();
+    void on_WarpLevelExit_clicked();
+    void on_WarpLevelEntrance_clicked();
+    void on_WarpLevelFile_textChanged(const QString &arg1);
+    void on_WarpToExitNu_valueChanged(int arg1);
+
+    void on_goToWarpDoor_clicked();
+
 
     void on_LevelLayers_visibilityChanged(bool visible);
     void on_actionLayersBox_triggered(bool checked);
@@ -292,8 +319,6 @@ private slots:
     void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1);
 
     void on_actionGo_to_Section_triggered();
-
-    void on_goToWarpDoor_clicked();
 
     void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
 

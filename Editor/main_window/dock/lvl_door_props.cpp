@@ -34,6 +34,11 @@ void MainWindow::setDoorsToolbox()
            .arg(door.array_id).arg(door.ix).arg(door.iy).arg(door.ox).arg(door.oy),
                                   door.array_id);
         }
+        if(ui->WarpList->count()<=0)
+            setDoorData(-1);
+        else
+            setDoorData( ui->WarpList->currentIndex() );
+
     }
 
 }
@@ -51,6 +56,8 @@ void MainWindow::setDoorData(long index)
             {
                 if(door.array_id == (unsigned long)ui->WarpList->currentData().toInt() )
                 {
+                    ui->WarpRemove->setEnabled(true);
+
                     ui->WarpAllowNPC->setEnabled(true);
                     ui->WarpAllowNPC->setChecked(door.allownpc);
 
@@ -116,6 +123,7 @@ void MainWindow::setDoorData(long index)
 
                     ui->WarpToMapY->setEnabled(true);
                     ui->WarpToMapY->setText((door.world_y!=-1)?QString::number(door.world_y):"");
+                    ui->WarpGetXYFromWorldMap->setEnabled(true);
 
 
                     ui->WarpLevelExit->setEnabled(true);
@@ -128,8 +136,10 @@ void MainWindow::setDoorData(long index)
                     ui->WarpSetExit->setEnabled( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) );
 
                     ui->WarpLevelFile->setEnabled(true);
-
                     ui->WarpLevelFile->setText( door.lname );
+                    ui->WarpBrowseLevels->setEnabled(true);
+                    ui->WarpToExitNu->setValue(door.warpto);
+                    ui->WarpToExitNu->setEnabled(true);
 
                     break;
                 }
@@ -161,6 +171,7 @@ void MainWindow::setDoorData(long index)
             ui->WarpToMapX->setText("");
             ui->WarpToMapY->setEnabled(false);
             ui->WarpToMapY->setText("");
+            ui->WarpGetXYFromWorldMap->setEnabled(false);
 
             ui->WarpLevelExit->setEnabled(false);
             ui->WarpLevelExit->setChecked(false);
@@ -168,10 +179,18 @@ void MainWindow::setDoorData(long index)
             ui->WarpLevelEntrance->setChecked(false);
             ui->WarpLevelFile->setEnabled(false);
             ui->WarpLevelFile->setText("");
+            ui->WarpBrowseLevels->setEnabled(false);
+            ui->WarpToExitNu->setEnabled(false);
+
         }
     }
 }
 
+
+
+////////////////////////////////////////////////////////////////
+///////////////////// Door Controll //////////////////////////
+////////////////////////////////////////////////////////////////
 void MainWindow::on_WarpList_currentIndexChanged(int index)
 {
     setDoorData(index);
@@ -191,5 +210,131 @@ void MainWindow::on_goToWarpDoor_clicked()
             }
         }
     }
+
+}
+
+
+void MainWindow::on_WarpAdd_clicked()
+{
+
+}
+void MainWindow::on_WarpRemove_clicked()
+{
+
+}
+
+
+
+void MainWindow::on_WarpSetEntrance_clicked()
+{
+
+}
+
+void MainWindow::on_WarpSetExit_clicked()
+{
+
+}
+
+
+//////////// Flags///////////
+void MainWindow::on_WarpNoYoshi_clicked(bool checked)
+{
+
+}
+void MainWindow::on_WarpAllowNPC_clicked(bool checked)
+{
+
+}
+
+void MainWindow::on_WarpLock_clicked(bool checked)
+{
+
+}
+
+/////Door props
+
+void MainWindow::on_WarpType_currentIndexChanged(int index)
+{
+
+}
+
+void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
+{
+
+}
+
+
+/////////Entrance Direction/////////////////
+void MainWindow::on_Entr_Down_clicked()
+{
+
+}
+void MainWindow::on_Entr_Right_clicked()
+{
+
+}
+
+void MainWindow::on_Entr_Up_clicked()
+{
+
+}
+void MainWindow::on_Entr_Left_clicked()
+{
+
+}
+
+/////////Exit Direction/////////////////
+void MainWindow::on_Exit_Up_clicked()
+{
+
+}
+void MainWindow::on_Exit_Left_clicked()
+{
+
+}
+void MainWindow::on_Exit_Down_clicked()
+{
+
+}
+void MainWindow::on_Exit_Right_clicked()
+{
+
+}
+
+
+
+void MainWindow::on_WarpToMapX_textEdited(const QString &arg1)
+{
+
+}
+
+void MainWindow::on_WarpToMapY_textEdited(const QString &arg1)
+{
+
+}
+
+void MainWindow::on_WarpGetXYFromWorldMap_clicked()
+{
+    QMessageBox::information(this, "Comming soon", "Selecting point from world map comming with WorldMap Editor in next versions of this programm", QMessageBox::Ok);
+}
+
+
+/////Door mode (Level Entrance / Level Exit)
+void MainWindow::on_WarpLevelExit_clicked()
+{
+
+}
+
+void MainWindow::on_WarpLevelEntrance_clicked()
+{
+
+}
+
+void MainWindow::on_WarpLevelFile_textChanged(const QString &arg1)
+{
+
+}
+void MainWindow::on_WarpToExitNu_valueChanged(int arg1)
+{
 
 }
