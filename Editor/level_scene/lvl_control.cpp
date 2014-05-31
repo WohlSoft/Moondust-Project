@@ -154,7 +154,7 @@ void LvlScene::openProps()
     dummyNPC.array_id=0;
 
     QList<QGraphicsItem * > items = this->selectedItems();
-    if((!items.isEmpty())&&(items.size()==1))
+    if(!items.isEmpty())
     {
         if(items.first()->data(0).toString()=="Block")
         {
