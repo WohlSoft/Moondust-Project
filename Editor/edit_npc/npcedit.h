@@ -127,6 +127,7 @@ private:
 
     void loadPreview();
     ItemNPC* npcPreview;
+    QGraphicsRectItem * physics;
 
     bool isModyfied;
 

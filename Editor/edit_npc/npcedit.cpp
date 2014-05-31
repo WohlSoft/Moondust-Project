@@ -28,6 +28,7 @@ npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
 {
     pConfigs = configs;
     PreviewScene=NULL;
+    physics=NULL;
     npcPreview=NULL;
     npc_id = 0;
     FileType = 2;
