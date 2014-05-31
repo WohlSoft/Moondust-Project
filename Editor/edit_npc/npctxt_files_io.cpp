@@ -69,6 +69,7 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     if(tmp.size()==2)
         if(!SMBX64::Int(tmp[1]))
         {
+            npc_id = tmp[1].toInt();
             setDefaultData( tmp[1].toInt() );
             ui->CurrentNPCID->setText( tmp[1] );
         }
@@ -77,15 +78,13 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     else
         setDefaultData(0);
 
-
-    loadPreview();
-
     StartNPCData = NpcData; //Save current history for made reset
     setDataBoxes();
 
-
     setCurrentFile(fileName);
     documentNotModified();
+
+    loadPreview();
 
     return true;
 }

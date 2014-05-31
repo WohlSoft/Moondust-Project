@@ -659,8 +659,15 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
 
 void npcedit::loadPreview()
 {
-    npcPreview = new ItemNPC();
-    npcPreview->setScenePoint();
+    if(npc_id==0) return;
+
+    if(PreviewScene==NULL) PreviewScene = new QGraphicsScene();
+
+    if(npcPreview==NULL)
+    {
+        npcPreview = new ItemNPC(true);
+        npcPreview->setScenePoint();
+    }
     LevelNPC npcData = FileFormats::dummyLvlNpc();
     npcData.id = npc_id;
     npcPreview->setNpcData(npcData);
@@ -673,19 +680,23 @@ void npcedit::loadPreview()
             targetNPC = npc;
             found = true;
         }
-
     }
     if(!found)
+    {
+        WriteToLog(QtWarningMsg, QString("NPC-Edit Preview -> Array Entry not found"));
         return;
+    }
+    else
+    {
+        WriteToLog(QtDebugMsg, QString("NPC-Edit Preview -> Array Entry already loaded"));
+    }
 
     npcPreview->localProps = targetNPC;
-    npcPreview->setPixmap(targetNPC.image);
+    npcPreview->setMainPixmap(targetNPC.image);
 
-    QGraphicsScene * sc = new QGraphicsScene();
-    ui->PreviewBox->setScene(sc);
-    ui->PreviewBox->scene()->addItem(npcPreview);
+    PreviewScene->addItem(npcPreview);
 
-    npcPreview->setPos(QPointF(10.0F, 10.0F));
+    npcPreview->setPos(QPointF(0, 0));
     npcPreview->setAnimation(npcPreview->localProps.frames,
                           npcPreview->localProps.framespeed,
                           npcPreview->localProps.framestyle,
@@ -700,9 +711,12 @@ void npcedit::loadPreview()
     npcPreview->setFlag(QGraphicsItem::ItemIsMovable, false);
 
     if(npcPreview->localProps.frames>1)
+    {
         npcPreview->setData(4, "animated");
+        npcPreview->AnimationStart();
+    }
 
-
+    ui->PreviewBox->setScene(PreviewScene);
 
     //npcPreview
 }

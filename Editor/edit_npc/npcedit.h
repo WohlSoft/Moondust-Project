@@ -122,6 +122,9 @@ private:
     NPCConfigFile StartNPCData;
     NPCConfigFile DefaultNPCData;
     void setDefaultData(unsigned long npc_id);
+
+    QGraphicsScene * PreviewScene;
+
     void loadPreview();
     ItemNPC* npcPreview;
 
