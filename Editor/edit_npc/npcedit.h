@@ -25,6 +25,7 @@
 
 #include "../data_configs/data_configs.h"
 #include "../file_formats/npc_filedata.h"
+#include "../level_scene/item_npc.h"
 
 namespace Ui {
 class npcedit;
@@ -121,6 +122,8 @@ private:
     NPCConfigFile StartNPCData;
     NPCConfigFile DefaultNPCData;
     void setDefaultData(unsigned long npc_id);
+    void loadPreview();
+    ItemNPC* npcPreview;
 
     bool isModyfied;
 
