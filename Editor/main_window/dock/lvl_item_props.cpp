@@ -359,6 +359,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
 
 
+////////////////////////////////////////////////////////////////////////////////////////////
 
 // ///////////BLOCKS///////////////////////////
 
@@ -506,6 +507,140 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
         else
             LvlPlacingItems::blockSet.event_no_more = "";
     }
+
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// ///////////BGO///////////////////////////
+
+void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
+{
+
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// ///////////NPC///////////////////////////
+
+
+void MainWindow::on_PROPS_NPCDirLeft_clicked()
+{
+
+}
+
+
+void MainWindow::on_PROPS_NPCDirRand_clicked()
+{
+
+}
+
+void MainWindow::on_PROPS_NPCDirRight_clicked()
+{
+
+}
+
+
+
+
+void MainWindow::on_PROPS_NpcFri_clicked(bool checked)
+{
+
+}
+
+void MainWindow::on_PROPS_NPCNoMove_clicked(bool checked)
+{
+
+}
+void MainWindow::on_PROPS_NpcBoss_clicked(bool checked)
+{
+
+}
+
+void MainWindow::on_PROPS_NpcTMsg_clicked()
+{
+
+}
+
+void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
+{
+
+}
+
+void MainWindow::on_PROPS_NPCContaiter_clicked()
+{
+
+}
+
+void MainWindow::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
+{
+
+}
+
+void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
+{
+
+}
+void MainWindow::on_PROPS_NPCGenType_currentIndexChanged(int index)
+{
+
+}
+void MainWindow::on_PROPS_NPCGenTime_valueChanged(double arg1)
+{
+
+}
+
+void MainWindow::on_PROPS_NPCGenUp_clicked()
+{
+
+}
+
+void MainWindow::on_PROPS_NPCGenLeft_clicked()
+{
+
+}
+
+void MainWindow::on_PROPS_NPCGenDown_clicked()
+{
+
+}
+void MainWindow::on_PROPS_NPCGenRight_clicked()
+{
+
+}
+
+
+void MainWindow::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1)
+{
+
+}
+
+void MainWindow::on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1)
+{
+
+}
+void MainWindow::on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1)
+{
+
+}
+void MainWindow::on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1)
+{
+
+}
+void MainWindow::on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1)
+{
+
+}
+void MainWindow::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1)
+{
 
 }
 
