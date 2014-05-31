@@ -237,4 +237,3 @@ void MainWindow::setMusicButton(bool checked)
 {
     ui->actionPlayMusic->setChecked(checked);
 }
-
