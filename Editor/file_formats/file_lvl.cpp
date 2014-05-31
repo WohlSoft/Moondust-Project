@@ -85,7 +85,7 @@ LevelBGO FileFormats::dummyLvlBgo()
     dummyBGO.y = 0;
     dummyBGO.id = 0;
     dummyBGO.layer = "Default";
-    dummyBGO.smbx64_sp = 0;
+    dummyBGO.smbx64_sp = -1;
 
     dummyBGO.array_id  = 0;
     dummyBGO.index = 0;
