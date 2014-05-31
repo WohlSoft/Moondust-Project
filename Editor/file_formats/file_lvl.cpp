@@ -20,6 +20,59 @@
 #include "../edit_level/leveledit.h"
 #include "file_formats.h"
 
+
+
+
+//*********************************************************
+//*******************Dummy arrays**************************
+//*********************************************************
+
+
+//Default dataSets
+LevelNPC    FileFormats::dummyLvlNpc()
+{
+    LevelNPC dummyNPC;
+    dummyNPC.x = 0;
+    dummyNPC.y = 0 ;
+    dummyNPC.direct = 0;
+    dummyNPC.id=0;
+    dummyNPC.special_data=0;
+    dummyNPC.generator=false;
+    dummyNPC.generator_type=0;
+    dummyNPC.generator_period=0;
+    dummyNPC.msg="";
+    dummyNPC.friendly=false;
+    dummyNPC.nomove=false;
+    dummyNPC.legacyboss=false;
+    dummyNPC.layer = "Default";
+    dummyNPC.event_activate="";
+    dummyNPC.event_die="";
+    dummyNPC.event_talk="";
+    dummyNPC.event_nomore="";
+    dummyNPC.attach_layer="";
+    dummyNPC.array_id=0;
+    dummyNPC.index=0;
+    return dummyNPC;
+}
+/*
+LevelBlock  FileFormats::dummyLvlBlock()
+{
+    0,0,0,0,0,0,false,false,
+    "Default","","","",0,0
+}
+LevelBGO    FileFormats::dummyLvlBgo()
+{
+    0,0,0,"Default",0,0,0
+}
+LevelWater  FileFormats::dummyLvlWater()
+{
+    0,0,0,0,0,false,"Default",0,0
+}
+*/
+
+
+
+
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
