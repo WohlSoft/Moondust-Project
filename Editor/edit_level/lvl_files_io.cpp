@@ -31,6 +31,7 @@
 #include "../common_features/logger.h"
 
 #include "../common_features/mainwinconnect.h"
+#include "../main_window/music_player.h"
 
 #include <QDebug>
 
@@ -338,6 +339,9 @@ void leveledit::closeEvent(QCloseEvent *event)
         MainWinConnect::pMainWin->on_actionSelect_triggered();
 
     if(maybeSave()) {
+        LvlMusPlay::musicForceReset = true;
+        MainWinConnect::pMainWin->setMusicButton(false);
+        MainWinConnect::pMainWin->setMusic(false);
         scene->uBGOs.clear();
         scene->uBGs.clear();
         scene->uBlocks.clear();
