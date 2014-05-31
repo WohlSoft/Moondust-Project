@@ -584,6 +584,7 @@ void npcedit::on_Width_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.width=arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -591,6 +592,7 @@ void npcedit::on_Height_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.height=arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -664,6 +666,7 @@ void npcedit::on_DirectLeft_clicked()
     ui->DirectLeft->setChecked(true);
     ui->DirectRight->setChecked(false);
     direction = -1;
+    updatePreview();
 }
 
 void npcedit::on_DirectRight_clicked()
@@ -671,6 +674,7 @@ void npcedit::on_DirectRight_clicked()
     ui->DirectRight->setChecked(true);
     ui->DirectLeft->setChecked(false);
     direction = 1;
+    updatePreview();
 }
 ////////////////////////////////////////////////////////////////
 
@@ -777,5 +781,29 @@ void npcedit::loadPreview()
     ui->PreviewBox->setBackgroundBrush(Qt::white);
 
     //npcPreview
+}
+
+void npcedit::updatePreview()
+{
+    if(!physics || !npcPreview)
+        return;
+
+
+
+    //update PhysicsBox
+    physics->setRect(0,0, NpcData.width, NpcData.height);
+    //update Dir
+    npcPreview->AnimationStop();
+    npcPreview->setAnimation(npcPreview->localProps.frames,
+                          npcPreview->localProps.framespeed,
+                          npcPreview->localProps.framestyle,
+                          direction,
+                          npcPreview->localProps.custom_animate,
+                          npcPreview->localProps.custom_ani_fl,
+                          npcPreview->localProps.custom_ani_el,
+                          npcPreview->localProps.custom_ani_fr,
+                          npcPreview->localProps.custom_ani_er);
+    npcPreview->AnimationStart();
+
 }
 
