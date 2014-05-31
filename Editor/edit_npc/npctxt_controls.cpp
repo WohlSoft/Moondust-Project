@@ -660,6 +660,28 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
 void npcedit::loadPreview()
 {
     npcPreview = new ItemNPC();
+    npcPreview->setScenePoint();
+    LevelNPC npcData;
+    obj_npc targetNPC;
+    //npcData.id = npc_id;
+    bool found = false;
+    foreach(obj_npc npc, pConfigs->main_npc)
+    {
+        if(npc.id == npc_id){
+            targetNPC = npc;
+            found = true;
+        }
 
+    }
+    if(!found)
+        return;
+
+    npcPreview->localProps = targetNPC;
+    npcPreview->setPixmap(targetNPC.image);
+
+
+
+
+    //npcPreview
 }
 
