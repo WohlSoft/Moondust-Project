@@ -241,6 +241,18 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
+
+       LevelBlock dummyBlock;
+       dummyBlock.array_id=0;
+       LevelBGO dummyBgo;
+       dummyBgo.array_id=0;
+       LevelNPC dummyNPC;
+       dummyNPC.array_id=0;
+
+       LvlItemProps(1,dummyBlock,
+                                 LvlPlacingItems::bgoSet,
+                                 dummyNPC, true);
+
        activeLvlEditWin()->setFocus();
     }
 
@@ -260,6 +272,18 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
+
+       LevelBlock dummyBlock;
+       dummyBlock.array_id=0;
+       LevelBGO dummyBgo;
+       dummyBgo.array_id=0;
+       LevelNPC dummyNPC;
+       dummyNPC.array_id=0;
+
+       LvlItemProps(2,dummyBlock,
+                                 dummyBgo,
+                                 LvlPlacingItems::npcSet, true);
+
        activeLvlEditWin()->setFocus();
     }
 
