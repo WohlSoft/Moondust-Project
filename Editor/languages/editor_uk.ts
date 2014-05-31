@@ -285,77 +285,77 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="92"/>
+        <location filename="../level_scene/item_npc.cpp" line="100"/>
         <source>Layer: </source>
         <translation type="unfinished">Шар: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="97"/>
+        <location filename="../level_scene/item_npc.cpp" line="105"/>
         <source>Add to new layer...</source>
         <translation type="unfinished">Додати на новий шар...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="116"/>
+        <location filename="../level_scene/item_npc.cpp" line="124"/>
         <source>Set %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="118"/>
+        <location filename="../level_scene/item_npc.cpp" line="126"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="120"/>
+        <location filename="../level_scene/item_npc.cpp" line="128"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="124"/>
+        <location filename="../level_scene/item_npc.cpp" line="132"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="129"/>
+        <location filename="../level_scene/item_npc.cpp" line="137"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="135"/>
+        <location filename="../level_scene/item_npc.cpp" line="143"/>
         <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="139"/>
+        <location filename="../level_scene/item_npc.cpp" line="147"/>
         <source>Not movable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="144"/>
+        <location filename="../level_scene/item_npc.cpp" line="152"/>
         <source>Set message...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="148"/>
+        <location filename="../level_scene/item_npc.cpp" line="156"/>
         <source>Set as Boss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="154"/>
+        <location filename="../level_scene/item_npc.cpp" line="162"/>
         <source>Copy</source>
         <translation type="unfinished">Копіювати</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="155"/>
+        <location filename="../level_scene/item_npc.cpp" line="163"/>
         <source>Cut</source>
         <translation type="unfinished">Вирізати</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="157"/>
+        <location filename="../level_scene/item_npc.cpp" line="165"/>
         <source>Remove</source>
         <translation type="unfinished">Видалити</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="159"/>
+        <location filename="../level_scene/item_npc.cpp" line="167"/>
         <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2257,44 +2257,44 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="57"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="58"/>
         <source>Load file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="58"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="59"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="101"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="103"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="102"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="104"/>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="113"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="115"/>
         <source>Write file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="114"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="116"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="137"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="139"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="138"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="140"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
