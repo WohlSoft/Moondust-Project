@@ -129,6 +129,10 @@ private:
     ItemNPC* npcPreview;
     QGraphicsRectItem * physics;
 
+    QPixmap npcImage;
+    QBitmap npcMask;
+    obj_npc defaultNPC;
+
     bool isModyfied;
 
     bool maybeSave();
