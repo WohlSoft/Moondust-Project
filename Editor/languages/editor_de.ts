@@ -1241,7 +1241,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="4590"/>
         <source>Go to Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehe zu Bereich</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4053"/>
@@ -1271,7 +1271,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="2396"/>
         <source>Block contents:</source>
-        <translation type="unfinished"></translation>
+        <translation>Block Inhalte:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2403"/>
@@ -1283,28 +1283,28 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="2522"/>
         <source>Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Ereignisse</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2429"/>
         <source>Destroyed: </source>
-        <translation type="unfinished"></translation>
+        <translation>Zerstört: </translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2451"/>
         <source>Hited:</source>
-        <translation type="unfinished"></translation>
+        <translation>Berührt:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2473"/>
         <location filename="../mainwindow.ui" line="3039"/>
         <source>Layer empty:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereich Leer:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2558"/>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2645"/>
@@ -1321,22 +1321,22 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="2944"/>
         <source>Attach to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Anbinden zu:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2973"/>
         <source>Activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivieren:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2995"/>
         <source>Death:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tod:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3017"/>
         <source>Talk:</source>
-        <translation type="unfinished"></translation>
+        <translation>Reden:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2693"/>
@@ -1346,12 +1346,12 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="2292"/>
         <source>Go To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehe Zu...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2539"/>
         <source>Square fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechteckfüllung</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2700"/>
@@ -1367,17 +1367,17 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <location filename="../mainwindow.ui" line="2765"/>
         <location filename="../mainwindow.ui" line="2772"/>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2799"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2807"/>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Warp</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2812"/>
@@ -1387,7 +1387,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="2898"/>
         <source>Delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzögerung:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4056"/>
@@ -1412,7 +1412,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="4112"/>
         <source>Attach to grid</source>
-        <translation>Zu Gitter binden</translation>
+        <translation>Zu Gitter anbinden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4125"/>
@@ -1567,7 +1567,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <location filename="../mainwindow.ui" line="4527"/>
         <location filename="../main_window/menubar.cpp" line="234"/>
         <source>[No opened files]</source>
-        <translation type="unfinished">[Keine Offnen Dateien]</translation>
+        <translation>[Keine Offnen Dateien]</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4542"/>
@@ -1747,26 +1747,26 @@ Alle Datein (*.*)</translation>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="137"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="195"/>
         <source>Position: [%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Position: [%1, %2]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="90"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="440"/>
         <source>%1 coins</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Münzen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="91"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="261"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="441"/>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Leer]</translation>
     </message>
     <message>
         <location filename="../main_window/edit_level_events.cpp" line="42"/>
         <location filename="../main_window/edit_level_layers.cpp" line="448"/>
         <source>[None]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Nichts]</translation>
     </message>
 </context>
 <context>
