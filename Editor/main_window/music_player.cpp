@@ -233,3 +233,8 @@ void MainWindow::setMusic(bool checked)
     LvlMusPlay::musicButtonChecked  = ui->actionPlayMusic->isChecked();
 }
 
+void MainWindow::setMusicButton(bool checked)
+{
+    ui->actionPlayMusic->setChecked(checked);
+}
+

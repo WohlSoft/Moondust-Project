@@ -109,6 +109,7 @@ public slots:
 
     void setLevelSectionData();
     void setMusic(bool checked);
+    void setMusicButton(bool checked);
 
     void setItemBoxes(bool setCat=false);
 
