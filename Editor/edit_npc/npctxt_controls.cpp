@@ -662,6 +662,7 @@ void npcedit::loadPreview()
     if(npc_id==0) return;
 
     if(PreviewScene==NULL) PreviewScene = new QGraphicsScene();
+    if(physics==NULL) physics = new QGraphicsRectItem();
 
     if(npcPreview==NULL)
     {
@@ -709,6 +710,7 @@ void npcedit::loadPreview()
 
     npcPreview->setFlag(QGraphicsItem::ItemIsSelectable, false);
     npcPreview->setFlag(QGraphicsItem::ItemIsMovable, false);
+    npcPreview->setZValue(1);
 
     if(npcPreview->localProps.frames>1)
     {
@@ -716,7 +718,16 @@ void npcedit::loadPreview()
         npcPreview->AnimationStart();
     }
 
+    physics->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+    physics->setBrush(Qt::transparent);
+    physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
+
+    PreviewScene->addItem(physics);
+
+    physics->setPos(0,0);
+    physics->setZValue(777);
     ui->PreviewBox->setScene(PreviewScene);
+    ui->PreviewBox->setBackgroundBrush(Qt::white);
 
     //npcPreview
 }
