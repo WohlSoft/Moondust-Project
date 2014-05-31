@@ -127,6 +127,9 @@ bool npcedit::saveFile(const QString &fileName)
 
     documentNotModified();
 
+    refreshImageFile();
+    updatePreview();
+
     return true;
 }
 
