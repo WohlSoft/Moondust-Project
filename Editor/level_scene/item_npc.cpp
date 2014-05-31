@@ -25,9 +25,10 @@
 
 #include "../common_features/mainwinconnect.h"
 
-ItemNPC::ItemNPC(QGraphicsPixmapItem *parent)
+ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
+    DisableScene = noScene;
     animated = false;
     aniDirect=false;
     aniBiDirect=false;
@@ -57,18 +58,25 @@ ItemNPC::~ItemNPC()
 
 void ItemNPC::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    if(scene->DrawMode)
-    {
-        unsetCursor();
-        ungrabMouse();
-        this->setSelected(false);
-        return;
-    }
+    if(!DisableScene)
+        if(scene->DrawMode)
+        {
+            unsetCursor();
+            ungrabMouse();
+            this->setSelected(false);
+            return;
+        }
     QGraphicsPixmapItem::mousePressEvent(mouseEvent);
 }
 
 void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
+    if(DisableScene)
+    {
+        QGraphicsPixmapItem::contextMenuEvent(event);
+        return;
+    }
+
     if((!scene->lock_npc)&&(!scene->DrawMode)&&(!isLocked))
     {
         //Remove selection from non-block items
@@ -453,6 +461,9 @@ void ItemNPC::changeDirection(int dir)
 
 void ItemNPC::setIncludedNPC(int npcID)
 {
+    if(DisableScene)
+        return;
+
     if(includedNPC!=NULL)
     {
         grp->removeFromGroup(includedNPC);
@@ -482,6 +493,9 @@ void ItemNPC::setIncludedNPC(int npcID)
 ///////////////////MainArray functions/////////////////////////////
 void ItemNPC::arrayApply()
 {
+    if(DisableScene)
+        return;
+
     bool found=false;
 
     if(npcData.index < (unsigned int)scene->LvlData->npc.size())
@@ -509,6 +523,9 @@ void ItemNPC::arrayApply()
 
 void ItemNPC::removeFromArray()
 {
+    if(DisableScene)
+        return;
+
     bool found=false;
     if(npcData.index < (unsigned int)scene->LvlData->npc.size())
     { //Check index
