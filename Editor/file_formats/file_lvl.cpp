@@ -1444,6 +1444,12 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
     //Doors
     for(i=0; i<FileData.doors.size(); i++)
     {
+
+        if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )
+            if(!FileData.doors[i].isSetIn) continue; // Skip brocken door
+        if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_i)) )
+            if(!FileData.doors[i].isSetOut) continue; // Skip brocken door
+
         TextData += SMBX64::IntS(FileData.doors[i].ix);
         TextData += SMBX64::IntS(FileData.doors[i].iy);
         TextData += SMBX64::IntS(FileData.doors[i].ox);
