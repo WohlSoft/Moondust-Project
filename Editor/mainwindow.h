@@ -346,6 +346,8 @@ private slots:
     void on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1);
     void on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1);
 
+    void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
+
 private:
 
     LevelEditingSettings LvlOpts;

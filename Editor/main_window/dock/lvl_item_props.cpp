@@ -147,6 +147,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             {ui->PROPS_BGOLayer->setCurrentIndex(i); break;}
         }
 
+        ui->PROPS_BGO_smbx64_sp->setValue( bgo.smbx64_sp );
+
         break;
     }
     case 2:
@@ -675,6 +677,30 @@ void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
 
 }
 
+
+void MainWindow::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
+{
+
+    if(bgoPtr<1)
+    {
+        LvlPlacingItems::bgoSet.smbx64_sp = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
+            {
+                ((ItemBGO*)item)->bgoData.smbx64_sp = arg1;
+                ((ItemBGO*)item)->arrayApply();
+                //break;
+            }
+        }
+    }
+
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
