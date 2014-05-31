@@ -89,7 +89,8 @@ SOURCES += main.cpp\
     main_window/dock/lvl_item_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/lvl_door_props.cpp \
-    main_window/dock/lvl_item_toolbox.cpp
+    main_window/dock/lvl_item_toolbox.cpp \
+    edit_npc/npceditscene.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -123,7 +124,8 @@ HEADERS  += mainwindow.h \
     main_window/global_settings.h \
     level_scene/item_door.h \
     level_scene/lvl_item_placing.h \
-    data_configs/obj_npc.h
+    data_configs/obj_npc.h \
+    edit_npc/npceditscene.h
 
 FORMS    += \
     mainwindow.ui \
