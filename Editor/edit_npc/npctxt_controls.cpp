@@ -657,6 +657,25 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
 }
 ////////////////////////////////////////////////////////////////
 
+
+
+void npcedit::on_DirectLeft_clicked()
+{
+    ui->DirectLeft->setChecked(true);
+    ui->DirectRight->setChecked(false);
+    direction = -1;
+}
+
+void npcedit::on_DirectRight_clicked()
+{
+    ui->DirectRight->setChecked(true);
+    ui->DirectLeft->setChecked(false);
+    direction = 1;
+}
+////////////////////////////////////////////////////////////////
+
+
+
 void npcedit::loadPreview()
 {
     if(npc_id==0) return;
@@ -729,7 +748,7 @@ void npcedit::loadPreview()
     npcPreview->setAnimation(npcPreview->localProps.frames,
                           npcPreview->localProps.framespeed,
                           npcPreview->localProps.framestyle,
-                          0,
+                          direction,
                           npcPreview->localProps.custom_animate,
                           npcPreview->localProps.custom_ani_fl,
                           npcPreview->localProps.custom_ani_el,

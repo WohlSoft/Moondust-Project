@@ -1104,9 +1104,9 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>330</y>
+     <y>350</y>
      <width>231</width>
-     <height>261</height>
+     <height>241</height>
     </rect>
    </property>
    <property name="title">
@@ -1121,7 +1121,7 @@
       <x>10</x>
       <y>20</y>
       <width>211</width>
-      <height>231</height>
+      <height>211</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -1209,6 +1209,41 @@ border-color: rgb(132, 132, 132);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="DirectLeft">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>330</y>
+     <width>41</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string notr="true">&lt;-</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="DirectRight">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>330</y>
+     <width>41</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string notr="true">-&gt;</string>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <resources>
