@@ -130,6 +130,7 @@ private:
     QGraphicsScene * PreviewScene;
 
     void loadPreview();
+    void updatePreview();
     ItemNPC* npcPreview;
     QGraphicsRectItem * physics;
 
