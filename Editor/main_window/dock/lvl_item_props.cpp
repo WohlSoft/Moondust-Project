@@ -665,10 +665,10 @@ void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="BGO")&&((item->data(2).toInt()==bgoPtr)))
+            if((item->data(0).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
                 ((ItemBGO*)item)->setLayer(arg1);
-                break;
+                //break;
             }
         }
     }
@@ -684,18 +684,67 @@ void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_PROPS_NPCDirLeft_clicked()
 {
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.direct = -1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->changeDirection(-1);
+                //break;
+            }
+        }
+    }
 
 }
 
 
 void MainWindow::on_PROPS_NPCDirRand_clicked()
 {
-
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.direct = 0;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->changeDirection(0);
+                //break;
+            }
+        }
+    }
 }
 
 void MainWindow::on_PROPS_NPCDirRight_clicked()
 {
-
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.direct = 1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->changeDirection(1);
+                //break;
+            }
+        }
+    }
 }
 
 
@@ -703,16 +752,66 @@ void MainWindow::on_PROPS_NPCDirRight_clicked()
 
 void MainWindow::on_PROPS_NpcFri_clicked(bool checked)
 {
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.friendly = checked;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setFriendly(checked);
+                //break;
+            }
+        }
+    }
 
 }
 
 void MainWindow::on_PROPS_NPCNoMove_clicked(bool checked)
 {
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.nomove = checked;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setNoMovable(checked);
+                //break;
+            }
+        }
+    }
 
 }
 void MainWindow::on_PROPS_NpcBoss_clicked(bool checked)
 {
-
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.legacyboss = checked;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setLegacyBoss(checked);
+                //break;
+            }
+        }
+    }
 }
 
 void MainWindow::on_PROPS_NpcTMsg_clicked()
@@ -737,34 +836,150 @@ void MainWindow::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
 
 void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
 {
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator = checked;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->npcData.generator = checked;
+                //break;
+            }
+        }
+    }
+    ui->PROPS_NPCGenBox->setVisible( checked );
 
 }
 void MainWindow::on_PROPS_NPCGenType_currentIndexChanged(int index)
 {
-
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_type = index+1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->npcData.generator_type = index+1;
+                //break;
+            }
+        }
+    }
 }
 void MainWindow::on_PROPS_NPCGenTime_valueChanged(double arg1)
 {
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_period = qRound(arg1*10);
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->npcData.generator_period = qRound(arg1*10);
+                //break;
+            }
+        }
+    }
 
 }
 
 void MainWindow::on_PROPS_NPCGenUp_clicked()
 {
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_direct = 1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->npcData.generator_direct = 1;
+                //break;
+            }
+        }
+    }
 
 }
 
 void MainWindow::on_PROPS_NPCGenLeft_clicked()
 {
-
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_direct = 2;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->npcData.generator_direct = 2;
+                //break;
+            }
+        }
+    }
 }
 
 void MainWindow::on_PROPS_NPCGenDown_clicked()
 {
-
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_direct = 3;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->npcData.generator_direct = 3;
+                //break;
+            }
+        }
+    }
 }
 void MainWindow::on_PROPS_NPCGenRight_clicked()
 {
-
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_direct = 4;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->npcData.generator_direct = 4;
+                //break;
+            }
+        }
+    }
 }
 
 
