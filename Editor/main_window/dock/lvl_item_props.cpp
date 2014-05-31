@@ -22,6 +22,10 @@
 #include "../../level_scene/lvl_item_placing.h"
 #include "../../npc_dialog/npcdialog.h"
 
+#include "../../level_scene/item_block.h"
+#include "../../level_scene/item_bgo.h"
+#include "../../level_scene/item_npc.h"
+
 
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
@@ -365,6 +369,21 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
 void MainWindow::on_PROPS_BlockResize_clicked()
 {
+    if(blockPtr<1) return;
+
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            {
+                activeLvlEditWin()->scene->setBlockResizer(item, true);
+                break;
+            }
+        }
+
+    }
 
 }
 
@@ -396,6 +415,19 @@ void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
     {
         LvlPlacingItems::blockSet.invisible = checked;
     }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            {
+                ((ItemBlock*)item)->setInvisible(checked);
+                break;
+            }
+        }
+    }
 
 }
 void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
@@ -403,6 +435,19 @@ void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
     if(blockPtr<1)
     {
         LvlPlacingItems::blockSet.slippery = checked;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            {
+                ((ItemBlock*)item)->setSlippery(checked);
+                break;
+            }
+        }
     }
 
 }
@@ -446,20 +491,19 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
         {
             LvlPlacingItems::blockSet.npc_id = selected_npc;
         }
-
-        /*
-        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        else
+        if (activeChildWindow()==1)
         {
-            if(SelItem->data(0).toString()=="Block")
+            QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+            foreach(QGraphicsItem * item, items)
             {
-                ((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
-                ((ItemBlock *) SelItem)->arrayApply();
-                ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
-                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+                {
+                    ((ItemBlock*)item)->setIncludedNPC(selected_npc);
+                    break;
+                }
             }
         }
-        modNPC.push_back(QVariant(selected_npc));
-        */
     }
 
 }
@@ -470,6 +514,19 @@ void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
     if(blockPtr<1)
     {
         LvlPlacingItems::blockSet.layer = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            {
+                ((ItemBlock*)item)->setLayer(arg1);
+                break;
+            }
+        }
     }
 
 }
@@ -485,6 +542,23 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
         else
             LvlPlacingItems::blockSet.event_destroy = "";
     }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            {
+                if(ui->PROPS_BlkEventDestroy->currentIndex()>0)
+                    ((ItemBlock*)item)->blockData.event_destroy = arg1;
+                else
+                    ((ItemBlock*)item)->blockData.event_destroy = "";
+                ((ItemBlock*)item)->arrayApply();
+                break;
+            }
+        }
+    }
 
 }
 void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
@@ -496,6 +570,23 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
         else
             LvlPlacingItems::blockSet.event_hit = "";
     }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            {
+                if(ui->PROPS_BlkEventHited->currentIndex()>0)
+                    ((ItemBlock*)item)->blockData.event_hit = arg1;
+                else
+                    ((ItemBlock*)item)->blockData.event_hit = "";
+                ((ItemBlock*)item)->arrayApply();
+                break;
+            }
+        }
+    }
 
 }
 void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1)
@@ -506,6 +597,24 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
             LvlPlacingItems::blockSet.event_no_more = arg1;
         else
             LvlPlacingItems::blockSet.event_no_more = "";
+    }
+
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            {
+                if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
+                    ((ItemBlock*)item)->blockData.event_no_more = arg1;
+                else
+                    ((ItemBlock*)item)->blockData.event_no_more = "";
+                ((ItemBlock*)item)->arrayApply();
+                break;
+            }
+        }
     }
 
 }
@@ -522,6 +631,23 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
 
 void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
 {
+    if(blockPtr<1)
+    {
+        LvlPlacingItems::bgoSet.layer = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="BGO")&&((item->data(2).toInt()==blockPtr)))
+            {
+                ((ItemBGO*)item)->setLayer(arg1);
+                break;
+            }
+        }
+    }
 
 }
 
