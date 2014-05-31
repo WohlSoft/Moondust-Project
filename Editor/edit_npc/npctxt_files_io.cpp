@@ -45,6 +45,7 @@ void npcedit::newFile(unsigned long npcID)
 
     documentWasModified();
 
+    loadPreview();
     /*connect(document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));*/
 }
@@ -76,6 +77,8 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     else
         setDefaultData(0);
 
+
+    loadPreview();
 
     StartNPCData = NpcData; //Save current history for made reset
     setDataBoxes();
