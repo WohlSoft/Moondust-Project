@@ -122,7 +122,8 @@ HEADERS  += mainwindow.h \
     level_scene/item_water.h \
     main_window/global_settings.h \
     level_scene/item_door.h \
-    level_scene/lvl_item_placing.h
+    level_scene/lvl_item_placing.h \
+    data_configs/obj_npc.h
 
 FORMS    += \
     mainwindow.ui \
