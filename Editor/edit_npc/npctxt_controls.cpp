@@ -673,6 +673,7 @@ void npcedit::loadPreview()
     npcData.id = npc_id;
     npcPreview->setNpcData(npcData);
     obj_npc targetNPC;
+
     //npcData.id = npc_id;
     bool found = false;
     foreach(obj_npc npc, pConfigs->main_npc)
@@ -680,8 +681,10 @@ void npcedit::loadPreview()
         if(npc.id == npc_id){
             targetNPC = npc;
             found = true;
+            break;
         }
     }
+
     if(!found)
     {
         WriteToLog(QtWarningMsg, QString("NPC-Edit Preview -> Array Entry not found"));
@@ -692,8 +695,33 @@ void npcedit::loadPreview()
         WriteToLog(QtDebugMsg, QString("NPC-Edit Preview -> Array Entry already loaded"));
     }
 
+
+    defaultNPC = targetNPC;
+
+    QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
+
+    if(QFile::exists(imagePath + targetNPC.image_n))
+    {
+        if(QFile::exists(imagePath + targetNPC.mask_n))
+            npcMask = QBitmap(imagePath + targetNPC.mask_n );
+        else
+            npcMask = targetNPC.mask;
+
+        npcImage = QPixmap( imagePath + targetNPC.image_n );
+
+        if((npcImage.height()!=npcMask.height())||(npcImage.width()!=npcMask.width()))
+            npcMask = npcMask.copy(0,0,npcImage.width(),npcImage.height());
+        npcImage.setMask(npcMask);
+    }
+    else
+        npcImage = targetNPC.image;
+
+
+    targetNPC = FileFormats::mergeNPCConfigs(defaultNPC, NpcData);
+
+
     npcPreview->localProps = targetNPC;
-    npcPreview->setMainPixmap(targetNPC.image);
+    npcPreview->setMainPixmap(npcImage);
 
     PreviewScene->addItem(npcPreview);
 
