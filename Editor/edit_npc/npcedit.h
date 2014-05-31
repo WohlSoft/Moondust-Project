@@ -115,6 +115,10 @@ private slots:
     void on_En_NoHammer_clicked();
     void on_NoHammer_stateChanged(int arg1);
 
+    void on_DirectLeft_clicked();
+
+    void on_DirectRight_clicked();
+
 private:
     Ui::npcedit *ui;
 
@@ -132,6 +136,7 @@ private:
     QPixmap npcImage;
     QBitmap npcMask;
     obj_npc defaultNPC;
+    int direction;
 
     bool isModyfied;
 
