@@ -76,7 +76,7 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
 
     merged.foreground = (local.en_foreground)?local.foreground:global.foreground;
 
-    merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / qreal(8 / local.framespeed) ) : global.framespeed;
+    merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / (qreal(8) / qreal(local.framespeed)) ) : global.framespeed;
     merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
 
     merged.frames = (local.en_frames)?local.frames:global.frames;
