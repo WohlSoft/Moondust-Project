@@ -502,7 +502,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         }
         //else bgodata.layer = "Default";
 
-        bgodata.smbx64_sp = 0;
+        bgodata.smbx64_sp = -1;
 
         bgodata.array_id = FileData.bgo_array_id;
         FileData.bgo_array_id++;
