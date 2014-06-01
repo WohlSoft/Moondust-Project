@@ -84,6 +84,10 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                     break;
             }
         }
+        if(j >= configs.main_block.size())
+        {
+            j=0;
+        }
 
         ui->PROPS_blockPos->setText( tr("Position: [%1, %2]").arg(block.x).arg(block.y) );
         ui->PROPS_BlockResize->setVisible( configs.main_block[j].sizable );
@@ -191,6 +195,11 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 if(configs.main_npc[j].id==npc.id)
                     break;
             }
+        }
+
+        if(j >= configs.main_npc.size())
+        {
+            j=0;
         }
 
         ui->PROPS_NPCContaiter->hide();

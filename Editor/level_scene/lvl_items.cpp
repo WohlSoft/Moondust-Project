@@ -229,6 +229,10 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     {
         //if(block.id==89) WriteToLog(QtDebugMsg, QString("Block 89 is %1, %2").arg(noimage).arg(tImg.isNull()));
         tImg = uBlockImg;
+        if(j >= pConfigs->main_block.size())
+        {
+            j=0;
+        }
     }
 
     BlockImage->setBlockData(block, pConfigs->main_block[j].sizable);
@@ -372,6 +376,10 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     if((noimage)||(tImg.isNull()))
     {
         tImg=uBgoImg;
+        if(j >= pConfigs->main_bgo.size())
+        {
+            j=0;
+        }
     }
 
     BGOItem->setBGOData(bgo);
@@ -520,6 +528,11 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     if((noimage)||(tImg.isNull()))
     {
         tImg=uNpcImg;
+        if(j >= pConfigs->main_npc.size())
+        {
+            j=0;
+            mergedSet = pConfigs->main_npc[j];
+        }
     }
 
 
