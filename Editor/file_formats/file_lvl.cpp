@@ -34,7 +34,7 @@ LevelNPC    FileFormats::dummyLvlNpc()
     LevelNPC dummyNPC;
     dummyNPC.x = 0;
     dummyNPC.y = 0 ;
-    dummyNPC.direct = 0;
+    dummyNPC.direct = -1;
     dummyNPC.id=0;
     dummyNPC.special_data=0;
     dummyNPC.generator=false;

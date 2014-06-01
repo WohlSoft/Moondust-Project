@@ -27,12 +27,15 @@
 #include "../../level_scene/item_npc.h"
 
 
+static bool LvlItemPropsLock=false;//Protector for allow apply changes only if filed was edit by human
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
     ui->blockProp->hide();
     ui->bgoProps->hide();
     ui->npcProps->hide();
+
+    LvlItemPropsLock=true;
 
     setLayerLists();
 
@@ -360,6 +363,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     default:
         ui->ItemProperties->hide();
     }
+    LvlItemPropsLock=false;
 
 }
 
@@ -423,10 +427,9 @@ void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 ((ItemBlock*)item)->setInvisible(checked);
-                break;
             }
         }
     }
@@ -444,10 +447,10 @@ void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 ((ItemBlock*)item)->setSlippery(checked);
-                break;
+                //break;
             }
         }
     }
@@ -513,12 +516,12 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
             QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
             foreach(QGraphicsItem * item, items)
             {
-                if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+                if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
                 {
                     ((ItemBlock *)item)->blockData.npc_id = selected_npc;
                     ((ItemBlock *)item)->arrayApply();
                     ((ItemBlock *)item)->setIncludedNPC(selected_npc);
-                    break;
+                    //break;
                 }
             }
         }
@@ -529,7 +532,8 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
 
 void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 {
-    //if(!ui->PROPS_BlockLayer->hasFocus()) return;
+    if(LvlItemPropsLock) return;
+
     if(blockPtr<1)
     {
         LvlPlacingItems::blockSet.layer = arg1;
@@ -540,10 +544,10 @@ void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 ((ItemBlock*)item)->setLayer(arg1);
-                break;
+                //break;
             }
         }
     }
@@ -553,7 +557,7 @@ void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1)
 {
-    //if(!ui->PROPS_BlkEventDestroy->hasFocus()) return;
+    if(LvlItemPropsLock) return;
 
     if(blockPtr<1)
     {
@@ -568,14 +572,14 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 if(ui->PROPS_BlkEventDestroy->currentIndex()>0)
                     ((ItemBlock*)item)->blockData.event_destroy = arg1;
                 else
                     ((ItemBlock*)item)->blockData.event_destroy = "";
                 ((ItemBlock*)item)->arrayApply();
-                break;
+                //break;
             }
         }
     }
@@ -583,7 +587,7 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
 }
 void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
 {
-    //if(!ui->PROPS_BlkEventHited->hasFocus()) return;
+    if(LvlItemPropsLock) return;
 
     if(blockPtr<1)
     {
@@ -598,14 +602,14 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 if(ui->PROPS_BlkEventHited->currentIndex()>0)
                     ((ItemBlock*)item)->blockData.event_hit = arg1;
                 else
                     ((ItemBlock*)item)->blockData.event_hit = "";
                 ((ItemBlock*)item)->arrayApply();
-                break;
+                //break;
             }
         }
     }
@@ -613,7 +617,7 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
 }
 void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1)
 {
-    //if(!ui->PROPS_BlkEventLayerEmpty->hasFocus()) return;
+    if(LvlItemPropsLock) return;
 
     if(blockPtr<1)
     {
@@ -629,14 +633,14 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
                 if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
                     ((ItemBlock*)item)->blockData.event_no_more = arg1;
                 else
                     ((ItemBlock*)item)->blockData.event_no_more = "";
                 ((ItemBlock*)item)->arrayApply();
-                break;
+                //break;
             }
         }
     }
@@ -655,7 +659,7 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
 
 void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
 {
-    //if(!ui->PROPS_BGOLayer->hasFocus()) return;
+    if(LvlItemPropsLock) return;
 
     if(bgoPtr<1)
     {
@@ -680,6 +684,7 @@ void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
 {
+    if(LvlItemPropsLock) return;
 
     if(bgoPtr<1)
     {
@@ -710,6 +715,7 @@ void MainWindow::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
 
 void MainWindow::on_PROPS_NPCDirLeft_clicked()
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.direct = -1;
@@ -733,6 +739,7 @@ void MainWindow::on_PROPS_NPCDirLeft_clicked()
 
 void MainWindow::on_PROPS_NPCDirRand_clicked()
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.direct = 0;
@@ -754,6 +761,7 @@ void MainWindow::on_PROPS_NPCDirRand_clicked()
 
 void MainWindow::on_PROPS_NPCDirRight_clicked()
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.direct = 1;
@@ -778,6 +786,7 @@ void MainWindow::on_PROPS_NPCDirRight_clicked()
 
 void MainWindow::on_PROPS_NpcFri_clicked(bool checked)
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.friendly = checked;
@@ -800,6 +809,7 @@ void MainWindow::on_PROPS_NpcFri_clicked(bool checked)
 
 void MainWindow::on_PROPS_NPCNoMove_clicked(bool checked)
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.nomove = checked;
@@ -821,6 +831,7 @@ void MainWindow::on_PROPS_NPCNoMove_clicked(bool checked)
 }
 void MainWindow::on_PROPS_NpcBoss_clicked(bool checked)
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.legacyboss = checked;
@@ -862,6 +873,7 @@ void MainWindow::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
 
 void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.generator = checked;
@@ -884,6 +896,7 @@ void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
 }
 void MainWindow::on_PROPS_NPCGenType_currentIndexChanged(int index)
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.generator_type = index+1;
@@ -904,6 +917,7 @@ void MainWindow::on_PROPS_NPCGenType_currentIndexChanged(int index)
 }
 void MainWindow::on_PROPS_NPCGenTime_valueChanged(double arg1)
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.generator_period = qRound(arg1*10);
@@ -1011,27 +1025,33 @@ void MainWindow::on_PROPS_NPCGenRight_clicked()
 
 void MainWindow::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
 
 }
 
 void MainWindow::on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
 
 }
 void MainWindow::on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
 
 }
 void MainWindow::on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
 
 }
 void MainWindow::on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
 
 }
 void MainWindow::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
 
 }
 
