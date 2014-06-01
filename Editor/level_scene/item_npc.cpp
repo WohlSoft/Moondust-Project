@@ -28,6 +28,8 @@
 ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
+    generatorArrow = NULL;
+    includedNPC = NULL;
     DisableScene = noScene;
     animated = false;
     aniDirect=false;
@@ -459,7 +461,7 @@ void ItemNPC::changeDirection(int dir)
     arrayApply();
 }
 
-void ItemNPC::setIncludedNPC(int npcID)
+void ItemNPC::setIncludedNPC(int npcID, bool init)
 {
     if(DisableScene)
         return;
@@ -473,21 +475,133 @@ void ItemNPC::setIncludedNPC(int npcID)
     }
     if(npcID==0) return;
 
-    QPixmap npcImg = QPixmap( scene->getNPCimg( npcID) );
+    QPixmap npcImg = QPixmap( scene->getNPCimg( npcID ) );
     includedNPC = scene->addPixmap( npcImg );
 
 
     //Default included NPC pos
     includedNPC->setPos(
                 (
-                    npcData.x+((localProps.width-npcImg.width())/2)
+                    this->scenePos().x()+qreal((qreal(localProps.width)-qreal(npcImg.width()))/qreal(2))
                  ),
                 (
-                    npcData.y+((localProps.height-npcImg.height())/2)
+                    (scene->pConfigs->marker_npc.buried == npcData.id)?
+                       this->scenePos().y()
+                      :this->scenePos().y()+qreal((qreal(localProps.height)-qreal(npcImg.height()))/qreal(2))
                  ));
-    includedNPC->setZValue(scene->npcZs + 10);
-    includedNPC->setOpacity(qreal(0.6));
+
+    if(scene->pConfigs->marker_npc.bubble != npcData.id)
+    {
+        includedNPC->setOpacity(qreal(0.4));
+        includedNPC->setZValue(this->zValue() + 0.0000010);
+    }
+    else
+        includedNPC->setZValue(this->zValue() - 0.0000010);
     grp->addToGroup(includedNPC);
+
+    if(!init) npcData.special_data = npcID;
+    if(!init) arrayApply();
+
+}
+
+void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
+{
+    if(DisableScene)
+        return;
+
+    if(!init) npcData.generator = enable;
+
+    if(generatorArrow!=NULL)
+    {
+        grp->removeFromGroup(generatorArrow);
+        scene->removeItem(generatorArrow);
+        free(generatorArrow);
+        generatorArrow = NULL;
+    }
+
+    if(!enable)
+    {
+        if(!init) arrayApply();
+        gridSize = localProps.grid;
+        return;
+    }
+    else
+    {
+        generatorArrow = new QGraphicsPixmapItem;
+
+        switch(type)
+        {
+        case 2:
+            generatorArrow->setPixmap( QPixmap(":/npc/proj.png") );
+            break;
+        case 1:
+        default:
+            generatorArrow->setPixmap( QPixmap(":/npc/warp.png") );
+            break;
+        }
+
+        scene->addItem( generatorArrow );
+
+        gridSize = 16;
+
+        generatorArrow->setOpacity(qreal(0.6));
+
+        QPointF offset=QPoint(0,0);
+
+        switch(direction)
+        {
+        case 2:
+            generatorArrow->setRotation(270);
+            offset.setY(32);
+            if(!init) npcData.generator_direct = 2;
+            break;
+        case 3:
+            generatorArrow->setRotation(180);
+            offset.setX(32);
+            offset.setY(32);
+            if(!init) npcData.generator_direct = 3;
+            break;
+        case 4:
+            generatorArrow->setRotation(90);
+            offset.setX(32);
+            if(!init) npcData.generator_direct = 4;
+            break;
+        case 1:
+        default:
+            generatorArrow->setRotation(0);
+            if(!init) npcData.generator_direct = 1;
+            break;
+        }
+
+        generatorArrow->setZValue(this->zValue() + 0.0000015);
+
+        //Default Generator arrow NPC pos
+        generatorArrow->setPos(
+                    (
+                        offset.x()+this->scenePos().x()+qreal((qreal(localProps.width) - qreal(32))/qreal(2))
+                     ),
+                    (
+                        offset.y()+this->scenePos().y()+qreal((qreal(localProps.height) - qreal(32))/qreal(2))
+                     ));
+
+        grp->addToGroup( generatorArrow );
+
+        if(!init) arrayApply();
+    }
+}
+
+void ItemNPC::setLayer(QString layer)
+{
+    foreach(LevelLayers lr, scene->LvlData->layers)
+    {
+        if(lr.name==layer)
+        {
+            npcData.layer = layer;
+            this->setVisible(!lr.hidden);
+            arrayApply();
+        break;
+        }
+    }
 }
 
 ///////////////////MainArray functions/////////////////////////////
@@ -553,7 +667,8 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     this->setPixmap(mainImage);
 
     imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
-    imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y );
+    imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
+                             - ((scene->pConfigs->marker_npc.buried == npcData.id)? (double)localProps.gfx_h : 0 ));
 
     //grid_attach_style
 
@@ -583,7 +698,6 @@ void ItemNPC::setScenePoint(LvlScene *theScene)
 {
     scene = theScene;
     grp = new QGraphicsItemGroup(this);
-    includedNPC = NULL;
 }
 
 
