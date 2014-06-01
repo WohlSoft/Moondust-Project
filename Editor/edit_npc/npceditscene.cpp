@@ -16,35 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
  */
 
-#ifndef ITEM_PLACING_H
-#define ITEM_PLACING_H
+#include "npceditscene.h"
 
-#include "../file_formats/lvl_filedata.h"
-class LvlPlacingItems
+NpcEditScene::NpcEditScene(QObject *parent) :
+    QGraphicsScene(parent)
 {
-public:
-    static LevelNPC npcSet;
-    static long npcGrid;
-    static LevelBlock blockSet;
-
-    static bool sizableBlock;
-    static bool fillingMode;
-
-    static LevelBGO bgoSet;
-    static LevelWater waterSet;
-
-    enum doorType{
-        DOOR_Entrance=0,
-        DOOR_Exit
-    };
-
-    static int doorType;
-    static int waterType;
-    static int playerID;
-
-    static int gridSz;
-    static QPoint gridOffset;
-
-};
-
-#endif // ITEM_PLACING_H
+}

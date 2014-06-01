@@ -22,13 +22,21 @@
 #include "../../level_scene/lvl_item_placing.h"
 #include "../../npc_dialog/npcdialog.h"
 
+#include "../../level_scene/item_block.h"
+#include "../../level_scene/item_bgo.h"
+#include "../../level_scene/item_npc.h"
+#include "../../level_scene/itemmsgbox.h"
 
+
+static bool LvlItemPropsLock=false;//Protector for allow apply changes only if filed was edit by human
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
     ui->blockProp->hide();
     ui->bgoProps->hide();
     ui->npcProps->hide();
+
+    LvlItemPropsLock=true;
 
     setLayerLists();
 
@@ -75,6 +83,10 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 if(configs.main_block[j].id==block.id)
                     break;
             }
+        }
+        if(j >= configs.main_block.size())
+        {
+            j=0;
         }
 
         ui->PROPS_blockPos->setText( tr("Position: [%1, %2]").arg(block.x).arg(block.y) );
@@ -143,6 +155,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             {ui->PROPS_BGOLayer->setCurrentIndex(i); break;}
         }
 
+        ui->PROPS_BGO_smbx64_sp->setValue( bgo.smbx64_sp );
+
         break;
     }
     case 2:
@@ -181,6 +195,11 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 if(configs.main_npc[j].id==npc.id)
                     break;
             }
+        }
+
+        if(j >= configs.main_npc.size())
+        {
+            j=0;
         }
 
         ui->PROPS_NPCContaiter->hide();
@@ -267,6 +286,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             }
         }
 
+        ui->PROPS_NpcTMsg->setText( npc.msg.isEmpty() ? tr("[none]") : npc.msg );
+
         ui->PROPS_NpcFri->setChecked( npc.friendly );
         ui->PROPS_NPCNoMove->setChecked( npc.nomove );
         ui->PROPS_NpcBoss->setChecked( npc.legacyboss );
@@ -290,9 +311,6 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
             switch(npc.generator_direct)
             {
-            case 1:
-                ui->PROPS_NPCGenUp->setChecked(true);
-                break;
             case 2:
                 ui->PROPS_NPCGenLeft->setChecked(true);
                 break;
@@ -300,11 +318,18 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 ui->PROPS_NPCGenDown->setChecked(true);
                 break;
             case 4:
-            default:
                 ui->PROPS_NPCGenRight->setChecked(true);
+                break;
+            case 1:
+            default:
+                ui->PROPS_NPCGenUp->setChecked(true);
                 break;
             }
 
+        }
+        else
+        {
+            ui->PROPS_NPCGenUp->setChecked(true);
         }
 
         ui->PROPS_NpcLayer->setCurrentIndex(0);
@@ -354,16 +379,33 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     default:
         ui->ItemProperties->hide();
     }
+    LvlItemPropsLock=false;
 
 }
 
 
 
+////////////////////////////////////////////////////////////////////////////////////////////
 
 // ///////////BLOCKS///////////////////////////
 
 void MainWindow::on_PROPS_BlockResize_clicked()
 {
+    if(blockPtr<1) return;
+
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")&&((item->data(2).toInt()==blockPtr)))
+            {
+                activeLvlEditWin()->scene->setBlockResizer(item, true);
+                break;
+            }
+        }
+
+    }
 
 }
 
@@ -395,6 +437,18 @@ void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
     {
         LvlPlacingItems::blockSet.invisible = checked;
     }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            {
+                ((ItemBlock*)item)->setInvisible(checked);
+            }
+        }
+    }
 
 }
 void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
@@ -403,15 +457,42 @@ void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
     {
         LvlPlacingItems::blockSet.slippery = checked;
     }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            {
+                ((ItemBlock*)item)->setSlippery(checked);
+                //break;
+            }
+        }
+    }
 
 }
 
 void MainWindow::on_PROPS_BlockIncludes_clicked()
 {
     int npcID=0;
+
     if(blockPtr<1)
     {
         npcID = LvlPlacingItems::blockSet.npc_id;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items1 = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * targetItem, items1)
+        {
+            if((targetItem->data(0).toString()=="Block")&&((targetItem->data(2).toInt()==blockPtr)))
+            {
+                npcID = ((ItemBlock*)targetItem)->blockData.npc_id;
+                break;
+            }
+        }
     }
 
     //LevelData selData;
@@ -445,20 +526,21 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
         {
             LvlPlacingItems::blockSet.npc_id = selected_npc;
         }
-
-        /*
-        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        else
+        if (activeChildWindow()==1)
         {
-            if(SelItem->data(0).toString()=="Block")
+            QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+            foreach(QGraphicsItem * item, items)
             {
-                ((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
-                ((ItemBlock *) SelItem)->arrayApply();
-                ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
-                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+                {
+                    //((ItemBlock *)item)->blockData.npc_id = selected_npc;
+                    //((ItemBlock *)item)->arrayApply();
+                    ((ItemBlock *)item)->setIncludedNPC(selected_npc);
+                    //break;
+                }
             }
         }
-        modNPC.push_back(QVariant(selected_npc));
-        */
     }
 
 }
@@ -466,9 +548,24 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
 
 void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
+
     if(blockPtr<1)
     {
         LvlPlacingItems::blockSet.layer = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            {
+                ((ItemBlock*)item)->setLayer(arg1);
+                //break;
+            }
+        }
     }
 
 }
@@ -476,6 +573,7 @@ void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
 
     if(blockPtr<1)
     {
@@ -484,10 +582,29 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
         else
             LvlPlacingItems::blockSet.event_destroy = "";
     }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            {
+                if(ui->PROPS_BlkEventDestroy->currentIndex()>0)
+                    ((ItemBlock*)item)->blockData.event_destroy = arg1;
+                else
+                    ((ItemBlock*)item)->blockData.event_destroy = "";
+                ((ItemBlock*)item)->arrayApply();
+                //break;
+            }
+        }
+    }
 
 }
 void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
+
     if(blockPtr<1)
     {
         if(ui->PROPS_BlkEventHited->currentIndex()>0)
@@ -495,16 +612,804 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
         else
             LvlPlacingItems::blockSet.event_hit = "";
     }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            {
+                if(ui->PROPS_BlkEventHited->currentIndex()>0)
+                    ((ItemBlock*)item)->blockData.event_hit = arg1;
+                else
+                    ((ItemBlock*)item)->blockData.event_hit = "";
+                ((ItemBlock*)item)->arrayApply();
+                //break;
+            }
+        }
+    }
 
 }
 void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1)
 {
+    if(LvlItemPropsLock) return;
+
     if(blockPtr<1)
     {
         if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
             LvlPlacingItems::blockSet.event_no_more = arg1;
         else
             LvlPlacingItems::blockSet.event_no_more = "";
+    }
+
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            {
+                if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
+                    ((ItemBlock*)item)->blockData.event_no_more = arg1;
+                else
+                    ((ItemBlock*)item)->blockData.event_no_more = "";
+                ((ItemBlock*)item)->arrayApply();
+                //break;
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// ///////////BGO///////////////////////////
+
+void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
+{
+    if(LvlItemPropsLock) return;
+
+    if(bgoPtr<1)
+    {
+        LvlPlacingItems::bgoSet.layer = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
+            {
+                ((ItemBGO*)item)->setLayer(arg1);
+                //break;
+            }
+        }
+    }
+
+}
+
+
+void MainWindow::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
+{
+    if(LvlItemPropsLock) return;
+
+    if(bgoPtr<1)
+    {
+        LvlPlacingItems::bgoSet.smbx64_sp = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
+            {
+                ((ItemBGO*)item)->bgoData.smbx64_sp = arg1;
+                ((ItemBGO*)item)->arrayApply();
+                //break;
+            }
+        }
+    }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+// ///////////NPC///////////////////////////
+
+
+void MainWindow::on_PROPS_NPCDirLeft_clicked()
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.direct = -1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->changeDirection(-1);
+                //break;
+            }
+        }
+    }
+
+}
+
+
+void MainWindow::on_PROPS_NPCDirRand_clicked()
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.direct = 0;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->changeDirection(0);
+                //break;
+            }
+        }
+    }
+}
+
+void MainWindow::on_PROPS_NPCDirRight_clicked()
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.direct = 1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->changeDirection(1);
+                //break;
+            }
+        }
+    }
+}
+
+
+
+
+void MainWindow::on_PROPS_NpcFri_clicked(bool checked)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.friendly = checked;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setFriendly(checked);
+                //break;
+            }
+        }
+    }
+
+}
+
+void MainWindow::on_PROPS_NPCNoMove_clicked(bool checked)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.nomove = checked;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setNoMovable(checked);
+                //break;
+            }
+        }
+    }
+
+}
+void MainWindow::on_PROPS_NpcBoss_clicked(bool checked)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.legacyboss = checked;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setLegacyBoss(checked);
+                //break;
+            }
+        }
+    }
+}
+
+void MainWindow::on_PROPS_NpcTMsg_clicked()
+{
+
+    //LevelData selData;
+    //QList<QVariant> modText;
+    //modText.push_back(QVariant(npcData.msg));
+
+    QString message;
+    if(npcPtr<1)
+    {
+        message = LvlPlacingItems::npcSet.msg;
+    }
+    else
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * SelItem, items )
+        {
+            if(SelItem->data(0).toString()=="NPC")
+            {
+                message = ((ItemNPC *) SelItem)->npcData.msg; break;
+            }
+        }
+    }
+
+    ItemMsgBox * msgBox = new ItemMsgBox(message);
+    msgBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    msgBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, msgBox->size(), qApp->desktop()->availableGeometry()));
+    if(msgBox->exec()==QDialog::Accepted)
+    {
+
+        if(npcPtr<1)
+        {
+            LvlPlacingItems::npcSet.msg = msgBox->currentText;
+        }
+        else
+        {
+            QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+            foreach(QGraphicsItem * SelItem, items )
+            {
+                if(SelItem->data(0).toString()=="NPC")
+                    ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
+                //selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+            }
+        //modText.push_back(QVariant(npcData.msg));
+        //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_MESSAGE, QVariant(modText));
+        }
+        ui->PROPS_NpcTMsg->setText( msgBox->currentText.isEmpty() ? tr("[none]") : msgBox->currentText );
+    }
+
+}
+
+void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.special_data = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                ((ItemNPC*)item)->npcData.special_data = arg1;
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+    }
+
+}
+
+void MainWindow::on_PROPS_NPCContaiter_clicked()
+{
+    int npcID=0;
+
+    if(npcPtr<1)
+    {
+        npcID = LvlPlacingItems::npcSet.special_data;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items1 = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * targetItem, items1)
+        {
+            if((targetItem->data(0).toString()=="NPC")&&((targetItem->data(2).toInt()==npcPtr)))
+            {
+                npcID = ((ItemNPC*)targetItem)->npcData.special_data;
+                break;
+            }
+        }
+    }
+
+    //LevelData selData;
+    //QList<QVariant> modNPC;
+
+    NpcDialog * npcList = new NpcDialog(&configs);
+    npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+    npcList->setState(npcID, 2);
+
+    if(npcList->exec()==QDialog::Accepted)
+    {
+        //apply to all selected items.
+        int selected_npc=0;
+        if(npcList->isEmpty)
+            selected_npc = 0;
+        else
+            selected_npc = npcList->selectedNPC;
+
+        ui->PROPS_NPCContaiter->setText(
+                    ((selected_npc>0)?QString("NPC-%1").arg(selected_npc)
+                       :tr("[empty]")
+                         ) );
+
+        if(npcPtr<1)
+        {
+            LvlPlacingItems::npcSet.special_data = selected_npc;
+        }
+        else
+        if (activeChildWindow()==1)
+        {
+            QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+            foreach(QGraphicsItem * item, items)
+            {
+                if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==blockPtr))*/)
+                {
+                    ((ItemNPC *)item)->setIncludedNPC(selected_npc);
+                }
+            }
+        }
+    }
+
+}
+
+void MainWindow::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.special_data = index;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                ((ItemNPC*)item)->npcData.special_data = index;
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+    }
+}
+
+void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator = checked;
+        if(checked)
+            LvlPlacingItems::gridSz = 16;
+        else
+            LvlPlacingItems::gridSz = LvlPlacingItems::npcGrid;
+
+
+        LvlItemPropsLock=true;
+
+        ui->PROPS_NPCGenType->setCurrentIndex( (LvlPlacingItems::npcSet.generator_type)-1);
+        ui->PROPS_NPCGenTime->setValue( (double)(LvlPlacingItems::npcSet.generator_period)/10);
+
+        switch(LvlPlacingItems::npcSet.generator_direct)
+        {
+        case 2:
+            ui->PROPS_NPCGenLeft->setChecked(true);
+            break;
+        case 3:
+            ui->PROPS_NPCGenDown->setChecked(true);
+            break;
+        case 4:
+            ui->PROPS_NPCGenRight->setChecked(true);
+            break;
+        case 1:
+        default:
+            ui->PROPS_NPCGenUp->setChecked(true);
+            break;
+        }
+        LvlItemPropsLock=false;
+
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                ((ItemNPC*)item)->setGenerator(checked,
+                 ((ItemNPC*)item)->npcData.generator_direct,
+                 ((ItemNPC*)item)->npcData.generator_type
+                 );
+                LvlItemPropsLock=true;
+                ui->PROPS_NPCGenType->setCurrentIndex( (((ItemNPC*)item)->npcData.generator_type)-1);
+                ui->PROPS_NPCGenTime->setValue( (double)(((ItemNPC*)item)->npcData.generator_period)/10);
+
+                switch(((ItemNPC*)item)->npcData.generator_direct)
+                {
+                case 2:
+                    ui->PROPS_NPCGenLeft->setChecked(true);
+                    break;
+                case 3:
+                    ui->PROPS_NPCGenDown->setChecked(true);
+                    break;
+                case 4:
+                    ui->PROPS_NPCGenRight->setChecked(true);
+                    break;
+                case 1:
+                default:
+                    ui->PROPS_NPCGenUp->setChecked(true);
+                    break;
+                }
+                LvlItemPropsLock=false;
+            }
+        }
+    }
+    ui->PROPS_NPCGenBox->setVisible( checked );
+
+
+}
+void MainWindow::on_PROPS_NPCGenType_currentIndexChanged(int index)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_type = index+1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                 ((ItemNPC*)item)->npcData.generator_direct,
+                 index+1
+                 );
+            }
+        }
+    }
+}
+void MainWindow::on_PROPS_NPCGenTime_valueChanged(double arg1)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_period = qRound(arg1*10);
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->npcData.generator_period = qRound(arg1*10);
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+    }
+
+}
+
+void MainWindow::on_PROPS_NPCGenUp_clicked()
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_direct = 1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                 1,
+                 ((ItemNPC*)item)->npcData.generator_type
+                 );
+            }
+        }
+    }
+
+}
+
+void MainWindow::on_PROPS_NPCGenLeft_clicked()
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_direct = 2;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                 2,
+                 ((ItemNPC*)item)->npcData.generator_type
+                 );
+            }
+        }
+    }
+}
+
+void MainWindow::on_PROPS_NPCGenDown_clicked()
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_direct = 3;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                 3,
+                 ((ItemNPC*)item)->npcData.generator_type
+                 );
+            }
+        }
+    }
+}
+void MainWindow::on_PROPS_NPCGenRight_clicked()
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.generator_direct = 4;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            {
+                ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
+                 4,
+                 ((ItemNPC*)item)->npcData.generator_type
+                 );
+            }
+        }
+    }
+}
+
+
+void MainWindow::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1)
+{
+    if(LvlItemPropsLock) return;
+
+    if(npcPtr<1)
+    {
+        LvlPlacingItems::npcSet.layer = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                ((ItemNPC*)item)->setLayer(arg1);
+            }
+        }
+    }
+
+}
+
+void MainWindow::on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1)
+{
+    if(LvlItemPropsLock) return;
+
+    if(npcPtr<1)
+    {
+        if(ui->PROPS_NpcAttachLayer->currentIndex()>0)
+            LvlPlacingItems::npcSet.attach_layer = arg1;
+        else
+            LvlPlacingItems::npcSet.attach_layer = "";
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                if(ui->PROPS_NpcAttachLayer->currentIndex()>0)
+                    ((ItemNPC*)item)->npcData.attach_layer = arg1;
+                else
+                    ((ItemNPC*)item)->npcData.attach_layer = "";
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+    }
+
+}
+void MainWindow::on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1)
+{
+    if(LvlItemPropsLock) return;
+
+    if(npcPtr<1)
+    {
+        if(ui->PROPS_NpcEventActivate->currentIndex()>0)
+            LvlPlacingItems::npcSet.event_activate = arg1;
+        else
+            LvlPlacingItems::npcSet.event_activate = "";
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                if(ui->PROPS_NpcEventActivate->currentIndex()>0)
+                    ((ItemNPC*)item)->npcData.event_activate = arg1;
+                else
+                    ((ItemNPC*)item)->npcData.event_activate = "";
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+    }
+
+}
+void MainWindow::on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1)
+{
+    if(LvlItemPropsLock) return;
+    if(npcPtr<1)
+    {
+        if(ui->PROPS_NpcEventDeath->currentIndex()>0)
+            LvlPlacingItems::npcSet.event_die = arg1;
+        else
+            LvlPlacingItems::npcSet.event_die = "";
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                if(ui->PROPS_NpcEventDeath->currentIndex()>0)
+                    ((ItemNPC*)item)->npcData.event_die = arg1;
+                else
+                    ((ItemNPC*)item)->npcData.event_die = "";
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+    }
+
+}
+void MainWindow::on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1)
+{
+    if(LvlItemPropsLock) return;
+
+    if(npcPtr<1)
+    {
+        if(ui->PROPS_NpcEventTalk->currentIndex()>0)
+            LvlPlacingItems::npcSet.event_talk = arg1;
+        else
+            LvlPlacingItems::npcSet.event_talk = "";
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                if(ui->PROPS_NpcEventTalk->currentIndex()>0)
+                    ((ItemNPC*)item)->npcData.event_talk = arg1;
+                else
+                    ((ItemNPC*)item)->npcData.event_talk = "";
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+    }
+
+}
+void MainWindow::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1)
+{
+    if(LvlItemPropsLock) return;
+
+    if(npcPtr<1)
+    {
+        if(ui->PROPS_NpcEventEmptyLayer->currentIndex()>0)
+            LvlPlacingItems::npcSet.event_nomore = arg1;
+        else
+            LvlPlacingItems::npcSet.event_nomore = "";
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                if(ui->PROPS_NpcEventEmptyLayer->currentIndex()>0)
+                    ((ItemNPC*)item)->npcData.event_nomore = arg1;
+                else
+                    ((ItemNPC*)item)->npcData.event_nomore = "";
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
     }
 
 }

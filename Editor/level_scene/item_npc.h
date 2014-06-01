@@ -39,13 +39,13 @@ class ItemNPC : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    ItemNPC(QGraphicsPixmapItem *parent=0);
+    ItemNPC(bool noScene=false, QGraphicsPixmapItem *parent=0);
     ~ItemNPC();
 
     void setMainPixmap(const QPixmap &pixmap);
     void setNpcData(LevelNPC inD);
     void setContextMenu(QMenu &menu);
-    void setScenePoint(LvlScene *theScene);
+    void setScenePoint(LvlScene *theScene=NULL);
 
     QRectF boundingRect() const;
 
@@ -64,7 +64,9 @@ public:
     void setNoMovable(bool stat);
     void setLegacyBoss(bool boss);
     void setMsg(QString message);
-    void setIncludedNPC(int npcID);
+    void setIncludedNPC(int npcID, bool init=false);
+    void setGenerator(bool enable, int direction=1, int type=1, bool init=false);
+    void setLayer(QString layer);
 
     void changeDirection(int dir);
 
@@ -95,8 +97,12 @@ private slots:
 
 private:
 
+    bool DisableScene;
+
     QGraphicsItemGroup * grp;
     QGraphicsItem * includedNPC;
+    QGraphicsPixmapItem * generatorArrow;
+
 
     bool animated;
     int frameSpeed;

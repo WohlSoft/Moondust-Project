@@ -19,6 +19,8 @@
 #include "lvlscene.h"
 #include "../edit_level/leveledit.h"
 
+#include "../file_formats/file_formats.h"
+
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
@@ -149,107 +151,6 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
 }
 
 
-obj_npc LvlScene::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured)
-{
-    obj_npc merged;
-    merged = global;
-    merged.image = QPixmap();   //Clear image values
-    merged.mask = QPixmap();
-
-    merged.gfx_offset_x = (local.en_gfxoffsetx)?local.gfxoffsetx:global.gfx_offset_x;
-    merged.gfx_offset_y = (local.en_gfxoffsety)?local.gfxoffsety:global.gfx_offset_y;
-
-    merged.width = (local.en_width)?local.width:global.width;
-    merged.height = (local.en_height)?local.height:global.height;
-
-    merged.foreground = (local.en_foreground)?local.foreground:global.foreground;
-
-    merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / qreal(8 / local.framespeed) ) : global.framespeed;
-    merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
-
-    merged.frames = (local.en_frames)?local.frames:global.frames;
-
-    if((local.en_frames)||(local.en_framestyle))
-        merged.ani_bidir = false; //Disable bidirectional animation
-
-    //Copy fixture size to GFX size
-    if((local.en_width)&&
-                (
-                ((merged.width <= (unsigned int)global.gfx_w)&&(merged.framestyle<2)&&(merged.framestyle>0))||
-                ((merged.width != (unsigned int)global.gfx_w)&&(merged.framestyle==0))
-                )
-            )
-        merged.gfx_w = merged.width;
-    else
-    {
-        if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
-            merged.width = captured.width();
-
-        merged.gfx_w = global.gfx_w;
-    }
-
-    //Copy fixture size to GFX size
-    if((local.en_height)&&(global.height <= (unsigned int)global.gfx_h)&&(merged.framestyle<2))
-        merged.gfx_h = merged.height;
-    else
-        merged.gfx_h = global.gfx_h;
-
-    if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
-        merged.gfx_w = captured.width();
-    else
-        merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
-
-    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
-
-
-    if(((int)merged.width>=(int)merged.grid))
-        merged.grid_offset_x = -1 * qRound( qreal((int)merged.width % merged.grid)/2 );
-    else
-        merged.grid_offset_x = qRound( qreal( merged.grid - (int)merged.width )/2 );
-
-    if(merged.grid_attach_style==1) merged.grid_offset_x += 16;
-
-    merged.grid_offset_y = -merged.height % merged.grid;
-
-
-    merged.score = (local.en_score)?local.score:global.score;
-    merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
-    merged.block_player_top = (local.en_playerblocktop)?local.playerblocktop:global.block_player_top;
-    merged.block_npc = (local.en_npcblock)?local.npcblock:global.block_npc;
-    merged.block_npc_top = (local.en_npcblocktop)?local.npcblocktop:global.block_npc_top;
-    merged.grab_side = (local.en_grabside)?local.grabside:global.grab_side;
-    merged.grab_top = (local.en_grabtop)?local.grabtop:global.grab_top;
-    merged.kill_on_jump = (local.en_jumphurt)? (!local.jumphurt) : global.kill_on_jump ;
-    merged.hurt_player = (local.en_nohurt)?!local.nohurt:global.hurt_player;
-    merged.collision_with_blocks = (local.en_noblockcollision)?(!local.noblockcollision):global.collision_with_blocks;
-    merged.turn_on_cliff_detect = (local.en_cliffturn)?local.cliffturn:global.turn_on_cliff_detect;
-    merged.can_be_eaten = (local.en_noyoshi)?(!local.noyoshi):global.can_be_eaten;
-    merged.speed = (local.en_speed) ? global.speed * local.speed : global.speed;
-    merged.kill_by_fireball = (local.en_nofireball)?(!local.nofireball):global.kill_by_fireball;
-    merged.gravity = (local.en_nogravity)?(!local.nogravity):global.gravity;
-    merged.freeze_by_iceball = (local.en_noiceball)?(!local.noiceball):global.freeze_by_iceball;
-    merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
-    merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
-
-    WriteToLog(QtDebugMsg, QString("-------------------------------------"));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge for NPC-ID=%1").arg(merged.id));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Height:   %1").arg(merged.height));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Width:    %1").arg(merged.width));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX h:    %1").arg(merged.gfx_h));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX w:    %1").arg(merged.gfx_w));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Grid size %1").arg(merged.grid));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset x: %1").arg(merged.grid_offset_x));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Offset y: %1").arg(merged.grid_offset_y));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GridStl:  %1").arg(merged.grid_attach_style));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offX: %1").arg(merged.gfx_offset_x));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> GFX offY: %1").arg(merged.gfx_offset_y));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> FrStyle:  %1").arg(merged.framestyle));
-    WriteToLog(QtDebugMsg, QString("NPC-Merge -> Frames:   %1").arg((int)merged.frames));
-    WriteToLog(QtDebugMsg, QString("-------------------------------------"));
-
-    return merged;
-}
-
 
 ////////////////////////////////// Place new ////////////////////////////////
 
@@ -328,6 +229,10 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     {
         //if(block.id==89) WriteToLog(QtDebugMsg, QString("Block 89 is %1, %2").arg(noimage).arg(tImg.isNull()));
         tImg = uBlockImg;
+        if(j >= pConfigs->main_block.size())
+        {
+            j=0;
+        }
     }
 
     BlockImage->setBlockData(block, pConfigs->main_block[j].sizable);
@@ -367,7 +272,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     //////////////////////////////Included NPC////////////////////////////////////////
     if(block.npc_id != 0)
     {
-        BlockImage->setIncludedNPC(block.npc_id);
+        BlockImage->setIncludedNPC(block.npc_id, true);
     }
     //////////////////////////////////////////////////////////////////////////////////
 
@@ -471,6 +376,10 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     if((noimage)||(tImg.isNull()))
     {
         tImg=uBgoImg;
+        if(j >= pConfigs->main_bgo.size())
+        {
+            j=0;
+        }
     }
 
     BGOItem->setBGOData(bgo);
@@ -619,6 +528,11 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     if((noimage)||(tImg.isNull()))
     {
         tImg=uNpcImg;
+        if(j >= pConfigs->main_npc.size())
+        {
+            j=0;
+            mergedSet = pConfigs->main_npc[j];
+        }
     }
 
 
@@ -630,24 +544,35 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         //WriteToLog(QtDebugMsg, "NPC place -> set Props");
     NPCItem->localProps = mergedSet;
 
-    if(npc.generator)
-        NPCItem->gridSize=16;
-    else
-        NPCItem->gridSize = mergedSet.grid;
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
     NPCItem->setMainPixmap(tImg);
 
         //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
     NPCItem->setContextMenu(npcMenu);
 
-        //WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
+        WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
 
     addItem(NPCItem);
 
+    if(NPCItem->localProps.foreground)
+        NPCItem->setZValue(npcZf);
+    else
+    if(NPCItem->localProps.background)
+        NPCItem->setZValue(npcZb);
+    else
+        NPCItem->setZValue(npcZs);
+
+        WriteToLog(QtDebugMsg, "NPC place -> set Generator");
+    NPCItem->setGenerator(npc.generator, npc.generator_direct, npc.generator_type, true);
+
+    if((mergedSet.container)&&(npc.special_data>0))
+        NPCItem->setIncludedNPC(npc.special_data, true);
+
+        WriteToLog(QtDebugMsg, "NPC place -> calculate grid");
     QPoint newPos = QPoint(npc.x, npc.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(npc.x, npc.y), NPCItem->localProps.grid,
+        newPos = applyGrid(QPoint(npc.x, npc.y), NPCItem->gridSize,
                            QPoint(NPCItem->localProps.grid_offset_x,
                                   NPCItem->localProps.grid_offset_y));
         npc.x = newPos.x();
@@ -655,8 +580,10 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     }
 
 
+        WriteToLog(QtDebugMsg, "NPC place -> set position");
     NPCItem->setPos( QPointF(newPos) );
 
+        WriteToLog(QtDebugMsg, "NPC place -> set animation");
     NPCItem->setAnimation(NPCItem->localProps.frames,
                           NPCItem->localProps.framespeed,
                           NPCItem->localProps.framestyle,
@@ -667,22 +594,15 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
                           NPCItem->localProps.custom_ani_fr,
                           NPCItem->localProps.custom_ani_er);
 
-
+        WriteToLog(QtDebugMsg, "NPC place -> set flags");
     NPCItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
     NPCItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
 
     //npcfore->addToGroup(box);
 
+        WriteToLog(QtDebugMsg, "NPC place -> set props");
     if(NPCItem->localProps.frames>1)
         NPCItem->setData(4, "animated");
-
-    if(NPCItem->localProps.foreground)
-        NPCItem->setZValue(npcZf);
-    else
-    if(NPCItem->localProps.background)
-        NPCItem->setZValue(npcZb);
-    else
-        NPCItem->setZValue(npcZs);
 
     NPCItem->setData(0, "NPC"); // ObjType
     NPCItem->setData(1, QString::number(npc.id) );
@@ -692,6 +612,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setData(10, QString::number(NPCItem->localProps.height) ); //height
 
     if(PasteFromBuffer) NPCItem->setSelected(true);
+    WriteToLog(QtDebugMsg, "NPC place -> done");
 }
 
 

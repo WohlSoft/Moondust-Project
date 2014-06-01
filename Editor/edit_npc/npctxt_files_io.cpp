@@ -45,6 +45,7 @@ void npcedit::newFile(unsigned long npcID)
 
     documentWasModified();
 
+    loadPreview();
     /*connect(document(), SIGNAL(contentsChanged()),
             this, SLOT(documentWasModified()));*/
 }
@@ -68,6 +69,7 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     if(tmp.size()==2)
         if(!SMBX64::Int(tmp[1]))
         {
+            npc_id = tmp[1].toInt();
             setDefaultData( tmp[1].toInt() );
             ui->CurrentNPCID->setText( tmp[1] );
         }
@@ -76,13 +78,13 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     else
         setDefaultData(0);
 
-
     StartNPCData = NpcData; //Save current history for made reset
     setDataBoxes();
 
-
     setCurrentFile(fileName);
     documentNotModified();
+
+    loadPreview();
 
     return true;
 }
@@ -124,6 +126,9 @@ bool npcedit::saveFile(const QString &fileName)
     setCurrentFile(fileName);
 
     documentNotModified();
+
+    refreshImageFile();
+    updatePreview();
 
     return true;
 }

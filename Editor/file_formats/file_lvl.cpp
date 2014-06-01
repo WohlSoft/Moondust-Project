@@ -20,6 +20,177 @@
 #include "../edit_level/leveledit.h"
 #include "file_formats.h"
 
+
+
+
+//*********************************************************
+//*******************Dummy arrays**************************
+//*********************************************************
+
+
+//Default dataSets
+LevelNPC    FileFormats::dummyLvlNpc()
+{
+    LevelNPC dummyNPC;
+    dummyNPC.x = 0;
+    dummyNPC.y = 0 ;
+    dummyNPC.direct = -1;
+    dummyNPC.id=0;
+    dummyNPC.special_data=0;
+    dummyNPC.generator=false;
+    dummyNPC.generator_type=1;
+    dummyNPC.generator_direct=1;
+    dummyNPC.generator_period=20;
+    dummyNPC.msg="";
+    dummyNPC.friendly=false;
+    dummyNPC.nomove=false;
+    dummyNPC.legacyboss=false;
+    dummyNPC.layer = "Default";
+    dummyNPC.event_activate="";
+    dummyNPC.event_die="";
+    dummyNPC.event_talk="";
+    dummyNPC.event_nomore="";
+    dummyNPC.attach_layer="";
+
+    dummyNPC.array_id=0;
+    dummyNPC.index=0;
+    return dummyNPC;
+}
+
+
+LevelBlock  FileFormats::dummyLvlBlock()
+{
+    LevelBlock dummyBlock;
+    dummyBlock.x = 0;
+    dummyBlock.y = 0;
+    dummyBlock.w = 0;
+    dummyBlock.h = 0;
+    dummyBlock.id = 0;
+    dummyBlock.npc_id = 0;
+    dummyBlock.invisible = false;
+    dummyBlock.slippery = false;
+    dummyBlock.layer = "Default";
+    dummyBlock.event_destroy = "";
+    dummyBlock.event_hit = "";
+    dummyBlock.event_no_more = "";
+
+    dummyBlock.array_id = 0;
+    dummyBlock.index = 0;
+    return dummyBlock;
+}
+
+LevelBGO FileFormats::dummyLvlBgo()
+{
+    LevelBGO dummyBGO;
+    dummyBGO.x = 0;
+    dummyBGO.y = 0;
+    dummyBGO.id = 0;
+    dummyBGO.layer = "Default";
+    dummyBGO.smbx64_sp = -1;
+
+    dummyBGO.array_id  = 0;
+    dummyBGO.index = 0;
+    return dummyBGO;
+}
+
+
+LevelWater FileFormats::dummyLvlWater()
+{
+    LevelWater dummyWater;
+    dummyWater.x  = 0;
+    dummyWater.y = 0;
+    dummyWater.w = 0;
+    dummyWater.h = 0;
+    dummyWater.unknown = 0;
+    dummyWater.quicksand = false;
+    dummyWater.layer = "Default";
+
+    dummyWater.array_id = 0;
+    dummyWater.index = 0;
+    return dummyWater;
+}
+
+LevelEvents FileFormats::dummyLvlEvent()
+{
+    LevelEvents dummyEvent;
+
+    dummyEvent.name="";
+    dummyEvent.msg="";
+    dummyEvent.sound_id=0;
+    dummyEvent.end_game=0;
+    dummyEvent.trigger="";
+    dummyEvent.trigger_timer=0;
+    dummyEvent.nosmoke=false;
+    dummyEvent.altjump=false;
+    dummyEvent.altrun=false;
+    dummyEvent.down=false;
+    dummyEvent.drop=false;
+    dummyEvent.jump=false;
+    dummyEvent.left=false;
+    dummyEvent.right=false;
+    dummyEvent.run=false;
+    dummyEvent.start=false;
+    dummyEvent.up=false;
+    dummyEvent.autostart=false;
+    dummyEvent.movelayer="";
+    dummyEvent.layer_speed_x=0;
+    dummyEvent.layer_speed_y=0;
+    dummyEvent.move_camera_x=0;
+    dummyEvent.move_camera_y=0;
+    dummyEvent.scroll_section=0;
+
+    LevelEvents_layers events_layers;
+    dummyEvent.layers.clear();
+    for(int j=0; j< 21; j++)
+    {
+        events_layers.hide="";
+        events_layers.show="";
+        events_layers.toggle="";
+        dummyEvent.layers.push_back(events_layers);
+    }
+    dummyEvent.layers_hide.clear();
+    dummyEvent.layers_show.clear();
+    dummyEvent.layers_toggle.clear();
+
+    LevelEvents_Sets events_sets;
+    dummyEvent.sets.clear();
+    for(int j=0; j< 21; j++)
+    {
+        events_sets.music_id=0;
+        events_sets.background_id=0;
+        events_sets.position_left=0;
+        events_sets.position_top=-1;
+        events_sets.position_bottom=-1;
+        events_sets.position_right=-1;
+        dummyEvent.sets.push_back(events_sets);
+    }
+
+
+    dummyEvent.array_id=0;
+    return dummyEvent;
+}
+
+
+LevelSection FileFormats::dummyLvlSection()
+{
+    LevelSection dummySection;
+    dummySection.id = 0;
+    dummySection.size_top=0;
+    dummySection.size_bottom=0;
+    dummySection.size_left=0;
+    dummySection.size_right=0;
+    dummySection.music_id=0;
+    dummySection.bgcolor=16291944;
+    dummySection.IsWarp=false;
+    dummySection.OffScreenEn=false;
+    dummySection.background=0;
+    dummySection.noback=false;
+    dummySection.underwater=false;
+    dummySection.music_file="";
+
+    return dummySection;
+}
+
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
@@ -178,19 +349,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     {
         for(i=i;i<21;i++)
             {
-            section.size_left=0;
-            section.size_top=0;
-            section.size_bottom=0;
-            section.size_right=0;
-            section.music_id=0;
-            section.bgcolor=16291944;
-            section.IsWarp=false;
-            section.OffScreenEn=false;
-            section.background=0;
-            section.noback=false;
-            section.underwater=false;
-            section.music_file="";
-
+            section = dummyLvlSection();
             section.id=i;
 
         FileData.sections.push_back(section); //Add Section in main array
@@ -231,6 +390,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     str_count++;line = in.readLine();
     while(line!="\"next\"")
     {
+        blocks = dummyLvlBlock();
+
         if(SMBX64::sInt(line)) //Block x
             goto badfile;
         else blocks.x = line.toInt();
@@ -271,7 +432,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             if(SMBX64::wBool(line)) //Slippery
                 goto badfile;
             else blocks.slippery = ((line=="#TRUE#")?true:false);
-        } else blocks.slippery = false;
+        }// else blocks.slippery = false;
 
         if(file_format >= 10)
         {
@@ -295,13 +456,14 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 goto badfile;
             else blocks.event_no_more = removeQuotes(line);
         }
+        /*
         else
         {  //Set default if loading old file version
             blocks.layer = "Default";
             blocks.event_destroy="";
             blocks.event_hit="";
             blocks.event_no_more="";
-        }
+        }*/
 
         blocks.array_id = FileData.blocks_array_id;
         FileData.blocks_array_id++;
@@ -316,6 +478,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     str_count++;line = in.readLine();
     while(line!="\"next\"")
     {
+        bgodata = dummyLvlBgo();
+
         if(SMBX64::sInt(line)) //BGO x
             goto badfile;
         else bgodata.x = line.toInt();
@@ -337,9 +501,9 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 goto badfile;
             else bgodata.layer = removeQuotes(line);
         }
-        else bgodata.layer = "Default";
+        //else bgodata.layer = "Default";
 
-        bgodata.smbx64_sp = 0;
+        bgodata.smbx64_sp = -1;
 
         bgodata.array_id = FileData.bgo_array_id;
         FileData.bgo_array_id++;
@@ -356,14 +520,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
      str_count++;line = in.readLine();
      while(line!="\"next\"")
      {
-        /*  Used only for debug
-         QMessageBox::warning(this, tr("Debug"),
-         tr(QString("Debug\nLine X: %1\n"
-                    "Converted: %2").arg(line)  //Print Bad data string
-                    .arg( (long)round(line.toDouble()))
-            .toStdString().c_str() ),
-             QMessageBox::Ok);
-        */
+
+         npcdata = dummyLvlNpc();
 
          if(SMBX64::sFloat(line)) //NPC x
              goto badfile;
@@ -480,6 +638,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                  goto badfile;
              else npcdata.event_nomore = removeQuotes(line);
         }
+         /*
          else
          {
             npcdata.special_data = -1;
@@ -495,7 +654,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             npcdata.event_die="";
             npcdata.event_talk="";
             npcdata.event_nomore="";
-         }
+         }*/
 
 
          if(file_format >= 63)
@@ -504,7 +663,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
              if(SMBX64::qStr(line)) //Layer name to attach
                  goto badfile;
              else npcdata.attach_layer = removeQuotes(line);
-         }  else npcdata.attach_layer = "";
+         } // else npcdata.attach_layer = "";
 
          npcdata.array_id = FileData.npc_array_id;
          FileData.npc_array_id++;
@@ -671,6 +830,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         while(line!="\"next\"")
         {
+            waters = dummyLvlWater();
             if(SMBX64::sInt(line)) //Water x
                 goto badfile;
             else waters.x = line.toInt();
@@ -703,7 +863,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                     goto badfile;
                 else waters.quicksand = ((line=="#TRUE#")?true:false);
             }
-            else waters.quicksand = false;
+            //else waters.quicksand = false;
 
 
             str_count++;line = in.readLine();
@@ -747,6 +907,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         while((line!="")&&(!line.isNull()))
         {
+            events = dummyLvlEvent();
             if(SMBX64::qStr(line)) //Event name
                 goto badfile;
             else events.name=removeQuotes(line);
@@ -764,7 +925,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                     goto badfile;
                 else events.sound_id  = line.toInt();
             }
-            else events.sound_id  = 0;
+            //else events.sound_id  = 0;
 
             str_count++;line = in.readLine();
             if(SMBX64::Int(line)) //EndGame
@@ -799,7 +960,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 if(events_layers.show!="") events.layers_show.push_back(events_layers.show);
                 if(events_layers.toggle!="") events.layers_toggle.push_back(events_layers.toggle);
 
-            events.layers.push_back(events_layers);
+                events.layers.push_back(events_layers);
             }
 
             events.sets.clear();
@@ -904,6 +1065,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                     goto badfile;
                 else events.up = ((line=="#TRUE#")?true:false);
             }
+            /*
             else
             {
                 events.trigger= "";
@@ -919,7 +1081,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 events.run=false;
                 events.start=false;
                 events.up=false;
-            }
+            }*/
 
             if(file_format>=32)
             {
@@ -944,13 +1106,14 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 else events.layer_speed_y = line.replace(QChar(','), QChar('.')).toFloat();
 
             }
+            /*
             else
             {
                 events.autostart = false;
                 events.movelayer = "";
                 events.layer_speed_x = 0;
                 events.layer_speed_x = 0;
-            }
+            }*/
 
 
             if(file_format>=49)
@@ -970,12 +1133,13 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                     goto badfile;
                 else events.scroll_section = line.toInt();
             }
+            /*
             else
             {
                 events.move_camera_x = 0;
                 events.move_camera_y = 0;
                 events.scroll_section = 0;
-            }
+            }*/
 
             events.array_id = FileData.events_array_id;
             FileData.events_array_id++;
@@ -1031,10 +1195,11 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             if(ev.name=="P Switch - End") pend=true;
         }
 
+        events = dummyLvlEvent();
+        /*
         events.msg="";
         events.sound_id=0;
         events.end_game=0;
-
         events.layers.clear();
         for(int j=0; j< 21; j++)
         {
@@ -1057,7 +1222,6 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             events_sets.position_right=-1;
             events.sets.push_back(events_sets);
         }
-
         events.trigger="";
         events.trigger_timer=0;
 
@@ -1082,7 +1246,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         events.move_camera_x=0;
         events.move_camera_y=0;
         events.scroll_section=0;
-
+        */
         if(!lstart)
         {
             events.array_id = FileData.events_array_id;
@@ -1281,6 +1445,12 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
     //Doors
     for(i=0; i<FileData.doors.size(); i++)
     {
+
+        if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )
+            if(!FileData.doors[i].isSetIn) continue; // Skip brocken door
+        if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_i)) )
+            if(!FileData.doors[i].isSetOut) continue; // Skip brocken door
+
         TextData += SMBX64::IntS(FileData.doors[i].ix);
         TextData += SMBX64::IntS(FileData.doors[i].iy);
         TextData += SMBX64::IntS(FileData.doors[i].ox);

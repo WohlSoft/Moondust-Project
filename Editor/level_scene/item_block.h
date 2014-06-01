@@ -67,7 +67,7 @@ public:
     void setLayer(QString layer);
     void setBlockSize(QRect rect);
 
-    void setIncludedNPC(int npcID);
+    void setIncludedNPC(int npcID, bool init=false);
 
     void arrayApply();
     void removeFromArray();

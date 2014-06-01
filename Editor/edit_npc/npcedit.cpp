@@ -27,8 +27,12 @@ npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
     ui(new Ui::npcedit)
 {
     pConfigs = configs;
+    PreviewScene=NULL;
+    physics=NULL;
+    npcPreview=NULL;
     npc_id = 0;
     FileType = 2;
+    direction = -1;
     isUntitled = true;
     isModyfied  = false;
     ui->setupUi(this);
@@ -44,6 +48,9 @@ npcedit::~npcedit()
 void npcedit::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {
+        if(physics) delete physics;
+        if(npcPreview) delete npcPreview;
+        if(PreviewScene) delete PreviewScene;
         event->accept();
     } else {
         event->ignore();

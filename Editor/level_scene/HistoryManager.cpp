@@ -132,6 +132,35 @@ void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerNa
     historyChanged = true;
 }
 
+void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
+{
+    cleanupRedoElements();
+
+    HistoryOperation resizeBlOperation;
+    resizeBlOperation.type = HistoryOperation::LEVELHISTORY_RESIZEBLOCK;
+    LevelData blData;
+    blData.blocks.push_back(bl);
+    resizeBlOperation.data = blData;
+    QList<QVariant> oldSizes;
+    QList<QVariant> newSizes;
+    QList<QVariant> package;
+    oldSizes.push_back(QVariant((qlonglong)oldLeft));
+    oldSizes.push_back(QVariant((qlonglong)oldTop));
+    oldSizes.push_back(QVariant((qlonglong)oldRight));
+    oldSizes.push_back(QVariant((qlonglong)oldBottom));
+    newSizes.push_back(QVariant((qlonglong)newLeft));
+    newSizes.push_back(QVariant((qlonglong)newTop));
+    newSizes.push_back(QVariant((qlonglong)newRight));
+    newSizes.push_back(QVariant((qlonglong)newBottom));
+    package.push_back(oldSizes);
+    package.push_back(newSizes);
+    resizeBlOperation.extraData = QVariant(package);
+    operationList.push_back(resizeBlOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -271,6 +300,14 @@ void LvlScene::historyBack()
 
         CallbackData cbData;
         findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
+    {
+        LevelData resizedBlock = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyUndoResizeBlock, 0, 0, 0, false, true, true, true);
         break;
     }
     default:
@@ -432,6 +469,14 @@ void LvlScene::historyForward()
 
         CallbackData cbData;
         findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
+    {
+        LevelData resizedBlock = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyRedoResizeBlock, 0, 0, 0, false, true, true, true);
         break;
     }
     default:
@@ -645,8 +690,8 @@ void LvlScene::historyUndoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
 {
     ItemBlock* targetItem = (ItemBlock*)cbData.item;
     int targetNPC_id = cbData.hist->extraData.toList()[0].toInt();
-    targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
-    targetItem->arrayApply();
+    //targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
+    //targetItem->arrayApply();
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
 }
 
@@ -654,8 +699,8 @@ void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
 {
     ItemBlock* targetItem = (ItemBlock*)cbData.item;
     int targetNPC_id = cbData.hist->extraData.toList()[1].toInt();
-    targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
-    targetItem->arrayApply();
+    //targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
+    //targetItem->arrayApply();
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
 }
 
@@ -787,6 +832,28 @@ void LvlScene::historyRedoChangeLayerWater(LvlScene::CallbackData cbData, LevelW
         }
     }
     targetItem->arrayApply();
+}
+
+void LvlScene::historyUndoResizeBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    QList<QVariant> package = cbData.hist->extraData.toList();
+    QList<QVariant> oldSizes = package[0].toList();
+    long tarLeft = (long)oldSizes[0].toLongLong();
+    long tarTop = (long)oldSizes[1].toLongLong();
+    long tarRight = (long)oldSizes[2].toLongLong();
+    long tarBottom = (long)oldSizes[3].toLongLong();
+    ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
+}
+
+void LvlScene::historyRedoResizeBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    QList<QVariant> package = cbData.hist->extraData.toList();
+    QList<QVariant> oldSizes = package[1].toList();
+    long tarLeft = (long)oldSizes[0].toLongLong();
+    long tarTop = (long)oldSizes[1].toLongLong();
+    long tarRight = (long)oldSizes[2].toLongLong();
+    long tarBottom = (long)oldSizes[3].toLongLong();
+    ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
 }
 
 void LvlScene::findGraphicsItem(LevelData toFind,

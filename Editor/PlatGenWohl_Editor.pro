@@ -16,6 +16,8 @@ TRANSLATIONS += languages/editor_en.ts \
     languages/editor_uk.ts \
     languages/editor_de.ts \
     languages/editor_es.ts \
+    languages/editor_nl.ts \
+    languages/editor_it.ts \
     languages/editor_fr.ts
 
 SOURCES += main.cpp\
@@ -87,7 +89,8 @@ SOURCES += main.cpp\
     main_window/dock/lvl_item_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/lvl_door_props.cpp \
-    main_window/dock/lvl_item_toolbox.cpp
+    main_window/dock/lvl_item_toolbox.cpp \
+    edit_npc/npceditscene.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -120,7 +123,9 @@ HEADERS  += mainwindow.h \
     level_scene/item_water.h \
     main_window/global_settings.h \
     level_scene/item_door.h \
-    level_scene/lvl_item_placing.h
+    level_scene/lvl_item_placing.h \
+    data_configs/obj_npc.h \
+    edit_npc/npceditscene.h
 
 FORMS    += \
     mainwindow.ui \

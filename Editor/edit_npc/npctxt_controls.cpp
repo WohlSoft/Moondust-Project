@@ -47,6 +47,7 @@ void npcedit::on_en_GFXOffsetX_clicked()
         ui->GFXOffSetX->setEnabled(false);
         NpcData.en_gfxoffsetx=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -63,6 +64,7 @@ void npcedit::on_en_GFXOffsetY_clicked()
         ui->GFXOffSetY->setEnabled(false);
         NpcData.en_gfxoffsety=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -79,6 +81,7 @@ void npcedit::on_En_GFXw_clicked()
         ui->GFXw->setEnabled(false);
         NpcData.en_gfxwidth=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -95,6 +98,7 @@ void npcedit::on_En_GFXh_clicked()
         ui->GFXh->setEnabled(false);
         NpcData.en_gfxheight=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -111,6 +115,7 @@ void npcedit::on_En_Frames_clicked()
         ui->Frames->setEnabled(false);
         NpcData.en_frames=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -127,6 +132,7 @@ void npcedit::on_En_Framespeed_clicked()
         ui->Framespeed->setEnabled(false);
         NpcData.en_framespeed=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -143,6 +149,7 @@ void npcedit::on_En_Framestyle_clicked()
         ui->FrameStyle->setEnabled(false);
         NpcData.en_framestyle=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -303,6 +310,7 @@ void npcedit::on_En_Width_clicked()
         ui->Width->setEnabled(false);
         NpcData.en_width=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -319,6 +327,7 @@ void npcedit::on_En_Height_clicked()
         ui->Height->setEnabled(false);
         NpcData.en_height=false;
     }
+    updatePreview();
     documentWasModified();
 }
 
@@ -471,6 +480,7 @@ void npcedit::on_GFXOffSetX_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxoffsetx = arg1;
+    updatePreview();
 }
 
 
@@ -479,6 +489,7 @@ void npcedit::on_GFXOffSetY_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxoffsety = arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -486,6 +497,7 @@ void npcedit::on_GFXw_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxwidth = arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -493,6 +505,7 @@ void npcedit::on_GFXh_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.gfxheight = arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -500,6 +513,7 @@ void npcedit::on_Frames_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.frames = arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -507,6 +521,7 @@ void npcedit::on_Framespeed_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.framespeed=arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -514,6 +529,7 @@ void npcedit::on_FrameStyle_currentIndexChanged(int index)
 {
     documentWasModified();
     NpcData.framestyle=index;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -584,6 +600,7 @@ void npcedit::on_Width_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.width=arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -591,6 +608,7 @@ void npcedit::on_Height_valueChanged(int arg1)
 {
     documentWasModified();
     NpcData.height=arg1;
+    updatePreview();
 }
 
 ////////////////////////////////////////////////////////////////
@@ -656,3 +674,190 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
     NpcData.nohammer=arg1;
 }
 ////////////////////////////////////////////////////////////////
+
+
+
+void npcedit::on_DirectLeft_clicked()
+{
+    ui->DirectLeft->setChecked(true);
+    ui->DirectRight->setChecked(false);
+    direction = -1;
+    updatePreview();
+}
+
+void npcedit::on_DirectRight_clicked()
+{
+    ui->DirectRight->setChecked(true);
+    ui->DirectLeft->setChecked(false);
+    direction = 1;
+    updatePreview();
+}
+////////////////////////////////////////////////////////////////
+
+void npcedit::loadPreview()
+{
+    if(npc_id==0) return;
+
+    if(PreviewScene==NULL) PreviewScene = new QGraphicsScene();
+    if(physics==NULL) physics = new QGraphicsRectItem();
+
+    PreviewScene->setSceneRect(0,0, ui->PreviewBox->width()-20, ui->PreviewBox->height()-20);
+
+    if(npcPreview==NULL)
+    {
+        npcPreview = new ItemNPC(true);
+        npcPreview->setScenePoint();
+    }
+    LevelNPC npcData = FileFormats::dummyLvlNpc();
+    npcData.id = npc_id;
+    npcData.x = 10;
+    npcData.y = 10;
+    npcPreview->setNpcData(npcData);
+    obj_npc targetNPC;
+
+    //npcData.id = npc_id;
+    bool found = false;
+    foreach(obj_npc npc, pConfigs->main_npc)
+    {
+        if(npc.id == npc_id){
+            targetNPC = npc;
+            found = true;
+            break;
+        }
+    }
+
+    if(!found)
+    {
+        WriteToLog(QtWarningMsg, QString("NPC-Edit Preview -> Array Entry not found"));
+        return;
+    }
+    else
+    {
+        WriteToLog(QtDebugMsg, QString("NPC-Edit Preview -> Array Entry already loaded"));
+    }
+
+
+    defaultNPC = targetNPC;
+
+    targetNPC = FileFormats::mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
+    npcPreview->localProps = targetNPC;
+
+    loadImageFile();
+    npcPreview->setMainPixmap(npcImage);
+
+    PreviewScene->addItem(npcPreview);
+
+    npcPreview->setAnimation(npcPreview->localProps.frames,
+                          npcPreview->localProps.framespeed,
+                          npcPreview->localProps.framestyle,
+                          direction,
+                          npcPreview->localProps.custom_animate,
+                          npcPreview->localProps.custom_ani_fl,
+                          npcPreview->localProps.custom_ani_el,
+                          npcPreview->localProps.custom_ani_fr,
+                          npcPreview->localProps.custom_ani_er);
+
+    npcPreview->setFlag(QGraphicsItem::ItemIsSelectable, false);
+    npcPreview->setFlag(QGraphicsItem::ItemIsMovable, false);
+    npcPreview->setZValue(1);
+
+    if(npcPreview->localProps.frames>1)
+    {
+        npcPreview->setData(4, "animated");
+        npcPreview->AnimationStart();
+    }
+
+    physics->setPen(QPen(Qt::red, 1, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+    physics->setBrush(Qt::transparent);
+    physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
+
+    PreviewScene->addItem(physics);
+
+    physics->setZValue(777);
+    ui->PreviewBox->setScene(PreviewScene);
+    ui->PreviewBox->setBackgroundBrush(Qt::white);
+
+    npcPreview->setPos(
+                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                );
+    physics->setPos(
+                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                );
+
+
+    //npcPreview
+}
+
+void npcedit::updatePreview()
+{
+    if(!physics || !npcPreview)
+        return;
+
+    npcPreview->localProps = FileFormats::mergeNPCConfigs(defaultNPC, NpcData, npcImage.size());
+
+    //update PhysicsBox
+    //update Dir
+    npcPreview->AnimationStop();
+    npcPreview->setMainPixmap(npcImage);
+    npcPreview->setAnimation(npcPreview->localProps.frames,
+                          npcPreview->localProps.framespeed,
+                          npcPreview->localProps.framestyle,
+                          direction,
+                          npcPreview->localProps.custom_animate,
+                          npcPreview->localProps.custom_ani_fl,
+                          npcPreview->localProps.custom_ani_el,
+                          npcPreview->localProps.custom_ani_fr,
+                          npcPreview->localProps.custom_ani_er, true);
+    npcPreview->AnimationStart();
+
+    physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
+
+    npcPreview->setPos(
+                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                );
+    physics->setPos(
+                (PreviewScene->width()/2)-(qreal(npcPreview->localProps.width)/qreal(2)) ,
+                (PreviewScene->height()/2)-(qreal(npcPreview->localProps.height)/qreal(2))
+                );
+
+}
+
+
+void npcedit::loadImageFile()
+{
+    QString imagePath = QFileInfo(curFile).dir().absolutePath()+"/";
+
+    if(QFile::exists(imagePath + defaultNPC.image_n))
+    {
+        if(QFile::exists(imagePath + defaultNPC.mask_n))
+            npcMask = QBitmap(imagePath + defaultNPC.mask_n );
+        else
+            npcMask = defaultNPC.mask;
+
+        npcImage = QPixmap( imagePath + defaultNPC.image_n );
+
+        if((npcImage.height()!=npcMask.height())||(npcImage.width()!=npcMask.width()))
+            npcMask = npcMask.copy(0,0,npcImage.width(),npcImage.height());
+        npcImage.setMask(npcMask);
+
+        WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+    }
+    else
+    {
+        npcImage = defaultNPC.image;
+        WriteToLog(QtDebugMsg, QString("System image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
+    }
+
+    WriteToLog(QtDebugMsg, QString("path %1").arg(imagePath + defaultNPC.image_n));
+
+}
+
+void npcedit::refreshImageFile()
+{
+    loadImageFile();
+    npcPreview->AnimationStop();
+    npcPreview->setMainPixmap(npcImage);
+}

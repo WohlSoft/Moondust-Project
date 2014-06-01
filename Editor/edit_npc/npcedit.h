@@ -25,6 +25,7 @@
 
 #include "../data_configs/data_configs.h"
 #include "../file_formats/npc_filedata.h"
+#include "../level_scene/item_npc.h"
 
 namespace Ui {
 class npcedit;
@@ -114,6 +115,10 @@ private slots:
     void on_En_NoHammer_clicked();
     void on_NoHammer_stateChanged(int arg1);
 
+    void on_DirectLeft_clicked();
+
+    void on_DirectRight_clicked();
+
 private:
     Ui::npcedit *ui;
 
@@ -121,6 +126,22 @@ private:
     NPCConfigFile StartNPCData;
     NPCConfigFile DefaultNPCData;
     void setDefaultData(unsigned long npc_id);
+
+    QGraphicsScene * PreviewScene;
+
+    void loadPreview();
+    void updatePreview();
+
+    void loadImageFile();
+    void refreshImageFile();
+
+    ItemNPC* npcPreview;
+    QGraphicsRectItem * physics;
+
+    QPixmap npcImage;
+    QBitmap npcMask;
+    obj_npc defaultNPC;
+    int direction;
 
     bool isModyfied;
 
