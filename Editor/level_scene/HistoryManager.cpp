@@ -690,8 +690,8 @@ void LvlScene::historyUndoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
 {
     ItemBlock* targetItem = (ItemBlock*)cbData.item;
     int targetNPC_id = cbData.hist->extraData.toList()[0].toInt();
-    targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
-    targetItem->arrayApply();
+    //targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
+    //targetItem->arrayApply();
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
 }
 
@@ -699,8 +699,8 @@ void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
 {
     ItemBlock* targetItem = (ItemBlock*)cbData.item;
     int targetNPC_id = cbData.hist->extraData.toList()[1].toInt();
-    targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
-    targetItem->arrayApply();
+    //targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
+    //targetItem->arrayApply();
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
 }
 
