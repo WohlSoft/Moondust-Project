@@ -268,7 +268,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     //////////////////////////////Included NPC////////////////////////////////////////
     if(block.npc_id != 0)
     {
-        BlockImage->setIncludedNPC(block.npc_id);
+        BlockImage->setIncludedNPC(block.npc_id, true);
     }
     //////////////////////////////////////////////////////////////////////////////////
 
@@ -531,24 +531,35 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         //WriteToLog(QtDebugMsg, "NPC place -> set Props");
     NPCItem->localProps = mergedSet;
 
-    if(npc.generator)
-        NPCItem->gridSize=16;
-    else
-        NPCItem->gridSize = mergedSet.grid;
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
     NPCItem->setMainPixmap(tImg);
 
         //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
     NPCItem->setContextMenu(npcMenu);
 
-        //WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
+        WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
 
     addItem(NPCItem);
 
+    if(NPCItem->localProps.foreground)
+        NPCItem->setZValue(npcZf);
+    else
+    if(NPCItem->localProps.background)
+        NPCItem->setZValue(npcZb);
+    else
+        NPCItem->setZValue(npcZs);
+
+        WriteToLog(QtDebugMsg, "NPC place -> set Generator");
+    NPCItem->setGenerator(npc.generator, npc.generator_direct, npc.generator_type, true);
+
+    if((mergedSet.container)&&(npc.special_data>0))
+        NPCItem->setIncludedNPC(npc.special_data, true);
+
+        WriteToLog(QtDebugMsg, "NPC place -> calculate grid");
     QPoint newPos = QPoint(npc.x, npc.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(npc.x, npc.y), NPCItem->localProps.grid,
+        newPos = applyGrid(QPoint(npc.x, npc.y), NPCItem->gridSize,
                            QPoint(NPCItem->localProps.grid_offset_x,
                                   NPCItem->localProps.grid_offset_y));
         npc.x = newPos.x();
@@ -556,8 +567,10 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     }
 
 
+        WriteToLog(QtDebugMsg, "NPC place -> set position");
     NPCItem->setPos( QPointF(newPos) );
 
+        WriteToLog(QtDebugMsg, "NPC place -> set animation");
     NPCItem->setAnimation(NPCItem->localProps.frames,
                           NPCItem->localProps.framespeed,
                           NPCItem->localProps.framestyle,
@@ -568,22 +581,15 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
                           NPCItem->localProps.custom_ani_fr,
                           NPCItem->localProps.custom_ani_er);
 
-
+        WriteToLog(QtDebugMsg, "NPC place -> set flags");
     NPCItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
     NPCItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
 
     //npcfore->addToGroup(box);
 
+        WriteToLog(QtDebugMsg, "NPC place -> set props");
     if(NPCItem->localProps.frames>1)
         NPCItem->setData(4, "animated");
-
-    if(NPCItem->localProps.foreground)
-        NPCItem->setZValue(npcZf);
-    else
-    if(NPCItem->localProps.background)
-        NPCItem->setZValue(npcZb);
-    else
-        NPCItem->setZValue(npcZs);
 
     NPCItem->setData(0, "NPC"); // ObjType
     NPCItem->setData(1, QString::number(npc.id) );
@@ -593,6 +599,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setData(10, QString::number(NPCItem->localProps.height) ); //height
 
     if(PasteFromBuffer) NPCItem->setSelected(true);
+    WriteToLog(QtDebugMsg, "NPC place -> done");
 }
 
 
