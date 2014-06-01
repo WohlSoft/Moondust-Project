@@ -24,6 +24,7 @@ class LvlPlacingItems
 {
 public:
     static LevelNPC npcSet;
+    static long npcGrid;
     static LevelBlock blockSet;
 
     static bool sizableBlock;
