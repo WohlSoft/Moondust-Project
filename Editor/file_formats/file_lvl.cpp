@@ -40,7 +40,7 @@ LevelNPC    FileFormats::dummyLvlNpc()
     dummyNPC.generator=false;
     dummyNPC.generator_type=1;
     dummyNPC.generator_direct=1;
-    dummyNPC.generator_period=2;
+    dummyNPC.generator_period=20;
     dummyNPC.msg="";
     dummyNPC.friendly=false;
     dummyNPC.nomove=false;
