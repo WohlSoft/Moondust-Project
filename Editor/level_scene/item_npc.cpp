@@ -539,6 +539,7 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
             generatorArrow->setPixmap( QPixmap(":/npc/warp.png") );
             break;
         }
+        if(!init) npcData.generator_type = type;
 
         scene->addItem( generatorArrow );
 
