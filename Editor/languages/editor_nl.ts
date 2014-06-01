@@ -1,102 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="uk_UA">
+<TS version="2.1" language="nl_NL">
 <context>
     <name>AppSettings</name>
     <message>
         <location filename="../main_window/appsettings.ui" line="20"/>
         <source>Settings</source>
-        <translation>Настройки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="34"/>
         <source>Main</source>
-        <translation>Основні</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="40"/>
         <source>Music player</source>
-        <translation>Музичний програвач</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="46"/>
         <source>Autoplay music on file open</source>
-        <translation>Автовмикання музики</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="56"/>
         <source>Performance</source>
-        <translation>Швидкодія</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="62"/>
         <source>Animation</source>
-        <translation>Анімація</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="79"/>
         <source>Animation Items limit</source>
-        <translation>Межа об&apos;єктів</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="86"/>
         <source>Collision detection</source>
-        <translation>Знаходження колізій</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="110"/>
         <source>Loging</source>
-        <translation>Журнал</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="116"/>
         <source>Log level</source>
-        <translation>Рівень звіту</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="126"/>
         <source>Browse</source>
-        <translation>Огляд</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="133"/>
         <source>Log file</source>
-        <translation>Файл звіту</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="141"/>
         <source>Disable logging</source>
-        <translation>Вимкнути ведення звітів</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="146"/>
         <source>Fatal</source>
-        <translation>Фатальні помилки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="151"/>
         <source>Crytical</source>
-        <translation>Критичні помилки</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="156"/>
         <source>Warning</source>
-        <translation>Попередження</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="161"/>
         <source>Debug</source>
-        <translation>Налагодження</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="53"/>
         <source>Set log file</source>
-        <translation>Вибір файла звіту</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="54"/>
         <source>Text files (*.txt *.log)</source>
-        <translation>Текстові файли (*.txt *.log)</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -104,39 +104,38 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="19"/>
         <source>Export to image</source>
-        <translation>Експорт в зображення</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="32"/>
         <location filename="../edit_level/saveimage.ui" line="64"/>
         <source> px</source>
-        <translation>px</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="47"/>
         <source>Please, select target image size:</source>
-        <translation type="unfinished">Будь ласка, вкажіть розмір
-зображення для збереження:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="57"/>
         <source>Save proportion</source>
-        <translation>Зберегти пропорції</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="74"/>
         <source>Width</source>
-        <translation>Ширина</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="94"/>
         <source>Export current section to image</source>
-        <translation>Зробити знімок секції у файл</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="104"/>
         <source>Height</source>
-        <translation>Висота</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -144,27 +143,27 @@
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="81"/>
         <source>Layer: </source>
-        <translation>Шар: </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="86"/>
         <source>Add to new layer...</source>
-        <translation>Додати на новий шар...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="103"/>
         <source>Copy</source>
-        <translation>Копіювати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="104"/>
         <source>Cut</source>
-        <translation>Вирізати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="106"/>
         <source>Remove</source>
-        <translation>Видалити</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="108"/>
@@ -177,52 +176,52 @@
     <message>
         <location filename="../level_scene/item_block.cpp" line="78"/>
         <source>Layer: </source>
-        <translation>Шар: </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="83"/>
         <source>Add to new layer...</source>
-        <translation>Додати на новий шар...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="91"/>
         <source> [hidden]</source>
-        <translation> [Прихований]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="101"/>
         <source>Invisible</source>
-        <translation>Невидимий</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="105"/>
         <source>Slippery</source>
-        <translation>Слизький</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="109"/>
         <source>Resize</source>
-        <translation>Змінити розмір</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="113"/>
         <source>Change included NPC...</source>
-        <translation>Змінити вміст блока...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="116"/>
         <source>Copy</source>
-        <translation>Копіювати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="117"/>
         <source>Cut</source>
-        <translation>Вирізати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="119"/>
         <source>Remove</source>
-        <translation>Видалити</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="121"/>
@@ -235,12 +234,12 @@
     <message>
         <location filename="../level_scene/item_door.cpp" line="75"/>
         <source>Layer: </source>
-        <translation type="unfinished">Шар: </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="80"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished">Додати на новий шар...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="101"/>
@@ -255,17 +254,17 @@
     <message>
         <location filename="../level_scene/item_door.cpp" line="112"/>
         <source>Copy</source>
-        <translation type="unfinished">Копіювати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="114"/>
         <source>Cut</source>
-        <translation type="unfinished">Вирізати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="118"/>
         <source>Remove</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -287,12 +286,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="102"/>
         <source>Layer: </source>
-        <translation type="unfinished">Шар: </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="107"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished">Додати на новий шар...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="126"/>
@@ -342,17 +341,17 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="164"/>
         <source>Copy</source>
-        <translation type="unfinished">Копіювати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="165"/>
         <source>Cut</source>
-        <translation type="unfinished">Вирізати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="167"/>
         <source>Remove</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="169"/>
@@ -365,12 +364,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/item_water.cpp" line="87"/>
         <source>Layer: </source>
-        <translation type="unfinished">Шар: </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="92"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished">Додати на новий шар...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="110"/>
@@ -390,17 +389,17 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/item_water.cpp" line="121"/>
         <source>Copy</source>
-        <translation type="unfinished">Копіювати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="122"/>
         <source>Cut</source>
-        <translation type="unfinished">Вирізати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="125"/>
         <source>Remove</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -504,7 +503,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="260"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Korrektion</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="292"/>
@@ -722,7 +721,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1778"/>
         <source>Main</source>
-        <translation type="unfinished">Основні</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1800"/>
@@ -841,24 +840,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3159"/>
-        <location filename="../mainwindow.ui" line="4583"/>
-        <source>Layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3190"/>
-        <source>Remove</source>
-        <translation type="unfinished">Видалити</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3200"/>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3210"/>
-        <source>Lock</source>
+        <location filename="../mainwindow.ui" line="2292"/>
+        <source>Go To...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -874,17 +857,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2381"/>
         <source>Resize</source>
-        <translation type="unfinished">Змінити розмір</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="2495"/>
-        <source>Invisible</source>
-        <translation type="unfinished">Невидимий</translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="2502"/>
-        <source>Slippery</source>
-        <translation type="unfinished">Слизький</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2396"/>
@@ -896,11 +869,6 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2586"/>
         <location filename="../mainwindow.ui" line="2986"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="2522"/>
-        <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -920,55 +888,28 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2558"/>
-        <source>BGO</source>
+        <location filename="../mainwindow.ui" line="2495"/>
+        <source>Invisible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2709"/>
-        <location filename="../mainwindow.ui" line="2890"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="210"/>
-        <source>Direction</source>
+        <location filename="../mainwindow.ui" line="2502"/>
+        <source>Slippery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2740"/>
-        <source>Random</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3008"/>
-        <source>Attach to:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3037"/>
-        <source>Activate:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3059"/>
-        <source>Death:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="3081"/>
-        <source>Talk:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="2757"/>
-        <source>Friendly</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="2292"/>
-        <source>Go To...</source>
+        <location filename="../mainwindow.ui" line="2522"/>
+        <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2539"/>
         <source>Square fill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2558"/>
+        <source>BGO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -985,6 +926,23 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2655"/>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2709"/>
+        <location filename="../mainwindow.ui" line="2890"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="210"/>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2740"/>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2757"/>
+        <source>Friendly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1021,6 +979,47 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="2962"/>
         <source>Delay:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3008"/>
+        <source>Attach to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3037"/>
+        <source>Activate:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3059"/>
+        <source>Death:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3081"/>
+        <source>Talk:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3159"/>
+        <location filename="../mainwindow.ui" line="4583"/>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3190"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3200"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3210"/>
+        <source>Lock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1482,7 +1481,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4378"/>
         <source>Animation</source>
-        <translation type="unfinished">Анімація</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4381"/>
@@ -1506,7 +1505,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4506"/>
         <source>Copy</source>
-        <translation type="unfinished">Копіювати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4509"/>
@@ -1557,7 +1556,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4606"/>
         <source>Cut</source>
-        <translation type="unfinished">Вирізати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4635"/>
@@ -1605,6 +1604,33 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="88"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="145"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="205"/>
+        <source>Position: [%1, %2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="98"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="512"/>
+        <source>%1 coins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="99"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="271"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="513"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="976"/>
+        <source>[empty]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="280"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="907"/>
+        <source>[none]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="199"/>
         <source>[No image]</source>
         <translation type="unfinished"></translation>
@@ -1634,6 +1660,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/edit_common.cpp" line="60"/>
         <source>Level file reloaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/edit_level_events.cpp" line="42"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="448"/>
+        <source>[None]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1720,39 +1752,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.cpp" line="172"/>
         <source>Create new NPC.txt configuration file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="88"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="145"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="205"/>
-        <source>Position: [%1, %2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="98"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="512"/>
-        <source>%1 coins</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="99"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="271"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="513"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="976"/>
-        <source>[empty]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="280"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="907"/>
-        <source>[none]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/edit_level_events.cpp" line="42"/>
-        <location filename="../main_window/edit_level_layers.cpp" line="448"/>
-        <source>[None]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1919,7 +1918,7 @@ File: %1
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="78"/>
         <source>Export current section to image</source>
-        <translation type="unfinished">Зробити знімок секції у файл</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="80"/>
@@ -2034,19 +2033,19 @@ Do you want to save your changes?</source>
         <location filename="../edit_npc/npcedit.ui" line="493"/>
         <location filename="../edit_npc/npcedit.ui" line="522"/>
         <source> px</source>
-        <translation type="unfinished">px</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="208"/>
         <location filename="../edit_npc/npcedit.ui" line="509"/>
         <source>Height</source>
-        <translation type="unfinished">Висота</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="221"/>
         <location filename="../edit_npc/npcedit.ui" line="480"/>
         <source>Width</source>
-        <translation type="unfinished">Ширина</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="284"/>

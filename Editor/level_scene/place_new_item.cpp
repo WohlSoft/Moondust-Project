@@ -19,6 +19,7 @@
 #include "lvlscene.h"
 #include "../edit_level/leveledit.h"
 
+#include "../file_formats/file_formats.h"
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
@@ -26,25 +27,20 @@
 
 #include "lvl_item_placing.h"
 
+/*
+    static LevelNPC dummyLvlNpc();
+    static LevelBlock dummyLvlBlock();
+    static LevelBGO dummyLvlBgo();
+    static LevelWater dummyLvlWater();
+    static LevelEvents dummyLvlEvent();
+*/
 
 //Default dataSets
-LevelNPC    LvlPlacingItems::npcSet={
-    0, 0, 0,  0, 0,false, 0, 0, 0, "", false,false,
-    false,"Default","", "","","", "",0,0
-};
-LevelBlock  LvlPlacingItems::blockSet=
-{
-    0,0,0,0,0,0,false,false,
-    "Default","","","",0,0
-};
-LevelBGO    LvlPlacingItems::bgoSet=
-{
-    0,0,0,"Default",0,0,0
-};
-LevelWater  LvlPlacingItems::waterSet=
-{
-    0,0,0,0,0,false,"Default",0,0
-};
+LevelNPC    LvlPlacingItems::npcSet=FileFormats::dummyLvlNpc();
+long        LvlPlacingItems::npcGrid=0;
+LevelBlock  LvlPlacingItems::blockSet=FileFormats::dummyLvlBlock();
+LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
+LevelWater  LvlPlacingItems::waterSet=FileFormats::dummyLvlWater();
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
 int LvlPlacingItems::waterType=0; //0 - Water, 1 - QuickSand
@@ -337,7 +333,13 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         tImg = getNPCimg(itemID);
 
-        LvlPlacingItems::gridSz=mergedSet.grid;
+        if(LvlPlacingItems::npcSet.generator)
+            LvlPlacingItems::gridSz=16;
+        else
+            LvlPlacingItems::gridSz=mergedSet.grid;
+
+        LvlPlacingItems::npcGrid=mergedSet.grid;
+
         LvlPlacingItems::gridOffset = QPoint(mergedSet.grid_offset_x,
                                              mergedSet.grid_offset_y);
 
@@ -348,7 +350,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         long imgOffsetY = (int)round( - (double)mergedSet.gfx_h +
                                       (double)mergedSet.height +
-                                      (double)mergedSet.gfx_offset_y );
+                                      (double)mergedSet.gfx_offset_y
+                                      -((pConfigs->marker_npc.buried == LvlPlacingItems::npcSet.id)? (double)mergedSet.gfx_h : 0) );
 
         ((QGraphicsPixmapItem *)cursor)->setOffset(
                     imgOffsetX+(-((double)mergedSet.gfx_offset_x)*

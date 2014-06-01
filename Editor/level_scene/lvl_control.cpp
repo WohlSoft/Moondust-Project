@@ -24,6 +24,7 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 #include "item_water.h"
+#include "item_door.h"
 
 #include "../common_features/mainwinconnect.h"
 #include "lvl_item_placing.h"
@@ -79,6 +80,22 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     ((ItemWater *)(*it))->removeFromArray();
                     if((*it)) delete (*it);
                     deleted=true;
+                }
+                else
+                if( objType=="Door_enter" )
+                {
+                    //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                    ((ItemDoor *)(*it))->removeFromArray();
+                    if((*it)) delete (*it);
+                    //deleted=true;
+                }
+                else
+                if( objType=="Door_exit" )
+                {
+                    //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                    ((ItemDoor *)(*it))->removeFromArray();
+                    if((*it)) delete (*it);
+                    //deleted=true;
                 }
         }
         if(deleted) addRemoveHistory(historyBuffer);
@@ -137,7 +154,7 @@ void LvlScene::openProps()
     dummyNPC.array_id=0;
 
     QList<QGraphicsItem * > items = this->selectedItems();
-    if((!items.isEmpty())&&(items.size()==1))
+    if(!items.isEmpty())
     {
         if(items.first()->data(0).toString()=="Block")
         {
@@ -313,10 +330,13 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     case MODE_PlacingNew:
         {
             this->clearSelection();
-            if(cursor) cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+            if(cursor)
+            {
+                        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
                                                          LvlPlacingItems::gridSz,
                                                          LvlPlacingItems::gridOffset)));
                        cursor->show();
+            }
             if( mouseEvent->buttons() & Qt::LeftButton ) placeItemUnderCursor();
             QGraphicsScene::mouseMoveEvent(mouseEvent);
             break;
@@ -558,6 +578,20 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemWater *)(*it))->removeFromArray();
                             deleted=true;
                         }
+                        else
+                        if( (*it)->data(0).toString()=="Door_enter" )
+                        {
+                            //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                            ((ItemDoor *)(*it))->removeFromArray();
+                            deleted=true;
+                        }
+                        else
+                        if( (*it)->data(0).toString()=="Door_exit" )
+                        {
+                            //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                            ((ItemDoor *)(*it))->removeFromArray();
+                            deleted=true;
+                        }
                         removeItem((*it));
                         continue;
                     }
@@ -724,6 +758,28 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
                             LvlData->modified = true;
                         }
+                        else
+                        if( ObjType == "Door_enter")
+                        {
+                            //Applay move into main array
+                            //historySourceBuffer.water.push_back(((ItemWater *)(*it))->waterData);
+                            ((ItemDoor *)(*it))->doorData.ix = (long)(*it)->scenePos().x();
+                            ((ItemDoor *)(*it))->doorData.iy = (long)(*it)->scenePos().y();
+                            ((ItemDoor *)(*it))->arrayApply();
+                            //historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
+                            LvlData->modified = true;
+                        }
+                        else
+                        if( ObjType == "Door_exit")
+                        {
+                            //Applay move into main array
+                            //historySourceBuffer.water.push_back(((ItemWater *)(*it))->waterData);
+                            ((ItemDoor *)(*it))->doorData.ox = (long)(*it)->scenePos().x();
+                            ((ItemDoor *)(*it))->doorData.oy = (long)(*it)->scenePos().y();
+                            ((ItemDoor *)(*it))->arrayApply();
+                            //historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
+                            LvlData->modified = true;
+                        }
                     }
                 }
 
@@ -786,8 +842,11 @@ void LvlScene::placeItemUnderCursor()
             LvlPlacingItems::npcSet.array_id = LvlData->npc_array_id;
 
             LvlData->npc.push_back(LvlPlacingItems::npcSet);
+
             placeNPC(LvlPlacingItems::npcSet, true);
+
             newData.npc.push_back(LvlPlacingItems::npcSet);
+
             wasPlaced=true;
         }
         else
@@ -819,7 +878,6 @@ void LvlScene::placeItemUnderCursor()
 
     if(opts.animationEnabled) stopAnimation();
     if(opts.animationEnabled) startBlockAnimation();
-
 }
 
 
@@ -986,10 +1044,10 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
                 long y = pResizer->pos().y();
                 long w = pResizer->_width;
                 long h = pResizer->_height;
-                //long oldX = ((ItemBlock *)pResizer->targetItem)->blockData.x;
-                //long oldY = ((ItemBlock *)pResizer->targetItem)->blockData.y;
-                //long oldW = ((ItemBlock *)pResizer->targetItem)->blockData.w;
-                //long oldH = ((ItemBlock *)pResizer->targetItem)->blockData.h;
+                long oldX = ((ItemBlock *)pResizer->targetItem)->blockData.x;
+                long oldY = ((ItemBlock *)pResizer->targetItem)->blockData.y;
+                long oldW = ((ItemBlock *)pResizer->targetItem)->blockData.w;
+                long oldH = ((ItemBlock *)pResizer->targetItem)->blockData.h;
                 ((ItemBlock *)pResizer->targetItem)->blockData.x = x;
                 ((ItemBlock *)pResizer->targetItem)->blockData.y = y;
                 ((ItemBlock *)pResizer->targetItem)->blockData.w = w;
@@ -998,7 +1056,7 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
                 ((ItemBlock *)pResizer->targetItem)->setBlockSize( QRect(x,y,w,h) );
                 LvlData->modified = true;
 
-                //addResizeSectionHistory(LvlData->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
+                addResizeBlockHistory(((ItemBlock *)pResizer->targetItem)->blockData, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
 
                 //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 //drawSpace();

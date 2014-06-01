@@ -31,6 +31,7 @@
 #include "../common_features/logger.h"
 
 #include "../common_features/mainwinconnect.h"
+#include "../main_window/music_player.h"
 
 #include <QDebug>
 
@@ -182,8 +183,11 @@ bool leveledit::saveFile(const QString &fileName)
     //set SMBX64 specified option to BGO
     for(int q=0; q< LvlData.bgo.size(); q++)
     {
+        if(LvlData.bgo[q].smbx64_sp < 0)
+        {
         if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
-        LvlData.bgo[q].smbx64_sp = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
+            LvlData.bgo[q].smbx64_sp = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
+        }
         //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
     }
 
@@ -338,6 +342,9 @@ void leveledit::closeEvent(QCloseEvent *event)
         MainWinConnect::pMainWin->on_actionSelect_triggered();
 
     if(maybeSave()) {
+        LvlMusPlay::musicForceReset = true;
+        MainWinConnect::pMainWin->setMusicButton(false);
+        MainWinConnect::pMainWin->setMusic(false);
         scene->uBGOs.clear();
         scene->uBGs.clear();
         scene->uBlocks.clear();

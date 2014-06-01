@@ -315,7 +315,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
              if(uNPC.withTxt)
              {  //Merge global and user's settings from NPC.txt file
-                 uNPC.merged = mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets, capturedS);
+                 uNPC.merged = FileFormats::mergeNPCConfigs(pConfigs->main_npc[i], uNPC.sets, capturedS);
              }
              else
              {
@@ -350,7 +350,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                      capturedS.setHeight(defGFX_h);
 
-                     uNPC.merged = mergeNPCConfigs(
+                     uNPC.merged = FileFormats::mergeNPCConfigs(
                                  pConfigs->main_npc[i],
                                  autoConf, capturedS);
                  }

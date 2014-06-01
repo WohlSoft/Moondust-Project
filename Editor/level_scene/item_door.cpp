@@ -273,6 +273,38 @@ void ItemDoor::arrayApply()
             break;
         }
     }
+
+    //Sync data to his pair door item
+    if(direction==D_Entrance)
+    {
+        if(doorData.isSetOut)
+        {
+            foreach(QGraphicsItem * door, scene->items())
+            {
+                if((door->data(0).toString()=="Door_exit")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
+                {
+                    ((ItemDoor *)door)->doorData = doorData;
+                    break;
+                }
+            }
+        }
+    }
+    else
+    {
+        if(doorData.isSetIn)
+        {
+            foreach(QGraphicsItem * door, scene->items())
+            {
+                if((door->data(0).toString()=="Door_enter")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
+                {
+                    ((ItemDoor *)door)->doorData = doorData;
+                    break;
+                }
+            }
+        }
+
+    }
+
 }
 
 void ItemDoor::removeFromArray()

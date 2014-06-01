@@ -52,7 +52,7 @@ public:
 
     void setCurrentSection(int scId);
     void ResetPosition();
-    void goTo(long x, long y);
+    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0));
 
     void changeCursor(int mode);
 
