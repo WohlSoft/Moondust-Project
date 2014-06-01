@@ -21,7 +21,7 @@
 #include "../mainwindow.h"
 
 #include "../file_formats/file_formats.h"
-
+#include "music_player.h"
 
 //Reload opened file data
 void MainWindow::on_actionReload_triggered()
@@ -60,8 +60,13 @@ void MainWindow::on_actionReload_triggered()
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
-            SetCurrentLevelSection(0);
             updateMenus(true);
+            SetCurrentLevelSection(0);
+
+            if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+            LvlMusPlay::musicForceReset=true; //reset musics
+            on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
+
         } else {
                 WriteToLog(QtDebugMsg, ">>File loading aborted");
             child->show();
