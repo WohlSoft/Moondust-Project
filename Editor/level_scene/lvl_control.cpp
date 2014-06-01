@@ -330,10 +330,13 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     case MODE_PlacingNew:
         {
             this->clearSelection();
-            if(cursor) cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+            if(cursor)
+            {
+                        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
                                                          LvlPlacingItems::gridSz,
                                                          LvlPlacingItems::gridOffset)));
                        cursor->show();
+            }
             if( mouseEvent->buttons() & Qt::LeftButton ) placeItemUnderCursor();
             QGraphicsScene::mouseMoveEvent(mouseEvent);
             break;
@@ -839,8 +842,11 @@ void LvlScene::placeItemUnderCursor()
             LvlPlacingItems::npcSet.array_id = LvlData->npc_array_id;
 
             LvlData->npc.push_back(LvlPlacingItems::npcSet);
+
             placeNPC(LvlPlacingItems::npcSet, true);
+
             newData.npc.push_back(LvlPlacingItems::npcSet);
+
             wasPlaced=true;
         }
         else
@@ -872,7 +878,6 @@ void LvlScene::placeItemUnderCursor()
 
     if(opts.animationEnabled) stopAnimation();
     if(opts.animationEnabled) startBlockAnimation();
-
 }
 
 
