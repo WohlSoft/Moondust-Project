@@ -64,7 +64,9 @@ public:
     void setNoMovable(bool stat);
     void setLegacyBoss(bool boss);
     void setMsg(QString message);
-    void setIncludedNPC(int npcID);
+    void setIncludedNPC(int npcID, bool init=false);
+    void setGenerator(bool enable, int direction=1, int type=1, bool init=false);
+    void setLayer(QString layer);
 
     void changeDirection(int dir);
 
@@ -99,6 +101,7 @@ private:
 
     QGraphicsItemGroup * grp;
     QGraphicsItem * includedNPC;
+    QGraphicsPixmapItem * generatorArrow;
 
 
     bool animated;
