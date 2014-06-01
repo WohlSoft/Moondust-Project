@@ -69,11 +69,26 @@ void leveledit::ResetPosition()
     goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-602);
 }
 
-void leveledit::goTo(long x, long y)
+void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
 {
 
-    ui->graphicsView->horizontalScrollBar()->setValue(x);
-    ui->graphicsView->verticalScrollBar()->setValue(y);
+    if(SwitchToSection)
+    {
+        for(int i=0; i<LvlData.sections.size(); i++)
+        {
+            if( (x >= LvlData.sections[i].size_left) &&
+                (x <= LvlData.sections[i].size_right) &&
+                (y >= LvlData.sections[i].size_top) &&
+                (y <= LvlData.sections[i].size_bottom) )
+            {
+                    MainWinConnect::pMainWin->SetCurrentLevelSection(i);
+                    break;
+            }
+        }
+    }
+
+    ui->graphicsView->horizontalScrollBar()->setValue(x + offset.x() );
+    ui->graphicsView->verticalScrollBar()->setValue(y + offset.y() );
 
     scene->update();
     ui->graphicsView->update();

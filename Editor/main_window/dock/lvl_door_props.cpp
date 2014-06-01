@@ -206,7 +206,8 @@ void MainWindow::on_goToWarpDoor_clicked()
         unsigned int doorID = ui->WarpList->currentData().toInt();
         foreach (LevelDoors door, edit->LvlData.doors) {
             if(doorID == door.array_id){
-                edit->goTo(door.ix-300, door.iy-300);
+                if(door.isSetIn) //If enter point was placed
+                    edit->goTo(door.ix, door.iy, true, QPoint(-300, -300)); //Goto entrance point
             }
         }
     }
