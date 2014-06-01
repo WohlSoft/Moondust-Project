@@ -38,8 +38,9 @@ LevelNPC    FileFormats::dummyLvlNpc()
     dummyNPC.id=0;
     dummyNPC.special_data=0;
     dummyNPC.generator=false;
-    dummyNPC.generator_type=0;
-    dummyNPC.generator_period=0;
+    dummyNPC.generator_type=1;
+    dummyNPC.generator_direct=1;
+    dummyNPC.generator_period=2;
     dummyNPC.msg="";
     dummyNPC.friendly=false;
     dummyNPC.nomove=false;
