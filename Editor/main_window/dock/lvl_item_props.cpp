@@ -1029,6 +1029,30 @@ void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
         else
             LvlPlacingItems::gridSz = LvlPlacingItems::npcGrid;
 
+
+        LvlItemPropsLock=true;
+
+        ui->PROPS_NPCGenType->setCurrentIndex( (LvlPlacingItems::npcSet.generator_type)-1);
+        ui->PROPS_NPCGenTime->setValue( (double)(LvlPlacingItems::npcSet.generator_period)/10);
+
+        switch(LvlPlacingItems::npcSet.generator_direct)
+        {
+        case 2:
+            ui->PROPS_NPCGenLeft->setChecked(true);
+            break;
+        case 3:
+            ui->PROPS_NPCGenDown->setChecked(true);
+            break;
+        case 4:
+            ui->PROPS_NPCGenRight->setChecked(true);
+            break;
+        case 1:
+        default:
+            ui->PROPS_NPCGenUp->setChecked(true);
+            break;
+        }
+        LvlItemPropsLock=false;
+
     }
     else
     if (activeChildWindow()==1)
@@ -1042,10 +1066,32 @@ void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
                  ((ItemNPC*)item)->npcData.generator_direct,
                  ((ItemNPC*)item)->npcData.generator_type
                  );
+                LvlItemPropsLock=true;
+                ui->PROPS_NPCGenType->setCurrentIndex( (((ItemNPC*)item)->npcData.generator_type)-1);
+                ui->PROPS_NPCGenTime->setValue( (double)(((ItemNPC*)item)->npcData.generator_period)/10);
+
+                switch(((ItemNPC*)item)->npcData.generator_direct)
+                {
+                case 2:
+                    ui->PROPS_NPCGenLeft->setChecked(true);
+                    break;
+                case 3:
+                    ui->PROPS_NPCGenDown->setChecked(true);
+                    break;
+                case 4:
+                    ui->PROPS_NPCGenRight->setChecked(true);
+                    break;
+                case 1:
+                default:
+                    ui->PROPS_NPCGenUp->setChecked(true);
+                    break;
+                }
+                LvlItemPropsLock=false;
             }
         }
     }
     ui->PROPS_NPCGenBox->setVisible( checked );
+
 
 }
 void MainWindow::on_PROPS_NPCGenType_currentIndexChanged(int index)
@@ -1061,7 +1107,7 @@ void MainWindow::on_PROPS_NPCGenType_currentIndexChanged(int index)
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
+            if(item->data(0).toString()=="NPC")
             {
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
                  ((ItemNPC*)item)->npcData.generator_direct,
@@ -1096,6 +1142,7 @@ void MainWindow::on_PROPS_NPCGenTime_valueChanged(double arg1)
 
 void MainWindow::on_PROPS_NPCGenUp_clicked()
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.generator_direct = 1;
@@ -1120,6 +1167,7 @@ void MainWindow::on_PROPS_NPCGenUp_clicked()
 
 void MainWindow::on_PROPS_NPCGenLeft_clicked()
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.generator_direct = 2;
@@ -1143,6 +1191,7 @@ void MainWindow::on_PROPS_NPCGenLeft_clicked()
 
 void MainWindow::on_PROPS_NPCGenDown_clicked()
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.generator_direct = 3;
@@ -1165,6 +1214,7 @@ void MainWindow::on_PROPS_NPCGenDown_clicked()
 }
 void MainWindow::on_PROPS_NPCGenRight_clicked()
 {
+    if(LvlItemPropsLock) return;
     if(npcPtr<1)
     {
         LvlPlacingItems::npcSet.generator_direct = 4;
