@@ -207,8 +207,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 {
                     if(SelItem->data(0).toString()=="Block")
                     {
-                        ((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
-                        ((ItemBlock *) SelItem)->arrayApply();
+                        //((ItemBlock *) SelItem)->blockData.npc_id = selected_npc;
+                        //((ItemBlock *) SelItem)->arrayApply();
                         ((ItemBlock *) SelItem)->setIncludedNPC(selected_npc);
                         selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
                     }
@@ -342,10 +342,9 @@ void ItemBlock::setLayer(QString layer)
         break;
         }
     }
-
 }
 
-void ItemBlock::setIncludedNPC(int npcID)
+void ItemBlock::setIncludedNPC(int npcID, bool init)
 {
     if(includedNPC!=NULL)
     {
@@ -369,6 +368,9 @@ void ItemBlock::setIncludedNPC(int npcID)
     includedNPC->setZValue(scene->blockZ + 10);
     includedNPC->setOpacity(qreal(0.6));
     grp->addToGroup(includedNPC);
+
+    if(!init) blockData.npc_id = npcID;
+    if(!init) arrayApply();
 }
 
 ///////////////////MainArray functions/////////////////////////////
