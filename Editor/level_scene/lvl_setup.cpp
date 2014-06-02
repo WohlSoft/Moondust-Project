@@ -23,6 +23,7 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 #include "item_water.h"
+#include "item_door.h"
 #include "../main_window/global_settings.h"
 
 ////////////////////////////////////Animator////////////////////////////////
@@ -141,6 +142,18 @@ void LvlScene::applyLayersVisible()
                 if( ((ItemWater *)tmp)->waterData.layer == layer.name)
                 {
                     ((ItemWater *)tmp)->setVisible( !layer.hidden ); break;
+                }
+            }
+        }
+        else
+        if(((*it)->data(0)=="Door_enter")||((*it)->data(0)=="Door_exit"))
+        {
+            tmp = (*it);
+            foreach(LevelLayers layer, LvlData->layers)
+            {
+                if( ((ItemDoor *)tmp)->doorData.layer == layer.name)
+                {
+                    ((ItemDoor *)tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
