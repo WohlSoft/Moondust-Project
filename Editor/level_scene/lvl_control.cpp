@@ -201,6 +201,45 @@ void LvlScene::selectionChanged()
     WriteToLog(QtDebugMsg, "Selection Changed!");
 }
 
+void LvlScene::doorPointsSync(long arrayID)
+{
+    bool doorExist=false;
+    bool doorEntranceSynced=false;
+    bool doorExitSynced=false;
+
+    int i=0;
+    //find doorItem in array
+    for(i=0; i<LvlData->doors.size(); i++)
+    {
+        if(LvlData->doors[i].array_id==(unsigned int)arrayID)
+        {
+            doorExist=true;
+            break;
+        }
+    }
+    if(!doorExist) return;
+
+    //get ItemList
+    QList<QGraphicsItem * > items = this->items();
+
+    foreach(QGraphicsItem * item, items)
+    {
+        if((item->data(0).toString()=="Door_enter")&&(item->data(2).toInt()==arrayID))
+        {
+            ((ItemDoor *)item)->doorData = LvlData->doors[i];
+            doorEntranceSynced = true;
+        }
+        if((item->data(0).toString()=="Door_exit")&&(item->data(2).toInt()==arrayID))
+        {
+            ((ItemDoor *)item)->doorData = LvlData->doors[i];
+            doorExitSynced = true;
+        }
+        if((doorEntranceSynced)&&(doorExitSynced)) return;
+    }
+
+}
+
+
 static QPointF drawStartPos = QPoint(0,0);
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
