@@ -82,15 +82,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     deleted=true;
                 }
                 else
-                if( objType=="Door_enter" )
-                {
-                    //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
-                    ((ItemDoor *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    //deleted=true;
-                }
-                else
-                if( objType=="Door_exit" )
+                if(( objType=="Door_enter" )||( objType=="Door_exit" ))
                 {
                     //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
                     ((ItemDoor *)(*it))->removeFromArray();
