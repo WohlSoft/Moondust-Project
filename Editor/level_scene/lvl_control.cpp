@@ -237,6 +237,14 @@ void LvlScene::doorPointsSync(long arrayID)
         if((doorEntranceSynced)&&(doorExitSynced)) return;
     }
 
+    if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )
+        if(!FileData.doors[i].isSetIn) continue; // Skip broken door
+
+    if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_i)) )
+        if(!FileData.doors[i].isSetOut) continue; // Skip broken door
+
+
+
 }
 
 
