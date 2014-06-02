@@ -170,6 +170,8 @@ public:
     void setDoors(QProgressDialog &progress);
     void setPlayerPoints();
 
+    void doorPointsSync(long arrayID);
+
     QPixmap getNPCimg(unsigned long npcID);
 
     void applyLayersVisible();
@@ -361,6 +363,7 @@ public:
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////
     void openProps();
+
 
 public slots:
     void selectionChanged();

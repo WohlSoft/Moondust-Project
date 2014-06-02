@@ -24,6 +24,7 @@
 #include "../level_scene/item_block.h"
 #include "../level_scene/item_npc.h"
 #include "../level_scene/item_water.h"
+#include "../level_scene/item_door.h"
 
 
 void MainWindow::RemoveCurrentLayer(bool moveToDefault)
@@ -76,7 +77,8 @@ void MainWindow::RemoveLayerItems(QString layerName)
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
             {
                 ((ItemBlock *)(*it))->removeFromArray();
-                activeLvlEditWin()->scene->removeItem((*it));
+                delete (*it);
+                //activeLvlEditWin()->scene->removeItem((*it));
             }
 
         }
@@ -86,7 +88,8 @@ void MainWindow::RemoveLayerItems(QString layerName)
             if(((ItemBGO *)(*it))->bgoData.layer==layerName)
             {
                 ((ItemBGO *)(*it))->removeFromArray();
-                activeLvlEditWin()->scene->removeItem((*it));
+                delete (*it);
+                //activeLvlEditWin()->scene->removeItem((*it));
             }
         }
         else
@@ -95,7 +98,8 @@ void MainWindow::RemoveLayerItems(QString layerName)
             if(((ItemNPC *)(*it))->npcData.layer==layerName)
             {
                 ((ItemNPC *)(*it))->removeFromArray();
-                activeLvlEditWin()->scene->removeItem((*it));
+                delete (*it);
+                //activeLvlEditWin()->scene->removeItem((*it));
             }
         }
         else
@@ -104,13 +108,19 @@ void MainWindow::RemoveLayerItems(QString layerName)
             if(((ItemWater *)(*it))->waterData.layer==layerName)
             {
                 ((ItemWater *)(*it))->removeFromArray();
-                activeLvlEditWin()->scene->removeItem((*it));
+                delete (*it);
+                //activeLvlEditWin()->scene->removeItem((*it));
             }
         }
         else
         if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
         {
-            //TODO
+            if(((ItemDoor *)(*it))->doorData.layer==layerName)
+            {
+                ((ItemDoor *)(*it))->removeFromArray();
+                delete (*it);
+                //activeLvlEditWin()->scene->removeItem((*it));
+            }
         }
     }
     setLayerLists();  //Sync comboboxes in properties
@@ -184,7 +194,10 @@ void MainWindow::ModifyLayer(QString layerName, bool visible)
         else
         if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
         {
-            //TODO
+            if(((ItemDoor *)(*it))->doorData.layer==layerName)
+            {
+                (*it)->setVisible(visible);
+            }
         }
     }
     setLayerLists();  //Sync comboboxes in properties
@@ -237,7 +250,11 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
         else
         if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
         {
-            //TODO
+            if(((ItemDoor *)(*it))->doorData.layer==layerName)
+            {
+                ((ItemDoor *)(*it))->doorData.layer = newLayerName;
+                ((ItemDoor *)(*it))->arrayApply();
+            }
         }
     }
     setLayerLists();  //Sync comboboxes in properties
@@ -296,7 +313,12 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
         else
         if(((*it)->data(0).toString()=="Door_enter")||((*it)->data(0).toString()=="Door_exit"))
         {
-            //TODO
+            if(((ItemDoor *)(*it))->doorData.layer==layerName)
+            {
+                ((ItemDoor *)(*it))->doorData.layer = newLayerName;
+                (*it)->setVisible(visible);
+                ((ItemDoor *)(*it))->arrayApply();
+            }
         }
     }
     setLayerLists();  //Sync comboboxes in properties
