@@ -20,6 +20,8 @@
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
 
+#include "../../file_formats/file_formats.h"
+
 
 void MainWindow::setDoorsToolbox()
 {
@@ -217,6 +219,22 @@ void MainWindow::on_goToWarpDoor_clicked()
 
 void MainWindow::on_WarpAdd_clicked()
 {
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+        LevelDoors newDoor = FileFormats::dummyLvlDoor();
+        newDoor.array_id = edit->LvlData.doors_array_id++;
+        newDoor.index = edit->LvlData.doors.size();
+        edit->LvlData.doors.push_back(newDoor);
+
+        ui->WarpList->addItem(QString("%1: x%2y%3 <=> x%4y%5")
+       .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
+                              newDoor.array_id);
+        ui->WarpList->setCurrentIndex( ui->WarpList->count()-1 );
+        ui->WarpRemove->setEnabled(true);
+    }
 
 }
 void MainWindow::on_WarpRemove_clicked()
@@ -240,27 +258,93 @@ void MainWindow::on_WarpSetExit_clicked()
 //////////// Flags///////////
 void MainWindow::on_WarpNoYoshi_clicked(bool checked)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].noyoshi = checked; break;
+            }
+        }
+
+    }
 }
 void MainWindow::on_WarpAllowNPC_clicked(bool checked)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].allownpc = checked; break;
+            }
+        }
+
+    }
 }
 
 void MainWindow::on_WarpLock_clicked(bool checked)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].locked = checked; break;
+            }
+        }
+    }
 }
 
 /////Door props
 
 void MainWindow::on_WarpType_currentIndexChanged(int index)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].type = index; break;
+            }
+        }
+
+        ui->WarpEntranceGrp->setEnabled(  index==1 );
+        ui->WarpExitGrp->setEnabled( index==1 );
+    }
 }
 
 void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].stars = arg1; break;
+            }
+        }
+    }
 
 }
 
@@ -268,50 +352,174 @@ void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
 /////////Entrance Direction/////////////////
 void MainWindow::on_Entr_Down_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].idirect = 3; break;
+            }
+        }
+    }
 
 }
 void MainWindow::on_Entr_Right_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].idirect = 4; break;
+            }
+        }
+    }
 }
 
 void MainWindow::on_Entr_Up_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].idirect = 1; break;
+            }
+        }
+    }
 }
 void MainWindow::on_Entr_Left_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].idirect = 2; break;
+            }
+        }
+    }
 }
 
 /////////Exit Direction/////////////////
 void MainWindow::on_Exit_Up_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].odirect = 3; break;
+            }
+        }
+    }
 }
+
 void MainWindow::on_Exit_Left_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].odirect = 4; break;
+            }
+        }
+    }
 }
+
 void MainWindow::on_Exit_Down_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].odirect = 1; break;
+            }
+        }
+    }
 }
+
 void MainWindow::on_Exit_Right_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].odirect = 2; break;
+            }
+        }
+    }
 }
 
 
 
 void MainWindow::on_WarpToMapX_textEdited(const QString &arg1)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].world_x = arg1.toInt(); break;
+            }
+        }
+    }
 }
 
 void MainWindow::on_WarpToMapY_textEdited(const QString &arg1)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].world_y = arg1.toInt(); break;
+            }
+        }
+    }
 }
 
 void MainWindow::on_WarpGetXYFromWorldMap_clicked()
@@ -321,21 +529,75 @@ void MainWindow::on_WarpGetXYFromWorldMap_clicked()
 
 
 /////Door mode (Level Entrance / Level Exit)
-void MainWindow::on_WarpLevelExit_clicked()
+void MainWindow::on_WarpLevelExit_clicked(bool checked)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].lvl_o = checked; break;
+            }
+        }
+        ui->WarpSetEntrance->setEnabled( ((!checked) && (!ui->WarpLevelEntrance->isChecked())) || ((checked) && (!ui->WarpLevelEntrance->isChecked())) );
+        ui->WarpSetExit->setEnabled( ((!checked) && (!ui->WarpLevelEntrance->isChecked())) || ((ui->WarpLevelEntrance->isChecked())) );
+    }
 
 }
 
-void MainWindow::on_WarpLevelEntrance_clicked()
+void MainWindow::on_WarpLevelEntrance_clicked(bool checked)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].lvl_i = checked; break;
+            }
+        }
+        ui->WarpSetEntrance->setEnabled( ((!ui->WarpLevelExit->isChecked()) && (!checked)) || ((ui->WarpLevelExit->isChecked()) && (!checked)) );
+        ui->WarpSetExit->setEnabled( ((!ui->WarpLevelExit->isChecked()) && (!checked)) || ((checked)) );
+    }
 
 }
 
 void MainWindow::on_WarpLevelFile_textChanged(const QString &arg1)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].lname = arg1; break;
+            }
+        }
+    }
 }
 void MainWindow::on_WarpToExitNu_valueChanged(int arg1)
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
 
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors[i].warpto = arg1; break;
+            }
+        }
+    }
 }
