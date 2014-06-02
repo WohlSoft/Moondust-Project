@@ -57,6 +57,38 @@ LevelNPC    FileFormats::dummyLvlNpc()
     return dummyNPC;
 }
 
+LevelDoors  FileFormats::dummyLvlDoor()
+{
+    LevelDoors dummyDoor;
+
+    dummyDoor.ix = 0;
+    dummyDoor.iy = 0;
+    dummyDoor.isSetIn = false;
+    dummyDoor.ox = 0;
+    dummyDoor.oy = 0;
+    dummyDoor.isSetOut = 0;
+    dummyDoor.idirect=3;
+    dummyDoor.odirect=3;
+    dummyDoor.type=0;
+    dummyDoor.lname = "";
+    dummyDoor.warpto = 0;
+    dummyDoor.lvl_i = false;
+    dummyDoor.lvl_o = false;
+    dummyDoor.world_x = -1;
+    dummyDoor.world_y = -1;
+    dummyDoor.stars = 0;
+    dummyDoor.layer = "Default";
+    dummyDoor.unknown = false;
+    dummyDoor.noyoshi = false;
+    dummyDoor.allownpc = false;
+    dummyDoor.locked = false;
+
+    dummyDoor.array_id = 0;
+    dummyDoor.index = 0;
+
+    return dummyDoor;
+}
+
 
 LevelBlock  FileFormats::dummyLvlBlock()
 {
@@ -679,6 +711,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     str_count++;line = in.readLine();
     while( ((line!="\"next\"")&&(file_format>=10)) || ((file_format<10)&&(line!="")&&(!line.isNull())))
     {
+        doors = dummyLvlDoor();
+
         if(SMBX64::sInt(line)) //Entrance x
             goto badfile;
         else doors.ix = line.toInt();
@@ -757,6 +791,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 goto badfile;
             else doors.world_y= line.toInt();
         }
+        /*
         else
         {
             doors.lname = "";
@@ -765,7 +800,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             doors.lvl_o = false;
             doors.world_x = -1;
             doors.world_y = -1;
-        }
+        }*/
 
         if(file_format>=8)
         {
@@ -773,7 +808,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             if(SMBX64::Int(line)) //Need a stars
                 goto badfile;
             else doors.stars= line.toInt();
-        } else doors.stars=0;
+        } //else doors.stars=0;
 
         if(file_format>=10)
         {
@@ -787,11 +822,11 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 goto badfile;
             else doors.unknown= ((line=="#TRUE#")?true:false);
 
-        } else
+        }/* else
         {
             doors.layer = "Default";
             doors.unknown = false;
-        }
+        }*/
 
         if(file_format>=28)
         {
@@ -810,12 +845,13 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 goto badfile;
             else doors.locked= ((line=="#TRUE#")?true:false);
         }
+        /*
         else
         {
             doors.noyoshi=false;
             doors.allownpc=false;
             doors.locked=false;
-        }
+        }*/
         doors.array_id = FileData.doors_array_id;
         FileData.doors_array_id++;
         doors.index = FileData.doors.size();//Apply element index
@@ -1196,57 +1232,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         }
 
         events = dummyLvlEvent();
-        /*
-        events.msg="";
-        events.sound_id=0;
-        events.end_game=0;
-        events.layers.clear();
-        for(int j=0; j< 21; j++)
-        {
-            events_layers.hide="";
-            events_layers.show="";
-            events_layers.toggle="";
-            events.layers.push_back(events_layers);
-        }
-        events.layers_hide.clear();
-        events.layers_show.clear();
-        events.layers_toggle.clear();
-        events.sets.clear();
-        for(int j=0; j< 21; j++)
-        {
-            events_sets.music_id=0;
-            events_sets.background_id=0;
-            events_sets.position_left=0;
-            events_sets.position_top=-1;
-            events_sets.position_bottom=-1;
-            events_sets.position_right=-1;
-            events.sets.push_back(events_sets);
-        }
-        events.trigger="";
-        events.trigger_timer=0;
 
-        events.nosmoke=false;
-
-        events.altjump=false;
-        events.altrun=false;
-        events.down=false;
-        events.drop=false;
-        events.jump=false;
-        events.left=false;
-        events.right=false;
-        events.run=false;
-        events.start=false;
-        events.up=false;
-
-        events.autostart=false;
-
-        events.movelayer="";
-        events.layer_speed_x=0;
-        events.layer_speed_y=0;
-        events.move_camera_x=0;
-        events.move_camera_y=0;
-        events.scroll_section=0;
-        */
         if(!lstart)
         {
             events.array_id = FileData.events_array_id;
