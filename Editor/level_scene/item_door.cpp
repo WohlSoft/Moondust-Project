@@ -211,7 +211,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                         foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                         {
 
-                            if(SelItem->data(0).toString()=="Water")
+                            if((SelItem->data(0).toString()=="Door_exit")  ||
+                                    (SelItem->data(0).toString()=="Door_enter"))
                             {
                             ((ItemDoor *) SelItem)->doorData.layer = lr.name;
                             ((ItemDoor *) SelItem)->setVisible(!lr.hidden);
@@ -323,29 +324,6 @@ void ItemDoor::removeFromArray()
         doorData.oy = 0;
     }
     arrayApply();
-    /*
-    bool found=false;
-    if(doorData.index < (unsigned int)scene->LvlData->bgo.size())
-    { //Check index
-        if(doorData.array_id == scene->LvlData->doors[doorData.index].array_id)
-        {
-            found=true;
-        }
-    }
-
-
-    if(found)
-    { //directlry
-        scene->LvlData->doors.remove(doorData.index);
-    }
-    else
-    for(int i=0; i<scene->LvlData->doors.size(); i++)
-    {
-        if(scene->LvlData->doors[i].array_id == doorData.array_id)
-        {
-            scene->LvlData->doors.remove(i); break;
-        }
-    }*/
 }
 
 void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
