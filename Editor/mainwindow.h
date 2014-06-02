@@ -270,8 +270,8 @@ private slots:
     void on_WarpToMapX_textEdited(const QString &arg1);
     void on_WarpToMapY_textEdited(const QString &arg1);
     void on_WarpGetXYFromWorldMap_clicked();
-    void on_WarpLevelExit_clicked();
-    void on_WarpLevelEntrance_clicked();
+    void on_WarpLevelExit_clicked(bool checked);
+    void on_WarpLevelEntrance_clicked(bool checked);
     void on_WarpLevelFile_textChanged(const QString &arg1);
     void on_WarpToExitNu_valueChanged(int arg1);
 
