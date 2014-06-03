@@ -39,6 +39,8 @@ public:
     };
 
     static int doorType;
+    static long doorArrayId;
+
     static int waterType;
     static int playerID;
 

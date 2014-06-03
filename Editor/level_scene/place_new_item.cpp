@@ -43,6 +43,8 @@ LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
 LevelWater  LvlPlacingItems::waterSet=FileFormats::dummyLvlWater();
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
+long LvlPlacingItems::doorArrayId = 0;
+
 int LvlPlacingItems::waterType=0; //0 - Water, 1 - QuickSand
 int LvlPlacingItems::playerID=0;
 
@@ -379,6 +381,21 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 4: //doorPoint
         placingItem=PLC_Door;
         LvlPlacingItems::doorType = dType;
+        LvlPlacingItems::doorArrayId = itemID;
+
+        LvlPlacingItems::gridSz=16;
+        LvlPlacingItems::gridOffset = QPoint(0,0);
+
+        cursor = addRect(0,0, 32, 32);
+
+        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::darkMagenta));
+        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::darkMagenta, 2,Qt::SolidLine));
+        cursor->setData(25, "CURSOR");
+        cursor->setZValue(7000);
+        cursor->setOpacity( 0.8 );
+        cursor->setVisible(true);
+        cursor->setEnabled(true);
+
         break;
     case 5: //PlayerPoint
         placingItem=PLC_PlayerPoint;
