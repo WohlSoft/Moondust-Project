@@ -82,15 +82,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     deleted=true;
                 }
                 else
-                if( objType=="Door_enter" )
-                {
-                    //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
-                    ((ItemDoor *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    //deleted=true;
-                }
-                else
-                if( objType=="Door_exit" )
+                if(( objType=="Door_enter" )||( objType=="Door_exit" ))
                 {
                     //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
                     ((ItemDoor *)(*it))->removeFromArray();
@@ -207,6 +199,65 @@ void LvlScene::selectionChanged()
     }
 
     WriteToLog(QtDebugMsg, "Selection Changed!");
+}
+
+void LvlScene::doorPointsSync(long arrayID, bool remove)
+{
+    bool doorExist=false;
+    bool doorEntranceSynced=false;
+    bool doorExitSynced=false;
+
+    int i=0;
+    //find doorItem in array
+    for(i=0; i<LvlData->doors.size(); i++)
+    {
+        if(LvlData->doors[i].array_id==(unsigned int)arrayID)
+        {
+            doorExist=true;
+            break;
+        }
+    }
+    if(!doorExist) return;
+
+    //get ItemList
+    QList<QGraphicsItem * > items = this->items();
+
+    foreach(QGraphicsItem * item, items)
+    {
+        if((!LvlData->doors[i].isSetIn)&&(!LvlData->doors[i].isSetOut)) break; //Don't sync door points if not placed
+
+        if((item->data(0).toString()=="Door_enter")&&(item->data(2).toInt()==arrayID))
+        {
+            if((LvlData->doors[i].lvl_i)||(remove))
+            {
+                ((ItemDoor *)item)->removeFromArray();
+                delete ((ItemDoor *)item);
+                doorEntranceSynced = true;
+            }
+            else
+            {
+                ((ItemDoor *)item)->doorData = LvlData->doors[i];
+                doorEntranceSynced = true;
+            }
+        }
+        if((item->data(0).toString()=="Door_exit")&&(item->data(2).toInt()==arrayID))
+        {
+            if(((LvlData->doors[i].lvl_o) && (!LvlData->doors[i].lvl_i))||(remove))
+            {
+                ((ItemDoor *)item)->removeFromArray();
+                delete ((ItemDoor *)item);
+                doorExitSynced = true;
+            }
+            else
+            {
+                ((ItemDoor *)item)->doorData = LvlData->doors[i];
+                doorExitSynced = true;
+            }
+        }
+        if((doorEntranceSynced)&&(doorExitSynced)) break; // stop fetch, because door points was synced
+    }
+
+
 }
 
 static QPointF drawStartPos = QPoint(0,0);
@@ -765,6 +816,12 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             //historySourceBuffer.water.push_back(((ItemWater *)(*it))->waterData);
                             ((ItemDoor *)(*it))->doorData.ix = (long)(*it)->scenePos().x();
                             ((ItemDoor *)(*it))->doorData.iy = (long)(*it)->scenePos().y();
+                            if((((ItemDoor *)(*it))->doorData.lvl_i)||((ItemDoor *)(*it))->doorData.lvl_o)
+                            {
+                                ((ItemDoor *)(*it))->doorData.ox = (long)(*it)->scenePos().x();
+                                ((ItemDoor *)(*it))->doorData.oy = (long)(*it)->scenePos().y();
+                            }
+
                             ((ItemDoor *)(*it))->arrayApply();
                             //historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
                             LvlData->modified = true;
@@ -776,6 +833,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             //historySourceBuffer.water.push_back(((ItemWater *)(*it))->waterData);
                             ((ItemDoor *)(*it))->doorData.ox = (long)(*it)->scenePos().x();
                             ((ItemDoor *)(*it))->doorData.oy = (long)(*it)->scenePos().y();
+                            if((((ItemDoor *)(*it))->doorData.lvl_i)||((ItemDoor *)(*it))->doorData.lvl_o)
+                            {
+                                ((ItemDoor *)(*it))->doorData.ix = (long)(*it)->scenePos().x();
+                                ((ItemDoor *)(*it))->doorData.iy = (long)(*it)->scenePos().y();
+                            }
                             ((ItemDoor *)(*it))->arrayApply();
                             //historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
                             LvlData->modified = true;

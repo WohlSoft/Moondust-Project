@@ -34,448 +34,255 @@ void npcedit::on_ResetNPCData_clicked()
 
 
 
-////////////////////////////////////////////////////////////////
-void npcedit::on_en_GFXOffsetX_clicked()
+///////////SMBX64 Options switches//////////////////////////////
+void npcedit::on_en_GFXOffsetX_clicked(bool checked)
 {
-    if(ui->en_GFXOffsetX->isChecked())
-    {
-        ui->GFXOffSetX->setEnabled(true);
-        NpcData.en_gfxoffsetx=true;
-    }
-    else
-    {
-        ui->GFXOffSetX->setEnabled(false);
-        NpcData.en_gfxoffsetx=false;
-    }
+    ui->GFXOffSetX->setEnabled(checked);
+    NpcData.en_gfxoffsetx=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_en_GFXOffsetY_clicked()
+void npcedit::on_en_GFXOffsetY_clicked(bool checked)
 {
-    if(ui->en_GFXOffsetY->isChecked())
-    {
-        ui->GFXOffSetY->setEnabled(true);
-        NpcData.en_gfxoffsety=true;
-    }
-    else
-    {
-        ui->GFXOffSetY->setEnabled(false);
-        NpcData.en_gfxoffsety=false;
-    }
+    ui->GFXOffSetY->setEnabled(checked);
+    NpcData.en_gfxoffsety=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_GFXw_clicked()
+void npcedit::on_En_GFXw_clicked(bool checked)
 {
-    if(ui->En_GFXw->isChecked())
-    {
-        ui->GFXw->setEnabled(true);
-        NpcData.en_gfxwidth=true;
-    }
-    else
-    {
-        ui->GFXw->setEnabled(false);
-        NpcData.en_gfxwidth=false;
-    }
+
+    ui->GFXw->setEnabled(checked);
+    NpcData.en_gfxwidth=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_GFXh_clicked()
+void npcedit::on_En_GFXh_clicked(bool checked)
 {
-    if(ui->En_GFXh->isChecked())
-    {
-        ui->GFXh->setEnabled(true);
-        NpcData.en_gfxheight=true;
-    }
-    else
-    {
-        ui->GFXh->setEnabled(false);
-        NpcData.en_gfxheight=false;
-    }
+    ui->GFXh->setEnabled(checked);
+    NpcData.en_gfxheight=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Frames_clicked()
+void npcedit::on_En_Frames_clicked(bool checked)
 {
-    if(ui->En_Frames->isChecked())
-    {
-        ui->Frames->setEnabled(true);
-        NpcData.en_frames=true;
-    }
-    else
-    {
-        ui->Frames->setEnabled(false);
-        NpcData.en_frames=false;
-    }
+    ui->Frames->setEnabled(checked);
+    NpcData.en_frames=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Framespeed_clicked()
+void npcedit::on_En_Framespeed_clicked(bool checked)
 {
-    if(ui->En_Framespeed->isChecked())
-    {
-        ui->Framespeed->setEnabled(true);
-        NpcData.en_framespeed=true;
-    }
-    else
-    {
-        ui->Framespeed->setEnabled(false);
-        NpcData.en_framespeed=false;
-    }
+    ui->Framespeed->setEnabled(checked);
+    NpcData.en_framespeed=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Framestyle_clicked()
+void npcedit::on_En_Framestyle_clicked(bool checked)
 {
-    if(ui->En_Framestyle->isChecked())
-    {
-        ui->FrameStyle->setEnabled(true);
-        NpcData.en_framestyle=true;
-    }
-    else
-    {
-        ui->FrameStyle->setEnabled(false);
-        NpcData.en_framestyle=false;
-    }
+    ui->FrameStyle->setEnabled(checked);
+    NpcData.en_framestyle=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_IsForeground_clicked()
+void npcedit::on_En_IsForeground_clicked(bool checked)
 {
-    if(ui->En_IsForeground->isChecked())
-    {
-        ui->IsForeground->setEnabled(true);
-        NpcData.en_foreground=true;
-    }
-    else
-    {
-        ui->IsForeground->setEnabled(false);
-        NpcData.en_foreground=false;
-    }
+    ui->IsForeground->setEnabled(checked);
+    NpcData.en_foreground=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_GrabSide_clicked()
+void npcedit::on_En_GrabSide_clicked(bool checked)
 {
-    if(ui->En_GrabSide->isChecked())
-    {
-        ui->GrabSide->setEnabled(true);
-        NpcData.en_grabside=true;
-    }
-    else
-    {
-        ui->GrabSide->setEnabled(false);
-        NpcData.en_grabside=false;
-    }
+    ui->GrabSide->setEnabled(checked);
+    NpcData.en_grabside=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_GrabTop_clicked()
+void npcedit::on_En_GrabTop_clicked(bool checked)
 {
-    if(ui->En_GrabTop->isChecked())
-    {
-        ui->GrabTop->setEnabled(true);
-        NpcData.en_grabtop=true;
-    }
-    else
-    {
-        ui->GrabTop->setEnabled(false);
-        NpcData.en_grabtop=false;
-    }
+    ui->GrabTop->setEnabled(checked);
+    NpcData.en_grabtop=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_JumpHurt_clicked()
+void npcedit::on_En_JumpHurt_clicked(bool checked)
 {
-    if(ui->En_JumpHurt->isChecked())
-    {
-        ui->JumpHurt->setEnabled(true);
-        NpcData.en_jumphurt=true;
-    }
-    else
-    {
-        ui->JumpHurt->setEnabled(false);
-        NpcData.en_jumphurt=false;
-    }
+    ui->JumpHurt->setEnabled(checked);
+    NpcData.en_jumphurt=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_DontHurt_clicked()
+void npcedit::on_En_DontHurt_clicked(bool checked)
 {
-    if(ui->En_DontHurt->isChecked())
-    {
-        ui->DontHurt->setEnabled(true);
-        NpcData.en_nohurt=true;
-    }
-    else
-    {
-        ui->DontHurt->setEnabled(false);
-        NpcData.en_nohurt=false;
-    }
+    ui->DontHurt->setEnabled(checked);
+    NpcData.en_nohurt=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Score_clicked()
+void npcedit::on_En_Score_clicked(bool checked)
 {
-    if(ui->En_Score->isChecked())
-    {
-        ui->Score->setEnabled(true);
-        NpcData.en_score=true;
-    }
-    else
-    {
-        ui->Score->setEnabled(false);
-        NpcData.en_score=false;
-    }
+    ui->Score->setEnabled(checked);
+    NpcData.en_score=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoEat_clicked()
+void npcedit::on_En_NoEat_clicked(bool checked)
 {
-    if(ui->En_NoEat->isChecked())
-    {
-        ui->NoEat->setEnabled(true);
-        NpcData.en_noyoshi=true;
-    }
-    else
-    {
-        ui->NoEat->setEnabled(false);
-        NpcData.en_noyoshi=false;
-    }
+    ui->NoEat->setEnabled(checked);
+    NpcData.en_noyoshi=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoFireball_clicked()
+void npcedit::on_En_NoFireball_clicked(bool checked)
 {
-    if(ui->En_NoFireball->isChecked())
-    {
-        ui->NoFireball->setEnabled(true);
-        NpcData.en_nofireball=true;
-    }
-    else
-    {
-        ui->NoFireball->setEnabled(false);
-        NpcData.en_nofireball=false;
-    }
+    ui->NoFireball->setEnabled(checked);
+    NpcData.en_nofireball=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoIceball_clicked()
+void npcedit::on_En_NoIceball_clicked(bool checked)
 {
-    if(ui->En_NoIceball->isChecked())
-    {
-        ui->NoIceball->setEnabled(true);
-        NpcData.en_noiceball=true;
-    }
-    else
-    {
-        ui->NoIceball->setEnabled(false);
-        NpcData.en_noiceball=false;
-    }
+    ui->NoIceball->setEnabled(checked);
+    NpcData.en_noiceball=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Width_clicked()
+void npcedit::on_En_Width_clicked(bool checked)
 {
-    if(ui->En_Width->isChecked())
-    {
-        ui->Width->setEnabled(true);
-        NpcData.en_width=true;
-    }
-    else
-    {
-        ui->Width->setEnabled(false);
-        NpcData.en_width=false;
-    }
+    ui->Width->setEnabled(checked);
+    NpcData.en_width=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Height_clicked()
+void npcedit::on_En_Height_clicked(bool checked)
 {
-    if(ui->En_Height->isChecked())
-    {
-        ui->Height->setEnabled(true);
-        NpcData.en_height=true;
-    }
-    else
-    {
-        ui->Height->setEnabled(false);
-        NpcData.en_height=false;
-    }
+    ui->Height->setEnabled(checked);
+    NpcData.en_height=checked;
+
     updatePreview();
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_Speed_clicked()
+void npcedit::on_En_Speed_clicked(bool checked)
 {
-    if(ui->En_Speed->isChecked())
-    {
-        ui->Speed->setEnabled(true);
-        NpcData.en_speed=true;
-    }
-    else
-    {
-        ui->Speed->setEnabled(false);
-        NpcData.en_speed=false;
-    }
+    ui->Speed->setEnabled(checked);
+    NpcData.en_speed=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_PlayerBlock_clicked()
+void npcedit::on_En_PlayerBlock_clicked(bool checked)
 {
-    if(ui->En_PlayerBlock->isChecked())
-    {
-        ui->PlayerBlock->setEnabled(true);
-        NpcData.en_playerblock=true;
-    }
-    else
-    {
-        ui->PlayerBlock->setEnabled(false);
-        NpcData.en_playerblock=false;
-    }
+    ui->PlayerBlock->setEnabled(checked);
+    NpcData.en_playerblock=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_PlayerBlockTop_clicked()
+void npcedit::on_En_PlayerBlockTop_clicked(bool checked)
 {
-    if(ui->En_PlayerBlockTop->isChecked())
-    {
-        ui->PlayerBlockTop->setEnabled(true);
-        NpcData.en_playerblocktop=true;
-    }
-    else
-    {
-        ui->PlayerBlockTop->setEnabled(false);
-        NpcData.en_playerblocktop=false;
-    }
+    ui->PlayerBlockTop->setEnabled(checked);
+    NpcData.en_playerblocktop=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NPCBlock_clicked()
+void npcedit::on_En_NPCBlock_clicked(bool checked)
 {
-    if(ui->En_NPCBlock->isChecked())
-    {
-        ui->NPCBlock->setEnabled(true);
-        NpcData.en_npcblock=true;
-    }
-    else
-    {
-        ui->NPCBlock->setEnabled(false);
-        NpcData.en_npcblock=false;
-    }
+    ui->NPCBlock->setEnabled(checked);
+    NpcData.en_npcblock=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NPCBlockTop_clicked()
+void npcedit::on_En_NPCBlockTop_clicked(bool checked)
 {
-    if(ui->En_NPCBlockTop->isChecked())
-    {
-        ui->NPCBlockTop->setEnabled(true);
-        NpcData.en_npcblocktop=true;
-    }
-    else
-    {
-        ui->NPCBlockTop->setEnabled(false);
-        NpcData.en_npcblocktop=false;
-    }
+    ui->NPCBlockTop->setEnabled(checked);
+    NpcData.en_npcblocktop=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoBlockCollision_clicked()
+void npcedit::on_En_NoBlockCollision_clicked(bool checked)
 {
-    if(ui->En_NoBlockCollision->isChecked())
-    {
-        ui->NoBlockCollision->setEnabled(true);
-        NpcData.en_noblockcollision=true;
-    }
-    else
-    {
-        ui->NoBlockCollision->setEnabled(false);
-        NpcData.en_noblockcollision=false;
-    }
+    ui->NoBlockCollision->setEnabled(checked);
+    NpcData.en_noblockcollision=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoGravity_clicked()
+void npcedit::on_En_NoGravity_clicked(bool checked)
 {
-    if(ui->En_NoGravity->isChecked())
-    {
-        ui->NoGravity->setEnabled(true);
-        NpcData.en_nogravity=true;
-    }
-    else
-    {
-        ui->NoGravity->setEnabled(false);
-        NpcData.en_nogravity=false;
-    }
+    ui->NoGravity->setEnabled(checked);
+    NpcData.en_nogravity=checked;
+
     documentWasModified();
 }
 
 ////////////////////////////////////////////////////////////////
-void npcedit::on_En_TurnCliff_clicked()
+void npcedit::on_En_TurnCliff_clicked(bool checked)
 {
-    if(ui->En_TurnCliff->isChecked())
-    {
-        ui->TurnCliff->setEnabled(true);
-        NpcData.en_cliffturn=true;
-    }
-    else
-    {
-        ui->TurnCliff->setEnabled(false);
-        NpcData.en_cliffturn=false;
-    }
+    ui->TurnCliff->setEnabled(checked);
+    NpcData.en_cliffturn=checked;
+
     documentWasModified();
 }
 
-////////////////////////////////////////////////////////////////
-void npcedit::on_En_NoHammer_clicked()
-{
-    if(ui->En_NoHammer->isChecked())
-    {
-        ui->NoHammer->setEnabled(true);
-        NpcData.en_nohammer=true;
-    }
-    else
-    {
-        ui->NoHammer->setEnabled(false);
-        NpcData.en_nohammer=false;
-    }
-    documentWasModified();
-}
 
-////////////////////////////////////////////////////////////////
+
+
+
+/////////////////SMBX64 Params//////////////////////////////////
 void npcedit::on_GFXOffSetX_valueChanged(int arg1)
 {
     documentWasModified();
@@ -666,6 +473,20 @@ void npcedit::on_TurnCliff_stateChanged(int arg1)
     documentWasModified();
     NpcData.cliffturn=arg1;
 }
+
+
+
+
+//////////Exchanged options/////////////////////////////////////
+void npcedit::on_En_NoHammer_clicked(bool checked)
+{
+    ui->NoHammer->setEnabled(checked);
+    NpcData.en_nohammer=checked;
+
+    documentWasModified();
+}
+
+
 
 ////////////////////////////////////////////////////////////////
 void npcedit::on_NoHammer_stateChanged(int arg1)

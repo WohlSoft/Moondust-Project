@@ -170,6 +170,8 @@ public:
     void setDoors(QProgressDialog &progress);
     void setPlayerPoints();
 
+    void doorPointsSync(long arrayID, bool remove=false);
+
     QPixmap getNPCimg(unsigned long npcID);
 
     void applyLayersVisible();
@@ -362,6 +364,8 @@ public:
     // ////////////////////////////////////////////
     void openProps();
 
+
+
 public slots:
     void selectionChanged();
 
@@ -378,10 +382,13 @@ private:
 
     void placeBlock(LevelBlock &block, bool toGrid=false);
     void placeBGO(LevelBGO &bgo, bool toGrid=false);
-    void placeDoor(LevelDoors &door, bool toGrid=false);
     void placeNPC(LevelNPC &npc, bool toGrid=false);
     void placeWater(LevelWater &water, bool toGrid=false);
     void placePlayerPoint(PlayerPoint plr, bool init=false);
+
+    void placeDoor(LevelDoors &door, bool toGrid=false);
+    void placeDoorEnter(LevelDoors &door, bool toGrid=false, bool init=false);
+    void placeDoorExit(LevelDoors &door, bool toGrid=false, bool init=false);
 
     void removeItemUnderCursor();
 

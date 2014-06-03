@@ -701,44 +701,52 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
 }
 
-void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
+void LvlScene::placeDoorEnter(LevelDoors &door, bool toGrid, bool init)
 {
-
     ItemDoor * doorItemEntrance;
     QPoint newPosI = QPoint(door.ix, door.iy);
 
-    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
+    doorItemEntrance = new ItemDoor;
+    doorItemEntrance->setScenePoint(this);
+    doorItemEntrance->setContextMenu(DoorMenu);
+    if(toGrid)
     {
-        doorItemEntrance = new ItemDoor;
-        doorItemEntrance->setScenePoint(this);
-        doorItemEntrance->setContextMenu(DoorMenu);
-        if(toGrid)
-        {
-            newPosI = applyGrid(QPoint(door.ix, door.iy), 16);
-            door.ix = newPosI.x();
-            door.iy = newPosI.y();
-        }
-        addItem(doorItemEntrance);
-        doorItemEntrance->setDoorData(door, ItemDoor::D_Entrance, true);
+        newPosI = applyGrid(QPoint(door.ix, door.iy), 16);
+        door.ix = newPosI.x();
+        door.iy = newPosI.y();
     }
+    addItem(doorItemEntrance);
+    doorItemEntrance->setDoorData(door, ItemDoor::D_Entrance, init);
+}
 
+void LvlScene::placeDoorExit(LevelDoors &door, bool toGrid, bool init)
+{
 
     ItemDoor * doorItemExit;
     QPoint newPosO = QPoint(door.ox, door.oy);
-    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) )
+
+    doorItemExit = new ItemDoor;
+    doorItemExit->setScenePoint(this);
+    doorItemExit->setContextMenu(DoorMenu);
+    if(toGrid)
     {
-        doorItemExit = new ItemDoor;
-        doorItemExit->setScenePoint(this);
-        doorItemExit->setContextMenu(DoorMenu);
-        if(toGrid)
-        {
-            newPosO = applyGrid(QPoint(door.ox, door.oy), 16);
-            door.ox = newPosO.x();
-            door.oy = newPosO.y();
-        }
-        addItem(doorItemExit);
-        doorItemExit->setDoorData(door, ItemDoor::D_Exit, true);
+        newPosO = applyGrid(QPoint(door.ox, door.oy), 16);
+        door.ox = newPosO.x();
+        door.oy = newPosO.y();
+    }
+    addItem(doorItemExit);
+    doorItemExit->setDoorData(door, ItemDoor::D_Exit, init);
+}
+
+void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
+{
+    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
+    {
+        placeDoorEnter(door, toGrid, true);
     }
 
-
+    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) )
+    {
+        placeDoorExit(door, toGrid, true);
+    }
 }

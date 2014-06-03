@@ -63,6 +63,7 @@ public:
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
+    static LevelDoors dummyLvlDoor();
     static LevelBlock dummyLvlBlock();
     static LevelBGO dummyLvlBgo();
     static LevelWater dummyLvlWater();

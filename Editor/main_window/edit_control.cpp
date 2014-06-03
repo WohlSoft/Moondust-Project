@@ -42,6 +42,8 @@ void MainWindow::on_actionSelect_triggered()
     resetEditmodeButtons();
     ui->actionSelect->setChecked(1);
 
+    ui->ItemProperties->hide();
+
     if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
     {
        activeLvlEditWin()->changeCursor(0);
@@ -59,6 +61,8 @@ void MainWindow::on_actionSelectOnly_triggered()
     resetEditmodeButtons();
     ui->actionSelectOnly->setChecked(1);
 
+    ui->ItemProperties->hide();
+
     if ((activeChildWindow()==1) && (ui->actionSelectOnly->isChecked()))
     {
        activeLvlEditWin()->changeCursor(0);
@@ -74,6 +78,8 @@ void MainWindow::on_actionEriser_triggered()
 {
     resetEditmodeButtons();
     ui->actionEriser->setChecked(1);
+
+    ui->ItemProperties->hide();
 
     if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
     {
@@ -91,6 +97,8 @@ void MainWindow::on_actionHandScroll_triggered()
     resetEditmodeButtons();
     ui->actionHandScroll->setChecked(1);
 
+    ui->ItemProperties->hide();
+
     if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
     {
        activeLvlEditWin()->scene->clearSelection();
@@ -107,6 +115,9 @@ void MainWindow::on_actionSetFirstPlayer_triggered()
 {
     resetEditmodeButtons();
     ui->actionSetFirstPlayer->setChecked(1);
+
+    ui->ItemProperties->hide();
+
     if((activeChildWindow()==1))
     {
         activeLvlEditWin()->changeCursor(2);
@@ -119,6 +130,9 @@ void MainWindow::on_actionSetSecondPlayer_triggered()
 {
     resetEditmodeButtons();
     ui->actionSetSecondPlayer->setChecked(1);
+
+    ui->ItemProperties->hide();
+
     if((activeChildWindow()==1))
     {
         activeLvlEditWin()->changeCursor(2);
@@ -131,6 +145,9 @@ void MainWindow::on_actionDrawWater_triggered()
 {
     resetEditmodeButtons();
     ui->actionDrawWater->setChecked(1);
+
+    ui->ItemProperties->hide();
+
     if((activeChildWindow()==1))
     {
         activeLvlEditWin()->changeCursor(3);
@@ -142,6 +159,9 @@ void MainWindow::on_actionDrawSand_triggered()
 {
     resetEditmodeButtons();
     ui->actionDrawSand->setChecked(1);
+
+    ui->ItemProperties->hide();
+
     if((activeChildWindow()==1))
     {
         activeLvlEditWin()->changeCursor(3);
