@@ -109,13 +109,33 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         }
 
         ItemMenu->addSeparator();
+
+
+        QAction * NoTransport = ItemMenu->addAction(tr("No Yoshi"));
+        NoTransport->setCheckable(true);
+        NoTransport->setChecked( doorData.noyoshi );
+
+        QAction * AllowNPC = ItemMenu->addAction(tr("Allow NPC"));
+        AllowNPC->setCheckable(true);
+        AllowNPC->setChecked( doorData.allownpc );
+
+        QAction * Locked = ItemMenu->addAction(tr("Locked"));
+        Locked->setCheckable(true);
+        Locked->setChecked( doorData.locked );
+
+        /*
+        ItemMenu->addSeparator();
         QAction *copyDoor = ItemMenu->addAction(tr("Copy"));
             copyDoor->setDisabled(true);
         QAction *cutDoor = ItemMenu->addAction(tr("Cut"));
             cutDoor->setDisabled(true);
+        */
 
         ItemMenu->addSeparator();
             QAction *remove = ItemMenu->addAction(tr("Remove"));
+
+        ItemMenu->addSeparator();
+            QAction *props = ItemMenu->addAction(tr("Properties..."));
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -128,22 +148,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         event->accept();
 
-        /*
-        if(selected==cutDoor)
-        {
-            //scene->doCut = true ;
-            MainWinConnect::pMainWin->on_actionCut_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==copyDoor)
-        {
-            //scene->doCopy = true ;
-            MainWinConnect::pMainWin->on_actionCopy_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        */
         if(selected==jumpTo)
         {
             //scene->doCopy = true ;
@@ -161,6 +165,48 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             scene->contextMenuOpened = false;
         }
         else
+        if(selected==NoTransport)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                {
+                    ((ItemDoor *) SelItem)->doorData.noyoshi=NoTransport->isChecked();
+                    ((ItemDoor *) SelItem)->arrayApply();
+                }
+            }
+            MainWinConnect::pMainWin->setDoorData(-2);
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==AllowNPC)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                {
+                    ((ItemDoor *) SelItem)->doorData.allownpc=AllowNPC->isChecked();
+                    ((ItemDoor *) SelItem)->arrayApply();
+                }
+            }
+            MainWinConnect::pMainWin->setDoorData(-2);
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==Locked)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                {
+                    ((ItemDoor *) SelItem)->doorData.locked=Locked->isChecked();
+                    ((ItemDoor *) SelItem)->arrayApply();
+                }
+            }
+            MainWinConnect::pMainWin->setDoorData(-2);
+            scene->contextMenuOpened = false;
+        }
+        else
         if(selected==remove)
         {
             //LevelData removedItems;
@@ -174,11 +220,17 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     ((ItemDoor *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
                     delete SelItem;
-                    MainWinConnect::pMainWin->setDoorData(-2);
                   //  deleted=true;
                 }
             }
+            MainWinConnect::pMainWin->setDoorData(-2);
             /* if(deleted) scene->addRemoveHistory( removedItems );*/
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==props)
+        {
+            MainWinConnect::pMainWin->SwitchToDoor(doorData.array_id);
             scene->contextMenuOpened = false;
         }
         else
