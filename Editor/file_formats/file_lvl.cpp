@@ -188,12 +188,12 @@ LevelEvents FileFormats::dummyLvlEvent()
     dummyEvent.sets.clear();
     for(int j=0; j< 21; j++)
     {
-        events_sets.music_id=0;
-        events_sets.background_id=0;
-        events_sets.position_left=0;
-        events_sets.position_top=-1;
-        events_sets.position_bottom=-1;
-        events_sets.position_right=-1;
+        events_sets.music_id=-1;
+        events_sets.background_id=-1;
+        events_sets.position_left=-1;
+        events_sets.position_top=0;
+        events_sets.position_bottom=0;
+        events_sets.position_right=0;
         dummyEvent.sets.push_back(events_sets);
     }
 
