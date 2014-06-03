@@ -119,26 +119,6 @@ void LvlScene::InitSection(int sect)
 }
 
 
-/*
-void LvlScene::ChangeSectionBG(int BG_Id) //set Backgrouns for currenctSection
-{
-    foreach (QGraphicsItem * findBG, items() )
-    {
-        if(findBG->data(0)=="BackGround"+QString::number(LvlData->CurSection) )
-        {
-            WriteToLog(QtDebugMsg, QString("Remove item BackGround"+QString::number(LvlData->CurSection)) );
-            removeItem(findBG); break;
-        }
-    }
-
-    if((BG_Id>=0) && (BG_Id <= pConfigs->main_bg.size() )) // Deny unexist ID
-            LvlData->sections[LvlData->CurSection].background = BG_Id;
-
-    WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
-    setSectionBG(LvlData->sections[LvlData->CurSection]);
-}
-*/
-
 void LvlScene::ChangeSectionBG(int BG_Id, int SectionID)
 {
     if(SectionID<0)
@@ -407,7 +387,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             RectPlus=0;
         }
 
-        if((!srcimg2.isNull()) && (sctH > R1H))
+        if((!srcimg2.isNull()) && ((sctH > R1H)||(si_attach==1)))
         {
 
             // /////////////////////Draw second row//////////////////
@@ -422,7 +402,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
                 WriteToLog(QtWarningMsg, "Draw BG -> second image is Null");
 
 
-        if( R1H+RectPlus < sctH)
+        if( R1H+RectPlus < sctH )
         {
             item = addRect(0, 0, sctW, sctH-R1H-RectPlus, Qt::NoPen, QBrush(FillColor));
             item->setData(0, "BackGround"+QString::number(sctID) );
