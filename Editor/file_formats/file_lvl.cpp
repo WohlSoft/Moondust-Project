@@ -67,8 +67,8 @@ LevelDoors  FileFormats::dummyLvlDoor()
     dummyDoor.ox = 0;
     dummyDoor.oy = 0;
     dummyDoor.isSetOut = 0;
-    dummyDoor.idirect=3;
-    dummyDoor.odirect=3;
+    dummyDoor.idirect=1;
+    dummyDoor.odirect=1;
     dummyDoor.type=0;
     dummyDoor.lname = "";
     dummyDoor.warpto = 0;
