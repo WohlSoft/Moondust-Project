@@ -127,6 +127,7 @@ public slots:
     void SetCurrentLevelSection(int SctId, int open=0);
     void setDoorsToolbox();
     void setDoorData(long index=-1);
+    void SwitchToDoor(long arrayID);
     void setLayersBox();
     void setLayerLists();
     void EventListsSync();
