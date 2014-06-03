@@ -223,6 +223,99 @@ LevelSection FileFormats::dummyLvlSection()
     return dummySection;
 }
 
+
+LevelData FileFormats::dummyLvlDataArray()
+{
+    LevelData NewFileData;
+
+    NewFileData.ReadFileValid = true;
+    NewFileData.modified = true;
+
+    NewFileData.CurSection=0;
+    NewFileData.playmusic=0;
+
+    NewFileData.LevelName = "";
+    NewFileData.stars = 0;
+
+    NewFileData.bgo_array_id = 0;
+    NewFileData.blocks_array_id = 0;
+    NewFileData.doors_array_id = 1;
+    NewFileData.events_array_id = 0;
+    NewFileData.layers_array_id = 0;
+    NewFileData.npc_array_id = 0;
+    NewFileData.water_array_id = 0;
+
+    //Create Section array
+    for(int i=0; i<21;i++)
+        NewFileData.sections.push_back( dummyLvlSection() );
+
+    //Create players array
+    PlayerPoint players;
+        players.x = 0;
+        players.y = 0;
+        players.w = 0;
+        players.h = 0;
+        players.id=0;
+        for(int i=0; i<2;i++)
+        {
+            players.id++;
+            NewFileData.players.push_back(players);
+        }
+
+
+    //Create system layers
+        //Default
+        //Destroyed Blocks
+        //Spawned NPCs
+
+    LevelLayers layers;
+        layers.hidden = false;
+        layers.name = "Default";
+        layers.array_id = NewFileData.layers_array_id++;
+        NewFileData.layers.push_back(layers);
+
+        layers.hidden = true;
+        layers.name = "Destroyed Blocks";
+        layers.array_id = NewFileData.layers_array_id++;
+        NewFileData.layers.push_back(layers);
+
+        layers.hidden = false;
+        layers.name = "Spawned NPCs";
+        layers.array_id = NewFileData.layers_array_id++;
+        NewFileData.layers.push_back(layers);
+
+    //Create system events
+        //Level - Start
+        //P Switch - Start
+        //P Switch - End
+
+    LevelEvents events = dummyLvlEvent();
+
+        events.array_id = NewFileData.events_array_id;
+        NewFileData.events_array_id++;
+
+        events.name = "Level - Start";
+        NewFileData.events.push_back(events);
+
+        events.array_id = NewFileData.events_array_id;
+        NewFileData.events_array_id++;
+
+        events.name = "P Switch - Start";
+        NewFileData.events.push_back(events);
+
+        events.array_id = NewFileData.events_array_id;
+        NewFileData.events_array_id++;
+
+        events.name = "P Switch - End";
+        NewFileData.events.push_back(events);
+
+
+return NewFileData;
+}
+
+
+
+
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
