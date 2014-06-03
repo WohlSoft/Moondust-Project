@@ -616,7 +616,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                  else npcdata.generator_direct= line.toInt();
 
                  str_count++;line = in.readLine();
-                 if(SMBX64::Int(line)) //Generator type [1] Warp, [2] Projective
+                 if(SMBX64::Int(line)) //Generator type [1] Warp, [2] Projectile
                      goto badfile;
                  else npcdata.generator_type = line.toInt();
                  str_count++;line = in.readLine();
