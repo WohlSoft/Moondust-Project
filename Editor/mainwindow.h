@@ -349,6 +349,10 @@ private slots:
 
     void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
 
+    void on_actionNewLevel_triggered();
+
+    void on_actionNewWorld_map_triggered();
+
 private:
 
     LevelEditingSettings LvlOpts;

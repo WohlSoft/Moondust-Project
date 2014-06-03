@@ -159,27 +159,6 @@ void MainWindow::on_actionAbout_triggered()
 }
 
 
-
-////////////////////////New files templates///////////////////////////
-
-void MainWindow::on_actionNewNPC_config_triggered()
-{
-
-    NpcDialog * npcList = new NpcDialog(&configs);
-    npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-    npcList->setState(0, 1);
-    npcList->setWindowTitle(tr("Create new NPC.txt configuration file"));
-    if(npcList->exec()==QDialog::Accepted)
-    {
-        npcedit *child = createNPCChild();
-        child->newFile( npcList->selectedNPC);
-        child->show();
-    }
-
-}
-
-
 //Toolbar context menu
 void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
 {
