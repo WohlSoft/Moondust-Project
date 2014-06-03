@@ -87,6 +87,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
                     ((ItemDoor *)(*it))->removeFromArray();
                     if((*it)) delete (*it);
+                    MainWinConnect::pMainWin->setDoorData(-2);
                     //deleted=true;
                 }
         }
@@ -236,6 +237,7 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
             }
             else
             {
+                LvlData->doors[i].isSetIn=true;
                 ((ItemDoor *)item)->doorData = LvlData->doors[i];
                 doorEntranceSynced = true;
             }
@@ -250,6 +252,7 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
             }
             else
             {
+                LvlData->doors[i].isSetOut=true;
                 ((ItemDoor *)item)->doorData = LvlData->doors[i];
                 doorExitSynced = true;
             }
@@ -552,6 +555,15 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
         break;
         }
+    case MODE_PlacingNew:
+    {
+        if(placingItem == PLC_Door)
+        {
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            QGraphicsScene::mouseReleaseEvent(mouseEvent);
+            return;
+        }
+    }
     default:
         break;
     }
@@ -635,6 +647,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
                             ((ItemDoor *)(*it))->removeFromArray();
                             deleted=true;
+                            MainWinConnect::pMainWin->setDoorData(-2);
                         }
                         else
                         if( (*it)->data(0).toString()=="Door_exit" )
@@ -642,6 +655,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
                             ((ItemDoor *)(*it))->removeFromArray();
                             deleted=true;
+                            MainWinConnect::pMainWin->setDoorData(-2);
                         }
                         removeItem((*it));
                         continue;
@@ -927,6 +941,49 @@ void LvlScene::placeItemUnderCursor()
                     pnt.h = 60;
                  placePlayerPoint(pnt);
                  break;
+             }
+            }
+
+        }
+        else
+        if(placingItem == PLC_Door)
+        {
+            foreach(LevelDoors door, LvlData->doors)
+            {
+             if(door.array_id == (unsigned int)LvlPlacingItems::doorArrayId)
+             {
+                if(LvlPlacingItems::doorType==LvlPlacingItems::DOOR_Entrance)
+                {
+                    if(!door.isSetIn)
+                    {
+                        door.ix = cursor->scenePos().x();
+                        door.iy = cursor->scenePos().y();
+                        if((door.lvl_i)||(door.lvl_o))
+                        {
+                            door.ox = door.ix;
+                            door.oy = door.iy;
+                        }
+                        door.isSetIn=true;
+                        placeDoorEnter(door, false, false);
+                    }
+                }
+                else
+                {
+                    if(!door.isSetOut)
+                    {
+                        door.ox = cursor->scenePos().x();
+                        door.oy = cursor->scenePos().y();
+                        if((door.lvl_i)||(door.lvl_o))
+                        {
+                            door.ix = door.ox;
+                            door.iy = door.oy;
+                        }
+                        door.isSetOut=true;
+                        placeDoorExit(door, false, false);
+                    }
+                }
+                MainWinConnect::pMainWin->setDoorData(-2);
+                break;
              }
             }
 

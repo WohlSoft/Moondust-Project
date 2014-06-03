@@ -144,6 +144,23 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         else
         */
+        if(selected==jumpTo)
+        {
+            //scene->doCopy = true ;
+            if(this->data(0).toString()=="Door_enter")
+            {
+                if(doorData.isSetOut)
+                MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(-300, -300));
+            }
+            else
+            if(this->data(0).toString()=="Door_exit")
+            {
+                if(doorData.isSetIn)
+                MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(-300, -300));
+            }
+            scene->contextMenuOpened = false;
+        }
+        else
         if(selected==remove)
         {
             //LevelData removedItems;
@@ -157,6 +174,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     ((ItemDoor *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
                     delete SelItem;
+                    MainWinConnect::pMainWin->setDoorData(-2);
                   //  deleted=true;
                 }
             }
@@ -357,6 +375,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     doorLabel = new QGraphicsTextItem(QString::number(doorData.array_id));
     if(direction==D_Entrance)
     {
+        doorData.isSetIn=true;
         setBrush(QBrush(cEnter));
         setPen(QPen(Qt::magenta, 2,Qt::SolidLine));
 
@@ -373,6 +392,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     }
     else
     {
+        doorData.isSetOut=true;
         setBrush(QBrush(cExit));
         setPen( QPen(Qt::darkMagenta, 2,Qt::SolidLine) );
 
@@ -403,45 +423,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
 
     if(!init)
     {
-        /*
-        _______________________________¶¶¶¶
-        _____________________¶¶¶¶¶¶¶_¶¶___¶¶¶¶¶¶
-        ___________________¶¶¶_____¶¶¶___¶¶¶___¶¶¶
-        __________________¶¶_______¶¶____¶¶¶¶¶¶¶¶¶
-        ________________¶¶¶¶¶_______¶_____¶______¶¶
-        ____________¶¶¶¶¶__¶¶_______¶____¶¶_______¶
-        ___________¶¶_______¶_______¶¶___¶¶_¶¶¶¶__¶
-        _______¶¶¶¶¶________¶¶______¶¶___¶_¶___¶¶_¶
-        _____¶¶¶___¶¶________¶_______¶___¶_¶¶___¶¶¶
-        ___¶¶_______¶¶¶______¶¶______¶¶¶¶¶¶__¶¶¶¶¶
-        __¶¶_________¶¶______¶¶_¶¶¶¶¶¶____¶¶¶¶¶¶¶
-        _¶¶__¶________¶¶______¶__¶¶_¶¶_______¶¶
-        ¶¶¶¶¶¶¶________¶_____¶¶_____¶¶_______¶¶
-        ¶____¶¶¶__¶¶¶¶¶¶_¶¶¶¶_¶_¶¶¶¶¶¶¶¶______¶¶
-        ¶_____¶¶¶______¶______¶¶__¶¶¶_¶¶¶_____¶¶
-        ¶¶¶¶¶¶¶¶¶¶___¶¶¶___¶__¶¶¶¶¶_____¶¶¶____¶¶
-        ¶_______¶¶__¶¶¶¶_¶¶¶¶¶¶¶¶__________¶¶__¶¶
-        ¶________¶¶¶¶¶¶¶¶¶__¶¶¶_____________¶__¶¶
-        ¶__________¶¶¶¶¶¶¶¶¶¶_________________¶¶¶
-        ¶¶_______________¶¶¶__________________¶¶
-        ¶¶______________¶¶¶__________________¶¶
-        ¶¶_____________¶¶¶¶_________________¶¶¶
-        _¶¶____________¶_¶¶_________________¶¶
-        _¶¶___________¶¶_¶_________________¶¶
-        __¶¶_____________¶________________¶¶
-        __¶¶_____________¶_______________¶¶¶
-        ___¶¶___________________________¶¶¶
-        ____¶__________________________¶¶¶
-        _____¶¶___________¶_¶¶¶______¶¶¶
-        ______¶¶¶¶¶¶¶¶¶¶¶¶¶_¶¶¶¶¶¶¶¶¶¶¶
-        ______¶¶¶¶¶¶¶¶¶¶¶¶¶_¶¶¶_¶¶¶¶¶
-        ______¶¶________¶_¶_¶___¶_¶¶¶
-        ______¶¶_______¶¶_¶_¶___¶_¶¶¶
-        ______¶¶_______¶¶_¶_¶___¶¶_¶¶
-        ______¶¶_______¶¶_¶____¶_¶_¶¶
-        ______¶¶______¶¶¶_¶____¶¶¶¶¶¶
-        ______¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-        */
+        arrayApply();
     }
 }
 

@@ -126,7 +126,7 @@ public slots:
     //LevelEdit functions
     void SetCurrentLevelSection(int SctId, int open=0);
     void setDoorsToolbox();
-    void setDoorData(long index);
+    void setDoorData(long index=-1);
     void setLayersBox();
     void setLayerLists();
     void EventListsSync();
