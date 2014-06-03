@@ -130,16 +130,29 @@ void leveledit::ExportToImage_fn()
 
 
 
-void leveledit::newFile()
+void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
 {
     static int sequenceNumber = 1;
 
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
+    LvlData = FileFormats::dummyLvlDataArray();
+    StartLvlData = LvlData;
 
-    /*connect(document(), SIGNAL(contentsChanged()),
-            this, SLOT(documentWasModified()));*/
+    scene = new LvlScene(configs, LvlData);
+    scene->opts = options;
+
+    scene->InitSection(0);
+    scene->setPlayerPoints();
+    scene->drawSpace();
+
+    if(!sceneCreated)
+    {
+        ui->graphicsView->setScene(scene);
+        sceneCreated = true;
+    }
+
 }
 
 
