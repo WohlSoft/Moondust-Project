@@ -59,32 +59,32 @@ private slots:
     void documentWasModified();
     void documentNotModified();
 
-    void on_en_GFXOffsetX_clicked();
-    void on_en_GFXOffsetY_clicked();
-    void on_En_GFXw_clicked();
-    void on_En_GFXh_clicked();
-    void on_En_Frames_clicked();
-    void on_En_Framespeed_clicked();
-    void on_En_Framestyle_clicked();
-    void on_En_IsForeground_clicked();
-    void on_En_GrabSide_clicked();
-    void on_En_GrabTop_clicked();
-    void on_En_JumpHurt_clicked();
-    void on_En_DontHurt_clicked();
-    void on_En_Score_clicked();
-    void on_En_NoEat_clicked();
-    void on_En_NoFireball_clicked();
-    void on_En_NoIceball_clicked();
-    void on_En_Width_clicked();
-    void on_En_Height_clicked();
-    void on_En_Speed_clicked();
-    void on_En_PlayerBlock_clicked();
-    void on_En_PlayerBlockTop_clicked();
-    void on_En_NPCBlock_clicked();
-    void on_En_NPCBlockTop_clicked();
-    void on_En_NoBlockCollision_clicked();
-    void on_En_NoGravity_clicked();
-    void on_En_TurnCliff_clicked();
+    void on_en_GFXOffsetX_clicked(bool checked);
+    void on_en_GFXOffsetY_clicked(bool checked);
+    void on_En_GFXw_clicked(bool checked);
+    void on_En_GFXh_clicked(bool checked);
+    void on_En_Frames_clicked(bool checked);
+    void on_En_Framespeed_clicked(bool checked);
+    void on_En_Framestyle_clicked(bool checked);
+    void on_En_IsForeground_clicked(bool checked);
+    void on_En_GrabSide_clicked(bool checked);
+    void on_En_GrabTop_clicked(bool checked);
+    void on_En_JumpHurt_clicked(bool checked);
+    void on_En_DontHurt_clicked(bool checked);
+    void on_En_Score_clicked(bool checked);
+    void on_En_NoEat_clicked(bool checked);
+    void on_En_NoFireball_clicked(bool checked);
+    void on_En_NoIceball_clicked(bool checked);
+    void on_En_Width_clicked(bool checked);
+    void on_En_Height_clicked(bool checked);
+    void on_En_Speed_clicked(bool checked);
+    void on_En_PlayerBlock_clicked(bool checked);
+    void on_En_PlayerBlockTop_clicked(bool checked);
+    void on_En_NPCBlock_clicked(bool checked);
+    void on_En_NPCBlockTop_clicked(bool checked);
+    void on_En_NoBlockCollision_clicked(bool checked);
+    void on_En_NoGravity_clicked(bool checked);
+    void on_En_TurnCliff_clicked(bool checked);
 
     void on_GFXOffSetX_valueChanged(int arg1);
     void on_GFXOffSetY_valueChanged(int arg1);
@@ -112,7 +112,9 @@ private slots:
     void on_NoBlockCollision_stateChanged(int arg1);
     void on_NoGravity_stateChanged(int arg1);
     void on_TurnCliff_stateChanged(int arg1);
-    void on_En_NoHammer_clicked();
+
+    //Extended
+    void on_En_NoHammer_clicked(bool checked);
     void on_NoHammer_stateChanged(int arg1);
 
     void on_DirectLeft_clicked();

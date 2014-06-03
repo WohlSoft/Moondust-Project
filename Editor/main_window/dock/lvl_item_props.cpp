@@ -286,7 +286,13 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             }
         }
 
-        ui->PROPS_NpcTMsg->setText( npc.msg.isEmpty() ? tr("[none]") : npc.msg );
+        QString npcmsg = (npc.msg.isEmpty() ? tr("[none]") : npc.msg);
+        if(npcmsg.size()>20)
+        {
+            npcmsg.resize(18);
+            npcmsg.push_back("...");
+        }
+        ui->PROPS_NpcTMsg->setText( npcmsg );
 
         ui->PROPS_NpcFri->setChecked( npc.friendly );
         ui->PROPS_NPCNoMove->setChecked( npc.nomove );
@@ -330,6 +336,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         else
         {
             ui->PROPS_NPCGenUp->setChecked(true);
+            ui->PROPS_NPCGenType->setCurrentIndex( 0 );
         }
 
         ui->PROPS_NpcLayer->setCurrentIndex(0);
@@ -913,7 +920,14 @@ void MainWindow::on_PROPS_NpcTMsg_clicked()
         //modText.push_back(QVariant(npcData.msg));
         //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_MESSAGE, QVariant(modText));
         }
-        ui->PROPS_NpcTMsg->setText( msgBox->currentText.isEmpty() ? tr("[none]") : msgBox->currentText );
+
+        QString npcmsg = (msgBox->currentText.isEmpty() ? tr("[none]") : msgBox->currentText);
+        if(npcmsg.size()>20)
+        {
+            npcmsg.resize(18);
+            npcmsg.push_back("...");
+        }
+        ui->PROPS_NpcTMsg->setText( npcmsg );
     }
 
 }
