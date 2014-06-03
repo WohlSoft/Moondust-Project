@@ -239,6 +239,25 @@ void MainWindow::on_WarpAdd_clicked()
 }
 void MainWindow::on_WarpRemove_clicked()
 {
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt(), true);
+
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->LvlData.doors.remove(i);
+                break;
+            }
+        }
+
+        ui->WarpList->removeItem( ui->WarpList->currentIndex() );
+
+        if(ui->WarpList->count()<=0) ui->WarpRemove->setEnabled(false);
+    }
 
 }
 
@@ -270,6 +289,7 @@ void MainWindow::on_WarpNoYoshi_clicked(bool checked)
                 edit->LvlData.doors[i].noyoshi = checked; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
 
     }
 }
@@ -287,6 +307,7 @@ void MainWindow::on_WarpAllowNPC_clicked(bool checked)
                 edit->LvlData.doors[i].allownpc = checked; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
 
     }
 }
@@ -305,6 +326,7 @@ void MainWindow::on_WarpLock_clicked(bool checked)
                 edit->LvlData.doors[i].locked = checked; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -327,6 +349,8 @@ void MainWindow::on_WarpType_currentIndexChanged(int index)
 
         ui->WarpEntranceGrp->setEnabled(  index==1 );
         ui->WarpExitGrp->setEnabled( index==1 );
+
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -344,6 +368,7 @@ void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
                 edit->LvlData.doors[i].stars = arg1; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
 }
@@ -364,6 +389,7 @@ void MainWindow::on_Entr_Down_clicked()
                 edit->LvlData.doors[i].idirect = 3; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
 }
@@ -381,6 +407,7 @@ void MainWindow::on_Entr_Right_clicked()
                 edit->LvlData.doors[i].idirect = 4; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -398,6 +425,7 @@ void MainWindow::on_Entr_Up_clicked()
                 edit->LvlData.doors[i].idirect = 1; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 void MainWindow::on_Entr_Left_clicked()
@@ -414,6 +442,7 @@ void MainWindow::on_Entr_Left_clicked()
                 edit->LvlData.doors[i].idirect = 2; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -432,6 +461,7 @@ void MainWindow::on_Exit_Up_clicked()
                 edit->LvlData.doors[i].odirect = 3; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -449,6 +479,7 @@ void MainWindow::on_Exit_Left_clicked()
                 edit->LvlData.doors[i].odirect = 4; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -466,6 +497,7 @@ void MainWindow::on_Exit_Down_clicked()
                 edit->LvlData.doors[i].odirect = 1; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -483,6 +515,7 @@ void MainWindow::on_Exit_Right_clicked()
                 edit->LvlData.doors[i].odirect = 2; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -502,6 +535,7 @@ void MainWindow::on_WarpToMapX_textEdited(const QString &arg1)
                 edit->LvlData.doors[i].world_x = arg1.toInt(); break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -519,6 +553,7 @@ void MainWindow::on_WarpToMapY_textEdited(const QString &arg1)
                 edit->LvlData.doors[i].world_y = arg1.toInt(); break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
@@ -535,16 +570,32 @@ void MainWindow::on_WarpLevelExit_clicked(bool checked)
     if (WinType==1)
     {
         leveledit* edit = activeLvlEditWin();
-
-        for(int i=0;i<edit->LvlData.doors.size();i++)
+        bool exists=false;
+        int i=0;
+        for(i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
-            {
+            {   exists=true;
                 edit->LvlData.doors[i].lvl_o = checked; break;
             }
         }
+
+        if(!exists) return;
+
+        //Disable placing door point, if it not avaliable
         ui->WarpSetEntrance->setEnabled( ((!checked) && (!ui->WarpLevelEntrance->isChecked())) || ((checked) && (!ui->WarpLevelEntrance->isChecked())) );
+        //Disable placing door point, if it not avaliable
         ui->WarpSetExit->setEnabled( ((!checked) && (!ui->WarpLevelEntrance->isChecked())) || ((ui->WarpLevelEntrance->isChecked())) );
+
+        //Unset placed point, if not it avaliable
+        if(! (((!checked) && (!ui->WarpLevelEntrance->isChecked())) || ((ui->WarpLevelEntrance->isChecked()))) )
+        {
+            ui->WarpExitPlaced->setChecked(false);
+            edit->LvlData.doors[i].ox = edit->LvlData.doors[i].ix;
+            edit->LvlData.doors[i].oy = edit->LvlData.doors[i].iy;
+        }
+
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
 }
@@ -555,16 +606,32 @@ void MainWindow::on_WarpLevelEntrance_clicked(bool checked)
     if (WinType==1)
     {
         leveledit* edit = activeLvlEditWin();
-
-        for(int i=0;i<edit->LvlData.doors.size();i++)
+        int i=0;
+        bool exists=false;
+        for(i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 edit->LvlData.doors[i].lvl_i = checked; break;
             }
         }
+
+        if(!exists) return;
+
+        //Disable placing door point, if it not avaliable
         ui->WarpSetEntrance->setEnabled( ((!ui->WarpLevelExit->isChecked()) && (!checked)) || ((ui->WarpLevelExit->isChecked()) && (!checked)) );
+         //Unset placed point, if not it avaliable
+        if(! (((!ui->WarpLevelExit->isChecked()) && (!checked)) || ((ui->WarpLevelExit->isChecked()) && (!checked))) )
+        {
+            ui->WarpEntrancePlaced->setChecked(false);
+            edit->LvlData.doors[i].ix = edit->LvlData.doors[i].ox;
+            edit->LvlData.doors[i].iy = edit->LvlData.doors[i].oy;
+        }
+
+        //Disable placing door point, if it not avaliable
         ui->WarpSetExit->setEnabled( ((!ui->WarpLevelExit->isChecked()) && (!checked)) || ((checked)) );
+
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
 }
@@ -583,6 +650,7 @@ void MainWindow::on_WarpLevelFile_textChanged(const QString &arg1)
                 edit->LvlData.doors[i].lname = arg1; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 void MainWindow::on_WarpToExitNu_valueChanged(int arg1)
@@ -599,5 +667,6 @@ void MainWindow::on_WarpToExitNu_valueChanged(int arg1)
                 edit->LvlData.doors[i].warpto = arg1; break;
             }
         }
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
