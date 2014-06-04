@@ -21,6 +21,7 @@
 #include "../../mainwindow.h"
 
 #include "../../file_formats/file_formats.h"
+#include "../../level_scene/lvl_item_placing.h"
 
 
 void MainWindow::setDoorsToolbox()
@@ -45,14 +46,32 @@ void MainWindow::setDoorsToolbox()
 
 }
 
-
-
-void MainWindow::setDoorData(long index)
+void MainWindow::SwitchToDoor(long arrayID)
 {
     int WinType = activeChildWindow();
     if (WinType==1)
     {
-        if( (activeLvlEditWin()->LvlData.doors.size() > 0) && (index < activeLvlEditWin()->LvlData.doors.size()) )
+        ui->DoorsToolbox->show();
+        ui->DoorsToolbox->raise();
+        ui->WarpList->setCurrentIndex(ui->WarpList->findData(QString::number(arrayID)));
+    }
+
+}
+
+
+void MainWindow::setDoorData(long index)
+{
+    long cIndex;
+    if(index==-2)
+        cIndex=ui->WarpList->currentIndex();
+    else
+        cIndex = index;
+
+
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        if( (activeLvlEditWin()->LvlData.doors.size() > 0) && (cIndex < activeLvlEditWin()->LvlData.doors.size()) )
         {
             foreach(LevelDoors door, activeLvlEditWin()->LvlData.doors)
             {
@@ -265,12 +284,80 @@ void MainWindow::on_WarpRemove_clicked()
 
 void MainWindow::on_WarpSetEntrance_clicked()
 {
+    //placeDoorEntrance
+    if(activeChildWindow()==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+        bool placed=false;
+        int i=0;
+        for(i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                placed = edit->LvlData.doors[i].isSetIn;
+                break;
+            }
+        }
 
+        if(placed)
+        {
+               edit->goTo(edit->LvlData.doors[i].ix, edit->LvlData.doors[i].iy, true, QPoint(-300, -300));
+               return;
+        }
+
+       resetEditmodeButtons();
+
+       edit->scene->clearSelection();
+       edit->changeCursor(2);
+       edit->scene->EditingMode = 2;
+       edit->scene->disableMoveItems=false;
+       edit->scene->DrawMode=true;
+       edit->scene->EraserEnabled = false;
+       edit->scene->setItemPlacer(4, ui->WarpList->currentData().toInt(), LvlPlacingItems::DOOR_Entrance);
+
+       ui->ItemProperties->hide();
+
+       edit->setFocus();
+    }
 }
 
 void MainWindow::on_WarpSetExit_clicked()
 {
+    //placeDoorEntrance
+    if(activeChildWindow()==1)
+    {
+        leveledit* edit = activeLvlEditWin();
+        bool placed=false;
+        int i=0;
+        for(i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                placed = edit->LvlData.doors[i].isSetOut;
+                break;
+            }
+        }
 
+        if(placed)
+        {
+               edit->goTo(edit->LvlData.doors[i].ox, edit->LvlData.doors[i].oy, true, QPoint(-300, -300));
+               return;
+        }
+
+        resetEditmodeButtons();
+
+        edit->scene->clearSelection();
+        edit->changeCursor(2);
+        edit->scene->EditingMode = 2;
+        edit->scene->disableMoveItems=false;
+        edit->scene->DrawMode=true;
+        edit->scene->EraserEnabled = false;
+        edit->scene->setItemPlacer(4, ui->WarpList->currentData().toInt(), LvlPlacingItems::DOOR_Exit);
+
+       ui->ItemProperties->hide();
+
+       activeLvlEditWin()->setFocus();
+    }
 }
 
 
@@ -532,7 +619,11 @@ void MainWindow::on_WarpToMapX_textEdited(const QString &arg1)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
-                edit->LvlData.doors[i].world_x = arg1.toInt(); break;
+                if(arg1.isEmpty())
+                    edit->LvlData.doors[i].world_x = -1;
+                else
+                    edit->LvlData.doors[i].world_x = arg1.toInt();
+                break;
             }
         }
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
@@ -550,7 +641,11 @@ void MainWindow::on_WarpToMapY_textEdited(const QString &arg1)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
-                edit->LvlData.doors[i].world_y = arg1.toInt(); break;
+                if(arg1.isEmpty())
+                    edit->LvlData.doors[i].world_y = -1;
+                else
+                    edit->LvlData.doors[i].world_y = arg1.toInt();
+                break;
             }
         }
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
@@ -583,12 +678,20 @@ void MainWindow::on_WarpLevelExit_clicked(bool checked)
         if(!exists) return;
 
         //Disable placing door point, if it not avaliable
-        ui->WarpSetEntrance->setEnabled( ((!checked) && (!ui->WarpLevelEntrance->isChecked())) || ((checked) && (!ui->WarpLevelEntrance->isChecked())) );
+        ui->WarpSetEntrance->setEnabled(
+                    ((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
+                    ((edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i))
+                    );
         //Disable placing door point, if it not avaliable
-        ui->WarpSetExit->setEnabled( ((!checked) && (!ui->WarpLevelEntrance->isChecked())) || ((ui->WarpLevelEntrance->isChecked())) );
+        ui->WarpSetExit->setEnabled(
+                    ((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
+                    (edit->LvlData.doors[i].lvl_i) );
+
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
 
         //Unset placed point, if not it avaliable
-        if(! (((!checked) && (!ui->WarpLevelEntrance->isChecked())) || ((ui->WarpLevelEntrance->isChecked()))) )
+        if(! (((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
+              (edit->LvlData.doors[i].lvl_i) ) )
         {
             ui->WarpExitPlaced->setChecked(false);
             edit->LvlData.doors[i].ox = edit->LvlData.doors[i].ix;
@@ -612,6 +715,7 @@ void MainWindow::on_WarpLevelEntrance_clicked(bool checked)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                exists=true;
                 edit->LvlData.doors[i].lvl_i = checked; break;
             }
         }
@@ -619,17 +723,24 @@ void MainWindow::on_WarpLevelEntrance_clicked(bool checked)
         if(!exists) return;
 
         //Disable placing door point, if it not avaliable
-        ui->WarpSetEntrance->setEnabled( ((!ui->WarpLevelExit->isChecked()) && (!checked)) || ((ui->WarpLevelExit->isChecked()) && (!checked)) );
-         //Unset placed point, if not it avaliable
-        if(! (((!ui->WarpLevelExit->isChecked()) && (!checked)) || ((ui->WarpLevelExit->isChecked()) && (!checked))) )
+        ui->WarpSetEntrance->setEnabled(
+                    ((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
+                    ((edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) );
+        //Disable placing door point, if it not avaliable
+        ui->WarpSetExit->setEnabled(
+                    ((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
+                    (edit->LvlData.doors[i].lvl_i) );
+
+        edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
+
+        //Unset placed point, if not it avaliable
+        if(! (((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
+              ((edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i))) )
         {
             ui->WarpEntrancePlaced->setChecked(false);
             edit->LvlData.doors[i].ix = edit->LvlData.doors[i].ox;
             edit->LvlData.doors[i].iy = edit->LvlData.doors[i].oy;
         }
-
-        //Disable placing door point, if it not avaliable
-        ui->WarpSetExit->setEnabled( ((!ui->WarpLevelExit->isChecked()) && (!checked)) || ((checked)) );
 
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }

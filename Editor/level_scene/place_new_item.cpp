@@ -40,9 +40,14 @@ LevelNPC    LvlPlacingItems::npcSet=FileFormats::dummyLvlNpc();
 long        LvlPlacingItems::npcGrid=0;
 LevelBlock  LvlPlacingItems::blockSet=FileFormats::dummyLvlBlock();
 LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
+long        LvlPlacingItems::bgoW = 0;
+long        LvlPlacingItems::bgoH = 0;
+
 LevelWater  LvlPlacingItems::waterSet=FileFormats::dummyLvlWater();
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
+long LvlPlacingItems::doorArrayId = 0;
+
 int LvlPlacingItems::waterType=0; //0 - Water, 1 - QuickSand
 int LvlPlacingItems::playerID=0;
 
@@ -253,6 +258,14 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         long w = tImg.width();
         long h = tImg.height()/( (pConfigs->main_bgo[j].animated)?pConfigs->main_bgo[j].frames:1);
 
+        LvlPlacingItems::bgoW = w;
+        LvlPlacingItems::bgoH = h;
+
+        if(LvlPlacingItems::fillingMode)
+        {
+            setSquareDrawer(); return;
+        }
+
         cursor = addPixmap(tImg.copy(0,0,w,h));
 
         cursor->setData(0, "BGO");
@@ -379,6 +392,21 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
     case 4: //doorPoint
         placingItem=PLC_Door;
         LvlPlacingItems::doorType = dType;
+        LvlPlacingItems::doorArrayId = itemID;
+
+        LvlPlacingItems::gridSz=16;
+        LvlPlacingItems::gridOffset = QPoint(0,0);
+
+        cursor = addRect(0,0, 32, 32);
+
+        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::darkMagenta));
+        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::darkMagenta, 2,Qt::SolidLine));
+        cursor->setData(25, "CURSOR");
+        cursor->setZValue(7000);
+        cursor->setOpacity( 0.8 );
+        cursor->setVisible(true);
+        cursor->setEnabled(true);
+
         break;
     case 5: //PlayerPoint
         placingItem=PLC_PlayerPoint;
@@ -428,6 +456,7 @@ void LvlScene::setSquareDrawer()
         }
         break;
     case PLC_Block:
+    case PLC_BGO:
     default:
         pen = QPen(Qt::gray, 2);
         brush = QBrush(Qt::darkGray);

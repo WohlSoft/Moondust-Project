@@ -29,7 +29,7 @@ void npcedit::on_ResetNPCData_clicked()
 {
     NpcData = StartNPCData; //Restore first version
     setDataBoxes();
-    documentNotModified();
+    if(!isUntitled) documentNotModified();
 }
 
 

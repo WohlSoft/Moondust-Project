@@ -109,13 +109,33 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         }
 
         ItemMenu->addSeparator();
+
+
+        QAction * NoTransport = ItemMenu->addAction(tr("No Yoshi"));
+        NoTransport->setCheckable(true);
+        NoTransport->setChecked( doorData.noyoshi );
+
+        QAction * AllowNPC = ItemMenu->addAction(tr("Allow NPC"));
+        AllowNPC->setCheckable(true);
+        AllowNPC->setChecked( doorData.allownpc );
+
+        QAction * Locked = ItemMenu->addAction(tr("Locked"));
+        Locked->setCheckable(true);
+        Locked->setChecked( doorData.locked );
+
+        /*
+        ItemMenu->addSeparator();
         QAction *copyDoor = ItemMenu->addAction(tr("Copy"));
             copyDoor->setDisabled(true);
         QAction *cutDoor = ItemMenu->addAction(tr("Cut"));
             cutDoor->setDisabled(true);
+        */
 
         ItemMenu->addSeparator();
             QAction *remove = ItemMenu->addAction(tr("Remove"));
+
+        ItemMenu->addSeparator();
+            QAction *props = ItemMenu->addAction(tr("Properties..."));
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -128,22 +148,65 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         event->accept();
 
-        /*
-        if(selected==cutDoor)
-        {
-            //scene->doCut = true ;
-            MainWinConnect::pMainWin->on_actionCut_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==copyDoor)
+        if(selected==jumpTo)
         {
             //scene->doCopy = true ;
-            MainWinConnect::pMainWin->on_actionCopy_triggered();
+            if(this->data(0).toString()=="Door_enter")
+            {
+                if(doorData.isSetOut)
+                MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(-300, -300));
+            }
+            else
+            if(this->data(0).toString()=="Door_exit")
+            {
+                if(doorData.isSetIn)
+                MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(-300, -300));
+            }
             scene->contextMenuOpened = false;
         }
         else
-        */
+        if(selected==NoTransport)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                {
+                    ((ItemDoor *) SelItem)->doorData.noyoshi=NoTransport->isChecked();
+                    ((ItemDoor *) SelItem)->arrayApply();
+                }
+            }
+            MainWinConnect::pMainWin->setDoorData(-2);
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==AllowNPC)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                {
+                    ((ItemDoor *) SelItem)->doorData.allownpc=AllowNPC->isChecked();
+                    ((ItemDoor *) SelItem)->arrayApply();
+                }
+            }
+            MainWinConnect::pMainWin->setDoorData(-2);
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==Locked)
+        {
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                {
+                    ((ItemDoor *) SelItem)->doorData.locked=Locked->isChecked();
+                    ((ItemDoor *) SelItem)->arrayApply();
+                }
+            }
+            MainWinConnect::pMainWin->setDoorData(-2);
+            scene->contextMenuOpened = false;
+        }
+        else
         if(selected==remove)
         {
             //LevelData removedItems;
@@ -160,7 +223,14 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                   //  deleted=true;
                 }
             }
+            MainWinConnect::pMainWin->setDoorData(-2);
             /* if(deleted) scene->addRemoveHistory( removedItems );*/
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==props)
+        {
+            MainWinConnect::pMainWin->SwitchToDoor(doorData.array_id);
             scene->contextMenuOpened = false;
         }
         else
@@ -357,6 +427,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     doorLabel = new QGraphicsTextItem(QString::number(doorData.array_id));
     if(direction==D_Entrance)
     {
+        doorData.isSetIn=true;
         setBrush(QBrush(cEnter));
         setPen(QPen(Qt::magenta, 2,Qt::SolidLine));
 
@@ -373,6 +444,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     }
     else
     {
+        doorData.isSetOut=true;
         setBrush(QBrush(cExit));
         setPen( QPen(Qt::darkMagenta, 2,Qt::SolidLine) );
 
@@ -403,45 +475,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
 
     if(!init)
     {
-        /*
-        _______________________________¶¶¶¶
-        _____________________¶¶¶¶¶¶¶_¶¶___¶¶¶¶¶¶
-        ___________________¶¶¶_____¶¶¶___¶¶¶___¶¶¶
-        __________________¶¶_______¶¶____¶¶¶¶¶¶¶¶¶
-        ________________¶¶¶¶¶_______¶_____¶______¶¶
-        ____________¶¶¶¶¶__¶¶_______¶____¶¶_______¶
-        ___________¶¶_______¶_______¶¶___¶¶_¶¶¶¶__¶
-        _______¶¶¶¶¶________¶¶______¶¶___¶_¶___¶¶_¶
-        _____¶¶¶___¶¶________¶_______¶___¶_¶¶___¶¶¶
-        ___¶¶_______¶¶¶______¶¶______¶¶¶¶¶¶__¶¶¶¶¶
-        __¶¶_________¶¶______¶¶_¶¶¶¶¶¶____¶¶¶¶¶¶¶
-        _¶¶__¶________¶¶______¶__¶¶_¶¶_______¶¶
-        ¶¶¶¶¶¶¶________¶_____¶¶_____¶¶_______¶¶
-        ¶____¶¶¶__¶¶¶¶¶¶_¶¶¶¶_¶_¶¶¶¶¶¶¶¶______¶¶
-        ¶_____¶¶¶______¶______¶¶__¶¶¶_¶¶¶_____¶¶
-        ¶¶¶¶¶¶¶¶¶¶___¶¶¶___¶__¶¶¶¶¶_____¶¶¶____¶¶
-        ¶_______¶¶__¶¶¶¶_¶¶¶¶¶¶¶¶__________¶¶__¶¶
-        ¶________¶¶¶¶¶¶¶¶¶__¶¶¶_____________¶__¶¶
-        ¶__________¶¶¶¶¶¶¶¶¶¶_________________¶¶¶
-        ¶¶_______________¶¶¶__________________¶¶
-        ¶¶______________¶¶¶__________________¶¶
-        ¶¶_____________¶¶¶¶_________________¶¶¶
-        _¶¶____________¶_¶¶_________________¶¶
-        _¶¶___________¶¶_¶_________________¶¶
-        __¶¶_____________¶________________¶¶
-        __¶¶_____________¶_______________¶¶¶
-        ___¶¶___________________________¶¶¶
-        ____¶__________________________¶¶¶
-        _____¶¶___________¶_¶¶¶______¶¶¶
-        ______¶¶¶¶¶¶¶¶¶¶¶¶¶_¶¶¶¶¶¶¶¶¶¶¶
-        ______¶¶¶¶¶¶¶¶¶¶¶¶¶_¶¶¶_¶¶¶¶¶
-        ______¶¶________¶_¶_¶___¶_¶¶¶
-        ______¶¶_______¶¶_¶_¶___¶_¶¶¶
-        ______¶¶_______¶¶_¶_¶___¶¶_¶¶
-        ______¶¶_______¶¶_¶____¶_¶_¶¶
-        ______¶¶______¶¶¶_¶____¶¶¶¶¶¶
-        ______¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶¶
-        */
+        arrayApply();
     }
 }
 
