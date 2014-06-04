@@ -1013,7 +1013,7 @@ void LvlScene::placeItemUnderCursor()
                             door.iy = door.oy;
                         }
                         door.isSetOut=true;
-                        addPlaceDoorHistory(door.array_id, false, door.ix, door.iy);
+                        addPlaceDoorHistory(door.array_id, false, door.ox, door.oy);
                         placeDoorExit(door, false, false);
                     }
                 }
