@@ -206,6 +206,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         }
 
         ui->PROPS_NPCContaiter->hide();
+        ui->PROPS_NpcContainsLabel->hide();
 
         ui->PROPS_NPCBoxLabel->hide();
         ui->PROPS_NPCSpecialBox->hide();
@@ -277,6 +278,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             case 2:
                 if(configs.main_npc[j].container)
                 {
+                    ui->PROPS_NpcContainsLabel->show();
                     ui->PROPS_NPCContaiter->show();
                     ui->PROPS_NPCContaiter->setText(
                                 ((npc.special_data>0)?QString("NPC-%1").arg(npc.special_data)
