@@ -275,6 +275,10 @@ void dataconfigs::loadLevelNPC()
         //    //    ;special-spin-max=25		; 67 maximal value of spin
             snpc.special_spin_max = npcset.value("special-spin-max", "1").toInt();
 
+        //        int special_spin_value_offset;
+        //    //    ;special-spin-value-offset=1		; display value in editor with offset
+            snpc.special_spin_value_offset = npcset.value("special-spin-value-offset", "0").toInt();
+
         //    //    ;game process
         //    //    score=2				; Add scores to player (value 0-13)
         //    //    ; 0, 10, 100, 200, 400, 800, 1000, 2000, 4000, 8000, 1up, 2up, 5up, 3up

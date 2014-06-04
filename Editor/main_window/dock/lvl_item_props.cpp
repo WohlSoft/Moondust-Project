@@ -29,6 +29,7 @@
 
 
 static bool LvlItemPropsLock=false;//Protector for allow apply changes only if filed was edit by human
+static int npcSpecSpinOffset=0;
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
@@ -270,10 +271,11 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 ui->PROPS_NpcSpinLabel->show();
                 ui->PROPS_NpcSpinLabel->setText( configs.main_npc[j].special_name );
                 ui->PROPS_NPCSpecialSpin->show();
-                ui->PROPS_NPCSpecialSpin->setMinimum( configs.main_npc[j].special_spin_min );
-                ui->PROPS_NPCSpecialSpin->setMaximum( configs.main_npc[j].special_spin_max );
+                npcSpecSpinOffset = configs.main_npc[j].special_spin_value_offset;
+                ui->PROPS_NPCSpecialSpin->setMinimum( configs.main_npc[j].special_spin_min + npcSpecSpinOffset );
+                ui->PROPS_NPCSpecialSpin->setMaximum( configs.main_npc[j].special_spin_max + npcSpecSpinOffset );
 
-                ui->PROPS_NPCSpecialSpin->setValue( npc.special_data );
+                ui->PROPS_NPCSpecialSpin->setValue( npc.special_data + npcSpecSpinOffset );
                 break;
             case 2:
                 if(configs.main_npc[j].container)
@@ -977,7 +979,7 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
         {
             if(item->data(0).toString()=="NPC")
             {
-                ((ItemNPC*)item)->npcData.special_data = arg1;
+                ((ItemNPC*)item)->npcData.special_data = arg1 - npcSpecSpinOffset;
                 ((ItemNPC*)item)->arrayApply();
             }
         }
