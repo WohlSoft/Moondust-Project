@@ -32,9 +32,9 @@ static bool LvlItemPropsLock=false;//Protector for allow apply changes only if f
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
-    ui->blockProp->hide();
-    ui->bgoProps->hide();
-    ui->npcProps->hide();
+    ui->blockProp->setVisible(false);
+    ui->bgoProps->setVisible(false);
+    ui->npcProps->setVisible(false);
 
     LvlItemPropsLock=true;
 
@@ -50,6 +50,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     {
     case 0:
     {
+        ui->ItemProperties->setVisible(true);
         ui->ItemProperties->show();
         ui->ItemProperties->raise();
         ui->blockProp->show();
@@ -145,6 +146,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             bgoPtr = bgo.array_id;
         ui->ItemProps->setCurrentIndex(1);
 
+        ui->PROPS_BGOSquareFill->setVisible( newItem );
+        ui->PROPS_BGOSquareFill->setChecked(LvlPlacingItems::fillingMode);
 
         ui->PROPS_bgoPos->setText( tr("Position: [%1, %2]").arg(bgo.x).arg(bgo.y) );
 
@@ -424,6 +427,7 @@ void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
     resetEditmodeButtons();
    //placeBlock
 
+    ui->PROPS_BGOSquareFill->setChecked(checked);
     if (activeChildWindow()==1)
     {
        activeLvlEditWin()->scene->clearSelection();
@@ -438,6 +442,30 @@ void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
        activeLvlEditWin()->setFocus();
     }
 }
+
+
+void MainWindow::on_PROPS_BGOSquareFill_clicked(bool checked)
+{
+    resetEditmodeButtons();
+   //placeBlock
+
+    ui->PROPS_BlockSquareFill->setChecked(checked);
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->scene->clearSelection();
+       activeLvlEditWin()->changeCursor(2);
+       activeLvlEditWin()->scene->EditingMode = 2;
+       activeLvlEditWin()->scene->disableMoveItems=false;
+       activeLvlEditWin()->scene->DrawMode=true;
+       activeLvlEditWin()->scene->EraserEnabled = false;
+       LvlPlacingItems::fillingMode = checked;
+       activeLvlEditWin()->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
+       WriteToLog(QtDebugMsg, QString("BGO Square draw -> %1").arg(checked));
+       activeLvlEditWin()->setFocus();
+    }
+}
+
+
 void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
 {
     if(blockPtr<1)

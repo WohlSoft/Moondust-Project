@@ -941,8 +941,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>238</width>
-        <height>242</height>
+        <width>460</width>
+        <height>267</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -2345,15 +2345,15 @@ p, li { white-space: pre-wrap; }
         </size>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="blockProp">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>246</width>
-          <height>398</height>
+          <width>264</width>
+          <height>354</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2550,8 +2550,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>167</width>
-          <height>417</height>
+          <width>468</width>
+          <height>354</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2580,14 +2580,14 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="BgoLayerLabel">
            <property name="text">
             <string>Layer:</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="2" column="1">
           <widget class="QComboBox" name="PROPS_BGOLayer">
            <item>
             <property name="text">
@@ -2596,7 +2596,7 @@ p, li { white-space: pre-wrap; }
            </item>
           </widget>
          </item>
-         <item row="3" column="0" colspan="2">
+         <item row="4" column="0" colspan="2">
           <widget class="QLabel" name="SMBX64title">
            <property name="font">
             <font>
@@ -2609,14 +2609,14 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="6" column="0">
           <widget class="QLabel" name="SortPriorityLabel">
            <property name="text">
             <string>Sort priority:</string>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
+         <item row="6" column="1">
           <widget class="QSpinBox" name="PROPS_BGO_smbx64_sp">
            <property name="minimum">
             <number>-1</number>
@@ -2629,14 +2629,14 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="2" column="0" colspan="2">
+         <item row="3" column="0" colspan="2">
           <widget class="Line" name="line_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="7" column="0">
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -2649,13 +2649,23 @@ p, li { white-space: pre-wrap; }
            </property>
           </spacer>
          </item>
-         <item row="6" column="1">
+         <item row="7" column="1">
           <widget class="QLabel" name="SMBX64_SP_Help">
            <property name="text">
             <string>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX's bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</string>
            </property>
            <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QPushButton" name="PROPS_BGOSquareFill">
+           <property name="text">
+            <string>Square fill</string>
+           </property>
+           <property name="checkable">
             <bool>true</bool>
            </property>
           </widget>
@@ -2667,7 +2677,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>247</width>
+          <width>194</width>
           <height>517</height>
          </rect>
         </property>

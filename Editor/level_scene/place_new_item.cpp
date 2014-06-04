@@ -40,6 +40,9 @@ LevelNPC    LvlPlacingItems::npcSet=FileFormats::dummyLvlNpc();
 long        LvlPlacingItems::npcGrid=0;
 LevelBlock  LvlPlacingItems::blockSet=FileFormats::dummyLvlBlock();
 LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
+long        LvlPlacingItems::bgoW = 0;
+long        LvlPlacingItems::bgoH = 0;
+
 LevelWater  LvlPlacingItems::waterSet=FileFormats::dummyLvlWater();
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
@@ -255,6 +258,14 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         long w = tImg.width();
         long h = tImg.height()/( (pConfigs->main_bgo[j].animated)?pConfigs->main_bgo[j].frames:1);
 
+        LvlPlacingItems::bgoW = w;
+        LvlPlacingItems::bgoH = h;
+
+        if(LvlPlacingItems::fillingMode)
+        {
+            setSquareDrawer(); return;
+        }
+
         cursor = addPixmap(tImg.copy(0,0,w,h));
 
         cursor->setData(0, "BGO");
@@ -445,6 +456,7 @@ void LvlScene::setSquareDrawer()
         }
         break;
     case PLC_Block:
+    case PLC_BGO:
     default:
         pen = QPen(Qt::gray, 2);
         brush = QBrush(Qt::darkGray);

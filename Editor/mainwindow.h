@@ -353,6 +353,8 @@ private slots:
 
     void on_actionNewWorld_map_triggered();
 
+    void on_PROPS_BGOSquareFill_clicked(bool checked);
+
 private:
 
     LevelEditingSettings LvlOpts;

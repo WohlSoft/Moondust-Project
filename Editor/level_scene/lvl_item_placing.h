@@ -31,6 +31,8 @@ public:
     static bool fillingMode;
 
     static LevelBGO bgoSet;
+    static long bgoW;
+    static long bgoH;
     static LevelWater waterSet;
 
     enum doorType{

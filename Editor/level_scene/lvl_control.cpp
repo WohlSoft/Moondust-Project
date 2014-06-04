@@ -548,6 +548,40 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                         }
                     }
+                    break;
+                }
+            case PLC_BGO:
+                {
+                    long x = cursor->scenePos().x();
+                    long y = cursor->scenePos().y();
+                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
+                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
+                    int repWidth = width/LvlPlacingItems::bgoW;
+                    int repHeight = height/LvlPlacingItems::bgoH;
+
+                    LevelData plSqBgo;
+                    for(int i = 0; i < repWidth; i++){
+                        for(int j = 0; j < repHeight; j++){
+                            LvlPlacingItems::bgoSet.x = x + i * LvlPlacingItems::bgoW;
+                            LvlPlacingItems::bgoSet.y = y + j * LvlPlacingItems::bgoH;
+
+                            LvlData->bgo_array_id++;
+
+                            LvlPlacingItems::bgoSet.array_id = LvlData->bgo_array_id;
+
+                            LvlData->bgo.push_back(LvlPlacingItems::bgoSet);
+                            placeBGO(LvlPlacingItems::bgoSet, true);
+                            plSqBgo.bgo.push_back(LvlPlacingItems::bgoSet);
+                        }
+                    }
+                    if(plSqBgo.bgo.size() > 0)
+                    {
+                        addPlaceHistory(plSqBgo);
+                        //restart Animation
+                        if(opts.animationEnabled) stopAnimation();
+                        if(opts.animationEnabled) startBlockAnimation();
+
+                    }
                 }
             }
 
