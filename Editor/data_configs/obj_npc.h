@@ -98,6 +98,7 @@ struct obj_npc
     int special_spin_max;
 //    ;special-spin-max=25		; 67 maximal value of spin
 
+    int special_spin_value_offset;
 //    ;game process
 //    score=2				; Add scores to player (value 0-13)
 //    ; 0, 10, 100, 200, 400, 800, 1000, 2000, 4000, 8000, 1up, 2up, 5up, 3up
