@@ -125,10 +125,10 @@ void MainWindow::on_actionCollisions_triggered(bool checked)
 }
 
 
-
 // //History Manager
 void MainWindow::on_actionUndo_triggered()
 {
+    ui->ItemProperties->hide();
     if (activeChildWindow()==1)
     {
         //Here must be call
@@ -140,6 +140,7 @@ void MainWindow::on_actionUndo_triggered()
 
 void MainWindow::on_actionRedo_triggered()
 {
+    ui->ItemProperties->hide();
     if (activeChildWindow()==1)
     {
         //Here must be call
