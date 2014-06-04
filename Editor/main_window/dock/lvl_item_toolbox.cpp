@@ -240,6 +240,9 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->disableMoveItems=false;
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
+
+       LvlPlacingItems::fillingMode = false;
+
        activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
        LevelBlock dummyBlock;
