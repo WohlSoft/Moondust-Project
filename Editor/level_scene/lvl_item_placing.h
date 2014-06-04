@@ -31,6 +31,8 @@ public:
     static bool fillingMode;
 
     static LevelBGO bgoSet;
+    static long bgoW;
+    static long bgoH;
     static LevelWater waterSet;
 
     enum doorType{
@@ -39,6 +41,8 @@ public:
     };
 
     static int doorType;
+    static long doorArrayId;
+
     static int waterType;
     static int playerID;
 

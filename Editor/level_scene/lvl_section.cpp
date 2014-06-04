@@ -436,7 +436,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             item->setPos(x,y);
             item->setZValue(bgZ);
 
-            if(sctH > R1H)
+            if(sctH >= R1H)
             {
                 item = addRect(0, 0, sctW, sctH-RectPlus, Qt::NoPen, QBrush(srcimg));
                 item->setData(0, "BackGround"+QString::number(sctID) );

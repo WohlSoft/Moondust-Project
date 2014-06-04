@@ -126,7 +126,8 @@ public slots:
     //LevelEdit functions
     void SetCurrentLevelSection(int SctId, int open=0);
     void setDoorsToolbox();
-    void setDoorData(long index);
+    void setDoorData(long index=-1);
+    void SwitchToDoor(long arrayID);
     void setLayersBox();
     void setLayerLists();
     void EventListsSync();
@@ -347,6 +348,12 @@ private slots:
     void on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1);
 
     void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
+
+    void on_actionNewLevel_triggered();
+
+    void on_actionNewWorld_map_triggered();
+
+    void on_PROPS_BGOSquareFill_clicked(bool checked);
 
 private:
 

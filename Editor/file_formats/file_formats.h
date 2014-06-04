@@ -60,6 +60,7 @@ public:
     // SMBX64 LVL File
     static LevelData ReadLevelFile(QFile &inf);             //read
     static QString WriteSMBX64LvlFile(LevelData FileData);  //write
+    static LevelData dummyLvlDataArray();                   //Create new
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
