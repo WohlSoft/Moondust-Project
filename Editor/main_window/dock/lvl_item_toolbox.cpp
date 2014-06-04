@@ -21,6 +21,7 @@
 #include "../../mainwindow.h"
 
 #include "../../level_scene/lvl_item_placing.h"
+#include "../../file_formats/file_formats.h"
 
 
 void MainWindow::setItemBoxes(bool setCat)
@@ -212,16 +213,9 @@ void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
 
        activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
-       LevelBlock dummyBlock;
-       dummyBlock.array_id=0;
-       LevelBGO dummyBgo;
-       dummyBgo.array_id=0;
-       LevelNPC dummyNPC;
-       dummyNPC.array_id=0;
-
        LvlItemProps(0,LvlPlacingItems::blockSet,
-                                 dummyBgo,
-                                 dummyNPC, true);
+                                 FileFormats::dummyLvlBgo(),
+                                 FileFormats::dummyLvlNpc(), true);
 
        activeLvlEditWin()->setFocus();
     }
@@ -245,16 +239,9 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
 
        activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
-       LevelBlock dummyBlock;
-       dummyBlock.array_id=0;
-       LevelBGO dummyBgo;
-       dummyBgo.array_id=0;
-       LevelNPC dummyNPC;
-       dummyNPC.array_id=0;
-
-       LvlItemProps(1,dummyBlock,
+       LvlItemProps(1,FileFormats::dummyLvlBlock(),
                                  LvlPlacingItems::bgoSet,
-                                 dummyNPC, true);
+                                 FileFormats::dummyLvlNpc(), true);
 
        activeLvlEditWin()->setFocus();
     }
@@ -276,15 +263,8 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
 
-       LevelBlock dummyBlock;
-       dummyBlock.array_id=0;
-       LevelBGO dummyBgo;
-       dummyBgo.array_id=0;
-       LevelNPC dummyNPC;
-       dummyNPC.array_id=0;
-
-       LvlItemProps(2,dummyBlock,
-                                 dummyBgo,
+       LvlItemProps(2,FileFormats::dummyLvlBlock(),
+                                 FileFormats::dummyLvlBgo(),
                                  LvlPlacingItems::npcSet, true);
 
        activeLvlEditWin()->setFocus();

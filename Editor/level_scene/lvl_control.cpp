@@ -29,6 +29,8 @@
 #include "../common_features/mainwinconnect.h"
 #include "lvl_item_placing.h"
 
+#include "../file_formats/file_formats.h"
+
 
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 {
@@ -137,15 +139,6 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
 void LvlScene::openProps()
 {
-    LevelBlock dummyBlock;
-    dummyBlock.array_id=0;
-
-    LevelBGO dummyBgo;
-    dummyBgo.array_id=0;
-
-    LevelNPC dummyNPC;
-    dummyNPC.array_id=0;
-
     QList<QGraphicsItem * > items = this->selectedItems();
     if(!items.isEmpty())
     {
@@ -153,31 +146,37 @@ void LvlScene::openProps()
         {
             MainWinConnect::pMainWin->LvlItemProps(0,
                           ((ItemBlock *)items.first())->blockData,
-                          dummyBgo,
-                          dummyNPC);
+                          FileFormats::dummyLvlBgo(),
+                          FileFormats::dummyLvlNpc());
         }
         else
         if(items.first()->data(0).toString()=="BGO")
         {
             MainWinConnect::pMainWin->LvlItemProps(1,
-                              dummyBlock,
+                              FileFormats::dummyLvlBlock(),
                               ((ItemBGO *)items.first())->bgoData,
-                              dummyNPC);
+                              FileFormats::dummyLvlNpc());
         }
         else
         if(items.first()->data(0).toString()=="NPC")
         {
             MainWinConnect::pMainWin->LvlItemProps(2,
-                              dummyBlock,
-                              dummyBgo,
+                              FileFormats::dummyLvlBlock(),
+                              FileFormats::dummyLvlBgo(),
                               ((ItemNPC *)items.first())->npcData);
         }
         else
-        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
+        MainWinConnect::pMainWin->LvlItemProps(-1,
+                                               FileFormats::dummyLvlBlock(),
+                                               FileFormats::dummyLvlBgo(),
+                                               FileFormats::dummyLvlNpc());
     }
     else
     {
-        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
+        MainWinConnect::pMainWin->LvlItemProps(-1,
+                                               FileFormats::dummyLvlBlock(),
+                                               FileFormats::dummyLvlBgo(),
+                                               FileFormats::dummyLvlNpc());
     }
 
     QGraphicsScene::selectionChanged();
