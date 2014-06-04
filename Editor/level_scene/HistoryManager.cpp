@@ -21,7 +21,9 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 #include "item_water.h"
+#include "item_door.h"
 #include "../common_features/logger.h"
+#include "../common_features/mainwinconnect.h"
 
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
@@ -48,6 +50,25 @@ void LvlScene::addPlaceHistory(LevelData placedItems)
     plOperation.data = placedItems;
 
     operationList.push_back(plOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
+void LvlScene::addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y)
+{
+    cleanupRedoElements();
+
+    HistoryOperation plDoorOperation;
+    plDoorOperation.type = HistoryOperation::LEVELHISTORY_PLACEDOOR;
+    QList<QVariant> doorExtraData;
+    doorExtraData.push_back(array_id);
+    doorExtraData.push_back(isEntrance);
+    doorExtraData.push_back((qlonglong)x);
+    doorExtraData.push_back((qlonglong)y);
+    plDoorOperation.extraData = QVariant(doorExtraData);
+
+    operationList.push_back(plDoorOperation);
     historyIndex++;
 
     historyChanged = true;
@@ -310,6 +331,13 @@ void LvlScene::historyBack()
         findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyUndoResizeBlock, 0, 0, 0, false, true, true, true);
         break;
     }
+    case HistoryOperation::LEVELHISTORY_PLACEDOOR:
+    {
+        CallbackData cbData;
+        findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyUndoPlaceDoor, lastOperation.extraData.toList()[1].toBool());
+
+        break;
+    }
     default:
         break;
     }
@@ -477,6 +505,41 @@ void LvlScene::historyForward()
 
         CallbackData cbData;
         findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyRedoResizeBlock, 0, 0, 0, false, true, true, true);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_PLACEDOOR:
+    {
+        bool found = false;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        LevelDoors door;
+
+        foreach(LevelDoors findDoor, LvlData->doors){
+            if(array_id == (int)findDoor.array_id){
+                door = findDoor;
+                found = true;
+                break;
+            }
+        }
+
+        if(!found)
+            return;
+
+        bool isEntrance = lastOperation.extraData.toList()[1].toBool();
+
+        if(isEntrance){
+            door.ix = (long)lastOperation.extraData.toList()[2].toLongLong();
+            door.iy = (long)lastOperation.extraData.toList()[3].toLongLong();
+            door.isSetIn = true;
+            placeDoorEnter(door, false, false);
+        }else{
+            door.ox = (long)lastOperation.extraData.toList()[2].toLongLong();
+            door.oy = (long)lastOperation.extraData.toList()[3].toLongLong();
+            door.isSetOut = true;
+            placeDoorExit(door, false, false);
+        }
+
+        MainWinConnect::pMainWin->setDoorData(-2);
+
         break;
     }
     default:
@@ -856,6 +919,13 @@ void LvlScene::historyRedoResizeBlock(LvlScene::CallbackData cbData, LevelBlock 
     ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
 }
 
+void LvlScene::historyUndoPlaceDoor(LvlScene::CallbackData cbData, LevelDoors /*door*/, bool /*isEntrance*/)
+{
+    ((ItemDoor *)(cbData.item))->removeFromArray();
+    if((cbData.item)) delete (cbData.item);
+    MainWinConnect::pMainWin->setDoorData(-2);
+}
+
 void LvlScene::findGraphicsItem(LevelData toFind,
                                 HistoryOperation * operation,
                                 CallbackData customData,
@@ -1057,6 +1127,36 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         }
     }
 
+}
+
+void LvlScene::findGraphicsDoor(int array_id, LvlScene::HistoryOperation *operation, LvlScene::CallbackData customData, LvlScene::callBackLevelDoors clbDoors, bool isEntrance)
+{
+    CallbackData cbData = customData;
+    cbData.hist = operation;
+    foreach (QGraphicsItem* i, items())
+    {
+        if(i->data(2).toInt() == array_id){
+            if(isEntrance && i->data(0).toString()=="Door_enter"){
+                //(this->*clbDoors)(CallbackData, LevelDoors, bool)
+                //find DoorData
+                foreach(LevelDoors findDoor, LvlData->doors){
+                    if(array_id == (int)findDoor.array_id){
+                        cbData.item = i;
+                        (this->*clbDoors)(cbData, findDoor, true);
+                        break;
+                    }
+                }
+            }else if(!isEntrance && i->data(0).toString()=="Door_exit"){
+                foreach(LevelDoors findDoor, LvlData->doors){
+                    if(array_id == (int)findDoor.array_id){
+                        cbData.item = i;
+                        (this->*clbDoors)(cbData, findDoor, true);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 QPoint LvlScene::calcTopLeftCorner(LevelData *data)

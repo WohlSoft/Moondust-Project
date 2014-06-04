@@ -243,7 +243,8 @@ public:
             LEVELHISTORY_CHANGEDSETTINGS,          //changed settings of items
             LEVELHISTORY_RESIZESECTION,
             LEVELHISTORY_CHANGEDLAYER,
-            LEVELHISTORY_RESIZEBLOCK
+            LEVELHISTORY_RESIZEBLOCK,
+            LEVELHISTORY_PLACEDOOR
         };
         HistoryType type;
         //used most of Operations
@@ -280,9 +281,11 @@ public:
     typedef void (LvlScene::*callBackLevelBGO)(CallbackData, LevelBGO);
     typedef void (LvlScene::*callBackLevelNPC)(CallbackData, LevelNPC);
     typedef void (LvlScene::*callBackLevelWater)(CallbackData, LevelWater);
+    typedef void (LvlScene::*callBackLevelDoors)(CallbackData, LevelDoors, bool); //bool isEntrance [true = entrance, false = exit]
     //add historys
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
+    void addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
     void addChangeSettingsHistory(LevelData modifiedItems, SettingSubType subType, QVariant extraData);
     void addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
@@ -351,6 +354,8 @@ public:
     //Callbackfunctions: Change sizeable Block size
     void historyUndoResizeBlock(CallbackData cbData, LevelBlock data);
     void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: Undo place of Doors
+    void historyUndoPlaceDoor(CallbackData cbData, LevelDoors door, bool isEntrance);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,
@@ -359,6 +364,9 @@ public:
                           bool ignoreBGO = false, 
                           bool ignoreNPC = false,
                           bool ignoreWater = false);
+
+    void findGraphicsDoor(int array_id, HistoryOperation* operation, CallbackData customData,
+                          callBackLevelDoors clbDoors, bool isEntrance);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
     // ////////////////////////////////////////////
