@@ -85,6 +85,7 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     documentNotModified();
 
     loadPreview();
+    on_DirectLeft_clicked();
 
     return true;
 }
