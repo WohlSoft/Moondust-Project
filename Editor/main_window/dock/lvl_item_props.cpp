@@ -478,14 +478,16 @@ void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
     else
     if (activeChildWindow()==1)
     {
+        LevelData selData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
+            if(item->data(0).toString()=="Block")
             {
                 ((ItemBlock*)item)->setInvisible(checked);
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_INVISIBLE, QVariant(checked));
     }
 
 }
