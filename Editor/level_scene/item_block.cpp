@@ -154,8 +154,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Block")
+                {
+                    selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
                     ((ItemBlock *) SelItem)->setInvisible(invis->isChecked());
-                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_INVISIBLE, QVariant(invis->isChecked()));
             scene->contextMenuOpened = false;
@@ -168,8 +170,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Block")
+                {
+                    selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
                     ((ItemBlock *) SelItem)->setSlippery(slipp->isChecked());
-                selData.blocks.push_back(((ItemBlock *) SelItem)->blockData);
+                }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SLIPPERY, QVariant(invis->isChecked()));
             scene->contextMenuOpened = false;
