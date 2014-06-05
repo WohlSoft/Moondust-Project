@@ -88,15 +88,24 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 {
                     //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
                     bool isEntrance = (objType=="Door_enter");
-                    addRemoveDoorHistory((*it)->data(2).toInt(), objType=="Door_enter",
+                    /*addRemoveDoorHistory((*it)->data(2).toInt(), objType=="Door_enter",
                                          (isEntrance ? ((ItemDoor *)(*it))->doorData.ix :
                                                        ((ItemDoor *)(*it))->doorData.ox),
                                          (isEntrance ? ((ItemDoor *)(*it))->doorData.iy :
-                                                       ((ItemDoor *)(*it))->doorData.oy));
+                                                       ((ItemDoor *)(*it))->doorData.oy));*/
+                    LevelDoors doorData = ((ItemDoor *)(*it))->doorData;
+                    if(isEntrance){
+                        doorData.isSetIn = true;
+                        doorData.isSetOut = false;
+                    }else{
+                        doorData.isSetIn = false;
+                        doorData.isSetOut = true;
+                    }
+                    historyBuffer.doors.push_back(doorData);
                     ((ItemDoor *)(*it))->removeFromArray();
                     if((*it)) delete (*it);
                     MainWinConnect::pMainWin->setDoorData(-2);
-                    //deleted=true;
+                    deleted=true;
                 }
         }
         if(deleted) addRemoveHistory(historyBuffer);
