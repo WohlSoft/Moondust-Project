@@ -460,11 +460,6 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.ui" line="44"/>
-        <source>Editor - PlatGEnWohl (Under Construction)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="108"/>
         <source>File</source>
         <translation type="unfinished"></translation>
@@ -834,7 +829,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2112"/>
         <location filename="../mainwindow.ui" line="2212"/>
         <location filename="../mainwindow.ui" line="2743"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="228"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="229"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
@@ -842,7 +837,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2128"/>
         <location filename="../mainwindow.ui" line="2228"/>
         <location filename="../mainwindow.ui" line="2757"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="235"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="236"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -945,7 +940,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2719"/>
         <location filename="../mainwindow.ui" line="2900"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="223"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="224"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
@@ -977,6 +972,11 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2767"/>
         <source>Friendly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="44"/>
+        <source>Editor - Platformer Game Engine (Under Construction)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1752,29 +1752,29 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="93"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="152"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="218"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="94"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="153"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="219"/>
         <source>Position: [%1, %2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="103"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="558"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="104"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="560"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="104"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="285"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="559"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1029"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="105"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="287"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="561"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1031"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="294"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="954"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="296"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="956"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2320,33 +2320,33 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="103"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="104"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="104"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="105"/>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="115"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="116"/>
         <source>Write file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="116"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="117"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="142"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="143"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_npc/npctxt_files_io.cpp" line="143"/>
+        <location filename="../edit_npc/npctxt_files_io.cpp" line="144"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
