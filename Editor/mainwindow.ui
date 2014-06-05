@@ -41,7 +41,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Editor - PlatGEnWohl (Under Construction)</string>
+   <string>Editor - Platformer Game Engine (Under Construction)</string>
   </property>
   <property name="windowIcon">
    <iconset resource="_resources/editor.qrc">
@@ -941,8 +941,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>271</width>
-        <height>267</height>
+        <width>256</width>
+        <height>242</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1002,8 +1002,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>254</width>
-        <height>267</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1026,8 +1026,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>254</width>
-        <height>267</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1050,8 +1050,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>254</width>
-        <height>267</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2352,8 +2352,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
-          <height>354</height>
+          <width>181</width>
+          <height>225</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2550,8 +2550,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
-          <height>354</height>
+          <width>167</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2676,8 +2676,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-60</y>
-          <width>262</width>
+          <y>0</y>
+          <width>247</width>
           <height>547</height>
          </rect>
         </property>
