@@ -47,33 +47,31 @@ struct DataFolders
 };
 
 struct obj_bgo{
-    /*
-    [background-1]
-    name="Smallest bush"		;background name, default="background-%n"
-    type="scenery"			;Background type, default="Scenery"
-    grid=32				; 32 | 16 Default="32"
-    view=background			; background | foreground, default="background"
-    image="background-1.gif"	;Image file with level file ; the image mask will be have *m.gif name.
-    climbing=0			; default = 0
-    animated = 0			; default = 0 - no
-    frames = 1			; default = 1
-    frame-speed=125			; default = 125 ms, etc. 8 frames per sec
-    */
+    //    [background-1]
     unsigned long id;
+    //    name="Smallest bush"		;background name, default="background-%n"
     QString name;
+    //    type="scenery"			;Background type, default="Scenery"
     QString type;
+    //    grid=32				; 32 | 16 Default="32"
     unsigned int grid;
+    //    view=background			; background | foreground, default="background"
     unsigned int view;
     int offsetX;
     int offsetY;
     int zOffset;
+    //    image="background-1.gif"	;Image file with level file ; the image mask will be have *m.gif name.
     QString image_n;
     QString mask_n;
     QPixmap image;
     QBitmap mask;
+    //    climbing=0			; default = 0
     bool climbing;
+    //    animated = 0			; default = 0 - no
     bool animated;
+    //    frames = 1			; default = 1
     unsigned int frames;
+    //    frame-speed=125			; default = 125 ms, etc. 8 frames per sec
     unsigned int framespeed;
 };
 
