@@ -40,6 +40,25 @@ void LvlScene::addRemoveHistory(LevelData removedItems)
     historyChanged = true;
 }
 
+void LvlScene::addRemoveDoorHistory(int array_id, bool isEntrance, long x, long y)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rmDoorOperation;
+    rmDoorOperation.type = HistoryOperation::LEVELHISTORY_REMOVEDOOR;
+    QList<QVariant> doorExtraData;
+    doorExtraData.push_back(array_id);
+    doorExtraData.push_back(isEntrance);
+    doorExtraData.push_back((qlonglong)x);
+    doorExtraData.push_back((qlonglong)y);
+    rmDoorOperation.extraData = QVariant(doorExtraData);
+
+    operationList.push_back(rmDoorOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
 void LvlScene::addPlaceHistory(LevelData placedItems)
 {
     //add cleanup redo elements
@@ -334,9 +353,42 @@ void LvlScene::historyBack()
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
     {
         CallbackData cbData;
-        findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyUndoPlaceDoor, lastOperation.extraData.toList()[1].toBool());
+        findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyRemoveDoors, lastOperation.extraData.toList()[1].toBool());
 
         break;
+    }
+    case HistoryOperation::LEVELHISTORY_REMOVEDOOR:
+    {
+        bool found = false;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        LevelDoors door;
+
+        foreach(LevelDoors findDoor, LvlData->doors){
+            if(array_id == (int)findDoor.array_id){
+                door = findDoor;
+                found = true;
+                break;
+            }
+        }
+
+        if(!found)
+            return;
+
+        bool isEntrance = lastOperation.extraData.toList()[1].toBool();
+
+        if(isEntrance){
+            door.ix = (long)lastOperation.extraData.toList()[2].toLongLong();
+            door.iy = (long)lastOperation.extraData.toList()[3].toLongLong();
+            door.isSetIn = true;
+            placeDoorEnter(door, false, false);
+        }else{
+            door.ox = (long)lastOperation.extraData.toList()[2].toLongLong();
+            door.oy = (long)lastOperation.extraData.toList()[3].toLongLong();
+            door.isSetOut = true;
+            placeDoorExit(door, false, false);
+        }
+
+        MainWinConnect::pMainWin->setDoorData(-2);
     }
     default:
         break;
@@ -542,6 +594,14 @@ void LvlScene::historyForward()
 
         break;
     }
+    case HistoryOperation::LEVELHISTORY_REMOVEDOOR:
+    {
+        CallbackData cbData;
+        findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyRemoveDoors, lastOperation.extraData.toList()[1].toBool());
+
+        break;
+    }
+
     default:
         break;
     }
@@ -919,7 +979,7 @@ void LvlScene::historyRedoResizeBlock(LvlScene::CallbackData cbData, LevelBlock 
     ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
 }
 
-void LvlScene::historyUndoPlaceDoor(LvlScene::CallbackData cbData, LevelDoors /*door*/, bool /*isEntrance*/)
+void LvlScene::historyRemoveDoors(LvlScene::CallbackData cbData, LevelDoors /*door*/, bool /*isEntrance*/)
 {
     ((ItemDoor *)(cbData.item))->removeFromArray();
     if((cbData.item)) delete (cbData.item);
