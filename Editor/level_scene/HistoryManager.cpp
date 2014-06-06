@@ -1297,6 +1297,9 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
     }else if(!data->npc.isEmpty()){
         baseX = (int)data->npc[0].x;
         baseY = (int)data->npc[0].y;
+    }else if(!data->water.isEmpty()){
+        baseX = (int)data->water[0].x;
+        baseY = (int)data->water[0].y;
     }
 
     foreach (LevelBlock block, data->blocks) {
@@ -1323,6 +1326,15 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
             baseY = (int)npc.y;
         }
     }
+    foreach (LevelWater water, data->water) {
+        if((int)water.x<baseX){
+            baseX = (int)water.x;
+        }
+        if((int)water.y<baseY){
+            baseY = (int)water.y;
+        }
+    }
+
 
     return QPoint(baseX, baseY);
 }
