@@ -876,6 +876,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         {
                             //Applay move into main array
                             //historySourceBuffer.water.push_back(((ItemWater *)(*it))->waterData);
+                            LevelDoors oldDoorData = ((ItemDoor *)(*it))->doorData;
+                            oldDoorData.isSetIn = true;
+                            oldDoorData.isSetOut = false;
+                            historySourceBuffer.doors.push_back(oldDoorData);
                             ((ItemDoor *)(*it))->doorData.ix = (long)(*it)->scenePos().x();
                             ((ItemDoor *)(*it))->doorData.iy = (long)(*it)->scenePos().y();
                             if((((ItemDoor *)(*it))->doorData.lvl_i)||((ItemDoor *)(*it))->doorData.lvl_o)
@@ -885,6 +889,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             }
 
                             ((ItemDoor *)(*it))->arrayApply();
+                            LevelDoors newDoorData = ((ItemDoor *)(*it))->doorData;
+                            newDoorData.isSetIn = true;
+                            newDoorData.isSetOut = false;
+                            historyBuffer.doors.push_back(newDoorData);
                             //historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
                             LvlData->modified = true;
                         }
@@ -893,6 +901,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         {
                             //Applay move into main array
                             //historySourceBuffer.water.push_back(((ItemWater *)(*it))->waterData);
+                            LevelDoors oldDoorData = ((ItemDoor *)(*it))->doorData;
+                            oldDoorData.isSetIn = false;
+                            oldDoorData.isSetOut = true;
+                            historySourceBuffer.doors.push_back(oldDoorData);
                             ((ItemDoor *)(*it))->doorData.ox = (long)(*it)->scenePos().x();
                             ((ItemDoor *)(*it))->doorData.oy = (long)(*it)->scenePos().y();
                             if((((ItemDoor *)(*it))->doorData.lvl_i)||((ItemDoor *)(*it))->doorData.lvl_o)
@@ -901,6 +913,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                 ((ItemDoor *)(*it))->doorData.iy = (long)(*it)->scenePos().y();
                             }
                             ((ItemDoor *)(*it))->arrayApply();
+                            LevelDoors newDoorData = ((ItemDoor *)(*it))->doorData;
+                            newDoorData.isSetIn = false;
+                            newDoorData.isSetOut = true;
+                            historyBuffer.doors.push_back(newDoorData);
                             //historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
                             LvlData->modified = true;
                         }

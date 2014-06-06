@@ -311,11 +311,12 @@ public:
     void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyRedoMoveWater(CallbackData cbData, LevelWater data);
-    //void historyRedoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyUndoMoveWater(CallbackData cbData, LevelWater data);
+    void historyUndoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
