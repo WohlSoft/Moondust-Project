@@ -289,11 +289,13 @@ void MainWindow::on_WarpSetEntrance_clicked()
         leveledit* edit = activeLvlEditWin();
         bool placed=false;
         int i=0;
+        int array_id = 0;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 placed = edit->LvlData.doors[i].isSetIn;
+                array_id = edit->LvlData.doors[i].array_id;
                 break;
             }
         }
@@ -301,6 +303,23 @@ void MainWindow::on_WarpSetEntrance_clicked()
         if(placed)
         {
                edit->goTo(edit->LvlData.doors[i].ix, edit->LvlData.doors[i].iy, true, QPoint(-300, -300));
+               //deselect all and select placed one
+               foreach (QGraphicsItem* i, edit->scene->selectedItems())
+               {
+                   i->setSelected(false);
+               }
+               foreach (QGraphicsItem* item, edit->scene->items())
+               {
+                   if(item->data(0).toString()=="Door_enter")
+                   {
+                       if(item->data(2).toInt()==array_id)
+                       {
+                           item->setSelected(true);
+                           break;
+                       }
+                   }
+               }
+
                return;
         }
 
@@ -328,11 +347,13 @@ void MainWindow::on_WarpSetExit_clicked()
         leveledit* edit = activeLvlEditWin();
         bool placed=false;
         int i=0;
+        int array_id = 0;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 placed = edit->LvlData.doors[i].isSetOut;
+                array_id = edit->LvlData.doors[i].array_id;
                 break;
             }
         }
@@ -340,6 +361,22 @@ void MainWindow::on_WarpSetExit_clicked()
         if(placed)
         {
                edit->goTo(edit->LvlData.doors[i].ox, edit->LvlData.doors[i].oy, true, QPoint(-300, -300));
+               //deselect all and select placed one
+               foreach (QGraphicsItem* i, edit->scene->selectedItems())
+               {
+                   i->setSelected(false);
+               }
+               foreach (QGraphicsItem* item, edit->scene->items())
+               {
+                   if(item->data(0).toString()=="Door_exit")
+                   {
+                       if(item->data(2).toInt()==array_id)
+                       {
+                           item->setSelected(true);
+                           break;
+                       }
+                   }
+               }
                return;
         }
 
