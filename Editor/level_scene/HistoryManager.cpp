@@ -283,7 +283,7 @@ void LvlScene::historyBack()
         LevelData movedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC, &LvlScene::historyUndoMoveWater, 0, false, false, false, false, true);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC, &LvlScene::historyUndoMoveWater, &LvlScene::historyUndoMoveDoors);
 
         break;
     }
@@ -460,7 +460,7 @@ void LvlScene::historyForward()
         CallbackData cbData;
         cbData.x = baseX;
         cbData.y = baseY;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC, &LvlScene::historyRedoMoveWater, 0, false, false, false, false, true);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC, &LvlScene::historyRedoMoveWater, &LvlScene::historyRedoMoveDoors);
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
@@ -659,6 +659,36 @@ void LvlScene::historyRedoMoveWater(LvlScene::CallbackData cbData, LevelWater da
     ((ItemWater *)(cbData.item))->arrayApply();
 }
 
+void LvlScene::historyRedoMoveDoors(LvlScene::CallbackData cbData, LevelDoors data, bool isEntrance)
+{
+    if(isEntrance){
+        long diffX = data.ix - cbData.x;
+        long diffY = data.iy - cbData.y;
+
+        cbData.item->setPos(QPointF(cbData.hist->x+diffX,cbData.hist->y+diffY));
+        ((ItemDoor *)(cbData.item))->doorData.ix = (long)cbData.item->scenePos().x();
+        ((ItemDoor *)(cbData.item))->doorData.iy = (long)cbData.item->scenePos().y();
+        if((((ItemDoor *)(cbData.item))->doorData.lvl_i)||((ItemDoor *)(cbData.item))->doorData.lvl_o)
+        {
+            ((ItemDoor *)(cbData.item))->doorData.ox = (long)(cbData.item)->scenePos().x();
+            ((ItemDoor *)(cbData.item))->doorData.oy = (long)(cbData.item)->scenePos().y();
+        }
+    }else{
+        long diffX = data.ox - cbData.x;
+        long diffY = data.oy - cbData.y;
+
+        cbData.item->setPos(QPointF(cbData.hist->x+diffX,cbData.hist->y+diffY));
+        ((ItemDoor *)(cbData.item))->doorData.ox = (long)cbData.item->scenePos().x();
+        ((ItemDoor *)(cbData.item))->doorData.oy = (long)cbData.item->scenePos().y();
+        if((((ItemDoor *)(cbData.item))->doorData.lvl_i)||((ItemDoor *)(cbData.item))->doorData.lvl_o)
+        {
+            ((ItemDoor *)(cbData.item))->doorData.ix = (long)(cbData.item)->scenePos().x();
+            ((ItemDoor *)(cbData.item))->doorData.iy = (long)(cbData.item)->scenePos().y();
+        }
+    }
+    ((ItemDoor *)(cbData.item))->arrayApply();
+}
+
 void LvlScene::historyUndoMoveBlocks(LvlScene::CallbackData cbData, LevelBlock data)
 {
     cbData.item->setPos(QPointF(data.x,data.y));
@@ -689,6 +719,30 @@ void LvlScene::historyUndoMoveWater(LvlScene::CallbackData cbData, LevelWater da
     ((ItemWater *)(cbData.item))->waterData.x = (long)cbData.item->scenePos().x();
     ((ItemWater *)(cbData.item))->waterData.y = (long)cbData.item->scenePos().y();
     ((ItemWater *)(cbData.item))->arrayApply();
+}
+
+void LvlScene::historyUndoMoveDoors(LvlScene::CallbackData cbData, LevelDoors data, bool isEntrance)
+{
+    if(isEntrance){
+        cbData.item->setPos(QPointF(data.ix, data.iy));
+        ((ItemDoor *)(cbData.item))->doorData.ix = (long)cbData.item->scenePos().x();
+        ((ItemDoor *)(cbData.item))->doorData.iy = (long)cbData.item->scenePos().y();
+        if((((ItemDoor *)(cbData.item))->doorData.lvl_i)||((ItemDoor *)(cbData.item))->doorData.lvl_o)
+        {
+            ((ItemDoor *)(cbData.item))->doorData.ox = (long)(cbData.item)->scenePos().x();
+            ((ItemDoor *)(cbData.item))->doorData.oy = (long)(cbData.item)->scenePos().y();
+        }
+    }else{
+        cbData.item->setPos(QPointF(data.ox, data.oy));
+        ((ItemDoor *)(cbData.item))->doorData.ox = (long)cbData.item->scenePos().x();
+        ((ItemDoor *)(cbData.item))->doorData.oy = (long)cbData.item->scenePos().y();
+        if((((ItemDoor *)(cbData.item))->doorData.lvl_i)||((ItemDoor *)(cbData.item))->doorData.lvl_o)
+        {
+            ((ItemDoor *)(cbData.item))->doorData.ix = (long)(cbData.item)->scenePos().x();
+            ((ItemDoor *)(cbData.item))->doorData.iy = (long)(cbData.item)->scenePos().y();
+        }
+    }
+    ((ItemDoor *)(cbData.item))->arrayApply();
 }
 
 void LvlScene::historyRemoveBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
@@ -1300,6 +1354,16 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
     }else if(!data->water.isEmpty()){
         baseX = (int)data->water[0].x;
         baseY = (int)data->water[0].y;
+    }else if(!data->doors.isEmpty()){
+        if(data->doors[0].isSetIn&&!data->doors[0].isSetOut){
+            baseX = data->doors[0].ix;
+            baseY = data->doors[0].iy;
+        }
+        else
+        if(!data->doors[0].isSetIn&&data->doors[0].isSetOut){
+            baseX = data->doors[0].ox;
+            baseY = data->doors[0].oy;
+        }
     }
 
     foreach (LevelBlock block, data->blocks) {
@@ -1332,6 +1396,25 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
         }
         if((int)water.y<baseY){
             baseY = (int)water.y;
+        }
+    }
+    foreach (LevelDoors door, data->doors) {
+        if(door.isSetIn&&!door.isSetOut){
+            if((int)door.ix<baseX){
+                baseX = (int)door.ix;
+            }
+            if((int)door.iy<baseY){
+                baseY = (int)door.iy;
+            }
+        }
+        else
+        if(!door.isSetIn&&door.isSetOut){
+            if((int)door.ox<baseX){
+                baseX = (int)door.ox;
+            }
+            if((int)door.oy<baseY){
+                baseY = (int)door.oy;
+            }
         }
     }
 
