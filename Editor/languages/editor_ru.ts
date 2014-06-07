@@ -90,12 +90,12 @@
         <translation>Отладка</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="53"/>
+        <location filename="../main_window/appsettings.cpp" line="71"/>
         <source>Set log file</source>
         <translation>Выбор файла отчёта</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="54"/>
+        <location filename="../main_window/appsettings.cpp" line="72"/>
         <source>Text files (*.txt *.log)</source>
         <translation>Текстовые файлы (*.txt *.log)</translation>
     </message>
@@ -549,8 +549,14 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Категория:</translation>
     </message>
     <message>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="28"/>
         <source>[all]</source>
-        <translation type="vanished">[Всё]</translation>
+        <translation>[всё]</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="29"/>
+        <source>[custom]</source>
+        <translation>[пользовательские]</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="491"/>
@@ -633,7 +639,7 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Музыка</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="200"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="199"/>
         <source>[Silence]</source>
         <translation>[Тишина]</translation>
     </message>
@@ -686,7 +692,7 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Фоновое изображение</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="199"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="198"/>
         <source>[No image]</source>
         <translation>[Без картинки]</translation>
     </message>
@@ -858,7 +864,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2112"/>
         <location filename="../mainwindow.ui" line="2212"/>
         <location filename="../mainwindow.ui" line="2743"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="229"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="228"/>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
@@ -866,7 +872,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2128"/>
         <location filename="../mainwindow.ui" line="2228"/>
         <location filename="../mainwindow.ui" line="2757"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="236"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="235"/>
         <source>Right</source>
         <translation>Право</translation>
     </message>
@@ -948,8 +954,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>События</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="296"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="956"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="295"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="961"/>
         <source>[none]</source>
         <translation>[нет]</translation>
     </message>
@@ -1379,7 +1385,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2719"/>
         <location filename="../mainwindow.ui" line="2900"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="224"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="223"/>
         <source>Direction</source>
         <translation>Направление</translation>
     </message>
@@ -1668,7 +1674,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4624"/>
-        <location filename="../main_window/menubar.cpp" line="234"/>
+        <location filename="../main_window/menubar.cpp" line="223"/>
         <source>[No opened files]</source>
         <translation>[Нет открытых файлов]</translation>
     </message>
@@ -1713,7 +1719,7 @@ File: %1
         <translation type="vanished">%1 блоков, %2 Фоновых объектов, %3 нИП скопировано в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="35"/>
+        <location filename="../main_window/clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
         <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон скопировано в буфер обмена</translation>
     </message>
@@ -1722,69 +1728,69 @@ File: %1
         <translation type="vanished">%1 блоков, %2 Фоновых объектов, %3 нИП перемещено в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="53"/>
+        <location filename="../main_window/clipboard.cpp" line="52"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
         <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон перемещено в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="30"/>
+        <location filename="../main_window/data_configs.cpp" line="28"/>
         <source>Reloading configurations</source>
         <translation>Перезагрузка конфигурации</translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="30"/>
+        <location filename="../main_window/data_configs.cpp" line="28"/>
         <source>Abort</source>
         <translation>Прервать</translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="54"/>
+        <location filename="../main_window/data_configs.cpp" line="52"/>
         <source>Reload configuration</source>
         <translation>Перезагрузить конфигурацию</translation>
     </message>
     <message>
-        <location filename="../main_window/data_configs.cpp" line="55"/>
+        <location filename="../main_window/data_configs.cpp" line="53"/>
         <source>Configuration succesfully reloaded!</source>
         <translation>Конфигурация объектов успешно перезагружена!</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_common.cpp" line="40"/>
+        <location filename="../main_window/edit_common.cpp" line="39"/>
         <location filename="../main_window/files_io.cpp" line="48"/>
         <source>File open error</source>
         <translation>Ошибка открытия файла</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_common.cpp" line="41"/>
+        <location filename="../main_window/edit_common.cpp" line="40"/>
         <location filename="../main_window/files_io.cpp" line="49"/>
         <source>Can&apos;t open the file.</source>
         <translation>Невозможно открыть файл.</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_common.cpp" line="47"/>
+        <location filename="../main_window/edit_common.cpp" line="46"/>
         <source>Reloading error</source>
         <translation>Ошибка перезагрузки</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_common.cpp" line="60"/>
+        <location filename="../main_window/edit_common.cpp" line="59"/>
         <source>Level file reloaded</source>
         <translation>Файл уровня перезагружен</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_layers.cpp" line="490"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="489"/>
         <source>New Layer %1</source>
         <translation>Новый слой %1</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_layers.cpp" line="665"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="664"/>
         <source>Rename layer</source>
         <translation>Переименовать слой</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_layers.cpp" line="669"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="668"/>
         <source>Remove layer with items</source>
         <translation>Удалить слой вместе с объектами</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_layers.cpp" line="670"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="669"/>
         <source>Remove layer and save items</source>
         <translation>Удалить слой и сохранить объекты</translation>
     </message>
@@ -1830,22 +1836,22 @@ File: %1
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="218"/>
+        <location filename="../main_window/menubar.cpp" line="207"/>
         <source>Close current</source>
         <translation>Закрыть текущее</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="224"/>
+        <location filename="../main_window/menubar.cpp" line="213"/>
         <source>Cascade</source>
         <translation>Окна каскадом</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="228"/>
+        <location filename="../main_window/menubar.cpp" line="217"/>
         <source>Tiled</source>
         <translation>Окна рядом</translation>
     </message>
     <message>
-        <location filename="../main_window/main_settings.cpp" line="179"/>
+        <location filename="../main_window/main_settings.cpp" line="178"/>
         <source>Current Language changed to %1</source>
         <translation>Текущий язык изменён на %1</translation>
     </message>
@@ -1855,29 +1861,29 @@ File: %1
         <translation>Создать новый файл конфигурации нПИ</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="94"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="153"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="219"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="93"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="152"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="218"/>
         <source>Position: [%1, %2]</source>
         <translation>Положение: [%1, %2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="104"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="560"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="103"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="565"/>
         <source>%1 coins</source>
         <translation>%1 монеток</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="105"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="287"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="561"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1031"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="104"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="286"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="566"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1036"/>
         <source>[empty]</source>
         <translation>[пусто]</translation>
     </message>
     <message>
-        <location filename="../main_window/edit_level_events.cpp" line="42"/>
-        <location filename="../main_window/edit_level_layers.cpp" line="470"/>
+        <location filename="../main_window/edit_level_events.cpp" line="41"/>
+        <location filename="../main_window/edit_level_layers.cpp" line="469"/>
         <source>[None]</source>
         <translation>[Нет]</translation>
     </message>
@@ -1982,12 +1988,12 @@ File: %1
         <translation>Заблокировать</translation>
     </message>
     <message>
-        <location filename="../level_scene/newlayerbox.cpp" line="36"/>
+        <location filename="../level_scene/newlayerbox.cpp" line="54"/>
         <source>Layer exists</source>
         <translation>Слой уже сщуествует</translation>
     </message>
     <message>
-        <location filename="../level_scene/newlayerbox.cpp" line="36"/>
+        <location filename="../level_scene/newlayerbox.cpp" line="54"/>
         <source>Layer &quot;%1&quot; is exist, please, set other name.</source>
         <translation>Слой &quot;%1&quot; уже существует, пожалуйста, выберите другое имя.</translation>
     </message>
