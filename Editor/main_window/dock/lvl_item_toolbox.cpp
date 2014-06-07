@@ -250,7 +250,58 @@ void MainWindow::setItemBoxes(bool setCat)
 
     tmpList.clear();
 
-    //set NPC item box
+    //set custom NPC items from loaded level
+    if(ui->NPCCatList->currentText()==customLabel)
+    {
+        if(activeChildWindow()==1)
+        {
+            //long j=0;
+            //bool isIndex=false;
+            leveledit * edit = activeLvlEditWin();
+            foreach(UserNPCs npc, edit->scene->uNPCs)
+            {
+
+                /*
+                //Check for index
+                if(npc.id < (unsigned long)configs.index_npc.size())
+                {
+                    if(npc.id == configs.main_npc[configs.index_npc[npc.id].gi].id)
+                    {
+                        j = configs.index_npc[npc.id].gi;
+                        isIndex=true;
+                    }
+                }
+                //In index is false, fetch array
+                if(!isIndex)
+                {
+                    for(int i=0; i < configs.main_npc.size(); i++)
+                    {
+                        if(configs.main_npc[i].id == npc.id)
+                        {
+                            j = 0;
+                            isIndex=true;
+                            break;
+                        }
+                    }
+                    if(!isIndex) j=0;
+                }
+                */
+                tmpI = edit->scene->getNPCimg(npc.id);
+                        //npc.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
+
+                item = new QListWidgetItem( QString("npc-%1").arg(npc.id) );
+                item->setIcon( QIcon( tmpI ) );
+                item->setData(3, QString::number(npc.id) );
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+                ui->NPCItemsList->addItem( item );
+            }
+
+        }
+
+    }
+    else
+    //set NPC item box from global config
     foreach(obj_npc npcItem, configs.main_npc)
     {
         //Add category
