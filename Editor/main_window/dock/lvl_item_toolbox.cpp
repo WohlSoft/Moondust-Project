@@ -25,8 +25,8 @@
 #include "../../data_configs/custom_data.h"
 
 
-static QString allLabel = MainWindow::tr("[all]");
-static QString customLabel = MainWindow::tr("[custom]");
+static QString allLabel = "[all]";
+static QString customLabel = "[custom]";
 
 
 void MainWindow::UpdateCustomItems()
@@ -42,6 +42,10 @@ void MainWindow::UpdateCustomItems()
 
 void MainWindow::setItemBoxes(bool setCat)
 {
+    allLabel    = MainWindow::tr("[all]");
+    customLabel = MainWindow::tr("[custom]");
+
+
         WriteToLog(QtDebugMsg, "LevelTools -> Clear current");
     ui->BGOItemsList->clear();
     ui->BlockItemsList->clear();

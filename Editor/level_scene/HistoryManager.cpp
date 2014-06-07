@@ -741,7 +741,7 @@ void LvlScene::historyForward()
 
         QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
         for(int i = 0; i < warplist->count(); i++){
-            if(warplist->itemData(i).toInt() == removedDoor.array_id){
+            if((unsigned int)warplist->itemData(i).toInt() == removedDoor.array_id){
                 warplist->removeItem(i);
                 break;
             }
