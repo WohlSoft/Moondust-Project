@@ -1375,18 +1375,19 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="2608"/>
         <source>SMBX64 defines:</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 definitionen:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2615"/>
         <source>Sort priority:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortierung Priorität:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2655"/>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dies is die Prioritierung der Sortierung. Damit kann man BGOs in den Vordergrund setzen (-1 ist die Standardeinstellung von der BGO Konfiguration)
+Bei diesem System wird ein Bug benutzt von SMBX benutzt, womit man bestimmte BGOs in den Vordergrund setzen kann. Diese Einstellung wird in die LVL Datei NICHT gespeichert!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2774"/>
@@ -1427,12 +1428,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="3151"/>
         <source>Talk message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachricht:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3158"/>
         <source>Contains of current NPC-Container</source>
-        <translation type="unfinished"></translation>
+        <translation>Inhalte vom aktuellen NPC-Container</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4153"/>
@@ -1823,7 +1824,7 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="28"/>
         <source>[all]</source>
-        <translation type="unfinished">[aller]</translation>
+        <translation>[alle]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="29"/>
