@@ -132,6 +132,10 @@ public slots:
     void setLayerLists();
     void EventListsSync();
 
+    //LvlDoorProps Functions
+    QComboBox* getWarpList();
+    void setWarpRemoveButtonEnabled(bool isEnabled);
+
     void on_ResizeSection_clicked();
     void on_applyResize_clicked();
     void on_cancelResize_clicked();

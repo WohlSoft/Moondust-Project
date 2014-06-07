@@ -247,6 +247,7 @@ void MainWindow::on_WarpAdd_clicked()
         newDoor.index = edit->LvlData.doors.size();
         edit->LvlData.doors.push_back(newDoor);
 
+        edit->scene->addAddWarpHistory(newDoor.array_id, ui->WarpList->count(), newDoor.index);
         ui->WarpList->addItem(QString("%1: x%2y%3 <=> x%4y%5")
        .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
                               newDoor.array_id);
@@ -274,7 +275,7 @@ void MainWindow::on_WarpRemove_clicked()
 
         ui->WarpList->removeItem( ui->WarpList->currentIndex() );
 
-        if(ui->WarpList->count()<=0) ui->WarpRemove->setEnabled(false);
+        if(ui->WarpList->count()<=0) setWarpRemoveButtonEnabled(false);
     }
 
 }
@@ -816,4 +817,14 @@ void MainWindow::on_WarpToExitNu_valueChanged(int arg1)
         }
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
+}
+
+QComboBox *MainWindow::getWarpList()
+{
+    return ui->WarpList;
+}
+
+void MainWindow::setWarpRemoveButtonEnabled(bool isEnabled)
+{
+    ui->WarpRemove->setEnabled(isEnabled);
 }

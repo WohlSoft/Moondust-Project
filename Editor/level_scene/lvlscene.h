@@ -243,7 +243,8 @@ public:
             LEVELHISTORY_RESIZESECTION,
             LEVELHISTORY_CHANGEDLAYER,
             LEVELHISTORY_RESIZEBLOCK,
-            LEVELHISTORY_PLACEDOOR
+            LEVELHISTORY_PLACEDOOR,
+            LEVELHISTORY_ADDWARP
         };
         HistoryType type;
         //used most of Operations
@@ -298,6 +299,7 @@ public:
     void addChangedLayerHistory(LevelData changedItems, QString newLayerName);
     void addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                long newLeft, long newTop, long newRight, long newBottom);
+    void addAddWarpHistory(int array_id, int listindex, int doorindex);
     //history modifiers
     void historyBack();
     void historyForward();
