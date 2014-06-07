@@ -24,6 +24,7 @@
 #include "item_door.h"
 #include "../common_features/logger.h"
 #include "../common_features/mainwinconnect.h"
+#include "../file_formats/file_formats.h"
 
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
@@ -177,6 +178,23 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
     package.push_back(newSizes);
     resizeBlOperation.extraData = QVariant(package);
     operationList.push_back(resizeBlOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
+void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
+{
+    cleanupRedoElements();
+
+    HistoryOperation addWpOperation;
+    addWpOperation.type = HistoryOperation::LEVELHISTORY_ADDWARP;
+    QList<QVariant> package;
+    package.push_back(array_id);
+    package.push_back(listindex);
+    package.push_back(doorindex);
+    addWpOperation.extraData = QVariant(package);
+    operationList.push_back(addWpOperation);
     historyIndex++;
 
     historyChanged = true;
@@ -372,6 +390,56 @@ void LvlScene::historyBack()
         CallbackData cbData;
         findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyRemoveDoors, lastOperation.extraData.toList()[1].toBool());
 
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_ADDWARP:
+    {
+        int arrayidDoor = lastOperation.extraData.toList()[0].toInt();
+        int listindex = lastOperation.extraData.toList()[1].toInt();
+        doorPointsSync((unsigned int)arrayidDoor,true);
+
+        for(int i = 0; i < LvlData->doors.size(); i++)
+        {
+            if(LvlData->doors[i].array_id==(unsigned int)arrayidDoor)
+            {
+                LvlData->doors.remove(i);
+                break;
+            }
+        }
+
+        bool found = false;
+
+        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        if(warplist->currentIndex()==listindex){
+            warplist->setCurrentIndex(0);
+        }
+
+
+        if(listindex < warplist->count()){
+            if(arrayidDoor == warplist->itemData(listindex)){
+                found = true;
+                warplist->removeItem(arrayidDoor);
+            }
+        }
+
+
+        if(!found)
+        {
+            for(int i = 0; i < warplist->count(); i++)
+            {
+                if(arrayidDoor == warplist->itemData(i)){
+                    warplist->removeItem(arrayidDoor);
+                    break;
+                }
+            }
+        }
+
+
+
+        if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
+
+        warplist->update();
+        warplist->repaint();
         break;
     }
     default:
@@ -577,7 +645,33 @@ void LvlScene::historyForward()
 
         break;
     }
+    case HistoryOperation::LEVELHISTORY_ADDWARP:
+    {
+        int arrayid = lastOperation.extraData.toList()[0].toInt();
+        int listindex = lastOperation.extraData.toList()[1].toInt();
+        int doorindex = lastOperation.extraData.toList()[2].toInt();
 
+        LevelDoors newDoor = FileFormats::dummyLvlDoor();
+        newDoor.array_id = arrayid;
+        newDoor.index = doorindex;
+
+        LvlData->doors.insert(doorindex, newDoor);
+        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        warplist->addItem(QString("%1: x%2y%3 <=> x%4y%5")
+                          .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
+                          newDoor.array_id);
+        if(warplist->count() < listindex)
+        {
+            warplist->setCurrentIndex( listindex );
+        }
+        else
+        {
+            warplist->setCurrentIndex( warplist->count()-1 );
+        }
+
+        MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(true);
+        break;
+    }
     default:
         break;
 
