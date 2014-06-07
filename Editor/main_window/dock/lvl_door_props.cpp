@@ -263,6 +263,16 @@ void MainWindow::on_WarpRemove_clicked()
     if (WinType==1)
     {
         leveledit* edit = activeLvlEditWin();
+
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->scene->addRemoveWarpHistory(edit->LvlData.doors[i]);
+                break;
+            }
+        }
+
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt(), true);
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
@@ -273,6 +283,7 @@ void MainWindow::on_WarpRemove_clicked()
                 break;
             }
         }
+
 
         ui->WarpList->removeItem( ui->WarpList->currentIndex() );
 

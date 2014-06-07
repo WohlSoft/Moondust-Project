@@ -200,6 +200,21 @@ void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
     historyChanged = true;
 }
 
+void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rmWpOperation;
+    rmWpOperation.type = HistoryOperation::LEVELHISTORY_REMOVEWARP;
+    LevelData data;
+    data.doors.push_back(removedDoor);
+    rmWpOperation.data = data;
+    operationList.push_back(rmWpOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -448,9 +463,35 @@ void LvlScene::historyBack()
 
         if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
 
+        MainWinConnect::pMainWin->setDoorData(-2);
+
         //warplist->update();
         //warplist->repaint();
         break;
+    }
+    case HistoryOperation::LEVELHISTORY_REMOVEWARP:
+    {
+        LevelDoors removedDoor = lastOperation.data.doors[0];
+        LvlData->doors.insert(removedDoor.index, removedDoor);
+
+        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        warplist->insertItem(removedDoor.index, QString("%1: x%2y%3 <=> x%4y%5")
+                             .arg(removedDoor.array_id).arg(removedDoor.ix).arg(removedDoor.iy).arg(removedDoor.ox).arg(removedDoor.oy),
+                             removedDoor.array_id);
+        if(warplist->count() > (int)removedDoor.index)
+        {
+            warplist->setCurrentIndex( removedDoor.index );
+        }
+        else
+        {
+            warplist->setCurrentIndex( warplist->count()-1 );
+        }
+
+        placeDoorEnter(removedDoor);
+        placeDoorExit(removedDoor);
+
+        MainWinConnect::pMainWin->setDoorData(-2);
+
     }
     default:
         break;
@@ -680,7 +721,35 @@ void LvlScene::historyForward()
         }
 
         MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(true);
+
+        MainWinConnect::pMainWin->setDoorData(-2);
         break;
+    }
+    case HistoryOperation::LEVELHISTORY_REMOVEWARP:
+    {
+        LevelDoors removedDoor = lastOperation.data.doors[0];
+        doorPointsSync( removedDoor.array_id, true);
+
+        for(int i=0;i<LvlData->doors.size();i++)
+        {
+            if(LvlData->doors[i].array_id==removedDoor.array_id)
+            {
+                LvlData->doors.remove(i);
+                break;
+            }
+        }
+
+        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        for(int i = 0; i < warplist->count(); i++){
+            if(warplist->itemData(i).toInt() == removedDoor.array_id){
+                warplist->removeItem(i);
+                break;
+            }
+        }
+
+        if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
+
+        MainWinConnect::pMainWin->setDoorData(-2);
     }
     default:
         break;
