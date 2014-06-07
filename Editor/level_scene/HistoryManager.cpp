@@ -394,6 +394,8 @@ void LvlScene::historyBack()
     }
     case HistoryOperation::LEVELHISTORY_ADDWARP:
     {
+        WriteToLog(QtDebugMsg, "HistoryManager -> undo Door entry add");
+
         int arrayidDoor = lastOperation.extraData.toList()[0].toInt();
         int listindex = lastOperation.extraData.toList()[1].toInt();
         doorPointsSync((unsigned int)arrayidDoor,true);
@@ -410,36 +412,44 @@ void LvlScene::historyBack()
         bool found = false;
 
         QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
-        if(warplist->currentIndex()==listindex){
-            warplist->setCurrentIndex(0);
+
+        if((warplist->currentIndex()==listindex)&&(warplist->count()>2))
+        {
+            warplist->setCurrentIndex(warplist->currentIndex()-1);
         }
 
+
+        WriteToLog(QtDebugMsg, "HistoryManager -> check index");
 
         if(listindex < warplist->count()){
-            if(arrayidDoor == warplist->itemData(listindex)){
+            if(arrayidDoor == warplist->itemData(listindex).toInt()){
                 found = true;
-                warplist->removeItem(arrayidDoor);
+                warplist->removeItem(listindex);
             }
         }
+        WriteToLog(QtDebugMsg, QString("HistoryManager -> found = %1").arg(found));
 
 
         if(!found)
         {
+            found=false;
             for(int i = 0; i < warplist->count(); i++)
             {
-                if(arrayidDoor == warplist->itemData(i)){
-                    warplist->removeItem(arrayidDoor);
+                if(arrayidDoor == warplist->itemData(i).toInt())
+                {
+                    warplist->removeItem(i);
+                    found=true;
                     break;
                 }
             }
         }
-
+        WriteToLog(QtDebugMsg, QString("HistoryManager -> found and removed = %1").arg(found));
 
 
         if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
 
-        warplist->update();
-        warplist->repaint();
+        //warplist->update();
+        //warplist->repaint();
         break;
     }
     default:
