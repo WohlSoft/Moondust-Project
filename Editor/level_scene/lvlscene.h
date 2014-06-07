@@ -45,39 +45,7 @@
 
 #include "resizer/item_resizer.h"
 
-struct UserBGOs
-{
-    QPixmap image;
-    QBitmap mask;
-    unsigned long id;
-};
-
-struct UserBlocks
-{
-    QPixmap image;
-    QBitmap mask;
-    unsigned long id;
-};
-
-struct UserNPCs
-{
-    bool withImg;
-    QPixmap image;
-    QBitmap mask;
-    unsigned long id;
-
-    bool withTxt;
-    NPCConfigFile sets;
-    obj_npc merged;
-};
-
-struct UserBGs
-{
-    QPixmap image;
-    QPixmap second_image;
-    unsigned long id;
-    unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
-};
+#include "../data_configs/custom_data.h"
 
 struct LevelEditingSettings
 {
