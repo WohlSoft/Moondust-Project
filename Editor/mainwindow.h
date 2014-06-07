@@ -112,6 +112,7 @@ public slots:
     void setMusicButton(bool checked);
 
     void setItemBoxes(bool setCat=false);
+    void UpdateCustomItems();
 
     void DragAndDroppedLayer(QModelIndex sourceParent,int sourceStart,int sourceEnd,QModelIndex destinationParent,int destinationRow);
 
@@ -135,6 +136,7 @@ public slots:
     //LvlDoorProps Functions
     QComboBox* getWarpList();
     void setWarpRemoveButtonEnabled(bool isEnabled);
+    void removeItemFromWarpList(int index);
 
     void on_ResizeSection_clicked();
     void on_applyResize_clicked();
@@ -160,7 +162,6 @@ public slots:
     void on_actionReset_position_triggered();
     void on_actionGridEn_triggered(bool checked);
     void on_LVLPropsBackImage_currentIndexChanged(int index);
-
     void on_actionReload_triggered();
 
 private slots:

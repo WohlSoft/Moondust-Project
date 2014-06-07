@@ -22,6 +22,23 @@
 #include "../../level_scene/lvl_item_placing.h"
 #include "../../file_formats/file_formats.h"
 
+#include "../../data_configs/custom_data.h"
+
+
+static QString allLabel = MainWindow::tr("[all]");
+static QString customLabel = MainWindow::tr("[custom]");
+
+
+void MainWindow::UpdateCustomItems()
+{
+    if((ui->BlockCatList->currentText()==customLabel)||
+       (ui->BGOCatList->currentText()==customLabel)||
+       (ui->NPCCatList->currentText()==customLabel))
+    {
+        setItemBoxes(true);
+    }
+
+}
 
 void MainWindow::setItemBoxes(bool setCat)
 {
@@ -38,9 +55,63 @@ void MainWindow::setItemBoxes(bool setCat)
     bool found = false;
 
     tmpList.clear();
-    tmpList.push_back("[all]");
 
-    //set Block item box
+    //set custom Block items from loaded level
+    if(ui->BlockCatList->currentText()==customLabel)
+    {
+        if(activeChildWindow()==1)
+        {
+            long j=0;
+            bool isIndex=false;
+            leveledit * edit = activeLvlEditWin();
+            foreach(UserBlocks block, edit->scene->uBlocks)
+            {
+
+                //Check for index
+                if(block.id < (unsigned long)configs.index_blocks.size())
+                {
+                    if(block.id == configs.main_block[configs.index_blocks[block.id].i].id)
+                    {
+                        j = configs.index_blocks[block.id].i;
+                        isIndex=true;
+                    }
+                }
+                //In index is false, fetch array
+                if(!isIndex)
+                {
+                    for(int i=0; i < configs.main_block.size(); i++)
+                    {
+                        if(configs.main_block[i].id == block.id)
+                        {
+                            j = 0;
+                            isIndex=true;
+                            break;
+                        }
+                    }
+                    if(!isIndex) j=0;
+                }
+
+
+                if(configs.main_block[j].animated)
+                    tmpI = block.image.copy(0,0,
+                                block.image.width(),
+                                (int)round(block.image.height() / configs.main_block[j].frames));
+                else
+                    tmpI = block.image;
+
+                item = new QListWidgetItem( QString("block-%1").arg(block.id) );
+                item->setIcon( QIcon( tmpI ) );
+                item->setData(3, QString::number(block.id) );
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+                ui->BlockItemsList->addItem( item );
+            }
+
+        }
+
+    }
+    else
+    //set Block item box from global configs
     foreach(obj_block blockItem, configs.main_block)
     {
         //Add category
@@ -51,7 +122,7 @@ void MainWindow::setItemBoxes(bool setCat)
                 {found =true; break;}  }
         if(!found) tmpList.push_back(blockItem.type);
 
-        if((blockItem.type==cat_blocks)||(cat_blocks=="[all]"))
+        if((blockItem.type==cat_blocks)||(cat_blocks==allLabel))
         {
             if(blockItem.animated)
                 tmpI = blockItem.image.copy(0,0,
@@ -69,6 +140,9 @@ void MainWindow::setItemBoxes(bool setCat)
         }
 
     }
+    tmpList.sort();
+    tmpList.push_front(customLabel);
+    tmpList.push_front(allLabel);
 
     //apply category list
     if(!setCat)
@@ -78,9 +152,63 @@ void MainWindow::setItemBoxes(bool setCat)
     }
 
     tmpList.clear();
-    tmpList.push_back("[all]");
 
-    //set BGO item box
+    //set custom BGO items from loaded level
+    if(ui->BGOCatList->currentText()==customLabel)
+    {
+        if(activeChildWindow()==1)
+        {
+            long j=0;
+            bool isIndex=false;
+            leveledit * edit = activeLvlEditWin();
+            foreach(UserBGOs bgo, edit->scene->uBGOs)
+            {
+
+                //Check for index
+                if(bgo.id < (unsigned long)configs.index_bgo.size())
+                {
+                    if(bgo.id == configs.main_bgo[configs.index_bgo[bgo.id].i].id)
+                    {
+                        j = configs.index_bgo[bgo.id].i;
+                        isIndex=true;
+                    }
+                }
+                //In index is false, fetch array
+                if(!isIndex)
+                {
+                    for(int i=0; i < configs.main_bgo.size(); i++)
+                    {
+                        if(configs.main_bgo[i].id == bgo.id)
+                        {
+                            j = 0;
+                            isIndex=true;
+                            break;
+                        }
+                    }
+                    if(!isIndex) j=0;
+                }
+
+
+                if(configs.main_bgo[j].animated)
+                    tmpI = bgo.image.copy(0,0,
+                                bgo.image.width(),
+                                (int)round(bgo.image.height() / configs.main_bgo[j].frames));
+                else
+                    tmpI = bgo.image;
+
+                item = new QListWidgetItem( QString("bgo-%1").arg(bgo.id) );
+                item->setIcon( QIcon( tmpI ) );
+                item->setData(3, QString::number(bgo.id) );
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+                ui->BGOItemsList->addItem( item );
+            }
+
+        }
+
+    }
+    else
+    //set BGO item box from global array
     foreach(obj_bgo bgoItem, configs.main_bgo)
     {
         //Add category
@@ -91,7 +219,7 @@ void MainWindow::setItemBoxes(bool setCat)
                 {found =true; break;}  }
         if(!found) tmpList.push_back(bgoItem.type);
 
-        if((bgoItem.type==cat_bgos)||(cat_bgos=="[all]"))
+        if((bgoItem.type==cat_bgos)||(cat_bgos==allLabel))
         {
             if(bgoItem.animated)
                 tmpI = bgoItem.image.copy(0,0,
@@ -108,6 +236,11 @@ void MainWindow::setItemBoxes(bool setCat)
             ui->BGOItemsList->addItem( item );
         }
     }
+
+    tmpList.sort();
+    tmpList.push_front(customLabel);
+    tmpList.push_front(allLabel);
+
     //apply category list
     if(!setCat)
     {
@@ -116,7 +249,6 @@ void MainWindow::setItemBoxes(bool setCat)
     }
 
     tmpList.clear();
-    tmpList.push_back("[all]");
 
     //set NPC item box
     foreach(obj_npc npcItem, configs.main_npc)
@@ -129,7 +261,7 @@ void MainWindow::setItemBoxes(bool setCat)
                 {found = true; break;}  }
         if(!found) tmpList.push_back(npcItem.category);
 
-        if((npcItem.category==cat_npcs)||(cat_npcs=="[all]"))
+        if((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
         {
             tmpI = npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
 
@@ -141,6 +273,10 @@ void MainWindow::setItemBoxes(bool setCat)
             ui->NPCItemsList->addItem( item );
         }
     }
+    tmpList.sort();
+    tmpList.push_front(customLabel);
+    tmpList.push_front(allLabel);
+
     //apply category list
     if(!setCat)
     {

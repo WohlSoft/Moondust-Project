@@ -144,7 +144,8 @@ HEADERS  += mainwindow.h \
     level_scene/item_door.h \
     level_scene/lvl_item_placing.h \
     data_configs/obj_npc.h \
-    edit_npc/npceditscene.h
+    edit_npc/npceditscene.h \
+    data_configs/custom_data.h
 
 FORMS    += \
     mainwindow.ui \
