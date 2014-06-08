@@ -1812,7 +1812,7 @@ File: %1
     <message>
         <location filename="../main_window/files_io.cpp" line="118"/>
         <source>NPC Config loaded</source>
-        <translation>Настройка NPC загружена</translation>
+        <translation>Настройка нИП загружена</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="127"/>
@@ -1858,7 +1858,7 @@ File: %1
     <message>
         <location filename="../main_window/edit_new_file.cpp" line="34"/>
         <source>Create new NPC.txt configuration file</source>
-        <translation>Создать новый файл конфигурации нПИ</translation>
+        <translation>Создать новый файл конфигурации нИП</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="93"/>
