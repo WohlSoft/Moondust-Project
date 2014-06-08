@@ -30,6 +30,7 @@ ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
     animated = false;
     frameFirst=0; //from first frame
     frameLast=-1; //to unlimited frameset
+    gridSize=32;
     //image = new QGraphicsPixmapItem;
     isLocked=false;
     timer=NULL;
