@@ -236,6 +236,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     }
 
     BlockImage->setBlockData(block, pConfigs->main_block[j].sizable);
+    BlockImage->gridSize = pConfigs->main_block[j].grid;
     BlockImage->setMainPixmap(tImg);
     addItem(BlockImage);
 
@@ -260,7 +261,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     QPoint newPos = QPoint(block.x, block.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(block.x, block.y), 32);
+        newPos = applyGrid(QPoint(block.x, block.y), BlockImage->gridSize);
         block.x = newPos.x();
         BlockImage->blockData.x = newPos.x();
         block.y = newPos.y();

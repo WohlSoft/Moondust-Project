@@ -715,6 +715,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     ObjType = (*it)->data(0).toString();
 
                     //(*it)->setZValue(Z);
+                    if( ObjType == "Block")
+                    {
+                        gridSize = ((ItemBlock *)(*it))->gridSize;
+                    }
+                    else
                     if( ObjType == "NPC")
                     {
                         gridSize = ((ItemNPC *)(*it))->gridSize;
