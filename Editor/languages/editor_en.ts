@@ -21,7 +21,7 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="46"/>
         <source>Autoplay music on file open</source>
-        <translation>Autoplay music on file open</translation>
+        <translation>Autoplay music after opening level</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="56"/>
@@ -76,7 +76,7 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="151"/>
         <source>Crytical</source>
-        <translation>Crytical</translation>
+        <translation>Critical</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="156"/>
@@ -115,12 +115,12 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="47"/>
         <source>Please, select target image size:</source>
-        <translation>Please, select target image size:</translation>
+        <translation>Please select target image size:</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="57"/>
         <source>Save proportion</source>
-        <translation>Save proportion</translation>
+        <translation>Save proportions</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="74"/>
@@ -206,7 +206,7 @@
     <message>
         <location filename="../level_scene/item_block.cpp" line="113"/>
         <source>Change included NPC...</source>
-        <translation>Change included NPC...</translation>
+        <translation>Change contained NPC...</translation>
     </message>
     <message>
         <location filename="../level_scene/item_block.cpp" line="116"/>
@@ -254,7 +254,7 @@
     <message>
         <location filename="../level_scene/item_door.cpp" line="114"/>
         <source>No Yoshi</source>
-        <translation>No transports</translation>
+        <translation>No Yoshi/Shoe</translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="118"/>
@@ -290,14 +290,14 @@
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="22"/>
         <source>Set message box</source>
-        <translation>Set message box</translation>
+        <translation>Set message text</translation>
     </message>
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="35"/>
         <source>Please, enter NPC&apos;s talkative message
 Message limits: max line lenth is 28 characters</source>
-        <translation>Please, enter NPC&apos;s talkative message
-Message limits: max line lenth is 28 characters</translation>
+        <translation>Please enter NPC&apos;s dialog message
+(Max line length is 28 characters)</translation>
     </message>
 </context>
 <context>
@@ -443,22 +443,22 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="48"/>
         <source>Search User Backgrounds %1</source>
-        <translation>Search User Backgrounds %1</translation>
+        <translation>Searching for custom Backgrounds %1</translation>
     </message>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="115"/>
         <source>Search User Blocks %1</source>
-        <translation>Search User Blocks %1</translation>
+        <translation>Searching for custom Blocks %1</translation>
     </message>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="178"/>
         <source>Search User BGOs %1</source>
-        <translation>Search User BGOs %1</translation>
+        <translation>Searching for custom BGOs %1</translation>
     </message>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="241"/>
         <source>Search User NPCs %1</source>
-        <translation>Search User NPCs %1</translation>
+        <translation>Searching for custom NPCs %1</translation>
     </message>
 </context>
 <context>
@@ -653,30 +653,30 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="1374"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
-        <translation>Leaving for the screen, the player enters the screen on the other side</translation>
+        <translation>When leaving the screen, the player will reappear on the opposite side</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1377"/>
         <location filename="../mainwindow.ui" line="3956"/>
         <source>Warp section</source>
-        <translation>Connect left/right borders</translation>
+        <translation>Level Wrap</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1396"/>
         <location filename="../mainwindow.ui" line="3970"/>
         <source>Off screen exit</source>
-        <translation>Off screen exit</translation>
+        <translation>Offscreen exit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1415"/>
         <source>No turn back (disable moving to left)</source>
-        <translation>No turn back</translation>
+        <translation>One-way scrolling (prevents screen from scrolling left)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1434"/>
         <location filename="../mainwindow.ui" line="3992"/>
         <source>Underwater</source>
-        <translation>Under water</translation>
+        <translation>Underwater</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1468"/>
@@ -742,7 +742,7 @@ Message limits: max line lenth is 28 characters</translation>
         <location filename="../mainwindow.ui" line="1661"/>
         <location filename="../mainwindow.ui" line="4403"/>
         <source>Warps and doors</source>
-        <translation>Warps and doors</translation>
+        <translation>Warps and Doors</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1690"/>
@@ -792,12 +792,12 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="1837"/>
         <source>No Yoshi</source>
-        <translation>No transports</translation>
+        <translation>No Yoshi/Shoe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1850"/>
         <source>Need stars</source>
-        <translation>Need a stars</translation>
+        <translation>Stars needed</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1873"/>
@@ -807,7 +807,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="1886"/>
         <source>Allow NPC</source>
-        <translation>Allow items</translation>
+        <translation>Allow carrying items</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1899"/>
@@ -822,7 +822,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="1971"/>
         <source>Warp to other level</source>
-        <translation></translation>
+        <translation>Warp to level</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1983"/>
@@ -945,7 +945,7 @@ Message limits: max line lenth is 28 characters</translation>
     </message>
     <message>
         <source>No more objects on layer</source>
-        <translation type="vanished">No more objects on layer</translation>
+        <translation type="vanished">No more objects in layer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3320"/>
@@ -1235,7 +1235,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="3981"/>
         <source>No turn back</source>
-        <translation>No turn back</translation>
+        <translation>One-way scrolling (prevents screen from scrolling left)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4000"/>
@@ -1261,7 +1261,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="4030"/>
         <source>Restart level after player&apos;s fail</source>
-        <translation>Restart level after player&apos;s fail</translation>
+        <translation>Restart level after death</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4087"/>
@@ -1291,7 +1291,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="4589"/>
         <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
-        <translation>Hold mouse button on map and move mouse for draw quicksand zone</translation>
+        <translation>Click and drag the cursor over the area you want to fill with quicksand</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4687"/>
@@ -1301,7 +1301,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="4150"/>
         <source>Eriser</source>
-        <translation>Eriser</translation>
+        <translation>Eraser</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2360"/>
@@ -1338,13 +1338,13 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="2451"/>
         <source>Hited:</source>
-        <translation>Hited:</translation>
+        <translation>Hit:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2473"/>
         <location filename="../mainwindow.ui" line="3113"/>
         <source>Layer empty:</source>
-        <translation>Layer empty:</translation>
+        <translation>No more objects in layer:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2558"/>
@@ -1366,7 +1366,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="3018"/>
         <source>Attach to:</source>
-        <translation>Attach to:</translation>
+        <translation>Attach to layer:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3047"/>
@@ -1396,7 +1396,7 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="2292"/>
         <source>Go To...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Go To...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2539"/>
@@ -1407,19 +1407,19 @@ Message limits: max line lenth is 28 characters</translation>
     <message>
         <location filename="../mainwindow.ui" line="2608"/>
         <source>SMBX64 defines:</source>
-        <translation>SMBX64 defines:</translation>
+        <translation>SMBX format:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2615"/>
         <source>Sort priority:</source>
-        <translation>Sort priority:</translation>
+        <translation>Sorting priority:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2655"/>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
-This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</translation>
+        <translation>This sets the sorting array priority. With this option you can make BGOs appear in the foreground. (Set this to -1 to use the default value from the global BGO config).
+This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simply place a BGO in the foreground. This option will not be saved in the LVL file, so you will need to set this option each time you open this level.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2774"/>
@@ -1465,12 +1465,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="3158"/>
         <source>Contains of current NPC-Container</source>
-        <translation>Contains of current NPC-Container</translation>
+        <translation>Contents of the current container</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4153"/>
         <source>Eriser (E)</source>
-        <translation>Eriser</translation>
+        <translation>Eraser</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4168"/>
@@ -1485,12 +1485,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4194"/>
         <source>Reset position</source>
-        <translation>Reset position</translation>
+        <translation>Reset camera position</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4209"/>
         <source>Attach to grid</source>
-        <translation>Attach to grid</translation>
+        <translation>Snap to grid</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4222"/>
@@ -1500,12 +1500,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4235"/>
         <source>Lock all BGO</source>
-        <translation>Lock all BGO</translation>
+        <translation>Lock all BGOs</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4248"/>
         <source>Lock all NPC</source>
-        <translation>Lock all NPC</translation>
+        <translation>Lock all NPCs</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4261"/>
@@ -1515,27 +1515,27 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4274"/>
         <source>Lock all water squares</source>
-        <translation>Lock all water squares</translation>
+        <translation>Lock water/quicksand</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4286"/>
         <source>Set first player position</source>
-        <translation>Set first player position</translation>
+        <translation>Set Player 1 position</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4289"/>
         <source>Set first player start point</source>
-        <translation>Set first player start point</translation>
+        <translation>Set Player 1 start point</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4301"/>
         <source>Set second player position</source>
-        <translation>Set second player position</translation>
+        <translation>Set Player 2 position</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4304"/>
         <source>Set second player start point</source>
-        <translation>Set second player start point</translation>
+        <translation>Set Player 2 start point</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4316"/>
@@ -1550,22 +1550,22 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4334"/>
         <source>Reload file data</source>
-        <translation>Reload file data</translation>
+        <translation>Reload all open files</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4337"/>
         <source>Reload current file data</source>
-        <translation>Reload current file data</translation>
+        <translation>Reload current file</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4355"/>
         <source>Scroll hand</source>
-        <translation>Scroll hand</translation>
+        <translation>Scroll cursor</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4358"/>
         <source>Scrolling (D)</source>
-        <translation>Scrolling (D)</translation>
+        <translation>Move camera (D)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4373"/>
@@ -1619,7 +1619,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4556"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to similar item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4571"/>
@@ -1629,12 +1629,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4574"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
-        <translation>Hold mouse button on map and move mouse for draw water zone</translation>
+        <translation>Click and drag the cursor over the area you want to fill with water</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4586"/>
         <source>Draw QuickSand zone</source>
-        <translation>Draw QuickSand zone</translation>
+        <translation>Draw Quicksand zone</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4601"/>
@@ -1664,7 +1664,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Bad File</source>
-        <translation type="obsolete">Bad file</translation>
+        <translation type="obsolete">Bad File</translation>
     </message>
     <message>
         <source>Bad file format
@@ -1679,21 +1679,21 @@ File: %1</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</source>
-        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</translation>
+        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC items have been copied to clipboard</translation>
     </message>
     <message>
         <location filename="../main_window/clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
-        <translation>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</translation>
+        <translation> % 1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are moved in clipboard</source>
-        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</translation>
+        <translation type = "vanished" >%1 blocks, %2 BGO, %3 NPC items have been copied to clipboard</translation>
     </message>
     <message>
         <location filename="../main_window/clipboard.cpp" line="52"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
-        <translation>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</translation>
+        <translation> % 1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="28"/>
@@ -1708,12 +1708,12 @@ File: %1</translation>
     <message>
         <location filename="../main_window/data_configs.cpp" line="52"/>
         <source>Reload configuration</source>
-        <translation>Reload configuration</translation>
+        <translation>Reload configurations</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="53"/>
         <source>Configuration succesfully reloaded!</source>
-        <translation>Configuration succesfully reloaded!</translation>
+        <translation>Configurations succesfully reloaded!</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="39"/>
@@ -1725,12 +1725,12 @@ File: %1</translation>
         <location filename="../main_window/edit_common.cpp" line="40"/>
         <location filename="../main_window/files_io.cpp" line="49"/>
         <source>Can&apos;t open the file.</source>
-        <translation>Can&apos;t open the file.</translation>
+        <translation>Can&apos;t open the file!</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="46"/>
         <source>Reloading error</source>
-        <translation>Reloading error</translation>
+        <translation>Reload Error!</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="59"/>
@@ -1750,12 +1750,12 @@ File: %1</translation>
     <message>
         <location filename="../main_window/edit_level_layers.cpp" line="668"/>
         <source>Remove layer with items</source>
-        <translation>Remove layer with items</translation>
+        <translation>Remove layer and items</translation>
     </message>
     <message>
         <location filename="../main_window/edit_level_layers.cpp" line="669"/>
         <source>Remove layer and save items</source>
-        <translation>Remove layer and save items</translation>
+        <translation>Remove layer and keep items</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="69"/>
@@ -1770,7 +1770,7 @@ File: %1</translation>
     <message>
         <location filename="../main_window/files_io.cpp" line="106"/>
         <source>Sorry, the World Maps support is not inplemented in this version.</source>
-        <translation>Sorry, the World Maps support is not inplemented in this version.</translation>
+        <translation>Sorry, World Maps are not supported in this version.</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="118"/>
@@ -1780,18 +1780,18 @@ File: %1</translation>
     <message>
         <location filename="../main_window/files_io.cpp" line="127"/>
         <source>Bad file</source>
-        <translation>Bad file</translation>
+        <translation>Bad File</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="128"/>
         <source>This file have unknown extension</source>
-        <translation>This file have unknown extension</translation>
+        <translation>This file has an unknown extension</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="150"/>
         <location filename="../main_window/files_io.cpp" line="165"/>
         <source>File saved</source>
-        <translation>File was saved</translation>
+        <translation>File saved</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="202"/>
@@ -1801,7 +1801,7 @@ File: %1</translation>
     <message>
         <location filename="../main_window/menubar.cpp" line="207"/>
         <source>Close current</source>
-        <translation>Close current</translation>
+        <translation>Close current file</translation>
     </message>
     <message>
         <location filename="../main_window/menubar.cpp" line="213"/>
@@ -1816,12 +1816,12 @@ File: %1</translation>
     <message>
         <location filename="../main_window/main_settings.cpp" line="178"/>
         <source>Current Language changed to %1</source>
-        <translation>Current Language changed to %1</translation>
+        <translation>Current language changed to %1</translation>
     </message>
     <message>
         <location filename="../main_window/edit_new_file.cpp" line="34"/>
         <source>Create new NPC.txt configuration file</source>
-        <translation>Create new NPC.txt configuration file</translation>
+        <translation>Create new NPC configuration file</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="93"/>
@@ -1834,7 +1834,7 @@ File: %1</translation>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="103"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="565"/>
         <source>%1 coins</source>
-        <translation>%1 coins</translation>
+        <translation>%1 coin(s)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="104"/>
@@ -1861,7 +1861,7 @@ File: %1</translation>
     <message>
         <location filename="../common_features/musicfilelist.ui" line="33"/>
         <source>Please, select music file for use as custom</source>
-        <translation>Please, select music file for use as custom</translation>
+        <translation>Please select custom music file</translation>
     </message>
 </context>
 <context>
@@ -1894,7 +1894,7 @@ File: %1</translation>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="163"/>
         <source>Please, select NPC from list</source>
-        <translation>Please, select NPC from list</translation>
+        <translation>Please select NPC from list</translation>
     </message>
 </context>
 <context>
@@ -1902,7 +1902,7 @@ File: %1</translation>
     <message>
         <location filename="../file_formats/file_formats.cpp" line="45"/>
         <source>Bad File</source>
-        <translation>Bad file</translation>
+        <translation>Bad File</translation>
     </message>
     <message>
         <location filename="../file_formats/file_formats.cpp" line="47"/>
@@ -1956,7 +1956,7 @@ File: %1
     <message>
         <location filename="../level_scene/newlayerbox.cpp" line="54"/>
         <source>Layer &quot;%1&quot; is exist, please, set other name.</source>
-        <translation>Layer &quot;%1&quot; is exist, please, set other name.</translation>
+        <translation>Layer &quot;%1&quot; already exists, please use another name.</translation>
     </message>
 </context>
 <context>
@@ -2008,7 +2008,7 @@ File: %1
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="87"/>
         <source>Please, wait...</source>
-        <translation>Please, wait...</translation>
+        <translation>Please wait...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="227"/>
@@ -2033,18 +2033,18 @@ File: %1
 because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation>Cannot open level file %1:
-because object configurations not loaded
-.Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
+because configurations are not loaded.
+Please, check that the "config/SMBX" directory exists and contains the *.INI configuration files.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="42"/>
         <source>1/%1 Loading user data</source>
-        <translation>1/%1 Loading user data</translation>
+        <translation>1/%1 Loading custom data</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="49"/>
         <source>1/%1 Applying Backgrounds</source>
-        <translation>1/%1 Loading user data</translation>
+        <translation>1/%1 Applying Backgrounds</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="55"/>
@@ -2064,12 +2064,12 @@ because object configurations not loaded
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="73"/>
         <source>5/%1 Applying Waters...</source>
-        <translation>5/%1 Applying Waters...</translation>
+        <translation>5/%1 Applying Water...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="79"/>
         <source>6/%1 Applying Doors...</source>
-        <translation>6/%1 Applying Doors...</translation>
+        <translation>6/%1 Applying Warps...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="170"/>
@@ -2078,25 +2078,25 @@ because object configurations not loaded
     </message>
     <message>
         <source>SMBX64 (1.3) Level file (*.lvl)</source>
-        <translation type="vanished">SMBX64 (SMBX 1.3) Level file (*.lvl)</translation>
+        <translation type="vanished">SMBX v1.3 Level file (*.lvl)</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="182"/>
         <source>Write file error</source>
-        <translation>Write file error</translation>
+        <translation>File save error</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="183"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Cannot write file %1:
+        <translation>Cannot save file %1:
 %2.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="282"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="283"/>
         <source>Loading level data</source>
-        <translation>Loading of level data</translation>
+        <translation>Loading level data</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="325"/>
@@ -2116,7 +2116,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="43"/>
         <source>NPC Configuration edit</source>
-        <translation>NPC Configuration edit</translation>
+        <translation>Edit NPC Configuration</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="71"/>
@@ -2126,12 +2126,12 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="83"/>
         <source>offset y</source>
-        <translation>Offset by Y</translation>
+        <translation>Y Offset</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="109"/>
         <source>offset x</source>
-        <translation>Offset by X</translation>
+        <translation>X Offset</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="138"/>
@@ -2198,27 +2198,27 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="564"/>
         <source>Speed multiplier</source>
-        <translation>Множитель скорости</translation>
+        <translation>Speed multiplier</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="608"/>
         <source>Player collision top</source>
-        <translation>Player block top</translation>
+        <translation>Player can stand on top</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="621"/>
         <source>Player collision</source>
-        <translation>Player block</translation>
+        <translation>Can push player</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="634"/>
         <source>NPC collision top</source>
-        <translation>NPC block top</translation>
+        <translation>NPC can stand on top</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="660"/>
         <source>NPC collision</source>
-        <translation>NPC block</translation>
+        <translation>Can push NPCs</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="725"/>
@@ -2244,7 +2244,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="803"/>
         <source>Grab side</source>
-        <translation>Grab side</translation>
+        <translation>Player can grab</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="816"/>
@@ -2264,87 +2264,87 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="907"/>
         <source>Jump hurt</source>
-        <translation>Hurt on jump</translation>
+        <translation>Hurt player on jump</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="933"/>
         <source>Don&apos;t hurt</source>
-        <translation>Don&apos;t hurt</translation>
+        <translation>Player can&apos;t hurt NPC</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="960"/>
         <source>[none]</source>
-        <translation>[нет]</translation>
+        <translation>[none]</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="965"/>
         <source>10</source>
-        <translation></translation>
+        <translation>10</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="970"/>
         <source>100</source>
-        <translation></translation>
+        <translation>100</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="975"/>
         <source>200</source>
-        <translation></translation>
+        <translation>200</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="980"/>
         <source>400</source>
-        <translation></translation>
+        <translation>400</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="985"/>
         <source>800</source>
-        <translation></translation>
+        <translation>800</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="990"/>
         <source>1000</source>
-        <translation></translation>
+        <translation>1000</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="995"/>
         <source>2000</source>
-        <translation></translation>
+        <translation>2000</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1000"/>
         <source>4000</source>
-        <translation></translation>
+        <translation>4000</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1005"/>
         <source>8000</source>
-        <translation></translation>
+        <translation>8000</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1010"/>
         <source>1up</source>
-        <translation></translation>
+        <translation>1up</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1015"/>
         <source>2up</source>
-        <translation></translation>
+        <translation>2up</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1020"/>
         <source>5up</source>
-        <translation></translation>
+        <translation>5up</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1047"/>
         <source>Don&apos;t freeze on fireball</source>
-        <translation>Don&apos;t freeze on fireball</translation>
+        <translation>Can&apos;t be frozen</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1073"/>
         <source>Grab top</source>
-        <translation>Grab on top</translation>
+        <translation>Player can grab top</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1099"/>
@@ -2374,7 +2374,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1191"/>
         <source>Modyfied</source>
-        <translation>Modyfied</translation>
+        <translation>Modified</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1206"/>
@@ -2406,18 +2406,18 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="105"/>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
-        <translation>SMBX custom NPC config file (npc-*.txt)</translation>
+        <translation>NPC config file (npc-*.txt)</translation>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="116"/>
         <source>Write file error</source>
-        <translation>Write file error</translation>
+        <translation>Fiel save error</translation>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="117"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Cannot write file %1:
+        <translation>Cannot save file %1:
 %2.</translation>
     </message>
     <message>
