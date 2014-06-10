@@ -45,39 +45,7 @@
 
 #include "resizer/item_resizer.h"
 
-struct UserBGOs
-{
-    QPixmap image;
-    QBitmap mask;
-    unsigned long id;
-};
-
-struct UserBlocks
-{
-    QPixmap image;
-    QBitmap mask;
-    unsigned long id;
-};
-
-struct UserNPCs
-{
-    bool withImg;
-    QPixmap image;
-    QBitmap mask;
-    unsigned long id;
-
-    bool withTxt;
-    NPCConfigFile sets;
-    obj_npc merged;
-};
-
-struct UserBGs
-{
-    QPixmap image;
-    QPixmap second_image;
-    unsigned long id;
-    unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
-};
+#include "../data_configs/custom_data.h"
 
 struct LevelEditingSettings
 {
@@ -243,7 +211,9 @@ public:
             LEVELHISTORY_RESIZESECTION,
             LEVELHISTORY_CHANGEDLAYER,
             LEVELHISTORY_RESIZEBLOCK,
-            LEVELHISTORY_PLACEDOOR
+            LEVELHISTORY_PLACEDOOR,
+            LEVELHISTORY_ADDWARP,
+            LEVELHISTORY_REMOVEWARP
         };
         HistoryType type;
         //used most of Operations
@@ -282,6 +252,12 @@ public:
     typedef void (LvlScene::*callBackLevelWater)(CallbackData, LevelWater);
     typedef void (LvlScene::*callBackLevelDoors)(CallbackData, LevelDoors, bool); //bool isEntrance [true = entrance, false = exit]
     //add historys
+    /*
+     * NOTE: when use History with Doors, LevelDoors MUST be posted individual.
+     * If Door Entrance: LevelDoors.isSetIn = true and LevelDoors.isSetOut = false
+     * If Door Exit: LevelDoors.isSetOut = true and LevelDoors.isSetIn = false
+     *
+     */
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
     void addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y);
@@ -292,6 +268,8 @@ public:
     void addChangedLayerHistory(LevelData changedItems, QString newLayerName);
     void addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                long newLeft, long newTop, long newRight, long newBottom);
+    void addAddWarpHistory(int array_id, int listindex, int doorindex);
+    void addRemoveWarpHistory(LevelDoors removedDoor);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -305,10 +283,12 @@ public:
     void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyRedoMoveWater(CallbackData cbData, LevelWater data);
+    void historyRedoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyUndoMoveWater(CallbackData cbData, LevelWater data);
+    void historyUndoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
@@ -354,15 +334,17 @@ public:
     void historyUndoResizeBlock(CallbackData cbData, LevelBlock data);
     void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);
     //Callbackfunctions: Undo place of Doors
-    void historyUndoPlaceDoor(CallbackData cbData, LevelDoors door, bool isEntrance);
+    void historyRemoveDoors(CallbackData cbData, LevelDoors door, bool isEntrance);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,
                           callBackLevelNPC clbNpc, callBackLevelWater clbWater,
+                          callBackLevelDoors clbDoor,
                           bool ignoreBlock = false,
                           bool ignoreBGO = false, 
                           bool ignoreNPC = false,
-                          bool ignoreWater = false);
+                          bool ignoreWater = false,
+                          bool ignoreDoors = false);
 
     void findGraphicsDoor(int array_id, HistoryOperation* operation, CallbackData customData,
                           callBackLevelDoors clbDoors, bool isEntrance);

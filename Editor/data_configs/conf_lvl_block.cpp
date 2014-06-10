@@ -64,6 +64,7 @@ void dataconfigs::loadLevelBlocks()
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
                 sblock.type = blockset.value("type", "Other").toString();
+                sblock.grid = blockset.value("grid", "32").toInt();
                 imgFile = blockset.value("image", "").toString();
 
                 sblock.image_n = imgFile;

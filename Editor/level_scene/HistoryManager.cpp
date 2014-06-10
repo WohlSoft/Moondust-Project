@@ -24,6 +24,7 @@
 #include "item_door.h"
 #include "../common_features/logger.h"
 #include "../common_features/mainwinconnect.h"
+#include "../file_formats/file_formats.h"
 
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
@@ -182,6 +183,38 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
     historyChanged = true;
 }
 
+void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
+{
+    cleanupRedoElements();
+
+    HistoryOperation addWpOperation;
+    addWpOperation.type = HistoryOperation::LEVELHISTORY_ADDWARP;
+    QList<QVariant> package;
+    package.push_back(array_id);
+    package.push_back(listindex);
+    package.push_back(doorindex);
+    addWpOperation.extraData = QVariant(package);
+    operationList.push_back(addWpOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
+void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rmWpOperation;
+    rmWpOperation.type = HistoryOperation::LEVELHISTORY_REMOVEWARP;
+    LevelData data;
+    data.doors.push_back(removedDoor);
+    rmWpOperation.data = data;
+    operationList.push_back(rmWpOperation);
+    historyIndex++;
+
+    historyChanged = true;
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -193,6 +226,7 @@ void LvlScene::historyBack()
     {
         //revert remove
         LevelData deletedData = lastOperation.data;
+        bool hasToUpdateDoorData = false;
 
         foreach (LevelBlock block, deletedData.blocks)
         {
@@ -225,6 +259,41 @@ void LvlScene::historyBack()
             placeWater(water);
         }
 
+        foreach (LevelDoors door, deletedData.doors)
+        {
+            LevelDoors originalDoor;
+            bool found = false;
+            foreach(LevelDoors findDoor, LvlData->doors){
+                if(door.array_id == findDoor.array_id){
+                    originalDoor = findDoor;
+                    found = true;
+                    break;
+                }
+            }
+            if(!found)
+                break;
+
+            if(door.isSetIn&&!door.isSetOut)
+            {
+                originalDoor.ix = door.ix;
+                originalDoor.iy = door.iy;
+                originalDoor.isSetIn = true;
+                placeDoorEnter(originalDoor, false, false);
+            }
+            else
+            if(!door.isSetIn&&door.isSetOut)
+            {
+                originalDoor.ox = door.ox;
+                originalDoor.oy = door.oy;
+                originalDoor.isSetOut = true;
+                placeDoorExit(originalDoor, false, false);
+            }
+            hasToUpdateDoorData = true;
+        }
+        if(hasToUpdateDoorData)
+            MainWinConnect::pMainWin->setDoorData(-2);
+
+
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
         if(opts.animationEnabled) startBlockAnimation();
@@ -237,7 +306,7 @@ void LvlScene::historyBack()
         LevelData placeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater);
+        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, false, false, false, false, true);
 
         break;
     }
@@ -247,7 +316,7 @@ void LvlScene::historyBack()
         LevelData movedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC, &LvlScene::historyUndoMoveWater);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC, &LvlScene::historyUndoMoveWater, &LvlScene::historyUndoMoveDoors);
 
         break;
     }
@@ -257,39 +326,39 @@ void LvlScene::historyBack()
 
         CallbackData cbData;
         if(lastOperation.subtype == SETTING_INVISIBLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsInvisibleBlock, 0, 0, 0, false, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsInvisibleBlock, 0, 0, 0, 0, false, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_SLIPPERY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsSlipperyBlock, 0, 0, 0, false, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsSlipperyBlock, 0, 0, 0, 0, false, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_FRIENDLY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsFriendlyNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsFriendlyNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_BOSS){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsBossNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsBossNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_NOMOVEABLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsNoMoveableNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsNoMoveableNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_MESSAGE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsMessageNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsMessageNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_DIRECTION){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, 0, 0, false, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, 0, 0, 0, false, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoSettingsTypeWater, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoSettingsTypeWater, 0, true, true, true, true);
         }
         break;
     }
@@ -320,7 +389,7 @@ void LvlScene::historyBack()
         LevelData modifiedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, 0, false, false, false, false, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
@@ -328,20 +397,105 @@ void LvlScene::historyBack()
         LevelData resizedBlock = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyUndoResizeBlock, 0, 0, 0, false, true, true, true);
+        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyUndoResizeBlock, 0, 0, 0, 0, false, true, true, true, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
     {
         CallbackData cbData;
-        findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyUndoPlaceDoor, lastOperation.extraData.toList()[1].toBool());
+        findGraphicsDoor(lastOperation.extraData.toList()[0].toInt(), &lastOperation, cbData, &LvlScene::historyRemoveDoors, lastOperation.extraData.toList()[1].toBool());
 
         break;
+    }
+    case HistoryOperation::LEVELHISTORY_ADDWARP:
+    {
+        WriteToLog(QtDebugMsg, "HistoryManager -> undo Door entry add");
+
+        int arrayidDoor = lastOperation.extraData.toList()[0].toInt();
+        int listindex = lastOperation.extraData.toList()[1].toInt();
+        doorPointsSync((unsigned int)arrayidDoor,true);
+
+        for(int i = 0; i < LvlData->doors.size(); i++)
+        {
+            if(LvlData->doors[i].array_id==(unsigned int)arrayidDoor)
+            {
+                LvlData->doors.remove(i);
+                break;
+            }
+        }
+
+        bool found = false;
+
+        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+
+        if((warplist->currentIndex()==listindex)&&(warplist->count()>2))
+        {
+            warplist->setCurrentIndex(warplist->currentIndex()-1);
+        }
+
+
+        WriteToLog(QtDebugMsg, "HistoryManager -> check index");
+
+        if(listindex < warplist->count()){
+            if(arrayidDoor == warplist->itemData(listindex).toInt()){
+                found = true;
+                warplist->removeItem(listindex);
+            }
+        }
+        WriteToLog(QtDebugMsg, QString("HistoryManager -> found = %1").arg(found));
+
+
+        if(!found)
+        {
+            found=false;
+            for(int i = 0; i < warplist->count(); i++)
+            {
+                if(arrayidDoor == warplist->itemData(i).toInt())
+                {
+                    warplist->removeItem(i);
+                    found=true;
+                    break;
+                }
+            }
+        }
+        WriteToLog(QtDebugMsg, QString("HistoryManager -> found and removed = %1").arg(found));
+
+
+        if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
+
+        MainWinConnect::pMainWin->setDoorData(-2);
+
+        //warplist->update();
+        //warplist->repaint();
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_REMOVEWARP:
+    {
+        LevelDoors removedDoor = lastOperation.data.doors[0];
+        LvlData->doors.insert(removedDoor.index, removedDoor);
+
+        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        warplist->insertItem(removedDoor.index, QString("%1: x%2y%3 <=> x%4y%5")
+                             .arg(removedDoor.array_id).arg(removedDoor.ix).arg(removedDoor.iy).arg(removedDoor.ox).arg(removedDoor.oy),
+                             removedDoor.array_id);
+        if(warplist->count() > (int)removedDoor.index)
+        {
+            warplist->setCurrentIndex( removedDoor.index );
+        }
+        else
+        {
+            warplist->setCurrentIndex( warplist->count()-1 );
+        }
+
+        placeDoorEnter(removedDoor);
+        placeDoorExit(removedDoor);
+
+        MainWinConnect::pMainWin->setDoorData(-2);
+
     }
     default:
         break;
     }
-
     LvlData->modified = true;
 
     historyChanged = true;
@@ -360,7 +514,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors);
 
         break;
     }
@@ -425,7 +579,7 @@ void LvlScene::historyForward()
         CallbackData cbData;
         cbData.x = baseX;
         cbData.y = baseY;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC, &LvlScene::historyRedoMoveWater);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC, &LvlScene::historyRedoMoveWater, &LvlScene::historyRedoMoveDoors);
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
@@ -434,39 +588,39 @@ void LvlScene::historyForward()
 
         CallbackData cbData;
         if(lastOperation.subtype == SETTING_INVISIBLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsInvisibleBlock, 0, 0, 0, false, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsInvisibleBlock, 0, 0, 0, 0, false, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_SLIPPERY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsSlipperyBlock, 0, 0, 0, false, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsSlipperyBlock, 0, 0, 0, 0, false, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_FRIENDLY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsFriendlyNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsFriendlyNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_BOSS){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsBossNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsBossNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_NOMOVEABLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsNoMoveableNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsNoMoveableNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_MESSAGE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsMessageNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsMessageNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_DIRECTION){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionNPC, 0, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionNPC, 0, 0, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, 0, 0, false, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, 0, 0, 0, false, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoSettingsTypeWater, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoSettingsTypeWater, 0, true, true, true, false, true);
         }
         break;
     }
@@ -496,7 +650,7 @@ void LvlScene::historyForward()
         LevelData modifiedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, 0, false, false, false, false, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
@@ -504,7 +658,7 @@ void LvlScene::historyForward()
         LevelData resizedBlock = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyRedoResizeBlock, 0, 0, 0, false, true, true, true);
+        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyRedoResizeBlock, 0, 0, 0, 0, false, true, true, true, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
@@ -542,10 +696,65 @@ void LvlScene::historyForward()
 
         break;
     }
-    default:
+    case HistoryOperation::LEVELHISTORY_ADDWARP:
+    {
+        int arrayid = lastOperation.extraData.toList()[0].toInt();
+        int listindex = lastOperation.extraData.toList()[1].toInt();
+        int doorindex = lastOperation.extraData.toList()[2].toInt();
+
+        LevelDoors newDoor = FileFormats::dummyLvlDoor();
+        newDoor.array_id = arrayid;
+        newDoor.index = doorindex;
+
+        LvlData->doors.insert(doorindex, newDoor);
+        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        warplist->addItem(QString("%1: x%2y%3 <=> x%4y%5")
+                          .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
+                          newDoor.array_id);
+        if(warplist->count() < listindex)
+        {
+            warplist->setCurrentIndex( listindex );
+        }
+        else
+        {
+            warplist->setCurrentIndex( warplist->count()-1 );
+        }
+
+        MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(true);
+
+        MainWinConnect::pMainWin->setDoorData(-2);
         break;
     }
+    case HistoryOperation::LEVELHISTORY_REMOVEWARP:
+    {
+        LevelDoors removedDoor = lastOperation.data.doors[0];
+        doorPointsSync( removedDoor.array_id, true);
 
+        for(int i=0;i<LvlData->doors.size();i++)
+        {
+            if(LvlData->doors[i].array_id==removedDoor.array_id)
+            {
+                LvlData->doors.remove(i);
+                break;
+            }
+        }
+
+        QComboBox* warplist = MainWinConnect::pMainWin->getWarpList();
+        for(int i = 0; i < warplist->count(); i++){
+            if((unsigned int)warplist->itemData(i).toInt() == removedDoor.array_id){
+                warplist->removeItem(i);
+                break;
+            }
+        }
+
+        if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
+
+        MainWinConnect::pMainWin->setDoorData(-2);
+    }
+    default:
+        break;
+
+    }
     historyIndex++;
 
     historyChanged = true;
@@ -623,6 +832,36 @@ void LvlScene::historyRedoMoveWater(LvlScene::CallbackData cbData, LevelWater da
     ((ItemWater *)(cbData.item))->arrayApply();
 }
 
+void LvlScene::historyRedoMoveDoors(LvlScene::CallbackData cbData, LevelDoors data, bool isEntrance)
+{
+    if(isEntrance){
+        long diffX = data.ix - cbData.x;
+        long diffY = data.iy - cbData.y;
+
+        cbData.item->setPos(QPointF(cbData.hist->x+diffX,cbData.hist->y+diffY));
+        ((ItemDoor *)(cbData.item))->doorData.ix = (long)cbData.item->scenePos().x();
+        ((ItemDoor *)(cbData.item))->doorData.iy = (long)cbData.item->scenePos().y();
+        if((((ItemDoor *)(cbData.item))->doorData.lvl_i)||((ItemDoor *)(cbData.item))->doorData.lvl_o)
+        {
+            ((ItemDoor *)(cbData.item))->doorData.ox = (long)(cbData.item)->scenePos().x();
+            ((ItemDoor *)(cbData.item))->doorData.oy = (long)(cbData.item)->scenePos().y();
+        }
+    }else{
+        long diffX = data.ox - cbData.x;
+        long diffY = data.oy - cbData.y;
+
+        cbData.item->setPos(QPointF(cbData.hist->x+diffX,cbData.hist->y+diffY));
+        ((ItemDoor *)(cbData.item))->doorData.ox = (long)cbData.item->scenePos().x();
+        ((ItemDoor *)(cbData.item))->doorData.oy = (long)cbData.item->scenePos().y();
+        if((((ItemDoor *)(cbData.item))->doorData.lvl_i)||((ItemDoor *)(cbData.item))->doorData.lvl_o)
+        {
+            ((ItemDoor *)(cbData.item))->doorData.ix = (long)(cbData.item)->scenePos().x();
+            ((ItemDoor *)(cbData.item))->doorData.iy = (long)(cbData.item)->scenePos().y();
+        }
+    }
+    ((ItemDoor *)(cbData.item))->arrayApply();
+}
+
 void LvlScene::historyUndoMoveBlocks(LvlScene::CallbackData cbData, LevelBlock data)
 {
     cbData.item->setPos(QPointF(data.x,data.y));
@@ -653,6 +892,30 @@ void LvlScene::historyUndoMoveWater(LvlScene::CallbackData cbData, LevelWater da
     ((ItemWater *)(cbData.item))->waterData.x = (long)cbData.item->scenePos().x();
     ((ItemWater *)(cbData.item))->waterData.y = (long)cbData.item->scenePos().y();
     ((ItemWater *)(cbData.item))->arrayApply();
+}
+
+void LvlScene::historyUndoMoveDoors(LvlScene::CallbackData cbData, LevelDoors data, bool isEntrance)
+{
+    if(isEntrance){
+        cbData.item->setPos(QPointF(data.ix, data.iy));
+        ((ItemDoor *)(cbData.item))->doorData.ix = (long)cbData.item->scenePos().x();
+        ((ItemDoor *)(cbData.item))->doorData.iy = (long)cbData.item->scenePos().y();
+        if((((ItemDoor *)(cbData.item))->doorData.lvl_i)||((ItemDoor *)(cbData.item))->doorData.lvl_o)
+        {
+            ((ItemDoor *)(cbData.item))->doorData.ox = (long)(cbData.item)->scenePos().x();
+            ((ItemDoor *)(cbData.item))->doorData.oy = (long)(cbData.item)->scenePos().y();
+        }
+    }else{
+        cbData.item->setPos(QPointF(data.ox, data.oy));
+        ((ItemDoor *)(cbData.item))->doorData.ox = (long)cbData.item->scenePos().x();
+        ((ItemDoor *)(cbData.item))->doorData.oy = (long)cbData.item->scenePos().y();
+        if((((ItemDoor *)(cbData.item))->doorData.lvl_i)||((ItemDoor *)(cbData.item))->doorData.lvl_o)
+        {
+            ((ItemDoor *)(cbData.item))->doorData.ix = (long)(cbData.item)->scenePos().x();
+            ((ItemDoor *)(cbData.item))->doorData.iy = (long)(cbData.item)->scenePos().y();
+        }
+    }
+    ((ItemDoor *)(cbData.item))->arrayApply();
 }
 
 void LvlScene::historyRemoveBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
@@ -919,7 +1182,7 @@ void LvlScene::historyRedoResizeBlock(LvlScene::CallbackData cbData, LevelBlock 
     ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
 }
 
-void LvlScene::historyUndoPlaceDoor(LvlScene::CallbackData cbData, LevelDoors /*door*/, bool /*isEntrance*/)
+void LvlScene::historyRemoveDoors(LvlScene::CallbackData cbData, LevelDoors /*door*/, bool /*isEntrance*/)
 {
     ((ItemDoor *)(cbData.item))->removeFromArray();
     if((cbData.item)) delete (cbData.item);
@@ -933,11 +1196,27 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                                 callBackLevelBGO clbBgo,
                                 callBackLevelNPC clbNpc,
                                 callBackLevelWater clbWater,
+                                callBackLevelDoors clbDoor,
                                 bool ignoreBlock,
                                 bool ignoreBGO,
                                 bool ignoreNPC,
-                                bool ignoreWater)
+                                bool ignoreWater,
+                                bool ignoreDoors)
 {
+    QMap<int, LevelDoors> sortedEntranceDoors;
+    QMap<int, LevelDoors> sortedExitDoors;
+    if(!ignoreDoors){
+        foreach (LevelDoors door, toFind.doors) {
+            if(door.isSetIn&&!door.isSetOut){
+                sortedEntranceDoors[door.array_id] = door;
+            }
+        }
+        foreach (LevelDoors door, toFind.doors) {
+            if(!door.isSetIn&&door.isSetOut){
+                sortedExitDoors[door.array_id] = door;
+            }
+        }
+    }
     QMap<int, LevelBlock> sortedBlock;
     if(!ignoreBlock){
         foreach (LevelBlock block, toFind.blocks)
@@ -975,6 +1254,8 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     QMap<int, QGraphicsItem*> sortedGraphBGO;
     QMap<int, QGraphicsItem*> sortedGraphNPC;
     QMap<int, QGraphicsItem*> sortedGraphWater;
+    QMap<int, QGraphicsItem*> sortedGraphDoorEntrance;
+    QMap<int, QGraphicsItem*> sortedGraphDoorExit;
     foreach (QGraphicsItem* unsortedItem, items())
     {
         if(unsortedItem->data(0).toString()=="Block")
@@ -1002,6 +1283,21 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         {
             if(!ignoreWater){
                 sortedGraphWater[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="Door_enter")
+        {
+            if(!ignoreDoors){
+                sortedGraphDoorEntrance[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+
+        }
+        else
+        if(unsortedItem->data(0).toString()=="Door_exit")
+        {
+            if(!ignoreDoors){
+                sortedGraphDoorExit[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
     }
@@ -1127,6 +1423,60 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         }
     }
 
+    if(!ignoreDoors)
+    {
+        foreach (QGraphicsItem* item, sortedGraphDoorEntrance)
+        {
+            if(sortedEntranceDoors.size()!=0)
+            {
+                QMap<int, LevelDoors>::iterator beginItem = sortedEntranceDoors.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedEntranceDoors.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedEntranceDoors.begin();
+
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbDoor)(cbData,(*beginItem),true);
+                    sortedEntranceDoors.erase(beginItem);
+                }
+            }
+        }
+        foreach (QGraphicsItem* item, sortedGraphDoorExit)
+        {
+            if(sortedExitDoors.size()!=0)
+            {
+                QMap<int, LevelDoors>::iterator beginItem = sortedExitDoors.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedExitDoors.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedExitDoors.begin();
+
+                currentArrayId = (*beginItem).array_id;
+
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbDoor)(cbData,(*beginItem),false);
+                    sortedExitDoors.erase(beginItem);
+                }
+            }
+        }
+    }
+
 }
 
 void LvlScene::findGraphicsDoor(int array_id, LvlScene::HistoryOperation *operation, LvlScene::CallbackData customData, LvlScene::callBackLevelDoors clbDoors, bool isEntrance)
@@ -1174,6 +1524,19 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
     }else if(!data->npc.isEmpty()){
         baseX = (int)data->npc[0].x;
         baseY = (int)data->npc[0].y;
+    }else if(!data->water.isEmpty()){
+        baseX = (int)data->water[0].x;
+        baseY = (int)data->water[0].y;
+    }else if(!data->doors.isEmpty()){
+        if(data->doors[0].isSetIn&&!data->doors[0].isSetOut){
+            baseX = data->doors[0].ix;
+            baseY = data->doors[0].iy;
+        }
+        else
+        if(!data->doors[0].isSetIn&&data->doors[0].isSetOut){
+            baseX = data->doors[0].ox;
+            baseY = data->doors[0].oy;
+        }
     }
 
     foreach (LevelBlock block, data->blocks) {
@@ -1200,6 +1563,34 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
             baseY = (int)npc.y;
         }
     }
+    foreach (LevelWater water, data->water) {
+        if((int)water.x<baseX){
+            baseX = (int)water.x;
+        }
+        if((int)water.y<baseY){
+            baseY = (int)water.y;
+        }
+    }
+    foreach (LevelDoors door, data->doors) {
+        if(door.isSetIn&&!door.isSetOut){
+            if((int)door.ix<baseX){
+                baseX = (int)door.ix;
+            }
+            if((int)door.iy<baseY){
+                baseY = (int)door.iy;
+            }
+        }
+        else
+        if(!door.isSetIn&&door.isSetOut){
+            if((int)door.ox<baseX){
+                baseX = (int)door.ox;
+            }
+            if((int)door.oy<baseY){
+                baseY = (int)door.oy;
+            }
+        }
+    }
+
 
     return QPoint(baseX, baseY);
 }

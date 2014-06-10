@@ -82,6 +82,8 @@ struct obj_block{
         QPixmap image;
         QBitmap mask;
     QString name;
+    //    grid=32				; 32 | 16 Default="32"
+    unsigned int grid;
     QString type;
     bool sizable;
     int danger;

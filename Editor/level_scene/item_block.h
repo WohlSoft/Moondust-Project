@@ -75,6 +75,7 @@ public:
     QPoint fPos() const;
     void setFrame(int);
     LevelBlock blockData;
+    int gridSize;
 
     //Locks
     bool isLocked;

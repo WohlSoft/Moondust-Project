@@ -183,6 +183,8 @@ void MainWindow::updateMenus(bool force)
             LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
             ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
             ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
+
+            UpdateCustomItems(); // Update custom item lists for Level
         }
         ui->actionAnimation->setChecked( LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( LvlOpts.collisionsEnabled );
@@ -193,20 +195,7 @@ void MainWindow::updateMenus(bool force)
         ui->actionRedo->setEnabled(false);
     }
 
-    /*
-    closeAllAct->setEnabled(hasSWindow);
-    tileAct->setEnabled(hasMdiChild);
-    cascadeAct->setEnabled(hasSWindow);
-    nextAct->setEnabled(hasSWindow);
-    previousAct->setEnabled(hasSWindow);
-    separatorAct->setVisible(hasSWindow);
-    bool hasSelection = (activeMdiChild() &&
-                         activeMdiChild()->textCursor().hasSelection());
-    cutAct->setEnabled(hasSelection);
-    copyAct->setEnabled(hasSelection);
-    */
     updateWindowMenu();
-
 }
 
 
@@ -238,8 +227,6 @@ void MainWindow::updateWindowMenu()
 
 
     for (int i = 0; i < windows.size(); ++i) {
-        //QM *child = qobject_cast<MdiChild *>(windows.at(i)->widget());
-
         QString text;
         if (i < 9) {
             text = QString("&%1").arg( windows.at(i)->windowTitle() ) ;

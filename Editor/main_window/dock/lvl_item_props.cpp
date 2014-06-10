@@ -484,6 +484,7 @@ void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
         {
             if(item->data(0).toString()=="Block")
             {
+                selData.blocks.push_back(((ItemBlock *) item)->blockData);
                 ((ItemBlock*)item)->setInvisible(checked);
             }
         }
@@ -500,15 +501,17 @@ void MainWindow::on_PROPS_BlkSlippery_clicked(bool checked)
     else
     if (activeChildWindow()==1)
     {
+        LevelData selData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
+                selData.blocks.push_back(((ItemBlock *) item)->blockData);
                 ((ItemBlock*)item)->setSlippery(checked);
-                //break;
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SLIPPERY, QVariant(checked));
     }
 
 }
@@ -537,6 +540,7 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
 
     //LevelData selData;
     //QList<QVariant> modNPC;
+    //modNPC.push_back(QVariant((int)blockData.npc_id));
 
     NpcDialog * npcList = new NpcDialog(&configs);
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
