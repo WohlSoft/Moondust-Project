@@ -355,7 +355,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="158"/>
         <source>Set as Boss</source>
-        <translation>Als Bos setzten</translation>
+        <translation>Als Boss setzten</translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="164"/>
@@ -1396,7 +1396,7 @@ Bei diesem System wird ein Bug benutzt von SMBX benutzt, womit man bestimmte BGO
     <message>
         <location filename="../mainwindow.ui" line="2768"/>
         <source>Set as Boss</source>
-        <translation>Als Bos setzten</translation>
+        <translation>Als Boss setzten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2826"/>
