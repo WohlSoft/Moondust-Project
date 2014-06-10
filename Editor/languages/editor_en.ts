@@ -21,7 +21,7 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="46"/>
         <source>Autoplay music on file open</source>
-        <translation>Autoplay music after opening level</translation>
+        <translation>Autoplay music after opening file</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="56"/>
@@ -792,7 +792,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1837"/>
         <source>No Yoshi</source>
-        <translation>No Yoshi/Shoe</translation>
+        <translation>No vehicles</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1850"/>
@@ -1235,7 +1235,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="3981"/>
         <source>No turn back</source>
-        <translation>One-way scrolling (prevents screen from scrolling left)</translation>
+        <translation>One-way scrolling</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4000"/>
@@ -1396,7 +1396,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2292"/>
         <source>Go To...</source>
-        <translation type="unfinished">Go To...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2539"/>
@@ -1550,7 +1550,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="4334"/>
         <source>Reload file data</source>
-        <translation>Reload all open files</translation>
+        <translation>Reload current file</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4337"/>
@@ -1684,16 +1684,16 @@ File: %1</translation>
     <message>
         <location filename="../main_window/clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
-        <translation> % 1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</translation>
+        <translation>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are moved in clipboard</source>
-        <translation type = "vanished" >%1 blocks, %2 BGO, %3 NPC items have been copied to clipboard</translation>
+        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC items have been copied to clipboard</translation>
     </message>
     <message>
         <location filename="../main_window/clipboard.cpp" line="52"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
-        <translation> % 1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</translation>
+        <translation>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="28"/>
@@ -1725,12 +1725,12 @@ File: %1</translation>
         <location filename="../main_window/edit_common.cpp" line="40"/>
         <location filename="../main_window/files_io.cpp" line="49"/>
         <source>Can&apos;t open the file.</source>
-        <translation>Can&apos;t open the file!</translation>
+        <translation>Can&apos;t open the file!.</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="46"/>
         <source>Reloading error</source>
-        <translation>Reload Error!</translation>
+        <translation>Reload Error</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="59"/>
@@ -2034,7 +2034,7 @@ because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation>Cannot open level file %1:
 because configurations are not loaded.
-Please, check that the "config/SMBX" directory exists and contains the *.INI configuration files.</translation>
+Please, check that the &quot;config/SMBX&quot; directory exists and contains the *.INI configuration files.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="42"/>
