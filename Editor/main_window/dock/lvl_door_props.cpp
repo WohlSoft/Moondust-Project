@@ -216,7 +216,7 @@ void MainWindow::on_WarpList_currentIndexChanged(int index)
     setDoorData(index);
 }
 
-
+/*
 void MainWindow::on_goToWarpDoor_clicked()
 {
     int WinType = activeChildWindow();
@@ -231,8 +231,8 @@ void MainWindow::on_goToWarpDoor_clicked()
             }
         }
     }
-
 }
+*/
 
 
 void MainWindow::on_WarpAdd_clicked()

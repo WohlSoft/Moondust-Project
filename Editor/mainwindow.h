@@ -281,7 +281,7 @@ private slots:
     void on_WarpLevelFile_textChanged(const QString &arg1);
     void on_WarpToExitNu_valueChanged(int arg1);
 
-    void on_goToWarpDoor_clicked();
+    //void on_goToWarpDoor_clicked();
 
 
     void on_LevelLayers_visibilityChanged(bool visible);
