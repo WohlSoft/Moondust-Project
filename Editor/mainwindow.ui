@@ -1002,8 +1002,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>242</height>
        </rect>
       </property>
      </widget>
@@ -1026,8 +1026,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>242</height>
        </rect>
       </property>
      </widget>
@@ -1050,8 +1050,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>242</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2279,19 +2279,6 @@ p, li { white-space: pre-wrap; }
       </widget>
      </widget>
     </widget>
-    <widget class="QPushButton" name="goToWarpDoor">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>410</y>
-       <width>101</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Go To...</string>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QDockWidget" name="ItemProperties">
@@ -2352,8 +2339,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>181</width>
-          <height>225</height>
+          <width>264</width>
+          <height>398</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2550,8 +2537,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>167</width>
-          <height>446</height>
+          <width>468</width>
+          <height>398</height>
          </rect>
         </property>
         <attribute name="label">

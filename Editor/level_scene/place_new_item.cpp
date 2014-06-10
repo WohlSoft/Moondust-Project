@@ -140,7 +140,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 tImg = uBlockImg;
             }
 
-            LvlPlacingItems::gridSz=32;
+            LvlPlacingItems::gridSz=pConfigs->main_block[j].grid;
             LvlPlacingItems::gridOffset = QPoint(0, 0);
 
             LvlPlacingItems::blockSet.id = itemID;

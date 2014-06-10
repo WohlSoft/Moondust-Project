@@ -216,7 +216,7 @@ void MainWindow::on_WarpList_currentIndexChanged(int index)
     setDoorData(index);
 }
 
-
+/*
 void MainWindow::on_goToWarpDoor_clicked()
 {
     int WinType = activeChildWindow();
@@ -231,8 +231,8 @@ void MainWindow::on_goToWarpDoor_clicked()
             }
         }
     }
-
 }
+*/
 
 
 void MainWindow::on_WarpAdd_clicked()
@@ -246,6 +246,8 @@ void MainWindow::on_WarpAdd_clicked()
         newDoor.array_id = edit->LvlData.doors_array_id++;
         newDoor.index = edit->LvlData.doors.size();
         edit->LvlData.doors.push_back(newDoor);
+
+        edit->scene->addAddWarpHistory(newDoor.array_id, ui->WarpList->count(), newDoor.index);
 
         ui->WarpList->addItem(QString("%1: x%2y%3 <=> x%4y%5")
        .arg(newDoor.array_id).arg(newDoor.ix).arg(newDoor.iy).arg(newDoor.ox).arg(newDoor.oy),
@@ -261,6 +263,16 @@ void MainWindow::on_WarpRemove_clicked()
     if (WinType==1)
     {
         leveledit* edit = activeLvlEditWin();
+
+        for(int i=0;i<edit->LvlData.doors.size();i++)
+        {
+            if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
+            {
+                edit->scene->addRemoveWarpHistory(edit->LvlData.doors[i]);
+                break;
+            }
+        }
+
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt(), true);
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
@@ -272,9 +284,11 @@ void MainWindow::on_WarpRemove_clicked()
             }
         }
 
+
         ui->WarpList->removeItem( ui->WarpList->currentIndex() );
 
-        if(ui->WarpList->count()<=0) ui->WarpRemove->setEnabled(false);
+        //if(ui->WarpList->count()<=0) ui->WarpRemove->setEnabled(false);
+        if(ui->WarpList->count()<=0) setWarpRemoveButtonEnabled(false);
     }
 
 }
@@ -289,11 +303,13 @@ void MainWindow::on_WarpSetEntrance_clicked()
         leveledit* edit = activeLvlEditWin();
         bool placed=false;
         int i=0;
+        int array_id = 0;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 placed = edit->LvlData.doors[i].isSetIn;
+                array_id = edit->LvlData.doors[i].array_id;
                 break;
             }
         }
@@ -301,6 +317,23 @@ void MainWindow::on_WarpSetEntrance_clicked()
         if(placed)
         {
                edit->goTo(edit->LvlData.doors[i].ix, edit->LvlData.doors[i].iy, true, QPoint(-300, -300));
+               //deselect all and select placed one
+               foreach (QGraphicsItem* i, edit->scene->selectedItems())
+               {
+                   i->setSelected(false);
+               }
+               foreach (QGraphicsItem* item, edit->scene->items())
+               {
+                   if(item->data(0).toString()=="Door_enter")
+                   {
+                       if(item->data(2).toInt()==array_id)
+                       {
+                           item->setSelected(true);
+                           break;
+                       }
+                   }
+               }
+
                return;
         }
 
@@ -328,11 +361,13 @@ void MainWindow::on_WarpSetExit_clicked()
         leveledit* edit = activeLvlEditWin();
         bool placed=false;
         int i=0;
+        int array_id = 0;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
                 placed = edit->LvlData.doors[i].isSetOut;
+                array_id = edit->LvlData.doors[i].array_id;
                 break;
             }
         }
@@ -340,6 +375,22 @@ void MainWindow::on_WarpSetExit_clicked()
         if(placed)
         {
                edit->goTo(edit->LvlData.doors[i].ox, edit->LvlData.doors[i].oy, true, QPoint(-300, -300));
+               //deselect all and select placed one
+               foreach (QGraphicsItem* i, edit->scene->selectedItems())
+               {
+                   i->setSelected(false);
+               }
+               foreach (QGraphicsItem* item, edit->scene->items())
+               {
+                   if(item->data(0).toString()=="Door_exit")
+                   {
+                       if(item->data(2).toInt()==array_id)
+                       {
+                           item->setSelected(true);
+                           break;
+                       }
+                   }
+               }
                return;
         }
 
@@ -779,4 +830,21 @@ void MainWindow::on_WarpToExitNu_valueChanged(int arg1)
         }
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
+}
+
+
+QComboBox *MainWindow::getWarpList()
+{
+    return ui->WarpList;
+}
+
+void MainWindow::removeItemFromWarpList(int index)
+{
+    ui->WarpList->removeItem(index);
+}
+
+
+void MainWindow::setWarpRemoveButtonEnabled(bool isEnabled)
+{
+    ui->WarpRemove->setEnabled(isEnabled);
 }
