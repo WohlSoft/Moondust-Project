@@ -31,6 +31,7 @@ void npcedit::setDataBoxes()
     if(!StartNPCData.en_gfxoffsetx)
     {
         ui->en_GFXOffsetX->setChecked(false);
+        ui->offsetx_label->setEnabled(false);
         ui->GFXOffSetX->setEnabled(false);
         ui->GFXOffSetX->setValue(DefaultNPCData.gfxoffsetx);
         NpcData.gfxoffsetx=DefaultNPCData.gfxoffsetx;
@@ -38,6 +39,7 @@ void npcedit::setDataBoxes()
     else
     {
         ui->en_GFXOffsetX->setChecked(true);
+        ui->offsetx_label->setEnabled(true);
         ui->GFXOffSetX->setEnabled(true);
         ui->GFXOffSetX->setValue(StartNPCData.gfxoffsetx);
     }
@@ -45,6 +47,7 @@ void npcedit::setDataBoxes()
     if(!StartNPCData.en_gfxoffsety)
     {
         ui->en_GFXOffsetY->setChecked(false);
+        ui->offsety_label->setEnabled(false);
         ui->GFXOffSetY->setEnabled(false);
         ui->GFXOffSetY->setValue(DefaultNPCData.gfxoffsety);
         NpcData.gfxoffsety=DefaultNPCData.gfxoffsety;
@@ -52,6 +55,7 @@ void npcedit::setDataBoxes()
     else
     {
         ui->en_GFXOffsetY->setChecked(true);
+        ui->offsety_label->setEnabled(true);
         ui->GFXOffSetY->setEnabled(true);
         ui->GFXOffSetY->setValue(StartNPCData.gfxoffsety);
     }
