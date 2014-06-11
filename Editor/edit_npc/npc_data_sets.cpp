@@ -28,386 +28,313 @@ void npcedit::setDataBoxes()
 {
 
     //Applay NPC data
+    ui->en_GFXOffsetX->setChecked(StartNPCData.en_gfxoffsetx);
+    ui->offsetx_label->setEnabled(StartNPCData.en_gfxoffsetx);
+    ui->GFXOffSetX->setEnabled(StartNPCData.en_gfxoffsetx);
     if(!StartNPCData.en_gfxoffsetx)
     {
-        ui->en_GFXOffsetX->setChecked(false);
-        ui->offsetx_label->setEnabled(false);
-        ui->GFXOffSetX->setEnabled(false);
         ui->GFXOffSetX->setValue(DefaultNPCData.gfxoffsetx);
         NpcData.gfxoffsetx=DefaultNPCData.gfxoffsetx;
     }
     else
-    {
-        ui->en_GFXOffsetX->setChecked(true);
-        ui->offsetx_label->setEnabled(true);
-        ui->GFXOffSetX->setEnabled(true);
         ui->GFXOffSetX->setValue(StartNPCData.gfxoffsetx);
-    }
 
+
+    ui->en_GFXOffsetY->setChecked(StartNPCData.en_gfxoffsety);
+    ui->offsety_label->setEnabled(StartNPCData.en_gfxoffsety);
+    ui->GFXOffSetY->setEnabled(StartNPCData.en_gfxoffsety);
     if(!StartNPCData.en_gfxoffsety)
     {
-        ui->en_GFXOffsetY->setChecked(false);
-        ui->offsety_label->setEnabled(false);
-        ui->GFXOffSetY->setEnabled(false);
         ui->GFXOffSetY->setValue(DefaultNPCData.gfxoffsety);
         NpcData.gfxoffsety=DefaultNPCData.gfxoffsety;
     }
     else
-    {
-        ui->en_GFXOffsetY->setChecked(true);
-        ui->offsety_label->setEnabled(true);
-        ui->GFXOffSetY->setEnabled(true);
         ui->GFXOffSetY->setValue(StartNPCData.gfxoffsety);
-    }
 
+
+    ui->En_IsForeground->setChecked(StartNPCData.en_foreground);
+    ui->IsForeground->setEnabled(StartNPCData.en_foreground);
     if(!StartNPCData.en_foreground)
     {
-        ui->En_IsForeground->setChecked(false);
-        ui->IsForeground->setEnabled(false);
         ui->IsForeground->setChecked(DefaultNPCData.foreground);
         NpcData.foreground=DefaultNPCData.foreground;
     }
     else
-    {
-        ui->En_IsForeground->setChecked(true);
-        ui->IsForeground->setEnabled(true);
         ui->IsForeground->setChecked(StartNPCData.foreground);
-    }
 
+
+    ui->En_GFXh->setChecked(StartNPCData.en_gfxheight);
+    ui->gheight_label->setEnabled(StartNPCData.en_gfxheight);
+    ui->GFXh->setEnabled(StartNPCData.en_gfxheight);
     if(!StartNPCData.en_gfxheight)
-    {
-        ui->En_GFXh->setChecked(false);
-        ui->GFXh->setEnabled(false);
+    {        
         ui->GFXh->setValue(DefaultNPCData.gfxheight);
         NpcData.gfxheight=DefaultNPCData.gfxheight;
     }
     else
-    {
-        ui->En_GFXh->setChecked(true);
-        ui->GFXh->setEnabled(true);
         ui->GFXh->setValue(StartNPCData.gfxheight);
-    }
 
+
+    ui->En_GFXw->setChecked(StartNPCData.en_gfxwidth);
+    ui->gwidth_label->setEnabled(StartNPCData.en_gfxwidth);
+    ui->GFXw->setEnabled(StartNPCData.en_gfxwidth);
     if(!StartNPCData.en_gfxwidth)
     {
-        ui->En_GFXw->setChecked(false);
-        ui->GFXw->setEnabled(false);
         ui->GFXw->setValue(DefaultNPCData.gfxwidth);
         NpcData.gfxwidth=DefaultNPCData.gfxwidth;
     }
     else
-    {
-        ui->En_GFXw->setChecked(true);
-        ui->GFXw->setEnabled(true);
         ui->GFXw->setValue(StartNPCData.gfxwidth);
-    }
 
+
+    ui->En_Framestyle->setChecked(StartNPCData.en_framestyle);
+    ui->framestyle_label->setEnabled(StartNPCData.en_framestyle);
+    ui->FrameStyle->setEnabled(StartNPCData.en_framestyle);
     if(!StartNPCData.en_framestyle)
-    {
-        ui->En_Framestyle->setChecked(false);
-        ui->FrameStyle->setEnabled(false);
+    {        
         ui->FrameStyle->setCurrentIndex(DefaultNPCData.framestyle);
         NpcData.framestyle=DefaultNPCData.framestyle;
     }
     else
-    {
-        ui->En_Framestyle->setChecked(true);
-        ui->FrameStyle->setEnabled(true);
         ui->FrameStyle->setCurrentIndex(StartNPCData.framestyle);
-    }
 
+
+    ui->En_Framespeed->setChecked(StartNPCData.en_framespeed);
+    ui->framespeed_label->setEnabled(StartNPCData.en_framespeed);
+    ui->Framespeed->setEnabled(StartNPCData.en_framespeed);
     if(!StartNPCData.en_framespeed)
-    {
-        ui->En_Framespeed->setChecked(false);
-        ui->Framespeed->setEnabled(false);
+    {        
         ui->Framespeed->setValue(DefaultNPCData.framespeed);
         NpcData.framespeed=DefaultNPCData.framespeed;
     }
     else
-    {
-        ui->En_Framespeed->setChecked(true);
-        ui->Framespeed->setEnabled(true);
         ui->Framespeed->setValue(StartNPCData.framespeed);
-    }
 
+
+    ui->En_Frames->setChecked(StartNPCData.en_frames);
+    ui->frames_label->setEnabled(StartNPCData.en_frames);
+    ui->Frames->setEnabled(StartNPCData.en_frames);
     if(!StartNPCData.en_frames)
     {
-        ui->En_Frames->setChecked(false);
-        ui->Frames->setEnabled(false);
         ui->Frames->setValue(DefaultNPCData.frames);
         NpcData.frames=DefaultNPCData.frames;
     }
     else
-    {
-        ui->En_Frames->setChecked(true);
-        ui->Frames->setEnabled(true);
         ui->Frames->setValue(StartNPCData.frames);
-    }
 
+
+    ui->En_Score->setChecked(StartNPCData.en_score);
+    ui->score_label->setEnabled(StartNPCData.en_score);
+    ui->Score->setEnabled(StartNPCData.en_score);
     if(!StartNPCData.en_score)
-    {
-        ui->En_Score->setChecked(false);
-        ui->Score->setEnabled(false);
+    {        
         ui->Score->setCurrentIndex(DefaultNPCData.score);
         NpcData.score=DefaultNPCData.score;
     }
     else
-    {
-        ui->En_Score->setChecked(true);
-        ui->Score->setEnabled(true);
         ui->Score->setCurrentIndex(StartNPCData.score);
-    }
 
+
+    ui->En_JumpHurt->setChecked(StartNPCData.en_jumphurt);
+    ui->JumpHurt->setEnabled(StartNPCData.en_jumphurt);
     if(!StartNPCData.en_jumphurt)
-    {
-        ui->En_JumpHurt->setChecked(false);
-        ui->JumpHurt->setEnabled(false);
+    {        
         ui->JumpHurt->setChecked(DefaultNPCData.jumphurt);
         NpcData.jumphurt=DefaultNPCData.jumphurt;
     }
     else
-    {
-        ui->En_JumpHurt->setChecked(true);
-        ui->JumpHurt->setEnabled(true);
         ui->JumpHurt->setChecked(StartNPCData.jumphurt);
-    }
 
+
+    ui->En_GrabTop->setChecked(StartNPCData.en_grabtop);
+    ui->GrabTop->setEnabled(StartNPCData.en_grabtop);
     if(!StartNPCData.en_grabtop)
-    {
-        ui->En_GrabTop->setChecked(false);
-        ui->GrabTop->setEnabled(false);
+    {        
         ui->GrabTop->setChecked(DefaultNPCData.grabtop);
         NpcData.grabtop=DefaultNPCData.grabtop;
     }
     else
-    {
-        ui->En_GrabTop->setChecked(true);
-        ui->GrabTop->setEnabled(true);
         ui->GrabTop->setChecked(StartNPCData.grabtop);
-    }
 
+
+    ui->En_GrabSide->setChecked(StartNPCData.en_grabside);
+    ui->GrabSide->setEnabled(StartNPCData.en_grabside);
     if(!StartNPCData.en_grabside)
-    {
-        ui->En_GrabSide->setChecked(false);
-        ui->GrabSide->setEnabled(false);
+    {        
         ui->GrabSide->setChecked(DefaultNPCData.grabside);
         NpcData.grabside=DefaultNPCData.grabside;
     }
     else
-    {
-        ui->En_GrabSide->setChecked(true);
-        ui->GrabSide->setEnabled(true);
         ui->GrabSide->setChecked(StartNPCData.grabside);
-    }
 
+
+    ui->En_NoFireball->setChecked(StartNPCData.en_nofireball);
+    ui->NoFireball->setEnabled(StartNPCData.en_nofireball);
     if(!StartNPCData.en_nofireball)
     {
-        ui->En_NoFireball->setChecked(false);
-        ui->NoFireball->setEnabled(false);
         ui->NoFireball->setChecked(DefaultNPCData.nofireball);
         NpcData.nofireball=DefaultNPCData.nofireball;
     }
     else
-    {
-        ui->En_NoFireball->setChecked(true);
-        ui->NoFireball->setEnabled(true);
         ui->NoFireball->setChecked(StartNPCData.nofireball);
-    }
 
+
+    ui->En_DontHurt->setChecked(StartNPCData.en_nohurt);
+    ui->DontHurt->setEnabled(StartNPCData.en_nohurt);
     if(!StartNPCData.en_nohurt)
-    {
-        ui->En_DontHurt->setChecked(false);
-        ui->DontHurt->setEnabled(false);
+    {        
         ui->DontHurt->setChecked(DefaultNPCData.nohurt);
         NpcData.nohurt=DefaultNPCData.nohurt;
     }
     else
-    {
-        ui->En_DontHurt->setChecked(true);
-        ui->DontHurt->setEnabled(true);
         ui->DontHurt->setChecked(StartNPCData.nohurt);
-    }
 
+
+    ui->En_NoEat->setChecked(StartNPCData.en_noyoshi);
+    ui->NoEat->setEnabled(StartNPCData.en_noyoshi);
     if(!StartNPCData.en_noyoshi)
     {
-        ui->En_NoEat->setChecked(false);
-        ui->NoEat->setEnabled(false);
         ui->NoEat->setChecked(DefaultNPCData.noyoshi);
         NpcData.noyoshi=DefaultNPCData.noyoshi;
     }
     else
-    {
-        ui->En_NoEat->setChecked(true);
-        ui->NoEat->setEnabled(true);
         ui->NoEat->setChecked(StartNPCData.noyoshi);
-    }
 
+
+    ui->En_NoIceball->setChecked(StartNPCData.en_noiceball);
+    ui->NoIceball->setEnabled(StartNPCData.en_noiceball);
     if(!StartNPCData.en_noiceball)
     {
-        ui->En_NoIceball->setChecked(false);
-        ui->NoIceball->setEnabled(false);
         ui->NoIceball->setChecked(DefaultNPCData.noiceball);
         NpcData.noiceball=DefaultNPCData.noiceball;
     }
     else
-    {
-        ui->En_NoIceball->setChecked(true);
-        ui->NoIceball->setEnabled(true);
         ui->NoIceball->setChecked(StartNPCData.noiceball);
-    }
 
+
+    ui->En_Height->setChecked(StartNPCData.en_height);
+    ui->height_label->setEnabled(StartNPCData.en_height);
+    ui->Height->setEnabled(StartNPCData.en_height);
     if(!StartNPCData.en_height)
     {
-        ui->En_Height->setChecked(false);
-        ui->Height->setEnabled(false);
         ui->Height->setValue(DefaultNPCData.height);
         NpcData.height=DefaultNPCData.height;
     }
     else
-    {
-        ui->En_Height->setChecked(true);
-        ui->Height->setEnabled(true);
         ui->Height->setValue(StartNPCData.height);
-    }
 
+
+    ui->En_Width->setChecked(StartNPCData.en_width);
+    ui->width_label->setEnabled(StartNPCData.en_width);
+    ui->Width->setEnabled(StartNPCData.en_width);
     if(!StartNPCData.en_width)
     {
-        ui->En_Width->setChecked(false);
-        ui->Width->setEnabled(false);
         ui->Width->setValue(DefaultNPCData.width);
         NpcData.width=DefaultNPCData.width;
     }
     else
-    {
-        ui->En_Width->setChecked(true);
-        ui->Width->setEnabled(true);
         ui->Width->setValue(StartNPCData.width);
-    }
 
+
+    ui->En_NPCBlock->setChecked(StartNPCData.en_npcblock);
+    ui->NPCBlock->setEnabled(StartNPCData.en_npcblock);
     if(!StartNPCData.en_npcblock)
     {
-        ui->En_NPCBlock->setChecked(false);
-        ui->NPCBlock->setEnabled(false);
         ui->NPCBlock->setChecked(DefaultNPCData.npcblock);
         NpcData.npcblock=DefaultNPCData.npcblock;
     }
     else
-    {
-        ui->En_NPCBlock->setChecked(true);
-        ui->NPCBlock->setEnabled(true);
         ui->NPCBlock->setChecked(StartNPCData.npcblock);
-    }
 
+
+    ui->En_NPCBlockTop->setChecked(StartNPCData.en_npcblocktop);
+    ui->NPCBlockTop->setEnabled(StartNPCData.en_npcblocktop);
     if(!StartNPCData.en_npcblocktop)
     {
-        ui->En_NPCBlockTop->setChecked(false);
-        ui->NPCBlockTop->setEnabled(false);
         ui->NPCBlockTop->setChecked(DefaultNPCData.npcblocktop);
         NpcData.npcblocktop=DefaultNPCData.npcblocktop;
     }
     else
-    {
-        ui->En_NPCBlockTop->setChecked(true);
-        ui->NPCBlockTop->setEnabled(true);
         ui->NPCBlockTop->setChecked(StartNPCData.npcblocktop);
-    }
 
+
+    ui->En_Speed->setChecked(StartNPCData.en_speed);
+    ui->speed_label->setEnabled(StartNPCData.en_speed);
+    ui->Speed->setEnabled(StartNPCData.en_speed);
     if(!StartNPCData.en_speed)
     {
-        ui->En_Speed->setChecked(false);
-        ui->Speed->setEnabled(false);
         NpcData.speed=DefaultNPCData.speed;
         ui->Speed->setValue(DefaultNPCData.speed);
     }
     else
-    {
-        ui->En_Speed->setChecked(true);
-        ui->Speed->setEnabled(true);
         ui->Speed->setValue(StartNPCData.speed);
-    }
 
+
+    ui->En_PlayerBlock->setChecked(StartNPCData.en_playerblock);
+    ui->PlayerBlock->setEnabled(StartNPCData.en_playerblock);
     if(!StartNPCData.en_playerblock)
     {
-        ui->En_PlayerBlock->setChecked(false);
-        ui->PlayerBlock->setEnabled(false);
         ui->PlayerBlock->setChecked(DefaultNPCData.playerblock);
         NpcData.playerblock=DefaultNPCData.playerblock;
     }
     else
-    {
-        ui->En_PlayerBlock->setChecked(true);
-        ui->PlayerBlock->setEnabled(true);
         ui->PlayerBlock->setChecked(StartNPCData.playerblock);
-    }
 
+
+    ui->En_PlayerBlockTop->setChecked(StartNPCData.en_playerblocktop);
+    ui->PlayerBlockTop->setEnabled(StartNPCData.en_playerblocktop);
     if(!StartNPCData.en_playerblocktop)
     {
-        ui->En_PlayerBlockTop->setChecked(false);
-        ui->PlayerBlockTop->setEnabled(false);
         ui->PlayerBlockTop->setChecked(DefaultNPCData.playerblocktop);
         NpcData.playerblocktop=DefaultNPCData.playerblocktop;
     }
     else
-    {
-        ui->En_PlayerBlockTop->setChecked(true);
-        ui->PlayerBlockTop->setEnabled(true);
         ui->PlayerBlockTop->setChecked(StartNPCData.playerblocktop);
-    }
 
+
+    ui->En_NoBlockCollision->setChecked(StartNPCData.en_noblockcollision);
+    ui->NoBlockCollision->setEnabled(StartNPCData.en_noblockcollision);
     if(!StartNPCData.en_noblockcollision)
-    {
-        ui->En_NoBlockCollision->setChecked(false);
-        ui->NoBlockCollision->setEnabled(false);
+    {        
         ui->NoBlockCollision->setChecked(DefaultNPCData.noblockcollision);
         NpcData.noblockcollision=DefaultNPCData.noblockcollision;
     }
     else
-    {
-        ui->En_NoBlockCollision->setChecked(true);
-        ui->NoBlockCollision->setEnabled(true);
         ui->NoBlockCollision->setChecked(StartNPCData.noblockcollision);
-    }
 
+
+    ui->En_NoGravity->setChecked(StartNPCData.en_nogravity);
+    ui->NoGravity->setEnabled(StartNPCData.en_nogravity);
     if(!StartNPCData.en_nogravity)
     {
-        ui->En_NoGravity->setChecked(false);
-        ui->NoGravity->setEnabled(false);
         ui->NoGravity->setChecked(DefaultNPCData.nogravity);
         NpcData.nogravity=DefaultNPCData.nogravity;
     }
     else
-    {
-        ui->En_NoGravity->setChecked(true);
-        ui->NoGravity->setEnabled(true);
         ui->NoGravity->setChecked(StartNPCData.nogravity);
-    }
 
+
+    ui->En_TurnCliff->setChecked(StartNPCData.en_cliffturn);
+    ui->TurnCliff->setEnabled(StartNPCData.en_cliffturn);
     if(!StartNPCData.en_cliffturn)
     {
-        ui->En_TurnCliff->setChecked(false);
-        ui->TurnCliff->setEnabled(false);
         ui->TurnCliff->setChecked(DefaultNPCData.cliffturn);
         NpcData.cliffturn=DefaultNPCData.cliffturn;
     }
     else
-    {
-        ui->En_TurnCliff->setChecked(true);
-        ui->TurnCliff->setEnabled(true);
         ui->TurnCliff->setChecked(StartNPCData.cliffturn);
-    }
+
+
+    ui->En_NoHammer->setChecked(StartNPCData.en_nohammer);
+    ui->NoHammer->setEnabled(StartNPCData.en_nohammer);
     if(!StartNPCData.en_nohammer)
     {
-        ui->En_NoHammer->setChecked(false);
-        ui->NoHammer->setEnabled(false);
         ui->NoHammer->setChecked(DefaultNPCData.nohammer);
         NpcData.nohammer=DefaultNPCData.nohammer;
     }
     else
-    {
-        ui->En_NoHammer->setChecked(true);
-        ui->NoHammer->setEnabled(true);
         ui->NoHammer->setChecked(StartNPCData.nohammer);
-    }
+
 }
 
 void npcedit::setDefaultData(unsigned long npc_id)
