@@ -38,6 +38,7 @@ void npcedit::on_ResetNPCData_clicked()
 void npcedit::on_en_GFXOffsetX_clicked(bool checked)
 {
     ui->GFXOffSetX->setEnabled(checked);
+    ui->offsetx_label->setEnabled(checked);
     NpcData.en_gfxoffsetx=checked;
 
     updatePreview();
@@ -48,6 +49,7 @@ void npcedit::on_en_GFXOffsetX_clicked(bool checked)
 void npcedit::on_en_GFXOffsetY_clicked(bool checked)
 {
     ui->GFXOffSetY->setEnabled(checked);
+    ui->offsety_label->setEnabled(checked);
     NpcData.en_gfxoffsety=checked;
 
     updatePreview();
