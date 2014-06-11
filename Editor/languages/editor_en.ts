@@ -463,103 +463,103 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="502"/>
         <source>Undone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Undone action: %1</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="762"/>
         <source>Redone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Redone action: %1</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1603"/>
         <source>Remove</source>
-        <translation type="unfinished">Remove</translation>
+        <translation>Remove</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1604"/>
         <source>Place</source>
-        <translation type="unfinished"></translation>
+        <translation>Place</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1605"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Move</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1606"/>
         <source>Changed Setting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Changed Setting [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1607"/>
         <source>Change Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Change Layer</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1608"/>
         <source>Resize Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Resize Block</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1609"/>
         <source>Place Door</source>
-        <translation type="unfinished"></translation>
+        <translation>Place door point</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1610"/>
         <source>Add Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Add warp entry</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1611"/>
         <source>Remove Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove warp entry</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1613"/>
         <location filename="../level_scene/HistoryManager.cpp" line="1629"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1620"/>
         <source>Slippery</source>
-        <translation type="unfinished">Slippery</translation>
+        <translation>Slippery</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1621"/>
         <source>Friendly</source>
-        <translation type="unfinished">Friendly</translation>
+        <translation>Friendly</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1622"/>
         <source>Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>Boss</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1623"/>
         <source>Not Moveable</source>
-        <translation type="unfinished"></translation>
+        <translation>Not movable</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1624"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Message</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1625"/>
         <source>Direction</source>
-        <translation type="unfinished">Direction</translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1626"/>
         <source>Included NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Change contained NPC</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1627"/>
         <source>Water Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Environment type</translation>
     </message>
 </context>
 <context>

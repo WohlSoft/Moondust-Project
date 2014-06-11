@@ -461,7 +461,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1603"/>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1604"/>
@@ -512,42 +512,42 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1620"/>
         <source>Slippery</source>
-        <translation type="unfinished">Resbaladizo</translation>
+        <translation>Resbaladizo</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1621"/>
         <source>Friendly</source>
-        <translation type="unfinished">Amigable</translation>
+        <translation>Amigable</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1622"/>
         <source>Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>Jefe</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1623"/>
         <source>Not Moveable</source>
-        <translation type="unfinished"></translation>
+        <translation>No mover</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1624"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Mensaje</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1625"/>
         <source>Direction</source>
-        <translation type="unfinished">Dirección</translation>
+        <translation>Dirección</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1626"/>
         <source>Included NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar NPC incluído</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1627"/>
         <source>Water Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de ambiente</translation>
     </message>
 </context>
 <context>
