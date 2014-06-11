@@ -65,6 +65,7 @@ void NpcDialog::setState(int npcID, int mode)
         ui->NPCfromList->setChecked(true);
         ui->coinsNPC->setEnabled(false);
         ui->coinsNPC->setVisible(false);
+        ui->coinsInBlock->setVisible(false);
         selectedNPC = npcID;
         if(selectedNPC==0)
         {
