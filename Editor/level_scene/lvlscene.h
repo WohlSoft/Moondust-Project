@@ -350,6 +350,8 @@ public:
                           callBackLevelDoors clbDoors, bool isEntrance);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
+    QString getHistoryText(HistoryOperation operation);
+    QString getHistorySettingText(SettingSubType subType);
     // ////////////////////////////////////////////
     void openProps();
 

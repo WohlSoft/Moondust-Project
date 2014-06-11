@@ -499,6 +499,7 @@ void LvlScene::historyBack()
     LvlData->modified = true;
 
     historyChanged = true;
+    MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(getHistoryText(lastOperation)));
 }
 
 void LvlScene::historyForward()
@@ -758,6 +759,7 @@ void LvlScene::historyForward()
     historyIndex++;
 
     historyChanged = true;
+    MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(getHistoryText(lastOperation)));
 }
 
 int LvlScene::getHistroyIndex()
@@ -1593,4 +1595,37 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
 
 
     return QPoint(baseX, baseY);
+}
+
+QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
+{
+    switch (operation.type) {
+    case HistoryOperation::LEVELHISTORY_REMOVE: return tr("Remove");
+    case HistoryOperation::LEVELHISTORY_PLACE: return tr("Place");
+    case HistoryOperation::LEVELHISTORY_MOVE: return tr("Move");
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS: return tr("Changed Setting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::LEVELHISTORY_CHANGEDLAYER: return tr("Change Layer");
+    case HistoryOperation::LEVELHISTORY_RESIZEBLOCK: return tr("Resize Block");
+    case HistoryOperation::LEVELHISTORY_PLACEDOOR: return tr("Place Door");
+    case HistoryOperation::LEVELHISTORY_ADDWARP: return tr("Add Warp");
+    case HistoryOperation::LEVELHISTORY_REMOVEWARP: return tr("Remove Warp");
+    default:
+        return tr("Unknown");
+    }
+}
+
+QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
+{
+    switch (subType) {
+    case SETTING_SLIPPERY: return tr("Slippery");
+    case SETTING_FRIENDLY: return tr("Friendly");
+    case SETTING_BOSS: return tr("Boss");
+    case SETTING_NOMOVEABLE: return tr("Not Moveable");
+    case SETTING_MESSAGE: return tr("Message");
+    case SETTING_DIRECTION: return tr("Direction");
+    case SETTING_CHANGENPC: return tr("Included NPC");
+    case SETTING_WATERTYPE: return tr("Water Type");
+    default:
+        return tr("Unknown");
+    }
 }
