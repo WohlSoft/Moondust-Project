@@ -2237,22 +2237,22 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="608"/>
         <source>Player collision top</source>
-        <translation>Блок игрока сверху</translation>
+        <translation>Игрок может стоять сверху</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="621"/>
         <source>Player collision</source>
-        <translation>Блок игрока</translation>
+        <translation>Столкновение с игроком</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="634"/>
         <source>NPC collision top</source>
-        <translation>Блок нИП сверху</translation>
+        <translation>нИПы можгут стоять сверху</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="660"/>
         <source>NPC collision</source>
-        <translation>Блок нИП</translation>
+        <translation>Столкновения с нИП</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="725"/>
