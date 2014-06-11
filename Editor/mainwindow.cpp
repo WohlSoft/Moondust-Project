@@ -176,3 +176,9 @@ void MainWindow::on_MainWindow_customContextMenuRequested(const QPoint &pos)
 
 }
 
+
+void MainWindow::showStatusMsg(QString msg, int time)
+{
+    statusBar()->showMessage(msg, time);
+}
+

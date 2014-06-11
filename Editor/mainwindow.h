@@ -77,6 +77,7 @@ public:
     int activeChildWindow();
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
+    void showStatusMsg(QString msg, int time=2000);
 
     void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
     long blockPtr; //ArrayID of editing item (-1 - use system)
