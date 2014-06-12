@@ -360,6 +360,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_WATERTYPE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoSettingsTypeWater, 0, true, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_NOYOSHI){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsNoYoshi, true, true, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -622,6 +626,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoSettingsTypeWater, 0, true, true, true, false, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_NOYOSHI){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsNoYoshi, true, true, true, true);
         }
         break;
     }
@@ -1040,6 +1048,18 @@ void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, Level
 void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
 {
     ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 0 : 1);
+}
+
+void LvlScene::historyUndoSettingsNoYoshi(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.noyoshi = !cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsNoYoshi(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.noyoshi = cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
 }
 
 void LvlScene::historyUndoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock data)
@@ -1625,6 +1645,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_DIRECTION: return tr("Direction");
     case SETTING_CHANGENPC: return tr("Included NPC");
     case SETTING_WATERTYPE: return tr("Water Type");
+    case SETTING_NOYOSHI: return tr("No Yoshi");
     default:
         return tr("Unknown");
     }
