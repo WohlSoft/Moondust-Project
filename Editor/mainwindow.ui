@@ -944,7 +944,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>468</height>
+        <height>481</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1005,7 +1005,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>468</height>
+        <height>481</height>
        </rect>
       </property>
      </widget>
@@ -1029,7 +1029,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>468</height>
+        <height>481</height>
        </rect>
       </property>
      </widget>
@@ -1053,7 +1053,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>468</height>
+        <height>481</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2333,8 +2333,17 @@ p, li { white-space: pre-wrap; }
          <height>16777215</height>
         </size>
        </property>
-       <property name="currentIndex">
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="lineWidth">
         <number>2</number>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -2344,8 +2353,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>809</height>
+          <width>260</width>
+          <height>782</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2543,7 +2552,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>809</height>
+          <height>786</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2670,7 +2679,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>264</width>
-          <height>809</height>
+          <height>786</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3161,7 +3170,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   <widget class="QDockWidget" name="LevelLayers">
    <property name="minimumSize">
     <size>
-     <width>279</width>
+     <width>280</width>
      <height>130</height>
     </size>
    </property>
@@ -3303,7 +3312,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   <widget class="QDockWidget" name="LevelEventsToolBox">
    <property name="minimumSize">
     <size>
-     <width>275</width>
+     <width>280</width>
      <height>477</height>
     </size>
    </property>
@@ -3356,7 +3365,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <number>2</number>
        </property>
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -3366,8 +3375,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>267</width>
-          <height>458</height>
+          <width>268</width>
+          <height>385</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3545,8 +3554,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>267</width>
-          <height>458</height>
+          <width>268</width>
+          <height>385</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3623,8 +3632,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>267</width>
-          <height>458</height>
+          <width>268</width>
+          <height>385</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3716,8 +3725,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
-          <width>250</width>
+          <y>-76</y>
+          <width>251</width>
           <height>461</height>
          </rect>
         </property>
@@ -4015,8 +4024,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>267</width>
-          <height>458</height>
+          <width>268</width>
+          <height>385</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4112,8 +4121,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>267</width>
-          <height>458</height>
+          <width>268</width>
+          <height>385</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4210,8 +4219,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>267</width>
-          <height>458</height>
+          <width>268</width>
+          <height>385</height>
          </rect>
         </property>
         <attribute name="label">
