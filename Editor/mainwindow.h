@@ -100,6 +100,7 @@ public slots:
     void save_as();
     void close_sw();
     void save_all();
+    void refreshHistoryButtons();
 
     void OpenFile(QString FilePath);
     void SyncRecentFiles();
@@ -167,7 +168,7 @@ public slots:
 
 private slots:
 
-    void TickTack();
+    //void TickTack();
 
     //Actions
     void on_LevelSectionSettings_visibilityChanged(bool visible);
@@ -400,10 +401,10 @@ private:
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;
 
-    QTimer * TickTackTimer; //Scene Events detector
-    bool TickTackLock;      //Scene Events detector locker
+//    QTimer * TickTackTimer; //Scene Events detector
+//    bool TickTackLock;      //Scene Events detector locker
 
-    QThread * thread1;
+//    QThread * thread1;
 
     QList<QString> recentOpen; //Recent files list
 

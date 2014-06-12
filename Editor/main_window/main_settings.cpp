@@ -122,18 +122,18 @@ void MainWindow::setUiDefults()
     ui->centralWidget->cascadeSubWindows();
 
 
-    //Start event detector
-    TickTackLock = false;
+//    //Start event detector
+//    TickTackLock = false;
 
-    //set timer for event detector loop
-    TickTackTimer = new QTimer(this);
-    connect(
-            TickTackTimer, SIGNAL(timeout()),
-            this,
-            SLOT( TickTack() ) );
+//    //set timer for event detector loop
+//    TickTackTimer = new QTimer(this);
+//    connect(
+//            TickTackTimer, SIGNAL(timeout()),
+//            this,
+//            SLOT( TickTack() ) );
 
-    //start event detection loop
-    TickTackTimer->start(1);
+//    //start event detection loop
+//    TickTackTimer->start(1);
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
 }
