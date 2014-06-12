@@ -38,7 +38,7 @@ void LvlScene::addRemoveHistory(LevelData removedItems)
     operationList.push_back(rmOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addPlaceHistory(LevelData placedItems)
@@ -53,7 +53,7 @@ void LvlScene::addPlaceHistory(LevelData placedItems)
     operationList.push_back(plOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y)
@@ -72,7 +72,7 @@ void LvlScene::addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y
     operationList.push_back(plDoorOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems)
@@ -95,7 +95,7 @@ void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedI
     operationList.push_back(mvOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, LvlScene::SettingSubType subType, QVariant extraData)
@@ -110,7 +110,7 @@ void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, LvlScene::Setti
     operationList.push_back(modOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
@@ -137,7 +137,7 @@ void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop,
     operationList.push_back(resizeOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerName)
@@ -151,7 +151,7 @@ void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerNa
     operationList.push_back(chLaOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
@@ -180,7 +180,7 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
     operationList.push_back(resizeBlOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
@@ -197,7 +197,7 @@ void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
     operationList.push_back(addWpOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
@@ -212,7 +212,7 @@ void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
     operationList.push_back(rmWpOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::historyBack()
@@ -502,7 +502,7 @@ void LvlScene::historyBack()
     }
     LvlData->modified = true;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(getHistoryText(lastOperation)));
 }
 
@@ -766,7 +766,7 @@ void LvlScene::historyForward()
     }
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(getHistoryText(lastOperation)));
 }
 
