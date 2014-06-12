@@ -467,12 +467,12 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="502"/>
         <source>Undone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückgänig: %1</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="762"/>
         <source>Redone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederhole: %1</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1603"/>
@@ -482,48 +482,48 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1604"/>
         <source>Place</source>
-        <translation type="unfinished"></translation>
+        <translation>Platziere</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1605"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegen</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1606"/>
         <source>Changed Setting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Verändere Einstellung [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1607"/>
         <source>Change Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechsele Ebene</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1608"/>
         <source>Resize Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blockgröße ändern</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1609"/>
         <source>Place Door</source>
-        <translation type="unfinished"></translation>
+        <translation>Platziere Tür</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1610"/>
         <source>Add Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Füge Warp hinzu</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1611"/>
         <source>Remove Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösche Warp</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1613"/>
         <location filename="../level_scene/HistoryManager.cpp" line="1629"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1620"/>
