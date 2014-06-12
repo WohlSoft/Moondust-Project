@@ -103,7 +103,6 @@ SOURCES += main.cpp\
     level_scene/item_door.cpp \
     level_scene/lvl_init_filedata.cpp \
     level_scene/lvl_section.cpp \
-    main_window/edit_level_events.cpp \
     main_window/dock/lvl_item_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/lvl_door_props.cpp \
