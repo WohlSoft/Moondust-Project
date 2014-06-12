@@ -361,6 +361,10 @@ private slots:
 
     void on_PROPS_BGOSquareFill_clicked(bool checked);
 
+    void on_actionLevelEvents_triggered(bool checked);
+
+    void on_LevelEventsToolBox_visibilityChanged(bool visible);
+
 private:
 
     LevelEditingSettings LvlOpts;
@@ -374,6 +378,7 @@ private:
     bool SectionToolBoxVis; //Section Settings
     bool LevelDoorsBoxVis; //Doors box
     bool LevelLayersBoxVis; //Layers box
+    bool LevelEventsBoxVis; //Events box
     bool WorldToolBoxVis;
     bool autoPlayMusic;
 

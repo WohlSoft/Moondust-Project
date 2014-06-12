@@ -477,7 +477,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1603"/>
         <source>Remove</source>
-        <translation type="unfinished">Löschen</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1604"/>
@@ -528,42 +528,42 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1620"/>
         <source>Slippery</source>
-        <translation type="unfinished">Rutschig</translation>
+        <translation>Rutschig</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1621"/>
         <source>Friendly</source>
-        <translation type="unfinished">Freundlich</translation>
+        <translation>Freundlich</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1622"/>
         <source>Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>Boss</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1623"/>
         <source>Not Moveable</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht Bewegbar</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1624"/>
         <source>Message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachricht</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1625"/>
         <source>Direction</source>
-        <translation type="unfinished">Richtung</translation>
+        <translation>Richtung</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1626"/>
         <source>Included NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Beinhaltende NPC ändern</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1627"/>
         <source>Water Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Umgebungs Typ</translation>
     </message>
 </context>
 <context>
