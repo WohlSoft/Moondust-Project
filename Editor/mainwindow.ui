@@ -3344,7 +3344,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         </font>
        </property>
        <property name="frameShape">
-        <enum>QFrame::Box</enum>
+        <enum>QFrame::StyledPanel</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Sunken</enum>
@@ -3352,8 +3352,11 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
        <property name="lineWidth">
         <number>2</number>
        </property>
+       <property name="midLineWidth">
+        <number>2</number>
+       </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -3363,8 +3366,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>456</height>
+          <width>267</width>
+          <height>458</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3542,8 +3545,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>456</height>
+          <width>267</width>
+          <height>458</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3620,14 +3623,17 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>456</height>
+          <width>267</width>
+          <height>458</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Autoscrool section</string>
         </attribute>
         <layout class="QFormLayout" name="formLayout_5">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
          <property name="horizontalSpacing">
           <number>3</number>
          </property>
@@ -3642,7 +3648,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="LVLEvent_Scroll_Sct"/>
+          <widget class="QSpinBox" name="LVLEvent_Scroll_Sct">
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>21</number>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_22">
@@ -3664,6 +3677,13 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_21">
+           <property name="text">
+            <string>Vertical speed:</string>
+           </property>
+          </widget>
+         </item>
          <item row="4" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spY">
            <property name="decimals">
@@ -3674,13 +3694,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
            <property name="maximum">
             <double>9999999.000000000000000</double>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Vertical speed:</string>
            </property>
           </widget>
          </item>
@@ -3704,7 +3717,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>248</width>
+          <width>250</width>
           <height>461</height>
          </rect>
         </property>
@@ -4002,8 +4015,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>456</height>
+          <width>267</width>
+          <height>458</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4099,8 +4112,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>456</height>
+          <width>267</width>
+          <height>458</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4197,8 +4210,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>456</height>
+          <width>267</width>
+          <height>458</height>
          </rect>
         </property>
         <attribute name="label">
