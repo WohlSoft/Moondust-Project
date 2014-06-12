@@ -25,7 +25,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    thread1 = new QThread;
+    //thread1 = new QThread;
 
     setDefaults(); // Apply default common settings
 
@@ -54,86 +54,9 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setUiDefults(); //Apply default UI settings
 }
 
-//Scene Event Detector
-void MainWindow::TickTack()
-{
-    if(TickTackLock) return;
-
-    TickTackLock = true;
-
-    try
-    {
-        if(activeChildWindow()==1)
-        {
-            if(activeLvlEditWin()->sceneCreated)
-            {
-                //Capturing flags from active Window
-                /*if(activeLvlEditWin()->scene->wasPasted)
-                {
-                    activeLvlEditWin()->changeCursor(0);
-                    activeLvlEditWin()->scene->wasPasted=false;
-                    activeLvlEditWin()->scene->disableMoveItems=false;
-                }
-                else
-                if(activeLvlEditWin()->scene->doCut)
-                {
-                    on_actionCut_triggered();
-                    activeLvlEditWin()->scene->doCut=false;
-                }
-                else
-                if(activeLvlEditWin()->scene->doCopy)
-                {
-                    on_actionCopy_triggered();
-                    activeLvlEditWin()->scene->doCopy=false;
-                }
-                else*/
-                if(activeLvlEditWin()->scene->historyChanged)
-                {
-                    ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-                    ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-                    activeLvlEditWin()->scene->historyChanged = false;
-                }
-                /*
-                else
-                if(activeLvlEditWin()->scene->resetPosition)
-                {
-                    on_actionReset_position_triggered();
-                    activeLvlEditWin()->scene->resetPosition = false;
-                }
-                else
-                if(activeLvlEditWin()->scene->SyncLayerList)
-                {
-                    setLayersBox();
-                    activeLvlEditWin()->scene->SyncLayerList = false;
-                }
-                else
-                if(activeLvlEditWin()->scene->resetResizingSection)
-                {
-                    ui->ResizeSection->setVisible(true);
-                    ui->applyResize->setVisible(false);
-                    ui->cancelResize->setVisible(false);
-                    activeLvlEditWin()->scene->resetResizingSection = false;
-                }*/
-            }
-        }
-        /*
-        else
-        if(activeChildWindow()==2)
-        {
-            if(activeNpcEditWin()->NpcData.ReadFileValid);
-        }*/
-    }
-    catch(int e)
-    {
-        WriteToLog(QtWarningMsg, QString("CLASS TYPE MISMATCH IN TIMER ON WINDOWS SWITCH: %1").arg(e));
-    }
-
-    TickTackLock = false;
-}
-
 MainWindow::~MainWindow()
 {
-    TickTackLock = false;
+    //TickTackLock = false;
     delete ui;
     WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
@@ -181,3 +104,95 @@ void MainWindow::showStatusMsg(QString msg, int time)
 {
     statusBar()->showMessage(msg, time);
 }
+
+
+void MainWindow::refreshHistoryButtons()
+{
+    if(activeChildWindow()==1)
+    {
+        if(activeLvlEditWin()->sceneCreated)
+        {
+            ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+            ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+        }
+    }
+}
+
+
+//Scene Event Detector
+//void MainWindow::TickTack()
+//{
+//    if(TickTackLock) return;
+
+//    TickTackLock = true;
+
+//    try
+//    {
+//        if(activeChildWindow()==1)
+//        {
+//            if(activeLvlEditWin()->sceneCreated)
+//            {
+                //Capturing flags from active Window
+                /*if(activeLvlEditWin()->scene->wasPasted)
+                {
+                    activeLvlEditWin()->changeCursor(0);
+                    activeLvlEditWin()->scene->wasPasted=false;
+                    activeLvlEditWin()->scene->disableMoveItems=false;
+                }
+                else
+                if(activeLvlEditWin()->scene->doCut)
+                {
+                    on_actionCut_triggered();
+                    activeLvlEditWin()->scene->doCut=false;
+                }
+                else
+                if(activeLvlEditWin()->scene->doCopy)
+                {
+                    on_actionCopy_triggered();
+                    activeLvlEditWin()->scene->doCopy=false;
+                }
+                else
+                if(activeLvlEditWin()->scene->historyChanged)
+                {
+                    ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
+                    ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
+                    activeLvlEditWin()->scene->historyChanged = false;
+                }
+
+                else
+                if(activeLvlEditWin()->scene->resetPosition)
+                {
+                    on_actionReset_position_triggered();
+                    activeLvlEditWin()->scene->resetPosition = false;
+                }
+                else
+                if(activeLvlEditWin()->scene->SyncLayerList)
+                {
+                    setLayersBox();
+                    activeLvlEditWin()->scene->SyncLayerList = false;
+                }
+                else
+                if(activeLvlEditWin()->scene->resetResizingSection)
+                {
+                    ui->ResizeSection->setVisible(true);
+                    ui->applyResize->setVisible(false);
+                    ui->cancelResize->setVisible(false);
+                    activeLvlEditWin()->scene->resetResizingSection = false;
+                }
+            }
+        }
+
+        else
+        if(activeChildWindow()==2)
+        {
+            if(activeNpcEditWin()->NpcData.ReadFileValid);
+        }
+    }
+    catch(int e)
+    {
+        WriteToLog(QtWarningMsg, QString("CLASS TYPE MISMATCH IN TIMER ON WINDOWS SWITCH: %1").arg(e));
+    }
+
+    TickTackLock = false;
+}
+*/
