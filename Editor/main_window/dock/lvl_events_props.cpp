@@ -20,3 +20,52 @@
 #include "../../mainwindow.h"
 
 
+#include "../../level_scene/item_bgo.h"
+#include "../../level_scene/item_block.h"
+#include "../../level_scene/item_npc.h"
+#include "../../level_scene/item_water.h"
+
+
+void MainWindow::EventListsSync()
+{
+    int WinType = activeChildWindow();
+
+    ui->PROPS_BlkEventDestroy->clear();
+    ui->PROPS_BlkEventHited->clear();
+    ui->PROPS_BlkEventLayerEmpty->clear();
+
+    ui->PROPS_NpcEventActivate->clear();
+    ui->PROPS_NpcEventDeath->clear();
+    ui->PROPS_NpcEventTalk->clear();
+    ui->PROPS_NpcEventEmptyLayer->clear();
+    ui->LVLEvent_TriggerEvent->clear();
+
+    QString noEvent = tr("[None]");
+    ui->PROPS_BlkEventDestroy->addItem(noEvent);
+    ui->PROPS_BlkEventHited->addItem(noEvent);
+    ui->PROPS_BlkEventLayerEmpty->addItem(noEvent);
+
+    ui->PROPS_NpcEventActivate->addItem(noEvent);
+    ui->PROPS_NpcEventDeath->addItem(noEvent);
+    ui->PROPS_NpcEventTalk->addItem(noEvent);
+    ui->PROPS_NpcEventEmptyLayer->addItem(noEvent);
+    ui->LVLEvent_TriggerEvent->addItem(noEvent);
+
+
+    if (WinType==1)
+    {
+        foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+        {
+            ui->PROPS_BlkEventDestroy->addItem(event.name);
+            ui->PROPS_BlkEventHited->addItem(event.name);
+            ui->PROPS_BlkEventLayerEmpty->addItem(event.name);
+
+            ui->PROPS_NpcEventActivate->addItem(event.name);
+            ui->PROPS_NpcEventDeath->addItem(event.name);
+            ui->PROPS_NpcEventTalk->addItem(event.name);
+            ui->PROPS_NpcEventEmptyLayer->addItem(event.name);
+            ui->LVLEvent_TriggerEvent->addItem(event.name);
+        }
+    }
+
+}
