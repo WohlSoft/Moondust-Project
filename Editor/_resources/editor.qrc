@@ -76,5 +76,6 @@
         <file alias="images/mac/mushroom.hqx">mushroom.hqx</file>
         <file alias="images/mac/mushroom.icns">mushroom.icns</file>
         <file>splash.png</file>
+        <file>images/events.png</file>
     </qresource>
 </RCC>
