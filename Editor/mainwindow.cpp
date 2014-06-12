@@ -181,4 +181,3 @@ void MainWindow::showStatusMsg(QString msg, int time)
 {
     statusBar()->showMessage(msg, time);
 }
-
