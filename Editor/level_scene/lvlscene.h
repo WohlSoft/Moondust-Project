@@ -244,7 +244,8 @@ public:
         SETTING_CHANGENPC,     //extraData: QList<QVariant[int]> [Old NPC ID, New NPC ID]
         SETTING_WATERTYPE,     //extraData: bool [IsWater = true, IsQuicksand = false]
         SETTING_NOYOSHI,       //extraData: bool [Activated?]
-        SETTING_ALLOWNPC       //extraData: bool [Activated?]
+        SETTING_ALLOWNPC,      //extraData: bool [Activated?]
+        SETTING_LOCKED         //extraData: bool [Activated?]
     };
 
     //typedefs
@@ -329,6 +330,9 @@ public:
     //Callbackfunctions: [Change Settings] Allow NPC
     void historyUndoSettingsAllowNPCDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyRedoSettingsAllowNPCDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    //Callbackfunctions: [Change Settings] Locked
+    void historyUndoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
