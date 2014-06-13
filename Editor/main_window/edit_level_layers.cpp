@@ -467,6 +467,8 @@ void MainWindow::setLayerLists()
     ui->PROPS_BlockLayer->clear();
     ui->PROPS_NpcAttachLayer->clear();
     ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
+    ui->LVLEvent_LayerMov_List->clear();
+    ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
 
     if (WinType==1)
     {
@@ -478,6 +480,7 @@ void MainWindow::setLayerLists()
             ui->PROPS_NpcLayer->addItem(layer.name);
             ui->PROPS_BlockLayer->addItem(layer.name);
             ui->PROPS_NpcAttachLayer->addItem(layer.name);
+            ui->LVLEvent_LayerMov_List->addItem(layer.name);
         }
     }
 

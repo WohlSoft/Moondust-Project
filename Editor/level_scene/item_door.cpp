@@ -167,14 +167,27 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         else
         if(selected==NoTransport)
         {
+            LevelData modDoors;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
                 {
+                    if(SelItem->data(0).toString()=="Door_exit"){
+                        LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                        door.isSetOut = true;
+                        door.isSetIn = false;
+                        modDoors.doors.push_back(door);
+                    }else if(SelItem->data(0).toString()=="Door_enter"){
+                        LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                        door.isSetOut = false;
+                        door.isSetIn = true;
+                        modDoors.doors.push_back(door);
+                    }
                     ((ItemDoor *) SelItem)->doorData.noyoshi=NoTransport->isChecked();
                     ((ItemDoor *) SelItem)->arrayApply();
                 }
             }
+            scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_NOYOSHI, QVariant(NoTransport->isChecked()));
             MainWinConnect::pMainWin->setDoorData(-2);
             scene->contextMenuOpened = false;
         }

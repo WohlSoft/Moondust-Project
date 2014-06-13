@@ -358,7 +358,12 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
         free(includedNPC);
         includedNPC = NULL;
     }
-    if(npcID==0) return;
+    if(npcID==0)
+    {
+        if(!init) blockData.npc_id = 0;
+        if(!init) arrayApply();
+        return;
+    }
 
     QPixmap npcImg = QPixmap( scene->getNPCimg( ((npcID > 1000)? (npcID-1000) : scene->pConfigs->marker_npc.coin_in_block ) ) );
     includedNPC = scene->addPixmap( npcImg );

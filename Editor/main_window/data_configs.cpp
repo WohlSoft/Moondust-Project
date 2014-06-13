@@ -22,8 +22,8 @@
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
-    thread1->start();
-    moveToThread(thread1);
+    //thread1->start();
+    //moveToThread(thread1);
 
     QProgressDialog progress(tr("Reloading configurations"), tr("Abort"), 0,100, this);
     progress.setWindowTitle("Please, wait...");

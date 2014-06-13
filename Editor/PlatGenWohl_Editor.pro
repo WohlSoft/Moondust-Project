@@ -103,13 +103,14 @@ SOURCES += main.cpp\
     level_scene/item_door.cpp \
     level_scene/lvl_init_filedata.cpp \
     level_scene/lvl_section.cpp \
-    main_window/edit_level_events.cpp \
     main_window/dock/lvl_item_props.cpp \
     main_window/dock/lvl_sctc_props.cpp \
     main_window/dock/lvl_door_props.cpp \
     main_window/dock/lvl_item_toolbox.cpp \
     edit_npc/npceditscene.cpp \
-    main_window/edit_new_file.cpp
+    main_window/edit_new_file.cpp \
+    main_window/translator.cpp \
+    main_window/dock/lvl_events_props.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

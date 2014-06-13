@@ -66,7 +66,7 @@ LevelDoors  FileFormats::dummyLvlDoor()
     dummyDoor.isSetIn = false;
     dummyDoor.ox = 0;
     dummyDoor.oy = 0;
-    dummyDoor.isSetOut = 0;
+    dummyDoor.isSetOut = false;
     dummyDoor.idirect=1;
     dummyDoor.odirect=1;
     dummyDoor.type=0;
@@ -884,16 +884,11 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 goto badfile;
             else doors.world_y= line.toInt();
         }
-        /*
         else
         {
-            doors.lname = "";
-            doors.warpto = 0;
-            doors.lvl_i = false;
-            doors.lvl_o = false;
-            doors.world_x = -1;
-            doors.world_y = -1;
-        }*/
+            doors.isSetIn=true;
+            doors.isSetOut=true;
+        }
 
         if(file_format>=8)
         {

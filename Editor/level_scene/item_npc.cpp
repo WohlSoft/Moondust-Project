@@ -473,7 +473,12 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
         free(includedNPC);
         includedNPC = NULL;
     }
-    if(npcID==0) return;
+    if(npcID==0)
+    {
+        if(!init) npcData.special_data = 0;
+        if(!init) arrayApply();
+        return;
+    }
 
     QPixmap npcImg = QPixmap( scene->getNPCimg( npcID ) );
     includedNPC = scene->addPixmap( npcImg );

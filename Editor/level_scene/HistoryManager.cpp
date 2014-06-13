@@ -38,7 +38,7 @@ void LvlScene::addRemoveHistory(LevelData removedItems)
     operationList.push_back(rmOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addPlaceHistory(LevelData placedItems)
@@ -53,7 +53,7 @@ void LvlScene::addPlaceHistory(LevelData placedItems)
     operationList.push_back(plOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y)
@@ -72,7 +72,7 @@ void LvlScene::addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y
     operationList.push_back(plDoorOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems)
@@ -95,7 +95,7 @@ void LvlScene::addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedI
     operationList.push_back(mvOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, LvlScene::SettingSubType subType, QVariant extraData)
@@ -110,7 +110,7 @@ void LvlScene::addChangeSettingsHistory(LevelData modifiedItems, LvlScene::Setti
     operationList.push_back(modOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
@@ -137,7 +137,7 @@ void LvlScene::addResizeSectionHistory(int sectionID, long oldLeft, long oldTop,
     operationList.push_back(resizeOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerName)
@@ -151,7 +151,7 @@ void LvlScene::addChangedLayerHistory(LevelData changedItems, QString newLayerNa
     operationList.push_back(chLaOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
@@ -180,7 +180,7 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
     operationList.push_back(resizeBlOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
@@ -197,7 +197,7 @@ void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
     operationList.push_back(addWpOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
@@ -212,7 +212,7 @@ void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
     operationList.push_back(rmWpOperation);
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
 void LvlScene::historyBack()
@@ -360,6 +360,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_WATERTYPE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoSettingsTypeWater, 0, true, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_NOYOSHI){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsNoYoshi, true, true, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -498,7 +502,8 @@ void LvlScene::historyBack()
     }
     LvlData->modified = true;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+    MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(getHistoryText(lastOperation)));
 }
 
 void LvlScene::historyForward()
@@ -621,6 +626,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoSettingsTypeWater, 0, true, true, true, false, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_NOYOSHI){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsNoYoshi, true, true, true, true);
         }
         break;
     }
@@ -757,7 +766,8 @@ void LvlScene::historyForward()
     }
     historyIndex++;
 
-    historyChanged = true;
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+    MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(getHistoryText(lastOperation)));
 }
 
 int LvlScene::getHistroyIndex()
@@ -1038,6 +1048,18 @@ void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, Level
 void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
 {
     ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 0 : 1);
+}
+
+void LvlScene::historyUndoSettingsNoYoshi(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.noyoshi = !cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsNoYoshi(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.noyoshi = cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
 }
 
 void LvlScene::historyUndoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock data)
@@ -1593,4 +1615,38 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
 
 
     return QPoint(baseX, baseY);
+}
+
+QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
+{
+    switch (operation.type) {
+    case HistoryOperation::LEVELHISTORY_REMOVE: return tr("Remove");
+    case HistoryOperation::LEVELHISTORY_PLACE: return tr("Place");
+    case HistoryOperation::LEVELHISTORY_MOVE: return tr("Move");
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS: return tr("Changed Setting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::LEVELHISTORY_CHANGEDLAYER: return tr("Change Layer");
+    case HistoryOperation::LEVELHISTORY_RESIZEBLOCK: return tr("Resize Block");
+    case HistoryOperation::LEVELHISTORY_PLACEDOOR: return tr("Place Door");
+    case HistoryOperation::LEVELHISTORY_ADDWARP: return tr("Add Warp");
+    case HistoryOperation::LEVELHISTORY_REMOVEWARP: return tr("Remove Warp");
+    default:
+        return tr("Unknown");
+    }
+}
+
+QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
+{
+    switch (subType) {
+    case SETTING_SLIPPERY: return tr("Slippery");
+    case SETTING_FRIENDLY: return tr("Friendly");
+    case SETTING_BOSS: return tr("Boss");
+    case SETTING_NOMOVEABLE: return tr("Not Moveable");
+    case SETTING_MESSAGE: return tr("Message");
+    case SETTING_DIRECTION: return tr("Direction");
+    case SETTING_CHANGENPC: return tr("Included NPC");
+    case SETTING_WATERTYPE: return tr("Water Type");
+    case SETTING_NOYOSHI: return tr("No Yoshi");
+    default:
+        return tr("Unknown");
+    }
 }
