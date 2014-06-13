@@ -243,7 +243,8 @@ public:
         SETTING_DIRECTION,     //extraData: QList<QVariant[int]> [Old Dir, New Dir]
         SETTING_CHANGENPC,     //extraData: QList<QVariant[int]> [Old NPC ID, New NPC ID]
         SETTING_WATERTYPE,     //extraData: bool [IsWater = true, IsQuicksand = false]
-        SETTING_NOYOSHI        //extraData: bool [Activated?]
+        SETTING_NOYOSHI,       //extraData: bool [Activated?]
+        SETTING_ALLOWNPC       //extraData: bool [Activated?]
     };
 
     //typedefs
@@ -323,8 +324,11 @@ public:
     void historyUndoSettingsTypeWater(CallbackData cbData, LevelWater data);
     void historyRedoSettingsTypeWater(CallbackData cbData, LevelWater data);
     //Callbackfunctions: [Change Settings] No Yoshi
-    void historyUndoSettingsNoYoshi(CallbackData cbData, LevelDoors data, bool isEntrance);
-    void historyRedoSettingsNoYoshi(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyUndoSettingsNoYoshiDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoSettingsNoYoshiDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    //Callbackfunctions: [Change Settings] Allow NPC
+    void historyUndoSettingsAllowNPCDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoSettingsAllowNPCDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);

@@ -362,7 +362,11 @@ void LvlScene::historyBack()
         }
         else
         if(lastOperation.subtype == SETTING_NOYOSHI){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsNoYoshi, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsNoYoshiDoors, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_ALLOWNPC){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsAllowNPCDoors, true, true, true, true);
         }
         break;
     }
@@ -629,7 +633,11 @@ void LvlScene::historyForward()
         }
         else
         if(lastOperation.subtype == SETTING_NOYOSHI){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsNoYoshi, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsNoYoshiDoors, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_ALLOWNPC){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsAllowNPCDoors, true, true, true, true);
         }
         break;
     }
@@ -1050,15 +1058,27 @@ void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, Level
     ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 0 : 1);
 }
 
-void LvlScene::historyUndoSettingsNoYoshi(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+void LvlScene::historyUndoSettingsNoYoshiDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
 {
     ((ItemDoor*)cbData.item)->doorData.noyoshi = !cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
 }
 
-void LvlScene::historyRedoSettingsNoYoshi(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+void LvlScene::historyRedoSettingsNoYoshiDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
 {
     ((ItemDoor*)cbData.item)->doorData.noyoshi = cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsAllowNPCDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.allownpc = !cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsAllowNPCDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.allownpc = cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
 }
 
@@ -1646,6 +1666,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_CHANGENPC: return tr("Included NPC");
     case SETTING_WATERTYPE: return tr("Water Type");
     case SETTING_NOYOSHI: return tr("No Yoshi");
+    case SETTING_ALLOWNPC: return tr("Allow NPC");
     default:
         return tr("Unknown");
     }
