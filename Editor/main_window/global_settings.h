@@ -42,6 +42,8 @@ public:
     static long total_music_wld;
     static long total_music_spc;
 
+    static long total_sound;
+
     static QString configName;
 
 };

@@ -176,6 +176,14 @@ struct obj_music
     QString file;
 };
 
+struct obj_sound
+{
+    unsigned long id;
+    QString name;
+    QString file;
+    bool hidden;
+};
+
 //////////////Indexing objects////////////////
 struct blocksIndexes
 {
@@ -217,10 +225,14 @@ public:
     QVector<obj_music > main_music_wld;
     QVector<obj_music > main_music_spc;
 
+    QVector<obj_sound > main_sound;
+
     //Indexes
     QVector<blocksIndexes > index_blocks;
     QVector<bgoIndexes > index_bgo;
     QVector<npcIndexes > index_npc;
+
+    bool check(); //Returns true, if something config entry is not initialized
 
 private:
 
@@ -245,6 +257,7 @@ private:
     void loadLevelBackgrounds();
 
     void loadMusic();
+    void loadSound();
 };
 
 

@@ -233,15 +233,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     StartLvlData = LvlData; //Save current history for made reset
 
     //Data configs exists
-    if(
-            (configs.main_bgo.size()<=0)||
-            (configs.main_bg.size()<=0)||
-            (configs.main_block.size()<=0)||
-            (configs.main_npc.size()<=0)||
-            (configs.main_music_lvl.size()<=0)||
-            (configs.main_music_wld.size()<=0)||
-            (configs.main_music_spc.size()<=0)
-      )
+    if( configs.check() )
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
 

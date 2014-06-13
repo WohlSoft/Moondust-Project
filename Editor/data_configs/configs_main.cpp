@@ -28,6 +28,7 @@ long ConfStatus::total_npc=0;
 long ConfStatus::total_music_lvl=0;
 long ConfStatus::total_music_wld=0;
 long ConfStatus::total_music_spc=0;
+long ConfStatus::total_sound=0;
 
 QString ConfStatus::configName="";
 
@@ -136,6 +137,10 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
     loadMusic();
     ///////////////////////////////////////Music////////////////////////////////////////////
 
+    ///////////////////////////////////////Sound////////////////////////////////////////////
+    loadSound();
+    ///////////////////////////////////////Sound////////////////////////////////////////////
+
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/
 
@@ -149,8 +154,24 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
     WriteToLog(QtDebugMsg, QString("Loaded Level musics    %1/%2").arg(main_music_lvl.size()).arg(ConfStatus::total_music_lvl));
     WriteToLog(QtDebugMsg, QString("Loaded Special musics  %1/%2").arg(main_music_spc.size()).arg(ConfStatus::total_music_spc));
     WriteToLog(QtDebugMsg, QString("Loaded World musics    %1/%2").arg(main_music_wld.size()).arg(ConfStatus::total_music_wld));
+    WriteToLog(QtDebugMsg, QString("Loaded Sounds          %1/%2").arg(main_sound.size()).arg(ConfStatus::total_sound));
 
     return true;
+}
+
+bool dataconfigs::check()
+{
+    return
+            (
+    (main_bgo.size()<=0)||
+    (main_bg.size()<=0)||
+    (main_block.size()<=0)||
+    (main_npc.size()<=0)||
+    (main_music_lvl.size()<=0)||
+    (main_music_wld.size()<=0)||
+    (main_music_spc.size()<=0)||
+    (main_sound.size()<=0)
+            );
 }
 
 

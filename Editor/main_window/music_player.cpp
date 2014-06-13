@@ -104,11 +104,7 @@ void MainWindow::setMusic(bool checked)
     bool silent;
     unsigned int CurMusNum;
 
-    if(
-            (configs.main_music_lvl.size()==0)||
-            (configs.main_music_spc.size()==0)||
-            (configs.main_music_wld.size()==0)
-            )
+    if( configs.check() )
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for music not loaded"));
         return;
