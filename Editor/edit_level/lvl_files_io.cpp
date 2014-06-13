@@ -363,7 +363,6 @@ void leveledit::closeEvent(QCloseEvent *event)
         scene->uBlocks.clear();
         scene->clear();
         sceneCreated=false;
-        MainWinConnect::pMainWin->updateMenus(true);
         //ui->graphicsView->cl
         event->accept();
     } else {
