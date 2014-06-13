@@ -368,6 +368,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_ALLOWNPC){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsAllowNPCDoors, true, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_LOCKED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsLockedDoors, true, true, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -638,6 +642,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_ALLOWNPC){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsAllowNPCDoors, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_LOCKED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsLockedDoors, true, true, true, true);
         }
         break;
     }
@@ -1079,6 +1087,18 @@ void LvlScene::historyUndoSettingsAllowNPCDoors(LvlScene::CallbackData cbData, L
 void LvlScene::historyRedoSettingsAllowNPCDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
 {
     ((ItemDoor*)cbData.item)->doorData.allownpc = cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsLockedDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.locked = !cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsLockedDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.locked = cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
 }
 
@@ -1667,6 +1687,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_WATERTYPE: return tr("Water Type");
     case SETTING_NOYOSHI: return tr("No Yoshi");
     case SETTING_ALLOWNPC: return tr("Allow NPC");
+    case SETTING_LOCKED: return tr("Locked");
     default:
         return tr("Unknown");
     }
