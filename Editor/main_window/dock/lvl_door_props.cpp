@@ -426,6 +426,7 @@ void MainWindow::on_WarpNoYoshi_clicked(bool checked)
                 edit->LvlData.doors[i].noyoshi = checked; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_NOYOSHI, QVariant(checked));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
 
     }
@@ -444,6 +445,7 @@ void MainWindow::on_WarpAllowNPC_clicked(bool checked)
                 edit->LvlData.doors[i].allownpc = checked; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_ALLOWNPC, QVariant(checked));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
 
     }
@@ -463,6 +465,7 @@ void MainWindow::on_WarpLock_clicked(bool checked)
                 edit->LvlData.doors[i].locked = checked; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_LOCKED, QVariant(checked));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }

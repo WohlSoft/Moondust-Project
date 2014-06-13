@@ -215,6 +215,23 @@ void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addChangeWarpSettingsHistory(int array_id, LvlScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chWpSettingsOperation;
+    chWpSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP;
+    chWpSettingsOperation.subtype = subtype;
+    QList<QVariant> package;
+    package.push_back(array_id);
+    package.push_back(extraData);
+    chWpSettingsOperation.extraData = QVariant(package);
+    operationList.push_back(chWpSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -505,6 +522,45 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setDoorData(-2);
 
     }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int index = -1;
+        QVariant extraData = lastOperation.extraData.toList()[1];
+        LevelDoors * doorp;
+        bool found = false;
+
+        for(int i = 0; i < LvlData->doors.size(); i++){
+            if(LvlData->doors[i].array_id == array_id){
+                found = true;
+                doorp = LvlData->doors.data();
+                index = i;
+                break;
+            }
+        }
+
+        if(!found)
+            break;
+
+
+        if(subtype == SETTING_NOYOSHI){
+            doorp[index].noyoshi = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_ALLOWNPC){
+            doorp[index].allownpc = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_LOCKED){
+            doorp[index].locked = !extraData.toBool();
+        }
+
+        MainWinConnect::pMainWin->setDoorData(-2);
+        doorPointsSync(array_id);
+
+        break;
+    }
     default:
         break;
     }
@@ -775,6 +831,45 @@ void LvlScene::historyForward()
         if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
 
         MainWinConnect::pMainWin->setDoorData(-2);
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int index = -1;
+        QVariant extraData = lastOperation.extraData.toList()[1];
+        LevelDoors * doorp;
+        bool found = false;
+
+        for(int i = 0; i < LvlData->doors.size(); i++){
+            if(LvlData->doors[i].array_id == array_id){
+                found = true;
+                doorp = LvlData->doors.data();
+                index = i;
+                break;
+            }
+        }
+
+        if(!found)
+            break;
+
+
+        if(subtype == SETTING_NOYOSHI){
+            doorp[index].noyoshi = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_ALLOWNPC){
+            doorp[index].allownpc = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_LOCKED){
+            doorp[index].locked = extraData.toBool();
+        }
+
+        MainWinConnect::pMainWin->setDoorData(-2);
+        doorPointsSync(array_id);
+
+        break;
     }
     default:
         break;
@@ -1670,6 +1765,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_PLACEDOOR: return tr("Place Door");
     case HistoryOperation::LEVELHISTORY_ADDWARP: return tr("Add Warp");
     case HistoryOperation::LEVELHISTORY_REMOVEWARP: return tr("Remove Warp");
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP: return tr("Changed Warpsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     default:
         return tr("Unknown");
     }

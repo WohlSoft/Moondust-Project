@@ -213,7 +213,8 @@ public:
             LEVELHISTORY_RESIZEBLOCK,
             LEVELHISTORY_PLACEDOOR,
             LEVELHISTORY_ADDWARP,
-            LEVELHISTORY_REMOVEWARP
+            LEVELHISTORY_REMOVEWARP,
+            LEVELHISTORY_CHANGEDSETTINGSWARP
         };
         HistoryType type;
         //used most of Operations
@@ -273,6 +274,7 @@ public:
                                long newLeft, long newTop, long newRight, long newBottom);
     void addAddWarpHistory(int array_id, int listindex, int doorindex);
     void addRemoveWarpHistory(LevelDoors removedDoor);
+    void addChangeWarpSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
     //history modifiers
     void historyBack();
     void historyForward();
