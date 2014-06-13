@@ -532,7 +532,7 @@ void LvlScene::historyBack()
         bool found = false;
 
         for(int i = 0; i < LvlData->doors.size(); i++){
-            if(LvlData->doors[i].array_id == array_id){
+            if(LvlData->doors[i].array_id == (unsigned int)array_id){
                 found = true;
                 doorp = LvlData->doors.data();
                 index = i;
@@ -842,7 +842,7 @@ void LvlScene::historyForward()
         bool found = false;
 
         for(int i = 0; i < LvlData->doors.size(); i++){
-            if(LvlData->doors[i].array_id == array_id){
+            if(LvlData->doors[i].array_id == (unsigned int)array_id){
                 found = true;
                 doorp = LvlData->doors.data();
                 index = i;
