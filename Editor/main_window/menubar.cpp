@@ -65,11 +65,13 @@ void MainWindow::updateMenus(bool force)
 
         LevelDoorsBoxVis = ui->DoorsToolbox->isVisible();
         LevelLayersBoxVis = ui->LevelLayers->isVisible();
+        LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
 
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
         ui->LevelSectionSettings->setVisible( 0 );
         ui->DoorsToolbox->setVisible( 0 );
         ui->LevelLayers->setVisible( 0 );
+        ui->LevelEventsToolBox->setVisible( 0 );
     }
 
     if((lastWinType !=1) && (WinType==1))
@@ -78,6 +80,7 @@ void MainWindow::updateMenus(bool force)
         ui->LevelSectionSettings->setVisible( SectionToolBoxVis );
         ui->DoorsToolbox->setVisible( LevelDoorsBoxVis );
         ui->LevelLayers->setVisible( LevelLayersBoxVis );
+        ui->LevelEventsToolBox->setVisible( LevelEventsBoxVis );
     }
     lastWinType =   WinType;
 
@@ -85,6 +88,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
     ui->actionSection_Settings->setVisible( (WinType==1) );
     ui->actionLevelProp->setEnabled( (WinType==1) );
+    ui->actionLevelEvents->setEnabled( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
 
     ui->menuLevel->setEnabled( (WinType==1) );

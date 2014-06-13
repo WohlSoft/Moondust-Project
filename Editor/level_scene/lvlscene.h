@@ -242,7 +242,8 @@ public:
         SETTING_MESSAGE,       //extraData: QList<QVariant[String]> [Old Text, New Text]
         SETTING_DIRECTION,     //extraData: QList<QVariant[int]> [Old Dir, New Dir]
         SETTING_CHANGENPC,     //extraData: QList<QVariant[int]> [Old NPC ID, New NPC ID]
-        SETTING_WATERTYPE      //extraData: bool [IsWater = true, IsQuicksand = false]
+        SETTING_WATERTYPE,     //extraData: bool [IsWater = true, IsQuicksand = false]
+        SETTING_NOYOSHI        //extraData: bool [Activated?]
     };
 
     //typedefs
@@ -321,6 +322,9 @@ public:
     //Callbackfunctions: [Change Settings] Water Type
     void historyUndoSettingsTypeWater(CallbackData cbData, LevelWater data);
     void historyRedoSettingsTypeWater(CallbackData cbData, LevelWater data);
+    //Callbackfunctions: [Change Settings] No Yoshi
+    void historyUndoSettingsNoYoshi(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoSettingsNoYoshi(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
@@ -350,6 +354,8 @@ public:
                           callBackLevelDoors clbDoors, bool isEntrance);
     //miscellaneous
     QPoint calcTopLeftCorner(LevelData* data);
+    QString getHistoryText(HistoryOperation operation);
+    QString getHistorySettingText(SettingSubType subType);
     // ////////////////////////////////////////////
     void openProps();
 

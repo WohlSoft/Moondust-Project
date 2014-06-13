@@ -16,13 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
-#include "../mainwindow.h"
+#include "../../ui_mainwindow.h"
+#include "../../mainwindow.h"
 
-#include "../level_scene/item_bgo.h"
-#include "../level_scene/item_block.h"
-#include "../level_scene/item_npc.h"
-#include "../level_scene/item_water.h"
+
+#include "../../level_scene/item_bgo.h"
+#include "../../level_scene/item_block.h"
+#include "../../level_scene/item_npc.h"
+#include "../../level_scene/item_water.h"
 
 
 void MainWindow::EventListsSync()
@@ -37,6 +38,7 @@ void MainWindow::EventListsSync()
     ui->PROPS_NpcEventDeath->clear();
     ui->PROPS_NpcEventTalk->clear();
     ui->PROPS_NpcEventEmptyLayer->clear();
+    ui->LVLEvent_TriggerEvent->clear();
 
     QString noEvent = tr("[None]");
     ui->PROPS_BlkEventDestroy->addItem(noEvent);
@@ -47,6 +49,8 @@ void MainWindow::EventListsSync()
     ui->PROPS_NpcEventDeath->addItem(noEvent);
     ui->PROPS_NpcEventTalk->addItem(noEvent);
     ui->PROPS_NpcEventEmptyLayer->addItem(noEvent);
+    ui->LVLEvent_TriggerEvent->addItem(noEvent);
+
 
     if (WinType==1)
     {
@@ -60,6 +64,7 @@ void MainWindow::EventListsSync()
             ui->PROPS_NpcEventDeath->addItem(event.name);
             ui->PROPS_NpcEventTalk->addItem(event.name);
             ui->PROPS_NpcEventEmptyLayer->addItem(event.name);
+            ui->LVLEvent_TriggerEvent->addItem(event.name);
         }
     }
 

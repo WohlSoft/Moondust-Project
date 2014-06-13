@@ -38,6 +38,7 @@ void npcedit::on_ResetNPCData_clicked()
 void npcedit::on_en_GFXOffsetX_clicked(bool checked)
 {
     ui->GFXOffSetX->setEnabled(checked);
+    ui->offsetx_label->setEnabled(checked);
     NpcData.en_gfxoffsetx=checked;
 
     updatePreview();
@@ -48,6 +49,7 @@ void npcedit::on_en_GFXOffsetX_clicked(bool checked)
 void npcedit::on_en_GFXOffsetY_clicked(bool checked)
 {
     ui->GFXOffSetY->setEnabled(checked);
+    ui->offsety_label->setEnabled(checked);
     NpcData.en_gfxoffsety=checked;
 
     updatePreview();
@@ -59,6 +61,7 @@ void npcedit::on_En_GFXw_clicked(bool checked)
 {
 
     ui->GFXw->setEnabled(checked);
+    ui->gwidth_label->setEnabled(checked);
     NpcData.en_gfxwidth=checked;
 
     updatePreview();
@@ -69,6 +72,7 @@ void npcedit::on_En_GFXw_clicked(bool checked)
 void npcedit::on_En_GFXh_clicked(bool checked)
 {
     ui->GFXh->setEnabled(checked);
+    ui->gheight_label->setEnabled(checked);
     NpcData.en_gfxheight=checked;
 
     updatePreview();
@@ -79,6 +83,7 @@ void npcedit::on_En_GFXh_clicked(bool checked)
 void npcedit::on_En_Frames_clicked(bool checked)
 {
     ui->Frames->setEnabled(checked);
+    ui->frames_label->setEnabled(checked);
     NpcData.en_frames=checked;
 
     updatePreview();
@@ -89,6 +94,7 @@ void npcedit::on_En_Frames_clicked(bool checked)
 void npcedit::on_En_Framespeed_clicked(bool checked)
 {
     ui->Framespeed->setEnabled(checked);
+    ui->framespeed_label->setEnabled(checked);
     NpcData.en_framespeed=checked;
 
     updatePreview();
@@ -99,6 +105,7 @@ void npcedit::on_En_Framespeed_clicked(bool checked)
 void npcedit::on_En_Framestyle_clicked(bool checked)
 {
     ui->FrameStyle->setEnabled(checked);
+    ui->framestyle_label->setEnabled(checked);
     NpcData.en_framestyle=checked;
 
     updatePreview();
@@ -154,6 +161,7 @@ void npcedit::on_En_DontHurt_clicked(bool checked)
 void npcedit::on_En_Score_clicked(bool checked)
 {
     ui->Score->setEnabled(checked);
+    ui->score_label->setEnabled(checked);
     NpcData.en_score=checked;
 
     documentWasModified();
@@ -190,6 +198,7 @@ void npcedit::on_En_NoIceball_clicked(bool checked)
 void npcedit::on_En_Width_clicked(bool checked)
 {
     ui->Width->setEnabled(checked);
+    ui->width_label->setEnabled(checked);
     NpcData.en_width=checked;
 
     updatePreview();
@@ -200,6 +209,7 @@ void npcedit::on_En_Width_clicked(bool checked)
 void npcedit::on_En_Height_clicked(bool checked)
 {
     ui->Height->setEnabled(checked);
+    ui->height_label->setEnabled(checked);
     NpcData.en_height=checked;
 
     updatePreview();
@@ -210,6 +220,7 @@ void npcedit::on_En_Height_clicked(bool checked)
 void npcedit::on_En_Speed_clicked(bool checked)
 {
     ui->Speed->setEnabled(checked);
+    ui->speed_label->setEnabled(checked);
     NpcData.en_speed=checked;
 
     documentWasModified();

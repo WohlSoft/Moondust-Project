@@ -82,6 +82,18 @@ void MainWindow::on_actionWarpsAndDoors_triggered(bool checked)
 
 
 
+void MainWindow::on_LevelEventsToolBox_visibilityChanged(bool visible)
+{
+    ui->actionLevelEvents->setChecked(visible);
+}
+
+void MainWindow::on_actionLevelEvents_triggered(bool checked)
+{
+    ui->LevelEventsToolBox->setVisible(checked);
+    if(checked) ui->LevelEventsToolBox->raise();
+}
+
+
 
 // //////////////////////////////// GoTo Section  ////////////////////////////////
 void MainWindow::on_actionSection_1_triggered()

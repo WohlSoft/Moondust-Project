@@ -77,6 +77,7 @@ public:
     int activeChildWindow();
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
+    void showStatusMsg(QString msg, int time=2000);
 
     void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
     long blockPtr; //ArrayID of editing item (-1 - use system)
@@ -99,6 +100,7 @@ public slots:
     void save_as();
     void close_sw();
     void save_all();
+    void refreshHistoryButtons();
 
     void OpenFile(QString FilePath);
     void SyncRecentFiles();
@@ -166,7 +168,7 @@ public slots:
 
 private slots:
 
-    void TickTack();
+    //void TickTack();
 
     //Actions
     void on_LevelSectionSettings_visibilityChanged(bool visible);
@@ -360,6 +362,10 @@ private slots:
 
     void on_PROPS_BGOSquareFill_clicked(bool checked);
 
+    void on_actionLevelEvents_triggered(bool checked);
+
+    void on_LevelEventsToolBox_visibilityChanged(bool visible);
+
 private:
 
     LevelEditingSettings LvlOpts;
@@ -373,6 +379,7 @@ private:
     bool SectionToolBoxVis; //Section Settings
     bool LevelDoorsBoxVis; //Doors box
     bool LevelLayersBoxVis; //Layers box
+    bool LevelEventsBoxVis; //Events box
     bool WorldToolBoxVis;
     bool autoPlayMusic;
 
@@ -394,10 +401,10 @@ private:
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;
 
-    QTimer * TickTackTimer; //Scene Events detector
-    bool TickTackLock;      //Scene Events detector locker
+//    QTimer * TickTackTimer; //Scene Events detector
+//    bool TickTackLock;      //Scene Events detector locker
 
-    QThread * thread1;
+//    QThread * thread1;
 
     QList<QString> recentOpen; //Recent files list
 
