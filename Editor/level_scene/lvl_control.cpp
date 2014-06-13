@@ -803,6 +803,15 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     {
                         sourcePos = QPoint(  ((ItemWater *)(*it))->waterData.x, ((ItemWater *)(*it))->waterData.y);
                     }
+                    else
+                    if( ObjType == "Door_enter")
+                    {
+                        sourcePos = QPoint(  ((ItemDoor *)(*it))->doorData.ix, ((ItemDoor *)(*it))->doorData.iy);
+                    }
+                    else
+                    if( ObjType == "Door_exit"){
+                        sourcePos = QPoint(  ((ItemDoor *)(*it))->doorData.ox, ((ItemDoor *)(*it))->doorData.oy);
+                    }
 
                     //Check position
                     if( sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y())))
