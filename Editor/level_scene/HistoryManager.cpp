@@ -1537,6 +1537,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                 }
             }
         }
+        MainWinConnect::pMainWin->setDoorData(-2); //update Door data
     }
 
 }
