@@ -531,71 +531,99 @@ void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
 /////////Entrance Direction/////////////////
 void MainWindow::on_Entr_Down_clicked()
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> dirData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                dirData.push_back(edit->LvlData.doors[i].idirect);
+                dirData.push_back(3);
                 edit->LvlData.doors[i].idirect = 3; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
 }
 void MainWindow::on_Entr_Right_clicked()
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> dirData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                dirData.push_back(edit->LvlData.doors[i].idirect);
+                dirData.push_back(4);
                 edit->LvlData.doors[i].idirect = 4; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
 void MainWindow::on_Entr_Up_clicked()
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> dirData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                dirData.push_back(edit->LvlData.doors[i].idirect);
+                dirData.push_back(1);
                 edit->LvlData.doors[i].idirect = 1; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 void MainWindow::on_Entr_Left_clicked()
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> dirData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                dirData.push_back(edit->LvlData.doors[i].idirect);
+                dirData.push_back(2);
                 edit->LvlData.doors[i].idirect = 2; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_ENTRDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
@@ -603,72 +631,100 @@ void MainWindow::on_Entr_Left_clicked()
 /////////Exit Direction/////////////////
 void MainWindow::on_Exit_Up_clicked()
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> dirData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                dirData.push_back(edit->LvlData.doors[i].odirect);
+                dirData.push_back(3);
                 edit->LvlData.doors[i].odirect = 3; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
 void MainWindow::on_Exit_Left_clicked()
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> dirData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                dirData.push_back(edit->LvlData.doors[i].odirect);
+                dirData.push_back(4);
                 edit->LvlData.doors[i].odirect = 4; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
 void MainWindow::on_Exit_Down_clicked()
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> dirData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                dirData.push_back(edit->LvlData.doors[i].odirect);
+                dirData.push_back(1);
                 edit->LvlData.doors[i].odirect = 1; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
 void MainWindow::on_Exit_Right_clicked()
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> dirData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                dirData.push_back(edit->LvlData.doors[i].odirect);
+                dirData.push_back(2);
                 edit->LvlData.doors[i].odirect = 2; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_EXITDIR, QVariant(dirData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
