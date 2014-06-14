@@ -522,7 +522,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1804"/>
         <source>Changed Warpsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Verändere Warpeinstellung [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1806"/>
@@ -573,37 +573,37 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1821"/>
         <source>No Yoshi</source>
-        <translation type="unfinished">Kein Yoshi</translation>
+        <translation>Kein Yoshi</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1822"/>
         <source>Allow NPC</source>
-        <translation type="unfinished">NPC Zulassen</translation>
+        <translation>NPC Zulassen</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1823"/>
         <source>Locked</source>
-        <translation type="unfinished">Gesperrt</translation>
+        <translation>Gesperrt</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1824"/>
         <source>Warp Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Warp Typ</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1825"/>
         <source>Need Stars</source>
-        <translation type="unfinished"></translation>
+        <translation>Brauche Sterne</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1826"/>
         <source>Entrance Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingangsrichtung</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1827"/>
         <source>Exit Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgangsrichtung</translation>
     </message>
 </context>
 <context>
@@ -636,7 +636,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="173"/>
         <source>Current section</source>
-        <translation>Akuteller Bereich</translation>
+        <translation>Aktueller Bereich</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="211"/>
@@ -823,7 +823,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="1540"/>
         <source>Current Section</source>
-        <translation>Akuteller Bereich</translation>
+        <translation>Aktueller Bereich</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1561"/>
@@ -1585,223 +1585,223 @@ Bei diesem System wird ein Bug benutzt von SMBX benutzt, womit man bestimmte BGO
     <message>
         <location filename="../mainwindow.ui" line="3323"/>
         <source>Classic Events</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassische Events</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3383"/>
         <source>Layer visibly</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebene sichtbar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3404"/>
         <source>Disable smoke effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktiviere Rauch Effekt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3469"/>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3495"/>
         <source>Toggle</source>
-        <translation type="unfinished"></translation>
+        <translation>Schalten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3530"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstecken</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3562"/>
         <source>Layers movement</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebenen Bewegung</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3568"/>
         <source>Set moving layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzte Ebenenbewegung</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3578"/>
         <location filename="../mainwindow.ui" line="3672"/>
         <source>Horisontal speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontale Geschwindigkeit:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3598"/>
         <location filename="../mainwindow.ui" line="3692"/>
         <source>Vertical speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikale Gerschwindigkeit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3640"/>
         <source>Autoscrool section</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereich Autoscroll</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3655"/>
         <source>Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereich</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3734"/>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Bereichseinstellungen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3746"/>
         <source>Current section:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktueller Bereich:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3768"/>
         <source>Set size and position</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzte größe und Position</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3774"/>
         <location filename="../mainwindow.ui" line="3912"/>
         <location filename="../mainwindow.ui" line="3970"/>
         <source>Don&apos;t change</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht ändern</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3793"/>
         <source>Capture...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufnehmen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3800"/>
         <location filename="../mainwindow.ui" line="3919"/>
         <location filename="../mainwindow.ui" line="3977"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurücksetzten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3829"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Oben</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3839"/>
         <source>Define new:</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu Definieren:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3852"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Unten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3906"/>
         <source>Set music</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzte Musik</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3926"/>
         <source>Replace music to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzte Musik zu:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3964"/>
         <source>Set background</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzte Hintergrund</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3984"/>
         <source>Replace background to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzte Hintergrund zu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4032"/>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemein</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4044"/>
         <source>Display message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Nachricht:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4064"/>
         <source>Play sound:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sound abspielen:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4086"/>
         <source>Do end game:</source>
-        <translation type="unfinished"></translation>
+        <translation>Beende Spiel:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4094"/>
         <source>Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Nichts</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4099"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiel endet &quot;Bowser bezwungen&quot;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4129"/>
         <source>Player Control hold keys</source>
-        <translation type="unfinished"></translation>
+        <translation>Spieler hält Taste</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4135"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>Rennen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4163"/>
         <source>Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Loslassen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4177"/>
         <source>Alt-run</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-Rennen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4184"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4191"/>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Springen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4198"/>
         <source>Alt-jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-Springen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4227"/>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation>Event ausführen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4239"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzögerung</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4270"/>
         <source>Events list</source>
-        <translation type="unfinished"></translation>
+        <translation>Eventliste</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4300"/>
         <source>Autostart event</source>
-        <translation type="unfinished"></translation>
+        <translation>Autostart event</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4326"/>
         <source>Create copy of event</source>
-        <translation type="unfinished"></translation>
+        <translation>Mache Kopie von Event</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5178"/>
