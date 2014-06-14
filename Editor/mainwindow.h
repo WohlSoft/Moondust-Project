@@ -134,6 +134,7 @@ public slots:
     void SwitchToDoor(long arrayID);
     void setLayersBox();
     void setLayerLists();
+    void setEventsBox();
     void EventListsSync();
 
     //LvlDoorProps Functions

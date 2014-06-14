@@ -26,6 +26,35 @@
 #include "../../level_scene/item_water.h"
 
 
+void MainWindow::setEventsBox()
+{
+    int WinType = activeChildWindow();
+    QListWidgetItem * item;
+
+    ui->LVLEvents_List->clear();
+
+    if (WinType==1)
+    {
+        foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+        {
+            item = new QListWidgetItem;
+            item->setText(event.name);
+            //item->setFlags(Qt::ItemIsUserCheckable);
+
+            item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+
+            if((event.name!="Level - Start")&&(event.name!="P Switch - Start")&&(event.name!="P Switch - End"))
+                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
+
+            //item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
+            item->setData(3, QString::number( event.array_id ) );
+            ui->LVLEvents_List->addItem( item );
+        }
+
+    }
+}
+
+
 void MainWindow::EventListsSync()
 {
     int WinType = activeChildWindow();

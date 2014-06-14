@@ -248,7 +248,9 @@ public:
         SETTING_ALLOWNPC,      //extraData: bool [Activated?]
         SETTING_LOCKED,        //extraData: bool [Activated?]
         SETTING_WARPTYPE,      //extraData: QList<QVariant[int]> [Old warptype, New warptype]
-        SETTING_NEEDASTAR      //extraData: QList<QVariant[int]> [Old stars, New stars]
+        SETTING_NEEDASTAR,     //extraData: QList<QVariant[int]> [Old stars, New stars]
+        SETTING_ENTRDIR,       //extraData: QList<QVariant[int]> [Old entrance dir, New entrance dir]
+        SETTING_EXITDIR        //extraData: QList<QVariant[int]> [Old exit dir, New exit dir]
     };
 
     //typedefs

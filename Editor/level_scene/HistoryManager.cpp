@@ -563,6 +563,14 @@ void LvlScene::historyBack()
         if(subtype == SETTING_NEEDASTAR){
             doorp[index].stars = extraData.toList()[0].toInt();
         }
+        else
+        if(subtype == SETTING_ENTRDIR){
+            doorp[index].idirect = extraData.toList()[0].toInt();
+        }
+        else
+        if(subtype == SETTING_EXITDIR){
+            doorp[index].odirect = extraData.toList()[0].toInt();
+        }
 
         MainWinConnect::pMainWin->isHistoryChangingData = true;
         MainWinConnect::pMainWin->setDoorData(-2);
@@ -882,6 +890,14 @@ void LvlScene::historyForward()
         else
         if(subtype == SETTING_NEEDASTAR){
             doorp[index].stars = extraData.toList()[1].toInt();
+        }
+        else
+        if(subtype == SETTING_ENTRDIR){
+            doorp[index].idirect = extraData.toList()[1].toInt();
+        }
+        else
+        if(subtype == SETTING_EXITDIR){
+            doorp[index].odirect = extraData.toList()[1].toInt();
         }
 
         MainWinConnect::pMainWin->isHistoryChangingData = true;
@@ -1807,6 +1823,8 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_LOCKED: return tr("Locked");
     case SETTING_WARPTYPE: return tr("Warp Type");
     case SETTING_NEEDASTAR: return tr("Need Stars");
+    case SETTING_ENTRDIR: return tr("Entrance Direction");
+    case SETTING_EXITDIR: return tr("Exit Direction");
     default:
         return tr("Unknown");
     }
