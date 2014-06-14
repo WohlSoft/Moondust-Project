@@ -18,8 +18,9 @@
 
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
+#include "../music_player.h"
 
-
+static bool lockSctSettingsProps=false;
 
 // Level Section Settings
 void MainWindow::on_LVLPropsLevelWarp_clicked(bool checked)
@@ -156,6 +157,7 @@ void MainWindow::on_cancelResize_clicked()
 
 void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
+    if(lockSctSettingsProps) return;
     if(configs.main_bg.size()==0)
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for backgrounds not loaded"));
@@ -190,6 +192,8 @@ void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
 
 void MainWindow::setLevelSectionData()
 {
+    lockSctSettingsProps=true;
+
     int i;
         WriteToLog(QtDebugMsg, QString("Set level Section Data"));
     ui->LVLPropsBackImage->clear();
@@ -204,4 +208,71 @@ void MainWindow::setLevelSectionData()
     for(i=0; i< configs.main_music_lvl.size();i++)
         ui->LVLPropsMusicNumber->addItem(configs.main_music_lvl[i].name);
 
+    lockSctSettingsProps=false;
+}
+
+
+void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
+{
+    if(lockSctSettingsProps) return;
+
+    unsigned int test = index;
+    if(ui->LVLPropsMusicNumber->hasFocus())
+    {
+        ui->LVLPropsMusicCustomEn->setChecked(  test == configs.music_custom_id );
+    }
+
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
+        if(ui->LVLPropsMusicNumber->hasFocus()) activeLvlEditWin()->LvlData.modified = true;
+    }
+
+    WriteToLog(QtDebugMsg, "Call to Set Music if playing");
+    setMusic(ui->actionPlayMusic->isChecked());
+}
+
+void MainWindow::on_LVLPropsMusicCustomEn_toggled(bool checked)
+{
+    if(lockSctSettingsProps) return;
+
+    if(ui->LVLPropsMusicCustomEn->hasFocus())
+    {
+        if(checked)
+        {
+            ui->LVLPropsMusicNumber->setCurrentIndex( configs.music_custom_id );
+            if(activeChildWindow()==1)
+            {
+                activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
+                activeLvlEditWin()->LvlData.modified = true;
+            }
+        }
+    }
+}
+
+void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
+{
+    QString dirPath;
+    if(activeChildWindow()==1)
+    {
+        dirPath = activeLvlEditWin()->LvlData.path;
+    }
+    else return;
+
+    MusicFileList musicList(dirPath);
+    if( musicList.exec() == QDialog::Accepted )
+    {
+        ui->LVLPropsMusicCustom->setText(musicList.SelectedFile);
+    }
+
+}
+
+void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
+{
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_file = arg1.simplified().remove('\"');
+    }
+
+    setMusic( ui->actionPlayMusic->isChecked() );
 }
