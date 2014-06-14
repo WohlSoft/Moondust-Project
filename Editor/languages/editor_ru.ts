@@ -521,7 +521,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1804"/>
         <source>Changed Warpsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменена настройка прохода [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1806"/>
@@ -572,37 +572,37 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1821"/>
         <source>No Yoshi</source>
-        <translation type="unfinished"></translation>
+        <translation>Без транспортных средств</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1822"/>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрешить предметы</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1823"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Заперто</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1824"/>
         <source>Warp Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип прохода</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1825"/>
         <source>Need Stars</source>
-        <translation type="unfinished"></translation>
+        <translation>Нужно звёзд</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1826"/>
         <source>Entrance Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Направление входа</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1827"/>
         <source>Exit Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Направление выхода</translation>
     </message>
 </context>
 <context>
