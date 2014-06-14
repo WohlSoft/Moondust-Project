@@ -1795,7 +1795,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4094"/>
         <source>Nothing</source>
-        <translation type="unfinished">Не завершать</translation>
+        <translation>Не завершать</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4099"/>
