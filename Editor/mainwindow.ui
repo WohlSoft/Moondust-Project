@@ -944,7 +944,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>481</height>
+        <height>514</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1005,7 +1005,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>481</height>
+        <height>514</height>
        </rect>
       </property>
      </widget>
@@ -1029,7 +1029,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>481</height>
+        <height>514</height>
        </rect>
       </property>
      </widget>
@@ -1053,7 +1053,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>481</height>
+        <height>514</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2354,7 +2354,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>260</width>
-          <height>782</height>
+          <height>724</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2552,7 +2552,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>786</height>
+          <height>724</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2678,8 +2678,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>786</height>
+          <width>260</width>
+          <height>724</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3312,7 +3312,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   <widget class="QDockWidget" name="LevelEventsToolBox">
    <property name="minimumSize">
     <size>
-     <width>280</width>
+     <width>284</width>
      <height>477</height>
     </size>
    </property>
@@ -3345,7 +3345,48 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <property name="spacing">
       <number>0</number>
      </property>
-     <item row="5" column="0" colspan="2">
+     <item row="1" column="1" rowspan="4">
+      <widget class="QListWidget" name="LVLEvents_List">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>130</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>236</height>
+        </size>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::InternalMove</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectItems</enum>
+       </property>
+       <property name="viewMode">
+        <enum>QListView::ListMode</enum>
+       </property>
+       <property name="uniformItemSizes">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Events list</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0" colspan="2">
       <widget class="QToolBox" name="LVLEvents_Settings">
        <property name="font">
         <font>
@@ -3375,8 +3416,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
-          <height>385</height>
+          <width>255</width>
+          <height>360</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3532,7 +3573,11 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </widget>
          </item>
          <item row="0" column="0" colspan="2">
-          <widget class="QListWidget" name="LVLEvents_layerList"/>
+          <widget class="QListWidget" name="LVLEvents_layerList">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAlwaysOn</enum>
+           </property>
+          </widget>
          </item>
          <item row="16" column="0" colspan="2">
           <spacer name="verticalSpacer_9">
@@ -3555,7 +3600,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>385</height>
+          <height>433</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3570,7 +3615,11 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </widget>
          </item>
          <item row="1" column="0" colspan="2">
-          <widget class="QComboBox" name="LVLEvent_LayerMov_List"/>
+          <widget class="QComboBox" name="LVLEvent_LayerMov_List">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_18">
@@ -3633,7 +3682,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>385</height>
+          <height>433</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3725,7 +3774,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-76</y>
+          <y>0</y>
           <width>251</width>
           <height>461</height>
          </rect>
@@ -4025,7 +4074,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>385</height>
+          <height>433</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4067,6 +4116,9 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          </item>
          <item>
           <widget class="QComboBox" name="LVLEvent_Cmn_PlaySnd">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
            <item>
             <property name="text">
              <string notr="true">[Don't play sound]</string>
@@ -4089,6 +4141,9 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          </item>
          <item>
           <widget class="QComboBox" name="LVLEvent_Cmn_EndGame">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
            <item>
             <property name="text">
              <string>Nothing</string>
@@ -4122,7 +4177,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>385</height>
+          <height>433</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4220,7 +4275,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>268</width>
-          <height>385</height>
+          <height>433</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4231,7 +4286,11 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
          </property>
          <item row="0" column="0" colspan="2">
-          <widget class="QComboBox" name="LVLEvent_TriggerEvent"/>
+          <widget class="QComboBox" name="LVLEvent_TriggerEvent">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+          </widget>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_27">
@@ -4264,20 +4323,10 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
        </widget>
       </widget>
      </item>
-     <item row="0" column="0" colspan="2">
-      <widget class="QLabel" name="label_13">
+     <item row="5" column="0" colspan="2">
+      <widget class="QCheckBox" name="checkBox_2">
        <property name="text">
-        <string>Events list</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1" rowspan="3">
-      <widget class="QListWidget" name="LVLEvents_List">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>236</height>
-        </size>
+        <string>Autostart event</string>
        </property>
       </widget>
      </item>
@@ -4291,13 +4340,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
        </property>
        <property name="text">
         <string notr="true">+</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="QCheckBox" name="checkBox_2">
-       <property name="text">
-        <string>Autostart event</string>
        </property>
       </widget>
      </item>

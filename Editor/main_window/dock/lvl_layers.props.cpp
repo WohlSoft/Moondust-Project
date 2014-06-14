@@ -16,14 +16,76 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
-#include "../mainwindow.h"
+#include "../../ui_mainwindow.h"
+#include "../../mainwindow.h"
 
-#include "../level_scene/item_bgo.h"
-#include "../level_scene/item_block.h"
-#include "../level_scene/item_npc.h"
-#include "../level_scene/item_water.h"
-#include "../level_scene/item_door.h"
+#include "../../level_scene/item_bgo.h"
+#include "../../level_scene/item_block.h"
+#include "../../level_scene/item_npc.h"
+#include "../../level_scene/item_water.h"
+#include "../../level_scene/item_door.h"
+
+
+
+void MainWindow::setLayersBox()
+{
+    int WinType = activeChildWindow();
+    QListWidgetItem * item;
+
+    ui->LvlLayerList->clear();
+
+    if (WinType==1)
+    {
+        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+        {
+            item = new QListWidgetItem;
+            item->setText(layer.name);
+            item->setFlags(Qt::ItemIsUserCheckable);
+
+            if((layer.name!="Destroyed Blocks")&&(layer.name!="Spawned NPCs"))
+                item->setFlags(item->flags() | Qt::ItemIsEnabled);
+
+            if(layer.name!="Default")
+                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+
+            item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
+            item->setData(3, QString::number( layer.array_id ) );
+            ui->LvlLayerList->addItem( item );
+        }
+
+    }
+}
+
+void MainWindow::setLayerLists()
+{
+    int WinType = activeChildWindow();
+
+    ui->PROPS_BGOLayer->clear();
+    ui->PROPS_NpcLayer->clear();
+    ui->PROPS_BlockLayer->clear();
+    ui->PROPS_NpcAttachLayer->clear();
+    ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
+    ui->LVLEvent_LayerMov_List->clear();
+    ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
+
+    if (WinType==1)
+    {
+        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+        {
+            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs"))
+                continue;
+            ui->PROPS_BGOLayer->addItem(layer.name);
+            ui->PROPS_NpcLayer->addItem(layer.name);
+            ui->PROPS_BlockLayer->addItem(layer.name);
+            ui->PROPS_NpcAttachLayer->addItem(layer.name);
+            ui->LVLEvent_LayerMov_List->addItem(layer.name);
+        }
+    }
+
+}
+
+
+
 
 
 void MainWindow::RemoveCurrentLayer(bool moveToDefault)
@@ -428,65 +490,6 @@ void MainWindow::on_actionLayersBox_triggered(bool checked)
     if(checked) ui->LevelLayers->raise();
 }
 
-
-void MainWindow::setLayersBox()
-{
-    int WinType = activeChildWindow();
-    QListWidgetItem * item;
-
-    ui->LvlLayerList->clear();
-
-    if (WinType==1)
-    {
-        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
-        {
-            item = new QListWidgetItem;
-            item->setText(layer.name);
-            item->setFlags(Qt::ItemIsUserCheckable);
-
-            if((layer.name!="Destroyed Blocks")&&(layer.name!="Spawned NPCs"))
-                item->setFlags(item->flags() | Qt::ItemIsEnabled);
-
-            if(layer.name!="Default")
-                item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
-
-            item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
-            item->setData(3, QString::number( layer.array_id ) );
-            ui->LvlLayerList->addItem( item );
-        }
-
-    }
-}
-
-void MainWindow::setLayerLists()
-{
-    int WinType = activeChildWindow();
-
-    ui->PROPS_BGOLayer->clear();
-    ui->PROPS_NpcLayer->clear();
-    ui->PROPS_BlockLayer->clear();
-    ui->PROPS_NpcAttachLayer->clear();
-    ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
-    ui->LVLEvent_LayerMov_List->clear();
-    ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
-
-    if (WinType==1)
-    {
-        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
-        {
-            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs"))
-                continue;
-            ui->PROPS_BGOLayer->addItem(layer.name);
-            ui->PROPS_NpcLayer->addItem(layer.name);
-            ui->PROPS_BlockLayer->addItem(layer.name);
-            ui->PROPS_NpcAttachLayer->addItem(layer.name);
-            ui->LVLEvent_LayerMov_List->addItem(layer.name);
-        }
-    }
-
-}
-
-
 void MainWindow::on_AddLayer_clicked()
 {
     AddNewLayer(tr("New Layer %1").arg( ui->LvlLayerList->count()+1 ), true);
@@ -781,3 +784,4 @@ void MainWindow::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
 
 }
+

@@ -59,7 +59,6 @@ SOURCES += main.cpp\
     main_window/menubar.cpp \
     main_window/edit_control.cpp \
     main_window/appsettings.cpp \
-    main_window/edit_level_layers.cpp \
     level_scene/lvlscene.cpp \
     level_scene/item_bgo.cpp \
     level_scene/item_block.cpp \
@@ -111,7 +110,8 @@ SOURCES += main.cpp\
     main_window/edit_new_file.cpp \
     main_window/translator.cpp \
     main_window/dock/lvl_events_props.cpp \
-    data_configs/conf_sound.cpp
+    data_configs/conf_sound.cpp \
+    main_window/dock/lvl_layers.props.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

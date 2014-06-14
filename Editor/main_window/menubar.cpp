@@ -131,14 +131,7 @@ void MainWindow::updateMenus(bool force)
 
     if(WinType==1)
     {
-        if(
-                (configs.main_bgo.size()<=0)||
-                (configs.main_bg.size()<=0)||
-                (configs.main_block.size()<=0)||
-                (configs.main_music_lvl.size()<=0)||
-                (configs.main_music_wld.size()<=0)||
-                (configs.main_music_spc.size()<=0)
-          )
+        if( configs.check() )
         {
             WriteToLog(QtCriticalMsg, "*.INI Configs not loaded");
             return;
@@ -166,6 +159,7 @@ void MainWindow::updateMenus(bool force)
         SetCurrentLevelSection(0, 1);
         setDoorsToolbox();
         setLayersBox();
+        setEventsBox();
 
         //Sync lists in properties windows
         EventListsSync();
