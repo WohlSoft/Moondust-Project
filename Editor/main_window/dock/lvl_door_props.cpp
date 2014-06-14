@@ -474,15 +474,21 @@ void MainWindow::on_WarpLock_clicked(bool checked)
 
 void MainWindow::on_WarpType_currentIndexChanged(int index)
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> warpTypeData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                warpTypeData.push_back(edit->LvlData.doors[i].type);
+                warpTypeData.push_back(index);
                 edit->LvlData.doors[i].type = index; break;
             }
         }
@@ -490,24 +496,32 @@ void MainWindow::on_WarpType_currentIndexChanged(int index)
         ui->WarpEntranceGrp->setEnabled(  index==1 );
         ui->WarpExitGrp->setEnabled( index==1 );
 
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_WARPTYPE, QVariant(warpTypeData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 }
 
 void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
 {
+    if(isHistoryChangingData)
+        return;
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> starData;
         leveledit* edit = activeLvlEditWin();
 
         for(int i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
+                starData.push_back(edit->LvlData.doors[i].stars);
+                starData.push_back(arg1);
                 edit->LvlData.doors[i].stars = arg1; break;
             }
         }
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_NEEDASTAR, QVariant(starData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
