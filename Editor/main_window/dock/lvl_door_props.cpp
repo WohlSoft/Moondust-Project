@@ -478,9 +478,6 @@ void MainWindow::on_WarpLock_clicked(bool checked)
 
 void MainWindow::on_WarpType_currentIndexChanged(int index)
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -509,9 +506,6 @@ void MainWindow::on_WarpType_currentIndexChanged(int index)
 
 void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -539,9 +533,6 @@ void MainWindow::on_WarpNeedAStars_valueChanged(int arg1)
 /////////Entrance Direction/////////////////
 void MainWindow::on_Entr_Down_clicked()
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -566,9 +557,6 @@ void MainWindow::on_Entr_Down_clicked()
 }
 void MainWindow::on_Entr_Right_clicked()
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -593,9 +581,6 @@ void MainWindow::on_Entr_Right_clicked()
 
 void MainWindow::on_Entr_Up_clicked()
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -619,9 +604,6 @@ void MainWindow::on_Entr_Up_clicked()
 }
 void MainWindow::on_Entr_Left_clicked()
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -647,9 +629,6 @@ void MainWindow::on_Entr_Left_clicked()
 /////////Exit Direction/////////////////
 void MainWindow::on_Exit_Up_clicked()
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -674,9 +653,6 @@ void MainWindow::on_Exit_Up_clicked()
 
 void MainWindow::on_Exit_Left_clicked()
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -701,9 +677,6 @@ void MainWindow::on_Exit_Left_clicked()
 
 void MainWindow::on_Exit_Down_clicked()
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
@@ -728,9 +701,6 @@ void MainWindow::on_Exit_Down_clicked()
 
 void MainWindow::on_Exit_Right_clicked()
 {
-    if(isHistoryChangingData)
-        return;
-
     if(lockSetSettings) return;
 
     int WinType = activeChildWindow();
