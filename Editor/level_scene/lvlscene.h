@@ -213,7 +213,8 @@ public:
             LEVELHISTORY_RESIZEBLOCK,
             LEVELHISTORY_PLACEDOOR,
             LEVELHISTORY_ADDWARP,
-            LEVELHISTORY_REMOVEWARP
+            LEVELHISTORY_REMOVEWARP,
+            LEVELHISTORY_CHANGEDSETTINGSWARP
         };
         HistoryType type;
         //used most of Operations
@@ -243,7 +244,11 @@ public:
         SETTING_DIRECTION,     //extraData: QList<QVariant[int]> [Old Dir, New Dir]
         SETTING_CHANGENPC,     //extraData: QList<QVariant[int]> [Old NPC ID, New NPC ID]
         SETTING_WATERTYPE,     //extraData: bool [IsWater = true, IsQuicksand = false]
-        SETTING_NOYOSHI        //extraData: bool [Activated?]
+        SETTING_NOYOSHI,       //extraData: bool [Activated?]
+        SETTING_ALLOWNPC,      //extraData: bool [Activated?]
+        SETTING_LOCKED,        //extraData: bool [Activated?]
+        SETTING_WARPTYPE,      //extraData: QList<QVariant[int]> [Old warptype, New warptype]
+        SETTING_NEEDASTAR      //extraData: QList<QVariant[int]> [Old stars, New stars]
     };
 
     //typedefs
@@ -271,6 +276,7 @@ public:
                                long newLeft, long newTop, long newRight, long newBottom);
     void addAddWarpHistory(int array_id, int listindex, int doorindex);
     void addRemoveWarpHistory(LevelDoors removedDoor);
+    void addChangeWarpSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -323,8 +329,14 @@ public:
     void historyUndoSettingsTypeWater(CallbackData cbData, LevelWater data);
     void historyRedoSettingsTypeWater(CallbackData cbData, LevelWater data);
     //Callbackfunctions: [Change Settings] No Yoshi
-    void historyUndoSettingsNoYoshi(CallbackData cbData, LevelDoors data, bool isEntrance);
-    void historyRedoSettingsNoYoshi(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyUndoSettingsNoYoshiDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoSettingsNoYoshiDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    //Callbackfunctions: [Change Settings] Allow NPC
+    void historyUndoSettingsAllowNPCDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoSettingsAllowNPCDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    //Callbackfunctions: [Change Settings] Locked
+    void historyUndoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);

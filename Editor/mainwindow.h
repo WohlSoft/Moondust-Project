@@ -83,6 +83,7 @@ public:
     long blockPtr; //ArrayID of editing item (-1 - use system)
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
+    bool isHistoryChangingData;
 
 protected:
     void closeEvent(QCloseEvent *event);

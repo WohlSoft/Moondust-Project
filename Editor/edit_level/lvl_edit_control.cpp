@@ -55,6 +55,7 @@ leveledit::~leveledit()
 {
     //free(scene);
     delete ui;
+    MainWinConnect::pMainWin->updateMenus(true);
 }
 
 
