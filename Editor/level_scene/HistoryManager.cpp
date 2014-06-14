@@ -572,9 +572,7 @@ void LvlScene::historyBack()
             doorp[index].odirect = extraData.toList()[0].toInt();
         }
 
-        MainWinConnect::pMainWin->isHistoryChangingData = true;
         MainWinConnect::pMainWin->setDoorData(-2);
-        MainWinConnect::pMainWin->isHistoryChangingData = false;
         doorPointsSync(array_id);
 
         break;
@@ -900,9 +898,7 @@ void LvlScene::historyForward()
             doorp[index].odirect = extraData.toList()[1].toInt();
         }
 
-        MainWinConnect::pMainWin->isHistoryChangingData = true;
         MainWinConnect::pMainWin->setDoorData(-2);
-        MainWinConnect::pMainWin->isHistoryChangingData = false;
         doorPointsSync(array_id);
 
         break;
