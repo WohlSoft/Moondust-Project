@@ -61,7 +61,7 @@ void MainWindow::setItemBoxes(bool setCat)
     tmpList.clear();
 
     //set custom Block items from loaded level
-    if(ui->BlockCatList->currentText()==customLabel)
+    if((ui->BlockCatList->currentText()==customLabel)&&(setCat))
     {
         if(activeChildWindow()==1)
         {
@@ -158,7 +158,7 @@ void MainWindow::setItemBoxes(bool setCat)
     tmpList.clear();
 
     //set custom BGO items from loaded level
-    if(ui->BGOCatList->currentText()==customLabel)
+    if((ui->BGOCatList->currentText()==customLabel)&&(setCat))
     {
         if(activeChildWindow()==1)
         {
@@ -255,7 +255,7 @@ void MainWindow::setItemBoxes(bool setCat)
     tmpList.clear();
 
     //set custom NPC items from loaded level
-    if(ui->NPCCatList->currentText()==customLabel)
+    if((ui->NPCCatList->currentText()==customLabel)&&(setCat))
     {
         if(activeChildWindow()==1)
         {

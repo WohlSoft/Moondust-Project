@@ -41,7 +41,7 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     if(!progress.wasCanceled())  progress.setValue(100);
 
-    setItemBoxes(); //Apply item boxes from reloaded configs
+    setItemBoxes(false); //Apply item boxes from reloaded configs
 
     //Set tools from loaded configs
     //setLevelSectionData();

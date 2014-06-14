@@ -215,6 +215,23 @@ void LvlScene::addRemoveWarpHistory(LevelDoors removedDoor)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addChangeWarpSettingsHistory(int array_id, LvlScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chWpSettingsOperation;
+    chWpSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP;
+    chWpSettingsOperation.subtype = subtype;
+    QList<QVariant> package;
+    package.push_back(array_id);
+    package.push_back(extraData);
+    chWpSettingsOperation.extraData = QVariant(package);
+    operationList.push_back(chWpSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -362,7 +379,15 @@ void LvlScene::historyBack()
         }
         else
         if(lastOperation.subtype == SETTING_NOYOSHI){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsNoYoshi, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsNoYoshiDoors, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_ALLOWNPC){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsAllowNPCDoors, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_LOCKED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsLockedDoors, true, true, true, true);
         }
         break;
     }
@@ -497,6 +522,55 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setDoorData(-2);
 
     }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int index = -1;
+        QVariant extraData = lastOperation.extraData.toList()[1];
+        LevelDoors * doorp;
+        bool found = false;
+
+        for(int i = 0; i < LvlData->doors.size(); i++){
+            if(LvlData->doors[i].array_id == (unsigned int)array_id){
+                found = true;
+                doorp = LvlData->doors.data();
+                index = i;
+                break;
+            }
+        }
+
+        if(!found)
+            break;
+
+
+        if(subtype == SETTING_NOYOSHI){
+            doorp[index].noyoshi = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_ALLOWNPC){
+            doorp[index].allownpc = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_LOCKED){
+            doorp[index].locked = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_WARPTYPE){
+            doorp[index].type = extraData.toList()[0].toInt();
+        }
+        else
+        if(subtype == SETTING_NEEDASTAR){
+            doorp[index].stars = extraData.toList()[0].toInt();
+        }
+
+        MainWinConnect::pMainWin->isHistoryChangingData = true;
+        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->isHistoryChangingData = false;
+        doorPointsSync(array_id);
+
+        break;
+    }
     default:
         break;
     }
@@ -629,7 +703,15 @@ void LvlScene::historyForward()
         }
         else
         if(lastOperation.subtype == SETTING_NOYOSHI){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsNoYoshi, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsNoYoshiDoors, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_ALLOWNPC){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsAllowNPCDoors, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_LOCKED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsLockedDoors, true, true, true, true);
         }
         break;
     }
@@ -759,6 +841,55 @@ void LvlScene::historyForward()
         if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
 
         MainWinConnect::pMainWin->setDoorData(-2);
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int index = -1;
+        QVariant extraData = lastOperation.extraData.toList()[1];
+        LevelDoors * doorp;
+        bool found = false;
+
+        for(int i = 0; i < LvlData->doors.size(); i++){
+            if(LvlData->doors[i].array_id == (unsigned int)array_id){
+                found = true;
+                doorp = LvlData->doors.data();
+                index = i;
+                break;
+            }
+        }
+
+        if(!found)
+            break;
+
+
+        if(subtype == SETTING_NOYOSHI){
+            doorp[index].noyoshi = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_ALLOWNPC){
+            doorp[index].allownpc = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_LOCKED){
+            doorp[index].locked = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_WARPTYPE){
+            doorp[index].type = extraData.toList()[1].toInt();
+        }
+        else
+        if(subtype == SETTING_NEEDASTAR){
+            doorp[index].stars = extraData.toList()[1].toInt();
+        }
+
+        MainWinConnect::pMainWin->isHistoryChangingData = true;
+        MainWinConnect::pMainWin->setDoorData(-2);
+        MainWinConnect::pMainWin->isHistoryChangingData = false;
+        doorPointsSync(array_id);
+
+        break;
     }
     default:
         break;
@@ -1050,15 +1181,39 @@ void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, Level
     ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 0 : 1);
 }
 
-void LvlScene::historyUndoSettingsNoYoshi(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+void LvlScene::historyUndoSettingsNoYoshiDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
 {
     ((ItemDoor*)cbData.item)->doorData.noyoshi = !cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
 }
 
-void LvlScene::historyRedoSettingsNoYoshi(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+void LvlScene::historyRedoSettingsNoYoshiDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
 {
     ((ItemDoor*)cbData.item)->doorData.noyoshi = cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsAllowNPCDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.allownpc = !cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsAllowNPCDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.allownpc = cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsLockedDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.locked = !cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsLockedDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ((ItemDoor*)cbData.item)->doorData.locked = cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
 }
 
@@ -1497,6 +1652,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                 }
             }
         }
+        MainWinConnect::pMainWin->setDoorData(-2); //update Door data
     }
 
 }
@@ -1629,6 +1785,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_PLACEDOOR: return tr("Place Door");
     case HistoryOperation::LEVELHISTORY_ADDWARP: return tr("Add Warp");
     case HistoryOperation::LEVELHISTORY_REMOVEWARP: return tr("Remove Warp");
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP: return tr("Changed Warpsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     default:
         return tr("Unknown");
     }
@@ -1646,6 +1803,10 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_CHANGENPC: return tr("Included NPC");
     case SETTING_WATERTYPE: return tr("Water Type");
     case SETTING_NOYOSHI: return tr("No Yoshi");
+    case SETTING_ALLOWNPC: return tr("Allow NPC");
+    case SETTING_LOCKED: return tr("Locked");
+    case SETTING_WARPTYPE: return tr("Warp Type");
+    case SETTING_NEEDASTAR: return tr("Need Stars");
     default:
         return tr("Unknown");
     }
