@@ -518,7 +518,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1804"/>
         <source>Changed Warpsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Changed Warp Setting [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1806"/>
@@ -569,37 +569,37 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1821"/>
         <source>No Yoshi</source>
-        <translation type="unfinished"></translation>
+        <translation>No Vehicles</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1822"/>
         <source>Allow NPC</source>
-        <translation type="unfinished">Allow items</translation>
+        <translation>Allow items</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1823"/>
         <source>Locked</source>
-        <translation type="unfinished">Locked</translation>
+        <translation>Locked</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1824"/>
         <source>Warp Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Warp Type</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1825"/>
         <source>Need Stars</source>
-        <translation type="unfinished"></translation>
+        <translation>Need Stars</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1826"/>
         <source>Entrance Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrance Direction</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1827"/>
         <source>Exit Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Exit Direction</translation>
     </message>
 </context>
 <context>
