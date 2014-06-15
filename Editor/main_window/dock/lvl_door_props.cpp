@@ -787,13 +787,20 @@ void MainWindow::on_WarpLevelExit_clicked(bool checked)
     int WinType = activeChildWindow();
     if (WinType==1)
     {
+        QList<QVariant> extraData;
         leveledit* edit = activeLvlEditWin();
         bool exists=false;
         int i=0;
         for(i=0;i<edit->LvlData.doors.size();i++)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
-            {   exists=true;
+            {
+                exists=true;
+                extraData.push_back(checked);
+                if(checked){
+                    extraData.push_back((int)edit->LvlData.doors[i].ox);
+                    extraData.push_back((int)edit->LvlData.doors[i].oy);
+                }
                 edit->LvlData.doors[i].lvl_o = checked; break;
             }
         }
@@ -820,7 +827,7 @@ void MainWindow::on_WarpLevelExit_clicked(bool checked)
             edit->LvlData.doors[i].ox = edit->LvlData.doors[i].ix;
             edit->LvlData.doors[i].oy = edit->LvlData.doors[i].iy;
         }
-
+        edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_LEVELEXIT, QVariant(extraData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
 
