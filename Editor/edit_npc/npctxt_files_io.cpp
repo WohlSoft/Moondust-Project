@@ -21,6 +21,7 @@
 #include "npcedit.h"
 #include "./ui_npcedit.h"
 #include "../file_formats/file_formats.h"
+#include "../main_window/global_settings.h"
 
 
 
@@ -102,7 +103,7 @@ bool npcedit::save()
 bool npcedit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-      curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
+      (isUntitled)?GlobalSettings::savePath_npctxt+QString("/")+curFile:curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
     if (fileName.isEmpty())
         return false;
 
@@ -119,6 +120,8 @@ bool npcedit::saveFile(const QString &fileName)
                              .arg(file.errorString()));
         return false;
     }
+
+    GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();
 
     QTextStream out(&file);
     QApplication::setOverrideCursor(Qt::WaitCursor);
