@@ -164,26 +164,26 @@ void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
         return;
     }
 
-    if(ui->LVLPropsBackImage->hasFocus())
+    //if(ui->LVLPropsBackImage->hasFocus())
+    //{
+    ui->LVLPropsBackImage->setEnabled(false);
+    WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
+    if (activeChildWindow()==1)
     {
-        ui->LVLPropsBackImage->setEnabled(false);
-        WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
-        if (activeChildWindow()==1)
-        {
-           activeLvlEditWin()->scene->ChangeSectionBG(index);
-           activeLvlEditWin()->LvlData.modified = true;
-        }
-        ui->LVLPropsBackImage->setEnabled(true);
+       activeLvlEditWin()->scene->ChangeSectionBG(ui->LVLPropsBackImage->currentData().toInt());
+       activeLvlEditWin()->LvlData.modified = true;
     }
-    else
-    {
-        if (activeChildWindow()==1)
-        {
-           ui->LVLPropsBackImage->setCurrentIndex(
-                       activeLvlEditWin()->LvlData.sections[
-                       activeLvlEditWin()->LvlData.CurSection].background);
-        }
-    }
+    ui->LVLPropsBackImage->setEnabled(true);
+//    }
+//    else
+//    {
+//        if (activeChildWindow()==1)
+//        {
+//           ui->LVLPropsBackImage->setCurrentIndex(
+//                       activeLvlEditWin()->LvlData.sections[
+//                       activeLvlEditWin()->LvlData.CurSection].background);
+//        }
+//    }
 }
 
 
@@ -199,14 +199,41 @@ void MainWindow::setLevelSectionData()
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
-    ui->LVLPropsBackImage->addItem( tr("[No image]") );
-    ui->LVLPropsMusicNumber->addItem( tr("[Silence]") );
+    ui->LVLPropsBackImage->addItem( tr("[No image]"), "0" );
+    ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), "0" );
 
     for(i=0; i< configs.main_bg.size();i++)
-        ui->LVLPropsBackImage->addItem(configs.main_bg[i].name);
+        ui->LVLPropsBackImage->addItem(configs.main_bg[i].name, QString::number(configs.main_bg[i].id));
 
     for(i=0; i< configs.main_music_lvl.size();i++)
-        ui->LVLPropsMusicNumber->addItem(configs.main_music_lvl[i].name);
+        ui->LVLPropsMusicNumber->addItem(configs.main_music_lvl[i].name, QString::number(configs.main_music_lvl[i].id) );
+
+    //Set current data
+    if (activeChildWindow()==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        //edit->LvlData.sections[edit->LvlData.CurSection].background
+        //edit->LvlData.sections[edit->LvlData.CurSection].music_id
+        ui->LVLPropsBackImage->setCurrentIndex(0);
+        for(int i=0;i<ui->LVLPropsBackImage->count();i++)
+        {
+            if((unsigned long)ui->LVLPropsBackImage->itemData(i).toInt() ==
+                    edit->LvlData.sections[edit->LvlData.CurSection].background)
+            {
+                ui->LVLPropsBackImage->setCurrentIndex(i); break;
+            }
+        }
+
+        ui->LVLPropsMusicNumber->setCurrentIndex(0);
+        for(int i=0;i<ui->LVLPropsMusicNumber->count();i++)
+        {
+            if((unsigned long)ui->LVLPropsMusicNumber->itemData(i).toInt() ==
+                    edit->LvlData.sections[edit->LvlData.CurSection].music_id)
+            {
+                ui->LVLPropsMusicNumber->setCurrentIndex(i); break;
+            }
+        }
+    }
 
     lockSctSettingsProps=false;
 }
@@ -217,10 +244,10 @@ void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
     if(lockSctSettingsProps) return;
 
     unsigned int test = index;
-    if(ui->LVLPropsMusicNumber->hasFocus())
-    {
+//    if(ui->LVLPropsMusicNumber->hasFocus())
+//    {
         ui->LVLPropsMusicCustomEn->setChecked(  test == configs.music_custom_id );
-    }
+//    }
 
     if(activeChildWindow()==1)
     {
@@ -269,10 +296,99 @@ void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
 
 void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
 {
+    if(lockSctSettingsProps) return;
+
     if(activeChildWindow()==1)
     {
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_file = arg1.simplified().remove('\"');
     }
 
     setMusic( ui->actionPlayMusic->isChecked() );
+}
+
+
+
+
+
+void MainWindow::SetCurrentLevelSection(int SctId, int open)
+{
+    lockSctSettingsProps=true;
+
+    int SectionId = SctId;
+    int WinType = activeChildWindow();
+
+    WriteToLog(QtDebugMsg, "Set Current Section");
+    if ((open==1)&&(WinType==1)) // Only Set Checked section number without section select
+    {
+        WriteToLog(QtDebugMsg, "get Current Section");
+        SectionId = activeLvlEditWin()->LvlData.CurSection;
+    }
+
+    WriteToLog(QtDebugMsg, "Set checkbox to");
+    ui->actionSection_1->setChecked( (SectionId==0) );
+    ui->actionSection_2->setChecked( (SectionId==1) );
+    ui->actionSection_3->setChecked( (SectionId==2) );
+    ui->actionSection_4->setChecked( (SectionId==3) );
+    ui->actionSection_5->setChecked( (SectionId==4) );
+    ui->actionSection_6->setChecked( (SectionId==5) );
+    ui->actionSection_7->setChecked( (SectionId==6) );
+    ui->actionSection_8->setChecked( (SectionId==7) );
+    ui->actionSection_9->setChecked( (SectionId==8) );
+    ui->actionSection_10->setChecked( (SectionId==9) );
+    ui->actionSection_11->setChecked( (SectionId==10) );
+    ui->actionSection_12->setChecked( (SectionId==11) );
+    ui->actionSection_13->setChecked( (SectionId==12) );
+    ui->actionSection_14->setChecked( (SectionId==13) );
+    ui->actionSection_15->setChecked( (SectionId==14) );
+    ui->actionSection_16->setChecked( (SectionId==15) );
+    ui->actionSection_17->setChecked( (SectionId==16) );
+    ui->actionSection_18->setChecked( (SectionId==17) );
+    ui->actionSection_19->setChecked( (SectionId==18) );
+    ui->actionSection_20->setChecked( (SectionId==19) );
+    ui->actionSection_21->setChecked( (SectionId==20) );
+
+    if ((WinType==1) && (open==0))
+    {
+       WriteToLog(QtDebugMsg, "Call to setCurrentSection()");
+       activeLvlEditWin()->setCurrentSection(SectionId);
+    }
+
+    if(WinType==1)
+    {
+        WriteToLog(QtDebugMsg, "Set Section Data in menu");
+        //Set Section Data in menu
+        ui->actionLevNoBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
+        ui->actionLevOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
+        ui->actionLevUnderW->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
+        ui->actionLevWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+
+        WriteToLog(QtDebugMsg, "Set text label");
+        //set data in Section Settings Widget
+        ui->LVLProp_CurSect->setText(QString::number(SectionId+1));
+
+        WriteToLog(QtDebugMsg, "Set ToolBar data");
+        ui->LVLPropsNoTBack->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].noback);
+        ui->LVLPropsOffScr->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].OffScreenEn);
+        ui->LVLPropsUnderWater->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].underwater);
+        ui->LVLPropsLevelWarp->setChecked(activeLvlEditWin()->LvlData.sections[SectionId].IsWarp);
+
+        WriteToLog(QtDebugMsg, "Set text to custom music file");
+        ui->LVLPropsMusicCustom->setText(activeLvlEditWin()->LvlData.sections[SectionId].music_file);
+
+        WriteToLog(QtDebugMsg, "Set standart Music index");
+        ui->LVLPropsMusicNumber->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].music_id );
+
+        WriteToLog(QtDebugMsg, "Set Custom music checkbox");
+        ui->LVLPropsMusicCustomEn->setChecked( (activeLvlEditWin()->LvlData.sections[SectionId].music_id == configs.music_custom_id) );
+
+        WriteToLog(QtDebugMsg, "Set background index");
+        if(activeLvlEditWin()->LvlData.sections[SectionId].background < (unsigned int)ui->LVLPropsBackImage->count() )
+            ui->LVLPropsBackImage->setCurrentIndex( activeLvlEditWin()->LvlData.sections[SectionId].background );
+        else
+            ui->LVLPropsBackImage->setCurrentIndex( ui->LVLPropsBackImage->count()-1 );
+
+        setMusic( ui->actionPlayMusic->isChecked() );
+    }
+
+    lockSctSettingsProps=false;
 }

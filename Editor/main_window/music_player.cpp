@@ -27,7 +27,7 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
 {
     WriteToLog(QtDebugMsg, "Clicked play music button");
     LvlMusPlay::currentCustomMusic = ui->LVLPropsMusicCustom->text();
-    LvlMusPlay::currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
+    LvlMusPlay::currentMusicId = ui->LVLPropsMusicNumber->currentData().toInt();
     setMusic(checked);
 }
 
@@ -48,7 +48,7 @@ void MainWindow::setMusic(bool checked)
 
     if(!LvlMusPlay::musicForceReset)
     {
-    if( ( LvlMusPlay::currentMusicId == ui->LVLPropsMusicNumber->currentIndex() ) &&
+    if( ( LvlMusPlay::currentMusicId == ui->LVLPropsMusicNumber->currentData().toInt() ) &&
             (LvlMusPlay::currentCustomMusic == ui->LVLPropsMusicCustom->text()) &&
             (LvlMusPlay::musicButtonChecked == ui->actionPlayMusic->isChecked()) ) return;
     } else LvlMusPlay::musicForceReset=false;
@@ -100,10 +100,10 @@ void MainWindow::setMusic(bool checked)
 
     WriteToLog(QtDebugMsg, "Check for Sielent");
 
-    if((ui->LVLPropsMusicNumber->currentIndex() <= 0) // Music is sielent
+    if((ui->LVLPropsMusicNumber->currentData().toInt() <= 0) // Music is sielent
             ||
        //Mute, if music ID not exist
-      (ui->LVLPropsMusicNumber->currentIndex()-1 > configs.main_music_lvl.size() ))
+      (ui->LVLPropsMusicNumber->currentData().toInt() > configs.main_music_lvl.size() ))
         silent=true;
     else
         silent=false;
@@ -112,9 +112,10 @@ void MainWindow::setMusic(bool checked)
 
     if(!silent)
     {
-        CurMusNum = ui->LVLPropsMusicNumber->currentIndex()-1;
+        CurMusNum = ui->LVLPropsMusicNumber->currentData().toInt();
+        musicFile="";
 
-        if(CurMusNum==configs.music_custom_id-1)
+        if(CurMusNum==configs.music_custom_id)
         {
                 WriteToLog(QtDebugMsg, QString("get Custom music path"));
             musicFile = ui->LVLPropsMusicCustom->text();
@@ -123,7 +124,14 @@ void MainWindow::setMusic(bool checked)
         else
         {
                 WriteToLog(QtDebugMsg, QString("get standart music path"));
-            musicFile = configs.main_music_lvl[CurMusNum].file;
+            foreach(obj_music mus, configs.main_music_lvl)
+            {
+                if(CurMusNum==mus.id)
+                {
+                    musicFile = mus.file;
+                    break;
+                }
+            }
             dirPath = configs.dirs.music;
             musicFilePath = configs.dirs.music + musicFile;
             //QMessageBox::information(this, "test", "music is \n"+musicFile+"\n"+QString::number());
@@ -160,7 +168,7 @@ void MainWindow::setMusic(bool checked)
     }
 
     LvlMusPlay::currentCustomMusic = ui->LVLPropsMusicCustom->text();
-    LvlMusPlay::currentMusicId = ui->LVLPropsMusicNumber->currentIndex();
+    LvlMusPlay::currentMusicId = ui->LVLPropsMusicNumber->currentData().toInt();
     LvlMusPlay::musicButtonChecked  = ui->actionPlayMusic->isChecked();
 }
 
