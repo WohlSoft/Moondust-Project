@@ -117,8 +117,11 @@ void MainWindow::slotLanguageChanged(QAction* action)
     {
         // load the language dependant on the action content
         GlobalSettings::locale = m_currLang;
+
         loadLanguage(action->data().toString());
         setItemBoxes();
+        setLevelSectionData();
+        setSoundList();
     }
 }
 
