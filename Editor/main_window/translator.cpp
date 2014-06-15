@@ -60,6 +60,17 @@ void MainWindow::setDefLang()
                 WriteToLog(QtDebugMsg, QString("Translation: %1").arg((int)ok));
        if(ok)
         qApp->installTranslator(&m_translator);
+       else
+       {
+           m_currLang="en"; //set to English if not exist
+           QLocale locale = QLocale(m_currLang);
+           QLocale::setDefault(locale);
+           ok = m_translator.load(m_langPath + QString("/editor_en.qm").arg(m_currLang));
+           if(ok)
+            qApp->installTranslator(&m_translator);
+
+           langListSync();
+       }
 
        ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
                 WriteToLog(QtDebugMsg, QString("QT Translation: %1").arg((int)ok));
@@ -117,8 +128,11 @@ void MainWindow::slotLanguageChanged(QAction* action)
     {
         // load the language dependant on the action content
         GlobalSettings::locale = m_currLang;
+
         loadLanguage(action->data().toString());
         setItemBoxes();
+        setLevelSectionData();
+        setSoundList();
     }
 }
 

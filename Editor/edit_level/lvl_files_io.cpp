@@ -32,6 +32,7 @@
 
 #include "../common_features/mainwinconnect.h"
 #include "../main_window/music_player.h"
+#include "../main_window/global_settings.h"
 
 #include <QDebug>
 
@@ -168,7 +169,7 @@ bool leveledit::save()
 bool leveledit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-        curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
+        (isUntitled)?GlobalSettings::savePath+QString("/")+curFile:curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
     if (fileName.isEmpty())
         return false;
 
@@ -185,6 +186,8 @@ bool leveledit::saveFile(const QString &fileName)
                              .arg(file.errorString()));
         return false;
     }
+
+    GlobalSettings::savePath = QFileInfo(fileName).path();
 
     QTextStream out(&file);
 
