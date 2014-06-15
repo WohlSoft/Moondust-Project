@@ -817,16 +817,24 @@ void MainWindow::on_WarpLevelExit_clicked(bool checked)
                     ((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
                     (edit->LvlData.doors[i].lvl_i) );
 
+        bool iPlaced = edit->LvlData.doors[i].isSetIn;
+        bool oPlaced = edit->LvlData.doors[i].isSetOut;
+
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
 
         //Unset placed point, if not it avaliable
         if(! (((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
               (edit->LvlData.doors[i].lvl_i) ) )
         {
+            oPlaced=false;
             ui->WarpExitPlaced->setChecked(false);
             edit->LvlData.doors[i].ox = edit->LvlData.doors[i].ix;
             edit->LvlData.doors[i].oy = edit->LvlData.doors[i].iy;
         }
+
+        edit->LvlData.doors[i].isSetIn = iPlaced;
+        edit->LvlData.doors[i].isSetOut = oPlaced;
+
         edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_LEVELEXIT, QVariant(extraData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
@@ -863,16 +871,23 @@ void MainWindow::on_WarpLevelEntrance_clicked(bool checked)
                     ((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
                     (edit->LvlData.doors[i].lvl_i) );
 
+        bool iPlaced = edit->LvlData.doors[i].isSetIn;
+        bool oPlaced = edit->LvlData.doors[i].isSetOut;
+
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
 
         //Unset placed point, if not it avaliable
         if(! (((!edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i)) ||
               ((edit->LvlData.doors[i].lvl_o) && (!edit->LvlData.doors[i].lvl_i))) )
         {
+            iPlaced=false;
             ui->WarpEntrancePlaced->setChecked(false);
             edit->LvlData.doors[i].ix = edit->LvlData.doors[i].ox;
             edit->LvlData.doors[i].iy = edit->LvlData.doors[i].oy;
         }
+
+        edit->LvlData.doors[i].isSetIn = iPlaced;
+        edit->LvlData.doors[i].isSetOut = oPlaced;
 
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
     }
