@@ -27,6 +27,10 @@ public:
     static QString locale;
     static long animatorItemsLimit;
 
+    static QString savePath;
+    static QString savePath_npctxt;
+    static QString openPath;
+
 };
 
 class ConfStatus

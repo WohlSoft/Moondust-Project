@@ -25,6 +25,10 @@
 #include "../../level_scene/item_npc.h"
 #include "../../level_scene/item_water.h"
 
+#include "../../file_formats/file_formats.h"
+
+static long currentEventArrayID=0;
+static bool lockSetEventSettings=false;
 
 void MainWindow::setEventsBox()
 {
@@ -51,9 +55,9 @@ void MainWindow::setEventsBox()
             ui->LVLEvents_List->addItem( item );
         }
 
+        on_LVLEvents_List_itemSelectionChanged();
     }
 }
-
 
 void MainWindow::EventListsSync()
 {
@@ -98,3 +102,211 @@ void MainWindow::EventListsSync()
     }
 
 }
+
+
+void MainWindow::setSoundList()
+{
+    ui->LVLEvent_Cmn_PlaySnd->clear();
+    ui->LVLEvent_Cmn_PlaySnd->addItem( tr("[Silence]"), "0" );
+
+    if(configs.check()) return;
+
+    foreach(obj_sound snd, configs.main_sound )
+    {
+        if(!snd.hidden)
+            ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id) );
+    }
+}
+
+
+
+void MainWindow::setEventData(long index)
+{
+    lockSetEventSettings=true;
+    long cIndex;
+    bool found=false;
+    if(index==-2)
+        {
+        if(!ui->LVLEvents_List->selectedItems().isEmpty())
+            cIndex = ui->LVLEvents_List->currentItem()->data(3).toInt();
+        else
+            cIndex = currentEventArrayID;
+        }
+    else
+        cIndex = index;
+
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+
+        if( (activeLvlEditWin()->LvlData.events.size() > 0) && (cIndex >= 0))
+        {
+            leveledit * edit = activeLvlEditWin();
+            currentEventArrayID=cIndex;
+            foreach(LevelEvents event, edit->LvlData.events)
+            {
+                if(event.array_id == (unsigned int)index)
+                {
+                    currentEventArrayID=event.array_id;
+
+                    //Enable controls
+                    ui->LVLEvents_Settings->setEnabled(true);
+                    ui->LVLEvent_AutoStart->setEnabled(true);
+
+                    //Set controls data
+                    ui->LVLEvent_AutoStart->setChecked( event.autostart );
+
+                    //Layers visibly - layerList
+                    ui->LVLEvents_layerList->clear();
+                    ui->LVLEvent_Layer_HideList->clear();
+                    ui->LVLEvent_Layer_ShowList->clear();
+                    ui->LVLEvent_Layer_ToggleList->clear();
+
+                    QListWidgetItem * item;
+                    //Total layers list
+                    foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+                    {
+                        item = new QListWidgetItem;
+                        item->setText(layer.name);
+                        item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+                        item->setData(3, QString::number( layer.array_id ) );
+                        ui->LVLEvents_layerList->addItem( item );
+                    }
+
+                    ui->LVLEvent_disableSmokeEffect->setChecked( event.nosmoke );
+
+                    //Hidden layers
+                    foreach(QString layer, event.layers_hide)
+                    {
+                        item = new QListWidgetItem;
+                        item->setText(layer);
+                        item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+                        QList<QListWidgetItem *> items =
+                              ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+                        foreach(QListWidgetItem *item, items)
+                        {
+                            if(item->text()==layer)
+                            { delete item; break;}
+                        }
+                        ui->LVLEvent_Layer_HideList->addItem( item );
+                    }
+
+                    //Showed layers
+                    foreach(QString layer, event.layers_show)
+                    {
+                        item = new QListWidgetItem;
+                        item->setText(layer);
+                        item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+                        QList<QListWidgetItem *> items =
+                              ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+                        foreach(QListWidgetItem *item, items)
+                        {
+                            if(item->text()==layer)
+                            { delete item; break;}
+                        }
+                        ui->LVLEvent_Layer_ShowList->addItem( item );
+                    }
+
+                    //Toggeled layers
+                    foreach(QString layer, event.layers_toggle)
+                    {
+                        item = new QListWidgetItem;
+                        item->setText(layer);
+                        item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+                        QList<QListWidgetItem *> items =
+                              ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+                        foreach(QListWidgetItem *item, items)
+                        {
+                            if(item->text()==layer)
+                            { delete item; break;}
+                        }
+                        ui->LVLEvent_Layer_ToggleList->addItem( item );
+                    }
+
+
+                    //Scroll section / Move Camera
+                    ui->LVLEvent_Scroll_Sct->setMaximum( edit->LvlData.sections.size() );
+                    ui->LVLEvent_Scroll_Sct->setValue( event.scroll_section );
+                    ui->LVLEvent_Scroll_spX->setValue( event.move_camera_x );
+                    ui->LVLEvent_Scroll_spY->setValue( event.move_camera_y );
+
+                    found=true;
+                    break;
+                }
+            }
+        }
+
+        if(!found)
+        {
+            ui->LVLEvents_Settings->setEnabled(false);
+            ui->LVLEvent_AutoStart->setEnabled(false);
+        }
+
+        currentEventArrayID=cIndex;
+    }
+    lockSetEventSettings=false;
+
+}
+
+
+void MainWindow::on_LVLEvents_List_itemSelectionChanged()
+{
+    if(ui->LVLEvents_List->selectedItems().isEmpty())
+    {
+        setEventData(-1);
+    }
+    else
+        setEventData(ui->LVLEvents_List->currentItem()->data(3).toInt());
+
+}
+
+
+void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
+{
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        if(item->data(3).toString()=="NewEvent")
+        {
+            bool AlreadyExist=false;
+            foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+            {
+                if( event.name==item->text() )
+                {
+                    AlreadyExist=true;
+                    break;
+                }
+            }
+
+            if(AlreadyExist)
+            {
+                delete item;
+                return;
+            }
+            else
+            {
+                LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+                NewEvent.name = item->text();
+                activeLvlEditWin()->LvlData.events_array_id++;
+                NewEvent.array_id = activeLvlEditWin()->LvlData.events_array_id;
+
+                item->setData(3, QString::number(NewEvent.array_id));
+
+                activeLvlEditWin()->LvlData.events.push_back(NewEvent);
+                activeLvlEditWin()->LvlData.modified=true;
+            }
+
+        }//if(item->data(3).toString()=="NewEvent")
+        else
+        {
+            //QString eventName = item->text();
+            //QString oldEventName = item->text();
+
+            //ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
+            activeLvlEditWin()->LvlData.modified=true;
+        }
+
+    }//if WinType==1
+}
+

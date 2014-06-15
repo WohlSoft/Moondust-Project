@@ -27,6 +27,9 @@
 
 QString GlobalSettings::locale="";
 long GlobalSettings::animatorItemsLimit=10000;
+QString GlobalSettings::openPath=".";
+QString GlobalSettings::savePath=".";
+QString GlobalSettings::savePath_npctxt=".";
 
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId;
@@ -72,6 +75,7 @@ void MainWindow::setUiDefults()
     //Applay objects into tools
     setLevelSectionData();
     setItemBoxes();
+    setSoundList();
 
     loadSettings();
 
@@ -136,7 +140,6 @@ void MainWindow::setUiDefults()
 //    TickTackTimer->start(1);
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
-    isHistoryChangingData = false;
 }
 
 
@@ -148,6 +151,9 @@ void MainWindow::loadSettings()
 
     settings.beginGroup("Main");
         LastOpenDir = settings.value("lastpath", ".").toString();
+        GlobalSettings::openPath = settings.value("lastpath", ".").toString();
+        GlobalSettings::savePath = settings.value("lastsavepath", ".").toString();
+        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", ".").toString();
         LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
         WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
         SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
@@ -193,7 +199,9 @@ void MainWindow::saveSettings()
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
     settings.setValue("pos", pos());
-    settings.setValue("lastpath", LastOpenDir);
+    settings.setValue("lastpath", GlobalSettings::openPath);
+    settings.setValue("lastsavepath", GlobalSettings::savePath);
+    settings.setValue("lastsavepath-npctxt", GlobalSettings::savePath_npctxt);
 
     settings.setValue("level-tb-visible", LevelToolBoxVis);
     settings.setValue("world-tb-visible", WorldToolBoxVis);

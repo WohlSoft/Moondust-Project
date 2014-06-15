@@ -21,6 +21,7 @@
 #include "../file_formats/file_formats.h"
 
 #include "music_player.h"
+#include "global_settings.h"
 
 
 void MainWindow::openFilesByArgs(QStringList args)
@@ -199,7 +200,7 @@ void MainWindow::close_sw()
 void MainWindow::on_OpenFile_triggered()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
-        trUtf8("Open file"),LastOpenDir,
+        trUtf8("Open file"),GlobalSettings::openPath,
         QString("All SMBX files (*.LVL *.WLD npc-*.TXT *.INI)\n"
         "SMBX Level (*.LVL)\n"
         "SMBX World (*.WLD)\n"
