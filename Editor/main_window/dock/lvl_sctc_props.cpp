@@ -158,6 +158,7 @@ void MainWindow::on_cancelResize_clicked()
 void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
     if(lockSctSettingsProps) return;
+
     if(configs.main_bg.size()==0)
     {
         WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs for backgrounds not loaded"));

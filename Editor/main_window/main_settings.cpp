@@ -72,6 +72,7 @@ void MainWindow::setUiDefults()
     //Applay objects into tools
     setLevelSectionData();
     setItemBoxes();
+    setSoundList();
 
     loadSettings();
 
