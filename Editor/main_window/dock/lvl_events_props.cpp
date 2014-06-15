@@ -59,7 +59,6 @@ void MainWindow::setEventsBox()
     }
 }
 
-
 void MainWindow::EventListsSync()
 {
     int WinType = activeChildWindow();
@@ -104,6 +103,23 @@ void MainWindow::EventListsSync()
 
 }
 
+
+void MainWindow::setSoundList()
+{
+    ui->LVLEvent_Cmn_PlaySnd->clear();
+    ui->LVLEvent_Cmn_PlaySnd->addItem( tr("[Silence]"), "0" );
+
+    if(configs.check()) return;
+
+    foreach(obj_sound snd, configs.main_sound )
+    {
+        if(!snd.hidden)
+            ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id) );
+    }
+}
+
+
+
 void MainWindow::setEventData(long index)
 {
     lockSetEventSettings=true;
@@ -139,9 +155,80 @@ void MainWindow::setEventData(long index)
 
                     //Set controls data
                     ui->LVLEvent_AutoStart->setChecked( event.autostart );
-                    ui->LVLEvent_Scroll_Sct->setMaximum( edit->LvlData.sections.size() );
-                    ui->LVLEvent_Scroll_Sct->setValue( edit->LvlData.CurSection );
 
+                    //Layers visibly - layerList
+                    ui->LVLEvents_layerList->clear();
+                    ui->LVLEvent_Layer_HideList->clear();
+                    ui->LVLEvent_Layer_ShowList->clear();
+                    ui->LVLEvent_Layer_ToggleList->clear();
+
+                    QListWidgetItem * item;
+                    //Total layers list
+                    foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+                    {
+                        item = new QListWidgetItem;
+                        item->setText(layer.name);
+                        item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+                        item->setData(3, QString::number( layer.array_id ) );
+                        ui->LVLEvents_layerList->addItem( item );
+                    }
+
+                    ui->LVLEvent_disableSmokeEffect->setChecked( event.nosmoke );
+
+                    //Hidden layers
+                    foreach(QString layer, event.layers_hide)
+                    {
+                        item = new QListWidgetItem;
+                        item->setText(layer);
+                        item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+                        QList<QListWidgetItem *> items =
+                              ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+                        foreach(QListWidgetItem *item, items)
+                        {
+                            if(item->text()==layer)
+                            { delete item; break;}
+                        }
+                        ui->LVLEvent_Layer_HideList->addItem( item );
+                    }
+
+                    //Showed layers
+                    foreach(QString layer, event.layers_show)
+                    {
+                        item = new QListWidgetItem;
+                        item->setText(layer);
+                        item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+                        QList<QListWidgetItem *> items =
+                              ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+                        foreach(QListWidgetItem *item, items)
+                        {
+                            if(item->text()==layer)
+                            { delete item; break;}
+                        }
+                        ui->LVLEvent_Layer_ShowList->addItem( item );
+                    }
+
+                    //Toggeled layers
+                    foreach(QString layer, event.layers_toggle)
+                    {
+                        item = new QListWidgetItem;
+                        item->setText(layer);
+                        item->setFlags(item->flags() | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+                        QList<QListWidgetItem *> items =
+                              ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+                        foreach(QListWidgetItem *item, items)
+                        {
+                            if(item->text()==layer)
+                            { delete item; break;}
+                        }
+                        ui->LVLEvent_Layer_ToggleList->addItem( item );
+                    }
+
+
+                    //Scroll section / Move Camera
+                    ui->LVLEvent_Scroll_Sct->setMaximum( edit->LvlData.sections.size() );
+                    ui->LVLEvent_Scroll_Sct->setValue( event.scroll_section );
+                    ui->LVLEvent_Scroll_spX->setValue( event.move_camera_x );
+                    ui->LVLEvent_Scroll_spY->setValue( event.move_camera_y );
 
                     found=true;
                     break;

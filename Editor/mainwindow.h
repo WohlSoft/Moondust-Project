@@ -116,6 +116,8 @@ public slots:
     void setItemBoxes(bool setCat=false);
     void UpdateCustomItems();
 
+    void setSoundList();
+
     void DragAndDroppedLayer(QModelIndex sourceParent,int sourceStart,int sourceEnd,QModelIndex destinationParent,int destinationRow);
 
     //SubWindow functions
