@@ -673,7 +673,8 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     this->setPixmap(mainImage);
     double BurriedOffset = 0;
 
-    if(!DisableScene) BurriedOffset=((scene->pConfigs->marker_npc.buried == npcData.id)? (double)localProps.gfx_h : 0 );
+    if(!DisableScene)
+        BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
 
     imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
     imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y

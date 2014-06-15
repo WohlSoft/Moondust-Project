@@ -134,6 +134,7 @@ public slots:
     void setLayersBox();
     void setLayerLists();
     void setEventsBox();
+    void setEventData(long index=-1);
     void EventListsSync();
 
     //LvlDoorProps Functions
@@ -305,7 +306,6 @@ private slots:
 
     void on_RemoveLayer_clicked();
 
-
     void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
 
     void on_MainWindow_customContextMenuRequested(const QPoint &pos);
@@ -330,6 +330,8 @@ private slots:
     void on_actionGo_to_Section_triggered();
 
     void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
+    void on_PROPS_BGOSquareFill_clicked(bool checked);
+    void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
 
     void on_PROPS_NPCDirLeft_clicked();
     void on_PROPS_NPCDirRand_clicked();
@@ -355,17 +357,17 @@ private slots:
     void on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1);
     void on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1);
 
-    void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
-
     void on_actionNewLevel_triggered();
-
     void on_actionNewWorld_map_triggered();
 
-    void on_PROPS_BGOSquareFill_clicked(bool checked);
 
+    //Level Events
     void on_actionLevelEvents_triggered(bool checked);
-
     void on_LevelEventsToolBox_visibilityChanged(bool visible);
+
+    void on_LVLEvents_List_itemSelectionChanged();
+    void on_LVLEvents_List_itemChanged(QListWidgetItem *item);
+
 
 private:
 

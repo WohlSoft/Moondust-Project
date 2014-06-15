@@ -25,6 +25,10 @@
 #include "../../level_scene/item_npc.h"
 #include "../../level_scene/item_water.h"
 
+#include "../../file_formats/file_formats.h"
+
+static long currentEventArrayID=0;
+static bool lockSetEventSettings=false;
 
 void MainWindow::setEventsBox()
 {
@@ -51,6 +55,7 @@ void MainWindow::setEventsBox()
             ui->LVLEvents_List->addItem( item );
         }
 
+        on_LVLEvents_List_itemSelectionChanged();
     }
 }
 
@@ -98,3 +103,123 @@ void MainWindow::EventListsSync()
     }
 
 }
+
+void MainWindow::setEventData(long index)
+{
+    lockSetEventSettings=true;
+    long cIndex;
+    bool found=false;
+    if(index==-2)
+        {
+        if(!ui->LVLEvents_List->selectedItems().isEmpty())
+            cIndex = ui->LVLEvents_List->currentItem()->data(3).toInt();
+        else
+            cIndex = currentEventArrayID;
+        }
+    else
+        cIndex = index;
+
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+
+        if( (activeLvlEditWin()->LvlData.events.size() > 0) && (cIndex >= 0))
+        {
+            leveledit * edit = activeLvlEditWin();
+            currentEventArrayID=cIndex;
+            foreach(LevelEvents event, edit->LvlData.events)
+            {
+                if(event.array_id == (unsigned int)index)
+                {
+                    currentEventArrayID=event.array_id;
+
+                    //Enable controls
+                    ui->LVLEvents_Settings->setEnabled(true);
+                    ui->LVLEvent_AutoStart->setEnabled(true);
+
+                    //Set controls data
+                    ui->LVLEvent_AutoStart->setChecked( event.autostart );
+                    ui->LVLEvent_Scroll_Sct->setMaximum( edit->LvlData.sections.size() );
+                    ui->LVLEvent_Scroll_Sct->setValue( edit->LvlData.CurSection );
+
+
+                    found=true;
+                    break;
+                }
+            }
+        }
+
+        if(!found)
+        {
+            ui->LVLEvents_Settings->setEnabled(false);
+            ui->LVLEvent_AutoStart->setEnabled(false);
+        }
+
+        currentEventArrayID=cIndex;
+    }
+    lockSetEventSettings=false;
+
+}
+
+
+void MainWindow::on_LVLEvents_List_itemSelectionChanged()
+{
+    if(ui->LVLEvents_List->selectedItems().isEmpty())
+    {
+        setEventData(-1);
+    }
+    else
+        setEventData(ui->LVLEvents_List->currentItem()->data(3).toInt());
+
+}
+
+
+void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
+{
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        if(item->data(3).toString()=="NewEvent")
+        {
+            bool AlreadyExist=false;
+            foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+            {
+                if( event.name==item->text() )
+                {
+                    AlreadyExist=true;
+                    break;
+                }
+            }
+
+            if(AlreadyExist)
+            {
+                delete item;
+                return;
+            }
+            else
+            {
+                LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+                NewEvent.name = item->text();
+                activeLvlEditWin()->LvlData.events_array_id++;
+                NewEvent.array_id = activeLvlEditWin()->LvlData.events_array_id;
+
+                item->setData(3, QString::number(NewEvent.array_id));
+
+                activeLvlEditWin()->LvlData.events.push_back(NewEvent);
+                activeLvlEditWin()->LvlData.modified=true;
+            }
+
+        }//if(item->data(3).toString()=="NewEvent")
+        else
+        {
+            //QString eventName = item->text();
+            //QString oldEventName = item->text();
+
+            //ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
+            activeLvlEditWin()->LvlData.modified=true;
+        }
+
+    }//if WinType==1
+}
+
