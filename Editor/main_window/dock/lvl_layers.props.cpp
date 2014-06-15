@@ -627,6 +627,8 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
 
 void MainWindow::on_RemoveLayer_clicked()
 {
+    if(ui->LvlLayerList->selectedItems().isEmpty()) return;
+
     RemoveCurrentLayer(true);
    /*
    QList<QListWidgetItem * > selected = ui->LvlLayerList->selectedItems();
