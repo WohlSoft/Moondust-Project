@@ -464,148 +464,148 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Поиск польз. нИП %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="595"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="600"/>
         <source>Undone: %1</source>
         <translation>Отменено действие: %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="931"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="936"/>
         <source>Redone: %1</source>
         <translation>Повторено действие: %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1809"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1814"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1810"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1815"/>
         <source>Place</source>
         <translation>Поместить</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1811"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1816"/>
         <source>Move</source>
         <translation>Переместить</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1812"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1817"/>
         <source>Changed Setting [%1]</source>
         <translation>Изменить настройку [%1]</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1813"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1818"/>
         <source>Change Layer</source>
         <translation>Изменить слой</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1814"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1819"/>
         <source>Resize Block</source>
         <translation>Изменить размер блока</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1815"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1820"/>
         <source>Place Door</source>
         <translation>Установить дверную точку</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1816"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1821"/>
         <source>Add Warp</source>
         <translation>Добавить запись прохода</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1817"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1822"/>
         <source>Remove Warp</source>
         <translation>Удалить запись прохода</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1818"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1823"/>
         <source>Changed Warpsetting [%1]</source>
         <translation>Изменена настройка прохода [%1]</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1820"/>
-        <location filename="../level_scene/HistoryManager.cpp" line="1844"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1825"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1849"/>
         <source>Unknown</source>
         <translation>Неизвестное</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1827"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1832"/>
         <source>Slippery</source>
         <translation>Скользкий</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1828"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1833"/>
         <source>Friendly</source>
         <translation>Дружественный</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1829"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1834"/>
         <source>Boss</source>
         <translation>Босс</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1830"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1835"/>
         <source>Not Moveable</source>
         <translation>Неподвижный</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1831"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1836"/>
         <source>Message</source>
         <translation>Сообщение</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1832"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1837"/>
         <source>Direction</source>
         <translation>Направление</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1833"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1838"/>
         <source>Included NPC</source>
         <translation>Изменить содержимое блока</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1834"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1839"/>
         <source>Water Type</source>
         <translation>Тип среды</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1835"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1840"/>
         <source>No Yoshi</source>
         <translation>Без транспортных средств</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1836"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1841"/>
         <source>Allow NPC</source>
         <translation>Разрешить предметы</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1837"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1842"/>
         <source>Locked</source>
         <translation>Заперто</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1838"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1843"/>
         <source>Warp Type</source>
         <translation>Тип прохода</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1839"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1844"/>
         <source>Need Stars</source>
         <translation>Нужно звёзд</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1840"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1845"/>
         <source>Entrance Direction</source>
         <translation>Направление входа</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1841"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1846"/>
         <source>Exit Direction</source>
         <translation>Направление выхода</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1842"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1847"/>
         <source>Set Level Exit</source>
         <translation>Установить выход уровня</translation>
     </message>
@@ -1005,7 +1005,6 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="2070"/>
         <location filename="../mainwindow.ui" line="2199"/>
-        <location filename="../mainwindow.ui" line="4414"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
@@ -1135,6 +1134,11 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="4403"/>
         <source>Open (Ctrl+O)</source>
         <translation>Открыть (Ctrl+O)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="4414"/>
+        <source>Exit program</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4422"/>
