@@ -876,6 +876,7 @@ void LvlScene::historyForward()
         if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
 
         MainWinConnect::pMainWin->setDoorData(-2);
+        break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
     {
