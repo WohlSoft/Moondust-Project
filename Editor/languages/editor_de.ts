@@ -608,7 +608,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1847"/>
         <source>Set Level Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzte Levelausgang</translation>
     </message>
 </context>
 <context>
@@ -777,7 +777,8 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="473"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte gib Nachricht ein
+Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1263"/>
@@ -988,7 +989,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2070"/>
         <location filename="../mainwindow.ui" line="2199"/>
         <source>Exit</source>
-        <translation>Beenden</translation>
+        <translation>Ausgang</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2084"/>
@@ -1076,7 +1077,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="4414"/>
         <source>Exit program</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4422"/>
@@ -1738,7 +1739,7 @@ Bei diesem System wird ein Bug benutzt von SMBX benutzt, womit man bestimmte BGO
     <message>
         <location filename="../mainwindow.ui" line="4144"/>
         <source>Test</source>
-        <translation type="unfinished"></translation>
+        <translation>Test</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4164"/>
