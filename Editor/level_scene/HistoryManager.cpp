@@ -596,6 +596,10 @@ void LvlScene::historyBack()
                 placeDoorEnter(doorp[index]);
             }
         }
+        else
+        if(subtype == SETTING_LEVELWARPTO){
+            doorp[index].warpto = extraData.toList()[0].toInt();
+        }
 
         MainWinConnect::pMainWin->setDoorData(-2);
         doorPointsSync(array_id);
@@ -939,6 +943,10 @@ void LvlScene::historyForward()
                 doorp[index].ix = extraData.toList()[1].toInt();
                 doorp[index].iy = extraData.toList()[2].toInt();
             }
+        }
+        else
+        if(subtype == SETTING_LEVELWARPTO){
+            doorp[index].warpto = extraData.toList()[1].toInt();
         }
 
         MainWinConnect::pMainWin->setDoorData(-2);
@@ -1866,6 +1874,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EXITDIR: return tr("Exit Direction");
     case SETTING_LEVELEXIT: return tr("Set Level Exit");
     case SETTING_LEVELENTR: return tr("Set Level Entrance");
+    case SETTING_LEVELWARPTO: return tr("Level Warp To");
     default:
         return tr("Unknown");
     }
