@@ -181,7 +181,7 @@ void MainWindow::setEventData(long index)
 
                     //Scroll section / Move Camera
                     ui->LVLEvent_Scroll_Sct->setMaximum( edit->LvlData.sections.size() );
-                    ui->LVLEvent_Scroll_Sct->setValue( event.scroll_section );
+                    ui->LVLEvent_Scroll_Sct->setValue( event.scroll_section+1 );
                     ui->LVLEvent_Scroll_spX->setValue( event.move_camera_x );
                     ui->LVLEvent_Scroll_spY->setValue( event.move_camera_y );
 
@@ -698,17 +698,55 @@ void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
 void MainWindow::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
 {
     if(lockSetEventSettings) return;
+
+    if(index<0) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].movelayer = ((index<=0)?"":ui->LVLEvent_LayerMov_List->currentText());
+        edit->LvlData.modified=true;
+    }
 }
 
 void MainWindow::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 {
     if(lockSetEventSettings) return;
 
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].layer_speed_x = arg1;
+        edit->LvlData.modified=true;
+    }
+
 }
 
 void MainWindow::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 {
     if(lockSetEventSettings) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].layer_speed_y = arg1;
+        edit->LvlData.modified=true;
+    }
 
 }
 
@@ -721,16 +759,53 @@ void MainWindow::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 void MainWindow::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
 {
     if(lockSetEventSettings) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].scroll_section = arg1-1;
+        edit->LvlData.modified=true;
+    }
 }
 
 void MainWindow::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 {
     if(lockSetEventSettings) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].move_camera_x = arg1;
+        edit->LvlData.modified=true;
+    }
+
 }
 
 void MainWindow::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 {
     if(lockSetEventSettings) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].move_camera_y = arg1;
+        edit->LvlData.modified=true;
+    }
 }
 
 
@@ -1113,11 +1188,36 @@ void MainWindow::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 {
     if(lockSetEventSettings) return;
     if(index<0) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].trigger = ui->LVLEvent_TriggerEvent->currentText();
+        edit->LvlData.modified=true;
+    }
+
 }
 
 void MainWindow::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
 {
     if(lockSetEventSettings) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].trigger_timer = qRound(arg1*10);
+        edit->LvlData.modified=true;
+    }
 
 }
 
