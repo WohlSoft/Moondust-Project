@@ -571,10 +571,17 @@ void LvlScene::historyBack()
         if(subtype == SETTING_EXITDIR){
             doorp[index].odirect = extraData.toList()[0].toInt();
         }
+        else
+        if(subtype == SETTING_LEVELEXIT){
+            doorp[index].lvl_o = !extraData.toList()[0].toBool();
+            if(!doorp[index].lvl_o && extraData.toList().size() >= 3){
+                doorp[index].ox = extraData.toList()[1].toInt();
+                doorp[index].oy = extraData.toList()[2].toInt();
+                placeDoorExit(doorp[index]);
+            }
+        }
 
-        MainWinConnect::pMainWin->isHistoryChangingData = true;
         MainWinConnect::pMainWin->setDoorData(-2);
-        MainWinConnect::pMainWin->isHistoryChangingData = false;
         doorPointsSync(array_id);
 
         break;
@@ -899,10 +906,17 @@ void LvlScene::historyForward()
         if(subtype == SETTING_EXITDIR){
             doorp[index].odirect = extraData.toList()[1].toInt();
         }
+        else
+        if(subtype == SETTING_LEVELEXIT){
+            doorp[index].lvl_o = extraData.toList()[0].toBool();
+            if(!(((!doorp[index].lvl_o) && (!doorp[index].lvl_i)) || (doorp[index].lvl_i)))
+            {
+                doorp[index].ox = extraData.toList()[1].toInt();
+                doorp[index].oy = extraData.toList()[2].toInt();
+            }
+        }
 
-        MainWinConnect::pMainWin->isHistoryChangingData = true;
         MainWinConnect::pMainWin->setDoorData(-2);
-        MainWinConnect::pMainWin->isHistoryChangingData = false;
         doorPointsSync(array_id);
 
         break;
@@ -1825,6 +1839,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_NEEDASTAR: return tr("Need Stars");
     case SETTING_ENTRDIR: return tr("Entrance Direction");
     case SETTING_EXITDIR: return tr("Exit Direction");
+    case SETTING_LEVELEXIT: return tr("Set Level Exit");
     default:
         return tr("Unknown");
     }

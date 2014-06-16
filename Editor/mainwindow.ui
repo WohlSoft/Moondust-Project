@@ -3440,7 +3440,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <number>0</number>
          </property>
          <item row="3" column="0" colspan="2">
-          <widget class="QCheckBox" name="LVLEvent_Key_AutoStartEv">
+          <widget class="QCheckBox" name="LVLEvent_disableSmokeEffect">
            <property name="text">
             <string>Disable smoke effects</string>
            </property>
@@ -3599,8 +3599,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
-          <height>433</height>
+          <width>272</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3681,8 +3681,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
-          <height>433</height>
+          <width>272</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3775,7 +3775,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>251</width>
+          <width>255</width>
           <height>461</height>
          </rect>
         </property>
@@ -4073,8 +4073,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
-          <height>433</height>
+          <width>272</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4176,8 +4176,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
-          <height>433</height>
+          <width>272</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4274,8 +4274,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>268</width>
-          <height>433</height>
+          <width>272</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4324,7 +4324,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
       </widget>
      </item>
      <item row="5" column="0" colspan="2">
-      <widget class="QCheckBox" name="checkBox_2">
+      <widget class="QCheckBox" name="LVLEvent_AutoStart">
        <property name="text">
         <string>Autostart event</string>
        </property>
