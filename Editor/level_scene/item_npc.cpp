@@ -228,8 +228,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             if(selected==msg)
             {
                 LevelData selData;
-                QList<QVariant> modText;
-                modText.push_back(QVariant(npcData.msg));
 
                 ItemMsgBox * msgBox = new ItemMsgBox(npcData.msg);
                 msgBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
@@ -242,12 +240,11 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     {
                         if(SelItem->data(0).toString()=="NPC")
                         {
-                            ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
                             selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                            ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
                         }
                     }
-                    modText.push_back(QVariant(npcData.msg));
-                    scene->addChangeSettingsHistory(selData, LvlScene::SETTING_MESSAGE, QVariant(modText));
+                    scene->addChangeSettingsHistory(selData, LvlScene::SETTING_MESSAGE, QVariant(msgBox->currentText));
                 }
                 scene->contextMenuOpened = false;
             }
@@ -271,52 +268,43 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         if(selected==setLeft)
         {
             LevelData selData;
-            QList<QVariant> modDir;
-            modDir.push_back(QVariant(npcData.direct));
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
                 {
-                    ((ItemNPC *) SelItem)->changeDirection(-1);
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    ((ItemNPC *) SelItem)->changeDirection(-1);
                 }
             }
-            modDir.push_back(QVariant(-1));
-            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(modDir));
+            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(-1));
             scene->contextMenuOpened = false;
         }
         if(selected==setRand)
         {
             LevelData selData;
-            QList<QVariant> modDir;
-            modDir.push_back(QVariant(npcData.direct));
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
                 {
-                    ((ItemNPC *) SelItem)->changeDirection(0);
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    ((ItemNPC *) SelItem)->changeDirection(0);
                 }
             }
-            modDir.push_back(QVariant(0));
-            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(modDir));
+            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(0));
             scene->contextMenuOpened = false;
         }
         if(selected==setRight)
         {
             LevelData selData;
-            QList<QVariant> modDir;
-            modDir.push_back(QVariant(npcData.direct));
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
                 {
-                    ((ItemNPC *) SelItem)->changeDirection(1);
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    ((ItemNPC *) SelItem)->changeDirection(1);
                 }
             }
-            modDir.push_back(QVariant(1));
-            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(modDir));
+            scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(1));
             scene->contextMenuOpened = false;
         }
         else
