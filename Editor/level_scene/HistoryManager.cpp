@@ -389,6 +389,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_LOCKED){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsLockedDoors, true, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_GENACTIVATE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -747,6 +751,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_LOCKED){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsLockedDoors, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENACTIVATE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateGeneratorNPC, 0, 0, true, true, false, true, true);
         }
         break;
     }
@@ -1279,6 +1287,16 @@ void LvlScene::historyRedoSettingsLockedDoors(LvlScene::CallbackData cbData, Lev
 {
     ((ItemDoor*)cbData.item)->doorData.locked = cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsActivateGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, data.generator_direct, data.generator_type);
+}
+
+void LvlScene::historyRedoSettingsActivateGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(cbData.hist->extraData.toBool(), data.generator_direct, data.generator_type);
 }
 
 void LvlScene::historyUndoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock data)
@@ -1876,6 +1894,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_LEVELEXIT: return tr("Set Level Exit");
     case SETTING_LEVELENTR: return tr("Set Level Entrance");
     case SETTING_LEVELWARPTO: return tr("Level Warp To");
+    case SETTING_GENACTIVATE: return tr("Activate Generator");
     default:
         return tr("Unknown");
     }

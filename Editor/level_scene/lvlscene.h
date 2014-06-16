@@ -253,7 +253,8 @@ public:
         SETTING_EXITDIR,       //extraData: QList<QVariant[int]> [Old exit dir, New exit dir]
         SETTING_LEVELEXIT,     //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
         SETTING_LEVELENTR,     //extraData: QList<QVariant[???]> [bool Checked, int ix, int iy]
-        SETTING_LEVELWARPTO    //extraData: QList<QVariant[int]> [Old id, New id]
+        SETTING_LEVELWARPTO,   //extraData: QList<QVariant[int]> [Old id, New id]
+        SETTING_GENACTIVATE    //extraData: bool [Activated?]
     };
 
     //typedefs
@@ -342,6 +343,9 @@ public:
     //Callbackfunctions: [Change Settings] Locked
     void historyUndoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyRedoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    //Callbackfunctions: [Change Settings] Activate Generator
+    void historyUndoSettingsActivateGeneratorNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsActivateGeneratorNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);

@@ -1187,11 +1187,13 @@ void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->setGenerator(checked,
                  ((ItemNPC*)item)->npcData.generator_direct,
                  ((ItemNPC*)item)->npcData.generator_type
@@ -1219,6 +1221,7 @@ void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
                 LvlItemPropsLock=false;
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENACTIVATE, QVariant(checked));
     }
     ui->PROPS_NPCGenBox->setVisible( checked );
 
