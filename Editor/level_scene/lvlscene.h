@@ -254,7 +254,10 @@ public:
         SETTING_LEVELEXIT,     //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
         SETTING_LEVELENTR,     //extraData: QList<QVariant[???]> [bool Checked, int ix, int iy]
         SETTING_LEVELWARPTO,   //extraData: QList<QVariant[int]> [Old id, New id]
-        SETTING_GENACTIVATE    //extraData: bool [Activated?]
+        SETTING_GENACTIVATE,   //extraData: bool [Activated?]
+        SETTING_GENTYPE,       //extraData: int [new type]
+        SETTING_GENDIR,        //extraData: int [new dir]
+        SETTING_GENTIME        //extraData: int [new time]
     };
 
     //typedefs
@@ -346,6 +349,15 @@ public:
     //Callbackfunctions: [Change Settings] Activate Generator
     void historyUndoSettingsActivateGeneratorNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsActivateGeneratorNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Generator Type
+    void historyUndoSettingsTypeGeneratorNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsTypeGeneratorNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Generator Direction
+    void historyUndoSettingsDirectionGeneratorNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsDirectionGeneratorNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Generator Time
+    void historyUndoSettingsTimeGeneratorNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsTimeGeneratorNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
