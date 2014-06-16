@@ -520,7 +520,7 @@ void LvlScene::historyBack()
         placeDoorExit(removedDoor);
 
         MainWinConnect::pMainWin->setDoorData(-2);
-
+        break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
     {
