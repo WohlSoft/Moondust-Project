@@ -371,6 +371,8 @@ private slots:
     void on_actionLevelEvents_triggered(bool checked);
     void on_LevelEventsToolBox_visibilityChanged(bool visible);
 
+    long getEventArrayIndex();
+
     void on_LVLEvents_List_itemSelectionChanged();
     void on_LVLEvents_List_itemChanged(QListWidgetItem *item);
 
@@ -378,6 +380,67 @@ private slots:
     void on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index);
     void on_LVLEvent_playSnd_clicked();
     void on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index);
+
+    void on_LVLEvents_add_clicked();
+    void on_LVLEvents_del_clicked();
+    void on_LVLEvents_duplicate_clicked();
+    void on_LVLEvent_AutoStart_clicked(bool checked);
+
+    void on_LVLEvent_disableSmokeEffect_clicked(bool checked);
+
+    void eventLayerVisiblySyncList();
+
+    void on_LVLEvent_Layer_HideAdd_clicked();
+    void on_LVLEvent_Layer_HideDel_clicked();
+
+    void on_LVLEvent_Layer_ShowAdd_clicked();
+    void on_LVLEvent_Layer_ShowDel_clicked();
+
+    void on_LVLEvent_Layer_TogAdd_clicked();
+    void on_LVLEvent_Layer_TogDel_clicked();
+
+    void on_LVLEvent_LayerMov_List_currentIndexChanged(int index);
+    void on_LVLEvent_LayerMov_spX_valueChanged(double arg1);
+    void on_LVLEvent_LayerMov_spY_valueChanged(double arg1);
+
+    void on_LVLEvent_Scroll_Sct_valueChanged(int arg1);
+    void on_LVLEvent_Scroll_spX_valueChanged(double arg1);
+    void on_LVLEvent_Scroll_spY_valueChanged(double arg1);
+
+    void on_LVLEvent_Sct_list_currentIndexChanged(int index);
+
+    void on_LVLEvent_SctSize_none_clicked();
+    void on_LVLEvent_SctSize_reset_clicked();
+    void on_LVLEvent_SctSize_define_clicked();
+    void on_LVLEvent_SctSize_left_textEdited(const QString &arg1);
+    void on_LVLEvent_SctSize_top_textEdited(const QString &arg1);
+    void on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1);
+    void on_LVLEvent_SctSize_right_textEdited(const QString &arg1);
+    void on_LVLEvent_SctSize_Set_clicked();
+
+    void on_LVLEvent_SctMus_none_clicked();
+    void on_LVLEvent_SctMus_reset_clicked();
+    void on_LVLEvent_SctMus_define_clicked();
+    void on_LVLEvent_SctMus_List_currentIndexChanged(int index);
+
+    void on_LVLEvent_SctBg_none_clicked();
+    void on_LVLEvent_SctBg_reset_clicked();
+    void on_LVLEvent_SctBg_define_clicked();
+    void on_LVLEvent_SctBg_List_currentIndexChanged(int index);
+
+    void on_LVLEvent_Key_Up_clicked(bool checked);
+    void on_LVLEvent_Key_Down_clicked(bool checked);
+    void on_LVLEvent_Key_Left_clicked(bool checked);
+    void on_LVLEvent_Key_Right_clicked(bool checked);
+    void on_LVLEvent_Key_Run_clicked(bool checked);
+    void on_LVLEvent_Key_AltRun_clicked(bool checked);
+    void on_LVLEvent_Key_Jump_clicked(bool checked);
+    void on_LVLEvent_Key_AltJump_clicked(bool checked);
+    void on_LVLEvent_Key_Drop_clicked(bool checked);
+    void on_LVLEvent_Key_Start_clicked(bool checked);
+
+    void on_LVLEvent_TriggerEvent_currentIndexChanged(int index);
+    void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
 
 private:
 
