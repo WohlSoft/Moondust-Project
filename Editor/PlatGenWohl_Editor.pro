@@ -111,7 +111,7 @@ SOURCES += main.cpp\
     main_window/translator.cpp \
     main_window/dock/lvl_events_props.cpp \
     data_configs/conf_sound.cpp \
-    main_window/dock/lvl_layers.props.cpp
+    main_window/dock/lvl_layers_props.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

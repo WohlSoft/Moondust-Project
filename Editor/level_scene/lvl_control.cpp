@@ -243,8 +243,11 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
 
         if((item->data(0).toString()=="Door_enter")&&(item->data(2).toInt()==arrayID))
         {
-            if((LvlData->doors[i].lvl_i)||(remove))
+            if((! (((!LvlData->doors[i].lvl_o) && (!LvlData->doors[i].lvl_i)) ||
+                   ((LvlData->doors[i].lvl_o) && (!LvlData->doors[i].lvl_i)))
+                )||(remove))
             {
+                ((ItemDoor *)item)->doorData = LvlData->doors[i];
                 ((ItemDoor *)item)->removeFromArray();
                 delete ((ItemDoor *)item);
                 doorEntranceSynced = true;
@@ -256,10 +259,13 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
                 doorEntranceSynced = true;
             }
         }
+
         if((item->data(0).toString()=="Door_exit")&&(item->data(2).toInt()==arrayID))
         {
-            if(((LvlData->doors[i].lvl_o) && (!LvlData->doors[i].lvl_i))||(remove))
+            if( (! (((!LvlData->doors[i].lvl_o) && (!LvlData->doors[i].lvl_i)) ||
+                                      (LvlData->doors[i].lvl_i) ) )||(remove))
             {
+                ((ItemDoor *)item)->doorData = LvlData->doors[i];
                 ((ItemDoor *)item)->removeFromArray();
                 delete ((ItemDoor *)item);
                 doorExitSynced = true;
