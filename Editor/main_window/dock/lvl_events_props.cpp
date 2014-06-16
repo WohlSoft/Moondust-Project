@@ -562,7 +562,26 @@ void MainWindow::on_LVLEvent_Layer_HideAdd_clicked()
 
 void MainWindow::on_LVLEvent_Layer_HideDel_clicked()
 {
+    if(lockSetEventSettings) return;
 
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        if(!ui->LVLEvent_Layer_HideList->selectedItems().isEmpty())
+        {
+            for(int j=0; j<edit->LvlData.events[i].layers_hide.size(); j++)
+            {
+            if(edit->LvlData.events[i].layers_hide[j]==ui->LVLEvent_Layer_HideList->currentItem()->text())
+                {edit->LvlData.events[i].layers_hide.removeAt(j); break;}
+            }
+            eventLayerVisiblySyncList();
+        }
+    }
 }
 
 void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
@@ -587,6 +606,26 @@ void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
 
 void MainWindow::on_LVLEvent_Layer_ShowDel_clicked()
 {
+    if(lockSetEventSettings) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        if(!ui->LVLEvent_Layer_ShowList->selectedItems().isEmpty())
+        {
+            for(int j=0; j<edit->LvlData.events[i].layers_show.size(); j++)
+            {
+            if(edit->LvlData.events[i].layers_show[j]==ui->LVLEvent_Layer_ShowList->currentItem()->text())
+                {edit->LvlData.events[i].layers_show.removeAt(j); break;}
+            }
+            eventLayerVisiblySyncList();
+        }
+    }
 
 }
 
@@ -612,7 +651,26 @@ void MainWindow::on_LVLEvent_Layer_TogAdd_clicked()
 
 void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
 {
+    if(lockSetEventSettings) return;
 
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        if(!ui->LVLEvent_Layer_ToggleList->selectedItems().isEmpty())
+        {
+            for(int j=0; j<edit->LvlData.events[i].layers_toggle.size(); j++)
+            {
+            if(edit->LvlData.events[i].layers_toggle[j]==ui->LVLEvent_Layer_ToggleList->currentItem()->text())
+                {edit->LvlData.events[i].layers_toggle.removeAt(j); break;}
+            }
+            eventLayerVisiblySyncList();
+        }
+    }
 }
 
 
