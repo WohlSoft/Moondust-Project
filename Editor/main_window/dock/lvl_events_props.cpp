@@ -510,6 +510,7 @@ void MainWindow::on_LVLEvent_AutoStart_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].autostart = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -532,6 +533,7 @@ void MainWindow::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].nosmoke = checked;
+        edit->LvlData.modified=true;
     }
 
 }
@@ -554,6 +556,7 @@ void MainWindow::on_LVLEvent_Layer_HideAdd_clicked()
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
             edit->LvlData.events[i].layers_hide.push_back(ui->LVLEvents_layerList->currentItem()->text());
+            edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
         }
     }
@@ -577,7 +580,11 @@ void MainWindow::on_LVLEvent_Layer_HideDel_clicked()
             for(int j=0; j<edit->LvlData.events[i].layers_hide.size(); j++)
             {
             if(edit->LvlData.events[i].layers_hide[j]==ui->LVLEvent_Layer_HideList->currentItem()->text())
-                {edit->LvlData.events[i].layers_hide.removeAt(j); break;}
+                {
+                    edit->LvlData.events[i].layers_hide.removeAt(j);
+                    edit->LvlData.modified=true;
+                    break;
+                }
             }
             eventLayerVisiblySyncList();
         }
@@ -599,6 +606,7 @@ void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
             edit->LvlData.events[i].layers_show.push_back(ui->LVLEvents_layerList->currentItem()->text());
+            edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
         }
     }
@@ -621,7 +629,11 @@ void MainWindow::on_LVLEvent_Layer_ShowDel_clicked()
             for(int j=0; j<edit->LvlData.events[i].layers_show.size(); j++)
             {
             if(edit->LvlData.events[i].layers_show[j]==ui->LVLEvent_Layer_ShowList->currentItem()->text())
-                {edit->LvlData.events[i].layers_show.removeAt(j); break;}
+                {
+                edit->LvlData.events[i].layers_show.removeAt(j);
+                edit->LvlData.modified=true;
+                break;
+                }
             }
             eventLayerVisiblySyncList();
         }
@@ -644,6 +656,7 @@ void MainWindow::on_LVLEvent_Layer_TogAdd_clicked()
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
             edit->LvlData.events[i].layers_toggle.push_back(ui->LVLEvents_layerList->currentItem()->text());
+            edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
         }
     }
@@ -666,7 +679,11 @@ void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
             for(int j=0; j<edit->LvlData.events[i].layers_toggle.size(); j++)
             {
             if(edit->LvlData.events[i].layers_toggle[j]==ui->LVLEvent_Layer_ToggleList->currentItem()->text())
-                {edit->LvlData.events[i].layers_toggle.removeAt(j); break;}
+                {
+                    edit->LvlData.events[i].layers_toggle.removeAt(j);
+                    edit->LvlData.modified=true;
+                    break;
+                }
             }
             eventLayerVisiblySyncList();
         }
@@ -836,6 +853,7 @@ void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
                 evnmsg.push_back("...");
             }
             ui->LVLEvent_Cmn_Msg->setText( evnmsg );
+            edit->LvlData.modified=true;
         }
 
     }
@@ -856,6 +874,7 @@ void MainWindow::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
         if(i<0) return;
 
         edit->LvlData.events[i].sound_id = ui->LVLEvent_Cmn_PlaySnd->currentData().toInt();
+        edit->LvlData.modified=true;
     }
 }
 
@@ -902,6 +921,7 @@ void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
         if(i<0) return;
 
         edit->LvlData.events[i].end_game = ui->LVLEvent_Cmn_EndGame->currentIndex();
+        edit->LvlData.modified=true;
     }
 
 }
@@ -926,6 +946,7 @@ void MainWindow::on_LVLEvent_Key_Up_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].up = checked;
+        edit->LvlData.modified=true;
     }
 
 }
@@ -943,6 +964,7 @@ void MainWindow::on_LVLEvent_Key_Down_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].down = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -959,6 +981,7 @@ void MainWindow::on_LVLEvent_Key_Left_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].left = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -975,6 +998,7 @@ void MainWindow::on_LVLEvent_Key_Right_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].right = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -991,6 +1015,7 @@ void MainWindow::on_LVLEvent_Key_Run_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].run = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -1007,6 +1032,7 @@ void MainWindow::on_LVLEvent_Key_AltRun_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].altrun = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -1023,6 +1049,7 @@ void MainWindow::on_LVLEvent_Key_Jump_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].jump = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -1039,6 +1066,7 @@ void MainWindow::on_LVLEvent_Key_AltJump_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].altjump = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -1055,6 +1083,7 @@ void MainWindow::on_LVLEvent_Key_Drop_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].drop = checked;
+        edit->LvlData.modified=true;
     }
 }
 
@@ -1071,6 +1100,7 @@ void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
         if(i<0) return;
 
         edit->LvlData.events[i].start = checked;
+        edit->LvlData.modified=true;
     }
 }
 
