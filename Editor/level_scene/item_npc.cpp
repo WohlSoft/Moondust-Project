@@ -215,7 +215,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()=="NPC"){
+                if(SelItem->data(0).toString()=="NPC")
+                {
                     ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                 }
@@ -240,8 +241,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                     {
                         if(SelItem->data(0).toString()=="NPC")
+                        {
                             ((ItemNPC *) SelItem)->setMsg( msgBox->currentText );
-                        selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                            selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                        }
                     }
                     modText.push_back(QVariant(npcData.msg));
                     scene->addChangeSettingsHistory(selData, LvlScene::SETTING_MESSAGE, QVariant(modText));
@@ -255,7 +258,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()=="NPC"){
+                if(SelItem->data(0).toString()=="NPC")
+                {
                     ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                 }
@@ -271,7 +275,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             modDir.push_back(QVariant(npcData.direct));
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()=="NPC"){
+                if(SelItem->data(0).toString()=="NPC")
+                {
                     ((ItemNPC *) SelItem)->changeDirection(-1);
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                 }
@@ -288,8 +293,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
+                {
                     ((ItemNPC *) SelItem)->changeDirection(0);
-                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                }
             }
             modDir.push_back(QVariant(0));
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(modDir));
@@ -303,8 +310,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
+                {
                     ((ItemNPC *) SelItem)->changeDirection(1);
-                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                }
             }
             modDir.push_back(QVariant(1));
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(modDir));
@@ -392,32 +401,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 scene->addChangedLayerHistory(modData, lName);
              scene->contextMenuOpened = false;
             }
-
-//            foreach(QAction * lItem, layerItems)
-//            {
-//                if(selected==lItem)
-//                {
-//                    foreach(LevelLayers lr, scene->LvlData->layers)
-//                    { //Find layer's settings
-//                        if(lr.name==lItem->data().toString())
-//                        {
-//                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-//                            {
-
-//                                if(SelItem->data(0).toString()=="NPC")
-//                                {
-//                                ((ItemNPC *) SelItem)->npcData.layer = lr.name;
-//                                ((ItemNPC *) SelItem)->setVisible(!lr.hidden);
-//                                ((ItemNPC *) SelItem)->arrayApply();
-//                                }
-//                            }
-//                        break;
-//                        }
-//                    }//Find layer's settings
-//                 scene->contextMenuOpened = false;
-//                 break;
-//                }//Find selected layer's item
-//            }
         }
     }
     else
