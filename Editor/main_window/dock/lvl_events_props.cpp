@@ -114,7 +114,7 @@ void MainWindow::setSoundList()
     foreach(obj_sound snd, configs.main_sound )
     {
         if(!snd.hidden)
-            ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id) );
+            ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id));
     }
 }
 
@@ -323,7 +323,7 @@ void MainWindow::setEventData(long index)
                     ui->LVLEvent_Cmn_PlaySnd->setCurrentIndex(0);
                     for(int i=0; i<ui->LVLEvent_Cmn_PlaySnd->count(); i++)
                     {
-                        if(ui->LVLEvent_Cmn_PlaySnd->currentData(i).toInt()== event.sound_id)
+                        if(ui->LVLEvent_Cmn_PlaySnd->itemData(i).toInt() == event.sound_id)
                         {
                             ui->LVLEvent_Cmn_PlaySnd->setCurrentIndex(i);
                             break;
