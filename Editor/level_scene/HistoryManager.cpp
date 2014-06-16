@@ -582,7 +582,18 @@ void LvlScene::historyBack()
             if(!doorp[index].lvl_o && !doorp[index].isSetOut && extraData.toList().size() >= 3){
                 doorp[index].ox = extraData.toList()[1].toInt();
                 doorp[index].oy = extraData.toList()[2].toInt();
+                doorp[index].isSetOut = true;
                 placeDoorExit(doorp[index]);
+            }
+        }
+        else
+        if(subtype == SETTING_LEVELENTR){
+            doorp[index].lvl_i = !extraData.toList()[0].toBool();
+            if(!doorp[index].lvl_i && !doorp[index].isSetIn && extraData.toList().size() >= 3){
+                doorp[index].ix = extraData.toList()[1].toInt();
+                doorp[index].iy = extraData.toList()[2].toInt();
+                doorp[index].isSetIn = true;
+                placeDoorEnter(doorp[index]);
             }
         }
 
@@ -918,6 +929,15 @@ void LvlScene::historyForward()
             {
                 doorp[index].ox = extraData.toList()[1].toInt();
                 doorp[index].oy = extraData.toList()[2].toInt();
+            }
+        }
+        else
+        if(subtype == SETTING_LEVELENTR){
+            doorp[index].lvl_i = extraData.toList()[0].toBool();
+            if(!(((!doorp[index].lvl_o) && (!doorp[index].lvl_i)) || ((doorp[index].lvl_o) && (!doorp[index].lvl_i))))
+            {
+                doorp[index].ix = extraData.toList()[1].toInt();
+                doorp[index].iy = extraData.toList()[2].toInt();
             }
         }
 
@@ -1845,6 +1865,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_ENTRDIR: return tr("Entrance Direction");
     case SETTING_EXITDIR: return tr("Exit Direction");
     case SETTING_LEVELEXIT: return tr("Set Level Exit");
+    case SETTING_LEVELENTR: return tr("Set Level Entrance");
     default:
         return tr("Unknown");
     }
