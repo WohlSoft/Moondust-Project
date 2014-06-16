@@ -97,9 +97,31 @@ void MainWindow::RemoveCurrentLayer(bool moveToDefault)
     //Remove from List
     QList<QListWidgetItem * > selected = ui->LvlLayerList->selectedItems();
 
+    leveledit * edit = activeLvlEditWin();
+
+    //Sync layer name with events
+    for(int j=0; j<edit->LvlData.events.size(); j++)
+    {
+        for(int i=0; i<edit->LvlData.events[j].layers_hide.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_hide[i] == selected[0]->text()) edit->LvlData.events[j].layers_hide.removeAt(i);
+        }
+        for(int i=0; i<edit->LvlData.events[j].layers_show.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_show[i] == selected[0]->text()) edit->LvlData.events[j].layers_show.removeAt(i);
+        }
+        for(int i=0; i<edit->LvlData.events[j].layers_toggle.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_toggle[i] == selected[0]->text()) edit->LvlData.events[j].layers_toggle.removeAt(i);
+        }
+        if(edit->LvlData.events[j].movelayer == selected[0]->text() ) edit->LvlData.events[j].movelayer = "";
+    }
+    setEventsBox(); //Refresh events
+
+
     if(moveToDefault)
     { //Find default layer visibly
-        foreach(LevelLayers layer, activeLvlEditWin()->LvlData.layers)
+        foreach(LevelLayers layer, edit->LvlData.layers)
         {
             if( layer.name=="Default" )
             {
@@ -117,7 +139,6 @@ void MainWindow::RemoveCurrentLayer(bool moveToDefault)
     {
         RemoveLayerItems(selected[0]->text());
     }
-
 
     if(selected.isEmpty()) return;
 
@@ -215,7 +236,8 @@ void MainWindow::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
 void MainWindow::ModifyLayer(QString layerName, bool visible)
 {
     //Apply layer's visibly to all items
-    QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+    leveledit * edit = activeLvlEditWin();
+    QList<QGraphicsItem*> ItemList = edit->scene->items();
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
@@ -268,7 +290,8 @@ void MainWindow::ModifyLayer(QString layerName, bool visible)
 void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
 {
     //Apply layer's name to all items
-    QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+    leveledit * edit = activeLvlEditWin();
+    QList<QGraphicsItem*> ItemList = edit->scene->items();
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
@@ -319,13 +342,34 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
             }
         }
     }
+
+    //Sync layer name with events
+    for(int j=0; j<edit->LvlData.events.size(); j++)
+    {
+        for(int i=0; i<edit->LvlData.events[j].layers_hide.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_hide[i] == layerName) edit->LvlData.events[j].layers_hide[i] = newLayerName;
+        }
+        for(int i=0; i<edit->LvlData.events[j].layers_show.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_show[i] == layerName) edit->LvlData.events[j].layers_show[i] = newLayerName;
+        }
+        for(int i=0; i<edit->LvlData.events[j].layers_toggle.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_toggle[i] == layerName) edit->LvlData.events[j].layers_toggle[i] = newLayerName;
+        }
+        if(edit->LvlData.events[j].movelayer == layerName ) edit->LvlData.events[j].movelayer = newLayerName;
+    }
+    setEventsBox(); //Refresh events
+
     setLayerLists();  //Sync comboboxes in properties
 }
 
 void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visible)
 {
     //Apply layer's name/visibly to all items
-    QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
+    leveledit * edit = activeLvlEditWin();
+    QList<QGraphicsItem*> ItemList = edit->scene->items();
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
@@ -383,6 +427,26 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             }
         }
     }
+
+    //Sync layer name with events
+    for(int j=0; j<edit->LvlData.events.size(); j++)
+    {
+        for(int i=0; i<edit->LvlData.events[j].layers_hide.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_hide[i] == layerName) edit->LvlData.events[j].layers_hide[i] = newLayerName;
+        }
+        for(int i=0; i<edit->LvlData.events[j].layers_show.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_show[i] == layerName) edit->LvlData.events[j].layers_show[i] = newLayerName;
+        }
+        for(int i=0; i<edit->LvlData.events[j].layers_toggle.size(); i++)
+        {
+            if(edit->LvlData.events[j].layers_toggle[i] == layerName) edit->LvlData.events[j].layers_toggle[i] = newLayerName;
+        }
+        if(edit->LvlData.events[j].movelayer == layerName ) edit->LvlData.events[j].movelayer = newLayerName;
+    }
+    setEventsBox(); //Refresh events
+
     setLayerLists();  //Sync comboboxes in properties
 }
 
