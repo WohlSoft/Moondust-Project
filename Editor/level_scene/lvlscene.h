@@ -240,7 +240,7 @@ public:
         SETTING_FRIENDLY,      //extraData: bool [Activated?]
         SETTING_BOSS,          //extraData: bool [Activated?]
         SETTING_NOMOVEABLE,    //extraData: bool [Activated?]
-        SETTING_MESSAGE,       //extraData: int [New Text]
+        SETTING_MESSAGE,       //extraData: String [New Text]
         SETTING_DIRECTION,     //extraData: int [New Dir]
         SETTING_CHANGENPC,     //extraData: int [New NPC ID]
         SETTING_WATERTYPE,     //extraData: bool [IsWater = true, IsQuicksand = false]
@@ -257,7 +257,8 @@ public:
         SETTING_GENACTIVATE,   //extraData: bool [Activated?]
         SETTING_GENTYPE,       //extraData: int [new type]
         SETTING_GENDIR,        //extraData: int [new dir]
-        SETTING_GENTIME        //extraData: int [new time]
+        SETTING_GENTIME,       //extraData: int [new time]
+        SETTING_ATTACHLAYER    //extraData: String [new layer]
     };
 
     //typedefs
@@ -358,6 +359,9 @@ public:
     //Callbackfunctions: [Change Settings] Generator Time
     void historyUndoSettingsTimeGeneratorNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsTimeGeneratorNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Attach Layer
+    void historyUndoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
