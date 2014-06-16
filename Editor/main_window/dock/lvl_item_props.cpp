@@ -290,7 +290,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 break;
             }
         }
-
+        LvlItemPropsLock=true;
         QString npcmsg = (npc.msg.isEmpty() ? tr("[none]") : npc.msg);
         if(npcmsg.size()>20)
         {
@@ -1237,17 +1237,20 @@ void MainWindow::on_PROPS_NPCGenType_currentIndexChanged(int index)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
                  ((ItemNPC*)item)->npcData.generator_direct,
                  index+1
                  );
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENTYPE, QVariant(index+1));
     }
 }
 void MainWindow::on_PROPS_NPCGenTime_valueChanged(double arg1)
@@ -1260,15 +1263,18 @@ void MainWindow::on_PROPS_NPCGenTime_valueChanged(double arg1)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->npcData.generator_period = qRound(arg1*10);
                 ((ItemNPC*)item)->arrayApply();
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENTIME, QVariant(qRound(arg1*10)));
     }
 
 }
@@ -1283,17 +1289,20 @@ void MainWindow::on_PROPS_NPCGenUp_clicked()
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
                  1,
                  ((ItemNPC*)item)->npcData.generator_type
                  );
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENDIR, QVariant(1));
     }
 
 }
@@ -1308,17 +1317,20 @@ void MainWindow::on_PROPS_NPCGenLeft_clicked()
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
                  2,
                  ((ItemNPC*)item)->npcData.generator_type
                  );
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENDIR, QVariant(2));
     }
 }
 
@@ -1332,17 +1344,20 @@ void MainWindow::on_PROPS_NPCGenDown_clicked()
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
                  3,
                  ((ItemNPC*)item)->npcData.generator_type
                  );
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENDIR, QVariant(3));
     }
 }
 void MainWindow::on_PROPS_NPCGenRight_clicked()
@@ -1355,17 +1370,20 @@ void MainWindow::on_PROPS_NPCGenRight_clicked()
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->setGenerator(((ItemNPC*)item)->npcData.generator,
                  4,
                  ((ItemNPC*)item)->npcData.generator_type
                  );
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_GENDIR, QVariant(4));
     }
 }
 

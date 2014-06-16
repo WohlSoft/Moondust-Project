@@ -393,6 +393,18 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_GENACTIVATE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateGeneratorNPC, 0, 0, true, true, false, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_GENTYPE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTypeGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENDIR){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENTIME){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTimeGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -756,6 +768,19 @@ void LvlScene::historyForward()
         if(lastOperation.subtype == SETTING_GENACTIVATE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateGeneratorNPC, 0, 0, true, true, false, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_GENTYPE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTypeGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENDIR){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENTIME){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTimeGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -1297,6 +1322,38 @@ void LvlScene::historyUndoSettingsActivateGeneratorNPC(LvlScene::CallbackData cb
 void LvlScene::historyRedoSettingsActivateGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
 {
     ((ItemNPC*)cbData.item)->setGenerator(cbData.hist->extraData.toBool(), data.generator_direct, data.generator_type);
+}
+
+void LvlScene::historyUndoSettingsTypeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, data.generator_direct, data.generator_type);
+}
+
+void LvlScene::historyRedoSettingsTypeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, data.generator_direct, cbData.hist->extraData.toInt());
+}
+
+void LvlScene::historyUndoSettingsDirectionGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, data.generator_direct, data.generator_type);
+}
+
+void LvlScene::historyRedoSettingsDirectionGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, cbData.hist->extraData.toInt(), data.generator_type);
+}
+
+void LvlScene::historyUndoSettingsTimeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.generator_period = data.generator_period;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsTimeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.generator_period = cbData.hist->extraData.toInt();
+    ((ItemNPC*)cbData.item)->arrayApply();
 }
 
 void LvlScene::historyUndoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock data)
@@ -1895,6 +1952,9 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_LEVELENTR: return tr("Set Level Entrance");
     case SETTING_LEVELWARPTO: return tr("Level Warp To");
     case SETTING_GENACTIVATE: return tr("Activate Generator");
+    case SETTING_GENTYPE: return tr("Generator Type");
+    case SETTING_GENDIR: return tr("Generator Direction");
+    case SETTING_GENTIME: return tr("Generator Time");
     default:
         return tr("Unknown");
     }
