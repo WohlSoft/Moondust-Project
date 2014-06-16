@@ -3406,7 +3406,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <number>2</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -4080,53 +4080,21 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <attribute name="label">
          <string>Common</string>
         </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QLabel" name="label_23">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="6" column="0">
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
-           <property name="text">
-            <string>Display message:</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
            </property>
-          </widget>
+          </spacer>
          </item>
-         <item>
-          <widget class="QPushButton" name="LVLEvent_Cmn_Msg">
-           <property name="text">
-            <string notr="true">[msg]</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_24">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Play sound:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="LVLEvent_Cmn_PlaySnd">
-           <property name="maxVisibleItems">
-            <number>50</number>
-           </property>
-           <item>
-            <property name="text">
-             <string notr="true">[Don't play sound]</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
+         <item row="4" column="0">
           <widget class="QLabel" name="label_25">
            <property name="font">
             <font>
@@ -4139,7 +4107,65 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item>
+         <item row="3" column="0">
+          <widget class="QComboBox" name="LVLEvent_Cmn_PlaySnd">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string notr="true">[Don't play sound]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_24">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Play sound:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QPushButton" name="LVLEvent_playSnd">
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Test</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QPushButton" name="LVLEvent_Cmn_Msg">
+           <property name="text">
+            <string notr="true">[msg]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label_23">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Display message:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0" colspan="2">
           <widget class="QComboBox" name="LVLEvent_Cmn_EndGame">
            <property name="maxVisibleItems">
             <number>50</number>
@@ -4155,19 +4181,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             </property>
            </item>
           </widget>
-         </item>
-         <item>
-          <spacer name="verticalSpacer">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>

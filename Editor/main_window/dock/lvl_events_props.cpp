@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMediaPlayer>
+
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
 
@@ -25,10 +27,14 @@
 #include "../../level_scene/item_npc.h"
 #include "../../level_scene/item_water.h"
 
+#include "../../level_scene/itemmsgbox.h"
+
 #include "../../file_formats/file_formats.h"
 
 static long currentEventArrayID=0;
 static bool lockSetEventSettings=false;
+
+QMediaPlayer playSnd;
 
 void MainWindow::setEventsBox()
 {
@@ -438,3 +444,132 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
     }//if WinType==1
 }
 
+
+
+
+void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
+{
+    if(currentEventArrayID<0) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i;
+        bool found=false;
+        //Get current data by ArrayID
+        for(i=0; i< edit->LvlData.events.size();i++)
+        {
+            if((unsigned long)currentEventArrayID==edit->LvlData.events[i].array_id)
+            {
+                found=true;
+                break;
+            }
+        }
+        if(!found) return;
+
+        ItemMsgBox * msgBox = new ItemMsgBox(edit->LvlData.events[i].msg,
+                tr("Please, enter message\nMessage limits: max line lenth is 28 characters"));
+        msgBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        msgBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, msgBox->size(), qApp->desktop()->availableGeometry()));
+        if(msgBox->exec()==QDialog::Accepted)
+        {
+            edit->LvlData.events[i].msg = msgBox->currentText;
+            QString evnmsg = (edit->LvlData.events[i].msg.isEmpty() ? tr("[none]") : edit->LvlData.events[i].msg);
+            if(evnmsg.size()>20)
+            {
+                evnmsg.resize(18);
+                evnmsg.push_back("...");
+            }
+            ui->LVLEvent_Cmn_Msg->setText( evnmsg );
+        }
+
+    }
+}
+
+
+void MainWindow::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
+{
+    if(lockSetEventSettings) return;
+    if(index<0) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i;
+        bool found=false;
+        //Get current data by ArrayID
+        for(i=0; i< edit->LvlData.events.size();i++)
+        {
+            if((unsigned long)currentEventArrayID==edit->LvlData.events[i].array_id)
+            {
+                found=true;
+                break;
+            }
+        }
+        if(!found) return;
+
+        edit->LvlData.events[i].sound_id = ui->LVLEvent_Cmn_PlaySnd->currentData().toInt();
+    }
+
+}
+
+void MainWindow::on_LVLEvent_playSnd_clicked()
+{
+    if(ui->LVLEvent_Cmn_PlaySnd->currentData().toInt()==0) return;
+
+    QString sndPath = configs.dirs.sounds;
+    long i;
+    bool found=false;
+    for(i=0; i<configs.main_sound.size(); i++)
+    {
+        if((unsigned int)ui->LVLEvent_Cmn_PlaySnd->currentData().toInt()==configs.main_sound[i].id)
+        {
+            found=true;
+            sndPath += configs.main_sound[i].file;
+            break;
+        }
+    }
+
+    WriteToLog(QtDebugMsg, QString("Test Sound -> path-1 %1").arg(sndPath));
+
+    if(!found) return;
+    if(!QFileInfo::exists(sndPath)) return;
+
+    playSnd.setMedia(QMediaContent(QUrl(sndPath)));
+    playSnd.setVolume(100);
+    playSnd.play();
+}
+
+
+
+void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
+{
+    if(lockSetEventSettings) return;
+    if(index<0) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i;
+        bool found=false;
+        //Get current data by ArrayID
+        for(i=0; i< edit->LvlData.events.size();i++)
+        {
+            if((unsigned long)currentEventArrayID==edit->LvlData.events[i].array_id)
+            {
+                found=true;
+                break;
+            }
+        }
+        if(!found) return;
+
+        edit->LvlData.events[i].end_game = ui->LVLEvent_Cmn_EndGame->currentIndex();
+    }
+
+}
