@@ -579,7 +579,7 @@ void LvlScene::historyBack()
         else
         if(subtype == SETTING_LEVELEXIT){
             doorp[index].lvl_o = !extraData.toList()[0].toBool();
-            if(!doorp[index].lvl_o && extraData.toList().size() >= 3){
+            if(!doorp[index].lvl_o && !doorp[index].isSetOut && extraData.toList().size() >= 3){
                 doorp[index].ox = extraData.toList()[1].toInt();
                 doorp[index].oy = extraData.toList()[2].toInt();
                 placeDoorExit(doorp[index]);
