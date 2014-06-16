@@ -204,7 +204,7 @@
     <message>
         <location filename="../data_configs/configstatus.cpp" line="137"/>
         <source>Game worlds</source>
-        <translation type="unfinished"></translation>
+        <translation>Game worlds</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="144"/>
