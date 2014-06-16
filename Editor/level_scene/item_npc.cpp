@@ -200,8 +200,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
+                {
                     ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
-                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_FRIENDLY, QVariant(fri->isChecked()));
             scene->contextMenuOpened = false;
@@ -213,9 +215,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()=="NPC")
+                if(SelItem->data(0).toString()=="NPC"){
                     ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
-                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_NOMOVEABLE, QVariant(stat->isChecked()));
             scene->contextMenuOpened = false;
@@ -252,9 +255,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             LevelData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()=="NPC")
+                if(SelItem->data(0).toString()=="NPC"){
                     ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
-                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BOSS, QVariant(boss->isChecked()));
             scene->contextMenuOpened = false;
@@ -267,9 +271,10 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             modDir.push_back(QVariant(npcData.direct));
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
-                if(SelItem->data(0).toString()=="NPC")
+                if(SelItem->data(0).toString()=="NPC"){
                     ((ItemNPC *) SelItem)->changeDirection(-1);
-                selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                }
             }
             modDir.push_back(QVariant(-1));
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(modDir));
