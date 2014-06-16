@@ -111,7 +111,8 @@ SOURCES += main.cpp\
     main_window/translator.cpp \
     main_window/dock/lvl_events_props.cpp \
     data_configs/conf_sound.cpp \
-    main_window/dock/lvl_layers_props.cpp
+    main_window/dock/lvl_layers_props.cpp \
+    data_configs/configstatus.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -147,7 +148,8 @@ HEADERS  += mainwindow.h \
     level_scene/lvl_item_placing.h \
     data_configs/obj_npc.h \
     edit_npc/npceditscene.h \
-    data_configs/custom_data.h
+    data_configs/custom_data.h \
+    data_configs/configstatus.h
 
 FORMS    += \
     mainwindow.ui \
@@ -160,7 +162,8 @@ FORMS    += \
     edit_level/levelprops.ui \
     edit_level/saveimage.ui \
     edit_npc/npcedit.ui \
-    about_dialog/aboutdialog.ui
+    about_dialog/aboutdialog.ui \
+    data_configs/configstatus.ui
 
 RC_FILE = _resources/pge_editor.rc
 
