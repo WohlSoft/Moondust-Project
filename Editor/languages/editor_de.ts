@@ -104,107 +104,107 @@
     <message>
         <location filename="../data_configs/configstatus.ui" line="20"/>
         <source>Current configuration status</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuelle Konigurationsstatus</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="37"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Status</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="49"/>
         <source>Item types:</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="76"/>
         <source>Config name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurationsname:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="89"/>
         <source>Config path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurationspfad:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="128"/>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordner</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="140"/>
         <source>Config directories:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurationsordner:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="190"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="195"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfad</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="20"/>
         <source>Level Blocks (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Blöcke (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="32"/>
         <source>Level Background objects (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Hintergrund Objekte (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="44"/>
         <source>Level Background images (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Hintergrundbilder (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="56"/>
         <source>Level NPC (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Level NPC (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="68"/>
         <source>Music (level) (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musik (level) (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="79"/>
         <source>Music (world) (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musik (welt) (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="90"/>
         <source>Music (special) (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musik (spezial) (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="102"/>
         <source>Sounds (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Töne (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="117"/>
         <source>Level data</source>
-        <translation type="unfinished"></translation>
+        <translation>Leveldaten</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="123"/>
         <source>World data</source>
-        <translation type="unfinished"></translation>
+        <translation>Weltdaten</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="130"/>
         <source>Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Charaktere</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="137"/>
         <source>Game worlds</source>
-        <translation type="unfinished"></translation>
+        <translation>Spielwelten</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="144"/>
@@ -214,12 +214,12 @@
     <message>
         <location filename="../data_configs/configstatus.cpp" line="151"/>
         <source>Sounds</source>
-        <translation type="unfinished">Sounds</translation>
+        <translation>Ton</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="158"/>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefinierte Daten</translation>
     </message>
 </context>
 <context>
@@ -736,12 +736,12 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1876"/>
         <source>Set Level Entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzte Leveleingang</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1877"/>
         <source>Level Warp To</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Warp zu</translation>
     </message>
 </context>
 <context>
@@ -1556,7 +1556,7 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="5795"/>
         <source>Current configuration status...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuelle Konigurationsstatus...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5238"/>
@@ -1887,7 +1887,7 @@ Bei diesem System wird ein Bug benutzt von SMBX benutzt, womit man bestimmte BGO
     <message>
         <location filename="../mainwindow.ui" line="4139"/>
         <source>Play sound:</source>
-        <translation>Sound abspielen:</translation>
+        <translation>Ton abspielen:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4114"/>
@@ -1957,7 +1957,7 @@ Bei diesem System wird ein Bug benutzt von SMBX benutzt, womit man bestimmte BGO
     <message>
         <location filename="../mainwindow.ui" line="256"/>
         <source>Global configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Globale Konfiguration</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4350"/>
