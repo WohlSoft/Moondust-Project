@@ -742,22 +742,22 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1954"/>
         <source>Activate Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Activate Generator</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1955"/>
         <source>Generator Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator Type</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1956"/>
         <source>Generator Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator Direction</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1957"/>
         <source>Generator Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator Time</translation>
     </message>
 </context>
 <context>
