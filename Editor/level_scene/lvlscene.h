@@ -251,7 +251,8 @@ public:
         SETTING_NEEDASTAR,     //extraData: QList<QVariant[int]> [Old stars, New stars]
         SETTING_ENTRDIR,       //extraData: QList<QVariant[int]> [Old entrance dir, New entrance dir]
         SETTING_EXITDIR,       //extraData: QList<QVariant[int]> [Old exit dir, New exit dir]
-        SETTING_LEVELEXIT      //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
+        SETTING_LEVELEXIT,     //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
+        SETTING_LEVELENTR      //extraData: QList<QVariant[???]> [bool Checked, int ix, int iy]
     };
 
     //typedefs
