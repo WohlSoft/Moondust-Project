@@ -59,7 +59,7 @@ void MainWindow::setLayersBox()
 void MainWindow::setLayerLists()
 {
     int WinType = activeChildWindow();
-
+    LvlItemPropsLock = true;
     ui->PROPS_BGOLayer->clear();
     ui->PROPS_NpcLayer->clear();
     ui->PROPS_BlockLayer->clear();
@@ -81,6 +81,7 @@ void MainWindow::setLayerLists()
             ui->LVLEvent_LayerMov_List->addItem(layer.name);
         }
     }
+    LvlItemPropsLock = false;
 
 }
 

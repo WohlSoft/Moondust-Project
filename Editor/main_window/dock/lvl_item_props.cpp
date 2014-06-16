@@ -27,7 +27,6 @@
 #include "../../level_scene/itemmsgbox.h"
 
 
-static bool LvlItemPropsLock=false;//Protector for allow apply changes only if filed was edit by human
 static int npcSpecSpinOffset=0;
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
@@ -605,15 +604,18 @@ void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
+                modData.blocks.push_back(((ItemBlock*)item)->blockData);
                 ((ItemBlock*)item)->setLayer(arg1);
                 //break;
             }
         }
+        activeLvlEditWin()->scene->addChangedLayerHistory(modData, arg1);
     }
 
 }
@@ -732,15 +734,18 @@ void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="BGO")/*&&((item->data(2).toInt()==bgoPtr))*/)
             {
+                modData.bgo.push_back(((ItemBGO*)item)->bgoData);
                 ((ItemBGO*)item)->setLayer(arg1);
                 //break;
             }
         }
+        activeLvlEditWin()->scene->addChangedLayerHistory(modData, arg1);
     }
 
 }
@@ -1373,14 +1378,17 @@ void MainWindow::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->setLayer(arg1);
             }
         }
+        activeLvlEditWin()->scene->addChangedLayerHistory(modData, arg1);
     }
 
 }

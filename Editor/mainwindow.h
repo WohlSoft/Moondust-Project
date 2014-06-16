@@ -84,6 +84,9 @@ public:
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
 
+    //For itemProps
+    bool LvlItemPropsLock; //Protector for allow apply changes only if filed was edit by human
+
 protected:
     void closeEvent(QCloseEvent *event);
     void dragEnterEvent(QDragEnterEvent *e);
