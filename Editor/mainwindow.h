@@ -210,9 +210,10 @@ private slots:
     void on_actionSection_19_triggered();
     void on_actionSection_20_triggered();
     void on_actionSection_21_triggered();
-    void on_actionLoad_configs_triggered();
     void on_actionExport_to_image_triggered();
 
+    void on_actionLoad_configs_triggered();
+    void on_actionCurConfig_triggered();
 
     void on_LVLPropsMusicNumber_currentIndexChanged(int index);
     void on_LVLPropsMusicCustomEn_toggled(bool checked);

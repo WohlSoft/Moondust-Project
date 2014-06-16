@@ -211,6 +211,7 @@ public:
     dataconfigs();
     bool loadconfigs();
     DataFolders dirs;
+    QString config_dir;
 
     QVector<obj_BG > main_bg;
 
@@ -243,7 +244,6 @@ private:
     QString tmpstr;
     QStringList tmp;
 
-    QString config_dir;
     unsigned long total_data;
     QString bgoPath;
     QString BGPath;
