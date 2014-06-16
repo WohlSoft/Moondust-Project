@@ -405,6 +405,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_GENTIME){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTimeGeneratorNPC, 0, 0, true, true, false, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_ATTACHLAYER){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -780,7 +784,10 @@ void LvlScene::historyForward()
         if(lastOperation.subtype == SETTING_GENTIME){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTimeGeneratorNPC, 0, 0, true, true, false, true, true);
         }
-
+        else
+        if(lastOperation.subtype == SETTING_ATTACHLAYER){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -1353,6 +1360,18 @@ void LvlScene::historyUndoSettingsTimeGeneratorNPC(LvlScene::CallbackData cbData
 void LvlScene::historyRedoSettingsTimeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->npcData.generator_period = cbData.hist->extraData.toInt();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsAttachLayerNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.attach_layer = data.attach_layer;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsAttachLayerNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.attach_layer = cbData.hist->extraData.toString();
     ((ItemNPC*)cbData.item)->arrayApply();
 }
 
@@ -1955,6 +1974,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_GENTYPE: return tr("Generator Type");
     case SETTING_GENDIR: return tr("Generator Direction");
     case SETTING_GENTIME: return tr("Generator Time");
+    case SETTING_ATTACHLAYER: return tr("Attach Layer");
     default:
         return tr("Unknown");
     }

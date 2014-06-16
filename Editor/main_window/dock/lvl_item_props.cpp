@@ -1385,17 +1385,31 @@ void MainWindow::on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 if(ui->PROPS_NpcAttachLayer->currentIndex()>0)
+                {
                     ((ItemNPC*)item)->npcData.attach_layer = arg1;
+                }
                 else
+                {
                     ((ItemNPC*)item)->npcData.attach_layer = "";
+                }
                 ((ItemNPC*)item)->arrayApply();
             }
+        }
+        if(ui->PROPS_NpcAttachLayer->currentIndex()>0)
+        {
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_ATTACHLAYER, QVariant(arg1));
+        }
+        else
+        {
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_ATTACHLAYER, QVariant(""));
         }
     }
 
