@@ -516,8 +516,13 @@ void LvlScene::historyBack()
             warplist->setCurrentIndex( warplist->count()-1 );
         }
 
-        placeDoorEnter(removedDoor);
-        placeDoorExit(removedDoor);
+        if(removedDoor.isSetOut){
+            placeDoorExit(removedDoor);
+        }
+        if(removedDoor.isSetIn){
+            placeDoorEnter(removedDoor);
+        }
+
 
         MainWinConnect::pMainWin->setDoorData(-2);
         break;
