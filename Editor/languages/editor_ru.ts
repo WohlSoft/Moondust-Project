@@ -205,7 +205,7 @@
     <message>
         <location filename="../data_configs/configstatus.cpp" line="137"/>
         <source>Game worlds</source>
-        <translation type="unfinished"></translation>
+        <translation>Игровые миры</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="144"/>
