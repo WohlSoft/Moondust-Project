@@ -370,6 +370,10 @@ private slots:
     void on_LVLEvents_List_itemSelectionChanged();
     void on_LVLEvents_List_itemChanged(QListWidgetItem *item);
 
+    void on_LVLEvent_Cmn_Msg_clicked();
+    void on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index);
+    void on_LVLEvent_playSnd_clicked();
+    void on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index);
 
 private:
 
