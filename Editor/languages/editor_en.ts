@@ -2503,17 +2503,17 @@ File: %1</translation>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="172"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter:</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="183"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="188"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="107"/>
