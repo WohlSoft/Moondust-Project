@@ -180,6 +180,8 @@ void MainWindow::loadLanguage(const QString& rLanguage)
         updateWindowMenu();
         langListSync();
 
+        clearFilter();
+
         ui->statusBar->showMessage(tr("Current Language changed to %1").arg(languageName));
     }
 }
