@@ -129,7 +129,7 @@ void NpcDialog::updateSearch(QString searchStr)
             continue;
         }
         if(ui->searchTypeBox->currentIndex()==0){ //search by text
-            if(!ui->npcList->item(i)->text().contains(toSearch)){
+            if(!ui->npcList->item(i)->text().contains(toSearch, Qt::CaseInsensitive)){
                 ui->npcList->setRowHidden(i,true);
             }else{
                 ui->npcList->setRowHidden(i,false);
