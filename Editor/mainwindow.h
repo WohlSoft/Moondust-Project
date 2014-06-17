@@ -121,7 +121,8 @@ public slots:
 
     void setSoundList();
 
-    void DragAndDroppedLayer(QModelIndex sourceParent,int sourceStart,int sourceEnd,QModelIndex destinationParent,int destinationRow);
+    void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
+    void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
 
     //SubWindow functions
     npcedit *createNPCChild();
