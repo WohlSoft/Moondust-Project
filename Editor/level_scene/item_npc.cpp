@@ -310,16 +310,22 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         else
         if(selected==remove)
         {
+            bool deleted=false;
+            LevelData selData;
+            scene->contextMenuOpened = false; //will be disabled by remove anyway
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="NPC")
                 {
+                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                     ((ItemNPC *)SelItem)->removeFromArray();
                     scene->removeItem(SelItem);
                     delete SelItem;
+                    deleted = true;
                 }
             }
-            scene->contextMenuOpened = false;
+            //as this object isn't valid anymore we need to use MainWinConnect
+            if(deleted) MainWinConnect::pMainWin->activeLvlEditWin()->scene->addRemoveHistory(selData);
         }
         else
         if(selected==props)
