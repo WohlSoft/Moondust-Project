@@ -67,6 +67,7 @@ void MainWindow::setEventsBox()
 
 void MainWindow::EventListsSync()
 {
+    LvlItemPropsLock = true;
     int WinType = activeChildWindow();
 
     ui->PROPS_BlkEventDestroy->clear();
@@ -106,6 +107,7 @@ void MainWindow::EventListsSync()
             ui->LVLEvent_TriggerEvent->addItem(event.name);
         }
     }
+    LvlItemPropsLock = false;
 
 }
 

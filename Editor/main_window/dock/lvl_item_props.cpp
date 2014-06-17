@@ -44,6 +44,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
     */
+    LvlItemPropsLock=true;
 
     switch(Type)
     {
@@ -633,11 +634,13 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
+                modData.blocks.push_back(((ItemBlock*)item)->blockData);
                 if(ui->PROPS_BlkEventDestroy->currentIndex()>0)
                     ((ItemBlock*)item)->blockData.event_destroy = arg1;
                 else
@@ -645,6 +648,11 @@ void MainWindow::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg
                 ((ItemBlock*)item)->arrayApply();
                 //break;
             }
+        }
+        if(ui->PROPS_BlkEventDestroy->currentIndex()>0){
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_DESTROYED, QVariant(arg1));
+        }else{
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_DESTROYED, QVariant(""));
         }
     }
 
@@ -663,11 +671,13 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
+                modData.blocks.push_back(((ItemBlock*)item)->blockData);
                 if(ui->PROPS_BlkEventHited->currentIndex()>0)
                     ((ItemBlock*)item)->blockData.event_hit = arg1;
                 else
@@ -675,6 +685,11 @@ void MainWindow::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
                 ((ItemBlock*)item)->arrayApply();
                 //break;
             }
+        }
+        if(ui->PROPS_BlkEventHited->currentIndex()>0){
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_HITED, QVariant(arg1));
+        }else{
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_HITED, QVariant(""));
         }
     }
 
@@ -694,11 +709,13 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if((item->data(0).toString()=="Block")/*&&((item->data(2).toInt()==blockPtr))*/)
             {
+                modData.blocks.push_back(((ItemBlock*)item)->blockData);
                 if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0)
                     ((ItemBlock*)item)->blockData.event_no_more = arg1;
                 else
@@ -706,6 +723,11 @@ void MainWindow::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &
                 ((ItemBlock*)item)->arrayApply();
                 //break;
             }
+        }
+        if(ui->PROPS_BlkEventLayerEmpty->currentIndex()>0){
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_LAYER_EMP, QVariant(arg1));
+        }else{
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_LAYER_EMP, QVariant(""));
         }
     }
 
@@ -1428,17 +1450,24 @@ void MainWindow::on_PROPS_NpcEventActivate_currentIndexChanged(const QString &ar
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 if(ui->PROPS_NpcEventActivate->currentIndex()>0)
                     ((ItemNPC*)item)->npcData.event_activate = arg1;
                 else
                     ((ItemNPC*)item)->npcData.event_activate = "";
                 ((ItemNPC*)item)->arrayApply();
             }
+        }
+        if(ui->PROPS_NpcEventActivate->currentIndex()>0){
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_ACTIVATE, QVariant(arg1));
+        }else{
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_ACTIVATE, QVariant(""));
         }
     }
 
@@ -1456,17 +1485,24 @@ void MainWindow::on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 if(ui->PROPS_NpcEventDeath->currentIndex()>0)
                     ((ItemNPC*)item)->npcData.event_die = arg1;
                 else
                     ((ItemNPC*)item)->npcData.event_die = "";
                 ((ItemNPC*)item)->arrayApply();
             }
+        }
+        if(ui->PROPS_NpcEventDeath->currentIndex()>0){
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_DEATH, QVariant(arg1));
+        }else{
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_DEATH, QVariant(""));
         }
     }
 
@@ -1485,17 +1521,24 @@ void MainWindow::on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1)
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 if(ui->PROPS_NpcEventTalk->currentIndex()>0)
                     ((ItemNPC*)item)->npcData.event_talk = arg1;
                 else
                     ((ItemNPC*)item)->npcData.event_talk = "";
                 ((ItemNPC*)item)->arrayApply();
             }
+        }
+        if(ui->PROPS_NpcEventTalk->currentIndex()>0){
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_TALK, QVariant(arg1));
+        }else{
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_TALK, QVariant(""));
         }
     }
 
@@ -1514,17 +1557,24 @@ void MainWindow::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &
     else
     if (activeChildWindow()==1)
     {
+        LevelData modData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                modData.npc.push_back(((ItemNPC*)item)->npcData);
                 if(ui->PROPS_NpcEventEmptyLayer->currentIndex()>0)
                     ((ItemNPC*)item)->npcData.event_nomore = arg1;
                 else
                     ((ItemNPC*)item)->npcData.event_nomore = "";
                 ((ItemNPC*)item)->arrayApply();
             }
+        }
+        if(ui->PROPS_NpcEventEmptyLayer->currentIndex()>0){
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_LAYER_EMP, QVariant(arg1));
+        }else{
+            activeLvlEditWin()->scene->addChangeSettingsHistory(modData, LvlScene::SETTING_EV_LAYER_EMP, QVariant(""));
         }
     }
 
