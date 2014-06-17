@@ -54,6 +54,8 @@ void MainWindow::setDefaults()
     LevelLayersBoxVis = false; //Layers box
     LevelEventsBoxVis = false; //Events box
 
+    LvlItemPropsLock=true;
+
     WorldToolBoxVis = false;
     autoPlayMusic = false;
 
