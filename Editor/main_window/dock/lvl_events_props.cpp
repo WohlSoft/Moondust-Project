@@ -107,7 +107,7 @@ void MainWindow::EventListsSync()
             ui->LVLEvent_TriggerEvent->addItem(event.name);
         }
     }
-    LvlItemPropsLock = false;
+    //LvlItemPropsLock = false; - must be true always
 
 }
 
@@ -458,6 +458,28 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
     }//if WinType==1
     EventListsSync();
 }
+
+void MainWindow::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
+{
+    WriteToLog(QtDebugMsg, "Row Change at " + QString::number(sourceStart) +
+               " " + QString::number(sourceEnd) +
+               " to " + QString::number(destinationRow));
+
+    int WinType = activeChildWindow();
+    if (WinType==1)
+    {
+        LevelEvents buffer;
+        if(sourceStart<activeLvlEditWin()->LvlData.events.size())
+        {
+            buffer = activeLvlEditWin()->LvlData.events[sourceStart];
+            activeLvlEditWin()->LvlData.events.remove(sourceStart);
+            activeLvlEditWin()->LvlData.events.insert(((destinationRow>sourceStart)?destinationRow-1:destinationRow), buffer);
+        }
+    }
+
+    EventListsSync();  //Sync comboboxes in properties
+}
+
 
 long MainWindow::getEventArrayIndex()
 {
