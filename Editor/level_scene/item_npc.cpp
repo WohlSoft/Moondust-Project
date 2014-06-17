@@ -257,8 +257,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             {
                 if(SelItem->data(0).toString()=="NPC")
                 {
-                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                     ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
+                    selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                 }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BOSS, QVariant(boss->isChecked()));
