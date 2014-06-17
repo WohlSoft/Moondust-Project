@@ -115,6 +115,42 @@ void NpcDialog::setState(int npcID, int mode)
 
 }
 
+void NpcDialog::updateSearch(QString searchStr)
+{
+    QString toSearch;
+    if(searchStr.isEmpty()){
+        toSearch = ui->searchEdit->text();
+    }else{
+        toSearch = searchStr;
+    }
+    for(int i = 0; i < ui->npcList->count(); i++){
+        if(toSearch.isEmpty()){
+            ui->npcList->setRowHidden(i,false);
+            continue;
+        }
+        if(ui->searchTypeBox->currentIndex()==0){ //search by text
+            if(!ui->npcList->item(i)->text().contains(toSearch)){
+                ui->npcList->setRowHidden(i,true);
+            }else{
+                ui->npcList->setRowHidden(i,false);
+            }
+        }else if(ui->searchTypeBox->currentIndex()==1){ //search by id
+            bool conv = false;
+            int toIdSearch = toSearch.toInt(&conv);
+            if(!conv){ //cannot convert
+                break;
+            }
+            if(ui->npcList->item(i)->data(3).toInt()==toIdSearch){
+                ui->npcList->setRowHidden(i,false);
+            }else{
+                ui->npcList->setRowHidden(i,true);
+            }
+        }else{//else do nothing
+            break;
+        }
+    }
+}
+
 void NpcDialog::on_npcList_doubleClicked(const QModelIndex &index)
 {
     selectedNPC = index.data(3).toInt();
@@ -162,9 +198,21 @@ void NpcDialog::on_buttonBox_accepted()
 void NpcDialog::on_NPCfromList_toggled(bool checked)
 {
     ui->npcList->setEnabled(checked);
+    ui->searchEdit->setEnabled(checked);
+    ui->searchTypeBox->setEnabled(checked);
 }
 
 void NpcDialog::on_coinsNPC_toggled(bool checked)
 {
-     ui->coinsInBlock->setEnabled(checked);
+    ui->coinsInBlock->setEnabled(checked);
+}
+
+void NpcDialog::on_searchEdit_textChanged(const QString &arg1)
+{
+    updateSearch(arg1);
+}
+
+void NpcDialog::on_searchTypeBox_currentIndexChanged(int /*index*/)
+{
+    updateSearch(QString(""));
 }

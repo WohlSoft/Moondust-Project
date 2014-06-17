@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>378</width>
-    <height>327</height>
+    <width>417</width>
+    <height>359</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,11 +17,11 @@
    <iconset resource="../_resources/editor.qrc">
     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,10,40,1000" columnstretch="100,0">
+  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0" columnstretch="100,0">
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
-   <item row="2" column="0" rowspan="2">
+   <item row="3" column="0">
     <widget class="QListWidget" name="npcList">
      <property name="minimumSize">
       <size>
@@ -77,6 +77,35 @@
         <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
       </property>
      </item>
+    </widget>
+   </item>
+   <item row="1" column="1" rowspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" rowspan="2">
+    <widget class="QLabel" name="npcSelectLabel">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Please, select NPC from list</string>
+     </property>
     </widget>
    </item>
    <item row="3" column="1">
@@ -135,34 +164,33 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="1" rowspan="2">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" rowspan="2">
-    <widget class="QLabel" name="npcSelectLabel">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Please, select NPC from list</string>
-     </property>
-    </widget>
+   <item row="2" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="labelFilter">
+       <property name="text">
+        <string>Filter:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="searchEdit"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="searchTypeBox">
+       <item>
+        <property name="text">
+         <string>Text</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ID</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
