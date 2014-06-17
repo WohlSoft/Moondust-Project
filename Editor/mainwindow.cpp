@@ -196,3 +196,4 @@ void MainWindow::refreshHistoryButtons()
     TickTackLock = false;
 }
 */
+

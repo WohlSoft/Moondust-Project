@@ -19,6 +19,8 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 
+#include "../data_configs/configstatus.h"
+
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
@@ -57,3 +59,12 @@ void MainWindow::on_actionLoad_configs_triggered()
 }
 
 
+
+void MainWindow::on_actionCurConfig_triggered()
+{
+    ConfigStatus * cnfWindow = new ConfigStatus(configs);
+    cnfWindow->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cnfWindow->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cnfWindow->size(), qApp->desktop()->availableGeometry()));
+    cnfWindow->exec();
+    //if(cnfWindow->exec()==QDialog::Accepted)
+}

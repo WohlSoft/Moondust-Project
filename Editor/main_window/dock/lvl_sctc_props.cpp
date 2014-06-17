@@ -200,14 +200,25 @@ void MainWindow::setLevelSectionData()
     ui->LVLPropsBackImage->clear();
     ui->LVLPropsMusicNumber->clear();
 
+    ui->LVLEvent_SctMus_List->clear(); //Music list in events
+    ui->LVLEvent_SctBg_List->clear();  //Background list in events
+
     ui->LVLPropsBackImage->addItem( tr("[No image]"), "0" );
+    ui->LVLEvent_SctBg_List->addItem( tr("[No image]"), "0" );
     ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), "0" );
+    ui->LVLEvent_SctMus_List->addItem( tr("[Silence]"), "0" );
 
     for(i=0; i< configs.main_bg.size();i++)
+    {
         ui->LVLPropsBackImage->addItem(configs.main_bg[i].name, QString::number(configs.main_bg[i].id));
+        ui->LVLEvent_SctBg_List->addItem(configs.main_bg[i].name, QString::number(configs.main_bg[i].id));
+    }
 
     for(i=0; i< configs.main_music_lvl.size();i++)
+    {
         ui->LVLPropsMusicNumber->addItem(configs.main_music_lvl[i].name, QString::number(configs.main_music_lvl[i].id) );
+        ui->LVLEvent_SctMus_List->addItem(configs.main_music_lvl[i].name, QString::number(configs.main_music_lvl[i].id) );
+    }
 
     //Set current data
     if (activeChildWindow()==1)

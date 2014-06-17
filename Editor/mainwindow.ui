@@ -251,7 +251,15 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionLoad_configs"/>
+    <widget class="QMenu" name="menuGlobal_configuration">
+     <property name="title">
+      <string>Global configuration</string>
+     </property>
+     <addaction name="actionCurConfig"/>
+     <addaction name="actionLoad_configs"/>
+    </widget>
+    <addaction name="menuGlobal_configuration"/>
+    <addaction name="separator"/>
     <addaction name="actionReload"/>
     <addaction name="separator"/>
     <addaction name="actionApplication_settings"/>
@@ -1004,8 +1012,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>514</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1028,8 +1036,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>514</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1052,8 +1060,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>239</width>
-        <height>514</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2551,8 +2559,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>468</width>
-          <height>724</height>
+          <width>167</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2678,8 +2686,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>260</width>
-          <height>724</height>
+          <width>194</width>
+          <height>547</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3406,7 +3414,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <number>2</number>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -3416,7 +3424,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>139</width>
           <height>360</height>
          </rect>
         </property>
@@ -3599,8 +3607,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>348</height>
+          <width>195</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3681,8 +3689,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>348</height>
+          <width>192</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3775,7 +3783,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>231</width>
           <height>461</height>
          </rect>
         </property>
@@ -4074,59 +4082,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>348</height>
+          <height>316</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Common</string>
         </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QLabel" name="label_23">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Display message:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="LVLEvent_Cmn_Msg">
-           <property name="text">
-            <string notr="true">[msg]</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_24">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Play sound:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="LVLEvent_Cmn_PlaySnd">
-           <property name="maxVisibleItems">
-            <number>50</number>
-           </property>
-           <item>
-            <property name="text">
-             <string notr="true">[Don't play sound]</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="4" column="0">
           <widget class="QLabel" name="label_25">
            <property name="font">
             <font>
@@ -4139,7 +4102,65 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item>
+         <item row="3" column="0">
+          <widget class="QComboBox" name="LVLEvent_Cmn_PlaySnd">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string notr="true">[Don't play sound]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_24">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Play sound:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QPushButton" name="LVLEvent_playSnd">
+           <property name="maximumSize">
+            <size>
+             <width>50</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Test</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QPushButton" name="LVLEvent_Cmn_Msg">
+           <property name="text">
+            <string notr="true">[msg]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label_23">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Display message:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0" colspan="2">
           <widget class="QComboBox" name="LVLEvent_Cmn_EndGame">
            <property name="maxVisibleItems">
             <number>50</number>
@@ -4156,7 +4177,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </item>
           </widget>
          </item>
-         <item>
+         <item row="6" column="0" colspan="2">
           <spacer name="verticalSpacer">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -4176,8 +4197,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>348</height>
+          <width>190</width>
+          <height>110</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4274,8 +4295,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>348</height>
+          <width>104</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4398,7 +4419,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   </action>
   <action name="Exit">
    <property name="text">
-    <string>Exit</string>
+    <string>Exit program</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
@@ -5764,6 +5785,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </property>
    <property name="text">
     <string>Events</string>
+   </property>
+  </action>
+  <action name="actionCurConfig">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Current configuration status...</string>
    </property>
   </action>
  </widget>

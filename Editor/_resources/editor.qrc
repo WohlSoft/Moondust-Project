@@ -77,5 +77,8 @@
         <file alias="images/mac/mushroom.icns">mushroom.icns</file>
         <file>splash.png</file>
         <file>images/events.png</file>
+        <file>images/conf_bad.png</file>
+        <file>images/conf_good.png</file>
+        <file>images/conf_warn.png</file>
     </qresource>
 </RCC>
