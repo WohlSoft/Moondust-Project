@@ -449,14 +449,15 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
         }//if(item->data(3).toString()=="NewEvent")
         else
         {
-            //QString eventName = item->text();
-            //QString oldEventName = item->text();
+            QString eventName = item->text();
+            QString oldEventName = item->text();
 
-            //ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
+            ModifyEventItem(item, oldEventName, eventName);
             activeLvlEditWin()->LvlData.modified=true;
         }
 
     }//if WinType==1
+    EventListsSync();
 }
 
 long MainWindow::getEventArrayIndex()
@@ -481,13 +482,79 @@ long MainWindow::getEventArrayIndex()
 }
 
 
+void MainWindow::AddNewEvent(QString eventName, bool setEdited)
+{
+    QListWidgetItem * item;
+    item = new QListWidgetItem;
+    item->setText(eventName);
+    item->setFlags(Qt::ItemIsEditable);
+    item->setFlags(item->flags() | Qt::ItemIsEnabled);
+    item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+    item->setData(3, QString("NewEvent") );
+    ui->LVLEvents_List->addItem( item );
+
+    if(setEdited)
+    {
+        ui->LVLEvents_List->setFocus();
+        ui->LVLEvents_List->editItem( item );
+    }
+    else
+    {
+        bool AlreadyExist=false;
+        foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+        {
+            if( event.name==item->text() )
+            {
+                AlreadyExist=true;
+                break;
+            }
+        }
+
+        if(AlreadyExist)
+        {
+            delete item;
+            return;
+        }
+        else
+        {
+            LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+            NewEvent.name = item->text();
+            activeLvlEditWin()->LvlData.events_array_id++;
+            NewEvent.array_id = activeLvlEditWin()->LvlData.events_array_id;
+            item->setData(3, QString::number(NewEvent.array_id));
+
+            activeLvlEditWin()->LvlData.events.push_back(NewEvent);
+            activeLvlEditWin()->LvlData.modified=true;
+        }
+    }
+    EventListsSync();  //Sync comboboxes in properties
+}
+
+void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName)
+{
+    //Find layer enrty in array and apply settings
+    for(int i=0; i < activeLvlEditWin()->LvlData.events.size(); i++)
+    {
+        if( activeLvlEditWin()->LvlData.events[i].array_id==(unsigned int)item->data(3).toInt() )
+        {
+            oldEventName = activeLvlEditWin()->LvlData.events[i].name;
+            activeLvlEditWin()->LvlData.events[i].name = newEventName;
+            break;
+        }
+    }
+    EventListsSync();  //Sync comboboxes in properties
+}
+
 void MainWindow::on_LVLEvents_add_clicked()
 {
+    AddNewEvent(tr("New Event %1").arg( ui->LVLEvents_List->count()+1 ), true);
 
 }
 
 void MainWindow::on_LVLEvents_del_clicked()
 {
+    if(ui->LVLEvents_List->selectedItems().isEmpty()) return;
+
 
 }
 
@@ -1178,8 +1245,6 @@ void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
         edit->LvlData.modified=true;
     }
 }
-
-
 
 
 

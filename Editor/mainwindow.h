@@ -472,6 +472,11 @@ private:
     void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);
     // //////////////////////////////////////////////
 
+    // ////////////Event Functions///////////////////
+    void AddNewEvent(QString eventName, bool setEdited);
+    void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
+    // //////////////////////////////////////////////
+
     QMediaPlayer * MusicPlayer;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);
@@ -513,7 +518,6 @@ private:
     void setPointer();
 
     Ui::MainWindow *ui;
-
 };
 
 
