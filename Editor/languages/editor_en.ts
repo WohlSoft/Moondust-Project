@@ -970,19 +970,19 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Music</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="117"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="119"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="208"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="209"/>
         <source>[Silence]</source>
         <translation>[Silence]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="656"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="667"/>
         <source>New Event %1</source>
         <translation>New Event %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1110"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1121"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
         <translation>Please enter message
@@ -1292,8 +1292,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Slippery</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="258"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1116"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="260"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1127"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="302"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="1055"/>
         <source>[none]</source>
@@ -1897,7 +1897,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3712"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="191"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="193"/>
         <source>Section</source>
         <translation>Section</translation>
     </message>
@@ -2453,7 +2453,7 @@ File: %1</translation>
         <translation>[empty]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="83"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="84"/>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="74"/>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="76"/>
         <source>[None]</source>
@@ -2503,17 +2503,17 @@ File: %1</translation>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="172"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter:</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="183"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="188"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="107"/>

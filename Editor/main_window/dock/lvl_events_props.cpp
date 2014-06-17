@@ -68,6 +68,7 @@ void MainWindow::EventListsSync()
 {
     ui->ItemProperties->hide();
     LvlItemPropsLock=true;
+    lockSetEventSettings=true;
     int WinType = activeChildWindow();
 
     ui->PROPS_BlkEventDestroy->clear();
@@ -108,6 +109,7 @@ void MainWindow::EventListsSync()
         }
     }
     //LvlItemPropsLock = false; - must be true always
+    lockSetEventSettings=false;
 
 }
 
@@ -276,7 +278,6 @@ void MainWindow::setEventData(long index)
                     if(event.end_game<ui->LVLEvent_Cmn_EndGame->count())
                         ui->LVLEvent_Cmn_EndGame->setCurrentIndex(event.end_game);
 
-
                     //Player Control key hold
                     ui->LVLEvent_Key_AltJump->setChecked(event.altjump);
                     ui->LVLEvent_Key_AltRun->setChecked(event.altrun);
@@ -411,6 +412,8 @@ void MainWindow::on_LVLEvents_List_itemSelectionChanged()
 
 void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 {
+    if(lockSetEventSettings) return;
+    lockSetEventSettings=true;
     int WinType = activeChildWindow();
 
     if (WinType==1)
@@ -457,10 +460,12 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 
     }//if WinType==1
     EventListsSync();
+    lockSetEventSettings=false;
 }
 
 void MainWindow::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow)
 {
+    lockSetEventSettings=true;
     WriteToLog(QtDebugMsg, "Row Change at " + QString::number(sourceStart) +
                " " + QString::number(sourceEnd) +
                " to " + QString::number(destinationRow));
@@ -476,7 +481,7 @@ void MainWindow::DragAndDroppedEvent(QModelIndex /*sourceParent*/,int sourceStar
             activeLvlEditWin()->LvlData.events.insert(((destinationRow>sourceStart)?destinationRow-1:destinationRow), buffer);
         }
     }
-
+    lockSetEventSettings=false;
     EventListsSync();  //Sync comboboxes in properties
 }
 
@@ -505,6 +510,8 @@ long MainWindow::getEventArrayIndex()
 
 void MainWindow::AddNewEvent(QString eventName, bool setEdited)
 {
+    lockSetEventSettings=true;
+
     QListWidgetItem * item;
     item = new QListWidgetItem;
     item->setText(eventName);
@@ -534,6 +541,7 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
         if(AlreadyExist)
         {
             delete item;
+            lockSetEventSettings=false;
             return;
         }
         else
@@ -548,11 +556,13 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
             activeLvlEditWin()->LvlData.modified=true;
         }
     }
+    lockSetEventSettings=false;
     EventListsSync();  //Sync comboboxes in properties
 }
 
 void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName)
 {
+    lockSetEventSettings=true;
     //Find layer enrty in array and apply settings
     leveledit * edit = activeLvlEditWin();
     for(int i=0; i < edit->LvlData.events.size(); i++)
@@ -597,6 +607,7 @@ void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QS
         }
     }
 
+    lockSetEventSettings=false;
     //Update event name in items
     ModifyEvent(oldEventName, newEventName);
     EventListsSync();  //Sync comboboxes in properties
