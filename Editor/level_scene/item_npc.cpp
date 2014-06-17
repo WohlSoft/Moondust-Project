@@ -201,8 +201,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             {
                 if(SelItem->data(0).toString()=="NPC")
                 {
-                    ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    ((ItemNPC *) SelItem)->setFriendly(fri->isChecked());
                 }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_FRIENDLY, QVariant(fri->isChecked()));
@@ -217,8 +217,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             {
                 if(SelItem->data(0).toString()=="NPC")
                 {
-                    ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    ((ItemNPC *) SelItem)->setNoMovable(stat->isChecked());
                 }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_NOMOVEABLE, QVariant(stat->isChecked()));
@@ -257,8 +257,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             {
                 if(SelItem->data(0).toString()=="NPC")
                 {
-                    ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
+                    ((ItemNPC *) SelItem)->setLegacyBoss(boss->isChecked());
                 }
             }
             scene->addChangeSettingsHistory(selData, LvlScene::SETTING_BOSS, QVariant(boss->isChecked()));
