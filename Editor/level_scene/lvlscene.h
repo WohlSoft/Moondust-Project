@@ -258,7 +258,13 @@ public:
         SETTING_GENTYPE,       //extraData: int [new type]
         SETTING_GENDIR,        //extraData: int [new dir]
         SETTING_GENTIME,       //extraData: int [new time]
-        SETTING_ATTACHLAYER    //extraData: String [new layer]
+        SETTING_ATTACHLAYER,   //extraData: String [new layer]
+        SETTING_EV_DESTROYED,  //extraData: String [new event]
+        SETTING_EV_HITED,      //extraData: String [new event]
+        SETTING_EV_LAYER_EMP,  //extraData: String [new event]
+        SETTING_EV_ACTIVATE,   //extraData: String [new event]
+        SETTING_EV_DEATH,      //extraData: String [new event]
+        SETTING_EV_TALK        //extraData: String [new event]
     };
 
     //typedefs
@@ -362,6 +368,26 @@ public:
     //Callbackfunctions: [Change Settings] Attach Layer
     void historyUndoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Destroyed Event
+    void historyUndoSettingsDestroyedEventBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsDestroyedEventBlocks(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: [Change Settings] Hited Event
+    void historyUndoSettingsHitedEventBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsHitedEventBlocks(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: [Change Settings] Layer Empty Event
+    void historyUndoSettingsLayerEmptyEventBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsLayerEmptyEventBlocks(CallbackData cbData, LevelBlock data);
+    void historyUndoSettingsLayerEmptyEventNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsLayerEmptyEventNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Activate Event
+    void historyUndoSettingsActivateEventNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsActivateEventNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Death Event
+    void historyUndoSettingsDeathEventNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsDeathEventNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Talk Event
+    void historyUndoSettingsTalkEventNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsTalkEventNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);

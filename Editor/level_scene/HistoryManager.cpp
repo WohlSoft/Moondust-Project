@@ -409,6 +409,30 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_ATTACHLAYER){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_EV_DESTROYED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsDestroyedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_HITED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsHitedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_LAYER_EMP){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsLayerEmptyEventBlocks, 0, &LvlScene::historyUndoSettingsLayerEmptyEventNPC, 0, 0, false, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_ACTIVATE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_DEATH){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDeathEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_TALK){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTalkEventNPC, 0, 0, true, true, false, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -787,6 +811,30 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_ATTACHLAYER){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_DESTROYED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsDestroyedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_HITED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsHitedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_LAYER_EMP){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsLayerEmptyEventBlocks, 0, &LvlScene::historyRedoSettingsLayerEmptyEventNPC, 0, 0, false, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_ACTIVATE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_DEATH){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDeathEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_TALK){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTalkEventNPC, 0, 0, true, true, false, true, true);
         }
         break;
     }
@@ -1372,6 +1420,90 @@ void LvlScene::historyUndoSettingsAttachLayerNPC(LvlScene::CallbackData cbData, 
 void LvlScene::historyRedoSettingsAttachLayerNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->npcData.attach_layer = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsDestroyedEventBlocks(LvlScene::CallbackData cbData, LevelBlock data)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_destroy = data.event_destroy;
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsDestroyedEventBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_destroy = cbData.hist->extraData.toString();
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsHitedEventBlocks(LvlScene::CallbackData cbData, LevelBlock data)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_hit = data.event_hit;
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsHitedEventBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_hit = cbData.hist->extraData.toString();
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsLayerEmptyEventBlocks(LvlScene::CallbackData cbData, LevelBlock data)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_no_more = data.event_no_more;
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsLayerEmptyEventBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_no_more = cbData.hist->extraData.toString();
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsLayerEmptyEventNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_nomore = data.event_nomore;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsLayerEmptyEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_nomore = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsActivateEventNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_activate = data.event_activate;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsActivateEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_activate = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsDeathEventNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_die = data.event_die;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsDeathEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_die = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsTalkEventNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_talk = data.event_talk;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsTalkEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_talk = cbData.hist->extraData.toString();
     ((ItemNPC*)cbData.item)->arrayApply();
 }
 
@@ -1975,6 +2107,12 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_GENDIR: return tr("Generator Direction");
     case SETTING_GENTIME: return tr("Generator Time");
     case SETTING_ATTACHLAYER: return tr("Attach Layer");
+    case SETTING_EV_DESTROYED: return tr("Event Block Destroyed");
+    case SETTING_EV_HITED: return tr("Event Block Hited");
+    case SETTING_EV_LAYER_EMP: return tr("Event Layer Empty");
+    case SETTING_EV_ACTIVATE: return tr("Event NPC Activate");
+    case SETTING_EV_DEATH: return tr("Event NPC Die");
+    case SETTING_EV_TALK: return tr("Event NPC Talk");
     default:
         return tr("Unknown");
     }
