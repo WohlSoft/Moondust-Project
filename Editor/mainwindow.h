@@ -143,6 +143,11 @@ public slots:
     void setEventData(long index=-1);
     void EventListsSync();
 
+    //Toolbox functions
+    void updateSearches();
+    void updateSearch(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox);
+    void clearSearches();
+
     //LvlDoorProps Functions
     QComboBox* getWarpList();
     void setWarpRemoveButtonEnabled(bool isEnabled);
@@ -442,6 +447,13 @@ private slots:
 
     void on_LVLEvent_TriggerEvent_currentIndexChanged(int index);
     void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
+
+    void on_BlockFilterField_textChanged(const QString &arg1);
+    void on_BlockFilterType_currentIndexChanged(int index);
+    void on_BGOFilterField_textChanged(const QString &arg1);
+    void on_BGOFilterType_currentIndexChanged(int index);
+    void on_NPCFilterField_textChanged(const QString &arg1);
+    void on_NPCFilterType_currentIndexChanged(int index);
 
 private:
 
