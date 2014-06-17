@@ -937,8 +937,8 @@ void MainWindow::on_PROPS_NpcFri_clicked(bool checked)
         {
             if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                ((ItemNPC*)item)->setFriendly(checked);
                 selData.npc.push_back(((ItemNPC*)item)->npcData);
+                ((ItemNPC*)item)->setFriendly(checked);
                 //break;
             }
         }
@@ -965,8 +965,8 @@ void MainWindow::on_PROPS_NPCNoMove_clicked(bool checked)
         {
             if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                ((ItemNPC*)item)->setNoMovable(checked);
                 selData.npc.push_back(((ItemNPC*)item)->npcData);
+                ((ItemNPC*)item)->setNoMovable(checked);
                 //break;
             }
         }
@@ -992,8 +992,8 @@ void MainWindow::on_PROPS_NpcBoss_clicked(bool checked)
         {
             if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
-                ((ItemNPC*)item)->setLegacyBoss(checked);
                 selData.npc.push_back(((ItemNPC*)item)->npcData);
+                ((ItemNPC*)item)->setLegacyBoss(checked);
                 //break;
             }
         }
