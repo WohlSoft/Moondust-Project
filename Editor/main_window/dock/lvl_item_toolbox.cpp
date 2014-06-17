@@ -518,6 +518,8 @@ void MainWindow::clearFilter()
 void MainWindow::on_BlockFilterField_textChanged(const QString &arg1)
 {
     updateFilters();
+
+    if(arg1.isEmpty()) return; //Dummy
 }
 
 void MainWindow::on_BlockFilterType_currentIndexChanged(int /*index*/)
@@ -528,6 +530,8 @@ void MainWindow::on_BlockFilterType_currentIndexChanged(int /*index*/)
 void MainWindow::on_BGOFilterField_textChanged(const QString &arg1)
 {
     updateFilters();
+
+    if(arg1.isEmpty()) return; //Dummy
 }
 
 void MainWindow::on_BGOFilterType_currentIndexChanged(int /*index*/)
@@ -538,6 +542,7 @@ void MainWindow::on_BGOFilterType_currentIndexChanged(int /*index*/)
 void MainWindow::on_NPCFilterField_textChanged(const QString &arg1)
 {
     updateFilters();
+    if(arg1.isEmpty()) return; //Dummy
 }
 
 void MainWindow::on_NPCFilterType_currentIndexChanged(int /*index*/)
