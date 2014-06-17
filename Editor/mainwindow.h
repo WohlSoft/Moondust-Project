@@ -475,6 +475,8 @@ private:
     // ////////////Event Functions///////////////////
     void AddNewEvent(QString eventName, bool setEdited);
     void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
+    void ModifyEvent(QString eventName, QString newEventName);
+    void RemoveEvent(QString eventName);
     // //////////////////////////////////////////////
 
     QMediaPlayer * MusicPlayer;

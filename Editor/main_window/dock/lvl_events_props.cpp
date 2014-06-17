@@ -56,7 +56,6 @@ void MainWindow::setEventsBox()
             if((event.name!="Level - Start")&&(event.name!="P Switch - Start")&&(event.name!="P Switch - End"))
                 item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled);
 
-            //item->setCheckState( (layer.hidden) ? Qt::Unchecked: Qt::Checked );
             item->setData(3, QString::number( event.array_id ) );
             ui->LVLEvents_List->addItem( item );
         }
@@ -67,6 +66,9 @@ void MainWindow::setEventsBox()
 
 void MainWindow::EventListsSync()
 {
+    ui->ItemProperties->hide();
+    LvlItemPropsLock=true;
+
     int WinType = activeChildWindow();
 
     ui->PROPS_BlkEventDestroy->clear();
@@ -109,7 +111,6 @@ void MainWindow::EventListsSync()
 
 }
 
-
 void MainWindow::setSoundList()
 {
     ui->LVLEvent_Cmn_PlaySnd->clear();
@@ -123,7 +124,6 @@ void MainWindow::setSoundList()
             ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id));
     }
 }
-
 
 
 void MainWindow::setEventData(long index)
@@ -409,7 +409,6 @@ void MainWindow::on_LVLEvents_List_itemSelectionChanged()
 
 }
 
-
 void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 {
     int WinType = activeChildWindow();
@@ -533,29 +532,133 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
 void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName)
 {
     //Find layer enrty in array and apply settings
-    for(int i=0; i < activeLvlEditWin()->LvlData.events.size(); i++)
+    leveledit * edit = activeLvlEditWin();
+    for(int i=0; i < edit->LvlData.events.size(); i++)
     {
-        if( activeLvlEditWin()->LvlData.events[i].array_id==(unsigned int)item->data(3).toInt() )
+        if( edit->LvlData.events[i].array_id==(unsigned int)item->data(3).toInt() )
         {
-            oldEventName = activeLvlEditWin()->LvlData.events[i].name;
-            activeLvlEditWin()->LvlData.events[i].name = newEventName;
+            int l=0;
+            bool exist=false;
+
+            oldEventName = edit->LvlData.events[i].name;
+
+            if(newEventName.isEmpty())
+            {   //Discard change to empty
+                lockSetEventSettings=true;
+                   item->setText(oldEventName);
+                lockSetEventSettings=false;
+                return;
+            }
+
+            if(oldEventName!=newEventName)
+            {
+                //Check for exists item equal to new item
+                for(l=0;l<edit->LvlData.events.size();l++)
+                {
+                    if(edit->LvlData.events[l].name==newEventName)
+                    {
+                        exist=true;
+                        break;
+                    }
+                }
+            }
+            if(exist)
+            {   //Discard change to exist event
+                lockSetEventSettings=true;
+                   item->setText(oldEventName);
+                lockSetEventSettings=false;
+                return;
+            }
+
+            edit->LvlData.events[i].name = newEventName;
             break;
         }
     }
+
+    //Update event name in items
+    ModifyEvent(oldEventName, newEventName);
     EventListsSync();  //Sync comboboxes in properties
+}
+
+void MainWindow::ModifyEvent(QString eventName, QString newEventName)
+{
+    //Apply layer's name to all items
+    leveledit * edit = activeLvlEditWin();
+    QList<QGraphicsItem*> ItemList = edit->scene->items();
+
+    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    {
+        if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
+
+        if((*it)->data(0).toString()=="Block")
+        {
+            bool isMod=false;
+            if( ((ItemBlock *)(*it))->blockData.event_destroy ==  eventName)
+                {((ItemBlock *)(*it))->blockData.event_destroy = newEventName; isMod=true;}
+            if( ((ItemBlock *)(*it))->blockData.event_hit ==  eventName)
+                {((ItemBlock *)(*it))->blockData.event_hit = newEventName; isMod=true;}
+            if( ((ItemBlock *)(*it))->blockData.event_no_more ==  eventName)
+                {((ItemBlock *)(*it))->blockData.event_no_more = newEventName; isMod=true;}
+            if(isMod){ ((ItemBlock *)(*it))->arrayApply(); }
+        }
+        else
+        if((*it)->data(0).toString()=="NPC")
+        {
+            bool isMod=false;
+            if( ((ItemNPC *)(*it))->npcData.event_activate ==  eventName)
+                {((ItemNPC *)(*it))->npcData.event_activate = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->npcData.event_die ==  eventName)
+                {((ItemNPC *)(*it))->npcData.event_die = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->npcData.event_talk ==  eventName)
+                {((ItemNPC *)(*it))->npcData.event_talk = newEventName; isMod=true;}
+            if( ((ItemNPC *)(*it))->npcData.event_nomore ==  eventName)
+                {((ItemNPC *)(*it))->npcData.event_nomore = newEventName; isMod=true;}
+            if(isMod) {((ItemNPC *)(*it))->arrayApply();}
+        }
+    }
+    for(int i=0; i < edit->LvlData.events.size(); i++)
+    {
+        if( edit->LvlData.events[i].trigger == eventName)
+            edit->LvlData.events[i].trigger = newEventName;
+    }
+}
+
+void MainWindow::RemoveEvent(QString eventName)
+{
+    if(eventName.isEmpty()) return;
+    //dummy
 }
 
 void MainWindow::on_LVLEvents_add_clicked()
 {
     AddNewEvent(tr("New Event %1").arg( ui->LVLEvents_List->count()+1 ), true);
-
 }
 
 void MainWindow::on_LVLEvents_del_clicked()
 {
     if(ui->LVLEvents_List->selectedItems().isEmpty()) return;
 
+    if(ui->LVLEvents_List->selectedItems()[0]->text()=="Level - Start") return;
+    if(ui->LVLEvents_List->selectedItems()[0]->text()=="P Switch - Start") return;
+    if(ui->LVLEvents_List->selectedItems()[0]->text()=="P Switch - End") return;
 
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        for(int i=0;i< activeLvlEditWin()->LvlData.events.size(); i++)
+        {
+            if( activeLvlEditWin()->LvlData.events[i].array_id==
+                    (unsigned int)ui->LVLEvents_List->selectedItems()[0]->data(3).toInt() )
+            {
+                ModifyEvent(activeLvlEditWin()->LvlData.events[i].name, "");
+                activeLvlEditWin()->LvlData.events.remove(i);
+                delete ui->LVLEvents_List->selectedItems()[0];
+                break;
+            }
+        }
+    }
+    EventListsSync();
 }
 
 void MainWindow::on_LVLEvents_duplicate_clicked()
