@@ -144,9 +144,9 @@ public slots:
     void EventListsSync();
 
     //Toolbox functions
-    void updateSearches();
-    void updateSearch(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox);
-    void clearSearches();
+    void updateFilters();
+    void updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox);
+    void clearFilter();
 
     //LvlDoorProps Functions
     QComboBox* getWarpList();
