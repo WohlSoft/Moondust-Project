@@ -46,6 +46,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     setItemBoxes(false); //Apply item boxes from reloaded configs
     setLevelSectionData();
     setSoundList();
+    clearFilter();
 
     //Set tools from loaded configs
     //setLevelSectionData();
