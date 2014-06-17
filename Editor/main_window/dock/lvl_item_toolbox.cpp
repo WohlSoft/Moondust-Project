@@ -339,6 +339,8 @@ void MainWindow::setItemBoxes(bool setCat)
         ui->NPCCatList->addItems(tmpList);
     }
 
+    updateFilters();
+
 }
 
 // ///////////////////////////////////
@@ -461,4 +463,84 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
     }
 
 }
+void MainWindow::updateFilters()
+{
+    int current = ui->LevelToolBoxTabs->currentIndex();
+    if(current == 0){
+        updateFilter(ui->BlockFilterField, ui->BlockItemsList, ui->BlockFilterType);
+    }else if(current == 1){
+        updateFilter(ui->BGOFilterField, ui->BGOItemsList, ui->BGOFilterType);
+    }else if(current == 2){
+        updateFilter(ui->NPCFilterField, ui->NPCItemsList, ui->NPCFilterType);
+    }
+}
 
+void MainWindow::updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox)
+{
+    QString toSearch;
+    toSearch = searchEdit->text();
+    for(int i = 0; i < itemList->count(); i++){
+        if(toSearch.isEmpty()){
+            itemList->setRowHidden(i,false);
+            continue;
+        }
+        if(typeBox->currentIndex()==0){ //search by text
+            if(!itemList->item(i)->text().contains(toSearch, Qt::CaseInsensitive)){
+                itemList->setRowHidden(i,true);
+            }else{
+                itemList->setRowHidden(i,false);
+            }
+        }else if(typeBox->currentIndex()==1){ //search by id
+            bool conv = false;
+            int toIdSearch = toSearch.toInt(&conv);
+            if(!conv){ //cannot convert
+                break;
+            }
+            if(itemList->item(i)->data(3).toInt()==toIdSearch){
+                itemList->setRowHidden(i,false);
+            }else{
+                itemList->setRowHidden(i,true);
+            }
+        }else{//else do nothing
+            break;
+        }
+    }
+}
+
+void MainWindow::clearFilter()
+{
+    ui->BlockFilterField->setText("");
+    ui->BGOFilterField->setText("");
+    ui->NPCFilterField->setText("");
+    updateFilters();
+}
+
+void MainWindow::on_BlockFilterField_textChanged(const QString &arg1)
+{
+    updateFilters();
+}
+
+void MainWindow::on_BlockFilterType_currentIndexChanged(int /*index*/)
+{
+    updateFilters();
+}
+
+void MainWindow::on_BGOFilterField_textChanged(const QString &arg1)
+{
+    updateFilters();
+}
+
+void MainWindow::on_BGOFilterType_currentIndexChanged(int /*index*/)
+{
+    updateFilters();
+}
+
+void MainWindow::on_NPCFilterField_textChanged(const QString &arg1)
+{
+    updateFilters();
+}
+
+void MainWindow::on_NPCFilterType_currentIndexChanged(int /*index*/)
+{
+    updateFilters();
+}
