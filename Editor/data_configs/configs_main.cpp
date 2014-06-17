@@ -68,6 +68,9 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
     dirset.setIniCodec("UTF-8");
 
     dirset.beginGroup("main");
+
+        ConfStatus::configName = dirset.value("config_name", config_dir).toString();
+
         dirs.worlds = QApplication::applicationDirPath() + "/" + dirset.value("worlds", "worlds").toString() + "/";
 
         dirs.music = QApplication::applicationDirPath() + "/" + dirset.value("music", "data/music").toString() + "/";

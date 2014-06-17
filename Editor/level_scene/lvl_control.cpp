@@ -162,7 +162,7 @@ void LvlScene::openProps()
             MainWinConnect::pMainWin->LvlItemProps(0,
                           ((ItemBlock *)items.first())->blockData,
                           FileFormats::dummyLvlBgo(),
-                          FileFormats::dummyLvlNpc());
+                          FileFormats::dummyLvlNpc(), false);
         }
         else
         if(items.first()->data(0).toString()=="BGO")
@@ -170,7 +170,7 @@ void LvlScene::openProps()
             MainWinConnect::pMainWin->LvlItemProps(1,
                               FileFormats::dummyLvlBlock(),
                               ((ItemBGO *)items.first())->bgoData,
-                              FileFormats::dummyLvlNpc());
+                              FileFormats::dummyLvlNpc(), false);
         }
         else
         if(items.first()->data(0).toString()=="NPC")
@@ -178,7 +178,7 @@ void LvlScene::openProps()
             MainWinConnect::pMainWin->LvlItemProps(2,
                               FileFormats::dummyLvlBlock(),
                               FileFormats::dummyLvlBgo(),
-                              ((ItemNPC *)items.first())->npcData);
+                              ((ItemNPC *)items.first())->npcData, false);
         }
         else
         MainWinConnect::pMainWin->LvlItemProps(-1,

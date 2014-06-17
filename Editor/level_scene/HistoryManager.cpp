@@ -389,6 +389,26 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_LOCKED){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsLockedDoors, true, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_GENACTIVATE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENTYPE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTypeGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENDIR){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENTIME){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTimeGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_ATTACHLAYER){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -516,11 +536,16 @@ void LvlScene::historyBack()
             warplist->setCurrentIndex( warplist->count()-1 );
         }
 
-        placeDoorEnter(removedDoor);
-        placeDoorExit(removedDoor);
+        if(removedDoor.isSetOut){
+            placeDoorExit(removedDoor);
+        }
+        if(removedDoor.isSetIn){
+            placeDoorEnter(removedDoor);
+        }
+
 
         MainWinConnect::pMainWin->setDoorData(-2);
-
+        break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
     {
@@ -574,11 +599,26 @@ void LvlScene::historyBack()
         else
         if(subtype == SETTING_LEVELEXIT){
             doorp[index].lvl_o = !extraData.toList()[0].toBool();
-            if(!doorp[index].lvl_o && extraData.toList().size() >= 3){
+            if(!doorp[index].lvl_o && !doorp[index].isSetOut && extraData.toList().size() >= 3){
                 doorp[index].ox = extraData.toList()[1].toInt();
                 doorp[index].oy = extraData.toList()[2].toInt();
+                doorp[index].isSetOut = true;
                 placeDoorExit(doorp[index]);
             }
+        }
+        else
+        if(subtype == SETTING_LEVELENTR){
+            doorp[index].lvl_i = !extraData.toList()[0].toBool();
+            if(!doorp[index].lvl_i && !doorp[index].isSetIn && extraData.toList().size() >= 3){
+                doorp[index].ix = extraData.toList()[1].toInt();
+                doorp[index].iy = extraData.toList()[2].toInt();
+                doorp[index].isSetIn = true;
+                placeDoorEnter(doorp[index]);
+            }
+        }
+        else
+        if(subtype == SETTING_LEVELWARPTO){
+            doorp[index].warpto = extraData.toList()[0].toInt();
         }
 
         MainWinConnect::pMainWin->setDoorData(-2);
@@ -728,6 +768,26 @@ void LvlScene::historyForward()
         if(lastOperation.subtype == SETTING_LOCKED){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsLockedDoors, true, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_GENACTIVATE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENTYPE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTypeGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENDIR){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_GENTIME){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTimeGeneratorNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_ATTACHLAYER){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -856,6 +916,7 @@ void LvlScene::historyForward()
         if(warplist->count()<=0) MainWinConnect::pMainWin->setWarpRemoveButtonEnabled(false);
 
         MainWinConnect::pMainWin->setDoorData(-2);
+        break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP:
     {
@@ -914,6 +975,19 @@ void LvlScene::historyForward()
                 doorp[index].ox = extraData.toList()[1].toInt();
                 doorp[index].oy = extraData.toList()[2].toInt();
             }
+        }
+        else
+        if(subtype == SETTING_LEVELENTR){
+            doorp[index].lvl_i = extraData.toList()[0].toBool();
+            if(!(((!doorp[index].lvl_o) && (!doorp[index].lvl_i)) || ((doorp[index].lvl_o) && (!doorp[index].lvl_i))))
+            {
+                doorp[index].ix = extraData.toList()[1].toInt();
+                doorp[index].iy = extraData.toList()[2].toInt();
+            }
+        }
+        else
+        if(subtype == SETTING_LEVELWARPTO){
+            doorp[index].warpto = extraData.toList()[1].toInt();
         }
 
         MainWinConnect::pMainWin->setDoorData(-2);
@@ -1113,9 +1187,9 @@ void LvlScene::historyRemoveWater(LvlScene::CallbackData cbData, LevelWater /*da
     removeItem(cbData.item);
 }
 
-void LvlScene::historyUndoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+void LvlScene::historyUndoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock data)
 {
-    ((ItemBlock*)cbData.item)->setInvisible(!cbData.hist->extraData.toBool());
+    ((ItemBlock*)cbData.item)->setInvisible(data.invisible);
 }
 
 void LvlScene::historyRedoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
@@ -1123,9 +1197,9 @@ void LvlScene::historyRedoSettingsInvisibleBlock(LvlScene::CallbackData cbData, 
     ((ItemBlock*)cbData.item)->setInvisible(cbData.hist->extraData.toBool());
 }
 
-void LvlScene::historyUndoSettingsSlipperyBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+void LvlScene::historyUndoSettingsSlipperyBlock(LvlScene::CallbackData cbData, LevelBlock data)
 {
-    ((ItemBlock*)cbData.item)->setSlippery(!cbData.hist->extraData.toBool());
+    ((ItemBlock*)cbData.item)->setSlippery(data.slippery);
 }
 
 void LvlScene::historyRedoSettingsSlipperyBlock(LvlScene::CallbackData cbData, LevelBlock /*data*/)
@@ -1133,9 +1207,9 @@ void LvlScene::historyRedoSettingsSlipperyBlock(LvlScene::CallbackData cbData, L
     ((ItemBlock*)cbData.item)->setSlippery(cbData.hist->extraData.toBool());
 }
 
-void LvlScene::historyUndoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+void LvlScene::historyUndoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC data)
 {
-    ((ItemNPC*)cbData.item)->setFriendly(!cbData.hist->extraData.toBool());
+    ((ItemNPC*)cbData.item)->setFriendly(data.friendly);
 }
 
 void LvlScene::historyRedoSettingsFriendlyNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
@@ -1143,9 +1217,9 @@ void LvlScene::historyRedoSettingsFriendlyNPC(LvlScene::CallbackData cbData, Lev
     ((ItemNPC*)cbData.item)->setFriendly(cbData.hist->extraData.toBool());
 }
 
-void LvlScene::historyUndoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+void LvlScene::historyUndoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNPC data)
 {
-    ((ItemNPC*)cbData.item)->setLegacyBoss(!cbData.hist->extraData.toBool());
+    ((ItemNPC*)cbData.item)->setLegacyBoss(data.legacyboss);
 }
 
 void LvlScene::historyRedoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
@@ -1153,9 +1227,9 @@ void LvlScene::historyRedoSettingsBossNPC(LvlScene::CallbackData cbData, LevelNP
     ((ItemNPC*)cbData.item)->setLegacyBoss(cbData.hist->extraData.toBool());
 }
 
-void LvlScene::historyUndoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+void LvlScene::historyUndoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, LevelNPC data)
 {
-    ((ItemNPC*)cbData.item)->setNoMovable(!cbData.hist->extraData.toBool());
+    ((ItemNPC*)cbData.item)->setNoMovable(data.nomove);
 }
 
 void LvlScene::historyRedoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
@@ -1163,30 +1237,30 @@ void LvlScene::historyRedoSettingsNoMoveableNPC(LvlScene::CallbackData cbData, L
     ((ItemNPC*)cbData.item)->setNoMovable(cbData.hist->extraData.toBool());
 }
 
-void LvlScene::historyUndoSettingsMessageNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+void LvlScene::historyUndoSettingsMessageNPC(LvlScene::CallbackData cbData, LevelNPC data)
 {
-    ((ItemNPC*)cbData.item)->setMsg(cbData.hist->extraData.toList()[0].toString());
+    ((ItemNPC*)cbData.item)->setMsg(data.msg);
 }
 
 void LvlScene::historyRedoSettingsMessageNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
-    ((ItemNPC*)cbData.item)->setMsg(cbData.hist->extraData.toList()[1].toString());
+    ((ItemNPC*)cbData.item)->setMsg(cbData.hist->extraData.toString());
 }
 
-void LvlScene::historyUndoSettingsDirectionNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+void LvlScene::historyUndoSettingsDirectionNPC(LvlScene::CallbackData cbData, LevelNPC data)
 {
-    ((ItemNPC*)cbData.item)->changeDirection(cbData.hist->extraData.toList()[0].toInt());
+    ((ItemNPC*)cbData.item)->changeDirection(data.direct);
 }
 
 void LvlScene::historyRedoSettingsDirectionNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
-    ((ItemNPC*)cbData.item)->changeDirection(cbData.hist->extraData.toList()[1].toInt());
+    ((ItemNPC*)cbData.item)->changeDirection(cbData.hist->extraData.toInt());
 }
 
-void LvlScene::historyUndoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+void LvlScene::historyUndoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData, LevelBlock data)
 {
     ItemBlock* targetItem = (ItemBlock*)cbData.item;
-    int targetNPC_id = cbData.hist->extraData.toList()[0].toInt();
+    int targetNPC_id = data.npc_id;
     //targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
     //targetItem->arrayApply();
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
@@ -1195,15 +1269,15 @@ void LvlScene::historyUndoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
 void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
 {
     ItemBlock* targetItem = (ItemBlock*)cbData.item;
-    int targetNPC_id = cbData.hist->extraData.toList()[1].toInt();
+    int targetNPC_id = cbData.hist->extraData.toInt();
     //targetItem->blockData.npc_id = (unsigned long)targetNPC_id;
     //targetItem->arrayApply();
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
 }
 
-void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater data)
 {
-    ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 1 : 0);
+    ((ItemWater*)cbData.item)->setType(data.quicksand ? 1 : 0);
 }
 
 void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
@@ -1245,6 +1319,60 @@ void LvlScene::historyRedoSettingsLockedDoors(LvlScene::CallbackData cbData, Lev
 {
     ((ItemDoor*)cbData.item)->doorData.locked = cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsActivateGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, data.generator_direct, data.generator_type);
+}
+
+void LvlScene::historyRedoSettingsActivateGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(cbData.hist->extraData.toBool(), data.generator_direct, data.generator_type);
+}
+
+void LvlScene::historyUndoSettingsTypeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, data.generator_direct, data.generator_type);
+}
+
+void LvlScene::historyRedoSettingsTypeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, data.generator_direct, cbData.hist->extraData.toInt());
+}
+
+void LvlScene::historyUndoSettingsDirectionGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, data.generator_direct, data.generator_type);
+}
+
+void LvlScene::historyRedoSettingsDirectionGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setGenerator(data.generator, cbData.hist->extraData.toInt(), data.generator_type);
+}
+
+void LvlScene::historyUndoSettingsTimeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.generator_period = data.generator_period;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsTimeGeneratorNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.generator_period = cbData.hist->extraData.toInt();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsAttachLayerNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.attach_layer = data.attach_layer;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsAttachLayerNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.attach_layer = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
 }
 
 void LvlScene::historyUndoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock data)
@@ -1840,6 +1968,13 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_ENTRDIR: return tr("Entrance Direction");
     case SETTING_EXITDIR: return tr("Exit Direction");
     case SETTING_LEVELEXIT: return tr("Set Level Exit");
+    case SETTING_LEVELENTR: return tr("Set Level Entrance");
+    case SETTING_LEVELWARPTO: return tr("Level Warp To");
+    case SETTING_GENACTIVATE: return tr("Activate Generator");
+    case SETTING_GENTYPE: return tr("Generator Type");
+    case SETTING_GENDIR: return tr("Generator Direction");
+    case SETTING_GENTIME: return tr("Generator Time");
+    case SETTING_ATTACHLAYER: return tr("Attach Layer");
     default:
         return tr("Unknown");
     }

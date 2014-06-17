@@ -240,9 +240,9 @@ public:
         SETTING_FRIENDLY,      //extraData: bool [Activated?]
         SETTING_BOSS,          //extraData: bool [Activated?]
         SETTING_NOMOVEABLE,    //extraData: bool [Activated?]
-        SETTING_MESSAGE,       //extraData: QList<QVariant[String]> [Old Text, New Text]
-        SETTING_DIRECTION,     //extraData: QList<QVariant[int]> [Old Dir, New Dir]
-        SETTING_CHANGENPC,     //extraData: QList<QVariant[int]> [Old NPC ID, New NPC ID]
+        SETTING_MESSAGE,       //extraData: String [New Text]
+        SETTING_DIRECTION,     //extraData: int [New Dir]
+        SETTING_CHANGENPC,     //extraData: int [New NPC ID]
         SETTING_WATERTYPE,     //extraData: bool [IsWater = true, IsQuicksand = false]
         SETTING_NOYOSHI,       //extraData: bool [Activated?]
         SETTING_ALLOWNPC,      //extraData: bool [Activated?]
@@ -251,7 +251,14 @@ public:
         SETTING_NEEDASTAR,     //extraData: QList<QVariant[int]> [Old stars, New stars]
         SETTING_ENTRDIR,       //extraData: QList<QVariant[int]> [Old entrance dir, New entrance dir]
         SETTING_EXITDIR,       //extraData: QList<QVariant[int]> [Old exit dir, New exit dir]
-        SETTING_LEVELEXIT      //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
+        SETTING_LEVELEXIT,     //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
+        SETTING_LEVELENTR,     //extraData: QList<QVariant[???]> [bool Checked, int ix, int iy]
+        SETTING_LEVELWARPTO,   //extraData: QList<QVariant[int]> [Old id, New id]
+        SETTING_GENACTIVATE,   //extraData: bool [Activated?]
+        SETTING_GENTYPE,       //extraData: int [new type]
+        SETTING_GENDIR,        //extraData: int [new dir]
+        SETTING_GENTIME,       //extraData: int [new time]
+        SETTING_ATTACHLAYER    //extraData: String [new layer]
     };
 
     //typedefs
@@ -340,6 +347,21 @@ public:
     //Callbackfunctions: [Change Settings] Locked
     void historyUndoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyRedoSettingsLockedDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    //Callbackfunctions: [Change Settings] Activate Generator
+    void historyUndoSettingsActivateGeneratorNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsActivateGeneratorNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Generator Type
+    void historyUndoSettingsTypeGeneratorNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsTypeGeneratorNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Generator Direction
+    void historyUndoSettingsDirectionGeneratorNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsDirectionGeneratorNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Generator Time
+    void historyUndoSettingsTimeGeneratorNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsTimeGeneratorNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Attach Layer
+    void historyUndoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);

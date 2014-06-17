@@ -350,13 +350,13 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     LevelEvents_Sets events_sets;
 
     //Begin all ArrayID's here;
-    FileData.blocks_array_id = 0;
-    FileData.bgo_array_id = 0;
-    FileData.npc_array_id = 0;
+    FileData.blocks_array_id = 1;
+    FileData.bgo_array_id = 1;
+    FileData.npc_array_id = 1;
     FileData.doors_array_id = 1;
-    FileData.water_array_id = 0;
-    FileData.layers_array_id = 0;
-    FileData.events_array_id = 0;
+    FileData.water_array_id = 1;
+    FileData.layers_array_id = 1;
+    FileData.events_array_id = 1;
 
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
