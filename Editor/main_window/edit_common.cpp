@@ -76,6 +76,8 @@ void MainWindow::on_actionReload_triggered()
                 WriteToLog(QtDebugMsg, ">>Windows closed");
         }
     }
+
+    clearFilter();
 }
 
 
