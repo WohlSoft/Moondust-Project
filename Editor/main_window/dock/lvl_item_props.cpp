@@ -1186,6 +1186,40 @@ void MainWindow::on_PROPS_NPCContaiter_clicked()
             {
                 if((item->data(0).toString()=="NPC")/*&&((item->data(2).toInt()==blockPtr))*/)
                 {
+                    LevelNPC npc = ((ItemNPC*)item)->npcData;
+
+                    bool found=false;
+                    int j;
+
+                    //Check Index exists
+                    if(npc.id < (unsigned int)configs.index_npc.size())
+                    {
+                        j = configs.index_npc[npc.id].i;
+
+                        if(j<configs.main_npc.size())
+                        {
+                        if(configs.main_npc[j].id == npc.id)
+                            found=true;
+                        }
+                    }
+                    //if Index found
+                    if(!found)
+                    {
+                        for(j=0;j<configs.main_npc.size();j++)
+                        {
+                            if(configs.main_npc[j].id==npc.id)
+                                break;
+                        }
+                    }
+
+                    if(j >= configs.main_npc.size())
+                    {
+                        j=0;
+                    }
+
+                    if(configs.main_npc[j].special_type != 2) //wrong type, go to next one
+                        continue;
+
                     ((ItemNPC *)item)->setIncludedNPC(selected_npc);
                 }
             }
@@ -1211,6 +1245,41 @@ void MainWindow::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
         {
             if(item->data(0).toString()=="NPC")
             {
+                LevelNPC npc = ((ItemNPC*)item)->npcData;
+
+                bool found=false;
+                int j;
+
+                //Check Index exists
+                if(npc.id < (unsigned int)configs.index_npc.size())
+                {
+                    j = configs.index_npc[npc.id].i;
+
+                    if(j<configs.main_npc.size())
+                    {
+                    if(configs.main_npc[j].id == npc.id)
+                        found=true;
+                    }
+                }
+                //if Index found
+                if(!found)
+                {
+                    for(j=0;j<configs.main_npc.size();j++)
+                    {
+                        if(configs.main_npc[j].id==npc.id)
+                            break;
+                    }
+                }
+
+                if(j >= configs.main_npc.size())
+                {
+                    j=0;
+                }
+
+                if(configs.main_npc[j].special_type != 0) //wrong type, go to next one
+                    continue;
+
+
                 ((ItemNPC*)item)->npcData.special_data = index;
                 ((ItemNPC*)item)->arrayApply();
             }
