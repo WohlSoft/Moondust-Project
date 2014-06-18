@@ -34,6 +34,9 @@
 static long currentEventArrayID=0;
 static bool lockSetEventSettings=false;
 
+static bool lockEventSectionDataList=false;
+static long curSectionField=0;
+
 QMediaPlayer playSnd;
 
 void MainWindow::setEventsBox()
@@ -192,69 +195,18 @@ void MainWindow::setEventData(long index)
                     for(int i=0; i<edit->LvlData.sections.size(); i++)
                         ui->LVLEvent_Sct_list->addItem(tr("Section")+QString(" ")+QString::number(i+1), QString::number(i));
 
-                    if(ui->LVLEvent_Sct_list->currentData().toInt()<event.sets.size())
+                    for(int i=0; i<ui->LVLEvent_Sct_list->count(); i++)
                     {
-                        ui->LVLEvent_SctSize_left->setText("");
-                        ui->LVLEvent_SctSize_top->setText("");
-                        ui->LVLEvent_SctSize_bottom->setText("");
-                        ui->LVLEvent_SctSize_right->setText("");
-                        ui->LVLEvent_SctSize_left->setEnabled(false);
-                        ui->LVLEvent_SctSize_top->setEnabled(false);
-                        ui->LVLEvent_SctSize_bottom->setEnabled(false);
-                        ui->LVLEvent_SctSize_right->setEnabled(false);
-                    switch(event.sets[ui->LVLEvent_Sct_list->currentData().toInt()].position_left)
+                        if(ui->LVLEvent_Sct_list->itemData(i).toInt()==edit->LvlData.CurSection)
                         {
-                        case -1:
-                            ui->LVLEvent_SctSize_none->setChecked(true);
-                            break;
-                        case -2:
-                            ui->LVLEvent_SctSize_reset->setChecked(true);
-                            break;
-                        default:
-                            ui->LVLEvent_SctSize_define->setChecked(true);
-                            ui->LVLEvent_SctSize_left->setText(QString::number(event.sets[ui->LVLEvent_Sct_list->currentData().toInt()].position_left));
-                            ui->LVLEvent_SctSize_top->setText(QString::number(event.sets[ui->LVLEvent_Sct_list->currentData().toInt()].position_top));
-                            ui->LVLEvent_SctSize_bottom->setText(QString::number(event.sets[ui->LVLEvent_Sct_list->currentData().toInt()].position_bottom));
-                            ui->LVLEvent_SctSize_right->setText(QString::number(event.sets[ui->LVLEvent_Sct_list->currentData().toInt()].position_right));
-                            ui->LVLEvent_SctSize_left->setEnabled(true);
-                            ui->LVLEvent_SctSize_top->setEnabled(true);
-                            ui->LVLEvent_SctSize_bottom->setEnabled(true);
-                            ui->LVLEvent_SctSize_right->setEnabled(true);
+                            ui->LVLEvent_Sct_list->setCurrentIndex(i);
+                            curSectionField = i;
                             break;
                         }
-
-                    ui->LVLEvent_SctMus_List->setEnabled(false);
-                    switch(event.sets[ui->LVLEvent_Sct_list->currentData().toInt()].music_id)
-                        {
-                        case -1:
-                            ui->LVLEvent_SctMus_none->setChecked(true);
-                            break;
-                        case -2:
-                            ui->LVLEvent_SctMus_reset->setChecked(true);
-                            break;
-                        default:
-                            ui->LVLEvent_SctMus_define->setChecked(true);
-                            ui->LVLEvent_SctMus_List->setEnabled(true);
-                            break;
-                        }
-
-                    ui->LVLEvent_SctBg_List->setEnabled(false);
-                    switch(event.sets[ui->LVLEvent_Sct_list->currentData().toInt()].background_id)
-                        {
-                        case -1:
-                            ui->LVLEvent_SctBg_none->setChecked(true);
-                            break;
-                        case -2:
-                            ui->LVLEvent_SctBg_reset->setChecked(true);
-                            break;
-                        default:
-                            ui->LVLEvent_SctBg_define->setChecked(true);
-                            ui->LVLEvent_SctBg_List->setEnabled(true);
-                            break;
-                        }
-
-
                     }
+
+                    eventSectionSettingsSync();
+
 
                     //Common settings
                     QString evnmsg = (event.msg.isEmpty() ? tr("[none]") : event.msg);
@@ -320,6 +272,112 @@ void MainWindow::setEventData(long index)
 
 }
 
+
+void MainWindow::eventSectionSettingsSync()
+{
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        int sectionID = ui->LVLEvent_Sct_list->currentData().toInt();
+
+        if(sectionID<edit->LvlData.events[i].sets.size())
+        {
+            ui->LVLEvent_SctSize_left->setText("");
+            ui->LVLEvent_SctSize_top->setText("");
+            ui->LVLEvent_SctSize_bottom->setText("");
+            ui->LVLEvent_SctSize_right->setText("");
+            ui->LVLEvent_SctSize_left->setEnabled(false);
+            ui->LVLEvent_SctSize_top->setEnabled(false);
+            ui->LVLEvent_SctSize_bottom->setEnabled(false);
+            ui->LVLEvent_SctSize_right->setEnabled(false);
+            ui->LVLEvent_SctSize_Set->setEnabled(false);
+
+        switch(edit->LvlData.events[i].sets[sectionID].position_left)
+            {
+            case -1:
+                ui->LVLEvent_SctSize_none->setChecked(true);
+                break;
+            case -2:
+                ui->LVLEvent_SctSize_reset->setChecked(true);
+                break;
+            default:
+                ui->LVLEvent_SctSize_define->setChecked(true);
+                lockEventSectionDataList=true;
+                ui->LVLEvent_SctSize_left->setText(QString::number(edit->LvlData.events[i].sets[sectionID].position_left));
+                ui->LVLEvent_SctSize_top->setText(QString::number(edit->LvlData.events[i].sets[sectionID].position_top));
+                ui->LVLEvent_SctSize_bottom->setText(QString::number(edit->LvlData.events[i].sets[sectionID].position_bottom));
+                ui->LVLEvent_SctSize_right->setText(QString::number(edit->LvlData.events[i].sets[sectionID].position_right));
+                ui->LVLEvent_SctSize_left->setEnabled(true);
+                ui->LVLEvent_SctSize_top->setEnabled(true);
+                ui->LVLEvent_SctSize_bottom->setEnabled(true);
+                ui->LVLEvent_SctSize_right->setEnabled(true);
+                ui->LVLEvent_SctSize_Set->setEnabled(true);
+                break;
+            }
+
+        ui->LVLEvent_SctMus_List->setEnabled(false);
+        long musicID = edit->LvlData.events[i].sets[sectionID].music_id;
+        switch(musicID)
+            {
+            case -1:
+                ui->LVLEvent_SctMus_none->setChecked(true);
+                break;
+            case -2:
+                ui->LVLEvent_SctMus_reset->setChecked(true);
+                break;
+            default:
+                ui->LVLEvent_SctMus_define->setChecked(true);
+                ui->LVLEvent_SctMus_List->setEnabled(true);
+
+                lockEventSectionDataList=true;
+                ui->LVLEvent_SctMus_List->setCurrentIndex(0);
+                for(int q=0; q<ui->LVLEvent_SctMus_List->count(); q++)
+                {
+                    if(ui->LVLEvent_SctMus_List->itemData(q).toInt()==musicID)
+                    {
+                        ui->LVLEvent_SctMus_List->setCurrentIndex(q);
+                        break;
+                    }
+                }
+                break;
+            }
+
+        ui->LVLEvent_SctBg_List->setEnabled(false);
+        long backgrndID = edit->LvlData.events[i].sets[sectionID].background_id;
+        switch(backgrndID)
+            {
+            case -1:
+                ui->LVLEvent_SctBg_none->setChecked(true);
+                break;
+            case -2:
+                ui->LVLEvent_SctBg_reset->setChecked(true);
+                break;
+            default:
+                ui->LVLEvent_SctBg_define->setChecked(true);
+                ui->LVLEvent_SctBg_List->setEnabled(true);
+
+                lockEventSectionDataList=true;
+                ui->LVLEvent_SctBg_List->setCurrentIndex(0);
+                for(int q=0; q<ui->LVLEvent_SctBg_List->count(); q++)
+                {
+                    if(ui->LVLEvent_SctBg_List->itemData(q).toInt()==backgrndID)
+                    {
+                        ui->LVLEvent_SctBg_List->setCurrentIndex(q);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    lockEventSectionDataList=false;
+}
 
 void MainWindow::eventLayerVisiblySyncList()
 {
@@ -1017,88 +1075,374 @@ void MainWindow::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 void MainWindow::on_LVLEvent_Sct_list_currentIndexChanged(int index)
 {
     if(lockSetEventSettings) return;
+    if(index<0) return;
+    curSectionField = index;
+    eventSectionSettingsSync();
 }
 
 void MainWindow::on_LVLEvent_SctSize_none_clicked()
 {
+    if(lockSetEventSettings) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        ui->LVLEvent_SctSize_left->setText("");
+        ui->LVLEvent_SctSize_top->setText("");
+        ui->LVLEvent_SctSize_bottom->setText("");
+        ui->LVLEvent_SctSize_right->setText("");
+        ui->LVLEvent_SctSize_left->setEnabled(false);
+        ui->LVLEvent_SctSize_top->setEnabled(false);
+        ui->LVLEvent_SctSize_bottom->setEnabled(false);
+        ui->LVLEvent_SctSize_right->setEnabled(false);
+        ui->LVLEvent_SctSize_Set->setEnabled(false);
+
+        edit->LvlData.events[i].sets[curSectionField].position_left = -1;
+        edit->LvlData.events[i].sets[curSectionField].position_right = 0;
+        edit->LvlData.events[i].sets[curSectionField].position_bottom = 0;
+        edit->LvlData.events[i].sets[curSectionField].position_top = 0;
+        edit->LvlData.modified=true;
+    }
+    lockEventSectionDataList=false;
 
 }
 
 void MainWindow::on_LVLEvent_SctSize_reset_clicked()
 {
+    if(lockSetEventSettings) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        ui->LVLEvent_SctSize_left->setText("");
+        ui->LVLEvent_SctSize_top->setText("");
+        ui->LVLEvent_SctSize_bottom->setText("");
+        ui->LVLEvent_SctSize_right->setText("");
+        ui->LVLEvent_SctSize_left->setEnabled(false);
+        ui->LVLEvent_SctSize_top->setEnabled(false);
+        ui->LVLEvent_SctSize_bottom->setEnabled(false);
+        ui->LVLEvent_SctSize_right->setEnabled(false);
+        ui->LVLEvent_SctSize_Set->setEnabled(false);
+
+        edit->LvlData.events[i].sets[curSectionField].position_left = -2;
+        edit->LvlData.events[i].sets[curSectionField].position_right = 0;
+        edit->LvlData.events[i].sets[curSectionField].position_bottom = 0;
+        edit->LvlData.events[i].sets[curSectionField].position_top = 0;
+        edit->LvlData.modified=true;
+    }
+    lockEventSectionDataList=false;
 
 }
 
 void MainWindow::on_LVLEvent_SctSize_define_clicked()
 {
+    if(lockSetEventSettings) return;
 
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        ui->LVLEvent_SctSize_left->setEnabled(true);
+        ui->LVLEvent_SctSize_top->setEnabled(true);
+        ui->LVLEvent_SctSize_bottom->setEnabled(true);
+        ui->LVLEvent_SctSize_right->setEnabled(true);
+        ui->LVLEvent_SctSize_Set->setEnabled(true);
+
+        ui->LVLEvent_SctSize_left->setText(QString::number(edit->LvlData.sections[curSectionField].size_left) );
+        ui->LVLEvent_SctSize_top->setText(QString::number(edit->LvlData.sections[curSectionField].size_top) );
+        ui->LVLEvent_SctSize_bottom->setText(QString::number(edit->LvlData.sections[curSectionField].size_bottom) );
+        ui->LVLEvent_SctSize_right->setText(QString::number(edit->LvlData.sections[curSectionField].size_right) );
+
+        edit->LvlData.events[i].sets[curSectionField].position_left = edit->LvlData.sections[curSectionField].size_left;
+        edit->LvlData.events[i].sets[curSectionField].position_right = edit->LvlData.sections[curSectionField].size_right;
+        edit->LvlData.events[i].sets[curSectionField].position_bottom = edit->LvlData.sections[curSectionField].size_bottom;
+        edit->LvlData.events[i].sets[curSectionField].position_top = edit->LvlData.sections[curSectionField].size_top;
+        edit->LvlData.modified=true;
+    }
+    lockEventSectionDataList=false;
 }
 
 void MainWindow::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
 {
     if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].position_left = arg1.toInt();
+    }
+    lockEventSectionDataList=false;
 }
 
 void MainWindow::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
 {
     if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].position_top = arg1.toInt();
+    }
+    lockEventSectionDataList=false;
+
 }
 
 void MainWindow::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
 {
     if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].position_bottom = arg1.toInt();
+    }
+    lockEventSectionDataList=false;
 }
 
 void MainWindow::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
 {
     if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].position_right = arg1.toInt();
+    }
+    lockEventSectionDataList=false;
+
 }
 
 void MainWindow::on_LVLEvent_SctSize_Set_clicked()
 {
+    if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+        if(curSectionField!=edit->LvlData.CurSection)
+        {
+            QMessageBox::information(this, tr("Get section size"),
+             tr("Please, set current section to %1 for capture data for this event").arg(curSectionField+1),
+             QMessageBox::Ok);
+            return;
+        }
+
+    }
 
 }
 
 void MainWindow::on_LVLEvent_SctMus_none_clicked()
 {
+    if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        ui->LVLEvent_SctMus_List->setEnabled(false);
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].music_id = -1;
+    }
+    lockEventSectionDataList=false;
 
 }
 
 void MainWindow::on_LVLEvent_SctMus_reset_clicked()
 {
+    if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
 
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        ui->LVLEvent_SctMus_List->setEnabled(false);
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].music_id = -2;
+    }
+    lockEventSectionDataList=false;
 }
 
 void MainWindow::on_LVLEvent_SctMus_define_clicked()
 {
+    if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
 
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        ui->LVLEvent_SctMus_List->setEnabled(true);
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].music_id = ui->LVLEvent_SctMus_List->currentData().toInt();
+    }
+    lockEventSectionDataList=false;
 }
 
 void MainWindow::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
 {
     if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
     if(index<0) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].music_id = ui->LVLEvent_SctMus_List->itemData(index).toInt();
+    }
+    lockEventSectionDataList=false;
 }
 
 void MainWindow::on_LVLEvent_SctBg_none_clicked()
 {
+    if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        ui->LVLEvent_SctBg_List->setEnabled(false);
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].background_id = -1;
+    }
+    lockEventSectionDataList=false;
 
 }
 
 void MainWindow::on_LVLEvent_SctBg_reset_clicked()
 {
+    if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        ui->LVLEvent_SctBg_List->setEnabled(false);
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].background_id = -2;
+    }
+    lockEventSectionDataList=false;
 
 }
 
 void MainWindow::on_LVLEvent_SctBg_define_clicked()
 {
+    if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        ui->LVLEvent_SctBg_List->setEnabled(true);
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].background_id = ui->LVLEvent_SctBg_List->currentData().toInt();
+    }
+    lockEventSectionDataList=false;
 
 }
 
 void MainWindow::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
 {
     if(lockSetEventSettings) return;
+    if(lockEventSectionDataList) return;
     if(index<0) return;
+
+
+    int WinType = activeChildWindow();
+
+    if (WinType==1)
+    {
+        lockEventSectionDataList=true;
+        leveledit * edit = activeLvlEditWin();
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        edit->LvlData.events[i].sets[curSectionField].background_id = ui->LVLEvent_SctBg_List->itemData(index).toInt();
+    }
+    lockEventSectionDataList=false;
 }
 
 
