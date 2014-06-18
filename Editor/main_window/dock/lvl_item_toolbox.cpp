@@ -156,8 +156,12 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         found = false;
         if(tmpList.size()!=0)
             foreach(QString cat, tmpList)
-            {   if(blockItem.category==cat)
-                {found =true; break;}  }
+            {
+                if(blockItem.category==cat)
+                {found =true; break;}
+                if((blockItem.group!=grp_blocks)&&(grp_blocks!=allLabel))
+                {found =true; break;}
+            }
         if(!found) tmpList.push_back(blockItem.category);
 
         if(
@@ -277,8 +281,12 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         found = false;
         if(tmpList.size()!=0)
             foreach(QString cat, tmpList)
-            {   if(bgoItem.category==cat)
-                {found =true; break;}  }
+            {
+                if(bgoItem.category==cat)
+                {found =true; break;}
+                if((bgoItem.group!=grp_bgo)&&(grp_bgo!=allLabel))
+                {found =true; break;}
+            }
         if(!found) tmpList.push_back(bgoItem.category);
 
         if(
@@ -368,8 +376,12 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         found = false;
         if(tmpList.size()!=0)
             foreach(QString cat, tmpList)
-            {   if(npcItem.category==cat)
-                {found = true; break;}  }
+            {
+                if(npcItem.category==cat)
+                {found = true; break;}
+                if((npcItem.group!=grp_npc)&&(grp_npc!=allLabel))
+                {found =true; break;}
+            }
         if(!found) tmpList.push_back(npcItem.category);
 
         if(
