@@ -29,6 +29,8 @@ struct obj_npc
     unsigned long id;
 //    name="Goomba"
     QString name;
+//    group="Enemy" 		;The sort category
+    QString group;
 //    category="Enemy"		;The sort category
     QString category;
 //    image="npc-1.gif"		;NPC Image file

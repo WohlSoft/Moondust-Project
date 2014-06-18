@@ -63,7 +63,8 @@ void dataconfigs::loadLevelBlocks()
             blockset.beginGroup( QString("block-%1").arg(i) );
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
-                sblock.type = blockset.value("type", "Other").toString();
+                sblock.group = blockset.value("group", "").toString();
+                sblock.category = blockset.value("category", "_Other").toString();
                 sblock.grid = blockset.value("grid", "32").toInt();
                 imgFile = blockset.value("image", "").toString();
 

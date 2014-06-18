@@ -62,7 +62,8 @@ void dataconfigs::loadLevelBGO()
     {
         bgoset.beginGroup( QString("background-"+QString::number(i)) );
             sbgo.name = bgoset.value("name", "").toString();
-            sbgo.type = bgoset.value("type", "other").toString();
+            sbgo.group = bgoset.value("group", "").toString();
+            sbgo.category = bgoset.value("category", "_Other").toString();
             sbgo.grid = bgoset.value("grid", "32").toInt();
             sbgo.view = (int)(bgoset.value("view", "background").toString()=="foreground");
             sbgo.offsetX = bgoset.value("offset-x", "0").toInt();

@@ -84,9 +84,10 @@ void dataconfigs::loadLevelNPC()
         //        QString name;
             snpc.name = npcset.value("name", "").toString();
 
+            snpc.group = npcset.value("group", "").toString();
         //    //    category="Enemy"		;The sort category
         //        QString category;
-            snpc.category = npcset.value("category", "Other").toString();
+            snpc.category = npcset.value("category", "_Other").toString();
         //    //    image="npc-1.gif"		;NPC Image file
 
             //        QString image_n;
