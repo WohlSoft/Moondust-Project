@@ -582,6 +582,7 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
     if(setEdited)
     {
         ui->LVLEvents_List->setFocus();
+        ui->LVLEvents_List->scrollToItem( item );
         ui->LVLEvents_List->editItem( item );
     }
     else
