@@ -3537,7 +3537,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <enum>QAbstractItemView::InternalMove</enum>
        </property>
        <property name="alternatingRowColors">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectItems</enum>
@@ -3587,7 +3587,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>139</width>
           <height>360</height>
          </rect>
         </property>
@@ -3770,8 +3770,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>316</height>
+          <width>195</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3852,8 +3852,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>316</height>
+          <width>192</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3946,7 +3946,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>231</width>
           <height>461</height>
          </rect>
         </property>
@@ -4360,8 +4360,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>316</height>
+          <width>190</width>
+          <height>110</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4458,8 +4458,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>316</height>
+          <width>104</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">

@@ -118,6 +118,7 @@ public slots:
 
     void setItemBoxes(bool setGrp=false, bool setCat=false);
     void UpdateCustomItems();
+    void eventSectionSettingsSync();
 
     void setSoundList();
 
