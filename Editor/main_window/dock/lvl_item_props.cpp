@@ -1075,13 +1075,52 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
     else
     if (activeChildWindow()==1)
     {
+        bool foundItems = false; //later for History
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
             if(item->data(0).toString()=="NPC")
             {
+                LevelNPC npc = ((ItemNPC*)item)->npcData;
+
+                bool found=false;
+                int j;
+
+                //Check Index exists
+                if(npc.id < (unsigned int)configs.index_npc.size())
+                {
+                    j = configs.index_npc[npc.id].i;
+
+                    if(j<configs.main_npc.size())
+                    {
+                    if(configs.main_npc[j].id == npc.id)
+                        found=true;
+                    }
+                }
+                //if Index found
+                if(!found)
+                {
+                    for(j=0;j<configs.main_npc.size();j++)
+                    {
+                        if(configs.main_npc[j].id==npc.id)
+                            break;
+                    }
+                }
+
+                if(j >= configs.main_npc.size())
+                {
+                    j=0;
+                }
+
+                if(configs.main_npc[j].special_type != 1) //wrong type, go to next one
+                    continue;
+
+                if(configs.main_npc[j].special_spin_value_offset != npcSpecSpinOffset) //wrong offset, go to next one
+                    continue;
+
                 ((ItemNPC*)item)->npcData.special_data = arg1 - npcSpecSpinOffset;
                 ((ItemNPC*)item)->arrayApply();
+                foundItems = true;
             }
         }
     }
