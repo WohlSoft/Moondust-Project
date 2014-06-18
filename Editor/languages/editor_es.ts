@@ -572,214 +572,219 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>Buscar PNJs personalizados %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="659"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="663"/>
         <source>Undone: %1</source>
         <translation>Sin terminar: %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1053"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1061"/>
         <source>Redone: %1</source>
         <translation>Rehacer: %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2069"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2099"/>
         <source>Remove</source>
         <translation>Remover</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2070"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2100"/>
         <source>Place</source>
         <translation>Colocar</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2071"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2101"/>
         <source>Move</source>
         <translation>Mover</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2072"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2102"/>
         <source>Changed Setting [%1]</source>
         <translation>Opción cambiada [%1]</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2073"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2103"/>
         <source>Change Layer</source>
         <translation>Cambiar capa</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2074"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2104"/>
         <source>Resize Block</source>
         <translation>Redimensionar Bloque</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2075"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2105"/>
         <source>Place Door</source>
         <translation>Colocar puerta</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2076"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2106"/>
         <source>Add Warp</source>
         <translation>Añadir traslado</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2077"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2107"/>
         <source>Remove Warp</source>
         <translation>Remover traslado</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2078"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2108"/>
         <source>Changed Warpsetting [%1]</source>
         <translation>Opción de traslado cambiada [%1]</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2080"/>
-        <location filename="../level_scene/HistoryManager.cpp" line="2117"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2110"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2148"/>
         <source>Unknown</source>
         <translation>Desconocido</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2087"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2117"/>
         <source>Slippery</source>
         <translation>Resbaladizo</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2088"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2118"/>
         <source>Friendly</source>
         <translation>Amigable</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2089"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2119"/>
         <source>Boss</source>
         <translation>Jefe</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2090"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2120"/>
         <source>Not Moveable</source>
         <translation>No mover</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2091"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2121"/>
         <source>Message</source>
         <translation>Mensaje</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2092"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2122"/>
         <source>Direction</source>
         <translation>Dirección</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2093"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2123"/>
         <source>Included NPC</source>
         <translation>Cambiar NPC incluído</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2094"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2124"/>
         <source>Water Type</source>
         <translation>Tipo de ambiente</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2095"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2125"/>
         <source>No Yoshi</source>
         <translation>No Yoshi</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2096"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2126"/>
         <source>Allow NPC</source>
         <translation>Habilitar PNJ</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2097"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2127"/>
         <source>Locked</source>
         <translation>Bloqueado</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2098"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2128"/>
         <source>Warp Type</source>
         <translation>Tipo de traslado</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2099"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2129"/>
         <source>Need Stars</source>
         <translation>Necesita estrellas</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2100"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2130"/>
         <source>Entrance Direction</source>
         <translation>Dirección de entrada</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2101"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2131"/>
         <source>Exit Direction</source>
         <translation>Dirección de salida</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2102"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2132"/>
         <source>Set Level Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2103"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2133"/>
         <source>Set Level Entrance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2104"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2134"/>
         <source>Level Warp To</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2105"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2135"/>
         <source>Activate Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2106"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2136"/>
         <source>Generator Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2107"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2137"/>
         <source>Generator Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2108"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2138"/>
         <source>Generator Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2109"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2139"/>
         <source>Attach Layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2110"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2140"/>
         <source>Event Block Destroyed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2111"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2141"/>
         <source>Event Block Hited</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2112"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2142"/>
         <source>Event Layer Empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2113"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2143"/>
         <source>Event NPC Activate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2114"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2144"/>
         <source>Event NPC Die</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2115"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2145"/>
         <source>Event NPC Talk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/HistoryManager.cpp" line="2146"/>
+        <source>NPC Special Data</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2402,7 +2407,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_props.cpp" line="108"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="294"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="588"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1135"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1175"/>
         <source>[empty]</source>
         <translation>[vacío]</translation>
     </message>
@@ -2422,12 +2427,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>[Nada]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="45"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="52"/>
         <source>[all]</source>
         <translation>[todo]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="46"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="53"/>
         <source>[custom]</source>
         <translation>[personalizado]</translation>
     </message>
