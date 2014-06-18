@@ -1075,7 +1075,7 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
     else
     if (activeChildWindow()==1)
     {
-        bool foundItems = false; //later for History
+        LevelData selData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
@@ -1118,11 +1118,12 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
                 if(configs.main_npc[j].special_spin_value_offset != npcSpecSpinOffset) //wrong offset, go to next one
                     continue;
 
+                selData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->npcData.special_data = arg1 - npcSpecSpinOffset;
                 ((ItemNPC*)item)->arrayApply();
-                foundItems = true;
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset));
     }
 
 }
@@ -1181,6 +1182,7 @@ void MainWindow::on_PROPS_NPCContaiter_clicked()
         else
         if (activeChildWindow()==1)
         {
+            LevelData selData;
             QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
             foreach(QGraphicsItem * item, items)
             {
@@ -1220,9 +1222,11 @@ void MainWindow::on_PROPS_NPCContaiter_clicked()
                     if(configs.main_npc[j].special_type != 2) //wrong type, go to next one
                         continue;
 
+                    selData.npc.push_back(((ItemNPC *)item)->npcData);
                     ((ItemNPC *)item)->setIncludedNPC(selected_npc);
                 }
             }
+            activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_CHANGENPC, QVariant(selected_npc));
         }
     }
 
@@ -1240,6 +1244,7 @@ void MainWindow::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
     else
     if (activeChildWindow()==1)
     {
+        LevelData selData;
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
@@ -1279,11 +1284,12 @@ void MainWindow::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
                 if(configs.main_npc[j].special_type != 0) //wrong type, go to next one
                     continue;
 
-
+                selData.npc.push_back(((ItemNPC*)item)->npcData);
                 ((ItemNPC*)item)->npcData.special_data = index;
                 ((ItemNPC*)item)->arrayApply();
             }
         }
+        activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(index));
     }
 }
 
