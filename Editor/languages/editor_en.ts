@@ -164,7 +164,7 @@
     <message>
         <location filename="../data_configs/configstatus.cpp" line="56"/>
         <source>Level NPC (%1/%1)</source>
-        <translation>Leve:l NPC (%1/%1)</translation>
+        <translation>Level: NPC (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="68"/>
