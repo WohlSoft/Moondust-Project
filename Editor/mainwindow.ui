@@ -356,14 +356,14 @@
     <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Level Tool box</string>
+    <string>Level Toolbox</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
    <widget class="QTabWidget" name="LevelToolBoxTabs">
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Blocks">
      <attribute name="title">
@@ -1081,7 +1081,7 @@
     <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>World map tool box</string>
+    <string>World Map Toolbox</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -1115,7 +1115,7 @@
         <x>0</x>
         <y>0</y>
         <width>256</width>
-        <height>514</height>
+        <height>515</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1176,7 +1176,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>514</height>
+        <height>515</height>
        </rect>
       </property>
      </widget>
@@ -1200,7 +1200,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>514</height>
+        <height>515</height>
        </rect>
       </property>
      </widget>
@@ -1224,7 +1224,7 @@
         <x>0</x>
         <y>0</y>
         <width>239</width>
-        <height>514</height>
+        <height>515</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -1831,7 +1831,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Warps and doors</string>
+    <string>Warps and Doors</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -2525,7 +2525,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>260</width>
-          <height>724</height>
+          <height>722</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2701,7 +2701,7 @@ p, li { white-space: pre-wrap; }
          <item row="5" column="0" colspan="2">
           <widget class="QPushButton" name="PROPS_BlockIncludes">
            <property name="text">
-            <string notr="true">IncludedNPC</string>
+            <string notr="true">Contained NPC</string>
            </property>
           </widget>
          </item>
@@ -2723,7 +2723,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>468</width>
-          <height>724</height>
+          <height>722</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2850,7 +2850,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>260</width>
-          <height>724</height>
+          <height>722</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3577,7 +3577,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <number>2</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -3857,7 +3857,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          </rect>
         </property>
         <attribute name="label">
-         <string>Autoscrool section</string>
+         <string>Autoscroll section</string>
         </attribute>
         <layout class="QFormLayout" name="formLayout_5">
          <property name="fieldGrowthPolicy">
@@ -4582,7 +4582,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   </action>
   <action name="Exit">
    <property name="text">
-    <string>Exit program</string>
+    <string>Exit</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
@@ -5218,7 +5218,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Off screen exit</string>
+    <string>Offscreen exit</string>
    </property>
   </action>
   <action name="actionLevNoBack">
@@ -5278,7 +5278,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Restart level after player's fail</string>
+    <string>Restart level after death</string>
    </property>
   </action>
   <action name="actionWLDNoChar1">
@@ -5335,7 +5335,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
    </property>
    <property name="text">
-    <string>Level tool box</string>
+    <string>Level Toolbox</string>
    </property>
    <property name="toolTip">
     <string>Level objects tool box</string>
@@ -5353,7 +5353,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
    </property>
    <property name="text">
-    <string>World tool box</string>
+    <string>World Toolbox</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -5416,7 +5416,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
    </property>
    <property name="text">
-    <string>Level Section Settings</string>
+    <string>Section Settings</string>
    </property>
    <property name="visible">
     <bool>true</bool>
@@ -5651,7 +5651,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <normaloff>:/doors.png</normaloff>:/doors.png</iconset>
    </property>
    <property name="text">
-    <string>Warps and doors</string>
+    <string>Warps and Doors</string>
    </property>
   </action>
   <action name="actionAnimation">

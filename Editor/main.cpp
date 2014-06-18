@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
     if(isRunning)
     {
-        WriteToLog(QtDebugMsg, "--> Application Already running, aborting <--");
+        WriteToLog(QtDebugMsg, "--> Application already running, aborting <--");
         return 0;
     }
 

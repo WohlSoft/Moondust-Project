@@ -71,7 +71,7 @@ void MainWindow::on_actionReload_triggered()
             child->show();
                 WriteToLog(QtDebugMsg, ">>Window showed");
             if(activeChildWindow()==1) activeLvlEditWin()->LvlData.modified = false;
-                WriteToLog(QtDebugMsg, ">>Option seted");
+                WriteToLog(QtDebugMsg, ">>Option set");
             ui->centralWidget->activeSubWindow()->close();
                 WriteToLog(QtDebugMsg, ">>Windows closed");
         }

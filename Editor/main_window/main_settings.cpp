@@ -74,7 +74,7 @@ void MainWindow::setUiDefults()
     this->setWindowIcon(QIcon(":/images/mac/mushroom.icns"));
     #endif
 
-    //Applay objects into tools
+    //Apply objects into tools
     setLevelSectionData();
     setItemBoxes();
     setSoundList();

@@ -70,7 +70,7 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("5/%1 Applying Waters...").arg(TotalSteps));
+            progress.setLabelText(tr("5/%1 Applying Water...").arg(TotalSteps));
     scene->setWaters(progress);
 
         if(progress.wasCanceled()) return false;
@@ -87,7 +87,7 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
 
 
     if(scene->opts.animationEnabled)
-        scene->startBlockAnimation();//Apply block animation
+        scene->startBlockAnimation(); //Apply block animation
 
     scene->applyLayersVisible();
 

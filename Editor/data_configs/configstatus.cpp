@@ -53,7 +53,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level NPC
     item = new QListWidgetItem;
-    item->setText(tr("Level NPC (%1/%1)").arg(configs->main_npc.size()).arg(ConfStatus::total_npc));
+    item->setText(tr("Level NPCs (%1/%1)").arg(configs->main_npc.size()).arg(ConfStatus::total_npc));
     if(configs->main_npc.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else

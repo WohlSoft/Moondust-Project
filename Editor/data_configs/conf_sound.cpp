@@ -32,7 +32,7 @@ void dataconfigs::loadSound()
 
     if(!QFile::exists(sound_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF sounds.ini: file not exist"));
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING sounds.ini: file does not exist"));
           return;
     }
 
@@ -64,7 +64,7 @@ void dataconfigs::loadSound()
 
         if( soundset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i));
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i));
             break;
         }
     }
