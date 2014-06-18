@@ -746,62 +746,62 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2135"/>
         <source>Activate Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviere Generator</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2136"/>
         <source>Generator Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator Typ</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2137"/>
         <source>Generator Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator Richtung</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2138"/>
         <source>Generator Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Generator Zeit</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2139"/>
         <source>Attach Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Binde Ebene</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2140"/>
         <source>Event Block Destroyed</source>
-        <translation type="unfinished"></translation>
+        <translation>Event Block Zerstört</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2141"/>
         <source>Event Block Hited</source>
-        <translation type="unfinished"></translation>
+        <translation>Event Block Berührt</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2142"/>
         <source>Event Layer Empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Event Ebene Leer</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2143"/>
         <source>Event NPC Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Event NPC Aktiviert</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2144"/>
         <source>Event NPC Die</source>
-        <translation type="unfinished"></translation>
+        <translation>Event NPC Tot</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2145"/>
         <source>Event NPC Talk</source>
-        <translation type="unfinished"></translation>
+        <translation>Event NPC Reden</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2146"/>
         <source>NPC Special Data</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC Extra Daten</translation>
     </message>
 </context>
 <context>
@@ -970,7 +970,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="667"/>
         <source>New Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Event %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1121"/>
@@ -2031,35 +2031,35 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../mainwindow.ui" line="682"/>
         <location filename="../mainwindow.ui" line="765"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="500"/>
         <location filename="../mainwindow.ui" line="721"/>
         <location filename="../mainwindow.ui" line="893"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="505"/>
         <location filename="../mainwindow.ui" line="726"/>
         <location filename="../mainwindow.ui" line="898"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="535"/>
         <location filename="../mainwindow.ui" line="698"/>
         <location filename="../mainwindow.ui" line="882"/>
         <source>Uniform icon size</source>
-        <translation type="unfinished"></translation>
+        <translation>Einheitliche Icon Größe</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="548"/>
         <location filename="../mainwindow.ui" line="675"/>
         <location filename="../mainwindow.ui" line="906"/>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppe:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4513"/>
@@ -2329,12 +2329,12 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="543"/>
         <source>Layers merge</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebene Zusammenfügen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="544"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebene mit Name &apos;%1&apos; existiert bereits, sollen die Ebenen zusammengefügt werden?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="626"/>
@@ -2524,17 +2524,17 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="172"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter:</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="183"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="188"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="107"/>
