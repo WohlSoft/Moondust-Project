@@ -36,9 +36,9 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     if(!configs.loadconfigs())
     {
-        QMessageBox::critical(this, "Configuration error", "Configuration can't be load.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
+        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
         splash.finish(this);
-        WriteToLog(QtFatalMsg, "<Application emergency closed>");
+        WriteToLog(QtFatalMsg, "<Error, application closed>");
         exit(EXIT_FAILURE);
         return;
     }

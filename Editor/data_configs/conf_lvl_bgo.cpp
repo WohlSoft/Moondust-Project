@@ -30,7 +30,7 @@ void dataconfigs::loadLevelBGO()
 
     if(!QFile::exists(bgo_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgo.ini: file not exist"));
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bgo.ini: file does not exist"));
           return;
     }
 
@@ -101,19 +101,19 @@ void dataconfigs::loadLevelBGO()
             {
                 index_bgo[i].i = i-1;
                 index_bgo[i].smbx64_sp = bgoset.value("smbx64-sort-priority", "0").toLongLong();
-                //WriteToLog(QtDebugMsg, QString("Gotten BGO SMBX64 Sort priority -> %1").arg( index_bgo[i].smbx64_sp ) );
+                //WriteToLog(QtDebugMsg, QString("Got SMBX64 BGO Sorting priority -> %1").arg( index_bgo[i].smbx64_sp ) );
             }
 
         bgoset.endGroup();
 
         if( bgoset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i));
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i));
         }
     }
 
     if((unsigned int)main_bgo.size()<bgo_total)
     {
-        WriteToLog(QtWarningMsg, QString("Not all BGOs loaded: total:%1, loaded: %2)").arg(bgo_total).arg(main_bgo.size()));
+        WriteToLog(QtWarningMsg, QString("Not all BGOs loaded! Total: %1, Loaded: %2)").arg(bgo_total).arg(main_bgo.size()));
     }
 }

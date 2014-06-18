@@ -31,7 +31,7 @@ void MainWindow::on_actionCopy_triggered()
        q2 += LvlBuffer.bgo.size();
        q3 += LvlBuffer.npc.size();
        q4 += LvlBuffer.water.size();
-       statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard").arg(q1).arg(q2).arg(q3).arg(q4), 2000);
+       statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard").arg(q1).arg(q2).arg(q3).arg(q4), 2000);
     }
 
 }
@@ -48,8 +48,8 @@ void MainWindow::on_actionCut_triggered()
        q2 += LvlBuffer.bgo.size();
        q3 += LvlBuffer.npc.size();
        q4 += LvlBuffer.water.size();
-       //statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC items are moved in clipboard").arg(q1).arg(q2).arg(q3), 2000);
-       statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard").arg(q1).arg(q2).arg(q3).arg(q4), 2000);
+       //statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC items have been moved to clipboard").arg(q1).arg(q2).arg(q3), 2000);
+       statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard").arg(q1).arg(q2).arg(q3).arg(q4), 2000);
     }
 }
 
@@ -57,7 +57,7 @@ void MainWindow::on_actionCut_triggered()
 void MainWindow::on_actionPaste_triggered()
 {
     if
-    (   //if buffer are empty
+    (   //if buffer is empty
             (LvlBuffer.blocks.size()==0)&&
             (LvlBuffer.bgo.size()==0)&&
             (LvlBuffer.npc.size()==0)&&

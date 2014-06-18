@@ -27,7 +27,7 @@
 void npcedit::setDataBoxes()
 {
 
-    //Applay NPC data
+    //Apply NPC data
     ui->en_GFXOffsetX->setChecked(StartNPCData.en_gfxoffsetx);
     ui->offsetx_label->setEnabled(StartNPCData.en_gfxoffsetx);
     ui->GFXOffSetX->setEnabled(StartNPCData.en_gfxoffsetx);
@@ -418,7 +418,7 @@ void npcedit::setDefaultData(unsigned long npc_id)
             {
                 if(pConfigs->main_npc[j].id==npc_id)
                 {
-                   break;//Found!
+                   break; //Found!
                 }
             }
         }

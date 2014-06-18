@@ -32,7 +32,7 @@ void dataconfigs::loadLevelBlocks()
 
     if(!QFile::exists(block_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini: file not exist"));
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_blocks.ini: file does not exist"));
           return;
     }
 
@@ -151,14 +151,14 @@ void dataconfigs::loadLevelBlocks()
 
           if( blockset.status()!=QSettings::NoError)
           {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
             break;
           }
        }
 
        if((unsigned int)main_block.size()<block_total)
        {
-           WriteToLog(QtWarningMsg, QString("Not all blocks loaded: total:%1, loaded: %2)").arg(block_total).arg(main_block.size()));
+           WriteToLog(QtWarningMsg, QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()));
        }
 
 }
