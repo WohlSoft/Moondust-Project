@@ -797,7 +797,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2146"/>
         <source>NPC Special Data</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC Extra Data</translation>
     </message>
 </context>
 <context>
@@ -975,19 +975,29 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Music</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="119"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="122"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="208"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="209"/>
         <source>[Silence]</source>
         <translation>[Silence]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="667"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="725"/>
         <source>New Event %1</source>
         <translation>New Event %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1121"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1273"/>
+        <source>Get section size</source>
+        <translation>Get section size</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
+        <source>Please, set current section to %1 for capture data for this event</source>
+        <translation>Please, switch current section to %1 for capture data for this event</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1465"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
         <translation>Please enter message
@@ -1297,10 +1307,10 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Slippery</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="260"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1127"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="302"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1055"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="212"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1471"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="323"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1076"/>
         <source>[none]</source>
         <translation>[none]</translation>
     </message>
@@ -1937,7 +1947,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3875"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="193"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="196"/>
         <source>Section</source>
         <translation>Section</translation>
     </message>
@@ -2480,20 +2490,20 @@ File: %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="107"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="587"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="608"/>
         <source>%1 coins</source>
         <translation>%1 coin(s)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="108"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="294"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="588"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1175"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="315"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="609"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1196"/>
         <source>[empty]</source>
         <translation>[empty]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="84"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="87"/>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="74"/>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="76"/>
         <source>[None]</source>
