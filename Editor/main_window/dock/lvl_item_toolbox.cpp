@@ -40,7 +40,11 @@ void MainWindow::UpdateCustomItems()
 
 }
 
-void MainWindow::setItemBoxes(bool setCat)
+static QString grp_blocks = "";
+static QString grp_bgo = "";
+static QString grp_npc = "";
+
+void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 {
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
@@ -55,13 +59,14 @@ void MainWindow::setItemBoxes(bool setCat)
     QListWidgetItem * item;
     QPixmap tmpI;
 
-    QStringList tmpList;
+    QStringList tmpList, tmpGrpList;
     bool found = false;
 
     tmpList.clear();
+    tmpGrpList.clear();
 
     //set custom Block items from loaded level
-    if((ui->BlockCatList->currentText()==customLabel)&&(setCat))
+    if((ui->BlockCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
         if(activeChildWindow()==1)
         {
@@ -118,6 +123,18 @@ void MainWindow::setItemBoxes(bool setCat)
     //set Block item box from global configs
     foreach(obj_block blockItem, configs.main_block)
     {
+        //Add Group
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString grp, tmpGrpList)
+            {
+                if(blockItem.group.isEmpty())
+                {found=true;break;}//Skip empty values
+                if(blockItem.group==grp)
+                {found=true; break;}
+            }
+        if(!found) tmpGrpList.push_back(blockItem.group);
+
         //Add category
         found = false;
         if(tmpList.size()!=0)
@@ -126,7 +143,9 @@ void MainWindow::setItemBoxes(bool setCat)
                 {found =true; break;}  }
         if(!found) tmpList.push_back(blockItem.category);
 
-        if((blockItem.category==cat_blocks)||(cat_blocks==allLabel))
+        if(
+                ((blockItem.group==grp_blocks)||(grp_blocks==allLabel)||(grp_blocks==""))&&
+                ((blockItem.category==cat_blocks)||(cat_blocks==allLabel)))
         {
             if(blockItem.animated)
                 tmpI = blockItem.image.copy(0,0,
@@ -147,6 +166,15 @@ void MainWindow::setItemBoxes(bool setCat)
     tmpList.sort();
     tmpList.push_front(customLabel);
     tmpList.push_front(allLabel);
+    tmpGrpList.sort();
+    tmpGrpList.push_front(allLabel);
+
+    //apply group list
+    if(!setGrp)
+    {
+        ui->BlockGroupList->clear();
+        ui->BlockGroupList->addItems(tmpGrpList);
+    }
 
     //apply category list
     if(!setCat)
@@ -156,9 +184,10 @@ void MainWindow::setItemBoxes(bool setCat)
     }
 
     tmpList.clear();
+    tmpGrpList.clear();
 
     //set custom BGO items from loaded level
-    if((ui->BGOCatList->currentText()==customLabel)&&(setCat))
+    if((ui->BGOCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
         if(activeChildWindow()==1)
         {
@@ -215,6 +244,18 @@ void MainWindow::setItemBoxes(bool setCat)
     //set BGO item box from global array
     foreach(obj_bgo bgoItem, configs.main_bgo)
     {
+        //Add Group
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString grp, tmpGrpList)
+            {
+                if(bgoItem.group.isEmpty())
+                {found=true;break;}//Skip empty values
+                if(bgoItem.group==grp)
+                {found=true; break;}
+            }
+        if(!found) tmpGrpList.push_back(bgoItem.group);
+
         //Add category
         found = false;
         if(tmpList.size()!=0)
@@ -223,7 +264,10 @@ void MainWindow::setItemBoxes(bool setCat)
                 {found =true; break;}  }
         if(!found) tmpList.push_back(bgoItem.category);
 
-        if((bgoItem.category==cat_bgos)||(cat_bgos==allLabel))
+        if(
+                ((bgoItem.group==grp_bgo)||(grp_bgo==allLabel)||(grp_bgo==""))&&
+                ((bgoItem.category==cat_bgos)||(cat_bgos==allLabel))
+           )
         {
             if(bgoItem.animated)
                 tmpI = bgoItem.image.copy(0,0,
@@ -244,7 +288,15 @@ void MainWindow::setItemBoxes(bool setCat)
     tmpList.sort();
     tmpList.push_front(customLabel);
     tmpList.push_front(allLabel);
+    tmpGrpList.sort();
+    tmpGrpList.push_front(allLabel);
 
+    //apply group list
+    if(!setGrp)
+    {
+        ui->BGOGroupList->clear();
+        ui->BGOGroupList->addItems(tmpGrpList);
+    }
     //apply category list
     if(!setCat)
     {
@@ -253,9 +305,10 @@ void MainWindow::setItemBoxes(bool setCat)
     }
 
     tmpList.clear();
+    tmpGrpList.clear();
 
     //set custom NPC items from loaded level
-    if((ui->NPCCatList->currentText()==customLabel)&&(setCat))
+    if((ui->NPCCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
         if(activeChildWindow()==1)
         {
@@ -265,33 +318,7 @@ void MainWindow::setItemBoxes(bool setCat)
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {
 
-                /*
-                //Check for index
-                if(npc.id < (unsigned long)configs.index_npc.size())
-                {
-                    if(npc.id == configs.main_npc[configs.index_npc[npc.id].gi].id)
-                    {
-                        j = configs.index_npc[npc.id].gi;
-                        isIndex=true;
-                    }
-                }
-                //In index is false, fetch array
-                if(!isIndex)
-                {
-                    for(int i=0; i < configs.main_npc.size(); i++)
-                    {
-                        if(configs.main_npc[i].id == npc.id)
-                        {
-                            j = 0;
-                            isIndex=true;
-                            break;
-                        }
-                    }
-                    if(!isIndex) j=0;
-                }
-                */
                 tmpI = edit->scene->getNPCimg(npc.id);
-                        //npc.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
 
                 item = new QListWidgetItem( QString("npc-%1").arg(npc.id) );
                 item->setIcon( QIcon( tmpI ) );
@@ -308,6 +335,18 @@ void MainWindow::setItemBoxes(bool setCat)
     //set NPC item box from global config
     foreach(obj_npc npcItem, configs.main_npc)
     {
+        //Add Group
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString grp, tmpGrpList)
+            {
+                if(npcItem.group.isEmpty())
+                {found=true;break;}//Skip empty values
+                if(npcItem.group==grp)
+                {found=true; break;}
+            }
+        if(!found) tmpGrpList.push_back(npcItem.group);
+
         //Add category
         found = false;
         if(tmpList.size()!=0)
@@ -316,7 +355,10 @@ void MainWindow::setItemBoxes(bool setCat)
                 {found = true; break;}  }
         if(!found) tmpList.push_back(npcItem.category);
 
-        if((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
+        if(
+                ((npcItem.group==grp_npc)||(grp_npc==allLabel)||(grp_npc==""))&&
+                ((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
+          )
         {
             tmpI = npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
 
@@ -331,6 +373,15 @@ void MainWindow::setItemBoxes(bool setCat)
     tmpList.sort();
     tmpList.push_front(customLabel);
     tmpList.push_front(allLabel);
+    tmpGrpList.sort();
+    tmpGrpList.push_front(allLabel);
+
+    //apply group list
+    if(!setGrp)
+    {
+        ui->NPCGroupList->clear();
+        ui->NPCGroupList->addItems(tmpGrpList);
+    }
 
     //apply category list
     if(!setCat)
@@ -344,45 +395,67 @@ void MainWindow::setItemBoxes(bool setCat)
 }
 
 // ///////////////////////////////////
+void MainWindow::on_BlockGroupList_currentIndexChanged(const QString &arg1)
+{
+    grp_blocks=arg1;
+    setItemBoxes(true);
+}
+
+void MainWindow::on_BGOGroupList_currentIndexChanged(const QString &arg1)
+{
+    grp_bgo=arg1;
+    setItemBoxes(true);
+}
+
+void MainWindow::on_NPCGroupList_currentIndexChanged(const QString &arg1)
+{
+    grp_npc=arg1;
+    setItemBoxes(true);
+}
+
+// ///////////////////////////////////
 void MainWindow::on_BlockCatList_currentIndexChanged(const QString &arg1)
 {
     cat_blocks=arg1;
-    setItemBoxes(true);
+    setItemBoxes(true, true);
 }
 
 
 void MainWindow::on_BGOCatList_currentIndexChanged(const QString &arg1)
 {
     cat_bgos=arg1;
-    setItemBoxes(true);
+    setItemBoxes(true, true);
 }
 
 
 void MainWindow::on_NPCCatList_currentIndexChanged(const QString &arg1)
 {
     cat_npcs=arg1;
-    setItemBoxes(true);
+    setItemBoxes(true, true);
 }
+
+
+
 
 // ///////////////////////////////////
 
 void MainWindow::on_BGOUniform_clicked(bool checked)
 {
     ui->BGOItemsList->setUniformItemSizes(checked);
-    setItemBoxes(true);
+    setItemBoxes(true, true);
 }
 
 void MainWindow::on_BlockUniform_clicked(bool checked)
 {
     ui->BlockItemsList->setUniformItemSizes(checked);
-    setItemBoxes(true);
+    setItemBoxes(true, true);
 }
 
 
 void MainWindow::on_NPCUniform_clicked(bool checked)
 {
     ui->NPCItemsList->setUniformItemSizes(checked);
-    setItemBoxes(true);
+    setItemBoxes(true, true);
 }
 
 

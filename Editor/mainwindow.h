@@ -116,7 +116,7 @@ public slots:
     void setMusic(bool checked);
     void setMusicButton(bool checked);
 
-    void setItemBoxes(bool setCat=false);
+    void setItemBoxes(bool setGrp=false, bool setCat=false);
     void UpdateCustomItems();
 
     void setSoundList();
@@ -305,11 +305,24 @@ private slots:
 
     void on_BGOUniform_clicked(bool checked);
     void on_BlockUniform_clicked(bool checked);
-
     void on_NPCUniform_clicked(bool checked);
+
+    void on_BlockGroupList_currentIndexChanged(const QString &arg1);
+    void on_BGOGroupList_currentIndexChanged(const QString &arg1);
+    void on_NPCGroupList_currentIndexChanged(const QString &arg1);
+
     void on_BlockCatList_currentIndexChanged(const QString &arg1);
     void on_BGOCatList_currentIndexChanged(const QString &arg1);
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
+
+    void on_BlockFilterField_textChanged(const QString &arg1);
+    void on_BlockFilterType_currentIndexChanged(int index);
+    void on_BGOFilterField_textChanged(const QString &arg1);
+
+    void on_BGOFilterType_currentIndexChanged(int index);
+    void on_NPCFilterField_textChanged(const QString &arg1);
+    void on_NPCFilterType_currentIndexChanged(int index);
+
 
     void on_actionNewNPC_config_triggered();
 
@@ -447,13 +460,6 @@ private slots:
 
     void on_LVLEvent_TriggerEvent_currentIndexChanged(int index);
     void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
-
-    void on_BlockFilterField_textChanged(const QString &arg1);
-    void on_BlockFilterType_currentIndexChanged(int index);
-    void on_BGOFilterField_textChanged(const QString &arg1);
-    void on_BGOFilterType_currentIndexChanged(int index);
-    void on_NPCFilterField_textChanged(const QString &arg1);
-    void on_NPCFilterType_currentIndexChanged(int index);
 
 private:
 
