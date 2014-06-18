@@ -266,6 +266,16 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 ui->PROPS_NPCBoxLabel->setText(configs.main_npc[j].special_name);
                 ui->PROPS_NPCSpecialBox->show();
 
+                if(newItem)
+                {//Reset value to min, if it out of range
+                    if((npc.special_data>=configs.main_npc[j].special_combobox_opts.size())||
+                        (npc.special_data<0))
+                    {
+                       LvlPlacingItems::npcSet.special_data=0;
+                       npc.special_data=0;
+                    }
+                }
+
                 ui->PROPS_NPCSpecialBox->clear();
                 for(int i=0; i < configs.main_npc[j].special_combobox_opts.size(); i++)
                 {
@@ -278,6 +288,17 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 ui->PROPS_NpcSpinLabel->show();
                 ui->PROPS_NpcSpinLabel->setText( configs.main_npc[j].special_name );
                 ui->PROPS_NPCSpecialSpin->show();
+
+                if(newItem)
+                { //Reset value to min, if it out of range
+                    if((npc.special_data>configs.main_npc[j].special_spin_max)||
+                       (npc.special_data<configs.main_npc[j].special_spin_max))
+                    {
+                       LvlPlacingItems::npcSet.special_data = configs.main_npc[j].special_spin_min;
+                       npc.special_data = configs.main_npc[j].special_spin_min;
+                    }
+                }
+
                 npcSpecSpinOffset = configs.main_npc[j].special_spin_value_offset;
                 ui->PROPS_NPCSpecialSpin->setMinimum( configs.main_npc[j].special_spin_min + npcSpecSpinOffset );
                 ui->PROPS_NPCSpecialSpin->setMaximum( configs.main_npc[j].special_spin_max + npcSpecSpinOffset );

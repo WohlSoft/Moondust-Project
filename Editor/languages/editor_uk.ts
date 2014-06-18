@@ -1451,7 +1451,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3875"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="193"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="196"/>
         <source>Section</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2257,19 +2257,29 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="119"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="122"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="208"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="209"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="667"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="725"/>
         <source>New Event %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1121"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1273"/>
+        <source>Get section size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
+        <source>Please, set current section to %1 for capture data for this event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1465"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
@@ -2401,28 +2411,28 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="107"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="587"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="608"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="108"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="294"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="588"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1175"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="315"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="609"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1196"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="260"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1127"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="302"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1055"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="212"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1471"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="323"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1076"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="84"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="87"/>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="74"/>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="76"/>
         <source>[None]</source>
