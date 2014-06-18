@@ -122,11 +122,11 @@ void MainWindow::setItemBoxes(bool setCat)
         found = false;
         if(tmpList.size()!=0)
             foreach(QString cat, tmpList)
-            {   if(blockItem.type==cat)
+            {   if(blockItem.category==cat)
                 {found =true; break;}  }
-        if(!found) tmpList.push_back(blockItem.type);
+        if(!found) tmpList.push_back(blockItem.category);
 
-        if((blockItem.type==cat_blocks)||(cat_blocks==allLabel))
+        if((blockItem.category==cat_blocks)||(cat_blocks==allLabel))
         {
             if(blockItem.animated)
                 tmpI = blockItem.image.copy(0,0,
@@ -219,11 +219,11 @@ void MainWindow::setItemBoxes(bool setCat)
         found = false;
         if(tmpList.size()!=0)
             foreach(QString cat, tmpList)
-            {   if(bgoItem.type==cat)
+            {   if(bgoItem.category==cat)
                 {found =true; break;}  }
-        if(!found) tmpList.push_back(bgoItem.type);
+        if(!found) tmpList.push_back(bgoItem.category);
 
-        if((bgoItem.type==cat_bgos)||(cat_bgos==allLabel))
+        if((bgoItem.category==cat_bgos)||(cat_bgos==allLabel))
         {
             if(bgoItem.animated)
                 tmpI = bgoItem.image.copy(0,0,
