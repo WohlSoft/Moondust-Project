@@ -28,6 +28,9 @@
 static QString allLabel = "[all]";
 static QString customLabel = "[custom]";
 
+static bool lock_grp=false;
+static bool lock_cat=false;
+
 
 void MainWindow::UpdateCustomItems()
 {
@@ -49,6 +52,20 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
 
+    if(!setCat)
+    {
+        lock_cat=true;
+        cat_blocks = allLabel;
+        cat_bgos = allLabel;
+        cat_npcs = allLabel;
+        if(!setGrp)
+        {
+            lock_grp=true;
+            grp_blocks = allLabel;
+            grp_bgo = allLabel;
+            grp_npc = allLabel;
+        }
+    }
 
         WriteToLog(QtDebugMsg, "LevelTools -> Clear current");
     ui->BGOItemsList->clear();
@@ -139,8 +156,12 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         found = false;
         if(tmpList.size()!=0)
             foreach(QString cat, tmpList)
-            {   if(blockItem.category==cat)
-                {found =true; break;}  }
+            {
+                if(blockItem.category==cat)
+                {found =true; break;}
+                if((blockItem.group!=grp_blocks)&&(grp_blocks!=allLabel))
+                {found =true; break;}
+            }
         if(!found) tmpList.push_back(blockItem.category);
 
         if(
@@ -260,8 +281,12 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         found = false;
         if(tmpList.size()!=0)
             foreach(QString cat, tmpList)
-            {   if(bgoItem.category==cat)
-                {found =true; break;}  }
+            {
+                if(bgoItem.category==cat)
+                {found =true; break;}
+                if((bgoItem.group!=grp_bgo)&&(grp_bgo!=allLabel))
+                {found =true; break;}
+            }
         if(!found) tmpList.push_back(bgoItem.category);
 
         if(
@@ -351,8 +376,12 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         found = false;
         if(tmpList.size()!=0)
             foreach(QString cat, tmpList)
-            {   if(npcItem.category==cat)
-                {found = true; break;}  }
+            {
+                if(npcItem.category==cat)
+                {found = true; break;}
+                if((npcItem.group!=grp_npc)&&(grp_npc!=allLabel))
+                {found =true; break;}
+            }
         if(!found) tmpList.push_back(npcItem.category);
 
         if(
@@ -390,6 +419,9 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         ui->NPCCatList->addItems(tmpList);
     }
 
+    lock_grp=false;
+    lock_cat=false;
+
     updateFilters();
 
 }
@@ -397,18 +429,21 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 // ///////////////////////////////////
 void MainWindow::on_BlockGroupList_currentIndexChanged(const QString &arg1)
 {
+    if(lock_grp) return;
     grp_blocks=arg1;
     setItemBoxes(true);
 }
 
 void MainWindow::on_BGOGroupList_currentIndexChanged(const QString &arg1)
 {
+    if(lock_grp) return;
     grp_bgo=arg1;
     setItemBoxes(true);
 }
 
 void MainWindow::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 {
+    if(lock_grp) return;
     grp_npc=arg1;
     setItemBoxes(true);
 }
@@ -416,6 +451,7 @@ void MainWindow::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 // ///////////////////////////////////
 void MainWindow::on_BlockCatList_currentIndexChanged(const QString &arg1)
 {
+    if(lock_cat) return;
     cat_blocks=arg1;
     setItemBoxes(true, true);
 }
@@ -423,6 +459,7 @@ void MainWindow::on_BlockCatList_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_BGOCatList_currentIndexChanged(const QString &arg1)
 {
+    if(lock_cat) return;
     cat_bgos=arg1;
     setItemBoxes(true, true);
 }
@@ -430,6 +467,7 @@ void MainWindow::on_BGOCatList_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_NPCCatList_currentIndexChanged(const QString &arg1)
 {
+    if(lock_cat) return;
     cat_npcs=arg1;
     setItemBoxes(true, true);
 }
