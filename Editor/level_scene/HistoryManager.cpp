@@ -371,7 +371,7 @@ void LvlScene::historyBack()
         }
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, &LvlScene::historyUndoSettingsChangeNPCNPC, 0, 0, false, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
@@ -432,6 +432,10 @@ void LvlScene::historyBack()
         else
         if(lastOperation.subtype == SETTING_EV_TALK){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTalkEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_SPECIAL_DATA){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsSpecialDataNPC, 0, 0, true, true, false, true, true);
         }
         break;
     }
@@ -774,7 +778,7 @@ void LvlScene::historyForward()
         }
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, &LvlScene::historyRedoSettingsChangeNPCNPC, 0, 0, false, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
@@ -835,6 +839,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_EV_TALK){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTalkEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_SPECIAL_DATA){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsSpecialDataNPC, 0, 0, true, true, false, true, true);
         }
         break;
     }
@@ -1323,6 +1331,16 @@ void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
 }
 
+void LvlScene::historyUndoSettingsChangeNPCNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setIncludedNPC(data.special_data);
+}
+
+void LvlScene::historyRedoSettingsChangeNPCNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setIncludedNPC(cbData.hist->extraData.toInt());
+}
+
 void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater data)
 {
     ((ItemWater*)cbData.item)->setType(data.quicksand ? 1 : 0);
@@ -1504,6 +1522,18 @@ void LvlScene::historyUndoSettingsTalkEventNPC(LvlScene::CallbackData cbData, Le
 void LvlScene::historyRedoSettingsTalkEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->npcData.event_talk = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsSpecialDataNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.special_data = data.special_data;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsSpecialDataNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.special_data = cbData.hist->extraData.toInt();
     ((ItemNPC*)cbData.item)->arrayApply();
 }
 
@@ -2113,6 +2143,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_ACTIVATE: return tr("Event NPC Activate");
     case SETTING_EV_DEATH: return tr("Event NPC Die");
     case SETTING_EV_TALK: return tr("Event NPC Talk");
+    case SETTING_SPECIAL_DATA: return tr("NPC Special Data");
     default:
         return tr("Unknown");
     }

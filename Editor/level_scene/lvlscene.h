@@ -264,7 +264,8 @@ public:
         SETTING_EV_LAYER_EMP,  //extraData: String [new event]
         SETTING_EV_ACTIVATE,   //extraData: String [new event]
         SETTING_EV_DEATH,      //extraData: String [new event]
-        SETTING_EV_TALK        //extraData: String [new event]
+        SETTING_EV_TALK,       //extraData: String [new event]
+        SETTING_SPECIAL_DATA   //extraData: int [new type]
     };
 
     //typedefs
@@ -341,6 +342,8 @@ public:
     //Callbackfunctions: [Change Settings] Included NPC
     void historyUndoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
+    void historyUndoSettingsChangeNPCNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsChangeNPCNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: [Change Settings] Water Type
     void historyUndoSettingsTypeWater(CallbackData cbData, LevelWater data);
     void historyRedoSettingsTypeWater(CallbackData cbData, LevelWater data);
@@ -388,6 +391,9 @@ public:
     //Callbackfunctions: [Change Settings] Talk Event
     void historyUndoSettingsTalkEventNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsTalkEventNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Talk Event
+    void historyUndoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
