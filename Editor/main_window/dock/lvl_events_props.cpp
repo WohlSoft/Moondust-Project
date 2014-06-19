@@ -502,6 +502,7 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 
                 item->setData(3, QString::number(NewEvent.array_id));
 
+                activeLvlEditWin()->scene->addAddEventHistory(NewEvent.array_id, ui->LVLEvents_List->count(), NewEvent.name);
                 activeLvlEditWin()->LvlData.events.push_back(NewEvent);
                 activeLvlEditWin()->LvlData.modified=true;
             }
@@ -611,6 +612,7 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
             NewEvent.array_id = activeLvlEditWin()->LvlData.events_array_id;
             item->setData(3, QString::number(NewEvent.array_id));
 
+            activeLvlEditWin()->scene->addAddEventHistory(NewEvent.array_id, ui->LVLEvents_List->count(), NewEvent.name);
             activeLvlEditWin()->LvlData.events.push_back(NewEvent);
             activeLvlEditWin()->LvlData.modified=true;
         }
@@ -713,6 +715,16 @@ void MainWindow::ModifyEvent(QString eventName, QString newEventName)
         if( edit->LvlData.events[i].trigger == eventName)
             edit->LvlData.events[i].trigger = newEventName;
     }
+}
+
+QListWidget *MainWindow::getEventList()
+{
+    return ui->LVLEvents_List;
+}
+
+void MainWindow::setEventToolsLocked(bool locked)
+{
+    lockSetEventSettings = locked;
 }
 
 void MainWindow::RemoveEvent(QString eventName)
