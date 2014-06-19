@@ -104,122 +104,122 @@
     <message>
         <location filename="../data_configs/configstatus.ui" line="20"/>
         <source>Current configuration status</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado de configuración actual</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="37"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="49"/>
         <source>Item types:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de ítems:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="76"/>
         <source>Config name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="89"/>
         <source>Config path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="128"/>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorios</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="140"/>
         <source>Config directories:</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorios de configuración:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="190"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="195"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="20"/>
         <source>Level Blocks (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloques de nivel (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="32"/>
         <source>Level Background objects (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Objetos de fondo del nivel (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="44"/>
         <source>Level Background images (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imágenes de fondo del nivel (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="56"/>
         <source>Level NPC (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNJs del nivel (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="68"/>
         <source>Music (level) (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Música (nivel) (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="79"/>
         <source>Music (world) (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Música (mundo) (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="90"/>
         <source>Music (special) (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Música (especial) (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="102"/>
         <source>Sounds (%1/%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonidos (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="117"/>
         <source>Level data</source>
-        <translation type="unfinished"></translation>
+        <translation>Datos de nivel</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="123"/>
         <source>World data</source>
-        <translation type="unfinished"></translation>
+        <translation>Datos de mundo</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="130"/>
         <source>Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Personajes</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="137"/>
         <source>Game worlds</source>
-        <translation type="unfinished"></translation>
+        <translation>Mundos del juego</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="144"/>
         <source>Music</source>
-        <translation type="unfinished">Música</translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="151"/>
         <source>Sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonidos</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="158"/>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation>Datos personalizados</translation>
     </message>
 </context>
 <context>
@@ -715,77 +715,77 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2132"/>
         <source>Set Level Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar Salida del nivel</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2133"/>
         <source>Set Level Entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>Fijar entrada del nivel</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2134"/>
         <source>Level Warp To</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasladar a</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2135"/>
         <source>Activate Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Generador</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2136"/>
         <source>Generator Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de generador</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2137"/>
         <source>Generator Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Dirección de generador</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2138"/>
         <source>Generator Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de generador</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2139"/>
         <source>Attach Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Atajar Capa</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2140"/>
         <source>Event Block Destroyed</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento Bloque Destruído</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2141"/>
         <source>Event Block Hited</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento Bloque Golpeado</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2142"/>
         <source>Event Layer Empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento Capa Vacía</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2143"/>
         <source>Event NPC Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento PNJ Activado</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2144"/>
         <source>Event NPC Die</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento PNJ muerto</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2145"/>
         <source>Event NPC Talk</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento Diálogo PNJ</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2146"/>
         <source>NPC Special Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Datos especial de PNJ</translation>
     </message>
 </context>
 <context>
@@ -955,23 +955,24 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="725"/>
         <source>New Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo Evento %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1273"/>
         <source>Get section size</source>
-        <translation type="unfinished"></translation>
+        <translation>Obtener tamaño de sección</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
         <source>Please, set current section to %1 for capture data for this event</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, fijar sección actual a %1 para capturar los datos de este evento</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1465"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, escribir mensaje
+Límite: máxima longitud de 28 caracteres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1434"/>
@@ -1507,47 +1508,47 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="256"/>
         <source>Global configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración global</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="489"/>
         <location filename="../mainwindow.ui" line="682"/>
         <location filename="../mainwindow.ui" line="765"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtro:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="500"/>
         <location filename="../mainwindow.ui" line="721"/>
         <location filename="../mainwindow.ui" line="893"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="505"/>
         <location filename="../mainwindow.ui" line="726"/>
         <location filename="../mainwindow.ui" line="898"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="535"/>
         <location filename="../mainwindow.ui" line="698"/>
         <location filename="../mainwindow.ui" line="882"/>
         <source>Uniform icon size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño uniforme de ícono</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="548"/>
         <location filename="../mainwindow.ui" line="675"/>
         <location filename="../mainwindow.ui" line="906"/>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupo:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4302"/>
         <source>Test</source>
-        <translation type="unfinished"></translation>
+        <translation>Probar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4513"/>
@@ -1572,7 +1573,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="4585"/>
         <source>Exit program</source>
-        <translation type="unfinished"></translation>
+        <translation>Salir del programa</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4593"/>
@@ -1918,7 +1919,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="5958"/>
         <source>Current configuration status...</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado actual de configuración...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5401"/>
@@ -2307,12 +2308,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="543"/>
         <source>Layers merge</source>
-        <translation type="unfinished"></translation>
+        <translation>Fusión de capas</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="544"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa con el nombre &apos;%1&apos; ya existe, ¿quiere fusionar las capas?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="626"/>
@@ -2490,17 +2491,17 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="172"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtro:</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="183"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="188"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../npc_dialog/npcdialog.ui" line="107"/>
