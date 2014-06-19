@@ -1290,6 +1290,14 @@ void MainWindow::on_LVLEvent_SctSize_Set_clicked()
             return;
         }
 
+        long i = getEventArrayIndex();
+        if(i<0) return;
+
+        activeLvlEditWin()->setFocus();
+        if(activeLvlEditWin()->scene->pResizer==NULL)
+        {
+            activeLvlEditWin()->scene->setEventSctSizeResizer(i, true);
+        }
     }
 
 }

@@ -121,6 +121,9 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
             case 2:
                 setBlockResizer(NULL, false, false);
                 break;
+            case 1:
+                setEventSctSizeResizer(-1, false, false);
+                break;
             case 0:
             default:
                 MainWinConnect::pMainWin->on_cancelResize_clicked();
@@ -137,6 +140,9 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
             {
             case 2:
                 setBlockResizer(NULL, false, true);
+                break;
+            case 1:
+                setEventSctSizeResizer(-1, false, true);
                 break;
             case 0:
             default:
@@ -1218,6 +1224,66 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         DrawMode=false;
     }
 }
+
+
+static long eventID=0;
+void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
+{
+    if(event>=0)
+        eventID=event;
+
+    if((enabled)&&(pResizer==NULL))
+    {
+        int x = LvlData->events[eventID].sets[LvlData->CurSection].position_left;
+        int y = LvlData->events[eventID].sets[LvlData->CurSection].position_top;
+        int w = LvlData->events[eventID].sets[LvlData->CurSection].position_right;
+        int h = LvlData->events[eventID].sets[LvlData->CurSection].position_bottom;
+
+        pResizer = new ItemResizer( QSize((long)fabs(x-w), (long)fabs(y-h)), Qt::yellow, 32 );
+        this->addItem(pResizer);
+        pResizer->setPos(x, y);
+        pResizer->type=1;
+        pResizer->_minSize = QSizeF(800, 600);
+        this->setFocus(Qt::ActiveWindowFocusReason);
+        //DrawMode=true;
+        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+    }
+    else
+    {
+        if(pResizer!=NULL)
+        {
+            if(accept)
+            {
+                WriteToLog(QtDebugMsg, QString("SECTION RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
+                long l = pResizer->pos().x();
+                long t = pResizer->pos().y();
+                long r = l+pResizer->_width;
+                long b = t+pResizer->_height;
+                //long oldL = LvlData->events[eventID].sets[LvlData->CurSection].position_left;
+                //long oldR = LvlData->events[eventID].sets[LvlData->CurSection].position_right;
+                //long oldT = LvlData->events[eventID].sets[LvlData->CurSection].position_top;
+                //long oldB = LvlData->events[eventID].sets[LvlData->CurSection].position_bottom;
+                LvlData->events[eventID].sets[LvlData->CurSection].position_left = l;
+                LvlData->events[eventID].sets[LvlData->CurSection].position_right = r;
+                LvlData->events[eventID].sets[LvlData->CurSection].position_top = t;
+                LvlData->events[eventID].sets[LvlData->CurSection].position_bottom = b;
+
+                //addResizeSectionHistory(LvlData->CurSection, oldL, oldT, oldR, oldB, l, t, r, b);
+
+                //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
+                //drawSpace();
+                LvlData->modified = true;
+                MainWinConnect::pMainWin->eventSectionSettingsSync();
+            }
+            delete pResizer;
+            pResizer = NULL;
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            //resetResizingSection=true;
+        }
+        DrawMode=false;
+    }
+}
+
 
 void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool accept)
 {

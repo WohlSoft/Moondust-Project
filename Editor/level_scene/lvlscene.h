@@ -199,6 +199,7 @@ public:
     // //////////////////////Resizer////////////////////////
     ItemResizer * pResizer; //reisizer pointer
     void setSectionResizer(bool enabled, bool accept=false);
+    void setEventSctSizeResizer(long event, bool enabled, bool accept=false);
     void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
 
     // ////////////HistoryManager///////////////////
