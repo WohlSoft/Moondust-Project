@@ -755,6 +755,7 @@ void MainWindow::on_LVLEvents_del_clicked()
             if( activeLvlEditWin()->LvlData.events[i].array_id==
                     (unsigned int)ui->LVLEvents_List->selectedItems()[0]->data(3).toInt() )
             {
+                activeLvlEditWin()->scene->addRemoveEventHistory(activeLvlEditWin()->LvlData.events[i],ui->LVLEvents_List->currentRow());
                 ModifyEvent(activeLvlEditWin()->LvlData.events[i].name, "");
                 activeLvlEditWin()->LvlData.events.remove(i);
                 delete ui->LVLEvents_List->selectedItems()[0];

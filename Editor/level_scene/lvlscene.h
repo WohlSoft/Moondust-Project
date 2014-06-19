@@ -215,7 +215,8 @@ public:
             LEVELHISTORY_ADDWARP,
             LEVELHISTORY_REMOVEWARP,
             LEVELHISTORY_CHANGEDSETTINGSWARP,
-            LEVELHISTORY_ADDEVENT
+            LEVELHISTORY_ADDEVENT,
+            LEVELHISTORY_REMOVEEVENT
         };
         HistoryType type;
         //used most of Operations
@@ -296,6 +297,7 @@ public:
     void addRemoveWarpHistory(LevelDoors removedDoor);
     void addChangeWarpSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
     void addAddEventHistory(int array_id, int listindex, QString name);
+    void addRemoveEventHistory(LevelEvents ev, int listindex);
     //history modifiers
     void historyBack();
     void historyForward();
