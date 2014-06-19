@@ -143,6 +143,9 @@ public slots:
     void setEventsBox();
     void setEventData(long index=-1);
     void EventListsSync();
+    void ModifyEvent(QString eventName, QString newEventName);
+    QListWidget* getEventList();
+    void setEventToolsLocked(bool locked);
 
     //Toolbox functions
     void updateFilters();
@@ -495,7 +498,7 @@ private:
     // ////////////Event Functions///////////////////
     void AddNewEvent(QString eventName, bool setEdited);
     void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
-    void ModifyEvent(QString eventName, QString newEventName);
+
     void RemoveEvent(QString eventName);
     // //////////////////////////////////////////////
 

@@ -232,6 +232,23 @@ void LvlScene::addChangeWarpSettingsHistory(int array_id, LvlScene::SettingSubTy
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addAddEventHistory(int array_id, int listindex, QString name)
+{
+    cleanupRedoElements();
+
+    HistoryOperation addEvOperation;
+    addEvOperation.type = HistoryOperation::LEVELHISTORY_ADDEVENT;
+    QList<QVariant> package;
+    package.push_back(array_id);
+    package.push_back(listindex);
+    package.push_back(name);
+    addEvOperation.extraData = QVariant(package);
+    operationList.push_back(addEvOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -652,6 +669,27 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setDoorData(-2);
         doorPointsSync(array_id);
 
+        break;            
+    }
+    case HistoryOperation::LEVELHISTORY_ADDEVENT:
+    {
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+
+        for (int i = 0; i < LvlData->events.size(); i++) {
+            if(LvlData->events[i].array_id == (unsigned int)array_id){
+                for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
+                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == array_id){
+                        delete MainWinConnect::pMainWin->getEventList()->item(j);
+                    }
+                }
+                MainWinConnect::pMainWin->ModifyEvent(LvlData->events[i].name, "");
+                LvlData->events.remove(i);
+            }
+        }
+
+        MainWinConnect::pMainWin->EventListsSync();
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
         break;
     }
     default:
@@ -1049,6 +1087,37 @@ void LvlScene::historyForward()
         MainWinConnect::pMainWin->setDoorData(-2);
         doorPointsSync(array_id);
 
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_ADDEVENT:
+    {
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int listindex = lastOperation.extraData.toList()[1].toInt();
+        QString name = lastOperation.extraData.toList()[2].toString();
+
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        QListWidgetItem * item;
+        item = new QListWidgetItem;
+        item->setText(name);
+        item->setFlags(Qt::ItemIsEditable);
+        item->setFlags(item->flags() | Qt::ItemIsEnabled);
+        item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+        item->setData(3, array_id );
+        QListWidget* evList = MainWinConnect::pMainWin->getEventList();
+        LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+        NewEvent.name = item->text();
+        NewEvent.array_id = array_id;
+        LvlData->events.push_back(NewEvent);
+        LvlData->modified = true;
+
+        if(evList->count() > listindex){
+            evList->insertItem(listindex, name);
+        }else{
+            evList->addItem(item);
+        }
+
+        MainWinConnect::pMainWin->EventListsSync();
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
         break;
     }
     default:
