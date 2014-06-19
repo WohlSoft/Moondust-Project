@@ -162,8 +162,12 @@
         <translation>Imágenes de fondo del nivel (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="56"/>
         <source>Level NPC (%1/%1)</source>
+        <translation type="vanished">PNJs del nivel (%1/%1)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="56"/>
+        <source>Level NPCs (%1/%1)</source>
         <translation>PNJs del nivel (%1/%1)</translation>
     </message>
     <message>
@@ -856,9 +860,8 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>General</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="359"/>
         <source>Level Tool box</source>
-        <translation>Caja de herramientas de nivel</translation>
+        <translation type="vanished">Caja de herramientas de nivel</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="370"/>
@@ -884,9 +887,8 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>PNJ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1084"/>
         <source>World map tool box</source>
-        <translation>Caja de herramientas del mundo</translation>
+        <translation type="vanished">Caja de herramientas del mundo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1110"/>
@@ -937,6 +939,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../mainwindow.ui" line="1352"/>
         <location filename="../mainwindow.ui" line="1532"/>
+        <location filename="../mainwindow.ui" line="5419"/>
         <source>Section Settings</source>
         <translation>Opciones de Sección</translation>
     </message>
@@ -953,22 +956,22 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>[Silencio]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="725"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="726"/>
         <source>New Event %1</source>
         <translation>Nuevo Evento %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1273"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
         <source>Get section size</source>
         <translation>Obtener tamaño de sección</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1275"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation>Por favor, fijar sección actual a %1 para capturar los datos de este evento</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1465"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1466"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
         <translation>Por favor, escribir mensaje
@@ -997,7 +1000,6 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1569"/>
-        <location filename="../mainwindow.ui" line="5221"/>
         <source>Off screen exit</source>
         <translation>Salida fuera de la pantalla</translation>
     </message>
@@ -1074,10 +1076,8 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1834"/>
-        <location filename="../mainwindow.ui" line="5654"/>
         <source>Warps and doors</source>
-        <translation>Traslados y puertas</translation>
+        <translation type="vanished">Traslados y puertas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1863"/>
@@ -1346,9 +1346,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Velocidad vertical:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3860"/>
         <source>Autoscrool section</source>
-        <translation>Autodesplazamiento</translation>
+        <translation type="vanished">Autodesplazamiento</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3875"/>
@@ -1511,6 +1510,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Configuración global</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="359"/>
+        <location filename="../mainwindow.ui" line="5338"/>
+        <source>Level Toolbox</source>
+        <translation>Herramientas de nivel</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="489"/>
         <location filename="../mainwindow.ui" line="682"/>
         <location filename="../mainwindow.ui" line="765"/>
@@ -1544,6 +1549,22 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="906"/>
         <source>Group:</source>
         <translation>Grupo:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1084"/>
+        <source>World Map Toolbox</source>
+        <translation>Herramientas del mundo</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1834"/>
+        <location filename="../mainwindow.ui" line="5654"/>
+        <source>Warps and Doors</source>
+        <translation>Traslados y puertas</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3860"/>
+        <source>Autoscroll section</source>
+        <translation>Autodesplazamiento</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4302"/>
@@ -1851,6 +1872,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Sección 21 (Alt+1)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="5221"/>
+        <source>Offscreen exit</source>
+        <translation>Salida fuera de la pantalla</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="5232"/>
         <source>No turn back</source>
         <translation>Sin retorno</translation>
@@ -1877,14 +1903,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Deshabilitar mapa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5281"/>
         <source>Restart level after player&apos;s fail</source>
-        <translation>Recomenzar nivel después de perder</translation>
+        <translation type="vanished">Recomenzar nivel después de perder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5338"/>
         <source>Level tool box</source>
-        <translation>Herramientas de nivel</translation>
+        <translation type="vanished">Herramientas de nivel</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5341"/>
@@ -1892,9 +1916,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Herramientas de objetos de nivel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5356"/>
         <source>World tool box</source>
-        <translation>Herramientas del mundo</translation>
+        <translation type="vanished">Herramientas del mundo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5377"/>
@@ -2059,14 +2082,23 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Retraso:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="5281"/>
+        <source>Restart level after fail</source>
+        <translation>Recomenzar nivel después de perder</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5356"/>
+        <source>World Toolbox</source>
+        <translation>Herramientas del mundo</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>Eriser (E)</source>
         <translation>Borrador (E)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5419"/>
         <source>Level Section Settings</source>
-        <translation>Opciones de sección</translation>
+        <translation type="vanished">Opciones de sección</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5430"/>
@@ -2234,7 +2266,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5875"/>
-        <location filename="../main_window/menubar.cpp" line="221"/>
         <source>[No opened files]</source>
         <translation>[No hay archivos abiertos]</translation>
     </message>
@@ -2254,14 +2285,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Opciones de aplicación</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
-        <translation>%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua copiados al portapapeles</translation>
+        <translation type="vanished">%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua copiados al portapapeles</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="52"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
-        <translation>%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua movidos al portapapeles</translation>
+        <translation type="vanished">%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua movidos al portapapeles</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="30"/>
@@ -2275,8 +2304,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="57"/>
+        <source>Reloading configuration</source>
+        <translation>Recargando configuraciones</translation>
+    </message>
+    <message>
         <source>Reload configuration</source>
-        <translation>Recargar configuración</translation>
+        <translation type="vanished">Recargar configuración</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="58"/>
@@ -2306,32 +2339,32 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Nivel recargado</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="543"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="544"/>
         <source>Layers merge</source>
         <translation>Fusión de capas</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="544"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="545"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>Capa con el nombre &apos;%1&apos; ya existe, ¿quiere fusionar las capas?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="626"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="627"/>
         <source>New Layer %1</source>
         <translation>Nueva Capa %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="804"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="805"/>
         <source>Rename layer</source>
         <translation>Renombrar capa</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="808"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="809"/>
         <source>Remove layer with items</source>
         <translation>Remover capa con ítems</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="809"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="810"/>
         <source>Remove layer and save items</source>
         <translation>Remover capas y guardar ítems</translation>
     </message>
@@ -2392,6 +2425,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Mosaicos</translation>
     </message>
     <message>
+        <location filename="../main_window/menubar.cpp" line="221"/>
+        <source>[No files open]</source>
+        <translation>[No hay archivos abiertos]</translation>
+    </message>
+    <message>
         <location filename="../main_window/translator.cpp" line="185"/>
         <source>Current Language changed to %1</source>
         <translation>Idioma actual cambiado a %1</translation>
@@ -2424,7 +2462,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="212"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1471"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1472"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="323"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="1076"/>
         <source>[none]</source>
@@ -2446,6 +2484,16 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="53"/>
         <source>[custom]</source>
         <translation>[personalizado]</translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="34"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
+        <translation>%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua copiados al portapapeles</translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="52"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</source>
+        <translation>%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua copiados al portapapeles</translation>
     </message>
 </context>
 <context>
@@ -2617,8 +2665,33 @@ File: %1
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="88"/>
-        <source>Please, wait...</source>
+        <source>Please wait...</source>
         <translation>Por favor, espere...</translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="183"/>
+        <source>File save error</source>
+        <translation>Error de escritura</translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="184"/>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation>No se puede escribir archivo %1:
+%2.</translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="244"/>
+        <source>Cannot open level file %1:
+because object configurations are not loaded
+.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
+        <translation>No se puede abrir archivo de nivel %1:
+porque no se cargaron las configuraciones de objetos.
+Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
+    </message>
+    <message>
+        <source>Please, wait...</source>
+        <translation type="vanished">Por favor, espere...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="230"/>
@@ -2638,11 +2711,10 @@ File: %1
         <translation>Configuraciones no cargadas</translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="244"/>
         <source>Cannot open level file %1:
 because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>No se puede abrir archivo de nivel %1:
+        <translation type="vanished">No se puede abrir archivo de nivel %1:
 porque no se cargaron las configuraciones de objetos.
 Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
     </message>
@@ -2673,8 +2745,12 @@ Por favor, compruebe que la configuración/directorio SMBX realmente existen y c
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="73"/>
-        <source>5/%1 Applying Waters...</source>
+        <source>5/%1 Applying Water...</source>
         <translation>5/%1 Aplicando agua...</translation>
+    </message>
+    <message>
+        <source>5/%1 Applying Waters...</source>
+        <translation type="vanished">5/%1 Aplicando agua...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="79"/>
@@ -2687,15 +2763,13 @@ Por favor, compruebe que la configuración/directorio SMBX realmente existen y c
         <translation>Guardar como</translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="183"/>
         <source>Write file error</source>
-        <translation>Error de escritura</translation>
+        <translation type="vanished">Error de escritura</translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="184"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>No se puede escribir archivo %1:
+        <translation type="vanished">No se puede escribir archivo %1:
 %2.</translation>
     </message>
     <message>
@@ -3015,14 +3089,24 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="117"/>
-        <source>Write file error</source>
-        <translation>Escribir informe de errores</translation>
+        <source>File save error</source>
+        <translation>Error de escritura</translation>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="118"/>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation>No se puede escribir archivo %1:
+%2.</translation>
+    </message>
+    <message>
+        <source>Write file error</source>
+        <translation type="vanished">Escribir informe de errores</translation>
+    </message>
+    <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>No se puede escribir archivo %1: %2.</translation>
+        <translation type="vanished">No se puede escribir archivo %1: %2.</translation>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="146"/>
