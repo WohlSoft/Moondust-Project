@@ -163,9 +163,13 @@
         <translation>Уровень: Фоновые изображения (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="56"/>
         <source>Level NPC (%1/%1)</source>
-        <translation>Уровень: нИП (%1/%1)</translation>
+        <translation type="vanished">Уровень: нИП (%1/%1)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="56"/>
+        <source>Level NPCs (%1/%1)</source>
+        <translation>Уровень: нИПы (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="68"/>
@@ -871,9 +875,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="359"/>
         <source>Level Tool box</source>
-        <translation>Уровень</translation>
+        <translation type="vanished">Уровень</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="370"/>
@@ -917,9 +920,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Секции уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1084"/>
         <source>World map tool box</source>
-        <translation>Карта мира</translation>
+        <translation type="vanished">Карта мира</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1110"/>
@@ -969,6 +971,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1352"/>
         <location filename="../mainwindow.ui" line="1532"/>
+        <location filename="../mainwindow.ui" line="5419"/>
         <source>Section Settings</source>
         <translation>Настройки секции</translation>
     </message>
@@ -985,22 +988,22 @@ Message limits: max line lenth is 28 characters</source>
         <translation>[Тишина]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="725"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="726"/>
         <source>New Event %1</source>
         <translation>Новое Событие %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1273"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
         <source>Get section size</source>
         <translation>Получение размера секции</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1275"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation>Пожалуйста, переключите текущую секцию на %1 для захвата данных для этого события</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1465"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1466"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
         <translation>Пожалуйста, введите сообщение
@@ -1029,7 +1032,6 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1569"/>
-        <location filename="../mainwindow.ui" line="5221"/>
         <source>Off screen exit</source>
         <translation>Выход из уровня за кадр</translation>
     </message>
@@ -1106,10 +1108,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1834"/>
-        <location filename="../mainwindow.ui" line="5654"/>
         <source>Warps and doors</source>
-        <translation>Проходы и двери</translation>
+        <translation type="vanished">Проходы и двери</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1863"/>
@@ -1325,7 +1325,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="212"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1471"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1472"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="323"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="1076"/>
         <source>[none]</source>
@@ -1626,6 +1626,11 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Секция 21 (Alt+1)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="5221"/>
+        <source>Offscreen exit</source>
+        <translation>Выход из уровня за кадр</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="5232"/>
         <source>No turn back</source>
         <translation>Нельзя вернуться</translation>
@@ -1652,9 +1657,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Отключить карту мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5281"/>
         <source>Restart level after player&apos;s fail</source>
-        <translation>Переиграть уровень при неудаче</translation>
+        <translation type="vanished">Переиграть уровень при неудаче</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5938"/>
@@ -1691,9 +1695,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="obsolete">Персонаж 5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5338"/>
         <source>Level tool box</source>
-        <translation>Уровень</translation>
+        <translation type="vanished">Уровень</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5341"/>
@@ -1701,9 +1704,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Объекты уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5356"/>
         <source>World tool box</source>
-        <translation>Карта мира</translation>
+        <translation type="vanished">Карта мира</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5377"/>
@@ -1816,6 +1818,12 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Глобальная конфигурация</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="359"/>
+        <location filename="../mainwindow.ui" line="5338"/>
+        <source>Level Toolbox</source>
+        <translation>Панель элементов Уровня</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="489"/>
         <location filename="../mainwindow.ui" line="682"/>
         <location filename="../mainwindow.ui" line="765"/>
@@ -1849,6 +1857,17 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="906"/>
         <source>Group:</source>
         <translation>Группа:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1084"/>
+        <source>World Map Toolbox</source>
+        <translation>Панель объектов карты мира</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1834"/>
+        <location filename="../mainwindow.ui" line="5654"/>
+        <source>Warps and Doors</source>
+        <translation>Проходы и Двери</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2711"/>
@@ -1972,9 +1991,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Вертикальная скорость:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3860"/>
         <source>Autoscrool section</source>
-        <translation>Автопрокрутка секции</translation>
+        <translation type="vanished">Автопрокрутка секции</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3875"/>
@@ -2072,6 +2090,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Воспроизвести звук:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="3860"/>
+        <source>Autoscroll section</source>
+        <translation>Автопрокрутка секции</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="4264"/>
         <source>Do end game:</source>
         <translation>Завершить игру:</translation>
@@ -2147,14 +2170,23 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Создать копию события</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="5281"/>
+        <source>Restart level after fail</source>
+        <translation>Переиграть уровень после провала</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5356"/>
+        <source>World Toolbox</source>
+        <translation>Панель объектов Карты Мира</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>Eriser (E)</source>
         <translation>Ластик (E)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5419"/>
         <source>Level Section Settings</source>
-        <translation>Настройки секции уровня</translation>
+        <translation type="vanished">Настройки секции уровня</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5430"/>
@@ -2322,7 +2354,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5875"/>
-        <location filename="../main_window/menubar.cpp" line="221"/>
         <source>[No opened files]</source>
         <translation>[Нет открытых файлов]</translation>
     </message>
@@ -2367,18 +2398,16 @@ File: %1
         <translation type="vanished">%1 блоков, %2 Фоновых объектов, %3 нИП скопировано в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="34"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
-        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон скопировано в буфер обмена</translation>
+        <translation type="vanished">%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон скопировано в буфер обмена</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are moved in clipboard</source>
         <translation type="vanished">%1 блоков, %2 Фоновых объектов, %3 нИП перемещено в буфер обмена</translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="52"/>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
-        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон перемещено в буфер обмена</translation>
+        <translation type="vanished">%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон перемещено в буфер обмена</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="30"/>
@@ -2392,8 +2421,12 @@ File: %1
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="57"/>
+        <source>Reloading configuration</source>
+        <translation>Перезагрузка конфигурации</translation>
+    </message>
+    <message>
         <source>Reload configuration</source>
-        <translation>Перезагрузить конфигурацию</translation>
+        <translation type="vanished">Перезагрузить конфигурацию</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="58"/>
@@ -2423,32 +2456,32 @@ File: %1
         <translation>Файл уровня перезагружен</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="543"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="544"/>
         <source>Layers merge</source>
         <translation>Слияние слоёв</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="544"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="545"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>Слой с именем &apos;%1&apos; уже существует, вы хотите объединить слои?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="626"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="627"/>
         <source>New Layer %1</source>
         <translation>Новый слой %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="804"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="805"/>
         <source>Rename layer</source>
         <translation>Переименовать слой</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="808"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="809"/>
         <source>Remove layer with items</source>
         <translation>Удалить слой вместе с объектами</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="809"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="810"/>
         <source>Remove layer and save items</source>
         <translation>Удалить слой и сохранить объекты</translation>
     </message>
@@ -2509,6 +2542,11 @@ File: %1
         <translation>Окна рядом</translation>
     </message>
     <message>
+        <location filename="../main_window/menubar.cpp" line="221"/>
+        <source>[No files open]</source>
+        <translation>[Нет открытых файлов]</translation>
+    </message>
+    <message>
         <location filename="../main_window/translator.cpp" line="185"/>
         <source>Current Language changed to %1</source>
         <translation>Текущий язык изменён на %1</translation>
@@ -2545,6 +2583,16 @@ File: %1
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="76"/>
         <source>[None]</source>
         <translation>[Нет]</translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="34"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
+        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон скопировано в буфер обмена</translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="52"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</source>
+        <translation>%1 блоков, %2 Фоновых объектов, %3 нИП, %4 физических зон скопировано в буфер обмена</translation>
     </message>
 </context>
 <context>
@@ -2720,8 +2768,33 @@ File: %1
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="88"/>
-        <source>Please, wait...</source>
+        <source>Please wait...</source>
         <translation>Пожалуйста, подождите...</translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="183"/>
+        <source>File save error</source>
+        <translation>Ошибка сохранения файла</translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="184"/>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation>Невозможно сохранить файл %1:
+%2.</translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="244"/>
+        <source>Cannot open level file %1:
+because object configurations are not loaded
+.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
+        <translation>Невозможно открыть файл %1:
+Посколькоу конфигурации объектов не загружены.
+Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
+    </message>
+    <message>
+        <source>Please, wait...</source>
+        <translation type="vanished">Пожалуйста, подождите...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="230"/>
@@ -2741,11 +2814,10 @@ File: %1
         <translation>Конфигурации не загружены</translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="244"/>
         <source>Cannot open level file %1:
 because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Невозможно открыть файл %1:
+        <translation type="vanished">Невозможно открыть файл %1:
 Посколькоу конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
@@ -2776,8 +2848,12 @@ because object configurations not loaded
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="73"/>
-        <source>5/%1 Applying Waters...</source>
+        <source>5/%1 Applying Water...</source>
         <translation>5/%1 Применение воды...</translation>
+    </message>
+    <message>
+        <source>5/%1 Applying Waters...</source>
+        <translation type="vanished">5/%1 Применение воды...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="79"/>
@@ -2794,15 +2870,13 @@ because object configurations not loaded
         <translation type="vanished">Файл уровня SMBX64 (SMBX 1.3) (*.lvl)</translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="183"/>
         <source>Write file error</source>
-        <translation>Ошибка записи файла</translation>
+        <translation type="vanished">Ошибка записи файла</translation>
     </message>
     <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="184"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Невозможно записать файл %1:
+        <translation type="vanished">Невозможно записать файл %1:
 %2.</translation>
     </message>
     <message>
@@ -3123,14 +3197,24 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="117"/>
-        <source>Write file error</source>
-        <translation>Ошибка записи файла</translation>
+        <source>File save error</source>
+        <translation>Ошибка сохранения файла</translation>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="118"/>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation>Невозможно сохранить файл %1:
+%2.</translation>
+    </message>
+    <message>
+        <source>Write file error</source>
+        <translation type="vanished">Ошибка записи файла</translation>
+    </message>
+    <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Невозможно записать файл %1:
+        <translation type="vanished">Невозможно записать файл %1:
 %2.</translation>
     </message>
     <message>

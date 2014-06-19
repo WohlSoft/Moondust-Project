@@ -163,7 +163,7 @@
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="56"/>
-        <source>Level NPC (%1/%1)</source>
+        <source>Level NPCs (%1/%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -864,11 +864,6 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="359"/>
-        <source>Level Tool box</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="370"/>
         <source>Blocks</source>
         <translation type="unfinished"></translation>
@@ -909,11 +904,6 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1021"/>
         <source>Level Sections Switch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1084"/>
-        <source>World map tool box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -964,6 +954,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1352"/>
         <location filename="../mainwindow.ui" line="1532"/>
+        <location filename="../mainwindow.ui" line="5419"/>
         <source>Section Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -995,7 +986,6 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1569"/>
-        <location filename="../mainwindow.ui" line="5221"/>
         <source>Off screen exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1043,12 +1033,6 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1809"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="1834"/>
-        <location filename="../mainwindow.ui" line="5654"/>
-        <source>Warps and doors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1445,11 +1429,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3860"/>
-        <source>Autoscrool section</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="3875"/>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="196"/>
         <source>Section</source>
@@ -1610,6 +1589,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="359"/>
+        <location filename="../mainwindow.ui" line="5338"/>
+        <source>Level Toolbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="489"/>
         <location filename="../mainwindow.ui" line="682"/>
         <location filename="../mainwindow.ui" line="765"/>
@@ -1642,6 +1627,22 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="675"/>
         <location filename="../mainwindow.ui" line="906"/>
         <source>Group:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1084"/>
+        <source>World Map Toolbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1834"/>
+        <location filename="../mainwindow.ui" line="5654"/>
+        <source>Warps and Doors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="3860"/>
+        <source>Autoscroll section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1950,6 +1951,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="5221"/>
+        <source>Offscreen exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="5232"/>
         <source>No turn back</source>
         <translation type="unfinished"></translation>
@@ -1977,22 +1983,17 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5281"/>
-        <source>Restart level after player&apos;s fail</source>
+        <source>Restart level after fail</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5338"/>
-        <source>Level tool box</source>
+        <location filename="../mainwindow.ui" line="5356"/>
+        <source>World Toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5341"/>
         <source>Level objects tool box</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5356"/>
-        <source>World tool box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2013,11 +2014,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="5404"/>
         <source>Eriser (E)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="5419"/>
-        <source>Level Section Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2191,7 +2187,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5875"/>
-        <location filename="../main_window/menubar.cpp" line="221"/>
         <source>[No opened files]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2221,16 +2216,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/clipboard.cpp" line="34"/>
-        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/clipboard.cpp" line="52"/>
-        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/data_configs.cpp" line="30"/>
         <source>Reloading configurations</source>
         <translation type="unfinished"></translation>
@@ -2242,7 +2227,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="57"/>
-        <source>Reload configuration</source>
+        <source>Reloading configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2264,22 +2249,22 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="725"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="726"/>
         <source>New Event %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1273"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
         <source>Get section size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1274"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1275"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1465"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1466"/>
         <source>Please, enter message
 Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
@@ -2307,32 +2292,32 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="543"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="544"/>
         <source>Layers merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="544"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="545"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="626"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="627"/>
         <source>New Layer %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="804"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="805"/>
         <source>Rename layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="808"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="809"/>
         <source>Remove layer with items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_props.cpp" line="809"/>
+        <location filename="../main_window/dock/lvl_layers_props.cpp" line="810"/>
         <source>Remove layer and save items</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2398,6 +2383,11 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/menubar.cpp" line="221"/>
+        <source>[No files open]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../main_window/edit_new_file.cpp" line="34"/>
         <source>Create new NPC.txt configuration file</source>
         <translation type="unfinished"></translation>
@@ -2425,7 +2415,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="212"/>
-        <location filename="../main_window/dock/lvl_events_props.cpp" line="1471"/>
+        <location filename="../main_window/dock/lvl_events_props.cpp" line="1472"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="323"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="1076"/>
         <source>[none]</source>
@@ -2446,6 +2436,16 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="53"/>
         <source>[custom]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="34"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/clipboard.cpp" line="52"/>
+        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2616,7 +2616,7 @@ File: %1
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="73"/>
-        <source>5/%1 Applying Waters...</source>
+        <source>5/%1 Applying Water...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2647,7 +2647,25 @@ File: %1
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="88"/>
-        <source>Please, wait...</source>
+        <source>Please wait...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="183"/>
+        <source>File save error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="184"/>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_level/lvl_files_io.cpp" line="244"/>
+        <source>Cannot open level file %1:
+because object configurations are not loaded
+.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2658,17 +2676,6 @@ File: %1
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="171"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="183"/>
-        <source>Write file error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="184"/>
-        <source>Cannot write file %1:
-%2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2685,13 +2692,6 @@ File: %1
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="243"/>
         <source>Configurations not loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../edit_level/lvl_files_io.cpp" line="244"/>
-        <source>Cannot open level file %1:
-because object configurations not loaded
-.Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3010,12 +3010,12 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="117"/>
-        <source>Write file error</source>
+        <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../edit_npc/npctxt_files_io.cpp" line="118"/>
-        <source>Cannot write file %1:
+        <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
