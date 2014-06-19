@@ -1716,7 +1716,7 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="3190"/>
         <source>Attach to:</source>
-        <translation>Anbinden zu:</translation>
+        <translation>Binde Ebene:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3219"/>

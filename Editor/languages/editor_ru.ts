@@ -1785,7 +1785,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="3190"/>
         <source>Attach to:</source>
-        <translation>Присоединить к:</translation>
+        <translation>Присоединить слой:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3219"/>

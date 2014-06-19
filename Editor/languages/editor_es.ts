@@ -2023,7 +2023,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="3190"/>
         <source>Attach to:</source>
-        <translation>Atajar a:</translation>
+        <translation>Atajar Capa:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3219"/>
