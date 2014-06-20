@@ -140,15 +140,25 @@ void MainWindow::setEventData(long index)
     long cIndex;
     bool found=false;
 
-    if(index==-1)
+    if(index==-1) //Force reset current event data
         ui->LVLEvents_List->clearSelection();
     else
-    if(index==-2)
+    if(index==-2) //Refresh current event data
         {
         if(!ui->LVLEvents_List->selectedItems().isEmpty())
             cIndex = ui->LVLEvents_List->currentItem()->data(3).toInt();
         else
-            cIndex = currentEventArrayID;
+            {
+                cIndex = currentEventArrayID;
+                for(int q=0; q<ui->LVLEvents_List->count();q++) //Select if not selected
+                {
+                    if(ui->LVLEvents_List->itemData(q).toInt()==cIndex)
+                    {
+                        ui->LVLEvents_List->item(q)->setSelected(true);
+                        break;
+                    }
+                }
+            }
         }
     else
         cIndex = index;
