@@ -1120,6 +1120,10 @@ void MainWindow::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        QList<QVariant> secData;
+        secData.push_back((qlonglong)edit->LvlData.events[i].scroll_section);
+        secData.push_back(arg1-1);
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_AUTOSCRSEC, QVariant(secData));
         edit->LvlData.events[i].scroll_section = arg1-1;
         edit->LvlData.modified=true;
     }
@@ -1137,6 +1141,10 @@ void MainWindow::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        QList<QVariant> scrollXData;
+        scrollXData.push_back(edit->LvlData.events[i].move_camera_x);
+        scrollXData.push_back(arg1);
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_AUTOSCRX, QVariant(scrollXData));
         edit->LvlData.events[i].move_camera_x = arg1;
         edit->LvlData.modified=true;
     }
@@ -1155,6 +1163,10 @@ void MainWindow::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        QList<QVariant> scrollYData;
+        scrollYData.push_back(edit->LvlData.events[i].move_camera_y);
+        scrollYData.push_back(arg1);
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_AUTOSCRY, QVariant(scrollYData));
         edit->LvlData.events[i].move_camera_y = arg1;
         edit->LvlData.modified=true;
     }
