@@ -926,72 +926,72 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2733"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Sound</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2734"/>
         <source>End Game</source>
-        <translation type="unfinished"></translation>
+        <translation>End Game</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2735"/>
         <source>Up Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Up Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2736"/>
         <source>Down Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Down Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2737"/>
         <source>Left Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Left Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2738"/>
         <source>Right Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Right Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2739"/>
         <source>Run Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Run Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2740"/>
         <source>Alt Run Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt Run Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2741"/>
         <source>Jump Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Jump Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2742"/>
         <source>Alt Jump Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt Jump Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2743"/>
         <source>Drop Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Drop Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2744"/>
         <source>Start Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Start Key Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2745"/>
         <source>Trigger Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Trigger Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2746"/>
         <source>Trigger Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Trigger Delay</translation>
     </message>
 </context>
 <context>
