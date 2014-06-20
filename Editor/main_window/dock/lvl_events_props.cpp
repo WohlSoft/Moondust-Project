@@ -137,17 +137,30 @@ void MainWindow::setSoundList()
 void MainWindow::setEventData(long index)
 {
     lockSetEventSettings=true;
-    long cIndex;
+    long cIndex=index;
     bool found=false;
-    if(index==-2)
+
+    if(index==-1) //Force reset current event data
+        ui->LVLEvents_List->clearSelection();
+    else
+    if(index==-2) //Refresh current event data
         {
         if(!ui->LVLEvents_List->selectedItems().isEmpty())
             cIndex = ui->LVLEvents_List->currentItem()->data(3).toInt();
         else
-            cIndex = currentEventArrayID;
+            {
+                cIndex = currentEventArrayID;
+                for(int q=0; q<ui->LVLEvents_List->count();q++) //Select if not selected
+                {
+                    if(ui->LVLEvents_List->item(q)->data(3).toInt()==cIndex)
+                    {
+                        ui->LVLEvents_List->item(q)->setSelected(true);
+                        break;
+                    }
+                }
+            }
         }
-    else
-        cIndex = index;
+
 
     int WinType = activeChildWindow();
     if (WinType==1)

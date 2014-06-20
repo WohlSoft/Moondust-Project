@@ -37,7 +37,7 @@ struct obj_npc
     QString image_n;
     QString mask_n;
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
 //    algorithm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
     int algorithm;
     //    ;If algorithm = 0, will using basic parametric alhorythm.
