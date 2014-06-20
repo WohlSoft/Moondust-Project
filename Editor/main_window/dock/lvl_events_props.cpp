@@ -1719,6 +1719,11 @@ void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
         msgBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, msgBox->size(), qApp->desktop()->availableGeometry()));
         if(msgBox->exec()==QDialog::Accepted)
         {
+            QList<QVariant> msgData;
+            msgData.push_back(edit->LvlData.events[i].msg);
+            msgData.push_back(msgBox->currentText);
+            edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_MSG, QVariant(msgData));
+
             edit->LvlData.events[i].msg = msgBox->currentText;
             QString evnmsg = (edit->LvlData.events[i].msg.isEmpty() ? tr("[none]") : edit->LvlData.events[i].msg);
             if(evnmsg.size()>20)
@@ -1746,6 +1751,10 @@ void MainWindow::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
         leveledit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
+        QList<QVariant> soundData;
+        soundData.push_back((qlonglong)edit->LvlData.events[i].sound_id);
+        soundData.push_back((qlonglong)ui->LVLEvent_Cmn_PlaySnd->currentData().toInt());
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_SOUND, QVariant(soundData));
 
         edit->LvlData.events[i].sound_id = ui->LVLEvent_Cmn_PlaySnd->currentData().toInt();
         edit->LvlData.modified=true;
@@ -1793,6 +1802,10 @@ void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
         leveledit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
+        QList<QVariant> endData;
+        endData.push_back((qlonglong)edit->LvlData.events[i].end_game);
+        endData.push_back((qlonglong)ui->LVLEvent_Cmn_EndGame->currentIndex());
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_ENDGAME, QVariant(endData));
 
         edit->LvlData.events[i].end_game = ui->LVLEvent_Cmn_EndGame->currentIndex();
         edit->LvlData.modified=true;
@@ -1819,6 +1832,7 @@ void MainWindow::on_LVLEvent_Key_Up_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KUP, QVariant(checked));
         edit->LvlData.events[i].up = checked;
         edit->LvlData.modified=true;
     }
@@ -1837,6 +1851,7 @@ void MainWindow::on_LVLEvent_Key_Down_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KDOWN, QVariant(checked));
         edit->LvlData.events[i].down = checked;
         edit->LvlData.modified=true;
     }
@@ -1854,6 +1869,7 @@ void MainWindow::on_LVLEvent_Key_Left_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KLEFT, QVariant(checked));
         edit->LvlData.events[i].left = checked;
         edit->LvlData.modified=true;
     }
@@ -1871,6 +1887,7 @@ void MainWindow::on_LVLEvent_Key_Right_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KRIGHT, QVariant(checked));
         edit->LvlData.events[i].right = checked;
         edit->LvlData.modified=true;
     }
@@ -1888,6 +1905,7 @@ void MainWindow::on_LVLEvent_Key_Run_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KRUN, QVariant(checked));
         edit->LvlData.events[i].run = checked;
         edit->LvlData.modified=true;
     }
@@ -1905,6 +1923,7 @@ void MainWindow::on_LVLEvent_Key_AltRun_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KALTRUN, QVariant(checked));
         edit->LvlData.events[i].altrun = checked;
         edit->LvlData.modified=true;
     }
@@ -1922,6 +1941,7 @@ void MainWindow::on_LVLEvent_Key_Jump_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KJUMP, QVariant(checked));
         edit->LvlData.events[i].jump = checked;
         edit->LvlData.modified=true;
     }
@@ -1939,6 +1959,7 @@ void MainWindow::on_LVLEvent_Key_AltJump_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KALTJUMP, QVariant(checked));
         edit->LvlData.events[i].altjump = checked;
         edit->LvlData.modified=true;
     }
@@ -1956,6 +1977,7 @@ void MainWindow::on_LVLEvent_Key_Drop_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KDROP, QVariant(checked));
         edit->LvlData.events[i].drop = checked;
         edit->LvlData.modified=true;
     }
@@ -1973,6 +1995,7 @@ void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KSTART, QVariant(checked));
         edit->LvlData.events[i].start = checked;
         edit->LvlData.modified=true;
     }
@@ -1994,6 +2017,11 @@ void MainWindow::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        QList<QVariant> triggerData;
+        triggerData.push_back(edit->LvlData.events[i].trigger);
+        triggerData.push_back(ui->LVLEvent_TriggerEvent->currentText());
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_TRIACTIVATE, QVariant(triggerData));
+
         edit->LvlData.events[i].trigger = ui->LVLEvent_TriggerEvent->currentText();
         edit->LvlData.modified=true;
     }
@@ -2011,6 +2039,11 @@ void MainWindow::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
         leveledit * edit = activeLvlEditWin();
         long i = getEventArrayIndex();
         if(i<0) return;
+
+        QList<QVariant> triggerData;
+        triggerData.push_back((qlonglong)edit->LvlData.events[i].trigger_timer);
+        triggerData.push_back((qlonglong)qRound(arg1*10));
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_TRIDELAY, QVariant(triggerData));
 
         edit->LvlData.events[i].trigger_timer = qRound(arg1*10);
         edit->LvlData.modified=true;

@@ -287,7 +287,22 @@ public:
         SETTING_EV_AUTOSCRY,        //extraData: QList<QVariant[double]> [Old y, New y]
         SETTING_EV_SECSIZE,         //extraData: QList<QVariant[long]> [Section, old top, old right, old bottom, old left, top, right, bottom, left]
         SETTING_EV_SECMUS,          //extraData: QList<QVariant[long]> [Section, old music id, new music id]
-        SETTING_EV_SECBG            //extraData: QList<QVariant[long]> [Section, old background id, new background id]
+        SETTING_EV_SECBG,           //extraData: QList<QVariant[long]> [Section, old background id, new background id]
+        SETTING_EV_MSG,             //extraDara: QList<QVariant[String]> [Old msg, New msg]
+        SETTING_EV_SOUND,           //extraDara: QList<QVariant[long]> [Old sound id, New sound id]
+        SETTING_EV_ENDGAME,         //extraData: QList<QVariant[long]> [Old endgame id, New endgame id]
+        SETTING_EV_KUP,             //extraData: bool [Activated?]
+        SETTING_EV_KDOWN,           //extraData: bool [Activated?]
+        SETTING_EV_KLEFT,           //extraData: bool [Activated?]
+        SETTING_EV_KRIGHT,          //extraData: bool [Activated?]
+        SETTING_EV_KRUN,            //extraData: bool [Activated?]
+        SETTING_EV_KALTRUN,         //extraData: bool [Activated?]
+        SETTING_EV_KJUMP,           //extraData: bool [Activated?]
+        SETTING_EV_KALTJUMP,        //extraData: bool [Activated?]
+        SETTING_EV_KDROP,           //extraData: bool [Activated?]
+        SETTING_EV_KSTART,          //extraData: bool [Activated?]
+        SETTING_EV_TRIACTIVATE,     //extraData: QList<QVariant[String]> [Old trigger, New trigger]
+        SETTING_EV_TRIDELAY         //extraData: QList<QVariant[long]> [Old delay, New delay]
     };
 
     //typedefs
