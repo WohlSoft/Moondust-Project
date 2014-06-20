@@ -929,72 +929,72 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2733"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Звук</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2734"/>
         <source>End Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Завершение игры</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2735"/>
         <source>Up Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Вверх&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2736"/>
         <source>Down Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Вниз&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2737"/>
         <source>Left Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Влево&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2738"/>
         <source>Right Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Вправо&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2739"/>
         <source>Run Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Бег&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2740"/>
         <source>Alt Run Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Альт. Бег&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2741"/>
         <source>Jump Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Прыжок&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2742"/>
         <source>Alt Jump Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Альт.Прыжок&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2743"/>
         <source>Drop Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Сбросить&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2744"/>
         <source>Start Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавиша &quot;Старт&quot; активирована</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2745"/>
         <source>Trigger Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Триггер события</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2746"/>
         <source>Trigger Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Задержка триггера</translation>
     </message>
 </context>
 <context>
