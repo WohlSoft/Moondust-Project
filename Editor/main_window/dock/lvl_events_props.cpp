@@ -1049,6 +1049,10 @@ void MainWindow::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        QList<QVariant> movLayerData;
+        movLayerData.push_back(edit->LvlData.events[i].movelayer);
+        movLayerData.push_back(((index<=0)?"":ui->LVLEvent_LayerMov_List->currentText()));
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_MOVELAYER, QVariant(movLayerData));
         edit->LvlData.events[i].movelayer = ((index<=0)?"":ui->LVLEvent_LayerMov_List->currentText());
         edit->LvlData.modified=true;
     }
@@ -1066,6 +1070,10 @@ void MainWindow::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        QList<QVariant> speedData;
+        speedData.push_back(edit->LvlData.events[i].layer_speed_x);
+        speedData.push_back(arg1);
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_SPEEDLAYERX, QVariant(speedData));
         edit->LvlData.events[i].layer_speed_x = arg1;
         edit->LvlData.modified=true;
     }
@@ -1084,6 +1092,10 @@ void MainWindow::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        QList<QVariant> speedData;
+        speedData.push_back(edit->LvlData.events[i].layer_speed_y);
+        speedData.push_back(arg1);
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_SPEEDLAYERY, QVariant(speedData));
         edit->LvlData.events[i].layer_speed_y = arg1;
         edit->LvlData.modified=true;
     }

@@ -278,7 +278,10 @@ public:
         SETTING_EV_LTOGADD,    //extraData: String [new Layer]
         SETTING_EV_LHIDEDEL,   //extraData: String [old Layer]
         SETTING_EV_LSHOWDEL,   //extraData: String [old Layer]
-        SETTING_EV_LTOGDEL     //extraData: String [old Layer]
+        SETTING_EV_LTOGDEL,    //extraData: String [old Layer]
+        SETTING_EV_MOVELAYER,  //extraData: QList<QVariant[String]> [Old layer, New layer]
+        SETTING_EV_SPEEDLAYERX,//extraData: QList<QVariant[String]> [Old x, New x]
+        SETTING_EV_SPEEDLAYERY //extraData: QList<QVariant[String]> [Old y, New y]
     };
 
     //typedefs

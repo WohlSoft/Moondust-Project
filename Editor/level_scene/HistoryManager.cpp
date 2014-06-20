@@ -854,6 +854,19 @@ void LvlScene::historyBack()
             QString layer = extraData.toString();
             eventp[index].layers_toggle.push_back(layer);
         }
+        else
+        if(subtype == SETTING_EV_MOVELAYER){
+            QString layer = extraData.toList()[0].toString();
+            eventp[index].movelayer = layer;
+        }
+        else
+        if(subtype == SETTING_EV_SPEEDLAYERX){
+            eventp[index].layer_speed_x = extraData.toList()[0].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_SPEEDLAYERY){
+            eventp[index].layer_speed_y = extraData.toList()[0].toDouble();
+        }
 
         MainWinConnect::pMainWin->setEventData(-2);
         MainWinConnect::pMainWin->setEventToolsLocked(false);
@@ -1406,6 +1419,19 @@ void LvlScene::historyForward()
                     }
                 }
             }
+        }
+        else
+        if(subtype == SETTING_EV_MOVELAYER){
+            QString layer = extraData.toList()[1].toString();
+            eventp[index].movelayer = layer;
+        }
+        else
+        if(subtype == SETTING_EV_SPEEDLAYERX){
+            eventp[index].layer_speed_x = extraData.toList()[1].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_SPEEDLAYERY){
+            eventp[index].layer_speed_y = extraData.toList()[1].toDouble();
         }
 
         MainWinConnect::pMainWin->setEventData(-2);
@@ -2518,6 +2544,9 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_LSHOWDEL: return tr("Remove Show Layer");
     case SETTING_EV_LTOGADD: return tr("Add Toggle Layer");
     case SETTING_EV_LTOGDEL: return tr("Remove Toggle Layer");
+    case SETTING_EV_MOVELAYER: return tr("Moving Layer");
+    case SETTING_EV_SPEEDLAYERX: return tr("Layer Speed Horizontal");
+    case SETTING_EV_SPEEDLAYERX: return tr("Layer Speed Vertical");
     default:
         return tr("Unknown");
     }
