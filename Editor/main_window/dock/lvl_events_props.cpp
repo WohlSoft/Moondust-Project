@@ -37,6 +37,9 @@ static bool lockSetEventSettings=false;
 static bool lockEventSectionDataList=false;
 static long curSectionField=0;
 
+static bool cloneEvent=false;
+static long cloneEventId=0;
+
 QMediaPlayer playSnd;
 
 void MainWindow::setEventsBox()
@@ -476,10 +479,11 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 
     if (WinType==1)
     {
+        leveledit * edit = activeLvlEditWin();
         if(item->data(3).toString()=="NewEvent")
         {
             bool AlreadyExist=false;
-            foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+            foreach(LevelEvents event, edit->LvlData.events)
             {
                 if( event.name==item->text() )
                 {
@@ -491,20 +495,38 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
             if(AlreadyExist)
             {
                 delete item;
+                cloneEvent=false;//Reset state
                 return;
             }
             else
             {
                 LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+
+                if(cloneEvent)
+                {
+                    bool found=false;
+                    long i;
+                    for(i=0; i< edit->LvlData.events.size();i++)
+                    {
+                        if((unsigned long)cloneEventId==edit->LvlData.events[i].array_id)
+                        {
+                            found=true;
+                            break;
+                        }
+                    }
+                    if(found) NewEvent = edit->LvlData.events[i];
+                    cloneEvent=false;//Reset state
+                }
+
                 NewEvent.name = item->text();
-                activeLvlEditWin()->LvlData.events_array_id++;
-                NewEvent.array_id = activeLvlEditWin()->LvlData.events_array_id;
+                edit->LvlData.events_array_id++;
+                NewEvent.array_id = edit->LvlData.events_array_id;
 
                 item->setData(3, QString::number(NewEvent.array_id));
 
-                activeLvlEditWin()->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
-                activeLvlEditWin()->LvlData.events.push_back(NewEvent);
-                activeLvlEditWin()->LvlData.modified=true;
+                edit->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
+                edit->LvlData.events.push_back(NewEvent);
+                edit->LvlData.modified=true;
             }
 
         }//if(item->data(3).toString()=="NewEvent")
@@ -571,6 +593,8 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
 {
     lockSetEventSettings=true;
 
+    if(activeChildWindow()!=1) return;
+
     QListWidgetItem * item;
     item = new QListWidgetItem;
     item->setText(eventName);
@@ -578,7 +602,10 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
     item->setFlags(item->flags() | Qt::ItemIsEnabled);
     item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
     item->setData(3, QString("NewEvent") );
+
     ui->LVLEvents_List->addItem( item );
+
+    leveledit * edit = activeLvlEditWin();
 
     if(setEdited)
     {
@@ -589,7 +616,7 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
     else
     {
         bool AlreadyExist=false;
-        foreach(LevelEvents event, activeLvlEditWin()->LvlData.events)
+        foreach(LevelEvents event, edit->LvlData.events)
         {
             if( event.name==item->text() )
             {
@@ -602,19 +629,36 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
         {
             delete item;
             lockSetEventSettings=false;
+            cloneEvent=false;//Reset state
             return;
         }
         else
         {
             LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+            if(cloneEvent)
+            {
+                bool found=false;
+                long i;
+                for(i=0; i< edit->LvlData.events.size();i++)
+                {
+                    if((unsigned long)cloneEventId==edit->LvlData.events[i].array_id)
+                    {
+                        found=true;
+                        break;
+                    }
+                }
+                if(found) NewEvent = edit->LvlData.events[i];
+                cloneEvent=false;//Reset state
+            }
+
             NewEvent.name = item->text();
-            activeLvlEditWin()->LvlData.events_array_id++;
-            NewEvent.array_id = activeLvlEditWin()->LvlData.events_array_id;
+            edit->LvlData.events_array_id++;
+            NewEvent.array_id = edit->LvlData.events_array_id;
             item->setData(3, QString::number(NewEvent.array_id));
 
-            activeLvlEditWin()->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
-            activeLvlEditWin()->LvlData.events.push_back(NewEvent);
-            activeLvlEditWin()->LvlData.modified=true;
+            edit->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
+            edit->LvlData.events.push_back(NewEvent);
+            edit->LvlData.modified=true;
         }
     }
     lockSetEventSettings=false;
@@ -768,6 +812,12 @@ void MainWindow::on_LVLEvents_del_clicked()
 
 void MainWindow::on_LVLEvents_duplicate_clicked()
 {
+    if(ui->LVLEvents_List->selectedItems().isEmpty()) return;
+
+    cloneEvent=true;
+    cloneEventId=ui->LVLEvents_List->selectedItems()[0]->data(3).toInt();
+
+    AddNewEvent(tr("Copyed Event %1").arg( ui->LVLEvents_List->count()+1 ), true);
 
 }
 
