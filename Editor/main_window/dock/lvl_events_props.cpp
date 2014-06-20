@@ -1296,6 +1296,10 @@ void MainWindow::on_LVLEvent_SctSize_Set_clicked()
         activeLvlEditWin()->setFocus();
         if(activeLvlEditWin()->scene->pResizer==NULL)
         {
+            activeLvlEditWin()->goTo(edit->LvlData.events[i].sets[curSectionField].position_left,
+                                     edit->LvlData.events[i].sets[curSectionField].position_top,
+                                     false,
+                                     QPoint(-10,-10));
             activeLvlEditWin()->scene->setEventSctSizeResizer(i, true);
         }
     }
