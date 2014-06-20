@@ -92,7 +92,7 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 
 QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
 {
-    QList<QGraphicsItem *> collisions = collidingItems(item);
+    QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
     foreach (QGraphicsItem * it, collisions) {
             if (it == item)
                  continue;
