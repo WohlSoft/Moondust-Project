@@ -261,6 +261,23 @@ void LvlScene::addRemoveEventHistory(LevelEvents ev)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addChangeEventSettingsHistory(int array_id, LvlScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chEvSettingsOperation;
+    chEvSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT;
+    chEvSettingsOperation.subtype = subtype;
+    QList<QVariant> package;
+    package.push_back(array_id);
+    package.push_back(extraData);
+    chEvSettingsOperation.extraData = QVariant(package);
+    operationList.push_back(chEvSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -729,6 +746,31 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setEventToolsLocked(false);
         break;
     }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int index = -1;
+        QVariant extraData = lastOperation.extraData.toList()[1];
+        LevelEvents * eventp;
+        bool found = false;
+
+        for(int i = 0; i < LvlData->events.size(); i++){
+            if(LvlData->events[i].array_id == (unsigned int)array_id){
+                found = true;
+                eventp = LvlData->events.data();
+                index = i;
+                break;
+            }
+        }
+
+        if(!found)
+            break;
+
+
+
+        break;
+    }
     default:
         break;
     }
@@ -1173,6 +1215,31 @@ void LvlScene::historyForward()
 
         MainWinConnect::pMainWin->EventListsSync();
         MainWinConnect::pMainWin->setEventToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int index = -1;
+        QVariant extraData = lastOperation.extraData.toList()[1];
+        LevelEvents * eventp;
+        bool found = false;
+
+        for(int i = 0; i < LvlData->events.size(); i++){
+            if(LvlData->events[i].array_id == (unsigned int)array_id){
+                found = true;
+                eventp = LvlData->events.data();
+                index = i;
+                break;
+            }
+        }
+
+        if(!found)
+            break;
+
+
+
         break;
     }
     default:
