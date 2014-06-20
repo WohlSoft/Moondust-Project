@@ -556,24 +556,36 @@ Límite: máxima longitud de 28 caracteres</translation>
 <context>
     <name>LvlScene</name>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="48"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="50"/>
         <source>Search User Backgrounds %1</source>
         <translation>Buscar fondos personalizados %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="115"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="122"/>
         <source>Search User Blocks %1</source>
         <translation>Buscar bloques personalizados %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="178"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="187"/>
         <source>Search User BGOs %1</source>
         <translation>Buscar OFs personalizados %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="241"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="252"/>
         <source>Search User NPCs %1</source>
         <translation>Buscar PNJs personalizados %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="397"/>
+        <source>Wrong custom images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="398"/>
+        <source>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="817"/>

@@ -30,6 +30,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     UserBGOs uBGO;
     UserNPCs uNPC;
 
+    bool WrongImagesDetected=false;
+
     uBGOs.clear();
     uBlocks.clear();
     uNPCs.clear();
@@ -57,6 +59,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             {
                 uBG.image = QPixmap( uLVLDs + pConfigs->main_bg[i].image_n );
                 uBG.id = pConfigs->main_bg[i].id;
+                if(uBG.image.isNull()) WrongImagesDetected=true;
                 loaded1 = true;
             }
             else
@@ -64,6 +67,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             {
                 uBG.image = QPixmap( uLVLs + pConfigs->main_bg[i].image_n );
                 uBG.id = pConfigs->main_bg[i].id;
+                if(uBG.image.isNull()) WrongImagesDetected=true;
                 loaded1 = true;
             }
 
@@ -81,6 +85,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     uBG.second_image = QPixmap( uLVLDs + pConfigs->main_bg[i].second_image_n );
                     uBG.id = pConfigs->main_bg[i].id;
                     loaded2 = true;
+                    if(uBG.second_image.isNull()) WrongImagesDetected=true;
                 }
                 else
                 if(QFile::exists(uLVLs + pConfigs->main_bg[i].second_image_n) )
@@ -88,11 +93,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     uBG.second_image = QPixmap( uLVLs + pConfigs->main_bg[i].second_image_n );
                     uBG.id = pConfigs->main_bg[i].id;
                     loaded2 = true;
+                    if(uBG.second_image.isNull()) WrongImagesDetected=true;
                 }
             }
             if((loaded1)&&(!loaded2)) uBG.q = 0;
             if((!loaded1)&&(loaded2)) uBG.q = 1;
             if((loaded1)&&(loaded2)) uBG.q = 2;
+
 
             //If user images found and loaded
             if( (loaded1) || (loaded2) )
@@ -124,6 +131,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     uBlock.mask = pConfigs->main_block[i].mask;
 
                 uBlock.image = QPixmap(uLVLDs + pConfigs->main_block[i].image_n );
+                if(uBlock.image.isNull()) WrongImagesDetected=true;
 
                 if((uBlock.image.height()!=uBlock.mask.height())||(uBlock.image.width()!=uBlock.mask.width()))
                     uBlock.mask = uBlock.mask.copy(0,0,uBlock.image.width(),uBlock.image.height());
@@ -147,6 +155,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     uBlock.mask = pConfigs->main_block[i].mask;
 
                 uBlock.image = QPixmap(uLVLs + pConfigs->main_block[i].image_n );
+                if(uBlock.image.isNull()) WrongImagesDetected=true;
 
                 if((uBlock.image.height()!=uBlock.mask.height())||(uBlock.image.width()!=uBlock.mask.width()))
                     uBlock.mask = uBlock.mask.copy(0,0,uBlock.image.width(),uBlock.image.height());
@@ -187,6 +196,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     uBGO.mask = pConfigs->main_bgo[i].mask;
 
                 uBGO.image = QPixmap(uLVLDs + pConfigs->main_bgo[i].image_n );
+                if(uBGO.image.isNull()) WrongImagesDetected=true;
 
                 if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
                     uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
@@ -210,6 +220,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     uBGO.mask = pConfigs->main_bgo[i].mask;
 
                 uBGO.image = QPixmap(uLVLs + pConfigs->main_bgo[i].image_n );
+                if(uBGO.image.isNull()) WrongImagesDetected=true;
 
                 if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
                     uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
@@ -246,42 +257,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
              QSize capturedS = QSize(0,0);
 
-             //Looking for user's GFX
-             if((QFile::exists(uLVLD) ) &&
-                   (QFile::exists(uLVLDs + pConfigs->main_npc[i].image_n)) )
-             {
-                 if(QFile::exists(uLVLDs + pConfigs->main_npc[i].mask_n))
-                     uNPC.mask = QBitmap(uLVLDs + pConfigs->main_npc[i].mask_n );
-                 else
-                     uNPC.mask = pConfigs->main_npc[i].mask;
-
-                 uNPC.image = QPixmap(uLVLDs + pConfigs->main_npc[i].image_n );
-
-                 if((uNPC.image.height()!=uNPC.mask.height())||(uNPC.image.width()!=uNPC.mask.width()))
-                     uNPC.mask = uNPC.mask.copy(0,0,uNPC.image.width(),uNPC.image.height());
-                 uNPC.image.setMask(uNPC.mask);
-                 uNPC.id = pConfigs->main_npc[i].id;
-                 uNPC.withImg = true;
-             }
-             else
-             if(QFile::exists(uLVLs + pConfigs->main_npc[i].image_n) )
-             {
-                 if(QFile::exists(uLVLs + pConfigs->main_npc[i].mask_n))
-                     uNPC.mask = QBitmap(uLVLs + pConfigs->main_npc[i].mask_n );
-                 else
-                     uNPC.mask = pConfigs->main_npc[i].mask;
-
-                 uNPC.image = QPixmap(uLVLs + pConfigs->main_npc[i].image_n );
-
-                 if((uNPC.image.height()!=uNPC.mask.height())||(uNPC.image.width()!=uNPC.mask.width()))
-                     uNPC.mask = uNPC.mask.copy(0,0,uNPC.image.width(),uNPC.image.height());
-
-                 uNPC.image.setMask(uNPC.mask);
-                 uNPC.id = pConfigs->main_npc[i].id;
-                 uNPC.withImg = true;
-             }
-
-             //Looking for user's NPC.txt
+             // /////////////////////// Looking for user's NPC.txt ////////////////////////////
+             // //(for use custom image filename, need to parse NPC.txt before iamges)/////////
              if((QFile::exists(uLVLD) ) &&
                    (QFile::exists(uLVLDs +
                       "npc-" + QString::number(pConfigs->main_npc[i].id)+".txt") ) )
@@ -308,6 +285,43 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                      uNPC.id = pConfigs->main_npc[i].id;
                      uNPC.withTxt = true;
                  }
+             }
+
+             // ///////////////////////Looking for user's GFX
+             if((QFile::exists(uLVLD) ) &&
+                   (QFile::exists(uLVLDs + pConfigs->main_npc[i].image_n)) )
+             {
+                 if(QFile::exists(uLVLDs + pConfigs->main_npc[i].mask_n))
+                     uNPC.mask = QBitmap(uLVLDs + pConfigs->main_npc[i].mask_n );
+                 else
+                     uNPC.mask = pConfigs->main_npc[i].mask;
+
+                 uNPC.image = QPixmap(uLVLDs + pConfigs->main_npc[i].image_n );
+                 if(uNPC.image.isNull()) WrongImagesDetected=true;
+
+                 if((uNPC.image.height()!=uNPC.mask.height())||(uNPC.image.width()!=uNPC.mask.width()))
+                     uNPC.mask = uNPC.mask.copy(0,0,uNPC.image.width(),uNPC.image.height());
+                 uNPC.image.setMask(uNPC.mask);
+                 uNPC.id = pConfigs->main_npc[i].id;
+                 uNPC.withImg = true;
+             }
+             else
+             if(QFile::exists(uLVLs + pConfigs->main_npc[i].image_n) )
+             {
+                 if(QFile::exists(uLVLs + pConfigs->main_npc[i].mask_n))
+                     uNPC.mask = QBitmap(uLVLs + pConfigs->main_npc[i].mask_n );
+                 else
+                     uNPC.mask = pConfigs->main_npc[i].mask;
+
+                 uNPC.image = QPixmap(uLVLs + pConfigs->main_npc[i].image_n );
+                 if(uNPC.image.isNull()) WrongImagesDetected=true;
+
+                 if((uNPC.image.height()!=uNPC.mask.height())||(uNPC.image.width()!=uNPC.mask.width()))
+                     uNPC.mask = uNPC.mask.copy(0,0,uNPC.image.width(),uNPC.image.height());
+
+                 uNPC.image.setMask(uNPC.mask);
+                 uNPC.id = pConfigs->main_npc[i].id;
+                 uNPC.withImg = true;
              }
 
              if(uNPC.withImg)
@@ -370,10 +384,21 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                      index_npc[uNPC.id].i = (uNPCs.size()-1);
                  }
              }
-
      if(!progress.wasCanceled())
          progress.setValue(progress.value()+1);
      else return;
      }
 
+    //Notification about wrong custom image sprites
+    if(WrongImagesDetected)
+    {
+        QMessageBox * msg = new QMessageBox();
+        msg->setWindowFlags(msg->windowFlags() | Qt::WindowStaysOnTopHint);
+        msg->setWindowTitle(tr("Wrong custom images"));
+        msg->setText(tr("This level have a wrong custom graphics files.\nYou will see 'ghosties' or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.\nPlease, reconvert your images to valid format and try to reload this level."));
+        msg->addButton(QMessageBox::Ok);
+        msg->setIcon(QMessageBox::Warning);
+
+        msg->exec();
+    }
 }
