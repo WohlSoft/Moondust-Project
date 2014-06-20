@@ -502,7 +502,7 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 
                 item->setData(3, QString::number(NewEvent.array_id));
 
-                activeLvlEditWin()->scene->addAddEventHistory(NewEvent.array_id, ui->LVLEvents_List->count(), NewEvent.name);
+                activeLvlEditWin()->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
                 activeLvlEditWin()->LvlData.events.push_back(NewEvent);
                 activeLvlEditWin()->LvlData.modified=true;
             }
@@ -612,7 +612,7 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
             NewEvent.array_id = activeLvlEditWin()->LvlData.events_array_id;
             item->setData(3, QString::number(NewEvent.array_id));
 
-            activeLvlEditWin()->scene->addAddEventHistory(NewEvent.array_id, ui->LVLEvents_List->count(), NewEvent.name);
+            activeLvlEditWin()->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
             activeLvlEditWin()->LvlData.events.push_back(NewEvent);
             activeLvlEditWin()->LvlData.modified=true;
         }
@@ -755,7 +755,7 @@ void MainWindow::on_LVLEvents_del_clicked()
             if( activeLvlEditWin()->LvlData.events[i].array_id==
                     (unsigned int)ui->LVLEvents_List->selectedItems()[0]->data(3).toInt() )
             {
-                activeLvlEditWin()->scene->addRemoveEventHistory(activeLvlEditWin()->LvlData.events[i],ui->LVLEvents_List->currentRow());
+                activeLvlEditWin()->scene->addRemoveEventHistory(activeLvlEditWin()->LvlData.events[i]);
                 ModifyEvent(activeLvlEditWin()->LvlData.events[i].name, "");
                 activeLvlEditWin()->LvlData.events.remove(i);
                 delete ui->LVLEvents_List->selectedItems()[0];

@@ -232,7 +232,7 @@ void LvlScene::addChangeWarpSettingsHistory(int array_id, LvlScene::SettingSubTy
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addAddEventHistory(int array_id, int listindex, QString name)
+void LvlScene::addAddEventHistory(int array_id, QString name)
 {
     cleanupRedoElements();
 
@@ -240,7 +240,6 @@ void LvlScene::addAddEventHistory(int array_id, int listindex, QString name)
     addEvOperation.type = HistoryOperation::LEVELHISTORY_ADDEVENT;
     QList<QVariant> package;
     package.push_back(array_id);
-    package.push_back(listindex);
     package.push_back(name);
     addEvOperation.extraData = QVariant(package);
     operationList.push_back(addEvOperation);
@@ -249,14 +248,13 @@ void LvlScene::addAddEventHistory(int array_id, int listindex, QString name)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addRemoveEventHistory(LevelEvents ev, int listindex)
+void LvlScene::addRemoveEventHistory(LevelEvents ev)
 {
     cleanupRedoElements();
 
     HistoryOperation rmEvOperation;
     rmEvOperation.type = HistoryOperation::LEVELHISTORY_REMOVEEVENT;
     rmEvOperation.data.events.push_back(ev);
-    rmEvOperation.extraData = QVariant(listindex);
     operationList.push_back(rmEvOperation);
     historyIndex++;
 
@@ -709,7 +707,6 @@ void LvlScene::historyBack()
     case HistoryOperation::LEVELHISTORY_REMOVEEVENT:
     {
         LevelEvents rmEvents = lastOperation.data.events[0];
-        int listindex = lastOperation.extraData.toInt();
 
         MainWinConnect::pMainWin->setEventToolsLocked(true);
         QListWidgetItem * item;
@@ -722,13 +719,10 @@ void LvlScene::historyBack()
         QListWidget* evList = MainWinConnect::pMainWin->getEventList();
         LevelEvents NewEvent = rmEvents;
 
-        if(evList->count() > listindex){
-            LvlData->events.insert(listindex, NewEvent);
-            evList->insertItem(listindex, rmEvents.name);
-        }else{
-            LvlData->events.push_back(NewEvent);
-            evList->addItem(item);
-        }
+
+        LvlData->events.push_back(NewEvent);
+        evList->addItem(item);
+
         LvlData->modified = true;
 
         MainWinConnect::pMainWin->EventListsSync();
@@ -1135,8 +1129,7 @@ void LvlScene::historyForward()
     case HistoryOperation::LEVELHISTORY_ADDEVENT:
     {
         int array_id = lastOperation.extraData.toList()[0].toInt();
-        int listindex = lastOperation.extraData.toList()[1].toInt();
-        QString name = lastOperation.extraData.toList()[2].toString();
+        QString name = lastOperation.extraData.toList()[1].toString();
 
         MainWinConnect::pMainWin->setEventToolsLocked(true);
         QListWidgetItem * item;
@@ -1151,13 +1144,10 @@ void LvlScene::historyForward()
         NewEvent.name = item->text();
         NewEvent.array_id = array_id;
 
-        if(evList->count() > listindex){
-            LvlData->events.insert(listindex, NewEvent);
-            evList->insertItem(listindex, name);
-        }else{
-            LvlData->events.push_back(NewEvent);
-            evList->addItem(item);
-        }
+
+        LvlData->events.push_back(NewEvent);
+        evList->addItem(item);
+
         LvlData->modified = true;
 
         MainWinConnect::pMainWin->EventListsSync();
