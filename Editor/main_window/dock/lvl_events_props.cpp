@@ -152,7 +152,7 @@ void MainWindow::setEventData(long index)
                 cIndex = currentEventArrayID;
                 for(int q=0; q<ui->LVLEvents_List->count();q++) //Select if not selected
                 {
-                    if(ui->LVLEvents_List->itemData(q).toInt()==cIndex)
+                    if(ui->LVLEvents_List->item(q)->data(3).toInt()==cIndex)
                     {
                         ui->LVLEvents_List->item(q)->setSelected(true);
                         break;
