@@ -28,6 +28,7 @@
 ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
+    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     generatorArrow = NULL;
     includedNPC = NULL;
     DisableScene = noScene;
