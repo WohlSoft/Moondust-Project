@@ -159,7 +159,7 @@ void MainWindow::setEventData(long index)
             currentEventArrayID=cIndex;
             foreach(LevelEvents event, edit->LvlData.events)
             {
-                if(event.array_id == (unsigned int)index)
+                if(event.array_id == (unsigned int)cIndex)
                 {
                     currentEventArrayID=event.array_id;
 
