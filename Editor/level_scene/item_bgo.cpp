@@ -27,6 +27,7 @@
 ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
+    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     animated = false;
     frameFirst=0; //from first frame
     frameLast=-1; //to unlimited frameset
