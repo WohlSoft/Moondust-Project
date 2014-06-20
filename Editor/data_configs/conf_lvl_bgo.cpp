@@ -19,6 +19,7 @@
 #include "data_configs.h"
 
 #include "../main_window/global_settings.h"
+#include "../common_features/graphics_funcs.h"
 
 void dataconfigs::loadLevelBGO()
 {
@@ -79,10 +80,10 @@ void dataconfigs::loadLevelBGO()
                 else
                     imgFileM = "";
                 sbgo.mask_n = imgFileM;
-                if(tmp.size()==2) mask = QBitmap(bgoPath + imgFileM);
+                mask = QPixmap();
+                if(tmp.size()==2) mask = QPixmap(bgoPath + imgFileM);
                 sbgo.mask = mask;
-                sbgo.image = QPixmap(bgoPath + imgFile);
-                if(tmp.size()==2) sbgo.image.setMask(mask);
+                sbgo.image = GraphicsHelps::setAlphaMask(QPixmap(bgoPath + imgFile), sbgo.mask);
             }
             else
             {

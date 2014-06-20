@@ -16,45 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CUSTOM_DATA_H
-#define CUSTOM_DATA_H
-
 #include <QPixmap>
-#include <QBitmap>
 
-struct UserBGOs
+#ifndef GRAPHICS_FUNCS_H
+#define GRAPHICS_FUNCS_H
+
+class GraphicsHelps
 {
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
+public:
+    static QPixmap setAlphaMask(QPixmap image, QPixmap mask);
+
 };
 
-struct UserBlocks
-{
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-};
-
-struct UserNPCs
-{
-    bool withImg;
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-
-    bool withTxt;
-    NPCConfigFile sets;
-    obj_npc merged;
-};
-
-struct UserBGs
-{
-    QPixmap image;
-    QPixmap second_image;
-    unsigned long id;
-    unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
-};
-
-
-#endif // CUSTOM_DATA_H
+#endif // GRAPHICS_FUNCS_H
