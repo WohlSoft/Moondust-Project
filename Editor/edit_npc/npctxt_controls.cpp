@@ -665,7 +665,7 @@ void npcedit::loadImageFile()
     if(QFile::exists(imagePath + defaultNPC.image_n))
     {
         if(QFile::exists(imagePath + defaultNPC.mask_n))
-            npcMask = QBitmap(imagePath + defaultNPC.mask_n );
+            npcMask = QPixmap(imagePath + defaultNPC.mask_n );
         else
             npcMask = defaultNPC.mask;
 
