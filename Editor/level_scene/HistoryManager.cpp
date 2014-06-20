@@ -766,7 +766,7 @@ void LvlScene::historyBack()
         for (int i = 0; i < LvlData->events.size(); i++) {
             if(LvlData->events[i].array_id == (unsigned int)dupEvents.array_id){
                 for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
-                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == dupEvents.array_id){
+                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == (int)dupEvents.array_id){
                         delete MainWinConnect::pMainWin->getEventList()->item(j);
                     }
                 }
