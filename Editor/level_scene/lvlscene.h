@@ -284,7 +284,10 @@ public:
         SETTING_EV_SPEEDLAYERY,     //extraData: QList<QVariant[double]> [Old y, New y]
         SETTING_EV_AUTOSCRSEC,      //extraData: QList<QVariant[String]> [Old section, New section]
         SETTING_EV_AUTOSCRX,        //extraData: QList<QVariant[double]> [Old y, New y]
-        SETTING_EV_AUTOSCRY         //extraData: QList<QVariant[double]> [Old y, New y]
+        SETTING_EV_AUTOSCRY,        //extraData: QList<QVariant[double]> [Old y, New y]
+        SETTING_EV_SECSIZE,         //extraData: QList<QVariant[long]> [Section, old top, old right, old bottom, old left, top, right, bottom, left]
+        SETTING_EV_SECMUS,          //extraData: QList<QVariant[long]> [Section, old music id, new music id]
+        SETTING_EV_SECBG            //extraData: QList<QVariant[long]> [Section, old background id, new background id]
     };
 
     //typedefs
