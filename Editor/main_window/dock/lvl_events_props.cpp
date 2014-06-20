@@ -784,6 +784,7 @@ void MainWindow::on_LVLEvent_AutoStart_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_AUTOSTART, QVariant(checked));
         edit->LvlData.events[i].autostart = checked;
         edit->LvlData.modified=true;
     }

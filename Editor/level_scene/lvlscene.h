@@ -269,7 +269,8 @@ public:
         SETTING_EV_ACTIVATE,   //extraData: String [new event]
         SETTING_EV_DEATH,      //extraData: String [new event]
         SETTING_EV_TALK,       //extraData: String [new event]
-        SETTING_SPECIAL_DATA   //extraData: int [new type]
+        SETTING_SPECIAL_DATA,  //extraData: int [new type]
+        SETTING_EV_AUTOSTART   //extraData: bool [Activated?]
     };
 
     //typedefs

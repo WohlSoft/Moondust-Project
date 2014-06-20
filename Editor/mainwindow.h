@@ -146,6 +146,7 @@ public slots:
     void ModifyEvent(QString eventName, QString newEventName);
     QListWidget* getEventList();
     void setEventToolsLocked(bool locked);
+    long getEventArrayIndex();
 
     //Toolbox functions
     void updateFilters();
@@ -394,7 +395,7 @@ private slots:
     void on_actionLevelEvents_triggered(bool checked);
     void on_LevelEventsToolBox_visibilityChanged(bool visible);
 
-    long getEventArrayIndex();
+
 
     void on_LVLEvents_List_itemSelectionChanged();
     void on_LVLEvents_List_itemChanged(QListWidgetItem *item);
