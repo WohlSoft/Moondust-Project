@@ -271,7 +271,14 @@ public:
         SETTING_EV_DEATH,      //extraData: String [new event]
         SETTING_EV_TALK,       //extraData: String [new event]
         SETTING_SPECIAL_DATA,  //extraData: int [new type]
-        SETTING_EV_AUTOSTART   //extraData: bool [Activated?]
+        SETTING_EV_AUTOSTART,  //extraData: bool [Activated?]
+        SETTING_EV_SMOKE,      //extraData: bool [Activated?]
+        SETTING_EV_LHIDEADD,   //extraData: String [new Layer]
+        SETTING_EV_LSHOWADD,   //extraData: String [new Layer]
+        SETTING_EV_LTOGADD,    //extraData: String [new Layer]
+        SETTING_EV_LHIDEDEL,   //extraData: String [old Layer]
+        SETTING_EV_LSHOWDEL,   //extraData: String [old Layer]
+        SETTING_EV_LTOGDEL     //extraData: String [old Layer]
     };
 
     //typedefs

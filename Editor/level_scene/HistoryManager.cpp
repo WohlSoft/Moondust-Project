@@ -802,7 +802,58 @@ void LvlScene::historyBack()
         if(subtype == SETTING_EV_AUTOSTART){
             eventp[index].autostart = !extraData.toBool();
         }
-
+        else
+        if(subtype == SETTING_EV_SMOKE){
+            eventp[index].nosmoke = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_LSHOWADD){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_show.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_show.size(); i++){
+                    if(eventp[index].layers_show[i] == layer){
+                        eventp[index].layers_show.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LHIDEADD){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_hide.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_hide.size(); i++){
+                    if(eventp[index].layers_hide[i] == layer){
+                        eventp[index].layers_hide.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LTOGADD){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_toggle.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_toggle.size(); i++){
+                    if(eventp[index].layers_toggle[i] == layer){
+                        eventp[index].layers_toggle.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LSHOWDEL){
+            QString layer = extraData.toString();
+            eventp[index].layers_show.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LHIDEDEL){
+            QString layer = extraData.toString();
+            eventp[index].layers_hide.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LTOGDEL){
+            QString layer = extraData.toString();
+            eventp[index].layers_toggle.push_back(layer);
+        }
 
         MainWinConnect::pMainWin->setEventData(-2);
         MainWinConnect::pMainWin->setEventToolsLocked(false);
@@ -1304,7 +1355,58 @@ void LvlScene::historyForward()
         if(subtype == SETTING_EV_AUTOSTART){
             eventp[index].autostart = extraData.toBool();
         }
-
+        else
+        if(subtype == SETTING_EV_SMOKE){
+            eventp[index].nosmoke = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_LSHOWADD){
+            QString layer = extraData.toString();
+            eventp[index].layers_show.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LHIDEADD){
+            QString layer = extraData.toString();
+            eventp[index].layers_hide.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LTOGADD){
+            QString layer = extraData.toString();
+            eventp[index].layers_toggle.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LSHOWDEL){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_show.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_show.size(); i++){
+                    if(eventp[index].layers_show[i] == layer){
+                        eventp[index].layers_show.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LHIDEDEL){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_hide.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_hide.size(); i++){
+                    if(eventp[index].layers_hide[i] == layer){
+                        eventp[index].layers_hide.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LTOGDEL){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_toggle.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_toggle.size(); i++){
+                    if(eventp[index].layers_toggle[i] == layer){
+                        eventp[index].layers_toggle.removeAt(i);
+                    }
+                }
+            }
+        }
 
         MainWinConnect::pMainWin->setEventData(-2);
         MainWinConnect::pMainWin->setEventToolsLocked(false);
@@ -2409,6 +2511,13 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_TALK: return tr("Event NPC Talk");
     case SETTING_SPECIAL_DATA: return tr("NPC Special Data");
     case SETTING_EV_AUTOSTART: return tr("Autostart");
+    case SETTING_EV_SMOKE: return tr("Layer Smoke Effect");
+    case SETTING_EV_LHIDEADD: return tr("Add Hide Layer");
+    case SETTING_EV_LHIDEDEL: return tr("Remove Hide Layer");
+    case SETTING_EV_LSHOWADD: return tr("Add Show Layer");
+    case SETTING_EV_LSHOWDEL: return tr("Remove Show Layer");
+    case SETTING_EV_LTOGADD: return tr("Add Toggle Layer");
+    case SETTING_EV_LTOGDEL: return tr("Remove Toggle Layer");
     default:
         return tr("Unknown");
     }
