@@ -139,6 +139,10 @@ void MainWindow::setEventData(long index)
     lockSetEventSettings=true;
     long cIndex;
     bool found=false;
+
+    if(index==-1)
+        ui->LVLEvents_List->clearSelection();
+    else
     if(index==-2)
         {
         if(!ui->LVLEvents_List->selectedItems().isEmpty())
@@ -148,6 +152,7 @@ void MainWindow::setEventData(long index)
         }
     else
         cIndex = index;
+
 
     int WinType = activeChildWindow();
     if (WinType==1)
