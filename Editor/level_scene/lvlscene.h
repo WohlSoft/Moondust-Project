@@ -297,8 +297,8 @@ public:
     void addAddWarpHistory(int array_id, int listindex, int doorindex);
     void addRemoveWarpHistory(LevelDoors removedDoor);
     void addChangeWarpSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
-    void addAddEventHistory(int array_id, int listindex, QString name);
-    void addRemoveEventHistory(LevelEvents ev, int listindex);
+    void addAddEventHistory(int array_id, QString name);
+    void addRemoveEventHistory(LevelEvents ev);
     //history modifiers
     void historyBack();
     void historyForward();
