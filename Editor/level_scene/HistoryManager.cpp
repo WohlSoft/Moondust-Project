@@ -767,8 +767,14 @@ void LvlScene::historyBack()
         if(!found)
             break;
 
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        if(subtype == SETTING_EV_AUTOSTART){
+            eventp[index].autostart = !extraData.toBool();
+        }
 
 
+        MainWinConnect::pMainWin->setEventData(-2);
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
         break;
     }
     default:
@@ -1238,7 +1244,14 @@ void LvlScene::historyForward()
         if(!found)
             break;
 
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        if(subtype == SETTING_EV_AUTOSTART){
+            eventp[index].autostart = extraData.toBool();
+        }
 
+
+        MainWinConnect::pMainWin->setEventData(-2);
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
 
         break;
     }
