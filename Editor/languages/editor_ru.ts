@@ -571,24 +571,38 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>LvlScene</name>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="48"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="50"/>
         <source>Search User Backgrounds %1</source>
         <translation>Поиск польз. фонов %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="115"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="122"/>
         <source>Search User Blocks %1</source>
         <translation>Поиск польз. блоков %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="178"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="187"/>
         <source>Search User BGOs %1</source>
         <translation>Поикс польз. фон.об. %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="241"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="252"/>
         <source>Search User NPCs %1</source>
         <translation>Поиск польз. нИП %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="397"/>
+        <source>Wrong custom images</source>
+        <translation>Плохой формат пользовательских изображений</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="398"/>
+        <source>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</source>
+        <translation>Этот уровень имеет неправильные файлы пользовательской графики
+Вы будете видеть &apos;призраков&apos; или другое заменяющее изображение вместо пользовательской графики объектов. Это может быть потому что, например, был сохранён BMP-файл под расширением GIF.
+Пожалуйста, переконвертируйте изображения в правильный формат и перезагрузите этот уровень.</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="817"/>
@@ -653,22 +667,22 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2369"/>
         <source>Add Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить Событие</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2370"/>
         <source>Remove Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить Событие</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2371"/>
         <source>Copy Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировать Событие</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2372"/>
         <source>Changed Eventsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить настройку События [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2374"/>
@@ -829,7 +843,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2411"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Автозапуск</translation>
     </message>
 </context>
 <context>
@@ -1020,7 +1034,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="827"/>
         <source>Copyed Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Копировано Событие %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1345"/>

@@ -568,24 +568,38 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>LvlScene</name>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="48"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="50"/>
         <source>Search User Backgrounds %1</source>
         <translation>Searching for custom Backgrounds %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="115"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="122"/>
         <source>Search User Blocks %1</source>
         <translation>Searching for custom Blocks %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="178"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="187"/>
         <source>Search User BGOs %1</source>
         <translation>Searching for custom BGOs %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="241"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="252"/>
         <source>Search User NPCs %1</source>
         <translation>Searching for custom NPCs %1</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="397"/>
+        <source>Wrong custom images</source>
+        <translation>Wrong custom image files</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="398"/>
+        <source>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</source>
+        <translation>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="817"/>
@@ -650,22 +664,22 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2369"/>
         <source>Add Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Add Event</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2370"/>
         <source>Remove Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove Event</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2371"/>
         <source>Copy Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Copy Event</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2372"/>
         <source>Changed Eventsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Changed Event Setting [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2374"/>
@@ -826,7 +840,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2411"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Autostart</translation>
     </message>
 </context>
 <context>
@@ -1017,7 +1031,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="827"/>
         <source>Copyed Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyed Event %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1345"/>
