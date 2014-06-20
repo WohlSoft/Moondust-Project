@@ -894,6 +894,67 @@ void LvlScene::historyBack()
         if(subtype == SETTING_EV_SECBG){
             eventp[index].sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[1].toLongLong();
         }
+        else
+        if(subtype == SETTING_EV_MSG){
+            eventp[index].msg = extraData.toList()[0].toString();
+        }
+        else
+        if(subtype == SETTING_EV_SOUND){
+            eventp[index].sound_id = (long)extraData.toList()[0].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_ENDGAME){
+            eventp[index].end_game = (long)extraData.toList()[0].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_KUP){
+            eventp[index].up = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KDOWN){
+            eventp[index].down = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KLEFT){
+            eventp[index].left = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KRIGHT){
+            eventp[index].right = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KRUN){
+            eventp[index].run = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KALTRUN){
+            eventp[index].altrun = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KJUMP){
+            eventp[index].jump = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KALTJUMP){
+            eventp[index].altjump = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KDROP){
+            eventp[index].drop = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KSTART){
+            eventp[index].start = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_TRIACTIVATE){
+            eventp[index].trigger = extraData.toList()[0].toString();
+        }
+        else
+        if(subtype == SETTING_EV_TRIDELAY){
+            eventp[index].trigger_timer = (long)extraData.toList()[0].toLongLong();
+        }
+
 
         MainWinConnect::pMainWin->setEventData(-2);
         MainWinConnect::pMainWin->setEventToolsLocked(false);
@@ -1487,6 +1548,67 @@ void LvlScene::historyForward()
         if(subtype == SETTING_EV_SECBG){
             eventp[index].sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[2].toLongLong();
         }
+        else
+        if(subtype == SETTING_EV_MSG){
+            eventp[index].msg = extraData.toList()[1].toString();
+        }
+        else
+        if(subtype == SETTING_EV_SOUND){
+            eventp[index].sound_id = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_ENDGAME){
+            eventp[index].end_game = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_KUP){
+            eventp[index].up = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KDOWN){
+            eventp[index].down = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KLEFT){
+            eventp[index].left = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KRIGHT){
+            eventp[index].right = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KRUN){
+            eventp[index].run = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KALTRUN){
+            eventp[index].altrun = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KJUMP){
+            eventp[index].jump = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KALTJUMP){
+            eventp[index].altjump = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KDROP){
+            eventp[index].drop = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KSTART){
+            eventp[index].start = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_TRIACTIVATE){
+            eventp[index].trigger = extraData.toList()[1].toString();
+        }
+        else
+        if(subtype == SETTING_EV_TRIDELAY){
+            eventp[index].trigger_timer = (long)extraData.toList()[1].toLongLong();
+        }
+
 
         MainWinConnect::pMainWin->setEventData(-2);
         MainWinConnect::pMainWin->setEventToolsLocked(false);
@@ -2607,6 +2729,21 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_SECSIZE: return tr("Section Size");
     case SETTING_EV_SECMUS: return tr("Section Music");
     case SETTING_EV_SECBG: return tr("Section Background");
+    case SETTING_EV_MSG: return tr("Message");
+    case SETTING_EV_SOUND: return tr("Sound");
+    case SETTING_EV_ENDGAME: return tr("End Game");
+    case SETTING_EV_KUP: return tr("Up Key Activate");
+    case SETTING_EV_KDOWN: return tr("Down Key Activate");
+    case SETTING_EV_KLEFT: return tr("Left Key Activate");
+    case SETTING_EV_KRIGHT: return tr("Right Key Activate");
+    case SETTING_EV_KRUN: return tr("Run Key Activate");
+    case SETTING_EV_KALTRUN: return tr("Alt Run Key Activate");
+    case SETTING_EV_KJUMP: return tr("Jump Key Activate");
+    case SETTING_EV_KALTJUMP: return tr("Alt Jump Key Activate");
+    case SETTING_EV_KDROP: return tr("Drop Key Activate");
+    case SETTING_EV_KSTART: return tr("Start Key Activate");
+    case SETTING_EV_TRIACTIVATE: return tr("Trigger Activate");
+    case SETTING_EV_TRIDELAY: return tr("Trigger Delay");
     default:
         return tr("Unknown");
     }
