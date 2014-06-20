@@ -137,7 +137,7 @@ void MainWindow::setSoundList()
 void MainWindow::setEventData(long index)
 {
     lockSetEventSettings=true;
-    long cIndex;
+    long cIndex=index;
     bool found=false;
 
     if(index==-1) //Force reset current event data
@@ -160,8 +160,6 @@ void MainWindow::setEventData(long index)
                 }
             }
         }
-    else
-        cIndex = index;
 
 
     int WinType = activeChildWindow();
