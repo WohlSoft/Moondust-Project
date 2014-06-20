@@ -867,6 +867,18 @@ void LvlScene::historyBack()
         if(subtype == SETTING_EV_SPEEDLAYERY){
             eventp[index].layer_speed_y = extraData.toList()[0].toDouble();
         }
+        else
+        if(subtype == SETTING_EV_AUTOSCRSEC){
+            eventp[index].scroll_section = (long)extraData.toList()[0].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRX){
+            eventp[index].move_camera_x = extraData.toList()[0].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRY){
+            eventp[index].move_camera_y = extraData.toList()[0].toDouble();
+        }
 
         MainWinConnect::pMainWin->setEventData(-2);
         MainWinConnect::pMainWin->setEventToolsLocked(false);
@@ -1432,6 +1444,18 @@ void LvlScene::historyForward()
         else
         if(subtype == SETTING_EV_SPEEDLAYERY){
             eventp[index].layer_speed_y = extraData.toList()[1].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRSEC){
+            eventp[index].scroll_section = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRX){
+            eventp[index].move_camera_x = extraData.toList()[1].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRY){
+            eventp[index].move_camera_y = extraData.toList()[1].toDouble();
         }
 
         MainWinConnect::pMainWin->setEventData(-2);
@@ -2547,6 +2571,9 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_MOVELAYER: return tr("Moving Layer");
     case SETTING_EV_SPEEDLAYERX: return tr("Layer Speed Horizontal");
     case SETTING_EV_SPEEDLAYERY: return tr("Layer Speed Vertical");
+    case SETTING_EV_AUTOSCRSEC: return tr("Autoscroll Layer");
+    case SETTING_EV_AUTOSCRX: return tr("Autoscroll Layer Speed Horizontal");
+    case SETTING_EV_AUTOSCRY: return tr("Autoscroll Layer Speed Vertical");
     default:
         return tr("Unknown");
     }

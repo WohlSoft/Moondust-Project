@@ -280,8 +280,11 @@ public:
         SETTING_EV_LSHOWDEL,        //extraData: String [old Layer]
         SETTING_EV_LTOGDEL,         //extraData: String [old Layer]
         SETTING_EV_MOVELAYER,       //extraData: QList<QVariant[String]> [Old layer, New layer]
-        SETTING_EV_SPEEDLAYERX,     //extraData: QList<QVariant[String]> [Old x, New x]
-        SETTING_EV_SPEEDLAYERY      //extraData: QList<QVariant[String]> [Old y, New y]
+        SETTING_EV_SPEEDLAYERX,     //extraData: QList<QVariant[double]> [Old x, New x]
+        SETTING_EV_SPEEDLAYERY,     //extraData: QList<QVariant[double]> [Old y, New y]
+        SETTING_EV_AUTOSCRSEC,      //extraData: QList<QVariant[String]> [Old section, New section]
+        SETTING_EV_AUTOSCRX,        //extraData: QList<QVariant[double]> [Old y, New y]
+        SETTING_EV_AUTOSCRY         //extraData: QList<QVariant[double]> [Old y, New y]
     };
 
     //typedefs
