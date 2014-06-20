@@ -2546,7 +2546,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_LTOGDEL: return tr("Remove Toggle Layer");
     case SETTING_EV_MOVELAYER: return tr("Moving Layer");
     case SETTING_EV_SPEEDLAYERX: return tr("Layer Speed Horizontal");
-    case SETTING_EV_SPEEDLAYERX: return tr("Layer Speed Vertical");
+    case SETTING_EV_SPEEDLAYERY: return tr("Layer Speed Vertical");
     default:
         return tr("Unknown");
     }
