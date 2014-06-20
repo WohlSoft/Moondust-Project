@@ -218,6 +218,7 @@ public:
             LEVELHISTORY_CHANGEDSETTINGSWARP,
             LEVELHISTORY_ADDEVENT,
             LEVELHISTORY_REMOVEEVENT,
+            LEVELHISTORY_DULPICATEEVENT,
             LEVELHISTORY_CHANGEDSETTINGSEVENT
         };
         HistoryType type;
@@ -301,6 +302,7 @@ public:
     void addChangeWarpSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
     void addAddEventHistory(int array_id, QString name);
     void addRemoveEventHistory(LevelEvents ev);
+    void addDuplicateEventHistory(LevelEvents newDuplicate);
     void addChangeEventSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
     //history modifiers
     void historyBack();

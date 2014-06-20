@@ -515,7 +515,7 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
                         }
                     }
                     if(found) NewEvent = edit->LvlData.events[i];
-                    cloneEvent=false;//Reset state
+
                 }
 
                 NewEvent.name = item->text();
@@ -524,9 +524,13 @@ void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 
                 item->setData(3, QString::number(NewEvent.array_id));
 
-                edit->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
+                if(!cloneEvent)
+                    edit->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
+                else
+                    edit->scene->addDuplicateEventHistory(NewEvent);
                 edit->LvlData.events.push_back(NewEvent);
                 edit->LvlData.modified=true;
+                cloneEvent=false;//Reset state
             }
 
         }//if(item->data(3).toString()=="NewEvent")
@@ -648,7 +652,6 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
                     }
                 }
                 if(found) NewEvent = edit->LvlData.events[i];
-                cloneEvent=false;//Reset state
             }
 
             NewEvent.name = item->text();
@@ -656,9 +659,13 @@ void MainWindow::AddNewEvent(QString eventName, bool setEdited)
             NewEvent.array_id = edit->LvlData.events_array_id;
             item->setData(3, QString::number(NewEvent.array_id));
 
-            edit->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
+            if(!cloneEvent)
+                edit->scene->addAddEventHistory(NewEvent.array_id, NewEvent.name);
+            else
+                edit->scene->addDuplicateEventHistory(NewEvent);
             edit->LvlData.events.push_back(NewEvent);
             edit->LvlData.modified=true;
+            cloneEvent=false;//Reset state
         }
     }
     lockSetEventSettings=false;
