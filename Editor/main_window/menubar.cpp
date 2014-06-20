@@ -218,7 +218,7 @@ void MainWindow::updateWindowMenu()
 
     ui->menuWindow->addSeparator();
 
-    QAction * empty = ui->menuWindow->addAction( tr("[No opened files]") );
+    QAction * empty = ui->menuWindow->addAction( tr("[No files open]") );
         empty->setDisabled(1);
 
         empty->setVisible( windows.isEmpty() );

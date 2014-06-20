@@ -360,7 +360,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
-    str_count++;line = in.readLine();   //Read first Line
+    str_count++;line = in.readLine();   //Read first line
     if( SMBX64::Int(line) ) //File format number
         goto badfile;
 
@@ -376,10 +376,10 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
     if(file_format >= 62)
     {
-        str_count++;line = in.readLine();   //Read Third Line
+        str_count++;line = in.readLine();   //Read third line
         if( SMBX64::qStr(line) ) //LevelTitle
             goto badfile;
-        else FileData.LevelName = removeQuotes(line);//remove quotes
+        else FileData.LevelName = removeQuotes(line); //remove quotes
     } else FileData.LevelName="";
 
     //total sections
@@ -453,7 +453,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         if(file_format >= 32)
         {
             str_count++;line = in.readLine();
-            if(SMBX64::wBool(line)) //UnderWater
+            if(SMBX64::wBool(line)) //Underwater
                 goto badfile;
             else section.underwater=((line=="#TRUE#")?true:false);
         }
@@ -464,7 +464,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(SMBX64::qStr(line)) //Custom Music
                 goto badfile;
-            else section.music_file = removeQuotes(line);//remove quotes
+            else section.music_file = removeQuotes(line); //remove quotes
         } else section.music_file="";
 
         section.id=i;
@@ -592,7 +592,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
         blocks.array_id = FileData.blocks_array_id;
         FileData.blocks_array_id++;
-        blocks.index = FileData.blocks.size();//Apply element index
+        blocks.index = FileData.blocks.size(); //Apply element index
     FileData.blocks.push_back(blocks); //AddBlock into array
 
     str_count++;line = in.readLine();
@@ -633,9 +633,9 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         bgodata.array_id = FileData.bgo_array_id;
         FileData.bgo_array_id++;
 
-        bgodata.index = FileData.bgo.size();//Apply element index
+        bgodata.index = FileData.bgo.size(); //Apply element index
 
-    FileData.bgo.push_back(bgodata); // Add Background object into array
+    FileData.bgo.push_back(bgodata); //Add Background object into array
 
     str_count++;line = in.readLine();
     }
@@ -675,11 +675,11 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
              switch(npcdata.id)
              {
              //SMBX64 Fixed special options for NPC
-             case 283:/*Buble*/ case 91: /*burried*/ case 284: /*SMW Lakitu*/
+             case 283:/*Bubble*/ case 91: /*buried*/ case 284: /*SMW Lakitu*/
              case 96: /*egg*/
              /*parakoopas*/
              case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
-             /*paragoomba*/ case 243: case 244:
+             /*Paragoomba*/ case 243: case 244:
              /*Cheep-Cheep*/ case 28: case 229: case 230: case 232: case 233: case 234: case 236:
              /*WarpSelection*/ case 288: case 289: /*firebar*/ case 260:
 
@@ -724,7 +724,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
              else npcdata.msg = removeQuotes(line);
 
              str_count++;line = in.readLine();
-             if(SMBX64::wBool(line)) //Friedly NPC
+             if(SMBX64::wBool(line)) //Friendly NPC
                  goto badfile;
              else npcdata.friendly = ((line=="#TRUE#")?true:false);
 
@@ -759,7 +759,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
              else npcdata.event_talk = removeQuotes(line);
 
              str_count++;line = in.readLine();
-             if(SMBX64::qStr(line)) //No more object in layer event
+             if(SMBX64::qStr(line)) //No more objects in layer event
                  goto badfile;
              else npcdata.event_nomore = removeQuotes(line);
         }
@@ -793,7 +793,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
          npcdata.array_id = FileData.npc_array_id;
          FileData.npc_array_id++;
 
-         npcdata.index = FileData.npc.size();//Apply element index
+         npcdata.index = FileData.npc.size(); //Apply element index
 
     FileData.npc.push_back(npcdata); //Add NPC into array
     str_count++;line = in.readLine();
@@ -857,7 +857,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             else doors.warpto= line.toInt();
 
             str_count++;line = in.readLine();
-            if(SMBX64::wBool(line)) //Level Entrance (can not enter)
+            if(SMBX64::wBool(line)) //Level Entrance (cannot enter)
                 goto badfile;
             else
             {
@@ -942,7 +942,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         }*/
         doors.array_id = FileData.doors_array_id;
         FileData.doors_array_id++;
-        doors.index = FileData.doors.size();//Apply element index
+        doors.index = FileData.doors.size(); //Apply element index
 
     FileData.doors.push_back(doors); //Add NPC into array
     str_count++;line = in.readLine();
@@ -998,7 +998,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             waters.array_id = FileData.water_array_id;
             FileData.water_array_id++;
 
-            waters.index = FileData.water.size();//Apply element index
+            waters.index = FileData.water.size(); //Apply element index
 
         FileData.water.push_back(waters); //Add Water area into array
         str_count++;line = in.readLine();
@@ -1352,7 +1352,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     FileData.ReadFileValid=true;
     return FileData;
 
-    badfile:    //If file format not corrects
+    badfile:    //If file format is not correct
     BadFileMsg(inf.fileName()+"\nFile format "+QString::number(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
@@ -1398,7 +1398,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
     }
     for( ; i<21 ; i++) //Protector
         TextData += "0\n0\n0\n0\n0\n16291944\n#FALSE#\n#FALSE#\n0\n#FALSE#\n#FALSE#\n\"\"\n";
-        //append dummy section data, if array have less than 21
+        //append dummy section data, if array size is less than 21
 
     //Players start point
     for(i=0; i<FileData.players.size() && i<2; i++ )
@@ -1477,8 +1477,8 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         switch(FileData.npc[i].id)
         {
             //SMBX64 Fixed special options for NPC
-            case 283:/*Buble*/
-            case 91: /*burried*/
+            case 283:/*Bubble*/
+            case 91: /*buried*/
             case 284: /*SMW Lakitu*/
             case 96: /*egg*/
             /*parakoopa*/ case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
@@ -1521,9 +1521,9 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
     {
 
         if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) )
-            if(!FileData.doors[i].isSetIn) continue; // Skip brocken door
+            if(!FileData.doors[i].isSetIn) continue; // Skip broken door
         if( ((!FileData.doors[i].lvl_o) && (!FileData.doors[i].lvl_i)) || ((FileData.doors[i].lvl_i)) )
-            if(!FileData.doors[i].isSetOut) continue; // Skip brocken door
+            if(!FileData.doors[i].isSetOut) continue; // Skip broken door
 
         TextData += SMBX64::IntS(FileData.doors[i].ix);
         TextData += SMBX64::IntS(FileData.doors[i].iy);
@@ -1599,7 +1599,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
             TextData += SMBX64::qStrS(FileData.events[i].layers[j].toggle);
         }
         for( ; j<21; j++)
-            TextData += "\"\"\n\"\"\n\"\"\n"; //(21th element is SMBX 1.3 bug protector)
+            TextData += "\"\"\n\"\"\n\"\"\n"; //(21st element is SMBX 1.3 bug protector)
 
         for(j=0; j< FileData.events[i].sets.size()  && j<21; j++)
         {

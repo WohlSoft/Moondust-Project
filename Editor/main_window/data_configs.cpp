@@ -28,7 +28,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     //moveToThread(thread1);
 
     QProgressDialog progress(tr("Reloading configurations"), tr("Abort"), 0,100, this);
-    progress.setWindowTitle("Please, wait...");
+    progress.setWindowTitle("Please wait...");
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
@@ -46,6 +46,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     setItemBoxes(false); //Apply item boxes from reloaded configs
     setLevelSectionData();
     setSoundList();
+    clearFilter();
 
     //Set tools from loaded configs
     //setLevelSectionData();
@@ -53,7 +54,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     if(!progress.wasCanceled())
         progress.close();
 
-    QMessageBox::information(this, tr("Reload configuration"),
+    QMessageBox::information(this, tr("Reloading configuration"),
     tr("Configuration succesfully reloaded!"),
     QMessageBox::Ok);
 }

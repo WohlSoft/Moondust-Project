@@ -74,7 +74,7 @@ void MainWindow::setUiDefults()
     this->setWindowIcon(QIcon(":/images/mac/mushroom.icns"));
     #endif
 
-    //Applay objects into tools
+    //Apply objects into tools
     setLevelSectionData();
     setItemBoxes();
     setSoundList();
@@ -142,6 +142,8 @@ void MainWindow::setUiDefults()
 //    TickTackTimer->start(1);
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
+    connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
+
 }
 
 

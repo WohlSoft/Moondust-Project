@@ -182,7 +182,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     QTextStream in(&inf);   //Read File
 
     in.setAutoDetectUnicode(true); //Test Fix for MacOS
-    in.setLocale(QLocale::system());   //Test Fix for MacOS
+    in.setLocale(QLocale::system()); //Test Fix for MacOS
     in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
 
     NPCConfigFile FileData = CreateEmpytNpcTXTArray();
@@ -200,9 +200,9 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        } //Skip empty strings
 
        Params=line.replace(QString(" "), QString("")). //Delete spaces
-               split("=", QString::SkipEmptyParts); // splited the Parameter and value (example: chicken=2)
+               split("=", QString::SkipEmptyParts); // split the Parameter and value (example: chicken=2)
 
-       if (Params.count() != 2) goto badfile;   // If string not contain strings with "=" as separator
+       if (Params.count() != 2) goto badfile;   // If string does not contain strings with "=" as separator
 
        if(Params[0]=="gfxoffsetx")
         {
@@ -541,7 +541,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
                FileData.en_noiceball=true;
            }
         }
-       else // Non SMBX64 parameters (not working in SMBX <=1.3)
+       else // Non-SMBX64 parameters (not working in SMBX <=1.3)
        if(Params[0]=="nohammer")
         {
            if(!booldeg.exactMatch(Params[1]))

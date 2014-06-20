@@ -51,8 +51,10 @@ struct obj_bgo{
     unsigned long id;
     //    name="Smallest bush"		;background name, default="background-%n"
     QString name;
-    //    type="scenery"			;Background type, default="Scenery"
-    QString type;
+    //    group="scenery"			;Background group, default="All about my pigeon"
+    QString group;
+    //    category="scenery"		;Background categoty, default="Scenery"
+    QString category;
     //    grid=32				; 32 | 16 Default="32"
     unsigned int grid;
     //    view=background			; background | foreground, default="background"
@@ -64,7 +66,7 @@ struct obj_bgo{
     QString image_n;
     QString mask_n;
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
     //    climbing=0			; default = 0
     bool climbing;
     //    animated = 0			; default = 0 - no
@@ -80,11 +82,12 @@ struct obj_block{
         QString image_n;
         QString mask_n;
         QPixmap image;
-        QBitmap mask;
+        QPixmap mask;
     QString name;
     //    grid=32				; 32 | 16 Default="32"
     unsigned int grid;
-    QString type;
+    QString group;
+    QString category;
     bool sizable;
     int danger;
     int collision;
@@ -238,7 +241,7 @@ public:
 private:
 
     //Buffers
-    QBitmap mask;
+    QPixmap mask;
     //QPixmap image;
     QString imgFile, imgFileM;
     QString tmpstr;

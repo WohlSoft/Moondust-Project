@@ -54,6 +54,7 @@ void MainWindow::OpenFile(QString FilePath)
     QFileInfo in_1(FilePath);
 
     LastOpenDir = in_1.absoluteDir().absolutePath();
+    GlobalSettings::openPath = in_1.absoluteDir().absolutePath();
 
     if(in_1.suffix() == "lvl")
     {

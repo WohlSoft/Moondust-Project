@@ -49,7 +49,6 @@ leveledit::leveledit(QWidget *parent) :
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
-
             /*
              * 	setOptimizationFlags(QGraphicsView::DontClipPainter);
         setOptimizationFlags(QGraphicsView::DontSavePainterState);

@@ -116,12 +116,14 @@ public slots:
     void setMusic(bool checked);
     void setMusicButton(bool checked);
 
-    void setItemBoxes(bool setCat=false);
+    void setItemBoxes(bool setGrp=false, bool setCat=false);
     void UpdateCustomItems();
+    void eventSectionSettingsSync();
 
     void setSoundList();
 
-    void DragAndDroppedLayer(QModelIndex sourceParent,int sourceStart,int sourceEnd,QModelIndex destinationParent,int destinationRow);
+    void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
+    void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
 
     //SubWindow functions
     npcedit *createNPCChild();
@@ -141,6 +143,15 @@ public slots:
     void setEventsBox();
     void setEventData(long index=-1);
     void EventListsSync();
+    void ModifyEvent(QString eventName, QString newEventName);
+    QListWidget* getEventList();
+    void setEventToolsLocked(bool locked);
+    long getEventArrayIndex();
+
+    //Toolbox functions
+    void updateFilters();
+    void updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox);
+    void clearFilter();
 
     //LvlDoorProps Functions
     QComboBox* getWarpList();
@@ -299,11 +310,24 @@ private slots:
 
     void on_BGOUniform_clicked(bool checked);
     void on_BlockUniform_clicked(bool checked);
-
     void on_NPCUniform_clicked(bool checked);
+
+    void on_BlockGroupList_currentIndexChanged(const QString &arg1);
+    void on_BGOGroupList_currentIndexChanged(const QString &arg1);
+    void on_NPCGroupList_currentIndexChanged(const QString &arg1);
+
     void on_BlockCatList_currentIndexChanged(const QString &arg1);
     void on_BGOCatList_currentIndexChanged(const QString &arg1);
     void on_NPCCatList_currentIndexChanged(const QString &arg1);
+
+    void on_BlockFilterField_textChanged(const QString &arg1);
+    void on_BlockFilterType_currentIndexChanged(int index);
+    void on_BGOFilterField_textChanged(const QString &arg1);
+
+    void on_BGOFilterType_currentIndexChanged(int index);
+    void on_NPCFilterField_textChanged(const QString &arg1);
+    void on_NPCFilterType_currentIndexChanged(int index);
+
 
     void on_actionNewNPC_config_triggered();
 
@@ -371,7 +395,7 @@ private slots:
     void on_actionLevelEvents_triggered(bool checked);
     void on_LevelEventsToolBox_visibilityChanged(bool visible);
 
-    long getEventArrayIndex();
+
 
     void on_LVLEvents_List_itemSelectionChanged();
     void on_LVLEvents_List_itemChanged(QListWidgetItem *item);
@@ -475,7 +499,7 @@ private:
     // ////////////Event Functions///////////////////
     void AddNewEvent(QString eventName, bool setEdited);
     void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
-    void ModifyEvent(QString eventName, QString newEventName);
+
     void RemoveEvent(QString eventName);
     // //////////////////////////////////////////////
 
