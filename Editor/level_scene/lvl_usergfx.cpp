@@ -20,6 +20,8 @@
 #include "../edit_level/leveledit.h"
 #include "../file_formats/file_formats.h"
 
+#include "../common_features/graphics_funcs.h"
+
 //Search and load custom User's files
 void LvlScene::loadUserData(QProgressDialog &progress)
 {
@@ -126,16 +128,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                   (QFile::exists(uLVLDs + pConfigs->main_block[i].image_n)) )
             {
                 if(QFile::exists(uLVLDs + pConfigs->main_block[i].mask_n))
-                    uBlock.mask = QBitmap(uLVLDs + pConfigs->main_block[i].mask_n );
+                    uBlock.mask = QPixmap(uLVLDs + pConfigs->main_block[i].mask_n );
                 else
                     uBlock.mask = pConfigs->main_block[i].mask;
 
-                uBlock.image = QPixmap(uLVLDs + pConfigs->main_block[i].image_n );
+                uBlock.image = GraphicsHelps::setAlphaMask(QPixmap(uLVLDs + pConfigs->main_block[i].image_n ), uBlock.mask);
                 if(uBlock.image.isNull()) WrongImagesDetected=true;
 
-                if((uBlock.image.height()!=uBlock.mask.height())||(uBlock.image.width()!=uBlock.mask.width()))
-                    uBlock.mask = uBlock.mask.copy(0,0,uBlock.image.width(),uBlock.image.height());
-                uBlock.image.setMask(uBlock.mask);
                 uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
 
@@ -150,17 +149,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             if(QFile::exists(uLVLs + pConfigs->main_block[i].image_n) )
             {
                 if(QFile::exists(uLVLs + pConfigs->main_block[i].mask_n))
-                    uBlock.mask = QBitmap(uLVLs + pConfigs->main_block[i].mask_n );
+                    uBlock.mask = QPixmap(uLVLs + pConfigs->main_block[i].mask_n );
                 else
                     uBlock.mask = pConfigs->main_block[i].mask;
 
-                uBlock.image = QPixmap(uLVLs + pConfigs->main_block[i].image_n );
+                uBlock.image = GraphicsHelps::setAlphaMask(QPixmap(uLVLs + pConfigs->main_block[i].image_n ), uBlock.mask);
                 if(uBlock.image.isNull()) WrongImagesDetected=true;
 
-                if((uBlock.image.height()!=uBlock.mask.height())||(uBlock.image.width()!=uBlock.mask.width()))
-                    uBlock.mask = uBlock.mask.copy(0,0,uBlock.image.width(),uBlock.image.height());
-
-                uBlock.image.setMask(uBlock.mask);
                 uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
 
@@ -191,16 +186,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                   (QFile::exists(uLVLDs + pConfigs->main_bgo[i].image_n)) )
             {
                 if(QFile::exists(uLVLDs + pConfigs->main_bgo[i].mask_n))
-                    uBGO.mask = QBitmap(uLVLDs + pConfigs->main_bgo[i].mask_n );
+                    uBGO.mask = QPixmap(uLVLDs + pConfigs->main_bgo[i].mask_n );
                 else
                     uBGO.mask = pConfigs->main_bgo[i].mask;
 
-                uBGO.image = QPixmap(uLVLDs + pConfigs->main_bgo[i].image_n );
+                uBGO.image = GraphicsHelps::setAlphaMask(QPixmap(uLVLDs + pConfigs->main_bgo[i].image_n ), uBGO.mask);
                 if(uBGO.image.isNull()) WrongImagesDetected=true;
 
-                if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
-                    uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
-                uBGO.image.setMask(uBGO.mask);
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
 
@@ -215,20 +207,15 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             if(QFile::exists(uLVLs + pConfigs->main_bgo[i].image_n) )
             {
                 if(QFile::exists(uLVLs + pConfigs->main_bgo[i].mask_n))
-                    uBGO.mask = QBitmap(uLVLs + pConfigs->main_bgo[i].mask_n );
+                    uBGO.mask = QPixmap(uLVLs + pConfigs->main_bgo[i].mask_n );
                 else
                     uBGO.mask = pConfigs->main_bgo[i].mask;
 
-                uBGO.image = QPixmap(uLVLs + pConfigs->main_bgo[i].image_n );
+                uBGO.image = GraphicsHelps::setAlphaMask(QPixmap(uLVLs + pConfigs->main_bgo[i].image_n ), uBGO.mask);
                 if(uBGO.image.isNull()) WrongImagesDetected=true;
 
-                if((uBGO.image.height()!=uBGO.mask.height())||(uBGO.image.width()!=uBGO.mask.width()))
-                    uBGO.mask = uBGO.mask.copy(0,0,uBGO.image.width(),uBGO.image.height());
-
-                uBGO.image.setMask(uBGO.mask);
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
-
 
                 //Apply index;
                 if(uBGO.id < (unsigned int)index_bgo.size())
@@ -292,16 +279,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                    (QFile::exists(uLVLDs + pConfigs->main_npc[i].image_n)) )
              {
                  if(QFile::exists(uLVLDs + pConfigs->main_npc[i].mask_n))
-                     uNPC.mask = QBitmap(uLVLDs + pConfigs->main_npc[i].mask_n );
+                     uNPC.mask = QPixmap(uLVLDs + pConfigs->main_npc[i].mask_n );
                  else
                      uNPC.mask = pConfigs->main_npc[i].mask;
 
-                 uNPC.image = QPixmap(uLVLDs + pConfigs->main_npc[i].image_n );
+                 uNPC.image = GraphicsHelps::setAlphaMask(QPixmap(uLVLDs + pConfigs->main_npc[i].image_n ), uNPC.mask);
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
 
-                 if((uNPC.image.height()!=uNPC.mask.height())||(uNPC.image.width()!=uNPC.mask.width()))
-                     uNPC.mask = uNPC.mask.copy(0,0,uNPC.image.width(),uNPC.image.height());
-                 uNPC.image.setMask(uNPC.mask);
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;
              }
@@ -309,17 +293,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
              if(QFile::exists(uLVLs + pConfigs->main_npc[i].image_n) )
              {
                  if(QFile::exists(uLVLs + pConfigs->main_npc[i].mask_n))
-                     uNPC.mask = QBitmap(uLVLs + pConfigs->main_npc[i].mask_n );
+                     uNPC.mask = QPixmap(uLVLs + pConfigs->main_npc[i].mask_n );
                  else
                      uNPC.mask = pConfigs->main_npc[i].mask;
 
-                 uNPC.image = QPixmap(uLVLs + pConfigs->main_npc[i].image_n );
+                 uNPC.image = GraphicsHelps::setAlphaMask(QPixmap(uLVLs + pConfigs->main_npc[i].image_n ), uNPC.mask);
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
 
-                 if((uNPC.image.height()!=uNPC.mask.height())||(uNPC.image.width()!=uNPC.mask.width()))
-                     uNPC.mask = uNPC.mask.copy(0,0,uNPC.image.width(),uNPC.image.height());
-
-                 uNPC.image.setMask(uNPC.mask);
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;
              }

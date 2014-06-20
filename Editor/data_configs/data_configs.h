@@ -66,7 +66,7 @@ struct obj_bgo{
     QString image_n;
     QString mask_n;
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
     //    climbing=0			; default = 0
     bool climbing;
     //    animated = 0			; default = 0 - no
@@ -82,7 +82,7 @@ struct obj_block{
         QString image_n;
         QString mask_n;
         QPixmap image;
-        QBitmap mask;
+        QPixmap mask;
     QString name;
     //    grid=32				; 32 | 16 Default="32"
     unsigned int grid;
@@ -241,7 +241,7 @@ public:
 private:
 
     //Buffers
-    QBitmap mask;
+    QPixmap mask;
     //QPixmap image;
     QString imgFile, imgFileM;
     QString tmpstr;

@@ -19,6 +19,7 @@
 #include "data_configs.h"
 
 #include "../main_window/global_settings.h"
+#include "../common_features/graphics_funcs.h"
 
 void dataconfigs::loadLevelNPC()
 {
@@ -107,17 +108,16 @@ void dataconfigs::loadLevelNPC()
                 else
                     imgFileM = "";
                 snpc.mask_n = imgFileM;
-                if(tmp.size()==2) mask = QBitmap(npcPath + imgFileM);
+                mask = QPixmap();
+                if(tmp.size()==2) mask = QPixmap(npcPath + imgFileM);
                 snpc.mask = mask;
-                snpc.image = QPixmap(npcPath + imgFile);
-                if(tmp.size()==2) snpc.image.setMask(mask);
-                //WriteToLog(QtDebugMsg, "NPC Config -> Image loaded");
+                snpc.image = GraphicsHelps::setAlphaMask(QPixmap(npcPath + imgFile), snpc.mask);
             }
             else
             {
                 //WriteToLog(QtWarningMsg, "NPC Config -> Empty image");
                 snpc.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-                snpc.mask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
+                snpc.mask = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
                 snpc.image.setMask(snpc.mask);
             }
 

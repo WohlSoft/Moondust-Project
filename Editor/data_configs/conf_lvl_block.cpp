@@ -19,6 +19,7 @@
 #include "data_configs.h"
 
 #include "../main_window/global_settings.h"
+#include "../common_features/graphics_funcs.h"
 
 void dataconfigs::loadLevelBlocks()
 {
@@ -77,10 +78,10 @@ void dataconfigs::loadLevelBlocks()
                     else
                         imgFileM = "";
                     sblock.mask_n = imgFileM;
-                    if(tmp.size()==2) mask = QBitmap(blockPath + imgFileM);
+                    mask = QPixmap();
+                    if(tmp.size()==2) mask = QPixmap(blockPath + imgFileM);
                     sblock.mask = mask;
-                    sblock.image = QPixmap(blockPath + imgFile);
-                    if(tmp.size()==2) sblock.image.setMask(mask);
+                    sblock.image = GraphicsHelps::setAlphaMask(QPixmap(blockPath + imgFile), sblock.mask);
                 }
                 else
                 {
