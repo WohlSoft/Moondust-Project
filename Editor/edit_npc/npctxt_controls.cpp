@@ -22,7 +22,7 @@
 #include "./ui_npcedit.h"
 #include "../file_formats/file_formats.h"
 
-
+#include "../common_features/graphics_funcs.h"
 
 
 void npcedit::on_ResetNPCData_clicked()
@@ -669,11 +669,7 @@ void npcedit::loadImageFile()
         else
             npcMask = defaultNPC.mask;
 
-        npcImage = QPixmap( imagePath + defaultNPC.image_n );
-
-        if((npcImage.height()!=npcMask.height())||(npcImage.width()!=npcMask.width()))
-            npcMask = npcMask.copy(0,0,npcImage.width(),npcImage.height());
-        npcImage.setMask(npcMask);
+        npcImage = GraphicsHelps::setAlphaMask(QPixmap( imagePath + defaultNPC.image_n ), npcMask);
 
         WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
     }
