@@ -2366,6 +2366,10 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_ADDWARP: return tr("Add Warp");
     case HistoryOperation::LEVELHISTORY_REMOVEWARP: return tr("Remove Warp");
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP: return tr("Changed Warpsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::LEVELHISTORY_ADDEVENT: return tr("Add Event");
+    case HistoryOperation::LEVELHISTORY_REMOVEEVENT: return tr("Remove Event");
+    case HistoryOperation::LEVELHISTORY_DULPICATEEVENT: return tr("Copy Event");
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT: return tr("Changed Eventsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     default:
         return tr("Unknown");
     }
@@ -2404,6 +2408,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_DEATH: return tr("Event NPC Die");
     case SETTING_EV_TALK: return tr("Event NPC Talk");
     case SETTING_SPECIAL_DATA: return tr("NPC Special Data");
+    case SETTING_EV_AUTOSTART: return tr("Autostart");
     default:
         return tr("Unknown");
     }
