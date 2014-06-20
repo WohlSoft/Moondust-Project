@@ -92,6 +92,11 @@ void MainWindow::setLayerLists()
 
 }
 
+void MainWindow::setLayerToolsLocked(bool locked)
+{
+    lockLayerEdit = locked;
+}
+
 
 
 

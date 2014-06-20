@@ -300,11 +300,16 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                                 ((ItemBlock *) SelItem)->arrayApply();
                             }
                         }
-                    break;
+                        if(selected==newLayer){
+                            scene->addChangedNewLayerHistory(modData, lr);
+                        }
+                        break;
                     }
                 }//Find layer's settings
-                scene->addChangedLayerHistory(modData, lName);
-             scene->contextMenuOpened = false;
+                if(selected!=newLayer){
+                    scene->addChangedLayerHistory(modData, lName);
+                }
+                scene->contextMenuOpened = false;
             }
 
         }
