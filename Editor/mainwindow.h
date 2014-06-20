@@ -140,6 +140,7 @@ public slots:
     void SwitchToDoor(long arrayID);
     void setLayersBox();
     void setLayerLists();
+    void setLayerToolsLocked(bool locked);
     void setEventsBox();
     void setEventData(long index=-1);
     void EventListsSync();

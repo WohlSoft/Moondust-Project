@@ -291,6 +291,21 @@ void LvlScene::addChangeEventSettingsHistory(int array_id, LvlScene::SettingSubT
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addChangedNewLayerHistory(LevelData changedItems, LevelLayers newLayer)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chNewLaOperation;
+    chNewLaOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER;
+    chNewLaOperation.extraData = QVariant(newLayer.name);
+    changedItems.layers.push_back(newLayer);
+    chNewLaOperation.data = changedItems;
+    operationList.push_back(chNewLaOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -960,6 +975,21 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setEventToolsLocked(false);
         break;
     }
+    case HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER:
+    {
+        LevelData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, 0, false, false, false, false, true);
+
+        for(int i = 0; i < LvlData->layers.size(); i++){
+            if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
+                LvlData->layers.removeAt(i);
+            }
+        }
+        MainWinConnect::pMainWin->setLayersBox();
+        break;
+    }
     default:
         break;
     }
@@ -1613,6 +1643,18 @@ void LvlScene::historyForward()
         MainWinConnect::pMainWin->setEventData(-2);
         MainWinConnect::pMainWin->setEventToolsLocked(false);
 
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER:
+    {
+        LevelData modifiedSourceData = lastOperation.data;
+
+        LvlData->layers.push_back(modifiedSourceData.layers[0]);
+
+        CallbackData cbData;
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, 0, false, false, false, false, true);
+
+        MainWinConnect::pMainWin->setLayersBox();
         break;
     }
     default:
@@ -2674,6 +2716,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_REMOVEEVENT: return tr("Remove Event");
     case HistoryOperation::LEVELHISTORY_DULPICATEEVENT: return tr("Copy Event");
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT: return tr("Changed Eventsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER: return tr("Move Items to new Layer");
     default:
         return tr("Unknown");
     }
