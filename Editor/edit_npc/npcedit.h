@@ -141,7 +141,7 @@ private:
     QGraphicsRectItem * physics;
 
     QPixmap npcImage;
-    QBitmap npcMask;
+    QPixmap npcMask;
     obj_npc defaultNPC;
     int direction;
 

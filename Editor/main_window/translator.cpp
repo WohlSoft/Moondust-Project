@@ -132,6 +132,7 @@ void MainWindow::slotLanguageChanged(QAction* action)
         loadLanguage(action->data().toString());
         setItemBoxes();
         setLevelSectionData();
+        setEventData(-1);
         setSoundList();
     }
 }

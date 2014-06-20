@@ -16,45 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CUSTOM_DATA_H
-#define CUSTOM_DATA_H
-
 #include <QPixmap>
-#include <QBitmap>
+#include <QImage>
+#include "graphics_funcs.h"
 
-struct UserBGOs
+
+QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
 {
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-};
+    if(mask.isNull())
+        return image;
 
-struct UserBlocks
-{
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-};
+    if(image.isNull())
+        return image;
 
-struct UserNPCs
-{
-    bool withImg;
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
+    QImage target = image.toImage();
+    QImage newmask = mask.toImage();
 
-    bool withTxt;
-    NPCConfigFile sets;
-    obj_npc merged;
-};
+    if(target.size()!= newmask.size())
+    {
+        newmask = newmask.copy(0,0, target.width(), target.height());
+    }
 
-struct UserBGs
-{
-    QPixmap image;
-    QPixmap second_image;
-    unsigned long id;
-    unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
-};
+    newmask.invertPixels();
 
+    target.setAlphaChannel(newmask);
 
-#endif // CUSTOM_DATA_H
+    return QPixmap::fromImage(target);
+}
