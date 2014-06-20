@@ -865,6 +865,7 @@ void MainWindow::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
         long i = getEventArrayIndex();
         if(i<0) return;
 
+        edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_SMOKE, QVariant(checked));
         edit->LvlData.events[i].nosmoke = checked;
         edit->LvlData.modified=true;
     }
@@ -888,6 +889,7 @@ void MainWindow::on_LVLEvent_Layer_HideAdd_clicked()
 
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
+            edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_LHIDEADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
             edit->LvlData.events[i].layers_hide.push_back(ui->LVLEvents_layerList->currentItem()->text());
             edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
@@ -914,6 +916,7 @@ void MainWindow::on_LVLEvent_Layer_HideDel_clicked()
             {
             if(edit->LvlData.events[i].layers_hide[j]==ui->LVLEvent_Layer_HideList->currentItem()->text())
                 {
+                    edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_LHIDEDEL, QVariant(edit->LvlData.events[i].layers_hide[j]));
                     edit->LvlData.events[i].layers_hide.removeAt(j);
                     edit->LvlData.modified=true;
                     break;
@@ -938,6 +941,7 @@ void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
 
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
+            edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_LSHOWADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
             edit->LvlData.events[i].layers_show.push_back(ui->LVLEvents_layerList->currentItem()->text());
             edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
@@ -963,6 +967,7 @@ void MainWindow::on_LVLEvent_Layer_ShowDel_clicked()
             {
             if(edit->LvlData.events[i].layers_show[j]==ui->LVLEvent_Layer_ShowList->currentItem()->text())
                 {
+                edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_LSHOWDEL, QVariant(edit->LvlData.events[i].layers_show[j]));
                 edit->LvlData.events[i].layers_show.removeAt(j);
                 edit->LvlData.modified=true;
                 break;
@@ -988,6 +993,7 @@ void MainWindow::on_LVLEvent_Layer_TogAdd_clicked()
 
         if(!ui->LVLEvents_layerList->selectedItems().isEmpty())
         {
+            edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_LTOGADD, QVariant(ui->LVLEvents_layerList->currentItem()->text()));
             edit->LvlData.events[i].layers_toggle.push_back(ui->LVLEvents_layerList->currentItem()->text());
             edit->LvlData.modified=true;
             eventLayerVisiblySyncList();
@@ -1013,6 +1019,7 @@ void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
             {
             if(edit->LvlData.events[i].layers_toggle[j]==ui->LVLEvent_Layer_ToggleList->currentItem()->text())
                 {
+                    edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_LTOGDEL, QVariant(edit->LvlData.events[i].layers_toggle[j]));
                     edit->LvlData.events[i].layers_toggle.removeAt(j);
                     edit->LvlData.modified=true;
                     break;
