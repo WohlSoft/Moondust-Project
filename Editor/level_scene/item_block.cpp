@@ -27,6 +27,7 @@
 ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
 {
+    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     animated = false;
     frameFirst=0; //from first frame
     frameLast=-1; //to unlimited frameset
@@ -224,6 +225,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         {
             LevelData removedItems;
             bool deleted=false;
+            scene->contextMenuOpened = false;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="Block")
@@ -235,8 +237,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     deleted=true;
                 }
             }
-            if(deleted) scene->addRemoveHistory( removedItems );
-            scene->contextMenuOpened = false;
+            if(deleted) MainWinConnect::pMainWin->activeLvlEditWin()->scene->addRemoveHistory( removedItems );
         }
         else
         if(selected==props)

@@ -29,13 +29,15 @@ struct obj_npc
     unsigned long id;
 //    name="Goomba"
     QString name;
+//    group="Enemy" 		;The sort category
+    QString group;
 //    category="Enemy"		;The sort category
     QString category;
 //    image="npc-1.gif"		;NPC Image file
     QString image_n;
     QString mask_n;
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
 //    algorithm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
     int algorithm;
     //    ;If algorithm = 0, will using basic parametric alhorythm.

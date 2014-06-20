@@ -356,20 +356,20 @@
     <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Level Tool box</string>
+    <string>Level Toolbox</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
    <widget class="QTabWidget" name="LevelToolBoxTabs">
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Blocks">
      <attribute name="title">
       <string>Blocks</string>
      </attribute>
-     <layout class="QGridLayout" name="BlocksG" columnstretch="0,90,0" columnminimumwidth="50,0,15">
+     <layout class="QGridLayout" name="BlocksG" columnstretch="0,90,9,1" columnminimumwidth="50,0,15,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -385,14 +385,26 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="0">
+      <item row="1" column="1" colspan="2">
+       <widget class="QComboBox" name="BlockCatList">
+        <property name="maxVisibleItems">
+         <number>30</number>
+        </property>
+        <item>
+         <property name="text">
+          <string notr="true">[all]</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
        <widget class="QLabel" name="BlockCatLabel">
         <property name="text">
          <string>Category:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="3">
+      <item row="4" column="0" colspan="4">
        <widget class="QListWidget" name="BlockItemsList">
         <property name="lineWidth">
          <number>1</number>
@@ -451,9 +463,6 @@
         <property name="uniformItemSizes">
          <bool>false</bool>
         </property>
-        <property name="batchSize">
-         <number>150</number>
-        </property>
         <property name="wordWrap">
          <bool>true</bool>
         </property>
@@ -474,23 +483,79 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="BlockCatList">
-        <property name="maxVisibleItems">
-         <number>30</number>
+      <item row="3" column="0">
+       <widget class="QLabel" name="BlockFilterLabel">
+        <property name="text">
+         <string>Filter:</string>
         </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="BlockFilterField"/>
+      </item>
+      <item row="3" column="2" colspan="2">
+       <widget class="QComboBox" name="BlockFilterType">
+        <item>
+         <property name="text">
+          <string>Text</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QCheckBox" name="BlockUniform">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>15</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Liberation Sans</family>
+          <pointsize>8</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+          <kerning>false</kerning>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Uniform icon size</string>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="BlockGroupLabel">
+        <property name="text">
+         <string>Group:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="3">
+       <widget class="QComboBox" name="BlockGroupList">
         <item>
          <property name="text">
           <string notr="true">[all]</string>
          </property>
         </item>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QCheckBox" name="BlockUniform">
-        <property name="text">
-         <string/>
-        </property>
        </widget>
       </item>
      </layout>
@@ -499,7 +564,7 @@
      <attribute name="title">
       <string>Backgrounds</string>
      </attribute>
-     <layout class="QGridLayout" name="BGOsG" columnstretch="0,95,0" columnminimumwidth="50,0,15">
+     <layout class="QGridLayout" name="BGOsG" columnstretch="0,90,9,1" columnminimumwidth="50,0,15,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -515,14 +580,14 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="0">
+      <item row="1" column="0">
        <widget class="QLabel" name="BGOCatLabel">
         <property name="text">
          <string>Category:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="3">
+      <item row="3" column="0" colspan="4">
        <widget class="QListWidget" name="BGOItemsList">
         <property name="lineWidth">
          <number>1</number>
@@ -604,7 +669,40 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="0" column="0">
+       <widget class="QLabel" name="BGOGroupLabel">
+        <property name="text">
+         <string>Group:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="BGOFilterLabel">
+        <property name="text">
+         <string>Filter:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="BGOFilterField"/>
+      </item>
+      <item row="1" column="3">
+       <widget class="QCheckBox" name="BGOUniform">
+        <property name="maximumSize">
+         <size>
+          <width>15</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Uniform icon size</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
        <widget class="QComboBox" name="BGOCatList">
         <property name="maxVisibleItems">
          <number>30</number>
@@ -616,11 +714,27 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QCheckBox" name="BGOUniform">
-        <property name="text">
-         <string/>
-        </property>
+      <item row="2" column="2" colspan="2">
+       <widget class="QComboBox" name="BGOFilterType">
+        <item>
+         <property name="text">
+          <string>Text</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="3">
+       <widget class="QComboBox" name="BGOGroupList">
+        <item>
+         <property name="text">
+          <string notr="true">[all]</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
@@ -629,7 +743,7 @@
      <attribute name="title">
       <string>NPC</string>
      </attribute>
-     <layout class="QGridLayout" name="NPCsG" columnstretch="0,95,0" columnminimumwidth="50,0,15">
+     <layout class="QGridLayout" name="NPCsG" columnstretch="0,90,9,1" columnminimumwidth="50,0,15,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -645,14 +759,24 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="0">
+      <item row="2" column="0">
+       <widget class="QLabel" name="NPCFilterLabel">
+        <property name="text">
+         <string>Filter:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="NPCFilterField"/>
+      </item>
+      <item row="1" column="0">
        <widget class="QLabel" name="NPCCatLabel">
         <property name="text">
          <string>Category:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="3">
+      <item row="3" column="0" colspan="4">
        <widget class="QListWidget" name="NPCItemsList">
         <property name="lineWidth">
          <number>1</number>
@@ -734,7 +858,7 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="1" column="1" colspan="2">
        <widget class="QComboBox" name="NPCCatList">
         <property name="maxVisibleItems">
          <number>30</number>
@@ -746,11 +870,50 @@
         </item>
        </widget>
       </item>
-      <item row="0" column="2">
+      <item row="1" column="3">
        <widget class="QCheckBox" name="NPCUniform">
+        <property name="maximumSize">
+         <size>
+          <width>15</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Uniform icon size</string>
+        </property>
         <property name="text">
          <string/>
         </property>
+       </widget>
+      </item>
+      <item row="2" column="2" colspan="2">
+       <widget class="QComboBox" name="NPCFilterType">
+        <item>
+         <property name="text">
+          <string>Text</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>ID</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_26">
+        <property name="text">
+         <string>Group:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="3">
+       <widget class="QComboBox" name="NPCGroupList">
+        <item>
+         <property name="text">
+          <string notr="true">[all]</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
@@ -918,7 +1081,7 @@
     <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>World map tool box</string>
+    <string>World Map Toolbox</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
@@ -1012,8 +1175,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>514</height>
        </rect>
       </property>
      </widget>
@@ -1036,8 +1199,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>514</height>
        </rect>
       </property>
      </widget>
@@ -1060,8 +1223,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>514</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -1668,7 +1831,7 @@
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Warps and doors</string>
+    <string>Warps and Doors</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -2538,7 +2701,7 @@ p, li { white-space: pre-wrap; }
          <item row="5" column="0" colspan="2">
           <widget class="QPushButton" name="PROPS_BlockIncludes">
            <property name="text">
-            <string notr="true">IncludedNPC</string>
+            <string notr="true">Contained NPC</string>
            </property>
           </widget>
          </item>
@@ -2559,8 +2722,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>167</width>
-          <height>446</height>
+          <width>468</width>
+          <height>724</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2686,8 +2849,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>194</width>
-          <height>547</height>
+          <width>260</width>
+          <height>724</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3374,7 +3537,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <enum>QAbstractItemView::InternalMove</enum>
        </property>
        <property name="alternatingRowColors">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectItems</enum>
@@ -3414,7 +3577,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <number>2</number>
        </property>
        <property name="currentIndex">
-        <number>4</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -3424,7 +3587,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>139</width>
+          <width>255</width>
           <height>360</height>
          </rect>
         </property>
@@ -3607,8 +3770,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>195</width>
-          <height>115</height>
+          <width>272</width>
+          <height>291</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3689,12 +3852,12 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>192</width>
-          <height>93</height>
+          <width>272</width>
+          <height>291</height>
          </rect>
         </property>
         <attribute name="label">
-         <string>Autoscrool section</string>
+         <string>Autoscroll section</string>
         </attribute>
         <layout class="QFormLayout" name="formLayout_5">
          <property name="fieldGrowthPolicy">
@@ -3783,7 +3946,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
+          <width>255</width>
           <height>461</height>
          </rect>
         </property>
@@ -4082,7 +4245,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>316</height>
+          <height>291</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4197,8 +4360,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>272</width>
+          <height>291</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4295,8 +4458,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>272</width>
+          <height>291</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5055,7 +5218,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Off screen exit</string>
+    <string>Offscreen exit</string>
    </property>
   </action>
   <action name="actionLevNoBack">
@@ -5115,7 +5278,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Restart level after player's fail</string>
+    <string>Restart level after fail</string>
    </property>
   </action>
   <action name="actionWLDNoChar1">
@@ -5172,7 +5335,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
    </property>
    <property name="text">
-    <string>Level tool box</string>
+    <string>Level Toolbox</string>
    </property>
    <property name="toolTip">
     <string>Level objects tool box</string>
@@ -5190,7 +5353,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
    </property>
    <property name="text">
-    <string>World tool box</string>
+    <string>World Toolbox</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -5253,7 +5416,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
    </property>
    <property name="text">
-    <string>Level Section Settings</string>
+    <string>Section Settings</string>
    </property>
    <property name="visible">
     <bool>true</bool>
@@ -5488,7 +5651,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <normaloff>:/doors.png</normaloff>:/doors.png</iconset>
    </property>
    <property name="text">
-    <string>Warps and doors</string>
+    <string>Warps and Doors</string>
    </property>
   </action>
   <action name="actionAnimation">

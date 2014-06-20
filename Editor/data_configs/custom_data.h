@@ -25,14 +25,14 @@
 struct UserBGOs
 {
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
     unsigned long id;
 };
 
 struct UserBlocks
 {
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
     unsigned long id;
 };
 
@@ -40,7 +40,7 @@ struct UserNPCs
 {
     bool withImg;
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
     unsigned long id;
 
     bool withTxt;

@@ -232,6 +232,65 @@ void LvlScene::addChangeWarpSettingsHistory(int array_id, LvlScene::SettingSubTy
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addAddEventHistory(int array_id, QString name)
+{
+    cleanupRedoElements();
+
+    HistoryOperation addEvOperation;
+    addEvOperation.type = HistoryOperation::LEVELHISTORY_ADDEVENT;
+    QList<QVariant> package;
+    package.push_back(array_id);
+    package.push_back(name);
+    addEvOperation.extraData = QVariant(package);
+    operationList.push_back(addEvOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
+void LvlScene::addRemoveEventHistory(LevelEvents ev)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rmEvOperation;
+    rmEvOperation.type = HistoryOperation::LEVELHISTORY_REMOVEEVENT;
+    rmEvOperation.data.events.push_back(ev);
+    operationList.push_back(rmEvOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
+void LvlScene::addDuplicateEventHistory(LevelEvents newDuplicate)
+{
+    cleanupRedoElements();
+
+    HistoryOperation dupEvOperation;
+    dupEvOperation.type = HistoryOperation::LEVELHISTORY_DULPICATEEVENT;
+    dupEvOperation.data.events.push_back(newDuplicate);
+    operationList.push_back(dupEvOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
+void LvlScene::addChangeEventSettingsHistory(int array_id, LvlScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chEvSettingsOperation;
+    chEvSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT;
+    chEvSettingsOperation.subtype = subtype;
+    QList<QVariant> package;
+    package.push_back(array_id);
+    package.push_back(extraData);
+    chEvSettingsOperation.extraData = QVariant(package);
+    operationList.push_back(chEvSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -371,7 +430,7 @@ void LvlScene::historyBack()
         }
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, &LvlScene::historyUndoSettingsChangeNPCNPC, 0, 0, false, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
@@ -408,6 +467,34 @@ void LvlScene::historyBack()
         else
         if(lastOperation.subtype == SETTING_ATTACHLAYER){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_DESTROYED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsDestroyedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_HITED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsHitedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_LAYER_EMP){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsLayerEmptyEventBlocks, 0, &LvlScene::historyUndoSettingsLayerEmptyEventNPC, 0, 0, false, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_ACTIVATE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_DEATH){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDeathEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_TALK){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTalkEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_SPECIAL_DATA){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsSpecialDataNPC, 0, 0, true, true, false, true, true);
         }
         break;
     }
@@ -624,6 +711,253 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setDoorData(-2);
         doorPointsSync(array_id);
 
+        break;            
+    }
+    case HistoryOperation::LEVELHISTORY_ADDEVENT:
+    {
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+
+        for (int i = 0; i < LvlData->events.size(); i++) {
+            if(LvlData->events[i].array_id == (unsigned int)array_id){
+                for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
+                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == array_id){
+                        delete MainWinConnect::pMainWin->getEventList()->item(j);
+                    }
+                }
+                MainWinConnect::pMainWin->ModifyEvent(LvlData->events[i].name, "");
+                LvlData->events.remove(i);
+            }
+        }
+
+        MainWinConnect::pMainWin->EventListsSync();
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_REMOVEEVENT:
+    {
+        LevelEvents rmEvents = lastOperation.data.events[0];
+
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        QListWidgetItem * item;
+        item = new QListWidgetItem;
+        item->setText(rmEvents.name);
+        item->setFlags(Qt::ItemIsEditable);
+        item->setFlags(item->flags() | Qt::ItemIsEnabled);
+        item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+        item->setData(3, QString::number(rmEvents.array_id) );
+        QListWidget* evList = MainWinConnect::pMainWin->getEventList();
+        LevelEvents NewEvent = rmEvents;
+
+
+        LvlData->events.push_back(NewEvent);
+        evList->addItem(item);
+
+        LvlData->modified = true;
+
+        MainWinConnect::pMainWin->EventListsSync();
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_DULPICATEEVENT:
+    {
+        LevelEvents dupEvents = lastOperation.data.events[0];
+
+        for (int i = 0; i < LvlData->events.size(); i++) {
+            if(LvlData->events[i].array_id == (unsigned int)dupEvents.array_id){
+                for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
+                    if((unsigned int)MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == dupEvents.array_id){
+                        delete MainWinConnect::pMainWin->getEventList()->item(j);
+                    }
+                }
+                MainWinConnect::pMainWin->ModifyEvent(LvlData->events[i].name, "");
+                LvlData->events.remove(i);
+            }
+        }
+
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int index = -1;
+        QVariant extraData = lastOperation.extraData.toList()[1];
+        LevelEvents * eventp;
+        bool found = false;
+
+        for(int i = 0; i < LvlData->events.size(); i++){
+            if(LvlData->events[i].array_id == (unsigned int)array_id){
+                found = true;
+                eventp = LvlData->events.data();
+                index = i;
+                break;
+            }
+        }
+
+        if(!found)
+            break;
+
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        if(subtype == SETTING_EV_AUTOSTART){
+            eventp[index].autostart = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_SMOKE){
+            eventp[index].nosmoke = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_LSHOWADD){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_show.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_show.size(); i++){
+                    if(eventp[index].layers_show[i] == layer){
+                        eventp[index].layers_show.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LHIDEADD){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_hide.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_hide.size(); i++){
+                    if(eventp[index].layers_hide[i] == layer){
+                        eventp[index].layers_hide.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LTOGADD){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_toggle.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_toggle.size(); i++){
+                    if(eventp[index].layers_toggle[i] == layer){
+                        eventp[index].layers_toggle.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LSHOWDEL){
+            QString layer = extraData.toString();
+            eventp[index].layers_show.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LHIDEDEL){
+            QString layer = extraData.toString();
+            eventp[index].layers_hide.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LTOGDEL){
+            QString layer = extraData.toString();
+            eventp[index].layers_toggle.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_MOVELAYER){
+            QString layer = extraData.toList()[0].toString();
+            eventp[index].movelayer = layer;
+        }
+        else
+        if(subtype == SETTING_EV_SPEEDLAYERX){
+            eventp[index].layer_speed_x = extraData.toList()[0].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_SPEEDLAYERY){
+            eventp[index].layer_speed_y = extraData.toList()[0].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRSEC){
+            eventp[index].scroll_section = (long)extraData.toList()[0].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRX){
+            eventp[index].move_camera_x = extraData.toList()[0].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRY){
+            eventp[index].move_camera_y = extraData.toList()[0].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_SECSIZE){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_top = (long)extraData.toList()[1].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_right = (long)extraData.toList()[2].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_bottom = (long)extraData.toList()[3].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_left = (long)extraData.toList()[4].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_SECMUS){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].music_id = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_SECBG){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_MSG){
+            eventp[index].msg = extraData.toList()[0].toString();
+        }
+        else
+        if(subtype == SETTING_EV_SOUND){
+            eventp[index].sound_id = (long)extraData.toList()[0].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_ENDGAME){
+            eventp[index].end_game = (long)extraData.toList()[0].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_KUP){
+            eventp[index].up = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KDOWN){
+            eventp[index].down = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KLEFT){
+            eventp[index].left = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KRIGHT){
+            eventp[index].right = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KRUN){
+            eventp[index].run = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KALTRUN){
+            eventp[index].altrun = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KJUMP){
+            eventp[index].jump = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KALTJUMP){
+            eventp[index].altjump = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KDROP){
+            eventp[index].drop = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KSTART){
+            eventp[index].start = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_TRIACTIVATE){
+            eventp[index].trigger = extraData.toList()[0].toString();
+        }
+        else
+        if(subtype == SETTING_EV_TRIDELAY){
+            eventp[index].trigger_timer = (long)extraData.toList()[0].toLongLong();
+        }
+
+
+        MainWinConnect::pMainWin->setEventData(-2);
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
         break;
     }
     default:
@@ -750,7 +1084,7 @@ void LvlScene::historyForward()
         }
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, &LvlScene::historyRedoSettingsChangeNPCNPC, 0, 0, false, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
@@ -787,6 +1121,34 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_ATTACHLAYER){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_DESTROYED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsDestroyedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_HITED){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsHitedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_LAYER_EMP){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsLayerEmptyEventBlocks, 0, &LvlScene::historyRedoSettingsLayerEmptyEventNPC, 0, 0, false, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_ACTIVATE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_DEATH){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDeathEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_EV_TALK){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTalkEventNPC, 0, 0, true, true, false, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_SPECIAL_DATA){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsSpecialDataNPC, 0, 0, true, true, false, true, true);
         }
         break;
     }
@@ -992,6 +1354,264 @@ void LvlScene::historyForward()
 
         MainWinConnect::pMainWin->setDoorData(-2);
         doorPointsSync(array_id);
+
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_ADDEVENT:
+    {
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        QString name = lastOperation.extraData.toList()[1].toString();
+
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        QListWidgetItem * item;
+        item = new QListWidgetItem;
+        item->setText(name);
+        item->setFlags(Qt::ItemIsEditable);
+        item->setFlags(item->flags() | Qt::ItemIsEnabled);
+        item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+        item->setData(3,  QString::number(array_id) );
+        QListWidget* evList = MainWinConnect::pMainWin->getEventList();
+        LevelEvents NewEvent = FileFormats::dummyLvlEvent();
+        NewEvent.name = item->text();
+        NewEvent.array_id = array_id;
+
+
+        LvlData->events.push_back(NewEvent);
+        evList->addItem(item);
+
+        LvlData->modified = true;
+
+        MainWinConnect::pMainWin->EventListsSync();
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_REMOVEEVENT:
+    {
+        LevelEvents rmEvents = lastOperation.data.events[0];
+
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        for (int i = 0; i < LvlData->events.size(); i++) {
+            if(LvlData->events[i].array_id == (unsigned int)rmEvents.array_id){
+                for(int j = 0; j < MainWinConnect::pMainWin->getEventList()->count(); j++){
+                    if(MainWinConnect::pMainWin->getEventList()->item(j)->data(3).toInt() == (int)rmEvents.array_id){
+                        delete MainWinConnect::pMainWin->getEventList()->item(j);
+                    }
+                }
+                MainWinConnect::pMainWin->ModifyEvent(LvlData->events[i].name, "");
+                LvlData->events.remove(i);
+            }
+        }
+
+        MainWinConnect::pMainWin->EventListsSync();
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_DULPICATEEVENT:
+    {
+        LevelEvents dupEvents = lastOperation.data.events[0];
+
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        QListWidgetItem * item;
+        item = new QListWidgetItem;
+        item->setText(dupEvents.name);
+        item->setFlags(Qt::ItemIsEditable);
+        item->setFlags(item->flags() | Qt::ItemIsEnabled);
+        item->setFlags(item->flags() | Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsSelectable);
+        item->setData(3, QString::number(dupEvents.array_id) );
+        QListWidget* evList = MainWinConnect::pMainWin->getEventList();
+        LevelEvents NewEvent = dupEvents;
+
+        LvlData->events.push_back(NewEvent);
+        evList->addItem(item);
+
+        LvlData->modified = true;
+
+        MainWinConnect::pMainWin->EventListsSync();
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
+
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        int index = -1;
+        QVariant extraData = lastOperation.extraData.toList()[1];
+        LevelEvents * eventp;
+        bool found = false;
+
+        for(int i = 0; i < LvlData->events.size(); i++){
+            if(LvlData->events[i].array_id == (unsigned int)array_id){
+                found = true;
+                eventp = LvlData->events.data();
+                index = i;
+                break;
+            }
+        }
+
+        if(!found)
+            break;
+
+        MainWinConnect::pMainWin->setEventToolsLocked(true);
+        if(subtype == SETTING_EV_AUTOSTART){
+            eventp[index].autostart = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_SMOKE){
+            eventp[index].nosmoke = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_LSHOWADD){
+            QString layer = extraData.toString();
+            eventp[index].layers_show.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LHIDEADD){
+            QString layer = extraData.toString();
+            eventp[index].layers_hide.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LTOGADD){
+            QString layer = extraData.toString();
+            eventp[index].layers_toggle.push_back(layer);
+        }
+        else
+        if(subtype == SETTING_EV_LSHOWDEL){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_show.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_show.size(); i++){
+                    if(eventp[index].layers_show[i] == layer){
+                        eventp[index].layers_show.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LHIDEDEL){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_hide.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_hide.size(); i++){
+                    if(eventp[index].layers_hide[i] == layer){
+                        eventp[index].layers_hide.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_LTOGDEL){
+            QString layer = extraData.toString();
+            if(!eventp[index].layers_toggle.isEmpty()){
+                for(int i = 0; i < eventp[index].layers_toggle.size(); i++){
+                    if(eventp[index].layers_toggle[i] == layer){
+                        eventp[index].layers_toggle.removeAt(i);
+                    }
+                }
+            }
+        }
+        else
+        if(subtype == SETTING_EV_MOVELAYER){
+            QString layer = extraData.toList()[1].toString();
+            eventp[index].movelayer = layer;
+        }
+        else
+        if(subtype == SETTING_EV_SPEEDLAYERX){
+            eventp[index].layer_speed_x = extraData.toList()[1].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_SPEEDLAYERY){
+            eventp[index].layer_speed_y = extraData.toList()[1].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRSEC){
+            eventp[index].scroll_section = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRX){
+            eventp[index].move_camera_x = extraData.toList()[1].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_AUTOSCRY){
+            eventp[index].move_camera_y = extraData.toList()[1].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_SECSIZE){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_top = (long)extraData.toList()[5].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_right = (long)extraData.toList()[6].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_bottom = (long)extraData.toList()[7].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_left = (long)extraData.toList()[8].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_SECMUS){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].music_id = (long)extraData.toList()[2].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_SECBG){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[2].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_MSG){
+            eventp[index].msg = extraData.toList()[1].toString();
+        }
+        else
+        if(subtype == SETTING_EV_SOUND){
+            eventp[index].sound_id = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_ENDGAME){
+            eventp[index].end_game = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_KUP){
+            eventp[index].up = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KDOWN){
+            eventp[index].down = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KLEFT){
+            eventp[index].left = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KRIGHT){
+            eventp[index].right = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KRUN){
+            eventp[index].run = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KALTRUN){
+            eventp[index].altrun = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KJUMP){
+            eventp[index].jump = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KALTJUMP){
+            eventp[index].altjump = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KDROP){
+            eventp[index].drop = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_KSTART){
+            eventp[index].start = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_EV_TRIACTIVATE){
+            eventp[index].trigger = extraData.toList()[1].toString();
+        }
+        else
+        if(subtype == SETTING_EV_TRIDELAY){
+            eventp[index].trigger_timer = (long)extraData.toList()[1].toLongLong();
+        }
+
+
+        MainWinConnect::pMainWin->setEventData(-2);
+        MainWinConnect::pMainWin->setEventToolsLocked(false);
 
         break;
     }
@@ -1275,6 +1895,16 @@ void LvlScene::historyRedoSettingsChangeNPCBlocks(LvlScene::CallbackData cbData,
     targetItem->setIncludedNPC((unsigned long)targetNPC_id);
 }
 
+void LvlScene::historyUndoSettingsChangeNPCNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->setIncludedNPC(data.special_data);
+}
+
+void LvlScene::historyRedoSettingsChangeNPCNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->setIncludedNPC(cbData.hist->extraData.toInt());
+}
+
 void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater data)
 {
     ((ItemWater*)cbData.item)->setType(data.quicksand ? 1 : 0);
@@ -1372,6 +2002,102 @@ void LvlScene::historyUndoSettingsAttachLayerNPC(LvlScene::CallbackData cbData, 
 void LvlScene::historyRedoSettingsAttachLayerNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC*)cbData.item)->npcData.attach_layer = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsDestroyedEventBlocks(LvlScene::CallbackData cbData, LevelBlock data)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_destroy = data.event_destroy;
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsDestroyedEventBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_destroy = cbData.hist->extraData.toString();
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsHitedEventBlocks(LvlScene::CallbackData cbData, LevelBlock data)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_hit = data.event_hit;
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsHitedEventBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_hit = cbData.hist->extraData.toString();
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsLayerEmptyEventBlocks(LvlScene::CallbackData cbData, LevelBlock data)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_no_more = data.event_no_more;
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsLayerEmptyEventBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    ((ItemBlock*)cbData.item)->blockData.event_no_more = cbData.hist->extraData.toString();
+    ((ItemBlock*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsLayerEmptyEventNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_nomore = data.event_nomore;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsLayerEmptyEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_nomore = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsActivateEventNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_activate = data.event_activate;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsActivateEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_activate = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsDeathEventNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_die = data.event_die;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsDeathEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_die = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsTalkEventNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_talk = data.event_talk;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsTalkEventNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.event_talk = cbData.hist->extraData.toString();
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyUndoSettingsSpecialDataNPC(LvlScene::CallbackData cbData, LevelNPC data)
+{
+    ((ItemNPC*)cbData.item)->npcData.special_data = data.special_data;
+    ((ItemNPC*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsSpecialDataNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    ((ItemNPC*)cbData.item)->npcData.special_data = cbData.hist->extraData.toInt();
     ((ItemNPC*)cbData.item)->arrayApply();
 }
 
@@ -1944,6 +2670,10 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_ADDWARP: return tr("Add Warp");
     case HistoryOperation::LEVELHISTORY_REMOVEWARP: return tr("Remove Warp");
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSWARP: return tr("Changed Warpsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::LEVELHISTORY_ADDEVENT: return tr("Add Event");
+    case HistoryOperation::LEVELHISTORY_REMOVEEVENT: return tr("Remove Event");
+    case HistoryOperation::LEVELHISTORY_DULPICATEEVENT: return tr("Copy Event");
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT: return tr("Changed Eventsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     default:
         return tr("Unknown");
     }
@@ -1975,6 +2705,45 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_GENDIR: return tr("Generator Direction");
     case SETTING_GENTIME: return tr("Generator Time");
     case SETTING_ATTACHLAYER: return tr("Attach Layer");
+    case SETTING_EV_DESTROYED: return tr("Event Block Destroyed");
+    case SETTING_EV_HITED: return tr("Event Block Hited");
+    case SETTING_EV_LAYER_EMP: return tr("Event Layer Empty");
+    case SETTING_EV_ACTIVATE: return tr("Event NPC Activate");
+    case SETTING_EV_DEATH: return tr("Event NPC Die");
+    case SETTING_EV_TALK: return tr("Event NPC Talk");
+    case SETTING_SPECIAL_DATA: return tr("NPC Special Data");
+    case SETTING_EV_AUTOSTART: return tr("Autostart");
+    case SETTING_EV_SMOKE: return tr("Layer Smoke Effect");
+    case SETTING_EV_LHIDEADD: return tr("Add Hide Layer");
+    case SETTING_EV_LHIDEDEL: return tr("Remove Hide Layer");
+    case SETTING_EV_LSHOWADD: return tr("Add Show Layer");
+    case SETTING_EV_LSHOWDEL: return tr("Remove Show Layer");
+    case SETTING_EV_LTOGADD: return tr("Add Toggle Layer");
+    case SETTING_EV_LTOGDEL: return tr("Remove Toggle Layer");
+    case SETTING_EV_MOVELAYER: return tr("Moving Layer");
+    case SETTING_EV_SPEEDLAYERX: return tr("Layer Speed Horizontal");
+    case SETTING_EV_SPEEDLAYERY: return tr("Layer Speed Vertical");
+    case SETTING_EV_AUTOSCRSEC: return tr("Autoscroll Layer");
+    case SETTING_EV_AUTOSCRX: return tr("Autoscroll Layer Speed Horizontal");
+    case SETTING_EV_AUTOSCRY: return tr("Autoscroll Layer Speed Vertical");
+    case SETTING_EV_SECSIZE: return tr("Section Size");
+    case SETTING_EV_SECMUS: return tr("Section Music");
+    case SETTING_EV_SECBG: return tr("Section Background");
+    case SETTING_EV_MSG: return tr("Message");
+    case SETTING_EV_SOUND: return tr("Sound");
+    case SETTING_EV_ENDGAME: return tr("End Game");
+    case SETTING_EV_KUP: return tr("Up Key Activate");
+    case SETTING_EV_KDOWN: return tr("Down Key Activate");
+    case SETTING_EV_KLEFT: return tr("Left Key Activate");
+    case SETTING_EV_KRIGHT: return tr("Right Key Activate");
+    case SETTING_EV_KRUN: return tr("Run Key Activate");
+    case SETTING_EV_KALTRUN: return tr("Alt Run Key Activate");
+    case SETTING_EV_KJUMP: return tr("Jump Key Activate");
+    case SETTING_EV_KALTJUMP: return tr("Alt Jump Key Activate");
+    case SETTING_EV_KDROP: return tr("Drop Key Activate");
+    case SETTING_EV_KSTART: return tr("Start Key Activate");
+    case SETTING_EV_TRIACTIVATE: return tr("Trigger Activate");
+    case SETTING_EV_TRIDELAY: return tr("Trigger Delay");
     default:
         return tr("Unknown");
     }

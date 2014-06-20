@@ -472,6 +472,7 @@ void MainWindow::AddNewLayer(QString layerName, bool setEdited)
     if(setEdited)
     {
         ui->LvlLayerList->setFocus();
+        ui->LvlLayerList->scrollToItem( item );
         ui->LvlLayerList->editItem( item );
     }
     else

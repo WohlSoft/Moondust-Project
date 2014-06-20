@@ -112,7 +112,8 @@ SOURCES += main.cpp\
     main_window/dock/lvl_events_props.cpp \
     data_configs/conf_sound.cpp \
     main_window/dock/lvl_layers_props.cpp \
-    data_configs/configstatus.cpp
+    data_configs/configstatus.cpp \
+    common_features/graphics_funcs.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -149,7 +150,8 @@ HEADERS  += mainwindow.h \
     data_configs/obj_npc.h \
     edit_npc/npceditscene.h \
     data_configs/custom_data.h \
-    data_configs/configstatus.h
+    data_configs/configstatus.h \
+    common_features/graphics_funcs.h
 
 FORMS    += \
     mainwindow.ui \

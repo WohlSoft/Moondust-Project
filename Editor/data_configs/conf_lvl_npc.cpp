@@ -19,6 +19,7 @@
 #include "data_configs.h"
 
 #include "../main_window/global_settings.h"
+#include "../common_features/graphics_funcs.h"
 
 void dataconfigs::loadLevelNPC()
 {
@@ -30,7 +31,7 @@ void dataconfigs::loadLevelNPC()
 
     if(!QFile::exists(npc_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_npc.ini: file not exist"));
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_npc.ini: file does not exist"));
           return;
     }
 
@@ -84,9 +85,10 @@ void dataconfigs::loadLevelNPC()
         //        QString name;
             snpc.name = npcset.value("name", "").toString();
 
+            snpc.group = npcset.value("group", "").toString();
         //    //    category="Enemy"		;The sort category
         //        QString category;
-            snpc.category = npcset.value("category", "Other").toString();
+            snpc.category = npcset.value("category", "_Other").toString();
         //    //    image="npc-1.gif"		;NPC Image file
 
             //        QString image_n;
@@ -106,17 +108,16 @@ void dataconfigs::loadLevelNPC()
                 else
                     imgFileM = "";
                 snpc.mask_n = imgFileM;
-                if(tmp.size()==2) mask = QBitmap(npcPath + imgFileM);
+                mask = QPixmap();
+                if(tmp.size()==2) mask = QPixmap(npcPath + imgFileM);
                 snpc.mask = mask;
-                snpc.image = QPixmap(npcPath + imgFile);
-                if(tmp.size()==2) snpc.image.setMask(mask);
-                //WriteToLog(QtDebugMsg, "NPC Config -> Image loaded");
+                snpc.image = GraphicsHelps::setAlphaMask(QPixmap(npcPath + imgFile), snpc.mask);
             }
             else
             {
                 //WriteToLog(QtWarningMsg, "NPC Config -> Empty image");
                 snpc.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-                snpc.mask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
+                snpc.mask = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
                 snpc.image.setMask(snpc.mask);
             }
 
@@ -190,7 +191,7 @@ void dataconfigs::loadLevelNPC()
         //    //    gfx-width-y=32
             snpc.gfx_w = npcset.value("gfx-width", QString::number(snpc.image.width()) ).toInt();
 
-          //  WriteToLog(QtDebugMsg, "NPC Config -> load other params...");
+          //  WriteToLog(QtDebugMsg, "NPC Config -> loading other params...");
         //    //    frame-speed=128
         //        unsigned int framespeed;
             snpc.framespeed = npcset.value("frame-speed", "128").toInt();
@@ -436,14 +437,14 @@ void dataconfigs::loadLevelNPC()
 
             if( npcset.status() != QSettings::NoError )
             {
-                WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i));
+                WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i));
                 break;
             }
         }
 
         if((unsigned int)main_npc.size()<npc_total)
         {
-            WriteToLog(QtWarningMsg, QString("Not all NPCs loaded: total:%1, loaded: %2)").arg(npc_total).arg(main_npc.size()));
+            WriteToLog(QtWarningMsg, QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(main_npc.size()));
         }
 
 }

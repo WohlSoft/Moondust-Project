@@ -19,6 +19,7 @@
 #include "data_configs.h"
 
 #include "../main_window/global_settings.h"
+#include "../common_features/graphics_funcs.h"
 
 void dataconfigs::loadLevelBlocks()
 {
@@ -32,7 +33,7 @@ void dataconfigs::loadLevelBlocks()
 
     if(!QFile::exists(block_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini: file not exist"));
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_blocks.ini: file does not exist"));
           return;
     }
 
@@ -63,7 +64,8 @@ void dataconfigs::loadLevelBlocks()
             blockset.beginGroup( QString("block-%1").arg(i) );
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
-                sblock.type = blockset.value("type", "Other").toString();
+                sblock.group = blockset.value("group", "").toString();
+                sblock.category = blockset.value("category", "_Other").toString();
                 sblock.grid = blockset.value("grid", "32").toInt();
                 imgFile = blockset.value("image", "").toString();
 
@@ -76,10 +78,10 @@ void dataconfigs::loadLevelBlocks()
                     else
                         imgFileM = "";
                     sblock.mask_n = imgFileM;
-                    if(tmp.size()==2) mask = QBitmap(blockPath + imgFileM);
+                    mask = QPixmap();
+                    if(tmp.size()==2) mask = QPixmap(blockPath + imgFileM);
                     sblock.mask = mask;
-                    sblock.image = QPixmap(blockPath + imgFile);
-                    if(tmp.size()==2) sblock.image.setMask(mask);
+                    sblock.image = GraphicsHelps::setAlphaMask(QPixmap(blockPath + imgFile), sblock.mask);
                 }
                 else
                 {
@@ -150,14 +152,14 @@ void dataconfigs::loadLevelBlocks()
 
           if( blockset.status()!=QSettings::NoError)
           {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
             break;
           }
        }
 
        if((unsigned int)main_block.size()<block_total)
        {
-           WriteToLog(QtWarningMsg, QString("Not all blocks loaded: total:%1, loaded: %2)").arg(block_total).arg(main_block.size()));
+           WriteToLog(QtWarningMsg, QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()));
        }
 
 }

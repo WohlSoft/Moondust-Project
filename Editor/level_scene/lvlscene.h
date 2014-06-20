@@ -199,6 +199,7 @@ public:
     // //////////////////////Resizer////////////////////////
     ItemResizer * pResizer; //reisizer pointer
     void setSectionResizer(bool enabled, bool accept=false);
+    void setEventSctSizeResizer(long event, bool enabled, bool accept=false);
     void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
 
     // ////////////HistoryManager///////////////////
@@ -214,7 +215,11 @@ public:
             LEVELHISTORY_PLACEDOOR,
             LEVELHISTORY_ADDWARP,
             LEVELHISTORY_REMOVEWARP,
-            LEVELHISTORY_CHANGEDSETTINGSWARP
+            LEVELHISTORY_CHANGEDSETTINGSWARP,
+            LEVELHISTORY_ADDEVENT,
+            LEVELHISTORY_REMOVEEVENT,
+            LEVELHISTORY_DULPICATEEVENT,
+            LEVELHISTORY_CHANGEDSETTINGSEVENT
         };
         HistoryType type;
         //used most of Operations
@@ -235,30 +240,69 @@ public:
     };
 
     enum SettingSubType{
-        SETTING_INVISIBLE = 0, //extraData: bool [Activated?]
-        SETTING_SLIPPERY,      //extraData: bool [Activated?]
-        SETTING_FRIENDLY,      //extraData: bool [Activated?]
-        SETTING_BOSS,          //extraData: bool [Activated?]
-        SETTING_NOMOVEABLE,    //extraData: bool [Activated?]
-        SETTING_MESSAGE,       //extraData: String [New Text]
-        SETTING_DIRECTION,     //extraData: int [New Dir]
-        SETTING_CHANGENPC,     //extraData: int [New NPC ID]
-        SETTING_WATERTYPE,     //extraData: bool [IsWater = true, IsQuicksand = false]
-        SETTING_NOYOSHI,       //extraData: bool [Activated?]
-        SETTING_ALLOWNPC,      //extraData: bool [Activated?]
-        SETTING_LOCKED,        //extraData: bool [Activated?]
-        SETTING_WARPTYPE,      //extraData: QList<QVariant[int]> [Old warptype, New warptype]
-        SETTING_NEEDASTAR,     //extraData: QList<QVariant[int]> [Old stars, New stars]
-        SETTING_ENTRDIR,       //extraData: QList<QVariant[int]> [Old entrance dir, New entrance dir]
-        SETTING_EXITDIR,       //extraData: QList<QVariant[int]> [Old exit dir, New exit dir]
-        SETTING_LEVELEXIT,     //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
-        SETTING_LEVELENTR,     //extraData: QList<QVariant[???]> [bool Checked, int ix, int iy]
-        SETTING_LEVELWARPTO,   //extraData: QList<QVariant[int]> [Old id, New id]
-        SETTING_GENACTIVATE,   //extraData: bool [Activated?]
-        SETTING_GENTYPE,       //extraData: int [new type]
-        SETTING_GENDIR,        //extraData: int [new dir]
-        SETTING_GENTIME,       //extraData: int [new time]
-        SETTING_ATTACHLAYER    //extraData: String [new layer]
+        SETTING_INVISIBLE = 0,      //extraData: bool [Activated?]
+        SETTING_SLIPPERY,           //extraData: bool [Activated?]
+        SETTING_FRIENDLY,           //extraData: bool [Activated?]
+        SETTING_BOSS,               //extraData: bool [Activated?]
+        SETTING_NOMOVEABLE,         //extraData: bool [Activated?]
+        SETTING_MESSAGE,            //extraData: String [New Text]
+        SETTING_DIRECTION,          //extraData: int [New Dir]
+        SETTING_CHANGENPC,          //extraData: int [New NPC ID]
+        SETTING_WATERTYPE,          //extraData: bool [IsWater = true, IsQuicksand = false]
+        SETTING_NOYOSHI,            //extraData: bool [Activated?]
+        SETTING_ALLOWNPC,           //extraData: bool [Activated?]
+        SETTING_LOCKED,             //extraData: bool [Activated?]
+        SETTING_WARPTYPE,           //extraData: QList<QVariant[int]> [Old warptype, New warptype]
+        SETTING_NEEDASTAR,          //extraData: QList<QVariant[int]> [Old stars, New stars]
+        SETTING_ENTRDIR,            //extraData: QList<QVariant[int]> [Old entrance dir, New entrance dir]
+        SETTING_EXITDIR,            //extraData: QList<QVariant[int]> [Old exit dir, New exit dir]
+        SETTING_LEVELEXIT,          //extraData: QList<QVariant[???]> [bool Checked, int ox, int oy]
+        SETTING_LEVELENTR,          //extraData: QList<QVariant[???]> [bool Checked, int ix, int iy]
+        SETTING_LEVELWARPTO,        //extraData: QList<QVariant[int]> [Old id, New id]
+        SETTING_GENACTIVATE,        //extraData: bool [Activated?]
+        SETTING_GENTYPE,            //extraData: int [new type]
+        SETTING_GENDIR,             //extraData: int [new dir]
+        SETTING_GENTIME,            //extraData: int [new time]
+        SETTING_ATTACHLAYER,        //extraData: String [new layer]
+        SETTING_EV_DESTROYED,       //extraData: String [new event]
+        SETTING_EV_HITED,           //extraData: String [new event]
+        SETTING_EV_LAYER_EMP,       //extraData: String [new event]
+        SETTING_EV_ACTIVATE,        //extraData: String [new event]
+        SETTING_EV_DEATH,           //extraData: String [new event]
+        SETTING_EV_TALK,            //extraData: String [new event]
+        SETTING_SPECIAL_DATA,       //extraData: int [new type]
+        SETTING_EV_AUTOSTART,       //extraData: bool [Activated?]
+        SETTING_EV_SMOKE,           //extraData: bool [Activated?]
+        SETTING_EV_LHIDEADD,        //extraData: String [new Layer]
+        SETTING_EV_LSHOWADD,        //extraData: String [new Layer]
+        SETTING_EV_LTOGADD,         //extraData: String [new Layer]
+        SETTING_EV_LHIDEDEL,        //extraData: String [old Layer]
+        SETTING_EV_LSHOWDEL,        //extraData: String [old Layer]
+        SETTING_EV_LTOGDEL,         //extraData: String [old Layer]
+        SETTING_EV_MOVELAYER,       //extraData: QList<QVariant[String]> [Old layer, New layer]
+        SETTING_EV_SPEEDLAYERX,     //extraData: QList<QVariant[double]> [Old x, New x]
+        SETTING_EV_SPEEDLAYERY,     //extraData: QList<QVariant[double]> [Old y, New y]
+        SETTING_EV_AUTOSCRSEC,      //extraData: QList<QVariant[String]> [Old section, New section]
+        SETTING_EV_AUTOSCRX,        //extraData: QList<QVariant[double]> [Old y, New y]
+        SETTING_EV_AUTOSCRY,        //extraData: QList<QVariant[double]> [Old y, New y]
+        SETTING_EV_SECSIZE,         //extraData: QList<QVariant[long]> [Section, old top, old right, old bottom, old left, top, right, bottom, left]
+        SETTING_EV_SECMUS,          //extraData: QList<QVariant[long]> [Section, old music id, new music id]
+        SETTING_EV_SECBG,           //extraData: QList<QVariant[long]> [Section, old background id, new background id]
+        SETTING_EV_MSG,             //extraDara: QList<QVariant[String]> [Old msg, New msg]
+        SETTING_EV_SOUND,           //extraDara: QList<QVariant[long]> [Old sound id, New sound id]
+        SETTING_EV_ENDGAME,         //extraData: QList<QVariant[long]> [Old endgame id, New endgame id]
+        SETTING_EV_KUP,             //extraData: bool [Activated?]
+        SETTING_EV_KDOWN,           //extraData: bool [Activated?]
+        SETTING_EV_KLEFT,           //extraData: bool [Activated?]
+        SETTING_EV_KRIGHT,          //extraData: bool [Activated?]
+        SETTING_EV_KRUN,            //extraData: bool [Activated?]
+        SETTING_EV_KALTRUN,         //extraData: bool [Activated?]
+        SETTING_EV_KJUMP,           //extraData: bool [Activated?]
+        SETTING_EV_KALTJUMP,        //extraData: bool [Activated?]
+        SETTING_EV_KDROP,           //extraData: bool [Activated?]
+        SETTING_EV_KSTART,          //extraData: bool [Activated?]
+        SETTING_EV_TRIACTIVATE,     //extraData: QList<QVariant[String]> [Old trigger, New trigger]
+        SETTING_EV_TRIDELAY         //extraData: QList<QVariant[long]> [Old delay, New delay]
     };
 
     //typedefs
@@ -287,6 +331,10 @@ public:
     void addAddWarpHistory(int array_id, int listindex, int doorindex);
     void addRemoveWarpHistory(LevelDoors removedDoor);
     void addChangeWarpSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
+    void addAddEventHistory(int array_id, QString name);
+    void addRemoveEventHistory(LevelEvents ev);
+    void addDuplicateEventHistory(LevelEvents newDuplicate);
+    void addChangeEventSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -335,6 +383,8 @@ public:
     //Callbackfunctions: [Change Settings] Included NPC
     void historyUndoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoSettingsChangeNPCBlocks(CallbackData cbData, LevelBlock data);
+    void historyUndoSettingsChangeNPCNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsChangeNPCNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: [Change Settings] Water Type
     void historyUndoSettingsTypeWater(CallbackData cbData, LevelWater data);
     void historyRedoSettingsTypeWater(CallbackData cbData, LevelWater data);
@@ -362,6 +412,29 @@ public:
     //Callbackfunctions: [Change Settings] Attach Layer
     void historyUndoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsAttachLayerNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Destroyed Event
+    void historyUndoSettingsDestroyedEventBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsDestroyedEventBlocks(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: [Change Settings] Hited Event
+    void historyUndoSettingsHitedEventBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsHitedEventBlocks(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: [Change Settings] Layer Empty Event
+    void historyUndoSettingsLayerEmptyEventBlocks(CallbackData cbData, LevelBlock data);
+    void historyRedoSettingsLayerEmptyEventBlocks(CallbackData cbData, LevelBlock data);
+    void historyUndoSettingsLayerEmptyEventNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsLayerEmptyEventNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Activate Event
+    void historyUndoSettingsActivateEventNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsActivateEventNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Death Event
+    void historyUndoSettingsDeathEventNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsDeathEventNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Talk Event
+    void historyUndoSettingsTalkEventNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsTalkEventNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Talk Event
+    void historyUndoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
+    void historyRedoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);

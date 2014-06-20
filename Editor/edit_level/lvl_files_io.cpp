@@ -85,7 +85,7 @@ void leveledit::ExportToImage_fn()
         QFileInfo exported(fileName);
 
         QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 2, this);
-        progress.setWindowTitle(tr("Please, wait..."));
+        progress.setWindowTitle(tr("Please wait..."));
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
         progress.setFixedSize(progress.size());
@@ -180,8 +180,8 @@ bool leveledit::saveFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Write file error"),
-                             tr("Cannot write file %1:\n%2.")
+        QMessageBox::warning(this, tr("File save error"),
+                             tr("Cannot save file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
         return false;
@@ -235,14 +235,14 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     }
     StartLvlData = LvlData; //Save current history for made reset
 
-    //Data configs exists
+    //Check if data configs exists
     if( configs.check() )
     {
-        WriteToLog(QtCriticalMsg, QString("Error! *.INI Configs not loaded"));
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
 
         QMessageBox::warning(this, tr("Configurations not loaded"),
-                             tr("Cannot open level file %1:\nbecause object configurations not loaded\n."
-                                "Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.")
+                             tr("Cannot open level file %1:\nbecause object configurations are not loaded\n."
+                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings.")
                              .arg(fileName));
 
         WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
@@ -253,7 +253,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
         return false;
     }
 
-    WriteToLog(QtDebugMsg, QString(">>Starting load file"));
+    WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
     scene = new LvlScene(configs, LvlData);

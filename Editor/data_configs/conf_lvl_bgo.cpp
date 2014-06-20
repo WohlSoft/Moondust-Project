@@ -19,6 +19,7 @@
 #include "data_configs.h"
 
 #include "../main_window/global_settings.h"
+#include "../common_features/graphics_funcs.h"
 
 void dataconfigs::loadLevelBGO()
 {
@@ -30,7 +31,7 @@ void dataconfigs::loadLevelBGO()
 
     if(!QFile::exists(bgo_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgo.ini: file not exist"));
+        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bgo.ini: file does not exist"));
           return;
     }
 
@@ -62,7 +63,8 @@ void dataconfigs::loadLevelBGO()
     {
         bgoset.beginGroup( QString("background-"+QString::number(i)) );
             sbgo.name = bgoset.value("name", "").toString();
-            sbgo.type = bgoset.value("type", "other").toString();
+            sbgo.group = bgoset.value("group", "").toString();
+            sbgo.category = bgoset.value("category", "_Other").toString();
             sbgo.grid = bgoset.value("grid", "32").toInt();
             sbgo.view = (int)(bgoset.value("view", "background").toString()=="foreground");
             sbgo.offsetX = bgoset.value("offset-x", "0").toInt();
@@ -78,10 +80,10 @@ void dataconfigs::loadLevelBGO()
                 else
                     imgFileM = "";
                 sbgo.mask_n = imgFileM;
-                if(tmp.size()==2) mask = QBitmap(bgoPath + imgFileM);
+                mask = QPixmap();
+                if(tmp.size()==2) mask = QPixmap(bgoPath + imgFileM);
                 sbgo.mask = mask;
-                sbgo.image = QPixmap(bgoPath + imgFile);
-                if(tmp.size()==2) sbgo.image.setMask(mask);
+                sbgo.image = GraphicsHelps::setAlphaMask(QPixmap(bgoPath + imgFile), sbgo.mask);
             }
             else
             {
@@ -100,19 +102,19 @@ void dataconfigs::loadLevelBGO()
             {
                 index_bgo[i].i = i-1;
                 index_bgo[i].smbx64_sp = bgoset.value("smbx64-sort-priority", "0").toLongLong();
-                //WriteToLog(QtDebugMsg, QString("Gotten BGO SMBX64 Sort priority -> %1").arg( index_bgo[i].smbx64_sp ) );
+                //WriteToLog(QtDebugMsg, QString("Got SMBX64 BGO Sorting priority -> %1").arg( index_bgo[i].smbx64_sp ) );
             }
 
         bgoset.endGroup();
 
         if( bgoset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i));
+            WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i));
         }
     }
 
     if((unsigned int)main_bgo.size()<bgo_total)
     {
-        WriteToLog(QtWarningMsg, QString("Not all BGOs loaded: total:%1, loaded: %2)").arg(bgo_total).arg(main_bgo.size()));
+        WriteToLog(QtWarningMsg, QString("Not all BGOs loaded! Total: %1, Loaded: %2)").arg(bgo_total).arg(main_bgo.size()));
     }
 }
