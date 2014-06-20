@@ -848,82 +848,82 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2594"/>
         <source>Layer Smoke Effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффект дыма для слоя</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2595"/>
         <source>Add Hide Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить слой в список скрытия</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2596"/>
         <source>Remove Hide Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить слой из списка скрытия</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2597"/>
         <source>Add Show Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить слой в список проявление</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2598"/>
         <source>Remove Show Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить слой из списка проявления</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2599"/>
         <source>Add Toggle Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить слой в список переключения</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2600"/>
         <source>Remove Toggle Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить слой из списка переключения</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2601"/>
         <source>Moving Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Движущийся слой</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2602"/>
         <source>Layer Speed Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальная скорость слоя</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2603"/>
         <source>Layer Speed Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальная скорость слоя</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2604"/>
         <source>Autoscroll Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Автопрокрутка секции</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2605"/>
         <source>Autoscroll Layer Speed Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтальная скорость автопрокрутки секции</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2606"/>
         <source>Autoscroll Layer Speed Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикальная скорость автопрокрутки секции</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2607"/>
         <source>Section Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер секции</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2608"/>
         <source>Section Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Музыка секции</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2609"/>
         <source>Section Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Фон секции</translation>
     </message>
 </context>
 <context>
