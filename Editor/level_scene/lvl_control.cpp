@@ -1263,6 +1263,18 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
                 //long oldR = LvlData->events[eventID].sets[LvlData->CurSection].position_right;
                 //long oldT = LvlData->events[eventID].sets[LvlData->CurSection].position_top;
                 //long oldB = LvlData->events[eventID].sets[LvlData->CurSection].position_bottom;
+                QList<QVariant> sizeData;
+                sizeData.push_back((qlonglong)LvlData->CurSection);
+                sizeData.push_back((qlonglong)LvlData->events[eventID].sets[LvlData->CurSection].position_top);
+                sizeData.push_back((qlonglong)LvlData->events[eventID].sets[LvlData->CurSection].position_right);
+                sizeData.push_back((qlonglong)LvlData->events[eventID].sets[LvlData->CurSection].position_bottom);
+                sizeData.push_back((qlonglong)LvlData->events[eventID].sets[LvlData->CurSection].position_left);
+                sizeData.push_back((qlonglong)t);
+                sizeData.push_back((qlonglong)r);
+                sizeData.push_back((qlonglong)b);
+                sizeData.push_back((qlonglong)l);
+                addChangeEventSettingsHistory(LvlData->events[eventID].array_id, LvlScene::SETTING_EV_SECSIZE, QVariant(sizeData));
+
                 LvlData->events[eventID].sets[LvlData->CurSection].position_left = l;
                 LvlData->events[eventID].sets[LvlData->CurSection].position_right = r;
                 LvlData->events[eventID].sets[LvlData->CurSection].position_top = t;

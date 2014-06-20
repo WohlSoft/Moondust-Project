@@ -879,6 +879,21 @@ void LvlScene::historyBack()
         if(subtype == SETTING_EV_AUTOSCRY){
             eventp[index].move_camera_y = extraData.toList()[0].toDouble();
         }
+        else
+        if(subtype == SETTING_EV_SECSIZE){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_top = (long)extraData.toList()[1].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_right = (long)extraData.toList()[2].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_bottom = (long)extraData.toList()[3].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_left = (long)extraData.toList()[4].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_SECMUS){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].music_id = (long)extraData.toList()[1].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_SECBG){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[1].toLongLong();
+        }
 
         MainWinConnect::pMainWin->setEventData(-2);
         MainWinConnect::pMainWin->setEventToolsLocked(false);
@@ -1456,6 +1471,21 @@ void LvlScene::historyForward()
         else
         if(subtype == SETTING_EV_AUTOSCRY){
             eventp[index].move_camera_y = extraData.toList()[1].toDouble();
+        }
+        else
+        if(subtype == SETTING_EV_SECSIZE){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_top = (long)extraData.toList()[5].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_right = (long)extraData.toList()[6].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_bottom = (long)extraData.toList()[7].toLongLong();
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].position_left = (long)extraData.toList()[8].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_SECMUS){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].music_id = (long)extraData.toList()[2].toLongLong();
+        }
+        else
+        if(subtype == SETTING_EV_SECBG){
+            eventp[index].sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[2].toLongLong();
         }
 
         MainWinConnect::pMainWin->setEventData(-2);
@@ -2574,6 +2604,9 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_AUTOSCRSEC: return tr("Autoscroll Layer");
     case SETTING_EV_AUTOSCRX: return tr("Autoscroll Layer Speed Horizontal");
     case SETTING_EV_AUTOSCRY: return tr("Autoscroll Layer Speed Vertical");
+    case SETTING_EV_SECSIZE: return tr("Section Size");
+    case SETTING_EV_SECMUS: return tr("Section Music");
+    case SETTING_EV_SECBG: return tr("Section Background");
     default:
         return tr("Unknown");
     }
