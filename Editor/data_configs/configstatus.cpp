@@ -161,6 +161,27 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
         itemDir = new QTableWidgetItem(configs->dirs.gcustom);
         ui->ItemsDirs->setItem(6, 1, itemDir);
 
+    QTableWidgetItem * itemError;
+    if(configs->errorsList.isEmpty())
+    {
+        QFont font;
+        font.setItalic(true);
+        ui->ItemsErrors->insertRow(0);
+            itemError = new QTableWidgetItem(tr("[Error list is empty]"));
+            itemError->setFont(font);
+            ui->ItemsErrors->setItem(0, 0, itemError);
+    }
+    else
+    {
+        for(long e=0;e<configs->errorsList.size();e++)
+        {
+            ui->ItemsErrors->insertRow(e);
+                itemError = new QTableWidgetItem(configs->errorsList[e]);
+                ui->ItemsErrors->setItem(e, 0, itemError);
+        }
+
+    }
+
 }
 
 ConfigStatus::~ConfigStatus()
