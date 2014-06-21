@@ -145,6 +145,7 @@ public slots:
     void setEventData(long index=-1);
     void EventListsSync();
     void ModifyEvent(QString eventName, QString newEventName);
+    void ModifyLayer(QString layerName, QString newLayerName);
     QListWidget* getEventList();
     void setEventToolsLocked(bool locked);
     long getEventArrayIndex();
@@ -490,7 +491,6 @@ private:
     void RemoveLayerItems(QString layerName);
     void RemoveLayerFromListAndData(QListWidgetItem * layerItem);
     void ModifyLayer(QString layerName, bool visible);
-    void ModifyLayer(QString layerName, QString newLayerName);
     void ModifyLayer(QString layerName, QString newLayerName, bool visible);
     //Direct List Functions
     void AddNewLayer(QString layerName, bool setEdited);

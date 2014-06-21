@@ -352,6 +352,23 @@ void LvlScene::addRenameEventHistory(int array_id, QString oldName, QString newN
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addRenameLayerHistory(int array_id, QString oldName, QString newName)
+{
+    cleanupRedoElements();
+
+    HistoryOperation renameLaOperation;
+    renameLaOperation.type = HistoryOperation::LEVELHISTORY_RENAMELAYER;
+    QList<QVariant> renameData;
+    renameData.push_back(array_id);
+    renameData.push_back(oldName);
+    renameData.push_back(newName);
+    renameLaOperation.extraData = QVariant(renameData);
+    operationList.push_back(renameLaOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -1118,10 +1135,31 @@ void LvlScene::historyBack()
             }
         }
 
-        MainWinConnect::pMainWin->ModifyEvent(newName, oldName);
         MainWinConnect::pMainWin->setEventToolsLocked(true);
+        MainWinConnect::pMainWin->ModifyEvent(newName, oldName);
         MainWinConnect::pMainWin->setEventsBox();
         MainWinConnect::pMainWin->setEventToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_RENAMELAYER:
+    {
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        QString oldName = lastOperation.extraData.toList()[1].toString();
+        QString newName = lastOperation.extraData.toList()[2].toString();
+
+        for(int i = 0; i < LvlData->layers.size(); i++){
+            if(LvlData->layers[i].array_id == (unsigned int)array_id){
+                LvlData->layers[i].name = oldName;
+            }
+        }
+
+        //just in case
+        MainWinConnect::pMainWin->setDoorData(-2);
+
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->ModifyLayer(newName, oldName);
+        MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
         break;
     }
     default:
@@ -1835,10 +1873,31 @@ void LvlScene::historyForward()
             }
         }
 
-        MainWinConnect::pMainWin->ModifyEvent(oldName, newName);
         MainWinConnect::pMainWin->setEventToolsLocked(true);
+        MainWinConnect::pMainWin->ModifyEvent(oldName, newName);
         MainWinConnect::pMainWin->setEventsBox();
         MainWinConnect::pMainWin->setEventToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_RENAMELAYER:
+    {
+        int array_id = lastOperation.extraData.toList()[0].toInt();
+        QString oldName = lastOperation.extraData.toList()[1].toString();
+        QString newName = lastOperation.extraData.toList()[2].toString();
+
+        for(int i = 0; i < LvlData->layers.size(); i++){
+            if(LvlData->layers[i].array_id == (unsigned int)array_id){
+                LvlData->layers[i].name = newName;
+            }
+        }
+
+        //just in case
+        MainWinConnect::pMainWin->setDoorData(-2);
+
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->ModifyLayer(oldName, newName);
+        MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
         break;
     }
     default:
@@ -2957,6 +3016,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_ADDLAYER: return tr("New Layer");
     case HistoryOperation::LEVELHISTORY_REMOVELAYER: return tr("Remove layer with items");
     case HistoryOperation::LEVELHISTORY_RENAMEEVENT: return tr("Rename Event");
+    case HistoryOperation::LEVELHISTORY_RENAMELAYER: return tr("Rename Layer");
     default:
         return tr("Unknown");
     }
