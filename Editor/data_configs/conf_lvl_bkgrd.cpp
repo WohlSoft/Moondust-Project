@@ -30,7 +30,7 @@ void dataconfigs::loadLevelBackgrounds()
 
     if(!QFile::exists(bg_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bkgrd.ini: file does not exist"));
+        addError(QString("ERROR LOADING lvl_bkgrd.ini: file does not exist"), QtCriticalMsg);
           return;
     }
 
@@ -46,10 +46,21 @@ void dataconfigs::loadLevelBackgrounds()
 
     ConfStatus::total_bg = bg_total;
 
+    if(ConfStatus::total_bg==0)
+    {
+        addError(QString("ERROR LOADING lvl_bkgrd.ini: number of items not define, or empty config"), QtCriticalMsg);
+        return;
+    }
+
     for(i=1; i<=bg_total; i++)
     {
         bgset.beginGroup( QString("background2-"+QString::number(i)) );
             sbg.name = bgset.value("name", "").toString();
+            if(sbg.name.isEmpty())
+            {
+                addError(QString("BG-%1 Item name isn't defined").arg(i));
+                goto skipBG;
+            }
             tmpstr = bgset.value("type", "single-row").toString();
                 if(tmpstr=="single-row")
                    sbg.type = 0;
@@ -79,10 +90,16 @@ void dataconfigs::loadLevelBackgrounds()
             if( (imgFile!="") )
             {
                 sbg.image = QPixmap(BGPath + imgFile);
+                if(sbg.image.isNull())
+                {
+                    addError(QString("BG-%1 Broken image file").arg(i));
+                    goto skipBG;
+                }
             }
             else
             {
-                sbg.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
+                addError(QString("BG-%1 Image filename isn't defined").arg(i));
+                goto skipBG;
             }
 
             sbg.attached = (int)(bgset.value("attached", "bottom").toString()=="top");
@@ -137,12 +154,14 @@ void dataconfigs::loadLevelBackgrounds()
             }
             sbg.id = i;
             main_bg.push_back(sbg);
+
+        skipBG:
         bgset.endGroup();
 
 
         if( bgset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i));
+            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i), QtCriticalMsg);
         }
     }
 

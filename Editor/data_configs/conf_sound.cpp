@@ -32,8 +32,8 @@ void dataconfigs::loadSound()
 
     if(!QFile::exists(sound_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING sounds.ini: file does not exist"));
-          return;
+        addError(QString("ERROR LOADING sounds.ini: file does not exist"), QtCriticalMsg);
+        return;
     }
 
     QSettings soundset(sound_ini, QSettings::IniFormat);
@@ -49,6 +49,12 @@ void dataconfigs::loadSound()
 
     ConfStatus::total_sound = sound_total;
 
+
+    if(ConfStatus::total_sound==0)
+    {
+        addError(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"), QtCriticalMsg);
+        return;
+    }
     //////////////////////////////
 
     //Sound
@@ -56,15 +62,26 @@ void dataconfigs::loadSound()
     {
         soundset.beginGroup( QString("sound-"+QString::number(i)) );
             sound.name = soundset.value("name", "").toString();
+            if(sound.name.isEmpty())
+            {
+                addError(QString("Sound-%1 Item name isn't defined").arg(i));
+                goto skipSoundFile;
+            }
             sound.file = soundset.value("file", "").toString();
+            if(sound.file.isEmpty())
+            {
+                addError(QString("Sound-%1 Item file isn't defined").arg(i));
+                goto skipSoundFile;
+            }
             sound.hidden = soundset.value("hidden", "0").toBool();
             sound.id = i;
             main_sound.push_back(sound);
+        skipSoundFile:
         soundset.endGroup();
 
         if( soundset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i));
+            addError(QString("ERROR LOADING sounds.ini N:%1 (sound %2)").arg(soundset.status()).arg(i), QtCriticalMsg);
             break;
         }
     }
