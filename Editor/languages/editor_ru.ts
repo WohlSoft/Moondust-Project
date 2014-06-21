@@ -148,48 +148,80 @@
         <translation>Путь</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="20"/>
         <source>Level Blocks (%1/%1)</source>
-        <translation>Уровень: блоки (%1/%1)</translation>
+        <translation type="vanished">Уровень: блоки (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="32"/>
         <source>Level Background objects (%1/%1)</source>
-        <translation>Уровень: Фоновые объекты (%1/%1)</translation>
+        <translation type="vanished">Уровень: Фоновые объекты (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="44"/>
         <source>Level Background images (%1/%1)</source>
-        <translation>Уровень: Фоновые изображения (%1/%1)</translation>
+        <translation type="vanished">Уровень: Фоновые изображения (%1/%1)</translation>
     </message>
     <message>
         <source>Level NPC (%1/%1)</source>
         <translation type="vanished">Уровень: нИП (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="56"/>
         <source>Level NPCs (%1/%1)</source>
-        <translation>Уровень: нИПы (%1/%1)</translation>
+        <translation type="vanished">Уровень: нИПы (%1/%1)</translation>
+    </message>
+    <message>
+        <source>Music (level) (%1/%1)</source>
+        <translation type="vanished">Музыка (уровень) (%1/%1)</translation>
+    </message>
+    <message>
+        <source>Music (world) (%1/%1)</source>
+        <translation type="vanished">Музыка (карта мира) (%1/%1)</translation>
+    </message>
+    <message>
+        <source>Music (special) (%1/%1)</source>
+        <translation type="vanished">Музыка (специальная) (%1/%1)</translation>
+    </message>
+    <message>
+        <source>Sounds (%1/%1)</source>
+        <translation type="vanished">Звуки (%1/%1)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="20"/>
+        <source>Level Blocks (%1/%2)</source>
+        <translation>Уровень: блоки  (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="32"/>
+        <source>Level Background objects (%1/%2)</source>
+        <translation>Уровень: Фоновые объекты (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="44"/>
+        <source>Level Background images (%1/%2)</source>
+        <translation>Уровень: Фоновые изображения (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="56"/>
+        <source>Level NPCs (%1/%2)</source>
+        <translation>Уровень: нИПы (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="68"/>
-        <source>Music (level) (%1/%1)</source>
-        <translation>Музыка (уровень) (%1/%1)</translation>
+        <source>Music (level) (%1/%2)</source>
+        <translation>Музыка (уровень) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="79"/>
-        <source>Music (world) (%1/%1)</source>
-        <translation>Музыка (карта мира) (%1/%1)</translation>
+        <source>Music (world) (%1/%2)</source>
+        <translation>Музыка (карта мира) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="90"/>
-        <source>Music (special) (%1/%1)</source>
-        <translation>Музыка (специальная) (%1/%1)</translation>
+        <source>Music (special) (%1/%2)</source>
+        <translation>Музыка (специальная) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="102"/>
-        <source>Sounds (%1/%1)</source>
-        <translation>Звуки (%1/%1)</translation>
+        <source>Sounds (%1/%2)</source>
+        <translation>Звуки (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="117"/>

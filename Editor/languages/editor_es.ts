@@ -147,48 +147,80 @@
         <translation>Directorio</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="20"/>
         <source>Level Blocks (%1/%1)</source>
-        <translation>Bloques de nivel (%1/%1)</translation>
+        <translation type="vanished">Bloques de nivel (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="32"/>
         <source>Level Background objects (%1/%1)</source>
-        <translation>Objetos de fondo del nivel (%1/%1)</translation>
+        <translation type="vanished">Objetos de fondo del nivel (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="44"/>
         <source>Level Background images (%1/%1)</source>
-        <translation>Imágenes de fondo del nivel (%1/%1)</translation>
+        <translation type="vanished">Imágenes de fondo del nivel (%1/%1)</translation>
     </message>
     <message>
         <source>Level NPC (%1/%1)</source>
         <translation type="vanished">PNJs del nivel (%1/%1)</translation>
     </message>
     <message>
-        <location filename="../data_configs/configstatus.cpp" line="56"/>
         <source>Level NPCs (%1/%1)</source>
-        <translation>PNJs del nivel (%1/%1)</translation>
+        <translation type="vanished">PNJs del nivel (%1/%1)</translation>
+    </message>
+    <message>
+        <source>Music (level) (%1/%1)</source>
+        <translation type="vanished">Música (nivel) (%1/%1)</translation>
+    </message>
+    <message>
+        <source>Music (world) (%1/%1)</source>
+        <translation type="vanished">Música (mundo) (%1/%1)</translation>
+    </message>
+    <message>
+        <source>Music (special) (%1/%1)</source>
+        <translation type="vanished">Música (especial) (%1/%1)</translation>
+    </message>
+    <message>
+        <source>Sounds (%1/%1)</source>
+        <translation type="vanished">Sonidos (%1/%1)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="20"/>
+        <source>Level Blocks (%1/%2)</source>
+        <translation>Bloques de nivel (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="32"/>
+        <source>Level Background objects (%1/%2)</source>
+        <translation>Objetos de fondo del nivel (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="44"/>
+        <source>Level Background images (%1/%2)</source>
+        <translation>Imágenes de fondo del nivel (%1/%2)</translation>
+    </message>
+    <message>
+        <location filename="../data_configs/configstatus.cpp" line="56"/>
+        <source>Level NPCs (%1/%2)</source>
+        <translation>PNJs del nivel (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="68"/>
-        <source>Music (level) (%1/%1)</source>
-        <translation>Música (nivel) (%1/%1)</translation>
+        <source>Music (level) (%1/%2)</source>
+        <translation>Música (nivel) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="79"/>
-        <source>Music (world) (%1/%1)</source>
-        <translation>Música (mundo) (%1/%1)</translation>
+        <source>Music (world) (%1/%2)</source>
+        <translation>Música (mundo) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="90"/>
-        <source>Music (special) (%1/%1)</source>
-        <translation>Música (especial) (%1/%1)</translation>
+        <source>Music (special) (%1/%2)</source>
+        <translation>Música (especial) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="102"/>
-        <source>Sounds (%1/%1)</source>
-        <translation>Sonidos (%1/%1)</translation>
+        <source>Sounds (%1/%2)</source>
+        <translation>Sonidos (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="117"/>
