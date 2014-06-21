@@ -70,9 +70,20 @@ void dataconfigs::loadMusic()
     {
         musicset.beginGroup( QString("world-music-"+QString::number(i)) );
             smusic_wld.name = musicset.value("name", "").toString();
+            if(smusic_wld.name.isEmpty())
+            {
+                addError(QString("WLD-Music-%1 Item name isn't defined").arg(i));
+                goto skipWldMusic;
+            }
             smusic_wld.file = musicset.value("file", "").toString();
+            if(smusic_wld.file.isEmpty())
+            {
+                addError(QString("WLD-Music-%1 Item file isn't defined").arg(i));
+                goto skipWldMusic;
+            }
             smusic_wld.id = i;
             main_music_wld.push_back(smusic_wld);
+        skipWldMusic:
         musicset.endGroup();
 
         if( musicset.status() != QSettings::NoError )
@@ -87,9 +98,21 @@ void dataconfigs::loadMusic()
     {
         musicset.beginGroup( QString("special-music-"+QString::number(i)) );
             smusic_spc.name = musicset.value("name", "").toString();
+            if(smusic_spc.name.isEmpty())
+            {
+                addError(QString("SPC-Music-%1 Item name isn't defined").arg(i));
+                goto skipWldMusic;
+            }
             smusic_spc.file = musicset.value("file", "").toString();
+            if(smusic_spc.file.isEmpty())
+            {
+                addError(QString("SPC-Music-%1 Item file isn't defined").arg(i));
+                goto skipWldMusic;
+            }
             smusic_spc.id = i;
             main_music_spc.push_back(smusic_spc);
+
+        skipSpcMusic:
         musicset.endGroup();
 
         if( musicset.status() != QSettings::NoError )
@@ -104,9 +127,20 @@ void dataconfigs::loadMusic()
     {
         musicset.beginGroup( QString("level-music-"+QString::number(i)) );
             smusic_lvl.name = musicset.value("name", "").toString();
+            if(smusic_lvl.name.isEmpty())
+            {
+                addError(QString("LVL-Music-%1 Item name isn't defined").arg(i));
+                goto skipWldMusic;
+            }
             smusic_lvl.file = musicset.value("file", "").toString();
+            if(smusic_lvl.file.isEmpty())
+            {
+                addError(QString("LVL-Music-%1 Item file isn't defined").arg(i));
+                goto skipWldMusic;
+            }
             smusic_lvl.id = i;
             main_music_lvl.push_back(smusic_lvl);
+        skipLvlMusic:
         musicset.endGroup();
 
         if( musicset.status() != QSettings::NoError )

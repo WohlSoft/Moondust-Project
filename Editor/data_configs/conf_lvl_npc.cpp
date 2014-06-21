@@ -84,8 +84,13 @@ void dataconfigs::loadLevelNPC()
         //    //    name="Goomba"
         //        QString name;
             snpc.name = npcset.value("name", "").toString();
+            if(snpc.name.isEmpty())
+            {
+                addError(QString("NPC-%1 Item name isn't defined").arg(i));
+                goto skipNPC;
+            }
 
-            snpc.group = npcset.value("group", "").toString();
+            snpc.group = npcset.value("group", "_NoGroup").toString();
         //    //    category="Enemy"		;The sort category
         //        QString category;
             snpc.category = npcset.value("category", "_Other").toString();
@@ -112,13 +117,16 @@ void dataconfigs::loadLevelNPC()
                 if(tmp.size()==2) mask = QPixmap(npcPath + imgFileM);
                 snpc.mask = mask;
                 snpc.image = GraphicsHelps::setAlphaMask(QPixmap(npcPath + imgFile), snpc.mask);
+                if(snpc.image.isNull())
+                {
+                    addError(QString("NPC-%1 Broken image file").arg(i));
+                    goto skipNPC;
+                }
             }
             else
             {
-                //WriteToLog(QtWarningMsg, "NPC Config -> Empty image");
-                snpc.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-                snpc.mask = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
-                snpc.image.setMask(snpc.mask);
+                addError(QString("NPC-%1 Image filename isn't defined").arg(i));
+                goto skipNPC;
             }
 
         //    //    algorithm="0"			;NPC's algorithm. Algorithms have states and events (onDie, onTail, onCollisionWithFlyBlock...)
@@ -142,7 +150,7 @@ void dataconfigs::loadLevelNPC()
             snpc.gfx_offset_y = npcset.value("gfx-offset-y", "0").toInt();
         //        int grid;
         //    //    grid=32
-            snpc.grid = npcset.value("grid", "32").toInt();
+            snpc.grid = npcset.value("grid", default_grid).toInt();
         //    //    grid-offset-x=0
         //        int grid_offset_x;
             snpc.grid_offset_x = npcset.value("grid-offset-x", "0").toInt();
@@ -432,6 +440,7 @@ void dataconfigs::loadLevelNPC()
             }
            // WriteToLog(QtDebugMsg, "NPC Config -> Index added");
 
+        skipNPC:
         npcset.endGroup();
 
 
