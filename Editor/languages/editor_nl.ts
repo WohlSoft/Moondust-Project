@@ -148,42 +148,42 @@
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="20"/>
-        <source>Level Blocks (%1/%1)</source>
+        <source>Level Blocks (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="32"/>
-        <source>Level Background objects (%1/%1)</source>
+        <source>Level Background objects (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="44"/>
-        <source>Level Background images (%1/%1)</source>
+        <source>Level Background images (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="56"/>
-        <source>Level NPCs (%1/%1)</source>
+        <source>Level NPCs (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="68"/>
-        <source>Music (level) (%1/%1)</source>
+        <source>Music (level) (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="79"/>
-        <source>Music (world) (%1/%1)</source>
+        <source>Music (world) (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="90"/>
-        <source>Music (special) (%1/%1)</source>
+        <source>Music (special) (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="102"/>
-        <source>Sounds (%1/%1)</source>
+        <source>Sounds (%1/%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
