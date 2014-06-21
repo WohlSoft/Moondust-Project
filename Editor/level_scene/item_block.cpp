@@ -267,7 +267,9 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     nLayer.array_id = scene->LvlData->layers_array_id;
                     scene->LvlData->layers.push_back(nLayer);
                     //scene->SyncLayerList=true; //Refresh layer list
+                    MainWinConnect::pMainWin->setLayerToolsLocked(true);
                     MainWinConnect::pMainWin->setLayersBox();
+                    MainWinConnect::pMainWin->setLayerToolsLocked(false);
                 }
             }
             else

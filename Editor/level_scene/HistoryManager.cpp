@@ -987,7 +987,9 @@ void LvlScene::historyBack()
                 LvlData->layers.removeAt(i);
             }
         }
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
         break;
     }
     default:
@@ -1654,7 +1656,9 @@ void LvlScene::historyForward()
         CallbackData cbData;
         findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, 0, false, false, false, false, true);
 
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
         break;
     }
     default:
