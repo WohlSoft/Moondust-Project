@@ -446,10 +446,12 @@ public:
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
     void historyUndoChangeLayerNPC(CallbackData cbData, LevelNPC data);
     void historyUndoChangeLayerWater(CallbackData cbData, LevelWater data);
+    void historyUndoChangeLayerDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyRedoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoChangeLayerBGO(CallbackData cbData, LevelBGO data);
     void historyRedoChangeLayerNPC(CallbackData cbData, LevelNPC data);
     void historyRedoChangeLayerWater(CallbackData cbData, LevelWater data);
+    void historyRedoChangeLayerDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Change sizeable Block size
     void historyUndoResizeBlock(CallbackData cbData, LevelBlock data);
     void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);

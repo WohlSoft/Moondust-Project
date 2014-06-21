@@ -569,7 +569,7 @@ void LvlScene::historyBack()
         LevelData modifiedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, 0, false, false, false, false, true);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor);
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
@@ -1009,8 +1009,7 @@ void LvlScene::historyBack()
         LevelData modifiedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, 0, false, false, false, false, true);
-
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor);
         for(int i = 0; i < LvlData->layers.size(); i++){
             if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
                 LvlData->layers.removeAt(i);
@@ -1304,7 +1303,7 @@ void LvlScene::historyForward()
         LevelData modifiedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, 0, false, false, false, false, true);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor);
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
@@ -1748,7 +1747,7 @@ void LvlScene::historyForward()
         LvlData->layers.push_back(modifiedSourceData.layers[0]);
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, 0, false, false, false, false, true);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor);
 
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
@@ -2331,6 +2330,20 @@ void LvlScene::historyUndoChangeLayerWater(LvlScene::CallbackData cbData, LevelW
     targetItem->arrayApply();
 }
 
+void LvlScene::historyUndoChangeLayerDoor(LvlScene::CallbackData cbData, LevelDoors data, bool /*isEntrance*/)
+{
+    ItemDoor* targetItem = (ItemDoor*)cbData.item;
+    QString oldLayer = data.layer;
+    targetItem->doorData.layer = oldLayer;
+    foreach (LevelLayers lr, LvlData->layers) {
+        if(lr.name == oldLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
 void LvlScene::historyRedoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
 {
     ItemBlock* targetItem = (ItemBlock*)cbData.item;
@@ -2383,6 +2396,20 @@ void LvlScene::historyRedoChangeLayerWater(LvlScene::CallbackData cbData, LevelW
     targetItem->waterData.layer = newLayer;
     foreach(LevelLayers lr, LvlData->layers)
     {
+        if(lr.name == newLayer)
+        {
+            targetItem->setVisible(!lr.hidden);
+        }
+    }
+    targetItem->arrayApply();
+}
+
+void LvlScene::historyRedoChangeLayerDoor(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    ItemDoor* targetItem = (ItemDoor*)cbData.item;
+    QString newLayer = cbData.hist->extraData.toString();
+    targetItem->doorData.layer = newLayer;
+    foreach (LevelLayers lr, LvlData->layers) {
         if(lr.name == newLayer)
         {
             targetItem->setVisible(!lr.hidden);
