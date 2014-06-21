@@ -504,6 +504,7 @@ void MainWindow::AddNewLayer(QString layerName, bool setEdited)
             NewLayer.hidden = (item->checkState() == Qt::Unchecked );
             activeLvlEditWin()->LvlData.layers_array_id++;
             NewLayer.array_id = activeLvlEditWin()->LvlData.layers_array_id;
+            activeLvlEditWin()->scene->addAddLayerHistory(NewLayer.array_id, NewLayer.name);
 
             item->setData(3, QString::number(NewLayer.array_id));
 
@@ -678,6 +679,7 @@ void MainWindow::on_LvlLayerList_itemChanged(QListWidgetItem *item)
                 NewLayer.hidden = (item->checkState() == Qt::Unchecked );
                 activeLvlEditWin()->LvlData.layers_array_id++;
                 NewLayer.array_id = activeLvlEditWin()->LvlData.layers_array_id;
+                activeLvlEditWin()->scene->addAddLayerHistory(NewLayer.array_id, NewLayer.name);
 
                 item->setData(3, QString::number(NewLayer.array_id));
 
