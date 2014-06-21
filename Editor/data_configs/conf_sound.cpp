@@ -32,8 +32,8 @@ void dataconfigs::loadSound()
 
     if(!QFile::exists(sound_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING sounds.ini: file does not exist"));
-          return;
+        addError(QString("ERROR LOADING sounds.ini: file does not exist"), QtCriticalMsg);
+        return;
     }
 
     QSettings soundset(sound_ini, QSettings::IniFormat);
@@ -49,6 +49,12 @@ void dataconfigs::loadSound()
 
     ConfStatus::total_sound = sound_total;
 
+
+    if(ConfStatus::total_sound==0)
+    {
+        addError(QString("ERROR LOADING sounds.ini: number of items not define, or empty config"), QtCriticalMsg);
+        return;
+    }
     //////////////////////////////
 
     //Sound

@@ -46,6 +46,12 @@ void dataconfigs::loadLevelBackgrounds()
 
     ConfStatus::total_bg = bg_total;
 
+    if(ConfStatus::total_bg==0)
+    {
+        addError(QString("ERROR LOADING lvl_bkgrd.ini: number of items not define, or empty config"), QtCriticalMsg);
+        return;
+    }
+
     for(i=1; i<=bg_total; i++)
     {
         bgset.beginGroup( QString("background2-"+QString::number(i)) );

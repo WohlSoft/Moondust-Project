@@ -61,6 +61,13 @@ void dataconfigs::loadLevelBlocks()
     }
 
 
+    if(ConfStatus::total_blocks==0)
+    {
+        addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), QtCriticalMsg);
+        return;
+    }
+
+
         for(i=1; i<=block_total; i++)
         {
             blockset.beginGroup( QString("block-%1").arg(i) );
