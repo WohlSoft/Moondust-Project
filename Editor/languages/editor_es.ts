@@ -578,14 +578,16 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="377"/>
         <source>Wrong custom images</source>
-        <translation type="unfinished"></translation>
+        <translation>Imágenes equivocadas</translation>
     </message>
     <message>
         <location filename="../level_scene/lvl_usergfx.cpp" line="378"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>Este nivel tiene unos gráficos personalizados equivocados
+Usted verá fantasmas u otras imágenes en vez de sus gráficos o ítems personalizados, usando imágenes inválidas. Ocurre, por ejemplo, con el formato BMP con extensión GIF.
+Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este nivel.</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="969"/>
@@ -650,22 +652,22 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2673"/>
         <source>Add Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir Evento</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2674"/>
         <source>Remove Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover Evento</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2675"/>
         <source>Copy Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar evento</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2676"/>
         <source>Changed Eventsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencia Cambiada [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2678"/>
@@ -827,157 +829,157 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2715"/>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoinicio</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2716"/>
         <source>Layer Smoke Effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Efecto de humo</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2717"/>
         <source>Add Hide Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir capa oculta</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2718"/>
         <source>Remove Hide Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover capa oculta</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2719"/>
         <source>Add Show Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir capa visible</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2720"/>
         <source>Remove Show Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover capa visible</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2721"/>
         <source>Add Toggle Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir capa intercambiable</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2722"/>
         <source>Remove Toggle Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover capa intercambiable</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2723"/>
         <source>Moving Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Moviendo capa</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2724"/>
         <source>Layer Speed Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidad horizontal</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2725"/>
         <source>Layer Speed Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidad vertical</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2726"/>
         <source>Autoscroll Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Autodesplazamiento</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2727"/>
         <source>Autoscroll Layer Speed Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidad de Autodesplazamiento Horizontal</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2728"/>
         <source>Autoscroll Layer Speed Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Velocidad de Autodesplazamiento Vertical</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2729"/>
         <source>Section Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de sección</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2730"/>
         <source>Section Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Música de sección</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2731"/>
         <source>Section Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Fondo de sección</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2733"/>
         <source>Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonido</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2734"/>
         <source>End Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Fin del juego</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2735"/>
         <source>Up Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Tecla Arriba</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2736"/>
         <source>Down Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Tecla Abajo</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2737"/>
         <source>Left Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Tecla Izquierda</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2738"/>
         <source>Right Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Tecla Derecha</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2739"/>
         <source>Run Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Tecla de Corrida</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2740"/>
         <source>Alt Run Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar tecla de Corrida secundaria</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2741"/>
         <source>Jump Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Tecla de Salto</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2742"/>
         <source>Alt Jump Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Tecla de Salto secundario</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2743"/>
         <source>Drop Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar tecla de Soltado</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2744"/>
         <source>Start Key Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar Tecla de Inicio</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2745"/>
         <source>Trigger Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activar función</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="2746"/>
         <source>Trigger Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Retardar Función</translation>
     </message>
 </context>
 <context>
@@ -1151,7 +1153,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="840"/>
         <source>Copyed Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento Copiado %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1473"/>
