@@ -222,7 +222,8 @@ public:
             LEVELHISTORY_CHANGEDSETTINGSEVENT,
             LEVELHISTORY_CHANGEDNEWLAYER,
             LEVELHISTORY_ADDLAYER,
-            LEVELHISTORY_REMOVELAYER
+            LEVELHISTORY_REMOVELAYER,
+            LEVELHISTORY_RENAMEEVENT
         };
         HistoryType type;
         //used most of Operations
@@ -341,6 +342,7 @@ public:
     void addChangedNewLayerHistory(LevelData changedItems, LevelLayers newLayer);
     void addAddLayerHistory(int array_id, QString name);
     void addRemoveLayerHistory(LevelData modData);
+    void addRenameEventHistory(int array_id, QString oldName, QString newName);
     //history modifiers
     void historyBack();
     void historyForward();
