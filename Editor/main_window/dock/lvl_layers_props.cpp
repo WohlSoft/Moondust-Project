@@ -493,6 +493,16 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             }
         }
     }
+    else
+    if(historyRecord == 1){
+        for(int i = 0; i < edit->LvlData.layers.size(); i++){
+            if(edit->LvlData.layers[i].name == layerName){
+                modData.layers.push_back(edit->LvlData.layers[i]);
+                edit->scene->addMergeLayer(modData, newLayerName);
+                break;
+            }
+        }
+    }
 
     //Sync layer name with events
     for(int j=0; j<edit->LvlData.events.size(); j++)
@@ -618,7 +628,7 @@ void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QS
                         edit->LvlData.layers[l].name = newLayerName;
                         edit->LvlData.layers[l].hidden = !visible;
                         ModifyLayer(newLayerName, visible);
-                        ModifyLayer(oldLayerName, newLayerName, visible);
+                        ModifyLayer(oldLayerName, newLayerName, visible, 1);
                         delete item;
                         edit->LvlData.layers.remove(i);
                         setLayerLists();  //Sync comboboxes in properties
