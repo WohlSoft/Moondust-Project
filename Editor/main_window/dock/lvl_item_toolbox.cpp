@@ -146,7 +146,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
             foreach(QString grp, tmpGrpList)
             {
                 if(blockItem.group.isEmpty())
-                {found=true;break;}//Skip empty values
+                {found=true; break;}//Skip empty values
                 if(blockItem.group==grp)
                 {found=true; break;}
             }
@@ -158,9 +158,9 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
             foreach(QString cat, tmpList)
             {
                 if(blockItem.category==cat)
-                {found =true; break;}
+                {found=true; break;}
                 if((blockItem.group!=grp_blocks)&&(grp_blocks!=allLabel))
-                {found =true; break;}
+                {found=true; break;}
             }
         if(!found) tmpList.push_back(blockItem.category);
 
@@ -283,9 +283,9 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
             foreach(QString cat, tmpList)
             {
                 if(bgoItem.category==cat)
-                {found =true; break;}
+                {found = true; break;}
                 if((bgoItem.group!=grp_bgo)&&(grp_bgo!=allLabel))
-                {found =true; break;}
+                {found = true; break;}
             }
         if(!found) tmpList.push_back(bgoItem.category);
 
@@ -380,7 +380,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
                 if(npcItem.category==cat)
                 {found = true; break;}
                 if((npcItem.group!=grp_npc)&&(grp_npc!=allLabel))
-                {found =true; break;}
+                {found = true; break;}
             }
         if(!found) tmpList.push_back(npcItem.category);
 
