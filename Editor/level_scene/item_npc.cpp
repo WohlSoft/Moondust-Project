@@ -815,7 +815,7 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
         case 0: //Single sprite
         default:
             frameFirst = 0;
-            frameLast = -1;
+            frameLast = framesQ-1;
             break;
         }
     }

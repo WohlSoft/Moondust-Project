@@ -79,11 +79,6 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / (qreal(8) / qreal(local.framespeed)) ) : global.framespeed;
     merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
 
-    merged.frames = (local.en_frames)?local.frames:global.frames;
-
-    if((local.en_frames)||(local.en_framestyle))
-        merged.ani_bidir = false; //Disable bidirectional animation
-
     //Copy fixture size to GFX size
     if((local.en_width)&&
                 (
@@ -123,6 +118,20 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
 
     merged.grid_offset_y = -merged.height % merged.grid;
 
+
+    if((merged.framestyle==0)&&((local.en_gfxheight)||(local.en_height))&&(!local.en_frames))
+    {
+        merged.frames = qRound(qreal(captured.height())/qreal(merged.gfx_h));
+        merged.custom_animate = false;
+    }
+    else
+        merged.frames = (local.en_frames)?local.frames:global.frames;
+
+    if((local.en_frames)||(local.en_framestyle))
+    {
+        merged.ani_bidir = false; //Disable bidirectional animation
+        merged.custom_animate = false; //Disable custom animation
+    }
 
     merged.score = (local.en_score)?local.score:global.score;
     merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
