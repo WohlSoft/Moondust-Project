@@ -313,6 +313,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
             if(itemIsFound)
             {
+                LevelData modData;
                 foreach(LevelLayers lr, scene->LvlData->layers)
                 { //Find layer's settings
                     if(lr.name==lName)
@@ -323,15 +324,34 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                             if((SelItem->data(0).toString()=="Door_exit")  ||
                                     (SelItem->data(0).toString()=="Door_enter"))
                             {
-                            ((ItemDoor *) SelItem)->doorData.layer = lr.name;
-                            ((ItemDoor *) SelItem)->setVisible(!lr.hidden);
-                            ((ItemDoor *) SelItem)->arrayApply();
+                                if(SelItem->data(0).toString()=="Door_exit"){
+                                    LevelDoors tDoor = ((ItemDoor *) SelItem)->doorData;
+                                    tDoor.isSetOut = true;
+                                    tDoor.isSetIn = false;
+                                    modData.doors.push_back(tDoor);
+                                }
+                                else
+                                if(SelItem->data(0).toString()=="Door_enter"){
+                                    LevelDoors tDoor = ((ItemDoor *) SelItem)->doorData;
+                                    tDoor.isSetOut = false;
+                                    tDoor.isSetIn = true;
+                                    modData.doors.push_back(tDoor);
+                                }
+                                ((ItemDoor *) SelItem)->doorData.layer = lr.name;
+                                ((ItemDoor *) SelItem)->setVisible(!lr.hidden);
+                                ((ItemDoor *) SelItem)->arrayApply();
                             }
                         }
-                    break;
+                        if(selected==newLayer){
+                            scene->addChangedNewLayerHistory(modData, lr);
+                        }
+                        break;
                     }
                 }//Find layer's settings
-             scene->contextMenuOpened = false;
+                if(selected!=newLayer){
+                    scene->addChangedLayerHistory(modData, lName);
+                }
+                scene->contextMenuOpened = false;
             }
         }
     }
