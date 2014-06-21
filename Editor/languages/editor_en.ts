@@ -684,37 +684,37 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3111"/>
         <source>Move Items to new Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Move Items to new Layer</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3112"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>New Layer</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3113"/>
         <source>Remove layer with items</source>
-        <translation type="unfinished">Remove layer and items</translation>
+        <translation>Remove layer and items</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3114"/>
         <source>Rename Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Rename Event</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3115"/>
         <source>Rename Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Rename Layer</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3116"/>
         <source>Remove layers and save items</source>
-        <translation type="unfinished"></translation>
+        <translation>Remove layer and save items</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3117"/>
         <source>Merge Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Merge Layer</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3119"/>

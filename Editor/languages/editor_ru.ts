@@ -687,37 +687,37 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3111"/>
         <source>Move Items to new Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Переместить объекты на новый слой</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3112"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый слой</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3113"/>
         <source>Remove layer with items</source>
-        <translation type="unfinished">Удалить слой вместе с объектами</translation>
+        <translation>Удалить слой вместе с объектами</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3114"/>
         <source>Rename Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Переименовать Событие</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3115"/>
         <source>Rename Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Переименовать Слой</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3116"/>
         <source>Remove layers and save items</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить Слой и сохранить объекты</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3117"/>
         <source>Merge Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Объединить Слой</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3119"/>
