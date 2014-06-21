@@ -101,13 +101,13 @@ void dataconfigs::loadMusic()
             if(smusic_spc.name.isEmpty())
             {
                 addError(QString("SPC-Music-%1 Item name isn't defined").arg(i));
-                goto skipWldMusic;
+                goto skipSpcMusic;
             }
             smusic_spc.file = musicset.value("file", "").toString();
             if(smusic_spc.file.isEmpty())
             {
                 addError(QString("SPC-Music-%1 Item file isn't defined").arg(i));
-                goto skipWldMusic;
+                goto skipSpcMusic;
             }
             smusic_spc.id = i;
             main_music_spc.push_back(smusic_spc);
@@ -130,13 +130,13 @@ void dataconfigs::loadMusic()
             if(smusic_lvl.name.isEmpty())
             {
                 addError(QString("LVL-Music-%1 Item name isn't defined").arg(i));
-                goto skipWldMusic;
+                goto skipLvlMusic;
             }
             smusic_lvl.file = musicset.value("file", "").toString();
             if(smusic_lvl.file.isEmpty())
             {
                 addError(QString("LVL-Music-%1 Item file isn't defined").arg(i));
-                goto skipWldMusic;
+                goto skipLvlMusic;
             }
             smusic_lvl.id = i;
             main_music_lvl.push_back(smusic_lvl);
