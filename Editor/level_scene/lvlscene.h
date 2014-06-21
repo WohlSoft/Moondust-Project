@@ -224,7 +224,10 @@ public:
             LEVELHISTORY_ADDLAYER,
             LEVELHISTORY_REMOVELAYER,
             LEVELHISTORY_RENAMEEVENT,
-            LEVELHISTORY_RENAMELAYER
+            LEVELHISTORY_RENAMELAYER,
+            LEVELHISTORY_REMOVELAYERANDSAVE,
+            LEVELHISTORY_MERGELAYER,
+            LEVELHISTORY_CHANGEDSETTINGSSECTION
         };
         HistoryType type;
         //used most of Operations
@@ -345,6 +348,9 @@ public:
     void addRemoveLayerHistory(LevelData modData);
     void addRenameEventHistory(int array_id, QString oldName, QString newName);
     void addRenameLayerHistory(int array_id, QString oldName, QString newName);
+    void addRemoveLayerAndSaveItemsHistory(LevelData modData);
+    void addMergeLayer(LevelData mergedData, QString newLayerName);
+    void addChangeSectionSettingsHistory(int sectionID, SettingSubType subtype, QVariant extraData);
     //history modifiers
     void historyBack();
     void historyForward();
