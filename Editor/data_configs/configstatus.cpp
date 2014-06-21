@@ -17,7 +17,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level Blocks
     item = new QListWidgetItem;
-    item->setText(tr("Level Blocks (%1/%1)").arg(configs->main_block.size()).arg(ConfStatus::total_blocks));
+    item->setText(tr("Level Blocks (%1/%2)").arg(configs->main_block.size()).arg(ConfStatus::total_blocks));
     if(configs->main_block.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -29,7 +29,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level BGO
     item = new QListWidgetItem;
-    item->setText(tr("Level Background objects (%1/%1)").arg(configs->main_bgo.size()).arg(ConfStatus::total_bgo));
+    item->setText(tr("Level Background objects (%1/%2)").arg(configs->main_bgo.size()).arg(ConfStatus::total_bgo));
     if(configs->main_bgo.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -41,7 +41,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level BG
     item = new QListWidgetItem;
-    item->setText(tr("Level Background images (%1/%1)").arg(configs->main_bg.size()).arg(ConfStatus::total_bg));
+    item->setText(tr("Level Background images (%1/%2)").arg(configs->main_bg.size()).arg(ConfStatus::total_bg));
     if(configs->main_bg.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -53,7 +53,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //Level NPC
     item = new QListWidgetItem;
-    item->setText(tr("Level NPCs (%1/%1)").arg(configs->main_npc.size()).arg(ConfStatus::total_npc));
+    item->setText(tr("Level NPCs (%1/%2)").arg(configs->main_npc.size()).arg(ConfStatus::total_npc));
     if(configs->main_npc.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -65,7 +65,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //MUSIC
     item = new QListWidgetItem;
-    item->setText(tr("Music (level) (%1/%1)").arg(configs->main_music_lvl.size()).arg(ConfStatus::total_music_lvl));
+    item->setText(tr("Music (level) (%1/%2)").arg(configs->main_music_lvl.size()).arg(ConfStatus::total_music_lvl));
     if(configs->main_music_lvl.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -76,7 +76,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     ui->ItemsStatus->addItem(item);
 
     item = new QListWidgetItem;
-    item->setText(tr("Music (world) (%1/%1)").arg(configs->main_music_wld.size()).arg(ConfStatus::total_music_wld));
+    item->setText(tr("Music (world) (%1/%2)").arg(configs->main_music_wld.size()).arg(ConfStatus::total_music_wld));
     if(configs->main_music_wld.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -87,7 +87,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     ui->ItemsStatus->addItem(item);
 
     item = new QListWidgetItem;
-    item->setText(tr("Music (special) (%1/%1)").arg(configs->main_music_spc.size()).arg(ConfStatus::total_music_spc));
+    item->setText(tr("Music (special) (%1/%2)").arg(configs->main_music_spc.size()).arg(ConfStatus::total_music_spc));
     if(configs->main_music_spc.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
@@ -99,7 +99,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
 
     //SOUND
     item = new QListWidgetItem;
-    item->setText(tr("Sounds (%1/%1)").arg(configs->main_sound.size()).arg(ConfStatus::total_sound));
+    item->setText(tr("Sounds (%1/%2)").arg(configs->main_sound.size()).arg(ConfStatus::total_sound));
     if(configs->main_sound.size()==0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
     else
