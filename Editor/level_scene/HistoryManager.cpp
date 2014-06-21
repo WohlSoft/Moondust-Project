@@ -397,6 +397,23 @@ void LvlScene::addMergeLayer(LevelData mergedData, QString newLayerName)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addChangeSectionSettingsHistory(int sectionID, LvlScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chSecSettingsOperation;
+    chSecSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION;
+    chSecSettingsOperation.subtype = subtype;
+    QList<QVariant> package;
+    package.push_back(sectionID);
+    package.push_back(extraData);
+    chSecSettingsOperation.extraData = QVariant(package);
+    operationList.push_back(chSecSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -1224,6 +1241,15 @@ void LvlScene::historyBack()
 
         break;
     }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int sectionID = lastOperation.extraData.toList()[0].toInt();
+        QVariant extraData = lastOperation.extraData.toList()[1];
+
+
+        break;
+    }
     default:
         break;
     }
@@ -1994,6 +2020,15 @@ void LvlScene::historyForward()
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        int sectionID = lastOperation.extraData.toList()[0].toInt();
+        QVariant extraData = lastOperation.extraData.toList()[1];
+
+
         break;
     }
     default:
@@ -3115,6 +3150,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_RENAMELAYER: return tr("Rename Layer");
     case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE: return tr("Remove layers and save items");
     case HistoryOperation::LEVELHISTORY_MERGELAYER: return tr("Merge Layer");
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION: return tr("Changed Sectionsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     default:
         return tr("Unknown");
     }
