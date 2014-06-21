@@ -31,7 +31,7 @@ void dataconfigs::loadLevelNPC()
 
     if(!QFile::exists(npc_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_npc.ini: file does not exist"));
+        addError(QString("ERROR LOADING lvl_npc.ini: file does not exist"), QtCriticalMsg);
           return;
     }
 
@@ -446,14 +446,14 @@ void dataconfigs::loadLevelNPC()
 
             if( npcset.status() != QSettings::NoError )
             {
-                WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i));
+                addError(QString("ERROR LOADING lvl_npc.ini N:%1 (npc-%2)").arg(npcset.status()).arg(i), QtCriticalMsg);
                 break;
             }
         }
 
         if((unsigned int)main_npc.size()<npc_total)
         {
-            WriteToLog(QtWarningMsg, QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(main_npc.size()));
+            addError(QString("Not all NPCs loaded! Total: %1, Loaded: %2)").arg(npc_total).arg(main_npc.size()), QtWarningMsg);
         }
 
 }

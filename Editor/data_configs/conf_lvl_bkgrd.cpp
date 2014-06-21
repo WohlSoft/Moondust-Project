@@ -30,7 +30,7 @@ void dataconfigs::loadLevelBackgrounds()
 
     if(!QFile::exists(bg_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bkgrd.ini: file does not exist"));
+        addError(QString("ERROR LOADING lvl_bkgrd.ini: file does not exist"), QtCriticalMsg);
           return;
     }
 
@@ -155,7 +155,7 @@ void dataconfigs::loadLevelBackgrounds()
 
         if( bgset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i));
+            addError(QString("ERROR LOADING lvl_bgrnd.ini N:%1 (background2-%2)").arg(bgset.status()).arg(i), QtCriticalMsg);
         }
     }
 

@@ -50,9 +50,9 @@ frames = 1			; default = 1
 frame-speed=125			; default = 125 ms, etc. 8 frames per sec
 */
 
-void dataconfigs::addError(QString bug)
+void dataconfigs::addError(QString bug, QtMsgType level)
 {
-    WriteToLog(QtWarningMsg, QString("LoadConfig -> ")+bug);
+    WriteToLog(level, QString("LoadConfig -> ")+bug);
     errorsList<<bug;
 }
 

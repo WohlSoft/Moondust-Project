@@ -268,7 +268,7 @@ private:
     void loadMusic();
     void loadSound();
 
-    void addError(QString bug);
+    void addError(QString bug, QtMsgType level=QtWarningMsg);
 };
 
 
