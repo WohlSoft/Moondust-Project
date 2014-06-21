@@ -32,7 +32,7 @@ void dataconfigs::loadLevelBGO()
     if(!QFile::exists(bgo_ini))
     {
         addError(QString("ERROR LOADING lvl_bgo.ini: file does not exist"), QtCriticalMsg);
-          return;
+        return;
     }
 
 
@@ -58,6 +58,11 @@ void dataconfigs::loadLevelBGO()
             index_bgo.push_back(bgoIndex);
         }
 
+    if(ConfStatus::total_bgo==0)
+    {
+        addError(QString("ERROR LOADING lvl_bgo.ini: number of items not define, or empty config"), QtCriticalMsg);
+        return;
+    }
 
     for(i=1; i<=bgo_total; i++)
     {

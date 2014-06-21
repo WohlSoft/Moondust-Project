@@ -65,6 +65,19 @@ void dataconfigs::loadMusic()
 
     //////////////////////////////
 
+    if(ConfStatus::total_music_lvl==0)
+    {
+        addError(QString("ERROR LOADING music.ini: number of Level Music items not define, or empty config"), QtCriticalMsg);
+    }
+    if(ConfStatus::total_music_wld==0)
+    {
+        addError(QString("ERROR LOADING music.ini: number of World Music items not define, or empty config"), QtCriticalMsg);
+    }
+    if(ConfStatus::total_music_spc==0)
+    {
+        addError(QString("ERROR LOADING music.ini: number of Special Music items not define, or empty config"), QtCriticalMsg);
+    }
+
     //World music
     for(i=1; i<=music_wld_total; i++)
     {

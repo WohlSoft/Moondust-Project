@@ -73,6 +73,11 @@ void dataconfigs::loadLevelNPC()
         int defGFX_h = 0;
         int combobox_size = 0;
 
+        if(ConfStatus::total_npc==0)
+        {
+            addError(QString("ERROR LOADING lvl_npc.ini: number of items not define, or empty config"), QtCriticalMsg);
+            return;
+        }
 
         for(i=1; i<=npc_total; i++)
         {
