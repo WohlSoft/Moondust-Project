@@ -306,6 +306,22 @@ void LvlScene::addChangedNewLayerHistory(LevelData changedItems, LevelLayers new
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addAddLayerHistory(int array_id, QString name)
+{
+    cleanupRedoElements();
+
+    HistoryOperation addNewLaOperation;
+    addNewLaOperation.type = HistoryOperation::LEVELHISTORY_ADDLAYER;
+    QList<QVariant> layerData;
+    layerData.push_back(array_id);
+    layerData.push_back(name);
+    addNewLaOperation.extraData = QVariant(layerData);
+    operationList.push_back(addNewLaOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -992,6 +1008,18 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
         break;
     }
+    case HistoryOperation::LEVELHISTORY_ADDLAYER:
+    {
+        for(int i = 0; i < LvlData->layers.size(); i++){
+            if(LvlData->layers[i].array_id == lastOperation.extraData.toList()[0].toInt()){
+                LvlData->layers.removeAt(i);
+            }
+        }
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        break;
+    }
     default:
         break;
     }
@@ -1656,6 +1684,18 @@ void LvlScene::historyForward()
         CallbackData cbData;
         findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, 0, false, false, false, false, true);
 
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_ADDLAYER:
+    {
+        LevelLayers l;
+        l.array_id = lastOperation.extraData.toList()[0].toInt();
+        l.name = lastOperation.extraData.toList()[1].toString();
+        l.hidden = false;
+        LvlData->layers.push_back(l);
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
@@ -2721,6 +2761,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_DULPICATEEVENT: return tr("Copy Event");
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSEVENT: return tr("Changed Eventsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     case HistoryOperation::LEVELHISTORY_CHANGEDNEWLAYER: return tr("Move Items to new Layer");
+    case HistoryOperation::LEVELHISTORY_ADDLAYER: return tr("New Layer");
     default:
         return tr("Unknown");
     }
