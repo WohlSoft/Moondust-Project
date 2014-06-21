@@ -145,7 +145,7 @@ void MainWindow::RemoveCurrentLayer(bool moveToDefault)
 
     if(moveToDefault)
     {
-        ModifyLayer(selected[0]->text(), "Default", layerVisible);
+        ModifyLayer(selected[0]->text(), "Default", layerVisible, 0);
     }
     else
     {
@@ -402,12 +402,14 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
     setLayerLists();  //Sync comboboxes in properties
 }
 
-void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visible)
+void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord)
 {
     //Apply layer's name/visibly to all items
     leveledit * edit = activeLvlEditWin();
     QList<QGraphicsItem*> ItemList = edit->scene->items();
 
+
+    LevelData modData;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
         if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
@@ -416,6 +418,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
         {
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
             {
+                modData.blocks.push_back(((ItemBlock *)(*it))->blockData);
                 ((ItemBlock *)(*it))->blockData.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemBlock *)(*it))->arrayApply();
@@ -427,6 +430,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
         {
             if(((ItemBGO *)(*it))->bgoData.layer==layerName)
             {
+                modData.bgo.push_back(((ItemBGO *)(*it))->bgoData);
                 ((ItemBGO *)(*it))->bgoData.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemBGO *)(*it))->arrayApply();
@@ -438,6 +442,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
         {
             if(((ItemNPC *)(*it))->npcData.layer==layerName)
             {
+                modData.npc.push_back(((ItemNPC *)(*it))->npcData);
                 ((ItemNPC *)(*it))->npcData.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemNPC *)(*it))->arrayApply();
@@ -448,6 +453,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
         {
             if(((ItemWater *)(*it))->waterData.layer==layerName)
             {
+                modData.water.push_back(((ItemWater *)(*it))->waterData);
                 ((ItemWater *)(*it))->waterData.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemWater *)(*it))->arrayApply();
@@ -458,9 +464,32 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
         {
             if(((ItemDoor *)(*it))->doorData.layer==layerName)
             {
+                if((*it)->data(0).toString()=="Door_enter"){
+                    LevelDoors tData = ((ItemDoor *)(*it))->doorData;
+                    tData.isSetIn = true;
+                    tData.isSetOut = false;
+                    modData.doors.push_back(tData);
+                }else if((*it)->data(0).toString()=="Door_exit"){
+                    LevelDoors tData = ((ItemDoor *)(*it))->doorData;
+                    tData.isSetIn = false;
+                    tData.isSetOut = true;
+                    modData.doors.push_back(tData);
+                }
                 ((ItemDoor *)(*it))->doorData.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemDoor *)(*it))->arrayApply();
+            }
+        }
+    }
+
+    if(historyRecord == 0){
+        if(newLayerName == "Default"){
+            for(int i = 0; i < edit->LvlData.layers.size(); i++){
+                if(edit->LvlData.layers[i].name == layerName){
+                    modData.layers.push_back(edit->LvlData.layers[i]);
+                    edit->scene->addRemoveLayerAndSaveItemsHistory(modData);
+                    break;
+                }
             }
         }
     }

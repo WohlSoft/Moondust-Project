@@ -369,6 +369,20 @@ void LvlScene::addRenameLayerHistory(int array_id, QString oldName, QString newN
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addRemoveLayerAndSaveItemsHistory(LevelData modData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation rmLaAndSaveItemsOperation;
+    rmLaAndSaveItemsOperation.type = HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE;
+    rmLaAndSaveItemsOperation.data = modData;
+    rmLaAndSaveItemsOperation.extraData = QVariant(QString("Default"));
+    operationList.push_back(rmLaAndSaveItemsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -1162,6 +1176,23 @@ void LvlScene::historyBack()
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
         break;
     }
+    case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE:
+    {
+        LvlData->layers.push_back(lastOperation.data.layers[0]);
+        LevelData mvData = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor);
+
+        //just in case
+        MainWinConnect::pMainWin->setDoorData(-2);
+
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
+
+        break;
+    }
     default:
         break;
     }
@@ -1896,6 +1927,23 @@ void LvlScene::historyForward()
 
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->ModifyLayer(oldName, newName);
+        MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE:
+    {
+        LevelData mvData = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor);
+
+        for(int i = 0; i < LvlData->layers.size(); i++){
+            if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
+                LvlData->layers.removeAt(i);
+            }
+        }
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
         break;
@@ -3017,6 +3065,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_REMOVELAYER: return tr("Remove layer with items");
     case HistoryOperation::LEVELHISTORY_RENAMEEVENT: return tr("Rename Event");
     case HistoryOperation::LEVELHISTORY_RENAMELAYER: return tr("Rename Layer");
+    case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE: return tr("Remove layers and save items");
     default:
         return tr("Unknown");
     }
