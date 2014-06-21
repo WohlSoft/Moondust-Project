@@ -1077,6 +1077,10 @@ void LvlScene::historyBack()
                 }
             }
         }
+
+        CallbackData cbData;
+        findGraphicsItem(lastOperation.data, &lastOperation, cbData, &LvlScene::historyUpdateVisibleBlocks, &LvlScene::historyUpdateVisibleBGO, &LvlScene::historyUpdateVisibleNPC, &LvlScene::historyUpdateVisibleWater, &LvlScene::historyUpdateVisibleDoor);
+
         //just in case
         MainWinConnect::pMainWin->setDoorData(-2);
 
@@ -2445,6 +2449,31 @@ void LvlScene::historyRemoveDoors(LvlScene::CallbackData cbData, LevelDoors /*do
     ((ItemDoor *)(cbData.item))->removeFromArray();
     if((cbData.item)) delete (cbData.item);
     MainWinConnect::pMainWin->setDoorData(-2);
+}
+
+void LvlScene::historyUpdateVisibleBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
+{
+    cbData.item->setVisible(!cbData.hist->data.layers[0].hidden);
+}
+
+void LvlScene::historyUpdateVisibleBGO(LvlScene::CallbackData cbData, LevelBGO /*data*/)
+{
+    cbData.item->setVisible(!cbData.hist->data.layers[0].hidden);
+}
+
+void LvlScene::historyUpdateVisibleNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
+{
+    cbData.item->setVisible(!cbData.hist->data.layers[0].hidden);
+}
+
+void LvlScene::historyUpdateVisibleWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+{
+    cbData.item->setVisible(!cbData.hist->data.layers[0].hidden);
+}
+
+void LvlScene::historyUpdateVisibleDoor(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
+{
+    cbData.item->setVisible(!cbData.hist->data.layers[0].hidden);
 }
 
 void LvlScene::findGraphicsItem(LevelData toFind,
