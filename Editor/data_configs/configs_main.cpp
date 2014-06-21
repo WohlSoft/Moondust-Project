@@ -34,7 +34,7 @@ QString ConfStatus::configName="";
 
 dataconfigs::dataconfigs()
 {
-
+    default_grid=0;
 }
 
 /*
@@ -50,11 +50,19 @@ frames = 1			; default = 1
 frame-speed=125			; default = 125 ms, etc. 8 frames per sec
 */
 
+void dataconfigs::addError(QString bug)
+{
+    WriteToLog(QtWarningMsg, QString("LoadConfig -> ")+bug);
+    errorsList<<bug;
+}
+
 bool dataconfigs::loadconfigs(/*bool nobar*/)
 {
     //unsigned long i;//, prgs=0;
     total_data=0;
     config_dir = QApplication::applicationDirPath() + "/" +  "configs/SMBX/";
+    default_grid=0;
+    errorsList.clear();
 
     //dirs
     if((!QDir(config_dir).exists())||(QFileInfo(config_dir).isFile()))
@@ -81,6 +89,10 @@ bool dataconfigs::loadconfigs(/*bool nobar*/)
         dirs.gplayble = QApplication::applicationDirPath() + "/" + dirset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
         dirs.gcustom = QApplication::applicationDirPath() + "/" + dirset.value("custom-data", "data-custom").toString() + "/";
+    dirset.endGroup();
+
+    dirset.beginGroup("graphics");
+        default_grid = dirset.value("default-grid", 32).toInt();
     dirset.endGroup();
 
     if( dirset.status() != QSettings::NoError )

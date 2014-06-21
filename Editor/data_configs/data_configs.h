@@ -238,6 +238,12 @@ public:
 
     bool check(); //Returns true, if something config entry is not initialized
 
+    //Graphics
+    unsigned int default_grid;
+
+    //Debug
+    QStringList errorsList;
+
 private:
 
     //Buffers
@@ -261,6 +267,8 @@ private:
 
     void loadMusic();
     void loadSound();
+
+    void addError(QString bug);
 };
 
 
