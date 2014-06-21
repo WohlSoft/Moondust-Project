@@ -219,7 +219,12 @@ public:
             LEVELHISTORY_ADDEVENT,
             LEVELHISTORY_REMOVEEVENT,
             LEVELHISTORY_DULPICATEEVENT,
-            LEVELHISTORY_CHANGEDSETTINGSEVENT
+            LEVELHISTORY_CHANGEDSETTINGSEVENT,
+            LEVELHISTORY_CHANGEDNEWLAYER,
+            LEVELHISTORY_ADDLAYER,
+            LEVELHISTORY_REMOVELAYER,
+            LEVELHISTORY_RENAMEEVENT,
+            LEVELHISTORY_RENAMELAYER
         };
         HistoryType type;
         //used most of Operations
@@ -335,6 +340,11 @@ public:
     void addRemoveEventHistory(LevelEvents ev);
     void addDuplicateEventHistory(LevelEvents newDuplicate);
     void addChangeEventSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
+    void addChangedNewLayerHistory(LevelData changedItems, LevelLayers newLayer);
+    void addAddLayerHistory(int array_id, QString name);
+    void addRemoveLayerHistory(LevelData modData);
+    void addRenameEventHistory(int array_id, QString oldName, QString newName);
+    void addRenameLayerHistory(int array_id, QString oldName, QString newName);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -440,15 +450,23 @@ public:
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
     void historyUndoChangeLayerNPC(CallbackData cbData, LevelNPC data);
     void historyUndoChangeLayerWater(CallbackData cbData, LevelWater data);
+    void historyUndoChangeLayerDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyRedoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoChangeLayerBGO(CallbackData cbData, LevelBGO data);
     void historyRedoChangeLayerNPC(CallbackData cbData, LevelNPC data);
     void historyRedoChangeLayerWater(CallbackData cbData, LevelWater data);
+    void historyRedoChangeLayerDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Change sizeable Block size
     void historyUndoResizeBlock(CallbackData cbData, LevelBlock data);
     void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);
     //Callbackfunctions: Undo place of Doors
     void historyRemoveDoors(CallbackData cbData, LevelDoors door, bool isEntrance);
+    //Callbackfunctions: Set Visible
+    void historyUpdateVisibleBlocks(CallbackData cbData, LevelBlock data);
+    void historyUpdateVisibleBGO(CallbackData cbData, LevelBGO data);
+    void historyUpdateVisibleNPC(CallbackData cbData, LevelNPC data);
+    void historyUpdateVisibleWater(CallbackData cbData, LevelWater data);
+    void historyUpdateVisibleDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,

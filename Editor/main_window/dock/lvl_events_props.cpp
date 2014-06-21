@@ -707,6 +707,8 @@ void MainWindow::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QS
                 return;
             }
 
+            activeLvlEditWin()->scene->addRenameEventHistory(edit->LvlData.events[i].array_id, oldEventName, newEventName);
+
             if(oldEventName!=newEventName)
             {
                 //Check for exists item equal to new item
