@@ -31,7 +31,7 @@ void dataconfigs::loadLevelBGO()
 
     if(!QFile::exists(bgo_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bgo.ini: file does not exist"));
+        addError(QString("ERROR LOADING lvl_bgo.ini: file does not exist"), QtCriticalMsg);
           return;
     }
 
@@ -127,12 +127,12 @@ void dataconfigs::loadLevelBGO()
 
         if( bgoset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i));
+            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(bgoset.status()).arg(i), QtCriticalMsg);
         }
     }
 
     if((unsigned int)main_bgo.size()<bgo_total)
     {
-        WriteToLog(QtWarningMsg, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.size()));
+        addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.size()));
     }
 }
