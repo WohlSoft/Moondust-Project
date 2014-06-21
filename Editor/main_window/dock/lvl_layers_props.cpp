@@ -607,6 +607,7 @@ void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QS
             }
             else
             {
+                edit->scene->addRenameLayerHistory(edit->LvlData.layers[i].array_id, oldLayerName, newLayerName);
                 edit->LvlData.layers[i].name = newLayerName;
                 edit->LvlData.layers[i].hidden = !visible;
             }
