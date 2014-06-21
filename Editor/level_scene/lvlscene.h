@@ -221,7 +221,8 @@ public:
             LEVELHISTORY_DULPICATEEVENT,
             LEVELHISTORY_CHANGEDSETTINGSEVENT,
             LEVELHISTORY_CHANGEDNEWLAYER,
-            LEVELHISTORY_ADDNEWLAYER
+            LEVELHISTORY_ADDLAYER,
+            LEVELHISTORY_REMOVELAYER
         };
         HistoryType type;
         //used most of Operations
@@ -339,6 +340,7 @@ public:
     void addChangeEventSettingsHistory(int array_id, SettingSubType subtype, QVariant extraData);
     void addChangedNewLayerHistory(LevelData changedItems, LevelLayers newLayer);
     void addAddLayerHistory(int array_id, QString name);
+    void addRemoveLayerHistory(LevelData modData);
     //history modifiers
     void historyBack();
     void historyForward();

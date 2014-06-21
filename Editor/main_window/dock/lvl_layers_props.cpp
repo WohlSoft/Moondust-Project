@@ -162,7 +162,7 @@ void MainWindow::RemoveCurrentLayer(bool moveToDefault)
 void MainWindow::RemoveLayerItems(QString layerName)
 {
     QList<QGraphicsItem*> ItemList = activeLvlEditWin()->scene->items();
-
+    LevelData delData;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
         if((*it)->data(25).toString()=="CURSOR") continue; //skip cursor item
@@ -171,6 +171,7 @@ void MainWindow::RemoveLayerItems(QString layerName)
         {
             if(((ItemBlock *)(*it))->blockData.layer==layerName)
             {
+                delData.blocks.push_back(((ItemBlock *)(*it))->blockData);
                 ((ItemBlock *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -182,6 +183,7 @@ void MainWindow::RemoveLayerItems(QString layerName)
         {
             if(((ItemBGO *)(*it))->bgoData.layer==layerName)
             {
+                delData.bgo.push_back(((ItemBGO *)(*it))->bgoData);
                 ((ItemBGO *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -192,6 +194,7 @@ void MainWindow::RemoveLayerItems(QString layerName)
         {
             if(((ItemNPC *)(*it))->npcData.layer==layerName)
             {
+                delData.npc.push_back(((ItemNPC *)(*it))->npcData);
                 ((ItemNPC *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -202,6 +205,7 @@ void MainWindow::RemoveLayerItems(QString layerName)
         {
             if(((ItemWater *)(*it))->waterData.layer==layerName)
             {
+                delData.water.push_back(((ItemWater *)(*it))->waterData);
                 ((ItemWater *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -212,12 +216,33 @@ void MainWindow::RemoveLayerItems(QString layerName)
         {
             if(((ItemDoor *)(*it))->doorData.layer==layerName)
             {
+                if(((*it)->data(0).toString()=="Door_enter")){
+                    LevelDoors tData = ((ItemDoor *)(*it))->doorData;
+                    tData.isSetIn = true;
+                    tData.isSetOut = false;
+                    delData.doors.push_back(tData);
+                }
+                else
+                if(((*it)->data(0).toString()=="Door_exit")){
+                    LevelDoors tData = ((ItemDoor *)(*it))->doorData;
+                    tData.isSetIn = false;
+                    tData.isSetOut = true;
+                    delData.doors.push_back(tData);
+                }
                 ((ItemDoor *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
             }
         }
     }
+    foreach (LevelLayers l, activeLvlEditWin()->LvlData.layers) {
+        if(l.name == layerName){
+            delData.layers.push_back(l);
+            break;
+        }
+    }
+    activeLvlEditWin()->scene->addRemoveLayerHistory(delData);
+
     setLayerLists();  //Sync comboboxes in properties
 }
 
