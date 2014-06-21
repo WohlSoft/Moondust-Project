@@ -180,7 +180,9 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     scene->LvlData->layers.push_back(nLayer);
 
                     //scene->SyncLayerList=true; //Refresh layer list
+                    MainWinConnect::pMainWin->setLayerToolsLocked(true);
                     MainWinConnect::pMainWin->setLayersBox();
+                    MainWinConnect::pMainWin->setLayerToolsLocked(false);
                 }
             }
             else
@@ -213,11 +215,16 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                                 ((ItemBGO *) SelItem)->arrayApply();
                             }
                         }
-                    break;
+                        if(selected==newLayer){
+                            scene->addChangedNewLayerHistory(modData, lr);
+                        }
+                        break;
                     }
                 }//Find layer's settings
-                scene->addChangedLayerHistory(modData, lName);
-             scene->contextMenuOpened = false;
+                if(selected!=newLayer){
+                    scene->addChangedLayerHistory(modData, lName);
+                }
+                scene->contextMenuOpened = false;
             }
 //            foreach(QAction * lItem, layerItems)
 //            {
