@@ -133,7 +133,7 @@ void dataconfigs::loadMusic()
                 goto skipLvlMusic;
             }
             smusic_lvl.file = musicset.value("file", "").toString();
-            if(smusic_lvl.file.isEmpty())
+            if(smusic_lvl.file.isEmpty()&&(i != music_custom_id))
             {
                 addError(QString("LVL-Music-%1 Item file isn't defined").arg(i));
                 goto skipLvlMusic;
