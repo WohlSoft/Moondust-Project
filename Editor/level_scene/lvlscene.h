@@ -457,6 +457,12 @@ public:
     void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);
     //Callbackfunctions: Undo place of Doors
     void historyRemoveDoors(CallbackData cbData, LevelDoors door, bool isEntrance);
+    //Callbackfunctions: Set Visible
+    void historyUpdateVisibleBlocks(CallbackData cbData, LevelBlock data);
+    void historyUpdateVisibleBGO(CallbackData cbData, LevelBGO data);
+    void historyUpdateVisibleNPC(CallbackData cbData, LevelNPC data);
+    void historyUpdateVisibleWater(CallbackData cbData, LevelWater data);
+    void historyUpdateVisibleDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,
