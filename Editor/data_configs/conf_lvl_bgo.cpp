@@ -63,9 +63,15 @@ void dataconfigs::loadLevelBGO()
     {
         bgoset.beginGroup( QString("background-"+QString::number(i)) );
             sbgo.name = bgoset.value("name", "").toString();
-            sbgo.group = bgoset.value("group", "").toString();
+
+                if(sbgo.name=="")
+                {
+                    addError(QString("BGO-%1 Item name isn't defined").arg(i));
+                    goto skipBGO;
+                }
+            sbgo.group = bgoset.value("group", "_NoGroup").toString();
             sbgo.category = bgoset.value("category", "_Other").toString();
-            sbgo.grid = bgoset.value("grid", "32").toInt();
+            sbgo.grid = bgoset.value("grid", default_grid).toInt();
             sbgo.view = (int)(bgoset.value("view", "background").toString()=="foreground");
             sbgo.offsetX = bgoset.value("offset-x", "0").toInt();
             sbgo.offsetY = bgoset.value("offset-y", "0").toInt();
@@ -84,12 +90,23 @@ void dataconfigs::loadLevelBGO()
                 if(tmp.size()==2) mask = QPixmap(bgoPath + imgFileM);
                 sbgo.mask = mask;
                 sbgo.image = GraphicsHelps::setAlphaMask(QPixmap(bgoPath + imgFile), sbgo.mask);
+                if(sbgo.image.isNull())
+                {
+                    addError(QString("BGO-%1 Brocken image file").arg(i));
+                    goto skipBGO;
+                }
+
             }
             else
             {
-                sbgo.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
-                sbgo.mask_n = "";
+                addError(QString("BGO-%1 Image filename isn't defined").arg(i));
+                goto skipBGO;
             }
+                /*
+                {
+                    sbgo.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
+                    sbgo.mask_n = "";
+                }*/
             sbgo.climbing = (bgoset.value("climbing", "0").toString()=="1");
             sbgo.animated = (bgoset.value("animated", "0").toString()=="1");
             sbgo.frames = bgoset.value("frames", "1").toInt();
@@ -105,6 +122,7 @@ void dataconfigs::loadLevelBGO()
                 //WriteToLog(QtDebugMsg, QString("Got SMBX64 BGO Sorting priority -> %1").arg( index_bgo[i].smbx64_sp ) );
             }
 
+        skipBGO:
         bgoset.endGroup();
 
         if( bgoset.status() != QSettings::NoError )
@@ -115,6 +133,6 @@ void dataconfigs::loadLevelBGO()
 
     if((unsigned int)main_bgo.size()<bgo_total)
     {
-        WriteToLog(QtWarningMsg, QString("Not all BGOs loaded! Total: %1, Loaded: %2)").arg(bgo_total).arg(main_bgo.size()));
+        WriteToLog(QtWarningMsg, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(main_bgo.size()));
     }
 }

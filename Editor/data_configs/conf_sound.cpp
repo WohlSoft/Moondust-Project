@@ -56,10 +56,21 @@ void dataconfigs::loadSound()
     {
         soundset.beginGroup( QString("sound-"+QString::number(i)) );
             sound.name = soundset.value("name", "").toString();
+            if(sound.name.isEmpty())
+            {
+                addError(QString("Sound-%1 Item name isn't defined").arg(i));
+                goto skipSoundFile;
+            }
             sound.file = soundset.value("file", "").toString();
+            if(sound.file.isEmpty())
+            {
+                addError(QString("Sound-%1 Item file isn't defined").arg(i));
+                goto skipSoundFile;
+            }
             sound.hidden = soundset.value("hidden", "0").toBool();
             sound.id = i;
             main_sound.push_back(sound);
+        skipSoundFile:
         soundset.endGroup();
 
         if( soundset.status() != QSettings::NoError )

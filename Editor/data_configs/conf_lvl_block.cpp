@@ -21,6 +21,8 @@
 #include "../main_window/global_settings.h"
 #include "../common_features/graphics_funcs.h"
 
+static QString Temp01="";
+
 void dataconfigs::loadLevelBlocks()
 {
     unsigned int i;
@@ -64,9 +66,16 @@ void dataconfigs::loadLevelBlocks()
             blockset.beginGroup( QString("block-%1").arg(i) );
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
-                sblock.group = blockset.value("group", "").toString();
+
+                if(sblock.name=="")
+                {
+                    addError(QString("BLOCK-%1 Item name isn't defined").arg(i));
+                    goto skipBLOCK;
+                }
+
+                sblock.group = blockset.value("group", "_NoGroup").toString();
                 sblock.category = blockset.value("category", "_Other").toString();
-                sblock.grid = blockset.value("grid", "32").toInt();
+                sblock.grid = blockset.value("grid", default_grid).toInt();
                 imgFile = blockset.value("image", "").toString();
 
                 sblock.image_n = imgFile;
@@ -82,11 +91,16 @@ void dataconfigs::loadLevelBlocks()
                     if(tmp.size()==2) mask = QPixmap(blockPath + imgFileM);
                     sblock.mask = mask;
                     sblock.image = GraphicsHelps::setAlphaMask(QPixmap(blockPath + imgFile), sblock.mask);
+                    if(sblock.image.isNull())
+                    {
+                        addError(QString("LoadConfig -> BLOCK-%1 Brocken image file").arg(i));
+                        goto skipBLOCK;
+                    }
                 }
                 else
                 {
-                    sblock.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
-                    sblock.mask_n = "";
+                    addError(QString("BLOCK-%1 Image filename isn't defined").arg(i));
+                    goto skipBLOCK;
                 }
 
                 sblock.sizable = blockset.value("sizable", "0").toBool();
@@ -99,10 +113,10 @@ void dataconfigs::loadLevelBlocks()
                 sblock.dest_bomb = blockset.value("destruct-bomb", "0").toBool();
                 sblock.dest_fire = blockset.value("destruct-fireball", "0").toBool();
 
-                imgFile = blockset.value("spawn-on-destroy", "0").toString();
-                if(imgFile!="0")
+                Temp01 = blockset.value("spawn-on-destroy", "0").toString();
+                if(Temp01!="0")
                 {
-                    tmp =  imgFile.split("-", QString::SkipEmptyParts);
+                    tmp =  Temp01.split("-", QString::SkipEmptyParts);
                     if(tmp.size()==2)
                     {
                         if(tmp[0]=="npc")
@@ -148,6 +162,7 @@ void dataconfigs::loadLevelBlocks()
                 if(i < (unsigned int)index_blocks.size())
                     index_blocks[i].i = i-1;
 
+            skipBLOCK:
             blockset.endGroup();
 
           if( blockset.status()!=QSettings::NoError)
