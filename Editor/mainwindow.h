@@ -468,6 +468,8 @@ private slots:
     void on_LVLEvent_TriggerEvent_currentIndexChanged(int index);
     void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
 
+    void on_WarpBrowseLevels_clicked();
+
 private:
 
     LevelEditingSettings LvlOpts;
