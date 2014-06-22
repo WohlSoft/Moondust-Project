@@ -834,7 +834,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     {
                         QGraphicsItem* tmp = deleteList.first();
                         deleteList.pop_front();
-                        delete tmp;
+                        if(tmp!=NULL) delete tmp;
                     }
                 }
 
