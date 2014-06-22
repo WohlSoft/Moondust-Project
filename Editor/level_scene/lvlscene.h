@@ -386,6 +386,7 @@ public:
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
     void historyRemoveNPC(CallbackData cbData, LevelNPC data);
     void historyRemoveWater(CallbackData cbData, LevelWater data);
+    void historyRemovePlayerPoint(CallbackData cbData, PlayerPoint data);
     //Callbackfunctions: [Change Settings] Hide
     void historyUndoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
     void historyRedoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);

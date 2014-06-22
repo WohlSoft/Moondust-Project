@@ -121,6 +121,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     {
                      if(LvlData->players[plr].id == player)
                      {
+                         historyBuffer.players.push_back(LvlData->players[plr]);
                          LvlData->players[plr].x = 0;
                          LvlData->players[plr].y = 0;
                          LvlData->players[plr].w = 0;
@@ -752,12 +753,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             {
                              if(LvlData->players[plr].id == player)
                              {
+                                 historyBuffer.players.push_back(LvlData->players[plr]);
                                  LvlData->players[plr].x = 0;
                                  LvlData->players[plr].y = 0;
                                  LvlData->players[plr].w = 0;
                                  LvlData->players[plr].h = 0;
                                  //    Uncomment this after add player point history
-                                 //deleted=true;
+                                 deleted=true;
                                  break;
                              }
                             }
@@ -1087,6 +1089,11 @@ void LvlScene::placeItemUnderCursor()
                  else
                     pnt.h = 60;
                  placePlayerPoint(pnt);
+
+                 newData.players.push_back(pnt);
+
+                 wasPlaced=true;
+
                  break;
              }
             }
@@ -1246,12 +1253,13 @@ void LvlScene::removeItemUnderCursor()
                 {
                  if(LvlData->players[plr].id == player)
                  {
+                     removedItems.players.push_back(LvlData->players[plr]);
                      LvlData->players[plr].x = 0;
                      LvlData->players[plr].y = 0;
                      LvlData->players[plr].w = 0;
                      LvlData->players[plr].h = 0;
                      //    Uncomment this after add player point history
-                     //deleted=true;
+                     deleted=true;
                      break;
                  }
                 }
