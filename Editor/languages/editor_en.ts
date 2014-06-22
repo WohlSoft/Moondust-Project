@@ -600,6 +600,19 @@ Message limits: max line lenth is 28 characters</source>
     </message>
 </context>
 <context>
+    <name>LevelFileList</name>
+    <message>
+        <location filename="../common_features/levelfilelist.ui" line="14"/>
+        <source>Level files list</source>
+        <translation>Level files list</translation>
+    </message>
+    <message>
+        <location filename="../common_features/levelfilelist.ui" line="24"/>
+        <source>Please, select level file from list for use them:</source>
+        <translation>Please, select level file from list for use them:</translation>
+    </message>
+</context>
+<context>
     <name>LevelProps</name>
     <message>
         <location filename="../edit_level/levelprops.ui" line="20"/>
