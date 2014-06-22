@@ -730,6 +730,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         if( (*it)->data(0).toString()=="Door_enter" )
                         {
                             //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                            LevelDoors tData = ((ItemDoor*)(*it))->doorData;
+                            tData.isSetIn = true;
+                            tData.isSetOut = false;
+                            historyBuffer.doors.push_back(tData);
                             ((ItemDoor *)(*it))->removeFromArray();
                             deleted=true;
                             MainWinConnect::pMainWin->setDoorData(-2);
@@ -738,6 +742,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         if( (*it)->data(0).toString()=="Door_exit" )
                         {
                             //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                            LevelDoors tData = ((ItemDoor*)(*it))->doorData;
+                            tData.isSetIn = false;
+                            tData.isSetOut = true;
+                            historyBuffer.doors.push_back(tData);
                             ((ItemDoor *)(*it))->removeFromArray();
                             deleted=true;
                             MainWinConnect::pMainWin->setDoorData(-2);
