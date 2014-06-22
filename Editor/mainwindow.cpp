@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 
 #include "npc_dialog/npcdialog.h"
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
@@ -196,3 +197,8 @@ void MainWindow::refreshHistoryButtons()
     TickTackLock = false;
 }
 */
+
+void MainWindow::on_actionContents_triggered()
+{
+    QDesktopServices::openUrl( QUrl::fromLocalFile( QApplication::applicationDirPath() + "/help/manual_editor.html" ) );
+}
