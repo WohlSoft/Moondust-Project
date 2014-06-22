@@ -328,6 +328,7 @@ public:
     typedef void (LvlScene::*callBackLevelNPC)(CallbackData, LevelNPC);
     typedef void (LvlScene::*callBackLevelWater)(CallbackData, LevelWater);
     typedef void (LvlScene::*callBackLevelDoors)(CallbackData, LevelDoors, bool); //bool isEntrance [true = entrance, false = exit]
+    typedef void (LvlScene::*callBackLevelPlayerPoints)(CallbackData, PlayerPoint);
     //add historys
     /*
      * NOTE: when use History with Doors, LevelDoors MUST be posted individual.
@@ -487,12 +488,13 @@ public:
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackLevelBlock clbBlock, callBackLevelBGO clbBgo,
                           callBackLevelNPC clbNpc, callBackLevelWater clbWater,
-                          callBackLevelDoors clbDoor,
+                          callBackLevelDoors clbDoor, callBackLevelPlayerPoints clbPlayer,
                           bool ignoreBlock = false,
                           bool ignoreBGO = false, 
                           bool ignoreNPC = false,
                           bool ignoreWater = false,
-                          bool ignoreDoors = false);
+                          bool ignoreDoors = false,
+                          bool ignorePlayer = false);
 
     void findGraphicsDoor(int array_id, HistoryOperation* operation, CallbackData customData,
                           callBackLevelDoors clbDoors, bool isEntrance);
