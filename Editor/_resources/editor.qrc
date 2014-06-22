@@ -80,5 +80,6 @@
         <file>images/conf_bad.png</file>
         <file>images/conf_good.png</file>
         <file>images/conf_warn.png</file>
+        <file>images/splash_editor.png</file>
     </qresource>
 </RCC>
