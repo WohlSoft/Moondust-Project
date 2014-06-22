@@ -16,35 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "musicfilelist.h"
-#include "ui_musicfilelist.h"
+#include "levelfilelist.h"
+#include "ui_levelfilelist.h"
 #include <QDir>
 
-MusicFileList::MusicFileList(QString Folder, QWidget *parent) :
+LevelFileList::LevelFileList(QString Folder, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::MusicFileList)
+    ui(new Ui::LevelFileList)
 {
     QStringList filters;
-    QDir musicDir(Folder);
-    filters << "*.mp3" << "*.ogg" << "*.wav" << "*.flac";
-    musicDir.setSorting(QDir::Name);
-    musicDir.setNameFilters(filters);
+    QDir levelDir(Folder);
+    filters << "*.lvl" << "*.lvlx" << "*.lvlb" << "*.lvlz";
+    levelDir.setSorting(QDir::Name);
+    levelDir.setNameFilters(filters);
     ui->setupUi(this);
-    ui->FileList->insertItems(musicDir.entryList().size(), musicDir.entryList(filters) );
+    ui->FileList->insertItems(levelDir.entryList().size(), levelDir.entryList(filters) );
 }
 
-MusicFileList::~MusicFileList()
+LevelFileList::~LevelFileList()
 {
     delete ui;
 }
 
-void MusicFileList::on_FileList_itemDoubleClicked(QListWidgetItem *item)
+
+void LevelFileList::on_FileList_itemDoubleClicked(QListWidgetItem *item)
 {
     SelectedFile = item->text();
     accept();
 }
 
-void MusicFileList::on_buttonBox_accepted()
+void LevelFileList::on_buttonBox_accepted()
 {
     foreach (QListWidgetItem * container, ui->FileList->selectedItems()) {
     SelectedFile = container->text();
@@ -53,7 +54,7 @@ void MusicFileList::on_buttonBox_accepted()
         accept();
 }
 
-void MusicFileList::on_buttonBox_rejected()
+void LevelFileList::on_buttonBox_rejected()
 {
     reject();
 }
