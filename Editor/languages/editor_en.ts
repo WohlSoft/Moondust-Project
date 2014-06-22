@@ -784,7 +784,7 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3244"/>
         <source>Changed Levelsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Changed Levelsetting [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3246"/>
@@ -1101,42 +1101,42 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3315"/>
         <source>Is Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Left-Right sides connection</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3316"/>
         <source>No Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Disable returns to left</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3317"/>
         <source>Off Screen Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Off Screen Level Exit</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3318"/>
         <source>Underwater</source>
-        <translation type="unfinished">Underwater</translation>
+        <translation>Underwater</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3319"/>
         <source>Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Background Image</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3320"/>
         <source>Music</source>
-        <translation type="unfinished">Music</translation>
+        <translation>Music</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3321"/>
         <source>Custom Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Custom Music</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3322"/>
         <source>Level Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Name</translation>
     </message>
 </context>
 <context>
