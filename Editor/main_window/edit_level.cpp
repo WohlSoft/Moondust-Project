@@ -28,6 +28,10 @@ void MainWindow::on_actionLevelProp_triggered()
         LevelProps LevProps(activeLvlEditWin()->LvlData);
         if(LevProps.exec()==QDialog::Accepted)
         {
+            QList<QVariant> lvlsetData;
+            lvlsetData.push_back(activeLvlEditWin()->LvlData.LevelName);
+            lvlsetData.push_back(LevProps.LevelTitle);
+            activeLvlEditWin()->scene->addChangeLevelSettingsHistory(LvlScene::SETTING_LEVELNAME, QVariant(lvlsetData));
             activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
         }
     }

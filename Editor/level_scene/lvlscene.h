@@ -227,7 +227,8 @@ public:
             LEVELHISTORY_RENAMELAYER,
             LEVELHISTORY_REMOVELAYERANDSAVE,
             LEVELHISTORY_MERGELAYER,
-            LEVELHISTORY_CHANGEDSETTINGSSECTION
+            LEVELHISTORY_CHANGEDSETTINGSSECTION,
+            LEVELHISTORY_CHANGEDSETTINGSLEVEL
         };
         HistoryType type;
         //used most of Operations
@@ -310,7 +311,15 @@ public:
         SETTING_EV_KDROP,           //extraData: bool [Activated?]
         SETTING_EV_KSTART,          //extraData: bool [Activated?]
         SETTING_EV_TRIACTIVATE,     //extraData: QList<QVariant[String]> [Old trigger, New trigger]
-        SETTING_EV_TRIDELAY         //extraData: QList<QVariant[long]> [Old delay, New delay]
+        SETTING_EV_TRIDELAY,        //extraData: QList<QVariant[long]> [Old delay, New delay]
+        SETTING_SECISWARP,          //extraData: bool [Activated?]
+        SETTING_SECNOBACK,          //extraData: bool [Activated?]
+        SETTING_SECOFFSCREENEXIT,   //extraData: bool [Activated?]
+        SETTING_SECUNDERWATER,      //extraData: bool [Activated?]
+        SETTING_SECBACKGROUNDIMG,   //extraData: QList<QVariant[int]> [old background id, new background id]
+        SETTING_SECMUSIC,           //extraData: QList<QVariant[int]> [old music id, new music id]
+        SETTING_SECCUSTOMMUSIC,     //extraData: QList<QVariant[String]> [old custom music name, new custom music name]
+        SETTING_LEVELNAME           //extraData: QList<QVariant[String]> [old level name, new level name]
     };
 
     //typedefs
@@ -351,6 +360,7 @@ public:
     void addRemoveLayerAndSaveItemsHistory(LevelData modData);
     void addMergeLayer(LevelData mergedData, QString newLayerName);
     void addChangeSectionSettingsHistory(int sectionID, SettingSubType subtype, QVariant extraData);
+    void addChangeLevelSettingsHistory(SettingSubType subtype, QVariant extraData);
     //history modifiers
     void historyBack();
     void historyForward();
