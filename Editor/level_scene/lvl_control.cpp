@@ -727,24 +727,12 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             deleted=true;
                         }
                         else
-                        if( (*it)->data(0).toString()=="Door_enter" )
+                        if(( (*it)->data(0).toString()=="Door_enter" )||( (*it)->data(0).toString()=="Door_exit" ))
                         {
                             //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
                             LevelDoors tData = ((ItemDoor*)(*it))->doorData;
-                            tData.isSetIn = true;
-                            tData.isSetOut = false;
-                            historyBuffer.doors.push_back(tData);
-                            ((ItemDoor *)(*it))->removeFromArray();
-                            deleted=true;
-                            MainWinConnect::pMainWin->setDoorData(-2);
-                        }
-                        else
-                        if( (*it)->data(0).toString()=="Door_exit" )
-                        {
-                            //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
-                            LevelDoors tData = ((ItemDoor*)(*it))->doorData;
-                            tData.isSetIn = false;
-                            tData.isSetOut = true;
+                            tData.isSetIn = ( (*it)->data(0).toString()=="Door_enter" );
+                            tData.isSetOut = ( (*it)->data(0).toString()=="Door_exit" );
                             historyBuffer.doors.push_back(tData);
                             ((ItemDoor *)(*it))->removeFromArray();
                             deleted=true;
@@ -1231,6 +1219,17 @@ void LvlScene::removeItemUnderCursor()
             {
                 removedItems.water.push_back(((ItemWater *)findItem)->waterData);
                 ((ItemWater *)findItem)->removeFromArray();
+                deleted=true;
+            }
+            else
+            if((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))
+            {
+                LevelDoors tData = ((ItemDoor*)findItem)->doorData;
+                                            tData.isSetIn = (findItem->data(0).toString()=="Door_enter");
+                                            tData.isSetOut = (findItem->data(0).toString()=="Door_exit");
+                                            removedItems.doors.push_back(tData);
+                ((ItemDoor *)findItem)->removeFromArray();
+                MainWinConnect::pMainWin->setDoorData(-2);
                 deleted=true;
             }
             else
