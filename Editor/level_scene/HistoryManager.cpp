@@ -25,7 +25,7 @@
 #include "../common_features/logger.h"
 #include "../common_features/mainwinconnect.h"
 #include "../file_formats/file_formats.h"
-
+#include "../main_window/music_player.h"
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -1290,6 +1290,7 @@ void LvlScene::historyBack()
         }
 
         MainWinConnect::pMainWin->setLevelSectionData();
+        MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL:
@@ -2107,8 +2108,9 @@ void LvlScene::historyForward()
         if(subtype == SETTING_SECCUSTOMMUSIC){
             LvlData->sections[sectionID].music_file = extraData.toList()[1].toString();
         }
-
         MainWinConnect::pMainWin->setLevelSectionData();
+        MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
+
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL:
