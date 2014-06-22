@@ -503,6 +503,16 @@ void LvlScene::historyBack()
             }
             hasToUpdateDoorData = true;
         }
+
+        foreach(PlayerPoint plr, deletedData.players){
+            for(int i = 0; i < LvlData->players.size(); i++){
+                if(LvlData->players[i].id == plr.id){
+                    LvlData->players[i] = plr;
+                }
+            }
+            placePlayerPoint(plr);
+        }
+
         if(hasToUpdateDoorData)
             MainWinConnect::pMainWin->setDoorData(-2);
 
@@ -519,7 +529,7 @@ void LvlScene::historyBack()
         LevelData placeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, 0, false, false, false, false, true, true);
+        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, &LvlScene::historyRemovePlayerPoint, false, false, false, false, true);
 
         break;
     }
@@ -1325,7 +1335,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, 0, false, false, false, false, false, true);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, &LvlScene::historyRemovePlayerPoint);
 
         break;
     }
@@ -1365,6 +1375,15 @@ void LvlScene::historyForward()
             //place them back
             LvlData->water.push_back(water);
             placeWater(water);
+        }
+
+        foreach(PlayerPoint plr, placedData.players){
+            for(int i = 0; i < LvlData->players.size(); i++){
+                if(LvlData->players[i].id == plr.id){
+                    LvlData->players[i] = plr;
+                }
+            }
+            placePlayerPoint(plr);
         }
 
         //refresh Animation control
@@ -1989,7 +2008,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, 0, false, false, false, false, false, true);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, &LvlScene::historyRemovePlayerPoint);
 
         for(int i = 0; i < LvlData->layers.size(); i++){
             if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
@@ -2313,6 +2332,19 @@ void LvlScene::historyRemoveWater(LvlScene::CallbackData cbData, LevelWater /*da
 {
     ((ItemWater *)cbData.item)->removeFromArray();
     removeItem(cbData.item);
+}
+
+void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoint data)
+{
+    for(int i = 0; i < LvlData->players.size(); i++){
+        if(LvlData->players[i].id == data.id){
+            LvlData->players[i].x = 0;
+            LvlData->players[i].y = 0;
+            LvlData->players[i].w = 0;
+            LvlData->players[i].h = 0;
+        }
+    }
+    delete cbData.item;
 }
 
 void LvlScene::historyUndoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock data)
