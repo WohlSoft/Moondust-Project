@@ -113,7 +113,8 @@ SOURCES += main.cpp\
     data_configs/conf_sound.cpp \
     main_window/dock/lvl_layers_props.cpp \
     data_configs/configstatus.cpp \
-    common_features/graphics_funcs.cpp
+    common_features/graphics_funcs.cpp \
+    common_features/levelfilelist.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -151,7 +152,8 @@ HEADERS  += mainwindow.h \
     edit_npc/npceditscene.h \
     data_configs/custom_data.h \
     data_configs/configstatus.h \
-    common_features/graphics_funcs.h
+    common_features/graphics_funcs.h \
+    common_features/levelfilelist.h
 
 FORMS    += \
     mainwindow.ui \
@@ -165,7 +167,8 @@ FORMS    += \
     edit_level/saveimage.ui \
     edit_npc/npcedit.ui \
     about_dialog/aboutdialog.ui \
-    data_configs/configstatus.ui
+    data_configs/configstatus.ui \
+    common_features/levelfilelist.ui
 
 RC_FILE = _resources/pge_editor.rc
 
