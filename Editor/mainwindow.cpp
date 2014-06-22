@@ -29,7 +29,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     setDefaults(); // Apply default common settings
 
-    QPixmap splashimg(":/splash.png");
+    QPixmap splashimg(":/images/splash_editor.png");
     QSplashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
     splash.show();

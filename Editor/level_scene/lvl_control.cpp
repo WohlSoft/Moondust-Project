@@ -107,6 +107,30 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     MainWinConnect::pMainWin->setDoorData(-2);
                     deleted=true;
                 }
+                else
+                if(( objType=="player1" )||( objType=="player2" ))
+                {
+                    unsigned long player=1;
+
+                    if(objType=="player1")
+                        player=1;
+                    if(objType=="player2")
+                        player=2;
+
+                    for(int plr=0; plr<LvlData->players.size(); plr++)
+                    {
+                     if(LvlData->players[plr].id == player)
+                     {
+                         historyBuffer.players.push_back(LvlData->players[plr]);
+                         LvlData->players[plr].x = 0;
+                         LvlData->players[plr].y = 0;
+                         LvlData->players[plr].w = 0;
+                         LvlData->players[plr].h = 0;
+                         if((*it)) delete (*it);
+                         break;
+                     }
+                    }
+                }
         }
         if(deleted) addRemoveHistory(historyBuffer);
 
@@ -659,6 +683,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
 
+            QList<QGraphicsItem*> deleteList;
+            deleteList.clear();
             QList<QGraphicsItem*> selectedList = selectedItems();
 
             // check for grid snap
@@ -702,26 +728,48 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             deleted=true;
                         }
                         else
-                        if( (*it)->data(0).toString()=="Door_enter" )
+                        if(( (*it)->data(0).toString()=="Door_enter" )||( (*it)->data(0).toString()=="Door_exit" ))
                         {
                             //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                            LevelDoors tData = ((ItemDoor*)(*it))->doorData;
+                            tData.isSetIn = ( (*it)->data(0).toString()=="Door_enter" );
+                            tData.isSetOut = ( (*it)->data(0).toString()=="Door_exit" );
+                            historyBuffer.doors.push_back(tData);
                             ((ItemDoor *)(*it))->removeFromArray();
                             deleted=true;
                             MainWinConnect::pMainWin->setDoorData(-2);
                         }
                         else
-                        if( (*it)->data(0).toString()=="Door_exit" )
+                        if(( (*it)->data(0).toString()=="player1" )||( (*it)->data(0).toString()=="player2" ))
                         {
-                            //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
-                            ((ItemDoor *)(*it))->removeFromArray();
-                            deleted=true;
-                            MainWinConnect::pMainWin->setDoorData(-2);
+                            unsigned long player=1;
+
+                            if((*it)->data(0).toString()=="player1")
+                                player=1;
+                            if((*it)->data(0).toString()=="player2")
+                                player=2;
+
+                            for(int plr=0; plr<LvlData->players.size(); plr++)
+                            {
+                             if(LvlData->players[plr].id == player)
+                             {
+                                 historyBuffer.players.push_back(LvlData->players[plr]);
+                                 LvlData->players[plr].x = 0;
+                                 LvlData->players[plr].y = 0;
+                                 LvlData->players[plr].w = 0;
+                                 LvlData->players[plr].h = 0;
+                                 //    Uncomment this after add player point history
+                                 deleted=true;
+                                 break;
+                             }
+                            }
                         }
                         removeItem((*it));
+                        deleteList.push_back((*it));
                         continue;
                     }
 
-                    gridSize = 32;
+                    gridSize = pConfigs->default_grid;
                     offsetX = 0;
                     offsetY = 0;
                     ObjType = (*it)->data(0).toString();
@@ -747,13 +795,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }else
                     if( ObjType == "Water")
                     {
-                        gridSize = 16;
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
                     }else
                     if( ObjType == "Door_enter")
-                        gridSize = 16 ;
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
                     else
                     if( ObjType == "Door_exit")
-                        gridSize = 16 ;
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
                     else
                     if( ObjType == "player1")
                     {
@@ -777,6 +825,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                   );
                     //////////////////////////////////////////////////////////////////
                 }
+
+                if(!deleteList.isEmpty())
+                {
+                    while(!deleteList.isEmpty())
+                    {
+                        QGraphicsItem* tmp = deleteList.first();
+                        deleteList.pop_front();
+                        if(tmp!=NULL) delete tmp;
+                    }
+                }
+                selectedList = selectedItems();
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
                 {
@@ -1030,6 +1089,11 @@ void LvlScene::placeItemUnderCursor()
                  else
                     pnt.h = 60;
                  placePlayerPoint(pnt);
+
+                 newData.players.push_back(pnt);
+
+                 wasPlaced=true;
+
                  break;
              }
             }
@@ -1163,6 +1227,42 @@ void LvlScene::removeItemUnderCursor()
                 removedItems.water.push_back(((ItemWater *)findItem)->waterData);
                 ((ItemWater *)findItem)->removeFromArray();
                 deleted=true;
+            }
+            else
+            if((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))
+            {
+                LevelDoors tData = ((ItemDoor*)findItem)->doorData;
+                                            tData.isSetIn = (findItem->data(0).toString()=="Door_enter");
+                                            tData.isSetOut = (findItem->data(0).toString()=="Door_exit");
+                                            removedItems.doors.push_back(tData);
+                ((ItemDoor *)findItem)->removeFromArray();
+                MainWinConnect::pMainWin->setDoorData(-2);
+                deleted=true;
+            }
+            else
+            if(( findItem->data(0).toString()=="player1" )||( findItem->data(0).toString()=="player2" ))
+            {
+                unsigned long player=1;
+
+                if(findItem->data(0).toString()=="player1")
+                    player=1;
+                if(findItem->data(0).toString()=="player2")
+                    player=2;
+
+                for(int plr=0; plr<LvlData->players.size(); plr++)
+                {
+                 if(LvlData->players[plr].id == player)
+                 {
+                     removedItems.players.push_back(LvlData->players[plr]);
+                     LvlData->players[plr].x = 0;
+                     LvlData->players[plr].y = 0;
+                     LvlData->players[plr].w = 0;
+                     LvlData->players[plr].h = 0;
+                     //    Uncomment this after add player point history
+                     deleted=true;
+                     break;
+                 }
+                }
             }
             removeItem(findItem);
             delete findItem;

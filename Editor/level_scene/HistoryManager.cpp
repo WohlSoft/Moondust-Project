@@ -25,7 +25,7 @@
 #include "../common_features/logger.h"
 #include "../common_features/mainwinconnect.h"
 #include "../file_formats/file_formats.h"
-
+#include "../main_window/music_player.h"
 
 void LvlScene::addRemoveHistory(LevelData removedItems)
 {
@@ -414,6 +414,20 @@ void LvlScene::addChangeSectionSettingsHistory(int sectionID, LvlScene::SettingS
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addChangeLevelSettingsHistory(LvlScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chLevelSettingsOperation;
+    chLevelSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL;
+    chLevelSettingsOperation.subtype = subtype;
+    chLevelSettingsOperation.extraData = extraData;
+    operationList.push_back(chLevelSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -489,6 +503,16 @@ void LvlScene::historyBack()
             }
             hasToUpdateDoorData = true;
         }
+
+        foreach(PlayerPoint plr, deletedData.players){
+            for(int i = 0; i < LvlData->players.size(); i++){
+                if(LvlData->players[i].id == plr.id){
+                    LvlData->players[i] = plr;
+                }
+            }
+            placePlayerPoint(plr);
+        }
+
         if(hasToUpdateDoorData)
             MainWinConnect::pMainWin->setDoorData(-2);
 
@@ -505,7 +529,7 @@ void LvlScene::historyBack()
         LevelData placeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, false, false, false, false, true);
+        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, &LvlScene::historyRemovePlayerPoint, false, false, false, false, true);
 
         break;
     }
@@ -515,7 +539,7 @@ void LvlScene::historyBack()
         LevelData movedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC, &LvlScene::historyUndoMoveWater, &LvlScene::historyUndoMoveDoors);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyUndoMoveBlocks, &LvlScene::historyUndoMoveBGO, &LvlScene::historyUndoMoveNPC, &LvlScene::historyUndoMoveWater, &LvlScene::historyUndoMoveDoors, 0, false, false, false, false, false, true);
 
         break;
     }
@@ -525,99 +549,99 @@ void LvlScene::historyBack()
 
         CallbackData cbData;
         if(lastOperation.subtype == SETTING_INVISIBLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsInvisibleBlock, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsInvisibleBlock, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_SLIPPERY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsSlipperyBlock, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsSlipperyBlock, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_FRIENDLY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsFriendlyNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsFriendlyNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_BOSS){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsBossNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsBossNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_NOMOVEABLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsNoMoveableNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsNoMoveableNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_MESSAGE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsMessageNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsMessageNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_DIRECTION){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, &LvlScene::historyUndoSettingsChangeNPCNPC, 0, 0, false, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsChangeNPCBlocks, 0, &LvlScene::historyUndoSettingsChangeNPCNPC, 0, 0, 0, false, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoSettingsTypeWater, 0, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoSettingsTypeWater, 0, 0, true, true, true, true, false, true);
         }
         else
         if(lastOperation.subtype == SETTING_NOYOSHI){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsNoYoshiDoors, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsNoYoshiDoors, 0, true, true, true, true, false, true);
         }
         else
         if(lastOperation.subtype == SETTING_ALLOWNPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsAllowNPCDoors, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsAllowNPCDoors, 0, true, true, true, true, false, true);
         }
         else
         if(lastOperation.subtype == SETTING_LOCKED){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsLockedDoors, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyUndoSettingsLockedDoors, 0, true, true, true, true, false, true);
         }
         else
         if(lastOperation.subtype == SETTING_GENACTIVATE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateGeneratorNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateGeneratorNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_GENTYPE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTypeGeneratorNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTypeGeneratorNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_GENDIR){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionGeneratorNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDirectionGeneratorNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_GENTIME){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTimeGeneratorNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTimeGeneratorNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_ATTACHLAYER){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsAttachLayerNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_DESTROYED){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsDestroyedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsDestroyedEventBlocks, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_HITED){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsHitedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsHitedEventBlocks, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_LAYER_EMP){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsLayerEmptyEventBlocks, 0, &LvlScene::historyUndoSettingsLayerEmptyEventNPC, 0, 0, false, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoSettingsLayerEmptyEventBlocks, 0, &LvlScene::historyUndoSettingsLayerEmptyEventNPC, 0, 0, 0, false, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_ACTIVATE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateEventNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsActivateEventNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_DEATH){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDeathEventNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsDeathEventNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_TALK){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTalkEventNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsTalkEventNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_SPECIAL_DATA){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsSpecialDataNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsSpecialDataNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         break;
     }
@@ -648,7 +672,7 @@ void LvlScene::historyBack()
         LevelData modifiedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
@@ -656,7 +680,7 @@ void LvlScene::historyBack()
         LevelData resizedBlock = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyUndoResizeBlock, 0, 0, 0, 0, false, true, true, true, true);
+        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyUndoResizeBlock, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
@@ -1088,7 +1112,7 @@ void LvlScene::historyBack()
         LevelData modifiedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
         for(int i = 0; i < LvlData->layers.size(); i++){
             if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
                 LvlData->layers.removeAt(i);
@@ -1158,7 +1182,7 @@ void LvlScene::historyBack()
         }
 
         CallbackData cbData;
-        findGraphicsItem(lastOperation.data, &lastOperation, cbData, &LvlScene::historyUpdateVisibleBlocks, &LvlScene::historyUpdateVisibleBGO, &LvlScene::historyUpdateVisibleNPC, &LvlScene::historyUpdateVisibleWater, &LvlScene::historyUpdateVisibleDoor);
+        findGraphicsItem(lastOperation.data, &lastOperation, cbData, &LvlScene::historyUpdateVisibleBlocks, &LvlScene::historyUpdateVisibleBGO, &LvlScene::historyUpdateVisibleNPC, &LvlScene::historyUpdateVisibleWater, &LvlScene::historyUpdateVisibleDoor, 0, false, false, false, false, false, true);
 
         //just in case
         MainWinConnect::pMainWin->setDoorData(-2);
@@ -1213,7 +1237,7 @@ void LvlScene::historyBack()
         LevelData mvData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor);
+        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
 
         //just in case
         MainWinConnect::pMainWin->setDoorData(-2);
@@ -1230,7 +1254,7 @@ void LvlScene::historyBack()
         LevelData mvData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor);
+        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyUndoChangeLayerBlocks, &LvlScene::historyUndoChangeLayerBGO, &LvlScene::historyUndoChangeLayerNPC, &LvlScene::historyUndoChangeLayerWater, &LvlScene::historyUndoChangeLayerDoor, 0, false, false, false, false, false, true);
 
         //just in case
         MainWinConnect::pMainWin->setDoorData(-2);
@@ -1247,7 +1271,46 @@ void LvlScene::historyBack()
         int sectionID = lastOperation.extraData.toList()[0].toInt();
         QVariant extraData = lastOperation.extraData.toList()[1];
 
+        if(subtype == SETTING_SECISWARP){
+            LvlData->sections[sectionID].IsWarp = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECOFFSCREENEXIT){
+            LvlData->sections[sectionID].OffScreenEn = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECNOBACK){
+            LvlData->sections[sectionID].noback = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECUNDERWATER){
+            LvlData->sections[sectionID].underwater = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECBACKGROUNDIMG){
+            ChangeSectionBG(extraData.toList()[0].toInt(), sectionID);
+        }
+        else
+        if(subtype == SETTING_SECMUSIC){
+            LvlData->sections[sectionID].music_id = extraData.toList()[0].toInt();
+        }
+        else
+        if(subtype == SETTING_SECCUSTOMMUSIC){
+            LvlData->sections[sectionID].music_file = extraData.toList()[0].toString();
+        }
 
+        MainWinConnect::pMainWin->setLevelSectionData();
+        MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        QVariant extraData = lastOperation.extraData;
+
+        if(subtype == SETTING_LEVELNAME){
+            LvlData->LevelName = extraData.toList()[0].toString();
+        }
         break;
     }
     default:
@@ -1272,7 +1335,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, &LvlScene::historyRemovePlayerPoint);
 
         break;
     }
@@ -1314,6 +1377,15 @@ void LvlScene::historyForward()
             placeWater(water);
         }
 
+        foreach(PlayerPoint plr, placedData.players){
+            for(int i = 0; i < LvlData->players.size(); i++){
+                if(LvlData->players[i].id == plr.id){
+                    LvlData->players[i] = plr;
+                }
+            }
+            placePlayerPoint(plr);
+        }
+
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
         if(opts.animationEnabled) startBlockAnimation();
@@ -1337,7 +1409,7 @@ void LvlScene::historyForward()
         CallbackData cbData;
         cbData.x = baseX;
         cbData.y = baseY;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC, &LvlScene::historyRedoMoveWater, &LvlScene::historyRedoMoveDoors);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &LvlScene::historyRedoMoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRedoMoveNPC, &LvlScene::historyRedoMoveWater, &LvlScene::historyRedoMoveDoors, 0, false, false, false, false, false, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS:
@@ -1346,99 +1418,99 @@ void LvlScene::historyForward()
 
         CallbackData cbData;
         if(lastOperation.subtype == SETTING_INVISIBLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsInvisibleBlock, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsInvisibleBlock, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_SLIPPERY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsSlipperyBlock, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsSlipperyBlock, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_FRIENDLY){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsFriendlyNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsFriendlyNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_BOSS){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsBossNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsBossNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_NOMOVEABLE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsNoMoveableNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsNoMoveableNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_MESSAGE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsMessageNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsMessageNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_DIRECTION){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_CHANGENPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, &LvlScene::historyRedoSettingsChangeNPCNPC, 0, 0, false, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsChangeNPCBlocks, 0, &LvlScene::historyRedoSettingsChangeNPCNPC, 0, 0, 0, false, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_WATERTYPE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoSettingsTypeWater, 0, true, true, true, false, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoSettingsTypeWater, 0, 0, true, true, true, false, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_NOYOSHI){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsNoYoshiDoors, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsNoYoshiDoors, 0, true, true, true, true, false, true);
         }
         else
         if(lastOperation.subtype == SETTING_ALLOWNPC){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsAllowNPCDoors, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsAllowNPCDoors, 0, true, true, true, true, false, true);
         }
         else
         if(lastOperation.subtype == SETTING_LOCKED){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsLockedDoors, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, 0, &LvlScene::historyRedoSettingsLockedDoors, 0, true, true, true, true, false, true);
         }
         else
         if(lastOperation.subtype == SETTING_GENACTIVATE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateGeneratorNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateGeneratorNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_GENTYPE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTypeGeneratorNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTypeGeneratorNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_GENDIR){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionGeneratorNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDirectionGeneratorNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_GENTIME){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTimeGeneratorNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTimeGeneratorNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_ATTACHLAYER){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsAttachLayerNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsAttachLayerNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_DESTROYED){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsDestroyedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsDestroyedEventBlocks, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_HITED){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsHitedEventBlocks, 0, 0, 0, 0, false, true, true, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsHitedEventBlocks, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_LAYER_EMP){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsLayerEmptyEventBlocks, 0, &LvlScene::historyRedoSettingsLayerEmptyEventNPC, 0, 0, false, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoSettingsLayerEmptyEventBlocks, 0, &LvlScene::historyRedoSettingsLayerEmptyEventNPC, 0, 0, 0, false, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_ACTIVATE){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateEventNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsActivateEventNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_DEATH){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDeathEventNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsDeathEventNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_EV_TALK){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTalkEventNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsTalkEventNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         else
         if(lastOperation.subtype == SETTING_SPECIAL_DATA){
-            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsSpecialDataNPC, 0, 0, true, true, false, true, true);
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsSpecialDataNPC, 0, 0, 0, true, true, false, true, true, true);
         }
         break;
     }
@@ -1468,7 +1540,7 @@ void LvlScene::historyForward()
         LevelData modifiedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor, 0, false, false, false, false, false, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZEBLOCK:
@@ -1476,7 +1548,7 @@ void LvlScene::historyForward()
         LevelData resizedBlock = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyRedoResizeBlock, 0, 0, 0, 0, false, true, true, true, true);
+        findGraphicsItem(resizedBlock, &lastOperation, cbData, &LvlScene::historyRedoResizeBlock, 0, 0, 0, 0, 0, false, true, true, true, true, true);
         break;
     }
     case HistoryOperation::LEVELHISTORY_PLACEDOOR:
@@ -1912,7 +1984,7 @@ void LvlScene::historyForward()
         LvlData->layers.push_back(modifiedSourceData.layers[0]);
 
         CallbackData cbData;
-        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor);
+        findGraphicsItem(modifiedSourceData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor, 0, false, false, false, false, false, true);
 
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
@@ -1936,7 +2008,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, &LvlScene::historyRemovePlayerPoint);
 
         for(int i = 0; i < LvlData->layers.size(); i++){
             if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
@@ -1993,7 +2065,7 @@ void LvlScene::historyForward()
         LevelData mvData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor);
+        findGraphicsItem(mvData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor, 0, false, false, false, false, false, true);
 
         for(int i = 0; i < LvlData->layers.size(); i++){
             if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
@@ -2010,7 +2082,7 @@ void LvlScene::historyForward()
         LevelData mergeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(mergeData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor);
+        findGraphicsItem(mergeData, &lastOperation, cbData, &LvlScene::historyRedoChangeLayerBlocks, &LvlScene::historyRedoChangeLayerBGO, &LvlScene::historyRedoChangeLayerNPC, &LvlScene::historyRedoChangeLayerWater, &LvlScene::historyRedoChangeLayerDoor, 0, false, false, false, false, false, true);
 
         for(int i = 0; i < LvlData->layers.size(); i++){
             if(LvlData->layers[i].array_id == lastOperation.data.layers[0].array_id){
@@ -2028,7 +2100,46 @@ void LvlScene::historyForward()
         int sectionID = lastOperation.extraData.toList()[0].toInt();
         QVariant extraData = lastOperation.extraData.toList()[1];
 
+        if(subtype == SETTING_SECISWARP){
+            LvlData->sections[sectionID].IsWarp = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECOFFSCREENEXIT){
+            LvlData->sections[sectionID].OffScreenEn = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECNOBACK){
+            LvlData->sections[sectionID].noback = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECUNDERWATER){
+            LvlData->sections[sectionID].underwater = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECBACKGROUNDIMG){
+            ChangeSectionBG(extraData.toList()[1].toInt(), sectionID);
+        }
+        else
+        if(subtype == SETTING_SECMUSIC){
+            LvlData->sections[sectionID].music_id = extraData.toList()[1].toInt();
+        }
+        else
+        if(subtype == SETTING_SECCUSTOMMUSIC){
+            LvlData->sections[sectionID].music_file = extraData.toList()[1].toString();
+        }
+        MainWinConnect::pMainWin->setLevelSectionData();
+        MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
 
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        QVariant extraData = lastOperation.extraData;
+
+        if(subtype == SETTING_LEVELNAME){
+            LvlData->LevelName = extraData.toList()[1].toString();
+        }
         break;
     }
     default:
@@ -2221,6 +2332,19 @@ void LvlScene::historyRemoveWater(LvlScene::CallbackData cbData, LevelWater /*da
 {
     ((ItemWater *)cbData.item)->removeFromArray();
     removeItem(cbData.item);
+}
+
+void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoint data)
+{
+    for(int i = 0; i < LvlData->players.size(); i++){
+        if(LvlData->players[i].id == data.id){
+            LvlData->players[i].x = 0;
+            LvlData->players[i].y = 0;
+            LvlData->players[i].w = 0;
+            LvlData->players[i].h = 0;
+        }
+    }
+    delete cbData.item;
 }
 
 void LvlScene::historyUndoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock data)
@@ -2727,11 +2851,13 @@ void LvlScene::findGraphicsItem(LevelData toFind,
                                 callBackLevelNPC clbNpc,
                                 callBackLevelWater clbWater,
                                 callBackLevelDoors clbDoor,
+                                callBackLevelPlayerPoints clbPlayer,
                                 bool ignoreBlock,
                                 bool ignoreBGO,
                                 bool ignoreNPC,
                                 bool ignoreWater,
-                                bool ignoreDoors)
+                                bool ignoreDoors,
+                                bool ignorePlayer)
 {
     QMap<int, LevelDoors> sortedEntranceDoors;
     QMap<int, LevelDoors> sortedExitDoors;
@@ -2775,6 +2901,13 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             sortedWater[water.array_id] = water;
         }
     }
+    QMap<int, PlayerPoint> sortedPlayers;
+    if(!ignorePlayer){
+        foreach (PlayerPoint player, toFind.players) {
+            sortedPlayers[player.id] = player;
+        }
+    }
+
 
     //bool blocksFinished = false;
     //bool bgosFinished = false;
@@ -2786,6 +2919,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
     QMap<int, QGraphicsItem*> sortedGraphWater;
     QMap<int, QGraphicsItem*> sortedGraphDoorEntrance;
     QMap<int, QGraphicsItem*> sortedGraphDoorExit;
+    QMap<int, QGraphicsItem*> sortedGraphPlayers;
     foreach (QGraphicsItem* unsortedItem, items())
     {
         if(unsortedItem->data(0).toString()=="Block")
@@ -2828,6 +2962,20 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         {
             if(!ignoreDoors){
                 sortedGraphDoorExit[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="player1")
+        {
+            if(!ignorePlayer){
+                sortedGraphPlayers[1] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="player2")
+        {
+            if(!ignorePlayer){
+                sortedGraphPlayers[2] = unsortedItem;
             }
         }
     }
@@ -3008,6 +3156,29 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         MainWinConnect::pMainWin->setDoorData(-2); //update Door data
     }
 
+    if(!ignorePlayer){
+        foreach (QGraphicsItem* item, sortedGraphPlayers)
+        {
+            if(sortedPlayers.size()!=0)
+            {
+                QMap<int, PlayerPoint>::iterator beginItem = sortedPlayers.begin();
+                unsigned int currentArrayId = (*beginItem).id;
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedPlayers.begin();
+
+                currentArrayId = (*beginItem).id;
+
+                if(currentArrayId==1||currentArrayId==2)
+                {
+                    cbData.item = item;
+                    (this->*clbPlayer)(cbData,(*beginItem));
+                    sortedPlayers.erase(beginItem);
+                }
+            }
+        }
+    }
+
 }
 
 void LvlScene::findGraphicsDoor(int array_id, LvlScene::HistoryOperation *operation, LvlScene::CallbackData customData, LvlScene::callBackLevelDoors clbDoors, bool isEntrance)
@@ -3151,6 +3322,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE: return tr("Remove layers and save items");
     case HistoryOperation::LEVELHISTORY_MERGELAYER: return tr("Merge Layer");
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION: return tr("Changed Sectionsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL: return tr("Changed Levelsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     default:
         return tr("Unknown");
     }
@@ -3221,6 +3393,14 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_KSTART: return tr("Start Key Activate");
     case SETTING_EV_TRIACTIVATE: return tr("Trigger Activate");
     case SETTING_EV_TRIDELAY: return tr("Trigger Delay");
+    case SETTING_SECISWARP: return tr("Is Warp");
+    case SETTING_SECNOBACK: return tr("No Back");
+    case SETTING_SECOFFSCREENEXIT: return tr("Off Screen Exit");
+    case SETTING_SECUNDERWATER: return tr("Underwater");
+    case SETTING_SECBACKGROUNDIMG: return tr("Background Image");
+    case SETTING_SECMUSIC: return tr("Music");
+    case SETTING_SECCUSTOMMUSIC: return tr("Custom Music");
+    case SETTING_LEVELNAME: return tr("Level Name");
     default:
         return tr("Unknown");
     }
