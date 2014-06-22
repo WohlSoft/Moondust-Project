@@ -26,7 +26,7 @@ MusicFileList::MusicFileList(QString Folder, QWidget *parent) :
 {
     QStringList filters;
     QDir musicDir(Folder);
-    filters << "*.mp3" << "*.ogg" << "*.wav" << "*.mid";
+    filters << "*.mp3" << "*.ogg" << "*.wav" << "*.flac";
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);
     ui->setupUi(this);
