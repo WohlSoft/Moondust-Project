@@ -22,7 +22,7 @@
 #include "./ui_npcedit.h"
 #include "../file_formats/file_formats.h"
 #include "../main_window/global_settings.h"
-
+#include "../common_features/mainwinconnect.h"
 
 
 
@@ -133,6 +133,9 @@ bool npcedit::saveFile(const QString &fileName)
 
     refreshImageFile();
     updatePreview();
+
+    MainWinConnect::pMainWin->AddToRecentFiles(fileName);
+    MainWinConnect::pMainWin->SyncRecentFiles();
 
     return true;
 }

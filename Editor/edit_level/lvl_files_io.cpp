@@ -216,6 +216,9 @@ bool leveledit::saveFile(const QString &fileName)
 
     LvlData.modified = false;
 
+    MainWinConnect::pMainWin->AddToRecentFiles(fileName);
+    MainWinConnect::pMainWin->SyncRecentFiles();
+
     return true;
 }
 
