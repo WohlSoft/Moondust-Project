@@ -149,12 +149,12 @@
     <message>
         <location filename="../data_configs/configstatus.ui" line="204"/>
         <source>Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Errores</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="217"/>
         <source>Errors of configuration loading:</source>
-        <translation type="unfinished"></translation>
+        <translation>Errores cargando configuraciones:</translation>
     </message>
     <message>
         <source>Level Blocks (%1/%1)</source>
@@ -270,7 +270,7 @@
     <message>
         <location filename="../data_configs/configstatus.cpp" line="170"/>
         <source>[Error list is empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Lista de errores está vacía]</translation>
     </message>
 </context>
 <context>
@@ -719,42 +719,42 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3146"/>
         <source>Move Items to new Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mover ítems a nueva capa</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3147"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nueva capa</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3148"/>
         <source>Remove layer with items</source>
-        <translation type="unfinished">Remover capa con ítems</translation>
+        <translation>Remover capa con ítems</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3149"/>
         <source>Rename Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Renombrar evento</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3150"/>
         <source>Rename Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Renombrar capa</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3151"/>
         <source>Remove layers and save items</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover capa y guardar elementos</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3152"/>
         <source>Merge Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Combinar capa</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3153"/>
         <source>Changed Sectionsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencia cambiada [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3155"/>
