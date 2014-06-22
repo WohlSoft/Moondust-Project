@@ -414,6 +414,20 @@ void LvlScene::addChangeSectionSettingsHistory(int sectionID, LvlScene::SettingS
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addChangeLevelSettingsHistory(LvlScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chLevelSettingsOperation;
+    chLevelSettingsOperation.type = HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL;
+    chLevelSettingsOperation.subtype = subtype;
+    chLevelSettingsOperation.extraData = extraData;
+    operationList.push_back(chLevelSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -1247,7 +1261,45 @@ void LvlScene::historyBack()
         int sectionID = lastOperation.extraData.toList()[0].toInt();
         QVariant extraData = lastOperation.extraData.toList()[1];
 
+        if(subtype == SETTING_SECISWARP){
+            LvlData->sections[sectionID].IsWarp = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECOFFSCREENEXIT){
+            LvlData->sections[sectionID].OffScreenEn = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECNOBACK){
+            LvlData->sections[sectionID].noback = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECUNDERWATER){
+            LvlData->sections[sectionID].underwater = !extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECBACKGROUNDIMG){
+            ChangeSectionBG(extraData.toList()[0].toInt(), sectionID);
+        }
+        else
+        if(subtype == SETTING_SECMUSIC){
+            LvlData->sections[sectionID].music_id = extraData.toList()[0].toInt();
+        }
+        else
+        if(subtype == SETTING_SECCUSTOMMUSIC){
+            LvlData->sections[sectionID].music_file = extraData.toList()[0].toString();
+        }
 
+        MainWinConnect::pMainWin->setLevelSectionData();
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        QVariant extraData = lastOperation.extraData;
+
+        if(subtype == SETTING_LEVELNAME){
+            LvlData->LevelName = extraData.toList()[0].toString();
+        }
         break;
     }
     default:
@@ -2028,7 +2080,45 @@ void LvlScene::historyForward()
         int sectionID = lastOperation.extraData.toList()[0].toInt();
         QVariant extraData = lastOperation.extraData.toList()[1];
 
+        if(subtype == SETTING_SECISWARP){
+            LvlData->sections[sectionID].IsWarp = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECOFFSCREENEXIT){
+            LvlData->sections[sectionID].OffScreenEn = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECNOBACK){
+            LvlData->sections[sectionID].noback = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECUNDERWATER){
+            LvlData->sections[sectionID].underwater = extraData.toBool();
+        }
+        else
+        if(subtype == SETTING_SECBACKGROUNDIMG){
+            ChangeSectionBG(extraData.toList()[1].toInt(), sectionID);
+        }
+        else
+        if(subtype == SETTING_SECMUSIC){
+            LvlData->sections[sectionID].music_id = extraData.toList()[1].toInt();
+        }
+        else
+        if(subtype == SETTING_SECCUSTOMMUSIC){
+            LvlData->sections[sectionID].music_file = extraData.toList()[1].toString();
+        }
 
+        MainWinConnect::pMainWin->setLevelSectionData();
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        QVariant extraData = lastOperation.extraData;
+
+        if(subtype == SETTING_LEVELNAME){
+            LvlData->LevelName = extraData.toList()[1].toString();
+        }
         break;
     }
     default:
@@ -3151,6 +3241,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_REMOVELAYERANDSAVE: return tr("Remove layers and save items");
     case HistoryOperation::LEVELHISTORY_MERGELAYER: return tr("Merge Layer");
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION: return tr("Changed Sectionsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL: return tr("Changed Levelsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     default:
         return tr("Unknown");
     }
@@ -3221,6 +3312,14 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_EV_KSTART: return tr("Start Key Activate");
     case SETTING_EV_TRIACTIVATE: return tr("Trigger Activate");
     case SETTING_EV_TRIDELAY: return tr("Trigger Delay");
+    case SETTING_SECISWARP: return tr("Is Warp");
+    case SETTING_SECNOBACK: return tr("No Back");
+    case SETTING_SECOFFSCREENEXIT: return tr("Off Screen Exit");
+    case SETTING_SECUNDERWATER: return tr("Underwater");
+    case SETTING_SECBACKGROUNDIMG: return tr("Background Image");
+    case SETTING_SECMUSIC: return tr("Music");
+    case SETTING_SECCUSTOMMUSIC: return tr("Custom Music");
+    case SETTING_LEVELNAME: return tr("Level Name");
     default:
         return tr("Unknown");
     }
