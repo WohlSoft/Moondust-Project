@@ -100,9 +100,11 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
                     (it->data(0).toString()=="Block")||
                     (it->data(0).toString()=="BGO")||
                     (it->data(0).toString()=="NPC")||
-                    (it->data(0).toString()=="door_exit")||
-                    (it->data(0).toString()=="door_enter")||
-                    (it->data(0).toString()=="water")
+                    (it->data(0).toString()=="Door_exit")||
+                    (it->data(0).toString()=="Door_enter")||
+                    (it->data(0).toString()=="Water")||
+                    (it->data(0).toString()=="player1")||
+                    (it->data(0).toString()=="player2")
               )&&(it->isVisible() ) )
                 return it;
     }

@@ -22,6 +22,8 @@
 #include "../../file_formats/file_formats.h"
 #include "../../level_scene/lvl_item_placing.h"
 
+#include "../../common_features/levelfilelist.h"
+
 
 static bool lockSetSettings=false;
 
@@ -897,6 +899,24 @@ void MainWindow::on_WarpLevelEntrance_clicked(bool checked)
 
         edit->scene->addChangeWarpSettingsHistory((unsigned int)ui->WarpList->currentData().toInt(), LvlScene::SETTING_LEVELENTR, QVariant(extraData));
         edit->scene->doorPointsSync( (unsigned int)ui->WarpList->currentData().toInt() );
+    }
+
+}
+
+
+void MainWindow::on_WarpBrowseLevels_clicked()
+{
+    QString dirPath;
+    if(activeChildWindow()==1)
+    {
+        dirPath = activeLvlEditWin()->LvlData.path;
+    }
+    else return;
+
+    LevelFileList levelList(dirPath);
+    if( levelList.exec() == QDialog::Accepted )
+    {
+        ui->WarpLevelFile->setText(levelList.SelectedFile);
     }
 
 }

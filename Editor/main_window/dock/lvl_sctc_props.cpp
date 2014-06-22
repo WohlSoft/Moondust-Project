@@ -27,6 +27,7 @@ void MainWindow::on_LVLPropsLevelWarp_clicked(bool checked)
 {
     if (activeChildWindow()==1)
     {
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECISWARP, QVariant(checked));
         ui->actionLevWarp->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].IsWarp = checked;
         activeLvlEditWin()->LvlData.modified = true;
@@ -37,6 +38,7 @@ void MainWindow::on_actionLevWarp_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECISWARP, QVariant(checked));
         ui->LVLPropsLevelWarp->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].IsWarp = checked;
         activeLvlEditWin()->LvlData.modified = true;
@@ -48,6 +50,7 @@ void MainWindow::on_LVLPropsOffScr_clicked(bool checked)
 {
     if (activeChildWindow()==1)
     {
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECOFFSCREENEXIT, QVariant(checked));
         ui->actionLevOffScr->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].OffScreenEn = checked;
         activeLvlEditWin()->LvlData.modified = true;
@@ -58,6 +61,7 @@ void MainWindow::on_actionLevOffScr_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECOFFSCREENEXIT, QVariant(checked));
         ui->LVLPropsOffScr->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].OffScreenEn = checked;
         activeLvlEditWin()->LvlData.modified = true;
@@ -70,6 +74,7 @@ void MainWindow::on_LVLPropsNoTBack_clicked(bool checked)
 {
     if (activeChildWindow()==1)
     {
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECNOBACK, QVariant(checked));
         ui->actionLevNoBack->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].noback = checked;
         activeLvlEditWin()->LvlData.modified = true;
@@ -80,6 +85,7 @@ void MainWindow::on_actionLevNoBack_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECNOBACK, QVariant(checked));
         ui->LVLPropsNoTBack->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].noback = checked;
         activeLvlEditWin()->LvlData.modified = true;
@@ -91,6 +97,7 @@ void MainWindow::on_LVLPropsUnderWater_clicked(bool checked)
 {
     if (activeChildWindow()==1)
     {
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECUNDERWATER, QVariant(checked));
         ui->actionLevUnderW->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].underwater = checked;
         activeLvlEditWin()->LvlData.modified = true;
@@ -101,6 +108,7 @@ void MainWindow::on_actionLevUnderW_triggered(bool checked)
 {
     if (activeChildWindow()==1)
     {
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECUNDERWATER, QVariant(checked));
         ui->LVLPropsUnderWater->setChecked(checked);
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].underwater = checked;
         activeLvlEditWin()->LvlData.modified = true;
@@ -171,8 +179,12 @@ void MainWindow::on_LVLPropsBackImage_currentIndexChanged(int index)
     WriteToLog(QtDebugMsg, "Change BG to "+QString::number(index));
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->scene->ChangeSectionBG(ui->LVLPropsBackImage->currentData().toInt());
-       activeLvlEditWin()->LvlData.modified = true;
+        QList<QVariant> backData;
+        backData.push_back(activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].background);
+        backData.push_back(ui->LVLPropsBackImage->currentData().toInt());
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECBACKGROUNDIMG, QVariant(backData));
+        activeLvlEditWin()->scene->ChangeSectionBG(ui->LVLPropsBackImage->currentData().toInt());
+        activeLvlEditWin()->LvlData.modified = true;
     }
     ui->LVLPropsBackImage->setEnabled(true);
 //    }
@@ -245,6 +257,17 @@ void MainWindow::setLevelSectionData()
                 ui->LVLPropsMusicNumber->setCurrentIndex(i); break;
             }
         }
+
+        ui->LVLPropsLevelWarp->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].IsWarp);
+        ui->actionLevWarp->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].IsWarp);
+        ui->LVLPropsOffScr->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn);
+        ui->actionLevOffScr->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].OffScreenEn);
+        ui->LVLPropsNoTBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
+        ui->actionLevNoBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].noback);
+        ui->LVLPropsUnderWater->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
+        ui->actionLevUnderW->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
+        ui->LVLPropsMusicCustom->setText(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
+        ui->LVLPropsMusicCustomEn->setChecked((activeLvlEditWin()->LvlData.sections[edit->LvlData.CurSection].music_id == configs.music_custom_id));
     }
 
     lockSctSettingsProps=false;
@@ -263,6 +286,10 @@ void MainWindow::on_LVLPropsMusicNumber_currentIndexChanged(int index)
 
     if(activeChildWindow()==1)
     {
+        QList<QVariant> musicData;
+        musicData.push_back(activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id);
+        musicData.push_back(ui->LVLPropsMusicNumber->currentIndex());
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECMUSIC, QVariant(musicData));
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
         if(ui->LVLPropsMusicNumber->hasFocus()) activeLvlEditWin()->LvlData.modified = true;
     }
@@ -282,6 +309,10 @@ void MainWindow::on_LVLPropsMusicCustomEn_toggled(bool checked)
             ui->LVLPropsMusicNumber->setCurrentIndex( configs.music_custom_id );
             if(activeChildWindow()==1)
             {
+                QList<QVariant> musicData;
+                musicData.push_back(activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id);
+                musicData.push_back(ui->LVLPropsMusicNumber->currentIndex());
+                activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECMUSIC, QVariant(musicData));
                 activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_id = ui->LVLPropsMusicNumber->currentIndex();
                 activeLvlEditWin()->LvlData.modified = true;
             }
@@ -312,6 +343,10 @@ void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
 
     if(activeChildWindow()==1)
     {
+        QList<QVariant> cusMusicData;
+        cusMusicData.push_back(activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_file);
+        cusMusicData.push_back(arg1.simplified().remove('\"'));
+        activeLvlEditWin()->scene->addChangeSectionSettingsHistory(activeLvlEditWin()->LvlData.CurSection, LvlScene::SETTING_SECCUSTOMMUSIC, QVariant(cusMusicData));
         activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_file = arg1.simplified().remove('\"');
     }
 
