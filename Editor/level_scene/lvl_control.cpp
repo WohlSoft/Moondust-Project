@@ -117,14 +117,14 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     if(objType=="player2")
                         player=2;
 
-                    foreach(PlayerPoint pnt, LvlData->players)
+                    for(int plr=0; plr<LvlData->players.size(); plr++)
                     {
-                     if(pnt.id == player)
+                     if(LvlData->players[plr].id == player)
                      {
-                         pnt.x = 0;
-                         pnt.y = 0;
-                         pnt.w = 0;
-                         pnt.h = 0;
+                         LvlData->players[plr].x = 0;
+                         LvlData->players[plr].y = 0;
+                         LvlData->players[plr].w = 0;
+                         LvlData->players[plr].h = 0;
                          if((*it)) delete (*it);
                          break;
                      }
@@ -760,14 +760,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             if((*it)->data(0).toString()=="player2")
                                 player=2;
 
-                            foreach(PlayerPoint pnt, LvlData->players)
+                            for(int plr=0; plr<LvlData->players.size(); plr++)
                             {
-                             if(pnt.id == player)
+                             if(LvlData->players[plr].id == player)
                              {
-                                 pnt.x = 0;
-                                 pnt.y = 0;
-                                 pnt.w = 0;
-                                 pnt.h = 0;
+                                 LvlData->players[plr].x = 0;
+                                 LvlData->players[plr].y = 0;
+                                 LvlData->players[plr].w = 0;
+                                 LvlData->players[plr].h = 0;
                                  //    Uncomment this after add player point history
                                  //deleted=true;
                                  break;
@@ -1243,14 +1243,14 @@ void LvlScene::removeItemUnderCursor()
                 if(findItem->data(0).toString()=="player2")
                     player=2;
 
-                foreach(PlayerPoint pnt, LvlData->players)
+                for(int plr=0; plr<LvlData->players.size(); plr++)
                 {
-                 if(pnt.id == player)
+                 if(LvlData->players[plr].id == player)
                  {
-                     pnt.x = 0;
-                     pnt.y = 0;
-                     pnt.w = 0;
-                     pnt.h = 0;
+                     LvlData->players[plr].x = 0;
+                     LvlData->players[plr].y = 0;
+                     LvlData->players[plr].w = 0;
+                     LvlData->players[plr].h = 0;
                      //    Uncomment this after add player point history
                      //deleted=true;
                      break;
