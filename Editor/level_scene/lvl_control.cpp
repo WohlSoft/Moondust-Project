@@ -107,6 +107,29 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     MainWinConnect::pMainWin->setDoorData(-2);
                     deleted=true;
                 }
+                else
+                if(( objType=="player1" )||( objType=="player2" ))
+                {
+                    unsigned long player=1;
+
+                    if(objType=="player1")
+                        player=1;
+                    if(objType=="player2")
+                        player=2;
+
+                    foreach(PlayerPoint pnt, LvlData->players)
+                    {
+                     if(pnt.id == player)
+                     {
+                         pnt.x = 0;
+                         pnt.y = 0;
+                         pnt.w = 0;
+                         pnt.h = 0;
+                         if((*it)) delete (*it);
+                         break;
+                     }
+                    }
+                }
         }
         if(deleted) addRemoveHistory(historyBuffer);
 
@@ -659,6 +682,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
 
+            QList<QGraphicsItem*> deleteList;
+            deleteList.clear();
             QList<QGraphicsItem*> selectedList = selectedItems();
 
             // check for grid snap
@@ -717,7 +742,32 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             deleted=true;
                             MainWinConnect::pMainWin->setDoorData(-2);
                         }
+                        else
+                        if(( (*it)->data(0).toString()=="player1" )||( (*it)->data(0).toString()=="player2" ))
+                        {
+                            unsigned long player=1;
+
+                            if((*it)->data(0).toString()=="player1")
+                                player=1;
+                            if((*it)->data(0).toString()=="player2")
+                                player=2;
+
+                            foreach(PlayerPoint pnt, LvlData->players)
+                            {
+                             if(pnt.id == player)
+                             {
+                                 pnt.x = 0;
+                                 pnt.y = 0;
+                                 pnt.w = 0;
+                                 pnt.h = 0;
+                                 //    Uncomment this after add player point history
+                                 //deleted=true;
+                                 break;
+                             }
+                            }
+                        }
                         removeItem((*it));
+                        deleteList.push_back((*it));
                         continue;
                     }
 
@@ -776,6 +826,16 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                            )
                                   );
                     //////////////////////////////////////////////////////////////////
+                }
+
+                if(!deleteList.isEmpty())
+                {
+                    while(!deleteList.isEmpty())
+                    {
+                        QGraphicsItem* tmp = deleteList.first();
+                        deleteList.pop_front();
+                        delete tmp;
+                    }
                 }
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
@@ -1163,6 +1223,30 @@ void LvlScene::removeItemUnderCursor()
                 removedItems.water.push_back(((ItemWater *)findItem)->waterData);
                 ((ItemWater *)findItem)->removeFromArray();
                 deleted=true;
+            }
+            else
+            if(( findItem->data(0).toString()=="player1" )||( findItem->data(0).toString()=="player2" ))
+            {
+                unsigned long player=1;
+
+                if(findItem->data(0).toString()=="player1")
+                    player=1;
+                if(findItem->data(0).toString()=="player2")
+                    player=2;
+
+                foreach(PlayerPoint pnt, LvlData->players)
+                {
+                 if(pnt.id == player)
+                 {
+                     pnt.x = 0;
+                     pnt.y = 0;
+                     pnt.w = 0;
+                     pnt.h = 0;
+                     //    Uncomment this after add player point history
+                     //deleted=true;
+                     break;
+                 }
+                }
             }
             removeItem(findItem);
             delete findItem;
