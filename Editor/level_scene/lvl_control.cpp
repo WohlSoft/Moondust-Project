@@ -771,7 +771,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         continue;
                     }
 
-                    gridSize = 32;
+                    gridSize = pConfigs->default_grid;
                     offsetX = 0;
                     offsetY = 0;
                     ObjType = (*it)->data(0).toString();
@@ -797,13 +797,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }else
                     if( ObjType == "Water")
                     {
-                        gridSize = 16;
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
                     }else
                     if( ObjType == "Door_enter")
-                        gridSize = 16 ;
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
                     else
                     if( ObjType == "Door_exit")
-                        gridSize = 16 ;
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
                     else
                     if( ObjType == "player1")
                     {
@@ -837,6 +837,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         if(tmp!=NULL) delete tmp;
                     }
                 }
+                selectedList = selectedItems();
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
                 {
