@@ -2736,7 +2736,7 @@ void LvlScene::historyUndoSettingsSortingBGO(LvlScene::CallbackData cbData, Leve
     ((ItemBGO*)cbData.item)->arrayApply();
 }
 
-void LvlScene::historyRedoSettingsSortingBGO(LvlScene::CallbackData cbData, LevelBGO data)
+void LvlScene::historyRedoSettingsSortingBGO(LvlScene::CallbackData cbData, LevelBGO /*data*/)
 {
     ((ItemBGO*)cbData.item)->bgoData.smbx64_sp = (long)cbData.hist->extraData.toLongLong();
     ((ItemBGO*)cbData.item)->arrayApply();
