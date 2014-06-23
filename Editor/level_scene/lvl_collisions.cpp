@@ -62,7 +62,28 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
               if((item->data(0).toString()=="Block")||(item->data(0).toString()=="NPC")
                       ||(item->data(0).toString()=="BGO"))
               {
-                  if(item->data(0).toString()!=it->data(0).toString()) continue;
+                  if(item->data(0).toString()=="NPC")
+                  {
+                      if( item->data(8).toBool() )
+                      {
+                          if(item->data(1).toInt()!=it->data(1).toInt()) continue;
+                      }
+                      else
+                      {
+                          if(
+                                  (
+                                   (item->data(0).toString()=="Block")
+                                   &&(!((ItemNPC *)item)->localProps.collision_with_blocks)
+                                   )
+                                  ||
+                                  ((item->data(0).toString()!="NPC")&&(item->data(0).toString()!="Block"))
+                             )
+                                    continue;
+                      }
+
+                  }
+                  else
+                        if(item->data(0).toString()!=it->data(0).toString()) continue;
 
                   if(item->data(3).toString()=="sizable")
                   {//sizable Block
