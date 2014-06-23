@@ -1013,6 +1013,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                  historySourceBuffer.players.push_back(LvlData->players[g]);
                                  LvlData->players[g].x = (long)(*it)->scenePos().x();
                                  LvlData->players[g].y = (long)(*it)->scenePos().y();
+                                 historyBuffer.players.push_back(LvlData->players[g]);
                                  break;
                              }
                             }
