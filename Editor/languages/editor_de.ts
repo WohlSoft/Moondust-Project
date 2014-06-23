@@ -149,12 +149,12 @@
     <message>
         <location filename="../data_configs/configstatus.ui" line="204"/>
         <source>Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="217"/>
         <source>Errors of configuration loading:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler mit Konfigurationen:</translation>
     </message>
     <message>
         <source>Level Blocks (%1/%1)</source>
@@ -270,7 +270,7 @@
     <message>
         <location filename="../data_configs/configstatus.cpp" line="170"/>
         <source>[Error list is empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Fehler Liste ist Leer]</translation>
     </message>
 </context>
 <context>
@@ -600,12 +600,12 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../common_features/levelfilelist.ui" line="20"/>
         <source>Level files list</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Datei Liste</translation>
     </message>
     <message>
         <location filename="../common_features/levelfilelist.ui" line="30"/>
         <source>Please, select level file from list for use them:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wähle die Leveldatei von der Liste:</translation>
     </message>
 </context>
 <context>
@@ -783,17 +783,17 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3436"/>
         <source>Changed Sectionsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Verändere Bereicheinstellung [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3437"/>
         <source>Changed Levelsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Verändere Leveleinstellung [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3438"/>
         <source>Place Player Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Platziere Spielerpunkt</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3440"/>
@@ -1110,47 +1110,47 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3509"/>
         <source>Is Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Ist Warp</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3510"/>
         <source>No Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein Zurück</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3511"/>
         <source>Off Screen Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Offscreen Ausgang</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3512"/>
         <source>Underwater</source>
-        <translation type="unfinished">Unterwasser</translation>
+        <translation>Unterwasser</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3513"/>
         <source>Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Hintergrundbild</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3514"/>
         <source>Music</source>
-        <translation type="unfinished">Musik</translation>
+        <translation>Musik</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3515"/>
         <source>Custom Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefiniert Musik</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3516"/>
         <source>Level Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Name</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3517"/>
         <source>BGO Sorting Priority</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO Sortierung Priorität</translation>
     </message>
 </context>
 <context>
@@ -1398,12 +1398,12 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="334"/>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte speichere Datei</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="334"/>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte speichere Datei, bevor du benutzerdefinierte Musikdateien wählen willst.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1711"/>
@@ -2914,13 +2914,14 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../common_features/musicfilelist.cpp" line="51"/>
         <source>Too many subfolders</source>
-        <translation type="unfinished"></translation>
+        <translation>Zu viele Subordner</translation>
     </message>
     <message>
         <location filename="../common_features/musicfilelist.cpp" line="51"/>
         <source>If you contunue this operation, application can be frozen.
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn du weitermachst, kann das Programm einfrieren.
+Möchtest du fortfahren?</translation>
     </message>
 </context>
 <context>
