@@ -428,6 +428,21 @@ void LvlScene::addChangeLevelSettingsHistory(LvlScene::SettingSubType subtype, Q
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos)
+{
+    cleanupRedoElements();
+
+    HistoryOperation plPlrPointOperation;
+    plPlrPointOperation.type = HistoryOperation::LEVELHISTORY_REPLACEPLAYERPOINT;
+    plPlrPointOperation.data.players.push_back(plr);
+    if(!((long)oldPos.toList()[3].toLongLong() == 0 && (long)oldPos.toList()[4].toLongLong() == 0))
+        plPlrPointOperation.extraData = oldPos;
+    operationList.push_back(plPlrPointOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::historyBack()
 {
     historyIndex--;
@@ -529,7 +544,7 @@ void LvlScene::historyBack()
         LevelData placeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, &LvlScene::historyRemovePlayerPoint, false, false, false, false, true);
+        findGraphicsItem(placeData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, 0, 0, false, false, false, false, false);
 
         break;
     }
@@ -1313,6 +1328,16 @@ void LvlScene::historyBack()
         }
         break;
     }
+    case HistoryOperation::LEVELHISTORY_REPLACEPLAYERPOINT:
+    {
+        //revert place
+        LevelData placeData = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(placeData, &lastOperation, cbData, 0, 0, 0, 0, 0, &LvlScene::historyRemovePlayerPoint, true, true, true, true, true);
+
+        break;
+    }
     default:
         break;
     }
@@ -1375,15 +1400,6 @@ void LvlScene::historyForward()
             //place them back
             LvlData->water.push_back(water);
             placeWater(water);
-        }
-
-        foreach(PlayerPoint plr, placedData.players){
-            for(int i = 0; i < LvlData->players.size(); i++){
-                if(LvlData->players[i].id == plr.id){
-                    LvlData->players[i] = plr;
-                }
-            }
-            placePlayerPoint(plr);
         }
 
         //refresh Animation control
@@ -2140,6 +2156,22 @@ void LvlScene::historyForward()
         if(subtype == SETTING_LEVELNAME){
             LvlData->LevelName = extraData.toList()[1].toString();
         }
+
+        break;
+    }
+    case HistoryOperation::LEVELHISTORY_REPLACEPLAYERPOINT:
+    {
+        LevelData placedData = lastOperation.data;
+        //revert place
+        foreach(PlayerPoint plr, placedData.players){
+            for(int i = 0; i < LvlData->players.size(); i++){
+                if(LvlData->players[i].id == plr.id){
+                    LvlData->players[i] = plr;
+                }
+            }
+            placePlayerPoint(plr);
+        }
+
         break;
     }
     default:
@@ -2336,15 +2368,39 @@ void LvlScene::historyRemoveWater(LvlScene::CallbackData cbData, LevelWater /*da
 
 void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoint data)
 {
-    for(int i = 0; i < LvlData->players.size(); i++){
-        if(LvlData->players[i].id == data.id){
-            LvlData->players[i].x = 0;
-            LvlData->players[i].y = 0;
-            LvlData->players[i].w = 0;
-            LvlData->players[i].h = 0;
+    bool wasPlaced = false;
+    PlayerPoint oPoint;
+    if(!cbData.hist->extraData.isNull()){
+        if(cbData.hist->extraData.type() == QVariant::List){
+            QList<QVariant> mData = cbData.hist->extraData.toList();
+            if(mData.size() == 5){
+                oPoint.id = (unsigned int)mData[0].toInt();
+                oPoint.x = (long)mData[1].toLongLong();
+                oPoint.y = (long)mData[2].toLongLong();
+                oPoint.w = (long)mData[3].toLongLong();
+                oPoint.h = (long)mData[4].toLongLong();
+                wasPlaced = true;
+            }
         }
     }
-    delete cbData.item;
+    for(int i = 0; i < LvlData->players.size(); i++){
+        if(wasPlaced){
+            if(LvlData->players[i].id == data.id){
+                placePlayerPoint(oPoint);
+                break;
+            }
+        }else{
+            if(LvlData->players[i].id == data.id){
+                LvlData->players[i].x = 0;
+                LvlData->players[i].y = 0;
+                LvlData->players[i].w = 0;
+                LvlData->players[i].h = 0;
+                delete cbData.item;
+                break;
+            }
+        }
+    }
+
 }
 
 void LvlScene::historyUndoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock data)

@@ -228,7 +228,8 @@ public:
             LEVELHISTORY_REMOVELAYERANDSAVE,
             LEVELHISTORY_MERGELAYER,
             LEVELHISTORY_CHANGEDSETTINGSSECTION,
-            LEVELHISTORY_CHANGEDSETTINGSLEVEL
+            LEVELHISTORY_CHANGEDSETTINGSLEVEL,
+            LEVELHISTORY_REPLACEPLAYERPOINT
         };
         HistoryType type;
         //used most of Operations
@@ -362,6 +363,7 @@ public:
     void addMergeLayer(LevelData mergedData, QString newLayerName);
     void addChangeSectionSettingsHistory(int sectionID, SettingSubType subtype, QVariant extraData);
     void addChangeLevelSettingsHistory(SettingSubType subtype, QVariant extraData);
+    void addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos);
     //history modifiers
     void historyBack();
     void historyForward();

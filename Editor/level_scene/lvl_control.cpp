@@ -126,6 +126,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                          LvlData->players[plr].y = 0;
                          LvlData->players[plr].w = 0;
                          LvlData->players[plr].h = 0;
+                         deleted=true;
                          if((*it)) delete (*it);
                          break;
                      }
@@ -885,7 +886,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
 
                     //Check position
-                    if( sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y())))
+                    if( (sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))) || ObjType == "player1" || ObjType == "player2")
                     {
                         IsMoved=false;
                         WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
@@ -1081,6 +1082,12 @@ void LvlScene::placeItemUnderCursor()
             {
              if(pnt.id == (unsigned int)LvlPlacingItems::playerID+1)
              {
+                 QList<QVariant> oData;
+                 oData.push_back(pnt.id);
+                 oData.push_back((qlonglong)pnt.x);
+                 oData.push_back((qlonglong)pnt.y);
+                 oData.push_back((qlonglong)pnt.w);
+                 oData.push_back((qlonglong)pnt.h);
                  pnt.x = cursor->scenePos().x();
                  pnt.y = cursor->scenePos().y();
                  pnt.w = 24;
@@ -1090,9 +1097,7 @@ void LvlScene::placeItemUnderCursor()
                     pnt.h = 60;
                  placePlayerPoint(pnt);
 
-                 newData.players.push_back(pnt);
-
-                 wasPlaced=true;
+                 addPlacePlayerPointHistory(pnt, QVariant(oData));
 
                  break;
              }
