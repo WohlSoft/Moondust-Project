@@ -792,7 +792,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3438"/>
         <source>Place Player Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Разместить точку игрока</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3440"/>
@@ -1149,7 +1149,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3517"/>
         <source>BGO Sorting Priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Приоритет сортировки Фоновых Объектов</translation>
     </message>
 </context>
 <context>
