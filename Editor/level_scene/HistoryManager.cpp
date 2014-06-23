@@ -658,6 +658,10 @@ void LvlScene::historyBack()
         if(lastOperation.subtype == SETTING_SPECIAL_DATA){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyUndoSettingsSpecialDataNPC, 0, 0, 0, true, true, false, true, true, true);
         }
+        else
+        if(lastOperation.subtype == SETTING_BGOSORTING){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, &LvlScene::historyUndoSettingsSortingBGO, 0, 0, 0, 0, true, false, true, true, true, true);
+        }
         break;
     }
     case HistoryOperation::LEVELHISTORY_RESIZESECTION:
@@ -1527,6 +1531,10 @@ void LvlScene::historyForward()
         else
         if(lastOperation.subtype == SETTING_SPECIAL_DATA){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, &LvlScene::historyRedoSettingsSpecialDataNPC, 0, 0, 0, true, true, false, true, true, true);
+        }
+        else
+        if(lastOperation.subtype == SETTING_BGOSORTING){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, &LvlScene::historyRedoSettingsSortingBGO, 0, 0, 0, 0, true, false, true, true, true, true);
         }
         break;
     }
@@ -2722,6 +2730,18 @@ void LvlScene::historyRedoSettingsSpecialDataNPC(LvlScene::CallbackData cbData, 
     ((ItemNPC*)cbData.item)->arrayApply();
 }
 
+void LvlScene::historyUndoSettingsSortingBGO(LvlScene::CallbackData cbData, LevelBGO data)
+{
+    ((ItemBGO*)cbData.item)->bgoData.smbx64_sp = data.smbx64_sp;
+    ((ItemBGO*)cbData.item)->arrayApply();
+}
+
+void LvlScene::historyRedoSettingsSortingBGO(LvlScene::CallbackData cbData, LevelBGO data)
+{
+    ((ItemBGO*)cbData.item)->bgoData.smbx64_sp = (long)cbData.hist->extraData.toLongLong();
+    ((ItemBGO*)cbData.item)->arrayApply();
+}
+
 void LvlScene::historyUndoChangeLayerBlocks(LvlScene::CallbackData cbData, LevelBlock data)
 {
     ItemBlock* targetItem = (ItemBlock*)cbData.item;
@@ -3494,6 +3514,7 @@ QString LvlScene::getHistorySettingText(LvlScene::SettingSubType subType)
     case SETTING_SECMUSIC: return tr("Music");
     case SETTING_SECCUSTOMMUSIC: return tr("Custom Music");
     case SETTING_LEVELNAME: return tr("Level Name");
+    case SETTING_BGOSORTING: return tr("BGO Sorting Priority");
     default:
         return tr("Unknown");
     }
