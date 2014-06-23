@@ -320,7 +320,8 @@ public:
         SETTING_SECBACKGROUNDIMG,   //extraData: QList<QVariant[int]> [old background id, new background id]
         SETTING_SECMUSIC,           //extraData: QList<QVariant[int]> [old music id, new music id]
         SETTING_SECCUSTOMMUSIC,     //extraData: QList<QVariant[String]> [old custom music name, new custom music name]
-        SETTING_LEVELNAME           //extraData: QList<QVariant[String]> [old level name, new level name]
+        SETTING_LEVELNAME,          //extraData: QList<QVariant[String]> [old level name, new level name]
+        SETTING_BGOSORTING
     };
 
     //typedefs
@@ -467,6 +468,9 @@ public:
     //Callbackfunctions: [Change Settings] Talk Event
     void historyUndoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Talk Event
+    void historyUndoSettingsSortingBGO(CallbackData cbData, LevelBGO data);
+    void historyRedoSettingsSortingBGO(CallbackData cbData, LevelBGO data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
