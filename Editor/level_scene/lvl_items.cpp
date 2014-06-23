@@ -688,7 +688,7 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
             player->setData(0, "player"+QString::number(plr.id) );
             player->setData(2, QString::number(plr.id));
             player->setFlag(QGraphicsItem::ItemIsSelectable, true);
-            //player->setFlag(QGraphicsItem::ItemIsMovable, true);
+            player->setFlag(QGraphicsItem::ItemIsMovable, true);
             if(!init)
             {
                 for(int i=0; i<LvlData->players.size(); i++)
