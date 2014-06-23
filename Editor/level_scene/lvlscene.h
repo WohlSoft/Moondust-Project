@@ -100,6 +100,7 @@ public:
     int placingItem;
     QGraphicsItem * cursor;
     void placeItemUnderCursor();
+    void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
 
     // //////////////////////////////////
@@ -513,7 +514,6 @@ public:
     QString getHistorySettingText(SettingSubType subType);
     // ////////////////////////////////////////////
     void openProps();
-
 
 
 public slots:
