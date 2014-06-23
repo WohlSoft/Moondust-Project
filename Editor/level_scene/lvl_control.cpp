@@ -997,6 +997,26 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             //historyBuffer.water.push_back(((ItemWater *)(*it))->waterData);
                             LvlData->modified = true;
                         }
+                        else
+                        if(( ObjType == "player1" ) || ( ObjType == "player2" ))
+                        {
+                            int plrId=0;
+                            if( ObjType == "player1" )
+                                plrId=1;
+                            if( ObjType == "player2" )
+                                plrId=2;
+
+                            for(int g=0; g<LvlData->players.size(); g++)
+                            {
+                             if(LvlData->players[g].id == (unsigned int)plrId)
+                             {
+                                 historySourceBuffer.players.push_back(LvlData->players[g]);
+                                 LvlData->players[g].x = (long)(*it)->scenePos().x();
+                                 LvlData->players[g].y = (long)(*it)->scenePos().y();
+                                 break;
+                             }
+                            }
+                        }
                     }
                 }
 
