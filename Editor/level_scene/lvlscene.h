@@ -378,11 +378,13 @@ public:
     void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyRedoMoveWater(CallbackData cbData, LevelWater data);
     void historyRedoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoMovePlayerPoint(CallbackData cbData, PlayerPoint data);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyUndoMoveWater(CallbackData cbData, LevelWater data);
     void historyUndoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyUndoMovePlayerPoint(CallbackData cbData, PlayerPoint data);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);

@@ -2286,6 +2286,20 @@ void LvlScene::historyRedoMoveDoors(LvlScene::CallbackData cbData, LevelDoors da
     ((ItemDoor *)(cbData.item))->arrayApply();
 }
 
+void LvlScene::historyRedoMovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoint data)
+{
+    long diffX = data.x - cbData.x;
+    long diffY = data.y - cbData.y;
+
+    cbData.item->setPos(QPointF(cbData.hist->x+diffX, cbData.hist->y+diffY));
+    for(int i = 0; i < LvlData->players.size(); i++){
+        if(LvlData->players[i].id == data.id){
+            LvlData->players[i].x = (long)cbData.item->scenePos().x();
+            LvlData->players[i].y = (long)cbData.item->scenePos().y();
+        }
+    }
+}
+
 void LvlScene::historyUndoMoveBlocks(LvlScene::CallbackData cbData, LevelBlock data)
 {
     cbData.item->setPos(QPointF(data.x,data.y));
@@ -2340,6 +2354,17 @@ void LvlScene::historyUndoMoveDoors(LvlScene::CallbackData cbData, LevelDoors da
         }
     }
     ((ItemDoor *)(cbData.item))->arrayApply();
+}
+
+void LvlScene::historyUndoMovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoint data)
+{
+    cbData.item->setPos(QPointF(data.x,data.y));
+    for(int i = 0; i < LvlData->players.size(); i++){
+        if(LvlData->players[i].id == data.id){
+            LvlData->players[i].x = (long)cbData.item->scenePos().x();
+            LvlData->players[i].y = (long)cbData.item->scenePos().y();
+        }
+    }
 }
 
 void LvlScene::historyRemoveBlocks(LvlScene::CallbackData cbData, LevelBlock /*data*/)
@@ -3295,6 +3320,9 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
             baseX = data->doors[0].ox;
             baseY = data->doors[0].oy;
         }
+    }else if(!data->players.isEmpty()){
+        baseX = (int)data->players[0].x;
+        baseY = (int)data->players[0].y;
     }
 
     foreach (LevelBlock block, data->blocks) {
@@ -3346,6 +3374,14 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
             if((int)door.oy<baseY){
                 baseY = (int)door.oy;
             }
+        }
+    }
+    foreach (PlayerPoint plPoint, data->players) {
+        if((int)plPoint.x<baseX){
+            baseX = (int)plPoint.x;
+        }
+        if((int)plPoint.y<baseY){
+            baseY = (int)plPoint.y;
         }
     }
 
