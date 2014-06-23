@@ -25,6 +25,7 @@ Editor 0.1.0
 - Fixed frames calculating for NPCs
 - On Music files list open current file will be selected
 - In music list displaying music files from sub-directories
+- Fixed autoalign bug: Grid applying only on moved items
 
 Editor 0.0.8.1
 - Fixed bug with door points on opening of old LVL files (file format < 8)

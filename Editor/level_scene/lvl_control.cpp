@@ -27,6 +27,7 @@
 #include "item_door.h"
 
 #include "../common_features/mainwinconnect.h"
+#include "../common_features/grid.h"
 #include "lvl_item_placing.h"
 
 #include "../file_formats/file_formats.h"
@@ -660,7 +661,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-            int gridSize=32, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
+            int gridSize=pConfigs->default_grid, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
 
             QPoint sourcePos;
 
@@ -770,61 +771,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         continue;
                     }
 
-                    gridSize = pConfigs->default_grid;
-                    offsetX = 0;
-                    offsetY = 0;
-                    ObjType = (*it)->data(0).toString();
-
-                    //(*it)->setZValue(Z);
-                    if( ObjType == "Block")
-                    {
-                        gridSize = ((ItemBlock *)(*it))->gridSize;
-                    }
-                    else
-                    if( ObjType == "NPC")
-                    {
-                        gridSize = ((ItemNPC *)(*it))->gridSize;
-                        offsetX = ((ItemNPC *)(*it))->localProps.grid_offset_x;
-                        offsetY = ((ItemNPC *)(*it))->localProps.grid_offset_y;
-                    }
-                    else
-                    if( ObjType == "BGO")
-                    {
-                        gridSize = ((ItemBGO *)(*it))->gridSize;
-                        offsetX = ((ItemBGO *)(*it))->gridOffsetX;
-                        offsetY = ((ItemBGO *)(*it))->gridOffsetY;
-                    }else
-                    if( ObjType == "Water")
-                    {
-                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
-                    }else
-                    if( ObjType == "Door_enter")
-                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
-                    else
-                    if( ObjType == "Door_exit")
-                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
-                    else
-                    if( ObjType == "player1")
-                    {
-                        offsetY = 2;
-                        gridSize = 2 ;
-                    }
-                    else
-                    if( ObjType == "player2")
-                    {
-                        offsetY = 2;
-                        gridSize = 2 ;
-                    }
-
-                    ////////////////////Apply to GRID/////////////////////////////////
-                    (*it)->setPos( QPointF(
-                                       applyGrid( (*it)->scenePos().toPoint(),
-                                                      gridSize,
-                                                      QPoint(offsetX, offsetY)
-                                                  )
-                                           )
-                                  );
-                    //////////////////////////////////////////////////////////////////
                 }
 
                 if(!deleteList.isEmpty())
@@ -856,34 +802,68 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                     WriteToLog(QtDebugMsg, QString(" >>Check collision with \"%1\"").arg(ObjType));
 
+                    gridSize = pConfigs->default_grid;
+                    offsetX = 0;
+                    offsetY = 0;
+
                     if( ObjType == "NPC")
                     {
                         sourcePos = QPoint(  ((ItemNPC *)(*it))->npcData.x, ((ItemNPC *)(*it))->npcData.y);
+                        gridSize = ((ItemNPC *)(*it))->gridSize;
+                        offsetX = ((ItemNPC *)(*it))->localProps.grid_offset_x;
+                        offsetY = ((ItemNPC *)(*it))->localProps.grid_offset_y;
                     }
                     else
                     if( ObjType == "Block")
                     {
                         sourcePos = QPoint(  ((ItemBlock *)(*it))->blockData.x, ((ItemBlock *)(*it))->blockData.y);
+                        gridSize = ((ItemBlock *)(*it))->gridSize;
                         //WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
                     }
                     else
                     if( ObjType == "BGO")
                     {
                         sourcePos = QPoint(  ((ItemBGO *)(*it))->bgoData.x, ((ItemBGO *)(*it))->bgoData.y);
+                        gridSize = ((ItemBGO *)(*it))->gridSize;
+                        offsetX = ((ItemBGO *)(*it))->gridOffsetX;
+                        offsetY = ((ItemBGO *)(*it))->gridOffsetY;
                     }
                     else
                     if( ObjType == "Water")
                     {
                         sourcePos = QPoint(  ((ItemWater *)(*it))->waterData.x, ((ItemWater *)(*it))->waterData.y);
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
                     }
                     else
                     if( ObjType == "Door_enter")
                     {
                         sourcePos = QPoint(  ((ItemDoor *)(*it))->doorData.ix, ((ItemDoor *)(*it))->doorData.iy);
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
                     }
                     else
                     if( ObjType == "Door_exit"){
                         sourcePos = QPoint(  ((ItemDoor *)(*it))->doorData.ox, ((ItemDoor *)(*it))->doorData.oy);
+                        gridSize = qRound(qreal(pConfigs->default_grid)/2);
+                    }
+                    else
+                    if(( ObjType == "player1" ) || ( ObjType == "player2" ))
+                    {
+                        offsetY = 2;
+                        gridSize = 2 ;
+                        int plrId=0;
+                        if( ObjType == "player1" )
+                            plrId=1;
+                        if( ObjType == "player2" )
+                            plrId=2;
+
+                        foreach(PlayerPoint pnt, LvlData->players)
+                        {
+                         if(pnt.id == (unsigned int)plrId)
+                         {
+                             sourcePos = QPoint(pnt.x, pnt.y);
+                             break;
+                         }
+                        }
                     }
 
                     //Check position
@@ -893,6 +873,16 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
                         continue;
                     }
+
+                    ////////////////////Apply to GRID/////////////////////////////////
+                    (*it)->setPos( QPointF(
+                                       applyGrid( (*it)->scenePos().toPoint(),
+                                                      gridSize,
+                                                      QPoint(offsetX, offsetY)
+                                                  )
+                                           )
+                                  );
+                    //////////////////////////////////////////////////////////////////
 
                     if(opts.collisionsEnabled)
                     { //check Available to collisions checking
