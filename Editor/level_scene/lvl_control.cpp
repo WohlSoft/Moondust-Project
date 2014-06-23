@@ -844,7 +844,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
                 EraserEnabled = false;
 
-                bool onlySelPlayer = true;
                 // Check collisions
                 //Only if collision ckecking enabled
                 if(!PasteFromBuffer)
@@ -853,10 +852,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 {
                     ObjType = (*it)->data(0).toString();
-                    if(ObjType == "player1" || ObjType == "player2"){
-                        continue; //is player flag
-                    }
-                    onlySelPlayer = false;
+
 
                     WriteToLog(QtDebugMsg, QString(" >>Check collision with \"%1\"").arg(ObjType));
 
@@ -1014,7 +1010,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
 
-                if((EditingMode==MODE_Selecting)&&(IsMoved)&&!onlySelPlayer) addMoveHistory(historySourceBuffer, historyBuffer);
+                if((EditingMode==MODE_Selecting)&&(IsMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
 
                 IsMoved = false;
 
