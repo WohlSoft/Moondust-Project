@@ -54,5 +54,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
         saveSettings();
         event->accept();
         qApp->quit();
+        exit(0);
     }
 }
