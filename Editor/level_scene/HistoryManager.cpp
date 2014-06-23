@@ -3270,7 +3270,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
 
                 currentArrayId = (*beginItem).id;
 
-                if(currentArrayId==1||currentArrayId==2)
+                if(item->data(0).toString() == QString("player") + QString::number(currentArrayId))
                 {
                     cbData.item = item;
                     (this->*clbPlayer)(cbData,(*beginItem));
