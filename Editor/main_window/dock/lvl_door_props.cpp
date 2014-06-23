@@ -913,7 +913,7 @@ void MainWindow::on_WarpBrowseLevels_clicked()
     }
     else return;
 
-    LevelFileList levelList(dirPath);
+    LevelFileList levelList(dirPath, ui->WarpLevelFile->text());
     if( levelList.exec() == QDialog::Accepted )
     {
         ui->WarpLevelFile->setText(levelList.SelectedFile);
