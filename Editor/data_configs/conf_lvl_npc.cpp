@@ -252,6 +252,9 @@ void dataconfigs::loadLevelNPC()
         //        bool container;
             snpc.container = npcset.value("container", "0").toBool();
 
+            snpc.no_npc_collions = npcset.value("no-npc-collisions", "0").toBool();
+        //    ; this option disabling collisions in editor with other NPCs, but with NPC's of same ID collisions will be checked
+
         //    //    ; Special option
         //    //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
         //        bool special_option;

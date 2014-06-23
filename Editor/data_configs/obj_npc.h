@@ -101,6 +101,9 @@ struct obj_npc
 //    container=0			; NPC can containing inside other NPC (need enable special option type 2)
     bool container;
 
+    bool no_npc_collions;
+//    ; this option disabling collisions in editor with other NPCs, but with NPC's of same ID collisions will be checked
+
 //    ; Special option
 //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
     bool special_option;

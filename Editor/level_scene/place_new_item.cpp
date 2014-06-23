@@ -372,6 +372,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         cursor->setData(0, "NPC");
         cursor->setData(1, QString::number(itemID));
+        cursor->setData(8, QString::number((int)mergedSet.no_npc_collions));
         cursor->setData(9, QString::number(mergedSet.width));
         cursor->setData(10, QString::number(mergedSet.height));
         cursor->setData(25, "CURSOR");
