@@ -70,6 +70,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_Exit_triggered()
 {
     MainWindow::close();
+    exit(0);
 }
 
 //Open About box
