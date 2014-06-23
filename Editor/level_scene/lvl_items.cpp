@@ -520,6 +520,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
         //WriteToLog(QtDebugMsg, "NPC place -> set Props");
     NPCItem->localProps = mergedSet;
+    NPCItem->setData(8, QString::number((int)mergedSet.no_npc_collions));
 
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
     NPCItem->setMainPixmap(tImg);
