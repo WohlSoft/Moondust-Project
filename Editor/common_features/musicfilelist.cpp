@@ -19,8 +19,11 @@
 #include "musicfilelist.h"
 #include "ui_musicfilelist.h"
 #include <QDir>
+#include <QDirIterator>
+#include <QMessageBox>
+#include "../common_features/timecounter.h"
 
-MusicFileList::MusicFileList(QString Folder, QWidget *parent) :
+MusicFileList::MusicFileList(QString Folder, QString current, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MusicFileList)
 {
@@ -29,8 +32,45 @@ MusicFileList::MusicFileList(QString Folder, QWidget *parent) :
     filters << "*.mp3" << "*.ogg" << "*.wav" << "*.flac";
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);
+
+    QStringList fileList;
+    //fileList << Folder;
+    QDirIterator dirsList(Folder, filters,
+                          QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                          QDirIterator::Subdirectories);
+
+    TimeCounter limiter;
+    limiter.start();
+    while(dirsList.hasNext())
+      {
+            dirsList.next();
+            fileList << musicDir.relativeFilePath(dirsList.filePath());
+            if(limiter.current()>1500)
+            {
+              QMessageBox::StandardButton reply;
+              reply = QMessageBox::question(this, tr("Too many subfolders"), tr("If you contunue this operation, application can be frozen.\nDo you want to continue?"),
+                                            QMessageBox::Yes|QMessageBox::Abort);
+              if (reply == QMessageBox::Abort)
+                  break;
+            }
+      }
+    limiter.stop("", -1);
+
     ui->setupUi(this);
-    ui->FileList->insertItems(musicDir.entryList().size(), musicDir.entryList(filters) );
+    //ui->FileList->insertItems(musicDir.entryList().size(), musicDir.entryList(filters));
+    ui->FileList->insertItems(fileList.size(), fileList);
+
+    // Select current item
+    for(int i=0; i<ui->FileList->count(); i++)
+    {
+        if(ui->FileList->item(i)->text()==current)
+        {
+            ui->FileList->item(i)->setSelected(true);
+            ui->FileList->scrollToItem(ui->FileList->item(i));
+         break;
+        }
+    }
+
 }
 
 MusicFileList::~MusicFileList()
