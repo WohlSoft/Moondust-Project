@@ -666,485 +666,490 @@ Diese Bilddateien werden mit einem &quot;Geister&quot;-Bild bzw. dummy-Bild erse
 Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="1347"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="1351"/>
         <source>Undone: %1</source>
         <translation>Rückgänig: %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="2184"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="2192"/>
         <source>Redone: %1</source>
         <translation>Wiederhole: %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3359"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3415"/>
         <source>Remove</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3360"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3416"/>
         <source>Place</source>
         <translation>Platziere</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3361"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3417"/>
         <source>Move</source>
         <translation>Bewegen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3362"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3418"/>
         <source>Changed Setting [%1]</source>
         <translation>Verändere Einstellung [%1]</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3363"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3419"/>
         <source>Change Layer</source>
         <translation>Wechsele Ebene</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3364"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3420"/>
         <source>Resize Block</source>
         <translation>Blockgröße ändern</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3365"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3421"/>
         <source>Place Door</source>
         <translation>Platziere Tür</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3366"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3422"/>
         <source>Add Warp</source>
         <translation>Füge Warp hinzu</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3367"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3423"/>
         <source>Remove Warp</source>
         <translation>Lösche Warp</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3368"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3424"/>
         <source>Changed Warpsetting [%1]</source>
         <translation>Verändere Warpeinstellung [%1]</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3369"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3425"/>
         <source>Add Event</source>
         <translation>Event Hinzufügen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3370"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3426"/>
         <source>Remove Event</source>
         <translation>Event Löschen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3371"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3427"/>
         <source>Copy Event</source>
         <translation>Event Kopieren</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3372"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3428"/>
         <source>Changed Eventsetting [%1]</source>
         <translation>Verändere Eventeinstellung [%1]</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3373"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3429"/>
         <source>Move Items to new Layer</source>
         <translation>Verschiebe Items zu neuer Ebene</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3374"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3430"/>
         <source>New Layer</source>
         <translation>Neue Ebene</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3375"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3431"/>
         <source>Remove layer with items</source>
         <translation>Lösche Ebene mit Items</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3376"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3432"/>
         <source>Rename Event</source>
         <translation>Event Umbennen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3377"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3433"/>
         <source>Rename Layer</source>
         <translation>Ebene umbennen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3378"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3434"/>
         <source>Remove layers and save items</source>
         <translation>Lösche Ebene, aber speichere Items</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3379"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3435"/>
         <source>Merge Layer</source>
         <translation>Ebene Zusammenfügen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3380"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3436"/>
         <source>Changed Sectionsetting [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3381"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3437"/>
         <source>Changed Levelsetting [%1]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3382"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3438"/>
         <source>Place Player Point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3384"/>
-        <location filename="../level_scene/HistoryManager.cpp" line="3462"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3440"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3519"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3391"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3447"/>
         <source>Slippery</source>
         <translation>Rutschig</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3392"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3448"/>
         <source>Friendly</source>
         <translation>Freundlich</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3393"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3449"/>
         <source>Boss</source>
         <translation>Boss</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3394"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3450"/>
         <source>Not Moveable</source>
         <translation>Nicht Bewegbar</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3395"/>
-        <location filename="../level_scene/HistoryManager.cpp" line="3438"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3451"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3494"/>
         <source>Message</source>
         <translation>Nachricht</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3396"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3452"/>
         <source>Direction</source>
         <translation>Richtung</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3397"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3453"/>
         <source>Included NPC</source>
         <translation>Beinhaltende NPC ändern</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3398"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3454"/>
         <source>Water Type</source>
         <translation>Umgebungs Typ</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3399"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3455"/>
         <source>No Yoshi</source>
         <translation>Kein Yoshi</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3400"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3456"/>
         <source>Allow NPC</source>
         <translation>NPC Zulassen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3401"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3457"/>
         <source>Locked</source>
         <translation>Gesperrt</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3402"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3458"/>
         <source>Warp Type</source>
         <translation>Warp Typ</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3403"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3459"/>
         <source>Need Stars</source>
         <translation>Brauche Sterne</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3404"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3460"/>
         <source>Entrance Direction</source>
         <translation>Eingangsrichtung</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3405"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3461"/>
         <source>Exit Direction</source>
         <translation>Ausgangsrichtung</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3406"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3462"/>
         <source>Set Level Exit</source>
         <translation>Setzte Levelausgang</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3407"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3463"/>
         <source>Set Level Entrance</source>
         <translation>Setzte Leveleingang</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3408"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3464"/>
         <source>Level Warp To</source>
         <translation>Level Warp zu</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3409"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3465"/>
         <source>Activate Generator</source>
         <translation>Aktiviere Generator</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3410"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3466"/>
         <source>Generator Type</source>
         <translation>Generator Typ</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3411"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3467"/>
         <source>Generator Direction</source>
         <translation>Generator Richtung</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3412"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3468"/>
         <source>Generator Time</source>
         <translation>Generator Zeit</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3413"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3469"/>
         <source>Attach Layer</source>
         <translation>Binde Ebene</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3414"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3470"/>
         <source>Event Block Destroyed</source>
         <translation>Event Block Zerstört</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3415"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3471"/>
         <source>Event Block Hited</source>
         <translation>Event Block Berührt</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3416"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3472"/>
         <source>Event Layer Empty</source>
         <translation>Event Ebene Leer</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3417"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3473"/>
         <source>Event NPC Activate</source>
         <translation>Event NPC Aktiviert</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3418"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3474"/>
         <source>Event NPC Die</source>
         <translation>Event NPC Tot</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3419"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3475"/>
         <source>Event NPC Talk</source>
         <translation>Event NPC Reden</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3420"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3476"/>
         <source>NPC Special Data</source>
         <translation>NPC Extra Daten</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3421"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3477"/>
         <source>Autostart</source>
         <translation>Autostart</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3422"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3478"/>
         <source>Layer Smoke Effect</source>
         <translation>Ebenen Raucheffekt</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3423"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3479"/>
         <source>Add Hide Layer</source>
         <translation>Füge versteckende Ebene hinzu</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3424"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3480"/>
         <source>Remove Hide Layer</source>
         <translation>Lösche versteckende Ebene</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3425"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3481"/>
         <source>Add Show Layer</source>
         <translation>Füge sichtbare Ebene hinzu</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3426"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3482"/>
         <source>Remove Show Layer</source>
         <translation>Lösche sichtbare Ebene</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3427"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3483"/>
         <source>Add Toggle Layer</source>
         <translation>Füge Ebenenschalter hinzu</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3428"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3484"/>
         <source>Remove Toggle Layer</source>
         <translation>Lösche Ebenenschalter</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3429"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3485"/>
         <source>Moving Layer</source>
         <translation>Bewege Ebene</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3430"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3486"/>
         <source>Layer Speed Horizontal</source>
         <translation>Ebenengeschwindigkeit Horizontal</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3431"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3487"/>
         <source>Layer Speed Vertical</source>
         <translation>Ebenengeschwindigkeit Vertikal</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3432"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3488"/>
         <source>Autoscroll Layer</source>
         <translation>Autoscroll Ebene</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3433"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3489"/>
         <source>Autoscroll Layer Speed Horizontal</source>
         <translation>Autoscroll Ebenegeschwindigkeit Horizontal</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3434"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3490"/>
         <source>Autoscroll Layer Speed Vertical</source>
         <translation>Autoscroll Ebenegeschwindigkeit Vertikal</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3435"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3491"/>
         <source>Section Size</source>
         <translation>Bereichsgröße</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3436"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3492"/>
         <source>Section Music</source>
         <translation>Bereichsmusik</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3437"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3493"/>
         <source>Section Background</source>
         <translation>Bereichshintergrund</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3439"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3495"/>
         <source>Sound</source>
         <translation>Ton</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3440"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3496"/>
         <source>End Game</source>
         <translation>Beende Spiel</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3441"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3497"/>
         <source>Up Key Activate</source>
         <translation>Aktiviere Taste Oben</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3442"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3498"/>
         <source>Down Key Activate</source>
         <translation>Aktiviere Taste Unten</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3443"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3499"/>
         <source>Left Key Activate</source>
         <translation>Aktiviere Taste Links</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3444"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3500"/>
         <source>Right Key Activate</source>
         <translation>Aktiviere Taste Rechts</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3445"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3501"/>
         <source>Run Key Activate</source>
         <translation>Aktiviere Taste Rennen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3446"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3502"/>
         <source>Alt Run Key Activate</source>
         <translation>Aktiviere Taste Alt Rennen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3447"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3503"/>
         <source>Jump Key Activate</source>
         <translation>Aktiviere Taste Springen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3448"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3504"/>
         <source>Alt Jump Key Activate</source>
         <translation>Aktiviere Taste Alt Springen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3449"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3505"/>
         <source>Drop Key Activate</source>
         <translation>Aktiviere Taste Loslassen</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3450"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3506"/>
         <source>Start Key Activate</source>
         <translation>Aktiviere Taste Start</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3451"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3507"/>
         <source>Trigger Activate</source>
         <translation>Aktiviere Event</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3452"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3508"/>
         <source>Trigger Delay</source>
         <translation>Eventverzögerung</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3453"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3509"/>
         <source>Is Warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3454"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3510"/>
         <source>No Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3455"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3511"/>
         <source>Off Screen Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3456"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3512"/>
         <source>Underwater</source>
         <translation type="unfinished">Unterwasser</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3457"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3513"/>
         <source>Background Image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3458"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3514"/>
         <source>Music</source>
         <translation type="unfinished">Musik</translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3459"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3515"/>
         <source>Custom Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../level_scene/HistoryManager.cpp" line="3460"/>
+        <location filename="../level_scene/HistoryManager.cpp" line="3516"/>
         <source>Level Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../level_scene/HistoryManager.cpp" line="3517"/>
+        <source>BGO Sorting Priority</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2854,7 +2859,7 @@ Alle Datein (*.*)</translation>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="108"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="315"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="609"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1196"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1199"/>
         <source>[empty]</source>
         <translation>[Leer]</translation>
     </message>
@@ -2862,7 +2867,7 @@ Alle Datein (*.*)</translation>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="228"/>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1730"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="323"/>
-        <location filename="../main_window/dock/lvl_item_props.cpp" line="1076"/>
+        <location filename="../main_window/dock/lvl_item_props.cpp" line="1079"/>
         <source>[none]</source>
         <translation>[Nichts]</translation>
     </message>
