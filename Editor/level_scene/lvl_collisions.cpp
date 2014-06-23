@@ -35,7 +35,8 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
     //qreal betweenZ;
 
     QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
-    foreach (QGraphicsItem * it, collisions) {
+    foreach (QGraphicsItem * it, collisions)
+    {
             if (it == item)
                  continue;
             if(!it->isVisible()) continue;
@@ -59,53 +60,58 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
             if(it->data(0).toString()=="Block")
                 WriteToLog(QtDebugMsg, QString(" >>Collision with block detected"));
 
-              if((item->data(0).toString()=="Block")||(item->data(0).toString()=="NPC")
-                      ||(item->data(0).toString()=="BGO"))
-              {
-                  if(item->data(0).toString()=="NPC")
-                  {
-                      if( item->data(8).toBool() )
-                      {
-                          if(item->data(1).toInt()!=it->data(1).toInt()) continue;
-                      }
-                      else
-                      {
-                          if(
-                                  (
-                                   (item->data(0).toString()=="Block")
-                                   &&(!((ItemNPC *)item)->localProps.collision_with_blocks)
-                                   )
-                                  ||
-                                  ((item->data(0).toString()!="NPC")&&(item->data(0).toString()!="Block"))
-                             )
-                                    continue;
-                      }
 
+          if((item->data(0).toString()=="Block")||(item->data(0).toString()=="NPC")||(item->data(0).toString()=="BGO"))
+          {
+              if(item->data(0).toString()=="NPC")
+              {
+                  if( item->data(8).toBool() ) // Disabled collisions with other NPCs
+                  {
+                      if(item->data(1).toInt()!=it->data(1).toInt()) continue;
                   }
                   else
-                        if(item->data(0).toString()!=it->data(0).toString()) continue;
-
-                  if(item->data(3).toString()=="sizable")
-                  {//sizable Block
-                      WriteToLog(QtDebugMsg, QString("sizable block") );
-                      continue;
+                  {
+                      if(
+                              (
+                               (it->data(0).toString()=="Block")
+                               &&(!((ItemNPC *)item)->localProps.collision_with_blocks)
+                               )
+                              ||
+                              (
+                               (it->data(0).toString()=="NPC")
+                               &&(it->data(8).toBool())
+                               )
+                              ||
+                              ((it->data(0).toString()!="NPC")&&(it->data(0).toString()!="Block"))
+                         )
+                                continue;
                   }
 
-                  if(item->data(0).toString()=="BGO")
-                    if(item->data(1).toInt()!=it->data(1).toInt()) continue;
-
-                     if( bottomA <= topB )
-                     { continue; }
-                     if( topA >= bottomB )
-                     { continue; }
-                     if( rightA <= leftB )
-                     { continue; }
-                     if( leftA >= rightB )
-                     { continue; }
-
-                     if(it->data(3).toString()!="sizable")
-                        return it;
               }
+              else
+                    if(item->data(0).toString()!=it->data(0).toString()) continue;
+
+              if(item->data(3).toString()=="sizable")
+              {//sizable Block
+                  WriteToLog(QtDebugMsg, QString("sizable block") );
+                  continue;
+              }
+
+              if(item->data(0).toString()=="BGO")
+                if(item->data(1).toInt()!=it->data(1).toInt()) continue;
+
+                 if( bottomA <= topB )
+                 { continue; }
+                 if( topA >= bottomB )
+                 { continue; }
+                 if( rightA <= leftB )
+                 { continue; }
+                 if( leftA >= rightB )
+                 { continue; }
+
+                 if(it->data(3).toString()!="sizable")
+                    return it;
+          }
 
     }
     return NULL;

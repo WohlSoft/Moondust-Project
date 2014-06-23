@@ -33,6 +33,10 @@
 #include "../file_formats/file_formats.h"
 
 
+QPoint sourcePos=QPoint(0,0);
+int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
+
+
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 {
     QList<QGraphicsItem*> selectedList = selectedItems();
@@ -498,9 +502,6 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
-static QPoint sourcePos;
-static int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
-
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(contextMenuOpened)
@@ -772,7 +773,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                     /////////////////////////GET DATA///////////////
 
-                    setItemSourceData((*it), ObjType); //Set Grid Size/Offset, sourcePosition
+                    setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
 
                     /////////////////////////GET DATA/////////////////////
 
