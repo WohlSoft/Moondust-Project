@@ -557,6 +557,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         npc.y = newPos.y();
     }
 
+    npc.is_star = mergedSet.is_star;
 
         WriteToLog(QtDebugMsg, "NPC place -> set position");
     NPCItem->setPos( QPointF(newPos) );

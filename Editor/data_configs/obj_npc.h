@@ -220,6 +220,9 @@ struct obj_npc
 //    lava-protection=0	; NPC will not be burn in lava
     bool lava_protect;
 
+    bool is_star; //If this marker was set, this NPC will be markered as "star"
+    //Quantity placed NPC's with marker "star" will be save in LVL-file
+
 };
 
 #endif // OBJ_NPC_H
