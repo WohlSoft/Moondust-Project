@@ -4590,16 +4590,28 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </property>
   </action>
   <action name="actionNewLevel">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/lvl16.png</normaloff>:/lvl16.png</iconset>
+   </property>
    <property name="text">
     <string>Level...</string>
    </property>
   </action>
   <action name="actionNewWorld_map">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
+   </property>
    <property name="text">
     <string>World map...</string>
    </property>
   </action>
   <action name="actionNewNPC_config">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
+   </property>
    <property name="text">
     <string>NPC config...</string>
    </property>
