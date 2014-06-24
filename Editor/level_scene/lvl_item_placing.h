@@ -25,6 +25,10 @@ class LvlPlacingItems
 public:
     static LevelNPC npcSet;
     static long npcGrid;
+    static long npcGfxOffsetX1;
+    static long npcGfxOffsetX2;
+    static long npcGfxOffsetY;
+
     static LevelBlock blockSet;
 
     static bool sizableBlock;

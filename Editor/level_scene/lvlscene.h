@@ -86,6 +86,7 @@ public:
 
     // ////////////ItemPlacers///////////
     void setItemPlacer(int itemType, unsigned long itemID=1, int dType=0);
+    void updateCursoredNpcDirection();
     void setSquareDrawer();
     enum placingItemType
     {
@@ -140,7 +141,7 @@ public:
 
     void doorPointsSync(long arrayID, bool remove=false);
 
-    QPixmap getNPCimg(unsigned long npcID);
+    QPixmap getNPCimg(unsigned long npcID, int Direction=0);
 
     void applyLayersVisible();
 
@@ -518,6 +519,7 @@ public:
 
 public slots:
     void selectionChanged();
+
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

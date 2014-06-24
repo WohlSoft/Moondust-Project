@@ -864,6 +864,11 @@ void MainWindow::on_PROPS_NPCDirLeft_clicked()
     if(npcPtr<0)
     {
         LvlPlacingItems::npcSet.direct = -1;
+
+        if (activeChildWindow()==1)
+        {
+            activeLvlEditWin()->scene->updateCursoredNpcDirection();
+        }
     }
     else
     if (activeChildWindow()==1)
@@ -893,6 +898,11 @@ void MainWindow::on_PROPS_NPCDirRand_clicked()
     if(npcPtr<0)
     {
         LvlPlacingItems::npcSet.direct = 0;
+
+        if (activeChildWindow()==1)
+        {
+            activeLvlEditWin()->scene->updateCursoredNpcDirection();
+        }
     }
     else
     if (activeChildWindow()==1)
@@ -921,6 +931,12 @@ void MainWindow::on_PROPS_NPCDirRight_clicked()
     if(npcPtr<0)
     {
         LvlPlacingItems::npcSet.direct = 1;
+
+        if (activeChildWindow()==1)
+        {
+            activeLvlEditWin()->scene->updateCursoredNpcDirection();
+        }
+
     }
     else
     if (activeChildWindow()==1)
