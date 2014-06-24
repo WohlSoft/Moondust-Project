@@ -8,3 +8,8 @@ h3 {
 a{
 	color:navy;	
 }
+
+.warning{
+	font-weight:bold;
+	color: red;	
+}
