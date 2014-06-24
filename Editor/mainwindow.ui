@@ -315,6 +315,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew"/>
    <addaction name="OpenFile"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
@@ -5956,6 +5957,15 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </property>
    <property name="text">
     <string>Current configuration status...</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>
