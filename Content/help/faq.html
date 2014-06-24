@@ -27,6 +27,10 @@
 	<p style="text-align: left"><a href="#I_see_ghosties_instead_NPCs,_Why">I 
 	see ghosties instead NPCs, Why?</a></p>
 	</li>
+	<li>
+	<p style="text-align: left">
+	<a href="#Do_the_graphics_use_the_same_format_as_SMBX">Do the graphics use the same format as SMBX?</a></p>
+	</li>
 </ul>
 <p style="text-align: left">&nbsp;</p>
 <p><strong>Q: <a name="level_settings">Where is a "Level Settings"?</a></strong></p>
@@ -61,7 +65,21 @@ into the <span style="text-decoration: underline">imageformats</span> dir
 special plugins, what you can get from Qt. You can get them
 <a href="http://engine.wohlnet.ru/docs/EXE_tests/Qt5Libs_full_pack/imageformats/" target="_blank">
 here</a>.<br />
+<br />
 </p>
+<p><strong>Q: <a name="Do_the_graphics_use_the_same_format_as_SMBX">Do the 
+graphics use the same format as SMBX?</a></strong></p>
+<p><strong>A:</strong> Yes, in SMBX-compatible configs you can use graphics by 
+SMBX64 standard:<br />
+&nbsp;- GIF file format without transparence<br />
+&nbsp;- Must used black/white mask for apply transparency<br />
+&nbsp;- Animation frames of sprite going down by vertical way.<br />
+&nbsp;- Playable character sprite have a 10x10 frame table, whole image size in 
+1000x1000px and fixed by position physical boxes.<br />
+&nbsp;- All SMBX's custom graphics fully compatible with engine.<br />
+<br />
+</p>
+<p>&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">&nbsp;</p>
 <hr />
