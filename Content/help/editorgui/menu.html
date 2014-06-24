@@ -12,78 +12,111 @@
 <p style="text-align: center">
 <img alt="Editor splash" height="250" src="../images/splash_editor.png" width="700" /></p>
 <h1 style="text-align: left">Menu</h1>
-		<p style="text-align: left"><strong>File</strong></p>
+		<p style="text-align: left"><strong><a name="File">File</a></strong></p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Creation_of_new_file">Creation of new file</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Create a new file.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Open_exist_file">Open exist file</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Open file</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;"><a name="Saving_file">Saving file</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Save current data into opened file. If file is 
+created, will be asked for save file.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Export_to_image">Export to image</a></p>
+<p style="text-align: left">This option will save current level section, or 
+world map into image file (will be saved in PNG format).</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>Edit</strong></p>
+<p style="text-align: left"><strong><a name="Edit">Edit</a></strong></p>
 <p style="text-align: left; text-decoration: underline;"><a name="History">History</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Undo - Cancel recent action.</p>
+<p style="text-align: left">Redo - Repeat canceled action.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;"><a name="Clipboard">Clipboard</a></p>
+<p style="text-align: left">Copy - Selected items will be stored in special 
+buffer. Data can be pasted in other file.</p>
+<p style="text-align: left">Cut - Selected itemss will be stored in special 
+buffer and deleted from working space.</p>
+<p style="text-align: left">Paste - Switch editing mode to "Paste". Cursor will 
+be changed and you must select point of working space, for paste items from 
+buffer.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>Level</strong></p>
+<p style="text-align: left"><strong><a name="Level">Level</a></strong></p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Change_current_section">Change current section</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">In this menu you can switch current section to 
+other.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Current_section_options">Current section options</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Connect left and right sides (Level Warp) - Moved 
+out off screen items/characters will be entered from opposite side of section.</p>
+<p style="text-align: left">Offscreen exit - Allows to player exit from level by 
+go out off screen.</p>
+<p style="text-align: left">One-way scrolling (No turn back) - Character can 
+move only from left to right.</p>
+<p style="text-align: left">Underwater - Force underwater physics to full 
+section area.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Change_level_title">Change level title</a></p>
+<p style="text-align: left">Here you can set the level title, what will be 
+displayed on trying of level debug.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>World</strong></p>
+<p style="text-align: left"><strong><a name="World">World</a></strong></p>
 <p style="text-align: left"><em>&lt;comming soon&gt;</em></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>View</strong></p>
+<p style="text-align: left"><strong><a name="View">View</a></strong></p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Show/Hide_toolboxes">Show/Hide toolboxes</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Here you can show or hide exists toolboxes</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Animation_on/off">Animation on/off</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Enable or disable item animations. This option will 
+not be work, if on level map placed too many items.</p>
+<p style="text-align: left"><em>You can disable this option for speed up.</em></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Collisions_on/off">Collisions on/off</a></p>
+<p style="text-align: left">Enable or disable collision detection on drop items. 
+If collision was cased, moved item will return back to source position. For 
+example: blocks can't be placed over other blocks, or NPCs can't be placed to 
+other NPCs or over blocks, and BGO can't be palced over equal BGO, but 
+difference BGO can be placed over.</p>
+<p style="text-align: left"><em>You will take speed up, if you disable this 
+option.</em> Also you can disable this option for place items without limits.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><strong>Tools</strong></p>
+<p style="text-align: left"><strong><a name="Tools">Tools</a></strong></p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Global_configuration_status">Global configuration status</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">This option displaying the global configuration 
+status window. You will see list of all loaded items and you can see all errors, 
+what appeared in config loading process, what will help for find error in game 
+config files.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Reloading_of_global_configuration">Reloading of global configuration</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">This option start to completely reload of all global 
+configuration data without restart of editor.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Reload_current_file">Reload current file</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Current file will be reloaded with his data, as 
+custom grahics.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left; text-decoration: underline;">
 <a name="Application_settings">Application settings</a></p>
-<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">This action will be open the application settings 
+window, where you can change animation item limits, set autoplay music, etc.<br />
+Here you can define logging properties, set log file or disable logging.</p>
 <p style="text-align: left">&nbsp;</p>
 		<p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
