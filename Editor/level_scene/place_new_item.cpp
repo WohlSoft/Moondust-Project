@@ -351,6 +351,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         else
             LvlPlacingItems::gridSz=mergedSet.grid;
 
+        LvlPlacingItems::npcSet.is_star = mergedSet.is_star;
+
         LvlPlacingItems::npcGrid=mergedSet.grid;
 
         LvlPlacingItems::gridOffset = QPoint(mergedSet.grid_offset_x,
