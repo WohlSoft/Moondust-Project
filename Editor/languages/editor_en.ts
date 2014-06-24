@@ -3384,12 +3384,12 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="907"/>
         <source>Jump hurt</source>
-        <translation>Hurt player on jump</translation>
+        <translation>Hurt player on stomp</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="933"/>
         <source>Don&apos;t hurt</source>
-        <translation>Player can&apos;t hurt NPC</translation>
+        <translation>NPC can&apos;t hurt Player</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="960"/>
