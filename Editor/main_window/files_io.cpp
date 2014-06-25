@@ -118,8 +118,8 @@ void MainWindow::OpenFile(QString FilePath)
         npcedit *child = createNPCChild();
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
-            updateMenus(true);
             child->show();
+            updateMenus(true);
         } else {
             child->close();
         }

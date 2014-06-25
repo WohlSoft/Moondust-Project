@@ -329,10 +329,16 @@ void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
     }
     else return;
 
-    MusicFileList musicList(dirPath);
+    if(activeLvlEditWin()->isUntitled)
+    {
+        QMessageBox::information(this, tr("Please, save file"), tr("Please, save file first, if you want to select custom music file."), QMessageBox::Ok);
+        return;
+    }
+
+    MusicFileList musicList( dirPath, ui->LVLPropsMusicCustom->text() );
     if( musicList.exec() == QDialog::Accepted )
     {
-        ui->LVLPropsMusicCustom->setText(musicList.SelectedFile);
+        ui->LVLPropsMusicCustom->setText( musicList.SelectedFile );
     }
 
 }

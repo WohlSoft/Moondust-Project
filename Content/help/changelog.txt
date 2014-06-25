@@ -1,0 +1,127 @@
+Editor 0.1.0
+- Added events control support
+- Added sound tester
+- Image render are improved and fully support taking alpha channel from masks (before only internal PNG alpha, or 1-bit masks files)
+- Fixed default main window size and position
+- Fixed Level item toolbox category list translating
+- Fixed but with empty category lists after config reload
+- Player's start points can be moved by mouse in selection mode
+- History manager can store any level data and any settings changes
+- New icons for section switch buttons
+- Optimises background and music selector
+- Language switcher are improved
+- Fixed crash on press "Delete" in layer list without selected item
+- Fixed bug with door flags "Level Exit" and "Level Entrance" on already placed points
+- If not exist translate equal to system, will be used english translate
+- Remembering of save paths
+- Merging of layers, on rename layer to equal to other exists
+- Configuration status window. You can see status of all configuration items and look for errors on load process
+- Fixed bug with events resets in properties window
+- Added search filter for NPC-Selection dialog
+- Added search filter for level Item Box
+- Fixed NPC's special option wrong values on placing items
+- Fixed grammars and spellings in labels
+- Optimized toolbox generation
+- Added Notification about wrong custom graphics files
+- Fixed frames calculating for NPCs
+- On Music files list open current file will be selected
+- In music list displaying music files from sub-directories
+- Fixed autoalign bug: Grid applying only on moved items
+- Fixed random NPC's direction generator
+- Added counter of stars in LVL-file save function
+
+Editor 0.0.8.1
+- Fixed bug with door points on opening of old LVL files (file format < 8)
+- Fixed undisabled labels on NPC-Editor
+- Fixed bug with sets of containers to empty.
+- Added Spanish translation
+
+Editor 0.0.8
+- Added support for render and control NPC's
+- POSSIBLE TO SAVE LEVEL FILE.
+- POSSIBLE TO CREATE NEW LEVEL FILE, NPC.txt file with selecting of base NPC.
+- Added NPC Previewer for NPC.txt editor
+- License updated to GNU GPLv3
+- Optimized level loading process
+- Added support to control doors
+- History manager: you can undo/redo changes on level map. [Not completely finished]
+- Clipboard: you can copy and paste.
+- Added Item Properties window, and with them possible to FULL CONTROL of ALL level items.
+- Added BGO hack for place them foreground
+- Added Item box and support for place new items on map
+- Added Layer box: You can create/rename/delete layers, you can move layers in list by mouse drag, you can change visibly of Layer
+- Added more protectors: you can violate limits with itemID and if itemID > global array item number, you will see dummy image instead crash.
+- ReWritten Background render algorithm
+- Unused Sections will be initialization on select
+- Possible to resize sections
+- Possible to resize sizable blocks
+- You can change player's start point positions
+- Added "Selection only" tool, you can select item group without moving them.
+- Fixed rubber tool
+- Water/Quicksand zons, sizable blocks placing in "Draw-Square" style
+- "Square Fill" tool: you can draw square and it will be filled by selected block or BGO (Warning, collisions ignoring!)
+- Fixes in configs: almost sorted blocks, BGOs and NPCs.
+- Full control of door entries
+- "Goto entrance" and "Goto exit" - possible to fast find other side of door, even them placed in other section.
+- in NPC-Editor displaying all default values for current npcID, if option not used.
+- Added application settings window: you can set autoplay music/animation/collisions or set log level and log file.
+- Animation will be reseted on exported image.
+- Optimized item map controls.
+- Application can be translated in other languages
+- Now, we have finished translates: English, Russian, German. Any of you can made more translates.
+
+Editor 0.0.7
+- Added door points array-ID text
+- Added player's points on level map
+- Added support for move objects on level map, change properties by blocks with context menu
+- Added blocks animation
+- Optimized level data loading
+- Added locks for objects by type
+- Added support to change all properties for section, but without resizing and creation new section
+- Fixed bug with silent music CPU overloading.
+- Removed red borders on exported images (bug with current section border)
+- Added objects collisions (for example, for protection for create blocks on blocks)
+- Added support for editing tools: hand scrolling, objects selection, rubber for delete objects
+- Fixed Z-Values in configuration
+- Added "Reload file" option, for re-Open current file, if its data changed outside editor (for example, NPC.txt configs, added/removed/replaced user's sprites)
+This option help with speed-up file saving. As we know, SMBX try to reload all data of current level file after saving. It is makes saving process slow. Real saving from data array into target file is almost instant operation.
+- Full support for big backgrounds
+- Added support for correctly aborting of the level loading process
+- Support for hot-keys for fast select necessary tools
+- And....Ghost, what temporary replacing all NPCs named as "Jackson the Ghost" by my brother.
+April 30, 2014, small updates in Editor 0.0.7 alpha, build updated and placed on same links
+- Added background objects animation
+- Added animation switch, for allow to off animation, if on map too many objects.
+- Added background context menu with "remove" option
+- Level data loading process optimized, speed-up
+
+Editor 0.0.6
+- Added blocks support
+- Added Music player, you can enable section settings view, and press "play" for start music playing.
+- Added custom music selection dialog
+- Data loading process are improved
+- New logo and icon
+- Added water view (if Quicksand bit enabled, displayed in Yellow color)
+- Added door points displaying
+
+Editor 0.0.5
+- Added "Export to image"
+- Added Level Properties read support (Level Title, if it set in LVL file)
+
+Editor 0.0.4
+- Added experimental support for backgrounds with support for user's images in world directory (all backgrounds will be tiled)
+- Added support for invisible blocks (showing is semi-transparent)
+- Added support for seeing the included NPC in block
+
+Editor 0.0.3
+- added full NPC config support (Read/Write)
+- added BGO renter
+- added splash dialog
+- saving all positions of toolbars/toolboxes, etc.
+- add section selecting (last position saving and restoring on current section change)
+
+Editor 0.0.2
+- Added support for render level objects in graphical Window
+
+Editor 0.0.1
+- First test version, can only check parsing of LVL files

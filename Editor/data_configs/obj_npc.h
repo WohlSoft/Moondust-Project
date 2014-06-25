@@ -101,6 +101,9 @@ struct obj_npc
 //    container=0			; NPC can containing inside other NPC (need enable special option type 2)
     bool container;
 
+    bool no_npc_collions;
+//    ; this option disabling collisions in editor with other NPCs, but with NPC's of same ID collisions will be checked
+
 //    ; Special option
 //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
     bool special_option;
@@ -216,6 +219,9 @@ struct obj_npc
     bool turn_on_cliff_detect;
 //    lava-protection=0	; NPC will not be burn in lava
     bool lava_protect;
+
+    bool is_star; //If this marker was set, this NPC will be markered as "star"
+    //Quantity placed NPC's with marker "star" will be save in LVL-file
 
 };
 

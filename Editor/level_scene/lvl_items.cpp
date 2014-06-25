@@ -27,49 +27,26 @@
 #include "item_water.h"
 #include "item_door.h"
 
+#include "../common_features/grid.h"
+
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {
-    int gridX, gridY;
     if((grid)&&(gridSize>0))
-    { //ATTACH TO GRID
-        gridX = ((int)source.x() - (int)source.x() % gridSize);
-        gridY = ((int)source.y() - (int)source.y() % gridSize);
-
-        if((int)source.x()<0)
-        {
-            if( (int)source.x() < gridOffset.x()+gridX - (int)(gridSize/2) )
-                gridX -= gridSize;
-        }
-        else
-        {
-            if( (int)source.x() > gridOffset.x()+gridX + (int)(gridSize/2) )
-                gridX += gridSize;
-        }
-
-        if((int)source.y()<0)
-        {if( (int)source.y() < gridOffset.y()+gridY - (int)(gridSize/2) )
-            gridY -= gridSize;
-        }
-        else {if( (int)source.y() > gridOffset.y()+gridY + (int)(gridSize/2) )
-         gridY += gridSize;
-        }
-
-        return QPoint(gridOffset.x()+gridX, gridOffset.y()+gridY);
-
-    }
+        return Grid::applyGrid(source, gridSize, gridOffset);
     else
         return source;
 }
 
 
-QPixmap LvlScene::getNPCimg(unsigned long npcID)
+QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
 {
     bool noimage=true, found=false;
     bool isUser=false, isUserTxt=false;
-    int j;
+    int j, q;
     QPixmap tempI;
     int gfxH = 0;
+    obj_npc merged;
 
     //Check Index exists
     if(npcID < (unsigned int)index_npc.size())
@@ -94,9 +71,15 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
                 tempI = uNPCs[index_npc[npcID].i].image;
             }
             if(uNPCs[index_npc[npcID].i].withTxt)
+            {
                 gfxH = uNPCs[index_npc[npcID].i].merged.gfx_h;
+                merged = uNPCs[index_npc[npcID].i].merged;
+            }
             else
+            {
                 gfxH = pConfigs->main_npc[index_npc[npcID].gi].height;
+                merged = pConfigs->main_npc[index_npc[npcID].gi];
+            }
         }
 
         if(!noimage)
@@ -109,20 +92,21 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
     else
     {
         //found neccesary element in arrays and select
-        for(j=0;j<uNPCs.size();j++)
+        for(q=0;q<uNPCs.size();q++)
         {
-            if(uNPCs[j].id == npcID)
+            if(uNPCs[q].id == npcID)
             {
-                if(uNPCs[j].withImg)
+                if(uNPCs[q].withImg)
                 {
                     isUser=true;
                     noimage=false;
-                    tempI = uNPCs[j].image;
+                    tempI = uNPCs[q].image;
                 }
-                if(uNPCs[j].withTxt)
+                if(uNPCs[q].withTxt)
                 {
                     isUserTxt = true;
-                    gfxH = uNPCs[j].merged.gfx_h;
+                    gfxH = uNPCs[q].merged.gfx_h;
+                    merged = uNPCs[q].merged;
                 }
                 break;
             }
@@ -136,7 +120,10 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
                 if(!isUser)
                     tempI = pConfigs->main_npc[j].image;
                 if(!isUserTxt)
+                {
                     gfxH =  pConfigs->main_npc[j].gfx_h;
+                    merged = pConfigs->main_npc[j];
+                }
                 break;
             }
         }
@@ -147,7 +134,44 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID)
         return uNpcImg;
     }
 
-    return tempI.copy(0,0, tempI.width(), gfxH );
+    if(Direction<=0)
+    {
+        int frame=0;
+        if(merged.custom_animate)
+        {
+            frame=merged.custom_ani_fl;
+        }
+        return tempI.copy(0,frame*gfxH, tempI.width(), gfxH );
+    }
+    else
+    {
+        int frame=0;
+        int framesQ;
+        if(merged.custom_animate)
+        {
+            frame=merged.custom_ani_fr;
+        }
+        else
+        {
+            switch(merged.framestyle)
+            {
+            case 2:
+                framesQ = merged.frames * 4;
+                frame = (int)(framesQ-(framesQ/4)*3);
+                break;
+            case 1:
+                framesQ = merged.frames * 2;
+                frame = (int)(framesQ / 2);
+                break;
+            case 0:
+            default:
+                break;
+            }
+
+        }
+        return tempI.copy(0,frame*gfxH, tempI.width(), gfxH );
+    }
+
 }
 
 
@@ -544,6 +568,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
         //WriteToLog(QtDebugMsg, "NPC place -> set Props");
     NPCItem->localProps = mergedSet;
+    NPCItem->setData(8, QString::number((int)mergedSet.no_npc_collions));
 
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
     NPCItem->setMainPixmap(tImg);
@@ -580,6 +605,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         npc.y = newPos.y();
     }
 
+    npc.is_star = mergedSet.is_star;
 
         WriteToLog(QtDebugMsg, "NPC place -> set position");
     NPCItem->setPos( QPointF(newPos) );
@@ -688,7 +714,7 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
             player->setData(0, "player"+QString::number(plr.id) );
             player->setData(2, QString::number(plr.id));
             player->setFlag(QGraphicsItem::ItemIsSelectable, true);
-            //player->setFlag(QGraphicsItem::ItemIsMovable, true);
+            player->setFlag(QGraphicsItem::ItemIsMovable, true);
             if(!init)
             {
                 for(int i=0; i<LvlData->players.size(); i++)
