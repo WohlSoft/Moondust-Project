@@ -67,3 +67,16 @@ QImage GraphicsHelps::fromBMP(QString &file)
 
     return bmpImg;
 }
+
+QPixmap GraphicsHelps::loadPixmap(QString file)
+{
+    return QPixmap::fromImage(loadQImage(file));
+}
+
+QImage GraphicsHelps::loadQImage(QString file)
+{
+    QImage image = QImage(file);
+    if(image.isNull())
+        image = fromBMP(file);
+    return image;
+}
