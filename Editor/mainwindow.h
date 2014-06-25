@@ -470,6 +470,10 @@ private slots:
 
     void on_WarpBrowseLevels_clicked();
 
+    void on_actionContents_triggered();
+
+    void on_actionNew_triggered();
+
 private:
 
     LevelEditingSettings LvlOpts;

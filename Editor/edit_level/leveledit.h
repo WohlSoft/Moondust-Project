@@ -61,6 +61,7 @@ public:
     LvlScene * scene;
 
     bool sceneCreated;
+    bool isUntitled;
 
     QString curFile;
     
@@ -84,7 +85,6 @@ private:
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
     QString latest_export_path;
-    bool isUntitled;
     unsigned int FileType;
 
     //QGraphicsScene* pScene;

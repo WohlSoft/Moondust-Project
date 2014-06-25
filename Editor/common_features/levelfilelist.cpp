@@ -20,7 +20,7 @@
 #include "ui_levelfilelist.h"
 #include <QDir>
 
-LevelFileList::LevelFileList(QString Folder, QWidget *parent) :
+LevelFileList::LevelFileList(QString Folder, QString current, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LevelFileList)
 {
@@ -31,6 +31,18 @@ LevelFileList::LevelFileList(QString Folder, QWidget *parent) :
     levelDir.setNameFilters(filters);
     ui->setupUi(this);
     ui->FileList->insertItems(levelDir.entryList().size(), levelDir.entryList(filters) );
+
+    // Select current item
+    for(int i=0; i<ui->FileList->count(); i++)
+    {
+        if(ui->FileList->item(i)->text()==current)
+        {
+            ui->FileList->item(i)->setSelected(true);
+            ui->FileList->scrollToItem(ui->FileList->item(i));
+         break;
+        }
+    }
+
 }
 
 LevelFileList::~LevelFileList()

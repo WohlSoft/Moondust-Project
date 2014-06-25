@@ -13,7 +13,7 @@ class LevelFileList : public QDialog
     Q_OBJECT
 
 public:
-    explicit LevelFileList(QString Folder, QWidget *parent = 0);
+    explicit LevelFileList(QString Folder, QString current="", QWidget *parent = 0);
     ~LevelFileList();
     QString SelectedFile;
 

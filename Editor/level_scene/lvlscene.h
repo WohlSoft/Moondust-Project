@@ -86,6 +86,7 @@ public:
 
     // ////////////ItemPlacers///////////
     void setItemPlacer(int itemType, unsigned long itemID=1, int dType=0);
+    void updateCursoredNpcDirection();
     void setSquareDrawer();
     enum placingItemType
     {
@@ -100,6 +101,7 @@ public:
     int placingItem;
     QGraphicsItem * cursor;
     void placeItemUnderCursor();
+    void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
 
     // //////////////////////////////////
@@ -139,7 +141,7 @@ public:
 
     void doorPointsSync(long arrayID, bool remove=false);
 
-    QPixmap getNPCimg(unsigned long npcID);
+    QPixmap getNPCimg(unsigned long npcID, int Direction=0);
 
     void applyLayersVisible();
 
@@ -228,7 +230,8 @@ public:
             LEVELHISTORY_REMOVELAYERANDSAVE,
             LEVELHISTORY_MERGELAYER,
             LEVELHISTORY_CHANGEDSETTINGSSECTION,
-            LEVELHISTORY_CHANGEDSETTINGSLEVEL
+            LEVELHISTORY_CHANGEDSETTINGSLEVEL,
+            LEVELHISTORY_REPLACEPLAYERPOINT
         };
         HistoryType type;
         //used most of Operations
@@ -319,7 +322,8 @@ public:
         SETTING_SECBACKGROUNDIMG,   //extraData: QList<QVariant[int]> [old background id, new background id]
         SETTING_SECMUSIC,           //extraData: QList<QVariant[int]> [old music id, new music id]
         SETTING_SECCUSTOMMUSIC,     //extraData: QList<QVariant[String]> [old custom music name, new custom music name]
-        SETTING_LEVELNAME           //extraData: QList<QVariant[String]> [old level name, new level name]
+        SETTING_LEVELNAME,          //extraData: QList<QVariant[String]> [old level name, new level name]
+        SETTING_BGOSORTING
     };
 
     //typedefs
@@ -362,6 +366,7 @@ public:
     void addMergeLayer(LevelData mergedData, QString newLayerName);
     void addChangeSectionSettingsHistory(int sectionID, SettingSubType subtype, QVariant extraData);
     void addChangeLevelSettingsHistory(SettingSubType subtype, QVariant extraData);
+    void addPlacePlayerPointHistory(PlayerPoint plr, QVariant oldPos);
     //history modifiers
     void historyBack();
     void historyForward();
@@ -376,11 +381,13 @@ public:
     void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyRedoMoveWater(CallbackData cbData, LevelWater data);
     void historyRedoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyRedoMovePlayerPoint(CallbackData cbData, PlayerPoint data);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
     void historyUndoMoveWater(CallbackData cbData, LevelWater data);
     void historyUndoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
+    void historyUndoMovePlayerPoint(CallbackData cbData, PlayerPoint data);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
@@ -463,6 +470,9 @@ public:
     //Callbackfunctions: [Change Settings] Talk Event
     void historyUndoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsSpecialDataNPC(CallbackData cbData, LevelNPC data);
+    //Callbackfunctions: [Change Settings] Talk Event
+    void historyUndoSettingsSortingBGO(CallbackData cbData, LevelBGO data);
+    void historyRedoSettingsSortingBGO(CallbackData cbData, LevelBGO data);
     //Callbackfunctions: Change Layer
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
@@ -507,9 +517,9 @@ public:
     void openProps();
 
 
-
 public slots:
     void selectionChanged();
+
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

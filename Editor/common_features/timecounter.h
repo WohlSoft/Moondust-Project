@@ -28,6 +28,7 @@ public:
     TimeCounter();
     void start();
     void stop(QString msg="",int items=0);
+    int current();
 
 private:
     QTime TickTack;

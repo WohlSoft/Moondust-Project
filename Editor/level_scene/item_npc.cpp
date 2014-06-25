@@ -736,7 +736,7 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
 
     if(direction==0) //if direction=random
     {
-        dir=(((bool)qrand()%2)?-1:1); //set randomly 1 or -1
+        dir=((0==qrand()%2)?-1:1); //set randomly 1 or -1
     }
 
     if(localProps.ani_directed_direct)

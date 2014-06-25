@@ -54,6 +54,7 @@ LevelNPC    FileFormats::dummyLvlNpc()
 
     dummyNPC.array_id=0;
     dummyNPC.index=0;
+    dummyNPC.is_star=false;
     return dummyNPC;
 }
 
@@ -1374,6 +1375,15 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
 {
     QString TextData;
     int i, j;
+
+    //Count placed stars on this level
+    FileData.stars=0;
+    for(i=0;i<FileData.npc.size();i++)
+    {
+        if(FileData.npc[i].is_star)
+            FileData.stars++;
+    }
+
 
     TextData += SMBX64::IntS(64);                     //Format version 64
     TextData += SMBX64::IntS(FileData.stars);         //Number of stars

@@ -252,6 +252,9 @@ void dataconfigs::loadLevelNPC()
         //        bool container;
             snpc.container = npcset.value("container", "0").toBool();
 
+            snpc.no_npc_collions = npcset.value("no-npc-collisions", "0").toBool();
+        //    ; this option disabling collisions in editor with other NPCs, but with NPC's of same ID collisions will be checked
+
         //    //    ; Special option
         //    //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
         //        bool special_option;
@@ -431,7 +434,11 @@ void dataconfigs::loadLevelNPC()
         //    //    lava-protection=0	; NPC will not be burn in lava
         //        bool lava_protect;
             snpc.lava_protect = npcset.value("lava-protection", "0").toBool();
+
+            snpc.is_star = npcset.value("is-star", "0").toBool();
+
           //  WriteToLog(QtDebugMsg, "NPC Config -> Loaded");
+
 
             main_npc.push_back(snpc);
 

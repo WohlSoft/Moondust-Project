@@ -37,6 +37,9 @@
 
 //Default dataSets
 LevelNPC    LvlPlacingItems::npcSet=FileFormats::dummyLvlNpc();
+long        LvlPlacingItems::npcGfxOffsetX1=0;
+long        LvlPlacingItems::npcGfxOffsetX2=0;
+long        LvlPlacingItems::npcGfxOffsetY=0;
 long        LvlPlacingItems::npcGrid=0;
 LevelBlock  LvlPlacingItems::blockSet=FileFormats::dummyLvlBlock();
 LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
@@ -344,12 +347,14 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             }
         }
 
-        tImg = getNPCimg(itemID);
+        tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
 
         if(LvlPlacingItems::npcSet.generator)
             LvlPlacingItems::gridSz=16;
         else
             LvlPlacingItems::gridSz=mergedSet.grid;
+
+        LvlPlacingItems::npcSet.is_star = mergedSet.is_star;
 
         LvlPlacingItems::npcGrid=mergedSet.grid;
 
@@ -366,12 +371,18 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                                       (double)mergedSet.gfx_offset_y
                                       -((pConfigs->marker_npc.buried == LvlPlacingItems::npcSet.id)? (double)mergedSet.gfx_h : 0) );
 
+        LvlPlacingItems::npcGfxOffsetX1 = imgOffsetX;
+        LvlPlacingItems::npcGfxOffsetX2 = (-((double)mergedSet.gfx_offset_x));
+        LvlPlacingItems::npcGfxOffsetY = imgOffsetY;
         ((QGraphicsPixmapItem *)cursor)->setOffset(
-                    imgOffsetX+(-((double)mergedSet.gfx_offset_x)*
-                                LvlPlacingItems::npcSet.direct), imgOffsetY );
+                    ( LvlPlacingItems::npcGfxOffsetX1 +
+                    ( LvlPlacingItems::npcGfxOffsetX2 *
+                      ((LvlPlacingItems::npcSet.direct==0)?-1:LvlPlacingItems::npcSet.direct))),
+                    LvlPlacingItems::npcGfxOffsetY );
 
         cursor->setData(0, "NPC");
         cursor->setData(1, QString::number(itemID));
+        cursor->setData(8, QString::number((int)mergedSet.no_npc_collions));
         cursor->setData(9, QString::number(mergedSet.width));
         cursor->setData(10, QString::number(mergedSet.height));
         cursor->setData(25, "CURSOR");
@@ -474,6 +485,21 @@ void LvlScene::setSquareDrawer()
 
     EditingMode = MODE_DrawSquare;
     DrawMode=true;
+}
+
+
+
+void LvlScene::updateCursoredNpcDirection()
+{
+    if(!cursor) return;
+    if(cursor->data(0).toString()!="NPC") return;
+
+    ((QGraphicsPixmapItem *)cursor)->setPixmap(getNPCimg(LvlPlacingItems::npcSet.id, LvlPlacingItems::npcSet.direct));
+    ((QGraphicsPixmapItem *)cursor)->setOffset(
+                ( LvlPlacingItems::npcGfxOffsetX1 +
+                ( LvlPlacingItems::npcGfxOffsetX2 *
+                  ((LvlPlacingItems::npcSet.direct==0)?-1:LvlPlacingItems::npcSet.direct))),
+                LvlPlacingItems::npcGfxOffsetY );
 }
 
 

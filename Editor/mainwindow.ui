@@ -315,6 +315,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew"/>
    <addaction name="OpenFile"/>
    <addaction name="actionSave"/>
    <addaction name="actionSave_as"/>
@@ -1175,8 +1176,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>514</height>
        </rect>
       </property>
      </widget>
@@ -1199,8 +1200,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>514</height>
        </rect>
       </property>
      </widget>
@@ -1223,8 +1224,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>239</width>
+        <height>514</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2722,8 +2723,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>167</width>
-          <height>446</height>
+          <width>468</width>
+          <height>724</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2849,8 +2850,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>194</width>
-          <height>547</height>
+          <width>260</width>
+          <height>724</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3771,7 +3772,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>291</height>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3853,7 +3854,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>291</height>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3946,7 +3947,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
+          <width>255</width>
           <height>461</height>
          </rect>
         </property>
@@ -4244,8 +4245,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>272</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4360,8 +4361,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>272</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4458,8 +4459,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>272</width>
+          <height>348</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4589,16 +4590,28 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </property>
   </action>
   <action name="actionNewLevel">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/lvl16.png</normaloff>:/lvl16.png</iconset>
+   </property>
    <property name="text">
     <string>Level...</string>
    </property>
   </action>
   <action name="actionNewWorld_map">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
+   </property>
    <property name="text">
     <string>World map...</string>
    </property>
   </action>
   <action name="actionNewNPC_config">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/coin.png</normaloff>:/images/coin.png</iconset>
+   </property>
    <property name="text">
     <string>NPC config...</string>
    </property>
@@ -4680,7 +4693,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   </action>
   <action name="actionContents">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Contents</string>
@@ -5956,6 +5969,15 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </property>
    <property name="text">
     <string>Current configuration status...</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
    </property>
   </action>
  </widget>
