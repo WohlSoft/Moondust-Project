@@ -25,7 +25,7 @@ class GraphicsHelps
 {
 public:
     static QPixmap setAlphaMask(QPixmap image, QPixmap mask);
-
+    static QImage fromBMP(QString& file);
 };
 
 #endif // GRAPHICS_FUNCS_H
