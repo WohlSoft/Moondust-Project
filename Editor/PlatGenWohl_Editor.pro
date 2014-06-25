@@ -114,7 +114,8 @@ SOURCES += main.cpp\
     main_window/dock/lvl_layers_props.cpp \
     data_configs/configstatus.cpp \
     common_features/graphics_funcs.cpp \
-    common_features/levelfilelist.cpp
+    common_features/levelfilelist.cpp \
+    libs/EasyBMP/EasyBMP.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -153,7 +154,11 @@ HEADERS  += mainwindow.h \
     data_configs/custom_data.h \
     data_configs/configstatus.h \
     common_features/graphics_funcs.h \
-    common_features/levelfilelist.h
+    common_features/levelfilelist.h \
+    libs/EasyBMP/EasyBMP.h \
+    libs/EasyBMP/EasyBMP_BMP.h \
+    libs/EasyBMP/EasyBMP_DataStructures.h \
+    libs/EasyBMP/EasyBMP_VariousBMPutilities.h
 
 FORMS    += \
     mainwindow.ui \
