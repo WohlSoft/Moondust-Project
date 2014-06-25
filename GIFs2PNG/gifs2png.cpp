@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
     QDir musicDir;
     QString path;
     QString OPath;
+    bool removeMode=false;
     QStringList fileList;
     QRegExp isMask = QRegExp("*m.gif");
     isMask.setPatternSyntax(QRegExp::Wildcard);
@@ -77,6 +78,10 @@ int main(int argc, char *argv[])
     if(a.arguments().filter("--help", Qt::CaseInsensitive).size()>0)
     {
         goto DisplayHelp;
+    }
+    if(a.arguments().filter("-R", Qt::CaseSensitive).size()>0)
+    {
+        removeMode=true;
     }
 
     musicDir.setPath(a.arguments().at(1));
@@ -129,6 +134,11 @@ int main(int argc, char *argv[])
         {
             target.save(OPath+tmp[0]+".png");
             qDebug() << path+q;
+            if(removeMode)
+            {
+                QFile::remove( path+q );
+                QFile::remove( path+imgFileM );
+            }
         }
         else
         qDebug() << path+q+" - WRONG!";
@@ -147,10 +157,11 @@ DisplayHelp:
     std::cout<<"This utility will merge GIF images and his mask into solid PNG image:\n";
     std::cout<<"============================================================================\n";
     std::cout<<"Syntax:\n\n";
-    std::cout<<"   GIFs2PNG [--help] /path/to/folder [-O/path/to/out]\n\n";
+    std::cout<<"   GIFs2PNG [--help] /path/to/folder [-O/path/to/out] [-R]\n\n";
     std::cout<<" --help              - Display this help\n";
     std::cout<<" /path/to/folder     - path to directory with pair of GIF files\n";
     std::cout<<" -O/path/to/out      - path to directory where will be saved PNG images\n";
+    std::cout<<" -R                  - Remove source images after succesfull converting\n";
     std::cout<<"\n\n";
 
     getchar();
