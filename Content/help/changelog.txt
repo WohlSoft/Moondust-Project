@@ -5,6 +5,7 @@ Editor 0.1.0
 - Fixed default main window size and position
 - Fixed Level item toolbox category list translating
 - Fixed but with empty category lists after config reload
+- Added support for BMP Files, Ghosties will be appeared ONLY if image realy broken.
 - Player's start points can be moved by mouse in selection mode
 - History manager can store any level data and any settings changes
 - New icons for section switch buttons
