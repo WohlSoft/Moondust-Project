@@ -4,16 +4,20 @@ This is a part of Platformer Game Engine by Wohlstand
 --------------------------------------------------------------------------------
 This programm distributed under GNU GPLv3
 ================================================================================
---------------------------------------------------------------------------------
-Usage:
---------------------------------------------------------------------------------
+This utility will fix lazily-made image masks:
+============================================================================
 Syntax:
 
-   LazyFixTool [--help] /path/to/folder [-O/path/to/out]
+   LazyFixTool [--help] /path/to/folder [-O/path/to/out] [-W] [-N]
 
  --help              - Display this help
  /path/to/folder     - path to directory with pair of GIF files
- -O/path/to/out      - path to directory where will be saved PNG images
+ -O/path/to/out      - path to directory where will be saved new images
+                       Note: (with -W flag will be ingored)
+ -W                  - Walk in subdirectores
+ -N                  - Don't create backup
+
+
 
 if -O will not be defined, PNG images will be saves in same folder, where placed GIF images.
 --------------------------------------------------------------------------------
