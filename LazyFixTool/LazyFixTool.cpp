@@ -28,8 +28,10 @@
 #include <QtDebug>
 #include <QFileInfo>
 
-#include "libs/giflib/gif_lib.h"
 #include "libs/EasyBMP/EasyBMP.h"
+extern "C"{
+#include "libs/giflib/gif_lib.h"
+}
 
 bool noBackUp=false;
 QImage setAlphaMask(QImage image, QImage mask)
