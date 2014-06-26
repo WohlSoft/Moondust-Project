@@ -1,5 +1,6 @@
 /*
  * LazyFixTool, a free tool for fix lazily-made image masks
+ * and also, convert all BMPs into GIF
  * This is a part of Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
@@ -34,6 +35,9 @@ extern "C"{
 }
 
 bool noBackUp=false;
+bool DarkGray=false;
+
+
 QImage setAlphaMask(QImage image, QImage mask)
 {
     if(mask.isNull())
@@ -59,9 +63,14 @@ QImage setAlphaMask(QImage image, QImage mask)
 
 bool toGif(QImage& img, QString& path){
     int errcode;
+
+    if(QFile(path).exists()) // Remove old file
+        QFile::remove(path);
+
     GifFileType* t = EGifOpenFileName(path.toStdString().c_str(),true, &errcode);
     if(!t){
         EGifCloseFile(t, &errcode);
+        std::cout << "Can't open\n";
         return false;
     }
 
@@ -94,6 +103,7 @@ bool toGif(QImage& img, QString& path){
 
     if(unfinished){
         EGifCloseFile(t, &errcode);
+        std::cout << "Unfinished\n";
         return false;
     }
 
@@ -104,6 +114,7 @@ bool toGif(QImage& img, QString& path){
 
     if(tarQImg.colorTable().size() != 256){
         EGifCloseFile(t, &errcode);
+        std::cout << "A lot of colors\n";
         return false;
     }
 
@@ -120,12 +131,14 @@ bool toGif(QImage& img, QString& path){
     errcode = EGifPutScreenDesc(t, img.width(), img.height(), 256, 0, cmo);
     if(errcode != GIF_OK){
         EGifCloseFile(t, &errcode);
+        std::cout << "EGifPutScreenDesc error 1\n";
         return false;
     }
 
     errcode = EGifPutImageDesc(t, 0, 0, img.width(), img.height(), false, 0);
     if(errcode != GIF_OK){
         EGifCloseFile(t, &errcode);
+        std::cout << "EGifPutImageDesc error 2\n";
         return false;
     }
 
@@ -136,6 +149,7 @@ bool toGif(QImage& img, QString& path){
         errcode = EGifPutLine(t, byteArr, tarQImg.width());
         if(errcode != GIF_OK){
             EGifCloseFile(t, &errcode);
+            std::cout << "EGifPutLine error 3\n";
             return false;
         }
 
@@ -143,14 +157,12 @@ bool toGif(QImage& img, QString& path){
         byteArr += ((tarQImg.width() % 4)!=0 ? 4 - (tarQImg.width() % 4) : 0);
     }
 
-
-
-
-
-    EGifCloseFile(t, &errcode);
     if(errcode != GIF_OK){
+        std::cout << "GIF error 4\n";
         return false;
     }
+    EGifCloseFile(t, &errcode);
+
     return true;
 }
 
@@ -190,6 +202,12 @@ void doMagicIn(QString path, QString q, QString OPath)
     QRegExp isMask = QRegExp("*m.gif");
     isMask.setPatternSyntax(QRegExp::Wildcard);
 
+    QRegExp isBackupDir = QRegExp("*/_backup/");
+    isBackupDir.setPatternSyntax(QRegExp::Wildcard);
+
+    if(isBackupDir.exactMatch(path))
+        return; //Skip backup directories
+
     if(isMask.exactMatch(q))
         return;
 
@@ -205,7 +223,27 @@ void doMagicIn(QString path, QString q, QString OPath)
     if(!QFile(path+q).exists())
         return;
     if(!QFile(path+imgFileM).exists())
+    {
+        QString saveTo;
+
+        QImage image = loadQImage(path+q);
+        if(image.isNull()) return;
+
+        qDebug() << path+q;
+
+        saveTo = QString(OPath+(tmp[0].toLower())+".gif");
+        //overwrite source image (convert BMP to GIF)
+        if(toGif( image, saveTo ) ) //Write gif
+        {
+            std::cout<<"GIF-1 only\n";
+        }
+        else
+        {
+            std::cout<<"BMP-1 only\n";
+            image.save(saveTo, "BMP"); //If failed, write BMP
+        }
         return;
+    }
 
     if(!noBackUp)
     {
@@ -263,18 +301,28 @@ void doMagicIn(QString path, QString q, QString OPath)
     for(int w=0; w< target.width(); w++)
         for(int h=0; h < target.height(); h++)
         {
-            if((target.pixel(w,h) < qRgb(0xFF,0xFF,0xFF)) && (target.pixel(w,h) >= qRgb(0x44,0x44,0x44)))
-                target.setPixel(w,h, qRgb(0x44,0x44,0x44));
+            if(DarkGray)
+            {
+                //fill white-gray to dark-gray
+                if((target.pixel(w,h) < qRgb(0xFF,0xFF,0xFF)) && (target.pixel(w,h) >= qRgb(0x44,0x44,0x44)))
+                    target.setPixel(w,h, qRgb(0x44,0x44,0x44));
 
-            if((target.pixel(w,h) > qRgb(0x00,0x00,0x00)) && (target.pixel(w,h) < qRgb(0x44,0x44,0x44)))
-                target.setPixel(w,h, qRgb(0x00,0x00,0x00));
+                //fill black-gray to black
+                if((target.pixel(w,h) > qRgb(0x00,0x00,0x00)) && (target.pixel(w,h) < qRgb(0x44,0x44,0x44)))
+                    target.setPixel(w,h, qRgb(0x00,0x00,0x00));
+            }
         }
-    else // If white not exist - fill white-gray to white
+    else // If white not exist
     for(int w=0; w< target.width(); w++)
         for(int h=0; h < target.height(); h++)
         {
+            //fill white-gray to white
             if(target.pixel(w,h) > qRgb(0xF3,0xF3,0xF3))
                 target.setPixel(w,h, qRgb(0xFF,0xFF,0xFF));
+
+            //fill black-gray to black
+            if((target.pixel(w,h) > qRgb(0x00,0x00,0x00)) && (target.pixel(w,h) < qRgb(0x44,0x44,0x44)))
+                target.setPixel(w,h, qRgb(0x00,0x00,0x00));
         }
 
     mask = target;
@@ -283,7 +331,33 @@ void doMagicIn(QString path, QString q, QString OPath)
 
     //Save after fix
     //target.save(OPath+tmp[0]+"_after.bmp", "BMP");
-    mask.save(OPath+tmp[0]+"m.gif", "BMP"); //overwrite mask image
+    QString saveTo;
+
+
+    saveTo = QString(OPath+(tmp[0].toLower())+".gif");
+    //overwrite source image (convert BMP to GIF)
+    if(toGif(image, saveTo ) ) //Write gif
+    {
+        std::cout<<"GIF-1 ";
+    }
+    else
+    {
+        std::cout<<"BMP-1 ";
+        image.save(saveTo, "BMP"); //If failed, write BMP
+    }
+
+    saveTo = QString(OPath+(tmp[0].toLower())+"m.gif");
+
+    //overwrite mask image
+    if( toGif(mask, saveTo ) ) //Write gif
+    {
+        std::cout<<"GIF-2\n";
+    }
+    else
+    {
+        mask.save(saveTo, "BMP"); //If failed, write BMP
+        std::cout<<"BMP-2\n";
+    }
 
     }
     else
@@ -327,6 +401,11 @@ int main(int argc, char *argv[])
     if(a.arguments().filter("-N", Qt::CaseInsensitive).size()>0)
     {
        noBackUp=true;
+    }
+
+    if(a.arguments().filter("-G", Qt::CaseInsensitive).size()>0)
+    {
+       DarkGray=true;
     }
 
     imagesDir.setPath(a.arguments().at(1));
@@ -392,13 +471,14 @@ DisplayHelp:
     std::cout<<"This utility will fix lazily-made image masks:\n";
     std::cout<<"============================================================================\n";
     std::cout<<"Syntax:\n\n";
-    std::cout<<"   LazyFixTool [--help] /path/to/folder [-O/path/to/out] [-W] [-N]\n\n";
+    std::cout<<"   LazyFixTool [--help] /path/to/folder [-O/path/to/out] [-W] [-N] [-G]\n\n";
     std::cout<<" --help              - Display this help\n";
     std::cout<<" /path/to/folder     - path to directory with pair of GIF files\n";
     std::cout<<" -O/path/to/out      - path to directory where will be saved new images\n";
     std::cout<<"                       Note: (with -W flag will be ingored)\n";
     std::cout<<" -W                  - Walk in subdirectores\n";
     std::cout<<" -N                  - Don't create backup\n";
+    std::cout<<" -G                  - Make gray shades on masks is more dark\n";
     std::cout<<"\n\n";
 
     getchar();

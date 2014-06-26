@@ -1,4 +1,5 @@
 # LazyFixTool, a free tool for fix lazily-made image masks
+# and also, convert all BMPs into GIF
 # This is a part of Platformer Game Engine by Wohlstand, a free platform for game making
 # Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
 #
