@@ -30,4 +30,21 @@ TEMPLATE = app
 
 
 SOURCES += \
-    LazyFixTool.cpp
+    LazyFixTool.cpp \
+    libs/giflib/dgif_lib.c \
+    libs/giflib/egif_lib.c \
+    libs/giflib/gif_err.c \
+    libs/giflib/gif_font.c \
+    libs/giflib/gif_hash.c \
+    libs/giflib/gifalloc.c \
+    libs/giflib/quantize.c \
+    libs/EasyBMP/EasyBMP.cpp
+
+HEADERS += \
+    libs/giflib/gif_hash.h \
+    libs/giflib/gif_lib.h \
+    libs/giflib/gif_lib_private.h \
+    libs/EasyBMP/EasyBMP.h \
+    libs/EasyBMP/EasyBMP_BMP.h \
+    libs/EasyBMP/EasyBMP_DataStructures.h \
+    libs/EasyBMP/EasyBMP_VariousBMPutilities.h
