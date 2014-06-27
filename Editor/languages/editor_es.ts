@@ -592,12 +592,12 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../common_features/levelfilelist.ui" line="20"/>
         <source>Level files list</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de archivos de nivel</translation>
     </message>
     <message>
         <location filename="../common_features/levelfilelist.ui" line="30"/>
         <source>Please, select level file from list for use them:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, seleccionar archivo de la lista para usarlo:</translation>
     </message>
 </context>
 <context>
@@ -772,12 +772,12 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3437"/>
         <source>Changed Levelsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiada la preferencia [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3438"/>
         <source>Place Player Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Colocar punto del jugador</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3440"/>
@@ -1094,47 +1094,47 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3509"/>
         <source>Is Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Es traslado</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3510"/>
         <source>No Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Sin Retorno</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3511"/>
         <source>Off Screen Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Salida fuera de pantalla</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3512"/>
         <source>Underwater</source>
-        <translation type="unfinished">Bajo agua</translation>
+        <translation>Bajo agua</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3513"/>
         <source>Background Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagen de fondo</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3514"/>
         <source>Music</source>
-        <translation type="unfinished">Música</translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3515"/>
         <source>Custom Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Música propia</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3516"/>
         <source>Level Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del nivel</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3517"/>
         <source>BGO Sorting Priority</source>
-        <translation type="unfinished"></translation>
+        <translation>Prioridad de OFs</translation>
     </message>
 </context>
 <context>
@@ -1383,12 +1383,12 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="334"/>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, guarde el archivo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="334"/>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1711"/>
@@ -2871,13 +2871,13 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../common_features/musicfilelist.cpp" line="51"/>
         <source>Too many subfolders</source>
-        <translation type="unfinished"></translation>
+        <translation>Demasiadas subcarpetas</translation>
     </message>
     <message>
         <location filename="../common_features/musicfilelist.cpp" line="51"/>
         <source>If you contunue this operation, application can be frozen.
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Si continúa esta operación, la aplicación se congelará. ¿Desea Continuar?</translation>
     </message>
 </context>
 <context>
