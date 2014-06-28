@@ -126,7 +126,7 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID)
 
     foreach (QGraphicsItem * findBG, items() )
     {
-        if(findBG->data(0)=="BackGround"+QString::number(SectionID) )
+        if(findBG->data(0).toString()=="BackGround"+QString::number(LvlData->sections[SectionID].id) )
         {
             WriteToLog(QtDebugMsg, QString("Remove items BackGround"+QString::number(SectionID)) );
             removeItem(findBG);
