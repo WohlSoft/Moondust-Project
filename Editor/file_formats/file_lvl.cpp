@@ -247,8 +247,13 @@ LevelData FileFormats::dummyLvlDataArray()
     NewFileData.water_array_id = 0;
 
     //Create Section array
+    LevelSection section;
     for(int i=0; i<21;i++)
-        NewFileData.sections.push_back( dummyLvlSection() );
+    {
+        section = dummyLvlSection();
+        section.id = i;
+        NewFileData.sections.push_back( section );
+    }
 
     //Create players array
     PlayerPoint players;
@@ -395,6 +400,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     ////////////SECTION Data//////////
     for(i=0;i<sct;i++)
     {
+        section = dummyLvlSection();
+
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //left
             goto badfile;
@@ -468,7 +475,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             else section.music_file = removeQuotes(line); //remove quotes
         } else section.music_file="";
 
-        section.id=i;
+        section.id = i;
     FileData.sections.push_back(section); //Add Section in main array
     }
     if(file_format<8)
