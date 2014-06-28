@@ -1375,7 +1375,7 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="1550"/>
         <location filename="../mainwindow.ui" line="5207"/>
         <source>Warp section</source>
-        <translation>Level Wrap</translation>
+        <translation>Connect left and right sides</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1569"/>
