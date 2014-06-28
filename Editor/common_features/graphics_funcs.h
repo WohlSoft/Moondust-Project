@@ -17,6 +17,7 @@
  */
 
 #include <QPixmap>
+#include <QImage>
 
 #ifndef GRAPHICS_FUNCS_H
 #define GRAPHICS_FUNCS_H
@@ -25,7 +26,9 @@ class GraphicsHelps
 {
 public:
     static QPixmap setAlphaMask(QPixmap image, QPixmap mask);
-
+    static QImage fromBMP(QString& file);
+    static QPixmap loadPixmap(QString file);
+    static QImage loadQImage(QString file);
 };
 
 #endif // GRAPHICS_FUNCS_H

@@ -665,11 +665,11 @@ void npcedit::loadImageFile()
     if(QFile::exists(imagePath + defaultNPC.image_n))
     {
         if(QFile::exists(imagePath + defaultNPC.mask_n))
-            npcMask = QPixmap(imagePath + defaultNPC.mask_n );
+            npcMask = GraphicsHelps::loadPixmap( imagePath + defaultNPC.mask_n );
         else
             npcMask = defaultNPC.mask;
 
-        npcImage = GraphicsHelps::setAlphaMask(QPixmap( imagePath + defaultNPC.image_n ), npcMask);
+        npcImage = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(imagePath + defaultNPC.image_n ), npcMask);
 
         WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
     }
