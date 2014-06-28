@@ -15,6 +15,7 @@ Syntax:
  --help              - Display this help
  /path/to/folder     - path to directory with pair of GIF files
  -O/path/to/out      - path to directory where will be saved PNG images
+ -R                  - Remove source images after succesfull converting
 
 if -O will not be defined, PNG images will be saves in same folder, where placed GIF images.
 --------------------------------------------------------------------------------
