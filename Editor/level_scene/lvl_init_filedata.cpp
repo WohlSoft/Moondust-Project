@@ -20,19 +20,6 @@
 #include "../edit_level/leveledit.h"
 
 
-
-/* ////////////////////////////////////The Trach///////////////////////////////////
-void LvlScene::placeBox(float x, float y)
-{
-    QGraphicsItem *	box = addPixmap(QPixmap(QApplication::applicationDirPath() + "/" + "data/graphics/level/block/block-8.gif"));
-    box->setPos(x, y);
-    if (itemCollidesWith(box))
-        removeItem(box);
-    else
-        box->setData(0, "Box");
-}
-*/
-
 // //////////////////////////Apply used sections///////////////////////////////////////
 void LvlScene::makeSectionBG(QProgressDialog &progress)
 //void LvlScene::makeSectionBG(int x, int y, int w, int h)
