@@ -121,24 +121,27 @@ void LvlScene::InitSection(int sect)
 
 void LvlScene::ChangeSectionBG(int BG_Id, int SectionID)
 {
+    int sctID=0;
     if(SectionID<0)
-        SectionID = LvlData->CurSection;
+        sctID = LvlData->CurSection;
+    else
+        sctID = SectionID;
 
     foreach (QGraphicsItem * findBG, items() )
     {
-        if(findBG->data(0).toString()=="BackGround"+QString::number(LvlData->sections[SectionID].id) )
+        if(findBG->data(0).toString()== QString("BackGround%1").arg(LvlData->sections[sctID].id) )
         {
-            WriteToLog(QtDebugMsg, QString("Remove items BackGround"+QString::number(SectionID)) );
+            WriteToLog(QtDebugMsg, QString("Remove items "+findBG->data(0).toString()+" by id="+QString::number(sctID)+" by SctID="+QString::number(LvlData->sections[sctID].id)) );
             removeItem(findBG);
             if(findBG) delete findBG;
         }
     }
 
     if((BG_Id>=0) && (BG_Id <= pConfigs->main_bg.size() )) // Deny unexist ID
-            LvlData->sections[SectionID].background = BG_Id;
+            LvlData->sections[sctID].background = BG_Id;
 
     WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
-    setSectionBG(LvlData->sections[SectionID]);
+    setSectionBG(LvlData->sections[sctID]);
 }
 
 
@@ -245,7 +248,7 @@ void LvlScene::setSectionBG(LevelSection section)
 
         if(itemRect!=NULL)
         {
-            itemRect->setData(0, "BackGround"+QString::number(section.id) );
+            itemRect->setData(0, QString("BackGround%1").arg(section.id) );
             itemRect->setZValue(bgZ);
         }
 
@@ -321,14 +324,14 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         // /////////////////////Draw row//////////////////
 
         item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
-        item->setData(0, "BackGround"+QString::number(sctID) );
+        item->setData(0, QString("BackGround%1").arg(sctID) );
         item->setPos(x, y+toY);
         item->setZValue(bgZ);
 
         if(R1H < sctH)
         {
             item = addRect(0, 0, sctW, sctH-R1H, Qt::NoPen, QBrush(FillColor));
-            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y+RectPlus);
             item->setZValue(bgZ);
         }
@@ -361,7 +364,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
         // /////////////////////Draw first row//////////////////
         item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
-        item->setData(0, "BackGround"+QString::number(sctID) );
+        item->setData(0, QString("BackGround%1").arg(sctID) );
         item->setPos(x, y+toY);
         item->setZValue(bgZ);
         // /////////////////////Draw first row//////////////////
@@ -392,7 +395,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
 
             // /////////////////////Draw second row//////////////////
             item = addRect(0, 0, sctW, R2H-R2Hc, Qt::NoPen, QBrush( srcimg2.copy(0, R2Ho, R2W, R2H-R2Hc) ));
-            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x, y+toY);
             item->setZValue(bgZ+0.0000000001);
             // /////////////////////Draw second row//////////////////
@@ -405,7 +408,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         if( R1H+RectPlus < sctH )
         {
             item = addRect(0, 0, sctW, sctH-R1H-RectPlus, Qt::NoPen, QBrush(FillColor));
-            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
             item->setZValue(bgZ);
         }
@@ -432,7 +435,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             item = addRect(0, 0, sctW, RectPlus, Qt::NoPen,
                            QBrush(srcimg.copy(0, R1H-RectPlus, R1W, RectPlus))
                            );
-            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
             item->setZValue(bgZ);
 
@@ -449,11 +452,13 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         {
             //Attached to Top
             item = addRect(0, 0, sctW, sctH, Qt::NoPen, QBrush(srcimg));
-            item->setData(0, "BackGround"+QString::number(sctID) );
+            item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
             item->setZValue(bgZ);
         }
     }
+
+    WriteToLog(QtDebugMsg, "acceptedID is "+QString::number(sctID)+" data is "+item->data(0).toString());
 
     WriteToLog(QtDebugMsg, "Draw BG -> Drawed");
 }
