@@ -19,6 +19,8 @@
 #include <QPixmap>
 #include <QImage>
 #include "graphics_funcs.h"
+#include "../libs/EasyBMP/EasyBMP.h"
+#include "logger.h"
 
 
 QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
@@ -42,4 +44,39 @@ QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
     target.setAlphaChannel(newmask);
 
     return QPixmap::fromImage(target);
+}
+
+QImage GraphicsHelps::fromBMP(QString &file)
+{
+    QImage errImg;
+
+    BMP tarBMP;
+    if(!tarBMP.ReadFromFile(file.toStdString().c_str())){
+        WriteToLog(QtCriticalMsg, QString("Error: File does not exsist"));
+        return errImg; //Check if empty with errImg.isNull();
+    }
+
+    QImage bmpImg(tarBMP.TellWidth(),tarBMP.TellHeight(),QImage::Format_RGB666);
+
+    for(int x = 0; x < tarBMP.TellWidth(); x++){
+        for(int y = 0; y < tarBMP.TellHeight(); y++){
+            RGBApixel pixAt = tarBMP.GetPixel(x,y);
+            bmpImg.setPixel(x,y,qRgb(pixAt.Red, pixAt.Green, pixAt.Blue));
+        }
+    }
+
+    return bmpImg;
+}
+
+QPixmap GraphicsHelps::loadPixmap(QString file)
+{
+    return QPixmap::fromImage(loadQImage(file));
+}
+
+QImage GraphicsHelps::loadQImage(QString file)
+{
+    QImage image = QImage(file);
+    if(image.isNull())
+        image = fromBMP(file);
+    return image;
 }

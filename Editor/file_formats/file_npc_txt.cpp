@@ -122,7 +122,7 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     if((merged.framestyle==0)&&((local.en_gfxheight)||(local.en_height))&&(!local.en_frames))
     {
         merged.frames = qRound(qreal(captured.height())/qreal(merged.gfx_h));
-        merged.custom_animate = false;
+        //merged.custom_animate = false;
     }
     else
         merged.frames = (local.en_frames)?local.frames:global.frames;
@@ -130,7 +130,7 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     if((local.en_frames)||(local.en_framestyle))
     {
         merged.ani_bidir = false; //Disable bidirectional animation
-        merged.custom_animate = false; //Disable custom animation
+        if((local.en_frames)) merged.custom_animate = false; //Disable custom animation
     }
 
     merged.score = (local.en_score)?local.score:global.score;
