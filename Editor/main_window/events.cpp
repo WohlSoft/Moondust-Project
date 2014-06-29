@@ -44,16 +44,14 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     ui->centralWidget->closeAllSubWindows();
 
-
     if (ui->centralWidget->currentSubWindow()) {
         event->ignore();
-
     }
     else
     {
         saveSettings();
         event->accept();
         qApp->quit();
-        exit(0);
+        //exit(0);
     }
 }
