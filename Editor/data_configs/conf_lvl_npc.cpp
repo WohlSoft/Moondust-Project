@@ -21,7 +21,7 @@
 #include "../main_window/global_settings.h"
 #include "../common_features/graphics_funcs.h"
 
-void dataconfigs::loadLevelNPC()
+void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
 {
     unsigned int i;
 
@@ -57,6 +57,9 @@ void dataconfigs::loadLevelNPC()
 
     npcset.endGroup();
 
+    if(prgs) prgs->setMaximum(npc_total);
+    if(prgs) prgs->setLabelText(QApplication::tr("Loading NPCs..."));
+
     ConfStatus::total_npc = npc_total;
 
     //creation of empty indexes of arrayElements
@@ -81,6 +84,12 @@ void dataconfigs::loadLevelNPC()
 
         for(i=1; i<=npc_total; i++)
         {
+            qApp->processEvents();
+            if(prgs)
+            {
+                if(!prgs->wasCanceled()) prgs->setValue(i);
+            }
+
             //WriteToLog(QtDebugMsg, QString("NPC Config -> read header data... npc-%1").arg(i));
             npcset.beginGroup( QString("npc-"+QString::number(i)) );
         //    //    [npc-1]

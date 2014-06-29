@@ -21,7 +21,7 @@
 #include "../main_window/global_settings.h"
 #include "../common_features/graphics_funcs.h"
 
-void dataconfigs::loadLevelBGO()
+void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
 {
     unsigned int i;
 
@@ -46,6 +46,9 @@ void dataconfigs::loadLevelBGO()
         total_data +=bgo_total;
     bgoset.endGroup();
 
+    if(prgs) prgs->setMaximum(bgo_total);
+    if(prgs) prgs->setLabelText(QApplication::tr("Loading BGOs..."));
+
     ConfStatus::total_bgo = bgo_total;
 
     //creation of empty indexes of arrayElements
@@ -66,6 +69,12 @@ void dataconfigs::loadLevelBGO()
 
     for(i=1; i<=bgo_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         bgoset.beginGroup( QString("background-"+QString::number(i)) );
             sbgo.name = bgoset.value("name", "").toString();
 

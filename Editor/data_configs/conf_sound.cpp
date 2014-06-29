@@ -20,7 +20,7 @@
 
 #include "../main_window/global_settings.h"
 
-void dataconfigs::loadSound()
+void dataconfigs::loadSound(QProgressDialog *prgs)
 {
     unsigned int i;
 
@@ -47,6 +47,9 @@ void dataconfigs::loadSound()
         total_data +=sound_total;
     soundset.endGroup();
 
+    if(prgs) prgs->setMaximum(sound_total);
+    if(prgs) prgs->setLabelText(QApplication::tr("Loading Sound..."));
+
     ConfStatus::total_sound = sound_total;
 
 
@@ -60,6 +63,12 @@ void dataconfigs::loadSound()
     //Sound
     for(i=1; i<=sound_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         soundset.beginGroup( QString("sound-"+QString::number(i)) );
             sound.name = soundset.value("name", "").toString();
             if(sound.name.isEmpty())

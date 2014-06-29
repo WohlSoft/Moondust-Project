@@ -20,7 +20,7 @@
 
 #include "../main_window/global_settings.h"
 
-void dataconfigs::loadLevelBackgrounds()
+void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
 {
     unsigned int i;
     obj_BG sbg;
@@ -44,6 +44,9 @@ void dataconfigs::loadLevelBackgrounds()
         total_data +=bg_total;
     bgset.endGroup();
 
+    if(prgs) prgs->setMaximum(bg_total);
+    if(prgs) prgs->setLabelText(QApplication::tr("Loading Backgrounds..."));
+
     ConfStatus::total_bg = bg_total;
 
     if(ConfStatus::total_bg==0)
@@ -54,6 +57,12 @@ void dataconfigs::loadLevelBackgrounds()
 
     for(i=1; i<=bg_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         bgset.beginGroup( QString("background2-"+QString::number(i)) );
             sbg.name = bgset.value("name", "").toString();
             if(sbg.name.isEmpty())
