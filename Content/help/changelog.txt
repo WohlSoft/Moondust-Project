@@ -4,7 +4,7 @@ Editor 0.1.0
 - Image render are improved and fully support taking alpha channel from masks (before only internal PNG alpha, or 1-bit masks files)
 - Fixed default main window size and position
 - Fixed Level item toolbox category list translating
-- Fixed but with empty category lists after config reload
+- Fixed bug with empty category lists after config reload
 - Added support for BMP Files, Ghosties will be appeared ONLY if image realy broken.
 - Player's start points can be moved by mouse in selection mode
 - History manager can store any level data and any settings changes
