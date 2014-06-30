@@ -1,3 +1,7 @@
+Editor 0.1.0.1
+- Fixed bug with custom music paths after save new file.
+- Speed up of level loading process, now Editor opening the huge levels quickly
+
 Editor 0.1.0
 - Added events control support
 - Added sound tester
