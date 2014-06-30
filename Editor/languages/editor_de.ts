@@ -2978,32 +2978,32 @@ Möchtest du fortfahren?</translation>
     <message>
         <location filename="../data_configs/conf_lvl_bgo.cpp" line="50"/>
         <source>Loading BGOs...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade BGOs...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_lvl_bkgrd.cpp" line="48"/>
         <source>Loading Backgrounds...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Hintergründe...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_lvl_block.cpp" line="53"/>
         <source>Loading Blocks...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Blöcke...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_lvl_npc.cpp" line="61"/>
         <source>Loading NPCs...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade NPCs...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_music.cpp" line="62"/>
         <source>Loading Music...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Musik...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_sound.cpp" line="51"/>
         <source>Loading Sound...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Töne...</translation>
     </message>
 </context>
 <context>
