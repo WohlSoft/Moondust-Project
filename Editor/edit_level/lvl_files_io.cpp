@@ -309,7 +309,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-         progress.setMinimumDuration(0);
+         progress.setMinimumDuration(500);
          //progress.setCancelButton(0);
 
     QTimer *timer = new QTimer(this);
