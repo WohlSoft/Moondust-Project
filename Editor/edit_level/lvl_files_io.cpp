@@ -37,6 +37,17 @@
 #include <QDebug>
 
 
+class xxx
+{
+public slots:
+    static void processEvents()
+    {
+        qApp->processEvents();
+    }
+
+};
+
+
 void leveledit::ExportToImage_fn()
 {
         long x, y, h, w, th, tw;
@@ -284,17 +295,13 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     int DataSize=0;
 
-    DataSize += LvlData.sections.size()*2;
-    DataSize += configs.main_bgo.size();
-
+    DataSize += 3;
+    DataSize += 6; /*LvlData.sections.size()*2;
     DataSize += LvlData.bgo.size();
-    DataSize += configs.main_block.size();
     DataSize += LvlData.blocks.size();
-
-    DataSize += configs.main_npc.size();
     DataSize += LvlData.npc.size();
     DataSize += LvlData.water.size();
-    DataSize += LvlData.doors.size();
+    DataSize += LvlData.doors.size();*/
 
     QProgressDialog progress(tr("Loading level data"), tr("Abort"), 0, DataSize, this);
          progress.setWindowTitle(tr("Loading level data"));
@@ -305,6 +312,11 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setMinimumDuration(0);
          //progress.setCancelButton(0);
 
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT( xxx::processEvents() ) );
+    timer->start(1);
+
+
     if(! DrawObjects(progress) )
     {
         LvlData.modified = false;
@@ -313,6 +325,9 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    timer->stop();
+    delete timer;
 
     if( !progress.wasCanceled() )
         progress.close();
@@ -392,6 +407,7 @@ void leveledit::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
     isUntitled = false;
+    LvlData.path = QFileInfo(fileName).absoluteDir().absolutePath();
     //document()->setModified(false);
     setWindowModified(false);
     setWindowTitle(userFriendlyCurrentFile());
