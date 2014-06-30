@@ -69,8 +69,11 @@ MainWindow::~MainWindow()
 //Exit from application
 void MainWindow::on_Exit_triggered()
 {
-    MainWindow::close();
-    exit(0);
+    //ui->centralWidget->closeAllSubWindows();
+    if(!MainWindow::close())
+        return;
+    qApp->quit();
+    //exit(0);
 }
 
 //Open About box

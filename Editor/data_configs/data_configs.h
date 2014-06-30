@@ -212,7 +212,7 @@ class dataconfigs
 {
 public:
     dataconfigs();
-    bool loadconfigs();
+    bool loadconfigs(QProgressDialog *prgs=NULL);
     DataFolders dirs;
     QString config_dir;
 
@@ -260,13 +260,13 @@ private:
     QString npcPath;
 
 
-    void loadLevelBGO();
-    void loadLevelBlocks();
-    void loadLevelNPC();
-    void loadLevelBackgrounds();
+    void loadLevelBGO(QProgressDialog *prgs=NULL);
+    void loadLevelBlocks(QProgressDialog *prgs=NULL);
+    void loadLevelNPC(QProgressDialog *prgs=NULL);
+    void loadLevelBackgrounds(QProgressDialog *prgs=NULL);
 
-    void loadMusic();
-    void loadSound();
+    void loadMusic(QProgressDialog *prgs=NULL);
+    void loadSound(QProgressDialog *prgs=NULL);
 
     void addError(QString bug, QtMsgType level=QtWarningMsg);
 };

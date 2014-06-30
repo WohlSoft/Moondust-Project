@@ -20,7 +20,7 @@
 
 #include "../main_window/global_settings.h"
 
-void dataconfigs::loadMusic()
+void dataconfigs::loadMusic(QProgressDialog *prgs)
 {
     unsigned int i;
 
@@ -58,6 +58,9 @@ void dataconfigs::loadMusic()
         total_data +=music_spc_total;
     musicset.endGroup();
 
+    if(prgs) prgs->setMaximum(music_lvl_total+music_wld_total+music_spc_total);
+    if(prgs) prgs->setLabelText(QApplication::tr("Loading Music..."));
+
     ConfStatus::total_music_lvl = music_lvl_total;
     ConfStatus::total_music_wld = music_wld_total;
     ConfStatus::total_music_spc = music_spc_total;
@@ -81,6 +84,12 @@ void dataconfigs::loadMusic()
     //World music
     for(i=1; i<=music_wld_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         musicset.beginGroup( QString("world-music-"+QString::number(i)) );
             smusic_wld.name = musicset.value("name", "").toString();
             if(smusic_wld.name.isEmpty())
@@ -109,6 +118,12 @@ void dataconfigs::loadMusic()
     //Special music
     for(i=1; i<=music_spc_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         musicset.beginGroup( QString("special-music-"+QString::number(i)) );
             smusic_spc.name = musicset.value("name", "").toString();
             if(smusic_spc.name.isEmpty())
@@ -138,6 +153,12 @@ void dataconfigs::loadMusic()
     //Level music
     for(i=1; i<=music_lvl_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         musicset.beginGroup( QString("level-music-"+QString::number(i)) );
             smusic_lvl.name = musicset.value("name", "").toString();
             if(smusic_lvl.name.isEmpty())

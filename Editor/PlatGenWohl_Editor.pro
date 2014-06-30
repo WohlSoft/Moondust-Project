@@ -27,6 +27,9 @@ QT       += core gui widgets multimedia opengl
 TARGET = pge_editor
 TEMPLATE = app
 
+#CONFIG += c++11
+#QMAKE_CXXFLAGS += -std=c++11
+
 # CONFIG += static
 
 TRANSLATIONS += languages/editor_en.ts \

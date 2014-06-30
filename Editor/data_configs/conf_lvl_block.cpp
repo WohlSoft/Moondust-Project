@@ -23,7 +23,7 @@
 
 static QString Temp01="";
 
-void dataconfigs::loadLevelBlocks()
+void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
 {
     unsigned int i;
 
@@ -49,6 +49,9 @@ void dataconfigs::loadLevelBlocks()
         total_data +=block_total;
     blockset.endGroup();
 
+    if(prgs) prgs->setMaximum(block_total);
+    if(prgs) prgs->setLabelText(QApplication::tr("Loading Blocks..."));
+
     ConfStatus::total_blocks = block_total;
 
     //creation of empty indexes of arrayElements
@@ -70,6 +73,12 @@ void dataconfigs::loadLevelBlocks()
 
         for(i=1; i<=block_total; i++)
         {
+            qApp->processEvents();
+            if(prgs)
+            {
+                if(!prgs->wasCanceled()) prgs->setValue(i);
+            }
+
             blockset.beginGroup( QString("block-%1").arg(i) );
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();

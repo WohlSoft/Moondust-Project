@@ -24,22 +24,24 @@
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
-    //thread1->start();
-    //moveToThread(thread1);
 
-    QProgressDialog progress(tr("Reloading configurations"), tr("Abort"), 0,100, this);
-    progress.setWindowTitle("Please wait...");
-    progress.setWindowModality(Qt::WindowModal);
+    QProgressDialog progress("Please wait...", tr("Abort"), 0,100, this);
+    progress.setWindowTitle(tr("Reloading configurations"));
+    //progress.setWindowModality(Qt::WindowModal);
+    progress.setModal(true);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
     progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
     progress.setCancelButton(0);
-    progress.show();
+    progress.setMinimumDuration(0);
+    progress.setAutoClose(false);
+    //progress.show();
 
     if(!progress.wasCanceled()) progress.setValue(1);
 
     //Reload configs
-    configs.loadconfigs();
+    qApp->processEvents();
+    configs.loadconfigs(&progress);
 
     if(!progress.wasCanceled())  progress.setValue(100);
 
