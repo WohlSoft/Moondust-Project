@@ -34,9 +34,9 @@ void LvlScene::makeSectionBG(QProgressDialog &progress)
 
         total++;
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            /*progress.setValue(progress.value()+1);
+        else*/ return;
     }
 
 }
@@ -53,9 +53,9 @@ void LvlScene::setBlocks(QProgressDialog &progress)
         //Add block to scene
         placeBlock(LvlData->blocks[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 }
 
@@ -73,9 +73,9 @@ void LvlScene::setBGO(QProgressDialog &progress)
         //add BGO to scene
         placeBGO(LvlData->bgo[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -92,9 +92,9 @@ void LvlScene::setNPC(QProgressDialog &progress)
         //add NPC to scene
         placeNPC(LvlData->npc[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -109,9 +109,9 @@ void LvlScene::setWaters(QProgressDialog &progress)
         //add Water to scene
         placeWater(LvlData->water[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -128,10 +128,9 @@ void LvlScene::setDoors(QProgressDialog &progress)
         //add Doors points to scene
         placeDoor(LvlData->doors[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else
-            return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 }
 
