@@ -1115,8 +1115,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>238</width>
-        <height>511</height>
+        <width>263</width>
+        <height>397</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1176,8 +1176,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>217</width>
-        <height>511</height>
+        <width>242</width>
+        <height>397</height>
        </rect>
       </property>
      </widget>
@@ -1200,8 +1200,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>217</width>
-        <height>511</height>
+        <width>242</width>
+        <height>397</height>
        </rect>
       </property>
      </widget>
@@ -1224,8 +1224,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>217</width>
-        <height>511</height>
+        <width>242</width>
+        <height>397</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2525,8 +2525,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>242</width>
-          <height>447</height>
+          <width>267</width>
+          <height>554</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2723,8 +2723,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>242</width>
-          <height>447</height>
+          <width>496</width>
+          <height>554</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2850,7 +2850,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>221</width>
+          <width>246</width>
           <height>609</height>
          </rect>
         </property>
@@ -3772,7 +3772,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>356</height>
+          <height>347</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3854,7 +3854,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>356</height>
+          <height>347</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4246,7 +4246,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>356</height>
+          <height>347</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4362,7 +4362,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>356</height>
+          <height>347</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4460,7 +4460,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>356</height>
+          <height>347</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4584,6 +4584,9 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <item row="0" column="0">
       <widget class="QToolBox" name="FindToolbox">
        <property name="currentIndex">
+        <number>2</number>
+       </property>
+       <property name="tabSpacing">
         <number>0</number>
        </property>
        <widget class="QWidget" name="LVLFindBlock">
@@ -4591,31 +4594,78 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>246</width>
-          <height>165</height>
+          <width>271</width>
+          <height>273</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Block</string>
         </attribute>
+        <widget class="QPushButton" name="FindStartBlock">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>240</y>
+           <width>251</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Search Block</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="LVLFindBGO">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>271</width>
+          <height>273</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>BGO</string>
         </attribute>
+        <widget class="QPushButton" name="FindStartBGO">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>240</y>
+           <width>251</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Search BGO</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="LVLFindNPC">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>246</width>
-          <height>165</height>
+          <width>271</width>
+          <height>273</height>
          </rect>
         </property>
         <attribute name="label">
          <string>NPC</string>
         </attribute>
+        <widget class="QPushButton" name="FindStartNPC">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>240</y>
+           <width>251</width>
+           <height>28</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Search NPC</string>
+         </property>
+        </widget>
        </widget>
       </widget>
      </item>
