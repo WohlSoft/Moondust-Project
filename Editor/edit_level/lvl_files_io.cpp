@@ -84,19 +84,25 @@ void leveledit::ExportToImage_fn()
 
         QFileInfo exported(fileName);
 
-        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 2, this);
+        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, this);
         progress.setWindowTitle(tr("Please wait..."));
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
         progress.setFixedSize(progress.size());
         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
         progress.setCancelButton(0);
+        progress.setMinimumDuration(0);
 
-        progress.show();
+        //progress.show();
 
         if(!progress.wasCanceled()) progress.setValue(0);
 
+        qApp->processEvents();
         if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
+
+
+        if(!progress.wasCanceled()) progress.setValue(10);
+        qApp->processEvents();
         scene->clearSelection(); // Clear selection on export
 
         latest_export_path = exported.absoluteDir().path();
@@ -105,19 +111,32 @@ void leveledit::ExportToImage_fn()
         th=imgSize[0];
         tw=imgSize[1];
 
+        qApp->processEvents();
         QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
 
-        if(!progress.wasCanceled()) progress.setValue(1);
+        if(!progress.wasCanceled()) progress.setValue(20);
 
+        qApp->processEvents();
         QPainter p(&img);
+
+        if(!progress.wasCanceled()) progress.setValue(30);
+        qApp->processEvents();
         scene->render(&p, QRectF(0,0,tw,th),QRectF(x,y,w,h));
+
+        qApp->processEvents();
         p.end();
 
+        if(!progress.wasCanceled()) progress.setValue(40);
+        qApp->processEvents();
         img.save(fileName);
-        if(!progress.wasCanceled()) progress.setValue(2);
 
+        qApp->processEvents();
+        if(!progress.wasCanceled()) progress.setValue(90);
+
+        qApp->processEvents();
         if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
 
+        if(!progress.wasCanceled()) progress.setValue(100);
         if(!progress.wasCanceled())
             progress.close();
 
@@ -283,6 +302,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+         progress.setMinimumDuration(0);
          //progress.setCancelButton(0);
 
     if(! DrawObjects(progress) )
