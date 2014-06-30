@@ -154,7 +154,7 @@
     <message>
         <location filename="../data_configs/configstatus.ui" line="217"/>
         <source>Errors of configuration loading:</source>
-        <translation>Errors of configuration load:</translation>
+        <translation>Configuration Load Errors:</translation>
     </message>
     <message>
         <source>Level Blocks (%1/%1)</source>
@@ -471,7 +471,7 @@
         <source>Please, enter NPC&apos;s talkative message
 Message limits: max line lenth is 28 characters</source>
         <translation>Please enter NPC&apos;s dialog message
-(Max line length is 28 characters)</translation>
+(Max length per line is 28 characters)</translation>
     </message>
 </context>
 <context>
@@ -609,7 +609,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../common_features/levelfilelist.ui" line="30"/>
         <source>Please, select level file from list for use them:</source>
-        <translation>Please, select level file from list for use them:</translation>
+        <translation>Please select level file from list to use them:</translation>
     </message>
 </context>
 <context>
@@ -657,9 +657,9 @@ Message limits: max line lenth is 28 characters</source>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation>This level have a wrong custom graphics files.
-You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
-Please, reconvert your images to valid format and try to reload this level.</translation>
+        <translation>This level has wrong custom graphic[s] files. 
+You will see &apos;ghosties&apos; or other dummy images instead of your custom graphics. This occurred due to, a bad conversion, say from BMP to GIF. 
+Please, reconvert your images to the valid format and try to reload this level.</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="1351"/>
@@ -784,7 +784,7 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3437"/>
         <source>Changed Levelsetting [%1]</source>
-        <translation>Changed Levelsetting [%1]</translation>
+        <translation>Changed Level Settings [%1]</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3438"/>
@@ -886,7 +886,7 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3464"/>
         <source>Level Warp To</source>
-        <translation>Warp to other level</translation>
+        <translation>Warp to another level</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3465"/>
@@ -921,7 +921,7 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3471"/>
         <source>Event Block Hited</source>
-        <translation>Event: Block hited</translation>
+        <translation>Event: Block hit</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3472"/>
@@ -936,7 +936,7 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3474"/>
         <source>Event NPC Die</source>
-        <translation>Event: NPC Die</translation>
+        <translation>Event: NPC Death</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3475"/>
@@ -1006,7 +1006,7 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3488"/>
         <source>Autoscroll Layer</source>
-        <translation>Autoscroll section</translation>
+        <translation>Autoscroll Section</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3489"/>
@@ -1046,52 +1046,52 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3497"/>
         <source>Up Key Activate</source>
-        <translation>Up Key Activate</translation>
+        <translation>Up Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3498"/>
         <source>Down Key Activate</source>
-        <translation>Down Key Activate</translation>
+        <translation>Down Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3499"/>
         <source>Left Key Activate</source>
-        <translation>Left Key Activate</translation>
+        <translation>Left Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3500"/>
         <source>Right Key Activate</source>
-        <translation>Right Key Activate</translation>
+        <translation>Right Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3501"/>
         <source>Run Key Activate</source>
-        <translation>Run Key Activate</translation>
+        <translation>Run Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3502"/>
         <source>Alt Run Key Activate</source>
-        <translation>Alt Run Key Activate</translation>
+        <translation>Alt Run Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3503"/>
         <source>Jump Key Activate</source>
-        <translation>Jump Key Activate</translation>
+        <translation>Jump Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3504"/>
         <source>Alt Jump Key Activate</source>
-        <translation>Alt Jump Key Activate</translation>
+        <translation>Alt Jump Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3505"/>
         <source>Drop Key Activate</source>
-        <translation>Drop Key Activate</translation>
+        <translation>Drop Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3506"/>
         <source>Start Key Activate</source>
-        <translation>Start Key Activate</translation>
+        <translation>Start Button Activate</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3507"/>
@@ -1337,7 +1337,7 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="842"/>
         <source>Copyed Event %1</source>
-        <translation>Copyed Event %1</translation>
+        <translation>Copied Event %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1475"/>
@@ -1347,7 +1347,7 @@ Please, reconvert your images to valid format and try to reload this level.</tra
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1476"/>
         <source>Please, set current section to %1 for capture data for this event</source>
-        <translation>Please, switch current section to %1 for capture data for this event</translation>
+        <translation>Please switch current section to %1 to capture data for this event</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="1719"/>
@@ -1385,7 +1385,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="1588"/>
         <source>No turn back (disable moving to left)</source>
-        <translation>One-way scrolling (prevents screen from scrolling left)</translation>
+        <translation>One-way scrolling (prevents screen from scrolling left, aka no turn-back)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1607"/>
@@ -1417,7 +1417,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="334"/>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>Please, save file first, if you want to select custom music file.</translation>
+        <translation>Please save the file first if you want to select a custom music file.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1711"/>
@@ -2001,7 +2001,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
-        <translation type="vanished">Restart level after death</translation>
+        <translation type="vanished">Restart level after player's death</translation>
     </message>
     <message>
         <source>Level tool box</source>
@@ -2139,7 +2139,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="44"/>
         <source>Editor - Platformer Game Engine (Under Construction)</source>
-        <translation>Editor - Platformer Game Engine (Under Construction)</translation>
+        <translation>Level Editor - Platformer Game Engine (Under Construction)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="256"/>
@@ -2218,8 +2218,8 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../mainwindow.ui" line="2827"/>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation>This sets the sorting array priority. With this option you can make BGOs appear in the foreground. (Set this to -1 to use the default value from the global BGO config).
-This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simply place one of foreground BGO to map (for example, air-screw). This option will not be saved in the LVL file, so you will need to set this option each time you open this level.</translation>
+        <translation>This sets the sorting array priority. With this option, you can make BGOs appear in the foreground. (Set this to -1 to use the default value from the global BGO config).
+This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simply place one of foreground BGO onto the map (for example, air-screw). This option will not be saved in the LVL file, so you will need to set this option each time you open this level.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2946"/>
@@ -2311,7 +2311,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
         <location filename="../mainwindow.ui" line="3798"/>
         <location filename="../mainwindow.ui" line="3892"/>
         <source>Horisontal speed:</source>
-        <translation>Horisontal speed:</translation>
+        <translation>Horizontal speed:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3818"/>
@@ -2321,7 +2321,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <source>Autoscrool section</source>
-        <translation type="vanished">Autoscrool section</translation>
+        <translation type="vanished">Autoscroll section</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3875"/>
@@ -2441,7 +2441,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="4368"/>
         <source>Player Control hold keys</source>
-        <translation>Hold player control keys</translation>
+        <translation>Hold player's control button</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4374"/>
@@ -2659,7 +2659,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="5807"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to similar item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to similar item Protection&lt;/p&gt;&lt;p&gt;(If enabled, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5822"/>
@@ -2754,7 +2754,7 @@ File: %1</translation>
     <message>
         <location filename="../main_window/data_configs.cpp" line="58"/>
         <source>Configuration succesfully reloaded!</source>
-        <translation>Configurations succesfully reloaded!</translation>
+        <translation>Configurations successfully reloaded!</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="39"/>
@@ -2766,7 +2766,7 @@ File: %1</translation>
         <location filename="../main_window/edit_common.cpp" line="40"/>
         <location filename="../main_window/files_io.cpp" line="50"/>
         <source>Can&apos;t open the file.</source>
-        <translation>Can&apos;t open the file!.</translation>
+        <translation>Can&apos;t open the file!</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="46"/>
@@ -2786,7 +2786,7 @@ File: %1</translation>
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="615"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</translation>
+        <translation>Layer with name &apos;%1&apos; already exist, do you want to merge the layers?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="698"/>
@@ -2821,7 +2821,7 @@ File: %1</translation>
     <message>
         <location filename="../main_window/files_io.cpp" line="108"/>
         <source>Sorry, the World Maps support is not inplemented in this version.</source>
-        <translation>Sorry, World Maps are not supported in this version.</translation>
+        <translation>Sorry, World Maps are currently not supported in this version.</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="120"/>
@@ -2939,8 +2939,8 @@ File: %1</translation>
         <location filename="../common_features/musicfilelist.cpp" line="51"/>
         <source>If you contunue this operation, application can be frozen.
 Do you want to continue?</source>
-        <translation>If you contunue this operation, application can be frozen.
-Do you want to continue?</translation>
+        <translation>If you continue this operation, the application could freeze.
+		Do you want to continue?</translation>
     </message>
 </context>
 <context>
@@ -3122,8 +3122,8 @@ File: %1
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation>Cannot open level file %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
+Object configurations are not loaded
+Please check that the config/SMBX directory exists and contains the *.INI files with the object settings.</translation>
     </message>
     <message>
         <source>Please, wait...</source>
@@ -3151,7 +3151,7 @@ because object configurations are not loaded
 because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
         <translation type="vanished">Cannot open level file %1:
-because configurations are not loaded.
+Configurations are not loaded.
 Please, check that the &quot;config/SMBX&quot; directory exists and contains the *.INI configuration files.</translation>
     </message>
     <message>
@@ -3364,7 +3364,7 @@ Do you want to save your changes?</translation>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="803"/>
         <source>Grab side</source>
-        <translation>Player can grab</translation>
+        <translation>Player can grab sides</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="816"/>
