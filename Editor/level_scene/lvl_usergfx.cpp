@@ -44,14 +44,16 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     QString uLVLD = LvlData->path + "/" + LvlData->filename;
     QString uLVLs = LvlData->path + "/";
 
+
+    if(!progress.wasCanceled())
+        progress.setLabelText(
+                    tr("Search User Backgrounds %1")
+                    .arg(QString::number(pConfigs->main_bg.size()) ) );
+
+    qApp->processEvents();
     //Load Backgrounds
     for(i=0; i<pConfigs->main_bg.size(); i++) //Add user images
         {
-        if(!progress.wasCanceled())
-            progress.setLabelText(
-                        tr("Search User Backgrounds %1")
-                        .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_bg.size()) ) );
-
             loaded1 = false;
             loaded2 = false;
 
@@ -108,21 +110,25 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 uBGs.push_back(uBG);
 
         total++;
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            /*progress.setValue(progress.value()+1);
+        else*/ return;
         }
 
 ///////////////////////////////////////////////////////////////////////////
 
+    if(!progress.wasCanceled())
+    {
+        progress.setLabelText(
+                    tr("Search User Blocks %1")
+                    .arg(QString::number(pConfigs->main_block.size()) ) );
+        progress.setValue(progress.value()+1);
+    }
+    qApp->processEvents();
     //Load Blocks
     for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
     {
 
-        if(!progress.wasCanceled())
-            progress.setLabelText(
-                        tr("Search User Blocks %1")
-                        .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_block.size()) ) );
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_block[i].image_n)) )
@@ -167,20 +173,25 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 }
             }
 
-    if(!progress.wasCanceled())
-        progress.setValue(progress.value()+1);
-    else return;
+    if(progress.wasCanceled())
+        /*progress.setValue(progress.value()+1);
+    else*/ return;
     }
 
 ///////////////////////////////////////////////////////////////////////////
 
+    if(!progress.wasCanceled())
+    {
+        progress.setLabelText(
+                    tr("Search User BGOs %1")
+                    .arg(QString::number(pConfigs->main_bgo.size()) ) );
+
+        progress.setValue(progress.value()+1);
+    }
+    qApp->processEvents();
     //Load BGO
     for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
     {
-        if(!progress.wasCanceled())
-            progress.setLabelText(
-                        tr("Search User BGOs %1")
-                        .arg(QString::number(i+1)+"/"+QString::number(pConfigs->main_bgo.size()) ) );
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_bgo[i].image_n)) )
@@ -224,12 +235,23 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     index_bgo[uBGO.id].i = (uBGOs.size()-1);
                 }
             }
-    if(!progress.wasCanceled())
-        progress.setValue(progress.value()+1);
-    else return;
+        if(progress.wasCanceled())
+            /*progress.setValue(progress.value()+1);
+        else*/ return;
     }
 
 ///////////////////////////////////////////////////////////////////////////
+
+
+    if(!progress.wasCanceled())
+    {
+        progress.setLabelText(
+                    tr("Search User NPCs %1")
+                    .arg(QString::number(pConfigs->main_npc.size()) ) );
+
+        progress.setValue(progress.value()+1);
+    }
+    qApp->processEvents();
 
     //Load NPC
     for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
@@ -364,10 +386,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                      index_npc[uNPC.id].i = (uNPCs.size()-1);
                  }
              }
-     if(!progress.wasCanceled())
-         progress.setValue(progress.value()+1);
-     else return;
+         if(progress.wasCanceled())
+             /*progress.setValue(progress.value()+1);
+         else*/ return;
      }
+
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
 
     //Notification about wrong custom image sprites
     if(WrongImagesDetected)

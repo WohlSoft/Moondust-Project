@@ -1,3 +1,7 @@
+Editor 0.1.0.1
+- Fixed bug with custom music paths after save new file.
+- Speed up of level loading process, now Editor opening the huge levels quickly
+
 Editor 0.1.0
 - Added events control support
 - Added sound tester
@@ -5,15 +9,15 @@ Editor 0.1.0
 - Fixed default main window size and position
 - Fixed Level item toolbox category list translating
 - Fixed bug with empty category lists after config reload
-- Added support for BMP Files, Ghosties will be appeared ONLY if image realy broken.
+- Added support for BMP Files, Ghosties will be appeared ONLY if image really broken.
 - Player's start points can be moved by mouse in selection mode
 - History manager can store any level data and any settings changes
 - New icons for section switch buttons
-- Optimises background and music selector
+- Optimized background and music selector
 - Language switcher are improved
 - Fixed crash on press "Delete" in layer list without selected item
 - Fixed bug with door flags "Level Exit" and "Level Entrance" on already placed points
-- If not exist translate equal to system, will be used english translate
+- If not exist translate equal to system, will be used English translate
 - Remembering of save paths
 - Merging of layers, on rename layer to equal to other exists
 - Configuration status window. You can see status of all configuration items and look for errors on load process
