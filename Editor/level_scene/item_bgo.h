@@ -43,7 +43,7 @@ public:
     ItemBGO(QGraphicsItem *parent=0);
     ~ItemBGO();
 
-    void setMainPixmap(const QPixmap &pixmap);
+    //void setMainPixmap(const QPixmap &pixmap);
     void setBGOData(LevelBGO inD);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
@@ -57,19 +57,19 @@ public:
 //    QGraphicsPixmapItem * image;
 
     //////Animation////////
-    void setAnimation(int frames, int framespeed);
+    //void setAnimation(int frames, int framespeed);
     void setAnimator(long aniID);
-    void AnimationStart();
-    void AnimationStop();
-    void draw();
+    //void AnimationStart();
+    //void AnimationStop();
+    //void draw();
 
     void setLayer(QString layer);
 
     void arrayApply();
     void removeFromArray();
 
-    QPoint fPos() const;
-    void setFrame(int);
+    //QPoint fPos() const;
+    //void setFrame(int);
     LevelBGO bgoData;
 
     int gridSize;

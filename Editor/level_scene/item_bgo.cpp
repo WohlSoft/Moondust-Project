@@ -330,12 +330,6 @@ void ItemBGO::removeFromArray()
     }
 }
 
-//void ItemBGO::setMainPixmap(const QPixmap &pixmap)
-//{
-//    mainImage = pixmap;
-//    //this->setPixmap(mainImage);
-//}
-
 void ItemBGO::setBGOData(LevelBGO inD)
 {
     bgoData = inD;
@@ -383,6 +377,25 @@ void ItemBGO::setScenePoint(LvlScene *theScene)
 
 ////////////////Animation///////////////////
 
+void ItemBGO::setAnimator(long aniID)
+{
+    if(aniID<scene->animates_BGO.size())
+    imageSize = QRectF(0,0,
+                scene->animates_BGO[aniID]->image().width(),
+                scene->animates_BGO[aniID]->image().height()
+                );
+
+    WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
+
+    animatorID = aniID;
+}
+
+//void ItemBGO::setMainPixmap(const QPixmap &pixmap)
+//{
+//    mainImage = pixmap;
+//    //this->setPixmap(mainImage);
+//}
+
 
 //void ItemBGO::setAnimation(int frames, int framespeed)
 //{
@@ -407,19 +420,6 @@ void ItemBGO::setScenePoint(LvlScene *theScene)
 //                SLOT( refresh()) );
 
 //}
-
-void ItemBGO::setAnimator(long aniID)
-{
-    if(aniID<scene->animates_BGO.size())
-    imageSize = QRectF(0,0,
-                scene->animates_BGO[aniID]->image().width(),
-                scene->animates_BGO[aniID]->image().height()
-                );
-
-    WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
-
-    animatorID = aniID;
-}
 
 //void ItemBGO::refresh()
 //{
