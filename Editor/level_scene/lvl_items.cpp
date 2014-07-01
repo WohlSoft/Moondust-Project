@@ -341,16 +341,17 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     bool noimage=true, found=false;
 
     ItemBGO *BGOItem = new ItemBGO;
-    bool isUser=false;
+    //bool isUser=false;
 
     noimage=true;
-    isUser=false;
+    //isUser=false;
+    long animator=0;
 
     //Check Index exists
     if(bgo.id < (unsigned int)index_bgo.size())
     {
         j = index_bgo[bgo.id].i;
-
+        animator = index_bgo[bgo.id].ai;
         if(j<pConfigs->main_bgo.size())
         {
         if(pConfigs->main_bgo[j].id == bgo.id)
@@ -363,13 +364,13 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     {   //get neccesary element directly
         if(index_bgo[bgo.id].type==1)
         {
-            isUser=true;
+            //isUser=true;
             noimage=false;
-            tImg = uBGOs[index_bgo[bgo.id].i].image;
+            //tImg = uBGOs[index_bgo[bgo.id].i].image;
         }
         else
         {
-            tImg = pConfigs->main_bgo[index_bgo[bgo.id].i].image;
+            //tImg = pConfigs->main_bgo[index_bgo[bgo.id].i].image;
             noimage=false;
         }
     }
@@ -380,9 +381,9 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
         {
             if(uBGOs[j].id==bgo.id)
             {
-                isUser=true;
+                //isUser=true;
                 noimage=false;
-                tImg = uBGOs[j].image;
+                //tImg = uBGOs[j].image;
                 break;
             }
         }
@@ -392,26 +393,29 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
             if(pConfigs->main_bgo[j].id==bgo.id)
             {
                 noimage=false;
-                if(!isUser)
-                tImg = pConfigs->main_bgo[j].image; break;
+                //if(!isUser)
+                //tImg = pConfigs->main_bgo[j].image; break;
             }
         }
     }
 
     if((noimage)||(tImg.isNull()))
     {
-        tImg=uBgoImg;
+        //tImg=uBgoImg;
         if(j >= pConfigs->main_bgo.size())
         {
             j=0;
         }
     }
 
+    BGOItem->setScenePoint(this);
+
     BGOItem->setBGOData(bgo);
         BGOItem->gridSize = pConfigs->main_bgo[j].grid;
         BGOItem->gridOffsetX = pConfigs->main_bgo[j].offsetX;
         BGOItem->gridOffsetY = pConfigs->main_bgo[j].offsetY;
-    BGOItem->setMainPixmap(tImg);
+    BGOItem->setAnimator(animator);
+    //BGOItem->setMainPixmap(tImg);
     BGOItem->setContextMenu(bgoMenu);
     addItem(BGOItem);
 
@@ -437,7 +441,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     if((!noimage) && (pConfigs->main_bgo[j].animated))
     {
         //tImg=tImg.copy(0, 0, tImg.width(), (int)round(tImg.height()/pConfigs->main_bgo[j].frames));
-        BGOItem->setAnimation(pConfigs->main_bgo[j].frames, pConfigs->main_bgo[j].framespeed);
+        //BGOItem->setAnimation(pConfigs->main_bgo[j].frames, pConfigs->main_bgo[j].framespeed);
         BGOItem->setData(4, "animated");
     }
 
@@ -457,9 +461,6 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     else
         BGOItem->setZValue(bgoZb + pConfigs->main_bgo[j].zOffset);
         //bgofore->addToGroup(box);
-
-    BGOItem->setScenePoint(this);
-
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }
 

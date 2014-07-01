@@ -64,13 +64,18 @@ public:
     bool isUntitled;
 
     QString curFile;
-    
+        
+    QTimer *updateTimer;
+    void setAutoUpdateTimer(int ms);
+    void stopAutoUpdateTimer();
+
 protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
     virtual void mouseReleaseEvent( QMouseEvent * event );
     virtual void leaveEvent(QEvent * leaveEvent);
+    void updateScene();
 
 private:
     void documentWasModified();

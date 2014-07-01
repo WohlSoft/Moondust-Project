@@ -26,8 +26,6 @@
 
 #include <QGraphicsSceneMouseEvent>
 
-#include <QGraphicsItemAnimation>
-
 #include <QKeyEvent>
 #include <QBitmap>
 #include <QPainter>
@@ -36,6 +34,7 @@
 #include <QtCore>
 #include <QDebug>
 
+#include "../common_features/simple_animator.h"
 
 #include "../file_formats/lvl_filedata.h"
 #include "../file_formats/npc_filedata.h"
@@ -130,6 +129,7 @@ public:
     void ChangeSectionBG(int BG_Id, int SectionID=-1);
     void DrawBG(int x, int y, int w, int h, int sctID, QPixmap &srcimg, QPixmap &srcimg2, obj_BG &bgsetup);
 
+    void buildAnimators();
     void loadUserData(QProgressDialog &progress);
 
     void setBlocks(QProgressDialog &progress);
@@ -159,6 +159,8 @@ public:
     QVector<UserBGOs > uBGOs;
     QVector<UserBlocks > uBlocks;
     QVector<UserNPCs > uNPCs;
+
+    QVector<SimpleAnimator * > animates_BGO;
 
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
 

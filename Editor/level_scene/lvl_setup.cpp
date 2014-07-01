@@ -40,6 +40,11 @@ void LvlScene::startBlockAnimation()
         return;
     }
 
+    foreach(SimpleAnimator * bgoA, animates_BGO)
+    {
+        bgoA->start();
+    }
+
     QList<QGraphicsItem*> ItemList = items();
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
@@ -49,12 +54,12 @@ void LvlScene::startBlockAnimation()
             tmp = (*it);
             ((ItemBlock *)tmp)->AnimationStart();
         }
-        else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBGO *)tmp)->AnimationStart();
-        }
+//        else
+//        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            ((ItemBGO *)tmp)->AnimationStart();
+//        }
         else
         if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
         {
@@ -67,6 +72,11 @@ void LvlScene::startBlockAnimation()
 
 void LvlScene::stopAnimation()
 {
+    foreach(SimpleAnimator * bgoA, animates_BGO)
+    {
+        bgoA->stop();
+    }
+
     QList<QGraphicsItem*> ItemList = items();
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
@@ -76,12 +86,12 @@ void LvlScene::stopAnimation()
             tmp = (*it);
             ((ItemBlock *)tmp)->AnimationStop();
         }
-        else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBGO *)tmp)->AnimationStop();
-        }
+//        else
+//        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            ((ItemBGO *)tmp)->AnimationStop();
+//        }
         else
         if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
         {
