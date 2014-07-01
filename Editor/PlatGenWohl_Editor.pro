@@ -119,7 +119,7 @@ SOURCES += main.cpp\
     common_features/graphics_funcs.cpp \
     common_features/levelfilelist.cpp \
     libs/EasyBMP/EasyBMP.cpp \
-	item_select_dialog/itemselectdialog.cpp \
+    item_select_dialog/itemselectdialog.cpp \
     common_features/simple_animator.cpp
 
 HEADERS  += mainwindow.h \
