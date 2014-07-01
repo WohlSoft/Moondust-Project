@@ -24,26 +24,28 @@
 #include "../common_features/mainwinconnect.h"
 
 
-ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
-    : QGraphicsPixmapItem(parent)
+ItemBGO::ItemBGO(QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
-    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-    animated = false;
-    frameFirst=0; //from first frame
-    frameLast=-1; //to unlimited frameset
+    //setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
+    //animated = false;
+    //frameFirst=0; //from first frame
+    //frameLast=-1; //to unlimited frameset
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
     isLocked=false;
     //image = new QGraphicsPixmapItem;
-    timer=NULL;
+    //timer=NULL;
+    animatorID=-1;
+    imageSize = QRectF(0,0,10,10);
 }
 
 
 ItemBGO::~ItemBGO()
 {
- //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
-    if(timer) delete timer;
+    //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
+    //if(timer) delete timer;
 }
 
 void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -55,7 +57,7 @@ void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
-    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
+    QGraphicsItem::mousePressEvent(mouseEvent);
 }
 
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
@@ -255,7 +257,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
     }
     else
     {
-        QGraphicsPixmapItem::contextMenuEvent(event);
+        QGraphicsItem::contextMenuEvent(event);
     }
 }
 
@@ -328,11 +330,11 @@ void ItemBGO::removeFromArray()
     }
 }
 
-void ItemBGO::setMainPixmap(const QPixmap &pixmap)
-{
-    mainImage = pixmap;
-    this->setPixmap(mainImage);
-}
+//void ItemBGO::setMainPixmap(const QPixmap &pixmap)
+//{
+//    mainImage = pixmap;
+//    //this->setPixmap(mainImage);
+//}
 
 void ItemBGO::setBGOData(LevelBGO inD)
 {
@@ -342,10 +344,30 @@ void ItemBGO::setBGOData(LevelBGO inD)
 
 QRectF ItemBGO::boundingRect() const
 {
+    return imageSize;
+    /*
     if(!animated)
         return QRectF(0,0,mainImage.width(),mainImage.height());
     else
-        return QRectF(0,0,frameWidth,frameSize);
+        return QRectF(0,0,frameWidth,frameSize);*/
+}
+
+void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+{
+    painter->setPen(QPen(QBrush(Qt::red), 1, Qt::DotLine));
+
+    if(animatorID<0)
+    {
+        painter->drawRect(QRect(0,0,1,1));
+        return;
+    }
+    if(scene->animates_BGO.size()>animatorID)
+        painter->drawPixmap(imageSize, scene->animates_BGO[animatorID]->image(), imageSize);
+    else
+        painter->drawRect(QRect(0,0,32,32));
+
+    if(this->isSelected())
+        painter->drawRect(0,0,imageSize.width()-1,imageSize.height()-1);
 }
 
 void ItemBGO::setContextMenu(QMenu &menu)
@@ -362,84 +384,104 @@ void ItemBGO::setScenePoint(LvlScene *theScene)
 ////////////////Animation///////////////////
 
 
-void ItemBGO::setAnimation(int frames, int framespeed)
+//void ItemBGO::setAnimation(int frames, int framespeed)
+//{
+//    animated = true;
+//    framesQ = frames;
+//    frameSpeed = framespeed;
+
+//    frameSize = (int)round(mainImage.height()/frames);
+//    frameWidth = mainImage.width();
+//    frameHeight = mainImage.height();
+
+//    framePos = QPoint(0,0);
+//    draw();
+
+//    setFrame(frameFirst);
+
+
+//    timer = new QTimer(this);
+//    connect(
+//                timer, SIGNAL(timeout()),
+//                this,
+//                SLOT( refresh()) );
+
+//}
+
+void ItemBGO::setAnimator(long aniID)
 {
-    animated = true;
-    framesQ = frames;
-    frameSpeed = framespeed;
+    if(aniID<scene->animates_BGO.size())
+    imageSize = QRectF(0,0,
+                scene->animates_BGO[aniID]->image().width(),
+                scene->animates_BGO[aniID]->image().height()
+                );
 
-    frameSize = (int)round(mainImage.height()/frames);
-    frameWidth = mainImage.width();
-    frameHeight = mainImage.height();
+    WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
 
-    framePos = QPoint(0,0);
-    draw();
-
-    setFrame(frameFirst);
-
-    timer = new QTimer(this);
-    connect(
-                timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
+    animatorID = aniID;
 }
 
-void ItemBGO::AnimationStart()
-{
-    if(!animated) return;
-    timer->start(frameSpeed);
-}
+//void ItemBGO::refresh()
+//{
+//    //update();
+//}
 
-void ItemBGO::AnimationStop()
-{
-    if(!animated) return;
-    timer->stop();
-    setFrame(frameFirst);
-}
+//void ItemBGO::AnimationStart()
+//{
+//    if(!animated) return;
+//    //timer->start(frameSpeed);
+//}
 
-void ItemBGO::draw()
-{
-    currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-}
+//void ItemBGO::AnimationStop()
+//{
+//    if(!animated) return;
+//    //timer->stop();
+//    //setFrame(frameFirst);
+//}
 
-QPoint ItemBGO::fPos() const
-{
-    return framePos;
-}
+//void ItemBGO::draw()
+//{
+//    currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
+//}
 
-void ItemBGO::setFrame(int y)
-{
-    frameCurrent = frameSize * y;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( frameCurrent );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
-}
+//QPoint ItemBGO::fPos() const
+//{
+//    return framePos;
+//}
 
-void ItemBGO::setLocked(bool lock)
-{
-    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
-}
+//void ItemBGO::setFrame(int y)
+//{
+//    frameCurrent = frameSize * y;
+//    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
+//         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
+//        {
+//        frameCurrent = frameFirst*frameSize;
+//        framePos.setY( frameFirst * frameSize );
+//        }
+//    else
+//    framePos.setY( frameCurrent );
+//    draw();
+//    //this->setPixmap(QPixmap(currentImage));
+//}
 
-void ItemBGO::nextFrame()
-{
-    frameCurrent += frameSize;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( framePos.y() + frameSize );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
-}
+//void ItemBGO::setLocked(bool lock)
+//{
+//    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
+//    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
+//    isLocked = lock;
+//}
+
+//void ItemBGO::nextFrame()
+//{
+//    frameCurrent += frameSize;
+//    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
+//         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
+//        {
+//        frameCurrent = frameFirst*frameSize;
+//        framePos.setY( frameFirst * frameSize );
+//        }
+//    else
+//    framePos.setY( framePos.y() + frameSize );
+//    draw();
+//    //this->setPixmap(QPixmap(currentImage));
+//}

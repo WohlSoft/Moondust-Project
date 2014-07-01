@@ -171,12 +171,18 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
     LvlData = FileFormats::dummyLvlDataArray();
     StartLvlData = LvlData;
 
+    ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
+
     scene = new LvlScene(configs, LvlData);
     scene->opts = options;
 
     scene->InitSection(0);
     scene->setPlayerPoints();
     scene->drawSpace();
+    scene->buildAnimators();
+
+    if(options.animationEnabled) scene->startBlockAnimation();
+    setAutoUpdateTimer(32);
 
     if(!sceneCreated)
     {
@@ -268,6 +274,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     }
     StartLvlData = LvlData; //Save current history for made reset
 
+    ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
+
     //Check if data configs exists
     if( configs.check() )
     {
@@ -335,9 +343,9 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     ui->graphicsView->verticalScrollBar()->setValue(265+LvlData.sections[0].size_bottom-602);
     ui->graphicsView->horizontalScrollBar()->setValue(330+LvlData.sections[0].size_left);
 
-    //ResetPosition();
-
     QApplication::restoreOverrideCursor();
+
+    setAutoUpdateTimer(32);
 
     setCurrentFile(fileName);
     LvlData.modified = false;
@@ -388,14 +396,28 @@ void leveledit::closeEvent(QCloseEvent *event)
         MainWinConnect::pMainWin->on_actionSelect_triggered();
 
     if(maybeSave()) {
+        stopAutoUpdateTimer();
         LvlMusPlay::musicForceReset = true;
         MainWinConnect::pMainWin->setMusicButton(false);
         MainWinConnect::pMainWin->setMusic(false);
+
+        scene->clear();
+        WriteToLog(QtDebugMsg, "!<-Cleared->!");
         scene->uBGOs.clear();
         scene->uBGs.clear();
         scene->uBlocks.clear();
-        scene->clear();
+
+        WriteToLog(QtDebugMsg, "!<-Delete animators->!");
+        while(! scene->animates_BGO.isEmpty() )
+        {
+            SimpleAnimator* tmp = scene->animates_BGO.first();
+            scene->animates_BGO.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
+        WriteToLog(QtDebugMsg, "!<-Delete scene->!");
+        delete scene;
         sceneCreated=false;
+        WriteToLog(QtDebugMsg, "!<-Deleted->!");
         //ui->graphicsView->cl
         event->accept();
     } else {

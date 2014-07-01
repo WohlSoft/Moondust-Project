@@ -1186,8 +1186,8 @@ void LvlScene::placeItemUnderCursor()
         addPlaceHistory(newData);
     }
 
-    if(opts.animationEnabled) stopAnimation();
-    if(opts.animationEnabled) startBlockAnimation();
+    //if(opts.animationEnabled) stopAnimation();
+    //if(opts.animationEnabled) startBlockAnimation();
 }
 
 

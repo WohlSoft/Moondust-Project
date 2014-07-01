@@ -23,6 +23,30 @@
 #include "../common_features/graphics_funcs.h"
 
 //Search and load custom User's files
+
+void LvlScene::buildAnimators()
+{
+    int i;
+    for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
+    {
+        SimpleAnimator * aniBGO = new SimpleAnimator(
+                         ((pConfigs->main_bgo[i].image.isNull())?
+                                uBgoImg:
+                               pConfigs->main_bgo[i].image),
+                              pConfigs->main_bgo[i].animated,
+                              pConfigs->main_bgo[i].frames,
+                              pConfigs->main_bgo[i].framespeed
+                              );
+
+        animates_BGO.push_back( aniBGO );
+        if(pConfigs->main_bgo[i].id < (unsigned int)index_blocks.size())
+        {
+            index_bgo[pConfigs->main_bgo[i].id].ai = animates_BGO.size()-1;
+        }
+    }
+
+}
+
 void LvlScene::loadUserData(QProgressDialog &progress)
 {
     int i, total=0;
@@ -193,6 +217,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     for(i=0; i<pConfigs->main_bgo.size(); i++) //Add user images
     {
 
+        bool custom=false;
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_bgo[i].image_n)) )
             {
@@ -206,6 +231,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
+                custom=true;
 
                 //Apply index;
                 if(uBGO.id < (unsigned int)index_bgo.size())
@@ -227,6 +253,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
+                custom=true;
 
                 //Apply index;
                 if(uBGO.id < (unsigned int)index_bgo.size())
@@ -235,6 +262,26 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                     index_bgo[uBGO.id].i = (uBGOs.size()-1);
                 }
             }
+
+
+            SimpleAnimator * aniBGO = new SimpleAnimator(
+                        ((custom)?
+                             ((uBGOs.last().image.isNull())?
+                                uBgoImg:
+                                    uBGOs.last().image)
+                                 :
+                             ((pConfigs->main_bgo[i].image.isNull())?
+                                uBgoImg:
+                                   pConfigs->main_bgo[i].image)
+                             ),
+                                  pConfigs->main_bgo[i].animated,
+                                  pConfigs->main_bgo[i].frames,
+                                  pConfigs->main_bgo[i].framespeed
+                                  );
+            animates_BGO.push_back( aniBGO );
+            index_bgo[pConfigs->main_bgo[i].id].ai = animates_BGO.size()-1;
+            WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
+
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);
         else*/ return;

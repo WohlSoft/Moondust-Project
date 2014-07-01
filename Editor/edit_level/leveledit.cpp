@@ -30,6 +30,8 @@
 #include "saveimage.h"
 #include "../common_features/logger.h"
 
+//#include <QGLWidget>
+
 
 #include <QDebug>
 
@@ -45,10 +47,15 @@ leveledit::leveledit(QWidget *parent) :
     latest_export_path = QApplication::applicationDirPath();
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);
+    updateTimer=NULL;
 
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontClipPainter);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     ui->graphicsView->setOptimizationFlags(QGraphicsView::DontAdjustForAntialiasing);
+
+    //ui->graphicsView->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers | QGL::DirectRendering)));
+    //ui->graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+
             /*
              * 	setOptimizationFlags(QGraphicsView::DontClipPainter);
         setOptimizationFlags(QGraphicsView::DontSavePainterState);
@@ -57,3 +64,34 @@ leveledit::leveledit(QWidget *parent) :
 
 
 
+void leveledit::updateScene()
+{
+    if(scene->opts.animationEnabled)
+        scene->update(
+                                     ui->graphicsView->horizontalScrollBar()->value(),
+                                     ui->graphicsView->verticalScrollBar()->value(),
+                                     ui->graphicsView->width(),
+                                     ui->graphicsView->height()
+                                     );
+}
+
+void leveledit::setAutoUpdateTimer(int ms)
+{
+    if(updateTimer!=NULL)
+        delete updateTimer;
+    updateTimer = new QTimer;
+    connect(
+                updateTimer, SIGNAL(timeout()),
+                this,
+                SLOT( updateScene()) );
+    updateTimer->start(ms);
+}
+
+void leveledit::stopAutoUpdateTimer()
+{
+    if(updateTimer!=NULL)
+    {
+        updateTimer->stop();
+        delete updateTimer;
+    }
+}
