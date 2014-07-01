@@ -48,6 +48,7 @@ SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int f
 
 QPixmap SimpleAnimator::image()
 {
+    QMutexLocker locker(&mutex); //Glitch protection
     return mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
 }
 
@@ -59,6 +60,8 @@ QPixmap SimpleAnimator::wholeImage()
 //Animation process
 void SimpleAnimator::nextFrame()
 {
+    mutex.lock();
+
     frameCurrent += frameSize;
     if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
          ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
@@ -68,11 +71,15 @@ void SimpleAnimator::nextFrame()
         }
     else
     framePos.setY( framePos.y() + frameSize );
+
+    mutex.unlock();
 }
 
 
 void SimpleAnimator::setFrame(int y)
 {
+    mutex.lock();
+
     frameCurrent = frameSize * y;
     if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
          ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
@@ -82,6 +89,8 @@ void SimpleAnimator::setFrame(int y)
         }
     else
     framePos.setY( frameCurrent );
+
+    mutex.unlock();
 }
 
 void SimpleAnimator::start()

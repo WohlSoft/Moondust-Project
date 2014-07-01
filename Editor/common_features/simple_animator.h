@@ -22,6 +22,8 @@
 #include <QObject>
 #include <QTimer>
 #include <QPixmap>
+#include <QMutex>
+#include <QMutexLocker>
 
 class SimpleAnimator : public QObject
 {
@@ -40,6 +42,8 @@ private slots:
     void nextFrame();
 
 private:
+    QMutex	mutex;
+
     QPixmap mainImage; //Whole image
 
     bool animated;
