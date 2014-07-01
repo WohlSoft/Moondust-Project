@@ -119,7 +119,8 @@ SOURCES += main.cpp\
     common_features/graphics_funcs.cpp \
     common_features/levelfilelist.cpp \
     libs/EasyBMP/EasyBMP.cpp \
-    item_select_dialog/itemselectdialog.cpp
+	item_select_dialog/itemselectdialog.cpp \
+    common_features/simple_animator.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -163,7 +164,8 @@ HEADERS  += mainwindow.h \
     libs/EasyBMP/EasyBMP_BMP.h \
     libs/EasyBMP/EasyBMP_DataStructures.h \
     libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
-    item_select_dialog/itemselectdialog.h
+    item_select_dialog/itemselectdialog.h \
+    common_features/simple_animator.h
 
 FORMS    += \
     mainwindow.ui \
