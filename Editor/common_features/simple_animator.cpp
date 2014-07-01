@@ -30,11 +30,10 @@ SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int f
     frameWidth = mainImage.width();
     frameHeight = mainImage.height();
     if(animated)
-        frameSize = (int)round(frameHeight/framesQ);
+        frameSize = qRound(qreal(frameHeight)/qreal(framesQ));
     else
         frameSize = frameWidth;
     framePos = QPoint(0,0);
-    draw();
 
     setFrame(frameFirst);
 
@@ -88,7 +87,7 @@ void SimpleAnimator::setFrame(int y)
 void SimpleAnimator::start()
 {
     if(!animated) return;
-    timer->start(frameSpeed);
+    timer->start(speed);
 }
 
 void SimpleAnimator::stop()
