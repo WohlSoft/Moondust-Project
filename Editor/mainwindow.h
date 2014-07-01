@@ -469,14 +469,11 @@ private slots:
     void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
 
     void on_WarpBrowseLevels_clicked();
-
     void on_actionContents_triggered();
-
     void on_actionNew_triggered();
-
     void on_actionLVLSearchBox_triggered(bool checked);
-
     void on_FindDock_visibilityChanged(bool visible);
+    void on_FindStartNPC_clicked();
 
 private:
 

@@ -16,38 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ITEMSELECTDIALOG_H
-#define ITEMSELECTDIALOG_H
+#include "../../ui_mainwindow.h"
+#include "../../mainwindow.h"
+#include "../../item_select_dialog/itemselectdialog.h"
 
-#include <QDialog>
-#include "data_configs/data_configs.h"
-
-namespace Ui {
-class ItemSelectDialog;
-}
-
-class ItemSelectDialog : public QDialog
+void MainWindow::on_FindStartNPC_clicked()
 {
-    Q_OBJECT
-
-public:
-    explicit ItemSelectDialog(dataconfigs *configs, bool blockTab = true, bool bgoTab = true, bool npcTab = true,
-                              QVariant npcExtraData = 0, QWidget *parent = 0);
-    ~ItemSelectDialog();
-
-private slots:
-
-    void on_Sel_TabCon_ItemType_currentChanged(int index);
-
-private:
-
-    void addExtraDataControl(QWidget* control);
-    QList<QWidget*> extraBlockWid;
-    QList<QWidget*> extraBGOWid;
-    QList<QWidget*> extraNPCWid;
-
-    dataconfigs* conf;
-    Ui::ItemSelectDialog *ui;
-};
-
-#endif // ITEMSELECTDIALOG_H
+    ItemSelectDialog* selDia = new ItemSelectDialog(&configs, true, true, true, 1);
+    selDia->exec();
+    delete selDia;
+}
