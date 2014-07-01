@@ -23,16 +23,19 @@ SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int f
     timer=NULL;
     mainImage = sprite;
     animated=enables;
+    frameFirst=0;
+    frameLast=-1;
 
     speed=fspeed;
     framesQ = framesq;
 
     frameWidth = mainImage.width();
     frameHeight = mainImage.height();
+
     if(animated)
-        frameSize = qRound(qreal(frameHeight)/qreal(framesQ));
+        frameSize = qRound(qreal(frameHeight/framesQ));
     else
-        frameSize = frameWidth;
+        frameSize = frameHeight;
     framePos = QPoint(0,0);
 
     setFrame(frameFirst);
@@ -44,11 +47,16 @@ SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int f
                 SLOT( nextFrame() ) );
 }
 
+SimpleAnimator::~SimpleAnimator()
+{
+    delete timer;
+}
+
 //Returns images
 
 QPixmap SimpleAnimator::image()
 {
-    QMutexLocker locker(&mutex); //Glitch protection
+   // QMutexLocker locker(&mutex); //Glitch protection
     return mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
 }
 
@@ -60,7 +68,7 @@ QPixmap SimpleAnimator::wholeImage()
 //Animation process
 void SimpleAnimator::nextFrame()
 {
-    mutex.lock();
+    //mutex.lock();
 
     frameCurrent += frameSize;
     if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
@@ -72,13 +80,13 @@ void SimpleAnimator::nextFrame()
     else
     framePos.setY( framePos.y() + frameSize );
 
-    mutex.unlock();
+   // mutex.unlock();
 }
 
 
 void SimpleAnimator::setFrame(int y)
 {
-    mutex.lock();
+    //mutex.lock();
 
     frameCurrent = frameSize * y;
     if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
@@ -90,7 +98,7 @@ void SimpleAnimator::setFrame(int y)
     else
     framePos.setY( frameCurrent );
 
-    mutex.unlock();
+    //mutex.unlock();
 }
 
 void SimpleAnimator::start()
