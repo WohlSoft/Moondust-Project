@@ -474,6 +474,10 @@ private slots:
 
     void on_actionNew_triggered();
 
+    void on_actionLVLSearchBox_triggered(bool checked);
+
+    void on_FindDock_visibilityChanged(bool visible);
+
 private:
 
     LevelEditingSettings LvlOpts;

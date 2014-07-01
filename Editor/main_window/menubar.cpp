@@ -90,6 +90,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevelProp->setEnabled( (WinType==1) );
     ui->actionLevelEvents->setEnabled( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
+    ui->actionLVLSearchBox->setVisible( (WinType==1) );
 
     ui->menuLevel->setEnabled( (WinType==1) );
 
