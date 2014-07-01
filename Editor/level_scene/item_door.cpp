@@ -27,16 +27,22 @@
 ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     : QGraphicsRectItem(parent)
 {
-
     isLocked=false;
     itemSize = QSize(32,32);
+    doorLabel=NULL;
+    doorLabel_shadow=NULL;
     //image = new QGraphicsRectItem;
 }
 
 
 ItemDoor::~ItemDoor()
 {
- //   WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
+    //WriteToLog(QtDebugMsg, "!<-Door destroy->!");
+    if(doorLabel!=NULL) delete doorLabel;
+    if(doorLabel_shadow!=NULL) delete doorLabel_shadow;
+    if(grp!=NULL) delete grp;
+
+    //WriteToLog(QtDebugMsg, "!<-Door destroyed->!");
 }
 
 void ItemDoor::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
