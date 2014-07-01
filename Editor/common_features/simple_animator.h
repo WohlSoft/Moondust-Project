@@ -30,6 +30,7 @@ class SimpleAnimator : public QObject
     Q_OBJECT
 public:
     SimpleAnimator(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64);
+    ~SimpleAnimator();
     QPixmap image();
     QPixmap wholeImage();
 
@@ -37,6 +38,8 @@ public:
 
     void start();
     void stop();
+
+    int speed;
 
 private slots:
     void nextFrame();
@@ -47,8 +50,6 @@ private:
     QPixmap mainImage; //Whole image
 
     bool animated;
-
-    int speed;
 
     int frameCurrent;
     QTimer * timer;
