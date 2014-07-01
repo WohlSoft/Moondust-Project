@@ -120,7 +120,8 @@ SOURCES += main.cpp\
     common_features/levelfilelist.cpp \
     libs/EasyBMP/EasyBMP.cpp \
     item_select_dialog/itemselectdialog.cpp \
-    common_features/simple_animator.cpp
+    common_features/simple_animator.cpp \
+    main_window/dock/lvl_search_toolbox.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

@@ -19,7 +19,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -98,7 +98,13 @@
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_Block"/>
+          <widget class="QListWidget" name="Sel_List_Block">
+           <item>
+            <property name="text">
+             <string>[Empty]</string>
+            </property>
+           </item>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -179,7 +185,13 @@
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_BGO"/>
+          <widget class="QListWidget" name="Sel_List_BGO">
+           <item>
+            <property name="text">
+             <string>[Empty]</string>
+            </property>
+           </item>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -260,7 +272,13 @@
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_NPC"/>
+          <widget class="QListWidget" name="Sel_List_NPC">
+           <item>
+            <property name="text">
+             <string>[Empty]</string>
+            </property>
+           </item>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -293,7 +311,7 @@
     </layout>
    </item>
    <item row="1" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="Sel_DiaButtonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -307,7 +325,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>Sel_DiaButtonBox</sender>
    <signal>accepted()</signal>
    <receiver>ItemSelectDialog</receiver>
    <slot>accept()</slot>
@@ -323,7 +341,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>Sel_DiaButtonBox</sender>
    <signal>rejected()</signal>
    <receiver>ItemSelectDialog</receiver>
    <slot>reject()</slot>
