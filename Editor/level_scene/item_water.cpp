@@ -48,7 +48,7 @@ ItemWater::ItemWater(QGraphicsPolygonItem *parent)
 
 ItemWater::~ItemWater()
 {
- //   WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
+   // WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
 }
 
 void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )

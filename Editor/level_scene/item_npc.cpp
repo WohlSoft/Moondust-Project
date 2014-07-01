@@ -54,7 +54,9 @@ ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
 
 ItemNPC::~ItemNPC()
 {
- //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+    //WriteToLog(QtDebugMsg, "!<-NPC destroyed->!");
+    if(includedNPC!=NULL) delete includedNPC;
+    if(grp!=NULL) delete grp;
     if(timer) delete timer;
 }
 
@@ -460,7 +462,7 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
     {
         grp->removeFromGroup(includedNPC);
         scene->removeItem(includedNPC);
-        free(includedNPC);
+        delete includedNPC;
         includedNPC = NULL;
     }
     if(npcID==0)

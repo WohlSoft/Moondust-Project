@@ -40,7 +40,10 @@ ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
 
 ItemBlock::~ItemBlock()
 {
- //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+   // WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+
+    if(includedNPC!=NULL) delete includedNPC;
+    if(grp!=NULL) delete grp;
     if(timer) delete timer;
 }
 
@@ -360,7 +363,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
     {
         grp->removeFromGroup(includedNPC);
         scene->removeItem(includedNPC);
-        free(includedNPC);
+        delete includedNPC;
         includedNPC = NULL;
     }
     if(npcID==0)
