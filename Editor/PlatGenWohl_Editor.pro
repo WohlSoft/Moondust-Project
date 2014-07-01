@@ -118,7 +118,8 @@ SOURCES += main.cpp\
     data_configs/configstatus.cpp \
     common_features/graphics_funcs.cpp \
     common_features/levelfilelist.cpp \
-    libs/EasyBMP/EasyBMP.cpp
+    libs/EasyBMP/EasyBMP.cpp \
+    item_select_dialog/itemselectdialog.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -161,7 +162,8 @@ HEADERS  += mainwindow.h \
     libs/EasyBMP/EasyBMP.h \
     libs/EasyBMP/EasyBMP_BMP.h \
     libs/EasyBMP/EasyBMP_DataStructures.h \
-    libs/EasyBMP/EasyBMP_VariousBMPutilities.h
+    libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
+    item_select_dialog/itemselectdialog.h
 
 FORMS    += \
     mainwindow.ui \
@@ -176,7 +178,8 @@ FORMS    += \
     edit_npc/npcedit.ui \
     about_dialog/aboutdialog.ui \
     data_configs/configstatus.ui \
-    common_features/levelfilelist.ui
+    common_features/levelfilelist.ui \
+    item_select_dialog/itemselectdialog.ui
 
 RC_FILE = _resources/pge_editor.rc
 
