@@ -588,27 +588,27 @@ void ItemSelectDialog::on_Sel_Combo_CategoryBlock_currentIndexChanged(int index)
 void ItemSelectDialog::on_Sel_Combo_GroupsBGO_currentIndexChanged(int index)
 {
     if(lock_grp) return;
-    grp_blocks=ui->Sel_Combo_GroupsBGO->itemText(index);
+    grp_bgo=ui->Sel_Combo_GroupsBGO->itemText(index);
     updateBoxes(true);
 }
 
 void ItemSelectDialog::on_Sel_Combo_CategoryBGO_currentIndexChanged(int index)
 {
     if(lock_cat) return;
-    cat_blocks=ui->Sel_Combo_CategoryBGO->itemText(index);
+    cat_bgos=ui->Sel_Combo_CategoryBGO->itemText(index);
     updateBoxes(true, true);
 }
 
 void ItemSelectDialog::on_Sel_Combo_GroupsNPC_currentIndexChanged(int index)
 {
     if(lock_grp) return;
-    grp_blocks=ui->Sel_Combo_GroupsNPC->itemText(index);
+    grp_npc=ui->Sel_Combo_GroupsNPC->itemText(index);
     updateBoxes(true);
 }
 
 void ItemSelectDialog::on_Sel_Combo_CategoryNPC_currentIndexChanged(int index)
 {
     if(lock_cat) return;
-    cat_blocks=ui->Sel_Combo_CategoryNPC->itemText(index);
+    cat_npcs=ui->Sel_Combo_CategoryNPC->itemText(index);
     updateBoxes(true, true);
 }
