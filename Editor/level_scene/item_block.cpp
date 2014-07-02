@@ -130,7 +130,9 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(!selected)
         {
-            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            #endif
             scene->contextMenuOpened = true;
             return;
         }
