@@ -676,17 +676,17 @@ void ItemSelectDialog::on_Sel_Text_NPC_textChanged(const QString &arg1)
     if(arg1.isEmpty()) return; //Dummy
 }
 
-void ItemSelectDialog::on_Sel_Combo_FiltertypeBlock_currentIndexChanged(int index)
+void ItemSelectDialog::on_Sel_Combo_FiltertypeBlock_currentIndexChanged(int)
 {
     updateFilters();
 }
 
-void ItemSelectDialog::on_Sel_Combo_FiltertypeBGO_currentIndexChanged(int index)
+void ItemSelectDialog::on_Sel_Combo_FiltertypeBGO_currentIndexChanged(int)
 {
     updateFilters();
 }
 
-void ItemSelectDialog::on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int index)
+void ItemSelectDialog::on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int)
 {
     updateFilters();
 }
