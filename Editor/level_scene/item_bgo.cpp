@@ -27,16 +27,11 @@
 ItemBGO::ItemBGO(QGraphicsItem *parent)
     : QGraphicsItem(parent)
 {
-    //setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-    //animated = false;
-    //frameFirst=0; //from first frame
-    //frameLast=-1; //to unlimited frameset
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
     isLocked=false;
-    //image = new QGraphicsPixmapItem;
-    //timer=NULL;
+
     animatorID=-1;
     imageSize = QRectF(0,0,10,10);
 }
@@ -316,17 +311,11 @@ void ItemBGO::setBGOData(LevelBGO inD)
 QRectF ItemBGO::boundingRect() const
 {
     return imageSize;
-    /*
-    if(!animated)
-        return QRectF(0,0,mainImage.width(),mainImage.height());
-    else
-        return QRectF(0,0,frameWidth,frameSize);*/
 }
 
 void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     painter->setPen(QPen(QBrush(Qt::red), 1, Qt::DotLine));
-
     if(animatorID<0)
     {
         painter->drawRect(QRect(0,0,1,1));
@@ -369,99 +358,3 @@ void ItemBGO::setAnimator(long aniID)
 
     animatorID = aniID;
 }
-
-//void ItemBGO::setMainPixmap(const QPixmap &pixmap)
-//{
-//    mainImage = pixmap;
-//    //this->setPixmap(mainImage);
-//}
-
-
-//void ItemBGO::setAnimation(int frames, int framespeed)
-//{
-//    animated = true;
-//    framesQ = frames;
-//    frameSpeed = framespeed;
-
-//    frameSize = (int)round(mainImage.height()/frames);
-//    frameWidth = mainImage.width();
-//    frameHeight = mainImage.height();
-
-//    framePos = QPoint(0,0);
-//    draw();
-
-//    setFrame(frameFirst);
-
-
-//    timer = new QTimer(this);
-//    connect(
-//                timer, SIGNAL(timeout()),
-//                this,
-//                SLOT( refresh()) );
-
-//}
-
-//void ItemBGO::refresh()
-//{
-//    //update();
-//}
-
-//void ItemBGO::AnimationStart()
-//{
-//    if(!animated) return;
-//    //timer->start(frameSpeed);
-//}
-
-//void ItemBGO::AnimationStop()
-//{
-//    if(!animated) return;
-//    //timer->stop();
-//    //setFrame(frameFirst);
-//}
-
-//void ItemBGO::draw()
-//{
-//    currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-//}
-
-//QPoint ItemBGO::fPos() const
-//{
-//    return framePos;
-//}
-
-//void ItemBGO::setFrame(int y)
-//{
-//    frameCurrent = frameSize * y;
-//    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-//         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-//        {
-//        frameCurrent = frameFirst*frameSize;
-//        framePos.setY( frameFirst * frameSize );
-//        }
-//    else
-//    framePos.setY( frameCurrent );
-//    draw();
-//    //this->setPixmap(QPixmap(currentImage));
-//}
-
-//void ItemBGO::setLocked(bool lock)
-//{
-//    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-//    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-//    isLocked = lock;
-//}
-
-//void ItemBGO::nextFrame()
-//{
-//    frameCurrent += frameSize;
-//    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-//         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-//        {
-//        frameCurrent = frameFirst*frameSize;
-//        framePos.setY( frameFirst * frameSize );
-//        }
-//    else
-//    framePos.setY( framePos.y() + frameSize );
-//    draw();
-//    //this->setPixmap(QPixmap(currentImage));
-//}
