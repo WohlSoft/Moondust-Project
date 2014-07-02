@@ -45,18 +45,18 @@ private slots:
     void npcTypeChange(bool toggled);
 
     void on_Sel_DiaButtonBox_accepted();
-
     void on_Sel_Combo_GroupsBlock_currentIndexChanged(int index);
-
     void on_Sel_Combo_CategoryBlock_currentIndexChanged(int index);
-
     void on_Sel_Combo_GroupsBGO_currentIndexChanged(int index);
-
     void on_Sel_Combo_CategoryBGO_currentIndexChanged(int index);
-
     void on_Sel_Combo_GroupsNPC_currentIndexChanged(int index);
-
     void on_Sel_Combo_CategoryNPC_currentIndexChanged(int index);
+    void on_Sel_Text_FilterBlock_textChanged(const QString &arg1);
+    void on_Sel_Text_FilterBGO_textChanged(const QString &arg1);
+    void on_Sel_Text_NPC_textChanged(const QString &arg1);
+    void on_Sel_Combo_FiltertypeBlock_currentIndexChanged(int index);
+    void on_Sel_Combo_FiltertypeBGO_currentIndexChanged(int index);
+    void on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int index);
 
 private:
 
@@ -72,6 +72,8 @@ private:
     QString cat_bgos;
     QString cat_npcs;
 
+    void updateFilters();
+    void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
 
     QList<QWidget*> extraBlockWid;
     QList<QWidget*> extraBGOWid;
