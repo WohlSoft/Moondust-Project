@@ -31,7 +31,7 @@ class SimpleAnimator : public QObject
 public:
     SimpleAnimator(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64);
     ~SimpleAnimator();
-    QPixmap image();
+    QPixmap image(int frame=-1);
     QPixmap wholeImage();
 
     void setFrame(int y);
