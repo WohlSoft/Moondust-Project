@@ -46,7 +46,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
 void MainWindow::on_actionNewLevel_triggered()
 {
     leveledit *child = createLvlChild();
-    child->newFile(configs, LvlOpts);
+    child->newFile(configs, GlobalSettings::LvlOpts);
     child->show();
     updateMenus(true);
     SetCurrentLevelSection(0);
@@ -54,7 +54,7 @@ void MainWindow::on_actionNewLevel_triggered()
     setDoorsToolbox();
     setLayersBox();
 
-    if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+    if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
     LvlMusPlay::musicForceReset=true; //reset musics
     on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 }

@@ -200,25 +200,17 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
             if(j<pConfigs->main_bgo.size())
             {
-            if(pConfigs->main_bgo[j].id == itemID)
-                found=true;
+                if(pConfigs->main_bgo[j].id == itemID)
+                    found=true;
             }
         }
 
         //if Index found
         if(found)
         {   //get neccesary element directly
-            if(index_bgo[itemID].type==1)
-            {
-                isUser=true;
-                noimage=false;
-                tImg = uBGOs[index_bgo[itemID].i].image;
-            }
-            else
-            {
-                tImg = pConfigs->main_bgo[index_bgo[itemID].i].image;
-                noimage=false;
-            }
+            isUser=true;
+            noimage=false;
+            tImg = animates_BGO[index_bgo[itemID].ai]->wholeImage();
         }
         else
         {

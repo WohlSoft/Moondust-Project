@@ -43,7 +43,6 @@ public:
     ItemBGO(QGraphicsItem *parent=0);
     ~ItemBGO();
 
-    //void setMainPixmap(const QPixmap &pixmap);
     void setBGOData(LevelBGO inD);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
@@ -51,25 +50,18 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-//    QPixmap mainImage;
     QMenu *ItemMenu;
-//    QGraphicsScene * scene;
-//    QGraphicsPixmapItem * image;
+
 
     //////Animation////////
-    //void setAnimation(int frames, int framespeed);
     void setAnimator(long aniID);
-    //void AnimationStart();
-    //void AnimationStop();
-    //void draw();
+
 
     void setLayer(QString layer);
 
     void arrayApply();
     void removeFromArray();
 
-    //QPoint fPos() const;
-    //void setFrame(int);
     LevelBGO bgoData;
 
     int gridSize;
@@ -80,36 +72,16 @@ public:
     bool isLocked;
     void setLocked(bool lock);
 
-//public slots:
-    //void refresh();
-
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    //virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
-
-private slots:
-    //void nextFrame();
 
 private:
     long animatorID;
     QRectF imageSize;
 
     bool animated;
-//    int frameSpeed;
     LvlScene * scene;
-//    int frameCurrent;
-//    QTimer * timer;
-//    QPoint framePos;
-//    int framesQ;
-//    int frameSize; // size of one frame
-//    int frameWidth; // sprite width
-//    int frameHeight; //sprite height
-//    QPixmap currentImage;
-
-//    //Animation alhorithm
-//    int frameFirst;
-//    int frameLast;
 
 };
 
