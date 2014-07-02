@@ -54,10 +54,14 @@ SimpleAnimator::~SimpleAnimator()
 
 //Returns images
 
-QPixmap SimpleAnimator::image()
+QPixmap SimpleAnimator::image(int frame)
 {
    // QMutexLocker locker(&mutex); //Glitch protection
-    return mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
+    if(frame<0)
+        return mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
+    else
+        return mainImage.copy(QRect(framePos.x(), frameSize*frame, frameWidth, frameSize ));
+
 }
 
 QPixmap SimpleAnimator::wholeImage()
