@@ -35,11 +35,22 @@ public:
                               QVariant npcExtraData = 0, QWidget *parent = 0);
     ~ItemSelectDialog();
 
+    int blockID;
+    int bgoID;
+    int npcID;
+
 private slots:
 
     void on_Sel_TabCon_ItemType_currentChanged(int index);
+    void npcTypeChange(bool toggled);
+
+    void on_Sel_DiaButtonBox_accepted();
 
 private:
+
+    QRadioButton* npcFromList;
+    QRadioButton* npcCoins;
+    QSpinBox* npcCoinsSel;
 
     void addExtraDataControl(QWidget* control);
     QList<QWidget*> extraBlockWid;

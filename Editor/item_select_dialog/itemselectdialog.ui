@@ -19,7 +19,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -102,6 +102,11 @@
            <item>
             <property name="text">
              <string>[Empty]</string>
+            </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
             </property>
            </item>
           </widget>
@@ -190,6 +195,11 @@
             <property name="text">
              <string>[Empty]</string>
             </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
+            </property>
            </item>
           </widget>
          </item>
@@ -276,6 +286,11 @@
            <item>
             <property name="text">
              <string>[Empty]</string>
+            </property>
+            <property name="font">
+             <font>
+              <italic>true</italic>
+             </font>
             </property>
            </item>
           </widget>
