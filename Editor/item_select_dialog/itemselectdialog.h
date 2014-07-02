@@ -46,6 +46,18 @@ private slots:
 
     void on_Sel_DiaButtonBox_accepted();
 
+    void on_Sel_Combo_GroupsBlock_currentIndexChanged(int index);
+
+    void on_Sel_Combo_CategoryBlock_currentIndexChanged(int index);
+
+    void on_Sel_Combo_GroupsBGO_currentIndexChanged(int index);
+
+    void on_Sel_Combo_CategoryBGO_currentIndexChanged(int index);
+
+    void on_Sel_Combo_GroupsNPC_currentIndexChanged(int index);
+
+    void on_Sel_Combo_CategoryNPC_currentIndexChanged(int index);
+
 private:
 
     QRadioButton* npcFromList;
@@ -53,6 +65,14 @@ private:
     QSpinBox* npcCoinsSel;
 
     void addExtraDataControl(QWidget* control);
+
+
+    void updateBoxes(bool setGrp = false, bool setCat = false);
+    QString cat_blocks;
+    QString cat_bgos;
+    QString cat_npcs;
+
+
     QList<QWidget*> extraBlockWid;
     QList<QWidget*> extraBGOWid;
     QList<QWidget*> extraNPCWid;
