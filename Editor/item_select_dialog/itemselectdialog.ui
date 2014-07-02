@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Search Item</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../_resources/editor.qrc">
+    <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -19,7 +23,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -81,6 +85,9 @@
          </item>
          <item row="1" column="1" colspan="2">
           <widget class="QComboBox" name="Sel_Combo_CategoryBlock">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
            <item>
             <property name="text">
              <string>[all]</string>
@@ -90,6 +97,9 @@
          </item>
          <item row="0" column="1" colspan="2">
           <widget class="QComboBox" name="Sel_Combo_GroupsBlock">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
            <item>
             <property name="text">
              <string>[all]</string>
@@ -142,6 +152,9 @@
          </item>
          <item row="0" column="1" colspan="2">
           <widget class="QComboBox" name="Sel_Combo_GroupsBGO">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
            <item>
             <property name="text">
              <string>[all]</string>
@@ -158,6 +171,9 @@
          </item>
          <item row="1" column="1" colspan="2">
           <widget class="QComboBox" name="Sel_Combo_CategoryBGO">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
            <item>
             <property name="text">
              <string>[all]</string>
@@ -234,6 +250,9 @@
          </item>
          <item row="0" column="1" colspan="2">
           <widget class="QComboBox" name="Sel_Combo_GroupsNPC">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
            <item>
             <property name="text">
              <string>[all]</string>
@@ -250,6 +269,9 @@
          </item>
          <item row="1" column="1" colspan="2">
           <widget class="QComboBox" name="Sel_Combo_CategoryNPC">
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
            <item>
             <property name="text">
              <string>[all]</string>
@@ -337,7 +359,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../_resources/editor.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>Sel_DiaButtonBox</sender>
