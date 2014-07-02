@@ -972,6 +972,7 @@
    <addaction name="actionEriser"/>
    <addaction name="separator"/>
    <addaction name="actionPlayMusic"/>
+   <addaction name="actionAnimation"/>
    <addaction name="separator"/>
    <addaction name="actionGridEn"/>
    <addaction name="separator"/>
@@ -2527,13 +2528,28 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>263</width>
-          <height>1468</height>
+          <height>1363</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Item Properties</string>
         </attribute>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
           <widget class="QGroupBox" name="blockProp">
            <property name="minimumSize">
@@ -2546,6 +2562,21 @@ p, li { white-space: pre-wrap; }
             <string>Block</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_13">
+            <property name="leftMargin">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>1</number>
+            </property>
+            <property name="rightMargin">
+             <number>1</number>
+            </property>
+            <property name="bottomMargin">
+             <number>1</number>
+            </property>
+            <property name="spacing">
+             <number>1</number>
+            </property>
             <item row="1" column="0">
              <widget class="QPushButton" name="PROPS_BlockResize">
               <property name="text">
@@ -2742,6 +2773,21 @@ p, li { white-space: pre-wrap; }
             <string>BGO</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_14">
+            <property name="leftMargin">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>1</number>
+            </property>
+            <property name="rightMargin">
+             <number>1</number>
+            </property>
+            <property name="bottomMargin">
+             <number>1</number>
+            </property>
+            <property name="spacing">
+             <number>1</number>
+            </property>
             <item row="6" column="1">
              <widget class="QLabel" name="SMBX64_SP_Help">
               <property name="maximumSize">
@@ -2873,6 +2919,21 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <string>NPC</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_15">
+            <property name="leftMargin">
+             <number>1</number>
+            </property>
+            <property name="topMargin">
+             <number>1</number>
+            </property>
+            <property name="rightMargin">
+             <number>1</number>
+            </property>
+            <property name="bottomMargin">
+             <number>1</number>
+            </property>
+            <property name="spacing">
+             <number>1</number>
+            </property>
             <item row="2" column="0" colspan="2">
              <widget class="QCheckBox" name="PROPS_NpcFri">
               <property name="text">
@@ -5856,6 +5917,10 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/animation.png</normaloff>:/images/animation.png</iconset>
+   </property>
    <property name="text">
     <string>Animation</string>
    </property>
@@ -5863,7 +5928,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
-    <string notr="true">F10</string>
+    <string>F10</string>
    </property>
   </action>
   <action name="action_recent1">
@@ -6168,6 +6233,10 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   <action name="actionLVLSearchBox">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
    </property>
    <property name="text">
     <string>Level Search</string>
