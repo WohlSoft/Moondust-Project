@@ -259,7 +259,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 if(uBGO.id < (unsigned int)index_bgo.size())
                 {
                     index_bgo[uBGO.id].type = 1;
-                    index_bgo[uBGO.id].i = (uBGOs.size()-1);
+                    //index_bgo[uBGO.id].i = (uBGOs.size()-1);
                 }
             }
 
@@ -279,8 +279,11 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                                   pConfigs->main_bgo[i].framespeed
                                   );
             animates_BGO.push_back( aniBGO );
+            index_bgo[pConfigs->main_bgo[i].id].i = i;
             index_bgo[pConfigs->main_bgo[i].id].ai = animates_BGO.size()-1;
-            WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
+            #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
+            #endif
 
         if(progress.wasCanceled())
             /*progress.setValue(progress.value()+1);

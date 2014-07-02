@@ -360,33 +360,33 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     }
 
     //if Index found
-    if(found)
-    {   //get neccesary element directly
-        if(index_bgo[bgo.id].type==1)
-        {
-            //isUser=true;
-            noimage=false;
-            //tImg = uBGOs[index_bgo[bgo.id].i].image;
-        }
-        else
-        {
-            //tImg = pConfigs->main_bgo[index_bgo[bgo.id].i].image;
-            noimage=false;
-        }
-    }
-    else
+    if(!found)
+//    {   //get neccesary element directly
+//        if(index_bgo[bgo.id].type==1)
+//        {
+//            //isUser=true;
+//            noimage=false;
+//            //tImg = uBGOs[index_bgo[bgo.id].i].image;
+//        }
+//        else
+//        {
+//            //tImg = pConfigs->main_bgo[index_bgo[bgo.id].i].image;
+//            noimage=false;
+//        }
+//    }
+//  else
     {
-        //fetching arrays
-        for(j=0;j<uBGOs.size();j++)
-        {
-            if(uBGOs[j].id==bgo.id)
-            {
-                //isUser=true;
-                noimage=false;
-                //tImg = uBGOs[j].image;
-                break;
-            }
-        }
+//        //fetching arrays
+//        for(j=0;j<uBGOs.size();j++)
+//        {
+//            if(uBGOs[j].id==bgo.id)
+//            {
+//                //isUser=true;
+//                noimage=false;
+//                //tImg = uBGOs[j].image;
+//                break;
+//            }
+//        }
 
         for(j=0;j<pConfigs->main_bgo.size();j++)
         {
@@ -399,7 +399,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
         }
     }
 
-    if((noimage)||(tImg.isNull()))
+    if(noimage)
     {
         //tImg=uBgoImg;
         if(j >= pConfigs->main_bgo.size())
@@ -407,19 +407,6 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
             j=0;
         }
     }
-
-    BGOItem->setScenePoint(this);
-
-    BGOItem->setBGOData(bgo);
-        BGOItem->gridSize = pConfigs->main_bgo[j].grid;
-        BGOItem->gridOffsetX = pConfigs->main_bgo[j].offsetX;
-        BGOItem->gridOffsetY = pConfigs->main_bgo[j].offsetY;
-    BGOItem->setAnimator(animator);
-    //BGOItem->setMainPixmap(tImg);
-    BGOItem->setContextMenu(bgoMenu);
-    addItem(BGOItem);
-
-    //WriteToLog(QtDebugMsg, QString("BGO Item-> source data %1 %2").arg(bgo.x).arg(bgo.y));
 
     QPoint newPos = QPoint(bgo.x, bgo.y);
     if(toGrid)
@@ -429,6 +416,24 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
         bgo.x = newPos.x();
         bgo.y = newPos.y();
     }
+
+    BGOItem->setScenePoint(this);
+
+    BGOItem->setBGOData(bgo);
+    BGOItem->gridSize = pConfigs->main_bgo[j].grid;
+    BGOItem->gridOffsetX = pConfigs->main_bgo[j].offsetX;
+    BGOItem->gridOffsetY = pConfigs->main_bgo[j].offsetY;
+    BGOItem->setAnimator(animator);
+    //BGOItem->setMainPixmap(tImg);
+    BGOItem->setContextMenu(bgoMenu);
+    addItem(BGOItem);
+
+
+    #ifdef _DEBUG_
+        WriteToLog(QtDebugMsg, QString("BGO Item-> grid config value %1").arg(pConfigs->main_bgo[j].grid));
+        WriteToLog(QtDebugMsg, QString("BGO Item-> grid value %1").arg(BGOItem->gridSize));
+        WriteToLog(QtDebugMsg, QString("BGO Item-> j value %1").arg(j));
+    #endif
 
     //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 1 %1 %2").arg(bgo.x).arg(bgo.y));
 
@@ -452,15 +457,11 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     BGOItem->setData(1, QString::number(bgo.id) );
     BGOItem->setData(2, QString::number(bgo.array_id) );
 
-    BGOItem->setData(9, QString::number(tImg.width()) ); //width
-    BGOItem->setData(10, QString::number(tImg.height()) ); //height
 
     if(pConfigs->main_bgo[j].view!=0)
         BGOItem->setZValue(bgoZf + pConfigs->main_bgo[j].zOffset);
-        //bgoback->addToGroup(box);
     else
         BGOItem->setZValue(bgoZb + pConfigs->main_bgo[j].zOffset);
-        //bgofore->addToGroup(box);
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }
 
@@ -577,7 +578,9 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
     NPCItem->setContextMenu(npcMenu);
 
+    #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> Add to scene");
+    #endif
 
     addItem(NPCItem);
 
@@ -589,13 +592,18 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     else
         NPCItem->setZValue(npcZs);
 
+    #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set Generator");
+    #endif
+
     NPCItem->setGenerator(npc.generator, npc.generator_direct, npc.generator_type, true);
 
     if((mergedSet.container)&&(npc.special_data>0))
         NPCItem->setIncludedNPC(npc.special_data, true);
 
+    #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> calculate grid");
+    #endif
     QPoint newPos = QPoint(npc.x, npc.y);
     if(toGrid)
     {
@@ -608,10 +616,15 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     npc.is_star = mergedSet.is_star;
 
+    #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set position");
+    #endif
     NPCItem->setPos( QPointF(newPos) );
 
+    #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set animation");
+    #endif
+
     NPCItem->setAnimation(NPCItem->localProps.frames,
                           NPCItem->localProps.framespeed,
                           NPCItem->localProps.framestyle,
@@ -622,13 +635,18 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
                           NPCItem->localProps.custom_ani_fr,
                           NPCItem->localProps.custom_ani_er);
 
+    #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set flags");
+    #endif
+
     NPCItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_npc));
     NPCItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_npc));
 
     //npcfore->addToGroup(box);
 
+    #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set props");
+    #endif
     if(NPCItem->localProps.frames>1)
         NPCItem->setData(4, "animated");
 
@@ -640,7 +658,9 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setData(10, QString::number(NPCItem->localProps.height) ); //height
 
     if(PasteFromBuffer) NPCItem->setSelected(true);
-    WriteToLog(QtDebugMsg, "NPC place -> done");
+    #ifdef _DEBUG_
+        WriteToLog(QtDebugMsg, "NPC place -> done");
+    #endif
 }
 
 
@@ -666,8 +686,10 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
     this->addItem( WATERItem );
     WATERItem->setPos(QPointF(newPos));
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("WaterDraw -> Scene x=%1").arg(WATERItem->pos().x()));
     WriteToLog(QtDebugMsg, QString("WaterDraw -> Scene y=%1").arg(WATERItem->pos().y()));
+    #endif
 
     WATERItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
     WATERItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));

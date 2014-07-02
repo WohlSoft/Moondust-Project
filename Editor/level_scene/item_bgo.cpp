@@ -115,7 +115,9 @@ QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(!selected)
         {
+            #ifdef _DEBUG_
             WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            #endif
             scene->contextMenuOpened = true;
             return;
         }
@@ -228,31 +230,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 }
                 scene->contextMenuOpened = false;
             }
-//            foreach(QAction * lItem, layerItems)
-//            {
-//                if(selected==lItem)
-//                {
-//                    foreach(LevelLayers lr, scene->LvlData->layers)
-//                    { //Find layer's settings
-//                        if(lr.name==lItem->data().toString())
-//                        {
-//                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-//                            {
-
-//                                if(SelItem->data(0).toString()=="BGO")
-//                                {
-//                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
-//                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
-//                                ((ItemBGO *) SelItem)->arrayApply();
-//                                }
-//                            }
-//                        break;
-//                        }
-//                    }//Find layer's settings
-//                 scene->contextMenuOpened = false;
-//                 break;
-//                }//Find selected layer's item
-//            }
         }
     }
     else
@@ -385,7 +362,10 @@ void ItemBGO::setAnimator(long aniID)
                 scene->animates_BGO[aniID]->image().height()
                 );
 
-    WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
+    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
+    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
+
+    //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
 
     animatorID = aniID;
 }
