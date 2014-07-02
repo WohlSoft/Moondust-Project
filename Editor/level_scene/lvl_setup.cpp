@@ -100,6 +100,7 @@ void LvlScene::stopAnimation()
         }
     }
 
+    update();
 }
 
 void LvlScene::applyLayersVisible()
