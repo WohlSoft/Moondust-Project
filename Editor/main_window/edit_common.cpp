@@ -21,6 +21,7 @@
 
 #include "../file_formats/file_formats.h"
 #include "music_player.h"
+#include "global_settings.h"
 
 //Reload opened file data
 void MainWindow::on_actionReload_triggered()
@@ -48,21 +49,21 @@ void MainWindow::on_actionReload_triggered()
 
         FileData.filename = QFileInfo(filePath).baseName();
         FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
-        FileData.playmusic = autoPlayMusic;
+        FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeLvlEditWin()->LvlData.modified = false;
         activeLvlEditWin()->close();
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         ui->centralWidget->activeSubWindow()->close();
 
         leveledit *child = createLvlChild();
-        if ((bool) (child->loadFile(filePath, FileData, configs, LvlOpts))) {
+        if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts))) {
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
             updateMenus(true);
             SetCurrentLevelSection(0);
 
-            if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+            if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
             LvlMusPlay::musicForceReset=true; //reset musics
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
@@ -101,11 +102,11 @@ void MainWindow::on_actionReset_position_triggered()
 
 void MainWindow::on_actionAnimation_triggered(bool checked)
 {
-    LvlOpts.animationEnabled = checked;
+    GlobalSettings::LvlOpts.animationEnabled = checked;
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->opts.animationEnabled = LvlOpts.animationEnabled;
-        if(LvlOpts.animationEnabled)
+        activeLvlEditWin()->scene->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
+        if(GlobalSettings::LvlOpts.animationEnabled)
         {
             activeLvlEditWin()->scene->startBlockAnimation();
         }
@@ -117,10 +118,10 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
 
 void MainWindow::on_actionCollisions_triggered(bool checked)
 {
-    LvlOpts.collisionsEnabled = checked;
+    GlobalSettings::LvlOpts.collisionsEnabled = checked;
     if (activeChildWindow()==1)
     {
-        activeLvlEditWin()->scene->opts.collisionsEnabled = LvlOpts.collisionsEnabled;
+        activeLvlEditWin()->scene->opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
     }
 
 }

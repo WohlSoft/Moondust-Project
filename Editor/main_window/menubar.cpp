@@ -19,6 +19,7 @@
 #include "ui_mainwindow.h"
 #include "../mainwindow.h"
 
+#include "global_settings.h"
 
 
 void MainWindow::updateMenus(bool force)
@@ -43,9 +44,10 @@ void MainWindow::updateMenus(bool force)
     ui->actionHandScroll->setEnabled( (WinType==1) || (WinType==3));
     ui->actionReload->setEnabled( (WinType==1) || (WinType==3));
 
-    if(!(WinType==3)) WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
+    if(!(WinType==3)) GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
+    ui->WorldToolBox->setVisible( (WinType==3) && (GlobalSettings::WorldToolBoxVis)); //Restore saved visible status
 
-    ui->WorldToolBox->setVisible( (WinType==3) && (WorldToolBoxVis)); //Restore saved visible status
+
     ui->menuWorld->setEnabled(( WinType==3) );
     ui->actionWLDToolBox->setVisible( (WinType==3));
 
@@ -58,31 +60,35 @@ void MainWindow::updateMenus(bool force)
 
 
 
-    if((!(WinType==1))&& (lastWinType == 1) )
+    if((!(WinType==1))&& (GlobalSettings::lastWinType == 1) )
     {
-        LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
-        SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
+        GlobalSettings::LevelToolBoxVis = ui->LevelToolBox->isVisible();  //Save current visible status
+        GlobalSettings::SectionToolBoxVis = ui->LevelSectionSettings->isVisible();
 
-        LevelDoorsBoxVis = ui->DoorsToolbox->isVisible();
-        LevelLayersBoxVis = ui->LevelLayers->isVisible();
-        LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
+        GlobalSettings::LevelDoorsBoxVis = ui->DoorsToolbox->isVisible();
+        GlobalSettings::LevelLayersBoxVis = ui->LevelLayers->isVisible();
+        GlobalSettings::LevelEventsBoxVis = ui->LevelEventsToolBox->isVisible();
+
+        GlobalSettings::LevelSearchBoxVis = ui->FindDock->isVisible();
 
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
         ui->LevelSectionSettings->setVisible( 0 );
         ui->DoorsToolbox->setVisible( 0 );
         ui->LevelLayers->setVisible( 0 );
         ui->LevelEventsToolBox->setVisible( 0 );
+        ui->FindDock->setVisible( 0 );
     }
 
-    if((lastWinType !=1) && (WinType==1))
+    if((GlobalSettings::lastWinType !=1) && (WinType==1))
     {
-        ui->LevelToolBox->setVisible( LevelToolBoxVis ); //Restore saved visible status
-        ui->LevelSectionSettings->setVisible( SectionToolBoxVis );
-        ui->DoorsToolbox->setVisible( LevelDoorsBoxVis );
-        ui->LevelLayers->setVisible( LevelLayersBoxVis );
-        ui->LevelEventsToolBox->setVisible( LevelEventsBoxVis );
+        ui->LevelToolBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
+        ui->LevelSectionSettings->setVisible( GlobalSettings::SectionToolBoxVis );
+        ui->DoorsToolbox->setVisible( GlobalSettings::LevelDoorsBoxVis );
+        ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
+        ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
+        ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
     }
-    lastWinType =   WinType;
+    GlobalSettings::lastWinType =   WinType;
 
     ui->actionLVLToolBox->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
@@ -178,15 +184,15 @@ void MainWindow::updateMenus(bool force)
             ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
             ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
 
-            LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
-            LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
+            GlobalSettings::LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
+            GlobalSettings::LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
             ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
             ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
 
             UpdateCustomItems(); // Update custom item lists for Level
         }
-        ui->actionAnimation->setChecked( LvlOpts.animationEnabled );
-        ui->actionCollisions->setChecked( LvlOpts.collisionsEnabled );
+        ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
+        ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
     }
     else
     {
