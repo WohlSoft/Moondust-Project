@@ -503,6 +503,51 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
     lock_grp=false;
     lock_cat=false;
+
+    updateFilters();
+}
+
+void ItemSelectDialog::updateFilters()
+{
+    if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_Block){
+        updateFilter(ui->Sel_Text_FilterBlock, ui->Sel_List_Block, ui->Sel_Combo_FiltertypeBlock);
+    }else if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_BGO){
+        updateFilter(ui->Sel_Text_FilterBGO, ui->Sel_List_BGO, ui->Sel_Combo_FiltertypeBGO);
+    }else if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_NPC){
+        updateFilter(ui->Sel_Text_NPC, ui->Sel_List_NPC, ui->Sel_Combo_FiltertypeNPC);
+    }
+}
+
+void ItemSelectDialog::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
+{
+    QString toSearch;
+    toSearch = searchEdit->text();
+    for(int i = 0; i < itemList->count(); i++){
+        if(toSearch.isEmpty()){
+            itemList->setRowHidden(i,false);
+            continue;
+        }
+        if(typeBox->currentIndex()==0){ //search by text
+            if(!itemList->item(i)->text().contains(toSearch, Qt::CaseInsensitive)){
+                itemList->setRowHidden(i,true);
+            }else{
+                itemList->setRowHidden(i,false);
+            }
+        }else if(typeBox->currentIndex()==1){ //search by id
+            bool conv = false;
+            int toIdSearch = toSearch.toInt(&conv);
+            if(!conv){ //cannot convert
+                break;
+            }
+            if(itemList->item(i)->data(3).toInt()==toIdSearch){
+                itemList->setRowHidden(i,false);
+            }else{
+                itemList->setRowHidden(i,true);
+            }
+        }else{//else do nothing
+            break;
+        }
+    }
 }
 
 void ItemSelectDialog::on_Sel_TabCon_ItemType_currentChanged(int index)
@@ -611,4 +656,37 @@ void ItemSelectDialog::on_Sel_Combo_CategoryNPC_currentIndexChanged(int index)
     if(lock_cat) return;
     cat_npcs=ui->Sel_Combo_CategoryNPC->itemText(index);
     updateBoxes(true, true);
+}
+
+void ItemSelectDialog::on_Sel_Text_FilterBlock_textChanged(const QString &arg1)
+{
+    updateFilters();
+    if(arg1.isEmpty()) return; //Dummy
+}
+
+void ItemSelectDialog::on_Sel_Text_FilterBGO_textChanged(const QString &arg1)
+{
+    updateFilters();
+    if(arg1.isEmpty()) return; //Dummy
+}
+
+void ItemSelectDialog::on_Sel_Text_NPC_textChanged(const QString &arg1)
+{
+    updateFilters();
+    if(arg1.isEmpty()) return; //Dummy
+}
+
+void ItemSelectDialog::on_Sel_Combo_FiltertypeBlock_currentIndexChanged(int index)
+{
+    updateFilters();
+}
+
+void ItemSelectDialog::on_Sel_Combo_FiltertypeBGO_currentIndexChanged(int index)
+{
+    updateFilters();
+}
+
+void ItemSelectDialog::on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int index)
+{
+    updateFilters();
 }
