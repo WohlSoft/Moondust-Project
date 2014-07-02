@@ -57,6 +57,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->ItemProperties->setVisible(true);
         ui->ItemProperties->show();
         ui->ItemProperties->raise();
+        ui->ItemProps->raise();
         ui->blockProp->show();
         ui->blockProp->raise();
         ui->ItemProps->setCurrentIndex(0);
