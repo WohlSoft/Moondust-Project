@@ -28,6 +28,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs,
     conf = configs;
     ui->setupUi(this);
 
+    ui->Sel_List_Block->item(0)->setData(3, QVariant(0));
+    ui->Sel_List_BGO->item(0)->setData(3, QVariant(0));
+    ui->Sel_List_NPC->item(0)->setData(3, QVariant(0));
+
     if(!blockTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block));
 
@@ -147,21 +151,35 @@ void ItemSelectDialog::npcTypeChange(bool /*toggled*/)
 
 void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
 {
-    if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)!=-1)
-        blockID = ui->Sel_List_Block->selectedItems()[0]->data(3).toInt();
+    blockID = 0;
+    bgoID = 0;
+    npcID = 0;
 
-    if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)!=-1)
-        bgoID = ui->Sel_List_BGO->selectedItems()[0]->data(3).toInt();
+    if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)!=-1){
+        if(!ui->Sel_List_Block->selectedItems().isEmpty()){
+            blockID = ui->Sel_List_Block->selectedItems()[0]->data(3).toInt();
+        }
+    }
+
+    if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)!=-1){
+        if(!ui->Sel_List_BGO->selectedItems().isEmpty()){
+            bgoID = ui->Sel_List_BGO->selectedItems()[0]->data(3).toInt();
+        }
+    }
 
     if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)!=-1){
         if(npcCoins!=0){
             if(npcCoins->isChecked()){
                 npcID = npcCoinsSel->value();
             }else{
-                npcID = ui->Sel_List_NPC->selectedItems()[0]->data(3).toInt()+1000;
+                if(!ui->Sel_List_NPC->selectedItems().isEmpty()){
+                    npcID = ui->Sel_List_NPC->selectedItems()[0]->data(3).toInt()+1000;
+                }
             }
         }else{
-            npcID = ui->Sel_List_NPC->selectedItems()[0]->data(3).toInt()+1000;
+            if(!ui->Sel_List_NPC->selectedItems().isEmpty()){
+                npcID = ui->Sel_List_NPC->selectedItems()[0]->data(3).toInt();
+            }
         }
     }
 
