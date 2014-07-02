@@ -182,7 +182,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
     scene->buildAnimators();
 
     if(options.animationEnabled) scene->startBlockAnimation();
-    setAutoUpdateTimer(32);
+    setAutoUpdateTimer(31);
 
     if(!sceneCreated)
     {
@@ -345,7 +345,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     QApplication::restoreOverrideCursor();
 
-    setAutoUpdateTimer(32);
+    setAutoUpdateTimer(31);
 
     setCurrentFile(fileName);
     LvlData.modified = false;
