@@ -45,12 +45,7 @@
 #include "resizer/item_resizer.h"
 
 #include "../data_configs/custom_data.h"
-
-struct LevelEditingSettings
-{
-    bool animationEnabled;
-    bool collisionsEnabled;
-};
+#include "../main_window/global_settings.h"
 
 class LvlScene : public QGraphicsScene
 {

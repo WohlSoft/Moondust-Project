@@ -53,7 +53,6 @@ void MainWindow::OpenFile(QString FilePath)
 
     QFileInfo in_1(FilePath);
 
-    LastOpenDir = in_1.absoluteDir().absolutePath();
     GlobalSettings::openPath = in_1.absoluteDir().absolutePath();
 
     if(in_1.suffix() == "lvl")
@@ -64,10 +63,10 @@ void MainWindow::OpenFile(QString FilePath)
 
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
-        FileData.playmusic = autoPlayMusic;
+        FileData.playmusic = GlobalSettings::autoPlayMusic;
 
         leveledit *child = createLvlChild();
-        if ( (bool)(child->loadFile(FilePath, FileData, configs, LvlOpts)) ) {
+        if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
             updateMenus(true);
@@ -75,7 +74,7 @@ void MainWindow::OpenFile(QString FilePath)
             setDoorsToolbox();
             setLayersBox();
 
-            if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+            if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
             LvlMusPlay::musicForceReset=true; //reset musics
             on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 
@@ -206,7 +205,7 @@ void MainWindow::on_OpenFile_triggered()
         "SMBX Level (*.LVL)\n"
         "SMBX World (*.WLD)\n"
         "SMBX NPC Config (npc-*.TXT)\n"
-        "All Files (*.*)"));
+        "All Files (*.*)"),0);
 
         if(fileName_DATA==NULL) return;
 
