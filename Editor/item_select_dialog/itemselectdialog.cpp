@@ -18,6 +18,15 @@
 
 #include "itemselectdialog.h"
 #include "ui_itemselectdialog.h"
+#include "../common_features/mainwinconnect.h"
+
+static QString allLabel = "[all]";
+static QString customLabel = "[custom]";
+static QString grp_blocks = "";
+static QString grp_bgo = "";
+static QString grp_npc = "";
+static bool lock_grp=false;
+static bool lock_cat=false;
 
 ItemSelectDialog::ItemSelectDialog(dataconfigs *configs,
                                    bool blockTab, bool bgoTab, bool npcTab,
@@ -105,9 +114,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs,
         }
     }
 
-
-
+    updateBoxes();
     on_Sel_TabCon_ItemType_currentChanged(ui->Sel_TabCon_ItemType->currentIndex());
+
 }
 
 ItemSelectDialog::~ItemSelectDialog()
@@ -118,6 +127,382 @@ ItemSelectDialog::~ItemSelectDialog()
 void ItemSelectDialog::addExtraDataControl(QWidget *control)
 {
     ui->verticalLayout->insertWidget(ui->verticalLayout->count()-1, control);
+}
+
+void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
+{
+    allLabel    = MainWindow::tr("[all]");
+    customLabel = MainWindow::tr("[custom]");
+
+    if(!setCat)
+    {
+        lock_cat=true;
+        cat_blocks = allLabel;
+        cat_bgos = allLabel;
+        cat_npcs = allLabel;
+        if(!setGrp)
+        {
+            lock_grp=true;
+            grp_blocks = allLabel;
+            grp_bgo = allLabel;
+            grp_npc = allLabel;
+        }
+    }
+
+    WriteToLog(QtDebugMsg, "LevelTools -> Clear current");
+    ui->Sel_List_BGO->clear();
+    ui->Sel_List_Block->clear();
+    ui->Sel_List_NPC->clear();
+
+    WriteToLog(QtDebugMsg, "LevelTools -> Declare new");
+    QListWidgetItem * item;
+    QPixmap tmpI;
+
+    QStringList tmpList, tmpGrpList;
+    bool found = false;
+
+    tmpList.clear();
+    tmpGrpList.clear();
+
+    //set custom Block items from loaded level
+    if((ui->Sel_Combo_CategoryBlock->currentText()==customLabel)&&(setCat)&&(setGrp))
+    {
+        if(MainWinConnect::pMainWin->activeChildWindow()==1)
+        {
+            long j=0;
+            bool isIndex=false;
+            leveledit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
+            foreach(UserBlocks block, edit->scene->uBlocks)
+            {
+
+                //Check for index
+                if(block.id < (unsigned long)conf->index_blocks.size())
+                {
+                    if(block.id == conf->main_block[conf->index_blocks[block.id].i].id)
+                    {
+                        j = conf->index_blocks[block.id].i;
+                        isIndex=true;
+                    }
+                }
+                //In index is false, fetch array
+                if(!isIndex)
+                {
+                    for(int i=0; i < conf->main_block.size(); i++)
+                    {
+                        if(conf->main_block[i].id == block.id)
+                        {
+                            j = 0;
+                            isIndex=true;
+                            break;
+                        }
+                    }
+                    if(!isIndex) j=0;
+                }
+
+
+                if(conf->main_block[j].animated)
+                    tmpI = block.image.copy(0,0,
+                                block.image.width(),
+                                (int)round(block.image.height() / conf->main_block[j].frames));
+                else
+                    tmpI = block.image;
+
+                item = new QListWidgetItem( QString("block-%1").arg(block.id) );
+                item->setIcon( QIcon( tmpI ) );
+                item->setData(3, QString::number(block.id) );
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+                ui->Sel_List_Block->addItem( item );
+            }
+
+        }
+
+    }
+    else
+    //set Block item box from global configs
+    foreach(obj_block blockItem, conf->main_block)
+    {
+        //Add Group
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString grp, tmpGrpList)
+            {
+                if(blockItem.group.isEmpty())
+                {found=true; break;}//Skip empty values
+                if(blockItem.group==grp)
+                {found=true; break;}
+            }
+        if(!found) tmpGrpList.push_back(blockItem.group);
+
+        //Add category
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString cat, tmpList)
+            {
+                if(blockItem.category==cat)
+                {found=true; break;}
+                if((blockItem.group!=grp_blocks)&&(grp_blocks!=allLabel))
+                {found=true; break;}
+            }
+        if(!found) tmpList.push_back(blockItem.category);
+
+        if(
+                ((blockItem.group==grp_blocks)||(grp_blocks==allLabel)||(grp_blocks==""))&&
+                ((blockItem.category==cat_blocks)||(cat_blocks==allLabel)))
+        {
+            if(blockItem.animated)
+                tmpI = blockItem.image.copy(0,0,
+                            blockItem.image.width(),
+                            (int)round(blockItem.image.height() / blockItem.frames));
+            else
+                tmpI = blockItem.image;
+
+            item = new QListWidgetItem( blockItem.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(blockItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->Sel_List_Block->addItem( item );
+        }
+
+    }
+    tmpList.sort();
+    tmpList.push_front(customLabel);
+    tmpList.push_front(allLabel);
+    tmpGrpList.sort();
+    tmpGrpList.push_front(allLabel);
+
+    //apply group list
+    if(!setGrp)
+    {
+        ui->Sel_Combo_GroupsBlock->clear();
+        ui->Sel_Combo_GroupsBlock->addItems(tmpGrpList);
+    }
+
+    //apply category list
+    if(!setCat)
+    {
+        ui->Sel_Combo_CategoryBlock->clear();
+        ui->Sel_Combo_CategoryBlock->addItems(tmpList);
+    }
+
+    tmpList.clear();
+    tmpGrpList.clear();
+
+    //set custom BGO items from loaded level
+    if((ui->Sel_Combo_CategoryBGO->currentText()==customLabel)&&(setCat)&&(setGrp))
+    {
+        if(MainWinConnect::pMainWin->activeChildWindow()==1)
+        {
+            long j=0;
+            bool isIndex=false;
+            leveledit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
+            foreach(UserBGOs bgo, edit->scene->uBGOs)
+            {
+
+                //Check for index
+                if(bgo.id < (unsigned long)conf->index_bgo.size())
+                {
+                    if(bgo.id == conf->main_bgo[conf->index_bgo[bgo.id].i].id)
+                    {
+                        j = conf->index_bgo[bgo.id].i;
+                        isIndex=true;
+                    }
+                }
+                //In index is false, fetch array
+                if(!isIndex)
+                {
+                    for(int i=0; i < conf->main_bgo.size(); i++)
+                    {
+                        if(conf->main_bgo[i].id == bgo.id)
+                        {
+                            j = 0;
+                            isIndex=true;
+                            break;
+                        }
+                    }
+                    if(!isIndex) j=0;
+                }
+
+
+                if(conf->main_bgo[j].animated)
+                    tmpI = bgo.image.copy(0,0,
+                                bgo.image.width(),
+                                (int)round(bgo.image.height() / conf->main_bgo[j].frames));
+                else
+                    tmpI = bgo.image;
+
+                item = new QListWidgetItem( QString("bgo-%1").arg(bgo.id) );
+                item->setIcon( QIcon( tmpI ) );
+                item->setData(3, QString::number(bgo.id) );
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+                ui->Sel_List_BGO->addItem( item );
+            }
+
+        }
+
+    }
+    else
+    //set BGO item box from global array
+    foreach(obj_bgo bgoItem, conf->main_bgo)
+    {
+        //Add Group
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString grp, tmpGrpList)
+            {
+                if(bgoItem.group.isEmpty())
+                {found=true;break;}//Skip empty values
+                if(bgoItem.group==grp)
+                {found=true; break;}
+            }
+        if(!found) tmpGrpList.push_back(bgoItem.group);
+
+        //Add category
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString cat, tmpList)
+            {
+                if(bgoItem.category==cat)
+                {found = true; break;}
+                if((bgoItem.group!=grp_bgo)&&(grp_bgo!=allLabel))
+                {found = true; break;}
+            }
+        if(!found) tmpList.push_back(bgoItem.category);
+
+        if(
+                ((bgoItem.group==grp_bgo)||(grp_bgo==allLabel)||(grp_bgo==""))&&
+                ((bgoItem.category==cat_bgos)||(cat_bgos==allLabel))
+           )
+        {
+            if(bgoItem.animated)
+                tmpI = bgoItem.image.copy(0,0,
+                            bgoItem.image.width(),
+                            (int)round(bgoItem.image.height() / bgoItem.frames) );
+            else
+                tmpI = bgoItem.image;
+
+            item = new QListWidgetItem( bgoItem.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(bgoItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->Sel_List_BGO->addItem( item );
+        }
+    }
+
+    tmpList.sort();
+    tmpList.push_front(customLabel);
+    tmpList.push_front(allLabel);
+    tmpGrpList.sort();
+    tmpGrpList.push_front(allLabel);
+
+    //apply group list
+    if(!setGrp)
+    {
+        ui->Sel_Combo_GroupsBGO->clear();
+        ui->Sel_Combo_GroupsBGO->addItems(tmpGrpList);
+    }
+    //apply category list
+    if(!setCat)
+    {
+        ui->Sel_Combo_CategoryBGO->clear();
+        ui->Sel_Combo_CategoryBGO->addItems(tmpList);
+    }
+
+    tmpList.clear();
+    tmpGrpList.clear();
+
+    //set custom NPC items from loaded level
+    if((ui->Sel_Combo_CategoryNPC->currentText()==customLabel)&&(setCat)&&(setGrp))
+    {
+        if(MainWinConnect::pMainWin->activeChildWindow()==1)
+        {
+            //long j=0;
+            //bool isIndex=false;
+            leveledit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
+            foreach(UserNPCs npc, edit->scene->uNPCs)
+            {
+
+                tmpI = edit->scene->getNPCimg(npc.id);
+
+                item = new QListWidgetItem( QString("npc-%1").arg(npc.id) );
+                item->setIcon( QIcon( tmpI ) );
+                item->setData(3, QString::number(npc.id) );
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+                ui->Sel_List_NPC->addItem( item );
+            }
+
+        }
+
+    }
+    else
+    //set NPC item box from global config
+    foreach(obj_npc npcItem, conf->main_npc)
+    {
+        //Add Group
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString grp, tmpGrpList)
+            {
+                if(npcItem.group.isEmpty())
+                {found=true;break;}//Skip empty values
+                if(npcItem.group==grp)
+                {found=true; break;}
+            }
+        if(!found) tmpGrpList.push_back(npcItem.group);
+
+        //Add category
+        found = false;
+        if(tmpList.size()!=0)
+            foreach(QString cat, tmpList)
+            {
+                if(npcItem.category==cat)
+                {found = true; break;}
+                if((npcItem.group!=grp_npc)&&(grp_npc!=allLabel))
+                {found = true; break;}
+            }
+        if(!found) tmpList.push_back(npcItem.category);
+
+        if(
+                ((npcItem.group==grp_npc)||(grp_npc==allLabel)||(grp_npc==""))&&
+                ((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
+          )
+        {
+            tmpI = npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
+
+            item = new QListWidgetItem( npcItem.name );
+            item->setIcon( QIcon( tmpI ) );
+            item->setData(3, QString::number(npcItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->Sel_List_NPC->addItem( item );
+        }
+    }
+    tmpList.sort();
+    tmpList.push_front(customLabel);
+    tmpList.push_front(allLabel);
+    tmpGrpList.sort();
+    tmpGrpList.push_front(allLabel);
+
+    //apply group list
+    if(!setGrp)
+    {
+        ui->Sel_Combo_GroupsNPC->clear();
+        ui->Sel_Combo_GroupsNPC->addItems(tmpGrpList);
+    }
+
+    //apply category list
+    if(!setCat)
+    {
+        ui->Sel_Combo_CategoryNPC->clear();
+        ui->Sel_Combo_CategoryNPC->addItems(tmpList);
+    }
+
+    lock_grp=false;
+    lock_cat=false;
 }
 
 void ItemSelectDialog::on_Sel_TabCon_ItemType_currentChanged(int index)
@@ -184,4 +569,46 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
     }
 
     this->accept();
+}
+
+void ItemSelectDialog::on_Sel_Combo_GroupsBlock_currentIndexChanged(int index)
+{
+    if(lock_grp) return;
+    grp_blocks=ui->Sel_Combo_GroupsBlock->itemText(index);
+    updateBoxes(true);
+}
+
+void ItemSelectDialog::on_Sel_Combo_CategoryBlock_currentIndexChanged(int index)
+{
+    if(lock_cat) return;
+    cat_blocks=ui->Sel_Combo_CategoryBlock->itemText(index);
+    updateBoxes(true, true);
+}
+
+void ItemSelectDialog::on_Sel_Combo_GroupsBGO_currentIndexChanged(int index)
+{
+    if(lock_grp) return;
+    grp_blocks=ui->Sel_Combo_GroupsBGO->itemText(index);
+    updateBoxes(true);
+}
+
+void ItemSelectDialog::on_Sel_Combo_CategoryBGO_currentIndexChanged(int index)
+{
+    if(lock_cat) return;
+    cat_blocks=ui->Sel_Combo_CategoryBGO->itemText(index);
+    updateBoxes(true, true);
+}
+
+void ItemSelectDialog::on_Sel_Combo_GroupsNPC_currentIndexChanged(int index)
+{
+    if(lock_grp) return;
+    grp_blocks=ui->Sel_Combo_GroupsNPC->itemText(index);
+    updateBoxes(true);
+}
+
+void ItemSelectDialog::on_Sel_Combo_CategoryNPC_currentIndexChanged(int index)
+{
+    if(lock_cat) return;
+    cat_blocks=ui->Sel_Combo_CategoryNPC->itemText(index);
+    updateBoxes(true, true);
 }
