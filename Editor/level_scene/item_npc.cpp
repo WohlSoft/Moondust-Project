@@ -124,6 +124,8 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         }
 
         ItemMenu->addSeparator();
+        QAction *newNPC = ItemMenu->addAction(tr("New NPC-Configuration"));
+        ItemMenu->addSeparator();
 
         QMenu * chDir = ItemMenu->addMenu(
                     tr("Set %1").arg(
@@ -194,6 +196,12 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             //scene->doCopy = true ;
             MainWinConnect::pMainWin->on_actionCopy_triggered();
             scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==newNPC){
+            npcedit *child = MainWinConnect::pMainWin->createNPCChild();
+            child->newFile(npcData.id);
+            child->show();
         }
         else
         if(selected==fri)
