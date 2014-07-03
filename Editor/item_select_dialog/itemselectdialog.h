@@ -39,6 +39,8 @@ public:
     int bgoID;
     int npcID;
 
+    bool isCoin;
+
 private slots:
 
     void on_Sel_TabCon_ItemType_currentChanged(int index);
