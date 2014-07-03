@@ -318,5 +318,6 @@ void MainWindow::on_actionApplication_settings_triggered()
 
         saveSettings();
     }
+    delete appSettings;
 
 }

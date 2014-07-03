@@ -26,7 +26,6 @@
 
 void MainWindow::on_actionNewNPC_config_triggered()
 {
-
     NpcDialog * npcList = new NpcDialog(&configs);
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
@@ -38,6 +37,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
         child->newFile( npcList->selectedNPC);
         child->show();
     }
+    delete npcList;
 
 }
 
