@@ -114,6 +114,8 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs,
         }
     }
 
+    isCoin = false;
+
     updateBoxes();
     on_Sel_TabCon_ItemType_currentChanged(ui->Sel_TabCon_ItemType->currentIndex());
 
@@ -608,6 +610,7 @@ void ItemSelectDialog::npcTypeChange(bool /*toggled*/)
     ui->Sel_Combo_FiltertypeNPC->setEnabled(npcFromList->isChecked());
     ui->Sel_Combo_GroupsNPC->setEnabled(npcFromList->isChecked());
     npcCoinsSel->setEnabled(npcCoins->isChecked());
+    isCoin = npcCoins->isChecked();
 }
 
 void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
@@ -634,7 +637,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
                 npcID = npcCoinsSel->value();
             }else{
                 if(!ui->Sel_List_NPC->selectedItems().isEmpty()){
-                    npcID = ui->Sel_List_NPC->selectedItems()[0]->data(3).toInt()+1000;
+                    npcID = ui->Sel_List_NPC->selectedItems()[0]->data(3).toInt();
                 }
             }
         }else{
