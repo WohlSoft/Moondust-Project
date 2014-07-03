@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Search Item</string>
+   <string>Select Item</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
-    <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
+    <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
