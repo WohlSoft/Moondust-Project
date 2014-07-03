@@ -93,6 +93,11 @@ private:
     bool animated;
     int frameSpeed;
 
+    QVector<QPixmap> frames; //Animation frames
+
+    void createAnimationFrames();
+    int CurrentFrame;
+
     QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
     QGraphicsItemGroup * grp;
     QGraphicsItem * includedNPC;
