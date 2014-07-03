@@ -489,7 +489,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="127"/>
         <source>New NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>New NPC-Configuration</translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="131"/>
@@ -566,47 +566,47 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="14"/>
         <source>Select Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Select Item</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="30"/>
         <source>Blocks</source>
-        <translation type="unfinished">Blocks</translation>
+        <translation>Blocks</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="51"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="187"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="285"/>
         <source>Filter:</source>
-        <translation type="unfinished">Filter:</translation>
+        <translation>Filter:</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="58"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="168"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="266"/>
         <source>Category:</source>
-        <translation type="unfinished">Category:</translation>
+        <translation>Category:</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="68"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="149"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="247"/>
         <source>Group:</source>
-        <translation type="unfinished">Group:</translation>
+        <translation>Group:</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="76"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="198"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="296"/>
         <source>Text</source>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="81"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="203"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="301"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="93"/>
@@ -616,39 +616,39 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="258"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="277"/>
         <source>[all]</source>
-        <translation type="unfinished">[all]</translation>
+        <translation>[all]</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="114"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="212"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="310"/>
         <source>[Empty]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="128"/>
         <source>BGO</source>
-        <translation type="unfinished">BGO</translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="226"/>
         <source>NPC</source>
-        <translation type="unfinished">NPC</translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="329"/>
         <source>Extra Data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra Data:</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.cpp" line="57"/>
         <source>NPC from List</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC from List</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.cpp" line="58"/>
         <source>Coins</source>
-        <translation type="unfinished">Coins</translation>
+        <translation>Coins</translation>
     </message>
 </context>
 <context>
@@ -2103,12 +2103,12 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="6242"/>
         <source>Level Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Item Search</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6245"/>
         <source>Search for an Item on the Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Search for an Item on the Level</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
