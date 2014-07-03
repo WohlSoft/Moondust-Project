@@ -634,6 +634,7 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
         }
 
     }
+    delete npcList;
 
 }
 
@@ -1101,6 +1102,7 @@ void MainWindow::on_PROPS_NpcTMsg_clicked()
         }
         ui->PROPS_NpcTMsg->setText( npcmsg );
     }
+    delete msgBox;
 
 }
 
@@ -1270,6 +1272,7 @@ void MainWindow::on_PROPS_NPCContaiter_clicked()
             activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_CHANGENPC, QVariant(selected_npc));
         }
     }
+    delete npcList;
 
 }
 

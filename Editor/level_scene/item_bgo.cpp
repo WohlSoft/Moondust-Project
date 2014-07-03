@@ -77,12 +77,13 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->clear();
 
         QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
+        LayerName->deleteLater();
 
         QAction *setLayer;
         QList<QAction *> layerItems;
 
         QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-        LayerName->addSeparator();
+        LayerName->addSeparator()->deleteLater();
 
         foreach(LevelLayers layer, scene->LvlData->layers)
         {
@@ -94,16 +95,21 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setLayer->setCheckable(true);
             setLayer->setEnabled(true);
             setLayer->setChecked( layer.name==bgoData.layer );
+            setLayer->deleteLater();
             layerItems.push_back(setLayer);
         }
 
         ItemMenu->addSeparator();
         QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
+        copyBGO->deleteLater();
         QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
-        ItemMenu->addSeparator();
+        cutBGO->deleteLater();
+        ItemMenu->addSeparator()->deleteLater();
         QAction *remove = ItemMenu->addAction(tr("Remove"));
-        ItemMenu->addSeparator();
+        remove->deleteLater();
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *props = ItemMenu->addAction(tr("Properties..."));
+        props->deleteLater();
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -183,6 +189,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     MainWinConnect::pMainWin->setLayersBox();
                     MainWinConnect::pMainWin->setLayerToolsLocked(false);
                 }
+                delete layerBox;
             }
             else
             foreach(QAction * lItem, layerItems)

@@ -918,7 +918,6 @@ void MainWindow::on_WarpBrowseLevels_clicked()
     {
         ui->WarpLevelFile->setText(levelList.SelectedFile);
     }
-
 }
 
 void MainWindow::on_WarpLevelFile_textChanged(const QString &arg1)
