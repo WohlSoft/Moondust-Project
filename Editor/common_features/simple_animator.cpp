@@ -18,13 +18,14 @@
 
 #include "simple_animator.h"
 
-SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed)
+SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last)
 {
     timer=NULL;
     mainImage = sprite;
     animated=enables;
-    frameFirst=0;
-    frameLast=-1;
+    frameFirst=First;
+    frameLast=Last;
+    CurrentFrame = 0;
 
     speed=fspeed;
     framesQ = framesq;
@@ -37,6 +38,8 @@ SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int f
     else
         frameSize = frameHeight;
     framePos = QPoint(0,0);
+
+    createAnimationFrames();
 
     setFrame(frameFirst);
 
@@ -56,11 +59,11 @@ SimpleAnimator::~SimpleAnimator()
 
 QPixmap SimpleAnimator::image(int frame)
 {
-   // QMutexLocker locker(&mutex); //Glitch protection
-    if(frame<0)
-        return mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
+    // QMutexLocker locker(&mutex); //Glitch protection
+    if((frame<0)||(frame>=frames.size()))
+        return frames[CurrentFrame];//mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
     else
-        return mainImage.copy(QRect(framePos.x(), frameSize*frame, frameWidth, frameSize ));
+        return frames[frame];//mainImage.copy(QRect(framePos.x(), frameSize*frame, frameWidth, frameSize ));
 
 }
 
@@ -72,8 +75,12 @@ QPixmap SimpleAnimator::wholeImage()
 //Animation process
 void SimpleAnimator::nextFrame()
 {
-    //mutex.lock();
+    CurrentFrame++;
+    if(CurrentFrame>=frames.size())
+        CurrentFrame=frameFirst;
 
+    //mutex.lock();
+    /*
     frameCurrent += frameSize;
     if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
          ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
@@ -84,14 +91,28 @@ void SimpleAnimator::nextFrame()
     else
     framePos.setY( framePos.y() + frameSize );
 
-   // mutex.unlock();
+    currentFrame = mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
+    // mutex.unlock();
+    */
+}
+
+void SimpleAnimator::createAnimationFrames()
+{
+
+    for(int i=0;i<framesQ;i++)
+    {
+        frames.push_back( mainImage.copy(QRect(framePos.x(), frameSize *i, frameWidth, frameSize )) );
+    }
+
 }
 
 
 void SimpleAnimator::setFrame(int y)
 {
     //mutex.lock();
-
+    if(y>=frames.size()) y=frameFirst;
+    CurrentFrame = y;
+    /*
     frameCurrent = frameSize * y;
     if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
          ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
@@ -102,12 +123,16 @@ void SimpleAnimator::setFrame(int y)
     else
     framePos.setY( frameCurrent );
 
+    currentFrame = mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
     //mutex.unlock();
+    */
 }
 
 void SimpleAnimator::start()
 {
     if(!animated) return;
+    if((frameLast>0)&&((frameLast-frameFirst)<=1)) return; //Don't start singleFrame animation
+
     timer->start(speed);
 }
 

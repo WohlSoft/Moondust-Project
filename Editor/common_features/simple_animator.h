@@ -23,13 +23,14 @@
 #include <QTimer>
 #include <QPixmap>
 #include <QMutex>
+#include <QVector>
 #include <QMutexLocker>
 
 class SimpleAnimator : public QObject
 {
     Q_OBJECT
 public:
-    SimpleAnimator(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64);
+    SimpleAnimator(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1);
     ~SimpleAnimator();
     QPixmap image(int frame=-1);
     QPixmap wholeImage();
@@ -48,6 +49,10 @@ private:
     QMutex	mutex;
 
     QPixmap mainImage; //Whole image
+    QVector<QPixmap> frames; //Whole image
+
+    void createAnimationFrames();
+    int CurrentFrame;
 
     bool animated;
 
