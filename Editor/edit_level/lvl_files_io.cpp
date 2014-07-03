@@ -37,15 +37,15 @@
 #include <QDebug>
 
 
-class xxx
-{
-public slots:
-    static void processEvents()
-    {
-        qApp->processEvents();
-    }
+//class xxx
+//{
+//public slots:
+//    static void processEvents()
+//    {
+//        qApp->processEvents();
+//    }
 
-};
+//};
 
 
 void leveledit::ExportToImage_fn()
@@ -320,9 +320,9 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setMinimumDuration(500);
          //progress.setCancelButton(0);
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT( xxx::processEvents() ) );
-    timer->start(1);
+//    QTimer *timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT( xxx::processEvents() ) );
+//    timer->start(1);
 
 
     if(! DrawObjects(progress) )
@@ -334,8 +334,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    timer->stop();
-    delete timer;
+//    timer->stop();
+//    delete timer;
 
     if( !progress.wasCanceled() )
         progress.close();
@@ -349,6 +349,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     setCurrentFile(fileName);
     LvlData.modified = false;
+
+    progress.deleteLater();
 
     return true;
 }
@@ -406,6 +408,7 @@ void leveledit::closeEvent(QCloseEvent *event)
         scene->uBGOs.clear();
         scene->uBGs.clear();
         scene->uBlocks.clear();
+        scene->uNPCs.clear();
 
         WriteToLog(QtDebugMsg, "!<-Delete animators->!");
         while(! scene->animates_BGO.isEmpty() )
