@@ -489,7 +489,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="127"/>
         <source>New NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Neue NPC Konfiguration</translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="131"/>
@@ -562,47 +562,47 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="14"/>
         <source>Select Item</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle ein Item aus</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="30"/>
         <source>Blocks</source>
-        <translation type="unfinished">Blöcke</translation>
+        <translation>Blöcke</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="51"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="187"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="285"/>
         <source>Filter:</source>
-        <translation type="unfinished">Filter:</translation>
+        <translation>Filter:</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="58"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="168"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="266"/>
         <source>Category:</source>
-        <translation type="unfinished">Kategorie:</translation>
+        <translation>Kategorie:</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="68"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="149"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="247"/>
         <source>Group:</source>
-        <translation type="unfinished">Gruppe:</translation>
+        <translation>Gruppe:</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="76"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="198"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="296"/>
         <source>Text</source>
-        <translation type="unfinished">Text</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="81"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="203"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="301"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="93"/>
@@ -612,39 +612,39 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="258"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="277"/>
         <source>[all]</source>
-        <translation type="unfinished">[alle]</translation>
+        <translation>[alle]</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="114"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="212"/>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="310"/>
         <source>[Empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Nichts]</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="128"/>
         <source>BGO</source>
-        <translation type="unfinished">BGO</translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="226"/>
         <source>NPC</source>
-        <translation type="unfinished">NPC</translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="329"/>
         <source>Extra Data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra Daten:</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.cpp" line="57"/>
         <source>NPC from List</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC von Liste</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.cpp" line="58"/>
         <source>Coins</source>
-        <translation type="unfinished">Münzen</translation>
+        <translation>Münzen</translation>
     </message>
 </context>
 <context>
@@ -2057,12 +2057,12 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="6242"/>
         <source>Level Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Level Suche</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6245"/>
         <source>Search for an Item on the Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche ein Item im Level</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -2578,22 +2578,22 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../mainwindow.ui" line="4636"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4691"/>
         <source>Search Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Block</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4738"/>
         <source>Search BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche BGO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4785"/>
         <source>Search NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche NPC</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5540"/>
@@ -2727,7 +2727,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../mainwindow.ui" line="5931"/>
         <source>F10</source>
-        <translation type="unfinished"></translation>
+        <translation>F10</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5939"/>
