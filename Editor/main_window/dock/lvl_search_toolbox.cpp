@@ -22,7 +22,9 @@
 
 void MainWindow::on_FindStartNPC_clicked()
 {
-    ItemSelectDialog* selDia = new ItemSelectDialog(&configs, true, true, true, 1);
-    selDia->exec();
+    ItemSelectDialog* selDia = new ItemSelectDialog(&configs, false, false, true, 0);
+    if(selDia->exec()==QDialog::Accepted){
+
+    }
     delete selDia;
 }
