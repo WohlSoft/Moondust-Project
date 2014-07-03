@@ -567,6 +567,37 @@ void ItemSelectDialog::on_Sel_TabCon_ItemType_currentChanged(int index)
             ((QWidget*)(*it))->setVisible((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)==index : false));
         }
     }
+
+    //update label
+    if((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)==index : false)){
+        ui->Sel_Label_ExtraData->setVisible(!extraBlockWid.isEmpty());
+        if(extraBlockWid.isEmpty()){
+            ui->horizontalLayout->removeItem(ui->verticalLayout);
+        }else{
+            ui->horizontalLayout->addLayout(ui->verticalLayout);
+        }
+        return;
+    }
+
+    if((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)==index : false)){
+        ui->Sel_Label_ExtraData->setVisible(!extraBGOWid.isEmpty());
+        if(extraBGOWid.isEmpty()){
+            ui->horizontalLayout->removeItem(ui->verticalLayout);
+        }else{
+            ui->horizontalLayout->addLayout(ui->verticalLayout);
+        }
+        return;
+    }
+
+    if((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)==index : false)){
+        ui->Sel_Label_ExtraData->setVisible(!extraNPCWid.isEmpty());
+        if(extraNPCWid.isEmpty()){
+            ui->horizontalLayout->removeItem(ui->verticalLayout);
+        }else{
+            ui->horizontalLayout->addLayout(ui->verticalLayout);
+        }
+        return;
+    }
 }
 
 void ItemSelectDialog::npcTypeChange(bool /*toggled*/)
