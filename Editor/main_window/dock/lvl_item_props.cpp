@@ -20,6 +20,7 @@
 #include "../../mainwindow.h"
 #include "../../level_scene/lvl_item_placing.h"
 #include "../../npc_dialog/npcdialog.h"
+#include "../../item_select_dialog/itemselectdialog.h"
 
 #include "../../level_scene/item_block.h"
 #include "../../level_scene/item_bgo.h"
@@ -586,22 +587,22 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
 
     LevelData selData;
 
-    NpcDialog * npcList = new NpcDialog(&configs);
+    ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,
+                                               ItemSelectDialog::NPCEXTRA_WITHCOINS | (npcID < 1000 && npcID != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                               (npcID < 1000 && npcID != 0 ? npcID : npcID-1000));
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-    npcList->setState(npcID);
 
     if(npcList->exec()==QDialog::Accepted)
     {
         //apply to all selected items.
         int selected_npc=0;
-        if(npcList->isEmpty)
-            selected_npc = 0;
-        else
-        if(npcList->isCoin)
-            selected_npc = npcList->coins;
-        else
-            selected_npc = npcList->selectedNPC+1000;
+        if(npcList->npcID!=0){
+            if(npcList->isCoin)
+                selected_npc = npcList->npcID;
+            else
+                selected_npc = npcList->npcID+1000;
+        }
 
 
         ui->PROPS_BlockIncludes->setText(

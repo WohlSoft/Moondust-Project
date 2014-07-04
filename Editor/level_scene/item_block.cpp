@@ -19,7 +19,6 @@
 #include "item_block.h"
 #include "../common_features/logger.h"
 
-#include "../npc_dialog/npcdialog.h"
 #include "../item_select_dialog/itemselectdialog.h"
 #include "newlayerbox.h"
 
