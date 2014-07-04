@@ -30,3 +30,33 @@ void MainWindow::on_FindStartNPC_clicked()
     }
     delete selDia;
 }
+
+void MainWindow::on_Find_Button_TypeBlock_clicked()
+{
+    ItemSelectDialog* selBlock = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BLOCK);
+    if(selBlock->exec()==QDialog::Accepted){
+        int selected = selBlock->blockID;
+        ui->Find_Button_TypeBlock->setText(((selected>0)?QString("Block-%1").arg(selected):tr("[empty]")));
+    }
+    delete selBlock;
+}
+
+void MainWindow::on_Find_Button_TypeBGO_clicked()
+{
+    ItemSelectDialog* selBgo = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BGO);
+    if(selBgo->exec()==QDialog::Accepted){
+        int selected = selBgo->bgoID;
+        ui->Find_Button_TypeBGO->setText(((selected>0)?QString("BGO-%1").arg(selected):tr("[empty]")));
+    }
+    delete selBgo;
+}
+
+void MainWindow::on_Find_Button_TypeNPC_clicked()
+{
+    ItemSelectDialog* selNpc = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC);
+    if(selNpc->exec()==QDialog::Accepted){
+        int selected = selNpc->npcID;
+        ui->Find_Button_TypeNPC->setText(((selected>0)?QString("NPC-%1").arg(selected):tr("[empty]")));
+    }
+    delete selNpc;
+}
