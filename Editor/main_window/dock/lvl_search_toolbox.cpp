@@ -64,3 +64,24 @@ void MainWindow::on_Find_Button_TypeNPC_clicked()
 
     delete selNpc;
 }
+
+void MainWindow::on_Find_Button_ResetBlock_clicked()
+{
+    ui->Find_Check_TypeBlock->setChecked(true);
+    ui->Find_Button_TypeBlock->setText(tr("[empty]"));
+    curSearchBlockID = 0;
+}
+
+void MainWindow::on_Find_Button_ResetBGO_clicked()
+{
+    ui->Find_Check_TypeBGO->setChecked(true);
+    ui->Find_Button_TypeBGO->setText(tr("[empty]"));
+    curSearchBGOID = 0;
+}
+
+void MainWindow::on_Find_Button_Reset_clicked()
+{
+    ui->Find_Check_TypeNPC->setChecked(true);
+    ui->Find_Button_TypeNPC->setText(tr("[empty]"));
+    curSearchNPCID = 0;
+}

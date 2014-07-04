@@ -1118,7 +1118,7 @@
         <x>0</x>
         <y>0</y>
         <width>263</width>
-        <height>385</height>
+        <height>335</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1179,7 +1179,7 @@
         <x>0</x>
         <y>0</y>
         <width>242</width>
-        <height>385</height>
+        <height>335</height>
        </rect>
       </property>
      </widget>
@@ -1203,7 +1203,7 @@
         <x>0</x>
         <y>0</y>
         <width>242</width>
-        <height>385</height>
+        <height>335</height>
        </rect>
       </property>
      </widget>
@@ -1227,7 +1227,7 @@
         <x>0</x>
         <y>0</y>
         <width>242</width>
-        <height>385</height>
+        <height>335</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -4683,7 +4683,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <item row="0" column="0">
       <widget class="QToolBox" name="FindToolbox">
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -4694,7 +4694,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>271</width>
-          <height>226</height>
+          <height>407</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4716,7 +4716,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <property name="spacing">
           <number>3</number>
          </property>
-         <item row="10" column="0" colspan="3">
+         <item row="11" column="0" colspan="3">
           <widget class="QPushButton" name="FindStartBlock">
            <property name="text">
             <string>Search Block</string>
@@ -4791,6 +4791,13 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
+         <item row="10" column="0" colspan="3">
+          <widget class="QPushButton" name="Find_Button_ResetBlock">
+           <property name="text">
+            <string>Reset Search Fields</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="LVLFindBGO">
@@ -4799,7 +4806,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>271</width>
-          <height>226</height>
+          <height>407</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4862,7 +4869,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="4" column="0" colspan="3">
+         <item row="5" column="0" colspan="3">
           <widget class="QPushButton" name="FindStartBGO">
            <property name="text">
             <string>Search BGO</string>
@@ -4896,6 +4903,13 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
+         <item row="4" column="0" colspan="3">
+          <widget class="QPushButton" name="Find_Button_ResetBGO">
+           <property name="text">
+            <string>Reset Search Fields</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="LVLFindNPC">
@@ -4904,7 +4918,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>271</width>
-          <height>226</height>
+          <height>407</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4974,7 +4988,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </spacer>
          </item>
-         <item row="4" column="0" colspan="4">
+         <item row="5" column="0" colspan="4">
           <widget class="QPushButton" name="FindStartNPC">
            <property name="text">
             <string>Search NPC</string>
@@ -4988,7 +5002,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
+         <item row="4" column="0" colspan="4">
+          <widget class="QPushButton" name="Find_Button_Reset">
+           <property name="text">
+            <string>Reset Search Fields</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
           <spacer name="verticalSpacer_13">
            <property name="orientation">
             <enum>Qt::Vertical</enum>

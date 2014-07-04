@@ -478,6 +478,12 @@ private slots:
 
     void on_Find_Button_TypeNPC_clicked();
 
+    void on_Find_Button_ResetBlock_clicked();
+
+    void on_Find_Button_ResetBGO_clicked();
+
+    void on_Find_Button_Reset_clicked();
+
 private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
