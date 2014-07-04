@@ -81,8 +81,9 @@ private:
     QRadioButton* npcCoins;
     QSpinBox* npcCoinsSel;
 
-    void addExtraDataControl(QWidget* control);
+    int removalFlags;
 
+    void addExtraDataControl(QWidget* control);
 
     void updateBoxes(bool setGrp = false, bool setCat = false);
     QString cat_blocks;

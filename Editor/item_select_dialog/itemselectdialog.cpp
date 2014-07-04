@@ -34,16 +34,34 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
     ui(new Ui::ItemSelectDialog)
 {
     conf = configs;
+    removalFlags = 0;
     ui->setupUi(this);
 
-    ui->Sel_List_Block->item(0)->setData(3, QVariant(0));
-    ui->Sel_List_BGO->item(0)->setData(3, QVariant(0));
-    ui->Sel_List_NPC->item(0)->setData(3, QVariant(0));
+    QFont font;
+    font.setItalic(true);
+    QListWidgetItem * empBlock = new QListWidgetItem();
+    QListWidgetItem * empBGO = new QListWidgetItem();
+    QListWidgetItem * empNPC = new QListWidgetItem();
+    empBlock->setFont(font);
+    empBGO->setFont(font);
+    empNPC->setFont(font);
+    QString emTxt = tr("[Empty]");
+    empBlock->setText(emTxt);
+    empBGO->setText(emTxt);
+    empNPC->setText(emTxt);
+    empBlock->setData(3, QVariant(0));
+    empBGO->setData(3, QVariant(0));
+    empNPC->setData(3, QVariant(0));
+
+    ui->Sel_List_Block->insertItem(0,empBlock);
+    ui->Sel_List_BGO->insertItem(0,empBGO);
+    ui->Sel_List_NPC->insertItem(0,empNPC);
+
 
     bool blockTab = tabs & TAB_BLOCK;
     bool bgoTab = tabs & TAB_BGO;
     bool npcTab = tabs & TAB_NPC;
-    bool isCoin = npcExtraData & NPCEXTRA_ISCOINSELECTED;
+    bool isCoinSel = npcExtraData & NPCEXTRA_ISCOINSELECTED;
 
     if(!blockTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block));
@@ -53,11 +71,6 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
 
     if(!npcTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC));
-
-    selectListItem(ui->Sel_List_Block, curSelIDBlock);
-    selectListItem(ui->Sel_List_BGO, curSelIDBGO);
-    if(!isCoin)
-        selectListItem(ui->Sel_List_NPC, curSelIDNPC);
 
     if(npcExtraData & NPCEXTRA_WITHCOINS){
         npcFromList = new QRadioButton(tr("NPC from List"));
@@ -69,13 +82,14 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
         addExtraDataControl(npcFromList);
         addExtraDataControl(npcCoins);
         addExtraDataControl(npcCoinsSel);
-        npcFromList->setChecked(true);
         connect(npcFromList, SIGNAL(toggled(bool)), this, SLOT(npcTypeChange(bool)));
-        if(isCoin){
+        if(isCoinSel){
             npcCoinsSel->setValue(curSelIDNPC);
             npcCoins->setChecked(true);
-            npcFromList->setChecked(false);
+            //npcFromList->setChecked(false);
             npcTypeChange(true);
+        }else{
+            npcFromList->setChecked(true);
         }
     }
 
@@ -121,11 +135,13 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
         }
     }
 
-    isCoin = false;
-
     updateBoxes();
     on_Sel_TabCon_ItemType_currentChanged(ui->Sel_TabCon_ItemType->currentIndex());
 
+    selectListItem(ui->Sel_List_Block, curSelIDBlock);
+    selectListItem(ui->Sel_List_BGO, curSelIDBGO);
+    if(!isCoinSel)
+        selectListItem(ui->Sel_List_NPC, curSelIDNPC);
 }
 
 ItemSelectDialog::~ItemSelectDialog()
@@ -143,6 +159,9 @@ void ItemSelectDialog::removeEmptyEntry(int tabs)
 
     if(tabs & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
         ui->Sel_List_NPC->removeItemWidget(ui->Sel_List_NPC->item(0));
+
+    removalFlags = static_cast<ItemSelectDialog::Tabs>(tabs);
+
 }
 
 void ItemSelectDialog::addExtraDataControl(QWidget *control)
@@ -522,6 +541,35 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
         ui->Sel_Combo_CategoryNPC->addItems(tmpList);
     }
 
+    QFont font;
+    font.setItalic(true);
+    QListWidgetItem * empBlock = new QListWidgetItem();
+    QListWidgetItem * empBGO = new QListWidgetItem();
+    QListWidgetItem * empNPC = new QListWidgetItem();
+    empBlock->setFont(font);
+    empBGO->setFont(font);
+    empNPC->setFont(font);
+    QString emTxt = tr("[Empty]");
+    empBlock->setText(emTxt);
+    empBGO->setText(emTxt);
+    empNPC->setText(emTxt);
+    empBlock->setData(3, QVariant(0));
+    empBGO->setData(3, QVariant(0));
+    empNPC->setData(3, QVariant(0));
+
+    ui->Sel_List_Block->insertItem(0,empBlock);
+    ui->Sel_List_BGO->insertItem(0,empBGO);
+    ui->Sel_List_NPC->insertItem(0,empNPC);
+
+    if(removalFlags & TAB_BLOCK && ui->Sel_List_Block->item(0)->data(3).toInt() == 0)
+        ui->Sel_List_Block->removeItemWidget(ui->Sel_List_Block->item(0));
+
+    if(removalFlags & TAB_BGO && ui->Sel_List_BGO->item(0)->data(3).toInt() == 0)
+        ui->Sel_List_BGO->removeItemWidget(ui->Sel_List_BGO->item(0));
+
+    if(removalFlags & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
+        ui->Sel_List_NPC->removeItemWidget(ui->Sel_List_NPC->item(0));
+
     lock_grp=false;
     lock_cat=false;
 
@@ -637,6 +685,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
     blockID = 0;
     bgoID = 0;
     npcID = 0;
+    isCoin = npcCoins->isChecked();
 
     if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)!=-1){
         if(!ui->Sel_List_Block->selectedItems().isEmpty()){
