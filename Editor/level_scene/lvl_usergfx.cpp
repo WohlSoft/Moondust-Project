@@ -45,6 +45,26 @@ void LvlScene::buildAnimators()
         }
     }
 
+    for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
+    {
+        SimpleAnimator * aniBlock = new SimpleAnimator(
+                         ((pConfigs->main_bgo[i].image.isNull())?
+                                uBgoImg:
+                               pConfigs->main_block[i].image),
+                                pConfigs->main_block[i].animated,
+                                pConfigs->main_block[i].frames,
+                                pConfigs->main_block[i].framespeed, 0, -1,
+                                pConfigs->main_block[i].animation_rev,
+                                pConfigs->main_block[i].animation_bid
+                              );
+
+        animates_Blocks.push_back( aniBlock );
+        if(pConfigs->main_block[i].id < (unsigned int)index_blocks.size())
+        {
+            index_blocks[pConfigs->main_block[i].id].ai = animates_Blocks.size()-1;
+        }
+    }
+
 }
 
 void LvlScene::loadUserData(QProgressDialog &progress)
@@ -153,6 +173,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
     {
 
+        bool custom=false;
 
             if((QFile::exists(uLVLD) ) &&
                   (QFile::exists(uLVLDs + pConfigs->main_block[i].image_n)) )
@@ -167,12 +188,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                 uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
+                custom=true;
 
                 //Apply index;
                 if(uBlock.id < (unsigned int)index_blocks.size())
                 {
                     index_blocks[uBlock.id].type = 1;
-                    index_blocks[uBlock.id].i = (uBlocks.size()-1);
+                    //index_blocks[uBlock.id].i = (uBlocks.size()-1);
                 }
             }
             else
@@ -188,14 +210,40 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                 uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
+                custom=true;
 
                 //Apply index;
                 if(uBlock.id < (unsigned int)index_blocks.size())
                 {
                     index_blocks[uBlock.id].type = 1;
-                    index_blocks[uBlock.id].i = (uBlocks.size()-1);
+                    //index_blocks[uBlock.id].i = (uBlocks.size()-1);
                 }
             }
+
+            SimpleAnimator * aniBlock = new SimpleAnimator(
+                        ((custom)?
+                             ((uBlocks.last().image.isNull())?
+                                uBgoImg:
+                                    uBlocks.last().image)
+                                 :
+                             ((pConfigs->main_block[i].image.isNull())?
+                                uBgoImg:
+                                   pConfigs->main_block[i].image)
+                             ),
+                                  pConfigs->main_block[i].animated,
+                                  pConfigs->main_block[i].frames,
+                                  pConfigs->main_block[i].framespeed, 0,-1,
+                                  pConfigs->main_block[i].animation_rev,
+                                  pConfigs->main_block[i].animation_bid
+                                  );
+
+            animates_Blocks.push_back( aniBlock );
+            index_blocks[pConfigs->main_block[i].id].i = i;
+            index_blocks[pConfigs->main_block[i].id].ai = animates_Blocks.size()-1;
+
+            #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(index_bgo[pConfigs->main_bgo[i].id].ai));
+            #endif
 
     if(progress.wasCanceled())
         /*progress.setValue(progress.value()+1);

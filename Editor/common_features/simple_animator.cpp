@@ -18,14 +18,17 @@
 
 #include "simple_animator.h"
 
-SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last)
+SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
 {
     timer=NULL;
     mainImage = sprite;
-    animated=enables;
-    frameFirst=First;
-    frameLast=Last;
+    animated = enables;
+    frameFirst = First;
+    frameLast = Last;
     CurrentFrame = 0;
+
+    bidirectional = bid;
+    reverce = rev;
 
     speed=fspeed;
     framesQ = framesq;
@@ -75,25 +78,44 @@ QPixmap SimpleAnimator::wholeImage()
 //Animation process
 void SimpleAnimator::nextFrame()
 {
-    CurrentFrame++;
-    if(CurrentFrame>=frames.size())
-        CurrentFrame=frameFirst;
-
-    //mutex.lock();
-    /*
-    frameCurrent += frameSize;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
+    if(reverce)
+    { // Reverce animation
+        CurrentFrame--;
+        if(CurrentFrame<0)
         {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
+            if(bidirectional)
+            {
+                reverce=!reverce; // change direction on first frame
+                CurrentFrame+=2;
+            }
+            else
+            {
+                 // Return to last frame;
+                if(frameLast<0)
+                    CurrentFrame=frames.size()-1;
+                else
+                    CurrentFrame=frameLast;
+            }
         }
-    else
-    framePos.setY( framePos.y() + frameSize );
 
-    currentFrame = mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-    // mutex.unlock();
-    */
+    }
+    else
+    { // Direct animation
+        CurrentFrame++;
+        if(((CurrentFrame>=frames.size())&&(frameLast<0))||
+           ((CurrentFrame>frameLast)&&(frameLast>=0)))
+        {
+            if(bidirectional)
+            {
+                reverce=!reverce; // change direction on last frame
+                CurrentFrame-=2;
+            }
+            else
+            {
+                CurrentFrame=frameFirst; // Return to first frame;
+            }
+        }
+    }
 }
 
 void SimpleAnimator::createAnimationFrames()
@@ -109,23 +131,8 @@ void SimpleAnimator::createAnimationFrames()
 
 void SimpleAnimator::setFrame(int y)
 {
-    //mutex.lock();
     if(y>=frames.size()) y=frameFirst;
     CurrentFrame = y;
-    /*
-    frameCurrent = frameSize * y;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( frameCurrent );
-
-    currentFrame = mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-    //mutex.unlock();
-    */
 }
 
 void SimpleAnimator::start()

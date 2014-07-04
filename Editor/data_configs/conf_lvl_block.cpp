@@ -168,7 +168,9 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
                 sblock.onhit_block= blockset.value("onhit-block", "2").toInt();
                 sblock.algorithm= blockset.value("algorithm", "2").toInt();
                 sblock.view = (int)(blockset.value("view", "background").toString()=="foreground");
-                sblock.animated = (blockset.value("animated", "0").toString()=="1");
+                sblock.animated = blockset.value("animated", "0").toBool();
+                sblock.animation_rev = blockset.value("animation-reverse", "0").toBool(); //Reverse animation
+                sblock.animation_bid = blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
                 sblock.frames = blockset.value("frames", "1").toInt();
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
                 sblock.id = i;
