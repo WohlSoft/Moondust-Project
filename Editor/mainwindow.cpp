@@ -33,6 +33,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     QPixmap splashimg(":/images/splash_editor.png");
     QSplashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
+    splash.setDisabled(true);
+    splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
     splash.show();
 
     if(!configs.loadconfigs())
