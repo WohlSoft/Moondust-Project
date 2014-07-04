@@ -480,6 +480,7 @@ void ItemBlock::setBlockSize(QRect rect)
     imageSize = QRectF(0,0, blockData.w, blockData.h);
     setIncludedNPC(blockData.npc_id);
     arrayApply();
+    scene->update();
 }
 
 
@@ -569,14 +570,14 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     int x,y, i, j;
     int hc, wc;
     QPixmap img;
-    QPixmap * sizableImage;
+    //QPixmap * sizableImage;
     QPainter * szblock;
     x=32;
     y=32;
 
-    sizableImage = new QPixmap(QSize(w, h));
-    sizableImage->fill(Qt::transparent);
-    szblock = new QPainter(sizableImage);
+    //sizableImage = new QPixmap(QSize(w, h));
+    img.fill(Qt::transparent);
+    szblock = new QPainter(&img);
 
     //L
     hc=0;
@@ -634,7 +635,8 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
      //4
     szblock->drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
 
-    img = QPixmap( * sizableImage);
+    //img = QPixmap( * sizableImage);
+    //delete sizableImage;
     delete szblock;
     return img;
 }
