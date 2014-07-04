@@ -36,7 +36,16 @@ void MainWindow::setLayersBox()
     int WinType = activeChildWindow();
     QListWidgetItem * item;
 
-    ui->LvlLayerList->clear();
+    //ui->LvlLayerList->clear();
+    QList<QListWidgetItem*> items;
+    items = ui->LvlLayerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    while(!items.isEmpty())
+    {
+        QListWidgetItem *tmp = items.first();
+        items.pop_front();
+        delete tmp;
+    }
+
 
     if (WinType==1)
     {
