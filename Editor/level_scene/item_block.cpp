@@ -20,6 +20,7 @@
 #include "../common_features/logger.h"
 
 #include "../npc_dialog/npcdialog.h"
+#include "../item_select_dialog/itemselectdialog.h"
 #include "newlayerbox.h"
 
 #include "../common_features/mainwinconnect.h"
@@ -207,21 +208,21 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         {
             scene->contextMenuOpened = false;
             LevelData selData;
-            NpcDialog * npcList = new NpcDialog(scene->pConfigs);
+            ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
+                                                       ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 1000 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                       (blockData.npc_id < 1000 && blockData.npc_id != 0 ? blockData.npc_id : blockData.npc_id-1000));
             npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
             npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-            npcList->setState(blockData.npc_id);
             if(npcList->exec()==QDialog::Accepted)
             {
                 //apply to all selected items.
                 int selected_npc=0;
-                if(npcList->isEmpty)
-                    selected_npc = 0;
-                else
-                if(npcList->isCoin)
-                    selected_npc = npcList->coins;
-                else
-                    selected_npc = npcList->selectedNPC+1000;
+                if(npcList->npcID!=0){
+                    if(npcList->isCoin)
+                        selected_npc = npcList->npcID;
+                    else
+                        selected_npc = npcList->npcID+1000;
+                }
 
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
