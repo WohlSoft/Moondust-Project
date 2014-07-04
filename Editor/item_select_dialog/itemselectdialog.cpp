@@ -28,9 +28,8 @@ static QString grp_npc = "";
 static bool lock_grp=false;
 static bool lock_cat=false;
 
-ItemSelectDialog::ItemSelectDialog(dataconfigs *configs,
-                                   bool blockTab, bool bgoTab, bool npcTab,
-                                   QVariant npcExtraData, QWidget *parent) :
+ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData,
+                                   int curSelIDBlock, int curSelIDBGO, int curSelIDNPC, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItemSelectDialog)
 {
@@ -41,6 +40,11 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs,
     ui->Sel_List_BGO->item(0)->setData(3, QVariant(0));
     ui->Sel_List_NPC->item(0)->setData(3, QVariant(0));
 
+    bool blockTab = tabs & TAB_BLOCK;
+    bool bgoTab = tabs & TAB_BGO;
+    bool npcTab = tabs & TAB_NPC;
+    bool isCoin = npcExtraData & NPCEXTRA_ISCOINSELECTED;
+
     if(!blockTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block));
 
@@ -50,25 +54,28 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs,
     if(!npcTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC));
 
-    if(!npcExtraData.isNull()){
-        switch (npcExtraData.toInt()) {
-        case 1:
-        {
-            npcFromList = new QRadioButton(tr("NPC from List"));
-            npcCoins = new QRadioButton(tr("Coins"));
-            npcCoinsSel = new QSpinBox();
-            npcCoinsSel->setMinimum(1);
-            npcCoinsSel->setEnabled(false);
-            extraNPCWid << npcFromList << npcCoins << npcCoinsSel;
-            addExtraDataControl(npcFromList);
-            addExtraDataControl(npcCoins);
-            addExtraDataControl(npcCoinsSel);
-            npcFromList->setChecked(true);
-            connect(npcFromList, SIGNAL(toggled(bool)), this, SLOT(npcTypeChange(bool)));
-            break;
-        }
-        default:
-            break;
+    selectListItem(ui->Sel_List_Block, curSelIDBlock);
+    selectListItem(ui->Sel_List_BGO, curSelIDBGO);
+    if(!isCoin)
+        selectListItem(ui->Sel_List_NPC, curSelIDNPC);
+
+    if(npcExtraData & NPCEXTRA_WITHCOINS){
+        npcFromList = new QRadioButton(tr("NPC from List"));
+        npcCoins = new QRadioButton(tr("Coins"));
+        npcCoinsSel = new QSpinBox();
+        npcCoinsSel->setMinimum(1);
+        npcCoinsSel->setEnabled(false);
+        extraNPCWid << npcFromList << npcCoins << npcCoinsSel;
+        addExtraDataControl(npcFromList);
+        addExtraDataControl(npcCoins);
+        addExtraDataControl(npcCoinsSel);
+        npcFromList->setChecked(true);
+        connect(npcFromList, SIGNAL(toggled(bool)), this, SLOT(npcTypeChange(bool)));
+        if(isCoin){
+            npcCoinsSel->setValue(curSelIDNPC);
+            npcCoins->setChecked(true);
+            npcFromList->setChecked(false);
+            npcTypeChange(true);
         }
     }
 
@@ -124,6 +131,18 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs,
 ItemSelectDialog::~ItemSelectDialog()
 {
     delete ui;
+}
+
+void ItemSelectDialog::removeEmptyEntry(int tabs)
+{
+    if(tabs & TAB_BLOCK && ui->Sel_List_Block->item(0)->data(3).toInt() == 0)
+        ui->Sel_List_Block->removeItemWidget(ui->Sel_List_Block->item(0));
+
+    if(tabs & TAB_BGO && ui->Sel_List_BGO->item(0)->data(3).toInt() == 0)
+        ui->Sel_List_BGO->removeItemWidget(ui->Sel_List_BGO->item(0));
+
+    if(tabs & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
+        ui->Sel_List_NPC->removeItemWidget(ui->Sel_List_NPC->item(0));
 }
 
 void ItemSelectDialog::addExtraDataControl(QWidget *control)
@@ -723,4 +742,13 @@ void ItemSelectDialog::on_Sel_Combo_FiltertypeBGO_currentIndexChanged(int)
 void ItemSelectDialog::on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int)
 {
     updateFilters();
+}
+
+void ItemSelectDialog::selectListItem(QListWidget* w, int array_id)
+{
+    for(int i = 0; i < w->count(); i++){
+        if(w->item(i)->data(3).toInt()==array_id){
+            w->setCurrentRow(i);
+        }
+    }
 }
