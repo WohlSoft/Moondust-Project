@@ -480,6 +480,7 @@ void ItemBlock::setBlockSize(QRect rect)
     imageSize = QRectF(0,0, blockData.w, blockData.h);
     setIncludedNPC(blockData.npc_id);
     arrayApply();
+    scene->update();
 }
 
 
@@ -568,21 +569,21 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
 {
     int x,y, i, j;
     int hc, wc;
-    QPixmap img;
-    QPixmap * sizableImage;
-    QPainter * szblock;
+    QPixmap img(w, h);
+    //QPixmap * sizableImage;
+    //QPainter * szblock;
     x=32;
     y=32;
 
-    sizableImage = new QPixmap(QSize(w, h));
-    sizableImage->fill(Qt::transparent);
-    szblock = new QPainter(sizableImage);
+    //sizableImage = new QPixmap(QSize(w, h));
+    img.fill(Qt::transparent);
+    QPainter szblock(&img);
 
     //L
     hc=0;
     for(i=0; i<((h-2*y) / y); i++ )
     {
-        szblock->drawPixmap(0, x+hc, x, y, srcimg.copy(QRect(0, y, x, y)));
+        szblock.drawPixmap(0, x+hc, x, y, srcimg.copy(QRect(0, y, x, y)));
             hc+=x;
     }
 
@@ -590,7 +591,7 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     hc=0;
     for(i=0; i<( (w-2*x) / x); i++ )
     {
-        szblock->drawPixmap(x+hc, 0, x, y, srcimg.copy(QRect(x, 0, x, y)) );
+        szblock.drawPixmap(x+hc, 0, x, y, srcimg.copy(QRect(x, 0, x, y)) );
             hc+=x;
     }
 
@@ -598,7 +599,7 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     hc=0;
     for(i=0; i< ( (w-2*x) / x); i++ )
     {
-        szblock->drawPixmap(x+hc, h-y, x, y, srcimg.copy(QRect(x, srcimg.width()-y, x, y )) );
+        szblock.drawPixmap(x+hc, h-y, x, y, srcimg.copy(QRect(x, srcimg.width()-y, x, y )) );
             hc+=x;
     }
 
@@ -606,7 +607,7 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     hc=0;
     for(i=0; i<((h-2*y) / y); i++ )
     {
-        szblock->drawPixmap(w-x, y+hc, x, y, srcimg.copy(QRect(srcimg.width()-x, y, x, y)));
+        szblock.drawPixmap(w-x, y+hc, x, y, srcimg.copy(QRect(srcimg.width()-x, y, x, y)));
             hc+=x;
     }
 
@@ -618,7 +619,7 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
         hc=0;
         for(j=0; j<((w-2*x) / x); j++ )
         {
-        szblock->drawPixmap(x+hc, y+wc, x, y, srcimg.copy(QRect(x, y, x, y)));
+        szblock.drawPixmap(x+hc, y+wc, x, y, srcimg.copy(QRect(x, y, x, y)));
             hc+=x;
         }
         wc+=y;
@@ -626,15 +627,16 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
 
     //Applay sizable formula
      //1
-    szblock->drawPixmap(0,0,y,x, srcimg.copy(QRect(0,0,y,x)));
+    szblock.drawPixmap(0,0,y,x, srcimg.copy(QRect(0,0,y,x)));
      //2
-    szblock->drawPixmap(w-y, 0, y, x, srcimg.copy(QRect(srcimg.width()-y, 0, y, x)) );
+    szblock.drawPixmap(w-y, 0, y, x, srcimg.copy(QRect(srcimg.width()-y, 0, y, x)) );
      //3
-    szblock->drawPixmap(w-y, h-x, y, x, srcimg.copy(QRect(srcimg.width()-y, srcimg.height()-x, y, x)) );
+    szblock.drawPixmap(w-y, h-x, y, x, srcimg.copy(QRect(srcimg.width()-y, srcimg.height()-x, y, x)) );
      //4
-    szblock->drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
+    szblock.drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
 
-    img = QPixmap( * sizableImage);
-    delete szblock;
+    //img = QPixmap( * sizableImage);
+    //delete sizableImage;
+    //delete szblock;
     return img;
 }
