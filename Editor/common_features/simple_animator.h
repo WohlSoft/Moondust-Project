@@ -30,7 +30,8 @@ class SimpleAnimator : public QObject
 {
     Q_OBJECT
 public:
-    SimpleAnimator(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1);
+    SimpleAnimator(QPixmap &sprite, bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
+                    bool rev=false, bool bid=false);
     ~SimpleAnimator();
     QPixmap image(int frame=-1);
     QPixmap wholeImage();
@@ -55,6 +56,9 @@ private:
     int CurrentFrame;
 
     bool animated;
+
+    bool bidirectional;
+    bool reverce;
 
     int frameCurrent;
     QTimer * timer;
