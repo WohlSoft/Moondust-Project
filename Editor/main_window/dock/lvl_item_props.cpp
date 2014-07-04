@@ -19,7 +19,7 @@
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
 #include "../../level_scene/lvl_item_placing.h"
-#include "../../npc_dialog/npcdialog.h"
+//#include "../../npc_dialog/npcdialog.h"
 #include "../../item_select_dialog/itemselectdialog.h"
 
 #include "../../level_scene/item_block.h"
@@ -55,18 +55,12 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     {
     case 0:
     {
-        ui->ItemProperties->setVisible(true);
-        ui->ItemProperties->show();
-        ui->ItemProperties->raise();
-        ui->ItemProps->raise();
-        ui->blockProp->show();
-        ui->blockProp->raise();
-        ui->ItemProps->setCurrentIndex(0);
-
         if(newItem)
             blockPtr = -1;
         else
             blockPtr = block.array_id;
+
+        ui->PROPS_BlockID->setText(tr("Block ID: %1, Array ID: %2").arg(block.id).arg(block.array_id));
 
         bool found=false;
         int j;
@@ -140,19 +134,26 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
         LvlItemPropsLock=false;
         LockItemProps=false;
+
+        ui->ItemProperties->setVisible(true);
+        ui->ItemProperties->show();
+        ui->ItemProperties->raise();
+        ui->ItemProps->raise();
+        ui->blockProp->show();
+        ui->blockProp->raise();
+        ui->ItemProps->setCurrentIndex(0);
+
         break;
     }
     case 1:
     {
-        ui->ItemProperties->show();
-        ui->ItemProperties->raise();
-        ui->bgoProps->show();
-        ui->bgoProps->raise();
         if(newItem)
             bgoPtr = -1;
         else
             bgoPtr = bgo.array_id;
-        ui->ItemProps->setCurrentIndex(1);
+
+
+        ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.array_id));
 
         ui->PROPS_BGOSquareFill->setVisible( newItem );
         ui->PROPS_BGOSquareFill->setChecked(LvlPlacingItems::fillingMode);
@@ -170,21 +171,23 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
         LvlItemPropsLock=false;
         LockItemProps=false;
+
+        ui->ItemProperties->show();
+        ui->ItemProperties->raise();
+        ui->bgoProps->show();
+        ui->bgoProps->raise();
+        ui->ItemProps->setCurrentIndex(0);
+
         break;
     }
     case 2:
     {
-        ui->ItemProperties->show();
-        ui->ItemProperties->raise();
-        ui->npcProps->show();
-        ui->npcProps->raise();
-
         if(newItem)
             npcPtr = -1;
         else
             npcPtr = npc.array_id;
 
-        ui->ItemProps->setCurrentIndex(2);
+        ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.array_id));
 
         bool found=false;
         int j;
@@ -417,6 +420,13 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         }
         LvlItemPropsLock=false;
         LockItemProps=false;
+
+        ui->ItemProperties->show();
+        ui->ItemProperties->raise();
+        ui->npcProps->show();
+        ui->npcProps->raise();
+        ui->ItemProps->setCurrentIndex(0);
+
         break;
     }
     case -1: //Nothing to edit
@@ -587,22 +597,31 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
 
     LevelData selData;
 
+    //NpcDialog * npcList = new NpcDialog(&configs);
     ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,
-                                               ItemSelectDialog::NPCEXTRA_WITHCOINS | (npcID < 1000 && npcID != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                               (npcID < 1000 && npcID != 0 ? npcID : npcID-1000));
+                                                   ItemSelectDialog::NPCEXTRA_WITHCOINS | (npcID < 1000 && npcID != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                   (npcID < 1000 && npcID != 0 ? npcID : npcID-1000));
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+    //npcList->setState(npcID);
 
     if(npcList->exec()==QDialog::Accepted)
     {
         //apply to all selected items.
         int selected_npc=0;
+//        if(npcList->isEmpty)
+//            selected_npc = 0;
+//        else
+//        if(npcList->isCoin)
+//            selected_npc = npcList->coins;
+//        else
+//            selected_npc = npcList->selectedNPC+1000;
         if(npcList->npcID!=0){
-            if(npcList->isCoin)
-                selected_npc = npcList->npcID;
-            else
-                selected_npc = npcList->npcID+1000;
-        }
+                    if(npcList->isCoin)
+                        selected_npc = npcList->npcID;
+                    else
+                        selected_npc = npcList->npcID+1000;
+                }
 
 
         ui->PROPS_BlockIncludes->setText(
@@ -1200,13 +1219,23 @@ void MainWindow::on_PROPS_NPCContaiter_clicked()
     //LevelData selData;
     //QList<QVariant> modNPC;
 
+    //NpcDialog * npcList = new NpcDialog(&configs);
     ItemSelectDialog* npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, npcID);
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+    //npcList->setState(npcID, 2);
+
     if(npcList->exec()==QDialog::Accepted)
     {
         //apply to all selected items.
+        //  int selected_npc=0;
+        // if(npcList->isEmpty)
+        //     selected_npc = 0;
+        //   else
+        //   selected_npc = npcList->selectedNPC;
+
         int selected_npc=npcList->npcID;
+
         ui->PROPS_NPCContaiter->setText(
                     ((selected_npc>0)?QString("NPC-%1").arg(selected_npc)
                        :tr("[empty]")
