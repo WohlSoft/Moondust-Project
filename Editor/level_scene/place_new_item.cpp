@@ -100,17 +100,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             if(found)
             {   //get neccesary element directly
                 WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Index %1").arg(itemID));
-                if(index_blocks[itemID].type==1)
-                {
-                    isUser=true;
-                    noimage=false;
-                    tImg = uBlocks[index_blocks[itemID].i].image;
-                }
-                else
-                {
-                    tImg = pConfigs->main_block[index_blocks[itemID].i].image;
-                    noimage=false;
-                }
+                isUser=true;
+                noimage=false;
+                tImg = animates_Blocks[index_blocks[itemID].ai]->wholeImage();
             }
             else
             {
