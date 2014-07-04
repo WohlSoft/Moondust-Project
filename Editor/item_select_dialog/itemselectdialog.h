@@ -31,8 +31,8 @@ class ItemSelectDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ItemSelectDialog(dataconfigs *configs, bool blockTab = true, bool bgoTab = true, bool npcTab = true,
-                              QVariant npcExtraData = 0, QWidget *parent = 0);
+    explicit ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData = 0,
+                              int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0, QWidget *parent = 0);
     ~ItemSelectDialog();
 
     int blockID;
@@ -40,6 +40,20 @@ public:
     int npcID;
 
     bool isCoin;
+
+    enum Tabs{
+        TAB_BLOCK = 1 << 0,
+        TAB_BGO = 1 << 1,
+        TAB_NPC = 1 << 2
+    };
+
+    enum NpcExtraFlags{
+        NPCEXTRA_WITHCOINS = 1 << 0,
+        NPCEXTRA_ISCOINSELECTED = 1 << 1
+    };
+
+    void removeEmptyEntry(int tabs);
+
 
 private slots:
 
@@ -61,6 +75,7 @@ private slots:
     void on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int index);
 
 private:
+    void selectListItem(QListWidget *w, int array_id);
 
     QRadioButton* npcFromList;
     QRadioButton* npcCoins;
@@ -84,5 +99,11 @@ private:
     dataconfigs* conf;
     Ui::ItemSelectDialog *ui;
 };
+
+inline ItemSelectDialog::Tabs operator|(ItemSelectDialog::Tabs a, ItemSelectDialog::Tabs b)
+{return static_cast<ItemSelectDialog::Tabs>(static_cast<int>(a) | static_cast<int>(b));}
+
+inline ItemSelectDialog::NpcExtraFlags operator|(ItemSelectDialog::NpcExtraFlags a, ItemSelectDialog::NpcExtraFlags b)
+{return static_cast<ItemSelectDialog::NpcExtraFlags>(static_cast<int>(a) | static_cast<int>(b));}
 
 #endif // ITEMSELECTDIALOG_H

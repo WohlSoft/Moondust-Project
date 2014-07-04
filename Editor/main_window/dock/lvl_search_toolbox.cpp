@@ -22,7 +22,9 @@
 
 void MainWindow::on_FindStartNPC_clicked()
 {
-    ItemSelectDialog* selDia = new ItemSelectDialog(&configs, false, false, true, 0);
+    ItemSelectDialog* selDia = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_NPC | ItemSelectDialog::TAB_BGO,
+                                                    ItemSelectDialog::NPCEXTRA_WITHCOINS | ItemSelectDialog::NPCEXTRA_ISCOINSELECTED, 0, 0, 20);
+    selDia->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_NPC | ItemSelectDialog::TAB_BGO);
     if(selDia->exec()==QDialog::Accepted){
 
     }
