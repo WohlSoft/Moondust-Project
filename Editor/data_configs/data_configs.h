@@ -109,6 +109,8 @@ struct obj_block{
 
     unsigned int view;
     bool animated;
+    bool animation_rev; //Reverse animation
+    bool animation_bid; //Bidirectional animation
     unsigned int frames;
     int framespeed;
 };
