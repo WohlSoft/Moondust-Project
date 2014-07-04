@@ -97,7 +97,7 @@
      <x>0</x>
      <y>0</y>
      <width>1511</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1117,8 +1117,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>256</width>
-        <height>437</height>
+        <width>263</width>
+        <height>385</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1178,8 +1178,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>242</width>
+        <height>385</height>
        </rect>
       </property>
      </widget>
@@ -1202,8 +1202,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>242</width>
+        <height>385</height>
        </rect>
       </property>
      </widget>
@@ -1226,8 +1226,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
-        <height>28</height>
+        <width>242</width>
+        <height>385</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2527,8 +2527,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>243</width>
-          <height>1259</height>
+          <width>246</width>
+          <height>1395</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3680,8 +3680,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>417</height>
+          <width>251</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3863,8 +3863,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>195</width>
-          <height>115</height>
+          <width>272</width>
+          <height>389</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3945,8 +3945,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>192</width>
-          <height>93</height>
+          <width>272</width>
+          <height>389</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4039,8 +4039,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>461</height>
+          <width>260</width>
+          <height>475</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4337,8 +4337,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>272</width>
+          <height>389</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4453,8 +4453,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>272</width>
+          <height>389</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4551,8 +4551,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>272</width>
+          <height>389</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4693,8 +4693,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>29</height>
+          <width>271</width>
+          <height>226</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4713,14 +4713,31 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item row="1" column="0">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <item row="10" column="0" colspan="3">
           <widget class="QPushButton" name="FindStartBlock">
            <property name="text">
             <string>Search Block</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_30">
+           <property name="text">
+            <string>Data</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Find_Button_TypeBlock">
+           <property name="text">
+            <string>[Empty]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0">
           <spacer name="verticalSpacer_11">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -4733,6 +4750,47 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </spacer>
          </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_29">
+           <property name="text">
+            <string>Search?</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="2">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="0" alignment="Qt::AlignHCenter">
+          <widget class="QCheckBox" name="Find_Check_TypeBlock">
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="Line" name="line_11">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="3">
+          <widget class="Line" name="line_12">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="LVLFindBGO">
@@ -4740,8 +4798,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>29</height>
+          <width>271</width>
+          <height>226</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4760,14 +4818,31 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="FindStartBGO">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <item row="2" column="0" alignment="Qt::AlignHCenter">
+          <widget class="QCheckBox" name="Find_Check_TypeBGO">
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="label_32">
            <property name="text">
-            <string>Search BGO</string>
+            <string>Data</string>
            </property>
           </widget>
          </item>
          <item row="0" column="0">
+          <widget class="QLabel" name="label_31">
+           <property name="text">
+            <string>Search?</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
           <spacer name="verticalSpacer_12">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -4775,10 +4850,51 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>40</height>
+             <height>136</height>
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="Find_Button_TypeBGO">
+           <property name="text">
+            <string>[Empty]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0" colspan="3">
+          <widget class="QPushButton" name="FindStartBGO">
+           <property name="text">
+            <string>Search BGO</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>213</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="Line" name="line_9">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="3">
+          <widget class="Line" name="line_10">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -4787,8 +4903,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>225</height>
+          <width>271</width>
+          <height>226</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4807,14 +4923,72 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item row="1" column="0">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <item row="0" column="2">
+          <widget class="Line" name="line_7">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label_33">
+           <property name="text">
+            <string>Search?</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QLabel" name="label_34">
+           <property name="text">
+            <string>Data</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" colspan="2" alignment="Qt::AlignHCenter">
+          <widget class="QCheckBox" name="Find_Check_TypeNPC">
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="3">
+          <widget class="QPushButton" name="Find_Button_TypeNPC">
+           <property name="text">
+            <string>[Empty]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="3">
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>213</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="4" column="0" colspan="4">
           <widget class="QPushButton" name="FindStartNPC">
            <property name="text">
             <string>Search NPC</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
+         <item row="1" column="0" colspan="4">
+          <widget class="Line" name="line_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
           <spacer name="verticalSpacer_13">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -4822,7 +4996,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <property name="sizeHint" stdset="0">
             <size>
              <width>20</width>
-             <height>40</height>
+             <height>136</height>
             </size>
            </property>
           </spacer>
