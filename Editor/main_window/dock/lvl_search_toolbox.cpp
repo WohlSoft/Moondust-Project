@@ -79,9 +79,16 @@ void MainWindow::on_Find_Button_ResetBGO_clicked()
     curSearchBGOID = 0;
 }
 
-void MainWindow::on_Find_Button_Reset_clicked()
+void MainWindow::on_Find_Button_ResetNPC_clicked()
 {
     ui->Find_Check_TypeNPC->setChecked(true);
     ui->Find_Button_TypeNPC->setText(tr("[empty]"));
     curSearchNPCID = 0;
+}
+
+void MainWindow::resetAllSearchFields()
+{
+    on_Find_Button_ResetBlock_clicked();
+    on_Find_Button_ResetBGO_clicked();
+    on_Find_Button_ResetNPC_clicked();
 }

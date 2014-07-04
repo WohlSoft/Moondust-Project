@@ -470,19 +470,15 @@ private slots:
     void on_actionContents_triggered();
     void on_actionNew_triggered();
     void on_actionLVLSearchBox_triggered(bool checked);
+
     void on_FindDock_visibilityChanged(bool visible);
     void on_FindStartNPC_clicked();
     void on_Find_Button_TypeBlock_clicked();
-
     void on_Find_Button_TypeBGO_clicked();
-
     void on_Find_Button_TypeNPC_clicked();
-
     void on_Find_Button_ResetBlock_clicked();
-
     void on_Find_Button_ResetBGO_clicked();
-
-    void on_Find_Button_Reset_clicked();
+    void on_Find_Button_ResetNPC_clicked();
 
 private:
 
@@ -511,6 +507,7 @@ private:
     int curSearchBlockID;
     int curSearchBGOID;
     int curSearchNPCID;
+    void resetAllSearchFields();
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
 
