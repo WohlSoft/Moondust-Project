@@ -44,23 +44,27 @@ void LvlScene::startBlockAnimation()
     {
         bgoA->start();
     }
+    foreach(SimpleAnimator * blockA, animates_Blocks)
+    {
+        blockA->start();
+    }
 
     QList<QGraphicsItem*> ItemList = items();
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBlock *)tmp)->AnimationStart();
-        }
+//        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            ((ItemBlock *)tmp)->AnimationStart();
+//        }
 //        else
 //        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
 //        {
 //            tmp = (*it);
 //            ((ItemBGO *)tmp)->AnimationStart();
 //        }
-        else
+//        else
         if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
         {
             tmp = (*it);
@@ -76,23 +80,27 @@ void LvlScene::stopAnimation()
     {
         bgoA->stop();
     }
+    foreach(SimpleAnimator * blockA, animates_Blocks)
+    {
+        blockA->stop();
+    }
 
     QList<QGraphicsItem*> ItemList = items();
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBlock *)tmp)->AnimationStop();
-        }
+//        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            ((ItemBlock *)tmp)->AnimationStop();
+//        }
 //        else
 //        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
 //        {
 //            tmp = (*it);
 //            ((ItemBGO *)tmp)->AnimationStop();
 //        }
-        else
+//        else
         if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
         {
             tmp = (*it);

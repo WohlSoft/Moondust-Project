@@ -254,25 +254,26 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
         }
     }
 
-    tImg = animates_Blocks[animator]->wholeImage();
-
     BlockImage->setBlockData(block, pConfigs->main_block[j].sizable);
     BlockImage->gridSize = pConfigs->main_block[j].grid;
-    BlockImage->setMainPixmap(tImg);
+    //BlockImage->setMainPixmap(tImg);
     addItem(BlockImage);
+
+    //Set pointers
+    BlockImage->setScenePoint(this);
+
 
     BlockImage->setContextMenu(blockMenu);
 
+    BlockImage->setAnimator(animator);
+
     if((!noimage) && (pConfigs->main_block[j].animated))
     {
-        BlockImage->setAnimation(pConfigs->main_block[j].frames, pConfigs->main_block[j].framespeed, pConfigs->main_block[j].algorithm);
+        //BlockImage->setAnimation(pConfigs->main_block[j].frames, pConfigs->main_block[j].framespeed, pConfigs->main_block[j].algorithm);
         BlockImage->setData(4, "animated");
     }
 
     //includedNPC = new QGraphicsItemGroup(BlockImage);
-
-    //Set pointers
-    BlockImage->setScenePoint(this);
     //BlockImage->setGroupPoint(includedNPC);
     //BlockImage->setNPCItemPoint(npc);
 
@@ -300,6 +301,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     if(pConfigs->main_block[j].sizable)
     {
+        BlockImage->setMainPixmap();
         BlockImage->setZValue( blockZs + ((double)block.y/(double)100000000000) + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
         //sbZ += 0.0000000001;
     }

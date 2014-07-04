@@ -603,8 +603,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         {
                             addPlaceHistory(plSqBlock);
                             //restart Animation
-                            if(opts.animationEnabled) stopAnimation();
-                            if(opts.animationEnabled) startBlockAnimation();
+                            //if(opts.animationEnabled) stopAnimation();
+                            //if(opts.animationEnabled) startBlockAnimation();
 
                         }
                     }
@@ -638,9 +638,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     {
                         addPlaceHistory(plSqBgo);
                         //restart Animation
-                        if(opts.animationEnabled) stopAnimation();
-                        if(opts.animationEnabled) startBlockAnimation();
-
                     }
                 }
             }
@@ -1112,6 +1109,9 @@ void LvlScene::placeItemUnderCursor()
             placeNPC(LvlPlacingItems::npcSet, true);
 
             newData.npc.push_back(LvlPlacingItems::npcSet);
+
+            if(opts.animationEnabled) stopAnimation();
+            if(opts.animationEnabled) startBlockAnimation();
 
             wasPlaced=true;
         }
