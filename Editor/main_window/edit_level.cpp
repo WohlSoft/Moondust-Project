@@ -97,6 +97,18 @@ void MainWindow::on_actionLevelEvents_triggered(bool checked)
     if(checked) ui->LevelEventsToolBox->raise();
 }
 
+void MainWindow::on_FindDock_visibilityChanged(bool visible)
+{
+    ui->actionLVLSearchBox->setChecked(visible);
+}
+
+void MainWindow::on_actionLVLSearchBox_triggered(bool checked)
+{
+    ui->FindDock->setVisible(checked);
+    if(checked) ui->FindDock->raise();
+}
+
+
 
 
 // //////////////////////////////// GoTo Section  ////////////////////////////////

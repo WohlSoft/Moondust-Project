@@ -5,36 +5,36 @@ Editor 0.1.0.1
 Editor 0.1.0
 - Added events control support
 - Added sound tester
-- Image render are improved and fully support taking alpha channel from masks (before only internal PNG alpha, or 1-bit masks files)
+- Image renders are improved and fully support taking alpha channel from masks (before only internal PNG alpha, or 1-bit masks files)
 - Fixed default main window size and position
 - Fixed Level item toolbox category list translating
 - Fixed bug with empty category lists after config reload
-- Added support for BMP Files, Ghosties will be appeared ONLY if image really broken.
+- Added support for BMP Files, "Ghosties" will appear ONLY if image is really broken.
 - Player's start points can be moved by mouse in selection mode
 - History manager can store any level data and any settings changes
 - New icons for section switch buttons
 - Optimized background and music selector
-- Language switcher are improved
-- Fixed crash on press "Delete" in layer list without selected item
+- Language switcher is improved
+- Fixed the crash on pressing "Delete" in the layer list without a selected item
 - Fixed bug with door flags "Level Exit" and "Level Entrance" on already placed points
-- If not exist translate equal to system, will be used English translate
+- If a translation equal to the system language does not exist, the English translation will be used.
 - Remembering of save paths
-- Merging of layers, on rename layer to equal to other exists
-- Configuration status window. You can see status of all configuration items and look for errors on load process
+- Merging of layers, on renaming a layer to a equivalent name of another layer
+- Configuration status window. You can see the status of all configuration items and look for errors in the load process
 - Fixed bug with events resets in properties window
 - Added search filter for NPC-Selection dialog
 - Added search filter for level Item Box
 - Fixed NPC's special option wrong values on placing items
-- Fixed grammars and spellings in labels
+- Fixed grammar and spellings in labels
 - Optimized toolbox generation
 - Added Notification about wrong custom graphics files
 - Fixed frames calculating for NPCs
-- On Music files list open current file will be selected
-- In music list displaying music files from sub-directories
-- Fixed autoalign bug: Grid applying only on moved items
+- In the Music files list, the open current file will be selected
+- In the music list displaying music files from sub-directories
+- Fixed auto-align bug: Grid applying only on moved items
 - Fixed random NPC's direction generator
 - Added counter of stars in LVL-file save function
-- Fixed bug with wrong background on created levels (before save them).
+- Fixed bug with wrong background on created levels (before saving them).
 
 Editor 0.0.8.1
 - Fixed bug with door points on opening of old LVL files (file format < 8)

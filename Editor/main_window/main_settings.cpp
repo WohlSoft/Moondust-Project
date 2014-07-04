@@ -31,6 +31,21 @@ QString GlobalSettings::openPath=".";
 QString GlobalSettings::savePath=".";
 QString GlobalSettings::savePath_npctxt=".";
 
+LevelEditingSettings GlobalSettings::LvlOpts;
+
+bool GlobalSettings::autoPlayMusic=false;
+
+bool GlobalSettings::LevelToolBoxVis=true;
+bool GlobalSettings::WorldToolBoxVis=true;
+
+bool GlobalSettings::SectionToolBoxVis=false;
+bool GlobalSettings::LevelDoorsBoxVis=false;
+bool GlobalSettings::LevelLayersBoxVis=false;
+bool GlobalSettings::LevelEventsBoxVis=false;
+bool GlobalSettings::LevelSearchBoxVis=false;
+
+int GlobalSettings::lastWinType=0;
+
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId;
 bool LvlMusPlay::musicButtonChecked;
@@ -43,21 +58,21 @@ void MainWindow::setDefaults()
 
     MusicPlayer = new QMediaPlayer;
 
-    LvlOpts.animationEnabled = true;
-    LvlOpts.collisionsEnabled = true;
+    GlobalSettings::LvlOpts.animationEnabled = true;
+    GlobalSettings::LvlOpts.collisionsEnabled = true;
 
-    LastOpenDir = ".";
-    lastWinType=0;
-    LevelToolBoxVis = true; //Level toolbox
-    SectionToolBoxVis = false; //Section Settings
-    LevelDoorsBoxVis = false; //Doors box
-    LevelLayersBoxVis = false; //Layers box
-    LevelEventsBoxVis = false; //Events box
+//    LastOpenDir = ".";
+//    lastWinType=0;
+//    LevelToolBoxVis = true; //Level toolbox
+//    SectionToolBoxVis = false; //Section Settings
+//    LevelDoorsBoxVis = false; //Doors box
+//    LevelLayersBoxVis = false; //Layers box
+//    LevelEventsBoxVis = false; //Events box
 
     LvlItemPropsLock=true;
 
-    WorldToolBoxVis = false;
-    autoPlayMusic = false;
+//    WorldToolBoxVis = false;
+//    autoPlayMusic = false;
 
     LvlMusPlay::currentCustomMusic = "";
     LvlMusPlay::currentMusicId = 0;
@@ -89,7 +104,7 @@ void MainWindow::setUiDefults()
     connect(windowMapper, SIGNAL(mapped(QWidget*)),
         this, SLOT(setActiveSubWindow(QWidget*)));
 
-    ui->actionPlayMusic->setChecked(autoPlayMusic);
+    ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
 
     ui->centralWidget->cascadeSubWindows();
 
@@ -107,7 +122,7 @@ void MainWindow::setUiDefults()
     ui->LevelSectionSettings->hide();
 
     ui->ItemProperties->hide();
-
+    ui->FindDock->hide();
 
     ui->menuView->setEnabled(0);
 
@@ -154,34 +169,38 @@ void MainWindow::loadSettings()
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
-        LastOpenDir = settings.value("lastpath", ".").toString();
+        //GlobalSettings::LastOpenDir = settings.value("lastpath", ".").toString();
         GlobalSettings::openPath = settings.value("lastpath", ".").toString();
         GlobalSettings::savePath = settings.value("lastsavepath", ".").toString();
         GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", ".").toString();
-        LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
-        WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
-        SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
-        LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
-        LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
-        LevelEventsBoxVis = settings.value("level-events-vis", "false").toBool();
 
-        LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
-        LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
+        GlobalSettings::LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
+        GlobalSettings::WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
+        GlobalSettings::SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
+        GlobalSettings::LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
+        GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
+        GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", "false").toBool();
+        GlobalSettings::LevelSearchBoxVis = settings.value("level-search-vis", "false").toBool();
+
+        GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
+        GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
-        autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
+        GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
 
         ui->DoorsToolbox->setFloating(settings.value("doors-tool-box-float", true).toBool());
         ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
         ui->LevelLayers->setFloating(settings.value("level-layers-float", true).toBool());
         ui->LevelEventsToolBox->setFloating(settings.value("level-events-float", true).toBool());
         ui->ItemProperties->setFloating(settings.value("item-props-box-float", true).toBool());
+        ui->FindDock->setFloating(settings.value("level-search-float", true).toBool());
 
         ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
         ui->LevelLayers->restoreGeometry(settings.value("level-layers-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
         ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
         ui->ItemProperties->restoreGeometry(settings.value("item-props-box-geometry", ui->ItemProperties->saveGeometry()).toByteArray());
+        ui->FindDock->restoreGeometry(settings.value("level-search-geometry", ui->FindDock->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
@@ -207,32 +226,36 @@ void MainWindow::saveSettings()
     settings.setValue("lastsavepath", GlobalSettings::savePath);
     settings.setValue("lastsavepath-npctxt", GlobalSettings::savePath_npctxt);
 
-    settings.setValue("level-tb-visible", LevelToolBoxVis);
-    settings.setValue("world-tb-visible", WorldToolBoxVis);
-    settings.setValue("section-tb-visible", SectionToolBoxVis);
-    settings.setValue("level-layers-vis", LevelLayersBoxVis);
-    settings.setValue("level-events-vis", LevelEventsBoxVis);
-    settings.setValue("level-doors-vis", LevelDoorsBoxVis);
+    settings.setValue("world-tb-visible", GlobalSettings::WorldToolBoxVis);
+
+    settings.setValue("level-tb-visible", GlobalSettings::LevelToolBoxVis);
+    settings.setValue("section-tb-visible", GlobalSettings::SectionToolBoxVis);
+    settings.setValue("level-layers-vis", GlobalSettings::LevelLayersBoxVis);
+    settings.setValue("level-events-vis", GlobalSettings::LevelEventsBoxVis);
+    settings.setValue("level-doors-vis", GlobalSettings::LevelDoorsBoxVis);
+    settings.setValue("level-search-vis", GlobalSettings::LevelSearchBoxVis);
 
     settings.setValue("doors-tool-box-float", ui->DoorsToolbox->isFloating());
     settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
     settings.setValue("level-layers-float", ui->LevelLayers->isFloating());
     settings.setValue("level-events-float", ui->LevelEventsToolBox->isFloating());
     settings.setValue("item-props-box-float", ui->ItemProperties->isFloating());
+    settings.setValue("level-search-float", ui->FindDock->isFloating());
 
     settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
     settings.setValue("level-layers-geometry", ui->LevelLayers->saveGeometry());
     settings.setValue("level-events-geometry", ui->LevelEventsToolBox->saveGeometry());
     settings.setValue("item-props-box-geometry", ui->ItemProperties->saveGeometry());
+    settings.setValue("level-search-geometry", ui->FindDock->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
 
-    settings.setValue("autoPlayMusic", autoPlayMusic);
+    settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
 
-    settings.setValue("animation", LvlOpts.animationEnabled);
-    settings.setValue("collisions", LvlOpts.collisionsEnabled);
+    settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
+    settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
     settings.setValue("language", GlobalSettings::locale);
@@ -273,9 +296,9 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
 
-    appSettings->autoPlayMusic = autoPlayMusic;
-    appSettings->Animation = LvlOpts.animationEnabled;
-    appSettings->Collisions = LvlOpts.collisionsEnabled;
+    appSettings->autoPlayMusic = GlobalSettings::autoPlayMusic;
+    appSettings->Animation = GlobalSettings::LvlOpts.animationEnabled;
+    appSettings->Collisions = GlobalSettings::LvlOpts.collisionsEnabled;
 
     appSettings->AnimationItemLimit = GlobalSettings::animatorItemsLimit;
 
@@ -283,17 +306,18 @@ void MainWindow::on_actionApplication_settings_triggered()
 
     if(appSettings->exec()==QDialog::Accepted)
     {
-        autoPlayMusic = appSettings->autoPlayMusic;
+        GlobalSettings::autoPlayMusic = appSettings->autoPlayMusic;
         GlobalSettings::animatorItemsLimit = appSettings->AnimationItemLimit;
-        LvlOpts.animationEnabled = appSettings->Animation;
-        LvlOpts.collisionsEnabled = appSettings->Collisions;
+        GlobalSettings::LvlOpts.animationEnabled = appSettings->Animation;
+        GlobalSettings::LvlOpts.collisionsEnabled = appSettings->Collisions;
 
-        ui->actionAnimation->setChecked(LvlOpts.animationEnabled);
-        on_actionAnimation_triggered(LvlOpts.animationEnabled);
-        ui->actionCollisions->setChecked(LvlOpts.collisionsEnabled);
-        on_actionCollisions_triggered(LvlOpts.collisionsEnabled);
+        ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
+        on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
+        ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
+        on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
 
         saveSettings();
     }
+    delete appSettings;
 
 }

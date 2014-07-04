@@ -37,15 +37,15 @@
 #include <QDebug>
 
 
-class xxx
-{
-public slots:
-    static void processEvents()
-    {
-        qApp->processEvents();
-    }
+//class xxx
+//{
+//public slots:
+//    static void processEvents()
+//    {
+//        qApp->processEvents();
+//    }
 
-};
+//};
 
 
 void leveledit::ExportToImage_fn()
@@ -171,12 +171,18 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
     LvlData = FileFormats::dummyLvlDataArray();
     StartLvlData = LvlData;
 
+    ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
+
     scene = new LvlScene(configs, LvlData);
     scene->opts = options;
 
     scene->InitSection(0);
     scene->setPlayerPoints();
     scene->drawSpace();
+    scene->buildAnimators();
+
+    if(options.animationEnabled) scene->startBlockAnimation();
+    setAutoUpdateTimer(31);
 
     if(!sceneCreated)
     {
@@ -268,6 +274,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     }
     StartLvlData = LvlData; //Save current history for made reset
 
+    ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
+
     //Check if data configs exists
     if( configs.check() )
     {
@@ -312,9 +320,9 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setMinimumDuration(500);
          //progress.setCancelButton(0);
 
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT( xxx::processEvents() ) );
-    timer->start(1);
+//    QTimer *timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT( xxx::processEvents() ) );
+//    timer->start(1);
 
 
     if(! DrawObjects(progress) )
@@ -326,8 +334,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    timer->stop();
-    delete timer;
+//    timer->stop();
+//    delete timer;
 
     if( !progress.wasCanceled() )
         progress.close();
@@ -335,12 +343,14 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     ui->graphicsView->verticalScrollBar()->setValue(265+LvlData.sections[0].size_bottom-602);
     ui->graphicsView->horizontalScrollBar()->setValue(330+LvlData.sections[0].size_left);
 
-    //ResetPosition();
-
     QApplication::restoreOverrideCursor();
+
+    setAutoUpdateTimer(31);
 
     setCurrentFile(fileName);
     LvlData.modified = false;
+
+    progress.deleteLater();
 
     return true;
 }
@@ -388,14 +398,35 @@ void leveledit::closeEvent(QCloseEvent *event)
         MainWinConnect::pMainWin->on_actionSelect_triggered();
 
     if(maybeSave()) {
+        stopAutoUpdateTimer();
         LvlMusPlay::musicForceReset = true;
         MainWinConnect::pMainWin->setMusicButton(false);
         MainWinConnect::pMainWin->setMusic(false);
+
+        scene->clear();
+        WriteToLog(QtDebugMsg, "!<-Cleared->!");
         scene->uBGOs.clear();
         scene->uBGs.clear();
         scene->uBlocks.clear();
-        scene->clear();
+        scene->uNPCs.clear();
+
+        WriteToLog(QtDebugMsg, "!<-Delete animators->!");
+        while(! scene->animates_BGO.isEmpty() )
+        {
+            SimpleAnimator* tmp = scene->animates_BGO.first();
+            scene->animates_BGO.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
+        while(! scene->animates_Blocks.isEmpty() )
+        {
+            SimpleAnimator* tmp = scene->animates_Blocks.first();
+            scene->animates_Blocks.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
+        WriteToLog(QtDebugMsg, "!<-Delete scene->!");
+        delete scene;
         sceneCreated=false;
+        WriteToLog(QtDebugMsg, "!<-Deleted->!");
         //ui->graphicsView->cl
         event->accept();
     } else {

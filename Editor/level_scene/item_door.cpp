@@ -27,16 +27,22 @@
 ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     : QGraphicsRectItem(parent)
 {
-
     isLocked=false;
     itemSize = QSize(32,32);
+    doorLabel=NULL;
+    doorLabel_shadow=NULL;
     //image = new QGraphicsRectItem;
 }
 
 
 ItemDoor::~ItemDoor()
 {
- //   WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
+    //WriteToLog(QtDebugMsg, "!<-Door destroy->!");
+    if(doorLabel!=NULL) delete doorLabel;
+    if(doorLabel_shadow!=NULL) delete doorLabel_shadow;
+    if(grp!=NULL) delete grp;
+
+    //WriteToLog(QtDebugMsg, "!<-Door destroyed->!");
 }
 
 void ItemDoor::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -73,12 +79,14 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->clear();
 
         QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer));
+            LayerName->deleteLater();
 
         QAction *setLayer;
         QList<QAction *> layerItems;
 
         QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-            LayerName->addSeparator();
+            LayerName->addSeparator()->deleteLater();;
+            newLayer->deleteLater();
 
         foreach(LevelLayers layer, scene->LvlData->layers)
         {
@@ -90,38 +98,44 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setLayer->setCheckable(true);
             setLayer->setEnabled(true);
             setLayer->setChecked( layer.name==doorData.layer );
+            setLayer->deleteLater();
             layerItems.push_back(setLayer);
         }
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();;
 
         QAction *jumpTo=NULL;
         if(this->data(0).toString()=="Door_enter")
         {
             jumpTo = ItemMenu->addAction(tr("Jump to exit"));
             jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
+            jumpTo->deleteLater();
         }
         else
         if(this->data(0).toString()=="Door_exit")
         {
             jumpTo = ItemMenu->addAction(tr("Jump to entrance"));
             jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
+            jumpTo->deleteLater();
         }
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();
 
 
         QAction * NoTransport = ItemMenu->addAction(tr("No Yoshi"));
         NoTransport->setCheckable(true);
         NoTransport->setChecked( doorData.noyoshi );
+        NoTransport->deleteLater();
 
         QAction * AllowNPC = ItemMenu->addAction(tr("Allow NPC"));
         AllowNPC->setCheckable(true);
         AllowNPC->setChecked( doorData.allownpc );
+        AllowNPC->deleteLater();
 
         QAction * Locked = ItemMenu->addAction(tr("Locked"));
         Locked->setCheckable(true);
         Locked->setChecked( doorData.locked );
+        Locked->deleteLater();
 
         /*
         ItemMenu->addSeparator();
@@ -131,11 +145,13 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             cutDoor->setDisabled(true);
         */
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();;
             QAction *remove = ItemMenu->addAction(tr("Remove"));
+            remove->deleteLater();
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();;
             QAction *props = ItemMenu->addAction(tr("Properties..."));
+            props->deleteLater();
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -298,6 +314,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     //scene->SyncLayerList=true; //Refresh layer list
                     MainWinConnect::pMainWin->setLayersBox();
                 }
+                delete layerBox;
             }
             else
             foreach(QAction * lItem, layerItems)

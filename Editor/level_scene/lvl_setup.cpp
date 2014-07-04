@@ -40,22 +40,31 @@ void LvlScene::startBlockAnimation()
         return;
     }
 
+    foreach(SimpleAnimator * bgoA, animates_BGO)
+    {
+        bgoA->start();
+    }
+    foreach(SimpleAnimator * blockA, animates_Blocks)
+    {
+        blockA->start();
+    }
+
     QList<QGraphicsItem*> ItemList = items();
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBlock *)tmp)->AnimationStart();
-        }
-        else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBGO *)tmp)->AnimationStart();
-        }
-        else
+//        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            ((ItemBlock *)tmp)->AnimationStart();
+//        }
+//        else
+//        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            ((ItemBGO *)tmp)->AnimationStart();
+//        }
+//        else
         if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
         {
             tmp = (*it);
@@ -67,22 +76,31 @@ void LvlScene::startBlockAnimation()
 
 void LvlScene::stopAnimation()
 {
+    foreach(SimpleAnimator * bgoA, animates_BGO)
+    {
+        bgoA->stop();
+    }
+    foreach(SimpleAnimator * blockA, animates_Blocks)
+    {
+        blockA->stop();
+    }
+
     QList<QGraphicsItem*> ItemList = items();
     QGraphicsItem *tmp;
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
-        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBlock *)tmp)->AnimationStop();
-        }
-        else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBGO *)tmp)->AnimationStop();
-        }
-        else
+//        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            ((ItemBlock *)tmp)->AnimationStop();
+//        }
+//        else
+//        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            ((ItemBGO *)tmp)->AnimationStop();
+//        }
+//        else
         if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
         {
             tmp = (*it);
@@ -90,6 +108,7 @@ void LvlScene::stopAnimation()
         }
     }
 
+    update();
 }
 
 void LvlScene::applyLayersVisible()

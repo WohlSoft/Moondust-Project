@@ -20,24 +20,26 @@
 #include "mainwindow.h"
 
 #include "npc_dialog/npcdialog.h"
+#include "item_select_dialog/itemselectdialog.h"
 #include "music_player.h"
 
 ////////////////////////New files templates///////////////////////////
 
 void MainWindow::on_actionNewNPC_config_triggered()
 {
-
-    NpcDialog * npcList = new NpcDialog(&configs);
+    //NpcDialog * npcList = new NpcDialog(&configs);
+    ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC);
+    npcList->removeEmptyEntry(ItemSelectDialog::TAB_NPC);
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-    npcList->setState(0, 1);
     npcList->setWindowTitle(tr("Create new NPC.txt configuration file"));
     if(npcList->exec()==QDialog::Accepted)
     {
         npcedit *child = createNPCChild();
-        child->newFile( npcList->selectedNPC);
+        child->newFile( npcList->npcID );
         child->show();
     }
+    delete npcList;
 
 }
 
@@ -46,7 +48,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
 void MainWindow::on_actionNewLevel_triggered()
 {
     leveledit *child = createLvlChild();
-    child->newFile(configs, LvlOpts);
+    child->newFile(configs, GlobalSettings::LvlOpts);
     child->show();
     updateMenus(true);
     SetCurrentLevelSection(0);
@@ -54,7 +56,7 @@ void MainWindow::on_actionNewLevel_triggered()
     setDoorsToolbox();
     setLayersBox();
 
-    if(autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+    if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
     LvlMusPlay::musicForceReset=true; //reset musics
     on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 }

@@ -64,15 +64,32 @@ public:
     bool isUntitled;
 
     QString curFile;
-    
+        
+    QTimer *updateTimer;
+    void setAutoUpdateTimer(int ms);
+    void stopAutoUpdateTimer();
+
+public slots:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+
 protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
     virtual void mouseReleaseEvent( QMouseEvent * event );
     virtual void leaveEvent(QEvent * leaveEvent);
+    void updateScene();
+
+    void moveH_slot();
+    void moveV_slot();
 
 private:
+    QTimer * hMover;
+    QTimer * vMover;
+    int hMove;
+    int vMove;
+
     void documentWasModified();
     Ui::leveledit *ui;
 
@@ -88,6 +105,8 @@ private:
     unsigned int FileType;
 
     //QGraphicsScene* pScene;
+    void moveH(int step);
+    void moveV(int step);
 };
 
 #endif // LEVELEDIT_H
