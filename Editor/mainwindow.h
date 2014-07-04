@@ -504,6 +504,12 @@ private:
     // //////////////////////////////////////////////
 
     // /////////////Search Box///////////////////////
+    enum currentSearch{
+        SEARCH_BLOCK = 1 << 0,
+        SEARCH_BGO = 1 << 1,
+        SEARCH_NPC = 1 << 2
+    };
+    int currentSearches;
     int curSearchBlockID;
     int curSearchBGOID;
     int curSearchNPCID;

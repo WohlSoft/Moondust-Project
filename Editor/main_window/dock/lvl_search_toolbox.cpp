@@ -22,13 +22,19 @@
 
 void MainWindow::on_FindStartNPC_clicked()
 {
-    ItemSelectDialog* selDia = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_NPC | ItemSelectDialog::TAB_BGO,
+    /*ItemSelectDialog* selDia = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_NPC | ItemSelectDialog::TAB_BGO,
                                                     ItemSelectDialog::NPCEXTRA_WITHCOINS | ItemSelectDialog::NPCEXTRA_ISCOINSELECTED, 0, 0, 20);
     selDia->removeEmptyEntry(ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_NPC | ItemSelectDialog::TAB_BGO);
     if(selDia->exec()==QDialog::Accepted){
 
     }
-    delete selDia;
+    delete selDia;*/ //old test code
+    if(!(currentSearches & SEARCH_BLOCK)){ //start search
+        currentSearches |= SEARCH_BLOCK;
+    }else{ //middle in a search
+        currentSearches ^= SEARCH_BLOCK;
+    }
+
 }
 
 void MainWindow::on_Find_Button_TypeBlock_clicked()
