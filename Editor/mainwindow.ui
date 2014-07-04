@@ -2526,7 +2526,7 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-391</y>
+          <y>0</y>
           <width>243</width>
           <height>1259</height>
          </rect>
@@ -4693,8 +4693,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>225</height>
+          <width>98</width>
+          <height>29</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4740,8 +4740,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>225</height>
+          <width>98</width>
+          <height>29</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5956,7 +5956,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="shortcut">
-    <string>F10</string>
+    <string notr="true">F10</string>
    </property>
   </action>
   <action name="action_recent1">
