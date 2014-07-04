@@ -501,6 +501,11 @@ private:
     void RemoveEvent(QString eventName);
     // //////////////////////////////////////////////
 
+    // /////////////Search Box///////////////////////
+    int curSearchBlockID;
+    int curSearchBGOID;
+    int curSearchNPCID;
+    // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);

@@ -33,9 +33,10 @@ void MainWindow::on_FindStartNPC_clicked()
 
 void MainWindow::on_Find_Button_TypeBlock_clicked()
 {
-    ItemSelectDialog* selBlock = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BLOCK);
+    ItemSelectDialog* selBlock = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BLOCK,0,curSearchBlockID);
     if(selBlock->exec()==QDialog::Accepted){
         int selected = selBlock->blockID;
+        curSearchBlockID = selected;
         ui->Find_Button_TypeBlock->setText(((selected>0)?QString("Block-%1").arg(selected):tr("[empty]")));
     }
     delete selBlock;
@@ -43,9 +44,10 @@ void MainWindow::on_Find_Button_TypeBlock_clicked()
 
 void MainWindow::on_Find_Button_TypeBGO_clicked()
 {
-    ItemSelectDialog* selBgo = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BGO);
+    ItemSelectDialog* selBgo = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BGO,0,0,curSearchBGOID);
     if(selBgo->exec()==QDialog::Accepted){
         int selected = selBgo->bgoID;
+        curSearchBGOID = selected;
         ui->Find_Button_TypeBGO->setText(((selected>0)?QString("BGO-%1").arg(selected):tr("[empty]")));
     }
     delete selBgo;
@@ -53,10 +55,12 @@ void MainWindow::on_Find_Button_TypeBGO_clicked()
 
 void MainWindow::on_Find_Button_TypeNPC_clicked()
 {
-    ItemSelectDialog* selNpc = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC);
+    ItemSelectDialog* selNpc = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,0,0,0,curSearchNPCID);
     if(selNpc->exec()==QDialog::Accepted){
         int selected = selNpc->npcID;
+        curSearchNPCID = selected;
         ui->Find_Button_TypeNPC->setText(((selected>0)?QString("NPC-%1").arg(selected):tr("[empty]")));
     }
+
     delete selNpc;
 }
