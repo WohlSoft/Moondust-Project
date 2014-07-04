@@ -472,6 +472,11 @@ private slots:
     void on_actionLVLSearchBox_triggered(bool checked);
     void on_FindDock_visibilityChanged(bool visible);
     void on_FindStartNPC_clicked();
+    void on_Find_Button_TypeBlock_clicked();
+
+    void on_Find_Button_TypeBGO_clicked();
+
+    void on_Find_Button_TypeNPC_clicked();
 
 private:
 
