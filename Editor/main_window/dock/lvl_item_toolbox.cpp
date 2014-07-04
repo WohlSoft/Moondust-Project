@@ -67,10 +67,33 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         }
     }
 
-        WriteToLog(QtDebugMsg, "LevelTools -> Clear current");
-    ui->BGOItemsList->clear();
-    ui->BlockItemsList->clear();
-    ui->NPCItemsList->clear();
+    WriteToLog(QtDebugMsg, "LevelTools -> Clear current");
+
+    QList<QListWidgetItem*> items;
+    items = ui->BGOItemsList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    while(!items.isEmpty())
+    {
+        QListWidgetItem *tmp = items.first();
+        items.pop_front();
+        delete tmp;
+    }
+
+    //ui->BlockItemsList->clear();
+    items = ui->BlockItemsList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    while(!items.isEmpty())
+    {
+        QListWidgetItem *tmp = items.first();
+        items.pop_front();
+        delete tmp;
+    }
+    //ui->NPCItemsList->clear();
+    items = ui->NPCItemsList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    while(!items.isEmpty())
+    {
+        QListWidgetItem *tmp = items.first();
+        items.pop_front();
+        delete tmp;
+    }
 
         WriteToLog(QtDebugMsg, "LevelTools -> Declare new");
     QListWidgetItem * item;
