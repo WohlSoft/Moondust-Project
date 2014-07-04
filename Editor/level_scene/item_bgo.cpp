@@ -322,7 +322,6 @@ QRectF ItemBGO::boundingRect() const
 
 void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    painter->setPen(QPen(QBrush(Qt::red), 1, Qt::DotLine));
     if(animatorID<0)
     {
         painter->drawRect(QRect(0,0,1,1));
@@ -334,7 +333,12 @@ void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget
         painter->drawRect(QRect(0,0,32,32));
 
     if(this->isSelected())
-        painter->drawRect(0,0,imageSize.width()-1,imageSize.height()-1);
+    {
+        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->setPen(QPen(QBrush(Qt::red), 2, Qt::DotLine));
+        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+    }
 }
 
 void ItemBGO::setContextMenu(QMenu &menu)
