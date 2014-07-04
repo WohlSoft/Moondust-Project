@@ -569,7 +569,7 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
 {
     int x,y, i, j;
     int hc, wc;
-    QPixmap img;
+    QPixmap img(w, h);
     //QPixmap * sizableImage;
     QPainter * szblock;
     x=32;
