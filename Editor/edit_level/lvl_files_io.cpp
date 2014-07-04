@@ -417,6 +417,12 @@ void leveledit::closeEvent(QCloseEvent *event)
             scene->animates_BGO.pop_front();
             if(tmp!=NULL) delete tmp;
         }
+        while(! scene->animates_Blocks.isEmpty() )
+        {
+            SimpleAnimator* tmp = scene->animates_Blocks.first();
+            scene->animates_Blocks.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
         WriteToLog(QtDebugMsg, "!<-Delete scene->!");
         delete scene;
         sceneCreated=false;

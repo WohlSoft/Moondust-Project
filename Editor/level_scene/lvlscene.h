@@ -156,6 +156,7 @@ public:
     QVector<UserNPCs > uNPCs;
 
     QVector<SimpleAnimator * > animates_BGO;
+    QVector<SimpleAnimator * > animates_Blocks;
 
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
 
