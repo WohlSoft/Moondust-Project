@@ -340,7 +340,6 @@ void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
     {
         ui->LVLPropsMusicCustom->setText( musicList.SelectedFile );
     }
-
 }
 
 void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)

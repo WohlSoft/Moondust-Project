@@ -19,29 +19,31 @@
 #include "item_block.h"
 #include "../common_features/logger.h"
 
-#include "../npc_dialog/npcdialog.h"
+#include "../item_select_dialog/itemselectdialog.h"
 #include "newlayerbox.h"
 
 #include "../common_features/mainwinconnect.h"
 
-ItemBlock::ItemBlock(QGraphicsPixmapItem *parent)
-    : QGraphicsPixmapItem(parent)
+ItemBlock::ItemBlock(QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
-    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     animated = false;
-    frameFirst=0; //from first frame
-    frameLast=-1; //to unlimited frameset
+    animatorID=-1;
+    imageSize = QRectF(0,0,10,10);
+
     gridSize=32;
-    //image = new QGraphicsPixmapItem;
+
     isLocked=false;
-    timer=NULL;
 }
 
 
 ItemBlock::~ItemBlock()
 {
- //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
-    if(timer) delete timer;
+   // WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
+
+    if(includedNPC!=NULL) delete includedNPC;
+    if(grp!=NULL) delete grp;
+    //if(timer) delete timer;
 }
 
 void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -53,7 +55,7 @@ void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
-    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
+    QGraphicsItem::mousePressEvent(mouseEvent);
 }
 
 void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
@@ -83,7 +85,8 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         QList<QAction *> layerItems;
 
         QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-        LayerName->addSeparator();
+        LayerName->addSeparator()->deleteLater();;
+        newLayer->deleteLater();
 
         foreach(LevelLayers layer, scene->LvlData->layers)
         {
@@ -95,41 +98,52 @@ void ItemBlock::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setLayer->setCheckable(true);
             setLayer->setEnabled(true);
             setLayer->setChecked( layer.name==blockData.layer );
+            newLayer->deleteLater();
             layerItems.push_back(setLayer);
         }
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();;
 
         QAction *invis = ItemMenu->addAction(tr("Invisible"));
             invis->setCheckable(1);
             invis->setChecked( blockData.invisible );
+            invis->deleteLater();
 
         QAction *slipp = ItemMenu->addAction(tr("Slippery"));
             slipp->setCheckable(1);
             slipp->setChecked( blockData.slippery );
+            slipp->deleteLater();
 
         QAction *resize = ItemMenu->addAction(tr("Resize"));
             resize->setVisible( (this->data(3).toString()=="sizable") );
+            resize->deleteLater();
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *chNPC = ItemMenu->addAction(tr("Change included NPC..."));
+        chNPC->deleteLater();
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *copyBlock = ItemMenu->addAction( tr("Copy") );
+        copyBlock->deleteLater();
         QAction *cutBlock = ItemMenu->addAction( tr("Cut") );
-        ItemMenu->addSeparator();
+        cutBlock->deleteLater();
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *remove = ItemMenu->addAction( tr("Remove") );
-        ItemMenu->addSeparator();
+        remove->deleteLater();
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *props = ItemMenu->addAction(tr("Properties..."));
+        props->deleteLater();
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(!selected)
         {
-            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            #endif
             scene->contextMenuOpened = true;
-            return;
+            goto delItems;
         }
         event->accept();
 
@@ -191,21 +205,21 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         {
             scene->contextMenuOpened = false;
             LevelData selData;
-            NpcDialog * npcList = new NpcDialog(scene->pConfigs);
+            ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
+                                                       ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 1000 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                       (blockData.npc_id < 1000 && blockData.npc_id != 0 ? blockData.npc_id : blockData.npc_id-1000));
             npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
             npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-            npcList->setState(blockData.npc_id);
             if(npcList->exec()==QDialog::Accepted)
             {
                 //apply to all selected items.
                 int selected_npc=0;
-                if(npcList->isEmpty)
-                    selected_npc = 0;
-                else
-                if(npcList->isCoin)
-                    selected_npc = npcList->coins;
-                else
-                    selected_npc = npcList->selectedNPC+1000;
+                if(npcList->npcID!=0){
+                    if(npcList->isCoin)
+                        selected_npc = npcList->npcID;
+                    else
+                        selected_npc = npcList->npcID+1000;
+                }
 
                 foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
@@ -219,6 +233,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 }
                 scene->addChangeSettingsHistory(selData, LvlScene::SETTING_CHANGENPC, QVariant(selected_npc));
             }
+            delete npcList;
         }
         else
         if(selected==remove)
@@ -271,6 +286,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     MainWinConnect::pMainWin->setLayersBox();
                     MainWinConnect::pMainWin->setLayerToolsLocked(false);
                 }
+                delete layerBox;
             }
             else
             foreach(QAction * lItem, layerItems)
@@ -315,10 +331,11 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             }
 
         }
+        delItems:;
     }
     else
     {
-        QGraphicsPixmapItem::contextMenuEvent(event);
+        QGraphicsItem::contextMenuEvent(event);
     }
 }
 
@@ -360,7 +377,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
     {
         grp->removeFromGroup(includedNPC);
         scene->removeItem(includedNPC);
-        free(includedNPC);
+        delete includedNPC;
         includedNPC = NULL;
     }
     if(npcID==0)
@@ -439,107 +456,28 @@ void ItemBlock::removeFromArray()
     }
 }
 
-/*
-void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void ItemBlock::setMainPixmap(/*const QPixmap &pixmap*/) // Init Sizable block
 {
-    int gridSize=32, offsetX=0, offsetY=0, gridX, gridY, i;
-    QPoint sourcePos;
-
-    sourcePos=QPoint(blockData.x, blockData.y);
-    QPointF itemPos = this->scenePos();
-
-    if((!isSelected())||(sourcePos == itemPos))
-    { QGraphicsPixmapItem::mouseReleaseEvent(event); return;}
-
-    if(scene->grid)
-    { //ATTACH TO GRID
-        gridX = ((int)itemPos.x() - (int)itemPos.x() % gridSize);
-        gridY = ((int)itemPos.y() - (int)itemPos.y() % gridSize);
-
-        if((int)itemPos.x()<0)
-        {
-            if( (int)itemPos.x() < gridX - (int)(gridSize/2) )
-                gridX -= gridSize;
-        }
-        else
-        {
-            if( (int)itemPos.x() > gridX + (int)(gridSize/2) )
-                gridX += gridSize;
-        }
-
-        if((int)itemPos.y()<0)
-        {if( (int)itemPos.y() < gridY - (int)(gridSize/2) )
-            gridY -= gridSize;
-        }
-        else {if( (int)itemPos.y() > gridY + (int)(gridSize/2) )
-         gridY += gridSize;
-        }
-
-        this->setPos(QPointF(offsetX+gridX, offsetY+gridY));
-    }
-
-    //Check collision
-    if( scene->itemCollidesWith(this) )
+    //currentImage = pixmap;
+    if(sizable)
     {
-        this->setPos(QPointF(sourcePos));
-        this->setSelected(false);
-        WriteToLog(QtDebugMsg, QString("Moved back %1 %2")
-                   .arg((long)this->scenePos().x())
-                   .arg((long)this->scenePos().y()) );
-    }
-    else
-    {
-        blockData.x=(long)this->scenePos().x();
-        blockData.y=(long)this->scenePos().y();
-
-         for (i=0;i<scene->LvlData->blocks.size();i++)
-            {
-                if(scene->LvlData->blocks[i].array_id == blockData.array_id)
-                {
-                    //Applay move into main array
-                    scene->LvlData->blocks[i].x = (long)this->scenePos().x();
-                    scene->LvlData->blocks[i].y = (long)this->scenePos().y();
-                    scene->LvlData->modyfied = true;
-                    break;
-                }
-            }
-    }
-
-}*/
-
-void ItemBlock::setMainPixmap(const QPixmap &pixmap)
-{
-    mainImage = pixmap;
-    if(!sizable)
-        this->setPixmap(mainImage);
-    else
-    {
-        frameWidth = blockData.w;
-        frameSize = blockData.h;
-        frameHeight = blockData.h;
-        currentImage = drawSizableBlock(blockData.w, blockData.h, mainImage);
-        this->setPixmap(currentImage);
+        currentImage = drawSizableBlock(blockData.w, blockData.h, scene->animates_Blocks[animatorID]->wholeImage());
+        imageSize = QRectF(0,0, blockData.w, blockData.h);
     }
 }
 
 void ItemBlock::setBlockSize(QRect rect)
 {
-    if(!sizable)
-        this->setPixmap(mainImage);
-    else
+    if(sizable)
     {
         blockData.x = rect.x();
         blockData.y = rect.y();
         blockData.w = rect.width();
         blockData.h = rect.height();
-
-        frameWidth = blockData.w;
-        frameSize = blockData.h;
-        frameHeight = blockData.h;
-        currentImage = drawSizableBlock(blockData.w, blockData.h, mainImage);
-        this->setPixmap(currentImage);
+        currentImage = drawSizableBlock(blockData.w, blockData.h, scene->animates_Blocks[animatorID]->wholeImage());
         this->setPos(blockData.x, blockData.y);
     }
+    imageSize = QRectF(0,0, blockData.w, blockData.h);
     setIncludedNPC(blockData.npc_id);
     arrayApply();
 }
@@ -549,15 +487,57 @@ void ItemBlock::setBlockData(LevelBlock inD, bool is_sz)
 {
     blockData = inD;
     sizable = is_sz;
+    imageSize = QRectF(0,0,blockData.w, blockData.h);
 }
 
 
 QRectF ItemBlock::boundingRect() const
 {
-    if((!animated)&&(!sizable))
-        return QRectF(0,0,mainImage.width(),mainImage.height());
+    return imageSize;
+}
+
+void ItemBlock::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
+{
+    if(animatorID<0)
+    {
+        painter->setPen(QPen(QBrush(Qt::red), 1, Qt::DotLine));
+        painter->drawRect(QRect(0,0,1,1));
+        return;
+    }
+
+    if(scene->animates_Blocks.size()>animatorID)
+    {
+        if(sizable)
+            painter->drawPixmap(imageSize, currentImage, imageSize);
+        else
+            painter->drawPixmap(imageSize, scene->animates_Blocks[animatorID]->image(), imageSize);
+    }
     else
-        return QRectF(0,0,frameWidth,frameSize);
+        painter->drawRect(QRect(0,0,32,32));
+
+    if(this->isSelected())
+    {
+        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->setPen(QPen(QBrush(Qt::green), 2, Qt::DotLine));
+        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+    }
+
+}
+
+void ItemBlock::setAnimator(long aniID)
+{
+    if(aniID<scene->animates_Blocks.size())
+    imageSize = QRectF(0,0,
+                scene->animates_Blocks[aniID]->image().width(),
+                scene->animates_Blocks[aniID]->image().height()
+                );
+    //this->setPixmap(scene->animates_Blocks[aniID]->image());
+    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
+    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
+
+    //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
+    animatorID = aniID;
 }
 
 void ItemBlock::setContextMenu(QMenu &menu)
@@ -574,101 +554,7 @@ void ItemBlock::setScenePoint(LvlScene *theScene)
     includedNPC = NULL;
 }
 
-/*
-void ItemBlock::setGroupPoint(QGraphicsItemGroup *theGrp)
-{
-    grp = theGrp;
-}
 
-void ItemBlock::setNPCItemPoint(QGraphicsItem *includedNPCPnt)
-{
-    includedNPC = includedNPCPnt;
-}
-*/
-
-////////////////Animation///////////////////
-
-
-void ItemBlock::setAnimation(int frames, int framespeed, int algorithm)
-{
-    animated = true;
-    framesQ = frames;
-    frameSpeed = framespeed;
-
-    frameSize = (int)round(mainImage.height()/frames);
-    frameWidth = mainImage.width();
-    frameHeight = mainImage.height();
-
-    framePos = QPoint(0,0);
-    draw();
-
-    if(algorithm == 1) // Invisible block
-    {
-        frameFirst = 5;
-        frameLast = 6;
-    }
-    else if(algorithm == 3) //Player's character block
-    {
-        frameFirst = 0;
-        frameLast = 1;
-    }
-    else if(algorithm == 4) //Player's character switch
-    {
-        frameFirst = 0;
-        frameLast = 4;
-    }
-    else //Default block
-    {
-        frameFirst = 0;
-        frameLast = -1;
-    }
-
-    setFrame(frameFirst);
-
-    timer = new QTimer(this);
-    connect(
-                timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
-}
-
-void ItemBlock::AnimationStart()
-{
-    if(!animated) return;
-    timer->start(frameSpeed);
-}
-
-void ItemBlock::AnimationStop()
-{
-    if(!animated) return;
-    timer->stop();
-    setFrame(frameFirst);
-}
-
-void ItemBlock::draw()
-{
-    currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-}
-
-QPoint ItemBlock::fPos() const
-{
-    return framePos;
-}
-
-void ItemBlock::setFrame(int y)
-{
-    frameCurrent = frameSize * y;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( frameCurrent );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
-}
 
 void ItemBlock::setLocked(bool lock)
 {
@@ -676,23 +562,6 @@ void ItemBlock::setLocked(bool lock)
     this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
     isLocked = lock;
 }
-
-void ItemBlock::nextFrame()
-{
-    frameCurrent += frameSize;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( framePos.y() + frameSize );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
-}
-
-
 
 //sizable Block formula
 QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
@@ -766,5 +635,6 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     szblock->drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
 
     img = QPixmap( * sizableImage);
+    delete szblock;
     return img;
 }

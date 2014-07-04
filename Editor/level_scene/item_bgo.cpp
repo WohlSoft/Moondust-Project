@@ -24,26 +24,23 @@
 #include "../common_features/mainwinconnect.h"
 
 
-ItemBGO::ItemBGO(QGraphicsPixmapItem *parent)
-    : QGraphicsPixmapItem(parent)
+ItemBGO::ItemBGO(QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
-    setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
-    animated = false;
-    frameFirst=0; //from first frame
-    frameLast=-1; //to unlimited frameset
     gridSize=32;
     gridOffsetX=0;
     gridOffsetY=0;
     isLocked=false;
-    //image = new QGraphicsPixmapItem;
-    timer=NULL;
+
+    animatorID=-1;
+    imageSize = QRectF(0,0,10,10);
 }
 
 
 ItemBGO::~ItemBGO()
 {
- //   WriteToLog(QtDebugMsg, "!<-Block destroyed->!");
-    if(timer) delete timer;
+    //WriteToLog(QtDebugMsg, "!<-BGO destroyed->!");
+    //if(timer) delete timer;
 }
 
 void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -55,7 +52,7 @@ void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
-    QGraphicsPixmapItem::mousePressEvent(mouseEvent);
+    QGraphicsItem::mousePressEvent(mouseEvent);
 }
 
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
@@ -80,12 +77,13 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->clear();
 
         QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
+        LayerName->deleteLater();
 
         QAction *setLayer;
         QList<QAction *> layerItems;
 
         QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-        LayerName->addSeparator();
+        LayerName->addSeparator()->deleteLater();
 
         foreach(LevelLayers layer, scene->LvlData->layers)
         {
@@ -97,23 +95,30 @@ void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setLayer->setCheckable(true);
             setLayer->setEnabled(true);
             setLayer->setChecked( layer.name==bgoData.layer );
+            setLayer->deleteLater();
             layerItems.push_back(setLayer);
         }
 
         ItemMenu->addSeparator();
         QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
+        copyBGO->deleteLater();
         QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
-        ItemMenu->addSeparator();
+        cutBGO->deleteLater();
+        ItemMenu->addSeparator()->deleteLater();
         QAction *remove = ItemMenu->addAction(tr("Remove"));
-        ItemMenu->addSeparator();
+        remove->deleteLater();
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *props = ItemMenu->addAction(tr("Properties..."));
+        props->deleteLater();
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(!selected)
         {
+            #ifdef _DEBUG_
             WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+            #endif
             scene->contextMenuOpened = true;
             return;
         }
@@ -184,6 +189,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     MainWinConnect::pMainWin->setLayersBox();
                     MainWinConnect::pMainWin->setLayerToolsLocked(false);
                 }
+                delete layerBox;
             }
             else
             foreach(QAction * lItem, layerItems)
@@ -226,36 +232,11 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 }
                 scene->contextMenuOpened = false;
             }
-//            foreach(QAction * lItem, layerItems)
-//            {
-//                if(selected==lItem)
-//                {
-//                    foreach(LevelLayers lr, scene->LvlData->layers)
-//                    { //Find layer's settings
-//                        if(lr.name==lItem->data().toString())
-//                        {
-//                            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-//                            {
-
-//                                if(SelItem->data(0).toString()=="BGO")
-//                                {
-//                                ((ItemBGO *) SelItem)->bgoData.layer = lr.name;
-//                                ((ItemBGO *) SelItem)->setVisible(!lr.hidden);
-//                                ((ItemBGO *) SelItem)->arrayApply();
-//                                }
-//                            }
-//                        break;
-//                        }
-//                    }//Find layer's settings
-//                 scene->contextMenuOpened = false;
-//                 break;
-//                }//Find selected layer's item
-//            }
         }
     }
     else
     {
-        QGraphicsPixmapItem::contextMenuEvent(event);
+        QGraphicsItem::contextMenuEvent(event);
     }
 }
 
@@ -328,12 +309,6 @@ void ItemBGO::removeFromArray()
     }
 }
 
-void ItemBGO::setMainPixmap(const QPixmap &pixmap)
-{
-    mainImage = pixmap;
-    this->setPixmap(mainImage);
-}
-
 void ItemBGO::setBGOData(LevelBGO inD)
 {
     bgoData = inD;
@@ -342,10 +317,28 @@ void ItemBGO::setBGOData(LevelBGO inD)
 
 QRectF ItemBGO::boundingRect() const
 {
-    if(!animated)
-        return QRectF(0,0,mainImage.width(),mainImage.height());
+    return imageSize;
+}
+
+void ItemBGO::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+{
+    if(animatorID<0)
+    {
+        painter->drawRect(QRect(0,0,1,1));
+        return;
+    }
+    if(scene->animates_BGO.size()>animatorID)
+        painter->drawPixmap(imageSize, scene->animates_BGO[animatorID]->image(), imageSize);
     else
-        return QRectF(0,0,frameWidth,frameSize);
+        painter->drawRect(QRect(0,0,32,32));
+
+    if(this->isSelected())
+    {
+        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+        painter->setPen(QPen(QBrush(Qt::red), 2, Qt::DotLine));
+        painter->drawRect(1,1,imageSize.width()-2,imageSize.height()-2);
+    }
 }
 
 void ItemBGO::setContextMenu(QMenu &menu)
@@ -361,85 +354,18 @@ void ItemBGO::setScenePoint(LvlScene *theScene)
 
 ////////////////Animation///////////////////
 
-
-void ItemBGO::setAnimation(int frames, int framespeed)
+void ItemBGO::setAnimator(long aniID)
 {
-    animated = true;
-    framesQ = frames;
-    frameSpeed = framespeed;
+    if(aniID<scene->animates_BGO.size())
+    imageSize = QRectF(0,0,
+                scene->animates_BGO[aniID]->image().width(),
+                scene->animates_BGO[aniID]->image().height()
+                );
 
-    frameSize = (int)round(mainImage.height()/frames);
-    frameWidth = mainImage.width();
-    frameHeight = mainImage.height();
+    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
+    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
 
-    framePos = QPoint(0,0);
-    draw();
+    //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
 
-    setFrame(frameFirst);
-
-    timer = new QTimer(this);
-    connect(
-                timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
-}
-
-void ItemBGO::AnimationStart()
-{
-    if(!animated) return;
-    timer->start(frameSpeed);
-}
-
-void ItemBGO::AnimationStop()
-{
-    if(!animated) return;
-    timer->stop();
-    setFrame(frameFirst);
-}
-
-void ItemBGO::draw()
-{
-    currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
-}
-
-QPoint ItemBGO::fPos() const
-{
-    return framePos;
-}
-
-void ItemBGO::setFrame(int y)
-{
-    frameCurrent = frameSize * y;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( frameCurrent );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
-}
-
-void ItemBGO::setLocked(bool lock)
-{
-    this->setFlag(QGraphicsItem::ItemIsSelectable, !lock);
-    this->setFlag(QGraphicsItem::ItemIsMovable, !lock);
-    isLocked = lock;
-}
-
-void ItemBGO::nextFrame()
-{
-    frameCurrent += frameSize;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-    framePos.setY( framePos.y() + frameSize );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
+    animatorID = aniID;
 }

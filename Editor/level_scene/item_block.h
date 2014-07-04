@@ -35,33 +35,28 @@
 #include "lvlscene.h"
 #include "../file_formats/lvl_filedata.h"
 
-class ItemBlock : public QObject, public QGraphicsPixmapItem
+class ItemBlock : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
-    ItemBlock(QGraphicsPixmapItem *parent=0);
+    ItemBlock(QGraphicsItem *parent=0);
     ~ItemBlock();
 
-    void setMainPixmap(const QPixmap &pixmap);
+    void setMainPixmap(/*const QPixmap &pixmap*/);
     void setBlockData(LevelBlock inD, bool is_sz);
     void setContextMenu(QMenu &menu);
 
     void setScenePoint(LvlScene *theScene);
-    //void setGroupPoint(QGraphicsItemGroup *theGrp);
-    //void setNPCItemPoint(QGraphicsItem *includedNPCPnt);
 
     QRectF boundingRect() const;
-
-    QPixmap mainImage;
-    QMenu *ItemMenu;
-//    QGraphicsScene * scene;
-//    QGraphicsPixmapItem * image;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     //////Animation////////
-    void setAnimation(int frames, int framespeed, int algorithm);
-    void AnimationStart();
-    void AnimationStop();
-    void draw();
+    void setAnimator(long aniID);
+
+    QMenu *ItemMenu;
+
     void setSlippery(bool slip);
     void setInvisible(bool inv);
     void setLayer(QString layer);
@@ -72,8 +67,6 @@ public:
     void arrayApply();
     void removeFromArray();
 
-    QPoint fPos() const;
-    void setFrame(int);
     LevelBlock blockData;
     int gridSize;
 
@@ -83,35 +76,22 @@ public:
 
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
-    //virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
-private slots:
-    void nextFrame();
-
 private:
-    bool animated;
-    int frameSpeed;
 
-    QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
+    long animatorID;
+    QRectF imageSize;
+
+    bool animated;
+
+
     QGraphicsItemGroup * grp;
     QGraphicsItem * includedNPC;
-
+    QPixmap currentImage;
     bool sizable;
     LvlScene * scene;
-    int frameCurrent;
-    QTimer * timer;
-    QPoint framePos;
-    int framesQ;
-    int frameSize; // size of one frame
-    int frameWidth; // sprite width
-    int frameHeight; //sprite height
-    QPixmap currentImage;
-
-    //Animation alhorithm
-    int frameFirst;
-    int frameLast;
-
+    QPixmap drawSizableBlock(int w, int h, QPixmap srcimg);
 };
 
 #endif // ITEM_BLOCK_H

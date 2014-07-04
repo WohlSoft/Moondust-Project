@@ -188,8 +188,6 @@ public slots:
 
 private slots:
 
-    //void TickTack();
-
     //Actions
     void on_LevelSectionSettings_visibilityChanged(bool visible);
     void on_LevelToolBox_visibilityChanged(bool visible);
@@ -469,35 +467,23 @@ private slots:
     void on_LVLEvent_TriggerDelay_valueChanged(double arg1);
 
     void on_WarpBrowseLevels_clicked();
-
     void on_actionContents_triggered();
-
     void on_actionNew_triggered();
+    void on_actionLVLSearchBox_triggered(bool checked);
+    void on_FindDock_visibilityChanged(bool visible);
+    void on_FindStartNPC_clicked();
 
 private:
 
-    LevelEditingSettings LvlOpts;
-    bool AnimationEnabled; //Animator switch
-
     LevelData LvlBuffer; // The Clipboarc for Level objects
 
-    QString LastOpenDir;
-    int lastWinType;
-    bool LevelToolBoxVis; //Level toolbox
-    bool SectionToolBoxVis; //Section Settings
-    bool LevelDoorsBoxVis; //Doors box
-    bool LevelLayersBoxVis; //Layers box
-    bool LevelEventsBoxVis; //Events box
-    bool WorldToolBoxVis;
-    bool autoPlayMusic;
-
-
-    // ////////////Layer Functions///////////////////
+     // ////////////Layer Functions///////////////////
     void RemoveCurrentLayer(bool moveToDefault);
     void RemoveLayerItems(QString layerName);
     void RemoveLayerFromListAndData(QListWidgetItem * layerItem);
     void ModifyLayer(QString layerName, bool visible);
     void ModifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord = -1);
+
     //Direct List Functions
     void AddNewLayer(QString layerName, bool setEdited);
     void ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible);

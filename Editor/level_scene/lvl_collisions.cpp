@@ -57,8 +57,10 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
             topB = it->scenePos().y();
             bottomB = it->scenePos().y()+it->data(10).toLongLong();
 
+            #ifdef _DEBUG_
             if(it->data(0).toString()=="Block")
                 WriteToLog(QtDebugMsg, QString(" >>Collision with block detected"));
+            #endif
 
 
           if((item->data(0).toString()=="Block")||(item->data(0).toString()=="NPC")||(item->data(0).toString()=="BGO"))
@@ -93,7 +95,9 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 
               if(item->data(3).toString()=="sizable")
               {//sizable Block
+                  #ifdef _DEBUG_
                   WriteToLog(QtDebugMsg, QString("sizable block") );
+                  #endif
                   continue;
               }
 

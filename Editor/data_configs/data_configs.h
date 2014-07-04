@@ -109,6 +109,8 @@ struct obj_block{
 
     unsigned int view;
     bool animated;
+    bool animation_rev; //Reverse animation
+    bool animation_bid; //Bidirectional animation
     unsigned int frames;
     int framespeed;
 };
@@ -191,12 +193,14 @@ struct obj_sound
 struct blocksIndexes
 {
     unsigned long i; //Target array index
+    unsigned long ai; //Animator array index
     unsigned int type;//0 - internal GFX, 1 - user defined GFX
 };
 
 struct bgoIndexes
 {
     unsigned long i; //Target array index
+    unsigned long ai; //Animator array index
     unsigned int type;//0 - internal GFX, 1 - user defined GFX
     long smbx64_sp;//smbx64-sort-priority, array sorting priority, need for compatible with SMBX 1.3
 };

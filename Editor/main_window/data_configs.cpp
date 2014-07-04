@@ -69,5 +69,6 @@ void MainWindow::on_actionCurConfig_triggered()
     cnfWindow->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cnfWindow->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cnfWindow->size(), qApp->desktop()->availableGeometry()));
     cnfWindow->exec();
+    delete cnfWindow;
     //if(cnfWindow->exec()==QDialog::Accepted)
 }

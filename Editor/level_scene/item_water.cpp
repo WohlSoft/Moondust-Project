@@ -48,7 +48,7 @@ ItemWater::ItemWater(QGraphicsPolygonItem *parent)
 
 ItemWater::~ItemWater()
 {
- //   WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
+   // WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
 }
 
 void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -85,12 +85,14 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->clear();
 
         QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer));
+        LayerName->deleteLater();
 
         QAction *setLayer;
         QList<QAction *> layerItems;
 
         QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-            LayerName->addSeparator();
+            LayerName->addSeparator()->deleteLater();
+            newLayer->deleteLater();
 
         foreach(LevelLayers layer, scene->LvlData->layers)
         {
@@ -102,27 +104,34 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setLayer->setCheckable(true);
             setLayer->setEnabled(true);
             setLayer->setChecked( layer.name==waterData.layer );
+            setLayer->deleteLater();
             layerItems.push_back(setLayer);
         }
 
         ItemMenu->addSeparator();
 
         QMenu * WaterType = ItemMenu->addMenu(tr("Environment type"));
+            WaterType->deleteLater();
 
         QAction *setAsWater = WaterType->addAction(tr("Water"));
             setAsWater->setCheckable(true);
             setAsWater->setChecked(!waterData.quicksand);
+            setAsWater->deleteLater();
 
         QAction *setAsQuicksand = WaterType->addAction(tr("Quicksand"));
             setAsQuicksand->setCheckable(true);
             setAsQuicksand->setChecked(waterData.quicksand);
+            setAsQuicksand->deleteLater();
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *copyWater = ItemMenu->addAction(tr("Copy"));
+            copyWater->deleteLater();
         QAction *cutWater = ItemMenu->addAction(tr("Cut"));
+            cutWater->deleteLater();
 
-        ItemMenu->addSeparator();
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *remove = ItemMenu->addAction(tr("Remove"));
+            remove->deleteLater();
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -225,6 +234,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                     MainWinConnect::pMainWin->setLayersBox();
                     MainWinConnect::pMainWin->setLayerToolsLocked(false);
                 }
+                delete layerBox;
             }
             else
             foreach(QAction * lItem, layerItems)
