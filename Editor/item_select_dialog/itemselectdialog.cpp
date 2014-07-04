@@ -91,6 +91,10 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
         }else{
             npcFromList->setChecked(true);
         }
+    }else{
+        npcFromList = 0;
+        npcCoins = 0;
+        npcCoinsSel = 0;
     }
 
     if(blockTab){
@@ -685,7 +689,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
     blockID = 0;
     bgoID = 0;
     npcID = 0;
-    isCoin = npcCoins->isChecked();
+    isCoin = (npcCoins ? npcCoins->isChecked() : false);
 
     if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)!=-1){
         if(!ui->Sel_List_Block->selectedItems().isEmpty()){
@@ -700,7 +704,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
     }
 
     if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)!=-1){
-        if(npcCoins!=0){
+        if(npcCoins){
             if(npcCoins->isChecked()){
                 npcID = npcCoinsSel->value();
             }else{

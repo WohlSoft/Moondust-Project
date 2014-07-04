@@ -1200,20 +1200,13 @@ void MainWindow::on_PROPS_NPCContaiter_clicked()
     //LevelData selData;
     //QList<QVariant> modNPC;
 
-    NpcDialog * npcList = new NpcDialog(&configs);
+    ItemSelectDialog* npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, npcID);
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
-    npcList->setState(npcID, 2);
-
     if(npcList->exec()==QDialog::Accepted)
     {
         //apply to all selected items.
-        int selected_npc=0;
-        if(npcList->isEmpty)
-            selected_npc = 0;
-        else
-            selected_npc = npcList->selectedNPC;
-
+        int selected_npc=npcList->npcID;
         ui->PROPS_NPCContaiter->setText(
                     ((selected_npc>0)?QString("NPC-%1").arg(selected_npc)
                        :tr("[empty]")
