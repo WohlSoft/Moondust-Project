@@ -156,15 +156,15 @@ ItemSelectDialog::~ItemSelectDialog()
 void ItemSelectDialog::removeEmptyEntry(int tabs)
 {
     if(tabs & TAB_BLOCK && ui->Sel_List_Block->item(0)->data(3).toInt() == 0)
-        ui->Sel_List_Block->removeItemWidget(ui->Sel_List_Block->item(0));
+        delete ui->Sel_List_Block->item(0);
 
     if(tabs & TAB_BGO && ui->Sel_List_BGO->item(0)->data(3).toInt() == 0)
-        ui->Sel_List_BGO->removeItemWidget(ui->Sel_List_BGO->item(0));
+        delete ui->Sel_List_BGO->item(0);
 
     if(tabs & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
-        ui->Sel_List_NPC->removeItemWidget(ui->Sel_List_NPC->item(0));
+        delete ui->Sel_List_NPC->item(0);
 
-    removalFlags = static_cast<ItemSelectDialog::Tabs>(tabs);
+    removalFlags = tabs;
 
 }
 
@@ -566,13 +566,13 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
     ui->Sel_List_NPC->insertItem(0,empNPC);
 
     if(removalFlags & TAB_BLOCK && ui->Sel_List_Block->item(0)->data(3).toInt() == 0)
-        ui->Sel_List_Block->removeItemWidget(ui->Sel_List_Block->item(0));
+        delete ui->Sel_List_Block->item(0);
 
     if(removalFlags & TAB_BGO && ui->Sel_List_BGO->item(0)->data(3).toInt() == 0)
-        ui->Sel_List_BGO->removeItemWidget(ui->Sel_List_BGO->item(0));
+        delete ui->Sel_List_BGO->item(0);
 
     if(removalFlags & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
-        ui->Sel_List_NPC->removeItemWidget(ui->Sel_List_NPC->item(0));
+        delete ui->Sel_List_NPC->item(0);
 
     lock_grp=false;
     lock_cat=false;
