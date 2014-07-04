@@ -1118,7 +1118,7 @@
         <x>0</x>
         <y>0</y>
         <width>263</width>
-        <height>335</height>
+        <height>357</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1178,8 +1178,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>242</width>
-        <height>335</height>
+        <width>77</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1202,8 +1202,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>242</width>
-        <height>335</height>
+        <width>77</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1226,8 +1226,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>242</width>
-        <height>335</height>
+        <width>77</width>
+        <height>28</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -3863,8 +3863,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>227</width>
+          <height>132</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3945,8 +3945,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>223</width>
+          <height>103</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4337,8 +4337,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>213</width>
+          <height>190</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4453,8 +4453,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>226</width>
+          <height>130</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4551,8 +4551,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>118</width>
+          <height>80</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4694,7 +4694,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>271</width>
-          <height>407</height>
+          <height>327</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4805,8 +4805,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>271</width>
-          <height>407</height>
+          <width>148</width>
+          <height>138</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4917,8 +4917,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>271</width>
-          <height>407</height>
+          <width>148</width>
+          <height>138</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5003,7 +5003,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </widget>
          </item>
          <item row="4" column="0" colspan="4">
-          <widget class="QPushButton" name="Find_Button_Reset">
+          <widget class="QPushButton" name="Find_Button_ResetNPC">
            <property name="text">
             <string>Reset Search Fields</string>
            </property>
