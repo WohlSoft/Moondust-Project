@@ -181,34 +181,32 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
     bool noimage=true, found=false;
-    bool isUser=false;
     int j;
+    long animator=0;
 
-    //QGraphicsItem *npc = NULL;
-    //QGraphicsItemGroup *includedNPC;
     ItemBlock *BlockImage = new ItemBlock;
-
-    noimage=true;
-    isUser=false;
-
 
     //Check Index exists
     if(block.id < (unsigned int)index_blocks.size())
     {
         j = index_blocks[block.id].i;
+        animator = index_blocks[block.id].ai;
 
         if(j<pConfigs->main_block.size())
         {
-        if(pConfigs->main_block[j].id == block.id)
-            found=true;
+            if(pConfigs->main_block[j].id == block.id)
+            {
+                found=true;noimage=false;
+            }
         //WriteToLog(QtDebugMsg, QString("ItemPlacer -> Index: %1[i=%2], value: %3").arg(block.id).arg(j).arg(pConfigs->main_block[j].id));
         }
     }
 
 
     //if Index found
-    if(found)
-    {   //get neccesary element directly
+    if(!found)
+    {
+        /*//get neccesary element directly
         if(index_blocks[block.id].type==1)
         {
             isUser=true;
@@ -235,29 +233,28 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
                 break;
             }
         }
-
+    */
         for(j=0;j<pConfigs->main_block.size();j++)
         {
             if(pConfigs->main_block[j].id==block.id)
             {
                 noimage=false;
-                if(!isUser)
-                    tImg = pConfigs->main_block[j].image; break;
+                //if(!isUser)
             }
         }
 
         //WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Fetch %1").arg(j));
     }
 
-    if((noimage)||(tImg.isNull()))
+    if(noimage)
     {
-        //if(block.id==89) WriteToLog(QtDebugMsg, QString("Block 89 is %1, %2").arg(noimage).arg(tImg.isNull()));
-        tImg = uBlockImg;
         if(j >= pConfigs->main_block.size())
         {
             j=0;
         }
     }
+
+    tImg = animates_Blocks[animator]->wholeImage();
 
     BlockImage->setBlockData(block, pConfigs->main_block[j].sizable);
     BlockImage->gridSize = pConfigs->main_block[j].grid;
@@ -361,47 +358,18 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 
     //if Index found
     if(!found)
-//    {   //get neccesary element directly
-//        if(index_bgo[bgo.id].type==1)
-//        {
-//            //isUser=true;
-//            noimage=false;
-//            //tImg = uBGOs[index_bgo[bgo.id].i].image;
-//        }
-//        else
-//        {
-//            //tImg = pConfigs->main_bgo[index_bgo[bgo.id].i].image;
-//            noimage=false;
-//        }
-//    }
-//  else
     {
-//        //fetching arrays
-//        for(j=0;j<uBGOs.size();j++)
-//        {
-//            if(uBGOs[j].id==bgo.id)
-//            {
-//                //isUser=true;
-//                noimage=false;
-//                //tImg = uBGOs[j].image;
-//                break;
-//            }
-//        }
-
         for(j=0;j<pConfigs->main_bgo.size();j++)
         {
             if(pConfigs->main_bgo[j].id==bgo.id)
             {
                 noimage=false;
-                //if(!isUser)
-                //tImg = pConfigs->main_bgo[j].image; break;
             }
         }
     }
 
     if(noimage)
     {
-        //tImg=uBgoImg;
         if(j >= pConfigs->main_bgo.size())
         {
             j=0;
@@ -663,7 +631,6 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     #endif
 }
 
-
 void LvlScene::placeWater(LevelWater &water, bool toGrid)
 {
     ItemWater *WATERItem = new ItemWater();
@@ -751,6 +718,19 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
 }
 
+void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
+{
+    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
+    {
+        placeDoorEnter(door, toGrid, true);
+    }
+
+    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) )
+    {
+        placeDoorExit(door, toGrid, true);
+    }
+}
+
 void LvlScene::placeDoorEnter(LevelDoors &door, bool toGrid, bool init)
 {
     ItemDoor * doorItemEntrance;
@@ -786,17 +766,4 @@ void LvlScene::placeDoorExit(LevelDoors &door, bool toGrid, bool init)
     }
     addItem(doorItemExit);
     doorItemExit->setDoorData(door, ItemDoor::D_Exit, init);
-}
-
-void LvlScene::placeDoor(LevelDoors &door, bool toGrid)
-{
-    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
-    {
-        placeDoorEnter(door, toGrid, true);
-    }
-
-    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) )
-    {
-        placeDoorExit(door, toGrid, true);
-    }
 }
