@@ -47,13 +47,46 @@ void LvlScene::buildAnimators()
 
     for(i=0; i<pConfigs->main_block.size(); i++) //Add user images
     {
+        //WriteToLog(QtDebugMsg, QString("Block Animator ID: %1").arg(i));
+
+        int frameFirst;
+        int frameLast;
+
+        switch(pConfigs->main_block[i].algorithm)
+        {
+            case 1: // Invisible block
+            {
+                frameFirst = 5;
+                frameLast = 6;
+                break;
+            }
+            case 3: //Player's character block
+            {
+                frameFirst = 0;
+                frameLast = 1;
+                break;
+            }
+            case 4: //Player's character switch
+            {
+                frameFirst = 0;
+                frameLast = 3;
+                break;
+            }
+            default: //Default block
+            {
+                frameFirst = 0;
+                frameLast = -1;
+                break;
+            }
+        }
+
         SimpleAnimator * aniBlock = new SimpleAnimator(
-                         ((pConfigs->main_bgo[i].image.isNull())?
+                         ((pConfigs->main_block[i].image.isNull())?
                                 uBgoImg:
-                               pConfigs->main_block[i].image),
+                                pConfigs->main_block[i].image),
                                 pConfigs->main_block[i].animated,
                                 pConfigs->main_block[i].frames,
-                                pConfigs->main_block[i].framespeed, 0, -1,
+                                pConfigs->main_block[i].framespeed, frameFirst, frameLast,
                                 pConfigs->main_block[i].animation_rev,
                                 pConfigs->main_block[i].animation_bid
                               );
@@ -220,6 +253,37 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 }
             }
 
+
+            int frameFirst;
+            int frameLast;
+
+            switch(pConfigs->main_block[i].algorithm)
+            {
+                case 1: // Invisible block
+                {
+                    frameFirst = 5;
+                    frameLast = 6;
+                    break;
+                }
+                case 3: //Player's character block
+                {
+                    frameFirst = 0;
+                    frameLast = 1;
+                    break;
+                }
+                case 4: //Player's character switch
+                {
+                    frameFirst = 0;
+                    frameLast = 3;
+                    break;
+                }
+                default: //Default block
+                {
+                    frameFirst = 0;
+                    frameLast = -1;
+                    break;
+                }
+            }
             SimpleAnimator * aniBlock = new SimpleAnimator(
                         ((custom)?
                              ((uBlocks.last().image.isNull())?
@@ -232,7 +296,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                              ),
                                   pConfigs->main_block[i].animated,
                                   pConfigs->main_block[i].frames,
-                                  pConfigs->main_block[i].framespeed, 0,-1,
+                                  pConfigs->main_block[i].framespeed, frameFirst,frameLast,
                                   pConfigs->main_block[i].animation_rev,
                                   pConfigs->main_block[i].animation_bid
                                   );
