@@ -96,7 +96,7 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     }
 
     //Copy fixture size to GFX size
-    if((local.en_height)&&(global.height <= (unsigned int)global.gfx_h)&&(merged.framestyle<2))
+    if((local.en_height)&&(merged.height != (unsigned int)global.gfx_h)&&(!merged.custom_animate)/*&&(merged.framestyle<2)*/)
         merged.gfx_h = merged.height;
     else
         merged.gfx_h = global.gfx_h;

@@ -78,7 +78,7 @@
       <set>QGraphicsView::CacheBackground</set>
      </property>
      <property name="viewportUpdateMode">
-      <enum>QGraphicsView::BoundingRectViewportUpdate</enum>
+      <enum>QGraphicsView::MinimalViewportUpdate</enum>
      </property>
      <property name="rubberBandSelectionMode">
       <enum>Qt::IntersectsItemShape</enum>

@@ -94,6 +94,7 @@ struct LevelNPC
     int direct;
     unsigned long id;
     long special_data;
+    long special_data2;
     bool generator;
     int generator_direct;
     int generator_type;

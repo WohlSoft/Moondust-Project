@@ -20,6 +20,7 @@
 #define APPSETTINGS_H
 
 #include <QDialog>
+#include <QMdiArea>
 
 namespace Ui {
 class AppSettings;
@@ -41,6 +42,9 @@ public:
 
     bool    logEnabled;
     int     loglevel;
+
+    QMdiArea::ViewMode   MainWindowView;
+
     QString logfile;
 
     void applySettings();
@@ -48,7 +52,6 @@ public:
 
 private slots:
     void on_setLogFile_clicked();
-
     void on_buttonBox_accepted();
 
 private:

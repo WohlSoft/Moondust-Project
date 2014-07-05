@@ -108,6 +108,7 @@ struct obj_npc
 //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
     bool special_option;
 //    ;special-name="Cheep-cheep"	; 60
+
     QString special_name;
 //    ;special-type=0			; 61 0 combobox, 1 - spin, 2 - npc-id
     int special_type;
@@ -120,8 +121,31 @@ struct obj_npc
 //    ;special-spin-min=0		; 66 milimal value of spin
     int special_spin_max;
 //    ;special-spin-max=25		; 67 maximal value of spin
-
     int special_spin_value_offset;
+
+//    have-special-2=0			; Special NPC's option, what can used by NPC's algorithm
+    bool special_option_2; //Second special option
+//    special-2-npc-spin-required
+    QList<long > special_2_npc_spin_required;
+//    special-2-npc-box-required
+    QList<long > special_2_npc_box_required;
+
+//    ;special-2-name="Cheep-cheep"	; 60
+    QString special_2_name;
+//    ;special-2-type=0			; 61 0 combobox, 1 - spin
+    int special_2_type;
+//    ;special-combobox-size=3		; 62 quantity of options
+    QStringList special_2_combobox_opts;
+//    ;special-option-0="Swim"		; 63 set title for 0 option combobox
+//    ;special-option-1="Jump"		; 64 set title for 1 option combobox
+//    ;special-option-2="Projective"	; 65 set title for 2 option combobox
+    int special_2_spin_min;
+//    ;special-2-spin-min=0		; 66 milimal value of spin
+    int special_2_spin_max;
+//    ;special-2-spin-max=25		; 67 maximal value of spin
+    int special_2_spin_value_offset;
+    //special-2-spin-value-offset
+
 //    ;game process
 //    score=2				; Add scores to player (value 0-13)
 //    ; 0, 10, 100, 200, 400, 800, 1000, 2000, 4000, 8000, 1up, 2up, 5up, 3up
