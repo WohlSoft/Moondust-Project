@@ -29,6 +29,7 @@
 
 
 static int npcSpecSpinOffset=0;
+static int npcSpecSpinOffset_2=0;
 static bool LockItemProps=true;
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
@@ -226,7 +227,13 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
         ui->PROPS_NpcSpinLabel->hide();
         ui->PROPS_NPCSpecialSpin->hide();
+
         ui->line_6->hide();
+
+        ui->PROPS_NpcSpecial2title->hide();
+        ui->PROPS_NPCSpecial2Spin->hide();
+        ui->PROPS_NPCSpecial2Box->hide();
+        ui->Line_Special2_sep->hide();
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
 
@@ -325,6 +332,74 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 break;
             }
         }
+        if((configs.main_npc[j].special_option_2)&&
+                ((configs.main_npc[j].special_2_npc_spin_required.isEmpty())||
+                 (configs.main_npc[j].special_2_npc_box_required.isEmpty())||
+                 (configs.main_npc[j].special_2_npc_spin_required.contains(npc.special_data))||
+                 (configs.main_npc[j].special_2_npc_box_required.contains(npc.special_data)))
+                )
+        {
+            if(
+                    ((configs.main_npc[j].special_2_npc_box_required.isEmpty())&&
+                     (configs.main_npc[j].special_2_type==0))
+                    ||
+                    (configs.main_npc[j].special_2_npc_box_required.contains(npc.special_data))
+              )
+            {
+                ui->Line_Special2_sep->show();
+                ui->PROPS_NpcSpecial2title->show();
+                ui->PROPS_NpcSpecial2title->setText(configs.main_npc[j].special_2_name);
+
+                ui->PROPS_NPCSpecial2Box->show();
+                if(newItem)
+                {//Reset value to min, if it out of range
+                    if((npc.special_data2>=configs.main_npc[j].special_2_combobox_opts.size())||
+                        (npc.special_data2<0))
+                    {
+                       LvlPlacingItems::npcSet.special_data2=0;
+                       npc.special_data2=0;
+                    }
+                }
+
+                ui->PROPS_NPCSpecial2Box->clear();
+                for(int i=0; i < configs.main_npc[j].special_2_combobox_opts.size(); i++)
+                {
+                    ui->PROPS_NPCSpecial2Box->addItem( configs.main_npc[j].special_2_combobox_opts[i] );
+                    if(i==npc.special_data2) ui->PROPS_NPCSpecial2Box->setCurrentIndex(i);
+                }
+            }
+            else
+            if(
+                    ((configs.main_npc[j].special_2_npc_spin_required.isEmpty())
+                     &&(configs.main_npc[j].special_2_type==1))||
+                    (configs.main_npc[j].special_2_npc_spin_required.contains(npc.special_data))
+              )
+            {
+                ui->Line_Special2_sep->show();
+                ui->PROPS_NpcSpecial2title->show();
+                ui->PROPS_NpcSpecial2title->setText(configs.main_npc[j].special_2_name);
+
+                ui->PROPS_NPCSpecial2Spin->show();
+                if(newItem)
+                { //Reset value to min, if it out of range
+                    if((npc.special_data2>configs.main_npc[j].special_2_spin_max)||
+                       (npc.special_data2<configs.main_npc[j].special_2_spin_max))
+                    {
+                       LvlPlacingItems::npcSet.special_data2 = configs.main_npc[j].special_2_spin_min;
+                       npc.special_data2 = configs.main_npc[j].special_2_spin_min;
+                    }
+                }
+
+                npcSpecSpinOffset_2 = configs.main_npc[j].special_2_spin_value_offset;
+                ui->PROPS_NPCSpecial2Spin->setMinimum( configs.main_npc[j].special_2_spin_min + npcSpecSpinOffset_2 );
+                ui->PROPS_NPCSpecial2Spin->setMaximum( configs.main_npc[j].special_2_spin_max + npcSpecSpinOffset_2 );
+
+                ui->PROPS_NPCSpecial2Spin->setValue( npc.special_data2 + npcSpecSpinOffset_2 );
+            }
+        }
+
+
+
         QString npcmsg = (npc.msg.isEmpty() ? tr("[none]") : npc.msg);
         if(npcmsg.size()>20)
         {
@@ -1359,6 +1434,138 @@ void MainWindow::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
         activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(index));
     }
 }
+
+
+
+void MainWindow::on_PROPS_NPCSpecial2Spin_valueChanged(int arg1)
+{
+    if(LvlItemPropsLock) return;
+    if(LockItemProps) return;
+
+    if(npcPtr<0)
+    {
+        LvlPlacingItems::npcSet.special_data2 = arg1;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        LevelData selData;
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                LevelNPC npc = ((ItemNPC*)item)->npcData;
+
+                bool found=false;
+                int j;
+
+                //Check Index exists
+                if(npc.id < (unsigned int)configs.index_npc.size())
+                {
+                    j = configs.index_npc[npc.id].i;
+
+                    if(j<configs.main_npc.size())
+                    {
+                    if(configs.main_npc[j].id == npc.id)
+                        found=true;
+                    }
+                }
+                //if Index found
+                if(!found)
+                {
+                    for(j=0;j<configs.main_npc.size();j++)
+                    {
+                        if(configs.main_npc[j].id==npc.id)
+                            break;
+                    }
+                }
+
+                if(j >= configs.main_npc.size())
+                {
+                    j=0;
+                }
+
+                if(configs.main_npc[j].special_2_type != 1) //wrong type, go to next one
+                    continue;
+
+                if(configs.main_npc[j].special_2_spin_value_offset != npcSpecSpinOffset_2) //wrong offset, go to next one
+                    continue;
+
+                selData.npc.push_back(((ItemNPC*)item)->npcData);
+                ((ItemNPC*)item)->npcData.special_data2 = arg1 - npcSpecSpinOffset_2;
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+        //activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset_2));
+    }
+
+
+}
+
+void MainWindow::on_PROPS_NPCSpecial2Box_currentIndexChanged(int index)
+{
+    if(LvlItemPropsLock) return;
+    if(LockItemProps) return;
+
+    if(npcPtr<0)
+    {
+        LvlPlacingItems::npcSet.special_data2 = index;
+    }
+    else
+    if (activeChildWindow()==1)
+    {
+        LevelData selData;
+        QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="NPC")
+            {
+                LevelNPC npc = ((ItemNPC*)item)->npcData;
+
+                bool found=false;
+                int j;
+
+                //Check Index exists
+                if(npc.id < (unsigned int)configs.index_npc.size())
+                {
+                    j = configs.index_npc[npc.id].i;
+
+                    if(j<configs.main_npc.size())
+                    {
+                    if(configs.main_npc[j].id == npc.id)
+                        found=true;
+                    }
+                }
+                //if Index found
+                if(!found)
+                {
+                    for(j=0;j<configs.main_npc.size();j++)
+                    {
+                        if(configs.main_npc[j].id==npc.id)
+                            break;
+                    }
+                }
+
+                if(j >= configs.main_npc.size())
+                {
+                    j=0;
+                }
+
+                if(configs.main_npc[j].special_2_type != 0) //wrong type, go to next one
+                    continue;
+
+                selData.npc.push_back(((ItemNPC*)item)->npcData);
+                ((ItemNPC*)item)->npcData.special_data2 = index;
+                ((ItemNPC*)item)->arrayApply();
+            }
+        }
+        //activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(index));
+    }
+
+
+}
+
 
 void MainWindow::on_PROPS_NpcGenerator_clicked(bool checked)
 {

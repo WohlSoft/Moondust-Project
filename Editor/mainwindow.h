@@ -382,6 +382,8 @@ private slots:
     void on_PROPS_NPCSpecialSpin_valueChanged(int arg1);
     void on_PROPS_NPCContaiter_clicked();
     void on_PROPS_NPCSpecialBox_currentIndexChanged(int index);
+    void on_PROPS_NPCSpecial2Spin_valueChanged(int arg1);
+    void on_PROPS_NPCSpecial2Box_currentIndexChanged(int index);
     void on_PROPS_NpcGenerator_clicked(bool checked);
     void on_PROPS_NPCGenType_currentIndexChanged(int index);
     void on_PROPS_NPCGenTime_valueChanged(double arg1);

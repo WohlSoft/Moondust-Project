@@ -133,3 +133,4 @@ void MainWindow::on_actionNew_triggered()
 {
     ui->menuNew->exec( this->cursor().pos() );
 }
+
