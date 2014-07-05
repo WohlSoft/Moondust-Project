@@ -525,6 +525,9 @@ private:
     int curSearchBlockID;
     int curSearchBGOID;
     int curSearchNPCID;
+    LevelBlock curSearchBlock;
+    LevelBGO curSearchBGO;
+    LevelNPC curSearchNPC;
     void resetAllSearchFields();
     void resetAllSearches();
     bool doSearchBlock(leveledit* edit);
