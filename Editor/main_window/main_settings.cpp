@@ -26,7 +26,7 @@
 #include "global_settings.h"
 
 QString GlobalSettings::locale="";
-long GlobalSettings::animatorItemsLimit=10000;
+long GlobalSettings::animatorItemsLimit=25000;
 QString GlobalSettings::openPath=".";
 QString GlobalSettings::savePath=".";
 QString GlobalSettings::savePath_npctxt=".";
