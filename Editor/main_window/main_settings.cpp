@@ -159,12 +159,15 @@ void MainWindow::setUiDefults()
 //    //start event detection loop
 //    TickTackTimer->start(1);
 
-    curSearchBlockID = 0;
-    curSearchBGOID = 0;
-    curSearchNPCID = 0;
-    curSearchBlockIndex = 0;
-    curSearchBGOIndex = 0;
-    curSearchNPCIndex = 0;
+    curSearchBlock.id = 0;
+    curSearchBlock.index = 0;
+
+    curSearchBGO.id = 0;
+    curSearchBGO.index = 0;
+    curSearchBGO.smbx64_sp = 0;
+
+    curSearchNPC.id = 0;
+    curSearchNPC.index = 0;
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));

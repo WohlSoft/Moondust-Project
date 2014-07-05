@@ -109,10 +109,10 @@ void MainWindow::on_FindStartNPC_clicked()
 
 void MainWindow::on_Find_Button_TypeBlock_clicked()
 {
-    ItemSelectDialog* selBlock = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BLOCK,0,curSearchBlockID);
+    ItemSelectDialog* selBlock = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BLOCK,0,curSearchBlock.id);
     if(selBlock->exec()==QDialog::Accepted){
         int selected = selBlock->blockID;
-        curSearchBlockID = selected;
+        curSearchBlock.id = selected;
         ui->Find_Button_TypeBlock->setText(((selected>0)?QString("Block-%1").arg(selected):tr("[empty]")));
     }
     delete selBlock;
@@ -120,10 +120,10 @@ void MainWindow::on_Find_Button_TypeBlock_clicked()
 
 void MainWindow::on_Find_Button_TypeBGO_clicked()
 {
-    ItemSelectDialog* selBgo = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BGO,0,0,curSearchBGOID);
+    ItemSelectDialog* selBgo = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BGO,0,0,curSearchBGO.id);
     if(selBgo->exec()==QDialog::Accepted){
         int selected = selBgo->bgoID;
-        curSearchBGOID = selected;
+        curSearchBGO.id = selected;
         ui->Find_Button_TypeBGO->setText(((selected>0)?QString("BGO-%1").arg(selected):tr("[empty]")));
     }
     delete selBgo;
@@ -131,10 +131,10 @@ void MainWindow::on_Find_Button_TypeBGO_clicked()
 
 void MainWindow::on_Find_Button_TypeNPC_clicked()
 {
-    ItemSelectDialog* selNpc = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,0,0,0,curSearchNPCID);
+    ItemSelectDialog* selNpc = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,0,0,0,curSearchNPC.id);
     if(selNpc->exec()==QDialog::Accepted){
         int selected = selNpc->npcID;
-        curSearchNPCID = selected;
+        curSearchNPC.id = selected;
         ui->Find_Button_TypeNPC->setText(((selected>0)?QString("NPC-%1").arg(selected):tr("[empty]")));
     }
 
@@ -146,12 +146,12 @@ void MainWindow::on_Find_Button_ResetBlock_clicked()
     if(!(currentSearches & SEARCH_BLOCK)){
         ui->Find_Check_TypeBlock->setChecked(true);
         ui->Find_Button_TypeBlock->setText(tr("[empty]"));
-        curSearchBlockID = 0;
+        curSearchBlock.id = 0;
     }else{
         currentSearches ^= SEARCH_BLOCK;
         ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
         ui->FindStartBlock->setText(tr("Search Block"));
-        curSearchBlockIndex = 0;
+        curSearchBlock.index = 0;
     }
 }
 
@@ -160,12 +160,12 @@ void MainWindow::on_Find_Button_ResetBGO_clicked()
     if(!(currentSearches & SEARCH_BGO)){
         ui->Find_Check_TypeBGO->setChecked(true);
         ui->Find_Button_TypeBGO->setText(tr("[empty]"));
-        curSearchBGOID = 0;
+        curSearchBGO.id = 0;
     }else{
         currentSearches ^= SEARCH_BGO;
         ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
         ui->FindStartBGO->setText(tr("Search BGO"));
-        curSearchBGOIndex = 0;
+        curSearchBGO.index = 0;
     }
 }
 
@@ -174,12 +174,12 @@ void MainWindow::on_Find_Button_ResetNPC_clicked()
     if(!(currentSearches & SEARCH_NPC)){
         ui->Find_Check_TypeNPC->setChecked(true);
         ui->Find_Button_TypeNPC->setText(tr("[empty]"));
-        curSearchNPCID = 0;
+        curSearchNPC.id = 0;
     }else{
         currentSearches ^= SEARCH_NPC;
         ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
         ui->FindStartNPC->setText(tr("Search NPC"));
-        curSearchNPCIndex = 0;
+        curSearchNPC.index = 0;
     }
 }
 
@@ -203,12 +203,12 @@ void MainWindow::resetAllSearches()
 bool MainWindow::doSearchBlock(leveledit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchBlockIndex+1 < gr.size()){
-        for(int i = curSearchBlockIndex+1; i < gr.size(); ++i){
+    if(curSearchBlock.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchBlock.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="Block"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeBlock->isChecked()&&toBeFound){
-                    toBeFound = ((ItemBlock*)gr[i])->blockData.id == (unsigned int)curSearchBlockID;
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.id == (unsigned int)curSearchBlock.id;
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
@@ -217,26 +217,26 @@ bool MainWindow::doSearchBlock(leveledit *edit)
                     }
                     gr[i]->setSelected(true);
                     edit->goTo(((ItemBlock*)gr[i])->blockData.x, ((ItemBlock*)gr[i])->blockData.y, true, QPoint(-300, -300));
-                    curSearchBlockIndex = i;
+                    curSearchBlock.index = i;
                     return false;
                 }
             }
         }
     }
     //end search
-    curSearchBlockIndex = 0;
+    curSearchBlock.index = 0;
     return true;
 }
 
 bool MainWindow::doSearchBGO(leveledit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchBGOIndex+1 < gr.size()){
-        for(int i = curSearchBGOIndex+1; i < gr.size(); ++i){
+    if(curSearchBGO.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchBGO.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="BGO"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeBGO->isChecked()&&toBeFound){
-                    toBeFound = ((ItemBGO*)gr[i])->bgoData.id == (unsigned int)curSearchBGOID;
+                    toBeFound = ((ItemBGO*)gr[i])->bgoData.id == (unsigned int)curSearchBGO.id;
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
@@ -245,26 +245,26 @@ bool MainWindow::doSearchBGO(leveledit *edit)
                     }
                     gr[i]->setSelected(true);
                     edit->goTo(((ItemBGO*)gr[i])->bgoData.x, ((ItemBGO*)gr[i])->bgoData.y, true, QPoint(-300, -300));
-                    curSearchBGOIndex = i;
+                    curSearchBGO.index = i;
                     return false;
                 }
             }
         }
     }
     //end search
-    curSearchBGOIndex = 0;
+    curSearchBGO.index = 0;
     return true;
 }
 
 bool MainWindow::doSearchNPC(leveledit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
-    if(curSearchNPCIndex+1 < gr.size()){
-        for(int i = curSearchNPCIndex+1; i < gr.size(); ++i){
+    if(curSearchNPC.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchNPC.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="NPC"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeNPC->isChecked()&&toBeFound){
-                    toBeFound = ((ItemNPC*)gr[i])->npcData.id == (unsigned int)curSearchNPCID;
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.id == (unsigned int)curSearchNPC.id;
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
@@ -273,14 +273,14 @@ bool MainWindow::doSearchNPC(leveledit *edit)
                     }
                     gr[i]->setSelected(true);
                     edit->goTo(((ItemNPC*)gr[i])->npcData.x, ((ItemNPC*)gr[i])->npcData.y, true, QPoint(-300, -300));
-                    curSearchNPCIndex = i;
+                    curSearchNPC.index = i;
                     return false;
                 }
             }
         }
     }
     //end search
-    curSearchNPCIndex = 0;
+    curSearchNPC.index = 0;
     return true;
 }
 
