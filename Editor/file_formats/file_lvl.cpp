@@ -37,6 +37,7 @@ LevelNPC    FileFormats::dummyLvlNpc()
     dummyNPC.direct = -1;
     dummyNPC.id=0;
     dummyNPC.special_data=0;
+    dummyNPC.special_data2=0;
     dummyNPC.generator=false;
     dummyNPC.generator_type=1;
     dummyNPC.generator_direct=1;
@@ -679,10 +680,11 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
          if(file_format >= 10)
          {
-             npcdata.special_data = -1;
+             npcdata.special_data = 0;
              switch(npcdata.id)
              {
              //SMBX64 Fixed special options for NPC
+             /*Containers*/
              case 283:/*Bubble*/ case 91: /*buried*/ case 284: /*SMW Lakitu*/
              case 96: /*egg*/
              /*parakoopas*/
@@ -696,6 +698,19 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                      goto badfile;
                  else npcdata.special_data = line.toInt();
 
+                if(npcdata.id==91)
+                switch(npcdata.special_data)
+                {
+                /*WarpSelection*/ case 288: /* case 289:*/ /*firebar*/ /*case 260:*/
+
+                 str_count++;line = in.readLine();
+                 if(SMBX64::sInt(line)) //skip line
+                     goto badfile;
+                 else npcdata.special_data2 = line.toInt();
+                 break;
+                default: break;
+                }
+
                  break;
              default: break;
              }
@@ -706,7 +721,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
              else npcdata.generator = ((line=="#TRUE#")?true:false);
 
              npcdata.generator_direct = -1;
-             npcdata.generator_type = -1;
+             npcdata.generator_type = 1;
 
              if(npcdata.generator)
              {
@@ -1494,16 +1509,23 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         switch(FileData.npc[i].id)
         {
             //SMBX64 Fixed special options for NPC
+            /*Containers*/
             case 283:/*Bubble*/
             case 91: /*buried*/
             case 284: /*SMW Lakitu*/
             case 96: /*egg*/
+
+            /*Items*/
             /*parakoopa*/ case 76: case 121: case 122:case 123:case 124: case 161:case 176:case 177:
             /*paragoomba*/ case 243: case 244:
             /*Cheep-Cheep*/ case 28: case 229: case 230: case 232: case 233: case 234: case 236:
             /*WarpSelection*/ case 288: case 289:
             /*firebar*/ case 260:
         TextData += SMBX64::IntS(FileData.npc[i].special_data);
+
+            if((FileData.npc[i].id==91)&&(FileData.npc[i].special_data==288)) // Warp Section value for included into herb magic potion
+                TextData += SMBX64::IntS(FileData.npc[i].special_data2);
+
             break;
             default:
                 break;
