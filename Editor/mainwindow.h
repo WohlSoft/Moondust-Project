@@ -127,6 +127,10 @@ public slots:
 
     //for search
     void toggleNewWindow(QMdiSubWindow *window);
+    void resetAllSearches();
+    void resetBlockSearch();
+    void resetBGOSearch();
+    void resetNPCSearch();
 
     //SubWindow functions
     npcedit *createNPCChild();
@@ -523,7 +527,6 @@ private:
     LevelBGO curSearchBGO;
     LevelNPC curSearchNPC;
     void resetAllSearchFields();
-    void resetAllSearches();
     bool doSearchBlock(leveledit* edit);
     bool doSearchBGO(leveledit* edit);
     bool doSearchNPC(leveledit* edit);

@@ -23,6 +23,8 @@
 #include "../../level_scene/item_bgo.h"
 #include "../../level_scene/item_npc.h"
 
+static bool lockReset = false;
+
 void MainWindow::on_FindStartBlock_clicked()
 {
     if(!(currentSearches & SEARCH_BLOCK)){ //start search
@@ -165,6 +167,7 @@ void MainWindow::on_Find_Button_ResetBGO_clicked()
         currentSearches ^= SEARCH_BGO;
         ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
         ui->FindStartBGO->setText(tr("Search BGO"));
+        ui->Find_Spin_PriorityBGO->setValue(-1);
         curSearchBGO.index = 0;
     }
 }
@@ -194,9 +197,33 @@ void MainWindow::resetAllSearchFields()
 
 void MainWindow::resetAllSearches()
 {
+    resetBlockSearch();
+    resetBGOSearch();
+    resetNPCSearch();
+}
+
+void MainWindow::resetBlockSearch()
+{
+    if(lockReset) return;
+    lockReset = true;
     if(currentSearches & SEARCH_BLOCK) on_Find_Button_ResetBlock_clicked();
+    lockReset = false;
+}
+
+void MainWindow::resetBGOSearch()
+{
+    if(lockReset) return;
+    lockReset = true;
     if(currentSearches & SEARCH_BGO) on_Find_Button_ResetBGO_clicked();
+    lockReset = false;
+}
+
+void MainWindow::resetNPCSearch()
+{
+    if(lockReset) return;
+    lockReset = true;
     if(currentSearches & SEARCH_NPC) on_Find_Button_ResetNPC_clicked();
+    lockReset = false;
 }
 
 //return true when finish searching
@@ -237,6 +264,9 @@ bool MainWindow::doSearchBGO(leveledit *edit)
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeBGO->isChecked()&&toBeFound){
                     toBeFound = ((ItemBGO*)gr[i])->bgoData.id == (unsigned int)curSearchBGO.id;
+                }
+                if(ui->Find_Check_PriorityBGO->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBGO*)gr[i])->bgoData.smbx64_sp == ui->Find_Spin_PriorityBGO->value();
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
