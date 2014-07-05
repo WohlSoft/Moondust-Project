@@ -112,7 +112,7 @@
           <item row="0" column="0">
            <widget class="QRadioButton" name="MView_SubWindows">
             <property name="text">
-             <string>Sub Wundiws</string>
+             <string>Sub Windows</string>
             </property>
            </widget>
           </item>
