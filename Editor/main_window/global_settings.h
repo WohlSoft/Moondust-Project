@@ -20,6 +20,7 @@
 #define GLOBAL_SETTINGS_H
 
 #include <QString>
+#include <QMdiArea>
 
 struct LevelEditingSettings
 {
@@ -53,6 +54,8 @@ public:
 
     //Last active file type state
     static int lastWinType;
+
+    static QMdiArea::ViewMode MainWindowView;
 
 };
 

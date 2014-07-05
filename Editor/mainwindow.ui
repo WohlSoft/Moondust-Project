@@ -82,10 +82,19 @@
     </brush>
    </property>
    <property name="viewMode">
-    <enum>QMdiArea::SubWindowView</enum>
+    <enum>QMdiArea::TabbedView</enum>
    </property>
    <property name="documentMode">
     <bool>true</bool>
+   </property>
+   <property name="tabsClosable">
+    <bool>true</bool>
+   </property>
+   <property name="tabsMovable">
+    <bool>true</bool>
+   </property>
+   <property name="tabShape">
+    <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="tabPosition">
     <enum>QTabWidget::North</enum>
@@ -97,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1511</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1117,8 +1126,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>263</width>
-        <height>357</height>
+        <width>256</width>
+        <height>403</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1178,8 +1187,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>77</width>
-        <height>28</height>
+        <width>239</width>
+        <height>403</height>
        </rect>
       </property>
      </widget>
@@ -1202,8 +1211,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>77</width>
-        <height>28</height>
+        <width>239</width>
+        <height>403</height>
        </rect>
       </property>
      </widget>
@@ -1226,8 +1235,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>77</width>
-        <height>28</height>
+        <width>239</width>
+        <height>403</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2527,8 +2536,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>246</width>
-          <height>1395</height>
+          <width>243</width>
+          <height>1259</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3680,8 +3689,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>251</width>
-          <height>436</height>
+          <width>272</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3863,8 +3872,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>227</width>
-          <height>132</height>
+          <width>272</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3945,8 +3954,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>223</width>
-          <height>103</height>
+          <width>272</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4039,8 +4048,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>260</width>
-          <height>475</height>
+          <width>255</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4337,8 +4346,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>213</width>
-          <height>190</height>
+          <width>272</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4453,8 +4462,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>226</width>
-          <height>130</height>
+          <width>272</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4551,8 +4560,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>118</width>
-          <height>80</height>
+          <width>272</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4693,8 +4702,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>271</width>
-          <height>327</height>
+          <width>264</width>
+          <height>336</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4805,8 +4814,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>148</width>
-          <height>138</height>
+          <width>264</width>
+          <height>336</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4917,8 +4926,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>148</width>
-          <height>138</height>
+          <width>264</width>
+          <height>336</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6466,6 +6475,9 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </property>
    <property name="toolTip">
     <string>Search for an Item on the Level</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+F</string>
    </property>
   </action>
  </widget>

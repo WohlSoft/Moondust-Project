@@ -44,13 +44,14 @@ bool GlobalSettings::LevelLayersBoxVis=false;
 bool GlobalSettings::LevelEventsBoxVis=false;
 bool GlobalSettings::LevelSearchBoxVis=false;
 
+QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
+
 int GlobalSettings::lastWinType=0;
 
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId;
 bool LvlMusPlay::musicButtonChecked;
 bool LvlMusPlay::musicForceReset=false;
-
 
 void MainWindow::setDefaults()
 {
@@ -142,6 +143,8 @@ void MainWindow::setUiDefults()
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
 
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+
 
 //    //Start event detector
 //    TickTackLock = false;
@@ -197,6 +200,8 @@ void MainWindow::loadSettings()
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
+
+        GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
 
         ui->DoorsToolbox->setFloating(settings.value("doors-tool-box-float", true).toBool());
         ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
@@ -264,6 +269,8 @@ void MainWindow::saveSettings()
 
     settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
 
+    settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
+
     settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
     settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
@@ -312,6 +319,8 @@ void MainWindow::on_actionApplication_settings_triggered()
 
     appSettings->AnimationItemLimit = GlobalSettings::animatorItemsLimit;
 
+    appSettings->MainWindowView = GlobalSettings::MainWindowView;
+
     appSettings->applySettings();
 
     if(appSettings->exec()==QDialog::Accepted)
@@ -325,6 +334,10 @@ void MainWindow::on_actionApplication_settings_triggered()
         on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
         ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
         on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
+
+        GlobalSettings::MainWindowView = appSettings->MainWindowView;
+
+        ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
 
         saveSettings();
     }
