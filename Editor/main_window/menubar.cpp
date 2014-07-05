@@ -208,6 +208,15 @@ void MainWindow::updateWindowMenu()
 {
     //Window menu
     ui->menuWindow->clear();
+
+    QAction * SubView = ui->menuWindow->addAction(tr("Sub Windows"));
+    connect(SubView, SIGNAL(triggered()), this, SLOT(setSubView()));
+
+    QAction * TabView = ui->menuWindow->addAction(tr("Tab Windows"));
+    connect(TabView, SIGNAL(triggered()), this, SLOT(setTabView()));
+
+    ui->menuWindow->addSeparator();
+
     QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
     QAction * closeC = ui->menuWindow->addAction(tr("Close current"));
         connect(closeC, SIGNAL(triggered()), this, SLOT( on_actionClose_triggered() ) );
