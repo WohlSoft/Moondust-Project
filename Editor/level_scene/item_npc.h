@@ -50,6 +50,7 @@ public:
     QRectF boundingRect() const;
 
     QPixmap mainImage;
+
     QMenu *ItemMenu;
 //    QGraphicsScene * scene;
 //    QGraphicsPixmapItem * image;
@@ -103,6 +104,11 @@ private:
     QGraphicsItemGroup * grp;
     QGraphicsItem * includedNPC;
     QGraphicsPixmapItem * generatorArrow;
+
+
+    QVector<QPixmap> frames; //Whole image
+    void createAnimationFrames();
+    int CurrentFrame;
 
 
     bool animated;
