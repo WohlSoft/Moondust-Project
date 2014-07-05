@@ -134,6 +134,8 @@ public slots:
     void setActiveSubWindow(QWidget *window);
     void SWCascade();
     void SWTile();
+    void setSubView();
+    void setTabView();
 
 
     //LevelEdit functions

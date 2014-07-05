@@ -143,3 +143,15 @@ void MainWindow::SWTile()
 {
     ui->centralWidget->tileSubWindows();
 }
+
+void MainWindow::setSubView()
+{
+    GlobalSettings::MainWindowView = QMdiArea::SubWindowView;
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+}
+
+void MainWindow::setTabView()
+{
+    GlobalSettings::MainWindowView = QMdiArea::TabbedView;
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+}
