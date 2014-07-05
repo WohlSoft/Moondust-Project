@@ -125,6 +125,9 @@ public slots:
     void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
     void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
 
+    //for search
+    void toggleNewWindow(QMdiSubWindow *window);
+
     //SubWindow functions
     npcedit *createNPCChild();
     leveledit *createLvlChild();
@@ -480,6 +483,10 @@ private slots:
     void on_Find_Button_ResetBGO_clicked();
     void on_Find_Button_ResetNPC_clicked();
 
+    void on_FindStartBlock_clicked();
+
+    void on_FindStartBGO_clicked();
+
 private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
@@ -509,11 +516,18 @@ private:
         SEARCH_BGO = 1 << 1,
         SEARCH_NPC = 1 << 2
     };
+    int curSearchBlockIndex;
+    int curSearchBGOIndex;
+    int curSearchNPCIndex;
     int currentSearches;
     int curSearchBlockID;
     int curSearchBGOID;
     int curSearchNPCID;
     void resetAllSearchFields();
+    void resetAllSearches();
+    bool doSearchBlock(leveledit* edit);
+    bool doSearchBGO(leveledit* edit);
+    bool doSearchNPC(leveledit* edit);
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
 
