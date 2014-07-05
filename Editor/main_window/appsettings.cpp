@@ -64,6 +64,12 @@ void AppSettings::applySettings()
         ui->logLevel->setCurrentIndex(0);
 
     ui->logFileName->setText(logfile);
+
+    if(MainWindowView==QMdiArea::SubWindowView)
+        ui->MView_SubWindows->setChecked(true);
+    if(MainWindowView==QMdiArea::TabbedView)
+        ui->MView_Tabs->setChecked(true);
+
 }
 
 void AppSettings::on_setLogFile_clicked()
@@ -84,6 +90,11 @@ void AppSettings::on_buttonBox_accepted()
     AnimationItemLimit = ui->itemsLisit->value();
 
     Collisions = ui->Collisions->isChecked();
+
+    if(ui->MView_SubWindows->isChecked())
+        MainWindowView = QMdiArea::SubWindowView;
+    if(ui->MView_Tabs->isChecked())
+        MainWindowView = QMdiArea::TabbedView;
 
     logfile = ui->logFileName->text();
 
