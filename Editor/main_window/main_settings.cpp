@@ -144,6 +144,7 @@ void MainWindow::setUiDefults()
     ui->centralWidget->cascadeSubWindows();
 
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+    ui->centralWidget->setTabsClosable(true);
 
 
 //    //Start event detector
