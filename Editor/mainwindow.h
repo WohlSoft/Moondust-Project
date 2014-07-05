@@ -518,13 +518,7 @@ private:
         SEARCH_BGO = 1 << 1,
         SEARCH_NPC = 1 << 2
     };
-    int curSearchBlockIndex;
-    int curSearchBGOIndex;
-    int curSearchNPCIndex;
     int currentSearches;
-    int curSearchBlockID;
-    int curSearchBGOID;
-    int curSearchNPCID;
     LevelBlock curSearchBlock;
     LevelBGO curSearchBGO;
     LevelNPC curSearchNPC;
