@@ -26,7 +26,7 @@
 #include "global_settings.h"
 
 QString GlobalSettings::locale="";
-long GlobalSettings::animatorItemsLimit=10000;
+long GlobalSettings::animatorItemsLimit=25000;
 QString GlobalSettings::openPath=".";
 QString GlobalSettings::savePath=".";
 QString GlobalSettings::savePath_npctxt=".";
@@ -44,13 +44,14 @@ bool GlobalSettings::LevelLayersBoxVis=false;
 bool GlobalSettings::LevelEventsBoxVis=false;
 bool GlobalSettings::LevelSearchBoxVis=false;
 
+QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
+
 int GlobalSettings::lastWinType=0;
 
 QString LvlMusPlay::currentCustomMusic;
 long LvlMusPlay::currentMusicId;
 bool LvlMusPlay::musicButtonChecked;
 bool LvlMusPlay::musicForceReset=false;
-
 
 void MainWindow::setDefaults()
 {
@@ -142,6 +143,8 @@ void MainWindow::setUiDefults()
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
 
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+    ui->centralWidget->setTabsClosable(true);
 
 //    //Start event detector
 //    TickTackLock = false;
@@ -156,9 +159,30 @@ void MainWindow::setUiDefults()
 //    //start event detection loop
 //    TickTackTimer->start(1);
 
+    curSearchBlock.id = 0;
+    curSearchBlock.index = 0;
+
+    curSearchBGO.id = 0;
+    curSearchBGO.index = 0;
+
+    curSearchNPC.id = 0;
+    curSearchNPC.index = 0;
+
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
+    connect(ui->Find_Check_TypeBlock, SIGNAL(toggled(bool)), ui->Find_Button_TypeBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeBGO, SIGNAL(toggled(bool)), ui->Find_Button_TypeBGO, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeNPC, SIGNAL(toggled(bool)), ui->Find_Button_TypeNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_PriorityBGO, SIGNAL(toggled(bool)), ui->Find_Spin_PriorityBGO, SLOT(setEnabled(bool)));
 
+    //reset if modify
+    connect(ui->Find_Button_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Button_TypeBGO, SIGNAL(clicked()), this, SLOT(resetBGOSearch()));
+    connect(ui->Find_Button_TypeNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Spin_PriorityBGO, SIGNAL(valueChanged(int)), this, SLOT(resetBGOSearch()));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindow(QMdiSubWindow*)));
+
+    updateWindowMenu();
 }
 
 
@@ -187,6 +211,8 @@ void MainWindow::loadSettings()
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
+
+        GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
 
         ui->DoorsToolbox->setFloating(settings.value("doors-tool-box-float", true).toBool());
         ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
@@ -254,6 +280,8 @@ void MainWindow::saveSettings()
 
     settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
 
+    settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
+
     settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
     settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
@@ -302,6 +330,8 @@ void MainWindow::on_actionApplication_settings_triggered()
 
     appSettings->AnimationItemLimit = GlobalSettings::animatorItemsLimit;
 
+    appSettings->MainWindowView = GlobalSettings::MainWindowView;
+
     appSettings->applySettings();
 
     if(appSettings->exec()==QDialog::Accepted)
@@ -315,6 +345,10 @@ void MainWindow::on_actionApplication_settings_triggered()
         on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
         ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
         on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
+
+        GlobalSettings::MainWindowView = appSettings->MainWindowView;
+
+        ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
 
         saveSettings();
     }

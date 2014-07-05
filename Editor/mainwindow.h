@@ -125,12 +125,21 @@ public slots:
     void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
     void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
 
+    //for search
+    void toggleNewWindow(QMdiSubWindow *window);
+    void resetAllSearches();
+    void resetBlockSearch();
+    void resetBGOSearch();
+    void resetNPCSearch();
+
     //SubWindow functions
     npcedit *createNPCChild();
     leveledit *createLvlChild();
     void setActiveSubWindow(QWidget *window);
     void SWCascade();
     void SWTile();
+    void setSubView();
+    void setTabView();
 
 
     //LevelEdit functions
@@ -373,6 +382,8 @@ private slots:
     void on_PROPS_NPCSpecialSpin_valueChanged(int arg1);
     void on_PROPS_NPCContaiter_clicked();
     void on_PROPS_NPCSpecialBox_currentIndexChanged(int index);
+    void on_PROPS_NPCSpecial2Spin_valueChanged(int arg1);
+    void on_PROPS_NPCSpecial2Box_currentIndexChanged(int index);
     void on_PROPS_NpcGenerator_clicked(bool checked);
     void on_PROPS_NPCGenType_currentIndexChanged(int index);
     void on_PROPS_NPCGenTime_valueChanged(double arg1);
@@ -470,8 +481,19 @@ private slots:
     void on_actionContents_triggered();
     void on_actionNew_triggered();
     void on_actionLVLSearchBox_triggered(bool checked);
+
     void on_FindDock_visibilityChanged(bool visible);
     void on_FindStartNPC_clicked();
+    void on_Find_Button_TypeBlock_clicked();
+    void on_Find_Button_TypeBGO_clicked();
+    void on_Find_Button_TypeNPC_clicked();
+    void on_Find_Button_ResetBlock_clicked();
+    void on_Find_Button_ResetBGO_clicked();
+    void on_Find_Button_ResetNPC_clicked();
+
+    void on_FindStartBlock_clicked();
+
+    void on_FindStartBGO_clicked();
 
 private:
 
@@ -496,6 +518,21 @@ private:
     void RemoveEvent(QString eventName);
     // //////////////////////////////////////////////
 
+    // /////////////Search Box///////////////////////
+    enum currentSearch{
+        SEARCH_BLOCK = 1 << 0,
+        SEARCH_BGO = 1 << 1,
+        SEARCH_NPC = 1 << 2
+    };
+    int currentSearches;
+    LevelBlock curSearchBlock;
+    LevelBGO curSearchBGO;
+    LevelNPC curSearchNPC;
+    void resetAllSearchFields();
+    bool doSearchBlock(leveledit* edit);
+    bool doSearchBGO(leveledit* edit);
+    bool doSearchNPC(leveledit* edit);
+    // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);

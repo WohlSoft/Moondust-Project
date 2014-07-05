@@ -305,6 +305,55 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    ;special-spin-value-offset=1		; display value in editor with offset
             snpc.special_spin_value_offset = npcset.value("special-spin-value-offset", "0").toInt();
 
+        //    have-special-2=0			; Special NPC's option, what can used by NPC's algorithm
+            snpc.special_option_2 = npcset.value("have-special-2", "0").toBool();
+
+
+
+        //    ;special-2-name="Cheep-cheep"	; 60
+            snpc.special_2_name = npcset.value("special-2-name", "Special option value").toString();;
+
+            //    special-2-npc-required
+            if(snpc.special_option_2)
+            {
+                QStringList tmp1 = npcset.value("special-2-npc-spin-required", "-1").toString().split(QChar(','));
+
+                if(!tmp1.isEmpty())
+                    if(tmp1.first()!="-1")
+                    foreach(QString x, tmp1)
+                        snpc.special_2_npc_spin_required.push_back(x.toInt());
+
+                QStringList tmp2 = npcset.value("special-2-npc-box-required", "-1").toString().split(QChar(','));
+
+                if(!tmp2.isEmpty())
+                    if(tmp2.first()!="-1")
+                    foreach(QString x, tmp2)
+                        snpc.special_2_npc_box_required.push_back(x.toInt());
+            }
+
+        //    ;special-2-type=0			; 61 0 combobox, 1 - spin
+            snpc.special_2_type = npcset.value("special-2-type", "1").toInt();;
+        //    ;special-combobox-size=3		; 62 quantity of options
+            combobox_size = npcset.value("special-2-combobox-size", "0").toInt();
+            for(int j=0; j<combobox_size; j++)
+            {
+                snpc.special_2_combobox_opts.push_back(
+                            npcset.value(QString("special-2-option-%1").arg(j), "0").toString()
+                            );
+            }
+        //    ;special-option-0="Swim"		; 63 set title for 0 option combobox
+        //    ;special-option-1="Jump"		; 64 set title for 1 option combobox
+        //    ;special-option-2="Projective"	; 65 set title for 2 option combobox
+            snpc.special_2_spin_min = npcset.value("special-2-spin-min", "0").toInt();
+        //    ;special-2-spin-min=0		; 66 milimal value of spin
+            snpc.special_2_spin_max = npcset.value("special-2-spin-max", "1").toInt();
+        //    ;special-2-spin-max=25		; 67 maximal value of spin
+            snpc.special_2_spin_value_offset = npcset.value("special-2-spin-value-offset", "0").toInt();
+            //special-2-spin-value-offset
+
+
+
+
         //    //    ;game process
         //    //    score=2				; Add scores to player (value 0-13)
         //    //    ; 0, 10, 100, 200, 400, 800, 1000, 2000, 4000, 8000, 1up, 2up, 5up, 3up

@@ -22,6 +22,8 @@
 #include "./ui_npcedit.h"
 #include "./file_formats/file_formats.h"
 
+#include "../common_features/mainwinconnect.h"
+
 npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::npcedit)
@@ -41,6 +43,7 @@ npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
 npcedit::~npcedit()
 {
     delete ui;
+    MainWinConnect::pMainWin->updateMenus(true);
 }
 
 

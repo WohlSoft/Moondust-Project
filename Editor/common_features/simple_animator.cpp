@@ -81,7 +81,7 @@ void SimpleAnimator::nextFrame()
     if(reverce)
     { // Reverce animation
         CurrentFrame--;
-        if(CurrentFrame<0)
+        if(CurrentFrame<frameFirst)
         {
             if(bidirectional)
             {
@@ -131,7 +131,8 @@ void SimpleAnimator::createAnimationFrames()
 
 void SimpleAnimator::setFrame(int y)
 {
-    if(y>=frames.size()) y=frameFirst;
+    if(y>=frames.size()) y= frameFirst;
+    if(y<frameFirst) y = (frameLast<0)? frames.size()-1 : frameLast;
     CurrentFrame = y;
 }
 

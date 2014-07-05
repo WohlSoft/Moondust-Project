@@ -1,3 +1,13 @@
+Editor 0.1.1
+- Animation render are improved and optimized
+- Added animation start/stop toolbar button
+- New selection dialog for items
+- Fixed a lot of memory leaks
+- Added displaying of Item ID in Properties tool box.
+- Added item search box
+- Added tab view mode, you can switch between sub-window/tab mode in application settings
+- Added support of second special value for fix bug with wrong LVL file parsing (Herb with included magic potion)
+
 Editor 0.1.0.1
 - Fixed bug with custom music paths after save new file.
 - Speed up of level loading process, now Editor opening the huge levels quickly

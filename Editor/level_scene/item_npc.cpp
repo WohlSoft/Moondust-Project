@@ -38,6 +38,9 @@ ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     curDirect = -1;
     frameStep = 1;
     gridSize = 1;
+    frameSize=1;
+
+    CurrentFrame=0;
 
     imgOffsetX=0;
     imgOffsetY=0;
@@ -467,6 +470,8 @@ void ItemNPC::changeDirection(int dir)
 {
     npcData.direct = dir;
 
+    //AnimationStop();
+
     setAnimation(localProps.frames, localProps.framespeed, localProps.framestyle, dir,
     localProps.custom_animate,
         localProps.custom_ani_fl,
@@ -474,7 +479,6 @@ void ItemNPC::changeDirection(int dir)
         localProps.custom_ani_fr,
         localProps.custom_ani_er,
     true);
-
     arrayApply();
 }
 
@@ -750,14 +754,17 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     custom_frameFR = frFR;//first right
     custom_frameER = frER;//enf right
 
+    bool refreshFrames = false;
+    if(localProps.gfx_h!=frameSize) refreshFrames = true;
+
     frameSize = localProps.gfx_h;
 
     frameWidth = localProps.gfx_w;
 
     frameHeight = mainImage.height();
 
-    framePos = QPoint(0,0);
-    draw();
+    //framePos = QPoint(0,0);
+    //draw();
 
     int dir=direction;
 
@@ -850,8 +857,6 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     curDirect  = dir;
     setOffset(imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
 
-    setFrame(frameFirst);
-
     if(!edit)
     {
         if(timer) delete timer;
@@ -860,6 +865,19 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
                     timer, SIGNAL(timeout()),
                     this,
                     SLOT( nextFrame() ) );
+    }
+
+    if(refreshFrames) createAnimationFrames();
+
+    setFrame(frameFirst);
+}
+
+void ItemNPC::createAnimationFrames()
+{
+    frames.clear();
+    for(int i=0; (frameSize*i <= frameHeight); i++)
+    {
+        frames.push_back( mainImage.copy(QRect(framePos.x(), frameSize*i, frameWidth, frameSize )) );
     }
 }
 
@@ -880,7 +898,7 @@ void ItemNPC::AnimationStop()
 
 void ItemNPC::draw()
 {
-    currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
+    //currentImage =  mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
 }
 
 QPoint ItemNPC::fPos() const
@@ -890,17 +908,14 @@ QPoint ItemNPC::fPos() const
 
 void ItemNPC::setFrame(int y)
 {
-    frameCurrent = frameSize * y;
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent >= frameLast*frameSize )&&(frameLast>-1)) )
-        {
-        frameCurrent = frameFirst*frameSize;
-        framePos.setY( frameFirst * frameSize );
-        }
-    else
-        framePos.setY( frameCurrent );
-    draw();
-    this->setPixmap(QPixmap(currentImage));
+    if(frames.isEmpty()) return;
+    //frameCurrent = frameSize * y;
+    CurrentFrame = y;
+    //Out of range protection
+    if( CurrentFrame >= frames.size()) CurrentFrame = (frameFirst<frames.size()) ? frameFirst : 0;
+    if( CurrentFrame < frameFirst) CurrentFrame = (frameLast<0)? frames.size()-1 : frameLast;
+
+    this->setPixmap(frames[CurrentFrame]);
 }
 
 void ItemNPC::setLocked(bool lock)
@@ -915,46 +930,47 @@ void ItemNPC::nextFrame()
 
     if(!aniDirect)
     {
-    frameCurrent += frameSize * frameStep;
+        //frameCurrent += frameSize * frameStep;
+        CurrentFrame += frameStep;
 
-    if ( ((frameCurrent >= frameHeight )&&(frameLast==-1)) ||
-         ((frameCurrent > frameLast*frameSize )&&(frameLast>-1)) )
-        {
-            if(!aniBiDirect)
-            {
-            frameCurrent = frameFirst * frameSize;
-            framePos.setY( frameFirst * frameSize );
-            } else
-            {
-            frameCurrent -= frameSize*frameStep*2;
-            framePos.setY( framePos.y() - frameSize*frameStep );
-            aniDirect=!aniDirect;
-            }
-        }
-    else
-        framePos.setY( framePos.y() + frameSize*frameStep );
-    }
-    else
-    {
-        frameCurrent -= frameSize * frameStep;
-
-        if (frameCurrent < (frameFirst*frameSize) )
+        if ( ((CurrentFrame >= frames.size()-(frameStep-1) )&&(frameLast<=-1)) ||
+             ((CurrentFrame > frameLast )&&(frameLast>=0)) )
             {
                 if(!aniBiDirect)
                 {
-                    frameCurrent = ( ((frameLast==-1)? frameHeight : frameLast*frameSize)-frameSize);
-                    framePos.setY( ((frameLast==-1) ? frameHeight : frameLast*frameSize)-frameSize );
-                } else
+                     CurrentFrame = frameFirst;
+                    //frameCurrent = frameFirst * frameSize;
+                    //framePos.setY( frameFirst * frameSize );
+                }
+                else
                 {
-                frameCurrent += frameSize*frameStep*2;
-                framePos.setY( framePos.y() + frameSize*frameStep );
-                aniDirect=!aniDirect;
+                    CurrentFrame -= frameStep*2;
+                    aniDirect=!aniDirect;
+                    //framePos.setY( framePos.y() - frameSize*frameStep );
                 }
             }
-        else
-            framePos.setY( framePos.y() - frameSize*frameStep );
     }
+    else
+    {
+        //frameCurrent -= frameSize * frameStep;
+        CurrentFrame -= frameStep;
 
-    draw();
-    this->setPixmap(QPixmap(currentImage));
+        if ( CurrentFrame < frameFirst )
+            {
+                if(!aniBiDirect)
+                {
+                    CurrentFrame = ((frameLast==-1)? frames.size()-1 : frameLast);
+                    //frameCurrent = ( ((frameLast==-1)? frameHeight : frameLast*frameSize)-frameSize);
+                    //framePos.setY( ((frameLast==-1) ? frameHeight : frameLast*frameSize)-frameSize );
+                }
+                else
+                {
+                    CurrentFrame+=frameStep*2;
+                    aniDirect=!aniDirect;
+                    //frameCurrent += frameSize*frameStep*2;
+                    //framePos.setY( framePos.y() + frameSize*frameStep );
+                }
+            }
+    }
+    setFrame(CurrentFrame);
 }
