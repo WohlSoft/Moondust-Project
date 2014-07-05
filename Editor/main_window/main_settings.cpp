@@ -146,7 +146,6 @@ void MainWindow::setUiDefults()
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
     ui->centralWidget->setTabsClosable(true);
 
-
 //    //Start event detector
 //    TickTackLock = false;
 
@@ -173,6 +172,8 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Check_TypeBGO, SIGNAL(toggled(bool)), ui->Find_Button_TypeBGO, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_TypeNPC, SIGNAL(toggled(bool)), ui->Find_Button_TypeNPC, SLOT(setEnabled(bool)));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindow(QMdiSubWindow*)));
+
+    updateWindowMenu();
 }
 
 

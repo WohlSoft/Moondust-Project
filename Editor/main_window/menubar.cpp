@@ -204,40 +204,74 @@ void MainWindow::updateMenus(bool force)
 }
 
 
+//QList<QMenu * > menu_delete_list;
+//QList<QAction * > action_delete_list;
+
 void MainWindow::updateWindowMenu()
 {
     //Window menu
     ui->menuWindow->clear();
 
+//    while(!action_delete_list.isEmpty())
+//    {
+//        QAction *tmp = action_delete_list.first();
+//        action_delete_list.pop_back();
+//        if(tmp!=NULL) {
+//            WriteToLog(QtDebugMsg, QString("->>>>Removed trash!<<<<-"));
+//            WriteToLog(QtDebugMsg, QString(tmp->text()));
+//            delete tmp;
+//        }
+//    }
+
     QAction * SubView = ui->menuWindow->addAction(tr("Sub Windows"));
     connect(SubView, SIGNAL(triggered()), this, SLOT(setSubView()));
+    SubView->setCheckable(true);
+    if(GlobalSettings::MainWindowView==QMdiArea::SubWindowView)
+        SubView->setChecked(true);
+
+    //action_delete_list.push_back(SubView);
+
 
     QAction * TabView = ui->menuWindow->addAction(tr("Tab Windows"));
     connect(TabView, SIGNAL(triggered()), this, SLOT(setTabView()));
+    TabView->setCheckable(true);
+    if(GlobalSettings::MainWindowView==QMdiArea::TabbedView)
+        TabView->setChecked(true);
+
+    //action_delete_list.push_back(TabView);
 
     ui->menuWindow->addSeparator();
+    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QList<QMdiSubWindow *> windows = ui->centralWidget->subWindowList();
     QAction * closeC = ui->menuWindow->addAction(tr("Close current"));
         connect(closeC, SIGNAL(triggered()), this, SLOT( on_actionClose_triggered() ) );
         closeC->setEnabled( !windows.isEmpty() );
 
+    //action_delete_list.push_back(closeC);
+
+
     ui->menuWindow->addSeparator();
+    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QAction * cascade = ui->menuWindow->addAction(tr("Cascade"));
         connect(cascade, SIGNAL(triggered()), this, SLOT( SWCascade() ) );
         cascade->setEnabled( !windows.isEmpty() );
+    //action_delete_list.push_back(cascade);
 
     QAction * tiledW = ui->menuWindow->addAction(tr("Tiled"));
         connect(tiledW, SIGNAL(triggered()), this, SLOT( SWTile() ) );
         tiledW->setEnabled( !windows.isEmpty() );
+    //action_delete_list.push_back(tiledW);
 
     ui->menuWindow->addSeparator();
+    //action_delete_list.push_back(ui->menuWindow->addSeparator());
 
     QAction * empty = ui->menuWindow->addAction( tr("[No files open]") );
         empty->setDisabled(1);
 
         empty->setVisible( windows.isEmpty() );
+    //action_delete_list.push_back(empty);
 
 
     for (int i = 0; i < windows.size(); ++i) {
@@ -250,6 +284,7 @@ void MainWindow::updateWindowMenu()
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
         action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
+        //action_delete_list.push_back(action);
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
         windowMapper->setMapping(action, windows.at(i));
