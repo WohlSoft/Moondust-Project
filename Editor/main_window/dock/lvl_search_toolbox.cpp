@@ -234,8 +234,11 @@ bool MainWindow::doSearchBlock(leveledit *edit)
         for(int i = curSearchBlock.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="Block"){
                 bool toBeFound = true;
-                if(ui->Find_Check_TypeBlock->isChecked()&&toBeFound){
+                if(ui->Find_Check_TypeBlock->isChecked()&&curSearchBlock.id!=0&&toBeFound){
                     toBeFound = ((ItemBlock*)gr[i])->blockData.id == (unsigned int)curSearchBlock.id;
+                }
+                if(ui->Find_Check_LayerBlock->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.layer == ui->Find_Combo_LayerBlock->currentText();
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
@@ -262,8 +265,11 @@ bool MainWindow::doSearchBGO(leveledit *edit)
         for(int i = curSearchBGO.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="BGO"){
                 bool toBeFound = true;
-                if(ui->Find_Check_TypeBGO->isChecked()&&toBeFound){
+                if(ui->Find_Check_TypeBGO->isChecked()&&curSearchBlock.id!=0&&toBeFound){
                     toBeFound = ((ItemBGO*)gr[i])->bgoData.id == (unsigned int)curSearchBGO.id;
+                }
+                if(ui->Find_Check_LayerBGO->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBGO*)gr[i])->bgoData.layer == ui->Find_Combo_LayerBGO->currentText();
                 }
                 if(ui->Find_Check_PriorityBGO->isChecked()&&toBeFound){
                     toBeFound = ((ItemBGO*)gr[i])->bgoData.smbx64_sp == ui->Find_Spin_PriorityBGO->value();
@@ -293,8 +299,11 @@ bool MainWindow::doSearchNPC(leveledit *edit)
         for(int i = curSearchNPC.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="NPC"){
                 bool toBeFound = true;
-                if(ui->Find_Check_TypeNPC->isChecked()&&toBeFound){
+                if(ui->Find_Check_TypeNPC->isChecked()&&curSearchBlock.id!=0&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.id == (unsigned int)curSearchNPC.id;
+                }
+                if(ui->Find_Check_LayernNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.layer == ui->Find_Combo_LayerNPC->currentText();
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())

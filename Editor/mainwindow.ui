@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1511</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1126,8 +1126,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>286</width>
-        <height>356</height>
+        <width>263</width>
+        <height>319</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1187,7 +1187,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
+        <width>77</width>
         <height>28</height>
        </rect>
       </property>
@@ -1211,7 +1211,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
+        <width>77</width>
         <height>28</height>
        </rect>
       </property>
@@ -1235,7 +1235,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>81</width>
+        <width>77</width>
         <height>28</height>
        </rect>
       </property>
@@ -2535,9 +2535,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-660</y>
-          <width>273</width>
-          <height>1319</height>
+          <y>0</y>
+          <width>246</width>
+          <height>1462</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3713,8 +3713,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>417</height>
+          <width>251</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3896,8 +3896,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>195</width>
-          <height>115</height>
+          <width>227</width>
+          <height>132</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3978,8 +3978,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>192</width>
-          <height>93</height>
+          <width>223</width>
+          <height>103</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4072,8 +4072,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>461</height>
+          <width>260</width>
+          <height>475</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4370,8 +4370,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>213</width>
+          <height>190</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4486,8 +4486,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>226</width>
+          <height>130</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4584,8 +4584,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>118</width>
+          <height>80</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4716,7 +4716,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <item row="0" column="0">
       <widget class="QToolBox" name="FindToolbox">
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -4726,8 +4726,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>156</width>
-          <height>143</height>
+          <width>271</width>
+          <height>469</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4849,7 +4849,11 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </widget>
          </item>
          <item row="4" column="3">
-          <widget class="QComboBox" name="Find_Combo_LayerBlock"/>
+          <widget class="QComboBox" name="Find_Combo_LayerBlock">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -4858,8 +4862,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>166</height>
+          <width>344</width>
+          <height>469</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5007,7 +5011,11 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </widget>
          </item>
          <item row="3" column="3" colspan="5">
-          <widget class="QComboBox" name="Find_Combo_LayerBGO"/>
+          <widget class="QComboBox" name="Find_Combo_LayerBGO">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -5016,8 +5024,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>294</width>
-          <height>491</height>
+          <width>307</width>
+          <height>469</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5139,7 +5147,11 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </widget>
          </item>
          <item row="5" column="4">
-          <widget class="QComboBox" name="Find_Combo_LayerNPC"/>
+          <widget class="QComboBox" name="Find_Combo_LayerNPC">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
