@@ -149,6 +149,9 @@ void MainWindow::on_Find_Button_ResetBlock_clicked()
         ui->Find_Check_TypeBlock->setChecked(true);
         ui->Find_Button_TypeBlock->setText(tr("[empty]"));
         curSearchBlock.id = 0;
+        ui->Find_Combo_LayerBlock->setCurrentText("Default");
+        ui->Find_Check_InvisibleActiveBlock->setChecked(false);
+        ui->Find_Check_SlipperyActiveBlock->setChecked(false);
     }else{
         currentSearches ^= SEARCH_BLOCK;
         ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
@@ -162,12 +165,13 @@ void MainWindow::on_Find_Button_ResetBGO_clicked()
     if(!(currentSearches & SEARCH_BGO)){
         ui->Find_Check_TypeBGO->setChecked(true);
         ui->Find_Button_TypeBGO->setText(tr("[empty]"));
+        ui->Find_Combo_LayerBGO->setCurrentText("Default");
+        ui->Find_Spin_PriorityBGO->setValue(-1);
         curSearchBGO.id = 0;
     }else{
         currentSearches ^= SEARCH_BGO;
         ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
         ui->FindStartBGO->setText(tr("Search BGO"));
-        ui->Find_Spin_PriorityBGO->setValue(-1);
         curSearchBGO.index = 0;
     }
 }
@@ -177,6 +181,7 @@ void MainWindow::on_Find_Button_ResetNPC_clicked()
     if(!(currentSearches & SEARCH_NPC)){
         ui->Find_Check_TypeNPC->setChecked(true);
         ui->Find_Button_TypeNPC->setText(tr("[empty]"));
+        ui->Find_Combo_LayerNPC->setCurrentText("Default");
         curSearchNPC.id = 0;
     }else{
         currentSearches ^= SEARCH_NPC;
