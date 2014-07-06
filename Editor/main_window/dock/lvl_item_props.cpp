@@ -235,6 +235,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->PROPS_NPCSpecial2Box->hide();
         ui->Line_Special2_sep->hide();
 
+        LvlPlacingItems::npcSet.msg="";
+
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
 
         if(configs.main_npc[j].direct_alt_title!="")
@@ -284,7 +286,9 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                         (npc.special_data<0))
                     {
                        LvlPlacingItems::npcSet.special_data=0;
+                       LvlPlacingItems::npcSet.special_data2=0;
                        npc.special_data=0;
+                       npc.special_data2=0;
                     }
                 }
 
@@ -1154,7 +1158,8 @@ void MainWindow::on_PROPS_NpcTMsg_clicked()
         message = LvlPlacingItems::npcSet.msg;
     }
     else
-    {
+    if (activeChildWindow()==1)
+    {        
         QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * SelItem, items )
         {
@@ -1176,6 +1181,7 @@ void MainWindow::on_PROPS_NpcTMsg_clicked()
             LvlPlacingItems::npcSet.msg = msgBox->currentText;
         }
         else
+        if (activeChildWindow()==1)
         {
             LevelData selData;
             QList<QGraphicsItem *> items = activeLvlEditWin()->scene->selectedItems();
