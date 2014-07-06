@@ -120,6 +120,25 @@ void MainWindow::on_Find_Button_TypeBlock_clicked()
     delete selBlock;
 }
 
+void MainWindow::on_Find_Button_ContainsNPCBlock_clicked()
+{
+    ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,
+                                                   ItemSelectDialog::NPCEXTRA_WITHCOINS | (curSearchBlock.npc_id < 1000 && curSearchBlock.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                   (curSearchBlock.npc_id < 1000 && curSearchBlock.npc_id != 0 ? curSearchBlock.npc_id : curSearchBlock.npc_id-1000));
+    if(npcList->exec()==QDialog::Accepted){
+        int selected = 0;
+        if(npcList->npcID!=0){
+            if(npcList->isCoin)
+                selected = npcList->npcID;
+            else
+                selected = npcList->npcID+1000;
+        }
+        curSearchBlock.npc_id = selected;
+        ui->Find_Button_ContainsNPCBlock->setText(((selected>0) ? ((selected>1000) ? QString("NPC-%1").arg(selected-1000) : tr("%1 coins").arg(selected)) : tr("[empty]")));
+    }
+    delete npcList;
+}
+
 void MainWindow::on_Find_Button_TypeBGO_clicked()
 {
     ItemSelectDialog* selBgo = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_BGO,0,0,curSearchBGO.id);
@@ -250,6 +269,9 @@ bool MainWindow::doSearchBlock(leveledit *edit)
                 }
                 if(ui->Find_Check_SlipperyBlock->isChecked()&&toBeFound){
                     toBeFound = ((ItemBlock*)gr[i])->blockData.slippery == ui->Find_Check_SlipperyActiveBlock->isChecked();
+                }
+                if(ui->Find_Check_ContainsNPCBlock->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.npc_id == curSearchBlock.npc_id;
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())

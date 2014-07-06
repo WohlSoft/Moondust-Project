@@ -1126,7 +1126,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>263</width>
+        <width>238</width>
         <height>348</height>
        </rect>
       </property>
@@ -2536,8 +2536,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>246</width>
-          <height>1462</height>
+          <width>221</width>
+          <height>1510</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4726,7 +4726,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>271</width>
+          <width>246</width>
           <height>359</height>
          </rect>
         </property>
@@ -4776,7 +4776,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="3" column="4">
           <widget class="QPushButton" name="Find_Button_TypeBlock">
            <property name="text">
-            <string>[Empty]</string>
+            <string>[empty]</string>
            </property>
           </widget>
          </item>
@@ -4889,6 +4889,26 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
+         <item row="7" column="0" alignment="Qt::AlignHCenter">
+          <widget class="QCheckBox" name="Find_Check_ContainsNPCBlock"/>
+         </item>
+         <item row="7" column="2">
+          <widget class="QLabel" name="label_44">
+           <property name="text">
+            <string>Contains NPC:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="4">
+          <widget class="QPushButton" name="Find_Button_ContainsNPCBlock">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string>[empty]</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="LVLFindBGO">
@@ -4896,7 +4916,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>344</width>
+          <width>246</width>
           <height>359</height>
          </rect>
         </property>
@@ -4983,7 +5003,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="2" column="3" colspan="5">
           <widget class="QPushButton" name="Find_Button_TypeBGO">
            <property name="text">
-            <string>[Empty]</string>
+            <string>[empty]</string>
            </property>
           </widget>
          </item>
@@ -5058,7 +5078,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>307</width>
+          <width>246</width>
           <height>359</height>
          </rect>
         </property>
@@ -5121,7 +5141,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="4" column="4">
           <widget class="QPushButton" name="Find_Button_TypeNPC">
            <property name="text">
-            <string>[Empty]</string>
+            <string>[empty]</string>
            </property>
           </widget>
          </item>
