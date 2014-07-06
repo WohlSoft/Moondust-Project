@@ -235,7 +235,11 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->PROPS_NPCSpecial2Box->hide();
         ui->Line_Special2_sep->hide();
 
-        LvlPlacingItems::npcSet.msg="";
+        if(npcPtr<0)
+        {
+            LvlPlacingItems::npcSet.msg="";
+            npc.msg="";
+        }
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
 
