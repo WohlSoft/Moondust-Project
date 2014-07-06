@@ -240,6 +240,12 @@ bool MainWindow::doSearchBlock(leveledit *edit)
                 if(ui->Find_Check_LayerBlock->isChecked()&&toBeFound){
                     toBeFound = ((ItemBlock*)gr[i])->blockData.layer == ui->Find_Combo_LayerBlock->currentText();
                 }
+                if(ui->Find_Check_InvisibleBlock->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.invisible == ui->Find_Check_InvisibleActiveBlock->isChecked();
+                }
+                if(ui->Find_Check_SlipperyBlock->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.slippery == ui->Find_Check_SlipperyActiveBlock->isChecked();
+                }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
                     {
