@@ -344,7 +344,7 @@ bool MainWindow::doSearchNPC(leveledit *edit)
                 if(ui->Find_Check_TypeNPC->isChecked()&&curSearchBlock.id!=0&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.id == (unsigned int)curSearchNPC.id;
                 }
-                if(ui->Find_Check_LayernNPC->isChecked()&&toBeFound){
+                if(ui->Find_Check_LayerNPC->isChecked()&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.layer == ui->Find_Combo_LayerNPC->currentText();
                 }
                 if(toBeFound){
