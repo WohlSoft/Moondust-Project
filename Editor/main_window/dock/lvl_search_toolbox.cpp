@@ -273,6 +273,15 @@ bool MainWindow::doSearchBlock(leveledit *edit)
                 if(ui->Find_Check_ContainsNPCBlock->isChecked()&&toBeFound){
                     toBeFound = ((ItemBlock*)gr[i])->blockData.npc_id == curSearchBlock.npc_id;
                 }
+                if(ui->Find_Check_EventDestoryedBlock->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.event_destroy == ui->Find_Combo_EventDestoryedBlock->currentText();
+                }
+                if(ui->Find_Check_EventHitedBlock->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.event_hit == ui->Find_Combo_EventHitedBlock->currentText();
+                }
+                if(ui->Find_Check_EventLayerEmptyBlock->isChecked()&&toBeFound){
+                    toBeFound = ((ItemBlock*)gr[i])->blockData.event_no_more == ui->Find_Combo_EventLayerEmptyBlock->currentText();
+                }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
                     {
