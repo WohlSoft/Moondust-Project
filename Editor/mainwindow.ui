@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1511</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1126,8 +1126,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>265</width>
-        <height>327</height>
+        <width>286</width>
+        <height>345</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1187,8 +1187,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>244</width>
-        <height>327</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1211,8 +1211,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>244</width>
-        <height>327</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
      </widget>
@@ -1235,8 +1235,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>244</width>
-        <height>327</height>
+        <width>81</width>
+        <height>28</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2536,8 +2536,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>248</width>
-          <height>1462</height>
+          <width>273</width>
+          <height>1319</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3713,8 +3713,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>251</width>
-          <height>436</height>
+          <width>272</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3896,8 +3896,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>195</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3978,8 +3978,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>192</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4072,8 +4072,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>260</width>
-          <height>475</height>
+          <width>231</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4370,8 +4370,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>188</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4486,8 +4486,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>190</width>
+          <height>110</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4584,8 +4584,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>104</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4716,7 +4716,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <item row="0" column="0">
       <widget class="QToolBox" name="FindToolbox">
        <property name="currentIndex">
-        <number>0</number>
+        <number>2</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -4726,8 +4726,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>273</width>
-          <height>440</height>
+          <width>264</width>
+          <height>527</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4967,8 +4967,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>273</width>
-          <height>440</height>
+          <width>190</width>
+          <height>166</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5129,8 +5129,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>273</width>
-          <height>440</height>
+          <width>294</width>
+          <height>527</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5160,7 +5160,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </widget>
          </item>
          <item row="5" column="0" colspan="2" alignment="Qt::AlignHCenter">
-          <widget class="QCheckBox" name="Find_Check_LayernNPC"/>
+          <widget class="QCheckBox" name="Find_Check_LayerNPC"/>
          </item>
          <item row="10" column="0" colspan="5">
           <widget class="QPushButton" name="Find_Button_ResetNPC">
