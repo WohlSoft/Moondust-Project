@@ -74,6 +74,11 @@ void MainWindow::setLayerLists()
     ui->ItemProperties->hide();
     LvlItemPropsLock=true;
 
+    //save old entry from search!
+    QString curSearchLayerBlock = ui->Find_Combo_LayerBlock->currentText();
+    QString curSearchLayerBGO = ui->Find_Combo_LayerBGO->currentText();
+    QString curSearchLayerNPC = ui->Find_Combo_LayerNPC->currentText();
+
     int WinType = activeChildWindow();
     LvlItemPropsLock = true;
     ui->PROPS_BGOLayer->clear();
@@ -83,6 +88,9 @@ void MainWindow::setLayerLists()
     ui->PROPS_NpcAttachLayer->addItem(tr("[None]"));
     ui->LVLEvent_LayerMov_List->clear();
     ui->LVLEvent_LayerMov_List->addItem(tr("[None]"));
+    ui->Find_Combo_LayerBlock->clear();
+    ui->Find_Combo_LayerBGO->clear();
+    ui->Find_Combo_LayerNPC->clear();
 
     if (WinType==1)
     {
@@ -95,8 +103,15 @@ void MainWindow::setLayerLists()
             ui->PROPS_BlockLayer->addItem(layer.name);
             ui->PROPS_NpcAttachLayer->addItem(layer.name);
             ui->LVLEvent_LayerMov_List->addItem(layer.name);
+            ui->Find_Combo_LayerBlock->addItem(layer.name);
+            ui->Find_Combo_LayerBGO->addItem(layer.name);
+            ui->Find_Combo_LayerNPC->addItem(layer.name);
         }
     }
+
+    ui->Find_Combo_LayerBlock->setCurrentText(curSearchLayerBlock);
+    ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
+    ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
     LvlItemPropsLock = false;
 
 }
@@ -512,6 +527,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
             }
         }
     }
+
 
     //Sync layer name with events
     for(int j=0; j<edit->LvlData.events.size(); j++)
