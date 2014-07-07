@@ -50,6 +50,7 @@ public:
     static QString IntS(long input);
     static QString BoolS(bool input);
     static QString qStrS(QString input);
+    static QString FloatS(float input);
 };
 
 
