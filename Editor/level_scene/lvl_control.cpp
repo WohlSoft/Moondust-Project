@@ -343,7 +343,7 @@ if(contextMenuOpened) return;
             }
 
             if(cursor){
-                cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-QPoint(16,16),
                                                    LvlPlacingItems::gridSz,
                                                    LvlPlacingItems::gridOffset)));
             }
@@ -446,7 +446,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->clearSelection();
             if(cursor)
             {
-                        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-QPoint(16,16),
                                                          LvlPlacingItems::gridSz,
                                                          LvlPlacingItems::gridOffset)));
                        cursor->show();
@@ -1070,8 +1070,8 @@ void LvlScene::placeItemUnderCursor()
     {
         if(placingItem == PLC_Block)
         {
-            LvlPlacingItems::blockSet.x = cursor->scenePos().x();
-            LvlPlacingItems::blockSet.y = cursor->scenePos().y();
+            LvlPlacingItems::blockSet.x = cursor->scenePos().x()+16;
+            LvlPlacingItems::blockSet.y = cursor->scenePos().y()+16;
 
             LvlData->blocks_array_id++;
             LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
@@ -1084,8 +1084,8 @@ void LvlScene::placeItemUnderCursor()
         else
         if(placingItem == PLC_BGO)
         {
-            LvlPlacingItems::bgoSet.x = cursor->scenePos().x();
-            LvlPlacingItems::bgoSet.y = cursor->scenePos().y();
+            LvlPlacingItems::bgoSet.x = cursor->scenePos().x()+16;
+            LvlPlacingItems::bgoSet.y = cursor->scenePos().y()+16;
 
             LvlData->bgo_array_id++;
             LvlPlacingItems::bgoSet.array_id = LvlData->bgo_array_id;
@@ -1098,8 +1098,8 @@ void LvlScene::placeItemUnderCursor()
         else
         if(placingItem == PLC_NPC)
         {
-            LvlPlacingItems::npcSet.x = cursor->scenePos().x();
-            LvlPlacingItems::npcSet.y = cursor->scenePos().y();
+            LvlPlacingItems::npcSet.x = cursor->scenePos().x()+16;
+            LvlPlacingItems::npcSet.y = cursor->scenePos().y()+16;
 
             LvlData->npc_array_id++;
             LvlPlacingItems::npcSet.array_id = LvlData->npc_array_id;
