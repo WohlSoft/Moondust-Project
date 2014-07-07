@@ -44,6 +44,10 @@ public:
         DOOR_Exit
     };
 
+
+    static int c_offset_x;
+    static int c_offset_y;
+
     static int doorType;
     static long doorArrayId;
 
