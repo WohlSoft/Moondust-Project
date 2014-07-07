@@ -208,6 +208,8 @@ void MainWindow::on_Find_Button_ResetNPC_clicked()
         ui->Find_Check_FriendlyActiveNPC->setChecked(false);
         ui->Find_Check_NotMoveActiveNPC->setChecked(false);
         ui->Find_Check_BossActiveNPC->setChecked(false);
+        ui->Find_Edit_MsgNPC->setText("");
+        ui->Find_Check_MsgSensitiveNPC->setChecked(false);
     }else{
         currentSearches ^= SEARCH_NPC;
         ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
@@ -313,7 +315,7 @@ bool MainWindow::doSearchBGO(leveledit *edit)
         for(int i = curSearchBGO.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="BGO"){
                 bool toBeFound = true;
-                if(ui->Find_Check_TypeBGO->isChecked()&&curSearchBlock.id!=0&&toBeFound){
+                if(ui->Find_Check_TypeBGO->isChecked()&&curSearchBGO.id!=0&&toBeFound){
                     toBeFound = ((ItemBGO*)gr[i])->bgoData.id == (unsigned int)curSearchBGO.id;
                 }
                 if(ui->Find_Check_LayerBGO->isChecked()&&toBeFound){
@@ -347,7 +349,8 @@ bool MainWindow::doSearchNPC(leveledit *edit)
         for(int i = curSearchNPC.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="NPC"){
                 bool toBeFound = true;
-                if(ui->Find_Check_TypeNPC->isChecked()&&curSearchBlock.id!=0&&toBeFound){
+                LevelNPC tmp = ((ItemNPC*)gr[i])->npcData;
+                if(ui->Find_Check_TypeNPC->isChecked()&&curSearchNPC.id!=0&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.id == (unsigned int)curSearchNPC.id;
                 }
                 if(ui->Find_Check_LayerNPC->isChecked()&&toBeFound){
@@ -370,6 +373,10 @@ bool MainWindow::doSearchNPC(leveledit *edit)
                 }
                 if(ui->Find_Check_BossNPC->isChecked()&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.legacyboss == ui->Find_Check_BossActiveNPC->isChecked();
+                }
+                if(ui->Find_Check_MsgNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.msg.contains(ui->Find_Edit_MsgNPC->text(),
+                                                                        (ui->Find_Check_MsgSensitiveNPC->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive));
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
