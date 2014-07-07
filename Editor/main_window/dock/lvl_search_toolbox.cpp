@@ -202,6 +202,7 @@ void MainWindow::on_Find_Button_ResetNPC_clicked()
         ui->Find_Button_TypeNPC->setText(tr("[empty]"));
         ui->Find_Combo_LayerNPC->setCurrentText("Default");
         curSearchNPC.id = 0;
+        ui->Find_Radio_DirLeftNPC->setChecked(true);
     }else{
         currentSearches ^= SEARCH_NPC;
         ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
@@ -346,6 +347,15 @@ bool MainWindow::doSearchNPC(leveledit *edit)
                 }
                 if(ui->Find_Check_LayerNPC->isChecked()&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.layer == ui->Find_Combo_LayerNPC->currentText();
+                }
+                if(ui->Find_Check_DirNPC->isChecked()&&toBeFound){
+                    if(ui->Find_Radio_DirLeftNPC->isChecked()){
+                        toBeFound = ((ItemNPC*)gr[i])->npcData.direct == -1;
+                    }else if(ui->Find_Radio_DirRandomNPC->isChecked()){
+                        toBeFound = ((ItemNPC*)gr[i])->npcData.direct == 0;
+                    }else if(ui->Find_Radio_DirRightNPC->isChecked()){
+                        toBeFound = ((ItemNPC*)gr[i])->npcData.direct == 1;
+                    }
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
