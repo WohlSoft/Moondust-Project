@@ -495,6 +495,8 @@ private slots:
 
     void on_FindStartBGO_clicked();
 
+    void on_Find_Button_ContainsNPCBlock_clicked();
+
 private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
