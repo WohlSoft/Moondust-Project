@@ -168,6 +168,8 @@ void MainWindow::on_Find_Button_ResetBlock_clicked()
         ui->Find_Check_TypeBlock->setChecked(true);
         ui->Find_Button_TypeBlock->setText(tr("[empty]"));
         curSearchBlock.id = 0;
+        curSearchBlock.npc_id = 0;
+        ui->Find_Button_ContainsNPCBlock->setText(tr("[empty]"));
         ui->Find_Combo_LayerBlock->setCurrentText("Default");
         ui->Find_Check_InvisibleActiveBlock->setChecked(false);
         ui->Find_Check_SlipperyActiveBlock->setChecked(false);
@@ -203,6 +205,9 @@ void MainWindow::on_Find_Button_ResetNPC_clicked()
         ui->Find_Combo_LayerNPC->setCurrentText("Default");
         curSearchNPC.id = 0;
         ui->Find_Radio_DirLeftNPC->setChecked(true);
+        ui->Find_Check_FriendlyActiveNPC->setChecked(false);
+        ui->Find_Check_NotMoveActiveNPC->setChecked(false);
+        ui->Find_Check_BossActiveNPC->setChecked(false);
     }else{
         currentSearches ^= SEARCH_NPC;
         ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
@@ -356,6 +361,15 @@ bool MainWindow::doSearchNPC(leveledit *edit)
                     }else if(ui->Find_Radio_DirRightNPC->isChecked()){
                         toBeFound = ((ItemNPC*)gr[i])->npcData.direct == 1;
                     }
+                }
+                if(ui->Find_Check_FriendlyNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.friendly == ui->Find_Check_FriendlyActiveNPC->isChecked();
+                }
+                if(ui->Find_Check_NotMoveNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.nomove == ui->Find_Check_NotMoveActiveNPC->isChecked();
+                }
+                if(ui->Find_Check_BossNPC->isChecked()&&toBeFound){
+                    toBeFound = ((ItemNPC*)gr[i])->npcData.legacyboss == ui->Find_Check_BossActiveNPC->isChecked();
                 }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
