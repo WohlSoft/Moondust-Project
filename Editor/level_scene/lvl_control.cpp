@@ -343,7 +343,9 @@ if(contextMenuOpened) return;
             }
 
             if(cursor){
-                cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
+                                                   QPoint(LvlPlacingItems::c_offset_x,
+                                                          LvlPlacingItems::c_offset_y),
                                                    LvlPlacingItems::gridSz,
                                                    LvlPlacingItems::gridOffset)));
             }
@@ -446,7 +448,9 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->clearSelection();
             if(cursor)
             {
-                        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
+                                                           QPoint(LvlPlacingItems::c_offset_x,
+                                                                  LvlPlacingItems::c_offset_y),
                                                          LvlPlacingItems::gridSz,
                                                          LvlPlacingItems::gridOffset)));
                        cursor->show();
