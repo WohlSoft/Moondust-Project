@@ -1127,7 +1127,7 @@
         <x>0</x>
         <y>0</y>
         <width>299</width>
-        <height>319</height>
+        <height>295</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1188,7 +1188,7 @@
         <x>0</x>
         <y>0</y>
         <width>278</width>
-        <height>319</height>
+        <height>295</height>
        </rect>
       </property>
      </widget>
@@ -1212,7 +1212,7 @@
         <x>0</x>
         <y>0</y>
         <width>278</width>
-        <height>319</height>
+        <height>295</height>
        </rect>
       </property>
      </widget>
@@ -1236,7 +1236,7 @@
         <x>0</x>
         <y>0</y>
         <width>278</width>
-        <height>319</height>
+        <height>295</height>
        </rect>
       </property>
       <widget class="QGroupBox" name="groupBox_6">
@@ -2535,7 +2535,7 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-484</y>
+          <y>-645</y>
           <width>282</width>
           <height>1462</height>
          </rect>
@@ -4727,7 +4727,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>271</width>
-          <height>469</height>
+          <height>555</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4968,7 +4968,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>344</width>
-          <height>469</height>
+          <height>555</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5130,7 +5130,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>307</width>
-          <height>469</height>
+          <height>555</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5152,6 +5152,60 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <property name="spacing">
           <number>3</number>
          </property>
+         <item row="7" column="4" rowspan="2" colspan="2">
+          <widget class="QGroupBox" name="groupBox">
+           <property name="title">
+            <string>Direction</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="spacing">
+             <number>3</number>
+            </property>
+            <property name="leftMargin">
+             <number>3</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>3</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QRadioButton" name="Find_Radio_DirLeftNPC">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Left</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="Find_Radio_DirRandomNPC">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Random</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="Find_Radio_DirRightNPC">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>Right</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
          <item row="4" column="0" colspan="2" alignment="Qt::AlignHCenter">
           <widget class="QCheckBox" name="Find_Check_TypeNPC">
            <property name="checked">
@@ -5162,21 +5216,21 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="5" column="0" colspan="2" alignment="Qt::AlignHCenter">
           <widget class="QCheckBox" name="Find_Check_LayerNPC"/>
          </item>
-         <item row="13" column="0" colspan="6">
+         <item row="14" column="0" colspan="6">
           <widget class="QPushButton" name="Find_Button_ResetNPC">
            <property name="text">
             <string>Reset Search Fields</string>
            </property>
           </widget>
          </item>
-         <item row="14" column="0" colspan="6">
+         <item row="15" column="0" colspan="6">
           <widget class="QPushButton" name="FindStartNPC">
            <property name="text">
             <string>Search NPC</string>
            </property>
           </widget>
          </item>
-         <item row="11" column="0" colspan="2">
+         <item row="12" column="0" colspan="2">
           <spacer name="verticalSpacer_13">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -5196,7 +5250,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="11" column="4" colspan="2">
+         <item row="12" column="4" colspan="2">
           <spacer name="horizontalSpacer_4">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -5258,62 +5312,59 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="7" column="4" rowspan="2" colspan="2">
-          <widget class="QGroupBox" name="groupBox">
-           <property name="title">
-            <string>Direction</string>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_7">
-            <property name="spacing">
-             <number>3</number>
-            </property>
-            <property name="leftMargin">
-             <number>3</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>3</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QRadioButton" name="Find_Radio_DirLeftNPC">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Left</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="Find_Radio_DirRandomNPC">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Random</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="Find_Radio_DirRightNPC">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Right</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
          <item row="7" column="0" colspan="2" alignment="Qt::AlignHCenter">
           <widget class="QCheckBox" name="Find_Check_DirNPC"/>
+         </item>
+         <item row="9" column="0" colspan="2" alignment="Qt::AlignHCenter">
+          <widget class="QCheckBox" name="Find_Check_FriendlyNPC"/>
+         </item>
+         <item row="10" column="0" colspan="2" alignment="Qt::AlignHCenter">
+          <widget class="QCheckBox" name="Find_Check_NotMoveNPC"/>
+         </item>
+         <item row="11" column="0" colspan="2" alignment="Qt::AlignHCenter">
+          <widget class="QCheckBox" name="Find_Check_BossNPC"/>
+         </item>
+         <item row="9" column="3">
+          <widget class="QLabel" name="label_48">
+           <property name="text">
+            <string>Friendly</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="3">
+          <widget class="QLabel" name="label_49">
+           <property name="text">
+            <string>Don't move</string>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="3">
+          <widget class="QLabel" name="label_50">
+           <property name="text">
+            <string>Set as Boss</string>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="4" colspan="2">
+          <widget class="QCheckBox" name="Find_Check_FriendlyActiveNPC">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="4" colspan="2">
+          <widget class="QCheckBox" name="Find_Check_NotMoveActiveNPC">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="4" colspan="2">
+          <widget class="QCheckBox" name="Find_Check_BossActiveNPC">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
