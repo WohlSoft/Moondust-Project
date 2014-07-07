@@ -7,6 +7,7 @@ Editor 0.1.1
 - Added item search box: you can find items by his ID and you can find layer members
 - Added tab view mode, you can switch between sub-window/tab mode in application settings
 - Added support of second special value for fix bug with wrong LVL file parsing (Herb with included magic potion)
+- Fixed loss of decimal part of values for layer movement and auto-scroll speed
 
 Editor 0.1.0.1
 - Fixed bug with custom music paths after save new file.
