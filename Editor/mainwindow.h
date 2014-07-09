@@ -404,7 +404,7 @@ private slots:
     //Level Events
     void on_actionLevelEvents_triggered(bool checked);
     void on_LevelEventsToolBox_visibilityChanged(bool visible);
-
+    void refreshSecondSpecialOption(long npcID, long spcOpts, long spcOpts2, bool newItem=false);
 
 
     void on_LVLEvents_List_itemSelectionChanged();
