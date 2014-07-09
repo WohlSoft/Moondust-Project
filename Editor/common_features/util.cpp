@@ -52,3 +52,14 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox 
         }
     }
 }
+
+void util::memclear(QListWidget *wid)
+{
+    QList<QListWidgetItem*> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    while(!items.isEmpty())
+    {
+        QListWidgetItem *tmp = items.first();
+        items.pop_front();
+        delete tmp;
+    }
+}
