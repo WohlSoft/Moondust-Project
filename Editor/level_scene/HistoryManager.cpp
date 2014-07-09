@@ -1329,6 +1329,10 @@ void LvlScene::historyBack()
 
         if(subtype == SETTING_LEVELNAME){
             LvlData->LevelName = extraData.toList()[0].toString();
+
+            MainWinConnect::pMainWin->activeLvlEditWin()->setWindowTitle( LvlData->LevelName.isEmpty() ?
+                MainWinConnect::pMainWin->activeLvlEditWin()->userFriendlyCurrentFile() : LvlData->LevelName );
+            MainWinConnect::pMainWin->updateWindowMenu();
         }
         break;
     }
@@ -2163,6 +2167,9 @@ void LvlScene::historyForward()
 
         if(subtype == SETTING_LEVELNAME){
             LvlData->LevelName = extraData.toList()[1].toString();
+            MainWinConnect::pMainWin->activeLvlEditWin()->setWindowTitle( LvlData->LevelName.isEmpty() ?
+                MainWinConnect::pMainWin->activeLvlEditWin()->userFriendlyCurrentFile() : LvlData->LevelName );
+            MainWinConnect::pMainWin->updateWindowMenu();
         }
 
         break;
