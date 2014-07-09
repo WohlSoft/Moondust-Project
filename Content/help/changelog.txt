@@ -8,6 +8,8 @@ Editor 0.1.1
 - Added tab view mode, you can switch between sub-window/tab mode in application settings
 - Added support of second special value for fix bug with wrong LVL file parsing (Herb with included magic potion)
 - Fixed loss of decimal part of values for layer movement and auto-scroll speed
+- Fixed offset bug for NPC special options
+- Title of sub-window will have the level title instead of file name
 
 Editor 0.1.0.1
 - Fixed bug with custom music paths after save new file.
