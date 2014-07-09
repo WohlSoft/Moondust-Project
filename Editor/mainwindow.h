@@ -192,7 +192,9 @@ public slots:
     void on_actionReset_position_triggered();
     void on_actionGridEn_triggered(bool checked);
     void on_LVLPropsBackImage_currentIndexChanged(int index);
+
     void on_actionReload_triggered();
+    void on_actionRefresh_menu_and_toolboxes_triggered();
 
 private slots:
 
@@ -489,11 +491,8 @@ private slots:
     void on_Find_Button_ResetBlock_clicked();
     void on_Find_Button_ResetBGO_clicked();
     void on_Find_Button_ResetNPC_clicked();
-
     void on_FindStartBlock_clicked();
-
     void on_FindStartBGO_clicked();
-
     void on_Find_Button_ContainsNPCBlock_clicked();
 
 private:
