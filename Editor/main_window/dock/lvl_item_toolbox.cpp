@@ -21,6 +21,7 @@
 
 #include "../../level_scene/lvl_item_placing.h"
 #include "../../file_formats/file_formats.h"
+#include "../../common_features/util.h"
 
 #include "../../data_configs/custom_data.h"
 
@@ -601,43 +602,11 @@ void MainWindow::updateFilters()
 {
     int current = ui->LevelToolBoxTabs->currentIndex();
     if(current == 0){
-        updateFilter(ui->BlockFilterField, ui->BlockItemsList, ui->BlockFilterType);
+        util::updateFilter(ui->BlockFilterField, ui->BlockItemsList, ui->BlockFilterType);
     }else if(current == 1){
-        updateFilter(ui->BGOFilterField, ui->BGOItemsList, ui->BGOFilterType);
+        util::updateFilter(ui->BGOFilterField, ui->BGOItemsList, ui->BGOFilterType);
     }else if(current == 2){
-        updateFilter(ui->NPCFilterField, ui->NPCItemsList, ui->NPCFilterType);
-    }
-}
-
-void MainWindow::updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox)
-{
-    QString toSearch;
-    toSearch = searchEdit->text();
-    for(int i = 0; i < itemList->count(); i++){
-        if(toSearch.isEmpty()){
-            itemList->setRowHidden(i,false);
-            continue;
-        }
-        if(typeBox->currentIndex()==0){ //search by text
-            if(!itemList->item(i)->text().contains(toSearch, Qt::CaseInsensitive)){
-                itemList->setRowHidden(i,true);
-            }else{
-                itemList->setRowHidden(i,false);
-            }
-        }else if(typeBox->currentIndex()==1){ //search by id
-            bool conv = false;
-            int toIdSearch = toSearch.toInt(&conv);
-            if(!conv){ //cannot convert
-                break;
-            }
-            if(itemList->item(i)->data(3).toInt()==toIdSearch){
-                itemList->setRowHidden(i,false);
-            }else{
-                itemList->setRowHidden(i,true);
-            }
-        }else{//else do nothing
-            break;
-        }
+        util::updateFilter(ui->NPCFilterField, ui->NPCItemsList, ui->NPCFilterType);
     }
 }
 
