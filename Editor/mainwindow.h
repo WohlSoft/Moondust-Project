@@ -161,7 +161,6 @@ public slots:
 
     //Toolbox functions
     void updateFilters();
-    void updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox);
     void clearFilter();
 
     //LvlDoorProps Functions

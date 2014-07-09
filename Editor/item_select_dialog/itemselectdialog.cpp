@@ -19,6 +19,7 @@
 #include "itemselectdialog.h"
 #include "ui_itemselectdialog.h"
 #include "../common_features/mainwinconnect.h"
+#include "../common_features/util.h"
 
 static QString allLabel = "[all]";
 static QString customLabel = "[custom]";
@@ -583,43 +584,11 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 void ItemSelectDialog::updateFilters()
 {
     if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_Block){
-        updateFilter(ui->Sel_Text_FilterBlock, ui->Sel_List_Block, ui->Sel_Combo_FiltertypeBlock);
+        util::updateFilter(ui->Sel_Text_FilterBlock, ui->Sel_List_Block, ui->Sel_Combo_FiltertypeBlock);
     }else if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_BGO){
-        updateFilter(ui->Sel_Text_FilterBGO, ui->Sel_List_BGO, ui->Sel_Combo_FiltertypeBGO);
+        util::updateFilter(ui->Sel_Text_FilterBGO, ui->Sel_List_BGO, ui->Sel_Combo_FiltertypeBGO);
     }else if(ui->Sel_TabCon_ItemType->currentWidget() == ui->Sel_Tab_NPC){
-        updateFilter(ui->Sel_Text_NPC, ui->Sel_List_NPC, ui->Sel_Combo_FiltertypeNPC);
-    }
-}
-
-void ItemSelectDialog::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
-{
-    QString toSearch;
-    toSearch = searchEdit->text();
-    for(int i = 0; i < itemList->count(); i++){
-        if(toSearch.isEmpty()){
-            itemList->setRowHidden(i,false);
-            continue;
-        }
-        if(typeBox->currentIndex()==0){ //search by text
-            if(!itemList->item(i)->text().contains(toSearch, Qt::CaseInsensitive)){
-                itemList->setRowHidden(i,true);
-            }else{
-                itemList->setRowHidden(i,false);
-            }
-        }else if(typeBox->currentIndex()==1){ //search by id
-            bool conv = false;
-            int toIdSearch = toSearch.toInt(&conv);
-            if(!conv){ //cannot convert
-                break;
-            }
-            if(itemList->item(i)->data(3).toInt()==toIdSearch){
-                itemList->setRowHidden(i,false);
-            }else{
-                itemList->setRowHidden(i,true);
-            }
-        }else{//else do nothing
-            break;
-        }
+        util::updateFilter(ui->Sel_Text_NPC, ui->Sel_List_NPC, ui->Sel_Combo_FiltertypeNPC);
     }
 }
 
