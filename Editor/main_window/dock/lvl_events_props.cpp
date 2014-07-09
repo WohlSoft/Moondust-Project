@@ -451,7 +451,7 @@ void MainWindow::eventLayerVisiblySyncList()
         }
 
         //ui->LVLEvent_Layer_ShowList->clear();
-        items = ui->LVLEvent_Layer_HideList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+        items = ui->LVLEvent_Layer_ShowList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
         while(!items.isEmpty())
         {
             QListWidgetItem *tmp = items.first();
@@ -460,7 +460,7 @@ void MainWindow::eventLayerVisiblySyncList()
         }
 
         //ui->LVLEvent_Layer_ToggleList->clear();
-        items = ui->LVLEvent_Layer_HideList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+        items = ui->LVLEvent_Layer_ToggleList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
         while(!items.isEmpty())
         {
             QListWidgetItem *tmp = items.first();
