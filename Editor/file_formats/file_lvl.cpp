@@ -167,10 +167,10 @@ LevelEvents FileFormats::dummyLvlEvent()
     dummyEvent.up=false;
     dummyEvent.autostart=false;
     dummyEvent.movelayer="";
-    dummyEvent.layer_speed_x=0;
-    dummyEvent.layer_speed_y=0;
-    dummyEvent.move_camera_x=0;
-    dummyEvent.move_camera_y=0;
+    dummyEvent.layer_speed_x=0.0;
+    dummyEvent.layer_speed_y=0.0;
+    dummyEvent.move_camera_x=0.0;
+    dummyEvent.move_camera_y=0.0;
     dummyEvent.scroll_section=0;
 
     LevelEvents_layers events_layers;
@@ -1671,10 +1671,10 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::BoolS(FileData.events[i].autostart);
 
         TextData += SMBX64::qStrS(FileData.events[i].movelayer);
-        TextData += SMBX64::IntS(FileData.events[i].layer_speed_x);
-        TextData += SMBX64::IntS(FileData.events[i].layer_speed_y);
-        TextData += SMBX64::IntS(FileData.events[i].move_camera_x);
-        TextData += SMBX64::IntS(FileData.events[i].move_camera_y);
+        TextData += SMBX64::FloatS(FileData.events[i].layer_speed_x);
+        TextData += SMBX64::FloatS(FileData.events[i].layer_speed_y);
+        TextData += SMBX64::FloatS(FileData.events[i].move_camera_x);
+        TextData += SMBX64::FloatS(FileData.events[i].move_camera_y);
         TextData += SMBX64::IntS(FileData.events[i].scroll_section);
     }
 

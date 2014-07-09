@@ -441,7 +441,7 @@ void leveledit::setCurrentFile(const QString &fileName)
     LvlData.path = QFileInfo(fileName).absoluteDir().absolutePath();
     //document()->setModified(false);
     setWindowModified(false);
-    setWindowTitle(userFriendlyCurrentFile());
+    setWindowTitle(LvlData.LevelName=="" ? userFriendlyCurrentFile() : LvlData.LevelName);
 }
 
 QString leveledit::strippedName(const QString &fullFileName)
