@@ -63,6 +63,9 @@ bool SMBX64::dBool(QString in) //Digital BOOL
 QString SMBX64::IntS(long input)
 {  return QString::number(input)+"\n"; }
 
+QString SMBX64::FloatS(float input)
+{  return QString::number(input)+"\n"; }
+
 QString SMBX64::BoolS(bool input)
 {  return QString( (input)?"#TRUE#":"#FALSE#" )+"\n"; }
 

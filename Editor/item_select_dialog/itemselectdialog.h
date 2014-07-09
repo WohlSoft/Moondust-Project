@@ -91,7 +91,6 @@ private:
     QString cat_npcs;
 
     void updateFilters();
-    void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
 
     QList<QWidget*> extraBlockWid;
     QList<QWidget*> extraBGOWid;
