@@ -31,6 +31,8 @@
 
 #include "../../file_formats/file_formats.h"
 
+#include "../../common_features/util.h"
+
 static long currentEventArrayID=0;
 static bool lockSetEventSettings=false;
 
@@ -47,15 +49,7 @@ void MainWindow::setEventsBox()
     int WinType = activeChildWindow();
     QListWidgetItem * item;
 
-    //ui->LVLEvents_List->clear();
-    QList<QListWidgetItem*> items;
-    items = ui->LVLEvents_List->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-    while(!items.isEmpty())
-    {
-        QListWidgetItem *tmp = items.first();
-        items.pop_front();
-        delete tmp;
-    }
+    util::memclear(ui->LVLEvents_List);
 
     if (WinType==1)
     {
@@ -431,42 +425,10 @@ void MainWindow::eventLayerVisiblySyncList()
 
         LevelEvents event = edit->LvlData.events[i];
 
-        //ui->LVLEvents_layerList->clear();
-        QList<QListWidgetItem*> items;
-        items = ui->LVLEvents_layerList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-        while(!items.isEmpty())
-        {
-            QListWidgetItem *tmp = items.first();
-            items.pop_front();
-            delete tmp;
-        }
-
-        //ui->LVLEvent_Layer_HideList->clear();
-        items = ui->LVLEvent_Layer_HideList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-        while(!items.isEmpty())
-        {
-            QListWidgetItem *tmp = items.first();
-            items.pop_front();
-            delete tmp;
-        }
-
-        //ui->LVLEvent_Layer_ShowList->clear();
-        items = ui->LVLEvent_Layer_ShowList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-        while(!items.isEmpty())
-        {
-            QListWidgetItem *tmp = items.first();
-            items.pop_front();
-            delete tmp;
-        }
-
-        //ui->LVLEvent_Layer_ToggleList->clear();
-        items = ui->LVLEvent_Layer_ToggleList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-        while(!items.isEmpty())
-        {
-            QListWidgetItem *tmp = items.first();
-            items.pop_front();
-            delete tmp;
-        }
+        util::memclear(ui->LVLEvents_layerList);
+        util::memclear(ui->LVLEvent_Layer_HideList);
+        util::memclear(ui->LVLEvent_Layer_ShowList);
+        util::memclear(ui->LVLEvent_Layer_ToggleList);
 
         QListWidgetItem * item;
         //Total layers list
