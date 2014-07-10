@@ -24,6 +24,7 @@
 #include "newlayerbox.h"
 
 #include "../common_features/mainwinconnect.h"
+#include "../file_formats/file_formats.h"
 
 ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     : QGraphicsPixmapItem(parent)
@@ -217,9 +218,26 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         else
         if(selected==newNPC){
-            npcedit *child = MainWinConnect::pMainWin->createNPCChild();
-            child->newFile(npcData.id);
-            child->show();
+            QString path1 = scene->LvlData->path+QString("/npc-%1.txt").arg( npcData.id );
+            QString path2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
+
+            WriteToLog(QtDebugMsg, QString("NPC.txt path 1: %1").arg(path1));
+            WriteToLog(QtDebugMsg, QString("NPC.txt path 2: %1").arg(path2));
+            if( (!scene->LvlData->untitled) && (QFileInfo( path2 ).exists()) )
+            {
+                MainWinConnect::pMainWin->OpenFile( path2 );
+            }
+            else
+            if( (!scene->LvlData->untitled) && (QFileInfo( path1 ).exists()) )
+            {
+                MainWinConnect::pMainWin->OpenFile( path1 );
+            }
+            else
+            {
+                npcedit *child = MainWinConnect::pMainWin->createNPCChild();
+                child->newFile(npcData.id);
+                child->show();
+            }
         }
         else
         if(selected==fri)
