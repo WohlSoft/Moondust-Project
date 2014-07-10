@@ -136,11 +136,15 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 
 void MainWindow::SWCascade()
 {
+    if(GlobalSettings::MainWindowView!=QMdiArea::SubWindowView)
+        setSubView(); // Switch into SubWindow mode on call this menuitem
     ui->centralWidget->cascadeSubWindows();
 }
 
 void MainWindow::SWTile()
 {
+    if(GlobalSettings::MainWindowView!=QMdiArea::SubWindowView)
+        setSubView(); // Switch into SubWindow mode on call this menuitem
     ui->centralWidget->tileSubWindows();
 }
 
