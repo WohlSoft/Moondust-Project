@@ -139,3 +139,14 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
 {
     updateMenus(true);
 }
+
+void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
+{
+    if(checked){
+        this->hide();
+        this->showFullScreen();
+    }else{
+        this->hide();
+        this->showNormal();
+    }
+}
