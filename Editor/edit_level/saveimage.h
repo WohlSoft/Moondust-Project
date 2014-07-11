@@ -34,6 +34,7 @@ public:
     QVector<long > imageSize;
 
     ~ExportToImage();
+    bool HideWatersAndDoors();
     
 private slots:
     void on_imgHeight_valueChanged(int arg1);

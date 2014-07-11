@@ -142,6 +142,7 @@ public:
 
     void startBlockAnimation();
     void stopAnimation();
+    void hideWarpsAndDoors(bool visible);
 
     void setLocked(int type, bool lock);
 

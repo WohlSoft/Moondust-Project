@@ -110,7 +110,7 @@ void leveledit::ExportToImage_fn()
 
         qApp->processEvents();
         if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
-
+        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(false);
 
         if(!progress.wasCanceled()) progress.setValue(10);
         qApp->processEvents();
@@ -146,6 +146,7 @@ void leveledit::ExportToImage_fn()
 
         qApp->processEvents();
         if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
+        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
 
         if(!progress.wasCanceled()) progress.setValue(100);
         if(!progress.wasCanceled())
