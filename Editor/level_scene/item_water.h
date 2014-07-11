@@ -43,6 +43,8 @@ public:
     ~ItemWater();
 
     void setSize(QSize sz);
+    void setRectSize(QRect rect);
+
     void setType(int tp);
     void setWaterData(LevelWater inD);
 

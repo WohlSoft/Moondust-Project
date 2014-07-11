@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>268</width>
-    <height>177</height>
+    <width>289</width>
+    <height>241</height>
    </rect>
   </property>
   <property name="font">
@@ -44,8 +44,8 @@ Message limits: max line lenth is 28 characters</string>
     <widget class="QPlainTextEdit" name="msgTextBox">
      <property name="minimumSize">
       <size>
-       <width>250</width>
-       <height>100</height>
+       <width>271</width>
+       <height>162</height>
       </size>
      </property>
      <property name="font">
@@ -59,14 +59,17 @@ Message limits: max line lenth is 28 characters</string>
      <property name="whatsThis">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
      <property name="undoRedoEnabled">
       <bool>false</bool>
      </property>
      <property name="plainText">
       <string notr="true"/>
-     </property>
-     <property name="tabStopWidth">
-      <number>28</number>
      </property>
      <property name="maximumBlockCount">
       <number>28</number>

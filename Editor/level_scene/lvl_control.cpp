@@ -148,6 +148,9 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
         {
             switch(pResizer->type)
             {
+            case 3:
+                setPhysEnvResizer(NULL, false, false);
+                break;
             case 2:
                 setBlockResizer(NULL, false, false);
                 break;
@@ -168,6 +171,9 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
         {
             switch(pResizer->type)
             {
+            case 3:
+                setPhysEnvResizer(NULL, false, true);
+                break;
             case 2:
                 setBlockResizer(NULL, false, true);
                 break;
@@ -1495,6 +1501,64 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
                 LvlData->modified = true;
 
                 addResizeBlockHistory(((ItemBlock *)pResizer->targetItem)->blockData, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
+
+                //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
+                //drawSpace();
+            }
+            delete pResizer;
+            pResizer = NULL;
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            //resetResizingSection=true;
+        }
+        DrawMode=false;
+    }
+}
+
+void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept)
+{
+    if((enabled)&&(pResizer==NULL))
+    {
+        int x = ((ItemWater *)targetRect)->waterData.x;
+        int y = ((ItemWater *)targetRect)->waterData.y;
+        int w = ((ItemWater *)targetRect)->waterData.w;
+        int h = ((ItemWater *)targetRect)->waterData.h;
+
+        pResizer = new ItemResizer( QSize(w, h), Qt::darkYellow, 16 );
+        this->addItem(pResizer);
+        pResizer->setPos(x, y);
+        pResizer->type=3;
+        pResizer->targetItem = targetRect;
+        pResizer->_minSize = QSizeF(16, 16);
+        this->setFocus(Qt::ActiveWindowFocusReason);
+        //DrawMode=true;
+        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+    }
+    else
+    {
+        if(pResizer!=NULL)
+        {
+            if(accept)
+            {
+                #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, QString("Water RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
+                #endif
+                long x = pResizer->pos().x();
+                long y = pResizer->pos().y();
+                long w = pResizer->_width;
+                long h = pResizer->_height;
+                //long oldX = ((ItemWater *)pResizer->targetItem)->waterData.x;
+                //long oldY = ((ItemWater *)pResizer->targetItem)->waterData.y;
+                //long oldW = ((ItemWater *)pResizer->targetItem)->waterData.w;
+                //long oldH = ((ItemWater *)pResizer->targetItem)->waterData.h;
+                ((ItemWater *)pResizer->targetItem)->waterData.x = x;
+                ((ItemWater *)pResizer->targetItem)->waterData.y = y;
+                ((ItemWater *)pResizer->targetItem)->waterData.w = w;
+                ((ItemWater *)pResizer->targetItem)->waterData.h = h;
+
+                ((ItemWater *)pResizer->targetItem)->setRectSize( QRect(x,y,w,h) );
+                LvlData->modified = true;
+
+                //addResizeBlockHistory(((ItemBlock *)pResizer->targetItem)->blockData, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
 
                 //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 //drawSpace();

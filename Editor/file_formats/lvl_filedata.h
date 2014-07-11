@@ -253,6 +253,7 @@ struct LevelData
     int CurSection;
     bool playmusic;
     bool modified;
+    bool untitled;
     QString filename;
     QString path;
 };
