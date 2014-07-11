@@ -110,7 +110,7 @@ void leveledit::ExportToImage_fn()
 
         qApp->processEvents();
         if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
-
+        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(false);
 
         if(!progress.wasCanceled()) progress.setValue(10);
         qApp->processEvents();
@@ -146,6 +146,7 @@ void leveledit::ExportToImage_fn()
 
         qApp->processEvents();
         if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
+        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
 
         if(!progress.wasCanceled()) progress.setValue(100);
         if(!progress.wasCanceled())
@@ -169,6 +170,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
     LvlData = FileFormats::dummyLvlDataArray();
+    LvlData.untitled = true;
     StartLvlData = LvlData;
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
@@ -251,6 +253,7 @@ bool leveledit::saveFile(const QString &fileName)
     setCurrentFile(fileName);
 
     LvlData.modified = false;
+    LvlData.untitled = false;
 
     MainWinConnect::pMainWin->AddToRecentFiles(fileName);
     MainWinConnect::pMainWin->SyncRecentFiles();
@@ -264,7 +267,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     QFile file(fileName);
     LvlData = FileData;
     LvlData.modified = false;
-
+    LvlData.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(this, tr("Read file error"),
                              tr("Cannot read file %1:\n%2.")
@@ -349,6 +352,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     setCurrentFile(fileName);
     LvlData.modified = false;
+    LvlData.untitled = false;
 
     progress.deleteLater();
 
@@ -439,6 +443,8 @@ void leveledit::setCurrentFile(const QString &fileName)
     curFile = QFileInfo(fileName).canonicalFilePath();
     isUntitled = false;
     LvlData.path = QFileInfo(fileName).absoluteDir().absolutePath();
+    LvlData.filename = QFileInfo(fileName).baseName();
+    LvlData.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
     setWindowTitle(LvlData.LevelName=="" ? userFriendlyCurrentFile() : LvlData.LevelName);

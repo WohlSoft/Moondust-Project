@@ -123,13 +123,16 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             setAsQuicksand->setChecked(waterData.quicksand);
             setAsQuicksand->deleteLater();
 
-        ItemMenu->addSeparator()->deleteLater();;
+        QAction *resize = ItemMenu->addAction(tr("Resize"));
+            resize->deleteLater();
+
+        ItemMenu->addSeparator()->deleteLater();
         QAction *copyWater = ItemMenu->addAction(tr("Copy"));
             copyWater->deleteLater();
         QAction *cutWater = ItemMenu->addAction(tr("Cut"));
             cutWater->deleteLater();
 
-        ItemMenu->addSeparator()->deleteLater();;
+        ItemMenu->addSeparator()->deleteLater();
         QAction *remove = ItemMenu->addAction(tr("Remove"));
             remove->deleteLater();
 
@@ -185,6 +188,12 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 }
             }
             scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(false));
+            scene->contextMenuOpened = false;
+        }
+        else
+        if(selected==resize)
+        {
+            scene->setPhysEnvResizer(this, true);
             scene->contextMenuOpened = false;
         }
         else
@@ -373,6 +382,17 @@ void ItemWater::setType(int tp)
     arrayApply();
 }
 
+void ItemWater::setRectSize(QRect rect)
+{
+    waterData.x = rect.x();
+    waterData.y = rect.y();
+    waterData.w = rect.width();
+    waterData.h = rect.height();
+    waterSize = rect.size();
+    setPos(waterData.x, waterData.y);
+    drawWater();
+    arrayApply();
+}
 
 void ItemWater::setSize(QSize sz)
 {

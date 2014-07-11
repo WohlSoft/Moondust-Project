@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 
     MainWindow w;
     w.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, QSize(qApp->desktop()->width()-100, qApp->desktop()->height()-100), qApp->desktop()->availableGeometry()));
-    w.show();
+    w.showNormal();
     w.activateWindow();
     w.raise();
 

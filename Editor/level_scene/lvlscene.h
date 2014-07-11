@@ -142,6 +142,7 @@ public:
 
     void startBlockAnimation();
     void stopAnimation();
+    void hideWarpsAndDoors(bool visible);
 
     void setLocked(int type, bool lock);
 
@@ -201,6 +202,7 @@ public:
     void setSectionResizer(bool enabled, bool accept=false);
     void setEventSctSizeResizer(long event, bool enabled, bool accept=false);
     void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
+    void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
 
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{

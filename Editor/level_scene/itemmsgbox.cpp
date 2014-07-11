@@ -43,6 +43,6 @@ ItemMsgBox::~ItemMsgBox()
 
 void ItemMsgBox::on_buttonBox_accepted()
 {
-    currentText = ui->msgTextBox->toPlainText().simplified().remove('\"');
+    currentText = ui->msgTextBox->toPlainText().remove('\n').remove('\r').remove('\t').remove('\"');
     accept();
 }
