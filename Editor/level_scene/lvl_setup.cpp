@@ -111,6 +111,22 @@ void LvlScene::stopAnimation()
     update();
 }
 
+void LvlScene::hideWarpsAndDoors(bool visible)
+{
+    QMap<QString, LevelLayers> localLayers;
+    for(int i = 0; i < LvlData->layers.size(); ++i){
+        localLayers[LvlData->layers[i].name] = LvlData->layers[i];
+    }
+
+    foreach (QGraphicsItem* i, items()) {
+        if(i->data(0).toString()=="Water"){
+            i->setVisible(!localLayers[((ItemWater*)i)->waterData.layer].hidden && visible);
+        }else if(i->data(0).toString()=="Door_exit" || i->data(0).toString()=="Door_enter"){
+            i->setVisible(!localLayers[((ItemDoor*)i)->doorData.layer].hidden && visible);
+        }
+    }
+}
+
 void LvlScene::applyLayersVisible()
 {
     QList<QGraphicsItem*> ItemList = items();
