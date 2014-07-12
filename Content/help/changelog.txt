@@ -4,13 +4,13 @@ Editor 0.1.1
 - New selection dialog for items
 - Fixed a lot of memory leaks
 - Added displaying of Item ID in Properties tool box.
-- Added item search box: you can find items by his ID and you can find layer members
+- Added item search box: you can find items by his ID and you can find layer members or other options
 - Added tab view mode, you can switch between sub-window/tab mode in application settings
 - Added support of second special value for fix bug with wrong LVL file parsing (Herb with included magic potion)
 - Fixed loss of decimal part of values for layer movement and auto-scroll speed
 - Fixed offset bug for NPC special options
 - Title of sub-window will have the level title instead of file name
-- Added fullscreen option, recommented for tablets!
+- Added fullscreen option, recommended for tablets!
 - Added option to Hide warps/doors and waters (Physic Environment zones) on exporting images.
 
 Editor 0.1.0.1
