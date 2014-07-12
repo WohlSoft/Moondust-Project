@@ -232,6 +232,7 @@ LevelData FileFormats::dummyLvlDataArray()
 
     NewFileData.ReadFileValid = true;
     NewFileData.modified = true;
+    NewFileData.untitled = true;
 
     NewFileData.CurSection=0;
     NewFileData.playmusic=0;
