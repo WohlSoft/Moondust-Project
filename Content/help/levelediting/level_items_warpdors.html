@@ -13,7 +13,7 @@
 <img alt="Editor splash" src="../images/splash_editor.png" /></p>
 <h1 style="text-align: left">Level editing &gt; Level items &gt; Warps and doors</h1>
 <p style="text-align: left"><strong>Warps</strong> - is a 
-special units, what allow to player teleport from first warp point (Entrance) to 
+special units, which allow to player teleport from first warp point (Entrance) to 
 second (Exit). Player can teleport between difference places of one section, and 
 also player can teleport between sections. This is a one way for enter to 
 another section, but exclusion is some NPCs, what can generate warp to other 
@@ -28,6 +28,53 @@ section.</p>
 see. Inside PGE-Editor this is available:</p>
 <p style="text-align: center">
 <img alt="" height="346" src="../screenshots/LevelEditing/Warps/LevelGlobalWarpList.png" width="259" /></p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: center"><em>Warp point context menu</em></p>
+<p style="text-align: center">
+<img alt="" height="221" src="../screenshots/LevelEditing/Warps/WarpContextMenu.png" width="184" /></p>
+<p style="text-align: left">&nbsp;</p>
+<h3 style="text-align: left"><a name="Warp_properties">Warp properties</a></h3>
+<p style="text-align: left">Warps have standard flags:</p>
+<p style="text-align: left"><strong>No Vehicles</strong> -&nbsp; (In SMBX this 
+option named as "No Yoshi") When you enter in this warp, playable character will 
+exit without his vehicle (Vehicle will be restored when player will end this 
+level).</p>
+<p style="text-align: left"><strong>Allow items</strong> - (In SMBX this option 
+named as "Allow NPC") With this flag, playable character can get carryed item 
+through this warp. Without this flags item will leaved nearly entrance of this 
+warp.</p>
+<p style="text-align: left"><strong>Locked</strong> - With this flag warp will 
+be locked and for enter in them, player character must have a key.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Special flags:</p>
+<p style="text-align: left"><strong>Level entrance</strong> - this option allow 
+to place only one point. With this flag impossible to enter in this warp, and 
+this warp can be used only for enter into this level</p>
+<p style="text-align: left"><strong>Level exit</strong> - this option allow to 
+place only one point. When playable character enter into this warp, level will 
+be done.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">Values and options:</p>
+<p style="text-align: left"><strong>Stars needed</strong> - This is limit for 
+star number. Player can enter in this warp only if he(she) collect necessary 
+number of stars.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left"><strong>X and Y</strong> - This is a coordinated of 
+world map. If they defined, this warp will be as exit into the world map 
+coordinates.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left"><strong>Warp type</strong> - Defining of warp type: 
+Instant, Pipe or Door.</p>
+<p style="text-align: left"><strong>Pipe directions</strong> - This is a 
+directions of warp, which can be used only for "pipe" warp type.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left"><strong>Level file name</strong> - Here defining the 
+another level file for make warp to them.</p>
+<p style="text-align: left"><strong>Door #</strong> - (Inside SMBX this option 
+named "Warp to"). If value is 0 (Normal entrance), player will start defined 
+level from his(her) start point, else player will entered in level by selected 
+warp point. </p>
+<p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <h3 style="text-align: left"><strong><a name="Warp_types">Warp types</a></strong></h3>
 <p style="text-align: left">The warps have a three types: Instant, Pipe and 
