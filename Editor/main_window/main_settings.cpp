@@ -95,6 +95,48 @@ void MainWindow::setUiDefults()
     setItemBoxes();
     setSoundList();
 
+    //MainWindow Geometry;
+    QRect mwg = this->geometry();
+
+    //Define the default geometry for toolboxes
+    ui->DoorsToolbox->setGeometry(
+                mwg.x()+mwg.width()-ui->DoorsToolbox->width()-10,
+                mwg.y()+120,
+                ui->DoorsToolbox->width(),
+                ui->DoorsToolbox->height()
+                );
+
+    ui->LevelSectionSettings->setGeometry(
+                mwg.x()+mwg.width()-ui->LevelSectionSettings->width()-10,
+                mwg.y()+120,
+                ui->LevelSectionSettings->width(),
+                ui->LevelSectionSettings->height()
+                );
+    ui->LevelLayers->setGeometry(
+                mwg.x()+mwg.width()-ui->LevelLayers->width()-10,
+                mwg.y()+120,
+                ui->LevelLayers->width(),
+                ui->LevelLayers->height()
+                );
+    ui->LevelEventsToolBox->setGeometry(
+                mwg.x()+mwg.width()-ui->LevelEventsToolBox->width()-10,
+                mwg.y()+120,
+                ui->LevelEventsToolBox->width(),
+                ui->LevelEventsToolBox->height()
+                );
+    ui->ItemProperties->setGeometry(
+                mwg.x()+mwg.width()-ui->ItemProperties->width()-10,
+                mwg.y()+120,
+                ui->ItemProperties->width(),
+                ui->ItemProperties->height()
+                );
+    ui->FindDock->setGeometry(
+                mwg.x()+mwg.width()-ui->FindDock->width()-10,
+                mwg.y()+120,
+                ui->FindDock->width(),
+                ui->FindDock->height()
+                );
+
     loadSettings();
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)),

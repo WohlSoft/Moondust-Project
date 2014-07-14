@@ -183,6 +183,35 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void LvlScene::addResizeWaterHistory(LevelWater wt, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
+{
+    cleanupRedoElements();
+
+    HistoryOperation resizeWtOperation;
+    resizeWtOperation.type = HistoryOperation::LEVELHISTORY_RESIZEWATER;
+    LevelData wtData;
+    wtData.water.push_back(wt);
+    resizeWtOperation.data = wtData;
+    QList<QVariant> oldSizes;
+    QList<QVariant> newSizes;
+    QList<QVariant> package;
+    oldSizes.push_back(QVariant((qlonglong)oldLeft));
+    oldSizes.push_back(QVariant((qlonglong)oldTop));
+    oldSizes.push_back(QVariant((qlonglong)oldRight));
+    oldSizes.push_back(QVariant((qlonglong)oldBottom));
+    newSizes.push_back(QVariant((qlonglong)newLeft));
+    newSizes.push_back(QVariant((qlonglong)newTop));
+    newSizes.push_back(QVariant((qlonglong)newRight));
+    newSizes.push_back(QVariant((qlonglong)newBottom));
+    package.push_back(oldSizes);
+    package.push_back(newSizes);
+    resizeWtOperation.extraData = QVariant(package);
+    operationList.push_back(resizeWtOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void LvlScene::addAddWarpHistory(int array_id, int listindex, int doorindex)
 {
     cleanupRedoElements();
@@ -1346,6 +1375,14 @@ void LvlScene::historyBack()
 
         break;
     }
+    case HistoryOperation::LEVELHISTORY_RESIZEWATER:
+    {
+        LevelData resizedWater = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(resizedWater, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyUndoResizeWater, 0, 0, true, true, true, false, true, true);
+        break;
+    }
     default:
         break;
     }
@@ -2189,6 +2226,14 @@ void LvlScene::historyForward()
 
         break;
     }
+    case HistoryOperation::LEVELHISTORY_RESIZEWATER:
+    {
+        LevelData resizedWater = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(resizedWater, &lastOperation, cbData, 0, 0, 0, &LvlScene::historyRedoResizeWater, 0, 0, true, true, true, false, true, true);
+        break;
+    }
     default:
         break;
 
@@ -2919,6 +2964,28 @@ void LvlScene::historyRedoResizeBlock(LvlScene::CallbackData cbData, LevelBlock 
     ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
 }
 
+void LvlScene::historyUndoResizeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+{
+    QList<QVariant> package = cbData.hist->extraData.toList();
+    QList<QVariant> oldSizes = package[0].toList();
+    long tarLeft = (long)oldSizes[0].toLongLong();
+    long tarTop = (long)oldSizes[1].toLongLong();
+    long tarRight = (long)oldSizes[2].toLongLong();
+    long tarBottom = (long)oldSizes[3].toLongLong();
+    ((ItemWater *)cbData.item)->setRectSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
+}
+
+void LvlScene::historyRedoResizeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+{
+    QList<QVariant> package = cbData.hist->extraData.toList();
+    QList<QVariant> oldSizes = package[1].toList();
+    long tarLeft = (long)oldSizes[0].toLongLong();
+    long tarTop = (long)oldSizes[1].toLongLong();
+    long tarRight = (long)oldSizes[2].toLongLong();
+    long tarBottom = (long)oldSizes[3].toLongLong();
+    ((ItemWater *)cbData.item)->setRectSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
+}
+
 void LvlScene::historyRemoveDoors(LvlScene::CallbackData cbData, LevelDoors /*door*/, bool /*isEntrance*/)
 {
     ((ItemDoor *)(cbData.item))->removeFromArray();
@@ -3443,6 +3510,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSSECTION: return tr("Changed Sectionsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGSLEVEL: return tr("Changed Levelsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     case HistoryOperation::LEVELHISTORY_REPLACEPLAYERPOINT: return tr("Place Player Point");
+    case HistoryOperation::LEVELHISTORY_RESIZEWATER: return tr("Resize Water");
     default:
         return tr("Unknown");
     }
