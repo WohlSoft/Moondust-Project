@@ -83,5 +83,10 @@
         <file>images/splash_editor.png</file>
         <file>images/animation.png</file>
         <file>images/search.png</file>
+        <file>images/cat/cat_16.png</file>
+        <file>images/cat/cat_32.png</file>
+        <file>images/cat/cat_48.png</file>
+        <file>images/cat/cat_128.png</file>
+        <file>images/cat/cat_256.png</file>
     </qresource>
 </RCC>
