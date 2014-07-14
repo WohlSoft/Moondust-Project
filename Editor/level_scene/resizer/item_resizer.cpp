@@ -388,7 +388,7 @@ void ItemResizer::setCornerPositions()
 
 QRectF ItemResizer::boundingRect() const
 {
-    return QRectF(0,0,_width,_height);
+    return QRectF(-10,-10,_width+20,_height+20);
 }
 
 
