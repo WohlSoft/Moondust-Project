@@ -1546,10 +1546,10 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
                 long y = pResizer->pos().y();
                 long w = pResizer->_width;
                 long h = pResizer->_height;
-                //long oldX = ((ItemWater *)pResizer->targetItem)->waterData.x;
-                //long oldY = ((ItemWater *)pResizer->targetItem)->waterData.y;
-                //long oldW = ((ItemWater *)pResizer->targetItem)->waterData.w;
-                //long oldH = ((ItemWater *)pResizer->targetItem)->waterData.h;
+                long oldX = ((ItemWater *)pResizer->targetItem)->waterData.x;
+                long oldY = ((ItemWater *)pResizer->targetItem)->waterData.y;
+                long oldW = ((ItemWater *)pResizer->targetItem)->waterData.w;
+                long oldH = ((ItemWater *)pResizer->targetItem)->waterData.h;
                 ((ItemWater *)pResizer->targetItem)->waterData.x = x;
                 ((ItemWater *)pResizer->targetItem)->waterData.y = y;
                 ((ItemWater *)pResizer->targetItem)->waterData.w = w;
@@ -1558,7 +1558,7 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
                 ((ItemWater *)pResizer->targetItem)->setRectSize( QRect(x,y,w,h) );
                 LvlData->modified = true;
 
-                //addResizeBlockHistory(((ItemBlock *)pResizer->targetItem)->blockData, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
+                addResizeWaterHistory(((ItemWater *)pResizer->targetItem)->waterData, oldX, oldY, oldX+oldW, oldY+oldH, x, y, x+w, y+h);
 
                 //ChangeSectionBG(LvlData->sections[LvlData->CurSection].background);
                 //drawSpace();

@@ -231,7 +231,8 @@ public:
             LEVELHISTORY_MERGELAYER,
             LEVELHISTORY_CHANGEDSETTINGSSECTION,
             LEVELHISTORY_CHANGEDSETTINGSLEVEL,
-            LEVELHISTORY_REPLACEPLAYERPOINT
+            LEVELHISTORY_REPLACEPLAYERPOINT,
+            LEVELHISTORY_RESIZEWATER
         };
         HistoryType type;
         //used most of Operations
@@ -349,6 +350,8 @@ public:
                                  long newLeft, long newTop, long newRight, long newBottom);
     void addChangedLayerHistory(LevelData changedItems, QString newLayerName);
     void addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom,
+                               long newLeft, long newTop, long newRight, long newBottom);
+    void addResizeWaterHistory(LevelWater wt, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                long newLeft, long newTop, long newRight, long newBottom);
     void addAddWarpHistory(int array_id, int listindex, int doorindex);
     void addRemoveWarpHistory(LevelDoors removedDoor);
@@ -487,6 +490,9 @@ public:
     //Callbackfunctions: Change sizeable Block size
     void historyUndoResizeBlock(CallbackData cbData, LevelBlock data);
     void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);
+    //Callbackfunctions: Change sizeable Water size
+    void historyUndoResizeWater(CallbackData cbData, LevelWater data);
+    void historyRedoResizeWater(CallbackData cbData, LevelWater data);
     //Callbackfunctions: Undo place of Doors
     void historyRemoveDoors(CallbackData cbData, LevelDoors door, bool isEntrance);
     //Callbackfunctions: Set Visible
