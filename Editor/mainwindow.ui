@@ -376,7 +376,7 @@
    </attribute>
    <widget class="QTabWidget" name="LevelToolBoxTabs">
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Blocks">
      <attribute name="title">
@@ -1129,7 +1129,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>274</width>
+        <width>246</width>
         <height>341</height>
        </rect>
       </property>
@@ -1190,7 +1190,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>258</width>
+        <width>230</width>
         <height>341</height>
        </rect>
       </property>
@@ -1214,7 +1214,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>258</width>
+        <width>230</width>
         <height>341</height>
        </rect>
       </property>
@@ -1238,7 +1238,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>258</width>
+        <width>230</width>
         <height>341</height>
        </rect>
       </property>
@@ -2539,7 +2539,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>262</width>
+          <width>234</width>
           <height>1330</height>
          </rect>
         </property>
@@ -4729,7 +4729,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>282</width>
+          <width>270</width>
           <height>555</height>
          </rect>
         </property>
@@ -4970,7 +4970,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>282</width>
+          <width>270</width>
           <height>555</height>
          </rect>
         </property>
@@ -5132,7 +5132,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>282</width>
+          <width>254</width>
           <height>555</height>
          </rect>
         </property>
@@ -5184,19 +5184,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <string>Search NPC</string>
            </property>
           </widget>
-         </item>
-         <item row="14" column="0" colspan="2">
-          <spacer name="verticalSpacer_13">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>136</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item row="4" column="4" colspan="2">
           <widget class="QPushButton" name="Find_Button_TypeNPC">
@@ -5395,6 +5382,19 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <string>Case Sensitive?</string>
            </property>
           </widget>
+         </item>
+         <item row="14" column="0" colspan="4">
+          <spacer name="verticalSpacer_13">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>136</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
