@@ -13,6 +13,101 @@
 <img alt="Editor splash" src="../images/splash_editor.png" /></p>
 <h1 style="text-align: left">Level editing &gt; Level items &gt;&nbsp; Background 
 objects</h1>
+<p style="text-align: left"><strong>Background objects.</strong> 
+- is a sceneries. But some BGO can have special features: platform movement 
+paths, will define movement paths for moting "platforms", reverser, what will 
+revert platform's speed back. Some BGO allows to clibmb on them. BGO can be 
+background and foreground. Foreground BGO placing over all other level items.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: center"><em>Placing of BGO</em></p>
+<p style="text-align: center">
+<img alt="" src="../screenshots/LevelEditing/Items/PlacingBGO.png" /></p>
+<p style="text-align: center">
+&nbsp;</p>
+<p style="text-align: center">
+<em>BGO Context menu</em></p>
+<p style="text-align: center">
+<img alt="" height="218" src="../screenshots/LevelEditing/Items/BGO_Context.png" width="236" /></p>
+<p style="text-align: center">
+&nbsp;</p>
+<p style="text-align: center">
+&nbsp;</p>
+<p style="text-align: center">
+&nbsp;</p>
+<h3 style="text-align: left">
+<a name="BGO_Properties">BGO Properties</a></h3>
+<p style="text-align: left">
+Each BGO now have only two options:</p>
+<p style="text-align: left">
+&nbsp;</p>
+<p style="text-align: left">
+<strong>Layer </strong>- here defined the layer, what is owner of this BGO. 
+All items at first are a members of "Default" layer.</p>
+<p style="text-align: left">
+&nbsp;</p>
+<p style="text-align: left">
+<strong>Sorting priority</strong> - The special option using only for SMBX LVL 
+file format saving process, but not save into them.</p>
+<p style="text-align: left">
+This option can be used only as hack of SMBX to force display background BGO as 
+foreground. This option don'd defining Z-value, which a real 
+foreground/background position index. This option defining the sequence of array 
+items for BGO in file.</p>
+<p style="text-align: left">
+&nbsp;</p>
+<p style="text-align: center">
+&nbsp;</p>
+<p style="text-align: center">
+<em>BGO Properties toolbox</em></p>
+<p style="text-align: center">
+<img alt="" height="420" src="../screenshots/LevelEditing/Items/Props_BGO.png" width="258" /></p>
+<p style="text-align: center">
+&nbsp;</p>
+<p style="text-align: center">
+&nbsp;</p>
+<p style="text-align: center">
+&nbsp;</p>
+<h3 style="text-align: left">
+<a name="How_work_the_Sorting_priority_value">How work the "Sorting priority" 
+value?</a></h3>
+<p style="text-align: left">
+This working ONLY if you saving into SMBX file format. And will not saving in 
+them. Aftter reopen same file you need to define this value again.</p>
+<p style="text-align: left">
+&nbsp;</p>
+<p style="text-align: left">
+All data, include BGOs, in files written in defined sequance:&nbsp;</p>
+<p style="text-align: left">
+<img alt="" height="466" src="../screenshots/LevelEditing/Items/bgo_hack/Pseudo-foregroundBGO-1.png" width="355" /></p>
+<p style="text-align: left">
+&nbsp;</p>
+<p style="text-align: left">
+&nbsp;</p>
+<p style="text-align: left">
+When we using the sort priority value, we will tell to BGO's place in the begin, 
+middle or in the end of array:</p>
+<p style="text-align: left">
+<img alt="" height="466" src="../screenshots/LevelEditing/Items/bgo_hack/Pseudo-foregroundBGO-2.png" width="355" /></p>
+<p style="text-align: center">
+&nbsp;</p>
+<p style="text-align: left">
+SMBX renger algorythm displaying BGOs by it's array order. On first BGO, which 
+marked as "Foreground", will made all next BGOs foreground too, even if haven't 
+"foreground" marker. Knowing this feature, is possible to force display 
+background BGOs as foreground.</p>
+<p style="text-align: left">
+This working only from SMBX and only in fullscreen mode.</p>
+<p style="text-align: left">
+&nbsp;</p>
+<p style="text-align: left">
+For it can work, you must place on the map the one of BGO with "Foreground" mark 
+(what already displaying as foreground) in the any place.</p>
+<p style="text-align: center">
+<img alt="" height="693" src="../screenshots/LevelEditing/Items/bgo_hack/_001_bgo_hack.png" width="991" /></p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left"><strong>Don't forget</strong>, if you saving into 
+SMBX LVL file format, in next time you must redefine the sorting priority value, 
+because in not saving in SMBX file format.</p>
 <p style="text-align: left">&nbsp;</p>
 
 

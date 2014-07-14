@@ -91,6 +91,19 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             j=0;
         }
 
+        if(blockPtr<0)
+        {
+            LvlPlacingItems::blockSet.invisible = configs.main_block[j].default_invisible_value;
+            block.invisible = configs.main_block[j].default_invisible_value;
+
+            LvlPlacingItems::blockSet.slippery = configs.main_block[j].default_slippery_value;
+            block.slippery = configs.main_block[j].default_slippery_value;
+
+            LvlPlacingItems::blockSet.npc_id = configs.main_block[j].default_content_value;
+            block.npc_id = configs.main_block[j].default_content_value;
+        }
+
+
         ui->PROPS_blockPos->setText( tr("Position: [%1, %2]").arg(block.x).arg(block.y) );
         ui->PROPS_BlockResize->setVisible( configs.main_block[j].sizable );
         ui->PROPS_BlockInvis->setChecked( block.invisible );
@@ -239,6 +252,21 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         {
             LvlPlacingItems::npcSet.msg="";
             npc.msg="";
+
+            LvlPlacingItems::npcSet.friendly = configs.main_npc[j].default_friendly_value;
+            npc.friendly = configs.main_npc[j].default_friendly_value;
+
+            LvlPlacingItems::npcSet.nomove = configs.main_npc[j].default_nomovable_value;
+            npc.nomove = configs.main_npc[j].default_nomovable_value;
+
+            LvlPlacingItems::npcSet.legacyboss = configs.main_npc[j].default_boss_value;
+            npc.legacyboss = configs.main_npc[j].default_boss_value;
+
+            if(configs.main_npc[j].default_special)
+            {
+                LvlPlacingItems::npcSet.special_data = configs.main_npc[j].default_special_value;
+                npc.special_data = configs.main_npc[j].default_special_value;
+            }
         }
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
