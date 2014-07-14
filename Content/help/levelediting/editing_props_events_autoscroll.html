@@ -20,12 +20,61 @@ section properties of same event. If you wasn't redefine of section. autoscroll
 will not be working.</p>
 <p style="text-align: left">- If you want use autoscrolling for original SMBX, 
 please, be careful, inside SMBX engine exists bug: Autoscroll working only for 
-one section and only if this section - first on current level, and, if you will 
+one section and only if this section - first on current level (contains player's 
+start point), and, if you will 
 try autoscroll for other section, it will not be work.</p>
 <p style="text-align: left">&nbsp;</p>
+<p style="text-align: left"><strong>Horizontal speed:</strong><br />
+If &lt;0 - move to left.<br />
+If &gt;0 - move to right<br />
+If =0 - stop<br />
+<strong>Vertical speed:</strong><br />
+If &lt;0 - move to up<br />
+If &gt;0 - move to down<br />
+If =0 - stop</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
-<p style="text-align: center">&nbsp;</p>
+<p style="text-align: center">
+<img alt="" height="105" src="../screenshots/LevelEditing/Events/004_autoscroll.png" width="271" /></p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<h3 style="text-align: left">How to made the autoscroll section</h3>
+<p style="text-align: left">1) At first step, you must define the default 
+section size what will be autoscrolled.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">2) Open in the same event the "section settings" tab 
+and define the little size. This is a movable part of section, where playable 
+character will be while this part will be scrolled.</p>
+<p style="text-align: center">
+<img alt="" height="653" src="../screenshots/LevelEditing/Events/006_capture_size.png" width="869" /></p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">The examples of autoscrolling areas:</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: center">
+<img alt="" height="358" src="../screenshots/LevelEditing/Events/Autoscroll_examples.png" width="798" /></p>
+<p style="text-align: left">3) Set the number of section which will be 
+autoscrolled and the speed X and speed Y values.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left"><strong>Don't forgot mark this event as autostart!</strong></p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">If you made all correctly, will be started the 
+autoscrolling on start of this level.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left; text-decoration: underline;">See also:</p>
+<p style="text-align: left"><a href="editing_props_events_list.html">Events list</a></p>
+<p style="text-align: left"><a href="editing_props_events_lay_visibly.html">
+Layars visibly</a></p>
+<p style="text-align: left"><a href="editing_props_events_lay_mov.html">Layer 
+movement</a></p>
+<p style="text-align: left"><a href="editing_props_events_sect_set.html">Change 
+section settings</a></p>
+<p style="text-align: left"><a href="editing_props_events_common.html">Common 
+event features</a></p>
+<p style="text-align: left"><a href="editing_props_events_hold_keys.html">Hold 
+player control keys</a></p>
+<p style="text-align: left"><a href="editing_props_events_trigger.html">Trigger 
+other event</a></p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
 
 
 <p style="text-align: left">&nbsp;</p>
