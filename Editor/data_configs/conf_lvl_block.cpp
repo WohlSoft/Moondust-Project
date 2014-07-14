@@ -173,6 +173,20 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
                 sblock.animation_bid = blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
                 sblock.frames = blockset.value("frames", "1").toInt();
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
+
+                long iTmp;
+                iTmp = blockset.value("default-invisible", "-1").toInt();
+                sblock.default_invisible = (iTmp>=0);
+                sblock.default_invisible_value = (iTmp>=0)?(bool)iTmp:false;
+
+                iTmp = blockset.value("default-slippery", "-1").toInt();
+                sblock.default_slippery = (iTmp>=0);
+                sblock.default_slippery_value = (iTmp>=0)?(bool)iTmp:false;
+
+                iTmp = blockset.value("default-npc-content", "-1").toInt();
+                sblock.default_content = (iTmp>=0);
+                sblock.default_content_value = (iTmp>=0) ? iTmp : 0;
+
                 sblock.id = i;
                 main_block.push_back(sblock);
 

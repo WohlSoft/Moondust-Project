@@ -497,6 +497,22 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
 
           //  WriteToLog(QtDebugMsg, "NPC Config -> Loaded");
 
+            long iTmp;
+            iTmp = npcset.value("default-friendly", "-1").toInt();
+            snpc.default_friendly = (iTmp>=0);
+            snpc.default_friendly_value = (iTmp>=0)?(bool)iTmp:false;
+
+            iTmp = npcset.value("default-no-movable", "-1").toInt();
+            snpc.default_nomovable = (iTmp>=0);
+            snpc.default_nomovable_value = (iTmp>=0)?(bool)iTmp:false;
+
+            iTmp = npcset.value("default-is-boss", "-1").toInt();
+            snpc.default_boss = (iTmp>=0);
+            snpc.default_boss_value = (iTmp>=0) ? (bool)iTmp : false;
+
+            iTmp = npcset.value("default-special-value", "-1").toInt();
+            snpc.default_special = (iTmp>=0);
+            snpc.default_special_value = (iTmp>=0) ? iTmp : 0;
 
             main_npc.push_back(snpc);
 

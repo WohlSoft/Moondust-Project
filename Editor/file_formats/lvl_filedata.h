@@ -83,8 +83,10 @@ struct LevelBGO
 
     //editing
     long smbx64_sp;
+    long smbx64_sp_apply; // Used only in save file process
     unsigned int array_id;
     unsigned int index;
+
 };
 
 struct LevelNPC
