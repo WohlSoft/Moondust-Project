@@ -118,10 +118,10 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="640.08203"
-     inkscape:cy="398.42294"
+     inkscape:cx="679.3414"
+     inkscape:cy="339.93526"
      inkscape:document-units="px"
-     inkscape:current-layer="layer9"
+     inkscape:current-layer="layer7"
      showgrid="false"
      inkscape:window-width="1280"
      inkscape:window-height="977"
@@ -142,7 +142,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -151,8 +151,7 @@
      id="layer7"
      inkscape:label="Cat"
      transform="translate(-97.702783,110.67365)"
-     style="display:inline"
-     sodipodi:insensitive="true">
+     style="display:inline">
     <path
        style="fill:#cccccc;stroke:#4d4d4d;stroke-width:6.8344717;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;enable-background:new"
        d="M 616.18959,174.2135 C 659.1259,114.95323 749.30577,91.322596 822.15944,98.225483 895.72657,105.19597 979.93632,146.09331 1012.0338,212.65503 1039.5431,269.702 1027.6866,352.15171 987.4456,401.0575 939.22911,459.65601 847.05046,481.57388 771.60216,473.43943 708.75174,466.66322 638.97293,431.74342 608.78317,376.20362 576.60639,317.0083 576.65901,228.7732 616.18959,174.2135 z"
@@ -300,19 +299,19 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cac" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1.36689425px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
+       style="fill:none;stroke:#4d4d4d;stroke-width:1.36689425000000010px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
        d="m 867.23918,391.80145 c 0,0 73.2999,13.12821 107.39885,27.3379 40.28867,16.78905 112.28057,67.36834 112.28057,67.36834"
        id="path3050"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cac" />
     <path
-       style="fill:none;stroke:#4d4d4d;stroke-width:1.36689425px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
+       style="fill:none;stroke:#4d4d4d;stroke-width:1.36689425000000010px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
        d="m 855.52295,385.94333 c 0,0 76.98382,8.78992 113.28137,21.41023 37.81488,13.14787 106.39808,55.72167 106.39808,55.72167"
        id="path3052"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cac" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1.36689425px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
+       style="fill:none;stroke:#4d4d4d;stroke-width:1.36689425000000010px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
        d="m 862.35744,400.58864 c 0,0 80.17853,14.16698 117.16235,30.26693 42.13401,18.34192 116.18601,74.20284 116.18601,74.20284"
        id="path3054"
        inkscape:connector-curvature="0"
@@ -336,13 +335,13 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cac" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1.36689425px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
+       style="fill:none;stroke:#4d4d4d;stroke-width:1.36689425000000010px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
        d="m 723.71529,387.89604 c -5.00662,0 -66.41915,2.45104 -98.86119,8.96136 -27.83897,5.5866 -60.93377,17.294 -81.23285,25.63575 -25.19394,10.35323 -67.89963,45.46384 -67.89963,45.46384"
        id="path3062"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="casc" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1.36689425px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
+       style="fill:none;stroke:#4d4d4d;stroke-width:1.36689425000000010px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
        d="m 706.14092,383.01428 c 0,0 -86.2225,4.10137 -127.45892,15.57259 -40.69533,11.3207 -115.65297,51.79576 -115.65297,51.79576"
        id="path3064"
        inkscape:connector-curvature="0"
@@ -354,7 +353,7 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cac" />
     <path
-       style="fill:none;stroke:#4d4d4d;stroke-width:1.36689425px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
+       style="fill:none;stroke:#4d4d4d;stroke-width:1.36689425000000010px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:new"
        d="m 716.88081,376.1798 c 0,0 -97.63841,4.73139 -144.43085,17.46607 -37.02188,10.0756 -105.51552,45.99688 -105.51552,45.99688"
        id="path3068"
        inkscape:connector-curvature="0"
@@ -400,8 +399,7 @@
      inkscape:groupmode="layer"
      id="layer11"
      inkscape:label="By Wohlstand_shadow"
-     transform="translate(41.082927,217.53583)"
-     sodipodi:insensitive="true">
+     transform="translate(41.082927,217.53583)">
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;opacity:0.75;fill:#008000;fill-opacity:1;stroke:none;display:inline;filter:url(#filter4936);enable-background:new;font-family:Monotype Corsiva;-inkscape-font-specification:Monotype Corsiva Oblique"
@@ -420,8 +418,7 @@
      inkscape:groupmode="layer"
      id="layer10"
      inkscape:label="by Wohlstand"
-     transform="translate(41.082927,217.53583)"
-     sodipodi:insensitive="true" />
+     transform="translate(41.082927,217.53583)" />
   <g
      inkscape:groupmode="layer"
      id="layer9"
@@ -458,8 +455,7 @@
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="Text"
-     transform="translate(41.082927,217.53583)"
-     sodipodi:insensitive="true">
+     transform="translate(41.082927,217.53583)">
     <flowRoot
        xml:space="preserve"
        id="flowRoot4490"
