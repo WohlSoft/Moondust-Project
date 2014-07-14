@@ -247,6 +247,20 @@ struct obj_npc
     bool is_star; //If this marker was set, this NPC will be markered as "star"
     //Quantity placed NPC's with marker "star" will be save in LVL-file
 
+    //Editor defaults
+    bool default_friendly;
+    bool default_friendly_value;
+
+    bool default_nomovable;
+    bool default_nomovable_value;
+
+    bool default_boss;
+    bool default_boss_value;
+
+    bool default_special;
+    long default_special_value;
+
+
 };
 
 #endif // OBJ_NPC_H

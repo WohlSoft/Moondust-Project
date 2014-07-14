@@ -46,6 +46,9 @@ public:
     static bool wBool(QString in); //Worded BOOL
     static bool dBool(QString in); //Worded BOOL
 
+    //Convert from string to internal data
+    static bool wBoolR(QString in);
+
     //SMBX64 parameter string generators
     static QString IntS(long input);
     static QString BoolS(bool input);
@@ -62,6 +65,7 @@ public:
     static LevelData ReadLevelFile(QFile &inf);             //read
     static QString WriteSMBX64LvlFile(LevelData FileData);  //write
     static LevelData dummyLvlDataArray();                   //Create new
+    static WorldData dummyWldDataArray();
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
@@ -71,6 +75,13 @@ public:
     static LevelWater dummyLvlWater();
     static LevelEvents dummyLvlEvent();
     static LevelSection dummyLvlSection();
+
+    //Wld Data
+    static WorldTiles dummyWldTile();
+    static WorldScenery dummyWldScen();
+    static WorldPaths dummyWldPath();
+    static WorldLevels dummyWldLevel();
+    static WorldMusic dummyWldMusic();
 
     // SMBX64 NPC.TXT File
     static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); //read

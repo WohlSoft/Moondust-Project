@@ -36,18 +36,6 @@
 
 #include <QDebug>
 
-
-//class xxx
-//{
-//public slots:
-//    static void processEvents()
-//    {
-//        qApp->processEvents();
-//    }
-
-//};
-
-
 void leveledit::ExportToImage_fn()
 {
         long x, y, h, w, th, tw;
@@ -239,9 +227,11 @@ bool leveledit::saveFile(const QString &fileName)
     {
         if(LvlData.bgo[q].smbx64_sp < 0)
         {
-        if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
-            LvlData.bgo[q].smbx64_sp = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
+            if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
+                LvlData.bgo[q].smbx64_sp_apply = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
         }
+        else
+            LvlData.bgo[q].smbx64_sp_apply = LvlData.bgo[q].smbx64_sp;
         //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
     }
 
