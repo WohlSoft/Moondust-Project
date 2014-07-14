@@ -12,6 +12,7 @@ Editor 0.1.1
 - Title of sub-window will have the level title instead of file name
 - Added fullscreen option, recommended for tablets!
 - Added option to Hide warps/doors and waters (Physic Environment zones) on exporting images.
+- Added definition for default flags value for blocks (slippery, invisible) and for NPC (friendly, no-move, boss)
 
 Editor 0.1.0.1
 - Fixed bug with custom music paths after save new file.
