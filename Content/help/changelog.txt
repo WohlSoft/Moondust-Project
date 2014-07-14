@@ -13,6 +13,8 @@ Editor 0.1.1
 - Added fullscreen option, recommended for tablets!
 - Added option to Hide warps/doors and waters (Physic Environment zones) on exporting images.
 - Added definition for default flags value for blocks (slippery, invisible) and for NPC (friendly, no-move, boss)
+- Added support for resize the physical environment zones (water, quicksand)
+- Default toolboxes position will begins from left screen side instead center of screen (Windows) or left-top corner (Linux)
 
 Editor 0.1.0.1
 - Fixed bug with custom music paths after save new file.
