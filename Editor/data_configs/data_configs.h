@@ -113,6 +113,17 @@ struct obj_block{
     bool animation_bid; //Bidirectional animation
     unsigned int frames;
     int framespeed;
+
+    //Editor defaults
+    bool default_slippery; //Slippery flag
+    bool default_slippery_value;
+
+    bool default_invisible; //Invisible flag
+    bool default_invisible_value;
+
+    bool default_content; //Content value
+    long default_content_value;
+
 };
 
 struct obj_BG{
