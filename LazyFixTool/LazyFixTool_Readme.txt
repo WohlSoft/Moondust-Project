@@ -1,9 +1,9 @@
-LazyFixTool - this is a free console utility, for fix the lazily-made image masks
-and also, convert all BMPs into GIF
+LazyFixTool is a free console utility for fixing lazily-made image masks
+and converting all BMPs into GIFs
 --------------------------------------------------------------------------------
-This is a part of Platformer Game Engine by Wohlstand
+This is a part of the Platformer Game Engine by Wohlstand
 --------------------------------------------------------------------------------
-This program distributed under GNU GPLv3
+This program is distributed under the GNU GPLv3 license 
 ================================================================================
 This utility will fix lazily-made image masks:
 ============================================================================
@@ -12,16 +12,16 @@ Syntax:
    LazyFixTool [--help] /path/to/folder [-O/path/to/out] [-W] [-N] [-G]
 
  --help              - Display this help
- /path/to/folder     - path to directory with pair of GIF files
- -O/path/to/out      - path to directory where will be saved new images
-                       Note: (with -W flag will be ingored)
+ /path/to/folder     - path to a directory with a pair of GIF files
+ -O/path/to/out      - path to a directory where the new images will be saved
+                       Note: (with -W flag will be ignored)
  -W                  - Walk in subdirectores
  -N                  - Don't create backup
  -G                  - Make gray shades on masks is more dark
 
 
 
-if -O will not be defined, PNG images will be saves in same folder, where placed GIF images.
+if -O will not be defined, the PNG images will be saved in the same folder, where the GIF images are placed.
 --------------------------------------------------------------------------------
 Examples:
 
