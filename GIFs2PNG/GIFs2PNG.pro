@@ -28,6 +28,13 @@ CONFIG   += console
 
 TEMPLATE = app
 
+RC_FILE = _resources/gifs2png.rc
 
 SOURCES += \
     gifs2png.cpp
+
+RESOURCES += \
+    _resources/gifs2png.qrc
+
+OTHER_FILES += \
+    _resources/gifs2png.rc
