@@ -46,17 +46,17 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="109"/>
         <source>Document view</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumentenansicht</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="115"/>
         <source>Sub Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Fester</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="122"/>
         <source>Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabs</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="133"/>
@@ -298,7 +298,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="47"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Das ist die &lt;span style=&quot; font-weight:600;&quot;&gt;Höhe&lt;/span&gt; des Zielbilds. Das Zielbild wird auf diese Größe skaliert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="50"/>
@@ -309,7 +309,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="130"/>
         <source>Hide door and water marking</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstecke Tür- und Wassermakierungen</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="37"/>
@@ -319,7 +319,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="120"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiv, wird das Zielbild seine Proportion behalten&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="123"/>
@@ -329,7 +329,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="60"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Das ist die &lt;span style=&quot; font-weight:600;&quot;&gt;Breite&lt;/span&gt; des Zielbilds. Das Zielbild wird auf diese Größe skaliert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="73"/>
@@ -505,7 +505,7 @@
         <location filename="../level_scene/itemmsgbox.ui" line="35"/>
         <location filename="../level_scene/itemmsgbox.ui" line="60"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Diese Nachricht wird angezeigt wenn der Spieler mit einem NPC redet.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Achtung:&lt;/span&gt; Alle Anführungszeichen und Zeilenvorschub [Neue Zeilen] werden gelöscht.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="38"/>
@@ -717,7 +717,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/item_water.cpp" line="126"/>
         <source>Resize</source>
-        <translation type="unfinished">Größe ändern</translation>
+        <translation>Größe ändern</translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="130"/>
@@ -746,7 +746,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <location filename="../common_features/levelfilelist.ui" line="30"/>
         <location filename="../common_features/levelfilelist.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dies ist eine Liste von Leveldateien, welche im selben Ordner wie die jetztige Leveldatei zu finden sind.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../common_features/levelfilelist.ui" line="33"/>
@@ -945,7 +945,7 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3513"/>
         <source>Resize Water</source>
-        <translation type="unfinished"></translation>
+        <translation>Wassergröße ändern</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3515"/>
@@ -2125,12 +2125,12 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="6865"/>
         <source>Refresh menus</source>
-        <translation type="unfinished"></translation>
+        <translation>Menüs aktualisieren</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6873"/>
         <source>Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Vollbild</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -2663,17 +2663,17 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../mainwindow.ui" line="4818"/>
         <source>Slippery:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rutschig:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4835"/>
         <source>Contains NPC:</source>
-        <translation type="unfinished"></translation>
+        <translation>Beeinhaltet NPC:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4861"/>
         <source>Invisible:</source>
-        <translation type="unfinished"></translation>
+        <translation>Unsichtbar:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4875"/>
@@ -2692,7 +2692,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../mainwindow.ui" line="5015"/>
         <location filename="../mainwindow.ui" line="5217"/>
         <source>Search?</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4764"/>
@@ -2708,29 +2708,29 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="194"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="215"/>
         <source>Reset Search Fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Suchfelder Zurücksetzen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4787"/>
         <location filename="../mainwindow.ui" line="5086"/>
         <location filename="../mainwindow.ui" line="5238"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Daten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4933"/>
         <source>Ev. Destroyed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ev. Zerstört:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4940"/>
         <source>Ev. Hited</source>
-        <translation type="unfinished"></translation>
+        <translation>Ev. Berührt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4947"/>
         <source>Ev. Layer Empty:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ev. Ebene Leer:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5035"/>
@@ -2751,12 +2751,12 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../mainwindow.ui" line="5317"/>
         <source>Contains Msg:</source>
-        <translation type="unfinished"></translation>
+        <translation>Beeinhaltet Nach.:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5388"/>
         <source>Case Sensitive?</source>
-        <translation type="unfinished"></translation>
+        <translation>Groß-/Kleinschreib. beachten?</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6143"/>
@@ -3113,12 +3113,12 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../main_window/menubar.cpp" line="226"/>
         <source>Sub Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenster</translation>
     </message>
     <message>
         <location filename="../main_window/menubar.cpp" line="235"/>
         <source>Tab Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabs</translation>
     </message>
     <message>
         <location filename="../main_window/menubar.cpp" line="247"/>
@@ -3153,7 +3153,7 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="64"/>
         <source>Block ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Block ID: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="107"/>
@@ -3192,12 +3192,12 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="170"/>
         <source>BGO ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO ID: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="204"/>
         <source>NPC ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC ID: %1, Array ID: %2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="246"/>
@@ -3239,14 +3239,14 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="33"/>
         <source>Next Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster Block</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="34"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="62"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="90"/>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Stoppen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="40"/>
@@ -3256,35 +3256,35 @@ Alle Datein (*.*)</translation>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="96"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="106"/>
         <source>Search Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche abgeschlossen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="40"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="50"/>
         <source>Block search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocksuche abgeschlossen!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="61"/>
         <source>Next BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster BGO</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="68"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="78"/>
         <source>BGO search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO suche abgeschlossen!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="89"/>
         <source>Next NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster NPC</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="96"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="106"/>
         <source>NPC search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC suche abgeschlossen!</translation>
     </message>
 </context>
 <context>
@@ -3298,7 +3298,7 @@ Alle Datein (*.*)</translation>
         <location filename="../common_features/musicfilelist.ui" line="36"/>
         <location filename="../common_features/musicfilelist.ui" line="55"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dies ist eine Liste von Musikdateien, welche im selben Ordner wie die Leveldatei liegen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../common_features/musicfilelist.ui" line="42"/>
