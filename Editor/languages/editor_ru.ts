@@ -944,7 +944,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3513"/>
         <source>Resize Water</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить размер зоны физической среды</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3515"/>
