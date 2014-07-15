@@ -3,6 +3,7 @@ Editor 0.1.1
 - Added animation start/stop toolbar button
 - New selection dialog for items
 - Fixed a lot of memory leaks
+- New design of the message box
 - Added displaying of Item ID in Properties tool box.
 - Added item search box: you can find items by his ID and you can find layer members or other options
 - Added tab view mode, you can switch between sub-window/tab mode in application settings
