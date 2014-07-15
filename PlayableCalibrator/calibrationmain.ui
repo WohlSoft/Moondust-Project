@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>418</width>
-    <height>290</height>
+    <height>291</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>SMBX64 Playble Sprite Calibrator</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="images.qrc">
+   <iconset resource="_resourses/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnminimumwidth="0,30,30,0,0">
@@ -255,7 +255,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="images.qrc"/>
+  <include location="_resourses/images.qrc"/>
  </resources>
  <connections/>
 </ui>
