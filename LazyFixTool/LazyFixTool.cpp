@@ -1,7 +1,7 @@
 /*
  * LazyFixTool, a free tool for fix lazily-made image masks
  * and also, convert all BMPs into GIF
- * This is a part of Platformer Game Engine by Wohlstand, a free platform for game making
+ * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -380,7 +380,7 @@ int main(int argc, char *argv[])
     std::cout<<"============================================================================\n";
     std::cout<<"Lazily-made image masks fix tool by Wohlstand\n";
     std::cout<<"============================================================================\n";
-    std::cout<<"This software distributed under GNU GPLv3\n";
+    std::cout<<"This program is distributed under the GNU GPLv3 license\n";
     std::cout<<"============================================================================\n";
 
     if(a.arguments().size()==1)
@@ -473,9 +473,9 @@ DisplayHelp:
     std::cout<<"Syntax:\n\n";
     std::cout<<"   LazyFixTool [--help] /path/to/folder [-O/path/to/out] [-W] [-N] [-G]\n\n";
     std::cout<<" --help              - Display this help\n";
-    std::cout<<" /path/to/folder     - path to directory with pair of GIF files\n";
-    std::cout<<" -O/path/to/out      - path to directory where will be saved new images\n";
-    std::cout<<"                       Note: (with -W flag will be ingored)\n";
+    std::cout<<" /path/to/folder     - path to a directory with a pair of GIF files\n";
+    std::cout<<" -O/path/to/out      - path to a directory where the new images will be saved\n";
+    std::cout<<"                       Note: (with -W flag will be ignored)\n";
     std::cout<<" -W                  - Walk in subdirectores\n";
     std::cout<<" -N                  - Don't create backup\n";
     std::cout<<" -G                  - Make gray shades on masks is more dark\n";
