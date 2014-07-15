@@ -88,5 +88,6 @@
         <file>images/cat/cat_48.png</file>
         <file>images/cat/cat_128.png</file>
         <file>images/cat/cat_256.png</file>
+        <file>PressStart2P.ttf</file>
     </qresource>
 </RCC>
