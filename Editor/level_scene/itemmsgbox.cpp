@@ -18,11 +18,14 @@
 
 #include "itemmsgbox.h"
 #include "ui_itemmsgbox.h"
+#include <QFontDatabase>
 
 ItemMsgBox::ItemMsgBox(QString text, QString label, QString title, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItemMsgBox)
 {
+    QFontDatabase::addApplicationFont(":/PressStart2P.ttf");
+
     currentText = text;
     ui->setupUi(this);
 
@@ -31,6 +34,8 @@ ItemMsgBox::ItemMsgBox(QString text, QString label, QString title, QWidget *pare
 
     if(!title.isEmpty())
         this->setWindowTitle(title);
+
+    ui->msgTextBox->setFont(QFont("Press Start 2P", 11));
 
     ui->msgTextBox->clear();
     ui->msgTextBox->appendPlainText(currentText);

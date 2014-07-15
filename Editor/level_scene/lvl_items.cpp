@@ -206,34 +206,6 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     //if Index found
     if(!found)
     {
-        /*//get neccesary element directly
-        if(index_blocks[block.id].type==1)
-        {
-            isUser=true;
-            noimage=false;
-            tImg = uBlocks[index_blocks[block.id].i].image;
-        }
-        else
-        {
-            tImg = pConfigs->main_block[index_blocks[block.id].i].image;
-            noimage=false;
-        }
-       // WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Index %1").arg(block.id));
-    }
-    else
-    {
-        //found neccesary element in arrays and select
-        for(j=0;j<uBlocks.size();j++)
-        {
-            if(uBlocks[j].id == block.id)
-            {
-                isUser=true;
-                noimage=false;
-                tImg = uBlocks[j].image;
-                break;
-            }
-        }
-    */
         for(j=0;j<pConfigs->main_block.size();j++)
         {
             if(pConfigs->main_block[j].id==block.id)
@@ -242,8 +214,6 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
                 //if(!isUser)
             }
         }
-
-        //WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Fetch %1").arg(j));
     }
 
     if(noimage)
