@@ -29,6 +29,7 @@ CONFIG   += console
 
 TEMPLATE = app
 
+RC_FILE = _resources/lazyfix_tool.rc
 
 SOURCES += \
     LazyFixTool.cpp \
@@ -49,3 +50,9 @@ HEADERS += \
     libs/EasyBMP/EasyBMP_BMP.h \
     libs/EasyBMP/EasyBMP_DataStructures.h \
     libs/EasyBMP/EasyBMP_VariousBMPutilities.h
+
+RESOURCES += \
+    _resources/lazyfix_tool.qrc
+
+OTHER_FILES += \
+    _resources/lazyfix_tool.rc
