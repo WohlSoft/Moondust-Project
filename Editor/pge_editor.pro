@@ -124,7 +124,11 @@ SOURCES += main.cpp\
     item_select_dialog/itemselectdialog.cpp \
     common_features/simple_animator.cpp \
     main_window/dock/lvl_search_toolbox.cpp \
-    common_features/util.cpp
+    common_features/util.cpp \
+    data_configs/conf_wld_tile.cpp \
+    data_configs/conf_wld_scene.cpp \
+    data_configs/conf_wld_path.cpp \
+    data_configs/conf_wld_level.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
