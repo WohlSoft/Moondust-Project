@@ -21,6 +21,41 @@
 #include "../main_window/global_settings.h"
 #include "../common_features/graphics_funcs.h"
 
+
+long dataconfigs::getNpcI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    if(itemID < (unsigned int)index_npc.size())
+    {
+        j = index_npc[itemID].gi;
+
+        if(j < main_npc.size())
+        {
+            if( main_npc[j].id == itemID)
+                found=true;
+        }
+    }
+
+    if(!found)
+    {
+        for(j=0; j < main_npc.size(); j++)
+        {
+            if(main_npc[j].id==itemID)
+            {
+                found=true;
+                break;
+            }
+        }
+    }
+
+    if(!found) j=-1;
+
+    return j;
+}
+
+
 void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
 {
     unsigned int i;
@@ -39,6 +74,7 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
     npcset.setIniCodec("UTF-8");
 
     main_npc.clear();   //Clear old
+    index_npc.clear();
 
     npcset.beginGroup("npc-main");
         npc_total = npcset.value("total", "0").toInt();

@@ -1788,14 +1788,11 @@ void MainWindow::on_LVLEvent_playSnd_clicked()
     QString sndPath = configs.dirs.sounds;
     long i;
     bool found=false;
-    for(i=0; i<configs.main_sound.size(); i++)
+    i = configs.getSndI( ui->LVLEvent_Cmn_PlaySnd->currentData().toInt() );
+    if(i>=0)
     {
-        if((unsigned int)ui->LVLEvent_Cmn_PlaySnd->currentData().toInt()==configs.main_sound[i].id)
-        {
-            found=true;
-            sndPath += configs.main_sound[i].file;
-            break;
-        }
+        found=true;
+        sndPath += configs.main_sound[i].file;
     }
 
     WriteToLog(QtDebugMsg, QString("Test Sound -> path-1 %1").arg(sndPath));
@@ -1832,10 +1829,6 @@ void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
     }
 
 }
-
-
-
-
 
 
 
