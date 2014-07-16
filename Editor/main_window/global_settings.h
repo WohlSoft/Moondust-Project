@@ -68,6 +68,11 @@ public:
     static long total_bg;
     static long total_npc;
 
+    static long total_wtile;
+    static long total_wpath;
+    static long total_wscene;
+    static long total_wlvl;
+
     static long total_music_lvl;
     static long total_music_wld;
     static long total_music_spc;
