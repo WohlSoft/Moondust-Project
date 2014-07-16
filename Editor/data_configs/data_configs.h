@@ -259,6 +259,16 @@ public:
     //Debug
     QStringList errorsList;
 
+    // Get Item of Index
+    long getNpcI(unsigned long itemID);
+    long getBlockI(unsigned long itemID);
+    long getBgoI(unsigned long itemID);
+    long getBgI(unsigned long itemID);
+    long getSndI(unsigned long itemID);
+    long getMusLvlI(unsigned long itemID);
+    long getMusWldI(unsigned long itemID);
+    long getMusSpcI(unsigned long itemID);
+
 private:
 
     //Buffers

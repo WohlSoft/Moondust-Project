@@ -20,6 +20,24 @@
 
 #include "../main_window/global_settings.h"
 
+long dataconfigs::getSndI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < main_sound.size(); j++)
+    {
+        if(main_sound[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+    if(!found) j=0;
+    return j;
+}
+
 void dataconfigs::loadSound(QProgressDialog *prgs)
 {
     unsigned int i;
