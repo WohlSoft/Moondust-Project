@@ -128,7 +128,8 @@ SOURCES += main.cpp\
     data_configs/conf_wld_tile.cpp \
     data_configs/conf_wld_scene.cpp \
     data_configs/conf_wld_path.cpp \
-    data_configs/conf_wld_level.cpp
+    data_configs/conf_wld_level.cpp \
+    tileset_configure_dialog/tilesetconfiguredialog.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -174,7 +175,8 @@ HEADERS  += mainwindow.h \
     libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
     item_select_dialog/itemselectdialog.h \
     common_features/simple_animator.h \
-    common_features/util.h
+    common_features/util.h \
+    tileset_configure_dialog/tilesetconfiguredialog.h
 
 FORMS    += \
     mainwindow.ui \
@@ -190,7 +192,8 @@ FORMS    += \
     about_dialog/aboutdialog.ui \
     data_configs/configstatus.ui \
     common_features/levelfilelist.ui \
-    item_select_dialog/itemselectdialog.ui
+    item_select_dialog/itemselectdialog.ui \
+    tileset_configure_dialog/tilesetconfiguredialog.ui
 
 RC_FILE = _resources/pge_editor.rc
 
