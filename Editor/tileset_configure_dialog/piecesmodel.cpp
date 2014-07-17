@@ -35,25 +35,19 @@ QVariant PiecesModel::data(const QModelIndex &index, int role) const
     if (role == Qt::DecorationRole)
         return QIcon(pixmaps.value(index.row()).scaled(m_PieceSize, m_PieceSize,
                          Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    else if (role == Qt::DisplayRole)
+        return pixmapNames.value(index.row());
     else if (role == Qt::UserRole)
         return pixmaps.value(index.row());
-    else if (role == Qt::UserRole + 1)
-        return locations.value(index.row());
 
     return QVariant();
 }
 
-void PiecesModel::addPiece(const QPixmap &pixmap, const QPoint &location)
+void PiecesModel::addPiece(const QPixmap &pixmap, const QString &name)
 {
-    int row;
-    if (int(2.0 * qrand() / (RAND_MAX + 1.0)) == 1)
-        row = 0;
-    else
-        row = pixmaps.size();
-
-    beginInsertRows(QModelIndex(), row, row);
-    pixmaps.insert(row, pixmap);
-    locations.insert(row, location);
+    beginInsertRows(QModelIndex(), pixmaps.size(), pixmaps.size());
+    pixmapNames.insert(pixmaps.size(), name);
+    pixmaps.insert(pixmaps.size(), pixmap);
     endInsertRows();
 }
 
@@ -80,7 +74,7 @@ bool PiecesModel::removeRows(int row, int count, const QModelIndex &parent)
 
     while (beginRow <= endRow) {
         pixmaps.removeAt(beginRow);
-        locations.removeAt(beginRow);
+        pixmapNames.removeAt(beginRow);
         ++beginRow;
     }
 
@@ -126,32 +120,31 @@ bool PiecesModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
     if (column > 0)
         return false;
 
-    int endRow;
+//    int endRow;
 
-    if (!parent.isValid()) {
-        if (row < 0)
-            endRow = pixmaps.size();
-        else
-            endRow = qMin(row, pixmaps.size());
-    } else {
-        endRow = parent.row();
-    }
+//    if (!parent.isValid()) {
+//        if (row < 0)
+//            endRow = pixmaps.size();
+//        else
+//            endRow = qMin(row, pixmaps.size());
+//    } else {
+//        endRow = parent.row();
+//    }
 
-    QByteArray encodedData = data->data("image/x-pge-piece");
-    QDataStream stream(&encodedData, QIODevice::ReadOnly);
+//    QByteArray encodedData = data->data("image/x-pge-piece");
+//    QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
-    while (!stream.atEnd()) {
-        QPixmap pixmap;
-        QPoint location;
-        stream >> pixmap >> location;
+//    while (!stream.atEnd()) {
+//        QPixmap pixmap;
+//        QPoint location;
+//        stream >> pixmap >> location;
 
-        beginInsertRows(QModelIndex(), endRow, endRow);
-        pixmaps.insert(endRow, pixmap);
-        locations.insert(endRow, location);
-        endInsertRows();
+//        beginInsertRows(QModelIndex(), endRow, endRow);
+//        pixmaps.insert(endRow, pixmap);
+//        endInsertRows();
 
-        ++endRow;
-    }
+//        ++endRow;
+//    }
 
     return true;
 }
@@ -169,16 +162,4 @@ Qt::DropActions PiecesModel::supportedDropActions() const
     return Qt::CopyAction | Qt::MoveAction;
 }
 
-void PiecesModel::addPieces(const QPixmap& pixmap)
-{
-    beginRemoveRows(QModelIndex(), 0, 24);
-    pixmaps.clear();
-    locations.clear();
-    endRemoveRows();
-    for (int y = 0; y < 5; ++y) {
-        for (int x = 0; x < 5; ++x) {
-            QPixmap pieceImage = pixmap.copy(x*m_PieceSize, y*m_PieceSize, m_PieceSize, m_PieceSize);
-            addPiece(pieceImage, QPoint(x, y));
-        }
-    }
-}
+

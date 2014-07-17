@@ -19,14 +19,23 @@
 #include "tilesetconfiguredialog.h"
 #include "ui_tilesetconfiguredialog.h"
 
-TilesetConfigureDialog::TilesetConfigureDialog(QWidget *parent) :
+TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TilesetConfigureDialog)
 {
     ui->setupUi(this);
     ui->tilesetLayoutWidgetContainer->addWidget(m_tileset = (new tileset(0,64,3,5)));
 
+    ui->listView->setAcceptDrops(true);
+    ui->listView->setDropIndicatorShown(true);
+    ui->listView->setDragEnabled(true);
     ui->listView->setModel(m_model = (new PiecesModel()));
+
+    m_conf = conf;
+    for(int i = 0; i < conf->main_block.size(); ++i){
+        m_model->addPiece(conf->main_block[i].image, conf->main_block[i].name);
+    }
+
 }
 
 TilesetConfigureDialog::~TilesetConfigureDialog()

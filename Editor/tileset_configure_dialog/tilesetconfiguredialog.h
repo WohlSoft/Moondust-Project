@@ -21,6 +21,7 @@
 
 #include "tileset.h"
 #include "piecesmodel.h"
+#include "../data_configs/data_configs.h"
 
 #include <QDialog>
 
@@ -33,7 +34,7 @@ class TilesetConfigureDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TilesetConfigureDialog(QWidget *parent = 0);
+    explicit TilesetConfigureDialog(dataconfigs* conf, QWidget *parent = 0);
     ~TilesetConfigureDialog();
 
 
@@ -42,6 +43,7 @@ private:
     Ui::TilesetConfigureDialog *ui;
     tileset* m_tileset;
     PiecesModel* m_model;
+    dataconfigs* m_conf;
 };
 
 #endif // TILESETCONFIGUREDIALOG_H

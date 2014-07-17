@@ -497,6 +497,8 @@ private slots:
 
     void on_actionSwitch_to_Fullscreen_triggered(bool checked);
 
+    void on_actionConfigure_Tilesets_triggered();
+
 private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
