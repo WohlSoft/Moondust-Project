@@ -129,7 +129,9 @@ SOURCES += main.cpp\
     data_configs/conf_wld_scene.cpp \
     data_configs/conf_wld_path.cpp \
     data_configs/conf_wld_level.cpp \
-    tileset_configure_dialog/tilesetconfiguredialog.cpp
+    tileset_configure_dialog/tilesetconfiguredialog.cpp \
+    tileset_configure_dialog/piecesmodel.cpp \
+    tileset_configure_dialog/tileset.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -176,7 +178,9 @@ HEADERS  += mainwindow.h \
     item_select_dialog/itemselectdialog.h \
     common_features/simple_animator.h \
     common_features/util.h \
-    tileset_configure_dialog/tilesetconfiguredialog.h
+    tileset_configure_dialog/tilesetconfiguredialog.h \
+    tileset_configure_dialog/piecesmodel.h \
+    tileset_configure_dialog/tileset.h
 
 FORMS    += \
     mainwindow.ui \
