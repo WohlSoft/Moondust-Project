@@ -47,12 +47,11 @@ public:
     int rowCount(const QModelIndex &parent) const;
     Qt::DropActions supportedDropActions() const;
 
-    void addPiece(const QPixmap &pixmap, const QPoint &location);
-    void addPieces(const QPixmap& pixmap);
+    void addPiece(const QPixmap &pixmap, const QString &name);
 
 private:
-    QList<QPoint> locations;
     QList<QPixmap> pixmaps;
+    QList<QString> pixmapNames;
 
     int m_PieceSize;
 };

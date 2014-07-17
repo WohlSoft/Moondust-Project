@@ -41,7 +41,7 @@
 #include "file_formats/wld_filedata.h"
 #include "file_formats/npc_filedata.h"
 
-#include "edit_level/leveledit.h"
+#include "edit_level/level_edit.h"
 #include "edit_npc/npcedit.h"
 #include "edit_world/world_edit.h"
 
@@ -499,6 +499,8 @@ private slots:
     void on_Find_Button_ContainsNPCBlock_clicked();
 
     void on_actionSwitch_to_Fullscreen_triggered(bool checked);
+
+    void on_actionConfigure_Tilesets_triggered();
 
 private:
 

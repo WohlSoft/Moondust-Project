@@ -17,7 +17,7 @@
  */
 
 #include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#include "../edit_level/level_edit.h"
 #include <QtMath>
 
 #include "item_block.h"
