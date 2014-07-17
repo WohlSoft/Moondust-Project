@@ -94,18 +94,18 @@ void MainWindow::OpenFile(QString FilePath)
         WorldData FileData = FileFormats::ReadWorldFile(file);
         if( !FileData.ReadFileValid ) return;
 
-        /*
-        leveledit *child = createLvlChild();
-        if (child->loadFile(FilePath)) {
+
+        WorldEdit *child = createWldChild();
+        //if (child->loadFile(FilePath)) {
             statusBar()->showMessage(tr("World map file loaded"), 2000);
             child->show();
-        } else {
-            child->close();
-        }
-        */
-        QMessageBox::information(this, tr("Dummy"),
-        tr("Sorry, the World Maps support is not inplemented in this version."),
-        QMessageBox::Ok);
+        //} else {
+        //    child->close();
+        //}
+
+        //QMessageBox::information(this, tr("Dummy"),
+        //tr("Sorry, the World Maps support is not inplemented in this version."),
+        //QMessageBox::Ok);
 
     }
     else

@@ -69,6 +69,27 @@ leveledit *MainWindow::createLvlChild()
     return child;
 }
 
+//Edit WORLD
+WorldEdit *MainWindow::createWldChild()
+{
+    WorldEdit *child = new WorldEdit;
+    QMdiSubWindow *worldWindow = new QMdiSubWindow;
+
+    worldWindow->setWidget(child);
+    worldWindow->setAttribute(Qt::WA_DeleteOnClose);
+
+    QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(worldWindow);
+    levelWindowP->setAttribute(Qt::WA_DeleteOnClose);
+
+    levelWindowP->setGeometry(
+                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
+                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
+                             800, 610);
+    levelWindowP->setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
+
+    return child;
+}
+
 
 
 //Common functions
@@ -81,6 +102,8 @@ int MainWindow::activeChildWindow()
             return 1;
         if(QString(activeSubWindow->widget()->metaObject()->className())=="npcedit")
             return 2;
+        if(QString(activeSubWindow->widget()->metaObject()->className())=="WorldEdit")
+            return 3;
     }
 
     return 0;
@@ -99,6 +122,14 @@ leveledit *MainWindow::activeLvlEditWin()
         return qobject_cast<leveledit *>(activeSubWindow->widget());
     return 0;
 }
+
+WorldEdit *MainWindow::activeWldEditWin()
+{
+    if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
+        return qobject_cast<WorldEdit *>(activeSubWindow->widget());
+    return 0;
+}
+
 
 
 QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)
