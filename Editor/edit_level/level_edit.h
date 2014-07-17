@@ -24,7 +24,9 @@
 #include <QGraphicsScene>
 
 #include "../file_formats/lvl_filedata.h"
+
 #include "../level_scene/lvlscene.h"
+
 #include "../data_configs/data_configs.h"
 
 namespace Ui {
