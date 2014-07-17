@@ -194,18 +194,16 @@ void LvlScene::setSectionBG(LevelSection section)
                 }
             } //If not exist, will be used default
 
-            for(j=0;j<pConfigs->main_bg.size();j++)
+            j=pConfigs->getBgI(section.background);
+            if(j>=0)
             {
-                if(pConfigs->main_bg[j].id==section.background)
-                {
-                    noimage=false;
-                      if(!isUser1)
-                          img = pConfigs->main_bg[j].image;
-                      if(!isUser2)
-                          img2 = pConfigs->main_bg[j].second_image;
-                    break;
-                }
+                noimage=false;
+                  if(!isUser1)
+                      img = pConfigs->main_bg[j].image;
+                  if(!isUser2)
+                      img2 = pConfigs->main_bg[j].second_image;
             }
+
             if((noimage)&&(!isUser1))
             {
                 WriteToLog(QtWarningMsg, "SetSectionBG-> Image not found");

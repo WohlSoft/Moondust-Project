@@ -1,5 +1,5 @@
 # GIFs2PNG, a free tool for merge GIF images with his masks and save into PNG
-# This is a part of Platformer Game Engine by Wohlstand, a free platform for game making
+# This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
 # Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,13 @@ CONFIG   += console
 
 TEMPLATE = app
 
+RC_FILE = _resources/gifs2png.rc
 
 SOURCES += \
     gifs2png.cpp
+
+RESOURCES += \
+    _resources/gifs2png.qrc
+
+OTHER_FILES += \
+    _resources/gifs2png.rc

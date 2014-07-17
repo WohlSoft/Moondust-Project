@@ -14,7 +14,7 @@
    <string>Animator</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="images.qrc">
+   <iconset resource="../_resourses/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <widget class="QGraphicsView" name="AnimateView">
@@ -480,7 +480,7 @@
   <tabstop>AnimateView</tabstop>
  </tabstops>
  <resources>
-  <include location="images.qrc"/>
+  <include location="../_resourses/images.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -43,6 +43,7 @@
 
 #include "edit_level/leveledit.h"
 #include "edit_npc/npcedit.h"
+#include "edit_world/world_edit.h"
 
 #include "about_dialog/aboutdialog.h"
 #include "edit_level/levelprops.h"
@@ -77,6 +78,7 @@ public:
     int activeChildWindow();
     npcedit *activeNpcEditWin();
     leveledit *activeLvlEditWin();
+    WorldEdit *activeWldEditWin();
     void showStatusMsg(QString msg, int time=2000);
 
     void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
@@ -135,6 +137,7 @@ public slots:
     //SubWindow functions
     npcedit *createNPCChild();
     leveledit *createLvlChild();
+    WorldEdit *createWldChild();
     void setActiveSubWindow(QWidget *window);
     void SWCascade();
     void SWTile();
@@ -536,6 +539,7 @@ private:
     bool doSearchNPC(leveledit* edit);
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
+    QSlider* muVol;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;

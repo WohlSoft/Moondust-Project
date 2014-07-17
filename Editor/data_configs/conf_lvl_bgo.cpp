@@ -21,6 +21,40 @@
 #include "../main_window/global_settings.h"
 #include "../common_features/graphics_funcs.h"
 
+
+long dataconfigs::getBgoI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    if(itemID < (unsigned int)index_bgo.size())
+    {
+        j = index_bgo[itemID].i;
+
+        if(j < main_bgo.size())
+        {
+            if( main_bgo[j].id == itemID)
+                found=true;
+        }
+    }
+
+    if(!found)
+    {
+        for(j=0; j < main_bgo.size(); j++)
+        {
+            if(main_bgo[j].id==itemID)
+            {
+                found=true;
+                break;
+            }
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+
 void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
 {
     unsigned int i;
@@ -40,6 +74,7 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
     bgoset.setIniCodec("UTF-8");
 
     main_bgo.clear();   //Clear old
+    index_bgo.clear();
 
     bgoset.beginGroup("background-main");
         bgo_total = bgoset.value("total", "0").toInt();

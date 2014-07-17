@@ -1,6 +1,6 @@
 /*
  * GIFs2PNG, a free tool for merge GIF images with his masks and save into PNG
- * This is a part of Platformer Game Engine by Wohlstand, a free platform for game making
+ * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     std::cout<<"============================================================================\n";
     std::cout<<"Pair of GIFs to PNG converter tool by Wohlstand\n";
     std::cout<<"============================================================================\n";
-    std::cout<<"This software distributed under GNU GPLv3\n";
+    std::cout<<"This program is distributed under the GNU GPLv3 license \n";
     std::cout<<"============================================================================\n";
 
     if(a.arguments().size()==1)
@@ -159,8 +159,8 @@ DisplayHelp:
     std::cout<<"Syntax:\n\n";
     std::cout<<"   GIFs2PNG [--help] /path/to/folder [-O/path/to/out] [-R]\n\n";
     std::cout<<" --help              - Display this help\n";
-    std::cout<<" /path/to/folder     - path to directory with pair of GIF files\n";
-    std::cout<<" -O/path/to/out      - path to directory where will be saved PNG images\n";
+    std::cout<<" /path/to/folder     - path to a directory with pair of GIF files\n";
+    std::cout<<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
     std::cout<<" -R                  - Remove source images after succesfull converting\n";
     std::cout<<"\n\n";
 
