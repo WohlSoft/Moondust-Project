@@ -24,6 +24,9 @@ TilesetConfigureDialog::TilesetConfigureDialog(QWidget *parent) :
     ui(new Ui::TilesetConfigureDialog)
 {
     ui->setupUi(this);
+    ui->tilesetLayoutWidgetContainer->addWidget(m_tileset = (new tileset(0,64,3,5)));
+
+    ui->listView->setModel(m_model = (new PiecesModel()));
 }
 
 TilesetConfigureDialog::~TilesetConfigureDialog()
