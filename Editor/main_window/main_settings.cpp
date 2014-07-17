@@ -34,6 +34,7 @@ QString GlobalSettings::savePath_npctxt=".";
 LevelEditingSettings GlobalSettings::LvlOpts;
 
 bool GlobalSettings::autoPlayMusic=false;
+int GlobalSettings::musicVolume=100;
 
 bool GlobalSettings::LevelToolBoxVis=true;
 bool GlobalSettings::WorldToolBoxVis=true;
@@ -200,6 +201,16 @@ void MainWindow::setUiDefults()
 
 //    //start event detection loop
 //    TickTackTimer->start(1);
+    muVol = new QSlider(Qt::Horizontal);
+    muVol->setMaximumWidth(100);
+    muVol->setMinimum(0);
+    muVol->setMaximum(100);
+    muVol->setValue(GlobalSettings::musicVolume);
+    MusicPlayer->setVolume(GlobalSettings::musicVolume);
+    ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
+    ui->EditionToolBar->insertSeparator(ui->actionAnimation);
+
+    connect(muVol, SIGNAL(valueChanged(int)), MusicPlayer, SLOT(setVolume(int)));
 
     curSearchBlock.id = 0;
     curSearchBlock.index = 0;
@@ -311,6 +322,7 @@ void MainWindow::loadSettings()
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
+        GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
 
         GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
 
@@ -379,6 +391,7 @@ void MainWindow::saveSettings()
     settings.setValue("windowState", saveState());
 
     settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
+    settings.setValue("music-volume", MusicPlayer->volume());
 
     settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
 

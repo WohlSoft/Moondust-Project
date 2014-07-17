@@ -121,14 +121,12 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                     }
                 }
 
-                for(j=0;j<pConfigs->main_block.size();j++)
+                j = pConfigs->getBlockI(itemID);
+                if(j>=0)
                 {
-                    if(pConfigs->main_block[j].id==itemID)
-                    {
-                        noimage=false;
-                        if(!isUser)
-                            tImg = pConfigs->main_block[j].image; break;
-                    }
+                    noimage=false;
+                    if(!isUser)
+                        tImg = pConfigs->main_block[j].image;
                 }
                 WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Fetch %1").arg(j));
             }
@@ -223,14 +221,12 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 }
             }
 
-            for(j=0;j<pConfigs->main_bgo.size();j++)
+            j=pConfigs->getBgoI(itemID);
+            if(j>=0)
             {
-                if(pConfigs->main_bgo[j].id==itemID)
-                {
-                    noimage=false;
-                    if(!isUser)
-                    tImg = pConfigs->main_bgo[j].image; break;
-                }
+                noimage=false;
+                if(!isUser)
+                tImg = pConfigs->main_bgo[j].image;
             }
         }
 
@@ -327,15 +323,13 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 }
             }
 
-            for(j=0;j<pConfigs->main_npc.size();j++)
+            j=pConfigs->getNpcI(itemID);
+            if(j>=0)
             {
-                if(pConfigs->main_npc[j].id==itemID)
-                {
-                    if(!isUserTxt)
-                        mergedSet = pConfigs->main_npc[j];
-                    break;
-                }
+                if(!isUserTxt)
+                    mergedSet = pConfigs->main_npc[j];
             }
+
         }
 
         tImg = getNPCimg(itemID, LvlPlacingItems::npcSet.direct);
@@ -391,6 +385,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::waterType = itemID;
         LvlPlacingItems::gridSz = 16;
         LvlPlacingItems::gridOffset = QPoint(0,0);
+        LvlPlacingItems::c_offset_x= 0;
+        LvlPlacingItems::c_offset_y= 0;
         setSquareDrawer(); return;
         break;
     case 4: //doorPoint
@@ -400,6 +396,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         LvlPlacingItems::gridSz=16;
         LvlPlacingItems::gridOffset = QPoint(0,0);
+
+        LvlPlacingItems::c_offset_x = 16;
+        LvlPlacingItems::c_offset_y = 16;
 
         cursor = addRect(0,0, 32, 32);
 
@@ -418,6 +417,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         LvlPlacingItems::gridSz=2;
         LvlPlacingItems::gridOffset = QPoint(0,2);
+
+        LvlPlacingItems::c_offset_x = 16;
+        LvlPlacingItems::c_offset_y = 16;
 
         cursor = addPixmap(QString(":/player%1.png").arg(itemID+1));
         cursor->setData(25, "CURSOR");

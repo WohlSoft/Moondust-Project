@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>289</width>
+    <width>452</width>
     <height>241</height>
    </rect>
   </property>
@@ -44,20 +44,26 @@ Message limits: max line lenth is 28 characters</string>
     <widget class="QPlainTextEdit" name="msgTextBox">
      <property name="minimumSize">
       <size>
-       <width>271</width>
+       <width>434</width>
        <height>162</height>
       </size>
      </property>
-     <property name="font">
-      <font>
-       <family>Liberation Mono</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
      <property name="whatsThis">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 18, 181);
+font: 11pt &quot;Press Start 2P&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <property name="lineWidth">
+      <number>2</number>
      </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -69,7 +75,7 @@ Message limits: max line lenth is 28 characters</string>
       <bool>false</bool>
      </property>
      <property name="plainText">
-      <string notr="true"/>
+      <string notr="true">XxXxXxXxXxXxXxXxXxXxXxXxXxXYYYYYYYYYYYYYYYYYYYYYYYYYYYZZZZZZZZZZZZZZZZZZZZZZZZZZZ</string>
      </property>
      <property name="maximumBlockCount">
       <number>28</number>

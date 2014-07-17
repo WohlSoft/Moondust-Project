@@ -156,6 +156,7 @@ struct obj_BG{
 
 };
 
+
 struct npc_Markers
 {
 //    ;Defines for SMBX64
@@ -185,21 +186,6 @@ struct npc_Markers
 
 };
 
-struct obj_music
-{
-    unsigned long id;
-    QString name;
-    QString file;
-};
-
-struct obj_sound
-{
-    unsigned long id;
-    QString name;
-    QString file;
-    bool hidden;
-};
-
 //////////////Indexing objects////////////////
 struct blocksIndexes
 {
@@ -223,6 +209,121 @@ struct npcIndexes
     unsigned int type;//0 - internal GFX, 1 - user defined GFX
 };
 
+
+
+////////////////////World map items///////////////////////////
+struct obj_w_tile{
+    unsigned long id;
+        QString image_n;
+        QString mask_n;
+        QPixmap image;
+        QPixmap mask;
+
+    QString group;
+    QString category;
+    bool animated;
+    unsigned int frames;
+    unsigned int framespeed; // Default 128 ms
+};
+
+struct obj_w_scenery{
+    unsigned long id;
+        QString image_n;
+        QString mask_n;
+        QPixmap image;
+        QPixmap mask;
+    QString group;
+    QString category;
+    bool animated;
+    unsigned int frames;
+    unsigned int framespeed; // Default 128 ms
+};
+
+struct obj_w_level{
+    unsigned long id;
+        QString image_n;
+        QString mask_n;
+        QPixmap image;
+        QPixmap mask;
+    QString group;
+    QString category;
+    bool animated;
+    unsigned int frames;
+    unsigned int framespeed; // Default 128 ms
+};
+
+struct obj_w_path{
+    unsigned long id;
+        QString image_n;
+        QString mask_n;
+        QPixmap image;
+        QPixmap mask;
+    QString group;
+    QString category;
+    bool animated;
+    unsigned int frames;
+    unsigned int framespeed; // Default 128 ms
+};
+
+//////////////Indexing objects////////////////
+struct wTileIndexes
+{
+    unsigned long i; //Target array index
+    unsigned long ai; //Animator array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+
+struct wSceneIndexes
+{
+    unsigned long i; //Target array index
+    unsigned long ai; //Animator array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+
+struct wLevelIndexes
+{
+    unsigned long i; //Target array index
+    unsigned long ai; //Animator array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+struct wPathIndexes
+{
+    unsigned long i; //Target array index
+    unsigned long ai; //Animator array index
+    unsigned int type;//0 - internal GFX, 1 - user defined GFX
+};
+
+
+//Markers
+struct wld_levels_Markers
+{
+    unsigned long path;
+    unsigned long bigpath;
+};
+
+
+
+
+////////////////////Common items///////////////////////////
+struct obj_music
+{
+    unsigned long id;
+    QString name;
+    QString file;
+};
+
+struct obj_sound
+{
+    unsigned long id;
+    QString name;
+    QString file;
+    bool hidden;
+};
+
+
+
+
+
 class dataconfigs
 {
 public:
@@ -231,25 +332,39 @@ public:
     DataFolders dirs;
     QString config_dir;
 
+    //Level map items
     QVector<obj_BG > main_bg;
-
     QVector<obj_bgo > main_bgo;
     QVector<obj_block > main_block;
-
     QVector<obj_npc > main_npc;
     npc_Markers marker_npc;
-
-    unsigned long music_custom_id;
-    QVector<obj_music > main_music_lvl;
-    QVector<obj_music > main_music_wld;
-    QVector<obj_music > main_music_spc;
-
-    QVector<obj_sound > main_sound;
 
     //Indexes
     QVector<blocksIndexes > index_blocks;
     QVector<bgoIndexes > index_bgo;
     QVector<npcIndexes > index_npc;
+
+    //World map items
+    QVector<obj_w_tile > main_wtiles;
+    QVector<obj_w_path > main_wpaths;
+    QVector<obj_w_scenery > main_wscene;
+    QVector<obj_w_level > main_wlevels;
+    wld_levels_Markers marker_wlvl;
+
+    //Indexes
+    QVector<wTileIndexes > index_wtiles;
+    QVector<wPathIndexes > index_wpaths;
+    QVector<wSceneIndexes > index_wscene;
+    QVector<wLevelIndexes > index_wlvl;
+
+    //Common items
+    unsigned long music_custom_id;
+    unsigned long music_w_custom_id;
+    QVector<obj_music > main_music_lvl;
+    QVector<obj_music > main_music_wld;
+    QVector<obj_music > main_music_spc;
+
+    QVector<obj_sound > main_sound;
 
     bool check(); //Returns true, if something config entry is not initialized
 
@@ -258,6 +373,22 @@ public:
 
     //Debug
     QStringList errorsList;
+
+    // Get Item of Index
+    long getNpcI(unsigned long itemID);
+    long getBlockI(unsigned long itemID);
+    long getBgoI(unsigned long itemID);
+    long getBgI(unsigned long itemID);
+
+    long getTileI(unsigned long itemID);
+    long getSceneI(unsigned long itemID);
+    long getPathI(unsigned long itemID);
+    long getWLevelI(unsigned long itemID);
+
+    long getSndI(unsigned long itemID);
+    long getMusLvlI(unsigned long itemID);
+    long getMusWldI(unsigned long itemID);
+    long getMusSpcI(unsigned long itemID);
 
 private:
 
@@ -274,11 +405,20 @@ private:
     QString blockPath;
     QString npcPath;
 
+    QString tilePath;
+    QString scenePath;
+    QString pathPath;
+    QString wlvlPath;
 
     void loadLevelBGO(QProgressDialog *prgs=NULL);
     void loadLevelBlocks(QProgressDialog *prgs=NULL);
     void loadLevelNPC(QProgressDialog *prgs=NULL);
     void loadLevelBackgrounds(QProgressDialog *prgs=NULL);
+
+    void loadWorldTiles(QProgressDialog *prgs=NULL);
+    void loadWorldScene(QProgressDialog *prgs=NULL);
+    void loadWorldPaths(QProgressDialog *prgs=NULL);
+    void loadWorldLevels(QProgressDialog *prgs=NULL);
 
     void loadMusic(QProgressDialog *prgs=NULL);
     void loadSound(QProgressDialog *prgs=NULL);

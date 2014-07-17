@@ -25,6 +25,11 @@ long ConfStatus::total_bgo=0;
 long ConfStatus::total_bg=0;
 long ConfStatus::total_npc=0;
 
+long ConfStatus::total_wtile=0;
+long ConfStatus::total_wpath=0;
+long ConfStatus::total_wscene=0;
+long ConfStatus::total_wlvl=0;
+
 long ConfStatus::total_music_lvl=0;
 long ConfStatus::total_music_wld=0;
 long ConfStatus::total_music_spc=0;
@@ -107,6 +112,10 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
     blockPath = dirs.glevel +  "block/";
     npcPath =   dirs.glevel +  "npc/";
 
+    tilePath =  dirs.gworld +  "tile/";
+    scenePath = dirs.gworld +  "scene/";
+    pathPath =  dirs.gworld +  "path/";
+    wlvlPath =  dirs.gworld +  "level/";
 
     //////////////////////////////////////////////////////////////////////////////////
 
@@ -129,23 +138,19 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
         else progress.close();
     */
 
-    ///////////////////////////////////////BackGround////////////////////////////////////////////
+    ///////////////////////////////////////Level items////////////////////////////////////////////
     loadLevelBackgrounds(prgs);
-    ///////////////////////////////////////BackGround////////////////////////////////////////////
-
-    //progress.setLabelText("Loading BGO Data");
-    ///////////////////////////////////////BGO////////////////////////////////////////////
     loadLevelBGO(prgs);
-    ///////////////////////////////////////BGO////////////////////////////////////////////
-
-    //progress.setLabelText("Loading Block Data");
-    ///////////////////////////////////////Block////////////////////////////////////////////
     loadLevelBlocks(prgs);
-    ///////////////////////////////////////Block////////////////////////////////////////////
-
-    ///////////////////////////////////////NPC////////////////////////////////////////////
     loadLevelNPC(prgs);
-    ///////////////////////////////////////NPC////////////////////////////////////////////
+    ///////////////////////////////////////Level items////////////////////////////////////////////
+
+    ///////////////////////////////////////World map items////////////////////////////////////////
+    loadWorldTiles(prgs);
+    loadWorldScene(prgs);
+    loadWorldPaths(prgs);
+    loadWorldLevels(prgs);
+    ///////////////////////////////////////World map items////////////////////////////////////////
 
 
     //progress.setLabelText("Loading Music Data");
@@ -157,6 +162,8 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
     loadSound(prgs);
     ///////////////////////////////////////Sound////////////////////////////////////////////
 
+
+
     /*if((!progress.wasCanceled())&&(!nobar))
         progress.close();*/
 
@@ -167,6 +174,10 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
     WriteToLog(QtDebugMsg, QString("Loaded BGOs            %1/%2").arg(main_bgo.size()).arg(ConfStatus::total_bgo));
     WriteToLog(QtDebugMsg, QString("Loaded NPCs            %1/%2").arg(main_npc.size()).arg(ConfStatus::total_npc));
     WriteToLog(QtDebugMsg, QString("Loaded Backgrounds     %1/%2").arg(main_bg.size()).arg(ConfStatus::total_bg));
+    WriteToLog(QtDebugMsg, QString("Loaded Tiles           %1/%2").arg(main_wtiles.size()).arg(ConfStatus::total_wtile));
+    WriteToLog(QtDebugMsg, QString("Loaded Sceneries       %1/%2").arg(main_wscene.size()).arg(ConfStatus::total_wscene));
+    WriteToLog(QtDebugMsg, QString("Loaded Path images     %1/%2").arg(main_wpaths.size()).arg(ConfStatus::total_wpath));
+    WriteToLog(QtDebugMsg, QString("Loaded Level images    %1/%2").arg(main_wlevels.size()).arg(ConfStatus::total_wlvl));
     WriteToLog(QtDebugMsg, QString("Loaded Level music     %1/%2").arg(main_music_lvl.size()).arg(ConfStatus::total_music_lvl));
     WriteToLog(QtDebugMsg, QString("Loaded Special music   %1/%2").arg(main_music_spc.size()).arg(ConfStatus::total_music_spc));
     WriteToLog(QtDebugMsg, QString("Loaded World music     %1/%2").arg(main_music_wld.size()).arg(ConfStatus::total_music_wld));
@@ -183,6 +194,10 @@ bool dataconfigs::check()
     (main_bg.size()<=0)||
     (main_block.size()<=0)||
     (main_npc.size()<=0)||
+    (main_wtiles.size()<=0)||
+    (main_wscene.size()<=0)||
+    (main_wpaths.size()<=0)||
+    (main_wlevels.size()<=0)||
     (main_music_lvl.size()<=0)||
     (main_music_wld.size()<=0)||
     (main_music_spc.size()<=0)||

@@ -20,6 +20,24 @@
 
 #include "../main_window/global_settings.h"
 
+long dataconfigs::getBgI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < main_bg.size(); j++)
+    {
+        if(main_bg[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
 void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
 {
     unsigned int i;

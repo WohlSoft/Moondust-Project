@@ -20,6 +20,61 @@
 
 #include "../main_window/global_settings.h"
 
+long dataconfigs::getMusLvlI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < main_music_lvl.size(); j++)
+    {
+        if(main_music_lvl[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+long dataconfigs::getMusWldI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < main_music_wld.size(); j++)
+    {
+        if(main_music_wld[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+long dataconfigs::getMusSpcI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < main_music_spc.size(); j++)
+    {
+        if(main_music_spc[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+
 void dataconfigs::loadMusic(QProgressDialog *prgs)
 {
     unsigned int i;

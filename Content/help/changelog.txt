@@ -1,20 +1,21 @@
 Editor 0.1.1
-- Animation render are improved and optimized
+- Animation rendering has been improved and optimized
 - Added animation start/stop toolbar button
 - New selection dialog for items
 - Fixed a lot of memory leaks
+- New design of the message box
 - Added displaying of Item ID in Properties tool box.
-- Added item search box: you can find items by his ID and you can find layer members or other options
+- Added item search box: you can find items by their ID along with layer members or other options
 - Added tab view mode, you can switch between sub-window/tab mode in application settings
-- Added support of second special value for fix bug with wrong LVL file parsing (Herb with included magic potion)
+- Added support of second special value for fixing a bug with a wrong LVL file parsing (Herb with included magic potion)	
 - Fixed loss of decimal part of values for layer movement and auto-scroll speed
 - Fixed offset bug for NPC special options
-- Title of sub-window will have the level title instead of file name
+- Title of the sub-window will have the level title instead of the file name
 - Added fullscreen option, recommended for tablets!
-- Added option to Hide warps/doors and waters (Physic Environment zones) on exporting images.
+- Added option to Hide warps/doors and waters (Physical Environment zones) on exporting images.
 - Added definition for default flags value for blocks (slippery, invisible) and for NPC (friendly, no-move, boss)
-- Added support for resize the physical environment zones (water, quicksand)
-- Default toolboxes position will begins from left screen side instead center of screen (Windows) or left-top corner (Linux)
+- Added support for resizing the physical environment zones (water, quicksand)
+- The default position for the toolboxes will be on the left side of the screen instead of the center (Windows) or left-top corner (Linux)
 
 Editor 0.1.0.1
 - Fixed bug with custom music paths after save new file.

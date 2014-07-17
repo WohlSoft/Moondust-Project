@@ -21,6 +21,40 @@
 #include "../main_window/global_settings.h"
 #include "../common_features/graphics_funcs.h"
 
+
+long dataconfigs::getBlockI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    if(itemID < (unsigned int)index_blocks.size())
+    {
+        j = index_blocks[itemID].i;
+
+        if(j < main_block.size())
+        {
+            if( main_block[j].id == itemID)
+                found=true;
+        }
+    }
+
+    if(!found)
+    {
+        for(j=0; j < main_block.size(); j++)
+        {
+            if(main_block[j].id==itemID)
+            {
+                found=true;
+                break;
+            }
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+
 static QString Temp01="";
 
 void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
@@ -43,6 +77,7 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
     blockset.setIniCodec("UTF-8");
 
     main_block.clear();   //Clear old
+    index_blocks.clear();
 
     blockset.beginGroup("blocks-main");
         block_total = blockset.value("total", "0").toInt();

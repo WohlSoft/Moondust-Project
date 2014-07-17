@@ -173,17 +173,6 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
 
 NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
 {
-    //Regs
-    QRegExp isint("\\d+");     //Check "Is Numeric"
-    //QRegExp boolwords("^(#TRUE#|#FALSE#)$");
-    QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    QRegExp booldeg("^(1|0)$");
-    //QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-    //QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
-    //QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
-
-
     int str_count=0;        //Line Counter
     //int i;                  //counters
     QString line;           //Current Line data
@@ -215,7 +204,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
 
        if(Params[0]=="gfxoffsetx")
         {
-           if(!issint.exactMatch(Params[1]))
+           if(SMBX64::sInt(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -228,7 +217,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxoffsety")
         {
-           if(!issint.exactMatch(Params[1]))
+           if(SMBX64::sInt(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -241,7 +230,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="width")
         {
-           if(!isint.exactMatch(Params[1]))
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -254,7 +243,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="height")
         {
-           if(!isint.exactMatch(Params[1]))
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -267,7 +256,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxwidth")
         {
-           if(!isint.exactMatch(Params[1]))
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -280,7 +269,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxheight")
         {
-           if(!isint.exactMatch(Params[1]))
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -293,7 +282,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="score")
         {
-           if(!isint.exactMatch(Params[1]))
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -306,7 +295,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="playerblock")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -319,7 +308,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="playerblocktop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -332,7 +321,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="npcblock")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -345,7 +334,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="npcblocktop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -358,7 +347,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="grabside")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
              if(!IgnoreBad) goto badfile;
            }
@@ -371,7 +360,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="grabtop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if (!IgnoreBad)goto badfile;
            }
@@ -384,7 +373,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="jumphurt")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -397,7 +386,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nohurt")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -410,7 +399,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noblockcollision")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -423,7 +412,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="cliffturn")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -436,7 +425,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noyoshi")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -449,7 +438,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="foreground")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -462,7 +451,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="speed")
         {
-           if(!issfloat.exactMatch(Params[1]))
+           if(SMBX64::sFloat(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -475,7 +464,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nofireball")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -488,7 +477,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nogravity")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -501,7 +490,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="frames")
         {
-           if(!isint.exactMatch(Params[1]))
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -514,7 +503,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="framespeed")
         {
-           if(!isint.exactMatch(Params[1]))
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -527,7 +516,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="framestyle")
         {
-           if(!isint.exactMatch(Params[1]))
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -540,7 +529,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noiceball")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -553,7 +542,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else // Non-SMBX64 parameters (not working in SMBX <=1.3)
        if(Params[0]=="nohammer")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -566,7 +555,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noshell")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           if(SMBX64::dBool(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -591,7 +580,7 @@ return FileData;
 
 
 badfile:    //If file format not corrects
-BadFileMsg(inf.fileName(), str_count, line+Params[0]);
+BadFileMsg(inf.fileName(), str_count, line+"\n"+Params[0]);
 FileData.ReadFileValid=false;
 return FileData;
 }

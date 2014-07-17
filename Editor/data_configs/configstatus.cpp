@@ -110,6 +110,56 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     ui->ItemsStatus->addItem(item);
 
 
+    //World Tiles
+    item = new QListWidgetItem;
+    item->setText(tr("World map Tiles (%1/%2)").arg(configs->main_wtiles.size()).arg(ConfStatus::total_wtile));
+    if(configs->main_wtiles.size()==0)
+        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
+    else
+    if(configs->main_wtiles.size()<ConfStatus::total_wtile)
+        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+    else
+        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+    ui->ItemsStatus->addItem(item);
+
+    //World Sceneries
+    item = new QListWidgetItem;
+    item->setText(tr("World map Sceneries (%1/%2)").arg(configs->main_wscene.size()).arg(ConfStatus::total_wscene));
+    if(configs->main_wscene.size()==0)
+        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
+    else
+    if(configs->main_wscene.size()<ConfStatus::total_wscene)
+        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+    else
+        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+    ui->ItemsStatus->addItem(item);
+
+
+    //World Sceneries
+    item = new QListWidgetItem;
+    item->setText(tr("World map Paths (%1/%2)").arg(configs->main_wpaths.size()).arg(ConfStatus::total_wpath));
+    if(configs->main_wpaths.size()==0)
+        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
+    else
+    if(configs->main_wpaths.size()<ConfStatus::total_wpath)
+        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+    else
+        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+    ui->ItemsStatus->addItem(item);
+
+
+    //World Levels
+    item = new QListWidgetItem;
+    item->setText(tr("World map Levels (%1/%2)").arg(configs->main_wlevels.size()).arg(ConfStatus::total_wlvl));
+    if(configs->main_wlevels.size()==0)
+        item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
+    else
+    if(configs->main_wlevels.size()<ConfStatus::total_wlvl)
+        item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
+    else
+        item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
+    ui->ItemsStatus->addItem(item);
+
 
     ////////////////////////DirList/////////////////////////
     QTableWidgetItem * itemDir;
