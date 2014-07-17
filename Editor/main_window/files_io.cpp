@@ -96,12 +96,13 @@ void MainWindow::OpenFile(QString FilePath)
 
 
         WorldEdit *child = createWldChild();
-        //if (child->loadFile(FilePath)) {
+        if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
+            updateMenus(true);
             statusBar()->showMessage(tr("World map file loaded"), 2000);
             child->show();
-        //} else {
-        //    child->close();
-        //}
+        } else {
+            child->close();
+        }
 
         //QMessageBox::information(this, tr("Dummy"),
         //tr("Sorry, the World Maps support is not inplemented in this version."),

@@ -19,8 +19,8 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
-#include "npc_dialog/npcdialog.h"
 #include "tileset_configure_dialog/tilesetconfiguredialog.h"
+#include "npc_dialog/npcdialog.h"
 #include <QDesktopServices>
 
 MainWindow::MainWindow(QMdiArea *parent) :
@@ -151,6 +151,7 @@ void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
         this->showNormal();
     }
 }
+
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
