@@ -19,6 +19,9 @@
 #ifndef TILESETCONFIGUREDIALOG_H
 #define TILESETCONFIGUREDIALOG_H
 
+#include "tileset.h"
+#include "piecesmodel.h"
+
 #include <QDialog>
 
 namespace Ui {
@@ -33,8 +36,12 @@ public:
     explicit TilesetConfigureDialog(QWidget *parent = 0);
     ~TilesetConfigureDialog();
 
+
+
 private:
     Ui::TilesetConfigureDialog *ui;
+    tileset* m_tileset;
+    PiecesModel* m_model;
 };
 
 #endif // TILESETCONFIGUREDIALOG_H
