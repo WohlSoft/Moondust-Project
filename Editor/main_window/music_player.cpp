@@ -149,7 +149,7 @@ void MainWindow::setMusic(bool checked)
                 WriteToLog(QtDebugMsg, QString("Set music player -> set PlayList"));
                 MusicPlayer->setPlaylist(&(GlobalMusicPlayer::CurrentMusic));
                 WriteToLog(QtDebugMsg, QString("Set music player -> setVolme and play"));
-                MusicPlayer->setVolume(75);
+                MusicPlayer->setVolume(muVol->value());
                 MusicPlayer->play();
             }
             else

@@ -42,6 +42,7 @@ public:
     static QString openPath;
 
     static bool autoPlayMusic;
+    static int musicVolume;
 
     //Toolboxes visibly states
     static bool LevelToolBoxVis;
