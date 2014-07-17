@@ -536,6 +536,7 @@ private:
     bool doSearchNPC(leveledit* edit);
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
+    QSlider* muVol;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;

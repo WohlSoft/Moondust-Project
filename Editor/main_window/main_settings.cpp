@@ -200,6 +200,16 @@ void MainWindow::setUiDefults()
 
 //    //start event detection loop
 //    TickTackTimer->start(1);
+    muVol = new QSlider(Qt::Horizontal);
+    muVol->setMaximumWidth(100);
+    muVol->setMinimum(0);
+    muVol->setMaximum(100);
+    muVol->setValue(100);
+    MusicPlayer->setVolume(100);
+    ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
+    ui->EditionToolBar->insertSeparator(ui->actionAnimation);
+
+    connect(muVol, SIGNAL(valueChanged(int)), MusicPlayer, SLOT(setVolume(int)));
 
     curSearchBlock.id = 0;
     curSearchBlock.index = 0;
