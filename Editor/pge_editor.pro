@@ -88,7 +88,7 @@ SOURCES += main.cpp\
     common_features/musicfilelist.cpp \
     edit_npc/npcedit.cpp \
     npc_dialog/npcdialog.cpp \
-    edit_level/leveledit.cpp \
+    edit_level/level_edit.cpp \
     edit_level/levelprops.cpp \
     edit_level/saveimage.cpp \
     edit_level/lvl_files_io.cpp \
@@ -132,7 +132,10 @@ SOURCES += main.cpp\
     tileset_configure_dialog/tilesetconfiguredialog.cpp \
     tileset_configure_dialog/piecesmodel.cpp \
     tileset_configure_dialog/tileset.cpp \
-    edit_world/world_edit.cpp
+    edit_world/world_edit.cpp \
+    edit_world/wld_draw.cpp \
+    edit_world/wld_edit_control.cpp \
+    edit_world/wld_files_io.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -152,7 +155,7 @@ HEADERS  += mainwindow.h \
     file_formats/lvl_filedata.h \
     file_formats/npc_filedata.h \
     file_formats/wld_filedata.h \
-    edit_level/leveledit.h \
+    edit_level/level_edit.h \
     edit_level/levelprops.h \
     edit_level/saveimage.h \
     edit_npc/npcedit.h \
