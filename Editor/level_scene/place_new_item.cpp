@@ -17,7 +17,7 @@
  */
 
 #include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#include "../edit_level/level_edit.h"
 
 #include "../file_formats/file_formats.h"
 #include "item_block.h"
