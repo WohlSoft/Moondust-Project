@@ -22,7 +22,7 @@
 #include <QMimeData>
 #include <QDrag>
 
-tileset::tileset(QWidget *parent, int baseSize, int rows, int cols) :
+tileset::tileset(dataconfigs* conf, QWidget *parent, int baseSize, int rows, int cols) :
     QWidget(parent)
 {
     setAcceptDrops(true);

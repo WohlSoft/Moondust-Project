@@ -20,28 +20,26 @@
 #define TILESET_H
 
 #include <QWidget>
+#include "../data_configs/data_configs.h"
 
 class tileset : public QWidget
 {
     Q_OBJECT
 public:
-    explicit tileset(QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
+    explicit tileset(dataconfigs *conf, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
 
     void clear();
 
     int rows() const;
-    void setRows(int rows);
-
     int cols() const;
-    void setCols(int cols);
-
     int getBaseSize() const;
-    void setBaseSize(int value);
 
 signals:
 
 public slots:
-
+    void setRows(int rows);
+    void setCols(int cols);
+    void setBaseSize(int value);
 
 protected:
     void paintEvent(QPaintEvent* ev);
