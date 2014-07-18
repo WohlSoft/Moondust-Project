@@ -29,6 +29,7 @@ tileset::tileset(dataconfigs* conf, QWidget *parent, int baseSize, int rows, int
     m_baseSize = baseSize;
     m_rows = rows;
     m_cols = cols;
+    m_conf = conf;
     updateSize();
 }
 
@@ -194,6 +195,33 @@ void tileset::updateSize()
 {
     setMaximumSize(QSize(m_baseSize*m_cols, m_baseSize*m_rows));
     setMinimumSize(QSize(m_baseSize*m_cols, m_baseSize*m_rows));
+    removeOuterItems(QRect(0,0,m_baseSize*m_cols,m_baseSize*m_rows));
+}
+
+void tileset::removeOuterItems(QRect updatedRect)
+{
+    if(pieceRects.size()==0)
+        return;
+
+    QList<QRect> rmRects;
+    QList<QPixmap> rmPixm;
+
+    for(int i = 0; i < pieceRects.size(); ++i){
+        QRect a = updatedRect+QMargins(1,1,1,1);
+        QRect b = pieceRects[i];
+        bool resA = a.contains(b);
+        bool resB = a.contains(b,true);
+        if(!((updatedRect+QMargins(1,1,1,1)).contains(pieceRects[i],true))){
+            rmRects << pieceRects[i];
+            rmPixm << piecePixmaps[i];
+        }
+    }
+
+    for(int i = 0; i < rmRects.size(); ++i){
+        int l = pieceRects.indexOf(rmRects[i]);
+        pieceRects.removeAt(l);
+        piecePixmaps.removeAt(l);
+    }
 }
 int tileset::cols() const
 {

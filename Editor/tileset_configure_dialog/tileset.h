@@ -62,8 +62,10 @@ private:
     int m_rows;
     int m_cols;
     int m_baseSize;
+    dataconfigs *m_conf;
 
     void updateSize();
+    void removeOuterItems(QRect updatedRect);
 };
 
 #endif // TILESET_H
