@@ -110,7 +110,9 @@ void tileset::dropEvent(QDropEvent *event)
         QPixmap pixmap;
         stream >> pixmap/* >> location*/;
 
-        piecePixmaps.append(pixmap);
+        QPixmap scaledPix = pixmap.scaled(m_baseSize, m_baseSize,Qt::KeepAspectRatio);
+
+        piecePixmaps.append(scaledPix);
         pieceRects.append(square);
 
         highlightedRect = QRect();
