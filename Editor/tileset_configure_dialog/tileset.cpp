@@ -34,7 +34,6 @@ tileset::tileset(QWidget *parent, int baseSize, int rows, int cols) :
 
 void tileset::clear()
 {
-    pieceLocations.clear();
     piecePixmaps.clear();
     pieceRects.clear();
     highlightedRect = QRect();
@@ -108,10 +107,8 @@ void tileset::dropEvent(QDropEvent *event)
         QDataStream stream(&pieceData, QIODevice::ReadOnly);
         QRect square = targetSquare(event->pos());
         QPixmap pixmap;
-        QPoint location;
-        stream >> pixmap >> location;
+        stream >> pixmap/* >> location*/;
 
-        pieceLocations.append(location);
         piecePixmaps.append(pixmap);
         pieceRects.append(square);
 
@@ -130,7 +127,6 @@ void tileset::dropEvent(QDropEvent *event)
 void tileset::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::RightButton){
-        pieceLocations.removeAt(findPiece(targetSquare(event->pos())));
         piecePixmaps.removeAt(findPiece(targetSquare(event->pos())));
         pieceRects.removeAt(findPiece(targetSquare(event->pos())));
         update();
@@ -143,21 +139,15 @@ void tileset::mousePressEvent(QMouseEvent *event)
     if (found == -1)
         return;
 
-    QPoint location = pieceLocations[found];
     QPixmap pixmap = piecePixmaps[found];
-    pieceLocations.removeAt(found);
     piecePixmaps.removeAt(found);
     pieceRects.removeAt(found);
-
-    if (location == QPoint(square.x()/getBaseSize(), square.y()/getBaseSize()))
-        inPlace--;
-
     update();
 
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
-    dataStream << pixmap << location;
+    dataStream << pixmap;
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData("image/x-pge-piece", itemData);
@@ -168,13 +158,9 @@ void tileset::mousePressEvent(QMouseEvent *event)
     drag->setPixmap(pixmap);
 
     if (drag->start(Qt::MoveAction) == 0) {
-        pieceLocations.insert(found, location);
         piecePixmaps.insert(found, pixmap);
         pieceRects.insert(found, square);
         update();
-
-        if (location == QPoint(square.x()/getBaseSize(), square.y()/getBaseSize()))
-            inPlace++;
     }
 }
 
