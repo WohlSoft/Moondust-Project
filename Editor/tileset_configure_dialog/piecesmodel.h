@@ -35,7 +35,12 @@ class PiecesModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit PiecesModel(dataconfigs* conf, int pieceSize = 32, QObject *parent = 0);
+    enum PieceType{
+        PIECE_BLOCK = 0,
+        PIECE_BGO = 1,
+        PIECE_NPC = 2
+    };
+    explicit PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize = 32, QObject *parent = 0);
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -50,12 +55,15 @@ public:
 
     void addPiece(const int &id);
 
+
 private:
+    QString getMimeType() const;
     QList<QPixmap> pixmaps;
     QList<QString> pixmapNames;
-
+    QList<int> pixmapId;
     int m_PieceSize;
     dataconfigs* m_conf;
+    PieceType m_type;
 };
 
 #endif // PIECESLIST_H

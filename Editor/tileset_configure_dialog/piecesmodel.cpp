@@ -22,8 +22,8 @@
 #include <QIcon>
 #include <QMimeData>
 
-PiecesModel::PiecesModel(dataconfigs* conf, int pieceSize, QObject *parent)
-    : QAbstractListModel(parent), m_PieceSize(pieceSize), m_conf(conf)
+PiecesModel::PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize, QObject *parent)
+    : QAbstractListModel(parent), m_PieceSize(pieceSize), m_conf(conf), m_type(pieceType)
 {
 }
 
@@ -39,6 +39,8 @@ QVariant PiecesModel::data(const QModelIndex &index, int role) const
         return pixmapNames.value(index.row());
     else if (role == Qt::UserRole)
         return pixmaps.value(index.row());
+    else if (role == Qt::UserRole + 1)
+        return pixmapId.value(index.row());
 
     return QVariant();
 }
@@ -49,7 +51,20 @@ void PiecesModel::addPiece(const int &index)
     pixmapNames.insert(pixmaps.size(), m_conf->main_block[index].name);
     pixmaps.insert(pixmaps.size(), m_conf->main_block[index].image.copy(0,0,m_conf->main_block[index].image.width(),
                                                                         qRound(qreal(m_conf->main_block[index].image.height())/ m_conf->main_block[index].frames) ));
+    pixmapId.insert(pixmaps.size(), m_conf->main_block[index].id);
     endInsertRows();
+}
+
+QString PiecesModel::getMimeType() const
+{
+    switch (m_type) {
+    case PIECE_BLOCK: return QString("text/x-pge-piece-block");
+    case PIECE_BGO: return QString("text/x-pge-piece-bgo");
+    case PIECE_NPC: return QString("text/x-pge-piece-npc");
+    default:
+        break;
+    }
+    return QString("image/x-pge-piece");
 }
 
 Qt::ItemFlags PiecesModel::flags(const QModelIndex &index) const
@@ -86,7 +101,7 @@ bool PiecesModel::removeRows(int row, int count, const QModelIndex &parent)
 QStringList PiecesModel::mimeTypes() const
 {
     QStringList types;
-    types << "image/x-pge-piece";
+    types << getMimeType().toStdString().c_str();
     return types;
 }
 
@@ -99,20 +114,21 @@ QMimeData *PiecesModel::mimeData(const QModelIndexList &indexes) const
 
     foreach (QModelIndex index, indexes) {
         if (index.isValid()) {
-            QPixmap pixmap = qvariant_cast<QPixmap>(data(index, Qt::UserRole));
-            //QPoint location = data(index, Qt::UserRole+1).toPoint();
-            stream << pixmap/* << location*/;
+            int id = data(index, Qt::UserRole+1).toInt();
+            stream << id;
         }
     }
 
-    mimeData->setData("image/x-pge-piece", encodedData);
+    mimeData->setData(getMimeType(), encodedData);
     return mimeData;
 }
 
 bool PiecesModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
                                int /*row*/, int column, const QModelIndex &parent)
 {
-    if (!data->hasFormat("image/x-pge-piece"))
+    Q_UNUSED(parent);
+
+    if (!data->hasFormat(getMimeType()))
         return false;
 
     if (action == Qt::IgnoreAction)
