@@ -111,7 +111,7 @@ QMimeData *PiecesModel::mimeData(const QModelIndexList &indexes) const
 }
 
 bool PiecesModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
-                               int row, int column, const QModelIndex &parent)
+                               int /*row*/, int column, const QModelIndex &parent)
 {
     if (!data->hasFormat("image/x-pge-piece"))
         return false;
