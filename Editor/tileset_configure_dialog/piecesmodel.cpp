@@ -67,19 +67,19 @@ bool PiecesModel::removeRows(int row, int count, const QModelIndex &parent)
     if (row >= pixmaps.size() || row + count <= 0)
         return false;
 
-    int beginRow = qMax(0, row);
-    int endRow = qMin(row + count - 1, pixmaps.size() - 1);
+//    int beginRow = qMax(0, row);
+//    int endRow = qMin(row + count - 1, pixmaps.size() - 1);
 
-    beginRemoveRows(parent, beginRow, endRow);
+//    beginRemoveRows(parent, beginRow, endRow);
 
-    while (beginRow <= endRow) {
-        pixmaps.removeAt(beginRow);
-        pixmapNames.removeAt(beginRow);
-        ++beginRow;
-    }
+//    while (beginRow <= endRow) {
+//        pixmaps.removeAt(beginRow);
+//        pixmapNames.removeAt(beginRow);
+//        ++beginRow;
+//    }
 
-    endRemoveRows();
-    return true;
+//    endRemoveRows();
+    return false;
 }
 
 QStringList PiecesModel::mimeTypes() const
@@ -146,7 +146,7 @@ bool PiecesModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
 //        ++endRow;
 //    }
 
-    return true;
+    return false;
 }
 
 int PiecesModel::rowCount(const QModelIndex &parent) const

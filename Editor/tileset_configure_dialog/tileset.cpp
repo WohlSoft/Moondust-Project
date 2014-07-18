@@ -129,6 +129,14 @@ void tileset::dropEvent(QDropEvent *event)
 
 void tileset::mousePressEvent(QMouseEvent *event)
 {
+    if(event->button() == Qt::RightButton){
+        pieceLocations.removeAt(findPiece(targetSquare(event->pos())));
+        piecePixmaps.removeAt(findPiece(targetSquare(event->pos())));
+        pieceRects.removeAt(findPiece(targetSquare(event->pos())));
+        update();
+        return;
+    }
+
     QRect square = targetSquare(event->pos());
     int found = findPiece(square);
 
