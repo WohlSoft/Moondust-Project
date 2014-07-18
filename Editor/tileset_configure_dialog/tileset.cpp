@@ -58,7 +58,7 @@ void tileset::paintEvent(QPaintEvent *ev)
         painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items to this box!"));
     }else{
         for (int i = 0; i < pieceRects.size(); ++i) {
-            painter.drawPixmap(pieceRects[i], piecePixmaps[i]);
+            painter.drawPixmap(QRect(pieceRects[i].x(), pieceRects[i].y(), piecePixmaps[i].width(), piecePixmaps[i].height()), piecePixmaps[i]);
         }
     }
 
@@ -207,10 +207,6 @@ void tileset::removeOuterItems(QRect updatedRect)
     QList<QPixmap> rmPixm;
 
     for(int i = 0; i < pieceRects.size(); ++i){
-        QRect a = updatedRect+QMargins(1,1,1,1);
-        QRect b = pieceRects[i];
-        bool resA = a.contains(b);
-        bool resB = a.contains(b,true);
         if(!((updatedRect+QMargins(1,1,1,1)).contains(pieceRects[i],true))){
             rmRects << pieceRects[i];
             rmPixm << piecePixmaps[i];
