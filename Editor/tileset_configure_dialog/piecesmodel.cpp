@@ -47,9 +47,8 @@ void PiecesModel::addPiece(const int &index)
 {
     beginInsertRows(QModelIndex(), pixmaps.size(), pixmaps.size());
     pixmapNames.insert(pixmaps.size(), m_conf->main_block[index].name);
-    pixmaps.insert(pixmaps.size(), (m_conf->main_block[index].frames == 1 ?
-                                        m_conf->main_block[index].image :
-                                        m_conf->main_block[index].image.copy(0,0,32,32)));
+    pixmaps.insert(pixmaps.size(), m_conf->main_block[index].image.copy(0,0,m_conf->main_block[index].image.width(),
+                                                                        qRound(qreal(m_conf->main_block[index].image.height())/ m_conf->main_block[index].frames) ));
     endInsertRows();
 }
 
