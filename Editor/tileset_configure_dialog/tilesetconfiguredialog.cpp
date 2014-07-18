@@ -29,11 +29,11 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
     ui->listView->setDragEnabled(true);
-    ui->listView->setModel(m_model = (new PiecesModel()));
+    ui->listView->setModel(m_model = (new PiecesModel(conf)));
 
     m_conf = conf;
     for(int i = 0; i < conf->main_block.size(); ++i){
-        m_model->addPiece(conf->main_block[i].image, conf->main_block[i].name);
+        m_model->addPiece(i);
     }
 
 }
@@ -41,4 +41,9 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
 TilesetConfigureDialog::~TilesetConfigureDialog()
 {
     delete ui;
+}
+
+void TilesetConfigureDialog::on_pushButton_clicked()
+{
+    m_tileset->clear();
 }
