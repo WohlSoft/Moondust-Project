@@ -22,7 +22,7 @@
 #include <QMimeData>
 #include <QDrag>
 
-tileset::tileset(dataconfigs* conf, QWidget *parent, int baseSize, int rows, int cols) :
+tileset::tileset(dataconfigs* conf, TilesetType type, QWidget *parent, int baseSize, int rows, int cols) :
     QWidget(parent)
 {
     setAcceptDrops(true);
@@ -30,6 +30,7 @@ tileset::tileset(dataconfigs* conf, QWidget *parent, int baseSize, int rows, int
     m_rows = rows;
     m_cols = cols;
     m_conf = conf;
+    m_type = type;
     updateSize();
 }
 
@@ -55,7 +56,7 @@ void tileset::paintEvent(QPaintEvent *ev)
     }
 
     if(pieceRects.isEmpty()){
-        painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items to this box!"));
+        painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items to this box!\nRightclick to remove!"));
     }else{
         for (int i = 0; i < pieceRects.size(); ++i) {
             painter.drawPixmap(QRect(pieceRects[i].x(), pieceRects[i].y(), piecePixmaps[i].width(), piecePixmaps[i].height()), piecePixmaps[i]);
@@ -67,7 +68,7 @@ void tileset::paintEvent(QPaintEvent *ev)
 
 void tileset::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat("image/x-pge-piece"))
+    if (event->mimeData()->hasFormat(getMimeType()))
         event->accept();
     else
         event->ignore();
@@ -85,7 +86,7 @@ void tileset::dragMoveEvent(QDragMoveEvent *event)
 {
     QRect updateRect = highlightedRect.united(targetSquare(event->pos()));
 
-    if (event->mimeData()->hasFormat("image/x-pge-piece")
+    if (event->mimeData()->hasFormat(getMimeType())
         && findPiece(targetSquare(event->pos())) == -1) {
 
         highlightedRect = targetSquare(event->pos());
@@ -101,19 +102,21 @@ void tileset::dragMoveEvent(QDragMoveEvent *event)
 
 void tileset::dropEvent(QDropEvent *event)
 {
-    if (event->mimeData()->hasFormat("image/x-pge-piece")
+    if (event->mimeData()->hasFormat(getMimeType())
         && findPiece(targetSquare(event->pos())) == -1) {
 
-        QByteArray pieceData = event->mimeData()->data("image/x-pge-piece");
+        QByteArray pieceData = event->mimeData()->data(getMimeType());
         QDataStream stream(&pieceData, QIODevice::ReadOnly);
         QRect square = targetSquare(event->pos());
-        QPixmap pixmap;
-        stream >> pixmap/* >> location*/;
+        int objID;
+        stream >> objID;
 
-        QPixmap scaledPix = pixmap.scaled(m_baseSize, m_baseSize,Qt::KeepAspectRatio);
+        //QPixmap scaledPix = pixmap.scaled(m_baseSize, m_baseSize,Qt::KeepAspectRatio);
+        QPixmap scaledPix = getScaledPixmapById(objID);
 
         piecePixmaps.append(scaledPix);
         pieceRects.append(square);
+        pieceID.append(objID);
 
         highlightedRect = QRect();
         update();
@@ -143,6 +146,7 @@ void tileset::mousePressEvent(QMouseEvent *event)
         return;
 
     QPixmap pixmap = piecePixmaps[found];
+    int objID = pieceID[found];
     piecePixmaps.removeAt(found);
     pieceRects.removeAt(found);
     update();
@@ -150,10 +154,10 @@ void tileset::mousePressEvent(QMouseEvent *event)
     QByteArray itemData;
     QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
-    dataStream << pixmap;
+    dataStream << objID;
 
     QMimeData *mimeData = new QMimeData;
-    mimeData->setData("image/x-pge-piece", itemData);
+    mimeData->setData(getMimeType(), itemData);
 
     QDrag *drag = new QDrag(this);
     drag->setMimeData(mimeData);
@@ -163,6 +167,7 @@ void tileset::mousePressEvent(QMouseEvent *event)
     if (drag->start(Qt::MoveAction) == 0) {
         piecePixmaps.insert(found, pixmap);
         pieceRects.insert(found, square);
+        pieceID.insert(found, objID);
         update();
     }
 }
@@ -179,6 +184,54 @@ int tileset::findPiece(const QRect &pieceRect) const
 const QRect tileset::targetSquare(const QPoint &position) const
 {
     return QRect(position.x()/getBaseSize() * getBaseSize(), position.y()/getBaseSize() * getBaseSize(), getBaseSize(), getBaseSize());
+}
+
+QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
+{
+    switch (m_type) {
+    case TILESET_BLOCK:
+    {
+        long tarIndex = m_conf->getBlockI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+        return m_conf->main_block[tarIndex].image.copy(
+                    0,0,m_conf->main_block[tarIndex].image.width(),
+                    qRound(qreal(m_conf->main_block[tarIndex].image.height())/ m_conf->main_block[tarIndex].frames) )
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);;
+        break;
+    }
+    case TILESET_BGO:
+    {
+        long tarIndex = m_conf->getBgoI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+
+        break;
+    }
+    case TILESET_NPC:
+    {
+        long tarIndex = m_conf->getNpcI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+
+        break;
+    }
+    default:
+        break;
+    }
+    return QPixmap(m_baseSize, m_baseSize);
+}
+
+QString tileset::getMimeType()
+{
+    switch (m_type) {
+    case TILESET_BLOCK: return QString("text/x-pge-piece-block");
+    case TILESET_BGO: return QString("text/x-pge-piece-bgo");
+    case TILESET_NPC: return QString("text/x-pge-piece-npc");
+    default:
+        break;
+    }
+    return QString("image/x-pge-piece");
 }
 int tileset::getBaseSize() const
 {

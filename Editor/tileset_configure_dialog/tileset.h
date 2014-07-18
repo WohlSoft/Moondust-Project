@@ -26,13 +26,32 @@ class tileset : public QWidget
 {
     Q_OBJECT
 public:
-    explicit tileset(dataconfigs *conf, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
+    enum TilesetType{
+        TILESET_BLOCK = 0,
+        TILESET_BGO = 1,
+        TILESET_NPC = 2
+    };
+
+    explicit tileset(dataconfigs *conf, TilesetType type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
 
     void clear();
 
     int rows() const;
     int cols() const;
     int getBaseSize() const;
+
+
+
+    struct SimpleTilesetItem{
+        int row,col,id;
+    };
+
+    struct SimpleTileset{
+        int rows, cols, baseSize;
+        QList<SimpleTilesetItem> items;
+    };
+
+
 
 signals:
 
@@ -53,9 +72,12 @@ protected:
 private:
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
+    QPixmap getScaledPixmapById(const unsigned int &id) const;
+    QString getMimeType();
 
     QList<QPixmap> piecePixmaps;
     QList<QRect> pieceRects;
+    QList<int> pieceID;
     QRect highlightedRect;
     int inPlace;
 
@@ -63,6 +85,7 @@ private:
     int m_cols;
     int m_baseSize;
     dataconfigs *m_conf;
+    TilesetType m_type;
 
     void updateSize();
     void removeOuterItems(QRect updatedRect);
