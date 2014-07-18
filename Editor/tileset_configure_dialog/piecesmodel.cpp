@@ -22,8 +22,8 @@
 #include <QIcon>
 #include <QMimeData>
 
-PiecesModel::PiecesModel(int pieceSize, QObject *parent)
-    : QAbstractListModel(parent), m_PieceSize(pieceSize)
+PiecesModel::PiecesModel(dataconfigs* conf, int pieceSize, QObject *parent)
+    : QAbstractListModel(parent), m_PieceSize(pieceSize), m_conf(conf)
 {
 }
 
@@ -43,11 +43,11 @@ QVariant PiecesModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void PiecesModel::addPiece(const QPixmap &pixmap, const QString &name)
+void PiecesModel::addPiece(const int &index)
 {
     beginInsertRows(QModelIndex(), pixmaps.size(), pixmaps.size());
-    pixmapNames.insert(pixmaps.size(), name);
-    pixmaps.insert(pixmaps.size(), pixmap);
+    pixmapNames.insert(pixmaps.size(), m_conf->main_block[index].name);
+    pixmaps.insert(pixmaps.size(), m_conf->main_block[index].image);
     endInsertRows();
 }
 

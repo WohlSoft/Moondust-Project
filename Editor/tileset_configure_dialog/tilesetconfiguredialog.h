@@ -39,6 +39,9 @@ public:
 
 
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::TilesetConfigureDialog *ui;
     tileset* m_tileset;
