@@ -233,9 +233,50 @@ QString tileset::getMimeType()
     }
     return QString("image/x-pge-piece");
 }
+tileset::TilesetType tileset::type() const
+{
+    return m_type;
+}
+
+void tileset::setType(const TilesetType &type)
+{
+    m_type = type;
+}
+
 int tileset::getBaseSize() const
 {
     return m_baseSize;
+}
+
+tileset::SimpleTileset tileset::toSimpleTileset()
+{
+    SimpleTileset s;
+    s.baseSize = m_baseSize;
+    s.rows = m_rows;
+    s.cols = m_cols;
+    s.type = m_type;
+    for(int i = 0; i < pieceRects.size(); ++i){
+        SimpleTilesetItem it;
+        it.col = pieceRects[i].x() / m_baseSize;
+        it.row = pieceRects[i].y() / m_baseSize;
+        it.id = pieceID[i];
+        s.items << it;
+    }
+    return s;
+}
+
+void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
+{
+    clear();
+    setBaseSize(tileset.baseSize);
+    setRows(tileset.rows);
+    setCols(tileset.cols);
+    setType(tileset.type);
+    for(int i = 0; i < tileset.items.size(); ++i){
+        piecePixmaps.append(getScaledPixmapById(tileset.items[i].id));
+        pieceRects.append(QRect(tileset.items[i].col*m_baseSize, tileset.items[i].row*m_baseSize, m_baseSize, m_baseSize));
+        pieceID.append(tileset.items[i].id);
+    }
 }
 
 void tileset::setBaseSize(int value)
