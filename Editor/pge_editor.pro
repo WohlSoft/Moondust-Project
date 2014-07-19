@@ -98,8 +98,6 @@ SOURCES += main.cpp\
     edit_npc/npc_data_sets.cpp \
     edit_npc/npctxt_controls.cpp \
     about_dialog/aboutdialog.cpp \
-    level_scene/resizer/cornergrabber.cpp \
-    level_scene/resizer/item_resizer.cpp \
     common_features/grid.cpp \
     common_features/mainwinconnect.cpp \
     level_scene/item_water.cpp \
@@ -135,7 +133,22 @@ SOURCES += main.cpp\
     edit_world/world_edit.cpp \
     edit_world/wld_draw.cpp \
     edit_world/wld_edit_control.cpp \
-    edit_world/wld_files_io.cpp
+    edit_world/wld_files_io.cpp \
+    world_scene/wld_scene.cpp \
+    world_scene/item_tile.cpp \
+    common_features/resizer/cornergrabber.cpp \
+    common_features/resizer/item_resizer.cpp \
+    world_scene/item_scene.cpp \
+    world_scene/item_path.cpp \
+    world_scene/item_level.cpp \
+    world_scene/wld_setup.cpp \
+    world_scene/wld_collisions.cpp \
+    world_scene/wld_clipboard.cpp \
+    world_scene/wld_init_filedata.cpp \
+    world_scene/wld_items.cpp \
+    world_scene/wld_usergfx.cpp \
+    world_scene/wld_control.cpp \
+    world_scene/wld_item_placing.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -160,8 +173,6 @@ HEADERS  += mainwindow.h \
     edit_level/saveimage.h \
     edit_npc/npcedit.h \
     about_dialog/aboutdialog.h \
-    level_scene/resizer/item_resizer.h \
-    level_scene/resizer/corner_grabber.h \
     common_features/grid.h \
     main_window/music_player.h \
     common_features/mainwinconnect.h \
@@ -185,7 +196,16 @@ HEADERS  += mainwindow.h \
     tileset_configure_dialog/tilesetconfiguredialog.h \
     tileset_configure_dialog/piecesmodel.h \
     tileset_configure_dialog/tileset.h \
-    edit_world/world_edit.h
+    edit_world/world_edit.h \
+    world_scene/wld_scene.h \
+    world_scene/item_tile.h \
+    common_features/resizer/corner_grabber.h \
+    common_features/resizer/item_resizer.h \
+    world_scene/item_scene.h \
+    world_scene/item_path.h \
+    world_scene/item_level.h \
+    world_scene/item_music.h \
+    world_scene/wld_item_placing.h
 
 FORMS    += \
     mainwindow.ui \
