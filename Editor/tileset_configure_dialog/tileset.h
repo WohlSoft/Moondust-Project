@@ -39,7 +39,7 @@ public:
     int rows() const;
     int cols() const;
     int getBaseSize() const;
-
+    TilesetType type() const;
 
 
     struct SimpleTilesetItem{
@@ -48,8 +48,14 @@ public:
 
     struct SimpleTileset{
         int rows, cols, baseSize;
+        TilesetType type;
         QList<SimpleTilesetItem> items;
     };
+
+    SimpleTileset toSimpleTileset();
+    void loadSimpleTileset(const SimpleTileset &tileset);
+
+
 
 
 
@@ -59,6 +65,7 @@ public slots:
     void setRows(int rows);
     void setCols(int cols);
     void setBaseSize(int value);
+    void setType(const TilesetType &type);
 
 protected:
     void paintEvent(QPaintEvent* ev);
