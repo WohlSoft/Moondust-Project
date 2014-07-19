@@ -20,28 +20,52 @@
 #define TILESET_H
 
 #include <QWidget>
+#include "../data_configs/data_configs.h"
 
 class tileset : public QWidget
 {
     Q_OBJECT
 public:
-    explicit tileset(QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
+    enum TilesetType{
+        TILESET_BLOCK = 0,
+        TILESET_BGO = 1,
+        TILESET_NPC = 2
+    };
+
+    explicit tileset(dataconfigs *conf, TilesetType type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
 
     void clear();
 
     int rows() const;
-    void setRows(int rows);
-
     int cols() const;
-    void setCols(int cols);
-
     int getBaseSize() const;
-    void setBaseSize(int value);
+    TilesetType type() const;
+
+
+    struct SimpleTilesetItem{
+        int row,col,id;
+    };
+
+    struct SimpleTileset{
+        int rows, cols, baseSize;
+        TilesetType type;
+        QList<SimpleTilesetItem> items;
+    };
+
+    SimpleTileset toSimpleTileset();
+    void loadSimpleTileset(const SimpleTileset &tileset);
+
+
+
+
 
 signals:
 
 public slots:
-
+    void setRows(int rows);
+    void setCols(int cols);
+    void setBaseSize(int value);
+    void setType(const TilesetType &type);
 
 protected:
     void paintEvent(QPaintEvent* ev);
@@ -55,18 +79,23 @@ protected:
 private:
     int findPiece(const QRect &pieceRect) const;
     const QRect targetSquare(const QPoint &position) const;
+    QPixmap getScaledPixmapById(const unsigned int &id) const;
+    QString getMimeType();
 
     QList<QPixmap> piecePixmaps;
     QList<QRect> pieceRects;
-    QList<QPoint> pieceLocations;
+    QList<int> pieceID;
     QRect highlightedRect;
     int inPlace;
 
     int m_rows;
     int m_cols;
     int m_baseSize;
+    dataconfigs *m_conf;
+    TilesetType m_type;
 
     void updateSize();
+    void removeOuterItems(QRect updatedRect);
 };
 
 #endif // TILESET_H
