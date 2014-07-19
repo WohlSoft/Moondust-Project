@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.1" language="en_US">
 <context>
     <name>AppSettings</name>
     <message>
@@ -173,39 +173,39 @@
     </message>
     <message>
         <source>Level Blocks (%1/%1)</source>
-        <translation>Level: Blocks (%1/%1)</translation>
+        <translation type="vanished">Level: Blocks (%1/%1)</translation>
     </message>
     <message>
         <source>Level Background objects (%1/%1)</source>
-        <translation>Level: Background objects (%1/%1)</translation>
+        <translation type="vanished">Level: Background objects (%1/%1)</translation>
     </message>
     <message>
         <source>Level Background images (%1/%1)</source>
-        <translation>Level: Background images (%1/%1)</translation>
+        <translation type="vanished">Level: Background images (%1/%1)</translation>
     </message>
     <message>
         <source>Level NPC (%1/%1)</source>
-        <translation>Level: NPC (%1/%1)</translation>
+        <translation type="vanished">Level: NPC (%1/%1)</translation>
     </message>
     <message>
         <source>Level NPCs (%1/%1)</source>
-        <translation>Level: NPCs (%1/%1)</translation>
+        <translation type="vanished">Level: NPCs (%1/%1)</translation>
     </message>
     <message>
         <source>Music (level) (%1/%1)</source>
-        <translation>Music (level) (%1/%1)</translation>
+        <translation type="vanished">Music (level) (%1/%1)</translation>
     </message>
     <message>
         <source>Music (world) (%1/%1)</source>
-        <translation>Music (world map) (%1/%1)</translation>
+        <translation type="vanished">Music (world map) (%1/%1)</translation>
     </message>
     <message>
         <source>Music (special) (%1/%1)</source>
-        <translation>Music (special) (%1/%1)</translation>
+        <translation type="vanished">Music (special) (%1/%1)</translation>
     </message>
     <message>
         <source>Sounds (%1/%1)</source>
-        <translation>Sounds (%1/%1)</translation>
+        <translation type="vanished">Sounds (%1/%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="20"/>
@@ -250,22 +250,22 @@
     <message>
         <location filename="../data_configs/configstatus.cpp" line="115"/>
         <source>World map Tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>World map: Tiles (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="127"/>
         <source>World map Sceneries (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>World map: Sceneries (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="140"/>
         <source>World map Paths (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>World map: Paths (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="153"/>
         <source>World map Levels (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>World map: Levels (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="167"/>
@@ -502,14 +502,32 @@
     </message>
     <message>
         <source>Copy</source>
+        <translation type="vanished">Copy</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="vanished">Cut</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_door.cpp" line="149"/>
+        <source>Remove</source>
+        <translation>Remove</translation>
+    </message>
+</context>
+<context>
+    <name>ItemLevel</name>
+    <message>
+        <location filename="../world_scene/item_level.cpp" line="79"/>
+        <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
+        <location filename="../world_scene/item_level.cpp" line="81"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="149"/>
+        <location filename="../world_scene/item_level.cpp" line="84"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -604,7 +622,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Legacy boss</source>
-        <translation>Legacy boss</translation>
+        <translation type="vanished">Legacy boss</translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="184"/>
@@ -618,6 +636,42 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="189"/>
+        <source>Remove</source>
+        <translation>Remove</translation>
+    </message>
+</context>
+<context>
+    <name>ItemPath</name>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="77"/>
+        <source>Copy</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="79"/>
+        <source>Cut</source>
+        <translation>Cut</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="82"/>
+        <source>Remove</source>
+        <translation>Remove</translation>
+    </message>
+</context>
+<context>
+    <name>ItemScene</name>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="77"/>
+        <source>Copy</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="79"/>
+        <source>Cut</source>
+        <translation>Cut</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="82"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -709,6 +763,24 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../item_select_dialog/itemselectdialog.cpp" line="78"/>
         <source>Coins</source>
         <translation>Coins</translation>
+    </message>
+</context>
+<context>
+    <name>ItemTile</name>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="77"/>
+        <source>Copy</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="79"/>
+        <source>Cut</source>
+        <translation>Cut</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="82"/>
+        <source>Remove</source>
+        <translation>Remove</translation>
     </message>
 </context>
 <context>
@@ -1391,7 +1463,7 @@ Please, reconvert your images to the valid format and try to reload this level.<
     </message>
     <message>
         <source>Level Tool box</source>
-        <translation>Level</translation>
+        <translation type="vanished">Level</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="384"/>
@@ -1431,15 +1503,15 @@ Please, reconvert your images to the valid format and try to reload this level.<
     </message>
     <message>
         <source>Editor</source>
-        <translation>Editor</translation>
+        <translation type="vanished">Editor</translation>
     </message>
     <message>
         <source>Level Sections</source>
-        <translation>Level Sections</translation>
+        <translation type="vanished">Level Sections</translation>
     </message>
     <message>
         <source>World map tool box</source>
-        <translation>World map</translation>
+        <translation type="vanished">World map</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1126"/>
@@ -1642,7 +1714,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Warps and doors</source>
-        <translation>Warps and Doors</translation>
+        <translation type="vanished">Warps and Doors</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1879"/>
@@ -1821,15 +1893,15 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Parameter</source>
-        <translation>Parameter</translation>
+        <translation type="vanished">Parameter</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Value</translation>
+        <translation type="vanished">Value</translation>
     </message>
     <message>
         <source>Position</source>
-        <translation>Position</translation>
+        <translation type="vanished">Position</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1855,7 +1927,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>No more objects on layer</source>
-        <translation>No more objects in layer</translation>
+        <translation type="vanished">No more objects in layer</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="5422"/>
@@ -2201,15 +2273,15 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="6882"/>
         <source>Configure Tilesets</source>
-        <translation type="unfinished"></translation>
+        <translation>Configure Tilesets</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
-        <translation>Restart level after player&apos;s death</translation>
+        <translation type="vanished">Restart level after player&apos;s death</translation>
     </message>
     <message>
         <source>Level tool box</source>
-        <translation>Level</translation>
+        <translation type="vanished">Level</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6204"/>
@@ -2218,7 +2290,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>World tool box</source>
-        <translation>World map</translation>
+        <translation type="vanished">World map</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6240"/>
@@ -2247,7 +2319,7 @@ Message limits: max line lenth is 28 characters</source>
     </message>
     <message>
         <source>Current configuration status</source>
-        <translation>Current configuration status</translation>
+        <translation type="vanished">Current configuration status</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6264"/>
@@ -2539,7 +2611,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <source>Autoscrool section</source>
-        <translation>Autoscroll section</translation>
+        <translation type="vanished">Autoscroll section</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4005"/>
@@ -2731,7 +2803,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <source>[Empty]</source>
-        <translation>[Empty]</translation>
+        <translation type="vanished">[Empty]</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4903"/>
@@ -2836,7 +2908,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <source>Level Section Settings</source>
-        <translation>Level Section Settings</translation>
+        <translation type="vanished">Level Section Settings</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6293"/>
@@ -2946,7 +3018,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <location filename="../mainwindow.ui" line="6535"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If you are getting lots of lag or have a slow computer, it is reccommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6546"/>
@@ -3030,7 +3102,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
         <source>Bad file format
 File: %1
 </source>
-        <translation>Bad file format
+        <translation type="vanished">Bad file format
 File: %1</translation>
     </message>
     <message>
@@ -3039,19 +3111,19 @@ File: %1</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are copied in clipboard</source>
-        <translation>%1 blocks, %2 BGO, %3 NPC items have been copied to clipboard</translation>
+        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC items have been copied to clipboard</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
-        <translation>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</translation>
+        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC items are moved in clipboard</source>
-        <translation>%1 blocks, %2 BGO, %3 NPC items have been copied to clipboard</translation>
+        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC items have been copied to clipboard</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
-        <translation>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</translation>
+        <translation type="vanished">%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="29"/>
@@ -3070,7 +3142,7 @@ File: %1</translation>
     </message>
     <message>
         <source>Reload configuration</source>
-        <translation>Reload configurations</translation>
+        <translation type="vanished">Reload configurations</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="60"/>
@@ -3136,16 +3208,16 @@ File: %1</translation>
     </message>
     <message>
         <source>Dummy</source>
-        <translation>Dummy</translation>
+        <translation type="vanished">Dummy</translation>
     </message>
     <message>
         <source>Sorry, the World Maps support is not inplemented in this version.</source>
-        <translation>Sorry, World Maps are currently not supported in this version.</translation>
+        <translation type="vanished">Sorry, World Maps are currently not supported in this version.</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="101"/>
         <source>World map file loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>World map file loaded</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="120"/>
@@ -3444,22 +3516,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../data_configs/conf_wld_level.cpp" line="87"/>
         <source>Loading Level images...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading Level images...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
         <source>Loading Paths images...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading Paths images...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_scene.cpp" line="85"/>
         <source>Loading Sceneries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading Sceneries...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_tile.cpp" line="85"/>
         <source>Loading Tiles...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading Tiles...</translation>
     </message>
 </context>
 <context>
@@ -3553,85 +3625,152 @@ File: %1
     </message>
 </context>
 <context>
+    <name>WldScene</name>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="127"/>
+        <source>Search User Tiles %1</source>
+        <translation>Search Custom Tiles %1</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="224"/>
+        <source>Search User Sceneries %1</source>
+        <translation>Search Custom Sceneries %1</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="310"/>
+        <source>Search User Paths %1</source>
+        <translation>Search Custom  Paths %1</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="396"/>
+        <source>Search User Levels %1</source>
+        <translation>Search Custom Levels %1</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="487"/>
+        <source>Wrong custom images</source>
+        <translation>Wrong custom image files</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="488"/>
+        <source>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</source>
+        <translation>This level has wrong custom graphic[s] files. 
+You will see &apos;ghosties&apos; or other dummy images instead of your custom graphics. This occurred due to, a bad conversion, say from BMP to GIF. 
+Please, reconvert your images to the valid format and try to reload this level.</translation>
+    </message>
+</context>
+<context>
     <name>WorldEdit</name>
     <message>
         <location filename="../edit_world/world_edit.ui" line="14"/>
         <source>World Map</source>
-        <translation type="unfinished"></translation>
+        <translation>World Map</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="42"/>
+        <source>1/%1 Loading user data</source>
+        <translation>1/%1 Loading custom data</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="50"/>
+        <source>1/%1 Applying Tiles</source>
+        <translation>1/%1 Applying Tiles</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="59"/>
+        <source>2/%1 Applying Sceneries...</source>
+        <translation>2/%1 Applying Sceneries...</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="68"/>
+        <source>3/%1 Applying Paths...</source>
+        <translation>3/%1 Applying Paths...</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="77"/>
+        <source>4/%1 Applying Leves...</source>
+        <translation>4/%1 Applying Leves...</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="87"/>
+        <source>5/%1 Applying Musics...</source>
+        <translation>5/%1 Applying Musics Boxes...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="159"/>
         <source>Untitled %1</source>
-        <translation type="unfinished">Untitled %1</translation>
+        <translation>Untitled %1</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="198"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="197"/>
         <source>Save As</source>
-        <translation type="unfinished">Save As</translation>
+        <translation>Save As</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_files_io.cpp" line="209"/>
+        <source>File save error</source>
+        <translation>File save error</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="210"/>
-        <source>File save error</source>
-        <translation type="unfinished">File save error</translation>
-    </message>
-    <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="211"/>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished">Cannot save file %1:
+        <translation>Cannot save file %1:
 %2.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="248"/>
         <source>Read file error</source>
-        <translation type="unfinished">Read file error</translation>
+        <translation>Read file error</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="249"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished">Cannot read file %1:
+        <translation>Cannot read file %1:
 %2.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="263"/>
         <source>Configurations not loaded</source>
-        <translation type="unfinished">Configurations not loaded</translation>
+        <translation>Configurations not loaded</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="264"/>
         <source>Cannot open level file %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished">Cannot open level file %1:
+        <translation>Cannot open level file %1:
 Object configurations are not loaded
 Please check that the config/SMBX directory exists and contains the *.INI files with the object settings.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="288"/>
         <source>Loading World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Loading World map data</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="288"/>
         <source>Abort</source>
-        <translation type="unfinished">Abort</translation>
+        <translation>Abort</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="289"/>
-        <source>Loading level data</source>
-        <translation type="unfinished">Loading level data</translation>
+        <source>Loading World data</source>
+        <translation>Loading World data</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_files_io.cpp" line="333"/>
+        <source> not saved</source>
+        <translation> not saved</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="334"/>
-        <source> not saved</source>
-        <translation type="unfinished"> not saved</translation>
-    </message>
-    <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="335"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished">&apos;%1&apos; has been modified.
+        <translation>&apos;%1&apos; has been modified.
 Do you want to save your changes?</translation>
     </message>
 </context>
@@ -3709,7 +3848,7 @@ Please check that the config/SMBX directory exists and contains the *.INI files 
     </message>
     <message>
         <source>Please, wait...</source>
-        <translation>Please wait...</translation>
+        <translation type="vanished">Please wait...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="262"/>
@@ -3732,7 +3871,7 @@ Please check that the config/SMBX directory exists and contains the *.INI files 
         <source>Cannot open level file %1:
 because object configurations not loaded
 .Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Cannot open level file %1:
+        <translation type="vanished">Cannot open level file %1:
 Configurations are not loaded.
 Please, check that the &quot;config/SMBX&quot; directory exists and contains the *.INI configuration files.</translation>
     </message>
@@ -3768,7 +3907,7 @@ Please, check that the &quot;config/SMBX&quot; directory exists and contains the
     </message>
     <message>
         <source>5/%1 Applying Waters...</source>
-        <translation>5/%1 Applying Water...</translation>
+        <translation type="vanished">5/%1 Applying Water...</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_draw.cpp" line="97"/>
@@ -3782,16 +3921,16 @@ Please, check that the &quot;config/SMBX&quot; directory exists and contains the
     </message>
     <message>
         <source>SMBX64 (1.3) Level file (*.lvl)</source>
-        <translation>SMBX v1.3 Level file (*.lvl)</translation>
+        <translation type="vanished">SMBX v1.3 Level file (*.lvl)</translation>
     </message>
     <message>
         <source>Write file error</source>
-        <translation>File save error</translation>
+        <translation type="vanished">File save error</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Cannot save file %1:
+        <translation type="vanished">Cannot save file %1:
 %2.</translation>
     </message>
     <message>
@@ -3980,51 +4119,51 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>10</source>
-        <translation>10</translation>
+        <translation type="vanished">10</translation>
     </message>
     <message>
         <source>100</source>
-        <translation>100</translation>
+        <translation type="vanished">100</translation>
     </message>
     <message>
         <source>200</source>
-        <translation>200</translation>
+        <translation type="vanished">200</translation>
     </message>
     <message>
         <source>400</source>
-        <translation>400</translation>
+        <translation type="vanished">400</translation>
     </message>
     <message>
         <source>800</source>
-        <translation>800</translation>
+        <translation type="vanished">800</translation>
     </message>
     <message>
         <source>1000</source>
-        <translation>1000</translation>
+        <translation type="vanished">1000</translation>
     </message>
     <message>
         <source>2000</source>
-        <translation>2000</translation>
+        <translation type="vanished">2000</translation>
     </message>
     <message>
         <source>4000</source>
-        <translation>4000</translation>
+        <translation type="vanished">4000</translation>
     </message>
     <message>
         <source>8000</source>
-        <translation>8000</translation>
+        <translation type="vanished">8000</translation>
     </message>
     <message>
         <source>1up</source>
-        <translation>1up</translation>
+        <translation type="vanished">1up</translation>
     </message>
     <message>
         <source>2up</source>
-        <translation>2up</translation>
+        <translation type="vanished">2up</translation>
     </message>
     <message>
         <source>5up</source>
-        <translation>5up</translation>
+        <translation type="vanished">5up</translation>
     </message>
     <message>
         <location filename="../edit_npc/npcedit.ui" line="1134"/>
@@ -4112,12 +4251,12 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>Write file error</source>
-        <translation>Fiel save error</translation>
+        <translation type="vanished">Fiel save error</translation>
     </message>
     <message>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Cannot save file %1:
+        <translation type="vanished">Cannot save file %1:
 %2.</translation>
     </message>
     <message>
