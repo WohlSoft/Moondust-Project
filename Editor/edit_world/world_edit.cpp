@@ -46,13 +46,13 @@ WorldEdit::WorldEdit(QWidget *parent) :
 
 void WorldEdit::updateScene()
 {
-    //    if(scene->opts.animationEnabled)
-    //        scene->update(
-    //                                     ui->graphicsView->horizontalScrollBar()->value(),
-    //                                     ui->graphicsView->verticalScrollBar()->value(),
-    //                                     ui->graphicsView->width(),
-    //                                     ui->graphicsView->height()
-    //                                     );
+        if(scene->opts.animationEnabled)
+            scene->update(
+                                         ui->graphicsView->horizontalScrollBar()->value(),
+                                         ui->graphicsView->verticalScrollBar()->value(),
+                                         ui->graphicsView->width(),
+                                         ui->graphicsView->height()
+                                         );
 }
 
 void WorldEdit::setAutoUpdateTimer(int ms)

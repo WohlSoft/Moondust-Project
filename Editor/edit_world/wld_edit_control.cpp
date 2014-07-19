@@ -26,7 +26,7 @@
 #include "../ui_world_edit.h"
 
 #include "../file_formats/wld_filedata.h"
-//#include "../level_scene/lvlscene.h"
+//#include "../level_scene/WldScene.h"
 #include "../common_features/logger.h"
 
 #include "../common_features/mainwinconnect.h"
@@ -36,12 +36,12 @@
 
 void WorldEdit::mouseReleaseEvent( QMouseEvent * event )
 {
-    /*
+
     if(scene->PasteFromBuffer)
     {
        changeCursor(0);
        scene->PasteFromBuffer=false;
-    }*/
+    }
     QWidget::mouseReleaseEvent( event );
 }
 
@@ -168,19 +168,19 @@ void WorldEdit::changeCursor(int mode)
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
-        //if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Selecting);
+        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Selecting);
         break;
     case 0:    // Selector
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
-        //if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Selecting);
+        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Selecting);
         break;
     case 1:    // Eriser
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_rubber.png"), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
-        //if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Erasing);
+        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Erasing);
         break;
     case 2:    // place New item
         ui->graphicsView->setInteractive(true);
@@ -188,7 +188,7 @@ void WorldEdit::changeCursor(int mode)
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
         ui->graphicsView->viewport()->setMouseTracking(true);
-        //if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
         break;
     case 3:    // Draw water zones
         ui->graphicsView->setInteractive(true);
@@ -196,20 +196,20 @@ void WorldEdit::changeCursor(int mode)
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
         ui->graphicsView->viewport()->setMouseTracking(true);
-        //if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_DrawSquare);
+        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_DrawSquare);
         break;
     case 4:    // paste from Buffer
-        //scene->clearSelection();
+        scene->clearSelection();
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_pasta.png"), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
-        //if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
+        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_PasteFromClip);
         break;
     case 5:    // Resizing mode
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
-        //if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Resizing);
+        if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Resizing);
         break;
     default:
         break;

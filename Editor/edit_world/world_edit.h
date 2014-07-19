@@ -26,6 +26,7 @@
 #include "../file_formats/wld_filedata.h"
 #include "../data_configs/data_configs.h"
 #include "../main_window/global_settings.h"
+#include "../world_scene/wld_scene.h"
 
 namespace Ui {
 class WorldEdit;
@@ -58,7 +59,7 @@ public:
 
     void ExportToImage_fn();
 
-    //WldScene * scene;
+    WldScene * scene;
 
     bool sceneCreated;
     bool isUntitled;

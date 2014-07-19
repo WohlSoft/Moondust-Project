@@ -16,53 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CUSTOM_DATA_H
-#define CUSTOM_DATA_H
+#ifndef ITEM_PLACING_H
+#define ITEM_PLACING_H
 
-#include "../file_formats/npc_filedata.h"
-#include <QPixmap>
-#include <QBitmap>
+#include <QPoint>
 
-struct UserIMGs
+#include "../file_formats/wld_filedata.h"
+class WldPlacingItems
 {
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
+public:
+    static WorldTiles TileSet;
+    static WorldScenery SceneSet;
+    static WorldPaths PathSet;
+    static WorldLevels LevelSet;
+    static WorldMusic MusicSet;
+
+    static bool fillingMode;
+
+    static int c_offset_x;
+    static int c_offset_y;
+
+    static int itemW;
+    static int itemH;
+
+    static int gridSz;
+    static QPoint gridOffset;
+
 };
 
-struct UserBGOs
-{
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-};
-
-struct UserBlocks
-{
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-};
-
-struct UserNPCs
-{
-    bool withImg;
-    QPixmap image;
-    QPixmap mask;
-    unsigned long id;
-
-    bool withTxt;
-    NPCConfigFile sets;
-    obj_npc merged;
-};
-
-struct UserBGs
-{
-    QPixmap image;
-    QPixmap second_image;
-    unsigned long id;
-    unsigned int q;//0 - only first; 1 - only second; 2 - fitst and seconf
-};
-
-
-#endif // CUSTOM_DATA_H
+#endif // ITEM_PLACING_H
