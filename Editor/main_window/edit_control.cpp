@@ -51,6 +51,15 @@ void MainWindow::on_actionSelect_triggered()
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->DrawMode=false;
     }
+    else
+    if ((activeChildWindow()==3) && (ui->actionSelect->isChecked()))
+    {
+       activeWldEditWin()->changeCursor(0);
+       activeWldEditWin()->scene->EditingMode = 0;
+       activeWldEditWin()->scene->disableMoveItems=false;
+       activeWldEditWin()->scene->EraserEnabled = false;
+       activeWldEditWin()->scene->DrawMode=false;
+    }
 }
 
 
@@ -70,6 +79,15 @@ void MainWindow::on_actionSelectOnly_triggered()
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->DrawMode=false;
     }
+    else
+    if ((activeChildWindow()==3) && (ui->actionSelectOnly->isChecked()))
+    {
+       activeWldEditWin()->changeCursor(0);
+       activeWldEditWin()->scene->EditingMode = 0;
+       activeWldEditWin()->scene->disableMoveItems=true;
+       activeWldEditWin()->scene->EraserEnabled = false;
+       activeWldEditWin()->scene->DrawMode=false;
+    }
 }
 
 
@@ -88,6 +106,16 @@ void MainWindow::on_actionEriser_triggered()
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->DrawMode=false;
     }
+    else
+    if ((activeChildWindow()==3) && (ui->actionEriser->isChecked()))
+    {
+       activeWldEditWin()->changeCursor(1);
+       activeWldEditWin()->scene->EditingMode = 1;
+       activeWldEditWin()->scene->disableMoveItems=false;
+       activeWldEditWin()->scene->EraserEnabled = false;
+       activeWldEditWin()->scene->DrawMode=false;
+    }
+
 }
 
 
@@ -106,6 +134,16 @@ void MainWindow::on_actionHandScroll_triggered()
        activeLvlEditWin()->scene->disableMoveItems=false;
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->DrawMode=false;
+    }
+    else
+    if ((activeChildWindow()==3) && (ui->actionHandScroll->isChecked()))
+    {
+       activeWldEditWin()->scene->clearSelection();
+       activeWldEditWin()->changeCursor(-1);
+       activeWldEditWin()->scene->EditingMode = 0;
+       activeWldEditWin()->scene->disableMoveItems=false;
+       activeWldEditWin()->scene->EraserEnabled = false;
+       activeWldEditWin()->scene->DrawMode=false;
     }
 }
 
@@ -169,3 +207,4 @@ void MainWindow::on_actionDrawSand_triggered()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
+
