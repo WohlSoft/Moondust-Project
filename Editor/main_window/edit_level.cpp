@@ -235,17 +235,6 @@ void MainWindow::on_actionGo_to_Section_triggered()
     }
 }
 
-// //////////////////////////////////////////////////////////////
-
-
-void MainWindow::on_actionGridEn_triggered(bool checked)
-{
-    if (activeChildWindow()==1)
-    {
-       activeLvlEditWin()->scene->grid = checked;
-    }
-}
-
 
 // //////////////////////// Locks Begin //////////////////////////////
 void MainWindow::on_actionLockBlocks_triggered(bool checked)
