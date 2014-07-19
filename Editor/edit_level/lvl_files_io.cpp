@@ -266,6 +266,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
         return false;
     }
     StartLvlData = LvlData; //Save current history for made reset
+    setCurrentFile(fileName);
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
 
