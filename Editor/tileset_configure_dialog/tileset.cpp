@@ -147,6 +147,7 @@ void tileset::mousePressEvent(QMouseEvent *event)
     int objID = pieceID[found];
     piecePixmaps.removeAt(found);
     pieceRects.removeAt(found);
+    pieceID.removeAt(found);
     update();
 
     QByteArray itemData;
@@ -299,11 +300,13 @@ void tileset::removeOuterItems(QRect updatedRect)
 
     QList<QRect> rmRects;
     QList<QPixmap> rmPixm;
+    QList<int> rmId;
 
     for(int i = 0; i < pieceRects.size(); ++i){
         if(!((updatedRect+QMargins(1,1,1,1)).contains(pieceRects[i],true))){
             rmRects << pieceRects[i];
             rmPixm << piecePixmaps[i];
+            rmId << pieceID[i];
         }
     }
 
@@ -311,6 +314,7 @@ void tileset::removeOuterItems(QRect updatedRect)
         int l = pieceRects.indexOf(rmRects[i]);
         pieceRects.removeAt(l);
         piecePixmaps.removeAt(l);
+        pieceID.removeAt(l);
     }
 }
 int tileset::cols() const
