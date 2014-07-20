@@ -121,6 +121,13 @@ private slots:
 
     void on_DirectRight_clicked();
 
+    void on_En_NoShell_clicked(bool checked);
+    void on_NoShell_stateChanged(int checked);
+
+    void on_En_Name_clicked(bool checked);
+
+    void on_Name_textEdited(const QString &arg1);
+
 private:
     Ui::npcedit *ui;
 

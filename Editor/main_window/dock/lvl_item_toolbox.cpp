@@ -347,14 +347,16 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 
                 tmpI = edit->scene->getNPCimg(npc.id);
 
-                item = new QListWidgetItem( QString("npc-%1").arg(npc.id) );
+                item = new QListWidgetItem( npc.withTxt ?
+                                    ((npc.sets.en_name)? npc.merged.name : QString("npc-%1").arg(npc.id))
+                                     : QString("npc-%1").arg(npc.id)
+                                                );
                 item->setIcon( QIcon( tmpI ) );
                 item->setData(3, QString::number(npc.id) );
                 item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
                 ui->NPCItemsList->addItem( item );
             }
-
         }
 
     }

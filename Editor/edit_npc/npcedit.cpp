@@ -59,4 +59,3 @@ void npcedit::closeEvent(QCloseEvent *event)
         event->ignore();
     }
 }
-

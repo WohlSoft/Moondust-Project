@@ -324,6 +324,7 @@ void npcedit::setDataBoxes()
     else
         ui->TurnCliff->setChecked(StartNPCData.cliffturn);
 
+    //Extended
 
     ui->En_NoHammer->setChecked(StartNPCData.en_nohammer);
     ui->NoHammer->setEnabled(StartNPCData.en_nohammer);
@@ -334,6 +335,27 @@ void npcedit::setDataBoxes()
     }
     else
         ui->NoHammer->setChecked(StartNPCData.nohammer);
+
+    ui->En_NoShell->setChecked(StartNPCData.en_noshell);
+    ui->NoShell->setEnabled(StartNPCData.en_noshell);
+    if(!StartNPCData.en_noshell)
+    {
+        ui->NoShell->setChecked(DefaultNPCData.noshell);
+        NpcData.noshell=DefaultNPCData.noshell;
+    }
+    else
+        ui->NoShell->setChecked(StartNPCData.noshell);
+
+
+    ui->En_Name->setChecked(StartNPCData.en_name);
+    ui->Name->setEnabled(StartNPCData.en_name);
+    if(!StartNPCData.en_name)
+    {
+        ui->Name->setText(DefaultNPCData.name);
+        NpcData.name=DefaultNPCData.name;
+    }
+    else
+        ui->Name->setText(StartNPCData.name);
 
 }
 
@@ -367,6 +389,8 @@ void npcedit::setDefaultData(unsigned long npc_id)
     DefaultNPCData.en_framestyle=false;
     DefaultNPCData.en_noiceball=false;
     DefaultNPCData.en_nohammer=false;
+    DefaultNPCData.en_noshell=false;
+    DefaultNPCData.en_name=false;
 
     if((npc_id==0)||(npc_id > (unsigned long)pConfigs->main_npc.size()))
     {
@@ -397,6 +421,7 @@ void npcedit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.framestyle=0;
         DefaultNPCData.noiceball=0;
         DefaultNPCData.nohammer=0;
+        DefaultNPCData.name="";
     }
     else
     {
@@ -452,7 +477,10 @@ void npcedit::setDefaultData(unsigned long npc_id)
         DefaultNPCData.framespeed=8;
         DefaultNPCData.framestyle=pConfigs->main_npc[j].framestyle;
         DefaultNPCData.noiceball=(int)(!pConfigs->main_npc[j].freeze_by_iceball);
+        //Extended
         DefaultNPCData.nohammer=(int)(!pConfigs->main_npc[j].kill_hammer);
+        DefaultNPCData.noshell=(int)(!pConfigs->main_npc[j].kill_by_npc);
+        DefaultNPCData.name=pConfigs->main_npc[j].name;
     }
 }
 

@@ -497,8 +497,6 @@ void npcedit::on_En_NoHammer_clicked(bool checked)
     documentWasModified();
 }
 
-
-
 ////////////////////////////////////////////////////////////////
 void npcedit::on_NoHammer_stateChanged(int arg1)
 {
@@ -506,6 +504,43 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
     NpcData.nohammer=arg1;
 }
 ////////////////////////////////////////////////////////////////
+
+
+
+void npcedit::on_En_NoShell_clicked(bool checked)
+{
+    ui->NoShell->setEnabled(checked);
+    NpcData.en_noshell=checked;
+
+    documentWasModified();
+}
+
+void npcedit::on_NoShell_stateChanged(int checked)
+{
+    documentWasModified();
+    NpcData.noshell=checked;
+}
+////////////////////////////////////////////////////////////////
+
+
+
+void npcedit::on_En_Name_clicked(bool checked)
+{
+    ui->Name->setEnabled(checked);
+    NpcData.en_name=checked;
+
+    documentWasModified();
+}
+
+
+void npcedit::on_Name_textEdited(const QString &arg1)
+{
+    documentWasModified();
+    NpcData.name=arg1;
+}
+
+
+
 
 
 
