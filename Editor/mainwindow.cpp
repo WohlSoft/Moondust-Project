@@ -159,3 +159,4 @@ void MainWindow::on_actionConfigure_Tilesets_triggered()
     tilesetConfDia->exec();
     delete tilesetConfDia;
 }
+

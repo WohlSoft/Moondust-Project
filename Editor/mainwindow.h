@@ -502,6 +502,8 @@ private slots:
 
     void on_actionConfigure_Tilesets_triggered();
 
+    void on_WLD_TilesList_itemClicked(QListWidgetItem *item);
+
 private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects

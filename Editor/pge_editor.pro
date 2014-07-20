@@ -148,7 +148,8 @@ SOURCES += main.cpp\
     world_scene/wld_items.cpp \
     world_scene/wld_usergfx.cpp \
     world_scene/wld_control.cpp \
-    world_scene/wld_item_placing.cpp
+    world_scene/wld_item_placing.cpp \
+    main_window/dock/wld_item_toolbox.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
