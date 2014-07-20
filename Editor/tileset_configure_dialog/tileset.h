@@ -40,7 +40,7 @@ public:
     int cols() const;
     int getBaseSize() const;
     TilesetType type() const;
-
+    bool editMode() const;
 
     struct SimpleTilesetItem{
         int row,col,id;
@@ -58,14 +58,15 @@ public:
 
 
 
-
 signals:
+    void clickedItem(tileset::TilesetType type, int id);
 
 public slots:
     void setRows(int rows);
     void setCols(int cols);
     void setBaseSize(int value);
     void setType(const TilesetType &type);
+    void setEditMode(bool editMode);
 
 protected:
     void paintEvent(QPaintEvent* ev);
@@ -93,6 +94,7 @@ private:
     int m_baseSize;
     dataconfigs *m_conf;
     TilesetType m_type;
+    bool m_editMode;
 
     void updateSize();
     void removeOuterItems(QRect updatedRect);
