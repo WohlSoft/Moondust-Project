@@ -56,7 +56,8 @@ void tileset::paintEvent(QPaintEvent *ev)
     }
 
     if(pieceRects.isEmpty()){
-        painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items to this box!\nRightclick to remove!"));
+        if(highlightedRect.isEmpty())
+            painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items to this box!\nRightclick to remove!"));
     }else{
         for (int i = 0; i < pieceRects.size(); ++i) {
             painter.drawPixmap(QRect(pieceRects[i].x(), pieceRects[i].y(), piecePixmaps[i].width(), piecePixmaps[i].height()), piecePixmaps[i]);
@@ -76,16 +77,13 @@ void tileset::dragEnterEvent(QDragEnterEvent *event)
 
 void tileset::dragLeaveEvent(QDragLeaveEvent *event)
 {
-    QRect updateRect = highlightedRect;
     highlightedRect = QRect();
-    update(updateRect);
+    update();
     event->accept();
 }
 
 void tileset::dragMoveEvent(QDragMoveEvent *event)
 {
-    QRect updateRect = highlightedRect.united(targetSquare(event->pos()));
-
     if (event->mimeData()->hasFormat(getMimeType())
         && findPiece(targetSquare(event->pos())) == -1) {
 
@@ -97,7 +95,7 @@ void tileset::dragMoveEvent(QDragMoveEvent *event)
         event->ignore();
     }
 
-    update(updateRect);
+    update();
 }
 
 void tileset::dropEvent(QDropEvent *event)
