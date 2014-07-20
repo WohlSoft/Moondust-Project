@@ -25,7 +25,7 @@
 tileset::tileset(dataconfigs* conf, TilesetType type, QWidget *parent, int baseSize, int rows, int cols) :
     QWidget(parent)
 {
-    setAcceptDrops(true);
+    setEditMode(true);
     m_baseSize = baseSize;
     m_rows = rows;
     m_cols = cols;
@@ -131,9 +131,12 @@ void tileset::dropEvent(QDropEvent *event)
 void tileset::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::RightButton){
-        piecePixmaps.removeAt(findPiece(targetSquare(event->pos())));
-        pieceRects.removeAt(findPiece(targetSquare(event->pos())));
-        update();
+        if(m_editMode){
+            piecePixmaps.removeAt(findPiece(targetSquare(event->pos())));
+            pieceRects.removeAt(findPiece(targetSquare(event->pos())));
+            update();
+            return;
+        }
         return;
     }
 
@@ -142,6 +145,11 @@ void tileset::mousePressEvent(QMouseEvent *event)
 
     if (found == -1)
         return;
+
+    if (!m_editMode){
+        emit clickedItem(m_type, pieceID[found]);
+        return;
+    }
 
     QPixmap pixmap = piecePixmaps[found];
     int objID = pieceID[found];
@@ -232,6 +240,17 @@ QString tileset::getMimeType()
     }
     return QString("image/x-pge-piece");
 }
+bool tileset::editMode() const
+{
+    return m_editMode;
+}
+
+void tileset::setEditMode(bool editMode)
+{
+    m_editMode = editMode;
+    setAcceptDrops(editMode);
+}
+
 tileset::TilesetType tileset::type() const
 {
     return m_type;
