@@ -56,7 +56,8 @@ void tileset::paintEvent(QPaintEvent *ev)
     }
 
     if(pieceRects.isEmpty()){
-        painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items to this box!\nRightclick to remove!"));
+        if(highlightedRect.isEmpty())
+            painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items to this box!\nRightclick to remove!"));
     }else{
         for (int i = 0; i < pieceRects.size(); ++i) {
             painter.drawPixmap(QRect(pieceRects[i].x(), pieceRects[i].y(), piecePixmaps[i].width(), piecePixmaps[i].height()), piecePixmaps[i]);
@@ -76,16 +77,13 @@ void tileset::dragEnterEvent(QDragEnterEvent *event)
 
 void tileset::dragLeaveEvent(QDragLeaveEvent *event)
 {
-    QRect updateRect = highlightedRect;
     highlightedRect = QRect();
-    update(updateRect);
+    update();
     event->accept();
 }
 
 void tileset::dragMoveEvent(QDragMoveEvent *event)
 {
-    QRect updateRect = highlightedRect.united(targetSquare(event->pos()));
-
     if (event->mimeData()->hasFormat(getMimeType())
         && findPiece(targetSquare(event->pos())) == -1) {
 
@@ -97,7 +95,7 @@ void tileset::dragMoveEvent(QDragMoveEvent *event)
         event->ignore();
     }
 
-    update(updateRect);
+    update();
 }
 
 void tileset::dropEvent(QDropEvent *event)
@@ -149,6 +147,7 @@ void tileset::mousePressEvent(QMouseEvent *event)
     int objID = pieceID[found];
     piecePixmaps.removeAt(found);
     pieceRects.removeAt(found);
+    pieceID.removeAt(found);
     update();
 
     QByteArray itemData;
@@ -301,11 +300,13 @@ void tileset::removeOuterItems(QRect updatedRect)
 
     QList<QRect> rmRects;
     QList<QPixmap> rmPixm;
+    QList<int> rmId;
 
     for(int i = 0; i < pieceRects.size(); ++i){
         if(!((updatedRect+QMargins(1,1,1,1)).contains(pieceRects[i],true))){
             rmRects << pieceRects[i];
             rmPixm << piecePixmaps[i];
+            rmId << pieceID[i];
         }
     }
 
@@ -313,6 +314,7 @@ void tileset::removeOuterItems(QRect updatedRect)
         int l = pieceRects.indexOf(rmRects[i]);
         pieceRects.removeAt(l);
         piecePixmaps.removeAt(l);
+        pieceID.removeAt(l);
     }
 }
 int tileset::cols() const
