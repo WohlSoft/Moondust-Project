@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1511</width>
-    <height>2042</height>
+    <width>1502</width>
+    <height>2301</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -105,8 +105,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1511</width>
-     <height>26</height>
+     <width>1502</width>
+     <height>18</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1083,7 +1083,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>141</height>
+     <height>149</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -1106,217 +1106,73 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QScrollArea" name="Tiles">
+    <widget class="QWidget" name="Tiles">
      <property name="toolTip">
       <string/>
      </property>
      <property name="accessibleName">
       <string/>
      </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="widgetResizable">
+     <property name="widgetResizable" stdset="0">
       <bool>true</bool>
      </property>
      <attribute name="title">
       <string>Tiles</string>
      </attribute>
-     <widget class="QListView" name="TilesItemBox">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>344</width>
-        <height>290</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"> Item {
-   Image {
-       id: pic
-   }
-   Text {
-       id: label
-       anchors.horizontalCenter: pic.horizontalCenter
-       anchors.top: pic.bottom
-       anchors.topMargin: 5
-   }
-}</string>
-      </property>
-      <property name="dragEnabled">
-       <bool>true</bool>
-      </property>
-      <property name="resizeMode">
-       <enum>QListView::Adjust</enum>
-      </property>
-      <property name="gridSize">
-       <size>
-        <width>128</width>
-        <height>128</height>
-       </size>
-      </property>
-      <property name="viewMode">
-       <enum>QListView::IconMode</enum>
-      </property>
-      <property name="modelColumn">
+     <layout class="QGridLayout" name="TilesG" columnstretch="0,90" columnminimumwidth="0,0">
+      <property name="leftMargin">
        <number>0</number>
       </property>
-      <property name="uniformItemSizes">
-       <bool>true</bool>
+      <property name="topMargin">
+       <number>0</number>
       </property>
-      <property name="batchSize">
-       <number>128</number>
+      <property name="rightMargin">
+       <number>0</number>
       </property>
-     </widget>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="WLD_Tiles_grp"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="WLD_Tiles_grp_label">
+        <property name="text">
+         <string>Group:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QListWidget" name="WLD_TilesList"/>
+      </item>
+     </layout>
     </widget>
-    <widget class="QScrollArea" name="Scenery">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="widgetResizable">
+    <widget class="QWidget" name="Scenery">
+     <property name="widgetResizable" stdset="0">
       <bool>true</bool>
      </property>
      <attribute name="title">
       <string>Scenery</string>
      </attribute>
-     <widget class="QWidget" name="SceneryScroll">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>323</width>
-        <height>290</height>
-       </rect>
-      </property>
-     </widget>
     </widget>
-    <widget class="QScrollArea" name="Level">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="widgetResizable">
+    <widget class="QWidget" name="Level">
+     <property name="widgetResizable" stdset="0">
       <bool>true</bool>
      </property>
      <attribute name="title">
       <string>Levels</string>
      </attribute>
-     <widget class="QWidget" name="WLDLevelScroll">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>323</width>
-        <height>290</height>
-       </rect>
-      </property>
-     </widget>
     </widget>
-    <widget class="QScrollArea" name="WldMusicBox">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="widgetResizable">
+    <widget class="QWidget" name="WldMusicBox">
+     <property name="widgetResizable" stdset="0">
       <bool>true</bool>
      </property>
      <attribute name="title">
       <string>Music Box</string>
      </attribute>
-     <widget class="QWidget" name="WLDMusicScroll">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>323</width>
-        <height>290</height>
-       </rect>
-      </property>
-      <widget class="QGroupBox" name="groupBox_6">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>141</width>
-         <height>131</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>World music</string>
-       </property>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>121</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Set point</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QComboBox" name="comboBox_3">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>70</y>
-          <width>121</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <item>
-         <property name="text">
-          <string>0 - [silence]</string>
-         </property>
-        </item>
-       </widget>
-       <widget class="QLabel" name="label_12">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>50</y>
-          <width>121</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Music:</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>100</y>
-          <width>121</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Play</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </widget>
-     </widget>
     </widget>
    </widget>
   </widget>
@@ -2540,8 +2396,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>327</width>
-          <height>1462</height>
+          <width>245</width>
+          <height>1330</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3717,8 +3573,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>251</width>
-          <height>436</height>
+          <width>270</width>
+          <height>617</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3900,8 +3756,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>199</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3982,8 +3838,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>196</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4076,8 +3932,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>260</width>
-          <height>475</height>
+          <width>222</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4374,8 +4230,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>193</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4490,8 +4346,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>193</width>
+          <height>114</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4588,8 +4444,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>389</height>
+          <width>108</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4726,7 +4582,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
      <item row="0" column="0">
       <widget class="QToolBox" name="FindToolbox">
        <property name="currentIndex">
-        <number>2</number>
+        <number>0</number>
        </property>
        <property name="tabSpacing">
         <number>0</number>
@@ -4736,14 +4592,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>271</width>
-          <height>572</height>
+          <width>265</width>
+          <height>695</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Block</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_10">
+        <layout class="QGridLayout" name="gridLayout_10" columnstretch="0,0,0,0,90">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -4765,19 +4621,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <string>Reset Search Fields</string>
            </property>
           </widget>
-         </item>
-         <item row="11" column="4">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item row="4" column="0" alignment="Qt::AlignHCenter">
           <widget class="QCheckBox" name="Find_Check_LayerBlock"/>
@@ -4977,14 +4820,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>344</width>
-          <height>572</height>
+          <width>265</width>
+          <height>695</height>
          </rect>
         </property>
         <attribute name="label">
          <string>BGO</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_11">
+        <layout class="QGridLayout" name="gridLayout_11" columnstretch="0,0,0,0,90">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -5030,7 +4873,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </spacer>
          </item>
-         <item row="7" column="0" colspan="8">
+         <item row="7" column="0" colspan="5">
           <widget class="QPushButton" name="FindStartBGO">
            <property name="text">
             <string>Search BGO</string>
@@ -5044,14 +4887,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="1" column="0" colspan="8">
+         <item row="1" column="0" colspan="5">
           <widget class="Line" name="line_10">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
-         <item row="6" column="0" colspan="8">
+         <item row="6" column="0" colspan="5">
           <widget class="QPushButton" name="Find_Button_ResetBGO">
            <property name="text">
             <string>Reset Search Fields</string>
@@ -5061,25 +4904,12 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="4" column="0" alignment="Qt::AlignHCenter">
           <widget class="QCheckBox" name="Find_Check_PriorityBGO"/>
          </item>
-         <item row="2" column="3" colspan="5">
+         <item row="2" column="3" colspan="2">
           <widget class="QPushButton" name="Find_Button_TypeBGO">
            <property name="text">
             <string>[empty]</string>
            </property>
           </widget>
-         </item>
-         <item row="5" column="3" colspan="5">
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>213</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item row="0" column="2">
           <widget class="QLabel" name="label_32">
@@ -5109,7 +4939,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="4" column="3" colspan="5">
+         <item row="4" column="3" colspan="2">
           <widget class="QSpinBox" name="Find_Spin_PriorityBGO">
            <property name="enabled">
             <bool>false</bool>
@@ -5125,7 +4955,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </property>
           </widget>
          </item>
-         <item row="3" column="3" colspan="5">
+         <item row="3" column="3" colspan="2">
           <widget class="QComboBox" name="Find_Combo_LayerBGO">
            <property name="enabled">
             <bool>false</bool>
@@ -5139,8 +4969,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>352</width>
-          <height>572</height>
+          <width>265</width>
+          <height>695</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5198,19 +5028,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <string>[empty]</string>
            </property>
           </widget>
-         </item>
-         <item row="14" column="4" colspan="2">
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>213</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item row="0" column="0" colspan="2">
           <widget class="QLabel" name="label_33">
