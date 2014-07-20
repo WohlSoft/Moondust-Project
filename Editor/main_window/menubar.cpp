@@ -93,8 +93,9 @@ void MainWindow::updateMenus(bool force)
     ui->actionLVLToolBox->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
     ui->actionSection_Settings->setVisible( (WinType==1) );
-    ui->actionLevelProp->setEnabled( (WinType==1) );
-    ui->actionLevelEvents->setEnabled( (WinType==1) );
+    ui->actionLevelProp->setVisible( (WinType==1) );
+    ui->actionLayersBox->setVisible( (WinType==1) );
+    ui->actionLevelEvents->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
     ui->actionLVLSearchBox->setVisible( (WinType==1) );
 
@@ -134,7 +135,7 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionGo_to_Section->setEnabled( (WinType==1) );
 
-    ui->actionGridEn->setEnabled( (WinType==1) );
+    ui->actionGridEn->setEnabled( (WinType==1)|| (WinType==3) );
 
     if(WinType==1)
     {
@@ -184,6 +185,8 @@ void MainWindow::updateMenus(bool force)
             ui->actionLockWaters->setChecked(activeLvlEditWin()->scene->lock_water);
             ui->actionLockDoors->setChecked(activeLvlEditWin()->scene->lock_door);
 
+            ui->actionGridEn->setChecked(activeLvlEditWin()->scene->grid);
+
             GlobalSettings::LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
             GlobalSettings::LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
             ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
@@ -193,6 +196,29 @@ void MainWindow::updateMenus(bool force)
         }
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
+    }
+    else
+    if(WinType==3)
+    {
+        if( configs.check() )
+        {
+            WriteToLog(QtCriticalMsg, "*.INI Configs not loaded");
+            return;
+        }
+
+        ui->actionSelect->trigger();
+
+        if(activeWldEditWin()->sceneCreated)
+        {
+            ui->actionGridEn->setChecked(activeWldEditWin()->scene->grid);
+
+            GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
+            GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
+        }
+
+        ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
+        ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
+
     }
     else
     {

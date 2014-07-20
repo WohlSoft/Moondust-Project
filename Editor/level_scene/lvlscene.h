@@ -42,7 +42,7 @@
 
 #include "../common_features/logger.h"
 
-#include "resizer/item_resizer.h"
+#include "../common_features/resizer/item_resizer.h"
 
 #include "../data_configs/custom_data.h"
 #include "../main_window/global_settings.h"

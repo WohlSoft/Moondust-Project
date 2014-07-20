@@ -96,6 +96,11 @@ void MainWindow::on_actionReset_position_triggered()
     {
        activeLvlEditWin()->ResetPosition();
     }
+    else
+    if (activeChildWindow()==3)
+    {
+       activeWldEditWin()->ResetPosition();
+    }
 }
 
 
@@ -113,6 +118,17 @@ void MainWindow::on_actionAnimation_triggered(bool checked)
         else
             activeLvlEditWin()->scene->stopAnimation();
     }
+    else
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->opts.animationEnabled = GlobalSettings::LvlOpts.animationEnabled;
+        if(GlobalSettings::LvlOpts.animationEnabled)
+        {
+            activeWldEditWin()->scene->startAnimation();
+        }
+        else
+            activeWldEditWin()->scene->stopAnimation();
+    }
 }
 
 
@@ -123,9 +139,29 @@ void MainWindow::on_actionCollisions_triggered(bool checked)
     {
         activeLvlEditWin()->scene->opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
     }
+    else
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->opts.collisionsEnabled = GlobalSettings::LvlOpts.collisionsEnabled;
+    }
 
 }
 
+// //////////////////////////////////////////////////////////////
+
+
+void MainWindow::on_actionGridEn_triggered(bool checked)
+{
+    if (activeChildWindow()==1)
+    {
+       activeLvlEditWin()->scene->grid = checked;
+    }
+    else
+    if (activeChildWindow()==3)
+    {
+       activeWldEditWin()->scene->grid = checked;
+    }
+}
 
 // //History Manager
 void MainWindow::on_actionUndo_triggered()

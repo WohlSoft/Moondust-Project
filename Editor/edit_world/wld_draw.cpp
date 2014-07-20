@@ -34,90 +34,75 @@
 
 bool WorldEdit::DrawObjects(QProgressDialog &progress)
 {
-//    int DataSize = progress.maximum();
-//    int TotalSteps = 6;
+    //int DataSize = progress.maximum();
+    int TotalSteps = 5;
 
-//        if(!progress.wasCanceled())
+        if(!progress.wasCanceled())
 
-//            progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
+            progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
-//    qApp->processEvents();
-//    scene->loadUserData(progress);
+    qApp->processEvents();
+    scene->loadUserData(progress);
 
-//        if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-//        if(!progress.wasCanceled())
-//            progress.setLabelText(tr("1/%1 Applying Backgrounds").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("1/%1 Applying Tiles").arg(TotalSteps));
 
-//    progress.setValue(progress.value()+1);
-//    qApp->processEvents();
-//    scene->makeSectionBG(progress);
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
+    scene->setTiles(progress);
 
-//        if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-//        if(!progress.wasCanceled())
-//            progress.setLabelText(tr("2/%1 Applying BGOs...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("2/%1 Applying Sceneries...").arg(TotalSteps));
 
-//    progress.setValue(progress.value()+1);
-//    qApp->processEvents();
-//    scene->setBGO(progress);
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
+    scene->setSceneries(progress);
 
-//        if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-//        if(!progress.wasCanceled())
-//            progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("3/%1 Applying Paths...").arg(TotalSteps));
 
-//    progress.setValue(progress.value()+1);
-//    qApp->processEvents();
-//    scene->setBlocks(progress);
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
+    scene->setPaths(progress);
 
-//        if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-//        if(!progress.wasCanceled())
-//            progress.setLabelText(tr("4/%1 Applying NPCs...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("4/%1 Applying Leves...").arg(TotalSteps));
 
-//    progress.setValue(progress.value()+1);
-//    progress.setValue(progress.value()+1);
-//    qApp->processEvents();
-//    scene->setNPC(progress);
+    progress.setValue(progress.value()+1);
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
+    scene->setLevels(progress);
 
-//        if(progress.wasCanceled()) return false;
+        if(progress.wasCanceled()) return false;
 
-//        if(!progress.wasCanceled())
-//            progress.setLabelText(tr("5/%1 Applying Water...").arg(TotalSteps));
+        if(!progress.wasCanceled())
+            progress.setLabelText(tr("5/%1 Applying Musics...").arg(TotalSteps));
 
-//    progress.setValue(progress.value()+1);
-//    qApp->processEvents();
-//    scene->setWaters(progress);
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
 
-//        if(progress.wasCanceled()) return false;
+    scene->setMusicBoxes(progress);
 
-//        if(!progress.wasCanceled())
-//            progress.setLabelText(tr("6/%1 Applying Doors...").arg(TotalSteps));
+        if(progress.wasCanceled()) return false;
 
+    if(scene->opts.animationEnabled)
+        scene->startAnimation(); //Apply block animation
 
-//    qApp->processEvents();
-//    scene->setDoors(progress);
-
-//        if(progress.wasCanceled()) return false;
-
-//    scene->setPlayerPoints();
-
-//    scene->drawSpace();
-
-
-//    if(scene->opts.animationEnabled)
-//        scene->startBlockAnimation(); //Apply block animation
-
-//    scene->applyLayersVisible();
-
-//    if(!sceneCreated)
-//    {
-//        ui->graphicsView->setScene(scene);
-//        sceneCreated = true;
-//    }
-//    if(!progress.wasCanceled())
-//        progress.setValue(DataSize);
+    if(!sceneCreated)
+    {
+        ui->graphicsView->setScene(scene);
+        sceneCreated = true;
+    }
+    if(!progress.wasCanceled())
+        progress.setValue(progress.maximum());
     return true;
 }
 

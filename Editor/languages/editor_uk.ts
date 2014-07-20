@@ -480,6 +480,24 @@
     </message>
 </context>
 <context>
+    <name>ItemLevel</name>
+    <message>
+        <location filename="../world_scene/item_level.cpp" line="79"/>
+        <source>Copy</source>
+        <translation type="unfinished">Копіювати</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_level.cpp" line="81"/>
+        <source>Cut</source>
+        <translation type="unfinished">Вирізати</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_level.cpp" line="84"/>
+        <source>Remove</source>
+        <translation type="unfinished">Видалити</translation>
+    </message>
+</context>
+<context>
     <name>ItemMsgBox</name>
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="22"/>
@@ -583,6 +601,42 @@ Message limits: max line lenth is 28 characters</source>
     </message>
 </context>
 <context>
+    <name>ItemPath</name>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="77"/>
+        <source>Copy</source>
+        <translation type="unfinished">Копіювати</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="79"/>
+        <source>Cut</source>
+        <translation type="unfinished">Вирізати</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="82"/>
+        <source>Remove</source>
+        <translation type="unfinished">Видалити</translation>
+    </message>
+</context>
+<context>
+    <name>ItemScene</name>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="77"/>
+        <source>Copy</source>
+        <translation type="unfinished">Копіювати</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="79"/>
+        <source>Cut</source>
+        <translation type="unfinished">Вирізати</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="82"/>
+        <source>Remove</source>
+        <translation type="unfinished">Видалити</translation>
+    </message>
+</context>
+<context>
     <name>ItemSelectDialog</name>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="14"/>
@@ -669,6 +723,24 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../item_select_dialog/itemselectdialog.cpp" line="78"/>
         <source>Coins</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemTile</name>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="77"/>
+        <source>Copy</source>
+        <translation type="unfinished">Копіювати</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="79"/>
+        <source>Cut</source>
+        <translation type="unfinished">Вирізати</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="82"/>
+        <source>Remove</source>
+        <translation type="unfinished">Видалити</translation>
     </message>
 </context>
 <context>
@@ -3394,10 +3466,75 @@ File: %1
     </message>
 </context>
 <context>
+    <name>WldScene</name>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="127"/>
+        <source>Search User Tiles %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="224"/>
+        <source>Search User Sceneries %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="310"/>
+        <source>Search User Paths %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="396"/>
+        <source>Search User Levels %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="487"/>
+        <source>Wrong custom images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="488"/>
+        <source>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>WorldEdit</name>
     <message>
         <location filename="../edit_world/world_edit.ui" line="14"/>
         <source>World Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="42"/>
+        <source>1/%1 Loading user data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="50"/>
+        <source>1/%1 Applying Tiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="59"/>
+        <source>2/%1 Applying Sceneries...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="68"/>
+        <source>3/%1 Applying Paths...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="77"/>
+        <source>4/%1 Applying Leves...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="87"/>
+        <source>5/%1 Applying Musics...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3406,17 +3543,17 @@ File: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="198"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="197"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="210"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="209"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="211"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="210"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
@@ -3456,16 +3593,16 @@ because object configurations are not loaded
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="289"/>
-        <source>Loading level data</source>
+        <source>Loading World data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="334"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="333"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="335"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="334"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>

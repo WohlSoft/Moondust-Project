@@ -27,7 +27,7 @@
 #include "../ui_world_edit.h"
 
 #include "../file_formats/file_formats.h"
-//#include "../level_scene/lvlscene.h"
+#include "../world_scene/wld_scene.h"
 
 //#include "saveimage.h"
 
@@ -162,22 +162,21 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     WldData.untitled = true;
     StartWldData = WldData;
 
-    ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
+    ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
 
-//    scene = new LvlScene(configs, WldData);
-//    scene->opts = options;
+    scene = new WldScene(configs, WldData);
+    scene->opts = options;
 
-//    scene->InitSection(0);
-//    scene->setPlayerPoints();
-//    scene->drawSpace();
-//    scene->buildAnimators();
+    //scene->InitSection(0);
+    //scene->drawSpace();
+    scene->buildAnimators();
 
-//    if(options.animationEnabled) scene->startBlockAnimation();
+    if(options.animationEnabled) scene->startAnimation();
     setAutoUpdateTimer(31);
 
     if(!sceneCreated)
     {
-        //ui->graphicsView->setScene(scene);
+        ui->graphicsView->setScene(scene);
         sceneCreated = true;
     }
 
@@ -242,6 +241,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 {
     QFile file(fileName);
     WldData = FileData;
+    setCurrentFile(fileName);
     WldData.modified = false;
     WldData.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -253,7 +253,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     }
     StartWldData = WldData; //Save current history for made reset
 
-    ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
+    ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
 
     //Check if data configs exists
     if( configs.check() )
@@ -276,9 +276,9 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    //scene = new WldScene(configs, WldData);
+    scene = new WldScene(configs, WldData);
 
-    //scene->opts = options;
+    scene->opts = options;
 
     int DataSize=0;
 
@@ -286,19 +286,19 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     DataSize += 6;
 
     QProgressDialog progress(tr("Loading World map data"), tr("Abort"), 0, DataSize, this);
-         progress.setWindowTitle(tr("Loading level data"));
+         progress.setWindowTitle(tr("Loading World data"));
          progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
          progress.setFixedSize(progress.size());
          progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-         progress.setMinimumDuration(500);
+         progress.setMinimumDuration(0);
 
-//    if(! DrawObjects(progress) )
-//    {
-//        WldData.modified = false;
-//        this->close();
-//        return false;
-//    }
+    if(! DrawObjects(progress) )
+    {
+        WldData.modified = false;
+        this->close();
+        return false;
+    }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
@@ -312,7 +312,6 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     setAutoUpdateTimer(31);
 
-    setCurrentFile(fileName);
     WldData.modified = false;
     WldData.untitled = false;
 
@@ -324,7 +323,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
 void WorldEdit::documentWasModified()
 {
-    //WldData.modified = true;
+    WldData.modified = true;
 }
 
 bool WorldEdit::maybeSave()
@@ -369,28 +368,41 @@ void WorldEdit::closeEvent(QCloseEvent *event)
         //MainWinConnect::pMainWin->setMusicButton(false);
         //MainWinConnect::pMainWin->setMusic(false);
 
-//        scene->clear();
-//        WriteToLog(QtDebugMsg, "!<-Cleared->!");
-//        scene->uBGOs.clear();
-//        scene->uBGs.clear();
-//        scene->uBlocks.clear();
-//        scene->uNPCs.clear();
+        scene->clear();
+        WriteToLog(QtDebugMsg, "!<-Cleared->!");
+        scene->uTiles.clear();
+        scene->uScenes.clear();
+        scene->uPaths.clear();
+        scene->uLevels.clear();
 
-//        WriteToLog(QtDebugMsg, "!<-Delete animators->!");
-//        while(! scene->animates_BGO.isEmpty() )
-//        {
-//            SimpleAnimator* tmp = scene->animates_BGO.first();
-//            scene->animates_BGO.pop_front();
-//            if(tmp!=NULL) delete tmp;
-//        }
-//        while(! scene->animates_Blocks.isEmpty() )
-//        {
-//            SimpleAnimator* tmp = scene->animates_Blocks.first();
-//            scene->animates_Blocks.pop_front();
-//            if(tmp!=NULL) delete tmp;
-//        }
-//        WriteToLog(QtDebugMsg, "!<-Delete scene->!");
-//        delete scene;
+        WriteToLog(QtDebugMsg, "!<-Delete animators->!");
+        while(! scene->animates_Tiles.isEmpty() )
+        {
+            SimpleAnimator* tmp = scene->animates_Tiles.first();
+            scene->animates_Tiles.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
+        while(! scene->animates_Scenery.isEmpty() )
+        {
+            SimpleAnimator* tmp = scene->animates_Scenery.first();
+            scene->animates_Scenery.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
+        while(! scene->animates_Paths.isEmpty() )
+        {
+            SimpleAnimator* tmp = scene->animates_Paths.first();
+            scene->animates_Paths.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
+        while(! scene->animates_Levels.isEmpty() )
+        {
+            SimpleAnimator* tmp = scene->animates_Levels.first();
+            scene->animates_Levels.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
+
+        WriteToLog(QtDebugMsg, "!<-Delete scene->!");
+        delete scene;
         sceneCreated=false;
         WriteToLog(QtDebugMsg, "!<-Deleted->!");
         //ui->graphicsView->cl

@@ -251,22 +251,22 @@
     <message>
         <location filename="../data_configs/configstatus.cpp" line="115"/>
         <source>World map Tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Карта мира: Плитки (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="127"/>
         <source>World map Sceneries (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Карта мира: Декорации (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="140"/>
         <source>World map Paths (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Карта мира: Пути (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="153"/>
         <source>World map Levels (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Карта мира: Уровни (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.cpp" line="167"/>
@@ -517,6 +517,24 @@
     </message>
 </context>
 <context>
+    <name>ItemLevel</name>
+    <message>
+        <location filename="../world_scene/item_level.cpp" line="79"/>
+        <source>Copy</source>
+        <translation>Копировать</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_level.cpp" line="81"/>
+        <source>Cut</source>
+        <translation>Вырезать</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_level.cpp" line="84"/>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
     <name>ItemMsgBox</name>
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="22"/>
@@ -626,6 +644,42 @@ Message limits: max line lenth is 28 characters</source>
     </message>
 </context>
 <context>
+    <name>ItemPath</name>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="77"/>
+        <source>Copy</source>
+        <translation>Копировать</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="79"/>
+        <source>Cut</source>
+        <translation>Вырезать</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_path.cpp" line="82"/>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>ItemScene</name>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="77"/>
+        <source>Copy</source>
+        <translation>Копировать</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="79"/>
+        <source>Cut</source>
+        <translation>Вырезать</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_scene.cpp" line="82"/>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
     <name>ItemSelectDialog</name>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="14"/>
@@ -712,6 +766,24 @@ Message limits: max line lenth is 28 characters</source>
         <location filename="../item_select_dialog/itemselectdialog.cpp" line="78"/>
         <source>Coins</source>
         <translation>Монетки</translation>
+    </message>
+</context>
+<context>
+    <name>ItemTile</name>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="77"/>
+        <source>Copy</source>
+        <translation>Копировать</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="79"/>
+        <source>Cut</source>
+        <translation>Вырезать</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/item_tile.cpp" line="82"/>
+        <source>Remove</source>
+        <translation>Удалить</translation>
     </message>
 </context>
 <context>
@@ -2218,7 +2290,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="6882"/>
         <source>Configure Tilesets</source>
-        <translation type="unfinished"></translation>
+        <translation>Настроить наборы плиток</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -3182,7 +3254,7 @@ File: %1
     <message>
         <location filename="../main_window/files_io.cpp" line="101"/>
         <source>World map file loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл карты мира загружен</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="120"/>
@@ -3483,22 +3555,22 @@ Do you want to continue?</source>
     <message>
         <location filename="../data_configs/conf_wld_level.cpp" line="87"/>
         <source>Loading Level images...</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка изображений уровней...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_path.cpp" line="84"/>
         <source>Loading Paths images...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зfгрузка изображений путей...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_scene.cpp" line="85"/>
         <source>Loading Sceneries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка Декораций...</translation>
     </message>
     <message>
         <location filename="../data_configs/conf_wld_tile.cpp" line="85"/>
         <source>Loading Tiles...</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка Плиток...</translation>
     </message>
 </context>
 <context>
@@ -3592,85 +3664,152 @@ File: %1
     </message>
 </context>
 <context>
+    <name>WldScene</name>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="127"/>
+        <source>Search User Tiles %1</source>
+        <translation>Поиск польз. Плиток %1</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="224"/>
+        <source>Search User Sceneries %1</source>
+        <translation>Поиск польз. Декораций %1</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="310"/>
+        <source>Search User Paths %1</source>
+        <translation>Поиск польз. Путей %1</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="396"/>
+        <source>Search User Levels %1</source>
+        <translation>Поиск польз. Уровней %1</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="487"/>
+        <source>Wrong custom images</source>
+        <translation>Плохой формат пользовательских изображений</translation>
+    </message>
+    <message>
+        <location filename="../world_scene/wld_usergfx.cpp" line="488"/>
+        <source>This level have a wrong custom graphics files.
+You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
+Please, reconvert your images to valid format and try to reload this level.</source>
+        <translation>Этот уровень имеет неправильные файлы пользовательской графики
+Вы будете видеть &apos;призраков&apos; или другое заменяющее изображение вместо пользовательской графики объектов. Это может быть потому что, например, был сохранён BMP-файл под расширением GIF.
+Пожалуйста, переконвертируйте изображения в правильный формат и перезагрузите этот уровень.</translation>
+    </message>
+</context>
+<context>
     <name>WorldEdit</name>
     <message>
         <location filename="../edit_world/world_edit.ui" line="14"/>
         <source>World Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Карта Мира</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="42"/>
+        <source>1/%1 Loading user data</source>
+        <translation>1/%1 Загрузка польз. данных</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="50"/>
+        <source>1/%1 Applying Tiles</source>
+        <translation>1/%1 Применение Плиток</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="59"/>
+        <source>2/%1 Applying Sceneries...</source>
+        <translation>2/%1 Применение декораций...</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="68"/>
+        <source>3/%1 Applying Paths...</source>
+        <translation>3/%1 Применение Путей...</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="77"/>
+        <source>4/%1 Applying Leves...</source>
+        <translation>4/%1 Применение Уровней...</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_draw.cpp" line="87"/>
+        <source>5/%1 Applying Musics...</source>
+        <translation>5/%1 Применение Муз. Шкатулок...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="159"/>
         <source>Untitled %1</source>
-        <translation type="unfinished">Безымянный %1</translation>
+        <translation>Безымянный %1</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="198"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="197"/>
         <source>Save As</source>
-        <translation type="unfinished">Сохранить как</translation>
+        <translation>Сохранить как</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_files_io.cpp" line="209"/>
+        <source>File save error</source>
+        <translation>Ошибка сохранения файла</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="210"/>
-        <source>File save error</source>
-        <translation type="unfinished">Ошибка сохранения файла</translation>
-    </message>
-    <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="211"/>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished">Невозможно сохранить файл %1:
+        <translation>Невозможно сохранить файл %1:
 %2.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="248"/>
         <source>Read file error</source>
-        <translation type="unfinished">Ошибка чтения файла</translation>
+        <translation>Ошибка чтения файла</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="249"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished">Невозможно прочитать файл %1:
+        <translation>Невозможно прочитать файл %1:
 %2.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="263"/>
         <source>Configurations not loaded</source>
-        <translation type="unfinished">Конфигурации не загружены</translation>
+        <translation>Конфигурации не загружены</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="264"/>
         <source>Cannot open level file %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished">Невозможно открыть файл %1:
+        <translation>Невозможно открыть файл %1:
 Посколькоу конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="288"/>
         <source>Loading World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка данных Карты Мира</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="288"/>
         <source>Abort</source>
-        <translation type="unfinished">Прервать</translation>
+        <translation>Прервать</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="289"/>
-        <source>Loading level data</source>
-        <translation type="unfinished">Загрузка данных уровня</translation>
+        <source>Loading World data</source>
+        <translation>Загрузка данных Мира</translation>
+    </message>
+    <message>
+        <location filename="../edit_world/wld_files_io.cpp" line="333"/>
+        <source> not saved</source>
+        <translation> не сохранён</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="334"/>
-        <source> not saved</source>
-        <translation type="unfinished"> не сохранён</translation>
-    </message>
-    <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="335"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished">&apos;%1&apos; был изменён.
+        <translation>&apos;%1&apos; был изменён.
 Вы хотите сохранить изменения?</translation>
     </message>
 </context>

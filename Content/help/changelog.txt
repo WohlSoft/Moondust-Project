@@ -1,3 +1,7 @@
+Editor 0.2.0
+- Added support of World Maps
+- Added customizing item tilesets
+
 Editor 0.1.1
 - Animation rendering has been improved and optimized
 - Added animation start/stop toolbar button

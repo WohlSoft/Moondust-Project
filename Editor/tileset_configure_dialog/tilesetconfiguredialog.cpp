@@ -24,7 +24,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
     ui(new Ui::TilesetConfigureDialog)
 {
     ui->setupUi(this);
-    ui->tilesetLayoutWidgetContainer->addWidget(m_tileset = (new tileset(conf,tileset::TILESET_BLOCK,0,64,3,3)));
+    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,tileset::TILESET_BLOCK,0,64,3,3)));
 
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
