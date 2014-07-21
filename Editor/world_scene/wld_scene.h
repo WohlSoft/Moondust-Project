@@ -193,7 +193,7 @@ public:
         //custom data
         long x, y;
     };
-
+    void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
 
     //history modifiers
     void historyBack();

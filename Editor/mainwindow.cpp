@@ -122,7 +122,14 @@ void MainWindow::refreshHistoryButtons()
             ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
             ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
         }
+    }else if(activeChildWindow()==3){
+        if(activeWldEditWin()->sceneCreated)
+        {
+            ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
+            ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
+        }
     }
+
 }
 
 void MainWindow::on_actionContents_triggered()
