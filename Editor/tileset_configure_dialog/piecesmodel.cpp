@@ -57,6 +57,22 @@ void PiecesModel::addPiece(const int &index)
         pixmapId.insert(pixmaps.size(), m_conf->main_block[index].id);
     }
     else
+    if(m_type==LEVELPIECE_BGO)
+    {
+        pixmapNames.insert(pixmaps.size(), m_conf->main_bgo[index].name);
+        pixmaps.insert(pixmaps.size(), m_conf->main_bgo[index].image.copy(0,0,m_conf->main_bgo[index].image.width(),
+                                                                             qRound(qreal(m_conf->main_bgo[index].image.height()) / m_conf->main_bgo[index].frames)));
+        pixmapId.insert(pixmaps.size(), m_conf->main_bgo[index].id);
+    }
+    else
+    if(m_type==LEVELPIECE_NPC)
+    {
+        pixmapNames.insert(pixmaps.size(), m_conf->main_npc[index].name);
+        pixmaps.insert(pixmaps.size(), m_conf->main_npc[index].image.copy(0,0,m_conf->main_npc[index].image.width(),
+                                                                             qRound(qreal(m_conf->main_npc[index].image.height()) / m_conf->main_npc[index].frames)));
+        pixmapId.insert(pixmaps.size(), m_conf->main_npc[index].id);
+    }
+    else
     if(m_type==WORLDPIECE_TILE)
     {
         pixmapNames.insert(pixmaps.size(), QString("dummy"));
