@@ -94,6 +94,8 @@ void MainWindow::setUiDefults()
     //Apply objects into tools
     setLevelSectionData();
     setItemBoxes();
+    setWldItemBoxes();
+
     setSoundList();
 
     //MainWindow Geometry;

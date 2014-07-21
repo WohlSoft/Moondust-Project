@@ -1146,7 +1146,35 @@
        </widget>
       </item>
       <item row="1" column="0" colspan="2">
-       <widget class="QListWidget" name="WLD_TilesList"/>
+       <widget class="QListWidget" name="WLD_TilesList">
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::InternalMove</enum>
+        </property>
+        <property name="defaultDropAction">
+         <enum>Qt::MoveAction</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="movement">
+         <enum>QListView::Snap</enum>
+        </property>
+        <property name="layoutMode">
+         <enum>QListView::Batched</enum>
+        </property>
+        <property name="spacing">
+         <number>1</number>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -3756,8 +3784,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>199</width>
-          <height>115</height>
+          <width>270</width>
+          <height>617</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3838,8 +3866,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>196</width>
-          <height>93</height>
+          <width>270</width>
+          <height>617</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3932,8 +3960,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>222</width>
-          <height>461</height>
+          <width>270</width>
+          <height>617</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4230,8 +4258,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
-          <height>159</height>
+          <width>270</width>
+          <height>617</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4346,8 +4374,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
-          <height>114</height>
+          <width>270</width>
+          <height>617</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4444,8 +4472,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>108</width>
-          <height>70</height>
+          <width>270</width>
+          <height>617</height>
          </rect>
         </property>
         <attribute name="label">
