@@ -171,6 +171,43 @@ public:
     //void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     //void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
 
+    // ////////////HistoryManager///////////////////
+    struct HistoryOperation{
+        enum HistoryType{
+            WORLDHISTORY_REMOVE = 0,               //Removed from map
+            WORLDHISTORY_PLACE,                    //Placed new
+            WORLDHISTORY_MOVE                     //moved
+        };
+        HistoryType type;
+        //used most of Operations
+        WorldData data;
+        WorldData data_mod;
+        //subtype (if needed)
+        int subtype;
+        //misc
+        QVariant extraData;
+    };
+    struct CallbackData{
+        QGraphicsItem* item;
+        HistoryOperation* hist;
+        //custom data
+        long x, y;
+    };
+
+
+    //history modifiers
+    void historyBack();
+    void historyForward();
+    void cleanupRedoElements();
+    //history information
+    int getHistroyIndex();
+    bool canUndo();
+    bool canRedo();
+    //miscellaneous
+    //QPoint calcTopLeftCorner(LevelData* data);
+    QString getHistoryText(HistoryOperation operation);
+    //QString getHistorySettingText(SettingSubType subType);
+
     void openProps();
 
 
@@ -224,7 +261,7 @@ private:
 
     // ////////////////HistoryManager///////////////////
     int historyIndex;
-    //QList<HistoryOperation> operationList;
+    QList<HistoryOperation> operationList;
     // /////////////////////////////////////////////////
 
 };
