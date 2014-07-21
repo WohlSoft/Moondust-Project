@@ -44,11 +44,11 @@ public:
     bool editMode() const;
 
     struct SimpleTilesetItem{
-        int row,col,id;
+        unsigned int row,col,id;
     };
 
     struct SimpleTileset{
-        int rows, cols, baseSize;
+        unsigned int rows, cols, baseSize;
         TilesetType type;
         QList<SimpleTilesetItem> items;
     };
@@ -57,7 +57,7 @@ public:
     void loadSimpleTileset(const SimpleTileset &tileset);
 
     static void SaveSimpleTileset(const QString &path, const SimpleTileset &tileset);
-
+    static bool OpenSimpleTileset(const QString &path, SimpleTileset &tileset);
 
 signals:
     void clickedItem(tileset::TilesetType type, long id);

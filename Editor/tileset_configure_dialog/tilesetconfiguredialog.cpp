@@ -116,3 +116,18 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
 
     tileset::SaveSimpleTileset(fileName,m_tileset->toSimpleTileset());
 }
+
+void TilesetConfigureDialog::on_OpenTileset_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Tileset"),
+                                                    QApplication::applicationDirPath() + "/" +  "configs/SMBX/",QString("PGE Tileset (*.ini)"));
+    if (fileName.isEmpty())
+        return;
+
+    tileset::SimpleTileset simple;
+    if(!tileset::OpenSimpleTileset(fileName,simple)){
+        QMessageBox::warning(this, tr("Failed to load tileset!"), tr("Failed to load tileset!\nData may be corrupted!"));
+    }else{
+        m_tileset->loadSimpleTileset(simple);
+    }
+}

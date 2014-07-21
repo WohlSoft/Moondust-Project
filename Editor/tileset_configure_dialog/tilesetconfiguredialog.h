@@ -45,6 +45,8 @@ private slots:
     void setUpTileset(int type);
     void on_SaveTileset_clicked();
 
+    void on_OpenTileset_clicked();
+
 private:
     Ui::TilesetConfigureDialog *ui;
     tileset* m_tileset;
