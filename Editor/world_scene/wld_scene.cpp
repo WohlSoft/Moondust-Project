@@ -90,6 +90,11 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
 
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
+    long padding=100000;
+
+    QGraphicsRectItem * bigRect = addRect(-padding, -padding, padding*2, padding*2, QPen(Qt::transparent), QBrush(Qt::transparent));
+    bigRect->setZValue(-10000000000);
+
 }
 
 WldScene::~WldScene()

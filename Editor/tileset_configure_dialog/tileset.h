@@ -59,7 +59,7 @@ public:
 
 
 signals:
-    void clickedItem(tileset::TilesetType type, int id);
+    void clickedItem(tileset::TilesetType type, long id);
 
 public slots:
     void setRows(int rows);
@@ -85,7 +85,7 @@ private:
 
     QList<QPixmap> piecePixmaps;
     QList<QRect> pieceRects;
-    QList<int> pieceID;
+    QList<long> pieceID;
     QRect highlightedRect;
     int inPlace;
 

@@ -499,3 +499,87 @@ badfile:    //If file format not corrects
 return FileData;
 }
 
+
+//*********************************************************
+//****************WRITE FILE FORMAT************************
+//*********************************************************
+
+
+QString FileFormats::WriteSMBX64WldFile(WorldData FileData)
+{
+    QString TextData;
+    int i;
+
+    TextData += SMBX64::IntS(64);                     //Format version 64
+    TextData += SMBX64::qStrS(FileData.EpisodeTitle);   //Episode title
+    TextData += SMBX64::BoolS(FileData.nocharacter1);
+    TextData += SMBX64::BoolS(FileData.nocharacter2);
+    TextData += SMBX64::BoolS(FileData.nocharacter3);
+    TextData += SMBX64::BoolS(FileData.nocharacter4);
+    TextData += SMBX64::BoolS(FileData.nocharacter5);
+    TextData += SMBX64::qStrS(FileData.autolevel);
+    TextData += SMBX64::BoolS(FileData.noworldmap);
+    TextData += SMBX64::BoolS(FileData.restartlevel);
+    TextData += SMBX64::IntS(FileData.stars);
+    TextData += SMBX64::qStrS(FileData.author1);
+    TextData += SMBX64::qStrS(FileData.author2);
+    TextData += SMBX64::qStrS(FileData.author3);
+    TextData += SMBX64::qStrS(FileData.author4);
+    TextData += SMBX64::qStrS(FileData.author5);
+
+    for(i=0;i<FileData.tiles.size();i++)
+    {
+        TextData += SMBX64::IntS(FileData.tiles[i].x);
+        TextData += SMBX64::IntS(FileData.tiles[i].y);
+        TextData += SMBX64::IntS(FileData.tiles[i].id);
+    }
+    TextData += "\"next\"\n";//Separator
+
+    for(i=0;i<FileData.scenery.size();i++)
+    {
+        TextData += SMBX64::IntS(FileData.scenery[i].x);
+        TextData += SMBX64::IntS(FileData.scenery[i].y);
+        TextData += SMBX64::IntS(FileData.scenery[i].id);
+    }
+    TextData += "\"next\"\n";//Separator
+
+    for(i=0;i<FileData.paths.size();i++)
+    {
+        TextData += SMBX64::IntS(FileData.paths[i].x);
+        TextData += SMBX64::IntS(FileData.paths[i].y);
+        TextData += SMBX64::IntS(FileData.paths[i].id);
+    }
+    TextData += "\"next\"\n";//Separator
+
+    for(i=0;i<FileData.levels.size();i++)
+    {
+        TextData += SMBX64::IntS(FileData.levels[i].x);
+        TextData += SMBX64::IntS(FileData.levels[i].y);
+        TextData += SMBX64::IntS(FileData.levels[i].id);
+        TextData += SMBX64::qStrS(FileData.levels[i].lvlfile);
+        TextData += SMBX64::qStrS(FileData.levels[i].title);
+        TextData += SMBX64::IntS(FileData.levels[i].top_exit);
+        TextData += SMBX64::IntS(FileData.levels[i].left_exit);
+        TextData += SMBX64::IntS(FileData.levels[i].bottom_exit);
+        TextData += SMBX64::IntS(FileData.levels[i].right_exit);
+        TextData += SMBX64::IntS(FileData.levels[i].entertowarp);
+        TextData += SMBX64::BoolS(FileData.levels[i].alwaysVisible);
+        TextData += SMBX64::BoolS(FileData.levels[i].pathbg);
+        TextData += SMBX64::BoolS(FileData.levels[i].gamestart);
+        TextData += SMBX64::IntS(FileData.levels[i].gotox);
+        TextData += SMBX64::IntS(FileData.levels[i].gotoy);
+        TextData += SMBX64::BoolS(FileData.levels[i].bigpathbg);
+    }
+    TextData += "\"next\"\n";//Separator
+
+    for(i=0;i<FileData.music.size();i++)
+    {
+        TextData += SMBX64::IntS(FileData.music[i].x);
+        TextData += SMBX64::IntS(FileData.music[i].y);
+        TextData += SMBX64::IntS(FileData.music[i].id);
+    }
+    TextData += "\"next\"\n";//Separator
+
+
+    return TextData;
+}
