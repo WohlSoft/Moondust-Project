@@ -36,9 +36,10 @@ class PiecesModel : public QAbstractListModel
 
 public:
     enum PieceType{
-        PIECE_BLOCK = 0,
-        PIECE_BGO = 1,
-        PIECE_NPC = 2
+        LEVELPIECE_BLOCK = 0,
+        LEVELPIECE_BGO,
+        LEVELPIECE_NPC,
+        WORLDPIECE_TILE
     };
     explicit PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize = 32, QObject *parent = 0);
 

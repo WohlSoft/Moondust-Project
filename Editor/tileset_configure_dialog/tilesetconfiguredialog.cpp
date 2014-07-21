@@ -24,15 +24,15 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
     ui(new Ui::TilesetConfigureDialog)
 {
     ui->setupUi(this);
-    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,tileset::TILESET_BLOCK,0,64,3,3)));
+    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,tileset::WORLDTILESET_TILE,0,64,3,3)));
 
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
     ui->listView->setDragEnabled(true);
-    ui->listView->setModel(m_model = (new PiecesModel(conf, PiecesModel::PIECE_BLOCK)));
+    ui->listView->setModel(m_model = (new PiecesModel(conf, PiecesModel::WORLDPIECE_TILE)));
 
     m_conf = conf;
-    for(int i = 0; i < conf->main_block.size(); ++i){
+    for(int i = 0; i < conf->main_wtiles.size(); ++i){
         m_model->addPiece(i);
     }
 

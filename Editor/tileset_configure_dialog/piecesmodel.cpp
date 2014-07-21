@@ -48,19 +48,32 @@ QVariant PiecesModel::data(const QModelIndex &index, int role) const
 void PiecesModel::addPiece(const int &index)
 {
     beginInsertRows(QModelIndex(), pixmaps.size(), pixmaps.size());
-    pixmapNames.insert(pixmaps.size(), m_conf->main_block[index].name);
-    pixmaps.insert(pixmaps.size(), m_conf->main_block[index].image.copy(0,0,m_conf->main_block[index].image.width(),
-                                                                        qRound(qreal(m_conf->main_block[index].image.height())/ m_conf->main_block[index].frames) ));
-    pixmapId.insert(pixmaps.size(), m_conf->main_block[index].id);
+
+    if(m_type==LEVELPIECE_BLOCK)
+    {
+        pixmapNames.insert(pixmaps.size(), m_conf->main_block[index].name);
+        pixmaps.insert(pixmaps.size(), m_conf->main_block[index].image.copy(0,0,m_conf->main_block[index].image.width(),
+                                                                            qRound(qreal(m_conf->main_block[index].image.height())/ m_conf->main_block[index].frames) ));
+        pixmapId.insert(pixmaps.size(), m_conf->main_block[index].id);
+    }
+    else
+    if(m_type==WORLDPIECE_TILE)
+    {
+        pixmapNames.insert(pixmaps.size(), QString("dummy"));
+        pixmaps.insert(pixmaps.size(), m_conf->main_wtiles[index].image.copy(0,0,m_conf->main_wtiles[index].image.width(),
+                                                                             qRound(qreal(m_conf->main_block[index].image.height()) / m_conf->main_wtiles[index].frames)));
+        pixmapId.insert(pixmaps.size(), m_conf->main_wtiles[index].id);
+    }
     endInsertRows();
 }
 
 QString PiecesModel::getMimeType() const
 {
     switch (m_type) {
-    case PIECE_BLOCK: return QString("text/x-pge-piece-block");
-    case PIECE_BGO: return QString("text/x-pge-piece-bgo");
-    case PIECE_NPC: return QString("text/x-pge-piece-npc");
+    case LEVELPIECE_BLOCK: return QString("text/x-pge-piece-block");
+    case LEVELPIECE_BGO: return QString("text/x-pge-piece-bgo");
+    case LEVELPIECE_NPC: return QString("text/x-pge-piece-npc");
+    case WORLDPIECE_TILE: return QString("text/x-pge-piece-tile");
     default:
         break;
     }
