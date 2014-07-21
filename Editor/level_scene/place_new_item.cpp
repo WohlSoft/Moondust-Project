@@ -175,7 +175,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             cursor->setData(25, "CURSOR");
             cursor->setZValue(7000);
             cursor->setOpacity( 0.8 );
-            cursor->setVisible(true);
+            cursor->setVisible(false);
             cursor->setEnabled(true);
             break;
         }
@@ -265,7 +265,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
+        cursor->setVisible(false);
         cursor->setEnabled(true);
 
         placingItem=PLC_BGO;
@@ -375,7 +375,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
+        cursor->setVisible(false);
         cursor->setEnabled(true);
 
         break;
@@ -407,7 +407,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
+        cursor->setVisible(false);
         cursor->setEnabled(true);
 
         break;
