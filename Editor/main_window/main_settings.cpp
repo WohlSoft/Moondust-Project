@@ -50,9 +50,12 @@ QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
 int GlobalSettings::lastWinType=0;
 
 QString LvlMusPlay::currentCustomMusic;
-long LvlMusPlay::currentMusicId;
+long LvlMusPlay::currentMusicId=0;
+long LvlMusPlay::currentWldMusicId=0;
+long LvlMusPlay::currentSpcMusicId=0;
 bool LvlMusPlay::musicButtonChecked;
 bool LvlMusPlay::musicForceReset=false;
+int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
 
 void MainWindow::setDefaults()
 {
