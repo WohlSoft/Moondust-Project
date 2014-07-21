@@ -150,6 +150,8 @@ void dataconfigs::loadWorldPaths(QProgressDialog *prgs)
             sPath.animated = (pathset.value("animated", "0").toString()=="1");
             sPath.frames = pathset.value("frames", "1").toInt();
             sPath.framespeed = pathset.value("frame-speed", "125").toInt();
+            sPath.row = pathset.value("row", "0").toInt();
+            sPath.col = pathset.value("col", "0").toInt();
             sPath.id = i;
             main_wpaths.push_back(sPath);
 
