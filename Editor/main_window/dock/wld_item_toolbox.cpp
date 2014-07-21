@@ -72,7 +72,12 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     WriteToLog(QtDebugMsg, "WorldTools -> Clear current");
 
-    util::memclear(ui->WLD_TilesList);
+    util::memclear(ui->WLD_SceneList);
+
+    util::memclear(ui->WLD_LevelList);
+
+    util::memclear(ui->WLD_MusicList);
+
     //util::memclear(ui->BlockItemsList);
     //util::memclear(ui->NPCItemsList);
 
@@ -86,129 +91,90 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
-    //set custom Block items from loaded level
-//    if((ui->BlockCatList->currentText()==customWLabel)&&(setCat)&&(setGrp))
+//    foreach(obj_w_tile tileItem, configs.main_wtiles)
 //    {
-//        if(activeChildWindow()==1)
-//        {
-//            long j=0;
-//            bool isIndex=false;
-//            leveledit * edit = activeLvlEditWin();
-//            foreach(UserBlocks block, edit->scene->uBlocks)
-//            {
+//            if(tileItem.animated)
+//                tmpI = tileItem.image.copy(0,0,
+//                            tileItem.image.width(),
+//                            (int)round(tileItem.image.height() / tileItem.frames));
+//            else
+//                tmpI = tileItem.image;
 
-//                //Check for index
-//                if(block.id < (unsigned long)configs.index_blocks.size())
-//                {
-//                    if(block.id == configs.main_block[configs.index_blocks[block.id].i].id)
-//                    {
-//                        j = configs.index_blocks[block.id].i;
-//                        isIndex=true;
-//                    }
-//                }
-//                //In index is false, fetch array
-//                if(!isIndex)
-//                {
-//                    for(int i=0; i < configs.main_block.size(); i++)
-//                    {
-//                        if(configs.main_block[i].id == block.id)
-//                        {
-//                            j = 0;
-//                            isIndex=true;
-//                            break;
-//                        }
-//                    }
-//                    if(!isIndex) j=0;
-//                }
+//            item = new QListWidgetItem();
+//            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+//            item->setText( NULL );
+//            item->setData(3, QString::number(tileItem.id) );
+//            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
-
-//                if(configs.main_block[j].animated)
-//                    tmpI = block.image.copy(0,0,
-//                                block.image.width(),
-//                                (int)round(block.image.height() / configs.main_block[j].frames));
-//                else
-//                    tmpI = block.image;
-
-//                item = new QListWidgetItem( QString("block-%1").arg(block.id) );
-//                item->setIcon( QIcon( tmpI ) );
-//                item->setData(3, QString::number(block.id) );
-//                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-
-//                ui->BlockItemsList->addItem( item );
-//            }
-
-//        }
-
+//            ui->WLD_TilesList->addItem( item );
 //    }
-//    else
-    //set Block item box from global configs
-    foreach(obj_w_tile tileItem, configs.main_wtiles)
+
+    foreach(obj_w_scenery sceneItem, configs.main_wscene)
     {
-        //Add Group
-//        found = false;
-//        if(tmpList.size()!=0)
-//            foreach(QString grp, tmpGrpList)
-//            {
-//                if(tileItem.group.isEmpty())
-//                {found=true; break;}//Skip empty values
-//                if(tileItem.group==grp)
-//                {found=true; break;}
-//            }
-//        if(!found) tmpGrpList.push_back(tileItem.group);
-
-//        //Add category
-//        found = false;
-//        if(tmpList.size()!=0)
-//            foreach(QString cat, tmpList)
-//            {
-//                if(tileItem.category==cat)
-//                {found=true; break;}
-//                if((tileItem.group!=grp_blocks)&&(grp_blocks!=allWLabel))
-//                {found=true; break;}
-//            }
-//        if(!found) tmpList.push_back(tileItem.category);
-
-//        if(
-//                ((tileItem.group==grp_blocks)||(grp_blocks==allWLabel)||(grp_blocks==""))&&
-//                ((tileItem.category==cat_blocks)||(cat_blocks==allWLabel)))
-//        {
-            if(tileItem.animated)
-                tmpI = tileItem.image.copy(0,0,
-                            tileItem.image.width(),
-                            (int)round(tileItem.image.height() / tileItem.frames));
+            if(sceneItem.animated)
+                tmpI = sceneItem.image.copy(0,0,
+                            sceneItem.image.width(),
+                            (int)round(sceneItem.image.height() / sceneItem.frames));
             else
-                tmpI = tileItem.image;
+                tmpI = sceneItem.image;
 
             item = new QListWidgetItem();
             item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
             item->setText( NULL );
-            item->setData(3, QString::number(tileItem.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            item->setData(3, QString::number(sceneItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
-            ui->WLD_TilesList->addItem( item );
-
-        //}
-
+            ui->WLD_SceneList->addItem( item );
     }
-//    tmpList.sort();
-//    tmpList.push_front(customWLabel);
-//    tmpList.push_front(allWLabel);
-//    tmpGrpList.sort();
-//    tmpGrpList.push_front(allWLabel);
 
-//    //apply group list
-//    if(!setGrp)
-//    {
-//        ui->BlockGroupList->clear();
-//        ui->BlockGroupList->addItems(tmpGrpList);
-//    }
+    //    foreach(obj_w_tile pathItem, configs.main_wtiles)
+    //    {
+    //            if(tileItem.animated)
+    //                tmpI = tileItem.image.copy(0,0,
+    //                            tileItem.image.width(),
+    //                            (int)round(tileItem.image.height() / tileItem.frames));
+    //            else
+    //                tmpI = tileItem.image;
 
-//    //apply category list
-//    if(!setCat)
-//    {
-//        ui->BlockCatList->clear();
-//        ui->BlockCatList->addItems(tmpList);
-//    }
+    //            item = new QListWidgetItem();
+    //            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+    //            item->setText( NULL );
+    //            item->setData(3, QString::number(tileItem.id) );
+    //            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+    //            ui->WLD_TilesList->addItem( item );
+    //    }
+
+    foreach(obj_w_level levelItem, configs.main_wlevels)
+    {
+            if(levelItem.animated)
+                tmpI = levelItem.image.copy(0,0,
+                            levelItem.image.width(),
+                            (int)round(levelItem.image.height() / levelItem.frames));
+            else
+                tmpI = levelItem.image;
+
+            item = new QListWidgetItem();
+            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            item->setText( NULL );
+            item->setData(3, QString::number(levelItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->WLD_LevelList->addItem( item );
+    }
+
+    foreach(obj_music musicItem, configs.main_music_wld)
+    {
+            item = new QListWidgetItem();
+            item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            item->setText( musicItem.name );
+            item->setData(3, QString::number(musicItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->WLD_MusicList->addItem( item );
+    }
+
+
 
     tmpList.clear();
     tmpGrpList.clear();
@@ -222,13 +188,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
 
 
-
-
-
-
-
-
-void MainWindow::on_WLD_TilesList_itemClicked(QListWidgetItem *item)
+void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
 {
     resetEditmodeButtons();
    //placeTile
@@ -252,6 +212,109 @@ void MainWindow::on_WLD_TilesList_itemClicked(QListWidgetItem *item)
 
        activeWldEditWin()->setFocus();
     }
-
 }
 
+
+void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
+{
+    resetEditmodeButtons();
+   //placeScenery
+
+    if ((activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
+    {
+       activeWldEditWin()->scene->clearSelection();
+       activeWldEditWin()->changeCursor(2);
+       activeWldEditWin()->scene->EditingMode = 2;
+       activeWldEditWin()->scene->disableMoveItems=false;
+       activeWldEditWin()->scene->DrawMode=true;
+       activeWldEditWin()->scene->EraserEnabled = false;
+
+       WldPlacingItems::fillingMode = false;
+
+       activeWldEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
+
+//       LvlItemProps(1,FileFormats::dummyLvlBlock(),
+//                                 LvlPlacingItems::bgoSet,
+//                                 FileFormats::dummyLvlNpc(), true);
+
+       activeWldEditWin()->setFocus();
+    }
+}
+
+void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
+{
+    resetEditmodeButtons();
+   //placePath
+
+    if ((activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
+    {
+       activeWldEditWin()->scene->clearSelection();
+       activeWldEditWin()->changeCursor(2);
+       activeWldEditWin()->scene->EditingMode = 2;
+       activeWldEditWin()->scene->disableMoveItems=false;
+       activeWldEditWin()->scene->DrawMode=true;
+       activeWldEditWin()->scene->EraserEnabled = false;
+
+       WldPlacingItems::fillingMode = false;
+
+       activeWldEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
+
+//       LvlItemProps(1,FileFormats::dummyLvlBlock(),
+//                                 LvlPlacingItems::bgoSet,
+//                                 FileFormats::dummyLvlNpc(), true);
+
+       activeWldEditWin()->setFocus();
+    }
+}
+
+void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
+{
+    resetEditmodeButtons();
+   //placeLevel
+
+    if ((activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
+    {
+       activeWldEditWin()->scene->clearSelection();
+       activeWldEditWin()->changeCursor(2);
+       activeWldEditWin()->scene->EditingMode = 2;
+       activeWldEditWin()->scene->disableMoveItems=false;
+       activeWldEditWin()->scene->DrawMode=true;
+       activeWldEditWin()->scene->EraserEnabled = false;
+
+       WldPlacingItems::fillingMode = false;
+
+       activeWldEditWin()->scene->setItemPlacer(3, item->data(3).toInt() );
+
+//       LvlItemProps(1,FileFormats::dummyLvlBlock(),
+//                                 LvlPlacingItems::bgoSet,
+//                                 FileFormats::dummyLvlNpc(), true);
+
+       activeWldEditWin()->setFocus();
+    }
+}
+
+void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
+{
+    resetEditmodeButtons();
+   //placeLevel
+
+    if ((activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))
+    {
+       activeWldEditWin()->scene->clearSelection();
+       activeWldEditWin()->changeCursor(2);
+       activeWldEditWin()->scene->EditingMode = 2;
+       activeWldEditWin()->scene->disableMoveItems=false;
+       activeWldEditWin()->scene->DrawMode=true;
+       activeWldEditWin()->scene->EraserEnabled = false;
+
+       WldPlacingItems::fillingMode = false;
+
+       activeWldEditWin()->scene->setItemPlacer(4, item->data(3).toInt() );
+
+//       LvlItemProps(1,FileFormats::dummyLvlBlock(),
+//                                 LvlPlacingItems::bgoSet,
+//                                 FileFormats::dummyLvlNpc(), true);
+
+       activeWldEditWin()->setFocus();
+    }
+}

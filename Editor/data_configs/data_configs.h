@@ -218,6 +218,8 @@ struct obj_w_tile{
         QString mask_n;
         QPixmap image;
         QPixmap mask;
+        unsigned long row;
+        unsigned long col;
 
     QString group;
     QString category;
@@ -258,6 +260,8 @@ struct obj_w_path{
         QString mask_n;
         QPixmap image;
         QPixmap mask;
+        unsigned long row;
+        unsigned long col;
     QString group;
     QString category;
     bool animated;
