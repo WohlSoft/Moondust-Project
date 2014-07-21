@@ -186,6 +186,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
             ui->WLD_TilesList->addItem( item );
+
         //}
 
     }
