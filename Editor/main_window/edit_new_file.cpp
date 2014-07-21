@@ -64,5 +64,14 @@ void MainWindow::on_actionNewLevel_triggered()
 
 void MainWindow::on_actionNewWorld_map_triggered()
 {
-    QMessageBox::information(this, "Comming soon", "World map editor in this version is not implemented", QMessageBox::Ok);
+    //QMessageBox::information(this, "Comming soon", "World map editor in this version is not implemented", QMessageBox::Ok);
+    WorldEdit *child = createWldChild();
+    child->newFile(configs, GlobalSettings::LvlOpts);
+    child->show();
+    updateMenus(true);
+    on_actionSelect_triggered();
+
+    //    if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
+    //    LvlMusPlay::musicForceReset=true; //reset musics
+    //    on_actionPlayMusic_triggered(ui->actionPlayMusic->isChecked());
 }
