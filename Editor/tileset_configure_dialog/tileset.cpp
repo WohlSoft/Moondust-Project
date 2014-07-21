@@ -196,7 +196,7 @@ const QRect tileset::targetSquare(const QPoint &position) const
 QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
 {
     switch (m_type) {
-    case TILESET_BLOCK:
+    case LEVELTILESET_BLOCK:
     {
         long tarIndex = m_conf->getBlockI(id);
         if(tarIndex==-1)
@@ -204,10 +204,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         return m_conf->main_block[tarIndex].image.copy(
                     0,0,m_conf->main_block[tarIndex].image.width(),
                     qRound(qreal(m_conf->main_block[tarIndex].image.height())/ m_conf->main_block[tarIndex].frames) )
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);;
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
-    case TILESET_BGO:
+    case LEVELTILESET_BGO:
     {
         long tarIndex = m_conf->getBgoI(id);
         if(tarIndex==-1)
@@ -215,12 +215,22 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
 
         break;
     }
-    case TILESET_NPC:
+    case LEVELTILESET_NPC:
     {
         long tarIndex = m_conf->getNpcI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
 
+        break;
+    }
+    case WORLDTILESET_TILE:
+    {
+        long tarIndex = m_conf->getTileI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+        return m_conf->main_wtiles[tarIndex].image.copy(0,0,m_conf->main_wtiles[tarIndex].image.width(),
+                                                     qRound(qreal(m_conf->main_block[tarIndex].image.height()) / m_conf->main_wtiles[tarIndex].frames))
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
     default:
@@ -232,9 +242,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
 QString tileset::getMimeType()
 {
     switch (m_type) {
-    case TILESET_BLOCK: return QString("text/x-pge-piece-block");
-    case TILESET_BGO: return QString("text/x-pge-piece-bgo");
-    case TILESET_NPC: return QString("text/x-pge-piece-npc");
+    case LEVELTILESET_BLOCK: return QString("text/x-pge-piece-block");
+    case LEVELTILESET_BGO: return QString("text/x-pge-piece-bgo");
+    case LEVELTILESET_NPC: return QString("text/x-pge-piece-npc");
+    case WORLDTILESET_TILE: return QString("text/x-pge-piece-tile");
     default:
         break;
     }

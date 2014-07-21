@@ -27,9 +27,10 @@ class tileset : public QWidget
     Q_OBJECT
 public:
     enum TilesetType{
-        TILESET_BLOCK = 0,
-        TILESET_BGO = 1,
-        TILESET_NPC = 2
+        LEVELTILESET_BLOCK = 0,
+        LEVELTILESET_BGO,
+        LEVELTILESET_NPC,
+        WORLDTILESET_TILE
     };
 
     explicit tileset(dataconfigs *conf, TilesetType type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
