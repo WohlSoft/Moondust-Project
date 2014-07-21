@@ -900,6 +900,48 @@ void WldScene::placeItemUnderCursor()
             newData.scenery.push_back(WldPlacingItems::SceneSet);
             wasPlaced=true;
         }
+        else
+        if(placingItem == PLC_Path)
+        {
+            WldPlacingItems::PathSet.x = cursor->scenePos().x();
+            WldPlacingItems::PathSet.y = cursor->scenePos().y();
+
+            WldData->path_array_id++;
+            WldPlacingItems::PathSet.array_id = WldData->path_array_id;
+
+            WldData->paths.push_back(WldPlacingItems::PathSet);
+            placePath(WldPlacingItems::PathSet, true);
+            newData.paths.push_back(WldPlacingItems::PathSet);
+            wasPlaced=true;
+        }
+        else
+        if(placingItem == PLC_Level)
+        {
+            WldPlacingItems::LevelSet.x = cursor->scenePos().x();
+            WldPlacingItems::LevelSet.y = cursor->scenePos().y();
+
+            WldData->level_array_id++;
+            WldPlacingItems::LevelSet.array_id = WldData->level_array_id;
+
+            WldData->levels.push_back(WldPlacingItems::LevelSet);
+            placeLevel(WldPlacingItems::LevelSet, true);
+            newData.levels.push_back(WldPlacingItems::LevelSet);
+            wasPlaced=true;
+        }
+        else
+        if(placingItem == PLC_Musicbox)
+        {
+            WldPlacingItems::MusicSet.x = cursor->scenePos().x();
+            WldPlacingItems::MusicSet.y = cursor->scenePos().y();
+
+            WldData->musicbox_array_id++;
+            WldPlacingItems::MusicSet.array_id = WldData->musicbox_array_id;
+
+            WldData->music.push_back(WldPlacingItems::MusicSet);
+            placeMusicbox(WldPlacingItems::MusicSet, true);
+            newData.music.push_back(WldPlacingItems::MusicSet);
+            wasPlaced=true;
+        }
 
     }
     if(wasPlaced)
