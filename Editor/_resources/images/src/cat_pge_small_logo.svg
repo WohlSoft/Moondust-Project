@@ -9,106 +9,18 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="1469.6737"
+   width="1484.4095"
    height="451.71429"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r"
    sodipodi:docname="cat_pge_small_logo.svg"
    style="enable-background:new"
-   inkscape:export-filename="D:\Developer\PlatfornerGameEngine\Editor\_resources\images\src\pge_small_logo.png"
-   inkscape:export-xdpi="92.409691"
-   inkscape:export-ydpi="92.409691">
+   inkscape:export-filename="D:\Developer\PlatfornerGameEngine\Editor\_resources\images\src\pge_small_logo_700x213.png"
+   inkscape:export-xdpi="42.438328"
+   inkscape:export-ydpi="42.438328">
   <defs
      id="defs4">
-    <filter
-       inkscape:collect="always"
-       id="filter4031"
-       x="-0.16492651"
-       width="1.3298531"
-       y="-0.078926429"
-       height="1.1578529"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="5.1715704"
-         id="feGaussianBlur4033" />
-    </filter>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter4031-5"
-       x="-0.16492651"
-       width="1.3298531"
-       y="-0.078926429"
-       height="1.1578529">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="5.1715704"
-         id="feGaussianBlur4033-6" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter4067"
-       x="-0.14042158"
-       width="1.2808433"
-       y="-0.1047641"
-       height="1.2095282"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.7583101"
-         id="feGaussianBlur4069" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter4071"
-       x="-0.13788433"
-       width="1.2757688"
-       y="-0.10622239"
-       height="1.2124448"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.7512168"
-         id="feGaussianBlur4073" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3815"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="2.3392221"
-         id="feGaussianBlur3817" />
-    </filter>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter3815-1">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="2.3392221"
-         id="feGaussianBlur3817-5" />
-    </filter>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter4817-3">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.5507812"
-         id="feGaussianBlur4819-2" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter4936"
-       color-interpolation-filters="sRGB">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.31228027"
-         id="feGaussianBlur4938" />
-    </filter>
     <filter
        inkscape:collect="always"
        id="filter4067-9"
@@ -179,6 +91,46 @@
          stdDeviation="5.1715704"
          id="feGaussianBlur4033-6-0" />
     </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3970"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.82690169"
+         id="feGaussianBlur3972" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4002"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.0120856"
+         id="feGaussianBlur4004" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4006"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.95768321"
+         id="feGaussianBlur4008" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4010"
+       x="-0.022067185"
+       width="1.0441344"
+       y="-0.12380433"
+       height="1.2476087"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.0956957"
+         id="feGaussianBlur4012" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -187,11 +139,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="714.76607"
-     inkscape:cy="189.37371"
+     inkscape:zoom="0.7"
+     inkscape:cx="701.79326"
+     inkscape:cy="222.20206"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1280"
      inkscape:window-height="977"
@@ -201,7 +153,7 @@
      showguides="true"
      inkscape:guide-bbox="true"
      fit-margin-top="5"
-     fit-margin-right="5"
+     fit-margin-right="25"
      fit-margin-bottom="5"
      fit-margin-left="5" />
   <metadata
@@ -218,9 +170,107 @@
   </metadata>
   <g
      inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="shadow"
+     transform="translate(-15.83672,-1.6032892)">
+    <text
+       xml:space="preserve"
+       style="font-size:38.10955811px;font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;opacity:0.66100003;fill:#000000;fill-opacity:1;stroke:none;display:inline;filter:url(#filter4010);enable-background:new;font-family:Monotype Corsiva;-inkscape-font-specification:Monotype Corsiva Oblique"
+       x="623.93085"
+       y="367.4502"
+       id="text4856-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4858-3"
+         x="623.93085"
+         y="367.4502"
+         style="font-size:63.51593018px;fill:#000000">By Wohlstand</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4490-5"
+       style="font-size:12px;font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;opacity:0.66100003;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;filter:url(#filter3970);enable-background:new;font-family:Monotype Corsiva;-inkscape-font-specification:Monotype Corsiva Oblique"
+       transform="matrix(3.0789982,0,0,3.0789982,590.11163,-1344.5417)"><flowRegion
+         id="flowRegion4492-8"><rect
+           id="rect4494-7"
+           width="275.90591"
+           height="85.199501"
+           x="-41.416252"
+           y="441.61276"
+           style="fill:#000000;stroke:#000000;stroke-opacity:1" /></flowRegion><flowPara
+         style="font-size:64px;font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+         id="flowPara4498-0"><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4502-3">P</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4504-6">l</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4506-4">a</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4508-0">t</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4510-5">f</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4512-5">o</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4514-2">r</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4516-5">m</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4518-1">e</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4520-0">r</flowSpan></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4490-0-0"
+       style="font-size:12px;font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;opacity:0.66100003;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;filter:url(#filter4006);enable-background:new;font-family:Monotype Corsiva;-inkscape-font-specification:Monotype Corsiva Oblique"
+       transform="matrix(3.232484,0,0,3.232484,650.90581,-1279.859)"><flowRegion
+         id="flowRegion4492-6-3"><rect
+           id="rect4494-6-8"
+           width="644.47736"
+           height="90.913788"
+           x="-41.416252"
+           y="441.61276"
+           style="fill:#000000;stroke:#000000;stroke-opacity:1" /></flowRegion><flowPara
+         style="font-size:64px;font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+         id="flowPara4498-7-7"><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4522-6-5">G</flowSpan><flowSpan
+           id="flowSpan4548-5-8"
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique">a</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4530-3-1">m</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4532-9-0">e</flowSpan></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4490-8-6"
+       style="font-size:12px;font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;opacity:0.66100003;fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;filter:url(#filter4002);enable-background:new;font-family:Monotype Corsiva;-inkscape-font-specification:Monotype Corsiva Oblique"
+       transform="matrix(3.0587292,0,0,3.0587292,1089.9679,-1200.928)"><flowRegion
+         id="flowRegion4492-7-8"><rect
+           id="rect4494-4-1"
+           width="644.47736"
+           height="90.913788"
+           x="-41.416252"
+           y="441.61276"
+           style="fill:#000000;stroke:#000000;stroke-opacity:1" /></flowRegion><flowPara
+         style="font-size:64px;font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+         id="flowPara4498-5-4"><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4534-8-1">E</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4550-8-5">n</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4556-45-1">g</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4558-4-5">i</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4562-2-7">n</flowSpan><flowSpan
+           style="font-style:oblique;font-weight:normal;fill:#000000;stroke:#000000;stroke-opacity:1;-inkscape-font-specification:Monotype Corsiva Oblique"
+           id="flowSpan4564-2-5">e</flowSpan></flowPara></flowRoot>  </g>
+  <g
+     inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="LogoText"
-     transform="translate(0,-2.491587)">
+     transform="translate(-15.83672,-4.0948762)"
+     sodipodi:insensitive="true">
     <text
        xml:space="preserve"
        style="font-size:38.10955811px;font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#008000;fill-opacity:1;stroke:none;display:inline;enable-background:new;font-family:Monotype Corsiva;-inkscape-font-specification:Monotype Corsiva Oblique"
@@ -318,7 +368,8 @@
      id="layer3"
      inkscape:label="Cat"
      style="display:inline"
-     transform="translate(-138.78571,-79.588061)">
+     transform="translate(-154.62243,-81.19135)"
+     sodipodi:insensitive="true">
     <g
        id="g3490"
        transform="translate(8.0812204,4.0406102)">
