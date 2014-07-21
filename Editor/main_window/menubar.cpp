@@ -20,7 +20,7 @@
 #include "../mainwindow.h"
 
 #include "global_settings.h"
-
+#include "music_player.h"
 
 void MainWindow::updateMenus(bool force)
 {
@@ -188,6 +188,8 @@ void MainWindow::updateMenus(bool force)
         EventListsSync();
         setLayerLists();
 
+        if(LvlMusPlay::musicType!=LvlMusPlay::LevelMusic) LvlMusPlay::musicForceReset=true;
+        LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
         setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
 
@@ -221,6 +223,9 @@ void MainWindow::updateMenus(bool force)
             return;
         }
 
+        if(LvlMusPlay::musicType!=LvlMusPlay::WorldMusic) LvlMusPlay::musicForceReset=true;
+        LvlMusPlay::musicType=LvlMusPlay::WorldMusic;
+        setMusic( ui->actionPlayMusic->isChecked() );
         ui->actionSelect->trigger();
 
         if(activeWldEditWin()->sceneCreated)
