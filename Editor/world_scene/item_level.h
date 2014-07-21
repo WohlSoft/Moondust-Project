@@ -63,6 +63,8 @@ public:
     void setPath(bool p);
     void setbPath(bool p);
 
+    void alwaysVisible(bool v);
+
     WorldLevels levelData;
 
     int gridSize;
@@ -81,11 +83,15 @@ public:
     bool isLocked;
     void setLocked(bool lock);
 
+
 protected:
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
 
 private:
+
+    QRectF imageSizeTarget;
+
     long animatorID;
     QRectF imageSize;
 

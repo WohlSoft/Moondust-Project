@@ -358,8 +358,6 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 
     LevelItem->setContextMenu(levelMenu);
 
-    LevelItem->setAnimator(animator);
-
     if((!noimage) && (pConfigs->main_wlevels[j].animated))
     {
         LevelItem->setData(4, "animated");
@@ -376,8 +374,10 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
     }
 
     LevelItem->setLevelData(level);
-
     LevelItem->setPos(QPointF(newPos));
+
+    LevelItem->setAnimator(animator, pConfigs->marker_wlvl.path, pConfigs->marker_wlvl.bigpath);
+
 
     LevelItem->setZValue(levelZ);
 
