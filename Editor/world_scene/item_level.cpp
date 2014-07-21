@@ -285,6 +285,18 @@ void ItemLevel::removeFromArray()
     }
 }
 
+void ItemLevel::setPath(bool p)
+{
+    levelData.pathbg=p;
+    arrayApply();
+}
+
+void ItemLevel::setbPath(bool p)
+{
+    levelData.bigpathbg=p;
+    arrayApply();
+}
+
 void ItemLevel::setLevelData(WorldLevels inD)
 {
     levelData = inD;
@@ -330,7 +342,7 @@ void ItemLevel::setScenePoint(WldScene *theScene)
 
 ////////////////Animation///////////////////
 
-void ItemLevel::setAnimator(long aniID)
+void ItemLevel::setAnimator(long aniID, long path, long bPath)
 {
     if(aniID<scene->animates_Levels.size())
     {
@@ -341,6 +353,8 @@ void ItemLevel::setAnimator(long aniID)
                 scene->animates_Levels[aniID]->image().height()
                 );
     }
+    pathID = path;
+    bPathID = bPath;
 
     this->setData(9, QString::number( gridSize ) ); //width
     this->setData(10, QString::number( gridSize ) ); //height

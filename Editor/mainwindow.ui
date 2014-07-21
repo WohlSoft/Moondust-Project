@@ -1211,6 +1211,9 @@
         <property name="flow">
          <enum>QListView::LeftToRight</enum>
         </property>
+        <property name="resizeMode">
+         <enum>QListView::Adjust</enum>
+        </property>
         <property name="spacing">
          <number>1</number>
         </property>
@@ -1218,6 +1221,12 @@
          <enum>QListView::IconMode</enum>
         </property>
         <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="sortingEnabled">
          <bool>true</bool>
         </property>
        </widget>
@@ -1323,6 +1332,12 @@
           <height>32</height>
          </size>
         </property>
+        <property name="resizeMode">
+         <enum>QListView::Adjust</enum>
+        </property>
+        <property name="layoutMode">
+         <enum>QListView::SinglePass</enum>
+        </property>
         <property name="spacing">
          <number>1</number>
         </property>
@@ -1330,6 +1345,9 @@
          <enum>QListView::IconMode</enum>
         </property>
         <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
+        <property name="sortingEnabled">
          <bool>true</bool>
         </property>
        </widget>
@@ -1365,6 +1383,9 @@
          <enum>QAbstractItemView::SingleSelection</enum>
         </property>
         <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
+        <property name="sortingEnabled">
          <bool>true</bool>
         </property>
        </widget>

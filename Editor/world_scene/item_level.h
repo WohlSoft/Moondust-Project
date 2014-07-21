@@ -53,12 +53,15 @@ public:
     QMenu *ItemMenu;
 
     //////Animation////////
-    void setAnimator(long aniID);
+    void setAnimator(long aniID, long path=0, long bPath=0);
 
     //void setLayer(QString layer);
 
     void arrayApply();
     void removeFromArray();
+
+    void setPath(bool p);
+    void setbPath(bool p);
 
     WorldLevels levelData;
 
@@ -67,6 +70,12 @@ public:
     int gridOffsetY;
     int imgOffsetX;
     int imgOffsetY;
+
+    int imgOffsetXp;
+    int imgOffsetYp;
+
+    int imgOffsetXbp;
+    int imgOffsetYbp;
 
     //Locks
     bool isLocked;
@@ -79,6 +88,12 @@ protected:
 private:
     long animatorID;
     QRectF imageSize;
+
+    long pathID;
+    QRectF imageSizeP;
+
+    long bPathID;
+    QRectF imageSizeBP;
 
     bool animated;
     WldScene * scene;

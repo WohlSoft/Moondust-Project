@@ -150,7 +150,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
+        cursor->setVisible(false);
         cursor->setEnabled(true);
 
         placingItem=PLC_Tile;
@@ -244,7 +244,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
+        cursor->setVisible(false);
         cursor->setEnabled(true);
 
         placingItem=PLC_Scene;
@@ -336,7 +336,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
+        cursor->setVisible(false);
         cursor->setEnabled(true);
 
         placingItem=PLC_Path;
@@ -439,7 +439,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
+        cursor->setVisible(false);
         cursor->setEnabled(true);
 
         placingItem=PLC_Level;
@@ -467,7 +467,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
-        cursor->setVisible(true);
+        cursor->setVisible(false);
         cursor->setEnabled(true);
 
         break;
