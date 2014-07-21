@@ -122,6 +122,8 @@ public slots:
     void UpdateCustomItems();
     void eventSectionSettingsSync();
 
+    void setWldItemBoxes(bool setGrp=false, bool setCat=false);
+
     void setSoundList();
 
     void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);

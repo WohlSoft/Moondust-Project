@@ -46,6 +46,8 @@ void MainWindow::on_actionLoad_configs_triggered()
     if(!progress.wasCanceled())  progress.setValue(100);
 
     setItemBoxes(false); //Apply item boxes from reloaded configs
+    setWldItemBoxes(false);
+
     setLevelSectionData();
     setSoundList();
     clearFilter();

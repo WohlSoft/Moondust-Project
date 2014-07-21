@@ -43,8 +43,10 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item)
             if(item->data(0).toString()=="MUSICBOX")
                 return NULL;
 
-            if(item->data(0).toInt()!=it->data(0).toInt()) continue;
-            if(item->data(1).toInt()!=it->data(1).toInt()) continue;
+            if(item->data(0).toString()!=it->data(0).toString()) continue;
+
+            if(item->data(0).toString()=="SCENERY")
+                if(item->data(1).toInt()!=it->data(1).toInt()) continue;
 
             leftA = item->scenePos().x();
             rightA = item->scenePos().x()+item->data(9).toLongLong();
@@ -64,7 +66,7 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item)
             { continue; }
             if( leftA >= rightB )
             { continue; }
-
+            return it;
     }
     return NULL;
 }
