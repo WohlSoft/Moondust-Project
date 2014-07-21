@@ -212,7 +212,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getBgoI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-
+        return m_conf->main_bgo[tarIndex].image.copy(
+                    0,0,m_conf->main_bgo[tarIndex].image.width(),
+                    qRound(qreal(m_conf->main_bgo[tarIndex].image.height())/ m_conf->main_bgo[tarIndex].frames) )
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
     case LEVELTILESET_NPC:
@@ -220,7 +223,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getNpcI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-
+        return m_conf->main_npc[tarIndex].image.copy(
+                    0,0,m_conf->main_npc[tarIndex].image.width(),
+                    qRound(qreal(m_conf->main_npc[tarIndex].image.height())/ m_conf->main_npc[tarIndex].frames) )
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
     case WORLDTILESET_TILE:

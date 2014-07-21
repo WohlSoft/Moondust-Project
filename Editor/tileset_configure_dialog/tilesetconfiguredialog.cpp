@@ -24,20 +24,20 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
     ui(new Ui::TilesetConfigureDialog)
 {
     ui->setupUi(this);
-    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,tileset::WORLDTILESET_TILE,0,64,3,3)));
+    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,tileset::LEVELTILESET_BLOCK,0,64,3,3)));
 
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
     ui->listView->setDragEnabled(true);
-    ui->listView->setModel(m_model = (new PiecesModel(conf, PiecesModel::WORLDPIECE_TILE)));
+    ui->listView->setModel(m_model = (new PiecesModel(conf, PiecesModel::LEVELPIECE_BLOCK)));
 
     m_conf = conf;
-    for(int i = 0; i < conf->main_wtiles.size(); ++i){
-        m_model->addPiece(i);
-    }
+    setUpItems(tileset::LEVELTILESET_BLOCK);
 
     connect(ui->spin_width,SIGNAL(valueChanged(int)),m_tileset,SLOT(setCols(int)));
     connect(ui->spin_height,SIGNAL(valueChanged(int)),m_tileset,SLOT(setRows(int)));
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),this,SLOT(setUpItems(int)));
+    connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),this,SLOT(setUpTileset(int)));
 
 }
 
@@ -49,4 +49,60 @@ TilesetConfigureDialog::~TilesetConfigureDialog()
 void TilesetConfigureDialog::on_pushButton_clicked()
 {
     m_tileset->clear();
+}
+
+void TilesetConfigureDialog::setUpItems(int type)
+{
+    setUpItems(static_cast<tileset::TilesetType>(type));
+}
+
+void TilesetConfigureDialog::setUpTileset(int type)
+{
+    m_tileset->clear();
+    m_tileset->setType(static_cast<tileset::TilesetType>(type));
+}
+
+void TilesetConfigureDialog::setUpItems(tileset::TilesetType type)
+{
+    delete m_model;
+    ui->listView->setModel(m_model = (new PiecesModel(m_conf, toPieceType(type))));
+
+    switch (type) {
+    case tileset::LEVELTILESET_BLOCK:
+    {
+        for(int i = 0; i < m_conf->main_block.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
+    }
+    case tileset::LEVELTILESET_BGO:
+    {
+        for(int i = 0; i < m_conf->main_bgo.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
+    }
+    case tileset::LEVELTILESET_NPC:
+    {
+        for(int i = 0; i < m_conf->main_npc.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
+    }
+    case tileset::WORLDTILESET_TILE:
+    {
+        for(int i = 0; i < m_conf->main_wtiles.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
+    }
+    default:
+        break;
+    }
+
+}
+
+PiecesModel::PieceType TilesetConfigureDialog::toPieceType(tileset::TilesetType type)
+{
+    return static_cast<PiecesModel::PieceType>(static_cast<int>(type));
 }

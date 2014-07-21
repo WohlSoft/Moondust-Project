@@ -41,12 +41,15 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
+    void setUpItems(int type);
+    void setUpTileset(int type);
 private:
     Ui::TilesetConfigureDialog *ui;
     tileset* m_tileset;
     PiecesModel* m_model;
     dataconfigs* m_conf;
+    void setUpItems(tileset::TilesetType type);
+    PiecesModel::PieceType toPieceType(tileset::TilesetType type);
 };
 
 #endif // TILESETCONFIGUREDIALOG_H

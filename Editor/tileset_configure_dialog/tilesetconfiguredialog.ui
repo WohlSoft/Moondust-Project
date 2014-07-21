@@ -118,6 +118,11 @@
          <string>NPC</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Tiles</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
