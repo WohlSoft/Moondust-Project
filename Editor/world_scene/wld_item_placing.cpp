@@ -225,12 +225,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
 
+        long iw = tImg.width();
+        long ih = tImg.height()/( (pConfigs->main_wscene[j].animated)?pConfigs->main_wscene[j].frames:1);
+
         if(WldPlacingItems::fillingMode)
         {
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,w,h));
+        cursor = addPixmap(tImg.copy(0,0,iw,ih));
 
         cursor->setData(0, "SCENERY");
         cursor->setData(1, QString::number(itemID));
@@ -407,8 +410,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         long w = WldPlacingItems::gridSz;
         long h = WldPlacingItems::gridSz;
 
-        //long w = tImg.width();
-        //long h = tImg.height()/( (pConfigs->main_wlevels[j].animated)?pConfigs->main_wlevels[j].frames:1);
+        long iw = tImg.width();
+        long ih = tImg.height()/( (pConfigs->main_wlevels[j].animated)?pConfigs->main_wlevels[j].frames:1);
 
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
@@ -418,7 +421,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,w,h));
+        cursor = addPixmap(tImg.copy(0,0,iw,ih));
 
         int imgOffsetX = (int)qRound( -( qreal(tImg.width()) - qreal(WldPlacingItems::gridSz))  / 2 );
         int imgOffsetY = (int)qRound( -qreal(
@@ -448,7 +451,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         placingItem=PLC_Musicbox;
         WldPlacingItems::MusicSet.id = itemID;
 
-        WldPlacingItems::gridSz=16;
+        WldPlacingItems::gridSz=32;
         WldPlacingItems::gridOffset = QPoint(0,0);
 
         WldPlacingItems::c_offset_x = 16;

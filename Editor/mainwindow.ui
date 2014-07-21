@@ -1104,7 +1104,7 @@
    </attribute>
    <widget class="QTabWidget" name="WorldToolBoxTabs">
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="Tiles">
      <property name="toolTip">
@@ -1119,7 +1119,7 @@
      <attribute name="title">
       <string>Tiles</string>
      </attribute>
-     <layout class="QGridLayout" name="TilesG" columnstretch="0,90" columnminimumwidth="0,0">
+     <layout class="QGridLayout" name="TilesG" columnstretch="0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -1135,26 +1135,10 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="WLD_Tiles_grp"/>
-      </item>
       <item row="0" column="0">
-       <widget class="QLabel" name="WLD_Tiles_grp_label">
-        <property name="text">
-         <string>Group:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QListWidget" name="WLD_TilesList">
-        <property name="dragEnabled">
-         <bool>true</bool>
-        </property>
-        <property name="dragDropMode">
-         <enum>QAbstractItemView::InternalMove</enum>
-        </property>
-        <property name="defaultDropAction">
-         <enum>Qt::MoveAction</enum>
+       <widget class="QTableWidget" name="WLD_TilesList">
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
         </property>
         <property name="iconSize">
          <size>
@@ -1162,18 +1146,33 @@
           <height>32</height>
          </size>
         </property>
-        <property name="movement">
-         <enum>QListView::Snap</enum>
-        </property>
-        <property name="layoutMode">
-         <enum>QListView::Batched</enum>
-        </property>
-        <property name="spacing">
-         <number>1</number>
-        </property>
-        <property name="viewMode">
-         <enum>QListView::IconMode</enum>
-        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderDefaultSectionSize">
+         <number>32</number>
+        </attribute>
+        <attribute name="horizontalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>32</number>
+        </attribute>
+        <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>32</number>
+        </attribute>
+        <attribute name="verticalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderMinimumSectionSize">
+         <number>32</number>
+        </attribute>
        </widget>
       </item>
      </layout>
@@ -1185,6 +1184,113 @@
      <attribute name="title">
       <string>Scenery</string>
      </attribute>
+     <layout class="QGridLayout" name="SceneryG" columnstretch="0" columnminimumwidth="0">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QListWidget" name="WLD_SceneList">
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="flow">
+         <enum>QListView::LeftToRight</enum>
+        </property>
+        <property name="spacing">
+         <number>1</number>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+        <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="Paths">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="widgetResizable" stdset="0">
+      <bool>true</bool>
+     </property>
+     <attribute name="title">
+      <string>Paths</string>
+     </attribute>
+     <layout class="QGridLayout" name="PathsG" columnstretch="0">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QTableWidget" name="WLD_PathsList">
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>32</number>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderDefaultSectionSize">
+         <number>32</number>
+        </attribute>
+        <attribute name="verticalHeaderHighlightSections">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderMinimumSectionSize">
+         <number>32</number>
+        </attribute>
+       </widget>
+      </item>
+     </layout>
     </widget>
     <widget class="QWidget" name="Level">
      <property name="widgetResizable" stdset="0">
@@ -1193,6 +1299,42 @@
      <attribute name="title">
       <string>Levels</string>
      </attribute>
+     <layout class="QGridLayout" name="LevelsG" columnstretch="0" columnminimumwidth="0">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QListWidget" name="WLD_LevelList">
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="spacing">
+         <number>1</number>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+        <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
     <widget class="QWidget" name="WldMusicBox">
      <property name="widgetResizable" stdset="0">
@@ -1201,6 +1343,33 @@
      <attribute name="title">
       <string>Music Box</string>
      </attribute>
+     <layout class="QGridLayout" name="MusicBoxG" columnstretch="0" columnminimumwidth="0">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QListWidget" name="WLD_MusicList">
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
@@ -4621,7 +4790,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>265</width>
-          <height>695</height>
+          <height>707</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4849,7 +5018,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>265</width>
-          <height>695</height>
+          <height>707</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4998,7 +5167,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>265</width>
-          <height>695</height>
+          <height>707</height>
          </rect>
         </property>
         <attribute name="label">
