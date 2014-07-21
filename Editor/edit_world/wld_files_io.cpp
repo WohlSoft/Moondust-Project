@@ -215,13 +215,13 @@ bool WorldEdit::saveFile(const QString &fileName)
 
     GlobalSettings::savePath = QFileInfo(fileName).path();
 
-    //QTextStream out(&file);
+    QTextStream out(&file);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
 
-    // ////////////////////// Write SMBX64 LVL //////////////////////////////
-    // out << FileFormats::WriteSMBX64WldFile(WldData);
+    // ////////////////////// Write SMBX64 WLD //////////////////////////////
+    out << FileFormats::WriteSMBX64WldFile(WldData);
     // //////////////////////////////////////////////////////////////////////
 
     QApplication::restoreOverrideCursor();

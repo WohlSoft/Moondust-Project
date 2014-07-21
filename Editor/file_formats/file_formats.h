@@ -65,7 +65,6 @@ public:
     static LevelData ReadLevelFile(QFile &inf);             //read
     static QString WriteSMBX64LvlFile(LevelData FileData);  //write
     static LevelData dummyLvlDataArray();                   //Create new
-    static WorldData dummyWldDataArray();
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
@@ -91,8 +90,9 @@ public:
     static obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
     // SMBX64 WLD File
-    static WorldData ReadWorldFile(QFile &inf); //read
-
+    static WorldData ReadWorldFile(QFile &inf);             //read
+    static QString WriteSMBX64WldFile(WorldData FileData);  //Write
+    static WorldData dummyWldDataArray();                   //Create new
 
 
     //common
