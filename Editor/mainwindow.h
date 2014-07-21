@@ -88,6 +88,8 @@ public:
 
     //For itemProps
     bool LvlItemPropsLock; //Protector for allow apply changes only if filed was edit by human
+    int subWins();
+
 
 protected:
     void closeEvent(QCloseEvent *event);
