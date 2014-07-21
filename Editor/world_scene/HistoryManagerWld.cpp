@@ -17,3 +17,76 @@
  */
 
 #include "item_level.h"
+#include "../common_features/mainwinconnect.h"
+
+void WldScene::historyBack()
+{
+    historyIndex--;
+    HistoryOperation lastOperation = operationList[historyIndex];
+
+    switch( lastOperation.type )
+    {
+
+    default:
+        break;
+    }
+    WldData->modified = true;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+    MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(getHistoryText(lastOperation)));
+}
+
+void WldScene::historyForward()
+{
+    HistoryOperation lastOperation = operationList[historyIndex];
+
+    switch( lastOperation.type )
+    {
+
+    default:
+        break;
+
+    }
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+    MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(getHistoryText(lastOperation)));
+}
+
+void WldScene::cleanupRedoElements()
+{
+    if(canRedo())
+    {
+        int lastSize = operationList.size();
+        for(int i = historyIndex; i < lastSize; i++)
+        {
+            operationList.pop_back();
+        }
+    }
+}
+
+int WldScene::getHistroyIndex()
+{
+    return historyIndex;
+}
+
+bool WldScene::canUndo()
+{
+    return historyIndex > 0;
+}
+
+bool WldScene::canRedo()
+{
+    return historyIndex < operationList.size();
+}
+
+QString WldScene::getHistoryText(WldScene::HistoryOperation operation)
+{
+    switch (operation.type) {
+    case HistoryOperation::WORLDHISTORY_REMOVE: return tr("Remove");
+    case HistoryOperation::WORLDHISTORY_PLACE: return tr("Place");
+    case HistoryOperation::WORLDHISTORY_MOVE: return tr("Move");
+    default:
+        return tr("Unknown");
+    }
+}
