@@ -101,6 +101,8 @@ void MainWindow::setUiDefults()
 
     setSoundList();
 
+    WldLvlExitTypeListReset();
+
     //MainWindow Geometry;
     QRect mwg = this->geometry();
 
