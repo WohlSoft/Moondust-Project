@@ -37,7 +37,7 @@ void MainWindow::setMusic(bool checked)
     QString dirPath;
     QString musicFile;
     QString musicFilePath;
-    bool silent;
+    bool silent = true;
     unsigned int CurMusNum;
 
     if( configs.check() )
