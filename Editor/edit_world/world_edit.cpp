@@ -26,6 +26,7 @@ WorldEdit::WorldEdit(QWidget *parent) :
 {
     sceneCreated = false;
     FileType = 0;
+    currentMusic=0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
     latest_export_path = QApplication::applicationDirPath();

@@ -119,7 +119,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
                 tmpI = sceneItem.image;
 
             item = new QListWidgetItem();
-            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            item->setIcon( QIcon( tmpI ) );
             item->setText( NULL );
             item->setData(3, QString::number(sceneItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -147,6 +147,9 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     foreach(obj_w_level levelItem, configs.main_wlevels)
     {
+            if((configs.marker_wlvl.path==levelItem.id)||
+               (configs.marker_wlvl.bigpath==levelItem.id))
+                continue;
             if(levelItem.animated)
                 tmpI = levelItem.image.copy(0,0,
                             levelItem.image.width(),
@@ -310,6 +313,10 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
        WldPlacingItems::fillingMode = false;
 
        activeWldEditWin()->scene->setItemPlacer(4, item->data(3).toInt() );
+
+       activeWldEditWin()->currentMusic = item->data(3).toInt();
+
+       setMusic( ui->actionPlayMusic->isChecked() );
 
 //       LvlItemProps(1,FileFormats::dummyLvlBlock(),
 //                                 LvlPlacingItems::bgoSet,
