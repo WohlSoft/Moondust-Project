@@ -33,7 +33,6 @@ void MainWindow::on_actionCopy_triggered()
        q4 += LvlBuffer.water.size();
        statusBar()->showMessage(tr("%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard").arg(q1).arg(q2).arg(q3).arg(q4), 2000);
     }
-
 }
 
 
