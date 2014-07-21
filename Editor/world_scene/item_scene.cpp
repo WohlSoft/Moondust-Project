@@ -336,8 +336,8 @@ void ItemScene::setAnimator(long aniID)
                 scene->animates_Scenery[aniID]->image().height()
                 );
 
-    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
-    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
+    this->setData(9, QString::number( gridSize ) ); //width
+    this->setData(10, QString::number( gridSize ) ); //height
 
     //WriteToLog(QtDebugMsg, QString("Scenery Animator ID: %1").arg(aniID));
 

@@ -88,6 +88,8 @@ public:
 
     //For itemProps
     bool LvlItemPropsLock; //Protector for allow apply changes only if filed was edit by human
+    int subWins();
+
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -121,6 +123,8 @@ public slots:
     void setItemBoxes(bool setGrp=false, bool setCat=false);
     void UpdateCustomItems();
     void eventSectionSettingsSync();
+
+    void setWldItemBoxes(bool setGrp=false, bool setCat=false);
 
     void setSoundList();
 

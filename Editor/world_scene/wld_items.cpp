@@ -109,6 +109,9 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
         TileItem->tileData.y = newPos.y();
     }
 
+
+    TileItem->setTileData(tile);
+
     TileItem->setPos(QPointF(newPos));
 
     TileItem->setZValue(tileZ);
@@ -194,6 +197,8 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
         scenery.y = newPos.y();
         SceneItem->sceneData.y = newPos.y();
     }
+
+    SceneItem->setSceneData(scenery);
 
     SceneItem->setPos(QPointF(newPos));
 
@@ -282,6 +287,8 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
         PathItem->pathData.y = newPos.y();
     }
 
+    PathItem->setPathData(path);
+
     PathItem->setPos(QPointF(newPos));
 
     PathItem->setZValue(pathZ);
@@ -367,6 +374,8 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
         level.y = newPos.y();
         LevelItem->levelData.y = newPos.y();
     }
+
+    LevelItem->setLevelData(level);
 
     LevelItem->setPos(QPointF(newPos));
 

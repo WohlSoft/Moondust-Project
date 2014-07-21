@@ -44,10 +44,6 @@ void MainWindow::updateMenus(bool force)
     ui->actionHandScroll->setEnabled( (WinType==1) || (WinType==3));
     ui->actionReload->setEnabled( (WinType==1) || (WinType==3));
 
-    if(!(WinType==3)) GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
-    ui->WorldToolBox->setVisible( (WinType==3) && (GlobalSettings::WorldToolBoxVis)); //Restore saved visible status
-
-
     ui->menuWorld->setEnabled(( WinType==3) );
     ui->actionWLDToolBox->setVisible( (WinType==3));
 
@@ -88,7 +84,23 @@ void MainWindow::updateMenus(bool force)
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
         ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
     }
+
+    if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
+    {
+        GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
+        ui->WorldToolBox->setVisible( 0 );
+    }
+
+    if((GlobalSettings::lastWinType !=3) && (WinType==3))
+    {
+        ui->WorldToolBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
+    }
+
+
+
     GlobalSettings::lastWinType =   WinType;
+
+
 
     ui->actionLVLToolBox->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
@@ -107,6 +119,9 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevOffScr->setEnabled( (WinType==1) );
     ui->actionLevWarp->setEnabled( (WinType==1) );
     ui->actionLevUnderW->setEnabled( (WinType==1) );
+
+    ui->actionLevelProp->setEnabled( (WinType==1) );
+
     ui->actionExport_to_image->setEnabled( (WinType==1) );
 
     ui->actionSection_1->setEnabled( (WinType==1) );
