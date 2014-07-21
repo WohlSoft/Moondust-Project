@@ -75,7 +75,22 @@ void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         this->setSelected(1);
         ItemMenu->clear();
+        QAction *setPathBG = ItemMenu->addAction(tr("Path background"));
+        setPathBG->setCheckable(true);
+        setPathBG->setChecked(levelData.pathbg);
+        setPathBG->deleteLater();
 
+        QAction *setBigPathBG = ItemMenu->addAction(tr("Big Path background"));
+        setBigPathBG->setCheckable(true);
+        setBigPathBG->setChecked(levelData.bigpathbg);
+        setBigPathBG->deleteLater();
+
+        QAction *setAlVis = ItemMenu->addAction(tr("Always Visible"));
+        setAlVis->setCheckable(true);
+        setAlVis->setChecked(levelData.alwaysVisible);
+        setAlVis->deleteLater();
+
+        ItemMenu->addSeparator()->deleteLater();;
         QAction *copyTile = ItemMenu->addAction(tr("Copy"));
         copyTile->deleteLater();
         QAction *cutTile = ItemMenu->addAction(tr("Cut"));
@@ -83,9 +98,9 @@ void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->addSeparator()->deleteLater();
         QAction *remove = ItemMenu->addAction(tr("Remove"));
         remove->deleteLater();
-        //ItemMenu->addSeparator()->deleteLater();;
-        //QAction *props = ItemMenu->addAction(tr("Properties..."));
-        //props->deleteLater();
+        ItemMenu->addSeparator()->deleteLater();;
+        QAction *props = ItemMenu->addAction(tr("Properties..."));
+        props->deleteLater();
 
         scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
@@ -100,6 +115,42 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         event->accept();
 
+        if(selected==setPathBG)
+        {
+            scene->contextMenuOpened = false;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="LEVEL")
+                {
+                    ((ItemLevel *)SelItem)->setPath( setPathBG->isChecked() );
+                }
+            }
+        }
+        else
+        if(selected==setBigPathBG)
+        {
+            scene->contextMenuOpened = false;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="LEVEL")
+                {
+                    ((ItemLevel *)SelItem)->setbPath( setBigPathBG->isChecked() );
+                }
+            }
+        }
+        else
+        if(selected==setAlVis)
+        {
+            scene->contextMenuOpened = false;
+            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="LEVEL")
+                {
+                    ((ItemLevel *)SelItem)->alwaysVisible( setAlVis->isChecked() );
+                }
+            }
+        }
+        else
         if(selected==cutTile)
         {
             //scene->doCut = true ;
@@ -285,16 +336,41 @@ void ItemLevel::removeFromArray()
     }
 }
 
+
+void ItemLevel::alwaysVisible(bool v)
+{
+    levelData.alwaysVisible = v;
+    arrayApply();
+}
+
 void ItemLevel::setPath(bool p)
 {
     levelData.pathbg=p;
     arrayApply();
+    this->update();
 }
 
 void ItemLevel::setbPath(bool p)
 {
     levelData.bigpathbg=p;
     arrayApply();
+
+    this->update();
+
+    imageSizeTarget=imageSize;
+
+    if(p)
+    {
+        if(imageSizeTarget.left() > imageSizeBP.left())
+            imageSizeTarget.setLeft( imageSizeBP.left() );
+        if(imageSizeTarget.right() < imageSizeBP.right())
+            imageSizeTarget.setRight( imageSizeBP.right() );
+        if(imageSizeTarget.top() > imageSizeBP.top())
+            imageSizeTarget.setTop( imageSizeBP.top() );
+        if(imageSizeTarget.bottom() < imageSizeBP.bottom())
+            imageSizeTarget.setBottom( imageSizeBP.bottom() );
+    }
+    scene->update();
 }
 
 void ItemLevel::setLevelData(WorldLevels inD)
@@ -305,7 +381,7 @@ void ItemLevel::setLevelData(WorldLevels inD)
 
 QRectF ItemLevel::boundingRect() const
 {
-    return imageSize;
+    return imageSizeTarget;
 }
 
 void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -315,6 +391,24 @@ void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
         painter->drawRect(QRect(imgOffsetX,imgOffsetY,1,1));
         return;
     }
+
+    if(levelData.bigpathbg)
+    {
+        if(scene->animates_Levels.size()>bPathID)
+            painter->drawPixmap(imageSizeBP, scene->animates_Levels[bPathID]->image(), scene->animates_Levels[bPathID]->image().rect());
+        else
+            painter->drawRect(QRect(0,0,32,32));
+    }
+
+
+    if(levelData.pathbg)
+    {
+        if(scene->animates_Levels.size()>pathID)
+            painter->drawPixmap(imageSizeP, scene->animates_Levels[pathID]->image(), scene->animates_Levels[pathID]->image().rect());
+        else
+            painter->drawRect(QRect(0,0,32,32));
+    }
+
     if(scene->animates_Levels.size()>animatorID)
         painter->drawPixmap(imageSize, scene->animates_Levels[animatorID]->image(), scene->animates_Levels[animatorID]->image().rect());
     else
@@ -344,21 +438,56 @@ void ItemLevel::setScenePoint(WldScene *theScene)
 
 void ItemLevel::setAnimator(long aniID, long path, long bPath)
 {
-    if(aniID<scene->animates_Levels.size())
+    if(aniID < scene->animates_Levels.size())
     {
     imgOffsetX = (int)qRound( -( qreal(scene->animates_Levels[aniID]->image().width() - gridSize)  / 2 ) );
-    imgOffsetY = (int)qRound( -qreal(scene->animates_Levels[aniID]->image().height()) + gridSize);
+    imgOffsetY = (int)qRound( -qreal(scene->animates_Levels[aniID]->image().height()) + gridSize );
     imageSize = QRectF(imgOffsetX,imgOffsetY,
                 scene->animates_Levels[aniID]->image().width(),
                 scene->animates_Levels[aniID]->image().height()
                 );
     }
-    pathID = path;
-    bPathID = bPath;
+
+    if(path < scene->animates_Levels.size())
+    {
+    imgOffsetXp = (int)qRound( -( qreal(scene->animates_Levels[path]->image().width() - gridSize)  / 2 ) );
+    imgOffsetYp = (int)qRound( -qreal(scene->animates_Levels[path]->image().height()) + gridSize );
+    imageSizeP = QRectF(imgOffsetXp,imgOffsetYp,
+                scene->animates_Levels[path]->image().width(),
+                scene->animates_Levels[path]->image().height()
+                );
+    }
+
+    if(bPath < scene->animates_Levels.size())
+    {
+    imgOffsetXbp = (int)qRound( -( qreal(scene->animates_Levels[bPath]->image().width() - gridSize)  / 2 ) );
+    imgOffsetYbp = (int)qRound( -qreal(scene->animates_Levels[bPath]->image().height()) + qreal(gridSize)*1.25);
+    imageSizeBP = QRectF(imgOffsetXbp,imgOffsetYbp,
+                scene->animates_Levels[bPath]->image().width(),
+                scene->animates_Levels[bPath]->image().height()
+                );
+    }
+
+
+    imageSizeTarget=imageSize;
+
+    if(levelData.bigpathbg)
+    {
+        if(imageSizeTarget.left() > imageSizeBP.left())
+            imageSizeTarget.setLeft( imageSizeBP.left() );
+        if(imageSizeTarget.right() < imageSizeBP.right())
+            imageSizeTarget.setRight( imageSizeBP.right() );
+        if(imageSizeTarget.top() > imageSizeBP.top())
+            imageSizeTarget.setTop( imageSizeBP.top() );
+        if(imageSizeTarget.bottom() < imageSizeBP.bottom())
+            imageSizeTarget.setBottom( imageSizeBP.bottom() );
+    }
 
     this->setData(9, QString::number( gridSize ) ); //width
     this->setData(10, QString::number( gridSize ) ); //height
     //WriteToLog(QtDebugMsg, QString("Tile Animator ID: %1").arg(aniID));
 
+    pathID = path;
+    bPathID = bPath;
     animatorID = aniID;
 }
