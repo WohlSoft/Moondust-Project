@@ -19,6 +19,25 @@
 #include "item_level.h"
 #include "../common_features/mainwinconnect.h"
 
+void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData /*targetMovedItems*/)
+{
+    cleanupRedoElements();
+
+    //set first base
+    //QPoint base = calcTopLeftCorner(&targetMovedItems);
+    QList<QVariant> coor;
+    //coor << base.x() << base.y();
+
+    HistoryOperation mvOperation;
+    mvOperation.type = HistoryOperation::WORLDHISTORY_MOVE;
+    mvOperation.data = sourceMovedItems;
+    mvOperation.extraData = coor;
+    operationList.push_back(mvOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::historyBack()
 {
     historyIndex--;
