@@ -144,6 +144,8 @@ void MainWindow::save()
     int WinType = activeChildWindow();
     if (WinType!=0)
     {
+        if(WinType==3)
+            saved = activeWldEditWin()->save();
         if(WinType==2)
             saved = activeNpcEditWin()->save();
         if(WinType==1)
@@ -159,6 +161,8 @@ void MainWindow::save_as()
     int WinType = activeChildWindow();
     if (WinType!=0)
     {
+        if(WinType==3)
+            saved = activeWldEditWin()->saveAs();
         if(WinType==2)
             saved = activeNpcEditWin()->saveAs();
         if(WinType==1)
@@ -170,11 +174,17 @@ void MainWindow::save_as()
 
 void MainWindow::save_all()
 {
-    leveledit *ChildWindow0;
-    npcedit *ChildWindow2;
+    leveledit *ChildWindow0=NULL;
+    npcedit *ChildWindow2=NULL;
+    WorldEdit *ChildWindow3=NULL;
 
     foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
+        if(QString(window->widget()->metaObject()->className())=="leveledit")
+        {
+        ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
+            ChildWindow3->save();
+        }
         if(QString(window->widget()->metaObject()->className())=="leveledit")
         {
         ChildWindow0 = qobject_cast<leveledit *>(window->widget());
@@ -185,7 +195,6 @@ void MainWindow::save_all()
         ChildWindow2 = qobject_cast<npcedit *>(window->widget());
             ChildWindow2->save();
         }
-
     }
 }
 
@@ -195,6 +204,10 @@ void MainWindow::close_sw()
         ui->centralWidget->activeSubWindow()->close();
 }
 
+int MainWindow::subWins()
+{
+    return ui->centralWidget->subWindowList().size();
+}
 
 
 // ///////////Events////////////////////
