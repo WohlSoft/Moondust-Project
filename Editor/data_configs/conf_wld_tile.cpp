@@ -150,6 +150,10 @@ void dataconfigs::loadWorldTiles(QProgressDialog *prgs)
             stile.animated = (tileset.value("animated", "0").toString()=="1");
             stile.frames = tileset.value("frames", "1").toInt();
             stile.framespeed = tileset.value("frame-speed", "125").toInt();
+            stile.row = tileset.value("row", "0").toInt();
+            stile.col = tileset.value("col", "0").toInt();
+
+
             stile.id = i;
             main_wtiles.push_back(stile);
 
