@@ -135,6 +135,7 @@ void tileset::mousePressEvent(QMouseEvent *event)
     if(event->button() == Qt::RightButton){
         if(m_editMode){
             piecePixmaps.removeAt(findPiece(targetSquare(event->pos())));
+            pieceID.removeAt(findPiece(targetSquare(event->pos())));
             pieceRects.removeAt(findPiece(targetSquare(event->pos())));
             update();
             return;
@@ -225,10 +226,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getNpcI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_npc[tarIndex].image.copy(
-                    0,0,m_conf->main_npc[tarIndex].image.width(),
-                    qRound(qreal(m_conf->main_npc[tarIndex].image.height())/ m_conf->main_npc[tarIndex].frames) )
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        return m_conf->main_npc[tarIndex].image.copy(0,0, m_conf->main_npc[tarIndex].image.width(), m_conf->main_npc[tarIndex].gfx_h );
         break;
     }
     case WORLDTILESET_TILE:
@@ -320,6 +318,7 @@ void tileset::SaveSimpleTileset(const QString &path, const tileset::SimpleTilese
 {
     QSettings simpleTilesetINI(path,QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
+    simpleTilesetINI.clear();
     simpleTilesetINI.beginGroup("tileset"); //HEADER
     simpleTilesetINI.setValue("rows",tileset.rows);
     simpleTilesetINI.setValue("cols",tileset.cols);
@@ -330,6 +329,50 @@ void tileset::SaveSimpleTileset(const QString &path, const tileset::SimpleTilese
         simpleTilesetINI.setValue("id",tileset.items[i].id);
         simpleTilesetINI.endGroup();
     }
+}
+
+bool tileset::OpenSimpleTileset(const QString &path, tileset::SimpleTileset &tileset)
+{
+    QSettings simpleTilesetINI(path,QSettings::IniFormat);
+    simpleTilesetINI.setIniCodec("UTF-8");
+    QStringList groups = simpleTilesetINI.childGroups();
+    int tilesetindex;
+    if((tilesetindex = groups.indexOf("tileset"))!=-1){
+        simpleTilesetINI.beginGroup("tileset");
+        tileset.rows = (unsigned int)simpleTilesetINI.value("rows",3).toInt();
+        tileset.cols = (unsigned int)simpleTilesetINI.value("cols",3).toInt();
+        tileset.baseSize = 64;
+        tileset.type = static_cast<tileset::TilesetType>(simpleTilesetINI.value("type",0).toInt());
+        simpleTilesetINI.endGroup();
+        groups.removeAt(tilesetindex);
+        for(int i = 0; i < groups.size(); ++i){
+            QString gr = groups[i];
+            if(gr.startsWith("item-")){
+                QStringList spData = gr.split("-");
+                if(spData.size() == 3){
+                    bool succ = false;
+                    SimpleTilesetItem i;
+                    i.col = spData[1].toInt(&succ);
+                    if(!succ)
+                        return false;
+                    i.row = spData[2].toInt(&succ);
+                    if(!succ)
+                        return false;
+                    simpleTilesetINI.beginGroup(gr);
+                    i.id = (unsigned int)simpleTilesetINI.value("id",0).toInt();
+                    simpleTilesetINI.endGroup();
+                    tileset.items << i;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+    }else{
+        return false;
+    }
+    return true;
 }
 
 void tileset::setBaseSize(int value)

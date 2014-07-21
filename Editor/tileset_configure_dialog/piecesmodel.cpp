@@ -68,8 +68,7 @@ void PiecesModel::addPiece(const int &index)
     if(m_type==LEVELPIECE_NPC)
     {
         pixmapNames.insert(pixmaps.size(), m_conf->main_npc[index].name);
-        pixmaps.insert(pixmaps.size(), m_conf->main_npc[index].image.copy(0,0,m_conf->main_npc[index].image.width(),
-                                                                             qRound(qreal(m_conf->main_npc[index].image.height()) / m_conf->main_npc[index].frames)));
+        pixmaps.insert(pixmaps.size(), m_conf->main_npc[index].image.copy(0,0, m_conf->main_npc[index].image.width(), m_conf->main_npc[index].gfx_h ));
         pixmapId.insert(pixmaps.size(), m_conf->main_npc[index].id);
     }
     else
