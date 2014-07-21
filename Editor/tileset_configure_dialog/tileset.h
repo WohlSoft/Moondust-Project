@@ -56,7 +56,7 @@ public:
     SimpleTileset toSimpleTileset();
     void loadSimpleTileset(const SimpleTileset &tileset);
 
-
+    static void SaveSimpleTileset(const QString &path, const SimpleTileset &tileset);
 
 
 signals:

@@ -22,6 +22,7 @@
 #include <QMimeData>
 #include <QDrag>
 
+
 tileset::tileset(dataconfigs* conf, TilesetType type, QWidget *parent, int baseSize, int rows, int cols) :
     QWidget(parent)
 {
@@ -311,6 +312,22 @@ void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
         piecePixmaps.append(getScaledPixmapById(tileset.items[i].id));
         pieceRects.append(QRect(tileset.items[i].col*m_baseSize, tileset.items[i].row*m_baseSize, m_baseSize, m_baseSize));
         pieceID.append(tileset.items[i].id);
+    }
+}
+
+void tileset::SaveSimpleTileset(const QString &path, const tileset::SimpleTileset &tileset)
+{
+    QSettings simpleTilesetINI(path,QSettings::IniFormat);
+    simpleTilesetINI.setIniCodec("UTF-8");
+    simpleTilesetINI.beginGroup("tileset"); //HEADER
+    simpleTilesetINI.setValue("rows",tileset.rows);
+    simpleTilesetINI.setValue("cols",tileset.cols);
+    simpleTilesetINI.setValue("type",static_cast<int>(tileset.type));
+    simpleTilesetINI.endGroup();
+    for(int i = 0; i < tileset.items.size(); ++i){
+        simpleTilesetINI.beginGroup(QString("item-%1-%2").arg(tileset.items[i].col).arg(tileset.items[i].row));
+        simpleTilesetINI.setValue("id",tileset.items[i].id);
+        simpleTilesetINI.endGroup();
     }
 }
 

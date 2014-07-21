@@ -106,3 +106,13 @@ PiecesModel::PieceType TilesetConfigureDialog::toPieceType(tileset::TilesetType 
 {
     return static_cast<PiecesModel::PieceType>(static_cast<int>(type));
 }
+
+void TilesetConfigureDialog::on_SaveTileset_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Tileset"),
+            QApplication::applicationDirPath() + "/" +  "configs/SMBX/", QString("PGE Tileset (*.ini)"));
+    if (fileName.isEmpty())
+        return;
+
+    tileset::SaveSimpleTileset(fileName,m_tileset->toSimpleTileset());
+}
