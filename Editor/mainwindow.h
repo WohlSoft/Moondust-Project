@@ -82,6 +82,7 @@ public:
     void showStatusMsg(QString msg, int time=2000);
 
     void LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem=false);
+    void WldItemProps(int Type, WorldLevels level, bool newItem=false);
     long blockPtr; //ArrayID of editing item (-1 - use system)
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
@@ -127,6 +128,8 @@ public slots:
     void setWldItemBoxes(bool setGrp=false, bool setCat=false);
 
     void setSoundList();
+    void WldLvlExitTypeListReset();
+
 
     void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
     void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
@@ -510,6 +513,22 @@ private slots:
     void on_WLD_PathsList_itemClicked(QTableWidgetItem *item);
     void on_WLD_LevelList_itemClicked(QListWidgetItem *item);
     void on_WLD_MusicList_itemClicked(QListWidgetItem *item);
+
+    void on_WLD_PROPS_PathBG_clicked(bool checked);
+    void on_WLD_PROPS_BigPathBG_clicked(bool checked);
+    void on_WLD_PROPS_AlwaysVis_clicked(bool checked);
+    void on_WLD_PROPS_GameStart_clicked(bool checked);
+    void on_WLD_PROPS_LVLFile_textEdited(const QString &arg1);
+    void on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1);
+    void on_WLD_PROPS_EnterTo_valueChanged(int arg1);
+    void on_WLD_PROPS_LVLBrowse_clicked();
+    void on_WLD_PROPS_ExitTop_currentIndexChanged(int index);
+    void on_WLD_PROPS_ExitLeft_currentIndexChanged(int index);
+    void on_WLD_PROPS_ExitRight_currentIndexChanged(int index);
+    void on_WLD_PROPS_ExitBottom_currentIndexChanged(int index);
+    void on_WLD_PROPS_GotoX_textEdited(const QString &arg1);
+    void on_WLD_PROPS_GotoY_textEdited(const QString &arg1);
+    void on_WLD_PROPS_GetPoint_clicked();
 
 private:
 
