@@ -39,6 +39,7 @@ void tileset::clear()
 {
     piecePixmaps.clear();
     pieceRects.clear();
+    pieceID.clear();
     highlightedRect = QRect();
     inPlace = 0;
     update();
