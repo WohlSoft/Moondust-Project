@@ -293,8 +293,8 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
 
     PathItem->setZValue(pathZ);
 
-    PathItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_scene));
-    PathItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_scene));
+    PathItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_path));
+    PathItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_path));
 
     PathItem->setData(0, "PATH");
     PathItem->setData(1, QString::number(path.id) );
@@ -394,9 +394,46 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 
 void WldScene::placeMusicbox(WorldMusic &musicbox, bool toGrid)
 {
+    ItemMusic *MusicBoxItem = new ItemMusic;
 
-    //Dummy!
-    if((musicbox.id) && (toGrid)) goto meow;
-    meow:;
+
+    int j = pConfigs->getMusWldI(musicbox.id);
+
+
+    MusicBoxItem->gridSize = pConfigs->default_grid;
+
+    addItem(MusicBoxItem);
+
+    //Set pointers
+    MusicBoxItem->setScenePoint(this);
+
+    MusicBoxItem->setContextMenu(musicMenu);
+
+    QPoint newPos = QPoint(musicbox.x, musicbox.y);
+    if(toGrid)
+    {
+        newPos = applyGrid(QPoint(musicbox.x, musicbox.y), MusicBoxItem->gridSize);
+        musicbox.x = newPos.x();
+        MusicBoxItem->musicData.x = newPos.x();
+        musicbox.y = newPos.y();
+        MusicBoxItem->musicData.y = newPos.y();
+    }
+
+    if(j>=0) MusicBoxItem->musicTitle = pConfigs->main_music_wld[j].name;
+
+    MusicBoxItem->setMusicData(musicbox);
+
+    MusicBoxItem->setPos(QPointF(newPos));
+
+    MusicBoxItem->setZValue(musicZ);
+
+    MusicBoxItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_musbox));
+    MusicBoxItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_musbox));
+
+    MusicBoxItem->setData(0, "MUSICBOX");
+    MusicBoxItem->setData(1, QString::number(musicbox.id) );
+    MusicBoxItem->setData(2, QString::number(musicbox.array_id) );
+
+    if(PasteFromBuffer) MusicBoxItem->setSelected(true);
 
 }
