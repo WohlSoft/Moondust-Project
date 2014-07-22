@@ -193,6 +193,12 @@ public:
         //custom data
         long x, y;
     };
+    //typedefs
+    typedef void (WldScene::*callBackWorldTiles)(CallbackData, WorldTiles);
+    typedef void (WldScene::*callBackWorldPaths)(CallbackData, WorldPaths);
+    typedef void (WldScene::*callBackWorldScenery)(CallbackData, WorldScenery);
+    typedef void (WldScene::*callBackWorldLevels)(CallbackData, WorldLevels);
+
     void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
 
     //history modifiers
@@ -203,8 +209,24 @@ public:
     int getHistroyIndex();
     bool canUndo();
     bool canRedo();
+    //Callback
+    void historyRedoMoveTile(CallbackData cbData, WorldTiles data);
+    void historyRedoMovePath(CallbackData cbData, WorldPaths data);
+    void historyRedoMoveScenery(CallbackData cbData, WorldScenery data);
+    void historyRedoMoveLevels(CallbackData cbData, WorldLevels data);
+    void historyUndoMoveTile(CallbackData cbData, WorldTiles data);
+    void historyUndoMovePath(CallbackData cbData, WorldPaths data);
+    void historyUndoMoveScenery(CallbackData cbData, WorldScenery data);
+    void historyUndoMoveLevels(CallbackData cbData, WorldLevels data);
     //miscellaneous
-    //QPoint calcTopLeftCorner(LevelData* data);
+    void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
+                          callBackWorldTiles clbTiles, callBackWorldPaths clbPaths,
+                          callBackWorldScenery clbScenery, callBackWorldLevels clbLevels,
+                          bool ignoreTiles = false,
+                          bool ignorePaths = false,
+                          bool ignoreScenery = false,
+                          bool ignoreLevels = false);
+    QPoint calcTopLeftCorner(WorldData* data);
     QString getHistoryText(HistoryOperation operation);
     //QString getHistorySettingText(SettingSubType subType);
 
