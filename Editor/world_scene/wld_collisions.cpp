@@ -40,8 +40,6 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item)
             if (it == item)
                  continue;
             if(!it->isVisible()) continue;
-            if(item->data(0).toString()=="MUSICBOX")
-                return NULL;
 
             if(item->data(0).toString()!=it->data(0).toString()) continue;
 
