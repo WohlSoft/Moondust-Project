@@ -131,7 +131,7 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
         ui->spin_width->setValue(simple.cols);
         ui->spin_height->setValue(simple.rows);
         ui->comboBox->setCurrentIndex(static_cast<int>(simple.type));
-        setUpItems();
+        setUpItems(simple.type);
         m_tileset->loadSimpleTileset(simple);
     }
 }

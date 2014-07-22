@@ -174,6 +174,12 @@ void MainWindow::on_actionUndo_triggered()
         ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
         ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
     }
+    else if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->historyBack();
+        ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
+        ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
+    }
 }
 
 void MainWindow::on_actionRedo_triggered()
@@ -186,5 +192,10 @@ void MainWindow::on_actionRedo_triggered()
         ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
         ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
     }
-
+    else if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->historyForward();
+        ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
+        ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
+    }
 }
