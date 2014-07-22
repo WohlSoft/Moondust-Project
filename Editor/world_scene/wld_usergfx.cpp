@@ -67,7 +67,7 @@ void WldScene::buildAnimators()
     {
         SimpleAnimator * aniPath = new SimpleAnimator(
                          ((pConfigs->main_wpaths[i].image.isNull())?
-                                uSceneImg:
+                                uPathImg:
                                pConfigs->main_wpaths[i].image),
                               pConfigs->main_wpaths[i].animated,
                               pConfigs->main_wpaths[i].frames,
@@ -83,16 +83,16 @@ void WldScene::buildAnimators()
 
     for(i=0; i<pConfigs->main_wlevels.size(); i++)
     {
-        SimpleAnimator * aniPath = new SimpleAnimator(
+        SimpleAnimator * aniLevel = new SimpleAnimator(
                          ((pConfigs->main_wpaths[i].image.isNull())?
-                                uSceneImg:
+                                uLevelImg:
                                pConfigs->main_wlevels[i].image),
                               pConfigs->main_wlevels[i].animated,
                               pConfigs->main_wlevels[i].frames,
                               pConfigs->main_wlevels[i].framespeed
                               );
 
-        animates_Levels.push_back( aniPath );
+        animates_Levels.push_back( aniLevel );
         if(pConfigs->main_wlevels[i].id < (unsigned int)index_levels.size())
         {
             index_levels[pConfigs->main_wlevels[i].id].ai = animates_Levels.size()-1;
