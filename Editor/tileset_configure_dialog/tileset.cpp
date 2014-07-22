@@ -286,7 +286,6 @@ int tileset::getBaseSize() const
 tileset::SimpleTileset tileset::toSimpleTileset()
 {
     SimpleTileset s;
-    s.baseSize = m_baseSize;
     s.rows = m_rows;
     s.cols = m_cols;
     s.type = m_type;
@@ -303,7 +302,6 @@ tileset::SimpleTileset tileset::toSimpleTileset()
 void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
 {
     clear();
-    setBaseSize(tileset.baseSize);
     setRows(tileset.rows);
     setCols(tileset.cols);
     setType(tileset.type);
@@ -341,7 +339,6 @@ bool tileset::OpenSimpleTileset(const QString &path, tileset::SimpleTileset &til
         simpleTilesetINI.beginGroup("tileset");
         tileset.rows = (unsigned int)simpleTilesetINI.value("rows",3).toInt();
         tileset.cols = (unsigned int)simpleTilesetINI.value("cols",3).toInt();
-        tileset.baseSize = 64;
         tileset.type = static_cast<tileset::TilesetType>(simpleTilesetINI.value("type",0).toInt());
         simpleTilesetINI.endGroup();
         groups.removeAt(tilesetindex);

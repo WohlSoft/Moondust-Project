@@ -48,7 +48,7 @@ public:
     };
 
     struct SimpleTileset{
-        unsigned int rows, cols, baseSize;
+        unsigned int rows, cols;
         TilesetType type;
         QList<SimpleTilesetItem> items;
     };
