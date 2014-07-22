@@ -315,7 +315,6 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
        activeWldEditWin()->scene->setItemPlacer(4, item->data(3).toInt() );
 
        activeWldEditWin()->currentMusic = item->data(3).toInt();
-
        setMusic( ui->actionPlayMusic->isChecked() );
 
 //       LvlItemProps(1,FileFormats::dummyLvlBlock(),

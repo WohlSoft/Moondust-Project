@@ -65,6 +65,8 @@ public:
     bool disableMoveItems;
     bool contextMenuOpened;
 
+    QPixmap musicBoxImg;
+
     enum EditMode
     {
         MODE_Selecting=0,
