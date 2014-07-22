@@ -23,6 +23,20 @@
 #include "item_scene.h"
 #include "item_tile.h"
 
+void WldScene::addRemoveHistory(WorldData removedItems)
+{
+    //add cleanup redo elements
+    cleanupRedoElements();
+    //add new element
+    HistoryOperation rmOperation;
+    rmOperation.type = HistoryOperation::WORLDHISTORY_REMOVE;
+    rmOperation.data = removedItems;
+    operationList.push_back(rmOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems)
 {
     cleanupRedoElements();
@@ -49,7 +63,42 @@ void WldScene::historyBack()
 
     switch( lastOperation.type )
     {
+    case HistoryOperation::WORLDHISTORY_REMOVE:
+    {
+        //revert remove
+        WorldData deletedData = lastOperation.data;
 
+        foreach (WorldTiles tile, deletedData.tiles)
+        {
+            //place them back
+            WldData->tiles.push_back(tile);
+            placeTile(tile);
+        }
+        foreach (WorldPaths path, deletedData.paths)
+        {
+            //place them back
+            WldData->paths.push_back(path);
+            placePath(path);
+        }
+        foreach (WorldScenery scenery, deletedData.scenery)
+        {
+            //place them back
+            WldData->scenery.push_back(scenery);
+            placeScenery(scenery);
+        }
+        foreach (WorldLevels level, deletedData.levels)
+        {
+            //place them back
+            WldData->levels.push_back(level);
+            placeLevel(level);
+        }
+
+        //refresh Animation control
+        if(opts.animationEnabled) stopAnimation();
+        if(opts.animationEnabled) startAnimation();
+
+        break;
+    }
     case HistoryOperation::WORLDHISTORY_MOVE:
     {
         //revert move
@@ -75,7 +124,16 @@ void WldScene::historyForward()
 
     switch( lastOperation.type )
     {
+    case HistoryOperation::WORLDHISTORY_REMOVE:
+    {
+        //redo remove
+        WorldData deletedData = lastOperation.data;
 
+        CallbackData cbData;
+        findGraphicsItem(deletedData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels);
+
+        break;
+    }
     case HistoryOperation::WORLDHISTORY_MOVE:
     {
 
@@ -207,6 +265,34 @@ void WldScene::historyUndoMoveLevels(WldScene::CallbackData cbData, WorldLevels 
     ((ItemLevel *)(cbData.item))->levelData.x = (long)cbData.item->scenePos().x();
     ((ItemLevel *)(cbData.item))->levelData.y = (long)cbData.item->scenePos().y();
     ((ItemLevel *)(cbData.item))->arrayApply();
+}
+
+void WldScene::historyRemoveTiles(WldScene::CallbackData cbData, WorldTiles /*data*/)
+{
+    ((ItemTile*)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+    delete cbData.item;
+}
+
+void WldScene::historyRemovePath(WldScene::CallbackData cbData, WorldPaths /*data*/)
+{
+    ((ItemPath*)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+    delete cbData.item;
+}
+
+void WldScene::historyRemoveScenery(WldScene::CallbackData cbData, WorldScenery /*data*/)
+{
+    ((ItemScene*)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+    delete cbData.item;
+}
+
+void WldScene::historyRemoveLevels(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+    delete cbData.item;
 }
 
 void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *operation, WldScene::CallbackData customData, WldScene::callBackWorldTiles clbTiles, WldScene::callBackWorldPaths clbPaths, WldScene::callBackWorldScenery clbScenery, WldScene::callBackWorldLevels clbLevels, bool ignoreTiles, bool ignorePaths, bool ignoreScenery, bool ignoreLevels)

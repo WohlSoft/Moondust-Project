@@ -201,6 +201,7 @@ public:
     typedef void (WldScene::*callBackWorldScenery)(CallbackData, WorldScenery);
     typedef void (WldScene::*callBackWorldLevels)(CallbackData, WorldLevels);
 
+    void addRemoveHistory(WorldData removedItems);
     void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
 
     //history modifiers
@@ -220,6 +221,11 @@ public:
     void historyUndoMovePath(CallbackData cbData, WorldPaths data);
     void historyUndoMoveScenery(CallbackData cbData, WorldScenery data);
     void historyUndoMoveLevels(CallbackData cbData, WorldLevels data);
+    //Callbackfunctions: Remove
+    void historyRemoveTiles(CallbackData cbData, WorldTiles data);
+    void historyRemovePath(CallbackData cbData, WorldPaths data);
+    void historyRemoveScenery(CallbackData cbData, WorldScenery data);
+    void historyRemoveLevels(CallbackData cbData, WorldLevels data);
     //miscellaneous
     void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackWorldTiles clbTiles, callBackWorldPaths clbPaths,
