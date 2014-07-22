@@ -101,7 +101,10 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
         }
         //dummy
-        if(deleted) historyBuffer.scenery.size();//addRemoveHistory(historyBuffer);
+        if(deleted) {
+            historyBuffer.scenery.size();
+            addRemoveHistory(historyBuffer);
+        }
 
         break;
     case (Qt::Key_Escape):
@@ -697,7 +700,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
                 {
-                    //addRemoveHistory(historyBuffer);
+                    addRemoveHistory(historyBuffer);
                 }
                 EraserEnabled = false;
 
