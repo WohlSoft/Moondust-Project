@@ -32,14 +32,13 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
 }
 
 
-void MainWindow::setMusic(bool checked=false)
+void MainWindow::setMusic(bool checked)
 {
     QString dirPath;
     QString musicFile;
     QString musicFilePath;
     bool silent = true;
     unsigned int CurMusNum;
-    checked = ui->actionPlayMusic->isChecked();
 
     if( configs.check() )
     {
