@@ -90,14 +90,14 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     if((*it)) delete (*it);
                     deleted=true;
                 }
-                else
-                if( objType=="MUSICBOX" )
-                {
-                    historyBuffer.music.push_back(((ItemMusic*)(*it))->musicData);
-                    ((ItemMusic *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
+//                else
+//                if( objType=="MUSICBOX" )
+//                {
+//                    historyBuffer.music.push_back(((ItemMusic*)(*it))->musicData);
+//                    ((ItemMusic *)(*it))->removeFromArray();
+//                    if((*it)) delete (*it);
+//                    deleted=true;
+//                }
 
         }
         //dummy
@@ -650,13 +650,6 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemLevel *)(*it))->removeFromArray();
                             deleted=true;
                         }
-                        else
-                        if( (*it)->data(0).toString()=="MUSICBOX" )
-                        {
-                            historyBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
-                            ((ItemMusic *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
                         removeItem((*it));
                         deleteList.push_back((*it));
                         continue;
@@ -799,12 +792,12 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         if( ObjType == "MUSICBOX")
                         {
                             //Applay move into main array
-                            historySourceBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
-                            ((ItemMusic *)(*it))->musicData.x = (long)(*it)->scenePos().x();
-                            ((ItemMusic *)(*it))->musicData.y = (long)(*it)->scenePos().y();
-                            ((ItemMusic *)(*it))->arrayApply();
-                            historyBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
-                            WldData->modified = true;
+//                            historySourceBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
+//                            ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
+//                            ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
+//                            ((ItemBGO *)(*it))->arrayApply();
+//                            historyBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
+//                            WldData->modified = true;
                         }
 
                     }
@@ -862,10 +855,10 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
     else
     if( ObjType == "MUSICBOX")
     {
-        WsourcePos = QPoint(  ((ItemMusic *)it)->musicData.x, ((ItemMusic*)it)->musicData.y);
-        WgridSize = ((ItemMusic *)it)->gridSize;
-        WoffsetX = 0;
-        WoffsetY = 0;
+//        sourcePos = QPoint(  ((ItemLevel *)it)->levelData.x, ((ItemLevel*)it)->levelData.y);
+//        gridSize = ((ItemLevel *)it)->gridSize;
+//        offsetX = 0;
+//        offsetY = 0;
     }
 }
 
@@ -997,7 +990,7 @@ void WldScene::removeItemUnderCursor()
         else
         if(findItem->data(0).toString()=="MUSICBOX")
         {
-            if( (lock_musbox) || (((ItemMusic *)findItem)->isLocked) )
+            //if( (lock_musbox) || (((ItemXXX *)findItem)->isLocked) )
             removeIt=false;
         }
 
@@ -1039,8 +1032,8 @@ void WldScene::removeItemUnderCursor()
             else
             if( findItem->data(0).toString()=="MUSICBOX" )
             {
-                removedItems.music.push_back(((ItemMusic *)findItem)->musicData);
-                ((ItemMusic *)findItem)->removeFromArray();
+//                removedItems.bgo.push_back(((ItemBGO *)findItem)->bgoData);
+//                ((ItemBGO *)findItem)->removeFromArray();
                 deleted=true;
             }
 

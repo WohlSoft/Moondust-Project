@@ -66,12 +66,10 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
     resetCursor();
 
     //set dummy images if target not exist or wrong
-    uTileImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_tile.png");
-    uSceneImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_scene.png");
-    uPathImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_path.png");
-    uLevelImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_wlvl.png");
-
-    musicBoxImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/music_box.png");
+    uTileImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_tile.png");;
+    uSceneImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_scene.png");;
+    uPathImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_path.png");;
+    uLevelImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_wlvl.png");;
 
     //set Default Z Indexes
     tileZ=0; // tiles

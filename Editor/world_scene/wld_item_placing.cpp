@@ -462,8 +462,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setData(1, QString::number(itemID));
         cursor->setData(9, QString::number(32));
         cursor->setData(10, QString::number(32));
-        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
-        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
+        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::darkMagenta));
+        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::darkMagenta, 2,Qt::SolidLine));
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
