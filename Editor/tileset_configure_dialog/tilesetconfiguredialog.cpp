@@ -128,6 +128,10 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
     if(!tileset::OpenSimpleTileset(fileName,simple)){
         QMessageBox::warning(this, tr("Failed to load tileset!"), tr("Failed to load tileset!\nData may be corrupted!"));
     }else{
+        ui->spin_width->setValue(simple.cols);
+        ui->spin_height->setValue(simple.rows);
+        ui->comboBox->setCurrentIndex(static_cast<int>(simple.type));
+        setUpItems();
         m_tileset->loadSimpleTileset(simple);
     }
 }
