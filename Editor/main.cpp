@@ -30,6 +30,7 @@
 int main(int argc, char *argv[])
 {
     QApplication::addLibraryPath(".");
+
     QApplication *a = new QApplication(argc, argv);
     a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
 
