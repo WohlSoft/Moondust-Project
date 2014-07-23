@@ -23,8 +23,9 @@
 
 #include "../../world_scene/item_level.h"
 #include "../../common_features/levelfilelist.h"
+#include "../../file_formats/file_formats.h"
 
-static bool wld_tools_lock=false;
+bool wld_tools_lock=false;
 
 
 void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
@@ -205,6 +206,41 @@ void MainWindow::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
 void MainWindow::on_WLD_PROPS_LVLBrowse_clicked()
 {
     if(wld_tools_lock) return;
+
+    QString dirPath;
+    if(activeChildWindow()==3)
+    {
+        dirPath = activeWldEditWin()->WldData.path;
+    }
+    else
+        return;
+
+    LevelFileList levelList(dirPath, ui->WLD_PROPS_LVLFile->text());
+    if( levelList.exec() == QDialog::Accepted )
+    {
+        ui->WLD_PROPS_LVLFile->setText(levelList.SelectedFile);
+
+        QRegExp lvlext = QRegExp("*.lvl");
+        lvlext.setPatternSyntax(QRegExp::Wildcard);
+
+        //Attempt to read level title:
+        QString FilePath = dirPath+"/"+levelList.SelectedFile;
+        QFile file(FilePath);
+
+        if (!file.open(QIODevice::ReadOnly)) return;
+
+        LevelData getLevelHead;
+        getLevelHead.LevelName = "";
+        if( lvlext.exactMatch(FilePath) )
+        {
+            getLevelHead = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
+            if( !getLevelHead.ReadFileValid ) return;
+        }
+
+        file.close();
+        if(!getLevelHead.LevelName.isEmpty())
+            ui->WLD_PROPS_LVLTitle->setText( getLevelHead.LevelName );
+    }
 
 }
 

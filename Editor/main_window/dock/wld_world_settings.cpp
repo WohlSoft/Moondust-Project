@@ -19,7 +19,10 @@
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
 
-static bool world_settings_lock_fields=false;
+#include "../../common_features/levelfilelist.h"
+#include "../../file_formats/file_formats.h"
+
+bool world_settings_lock_fields=false;
 QList<QCheckBox * > WLD_CharacterCheckBoxes;
 
 
@@ -151,6 +154,21 @@ void MainWindow::on_WLD_AutostartLvlBrowse_clicked()
 {
     if(world_settings_lock_fields) return;
 
+    QString dirPath;
+    if(activeChildWindow()==3)
+    {
+        dirPath = activeWldEditWin()->WldData.path;
+    }
+    else
+        return;
+
+    LevelFileList levelList(dirPath, ui->WLD_AutostartLvl->text());
+    if( levelList.exec() == QDialog::Accepted )
+    {
+        ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
+        on_WLD_AutostartLvl_textEdited(levelList.SelectedFile);
+    }
+
 }
 
 void MainWindow::on_WLD_Stars_valueChanged(int arg1)
@@ -168,6 +186,57 @@ void MainWindow::on_WLD_DoCountStars_clicked()
 {
     if(world_settings_lock_fields) return;
 
+    //Count stars of all used levels on this world map
+
+    QString dirPath;
+    long starzzz=0;
+
+    if (activeChildWindow()==3)
+    {
+        WorldEdit * edit = activeWldEditWin();
+        dirPath = edit->WldData.path;
+
+        QRegExp lvlext = QRegExp("*.lvl");
+        lvlext.setPatternSyntax(QRegExp::Wildcard);
+
+        QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, edit->WldData.levels.size(), this);
+             progress.setWindowTitle(tr("Counting stars..."));
+             progress.setWindowModality(Qt::WindowModal);
+             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+             progress.setFixedSize(progress.size());
+             progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+             progress.setMinimumDuration(0);
+
+        for(int i=0;i<edit->WldData.levels.size();i++)
+        {
+            //Attempt to read stars quantity of level:
+
+            if(edit->WldData.levels[i].lvlfile.isEmpty()) continue;
+            QString FilePath = dirPath+"/"+edit->WldData.levels[i].lvlfile;
+            if(!QFile(FilePath).exists()) continue;
+
+            QFile file(FilePath);
+            if (!file.open(QIODevice::ReadOnly)) continue;
+
+            LevelData getLevelHead;
+            getLevelHead.stars = 0;
+            if( lvlext.exactMatch(FilePath) )
+            {
+                getLevelHead = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
+                if( !getLevelHead.ReadFileValid ) continue;
+            }
+            file.close();
+            starzzz+=getLevelHead.stars;
+
+            if(progress.wasCanceled()) break;
+            progress.setValue(i);
+            qApp->processEvents();
+        }
+
+        if(progress.wasCanceled()) return;
+        ui->WLD_Stars->setValue(starzzz);
+        progress.close();
+    }
 }
 
 void MainWindow::on_WLD_Credirs_textChanged()

@@ -55,7 +55,7 @@ void MainWindow::OpenFile(QString FilePath)
 
     GlobalSettings::openPath = in_1.absoluteDir().absolutePath();
 
-    if(in_1.suffix() == "lvl")
+    if(in_1.suffix().toLower() == "lvl")
     {
 
         LevelData FileData = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
@@ -89,7 +89,7 @@ void MainWindow::OpenFile(QString FilePath)
         }
     }
     else
-    if(in_1.suffix() == "wld")
+    if(in_1.suffix().toLower() == "wld")
     {
         WorldData FileData = FileFormats::ReadWorldFile(file);
         if( !FileData.ReadFileValid ) return;
@@ -117,7 +117,7 @@ void MainWindow::OpenFile(QString FilePath)
 
     }
     else
-    if(in_1.suffix() == "txt")
+    if(in_1.suffix().toLower() == "txt")
     {
         NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(file);
         if( !FileData.ReadFileValid ) return;
