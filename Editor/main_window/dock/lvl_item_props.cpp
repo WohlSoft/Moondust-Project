@@ -28,9 +28,9 @@
 #include "../../level_scene/itemmsgbox.h"
 
 
-static int npcSpecSpinOffset=0;
-static int npcSpecSpinOffset_2=0;
-static bool LockItemProps=true;
+int npcSpecSpinOffset=0;
+int npcSpecSpinOffset_2=0;
+bool LockItemProps=true;
 
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {

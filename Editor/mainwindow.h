@@ -555,6 +555,9 @@ private slots:
     void on_actionWLDFailRestart_triggered(bool checked);
     void on_actionWLDProperties_triggered();
 
+signals:
+    void closeEditor();
+
 private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
@@ -594,6 +597,9 @@ private:
     bool doSearchNPC(leveledit* edit);
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
+    QMediaPlayer playSnd;
+    QMediaPlaylist CurrentMusic;
+
     QSlider* muVol;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);

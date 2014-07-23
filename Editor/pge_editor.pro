@@ -22,7 +22,7 @@
 #
 #----------------------------------------------------------------------------
 
-QT       += core gui widgets multimedia opengl
+QT       += gui widgets multimedia
 
 TARGET = pge_editor
 TEMPLATE = app

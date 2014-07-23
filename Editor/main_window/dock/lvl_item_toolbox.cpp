@@ -26,11 +26,11 @@
 #include "../../data_configs/custom_data.h"
 
 
-static QString allLabel = "[all]";
-static QString customLabel = "[custom]";
+QString allLabel = "[all]";
+QString customLabel = "[custom]";
 
-static bool lock_grp=false;
-static bool lock_cat=false;
+bool lock_grp=false;
+bool lock_cat=false;
 
 
 void MainWindow::UpdateCustomItems()

@@ -28,11 +28,11 @@
 
 
 
-static QString allWLabel = "[all]";
-static QString customWLabel = "[custom]";
+QString allWLabel = "[all]";
+QString customWLabel = "[custom]";
 
-static bool lock_Wgrp=false;
-static bool lock_Wcat=false;
+bool lock_Wgrp=false;
+bool lock_Wcat=false;
 
 
 //void MainWindow::UpdateWldCustomItems()
