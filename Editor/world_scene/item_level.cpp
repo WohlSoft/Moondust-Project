@@ -183,11 +183,11 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             }
             //if(deleted) MainWinConnect::pMainWin->activeLvlEditWin()->scene->addRemoveHistory( removedItems );
         }
-//        else
-//        if(selected==props)
-//        {
-//            scene->openProps();
-//        }
+        else
+        if(selected==props)
+        {
+            scene->openProps();
+        }
 //        else
 //        {
 //            bool itemIsFound=false;

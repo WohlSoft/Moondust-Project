@@ -240,6 +240,7 @@
      <string>View</string>
     </property>
     <addaction name="actionWLDToolBox"/>
+    <addaction name="actionWorld_settings"/>
     <addaction name="actionLVLToolBox"/>
     <addaction name="actionSection_Settings"/>
     <addaction name="actionWarpsAndDoors"/>
@@ -1007,7 +1008,6 @@
    <addaction name="actionGridEn"/>
    <addaction name="separator"/>
    <addaction name="actionReload"/>
-   <addaction name="actionWLDToolBox"/>
   </widget>
   <widget class="QToolBar" name="LevelObjectToolbar">
    <property name="contextMenuPolicy">
@@ -1042,6 +1042,25 @@
    <addaction name="actionLayersBox"/>
    <addaction name="actionLevelEvents"/>
    <addaction name="actionLVLSearchBox"/>
+  </widget>
+  <widget class="QToolBar" name="WorldObjectToolbar">
+   <property name="windowTitle">
+    <string>World map Toolbar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionLockTiles"/>
+   <addaction name="actionLockScenes"/>
+   <addaction name="actionLockPaths"/>
+   <addaction name="actionLockLevels"/>
+   <addaction name="actionLockMusicBoxes"/>
+   <addaction name="separator"/>
+   <addaction name="actionWLDToolBox"/>
+   <addaction name="actionWorld_settings"/>
   </widget>
   <widget class="QToolBar" name="LevelSectionsToolBar">
    <property name="contextMenuPolicy">
@@ -1450,7 +1469,7 @@
     <bool>false</bool>
    </property>
    <property name="features">
-    <set>QDockWidget::AllDockWidgetFeatures</set>
+    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetFloatable</set>
    </property>
    <property name="allowedAreas">
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
@@ -1616,7 +1635,7 @@
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>221</width>
+       <width>219</width>
        <height>121</height>
       </rect>
      </property>
@@ -1638,87 +1657,109 @@
      <property name="title">
       <string>Section Settings</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <widget class="QCheckBox" name="LVLPropsLevelWarp">
-        <property name="font">
-         <font>
-          <family>Liberation Sans</family>
-          <pointsize>8</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="whatsThis">
-         <string>Leaving for the screen, the player enters the screen on the other side</string>
-        </property>
-        <property name="text">
-         <string>Warp section</string>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="LVLPropsOffScr">
-        <property name="font">
-         <font>
-          <family>Liberation Sans</family>
-          <pointsize>8</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Off screen exit</string>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="LVLPropsNoTBack">
-        <property name="font">
-         <font>
-          <family>Liberation Sans</family>
-          <pointsize>8</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>No turn back (disable moving to left)</string>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="LVLPropsUnderWater">
-        <property name="font">
-         <font>
-          <family>Liberation Sans</family>
-          <pointsize>8</pointsize>
-          <weight>50</weight>
-          <italic>false</italic>
-          <bold>false</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Underwater</string>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QCheckBox" name="LVLPropsLevelWarp">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>23</y>
+        <width>88</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="whatsThis">
+       <string>Leaving for the screen, the player enters the screen on the other side</string>
+      </property>
+      <property name="text">
+       <string>Warp section</string>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="LVLPropsOffScr">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>46</y>
+        <width>97</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Off screen exit</string>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="LVLPropsNoTBack">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>69</y>
+        <width>197</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>No turn back (disable moving to left)</string>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="LVLPropsUnderWater">
+      <property name="geometry">
+       <rect>
+        <x>11</x>
+        <y>92</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Liberation Sans</family>
+        <pointsize>8</pointsize>
+        <weight>50</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Underwater</string>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
     </widget>
     <widget class="QGroupBox" name="LVLPropStyleGr">
      <property name="geometry">
@@ -2631,7 +2672,7 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>245</width>
+          <width>280</width>
           <height>1330</height>
          </rect>
         </property>
@@ -3809,7 +3850,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>270</width>
-          <height>617</height>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3991,8 +4032,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>617</height>
+          <width>199</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4073,8 +4114,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>617</height>
+          <width>196</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4167,8 +4208,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>617</height>
+          <width>222</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4465,8 +4506,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>617</height>
+          <width>193</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4581,8 +4622,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>617</height>
+          <width>193</width>
+          <height>114</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4679,8 +4720,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>617</height>
+          <width>108</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4827,8 +4868,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>409</height>
+          <width>300</width>
+          <height>491</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5055,8 +5096,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>409</height>
+          <width>194</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5204,8 +5245,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>265</width>
-          <height>409</height>
+          <width>220</width>
+          <height>295</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5479,6 +5520,9 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
     <iconset resource="_resources/editor.qrc">
      <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
    </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
    <property name="windowTitle">
     <string>Item Properties</string>
    </property>
@@ -5716,6 +5760,168 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          </spacer>
         </item>
        </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="WorldSettings">
+   <property name="windowIcon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>World Settings</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QGridLayout" name="gridLayout_18" rowstretch="0,0,0,0,0,0,0,0,0,0,80" columnstretch="20,80,0">
+     <item row="4" column="0" colspan="3">
+      <widget class="QLabel" name="label_58">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Intro level:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0" colspan="3">
+      <widget class="QGroupBox" name="WLD_DisableCharacters">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Disable characters:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0" colspan="3">
+      <widget class="QTextEdit" name="WLD_Credirs">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="autoFormatting">
+        <set>QTextEdit::AutoNone</set>
+       </property>
+       <property name="html">
+        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="acceptRichText">
+        <bool>false</bool>
+       </property>
+       <property name="placeholderText">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0" colspan="3">
+      <widget class="QLabel" name="label_60">
+       <property name="font">
+        <font>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Credits of this world (SMBX allows only 5 lines):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="3">
+      <widget class="QLabel" name="label_57">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>World title:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="2">
+      <widget class="QPushButton" name="WLD_DoCountStars">
+       <property name="text">
+        <string>Count</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QPushButton" name="WLD_AutostartLvlBrowse">
+       <property name="text">
+        <string>Browse</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_59">
+       <property name="text">
+        <string>Total stars:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="3">
+      <widget class="QCheckBox" name="WLD_NoWorldMap">
+       <property name="text">
+        <string>Hub-styled world (without world map)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="3">
+      <widget class="QCheckBox" name="WLD_RestartLevel">
+       <property name="text">
+        <string>Restart last level after fail</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QSpinBox" name="WLD_Stars">
+       <property name="maximum">
+        <number>999999999</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="3">
+      <widget class="QLineEdit" name="WLD_Title"/>
+     </item>
+     <item row="5" column="0" colspan="2">
+      <widget class="QLineEdit" name="WLD_AutostartLvl"/>
+     </item>
+     <item row="7" column="0" colspan="3">
+      <widget class="Line" name="line_13">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
       </widget>
      </item>
     </layout>
@@ -7206,6 +7412,83 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   <action name="actionConvert_PNG_to_GIF_with_mask_PNG2GIFs">
    <property name="text">
     <string>Convert PNG to GIF with mask (PNG2GIFs)...</string>
+   </property>
+  </action>
+  <action name="actionWorld_settings">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
+   </property>
+   <property name="text">
+    <string>World settings</string>
+   </property>
+  </action>
+  <action name="actionLockTiles">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/lock_tile_op.png</normaloff>
+     <normalon>:/images/lock_tile_cl.png</normalon>:/images/lock_tile_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock tiles</string>
+   </property>
+  </action>
+  <action name="actionLockScenes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/lock_scenery_op.png</normaloff>
+     <normalon>:/images/lock_scenery_cl.png</normalon>:/images/lock_scenery_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock Sceneries</string>
+   </property>
+  </action>
+  <action name="actionLockPaths">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/lock_paths_op.png</normaloff>
+     <normalon>:/images/lock_paths_cl.png</normalon>:/images/lock_paths_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock Paths</string>
+   </property>
+  </action>
+  <action name="actionLockLevels">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/lock_levels_op.png</normaloff>
+     <normalon>:/images/lock_levels_cl.png</normalon>:/images/lock_levels_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock Levels</string>
+   </property>
+  </action>
+  <action name="actionLockMusicBoxes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/lock_musicbox_op.png</normaloff>
+     <normalon>:/images/lock_musicbox_cl.png</normalon>:/images/lock_musicbox_op.png</iconset>
+   </property>
+   <property name="text">
+    <string>Lock Music Boxes</string>
    </property>
   </action>
  </widget>

@@ -29,7 +29,86 @@ static bool wld_tools_lock=false;
 
 void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
 {
+    wld_tools_lock=true;
 
+    switch(Type)
+    {
+    case 0:
+        {
+            if(newItem)
+                wlvlPtr = -1;
+            else
+                wlvlPtr = level.array_id;
+
+            ui->WLD_PROPS_lvlID->setText(tr("Level ID: %1, Array ID: %2").arg(level.id).arg(level.array_id));
+            ui->WLD_PROPS_lvlPos->setText( tr("Position: [%1, %2]").arg(level.x).arg(level.y) );
+            ui->WLD_PROPS_LVLTitle->setText(level.title);
+            ui->WLD_PROPS_LVLFile->setText(level.lvlfile);
+            ui->WLD_PROPS_EnterTo->setValue(level.entertowarp);
+
+            ui->WLD_PROPS_AlwaysVis->setChecked(level.alwaysVisible);
+            ui->WLD_PROPS_PathBG->setChecked(level.pathbg);
+            ui->WLD_PROPS_BigPathBG->setChecked(level.bigpathbg);
+            ui->WLD_PROPS_GameStart->setChecked(level.gamestart);
+
+            ui->WLD_PROPS_GotoX->setText((level.gotox==-1) ? "" : QString::number(level.gotox));
+            ui->WLD_PROPS_GotoY->setText((level.gotoy==-1) ? "" : QString::number(level.gotoy));
+
+            if(newItem)
+            {//Reset value to min, if it out of range
+                if(level.left_exit >= ui->WLD_PROPS_ExitLeft->count() )
+                {
+                   WldPlacingItems::LevelSet.left_exit = -1;
+                   level.left_exit = -1;
+                }
+            }
+            ui->WLD_PROPS_ExitLeft->setCurrentIndex( level.left_exit+1 );
+
+            if(newItem)
+            {//Reset value to min, if it out of range
+                if(level.right_exit >= ui->WLD_PROPS_ExitRight->count() )
+                {
+                   WldPlacingItems::LevelSet.right_exit = -1;
+                   level.right_exit = -1;
+                }
+            }
+            ui->WLD_PROPS_ExitRight->setCurrentIndex( level.left_exit+1 );
+
+            if(newItem)
+            {//Reset value to min, if it out of range
+                if(level.top_exit >= ui->WLD_PROPS_ExitTop->count() )
+                {
+                   WldPlacingItems::LevelSet.top_exit = -1;
+                   level.top_exit = -1;
+                }
+            }
+            ui->WLD_PROPS_ExitTop->setCurrentIndex( level.top_exit+1 );
+
+            if(newItem)
+            {//Reset value to min, if it out of range
+                if(level.bottom_exit >= ui->WLD_PROPS_ExitBottom->count() )
+                {
+                   WldPlacingItems::LevelSet.bottom_exit = -1;
+                   level.bottom_exit = -1;
+                }
+            }
+            ui->WLD_PROPS_ExitBottom->setCurrentIndex( level.bottom_exit+1 );
+
+            ui->WLD_ItemProps->setVisible(true);
+            ui->WLD_ItemProps->show();
+            ui->WLD_ItemProps->raise();
+
+            wld_tools_lock=false;
+
+            ui->WLD_ItemProps->show();
+
+            break;
+        }
+    case -1: //Nothing to edit
+    default:
+        ui->WLD_ItemProps->hide();
+    }
+    wld_tools_lock=false;
 }
 
 

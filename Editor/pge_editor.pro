@@ -152,7 +152,8 @@ SOURCES += main.cpp\
     main_window/dock/wld_item_toolbox.cpp \
     world_scene/HistoryManagerWld.cpp \
     main_window/dock/wld_item_props.cpp \
-    world_scene/item_music.cpp
+    world_scene/item_music.cpp \
+    main_window/dock/wld_world_settings.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

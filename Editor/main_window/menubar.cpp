@@ -52,7 +52,10 @@ void MainWindow::updateMenus(bool force)
     ui->actionCut->setEnabled( (WinType==1) || (WinType==3) );
 
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
+    ui->WorldObjectToolbar->setVisible( (WinType==3) );
+
     ui->ItemProperties->setVisible(false);
+    ui->WLD_ItemProps->setVisible(false);
 
 
 
@@ -88,18 +91,20 @@ void MainWindow::updateMenus(bool force)
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
     {
         GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
+        GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
         ui->WorldToolBox->setVisible( 0 );
+        ui->WorldSettings->setVisible( 0 );
     }
 
     if((GlobalSettings::lastWinType !=3) && (WinType==3))
     {
         ui->WorldToolBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
+        ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
     }
 
 
 
     GlobalSettings::lastWinType =   WinType;
-
 
 
     ui->actionLVLToolBox->setVisible( (WinType==1) );
@@ -110,6 +115,9 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevelEvents->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
     ui->actionLVLSearchBox->setVisible( (WinType==1) );
+
+    ui->actionWLDToolBox->setVisible( (WinType==3) );
+    ui->actionWorld_settings->setVisible( (WinType==3) );
 
     ui->menuLevel->setEnabled( (WinType==1) );
 
@@ -223,6 +231,9 @@ void MainWindow::updateMenus(bool force)
             return;
         }
 
+        setCurrentWorldSettings();
+
+
         if(LvlMusPlay::musicType!=LvlMusPlay::WorldMusic) LvlMusPlay::musicForceReset=true;
         LvlMusPlay::musicType=LvlMusPlay::WorldMusic;
         setMusic( ui->actionPlayMusic->isChecked() );
@@ -230,6 +241,12 @@ void MainWindow::updateMenus(bool force)
 
         if(activeWldEditWin()->sceneCreated)
         {
+            ui->actionLockTiles->setChecked(activeWldEditWin()->scene->lock_tile);
+            ui->actionLockScenes->setChecked(activeWldEditWin()->scene->lock_scene);
+            ui->actionLockPaths->setChecked(activeWldEditWin()->scene->lock_path);
+            ui->actionLockLevels->setChecked(activeWldEditWin()->scene->lock_level);
+            ui->actionLockMusicBoxes->setChecked(activeWldEditWin()->scene->lock_musbox);
+
             ui->actionGridEn->setChecked(activeWldEditWin()->scene->grid);
 
             GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
