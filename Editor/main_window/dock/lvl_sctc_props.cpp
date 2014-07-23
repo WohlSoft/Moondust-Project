@@ -20,7 +20,7 @@
 #include "../../mainwindow.h"
 #include "../music_player.h"
 
-static bool lockSctSettingsProps=false;
+bool lockSctSettingsProps=false;
 
 // Level Section Settings
 void MainWindow::on_LVLPropsLevelWarp_clicked(bool checked)

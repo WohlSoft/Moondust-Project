@@ -50,8 +50,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     else
     {
         saveSettings();
+        closeEditor();
         event->accept();
-        qApp->quit();
-        //exit(0);
     }
 }
