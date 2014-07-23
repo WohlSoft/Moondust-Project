@@ -153,7 +153,8 @@ SOURCES += main.cpp\
     world_scene/HistoryManagerWld.cpp \
     main_window/dock/wld_item_props.cpp \
     world_scene/item_music.cpp \
-    main_window/dock/wld_world_settings.cpp
+    main_window/dock/wld_world_settings.cpp \
+    common_features/proxystyle.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -210,7 +211,8 @@ HEADERS  += mainwindow.h \
     world_scene/item_path.h \
     world_scene/item_level.h \
     world_scene/item_music.h \
-    world_scene/wld_item_placing.h
+    world_scene/wld_item_placing.h \
+    common_features/proxystyle.h
 
 FORMS    += \
     mainwindow.ui \

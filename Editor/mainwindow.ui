@@ -2103,8 +2103,8 @@
        <rect>
         <x>10</x>
         <y>90</y>
-        <width>77</width>
-        <height>20</height>
+        <width>78</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="maxVisibleItems">
@@ -2155,7 +2155,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>No Yoshi</string>
+       <string>No Vehicles</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_4">
@@ -3428,6 +3428,9 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                </item>
                <item row="0" column="1">
                 <widget class="QComboBox" name="PROPS_NPCGenType">
+                 <property name="sizeAdjustPolicy">
+                  <enum>QComboBox::AdjustToContents</enum>
+                 </property>
                  <item>
                   <property name="text">
                    <string>Warp</string>
@@ -5506,7 +5509,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
   <widget class="QDockWidget" name="WLD_ItemProps">
    <property name="minimumSize">
     <size>
-     <width>260</width>
+     <width>300</width>
      <height>527</height>
     </size>
    </property>
@@ -5551,7 +5554,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
        <property name="title">
         <string>Level</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_16" columnstretch="0,80,0">
+       <layout class="QGridLayout" name="gridLayout_16" columnstretch="0,0,0">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -5656,46 +5659,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           </property>
          </widget>
         </item>
-        <item row="12" column="0" colspan="3">
-         <widget class="QGroupBox" name="groupBox_6">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>121</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>121</height>
-           </size>
-          </property>
-          <property name="title">
-           <string>Open path by exists:</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_17">
-           <item row="2" column="0">
-            <widget class="QComboBox" name="WLD_PROPS_ExitLeft"/>
-           </item>
-           <item row="2" column="2">
-            <widget class="QComboBox" name="WLD_PROPS_ExitRight"/>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_55">
-             <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/images/warp_exit.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1" rowspan="2">
-            <widget class="QComboBox" name="WLD_PROPS_ExitTop"/>
-           </item>
-           <item row="3" column="1">
-            <widget class="QComboBox" name="WLD_PROPS_ExitBottom"/>
-           </item>
-          </layout>
-         </widget>
-        </item>
         <item row="13" column="0" colspan="3">
          <widget class="QGroupBox" name="groupBox_3">
           <property name="minimumSize">
@@ -5758,6 +5721,86 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="12" column="0" colspan="3">
+         <widget class="QGroupBox" name="groupBox_6">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>121</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>121</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Open path by exists:</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_17">
+           <item row="2" column="0">
+            <widget class="QComboBox" name="WLD_PROPS_ExitLeft">
+             <property name="maxVisibleItems">
+              <number>50</number>
+             </property>
+             <property name="insertPolicy">
+              <enum>QComboBox::InsertAtBottom</enum>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::AdjustToContents</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QComboBox" name="WLD_PROPS_ExitRight">
+             <property name="maxVisibleItems">
+              <number>50</number>
+             </property>
+             <property name="insertPolicy">
+              <enum>QComboBox::InsertAtBottom</enum>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::AdjustToContents</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_55">
+             <property name="text">
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/images/warp_exit.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" rowspan="2">
+            <widget class="QComboBox" name="WLD_PROPS_ExitTop">
+             <property name="maxVisibleItems">
+              <number>50</number>
+             </property>
+             <property name="insertPolicy">
+              <enum>QComboBox::InsertAtBottom</enum>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::AdjustToContents</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="WLD_PROPS_ExitBottom">
+             <property name="maxVisibleItems">
+              <number>50</number>
+             </property>
+             <property name="insertPolicy">
+              <enum>QComboBox::InsertAtBottom</enum>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QComboBox::AdjustToContents</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
