@@ -97,9 +97,16 @@ void MainWindow::OpenFile(QString FilePath)
 
         WorldEdit *child = createWldChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
-            updateMenus(true);
-            statusBar()->showMessage(tr("World map file loaded"), 2000);
             child->show();
+
+            updateMenus(true);            
+            setCurrentWorldSettings();
+            if(FileData.noworldmap)
+            {
+                ui->WorldSettings->setVisible(true);
+                ui->WorldSettings->raise();
+            }
+            statusBar()->showMessage(tr("World map file loaded"), 2000);
         } else {
             child->close();
         }
