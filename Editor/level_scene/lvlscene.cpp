@@ -72,11 +72,9 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
 
     //set dummy images if target not exist or wrong
-    uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.gif");
-    npcmask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
-    uNpcImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-    uNpcImg.setMask(npcmask);
-    uBgoImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
+    uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.png");
+    uNpcImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.png");
+    uBgoImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.png");
 
 
     //set Default Z Indexes
