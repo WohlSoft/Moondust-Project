@@ -24,6 +24,7 @@
 #include <QSystemSemaphore>
 
 #include "common_features/logger.h"
+#include "common_features/proxystyle.h"
 
 //Regular expressions for File Formats
 
@@ -67,6 +68,8 @@ int main(int argc, char *argv[])
         WriteToLog(QtDebugMsg, "--> Application already running, aborting <--");
         return 0;
     }
+
+    a.setStyle(new PGE_ProxyStyle);
 
     // ////////////////////////////////////////////////////
     WriteToLog(QtDebugMsg, "--> Application started <--");
