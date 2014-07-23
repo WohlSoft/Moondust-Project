@@ -288,9 +288,7 @@ void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
 
        activeWldEditWin()->scene->setItemPlacer(3, item->data(3).toInt() );
 
-//       LvlItemProps(1,FileFormats::dummyLvlBlock(),
-//                                 LvlPlacingItems::bgoSet,
-//                                 FileFormats::dummyLvlNpc(), true);
+       WldItemProps(0, WldPlacingItems::LevelSet, true);
 
        activeWldEditWin()->setFocus();
     }

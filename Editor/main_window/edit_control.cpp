@@ -42,6 +42,7 @@ void MainWindow::on_actionSelect_triggered()
     ui->actionSelect->setChecked(1);
 
     ui->ItemProperties->hide();
+    ui->WLD_ItemProps->hide();
 
     if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
     {

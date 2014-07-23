@@ -162,64 +162,36 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
 void WldScene::openProps()
 {
-//    QList<QGraphicsItem * > items = this->selectedItems();
-//    if(!items.isEmpty())
-//    {
-//        if(items.first()->data(0).toString()=="Block")
-//        {
-//            MainWinConnect::pMainWin->LvlItemProps(0,
-//                          ((ItemBlock *)items.first())->blockData,
-//                          FileFormats::dummyLvlBgo(),
-//                          FileFormats::dummyLvlNpc(), false);
-//        }
-//        else
-//        if(items.first()->data(0).toString()=="BGO")
-//        {
-//            MainWinConnect::pMainWin->LvlItemProps(1,
-//                              FileFormats::dummyLvlBlock(),
-//                              ((ItemBGO *)items.first())->bgoData,
-//                              FileFormats::dummyLvlNpc(), false);
-//        }
-//        else
-//        if(items.first()->data(0).toString()=="NPC")
-//        {
-//            MainWinConnect::pMainWin->LvlItemProps(2,
-//                              FileFormats::dummyLvlBlock(),
-//                              FileFormats::dummyLvlBgo(),
-//                              ((ItemNPC *)items.first())->npcData, false);
-//        }
-//        else
-//        MainWinConnect::pMainWin->LvlItemProps(-1,
-//                                               FileFormats::dummyLvlBlock(),
-//                                               FileFormats::dummyLvlBgo(),
-//                                               FileFormats::dummyLvlNpc());
-//    }
-//    else
-//    {
-//        MainWinConnect::pMainWin->LvlItemProps(-1,
-//                                               FileFormats::dummyLvlBlock(),
-//                                               FileFormats::dummyLvlBgo(),
-//                                               FileFormats::dummyLvlNpc());
-//    }
+    QList<QGraphicsItem * > items = this->selectedItems();
+    if(!items.isEmpty())
+    {
+        if(items.first()->data(0).toString()=="LEVEL")
+        {
+            MainWinConnect::pMainWin->WldItemProps(0,
+                          ((ItemLevel *)items.first())->levelData,
+                          false);
+        }
+        else
+        MainWinConnect::pMainWin->WldItemProps(-1,
+                                               FileFormats::dummyWldLevel(),
+                                               false);
+    }
+    else
+    {
+        MainWinConnect::pMainWin->WldItemProps(-1,
+                                               FileFormats::dummyWldLevel(),
+                                               false );
+    }
 
-//    QGraphicsScene::selectionChanged();
+    QGraphicsScene::selectionChanged();
 }
 
 void WldScene::selectionChanged()
 {
-//    if(this->selectedItems().isEmpty())
-//    {
-//        LevelBlock dummyBlock;
-//        dummyBlock.array_id=0;
-
-//        LevelBGO dummyBgo;
-//        dummyBgo.array_id=0;
-
-//        LevelNPC dummyNPC;
-//        dummyNPC.array_id=0;
-
-//        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
-//    }
+    if(this->selectedItems().isEmpty())
+    {
+        MainWinConnect::pMainWin->WldItemProps(-1, FileFormats::dummyWldLevel());
+    }
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "Selection Changed!");

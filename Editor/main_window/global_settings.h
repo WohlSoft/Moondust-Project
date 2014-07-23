@@ -46,12 +46,13 @@ public:
 
     //Toolboxes visibly states
     static bool LevelToolBoxVis;
-    static bool WorldToolBoxVis;
     static bool SectionToolBoxVis;
     static bool LevelDoorsBoxVis;
     static bool LevelLayersBoxVis;
     static bool LevelEventsBoxVis;
     static bool LevelSearchBoxVis;
+    static bool WorldToolBoxVis;
+    static bool WorldSettingsToolboxVis;
 
     //Last active file type state
     static int lastWinType;
