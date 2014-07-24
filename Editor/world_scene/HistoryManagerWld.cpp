@@ -37,6 +37,21 @@ void WldScene::addRemoveHistory(WorldData removedItems)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void WldScene::addPlaceHistory(WorldData placedItems)
+{
+    //add cleanup redo elements
+    cleanupRedoElements();
+    //add new element
+    HistoryOperation plOperation;
+    plOperation.type = HistoryOperation::WORLDHISTORY_PLACE;
+    plOperation.data = placedItems;
+
+    operationList.push_back(plOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems)
 {
     cleanupRedoElements();
@@ -99,6 +114,16 @@ void WldScene::historyBack()
 
         break;
     }
+    case HistoryOperation::WORLDHISTORY_PLACE:
+    {
+        //revert place
+        WorldData placeData = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(placeData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels);
+
+        break;
+    }
     case HistoryOperation::WORLDHISTORY_MOVE:
     {
         //revert move
@@ -131,6 +156,42 @@ void WldScene::historyForward()
 
         CallbackData cbData;
         findGraphicsItem(deletedData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels);
+
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_PLACE:
+    {
+        //revert remove
+        WorldData placedData = lastOperation.data;
+
+        foreach (WorldTiles tile, placedData.tiles)
+        {
+            //place them back
+            WldData->tiles.push_back(tile);
+            placeTile(tile);
+        }
+        foreach (WorldPaths path, placedData.paths)
+        {
+            //place them back
+            WldData->paths.push_back(path);
+            placePath(path);
+        }
+        foreach (WorldScenery scenery, placedData.scenery)
+        {
+            //place them back
+            WldData->scenery.push_back(scenery);
+            placeScenery(scenery);
+        }
+        foreach (WorldLevels level, placedData.levels)
+        {
+            //place them back
+            WldData->levels.push_back(level);
+            placeLevel(level);
+        }
+
+        //refresh Animation control
+        if(opts.animationEnabled) stopAnimation();
+        if(opts.animationEnabled) startAnimation();
 
         break;
     }
