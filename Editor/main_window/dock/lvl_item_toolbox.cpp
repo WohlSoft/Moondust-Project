@@ -121,7 +121,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 
 
                 if(configs.main_block[j].animated)
-                    tmpI = block.image.copy(0,0,
+                    tmpI = block.image.copy(0,
+                                (int)round(block.image.height() / configs.main_block[j].frames)*configs.main_block[j].display_frame,
                                 block.image.width(),
                                 (int)round(block.image.height() / configs.main_block[j].frames));
                 else
@@ -171,7 +172,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
                 ((blockItem.category==cat_blocks)||(cat_blocks==allLabel)))
         {
             if(blockItem.animated)
-                tmpI = blockItem.image.copy(0,0,
+                tmpI = blockItem.image.copy(0,
+                            (int)round(blockItem.image.height() / blockItem.frames)*blockItem.display_frame,
                             blockItem.image.width(),
                             (int)round(blockItem.image.height() / blockItem.frames));
             else
@@ -246,7 +248,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 
 
                 if(configs.main_bgo[j].animated)
-                    tmpI = bgo.image.copy(0,0,
+                    tmpI = bgo.image.copy(0,
+                                (int)round(bgo.image.height() / configs.main_bgo[j].frames) * configs.main_bgo[j].display_frame,
                                 bgo.image.width(),
                                 (int)round(bgo.image.height() / configs.main_bgo[j].frames));
                 else
@@ -297,7 +300,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
            )
         {
             if(bgoItem.animated)
-                tmpI = bgoItem.image.copy(0,0,
+                tmpI = bgoItem.image.copy(0,
+                            (int)round(bgoItem.image.height() / bgoItem.frames)*bgoItem.display_frame,
                             bgoItem.image.width(),
                             (int)round(bgoItem.image.height() / bgoItem.frames) );
             else
