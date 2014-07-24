@@ -1047,7 +1047,7 @@ void WldScene::setScreenshotSelector(QPoint start, bool enabled, bool accept)
         pResizer->_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+        MainWinConnect::pMainWin->activeWldEditWin()->changeCursor(5);
     }
     else
     {
@@ -1056,14 +1056,14 @@ void WldScene::setScreenshotSelector(QPoint start, bool enabled, bool accept)
             if(accept)
             {
                 #ifdef _DEBUG_
-                WriteToLog(QtDebugMsg, QString("SECTION RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
+                WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
-                long l = pResizer->pos().x();
-                long t = pResizer->pos().y();
-                long r = l+pResizer->_width;
-                long b = t+pResizer->_height;
+                //long l = pResizer->pos().x();
+                //long t = pResizer->pos().y();
+                //long r = l+pResizer->_width;
+                //long b = t+pResizer->_height;
 
-                LvlData->modified = true;
+                //WldData->modified = true;
             }
             delete pResizer;
             pResizer = NULL;
