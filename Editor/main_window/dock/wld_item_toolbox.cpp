@@ -109,7 +109,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     foreach(obj_w_tile tileItem, configs.main_wtiles )
     {
             if(tileItem.animated)
-                tmpI = tileItem.image.copy(0,0,
+                tmpI = tileItem.image.copy(0,
+                            (int)round(tileItem.image.height() / tileItem.frames) * tileItem.display_frame,
                             tileItem.image.width(),
                             (int)round(tileItem.image.height() / tileItem.frames));
             else
@@ -136,7 +137,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     foreach(obj_w_scenery sceneItem, configs.main_wscene)
     {
             if(sceneItem.animated)
-                tmpI = sceneItem.image.copy(0,0,
+                tmpI = sceneItem.image.copy(0,
+                            (int)round(sceneItem.image.height() / sceneItem.frames) * sceneItem.display_frame,
                             sceneItem.image.width(),
                             (int)round(sceneItem.image.height() / sceneItem.frames));
             else
@@ -170,7 +172,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     foreach(obj_w_path pathItem, configs.main_wpaths )
     {
             if(pathItem.animated)
-                tmpI = pathItem.image.copy(0,0,
+                tmpI = pathItem.image.copy(0,
+                            (int)round(pathItem.image.height() / pathItem.frames)*pathItem.display_frame,
                             pathItem.image.width(),
                             (int)round(pathItem.image.height() / pathItem.frames));
             else
@@ -200,7 +203,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
                (configs.marker_wlvl.bigpath==levelItem.id))
                 continue;
             if(levelItem.animated)
-                tmpI = levelItem.image.copy(0,0,
+                tmpI = levelItem.image.copy(0,
+                            (int)round(levelItem.image.height() / levelItem.frames)*levelItem.display_frame,
                             levelItem.image.width(),
                             (int)round(levelItem.image.height() / levelItem.frames));
             else

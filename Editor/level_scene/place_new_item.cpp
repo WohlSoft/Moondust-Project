@@ -160,7 +160,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 setSquareDrawer(); return;
             }
 
-            cursor = addPixmap(tImg.copy(0,0,
+            cursor = addPixmap(tImg.copy(0,
+                                         LvlPlacingItems::blockSet.h*pConfigs->main_block[j].display_frame,
                                          LvlPlacingItems::blockSet.w,
                                          LvlPlacingItems::blockSet.h
                                          )
@@ -254,7 +255,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,w,h));
+        cursor = addPixmap(tImg.copy(0, h*pConfigs->main_bgo[j].display_frame, w, h));
 
         cursor->setData(0, "BGO");
         cursor->setData(1, QString::number(itemID));

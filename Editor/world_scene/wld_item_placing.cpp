@@ -139,7 +139,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,w,h));
+        cursor = addPixmap(tImg.copy(0,h*pConfigs->main_wtiles[j].display_frame,w,h));
 
         cursor->setData(0, "TILE");
         cursor->setData(1, QString::number(itemID));
@@ -233,7 +233,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,iw,ih));
+        cursor = addPixmap(tImg.copy(0,ih * pConfigs->main_wscene[j].display_frame ,iw,ih));
 
         cursor->setData(0, "SCENERY");
         cursor->setData(1, QString::number(itemID));
@@ -325,7 +325,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,w,h));
+        cursor = addPixmap(tImg.copy(0,h * pConfigs->main_wpaths[j].display_frame, w ,h));
 
         cursor->setData(0, "PATH");
         cursor->setData(1, QString::number(itemID));
@@ -421,7 +421,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,iw,ih));
+        cursor = addPixmap(tImg.copy(0, ih * pConfigs->main_wlevels[j].display_frame ,iw,ih));
 
         int imgOffsetX = (int)qRound( -( qreal(tImg.width()) - qreal(WldPlacingItems::gridSz))  / 2 );
         int imgOffsetY = (int)qRound( -qreal(
