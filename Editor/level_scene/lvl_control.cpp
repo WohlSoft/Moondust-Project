@@ -663,6 +663,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             QGraphicsScene::mouseReleaseEvent(mouseEvent);
             return;
+        }else{
+            addPlaceHistory(placingItems);
+            placingItems.blocks.clear();
+            placingItems.bgo.clear();
+            placingItems.npc.clear();
         }
     }
     default:
@@ -1070,7 +1075,6 @@ void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 
 void LvlScene::placeItemUnderCursor()
 {
-    LevelData newData;
     bool wasPlaced=false;
     if( itemCollidesWith(cursor) )
     {
@@ -1088,7 +1092,7 @@ void LvlScene::placeItemUnderCursor()
 
             LvlData->blocks.push_back(LvlPlacingItems::blockSet);
             placeBlock(LvlPlacingItems::blockSet, true);
-            newData.blocks.push_back(LvlPlacingItems::blockSet);
+            placingItems.blocks.push_back(LvlPlacingItems::blockSet);
             wasPlaced=true;
         }
         else
@@ -1102,7 +1106,7 @@ void LvlScene::placeItemUnderCursor()
 
             LvlData->bgo.push_back(LvlPlacingItems::bgoSet);
             placeBGO(LvlPlacingItems::bgoSet, true);
-            newData.bgo.push_back(LvlPlacingItems::bgoSet);
+            placingItems.bgo.push_back(LvlPlacingItems::bgoSet);
             wasPlaced=true;
         }
         else
@@ -1118,7 +1122,7 @@ void LvlScene::placeItemUnderCursor()
 
             placeNPC(LvlPlacingItems::npcSet, true);
 
-            newData.npc.push_back(LvlPlacingItems::npcSet);
+            placingItems.npc.push_back(LvlPlacingItems::npcSet);
 
             if(opts.animationEnabled) stopAnimation();
             if(opts.animationEnabled) startBlockAnimation();
@@ -1203,7 +1207,6 @@ void LvlScene::placeItemUnderCursor()
     if(wasPlaced)
     {
         LvlData->modified = true;
-        addPlaceHistory(newData);
     }
 
     //if(opts.animationEnabled) stopAnimation();
