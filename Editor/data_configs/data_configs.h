@@ -334,6 +334,12 @@ struct obj_sound
     bool hidden;
 };
 
+struct obj_playable_character
+{
+    unsigned long id;
+    QString name;
+};
+
 
 
 
@@ -345,6 +351,9 @@ public:
     bool loadconfigs(QProgressDialog *prgs=NULL);
     DataFolders dirs;
     QString config_dir;
+
+    //Playable Characters
+    QVector<obj_playable_character > characters;
 
     //Level map items
     QVector<obj_BG > main_bg;
