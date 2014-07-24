@@ -91,23 +91,47 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
-//    foreach(obj_w_tile tileItem, configs.main_wtiles)
-//    {
-//            if(tileItem.animated)
-//                tmpI = tileItem.image.copy(0,0,
-//                            tileItem.image.width(),
-//                            (int)round(tileItem.image.height() / tileItem.frames));
-//            else
-//                tmpI = tileItem.image;
+    ui->WLD_TilesList->clear();
+    unsigned int tableRows=0;
+    unsigned int tableCols=0;
 
-//            item = new QListWidgetItem();
-//            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-//            item->setText( NULL );
-//            item->setData(3, QString::number(tileItem.id) );
-//            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+    //get Table size
+    foreach(obj_w_tile tileItem, configs.main_wtiles )
+    {
+        if(tableRows<tileItem.row+1) tableRows=tileItem.row+1;
+        if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
+    }
 
-//            ui->WLD_TilesList->addItem( item );
-//    }
+    ui->WLD_TilesList->setRowCount(tableRows);
+    ui->WLD_TilesList->setColumnCount(tableCols);
+    ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
+
+    foreach(obj_w_tile tileItem, configs.main_wtiles )
+    {
+            if(tileItem.animated)
+                tmpI = tileItem.image.copy(0,0,
+                            tileItem.image.width(),
+                            (int)round(tileItem.image.height() / tileItem.frames));
+            else
+                tmpI = tileItem.image;
+
+        QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.row, tileItem.col);
+
+        if (!Titem || Titem->text().isEmpty())
+        {
+            Titem = new QTableWidgetItem();
+            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setText( NULL );
+            Titem->setSizeHint(QSize(32,32));
+            Titem->setData(3, QString::number(tileItem.id) );
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+            ui->WLD_TilesList->setRowHeight(tileItem.row, 34);
+            ui->WLD_TilesList->setColumnWidth(tileItem.col, 34);
+
+            ui->WLD_TilesList->setItem(tileItem.row,tileItem.col, Titem);
+        }
+    }
 
     foreach(obj_w_scenery sceneItem, configs.main_wscene)
     {
@@ -129,8 +153,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
 
     ui->WLD_PathsList->clear();
-    unsigned int tableRows=0;
-    unsigned int tableCols=0;
+    tableRows=0;
+    tableCols=0;
 
     //get Table size
     foreach(obj_w_path pathItem, configs.main_wpaths )
@@ -154,7 +178,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
         QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.row, pathItem.col);
 
-        if (!item || item->text().isEmpty())
+        if (!Titem || Titem->text().isEmpty())
         {
             Titem = new QTableWidgetItem();
             Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
@@ -163,8 +187,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
             Titem->setData(3, QString::number(pathItem.id) );
             Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
 
-            ui->WLD_PathsList->setRowHeight(pathItem.row, 33);
-            ui->WLD_PathsList->setColumnWidth(pathItem.col, 33);
+            ui->WLD_PathsList->setRowHeight(pathItem.row, 34);
+            ui->WLD_PathsList->setColumnWidth(pathItem.col, 34);
 
             ui->WLD_PathsList->setItem(pathItem.row,pathItem.col, Titem);
         }
