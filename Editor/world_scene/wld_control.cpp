@@ -1036,6 +1036,44 @@ void WldScene::removeItemUnderCursor()
     }
 }
 
+void WldScene::setScreenshotSelector(QPoint start, bool enabled, bool accept)
+{
+    if((enabled)&&(pResizer==NULL))
+    {
+        pResizer = new ItemResizer( QSize(800, 600), Qt::yellow, 32 );
+        this->addItem(pResizer);
+        pResizer->setPos(start.x()-400, start.y()-300);
+        pResizer->type=0;
+        pResizer->_minSize = QSizeF(800, 600);
+        this->setFocus(Qt::ActiveWindowFocusReason);
+        //DrawMode=true;
+        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+    }
+    else
+    {
+        if(pResizer!=NULL)
+        {
+            if(accept)
+            {
+                #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, QString("SECTION RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
+                #endif
+                long l = pResizer->pos().x();
+                long t = pResizer->pos().y();
+                long r = l+pResizer->_width;
+                long b = t+pResizer->_height;
+
+                LvlData->modified = true;
+            }
+            delete pResizer;
+            pResizer = NULL;
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            //resetResizingSection=true;
+        }
+        DrawMode=false;
+    }
+}
+
 
 void WldScene::SwitchEditingMode(int EdtMode)
 {
