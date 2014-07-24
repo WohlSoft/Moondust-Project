@@ -76,7 +76,7 @@ void PiecesModel::addPiece(const int &index)
     {
         pixmapNames.insert(pixmaps.size(), QString("dummy"));
         pixmaps.insert(pixmaps.size(), m_conf->main_wtiles[index].image.copy(0,0,m_conf->main_wtiles[index].image.width(),
-                                                                             qRound(qreal(m_conf->main_block[index].image.height()) / m_conf->main_wtiles[index].frames)));
+                                                                             qRound(qreal(m_conf->main_wtiles[index].image.height()) / m_conf->main_wtiles[index].frames)));
         pixmapId.insert(pixmaps.size(), m_conf->main_wtiles[index].id);
     }
     endInsertRows();

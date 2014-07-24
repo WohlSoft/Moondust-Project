@@ -235,7 +235,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
         return m_conf->main_wtiles[tarIndex].image.copy(0,0,m_conf->main_wtiles[tarIndex].image.width(),
-                                                     qRound(qreal(m_conf->main_block[tarIndex].image.height()) / m_conf->main_wtiles[tarIndex].frames))
+                                                     qRound(qreal(m_conf->main_wtiles[tarIndex].image.height()) / m_conf->main_wtiles[tarIndex].frames))
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
