@@ -96,6 +96,21 @@ void TilesetConfigureDialog::setUpItems(tileset::TilesetType type)
         }
         break;
     }
+    case tileset::WORLDTILESET_PATH:
+        for(int i = 0; i < m_conf->main_wpaths.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
+    case tileset::WORLDTILESET_SCENERY:
+        for(int i = 0; i < m_conf->main_wscene.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
+    case tileset::WORLDTILESET_LEVEL:
+        for(int i = 0; i < m_conf->main_wlevels.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
     default:
         break;
     }

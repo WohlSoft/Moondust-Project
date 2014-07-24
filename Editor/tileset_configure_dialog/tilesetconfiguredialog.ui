@@ -120,7 +120,22 @@
        </item>
        <item>
         <property name="text">
-         <string>Tiles</string>
+         <string>Tile</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Path</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Scenery</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Level</string>
         </property>
        </item>
       </widget>

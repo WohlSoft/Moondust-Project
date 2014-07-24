@@ -239,6 +239,36 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
+    case WORLDTILESET_PATH:
+    {
+        long tarIndex = m_conf->getPathI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+        return m_conf->main_wpaths[tarIndex].image.copy(0,0,m_conf->main_wpaths[tarIndex].image.width(),
+                                                     qRound(qreal(m_conf->main_wpaths[tarIndex].image.height()) / m_conf->main_wpaths[tarIndex].frames))
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        break;
+    }
+    case WORLDTILESET_SCENERY:
+    {
+        long tarIndex = m_conf->getSceneI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+        return m_conf->main_wscene[tarIndex].image.copy(0,0,m_conf->main_wscene[tarIndex].image.width(),
+                                                     qRound(qreal(m_conf->main_wscene[tarIndex].image.height()) / m_conf->main_wscene[tarIndex].frames))
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        break;
+    }
+    case WORLDTILESET_LEVEL:
+    {
+        long tarIndex = m_conf->getWLevelI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+        return m_conf->main_wlevels[tarIndex].image.copy(0,0,m_conf->main_wlevels[tarIndex].image.width(),
+                                                     qRound(qreal(m_conf->main_wlevels[tarIndex].image.height()) / m_conf->main_wlevels[tarIndex].frames))
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        break;
+    }
     default:
         break;
     }
@@ -252,6 +282,9 @@ QString tileset::getMimeType()
     case LEVELTILESET_BGO: return QString("text/x-pge-piece-bgo");
     case LEVELTILESET_NPC: return QString("text/x-pge-piece-npc");
     case WORLDTILESET_TILE: return QString("text/x-pge-piece-tile");
+    case WORLDTILESET_PATH: return QString("text/x-pge-piece-path");
+    case WORLDTILESET_SCENERY: return QString("text/x-pge-piece-scenery");
+    case WORLDTILESET_LEVEL: return QString("text/x-pge-piece-level");
     default:
         break;
     }
