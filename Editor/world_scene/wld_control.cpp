@@ -549,6 +549,18 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     //            QGraphicsScene::mouseReleaseEvent(mouseEvent);
     //            return;
     //        }
+            if(!placingItems.tiles.isEmpty()||
+                    !placingItems.paths.isEmpty()||
+                    !placingItems.scenery.isEmpty()||
+                    !placingItems.levels.isEmpty()||
+                    !placingItems.music.isEmpty()){
+                addPlaceHistory(placingItems);
+                placingItems.tiles.clear();
+                placingItems.paths.clear();
+                placingItems.scenery.clear();
+                placingItems.levels.clear();
+                placingItems.music.clear();
+            }
         }
     default:
         break;
@@ -847,7 +859,6 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 
 void WldScene::placeItemUnderCursor()
 {
-    WorldData newData;
     bool wasPlaced=false;
     if( itemCollidesWith(cursor) )
     {
@@ -865,7 +876,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->tiles.push_back(WldPlacingItems::TileSet);
             placeTile(WldPlacingItems::TileSet, true);
-            newData.tiles.push_back(WldPlacingItems::TileSet);
+            placingItems.tiles.push_back(WldPlacingItems::TileSet);
             wasPlaced=true;
         }
         else
@@ -879,7 +890,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->scenery.push_back(WldPlacingItems::SceneSet);
             placeScenery(WldPlacingItems::SceneSet, true);
-            newData.scenery.push_back(WldPlacingItems::SceneSet);
+            placingItems.scenery.push_back(WldPlacingItems::SceneSet);
             wasPlaced=true;
         }
         else
@@ -893,7 +904,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->paths.push_back(WldPlacingItems::PathSet);
             placePath(WldPlacingItems::PathSet, true);
-            newData.paths.push_back(WldPlacingItems::PathSet);
+            placingItems.paths.push_back(WldPlacingItems::PathSet);
             wasPlaced=true;
         }
         else
@@ -907,7 +918,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->levels.push_back(WldPlacingItems::LevelSet);
             placeLevel(WldPlacingItems::LevelSet, true);
-            newData.levels.push_back(WldPlacingItems::LevelSet);
+            placingItems.levels.push_back(WldPlacingItems::LevelSet);
             wasPlaced=true;
         }
         else
@@ -921,7 +932,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->music.push_back(WldPlacingItems::MusicSet);
             placeMusicbox(WldPlacingItems::MusicSet, true);
-            newData.music.push_back(WldPlacingItems::MusicSet);
+            placingItems.music.push_back(WldPlacingItems::MusicSet);
             wasPlaced=true;
         }
 
@@ -929,7 +940,6 @@ void WldScene::placeItemUnderCursor()
     if(wasPlaced)
     {
         WldData->modified = true;
-        //addPlaceHistory(newData);
     }
 
     //if(opts.animationEnabled) stopAnimation();

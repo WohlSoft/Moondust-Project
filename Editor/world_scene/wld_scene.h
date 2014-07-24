@@ -95,6 +95,7 @@ public:
     int placingItem;
     QGraphicsItem * cursor;
     void placeItemUnderCursor();
+    WorldData placingItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
 
@@ -202,6 +203,7 @@ public:
     typedef void (WldScene::*callBackWorldLevels)(CallbackData, WorldLevels);
 
     void addRemoveHistory(WorldData removedItems);
+    void addPlaceHistory(WorldData placedItems);
     void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
 
     //history modifiers
