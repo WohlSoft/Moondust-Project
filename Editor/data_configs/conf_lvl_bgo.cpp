@@ -160,6 +160,7 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
             sbgo.animated = (bgoset.value("animated", "0").toString()=="1");
             sbgo.frames = bgoset.value("frames", "1").toInt();
             sbgo.framespeed = bgoset.value("frame-speed", "125").toInt();
+            sbgo.display_frame = bgoset.value("display-frame", "0").toInt();
             sbgo.id = i;
             main_bgo.push_back(sbgo);
 
