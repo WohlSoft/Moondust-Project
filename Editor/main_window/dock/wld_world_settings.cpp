@@ -65,6 +65,11 @@ void MainWindow::setCurrentWorldSettings()
         //ui->WLD_DisableCharacters
 
 
+        //Need to dinamicly add the character's list into menu and into groupbox.
+        //Actions must set/unset the edit->WldData.nocharacter1, edit->WldData.nocharacter2, ... values.
+        //
+
+
     }
     world_settings_lock_fields=false;
 }
