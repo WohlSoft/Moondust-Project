@@ -253,6 +253,9 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    frame-speed=128
         //        unsigned int framespeed;
             snpc.framespeed = npcset.value("frame-speed", "128").toInt();
+
+
+            snpc.display_frame = npcset.value("display-frame", "0").toInt();
         //    //    foreground=0
         //        bool foreground;
             snpc.foreground = npcset.value("foreground", "0").toBool();
