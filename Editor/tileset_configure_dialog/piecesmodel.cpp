@@ -74,7 +74,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_TILE)
     {
-        pixmapNames.insert(pixmaps.size(), QString("dummy"));
+        pixmapNames.insert(pixmaps.size(), QString("tile-%1").arg(index));
         pixmaps.insert(pixmaps.size(), m_conf->main_wtiles[index].image.copy(0,0,m_conf->main_wtiles[index].image.width(),
                                                                              qRound(qreal(m_conf->main_wtiles[index].image.height()) / m_conf->main_wtiles[index].frames)));
         pixmapId.insert(pixmaps.size(), m_conf->main_wtiles[index].id);
@@ -82,7 +82,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_PATH)
     {
-        pixmapNames.insert(pixmaps.size(), QString("dummy"));
+        pixmapNames.insert(pixmaps.size(), QString("path-%1").arg(index));
         pixmaps.insert(pixmaps.size(), m_conf->main_wpaths[index].image.copy(0,0,m_conf->main_wpaths[index].image.width(),
                                                                              qRound(qreal(m_conf->main_wpaths[index].image.height()) / m_conf->main_wpaths[index].frames)));
         pixmapId.insert(pixmaps.size(), m_conf->main_wpaths[index].id);
@@ -90,7 +90,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_SCENERY)
     {
-        pixmapNames.insert(pixmaps.size(), QString("dummy"));
+        pixmapNames.insert(pixmaps.size(), QString("scenery-%1").arg(index));
         pixmaps.insert(pixmaps.size(), m_conf->main_wscene[index].image.copy(0,0,m_conf->main_wscene[index].image.width(),
                                                                              qRound(qreal(m_conf->main_wscene[index].image.height()) / m_conf->main_wscene[index].frames)));
         pixmapId.insert(pixmaps.size(), m_conf->main_wscene[index].id);
@@ -98,7 +98,7 @@ void PiecesModel::addPiece(const int &index)
     else
     if(m_type==WORLDPIECE_LEVEL)
     {
-        pixmapNames.insert(pixmaps.size(), QString("dummy"));
+        pixmapNames.insert(pixmaps.size(), QString("level-%1").arg(index));
         pixmaps.insert(pixmaps.size(), m_conf->main_wlevels[index].image.copy(0,0,m_conf->main_wlevels[index].image.width(),
                                                                              qRound(qreal(m_conf->main_wlevels[index].image.height()) / m_conf->main_wlevels[index].frames)));
         pixmapId.insert(pixmaps.size(), m_conf->main_wlevels[index].id);
