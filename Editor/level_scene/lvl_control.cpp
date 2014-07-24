@@ -664,10 +664,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QGraphicsScene::mouseReleaseEvent(mouseEvent);
             return;
         }else{
-            addPlaceHistory(placingItems);
-            placingItems.blocks.clear();
-            placingItems.bgo.clear();
-            placingItems.npc.clear();
+            if(!placingItems.blocks.isEmpty()||
+                    !placingItems.bgo.isEmpty()||
+                    !placingItems.npc.isEmpty()){
+                addPlaceHistory(placingItems);
+                placingItems.blocks.clear();
+                placingItems.bgo.clear();
+                placingItems.npc.clear();
+            }
         }
     }
     default:
