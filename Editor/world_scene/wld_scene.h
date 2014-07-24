@@ -201,6 +201,7 @@ public:
     typedef void (WldScene::*callBackWorldPaths)(CallbackData, WorldPaths);
     typedef void (WldScene::*callBackWorldScenery)(CallbackData, WorldScenery);
     typedef void (WldScene::*callBackWorldLevels)(CallbackData, WorldLevels);
+    typedef void (WldScene::*callBackWorldMusicbox)(CallbackData, WorldMusic);
 
     void addRemoveHistory(WorldData removedItems);
     void addPlaceHistory(WorldData placedItems);
@@ -219,23 +220,27 @@ public:
     void historyRedoMovePath(CallbackData cbData, WorldPaths data);
     void historyRedoMoveScenery(CallbackData cbData, WorldScenery data);
     void historyRedoMoveLevels(CallbackData cbData, WorldLevels data);
+    void historyRedoMoveMusic(CallbackData cbData, WorldMusic data);
     void historyUndoMoveTile(CallbackData cbData, WorldTiles data);
     void historyUndoMovePath(CallbackData cbData, WorldPaths data);
     void historyUndoMoveScenery(CallbackData cbData, WorldScenery data);
     void historyUndoMoveLevels(CallbackData cbData, WorldLevels data);
+    void historyUndoMoveMusic(CallbackData cbData, WorldMusic data);
     //Callbackfunctions: Remove
     void historyRemoveTiles(CallbackData cbData, WorldTiles data);
     void historyRemovePath(CallbackData cbData, WorldPaths data);
     void historyRemoveScenery(CallbackData cbData, WorldScenery data);
     void historyRemoveLevels(CallbackData cbData, WorldLevels data);
+    void historyRemoveMusic(CallbackData cbData, WorldMusic data);
     //miscellaneous
     void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackWorldTiles clbTiles, callBackWorldPaths clbPaths,
-                          callBackWorldScenery clbScenery, callBackWorldLevels clbLevels,
+                          callBackWorldScenery clbScenery, callBackWorldLevels clbLevels, callBackWorldMusicbox clbMusic,
                           bool ignoreTiles = false,
                           bool ignorePaths = false,
                           bool ignoreScenery = false,
-                          bool ignoreLevels = false);
+                          bool ignoreLevels = false,
+                          bool ignoreMusicbox = false);
     QPoint calcTopLeftCorner(WorldData* data);
     QString getHistoryText(HistoryOperation operation);
     //QString getHistorySettingText(SettingSubType subType);

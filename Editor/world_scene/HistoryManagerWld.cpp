@@ -120,7 +120,7 @@ void WldScene::historyBack()
         WorldData placeData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(placeData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels);
+        findGraphicsItem(placeData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels, &WldScene::historyRemoveMusic);
 
         break;
     }
@@ -130,7 +130,7 @@ void WldScene::historyBack()
         WorldData movedSourceData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &WldScene::historyUndoMoveTile, &WldScene::historyUndoMovePath, &WldScene::historyUndoMoveScenery, &WldScene::historyUndoMoveLevels);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &WldScene::historyUndoMoveTile, &WldScene::historyUndoMovePath, &WldScene::historyUndoMoveScenery, &WldScene::historyUndoMoveLevels, &WldScene::historyUndoMoveMusic);
 
         break;
     }
@@ -155,7 +155,7 @@ void WldScene::historyForward()
         WorldData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels, &WldScene::historyRemoveMusic);
 
         break;
     }
@@ -212,7 +212,7 @@ void WldScene::historyForward()
         CallbackData cbData;
         cbData.x = baseX;
         cbData.y = baseY;
-        findGraphicsItem(movedSourceData, &lastOperation, cbData, &WldScene::historyRedoMoveTile, &WldScene::historyRedoMovePath, &WldScene::historyRedoMoveScenery, &WldScene::historyRedoMoveLevels);
+        findGraphicsItem(movedSourceData, &lastOperation, cbData, &WldScene::historyRedoMoveTile, &WldScene::historyRedoMovePath, &WldScene::historyRedoMoveScenery, &WldScene::historyRedoMoveLevels, &WldScene::historyRedoMoveMusic);
         break;
     }
     default:
@@ -296,6 +296,17 @@ void WldScene::historyRedoMoveLevels(WldScene::CallbackData cbData, WorldLevels 
     ((ItemLevel *)(cbData.item))->arrayApply();
 }
 
+void WldScene::historyRedoMoveMusic(WldScene::CallbackData cbData, WorldMusic data)
+{
+    long diffX = data.x - cbData.x;
+    long diffY = data.y - cbData.y;
+
+    cbData.item->setPos(QPointF(cbData.hist->extraData.toList()[0].toInt()+diffX,cbData.hist->extraData.toList()[1].toInt()+diffY));
+    ((ItemMusic *)(cbData.item))->musicData.x = (long)cbData.item->scenePos().x();
+    ((ItemMusic *)(cbData.item))->musicData.y = (long)cbData.item->scenePos().y();
+    ((ItemMusic *)(cbData.item))->arrayApply();
+}
+
 void WldScene::historyUndoMoveTile(WldScene::CallbackData cbData, WorldTiles data)
 {
     cbData.item->setPos(QPointF(data.x,data.y));
@@ -328,6 +339,14 @@ void WldScene::historyUndoMoveLevels(WldScene::CallbackData cbData, WorldLevels 
     ((ItemLevel *)(cbData.item))->arrayApply();
 }
 
+void WldScene::historyUndoMoveMusic(WldScene::CallbackData cbData, WorldMusic data)
+{
+    cbData.item->setPos(QPointF(data.x,data.y));
+    ((ItemMusic *)(cbData.item))->musicData.x = (long)cbData.item->scenePos().x();
+    ((ItemMusic *)(cbData.item))->musicData.y = (long)cbData.item->scenePos().y();
+    ((ItemMusic *)(cbData.item))->arrayApply();
+}
+
 void WldScene::historyRemoveTiles(WldScene::CallbackData cbData, WorldTiles /*data*/)
 {
     ((ItemTile*)cbData.item)->removeFromArray();
@@ -356,7 +375,14 @@ void WldScene::historyRemoveLevels(WldScene::CallbackData cbData, WorldLevels /*
     delete cbData.item;
 }
 
-void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *operation, WldScene::CallbackData customData, WldScene::callBackWorldTiles clbTiles, WldScene::callBackWorldPaths clbPaths, WldScene::callBackWorldScenery clbScenery, WldScene::callBackWorldLevels clbLevels, bool ignoreTiles, bool ignorePaths, bool ignoreScenery, bool ignoreLevels)
+void WldScene::historyRemoveMusic(WldScene::CallbackData cbData, WorldMusic /*data*/)
+{
+    ((ItemMusic*)cbData.item)->removeFromArray();
+    removeItem(cbData.item);
+    delete cbData.item;
+}
+
+void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *operation, WldScene::CallbackData customData, WldScene::callBackWorldTiles clbTiles, WldScene::callBackWorldPaths clbPaths, WldScene::callBackWorldScenery clbScenery, WldScene::callBackWorldLevels clbLevels, callBackWorldMusicbox clbMusic, bool ignoreTiles, bool ignorePaths, bool ignoreScenery, bool ignoreLevels, bool ignoreMusicbox)
 {
     QMap<int, WorldTiles> sortedTiles;
     if(!ignoreTiles){
@@ -386,6 +412,13 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
             sortedLevels[level.array_id] = level;
         }
     }
+    QMap<int, WorldMusic> sortedMusic;
+    if(!ignoreMusicbox){
+        foreach (WorldMusic music, toFind.music)
+        {
+            sortedMusic[music.array_id] = music;
+        }
+    }
 
     CallbackData cbData = customData;
     cbData.hist = operation;
@@ -393,7 +426,7 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
     QMap<int, QGraphicsItem*> sortedGraphPath;
     QMap<int, QGraphicsItem*> sortedGraphScenery;
     QMap<int, QGraphicsItem*> sortedGraphLevels;
-
+    QMap<int, QGraphicsItem*> sortedGraphMusic;
     foreach (QGraphicsItem* unsortedItem, items())
     {
         if(unsortedItem->data(0).toString()=="TILE")
@@ -421,6 +454,13 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
         {
             if(!ignoreLevels){
                 sortedGraphLevels[unsortedItem->data(2).toInt()] = unsortedItem;
+            }
+        }
+        else
+        if(unsortedItem->data(0).toString()=="MUSICBOX")
+        {
+            if(!ignoreLevels){
+                sortedGraphMusic[unsortedItem->data(2).toInt()] = unsortedItem;
             }
         }
     }
@@ -549,6 +589,36 @@ void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *op
         }
     }
 
+    if(!ignoreMusicbox){
+        foreach (QGraphicsItem* item, sortedGraphMusic)
+        {
+
+            if(sortedMusic.size()!=0)
+            {
+                QMap<int, WorldMusic>::iterator beginItem = sortedMusic.begin();
+                unsigned int currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()>currentArrayId)
+                {
+                    //not found
+                    sortedMusic.erase(beginItem);
+                }
+
+                //but still test if the next blocks, is the block we search!
+                beginItem = sortedMusic.begin();
+                currentArrayId = (*beginItem).array_id;
+                if((unsigned int)item->data(2).toInt()==currentArrayId)
+                {
+                    cbData.item = item;
+                    (this->*clbMusic)(cbData,(*beginItem));
+                    sortedMusic.erase(beginItem);
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
 }
 
 QPoint WldScene::calcTopLeftCorner(WorldData *data)
