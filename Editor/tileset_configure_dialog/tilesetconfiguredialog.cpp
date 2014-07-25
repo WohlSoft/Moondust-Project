@@ -96,6 +96,21 @@ void TilesetConfigureDialog::setUpItems(tileset::TilesetType type)
         }
         break;
     }
+    case tileset::WORLDTILESET_PATH:
+        for(int i = 0; i < m_conf->main_wpaths.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
+    case tileset::WORLDTILESET_SCENERY:
+        for(int i = 0; i < m_conf->main_wscene.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
+    case tileset::WORLDTILESET_LEVEL:
+        for(int i = 0; i < m_conf->main_wlevels.size(); ++i){
+            m_model->addPiece(i);
+        }
+        break;
     default:
         break;
     }
@@ -128,6 +143,10 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
     if(!tileset::OpenSimpleTileset(fileName,simple)){
         QMessageBox::warning(this, tr("Failed to load tileset!"), tr("Failed to load tileset!\nData may be corrupted!"));
     }else{
+        ui->spin_width->setValue(simple.cols);
+        ui->spin_height->setValue(simple.rows);
+        ui->comboBox->setCurrentIndex(static_cast<int>(simple.type));
+        setUpItems(simple.type);
         m_tileset->loadSimpleTileset(simple);
     }
 }

@@ -26,11 +26,11 @@
 #include "../../data_configs/custom_data.h"
 
 
-static QString allLabel = "[all]";
-static QString customLabel = "[custom]";
+QString allLabel = "[all]";
+QString customLabel = "[custom]";
 
-static bool lock_grp=false;
-static bool lock_cat=false;
+bool lock_grp=false;
+bool lock_cat=false;
 
 
 void MainWindow::UpdateCustomItems()
@@ -52,6 +52,9 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 {
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
+
+    ui->menuNew->setEnabled(false);
+    ui->actionNew->setEnabled(false);
 
     if(!setCat)
     {
@@ -121,7 +124,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 
 
                 if(configs.main_block[j].animated)
-                    tmpI = block.image.copy(0,0,
+                    tmpI = block.image.copy(0,
+                                (int)round(block.image.height() / configs.main_block[j].frames)*configs.main_block[j].display_frame,
                                 block.image.width(),
                                 (int)round(block.image.height() / configs.main_block[j].frames));
                 else
@@ -171,7 +175,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
                 ((blockItem.category==cat_blocks)||(cat_blocks==allLabel)))
         {
             if(blockItem.animated)
-                tmpI = blockItem.image.copy(0,0,
+                tmpI = blockItem.image.copy(0,
+                            (int)round(blockItem.image.height() / blockItem.frames)*blockItem.display_frame,
                             blockItem.image.width(),
                             (int)round(blockItem.image.height() / blockItem.frames));
             else
@@ -246,7 +251,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 
 
                 if(configs.main_bgo[j].animated)
-                    tmpI = bgo.image.copy(0,0,
+                    tmpI = bgo.image.copy(0,
+                                (int)round(bgo.image.height() / configs.main_bgo[j].frames) * configs.main_bgo[j].display_frame,
                                 bgo.image.width(),
                                 (int)round(bgo.image.height() / configs.main_bgo[j].frames));
                 else
@@ -297,7 +303,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
            )
         {
             if(bgoItem.animated)
-                tmpI = bgoItem.image.copy(0,0,
+                tmpI = bgoItem.image.copy(0,
+                            (int)round(bgoItem.image.height() / bgoItem.frames)*bgoItem.display_frame,
                             bgoItem.image.width(),
                             (int)round(bgoItem.image.height() / bgoItem.frames) );
             else
@@ -428,6 +435,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 
     updateFilters();
 
+    ui->menuNew->setEnabled(true);
+    ui->actionNew->setEnabled(true);
 }
 
 // ///////////////////////////////////
@@ -510,6 +519,7 @@ void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeLvlEditWin()->scene->clearSelection();
        activeLvlEditWin()->changeCursor(2);
        activeLvlEditWin()->scene->EditingMode = 2;
@@ -517,6 +527,8 @@ void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        LvlPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
@@ -535,6 +547,7 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeLvlEditWin()->scene->clearSelection();
        activeLvlEditWin()->changeCursor(2);
        activeLvlEditWin()->scene->EditingMode = 2;
@@ -543,6 +556,8 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->EraserEnabled = false;
 
        LvlPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
@@ -562,6 +577,7 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
     //placeNPC
     if ((activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeLvlEditWin()->scene->clearSelection();
        activeLvlEditWin()->changeCursor(2);
        activeLvlEditWin()->scene->EditingMode = 2;
@@ -569,6 +585,10 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
+
+       LvlPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(false);
 
        LvlItemProps(2,FileFormats::dummyLvlBlock(),
                                  FileFormats::dummyLvlBgo(),

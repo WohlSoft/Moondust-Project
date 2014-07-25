@@ -65,6 +65,8 @@ public:
     bool disableMoveItems;
     bool contextMenuOpened;
 
+    QPixmap musicBoxImg;
+
     enum EditMode
     {
         MODE_Selecting=0,
@@ -93,6 +95,7 @@ public:
     int placingItem;
     QGraphicsItem * cursor;
     void placeItemUnderCursor();
+    WorldData placingItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
 
@@ -170,13 +173,16 @@ public:
     //void setEventSctSizeResizer(long event, bool enabled, bool accept=false);
     //void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     //void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
+    void setScreenshotSelector(QPoint start, bool enabled, bool accept = false);
 
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
         enum HistoryType{
             WORLDHISTORY_REMOVE = 0,               //Removed from map
             WORLDHISTORY_PLACE,                    //Placed new
-            WORLDHISTORY_MOVE                     //moved
+            WORLDHISTORY_MOVE,                     //moved
+            WORLDHISTORY_CHANGEDSETTINGSWORLD,
+            WORLDHISTORY_CHANGEDSETTINGSWORLDITEM
         };
         HistoryType type;
         //used most of Operations
@@ -193,7 +199,29 @@ public:
         //custom data
         long x, y;
     };
+
+    enum SettingSubType{
+        SETTING_HUB = 0,
+        SETTING_RESTARTAFTERFAIL,
+        SETTING_TOTALSTARS,
+        SETTING_INTROLEVEL,
+        SETTING_PATHBACKGROUND,
+        SETTING_BIGPATHBACKGROUND,
+        SETTING_ALWAYSVISIBLE
+    };
+
+    //typedefs
+    typedef void (WldScene::*callBackWorldTiles)(CallbackData, WorldTiles);
+    typedef void (WldScene::*callBackWorldPaths)(CallbackData, WorldPaths);
+    typedef void (WldScene::*callBackWorldScenery)(CallbackData, WorldScenery);
+    typedef void (WldScene::*callBackWorldLevels)(CallbackData, WorldLevels);
+    typedef void (WldScene::*callBackWorldMusicbox)(CallbackData, WorldMusic);
+
+    void addRemoveHistory(WorldData removedItems);
+    void addPlaceHistory(WorldData placedItems);
     void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
+    void addChangeWorldSettingsHistory(SettingSubType subtype, QVariant extraData);
+    void addChangeSettingsHistory(WorldData modifiedItems, SettingSubType subType, QVariant extraData);
 
     //history modifiers
     void historyBack();
@@ -203,8 +231,41 @@ public:
     int getHistroyIndex();
     bool canUndo();
     bool canRedo();
+    //Callback
+    void historyRedoMoveTile(CallbackData cbData, WorldTiles data);
+    void historyRedoMovePath(CallbackData cbData, WorldPaths data);
+    void historyRedoMoveScenery(CallbackData cbData, WorldScenery data);
+    void historyRedoMoveLevels(CallbackData cbData, WorldLevels data);
+    void historyRedoMoveMusic(CallbackData cbData, WorldMusic data);
+    void historyUndoMoveTile(CallbackData cbData, WorldTiles data);
+    void historyUndoMovePath(CallbackData cbData, WorldPaths data);
+    void historyUndoMoveScenery(CallbackData cbData, WorldScenery data);
+    void historyUndoMoveLevels(CallbackData cbData, WorldLevels data);
+    void historyUndoMoveMusic(CallbackData cbData, WorldMusic data);
+    //Callbackfunctions: Remove
+    void historyRemoveTiles(CallbackData cbData, WorldTiles data);
+    void historyRemovePath(CallbackData cbData, WorldPaths data);
+    void historyRemoveScenery(CallbackData cbData, WorldScenery data);
+    void historyRemoveLevels(CallbackData cbData, WorldLevels data);
+    void historyRemoveMusic(CallbackData cbData, WorldMusic data);
+    //Callbackfunctions: Levels
+    void historyUndoSettingPathBackgroundLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathBackgroundLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingBigPathBackgroundLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingBigPathBackgroundLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
+
     //miscellaneous
-    //QPoint calcTopLeftCorner(LevelData* data);
+    void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
+                          callBackWorldTiles clbTiles, callBackWorldPaths clbPaths,
+                          callBackWorldScenery clbScenery, callBackWorldLevels clbLevels, callBackWorldMusicbox clbMusic,
+                          bool ignoreTiles = false,
+                          bool ignorePaths = false,
+                          bool ignoreScenery = false,
+                          bool ignoreLevels = false,
+                          bool ignoreMusicbox = false);
+    QPoint calcTopLeftCorner(WorldData* data);
     QString getHistoryText(HistoryOperation operation);
     //QString getHistorySettingText(SettingSubType subType);
 

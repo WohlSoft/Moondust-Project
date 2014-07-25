@@ -20,7 +20,7 @@
 #include "../../mainwindow.h"
 #include "../music_player.h"
 
-static bool lockSctSettingsProps=false;
+bool lockSctSettingsProps=false;
 
 // Level Section Settings
 void MainWindow::on_LVLPropsLevelWarp_clicked(bool checked)
@@ -133,6 +133,7 @@ void MainWindow::on_ResizeSection_clicked()
             ui->ResizeSection->setVisible(false);
             ui->applyResize->setVisible(true);
             ui->cancelResize->setVisible(true);
+            ui->ResizingToolbar->setVisible(true);
         }
     }
 }
@@ -145,6 +146,7 @@ void MainWindow::on_applyResize_clicked()
         ui->ResizeSection->setVisible(true);
         ui->applyResize->setVisible(false);
         ui->cancelResize->setVisible(false);
+        ui->ResizingToolbar->setVisible(false);
     }
 }
 
@@ -156,6 +158,7 @@ void MainWindow::on_cancelResize_clicked()
         ui->ResizeSection->setVisible(true);
         ui->applyResize->setVisible(false);
         ui->cancelResize->setVisible(false);
+        ui->ResizingToolbar->setVisible(false);
     }
 }
 

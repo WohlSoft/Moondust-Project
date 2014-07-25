@@ -25,7 +25,7 @@
 #include "../../common_features/levelfilelist.h"
 
 
-static bool lockSetSettings=false;
+bool lockSetSettings=false;
 
 void MainWindow::setDoorsToolbox()
 {

@@ -122,7 +122,7 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->addSeparator()->deleteLater();
 
 
-        QAction * NoTransport = ItemMenu->addAction(tr("No Yoshi"));
+        QAction * NoTransport = ItemMenu->addAction(tr("No Vehicles"));
         NoTransport->setCheckable(true);
         NoTransport->setChecked( doorData.noyoshi );
         NoTransport->deleteLater();

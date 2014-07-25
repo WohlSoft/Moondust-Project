@@ -95,6 +95,7 @@ public:
     int placingItem;
     QGraphicsItem * cursor;
     void placeItemUnderCursor();
+    LevelData placingItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
 

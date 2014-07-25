@@ -28,6 +28,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     ui(new Ui::MainWindow)
 {
     //thread1 = new QThread;
+    this->setAttribute(Qt::WA_QuitOnClose, true);
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 
     setDefaults(); // Apply default common settings
 
@@ -60,8 +62,9 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
 MainWindow::~MainWindow()
 {
-    //TickTackLock = false;
+    MusicPlayer->stop();
     delete ui;
+    delete MusicPlayer;
     WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
 
@@ -75,7 +78,7 @@ void MainWindow::on_Exit_triggered()
     //ui->centralWidget->closeAllSubWindows();
     if(!MainWindow::close())
         return;
-    qApp->quit();
+    //qApp->quit();
     //exit(0);
 }
 

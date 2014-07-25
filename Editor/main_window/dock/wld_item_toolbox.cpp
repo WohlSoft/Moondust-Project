@@ -28,11 +28,11 @@
 
 
 
-static QString allWLabel = "[all]";
-static QString customWLabel = "[custom]";
+QString allWLabel = "[all]";
+QString customWLabel = "[custom]";
 
-static bool lock_Wgrp=false;
-static bool lock_Wcat=false;
+bool lock_Wgrp=false;
+bool lock_Wcat=false;
 
 
 //void MainWindow::UpdateWldCustomItems()
@@ -55,6 +55,9 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     allWLabel    = MainWindow::tr("[all]");
     customWLabel = MainWindow::tr("[custom]");
 
+    ui->menuNew->setEnabled(false);
+    ui->actionNew->setEnabled(false);
+
     if(!setCat)
     {
         lock_Wcat=true;
@@ -72,10 +75,10 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     WriteToLog(QtDebugMsg, "WorldTools -> Clear current");
 
+    ui->WLD_TilesList->clear();
     util::memclear(ui->WLD_SceneList);
-
     util::memclear(ui->WLD_LevelList);
-
+    ui->WLD_PathsList->clear();
     util::memclear(ui->WLD_MusicList);
 
     //util::memclear(ui->BlockItemsList);
@@ -91,28 +94,53 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
-//    foreach(obj_w_tile tileItem, configs.main_wtiles)
-//    {
-//            if(tileItem.animated)
-//                tmpI = tileItem.image.copy(0,0,
-//                            tileItem.image.width(),
-//                            (int)round(tileItem.image.height() / tileItem.frames));
-//            else
-//                tmpI = tileItem.image;
+    unsigned int tableRows=0;
+    unsigned int tableCols=0;
 
-//            item = new QListWidgetItem();
-//            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-//            item->setText( NULL );
-//            item->setData(3, QString::number(tileItem.id) );
-//            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+    //get Table size
+    foreach(obj_w_tile tileItem, configs.main_wtiles )
+    {
+        if(tableRows<tileItem.row+1) tableRows=tileItem.row+1;
+        if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
+    }
 
-//            ui->WLD_TilesList->addItem( item );
-//    }
+    ui->WLD_TilesList->setRowCount(tableRows);
+    ui->WLD_TilesList->setColumnCount(tableCols);
+    ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
+
+    foreach(obj_w_tile tileItem, configs.main_wtiles )
+    {
+            if(tileItem.animated)
+                tmpI = tileItem.image.copy(0,
+                            (int)round(tileItem.image.height() / tileItem.frames) * tileItem.display_frame,
+                            tileItem.image.width(),
+                            (int)round(tileItem.image.height() / tileItem.frames));
+            else
+                tmpI = tileItem.image;
+
+        QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.row, tileItem.col);
+
+        if (!Titem || Titem->text().isEmpty())
+        {
+            Titem = new QTableWidgetItem();
+            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setText( NULL );
+            Titem->setSizeHint(QSize(32,32));
+            Titem->setData(3, QString::number(tileItem.id) );
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+            ui->WLD_TilesList->setRowHeight(tileItem.row, 34);
+            ui->WLD_TilesList->setColumnWidth(tileItem.col, 34);
+
+            ui->WLD_TilesList->setItem(tileItem.row,tileItem.col, Titem);
+        }
+    }
 
     foreach(obj_w_scenery sceneItem, configs.main_wscene)
     {
             if(sceneItem.animated)
-                tmpI = sceneItem.image.copy(0,0,
+                tmpI = sceneItem.image.copy(0,
+                            (int)round(sceneItem.image.height() / sceneItem.frames) * sceneItem.display_frame,
                             sceneItem.image.width(),
                             (int)round(sceneItem.image.height() / sceneItem.frames));
             else
@@ -127,23 +155,47 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
             ui->WLD_SceneList->addItem( item );
     }
 
-    //    foreach(obj_w_tile pathItem, configs.main_wtiles)
-    //    {
-    //            if(tileItem.animated)
-    //                tmpI = tileItem.image.copy(0,0,
-    //                            tileItem.image.width(),
-    //                            (int)round(tileItem.image.height() / tileItem.frames));
-    //            else
-    //                tmpI = tileItem.image;
+    tableRows=0;
+    tableCols=0;
 
-    //            item = new QListWidgetItem();
-    //            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
-    //            item->setText( NULL );
-    //            item->setData(3, QString::number(tileItem.id) );
-    //            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+    //get Table size
+    foreach(obj_w_path pathItem, configs.main_wpaths )
+    {
+        if(tableRows<pathItem.row+1) tableRows=pathItem.row+1;
+        if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
+    }
 
-    //            ui->WLD_TilesList->addItem( item );
-    //    }
+    ui->WLD_PathsList->setRowCount(tableRows);
+    ui->WLD_PathsList->setColumnCount(tableCols);
+    ui->WLD_PathsList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
+
+    foreach(obj_w_path pathItem, configs.main_wpaths )
+    {
+            if(pathItem.animated)
+                tmpI = pathItem.image.copy(0,
+                            (int)round(pathItem.image.height() / pathItem.frames)*pathItem.display_frame,
+                            pathItem.image.width(),
+                            (int)round(pathItem.image.height() / pathItem.frames));
+            else
+                tmpI = pathItem.image;
+
+        QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.row, pathItem.col);
+
+        if (!Titem || Titem->text().isEmpty())
+        {
+            Titem = new QTableWidgetItem();
+            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setText( NULL );
+            Titem->setSizeHint(QSize(32,32));
+            Titem->setData(3, QString::number(pathItem.id) );
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+            ui->WLD_PathsList->setRowHeight(pathItem.row, 34);
+            ui->WLD_PathsList->setColumnWidth(pathItem.col, 34);
+
+            ui->WLD_PathsList->setItem(pathItem.row,pathItem.col, Titem);
+        }
+    }
 
     foreach(obj_w_level levelItem, configs.main_wlevels)
     {
@@ -151,7 +203,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
                (configs.marker_wlvl.bigpath==levelItem.id))
                 continue;
             if(levelItem.animated)
-                tmpI = levelItem.image.copy(0,0,
+                tmpI = levelItem.image.copy(0,
+                            (int)round(levelItem.image.height() / levelItem.frames)*levelItem.display_frame,
                             levelItem.image.width(),
                             (int)round(levelItem.image.height() / levelItem.frames));
             else
@@ -187,6 +240,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     updateFilters();
 
+    ui->menuNew->setEnabled(true);
+    ui->actionNew->setEnabled(true);
 }
 
 
@@ -198,6 +253,7 @@ void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_TilesList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -206,6 +262,8 @@ void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
@@ -225,6 +283,7 @@ void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -233,6 +292,8 @@ void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
@@ -251,6 +312,7 @@ void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -259,6 +321,8 @@ void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
 
@@ -277,6 +341,7 @@ void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -285,12 +350,12 @@ void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(3, item->data(3).toInt() );
 
-//       LvlItemProps(1,FileFormats::dummyLvlBlock(),
-//                                 LvlPlacingItems::bgoSet,
-//                                 FileFormats::dummyLvlNpc(), true);
+       WldItemProps(0, WldPlacingItems::LevelSet, true);
 
        activeWldEditWin()->setFocus();
     }
@@ -303,6 +368,7 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -311,11 +377,12 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(false);
 
        activeWldEditWin()->scene->setItemPlacer(4, item->data(3).toInt() );
 
        activeWldEditWin()->currentMusic = item->data(3).toInt();
-
        setMusic( ui->actionPlayMusic->isChecked() );
 
 //       LvlItemProps(1,FileFormats::dummyLvlBlock(),

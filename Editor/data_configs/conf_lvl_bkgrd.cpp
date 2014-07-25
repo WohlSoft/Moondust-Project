@@ -139,6 +139,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
 
             sbg.animated = (bgset.value("animated", "0").toString()=="1");//animated
             sbg.frames = bgset.value("frames", "1").toInt();
+            sbg.display_frame = bgset.value("display-frame", "0").toInt();
             //frames
 
             if(sbg.type==1)
