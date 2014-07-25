@@ -55,6 +55,9 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     allWLabel    = MainWindow::tr("[all]");
     customWLabel = MainWindow::tr("[custom]");
 
+    ui->menuNew->setEnabled(false);
+    ui->actionNew->setEnabled(false);
+
     if(!setCat)
     {
         lock_Wcat=true;
@@ -72,10 +75,10 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     WriteToLog(QtDebugMsg, "WorldTools -> Clear current");
 
+    ui->WLD_TilesList->clear();
     util::memclear(ui->WLD_SceneList);
-
     util::memclear(ui->WLD_LevelList);
-
+    ui->WLD_PathsList->clear();
     util::memclear(ui->WLD_MusicList);
 
     //util::memclear(ui->BlockItemsList);
@@ -91,7 +94,6 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
-    ui->WLD_TilesList->clear();
     unsigned int tableRows=0;
     unsigned int tableCols=0;
 
@@ -153,8 +155,6 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
             ui->WLD_SceneList->addItem( item );
     }
 
-
-    ui->WLD_PathsList->clear();
     tableRows=0;
     tableCols=0;
 
@@ -240,6 +240,8 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
     updateFilters();
 
+    ui->menuNew->setEnabled(true);
+    ui->actionNew->setEnabled(true);
 }
 
 
