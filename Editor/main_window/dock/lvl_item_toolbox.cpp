@@ -53,6 +53,9 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
 
+    ui->menuNew->setEnabled(false);
+    ui->actionNew->setEnabled(false);
+
     if(!setCat)
     {
         lock_cat=true;
@@ -432,6 +435,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 
     updateFilters();
 
+    ui->menuNew->setEnabled(true);
+    ui->actionNew->setEnabled(true);
 }
 
 // ///////////////////////////////////
