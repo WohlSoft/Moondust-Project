@@ -31,11 +31,16 @@ void MainWindow::setCurrentWorldSettings()
     world_settings_lock_fields=true;
     int WinType = activeChildWindow();
     //QCheckBox *
+
+    WriteToLog(QtDebugMsg, "-> Set Worldmap settings");
     if(WinType==3)
     {
         WorldEdit * edit = activeWldEditWin();
+
+        WriteToLog(QtDebugMsg, "-> setTitle");
         ui->WLD_Title->setText( edit->WldData.EpisodeTitle );
 
+        WriteToLog(QtDebugMsg, "-> setText");
         ui->WLD_AutostartLvl->setText( edit->WldData.autolevel );
 
         ui->WLD_Stars->setValue( edit->WldData.stars );
@@ -53,6 +58,7 @@ void MainWindow::setCurrentWorldSettings()
         credits += (edit->WldData.author5.isEmpty())? "" : edit->WldData.author5;
         ui->WLD_Credirs->setText( credits );
 
+        WriteToLog(QtDebugMsg, "-> Character List");
         //clear character list
         while(!WLD_CharacterCheckBoxes.isEmpty())
         {
@@ -61,6 +67,7 @@ void MainWindow::setCurrentWorldSettings()
             delete tmp;
         }
 
+        WriteToLog(QtDebugMsg, "-> Clear Menu");
         ui->menuDisable_characters->clear();
         //ui->WLD_DisableCharacters
 
@@ -70,6 +77,7 @@ void MainWindow::setCurrentWorldSettings()
         //
 
 
+        WriteToLog(QtDebugMsg, "-> Done");
     }
     world_settings_lock_fields=false;
 }

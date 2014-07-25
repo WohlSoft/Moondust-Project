@@ -1139,6 +1139,9 @@
     <number>1</number>
    </attribute>
    <widget class="QTabWidget" name="WorldToolBoxTabs">
+    <property name="tabPosition">
+     <enum>QTabWidget::West</enum>
+    </property>
     <property name="currentIndex">
      <number>0</number>
     </property>
@@ -4035,8 +4038,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>199</width>
-          <height>115</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4117,8 +4120,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>196</width>
-          <height>93</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4211,7 +4214,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>222</width>
+          <width>254</width>
           <height>461</height>
          </rect>
         </property>
@@ -4509,8 +4512,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
-          <height>159</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4625,8 +4628,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
-          <height>114</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4723,8 +4726,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>108</width>
-          <height>70</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5099,8 +5102,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>194</width>
-          <height>146</height>
+          <width>300</width>
+          <height>491</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5248,8 +5251,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>220</width>
-          <height>295</height>
+          <width>300</width>
+          <height>491</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5969,6 +5972,32 @@ p, li { white-space: pre-wrap; }
      </item>
     </layout>
    </widget>
+  </widget>
+  <widget class="QToolBar" name="PlacingToolbar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionSquareFill"/>
+   <addaction name="actionOverwriteMode"/>
+  </widget>
+  <widget class="QToolBar" name="ResizingToolbar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionResizeApply"/>
+   <addaction name="actionResizeCancel"/>
   </widget>
   <action name="OpenFile">
    <property name="checkable">
@@ -7532,6 +7561,48 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Lock Music Boxes</string>
+   </property>
+  </action>
+  <action name="actionSquareFill">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/square_fill.png</normaloff>:/images/square_fill.png</iconset>
+   </property>
+   <property name="text">
+    <string>Square Fill</string>
+   </property>
+  </action>
+  <action name="actionOverwriteMode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/overwrite.png</normaloff>:/images/overwrite.png</iconset>
+   </property>
+   <property name="text">
+    <string>Overwrite mode</string>
+   </property>
+  </action>
+  <action name="actionResizeApply">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/resize_accept.png</normaloff>:/images/resize_accept.png</iconset>
+   </property>
+   <property name="text">
+    <string>Apply</string>
+   </property>
+  </action>
+  <action name="actionResizeCancel">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/resize_cancel.png</normaloff>:/images/resize_cancel.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
    </property>
   </action>
  </widget>

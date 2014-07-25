@@ -26,12 +26,12 @@
 //Reload opened file data
 void MainWindow::on_actionReload_triggered()
 {
-    LevelData FileData;
     QString filePath;
     QRect wnGeom;
 
     if (activeChildWindow()==1)
     {
+        LevelData FileData;
         filePath = activeLvlEditWin()->curFile;
 
         QFile fileIn(filePath);
@@ -76,6 +76,56 @@ void MainWindow::on_actionReload_triggered()
             ui->centralWidget->activeSubWindow()->close();
                 WriteToLog(QtDebugMsg, ">>Windows closed");
         }
+    }
+    else
+    if (activeChildWindow()==3)
+    {
+        WorldData FileData;
+        filePath = activeWldEditWin()->curFile;
+
+        QFile fileIn(filePath);
+
+        if (!fileIn.open(QIODevice::ReadOnly)) {
+        QMessageBox::critical(this, tr("File open error"),
+        tr("Can't open the file."), QMessageBox::Ok);
+            return;
+        }
+
+        FileData = FileFormats::ReadWorldFile(fileIn); //function in file_formats.cpp
+        if( !FileData.ReadFileValid ){
+            statusBar()->showMessage(tr("Reloading error"), 2000);
+            return;}
+
+        FileData.filename = QFileInfo(filePath).baseName();
+        FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
+        FileData.playmusic = GlobalSettings::autoPlayMusic;
+        activeWldEditWin()->WldData.modified = false;
+        activeWldEditWin()->close();
+        wnGeom = ui->centralWidget->activeSubWindow()->geometry();
+        ui->centralWidget->activeSubWindow()->close();
+
+        WorldEdit *child = createWldChild();
+        if ( (bool)(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
+            child->show();
+
+            updateMenus(true);
+            setCurrentWorldSettings();
+            if(FileData.noworldmap)
+            {
+                ui->WorldSettings->setVisible(true);
+                ui->WorldSettings->raise();
+            }
+            statusBar()->showMessage(tr("World map file loaded"), 2000);
+        } else {
+            WriteToLog(QtDebugMsg, ">>File loading aborted");
+            child->show();
+            WriteToLog(QtDebugMsg, ">>Window showed");
+            if(activeChildWindow()==1) activeWldEditWin()->WldData.modified = false;
+            WriteToLog(QtDebugMsg, ">>Option set");
+            ui->centralWidget->activeSubWindow()->close();
+            WriteToLog(QtDebugMsg, ">>Windows closed");
+        }
+
     }
 
     clearFilter();

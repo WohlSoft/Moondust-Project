@@ -19,6 +19,8 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 
+#include "../world_scene/wld_item_placing.h"
+#include "../level_scene/lvl_item_placing.h"
 
 /////////////////Switch edit mode////////////////////////////////////////////
 
@@ -33,6 +35,9 @@ void MainWindow::resetEditmodeButtons()
     ui->actionSetSecondPlayer->setChecked(0);
     ui->actionDrawWater->setChecked(0);
     ui->actionDrawSand->setChecked(0);
+
+    ui->PlacingToolbar->setVisible(false);
+    ui->ResizingToolbar->setVisible(false);
 }
 
 
@@ -209,3 +214,148 @@ void MainWindow::on_actionDrawSand_triggered()
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+void MainWindow::on_actionSquareFill_triggered(bool checked)
+{
+        resetEditmodeButtons();
+        ui->PlacingToolbar->setVisible(true);
+
+        if (activeChildWindow()==1)
+        {
+            leveledit * edit = activeLvlEditWin();
+
+            edit->scene->clearSelection();
+            edit->changeCursor(2);
+            edit->scene->EditingMode = 2;
+            edit->scene->disableMoveItems=false;
+            edit->scene->DrawMode=true;
+            edit->scene->EraserEnabled = false;
+            LvlPlacingItems::fillingMode = checked;
+            switch(edit->scene->placingItem)
+            {
+                case LvlScene::PLC_Block:
+                   ui->PROPS_BGOSquareFill->setChecked(checked);
+                   edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
+                   WriteToLog(QtDebugMsg, QString("Block Square draw -> %1").arg(checked));
+
+                break;
+                case LvlScene::PLC_BGO:
+                   ui->PROPS_BGOSquareFill->setChecked(checked);
+                   edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
+                   WriteToLog(QtDebugMsg, QString("BGO Square draw -> %1").arg(checked));
+
+                break;
+
+                default:
+                break;
+            }
+            edit->setFocus();
+        }
+        else
+        if (activeChildWindow()==3)
+        {
+            WorldEdit * edit = activeWldEditWin();
+
+            edit->scene->clearSelection();
+            edit->changeCursor(2);
+            edit->scene->EditingMode = 2;
+            edit->scene->disableMoveItems=false;
+            edit->scene->DrawMode=true;
+            edit->scene->EraserEnabled = false;
+            WldPlacingItems::fillingMode = checked;
+
+            switch(edit->scene->placingItem)
+            {
+                case WldScene::PLC_Tile:
+                   edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
+                   WriteToLog(QtDebugMsg, QString("Tile Square draw -> %1").arg(checked));
+
+                break;
+                case WldScene::PLC_Scene:
+                   edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id );
+                   WriteToLog(QtDebugMsg, QString("Scenery Square draw -> %1").arg(checked));
+
+                break;
+                case WldScene::PLC_Path:
+                   edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id );
+                   WriteToLog(QtDebugMsg, QString("Path Square draw -> %1").arg(checked));
+
+                break;
+                case WldScene::PLC_Level:
+                   edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id );
+                   WriteToLog(QtDebugMsg, QString("Path Square draw -> %1").arg(checked));
+
+                break;
+
+                default: break;
+            }
+            edit->setFocus();
+        }
+}
+
+void MainWindow::on_actionOverwriteMode_triggered(bool checked)
+{
+    WriteToLog(QtDebugMsg, QString("Overwrite mode is -> %1").arg(checked));
+}
+
+void MainWindow::resizeToolbarVisible(bool vis)
+{
+    ui->ResizingToolbar->setVisible(vis);
+}
+
+void MainWindow::on_actionResizeApply_triggered()
+{
+    if (activeChildWindow()==1)
+    {
+        LvlScene * edit = activeLvlEditWin()->scene;
+        ItemResizer * pResizer = edit->pResizer;
+        if(pResizer!=NULL )
+        {
+            switch(pResizer->type)
+            {
+            case 3:
+                edit->setPhysEnvResizer(NULL, false, true);
+                break;
+            case 2:
+                edit->setBlockResizer(NULL, false, true);
+                break;
+            case 1:
+                edit->setEventSctSizeResizer(-1, false, true);
+                break;
+            case 0:
+            default:
+                on_applyResize_clicked();
+            }
+        }
+    }
+    ui->ResizingToolbar->setVisible(false);
+}
+
+void MainWindow::on_actionResizeCancel_triggered()
+{
+    if (activeChildWindow()==1)
+    {
+        LvlScene * edit = activeLvlEditWin()->scene;
+        ItemResizer * pResizer = edit->pResizer;
+        if(pResizer!=NULL )
+        {
+            switch(pResizer->type)
+            {
+            case 3:
+                edit->setPhysEnvResizer(NULL, false, false);
+                break;
+            case 2:
+                edit->setBlockResizer(NULL, false, false);
+                break;
+            case 1:
+                edit->setEventSctSizeResizer(-1, false, false);
+                break;
+            case 0:
+            default:
+                on_cancelResize_clicked();
+            }
+        }
+    }
+    ui->ResizingToolbar->setVisible(false);
+}
