@@ -101,6 +101,9 @@ struct WorldData
     bool nocharacter3;
     bool nocharacter4;
     bool nocharacter5;
+
+    QList<bool > nocharacter;
+
     QString autolevel;
     bool noworldmap;
     bool restartlevel;
