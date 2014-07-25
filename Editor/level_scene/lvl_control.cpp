@@ -1351,6 +1351,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+        MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
     {
@@ -1383,6 +1384,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
             delete pResizer;
             pResizer = NULL;
             MainWinConnect::pMainWin->on_actionSelect_triggered();
+            MainWinConnect::pMainWin->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
         DrawMode=false;
@@ -1411,6 +1413,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+        MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
     {
@@ -1456,6 +1459,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
             delete pResizer;
             pResizer = NULL;
             MainWinConnect::pMainWin->on_actionSelect_triggered();
+            MainWinConnect::pMainWin->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
         DrawMode=false;
@@ -1481,6 +1485,7 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+        MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
     {
@@ -1515,6 +1520,7 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
             delete pResizer;
             pResizer = NULL;
             MainWinConnect::pMainWin->on_actionSelect_triggered();
+            MainWinConnect::pMainWin->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
         DrawMode=false;
@@ -1539,6 +1545,7 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(5);
+        MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
     {
@@ -1573,6 +1580,7 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
             delete pResizer;
             pResizer = NULL;
             MainWinConnect::pMainWin->on_actionSelect_triggered();
+            MainWinConnect::pMainWin->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
         DrawMode=false;

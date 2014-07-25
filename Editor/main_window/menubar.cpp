@@ -31,6 +31,9 @@ void MainWindow::updateMenus(bool force)
     int WinType = activeChildWindow(); // 1 lvledit, 2 npcedit, 3 wldedit
     bool hasSWindow = (WinType != 0);
 
+    ui->PlacingToolbar->setVisible(false);
+    ui->ResizingToolbar->setVisible(false);
+
     ui->actionSave->setEnabled(hasSWindow);
     ui->actionSave_as->setEnabled(hasSWindow);
     ui->actionSave_all->setEnabled(hasSWindow);
@@ -77,7 +80,6 @@ void MainWindow::updateMenus(bool force)
         ui->LevelEventsToolBox->setVisible( 0 );
         ui->FindDock->setVisible( 0 );
     }
-
     if((GlobalSettings::lastWinType !=1) && (WinType==1))
     {
         ui->LevelToolBox->setVisible( GlobalSettings::LevelToolBoxVis ); //Restore saved visible status
@@ -88,6 +90,7 @@ void MainWindow::updateMenus(bool force)
         ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
     }
 
+
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
     {
         GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
@@ -95,14 +98,11 @@ void MainWindow::updateMenus(bool force)
         ui->WorldToolBox->setVisible( 0 );
         ui->WorldSettings->setVisible( 0 );
     }
-
     if((GlobalSettings::lastWinType !=3) && (WinType==3))
     {
         ui->WorldToolBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
         ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
     }
-
-
 
     GlobalSettings::lastWinType =   WinType;
 
@@ -132,6 +132,9 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionExport_to_image->setEnabled( (WinType==1) );
 
+    ui->actionReset_position->setEnabled( (WinType==1) );
+    ui->actionGo_to_Section->setEnabled( (WinType==1) );
+
     ui->actionSection_1->setEnabled( (WinType==1) );
     ui->actionSection_2->setEnabled( (WinType==1) );
     ui->actionSection_3->setEnabled( (WinType==1) );
@@ -153,10 +156,6 @@ void MainWindow::updateMenus(bool force)
     ui->actionSection_19->setEnabled( (WinType==1) );
     ui->actionSection_20->setEnabled( (WinType==1) );
     ui->actionSection_21->setEnabled( (WinType==1) );
-
-    ui->actionReset_position->setEnabled( (WinType==1) );
-
-    ui->actionGo_to_Section->setEnabled( (WinType==1) );
 
     ui->actionGridEn->setEnabled( (WinType==1)|| (WinType==3) );
 
@@ -231,8 +230,11 @@ void MainWindow::updateMenus(bool force)
             return;
         }
 
+        WriteToLog(QtDebugMsg, "-> Current world settings");
+
         setCurrentWorldSettings();
 
+        WriteToLog(QtDebugMsg, "-> Music Player");
 
         if(LvlMusPlay::musicType!=LvlMusPlay::WorldMusic) LvlMusPlay::musicForceReset=true;
         LvlMusPlay::musicType=LvlMusPlay::WorldMusic;
@@ -241,14 +243,17 @@ void MainWindow::updateMenus(bool force)
 
         if(activeWldEditWin()->sceneCreated)
         {
+            WriteToLog(QtDebugMsg, "-> Get scene flags: locks");
             ui->actionLockTiles->setChecked(activeWldEditWin()->scene->lock_tile);
             ui->actionLockScenes->setChecked(activeWldEditWin()->scene->lock_scene);
             ui->actionLockPaths->setChecked(activeWldEditWin()->scene->lock_path);
             ui->actionLockLevels->setChecked(activeWldEditWin()->scene->lock_level);
             ui->actionLockMusicBoxes->setChecked(activeWldEditWin()->scene->lock_musbox);
 
+            WriteToLog(QtDebugMsg, "-> Get scene flags: grid");
             ui->actionGridEn->setChecked(activeWldEditWin()->scene->grid);
 
+            WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
             GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
             GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
         }

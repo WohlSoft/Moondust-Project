@@ -211,6 +211,14 @@ public slots:
     void on_actionReload_triggered();
     void on_actionRefresh_menu_and_toolboxes_triggered();
 
+    void on_actionSquareFill_triggered(bool checked);
+    void on_actionOverwriteMode_triggered(bool checked);
+
+    void on_actionResizeApply_triggered();
+    void on_actionResizeCancel_triggered();
+
+    void resizeToolbarVisible(bool vis);
+
 private slots:
 
     //Actions
@@ -561,6 +569,7 @@ signals:
 private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
+    WorldData WldBuffer; // The Clipboarc for World map objects
 
      // ////////////Layer Functions///////////////////
     void RemoveCurrentLayer(bool moveToDefault);

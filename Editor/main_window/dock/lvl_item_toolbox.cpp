@@ -519,6 +519,7 @@ void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeLvlEditWin()->scene->clearSelection();
        activeLvlEditWin()->changeCursor(2);
        activeLvlEditWin()->scene->EditingMode = 2;
@@ -526,6 +527,8 @@ void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        LvlPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
@@ -544,6 +547,7 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeLvlEditWin()->scene->clearSelection();
        activeLvlEditWin()->changeCursor(2);
        activeLvlEditWin()->scene->EditingMode = 2;
@@ -552,6 +556,8 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->EraserEnabled = false;
 
        LvlPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
@@ -571,6 +577,7 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
     //placeNPC
     if ((activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeLvlEditWin()->scene->clearSelection();
        activeLvlEditWin()->changeCursor(2);
        activeLvlEditWin()->scene->EditingMode = 2;
@@ -578,6 +585,10 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
        activeLvlEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
+
+       LvlPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(false);
 
        LvlItemProps(2,FileFormats::dummyLvlBlock(),
                                  FileFormats::dummyLvlBgo(),

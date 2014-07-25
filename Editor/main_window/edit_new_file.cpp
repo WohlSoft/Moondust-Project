@@ -69,7 +69,12 @@ void MainWindow::on_actionNewWorld_map_triggered()
     child->newFile(configs, GlobalSettings::LvlOpts);
     child->show();
     updateMenus(true);
+
+    WriteToLog(QtDebugMsg, "-> select action trigger");
+
     on_actionSelect_triggered();
+
+    WriteToLog(QtDebugMsg, "-> done");
 
     //    if(GlobalSettings::autoPlayMusic) ui->actionPlayMusic->setChecked(true);
     //    LvlMusPlay::musicForceReset=true; //reset musics

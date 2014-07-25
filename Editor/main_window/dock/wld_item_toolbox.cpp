@@ -253,6 +253,7 @@ void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_TilesList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -261,6 +262,8 @@ void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
@@ -280,6 +283,7 @@ void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -288,6 +292,8 @@ void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
@@ -306,6 +312,7 @@ void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -314,6 +321,8 @@ void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
 
@@ -332,6 +341,7 @@ void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -340,6 +350,8 @@ void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(3, item->data(3).toInt() );
 
@@ -356,6 +368,7 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
 
     if ((activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))
     {
+       ui->PlacingToolbar->setVisible(true);
        activeWldEditWin()->scene->clearSelection();
        activeWldEditWin()->changeCursor(2);
        activeWldEditWin()->scene->EditingMode = 2;
@@ -364,6 +377,8 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
        activeWldEditWin()->scene->EraserEnabled = false;
 
        WldPlacingItems::fillingMode = false;
+       ui->actionSquareFill->setChecked(false);
+       ui->actionSquareFill->setEnabled(false);
 
        activeWldEditWin()->scene->setItemPlacer(4, item->data(3).toInt() );
 
