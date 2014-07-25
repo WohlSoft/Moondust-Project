@@ -3,6 +3,7 @@ Editor 0.2.0
 - Added customizing item tilesets
 - Added "name" field into customizing NPC.txt for define NPC's name
 - Fixed zombie bug: application process will correctly end his work
+- Insivible frames of some items are visible!
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized
