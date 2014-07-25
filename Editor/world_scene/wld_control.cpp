@@ -444,6 +444,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //addPlaceHistory(plSqBgo);
                     }
                 }
+            break;
             case PLC_Scene:
                 {
                     long x = cursor->scenePos().x();
@@ -474,6 +475,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //restart Animation
                     }
                 }
+            break;
             case PLC_Path:
                 {
                     long x = cursor->scenePos().x();
@@ -504,6 +506,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //restart Animation
                     }
                 }
+            break;
             case PLC_Level:
                 {
                     long x = cursor->scenePos().x();
@@ -534,6 +537,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //restart Animation
                     }
                 }
+            break;
             default:
                 break;
             }
