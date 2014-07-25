@@ -30,7 +30,10 @@ public:
         LEVELTILESET_BLOCK = 0,
         LEVELTILESET_BGO,
         LEVELTILESET_NPC,
-        WORLDTILESET_TILE
+        WORLDTILESET_TILE,
+        WORLDTILESET_PATH,
+        WORLDTILESET_SCENERY,
+        WORLDTILESET_LEVEL
     };
 
     explicit tileset(dataconfigs *conf, TilesetType type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
@@ -48,7 +51,7 @@ public:
     };
 
     struct SimpleTileset{
-        unsigned int rows, cols, baseSize;
+        unsigned int rows, cols;
         TilesetType type;
         QList<SimpleTilesetItem> items;
     };

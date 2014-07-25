@@ -106,6 +106,21 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
         WriteToLog(QtCriticalMsg, QString("ERROR LOADING main.ini N:%1").arg(dirset.status()));
     }
 
+
+    characters.clear();
+
+    dirset.beginGroup("characters");
+        int characters_q = dirset.value("characters", 0).toInt();
+        for(int i=1; i<= characters_q; i++)
+        {
+            obj_playable_character pchar;
+            pchar.id = i;
+            pchar.name = dirset.value(QString("character%1-name").arg(i), QString("Character #%1").arg(i)).toString();
+            characters.push_back(pchar);
+        }
+    dirset.endGroup();
+
+
     ////////////////////////////////Preparing////////////////////////////////////////
     bgoPath =   dirs.glevel +  "background/";
     BGPath =    dirs.glevel +  "background2/";

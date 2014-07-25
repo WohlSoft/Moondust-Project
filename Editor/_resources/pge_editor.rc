@@ -1,10 +1,14 @@
-IDI_ICON1               ICON    DISCARDABLE     "mushroom.ico"
+ICON_01                      ICON    DISCARDABLE     "mushroom.ico"
+ICON_02_LVLX                 ICON    DISCARDABLE     "file_lvlx.ico"
+ICON_03_WLDX                 ICON    DISCARDABLE     "file_wldx.ico"
+ICON_04_LVL                  ICON    DISCARDABLE     "file_lvl.ico"
+ICON_05_WLD                  ICON    DISCARDABLE     "file_wld.ico"
 
 #include <windows.h>
 
 VS_VERSION_INFO     VERSIONINFO
-FILEVERSION         0, 1, 1, 3
-PRODUCTVERSION      0, 1, 1, 3
+FILEVERSION         0, 2, 0, 0
+PRODUCTVERSION      0, 2, 0, 0
 FILEFLAGSMASK       0x3fL
 FILEFLAGS           0
 FILEOS              VOS_NT_WINDOWS32
@@ -21,12 +25,12 @@ BEGIN
     BEGIN
         VALUE   "CompanyName",      "Wohlhabend Network System\0"
         VALUE   "FileDescription",  "Platformer Game Engine - Editor\0"
-        VALUE   "FileVersion",      "0.1.1 Alpha\0"
+        VALUE   "FileVersion",      "0.2.0 Alpha\0"
         VALUE   "InternalName",     "Filename\0"
         VALUE   "LegalCopyright",   "2014 by Wohlstand\0"
         VALUE   "OriginalFilename", "pge_editor.exe\0"
         VALUE   "ProductName",      "Platformer Game Engine\0"
-        VALUE   "ProductVersion",   "0.1.1 Alpha\0"
+        VALUE   "ProductVersion",   "0.2.0 Alpha\0"
     END
 END
 END

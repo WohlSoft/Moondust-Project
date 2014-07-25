@@ -20,14 +20,14 @@
 #define MUSIC_PLAYER_H
 
 #include <QString>
-#include <QMediaPlayer>
+//#include <QMediaPlayer>
 
-class GlobalMusicPlayer
-{
-    public:
-        static QMediaPlaylist CurrentMusic;
+//class GlobalMusicPlayer
+//{
+//    public:
+//        //static QMediaPlaylist CurrentMusic;
 
-};
+//};
 
 class LvlMusPlay
 {

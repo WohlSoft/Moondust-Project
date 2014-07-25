@@ -34,14 +34,16 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item)
     qlonglong bottomA, bottomB;
     //qreal betweenZ;
 
-    QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
+    QList<QGraphicsItem *> collisions = this->items(
+                item->pos().x(),item->pos().y(),
+                item->data(9).toReal(),item->data(10).toReal(),
+                Qt::IntersectsItemBoundingRect, Qt::AscendingOrder);
+    //collidingItems(item, Qt::IntersectsItemBoundingRect);
     foreach (QGraphicsItem * it, collisions)
     {
             if (it == item)
                  continue;
             if(!it->isVisible()) continue;
-            if(item->data(0).toString()=="MUSICBOX")
-                return NULL;
 
             if(item->data(0).toString()!=it->data(0).toString()) continue;
 

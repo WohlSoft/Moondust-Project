@@ -75,6 +75,8 @@ struct obj_bgo{
     unsigned int frames;
     //    frame-speed=125			; default = 125 ms, etc. 8 frames per sec
     unsigned int framespeed;
+
+    unsigned int display_frame;
 };
 
 struct obj_block{
@@ -114,6 +116,8 @@ struct obj_block{
     unsigned int frames;
     int framespeed;
 
+    unsigned int display_frame;
+
     //Editor defaults
     bool default_slippery; //Slippery flag
     bool default_slippery_value;
@@ -141,6 +145,8 @@ struct obj_BG{
     bool editing_tiled;
     bool animated;
     unsigned int frames;
+
+    unsigned int display_frame;
 
     bool magic;
     unsigned int magic_strips;
@@ -226,6 +232,7 @@ struct obj_w_tile{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int display_frame;
 };
 
 struct obj_w_scenery{
@@ -239,6 +246,7 @@ struct obj_w_scenery{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int display_frame;
 };
 
 struct obj_w_level{
@@ -252,6 +260,7 @@ struct obj_w_level{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int display_frame;
 };
 
 struct obj_w_path{
@@ -267,6 +276,7 @@ struct obj_w_path{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int display_frame;
 };
 
 //////////////Indexing objects////////////////
@@ -324,6 +334,12 @@ struct obj_sound
     bool hidden;
 };
 
+struct obj_playable_character
+{
+    unsigned long id;
+    QString name;
+};
+
 
 
 
@@ -335,6 +351,9 @@ public:
     bool loadconfigs(QProgressDialog *prgs=NULL);
     DataFolders dirs;
     QString config_dir;
+
+    //Playable Characters
+    QVector<obj_playable_character > characters;
 
     //Level map items
     QVector<obj_BG > main_bg;

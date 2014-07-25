@@ -1,5 +1,4 @@
 <RCC>
-
     <qresource prefix="/">
         <file>images/new.png</file>
         <file>images/open.png</file>
@@ -90,5 +89,19 @@
         <file>images/cat/cat_128.png</file>
         <file>images/cat/cat_256.png</file>
         <file>PressStart2P.ttf</file>
+        <file>images/lock_tile_cl.png</file>
+        <file>images/lock_musicbox_op.png</file>
+        <file>images/lock_musicbox_cl.png</file>
+        <file>images/lock_levels_op.png</file>
+        <file>images/lock_levels_cl.png</file>
+        <file>images/lock_paths_op.png</file>
+        <file>images/lock_paths_cl.png</file>
+        <file>images/lock_scenery_op.png</file>
+        <file>images/lock_scenery_cl.png</file>
+        <file>images/lock_tile_op.png</file>
+        <file>images/overwrite.png</file>
+        <file>images/square_fill.png</file>
+        <file>images/resize_cancel.png</file>
+        <file>images/resize_accept.png</file>
     </qresource>
 </RCC>

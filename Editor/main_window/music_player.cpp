@@ -20,7 +20,7 @@
 #include "../mainwindow.h"
 #include "music_player.h"
 
-QMediaPlaylist GlobalMusicPlayer::CurrentMusic;
+//QMediaPlaylist GlobalMusicPlayer::CurrentMusic;
 
 
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
@@ -32,13 +32,14 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
 }
 
 
-void MainWindow::setMusic(bool checked)
+void MainWindow::setMusic(bool checked=false)
 {
     QString dirPath;
     QString musicFile;
     QString musicFilePath;
     bool silent = true;
     unsigned int CurMusNum;
+    checked = ui->actionPlayMusic->isChecked();
 
     if( configs.check() )
     {
@@ -70,7 +71,7 @@ void MainWindow::setMusic(bool checked)
 
 
     WriteToLog(QtDebugMsg, "-> New MediaPlayList");
-    GlobalMusicPlayer::CurrentMusic.clear();
+    CurrentMusic.clear();
 
 
     if((LvlMusPlay::musicType==LvlMusPlay::LevelMusic)&&(activeChildWindow()!=1))
@@ -233,12 +234,12 @@ void MainWindow::setMusic(bool checked)
             if( (QFile::exists(musicFilePath)) && (QFileInfo(musicFilePath)).isFile() )
             {
                 WriteToLog(QtDebugMsg, QString("Set music player -> addMedia"));
-                GlobalMusicPlayer::CurrentMusic.addMedia(QUrl::fromLocalFile( musicFilePath ));
-                GlobalMusicPlayer::CurrentMusic.setPlaybackMode(QMediaPlaylist::Loop);
+                CurrentMusic.addMedia(QUrl::fromLocalFile( musicFilePath ));
+                CurrentMusic.setPlaybackMode(QMediaPlaylist::Loop);
                 WriteToLog(QtDebugMsg, QString("Set music player -> stop Current"));
                 MusicPlayer->stop();
                 WriteToLog(QtDebugMsg, QString("Set music player -> set PlayList"));
-                MusicPlayer->setPlaylist(&(GlobalMusicPlayer::CurrentMusic));
+                MusicPlayer->setPlaylist(&(CurrentMusic));
                 WriteToLog(QtDebugMsg, QString("Set music player -> setVolme and play"));
                 MusicPlayer->setVolume(muVol->value());
                 MusicPlayer->play();

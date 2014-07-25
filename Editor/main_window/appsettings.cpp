@@ -19,6 +19,8 @@
 #include "appsettings.h"
 #include "./ui_appsettings.h"
 #include <QFileDialog>
+#include <QMessageBox>
+#include <QSettings>
 #include <math.h>
 
 #include "../common_features/logger_sets.h"
@@ -119,4 +121,69 @@ void AppSettings::on_buttonBox_accepted()
     LogWriter::enabled = logEnabled;
 
     accept();
+}
+
+void AppSettings::on_AssociateFiles_clicked()
+{
+
+    bool success = true;
+
+    #ifdef __WIN32__
+        QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
+
+        // file extension(s)
+        registry_hkcr.setValue(".lvl/Default", "SMBX64.Level");
+        registry_hkcr.setValue(".wld/Default", "SMBX64.World");
+        //registry_hkcr.setValue(".lvlx/Default", "PGWWohlstand.Level");
+        //registry_hkcr.setValue(".wldx/Default", "PGWWohlstand.World");
+
+        registry_hkcr.setValue("SMBX64.Level/Default", tr("SMBX Level file", "File Types"));
+        registry_hkcr.setValue("SMBX64.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",3");
+        registry_hkcr.setValue("SMBX64.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" %1");
+
+        registry_hkcr.setValue("SMBX64.World/Default", tr("SMBX World file", "File Types"));
+        registry_hkcr.setValue("SMBX64.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",4");
+        registry_hkcr.setValue("SMBX64.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" %1");
+
+        // User variable(s)
+        QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
+        registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\"");
+
+    #elif defined __APPLE__
+        // only useful when other apps have taken precedence over our file extensions and you want to reset it
+    //Need write correct strings for allow associations for Mac OS:
+    /*
+        system("defaults write com.apple.LaunchServices LSHandlers -array-add '<dict><key>LSHandlerContentTag</key><string>lvl</string><key>LSHandlerContentTagClass</key><string>public.filename-extension</string><key>LSHandlerRoleAll</key><string>org.pge_editor.desktop</string></dict>'");
+        system("defaults write com.apple.LaunchServices LSHandlers -array-add '<dict><key>LSHandlerContentTag</key><string>wld</string><key>LSHandlerContentTagClass</key><string>public.filename-extension</string><key>LSHandlerRoleAll</key><string>org.pge_editor.desktop</string></dict>'");
+        system("/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -domain local -domain system -domain user");
+     */
+    success=false; // remove this when associator was created
+    #else
+
+        // Here need correctly associate too
+      /*
+        // this is a little silly due to all the system commands below anyway - just use mkdir -p ?  Does have the advantage of the alert I guess
+        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local");
+        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share");
+        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/mime");
+        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/mime/packages");
+        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local");
+        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share");
+        if (success) success = checkForDir(QDir::home().absolutePath() + "/.local/share/applications");
+        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hedgewars-mimeinfo.xml "+QDir::home().absolutePath()+"/.local/share/mime/packages").toLocal8Bit().constData())==0;
+        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hedgewars.desktop "+QDir::home().absolutePath()+"/.local/share/applications").toLocal8Bit().constData())==0;
+        if (success) success = system(("cp "+datadir->absolutePath()+"/misc/hwengine.desktop "+QDir::home().absolutePath()+"/.local/share/applications").toLocal8Bit().constData())==0;
+        if (success) success = system(("update-mime-database "+QDir::home().absolutePath()+"/.local/share/mime").toLocal8Bit().constData())==0;
+        if (success) success = system("xdg-mime default pge_editor.desktop application/x-smbx64-level")==0;
+        if (success) success = system("xdg-mime default pge_editor.desktop application/x-smbx64-world")==0;
+        // hack to add user's settings to hwengine. might be better at this point to read in the file, append it, and write it out to its new home.  This assumes no spaces in the data dir path
+        if (success) success = system(("sed -i 's|^\\(Exec=.*\\) \\(%f\\)|\\1 \\2 |' "+QDir::home().absolutePath()+"/.local/share/applications/pge_editor.desktop").toLocal8Bit().constData())==0;
+      */
+    success=false; // remove this when associator was created
+    #endif
+        if (success)
+            QMessageBox::information(this, tr("Success"), tr("All file associations have been set"), QMessageBox::Ok);
+        else
+            QMessageBox::warning(this, tr("Error"), QMessageBox::tr("File association failed."), QMessageBox::Ok);
+
 }

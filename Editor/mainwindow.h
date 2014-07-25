@@ -87,6 +87,8 @@ public:
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
 
+    long wlvlPtr; //ArrayID of editing item
+
     //For itemProps
     bool LvlItemPropsLock; //Protector for allow apply changes only if filed was edit by human
     int subWins();
@@ -169,6 +171,9 @@ public slots:
     void setEventToolsLocked(bool locked);
     long getEventArrayIndex();
 
+    //WorldEdit functions
+    void setCurrentWorldSettings();
+
     //Toolbox functions
     void updateFilters();
     void clearFilter();
@@ -206,6 +211,14 @@ public slots:
     void on_actionReload_triggered();
     void on_actionRefresh_menu_and_toolboxes_triggered();
 
+    void on_actionSquareFill_triggered(bool checked);
+    void on_actionOverwriteMode_triggered(bool checked);
+
+    void on_actionResizeApply_triggered();
+    void on_actionResizeCancel_triggered();
+
+    void resizeToolbarVisible(bool vis);
+
 private slots:
 
     //Actions
@@ -215,10 +228,10 @@ private slots:
     void on_OpenFile_triggered();
     void on_Exit_triggered();
     void on_actionAbout_triggered();
-    void on_actionLVLToolBox_triggered();
-    void on_actionWLDToolBox_triggered();
+    void on_actionLVLToolBox_triggered(bool checked);
+    void on_actionWLDToolBox_triggered(bool checked);
     void on_actionLevelProp_triggered();
-    void on_actionSection_Settings_triggered();
+    void on_actionSection_Settings_triggered(bool checked);
     void on_actionSave_triggered();
     void on_actionSave_as_triggered();
     void on_actionClose_triggered();
@@ -530,9 +543,33 @@ private slots:
     void on_WLD_PROPS_GotoY_textEdited(const QString &arg1);
     void on_WLD_PROPS_GetPoint_clicked();
 
+    void on_actionWorld_settings_triggered(bool checked);
+    void on_actionLockTiles_triggered(bool checked);
+    void on_actionLockScenes_triggered(bool checked);
+    void on_actionLockPaths_triggered(bool checked);
+    void on_actionLockLevels_triggered(bool checked);
+    void on_actionLockMusicBoxes_triggered(bool checked);
+
+    void on_WorldSettings_visibilityChanged(bool visible);
+    void on_WLD_Title_textChanged(const QString &arg1);
+    void on_WLD_NoWorldMap_clicked(bool checked);
+    void on_WLD_RestartLevel_clicked(bool checked);
+    void on_WLD_AutostartLvl_textEdited(const QString &arg1);
+    void on_WLD_AutostartLvlBrowse_clicked();
+    void on_WLD_Stars_valueChanged(int arg1);
+    void on_WLD_DoCountStars_clicked();
+    void on_WLD_Credirs_textChanged();
+    void on_actionWLDDisableMap_triggered(bool checked);
+    void on_actionWLDFailRestart_triggered(bool checked);
+    void on_actionWLDProperties_triggered();
+
+signals:
+    void closeEditor();
+
 private:
 
     LevelData LvlBuffer; // The Clipboarc for Level objects
+    WorldData WldBuffer; // The Clipboarc for World map objects
 
      // ////////////Layer Functions///////////////////
     void RemoveCurrentLayer(bool moveToDefault);
@@ -569,6 +606,9 @@ private:
     bool doSearchNPC(leveledit* edit);
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
+    QMediaPlayer playSnd;
+    QMediaPlaylist CurrentMusic;
+
     QSlider* muVol;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);

@@ -33,16 +33,14 @@
 
 #include "../../common_features/util.h"
 
-static long currentEventArrayID=0;
-static bool lockSetEventSettings=false;
+long currentEventArrayID=0;
+bool lockSetEventSettings=false;
 
-static bool lockEventSectionDataList=false;
-static long curSectionField=0;
+bool lockEventSectionDataList=false;
+long curSectionField=0;
 
-static bool cloneEvent=false;
-static long cloneEventId=0;
-
-QMediaPlayer playSnd;
+bool cloneEvent=false;
+long cloneEventId=0;
 
 void MainWindow::setEventsBox()
 {

@@ -230,8 +230,8 @@ void WldScene::setLocked(int type, bool lock)
         case 5://Musicboxes
             if((*it)->data(0).toString()=="MUSICBOX")
             {
-                //(*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemPath *)(*it))->isLocked ) ) );
-                //(*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemPath *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemMusic *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemMusic *)(*it))->isLocked ) ) );
             }
             break;
         default: break;

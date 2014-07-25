@@ -2,6 +2,10 @@ Editor 0.2.0
 - Added support of World Maps
 - Added customizing item tilesets
 - Added "name" field into customizing NPC.txt for define NPC's name
+- Fixed zombie bug: application process will correctly end his work
+- Insivible frames of some items are visible!
+- Square fill tool buttom will be appeared on toolbar when you switched in the placing mode.
+- Apply/Cancel buttons of resizing process available on the toolbar
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized

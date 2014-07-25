@@ -1405,7 +1405,7 @@ void LvlScene::historyForward()
         LevelData deletedData = lastOperation.data;
 
         CallbackData cbData;
-        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRedoMoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, &LvlScene::historyRemovePlayerPoint);
+        findGraphicsItem(deletedData, &lastOperation, cbData, &LvlScene::historyRemoveBlocks, &LvlScene::historyRemoveBGO, &LvlScene::historyRemoveNPC, &LvlScene::historyRemoveWater, &LvlScene::historyRemoveDoors, &LvlScene::historyRemovePlayerPoint);
 
         break;
     }
@@ -2431,24 +2431,28 @@ void LvlScene::historyRemoveBlocks(LvlScene::CallbackData cbData, LevelBlock /*d
 {
     ((ItemBlock*)cbData.item)->removeFromArray();
     removeItem(cbData.item);
+    delete cbData.item;
 }
 
 void LvlScene::historyRemoveBGO(LvlScene::CallbackData cbData, LevelBGO /*data*/)
 {
     ((ItemBGO *)cbData.item)->removeFromArray();
     removeItem(cbData.item);
+    delete cbData.item;
 }
 
 void LvlScene::historyRemoveNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/)
 {
     ((ItemNPC *)cbData.item)->removeFromArray();
     removeItem(cbData.item);
+    delete cbData.item;
 }
 
 void LvlScene::historyRemoveWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
 {
     ((ItemWater *)cbData.item)->removeFromArray();
     removeItem(cbData.item);
+    delete cbData.item;
 }
 
 void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoint data)

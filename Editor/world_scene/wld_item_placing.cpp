@@ -139,7 +139,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,w,h));
+        cursor = addPixmap(tImg.copy(0,h*pConfigs->main_wtiles[j].display_frame,w,h));
 
         cursor->setData(0, "TILE");
         cursor->setData(1, QString::number(itemID));
@@ -233,7 +233,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,iw,ih));
+        cursor = addPixmap(tImg.copy(0,ih * pConfigs->main_wscene[j].display_frame ,iw,ih));
 
         cursor->setData(0, "SCENERY");
         cursor->setData(1, QString::number(itemID));
@@ -325,7 +325,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,w,h));
+        cursor = addPixmap(tImg.copy(0,h * pConfigs->main_wpaths[j].display_frame, w ,h));
 
         cursor->setData(0, "PATH");
         cursor->setData(1, QString::number(itemID));
@@ -421,7 +421,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
-        cursor = addPixmap(tImg.copy(0,0,iw,ih));
+        cursor = addPixmap(tImg.copy(0, ih * pConfigs->main_wlevels[j].display_frame ,iw,ih));
 
         int imgOffsetX = (int)qRound( -( qreal(tImg.width()) - qreal(WldPlacingItems::gridSz))  / 2 );
         int imgOffsetY = (int)qRound( -qreal(
@@ -462,8 +462,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setData(1, QString::number(itemID));
         cursor->setData(9, QString::number(32));
         cursor->setData(10, QString::number(32));
-        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::darkMagenta));
-        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::darkMagenta, 2,Qt::SolidLine));
+        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
+        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );

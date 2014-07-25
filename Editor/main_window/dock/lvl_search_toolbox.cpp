@@ -23,7 +23,7 @@
 #include "../../level_scene/item_bgo.h"
 #include "../../level_scene/item_npc.h"
 
-static bool lockReset = false;
+bool lockReset = false;
 
 void MainWindow::on_FindStartBlock_clicked()
 {

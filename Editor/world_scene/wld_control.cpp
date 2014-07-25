@@ -90,18 +90,21 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                     if((*it)) delete (*it);
                     deleted=true;
                 }
-//                else
-//                if( objType=="MUSICBOX" )
-//                {
-//                    historyBuffer.music.push_back(((ItemMusic*)(*it))->musicData);
-//                    ((ItemMusic *)(*it))->removeFromArray();
-//                    if((*it)) delete (*it);
-//                    deleted=true;
-//                }
+                else
+                if( objType=="MUSICBOX" )
+                {
+                    historyBuffer.music.push_back(((ItemMusic*)(*it))->musicData);
+                    ((ItemMusic *)(*it))->removeFromArray();
+                    if((*it)) delete (*it);
+                    deleted=true;
+                }
 
         }
         //dummy
-        if(deleted) historyBuffer.scenery.size();//addRemoveHistory(historyBuffer);
+        if(deleted) {
+            historyBuffer.scenery.size();
+            addRemoveHistory(historyBuffer);
+        }
 
         break;
     case (Qt::Key_Escape):
@@ -159,64 +162,36 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
 void WldScene::openProps()
 {
-//    QList<QGraphicsItem * > items = this->selectedItems();
-//    if(!items.isEmpty())
-//    {
-//        if(items.first()->data(0).toString()=="Block")
-//        {
-//            MainWinConnect::pMainWin->LvlItemProps(0,
-//                          ((ItemBlock *)items.first())->blockData,
-//                          FileFormats::dummyLvlBgo(),
-//                          FileFormats::dummyLvlNpc(), false);
-//        }
-//        else
-//        if(items.first()->data(0).toString()=="BGO")
-//        {
-//            MainWinConnect::pMainWin->LvlItemProps(1,
-//                              FileFormats::dummyLvlBlock(),
-//                              ((ItemBGO *)items.first())->bgoData,
-//                              FileFormats::dummyLvlNpc(), false);
-//        }
-//        else
-//        if(items.first()->data(0).toString()=="NPC")
-//        {
-//            MainWinConnect::pMainWin->LvlItemProps(2,
-//                              FileFormats::dummyLvlBlock(),
-//                              FileFormats::dummyLvlBgo(),
-//                              ((ItemNPC *)items.first())->npcData, false);
-//        }
-//        else
-//        MainWinConnect::pMainWin->LvlItemProps(-1,
-//                                               FileFormats::dummyLvlBlock(),
-//                                               FileFormats::dummyLvlBgo(),
-//                                               FileFormats::dummyLvlNpc());
-//    }
-//    else
-//    {
-//        MainWinConnect::pMainWin->LvlItemProps(-1,
-//                                               FileFormats::dummyLvlBlock(),
-//                                               FileFormats::dummyLvlBgo(),
-//                                               FileFormats::dummyLvlNpc());
-//    }
+    QList<QGraphicsItem * > items = this->selectedItems();
+    if(!items.isEmpty())
+    {
+        if(items.first()->data(0).toString()=="LEVEL")
+        {
+            MainWinConnect::pMainWin->WldItemProps(0,
+                          ((ItemLevel *)items.first())->levelData,
+                          false);
+        }
+        else
+        MainWinConnect::pMainWin->WldItemProps(-1,
+                                               FileFormats::dummyWldLevel(),
+                                               false);
+    }
+    else
+    {
+        MainWinConnect::pMainWin->WldItemProps(-1,
+                                               FileFormats::dummyWldLevel(),
+                                               false );
+    }
 
-//    QGraphicsScene::selectionChanged();
+    QGraphicsScene::selectionChanged();
 }
 
 void WldScene::selectionChanged()
 {
-//    if(this->selectedItems().isEmpty())
-//    {
-//        LevelBlock dummyBlock;
-//        dummyBlock.array_id=0;
-
-//        LevelBGO dummyBgo;
-//        dummyBgo.array_id=0;
-
-//        LevelNPC dummyNPC;
-//        dummyNPC.array_id=0;
-
-//        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
-//    }
+    if(this->selectedItems().isEmpty())
+    {
+        MainWinConnect::pMainWin->WldItemProps(-1, FileFormats::dummyWldLevel());
+    }
 
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "Selection Changed!");
@@ -469,6 +444,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //addPlaceHistory(plSqBgo);
                     }
                 }
+            break;
             case PLC_Scene:
                 {
                     long x = cursor->scenePos().x();
@@ -499,6 +475,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //restart Animation
                     }
                 }
+            break;
             case PLC_Path:
                 {
                     long x = cursor->scenePos().x();
@@ -529,6 +506,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //restart Animation
                     }
                 }
+            break;
             case PLC_Level:
                 {
                     long x = cursor->scenePos().x();
@@ -559,6 +537,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         //restart Animation
                     }
                 }
+            break;
             default:
                 break;
             }
@@ -574,6 +553,18 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     //            QGraphicsScene::mouseReleaseEvent(mouseEvent);
     //            return;
     //        }
+            if(!placingItems.tiles.isEmpty()||
+                    !placingItems.paths.isEmpty()||
+                    !placingItems.scenery.isEmpty()||
+                    !placingItems.levels.isEmpty()||
+                    !placingItems.music.isEmpty()){
+                addPlaceHistory(placingItems);
+                placingItems.tiles.clear();
+                placingItems.paths.clear();
+                placingItems.scenery.clear();
+                placingItems.levels.clear();
+                placingItems.music.clear();
+            }
         }
     default:
         break;
@@ -650,6 +641,13 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((ItemLevel *)(*it))->removeFromArray();
                             deleted=true;
                         }
+                        else
+                        if( (*it)->data(0).toString()=="MUSICBOX" )
+                        {
+                            historyBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
+                            ((ItemMusic *)(*it))->removeFromArray();
+                            deleted=true;
+                        }
                         removeItem((*it));
                         deleteList.push_back((*it));
                         continue;
@@ -697,7 +695,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
                 {
-                    //addRemoveHistory(historyBuffer);
+                    addRemoveHistory(historyBuffer);
                 }
                 EraserEnabled = false;
 
@@ -792,18 +790,18 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         if( ObjType == "MUSICBOX")
                         {
                             //Applay move into main array
-//                            historySourceBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
-//                            ((ItemBGO *)(*it))->bgoData.x = (long)(*it)->scenePos().x();
-//                            ((ItemBGO *)(*it))->bgoData.y = (long)(*it)->scenePos().y();
-//                            ((ItemBGO *)(*it))->arrayApply();
-//                            historyBuffer.bgo.push_back(((ItemBGO *)(*it))->bgoData);
-//                            WldData->modified = true;
+                            historySourceBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
+                            ((ItemMusic *)(*it))->musicData.x = (long)(*it)->scenePos().x();
+                            ((ItemMusic *)(*it))->musicData.y = (long)(*it)->scenePos().y();
+                            ((ItemMusic *)(*it))->arrayApply();
+                            historyBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
+                            WldData->modified = true;
                         }
 
                     }
                 }////////////////////////SECOND FETCH///////////////////////
 
-                //if((EditingMode==MODE_Selecting)&&(IsMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
+                if((EditingMode==MODE_Selecting)&&(IsMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
 
                 IsMoved = false;
 
@@ -855,17 +853,16 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
     else
     if( ObjType == "MUSICBOX")
     {
-//        sourcePos = QPoint(  ((ItemLevel *)it)->levelData.x, ((ItemLevel*)it)->levelData.y);
-//        gridSize = ((ItemLevel *)it)->gridSize;
-//        offsetX = 0;
-//        offsetY = 0;
+        WsourcePos = QPoint(  ((ItemMusic *)it)->musicData.x, ((ItemMusic*)it)->musicData.y);
+        WgridSize = ((ItemMusic *)it)->gridSize;
+        WoffsetX = 0;
+        WoffsetY = 0;
     }
 }
 
 
 void WldScene::placeItemUnderCursor()
 {
-    WorldData newData;
     bool wasPlaced=false;
     if( itemCollidesWith(cursor) )
     {
@@ -883,7 +880,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->tiles.push_back(WldPlacingItems::TileSet);
             placeTile(WldPlacingItems::TileSet, true);
-            newData.tiles.push_back(WldPlacingItems::TileSet);
+            placingItems.tiles.push_back(WldPlacingItems::TileSet);
             wasPlaced=true;
         }
         else
@@ -897,7 +894,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->scenery.push_back(WldPlacingItems::SceneSet);
             placeScenery(WldPlacingItems::SceneSet, true);
-            newData.scenery.push_back(WldPlacingItems::SceneSet);
+            placingItems.scenery.push_back(WldPlacingItems::SceneSet);
             wasPlaced=true;
         }
         else
@@ -911,7 +908,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->paths.push_back(WldPlacingItems::PathSet);
             placePath(WldPlacingItems::PathSet, true);
-            newData.paths.push_back(WldPlacingItems::PathSet);
+            placingItems.paths.push_back(WldPlacingItems::PathSet);
             wasPlaced=true;
         }
         else
@@ -925,7 +922,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->levels.push_back(WldPlacingItems::LevelSet);
             placeLevel(WldPlacingItems::LevelSet, true);
-            newData.levels.push_back(WldPlacingItems::LevelSet);
+            placingItems.levels.push_back(WldPlacingItems::LevelSet);
             wasPlaced=true;
         }
         else
@@ -939,7 +936,7 @@ void WldScene::placeItemUnderCursor()
 
             WldData->music.push_back(WldPlacingItems::MusicSet);
             placeMusicbox(WldPlacingItems::MusicSet, true);
-            newData.music.push_back(WldPlacingItems::MusicSet);
+            placingItems.music.push_back(WldPlacingItems::MusicSet);
             wasPlaced=true;
         }
 
@@ -947,7 +944,6 @@ void WldScene::placeItemUnderCursor()
     if(wasPlaced)
     {
         WldData->modified = true;
-        //addPlaceHistory(newData);
     }
 
     //if(opts.animationEnabled) stopAnimation();
@@ -990,7 +986,7 @@ void WldScene::removeItemUnderCursor()
         else
         if(findItem->data(0).toString()=="MUSICBOX")
         {
-            //if( (lock_musbox) || (((ItemXXX *)findItem)->isLocked) )
+            if( (lock_musbox) || (((ItemMusic *)findItem)->isLocked) )
             removeIt=false;
         }
 
@@ -1032,15 +1028,53 @@ void WldScene::removeItemUnderCursor()
             else
             if( findItem->data(0).toString()=="MUSICBOX" )
             {
-//                removedItems.bgo.push_back(((ItemBGO *)findItem)->bgoData);
-//                ((ItemBGO *)findItem)->removeFromArray();
+                removedItems.music.push_back(((ItemMusic *)findItem)->musicData);
+                ((ItemMusic *)findItem)->removeFromArray();
                 deleted=true;
             }
 
               removeItem(findItem);
             delete findItem;
-            if(deleted) removedItems.paths.size();//addRemoveHistory(removedItems);
+            if(deleted) addRemoveHistory(removedItems);
         }
+    }
+}
+
+void WldScene::setScreenshotSelector(QPoint start, bool enabled, bool accept)
+{
+    if((enabled)&&(pResizer==NULL))
+    {
+        pResizer = new ItemResizer( QSize(800, 600), Qt::yellow, 32 );
+        this->addItem(pResizer);
+        pResizer->setPos(start.x()-400, start.y()-300);
+        pResizer->type=0;
+        pResizer->_minSize = QSizeF(800, 600);
+        this->setFocus(Qt::ActiveWindowFocusReason);
+        //DrawMode=true;
+        MainWinConnect::pMainWin->activeWldEditWin()->changeCursor(5);
+    }
+    else
+    {
+        if(pResizer!=NULL)
+        {
+            if(accept)
+            {
+                #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
+                #endif
+                //long l = pResizer->pos().x();
+                //long t = pResizer->pos().y();
+                //long r = l+pResizer->_width;
+                //long b = t+pResizer->_height;
+
+                //WldData->modified = true;
+            }
+            delete pResizer;
+            pResizer = NULL;
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            //resetResizingSection=true;
+        }
+        DrawMode=false;
     }
 }
 

@@ -48,15 +48,10 @@ void MainWindow::on_LevelToolBox_visibilityChanged(bool visible)
     ui->actionLVLToolBox->setChecked(visible);
 }
 
-void MainWindow::on_actionLVLToolBox_triggered()
+void MainWindow::on_actionLVLToolBox_triggered(bool checked)
 {
-    if(ui->actionLVLToolBox->isChecked())
-    {
-        ui->LevelToolBox->setVisible(true);
-        ui->LevelToolBox->raise();
-    }
-    else
-        ui->LevelToolBox->setVisible(false);
+    ui->LevelToolBox->setVisible(checked);
+    if(checked) ui->LevelToolBox->raise();
 }
 
 
@@ -66,15 +61,10 @@ void MainWindow::on_LevelSectionSettings_visibilityChanged(bool visible)
         ui->actionSection_Settings->setChecked(visible);
 }
 
-void MainWindow::on_actionSection_Settings_triggered()
+void MainWindow::on_actionSection_Settings_triggered(bool checked)
 {
-    if(ui->actionSection_Settings->isChecked())
-    {
-        ui->LevelSectionSettings->setVisible(true);
-        ui->LevelSectionSettings->raise();
-    }
-    else
-        ui->LevelSectionSettings->setVisible(false);
+    ui->LevelSectionSettings->setVisible(checked);
+    if(checked) ui->LevelSectionSettings->raise();
 }
 
 void MainWindow::on_DoorsToolbox_visibilityChanged(bool visible)

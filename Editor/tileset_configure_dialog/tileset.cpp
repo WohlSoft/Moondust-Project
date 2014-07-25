@@ -235,7 +235,37 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
         return m_conf->main_wtiles[tarIndex].image.copy(0,0,m_conf->main_wtiles[tarIndex].image.width(),
-                                                     qRound(qreal(m_conf->main_block[tarIndex].image.height()) / m_conf->main_wtiles[tarIndex].frames))
+                                                     qRound(qreal(m_conf->main_wtiles[tarIndex].image.height()) / m_conf->main_wtiles[tarIndex].frames))
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        break;
+    }
+    case WORLDTILESET_PATH:
+    {
+        long tarIndex = m_conf->getPathI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+        return m_conf->main_wpaths[tarIndex].image.copy(0,0,m_conf->main_wpaths[tarIndex].image.width(),
+                                                     qRound(qreal(m_conf->main_wpaths[tarIndex].image.height()) / m_conf->main_wpaths[tarIndex].frames))
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        break;
+    }
+    case WORLDTILESET_SCENERY:
+    {
+        long tarIndex = m_conf->getSceneI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+        return m_conf->main_wscene[tarIndex].image.copy(0,0,m_conf->main_wscene[tarIndex].image.width(),
+                                                     qRound(qreal(m_conf->main_wscene[tarIndex].image.height()) / m_conf->main_wscene[tarIndex].frames))
+                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        break;
+    }
+    case WORLDTILESET_LEVEL:
+    {
+        long tarIndex = m_conf->getWLevelI(id);
+        if(tarIndex==-1)
+            return QPixmap(m_baseSize, m_baseSize);
+        return m_conf->main_wlevels[tarIndex].image.copy(0,0,m_conf->main_wlevels[tarIndex].image.width(),
+                                                     qRound(qreal(m_conf->main_wlevels[tarIndex].image.height()) / m_conf->main_wlevels[tarIndex].frames))
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
@@ -252,6 +282,9 @@ QString tileset::getMimeType()
     case LEVELTILESET_BGO: return QString("text/x-pge-piece-bgo");
     case LEVELTILESET_NPC: return QString("text/x-pge-piece-npc");
     case WORLDTILESET_TILE: return QString("text/x-pge-piece-tile");
+    case WORLDTILESET_PATH: return QString("text/x-pge-piece-path");
+    case WORLDTILESET_SCENERY: return QString("text/x-pge-piece-scenery");
+    case WORLDTILESET_LEVEL: return QString("text/x-pge-piece-level");
     default:
         break;
     }
@@ -286,7 +319,6 @@ int tileset::getBaseSize() const
 tileset::SimpleTileset tileset::toSimpleTileset()
 {
     SimpleTileset s;
-    s.baseSize = m_baseSize;
     s.rows = m_rows;
     s.cols = m_cols;
     s.type = m_type;
@@ -303,7 +335,6 @@ tileset::SimpleTileset tileset::toSimpleTileset()
 void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
 {
     clear();
-    setBaseSize(tileset.baseSize);
     setRows(tileset.rows);
     setCols(tileset.cols);
     setType(tileset.type);
@@ -341,7 +372,6 @@ bool tileset::OpenSimpleTileset(const QString &path, tileset::SimpleTileset &til
         simpleTilesetINI.beginGroup("tileset");
         tileset.rows = (unsigned int)simpleTilesetINI.value("rows",3).toInt();
         tileset.cols = (unsigned int)simpleTilesetINI.value("cols",3).toInt();
-        tileset.baseSize = 64;
         tileset.type = static_cast<tileset::TilesetType>(simpleTilesetINI.value("type",0).toInt());
         simpleTilesetINI.endGroup();
         groups.removeAt(tilesetindex);
