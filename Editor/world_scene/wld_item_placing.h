@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ITEM_PLACING_H
-#define ITEM_PLACING_H
+#ifndef WLD_ITEM_PLACING_H
+#define WLD_ITEM_PLACING_H
 
 #include <QPoint>
 
