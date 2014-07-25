@@ -157,6 +157,10 @@ void WldScene::historyBack()
             WldData->noworldmap = !extraData.toBool();
         }else if(subtype == SETTING_RESTARTAFTERFAIL){
             WldData->restartlevel = !extraData.toBool();
+        }else if(subtype == SETTING_TOTALSTARS){
+            WldData->stars = extraData.toList()[0].toInt();
+        }else if(subtype == SETTING_INTROLEVEL){
+            WldData->autolevel = extraData.toList()[0].toString();
         }
 
         MainWinConnect::pMainWin->setCurrentWorldSettings();
@@ -253,6 +257,10 @@ void WldScene::historyForward()
             WldData->noworldmap = extraData.toBool();
         }else if(subtype == SETTING_RESTARTAFTERFAIL){
             WldData->restartlevel = extraData.toBool();
+        }else if(subtype == SETTING_TOTALSTARS){
+            WldData->stars = extraData.toList()[1].toInt();
+        }else if(subtype == SETTING_INTROLEVEL){
+            WldData->autolevel = extraData.toList()[1].toString();
         }
 
         MainWinConnect::pMainWin->setCurrentWorldSettings();
