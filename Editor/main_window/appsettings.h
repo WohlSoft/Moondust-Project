@@ -54,6 +54,8 @@ private slots:
     void on_setLogFile_clicked();
     void on_buttonBox_accepted();
 
+    void on_AssociateFiles_clicked();
+
 private:
     Ui::AppSettings *ui;
 };
