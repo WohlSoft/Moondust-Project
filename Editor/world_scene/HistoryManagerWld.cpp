@@ -71,6 +71,20 @@ void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedI
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void WldScene::addChangeWorldSettingsHistory(WldScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chLevelSettingsOperation;
+    chLevelSettingsOperation.type = HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD;
+    chLevelSettingsOperation.subtype = subtype;
+    chLevelSettingsOperation.extraData = extraData;
+    operationList.push_back(chLevelSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::historyBack()
 {
     historyIndex--;
@@ -107,6 +121,11 @@ void WldScene::historyBack()
             WldData->levels.push_back(level);
             placeLevel(level);
         }
+        foreach (WorldMusic music, deletedData.music)
+        {
+            WldData->music.push_back(music);
+            placeMusicbox(music);
+        }
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
@@ -131,6 +150,25 @@ void WldScene::historyBack()
 
         CallbackData cbData;
         findGraphicsItem(movedSourceData, &lastOperation, cbData, &WldScene::historyUndoMoveTile, &WldScene::historyUndoMovePath, &WldScene::historyUndoMoveScenery, &WldScene::historyUndoMoveLevels, &WldScene::historyUndoMoveMusic);
+
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        QVariant extraData = lastOperation.extraData;
+
+        if(subtype == SETTING_HUB){
+            WldData->noworldmap = !extraData.toBool();
+        }else if(subtype == SETTING_RESTARTAFTERFAIL){
+            WldData->restartlevel = !extraData.toBool();
+        }else if(subtype == SETTING_TOTALSTARS){
+            WldData->stars = extraData.toList()[0].toInt();
+        }else if(subtype == SETTING_INTROLEVEL){
+            WldData->autolevel = extraData.toList()[0].toString();
+        }
+
+        MainWinConnect::pMainWin->setCurrentWorldSettings();
 
         break;
     }
@@ -188,6 +226,11 @@ void WldScene::historyForward()
             WldData->levels.push_back(level);
             placeLevel(level);
         }
+        foreach (WorldMusic music, placedData.music)
+        {
+            WldData->music.push_back(music);
+            placeMusicbox(music);
+        }
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
@@ -213,6 +256,25 @@ void WldScene::historyForward()
         cbData.x = baseX;
         cbData.y = baseY;
         findGraphicsItem(movedSourceData, &lastOperation, cbData, &WldScene::historyRedoMoveTile, &WldScene::historyRedoMovePath, &WldScene::historyRedoMoveScenery, &WldScene::historyRedoMoveLevels, &WldScene::historyRedoMoveMusic);
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        QVariant extraData = lastOperation.extraData;
+
+        if(subtype == SETTING_HUB){
+            WldData->noworldmap = extraData.toBool();
+        }else if(subtype == SETTING_RESTARTAFTERFAIL){
+            WldData->restartlevel = extraData.toBool();
+        }else if(subtype == SETTING_TOTALSTARS){
+            WldData->stars = extraData.toList()[1].toInt();
+        }else if(subtype == SETTING_INTROLEVEL){
+            WldData->autolevel = extraData.toList()[1].toString();
+        }
+
+        MainWinConnect::pMainWin->setCurrentWorldSettings();
+
         break;
     }
     default:
