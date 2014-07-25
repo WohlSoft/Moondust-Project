@@ -181,7 +181,8 @@ public:
             WORLDHISTORY_REMOVE = 0,               //Removed from map
             WORLDHISTORY_PLACE,                    //Placed new
             WORLDHISTORY_MOVE,                     //moved
-            WORLDHISTORY_CHANGEDSETTINGSWORLD
+            WORLDHISTORY_CHANGEDSETTINGSWORLD,
+            WORLDHISTORY_CHANGEDSETTINGSWORLDITEM
         };
         HistoryType type;
         //used most of Operations
@@ -203,7 +204,10 @@ public:
         SETTING_HUB = 0,
         SETTING_RESTARTAFTERFAIL,
         SETTING_TOTALSTARS,
-        SETTING_INTROLEVEL
+        SETTING_INTROLEVEL,
+        SETTING_PATHBACKGROUND,
+        SETTING_BIGPATHBACKGROUND,
+        SETTING_ALWAYSVISIBLE
     };
 
     //typedefs
@@ -217,6 +221,7 @@ public:
     void addPlaceHistory(WorldData placedItems);
     void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
     void addChangeWorldSettingsHistory(SettingSubType subtype, QVariant extraData);
+    void addChangeSettingsHistory(WorldData modifiedItems, SettingSubType subType, QVariant extraData);
 
     //history modifiers
     void historyBack();
@@ -243,6 +248,14 @@ public:
     void historyRemoveScenery(CallbackData cbData, WorldScenery data);
     void historyRemoveLevels(CallbackData cbData, WorldLevels data);
     void historyRemoveMusic(CallbackData cbData, WorldMusic data);
+    //Callbackfunctions: Levels
+    void historyUndoSettingPathBackgroundLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathBackgroundLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingBigPathBackgroundLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingBigPathBackgroundLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
+
     //miscellaneous
     void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
                           callBackWorldTiles clbTiles, callBackWorldPaths clbPaths,

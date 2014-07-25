@@ -182,7 +182,7 @@ void MainWindow::on_WLD_PROPS_PathBG_clicked(bool checked)
                 ((ItemLevel*)item)->setPath(checked);
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBACKGROUND, QVariant(checked));
     }
 }
 
@@ -207,7 +207,7 @@ void MainWindow::on_WLD_PROPS_BigPathBG_clicked(bool checked)
                 ((ItemLevel*)item)->setbPath(checked);
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_BIGPATHBACKGROUND, QVariant(checked));
     }
 
 }
@@ -233,7 +233,7 @@ void MainWindow::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
                 ((ItemLevel*)item)->alwaysVisible(checked);
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_ALWAYSVISIBLE, QVariant(checked));
     }
 
 }

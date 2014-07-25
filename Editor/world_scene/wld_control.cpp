@@ -1035,7 +1035,7 @@ void WldScene::removeItemUnderCursor()
 
               removeItem(findItem);
             delete findItem;
-            if(deleted) removedItems.paths.size();addRemoveHistory(removedItems);
+            if(deleted) addRemoveHistory(removedItems);
         }
     }
 }

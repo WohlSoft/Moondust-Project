@@ -85,6 +85,21 @@ void WldScene::addChangeWorldSettingsHistory(WldScene::SettingSubType subtype, Q
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void WldScene::addChangeSettingsHistory(WorldData modifiedItems, WldScene::SettingSubType subType, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation modOperation;
+    modOperation.type = HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLDITEM;
+    modOperation.data = modifiedItems;
+    modOperation.subtype = subType;
+    modOperation.extraData = extraData;
+    operationList.push_back(modOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::historyBack()
 {
     historyIndex--;
@@ -170,6 +185,20 @@ void WldScene::historyBack()
 
         MainWinConnect::pMainWin->setCurrentWorldSettings();
 
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLDITEM:
+    {
+        WorldData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        if(lastOperation.subtype == SETTING_PATHBACKGROUND){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingPathBackgroundLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_BIGPATHBACKGROUND){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingBigPathBackgroundLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_ALWAYSVISIBLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingAlwaysVisibleLevel, 0, true, true, true, false, true);
+        }
         break;
     }
     default:
@@ -275,6 +304,20 @@ void WldScene::historyForward()
 
         MainWinConnect::pMainWin->setCurrentWorldSettings();
 
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLDITEM:
+    {
+        WorldData modifiedSourceData = lastOperation.data;
+
+        CallbackData cbData;
+        if(lastOperation.subtype == SETTING_PATHBACKGROUND){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingPathBackgroundLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_BIGPATHBACKGROUND){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingBigPathBackgroundLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_ALWAYSVISIBLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingAlwaysVisibleLevel, 0, true, true, true, false, true);
+        }
         break;
     }
     default:
@@ -442,6 +485,36 @@ void WldScene::historyRemoveMusic(WldScene::CallbackData cbData, WorldMusic /*da
     ((ItemMusic*)cbData.item)->removeFromArray();
     removeItem(cbData.item);
     delete cbData.item;
+}
+
+void WldScene::historyUndoSettingPathBackgroundLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->setPath(data.pathbg);
+}
+
+void WldScene::historyRedoSettingPathBackgroundLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->setPath(cbData.hist->extraData.toBool());
+}
+
+void WldScene::historyUndoSettingBigPathBackgroundLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->setbPath(data.bigpathbg);
+}
+
+void WldScene::historyRedoSettingBigPathBackgroundLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->setbPath(cbData.hist->extraData.toBool());
+}
+
+void WldScene::historyUndoSettingAlwaysVisibleLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->alwaysVisible(data.alwaysVisible);
+}
+
+void WldScene::historyRedoSettingAlwaysVisibleLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->alwaysVisible(cbData.hist->extraData.toBool());
 }
 
 void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *operation, WldScene::CallbackData customData, WldScene::callBackWorldTiles clbTiles, WldScene::callBackWorldPaths clbPaths, WldScene::callBackWorldScenery clbScenery, WldScene::callBackWorldLevels clbLevels, callBackWorldMusicbox clbMusic, bool ignoreTiles, bool ignorePaths, bool ignoreScenery, bool ignoreLevels, bool ignoreMusicbox)
