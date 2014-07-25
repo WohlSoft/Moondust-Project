@@ -121,6 +121,11 @@ void WldScene::historyBack()
             WldData->levels.push_back(level);
             placeLevel(level);
         }
+        foreach (WorldMusic music, deletedData.music)
+        {
+            WldData->music.push_back(music);
+            placeMusicbox(music);
+        }
 
         //refresh Animation control
         if(opts.animationEnabled) stopAnimation();
@@ -220,6 +225,11 @@ void WldScene::historyForward()
             //place them back
             WldData->levels.push_back(level);
             placeLevel(level);
+        }
+        foreach (WorldMusic music, placedData.music)
+        {
+            WldData->music.push_back(music);
+            placeMusicbox(music);
         }
 
         //refresh Animation control
