@@ -118,37 +118,46 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         if(selected==setPathBG)
         {
             scene->contextMenuOpened = false;
+            WorldData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="LEVEL")
                 {
+                    selData.levels << ((ItemLevel *)SelItem)->levelData;
                     ((ItemLevel *)SelItem)->setPath( setPathBG->isChecked() );
                 }
             }
+            scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBACKGROUND, QVariant(setPathBG->isChecked()));
         }
         else
         if(selected==setBigPathBG)
         {
             scene->contextMenuOpened = false;
+            WorldData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="LEVEL")
                 {
+                    selData.levels << ((ItemLevel *)SelItem)->levelData;
                     ((ItemLevel *)SelItem)->setbPath( setBigPathBG->isChecked() );
                 }
             }
+            scene->addChangeSettingsHistory(selData, WldScene::SETTING_BIGPATHBACKGROUND, QVariant(setPathBG->isChecked()));
         }
         else
         if(selected==setAlVis)
         {
             scene->contextMenuOpened = false;
+            WorldData selData;
             foreach(QGraphicsItem * SelItem, scene->selectedItems() )
             {
                 if(SelItem->data(0).toString()=="LEVEL")
                 {
+                    selData.levels << ((ItemLevel *)SelItem)->levelData;
                     ((ItemLevel *)SelItem)->alwaysVisible( setAlVis->isChecked() );
                 }
             }
+            scene->addChangeSettingsHistory(selData, WldScene::SETTING_ALWAYSVISIBLE, QVariant(setPathBG->isChecked()));
         }
         else
         if(selected==cutTile)
