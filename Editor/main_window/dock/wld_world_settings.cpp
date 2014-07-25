@@ -178,8 +178,13 @@ void MainWindow::on_WLD_AutostartLvlBrowse_clicked()
     LevelFileList levelList(dirPath, ui->WLD_AutostartLvl->text());
     if( levelList.exec() == QDialog::Accepted )
     {
-        ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
-        on_WLD_AutostartLvl_textEdited(levelList.SelectedFile);
+        if(activeChildWindow()==3){
+            QList<QVariant> var;
+            var << activeWldEditWin()->WldData.autolevel << levelList.SelectedFile;
+            activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
+            ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
+            on_WLD_AutostartLvl_textEdited(levelList.SelectedFile);
+        }
     }
 
 }
@@ -189,6 +194,9 @@ void MainWindow::on_WLD_Stars_valueChanged(int arg1)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
+        QList<QVariant> var;
+        var << activeWldEditWin()->WldData.stars << arg1;
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_TOTALSTARS, var);
         activeWldEditWin()->WldData.stars = arg1;
         activeWldEditWin()->WldData.modified = true;
     }

@@ -201,7 +201,9 @@ public:
 
     enum SettingSubType{
         SETTING_HUB = 0,
-        SETTING_RESTARTAFTERFAIL
+        SETTING_RESTARTAFTERFAIL,
+        SETTING_TOTALSTARS,
+        SETTING_INTROLEVEL
     };
 
     //typedefs
