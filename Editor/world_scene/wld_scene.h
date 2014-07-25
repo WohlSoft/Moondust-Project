@@ -180,7 +180,8 @@ public:
         enum HistoryType{
             WORLDHISTORY_REMOVE = 0,               //Removed from map
             WORLDHISTORY_PLACE,                    //Placed new
-            WORLDHISTORY_MOVE                     //moved
+            WORLDHISTORY_MOVE,                     //moved
+            WORLDHISTORY_CHANGEDSETTINGSWORLD
         };
         HistoryType type;
         //used most of Operations
@@ -197,6 +198,12 @@ public:
         //custom data
         long x, y;
     };
+
+    enum SettingSubType{
+        SETTING_HUB = 0,
+        SETTING_RESTARTAFTERFAIL
+    };
+
     //typedefs
     typedef void (WldScene::*callBackWorldTiles)(CallbackData, WorldTiles);
     typedef void (WldScene::*callBackWorldPaths)(CallbackData, WorldPaths);
@@ -207,6 +214,7 @@ public:
     void addRemoveHistory(WorldData removedItems);
     void addPlaceHistory(WorldData placedItems);
     void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
+    void addChangeWorldSettingsHistory(SettingSubType subtype, QVariant extraData);
 
     //history modifiers
     void historyBack();

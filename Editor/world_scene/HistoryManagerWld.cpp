@@ -71,6 +71,20 @@ void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedI
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void WldScene::addChangeWorldSettingsHistory(WldScene::SettingSubType subtype, QVariant extraData)
+{
+    cleanupRedoElements();
+
+    HistoryOperation chLevelSettingsOperation;
+    chLevelSettingsOperation.type = HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD;
+    chLevelSettingsOperation.subtype = subtype;
+    chLevelSettingsOperation.extraData = extraData;
+    operationList.push_back(chLevelSettingsOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::historyBack()
 {
     historyIndex--;
@@ -131,6 +145,21 @@ void WldScene::historyBack()
 
         CallbackData cbData;
         findGraphicsItem(movedSourceData, &lastOperation, cbData, &WldScene::historyUndoMoveTile, &WldScene::historyUndoMovePath, &WldScene::historyUndoMoveScenery, &WldScene::historyUndoMoveLevels, &WldScene::historyUndoMoveMusic);
+
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        QVariant extraData = lastOperation.extraData;
+
+        if(subtype == SETTING_HUB){
+            WldData->noworldmap = !extraData.toBool();
+        }else if(subtype == SETTING_RESTARTAFTERFAIL){
+            WldData->restartlevel = !extraData.toBool();
+        }
+
+        MainWinConnect::pMainWin->setCurrentWorldSettings();
 
         break;
     }
@@ -213,6 +242,21 @@ void WldScene::historyForward()
         cbData.x = baseX;
         cbData.y = baseY;
         findGraphicsItem(movedSourceData, &lastOperation, cbData, &WldScene::historyRedoMoveTile, &WldScene::historyRedoMovePath, &WldScene::historyRedoMoveScenery, &WldScene::historyRedoMoveLevels, &WldScene::historyRedoMoveMusic);
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD:
+    {
+        SettingSubType subtype = (SettingSubType)lastOperation.subtype;
+        QVariant extraData = lastOperation.extraData;
+
+        if(subtype == SETTING_HUB){
+            WldData->noworldmap = extraData.toBool();
+        }else if(subtype == SETTING_RESTARTAFTERFAIL){
+            WldData->restartlevel = extraData.toBool();
+        }
+
+        MainWinConnect::pMainWin->setCurrentWorldSettings();
+
         break;
     }
     default:
