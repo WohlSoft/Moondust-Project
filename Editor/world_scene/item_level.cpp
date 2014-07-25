@@ -75,6 +75,19 @@ void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         this->setSelected(1);
         ItemMenu->clear();
+
+        QAction *LvlTitle = ItemMenu->addAction(QString("[%1]").arg(levelData.title));
+        LvlTitle->setEnabled(false);
+        LvlTitle->setVisible(!levelData.title.isEmpty());
+        LvlTitle->deleteLater();
+
+        QAction *openLvl = ItemMenu->addAction(tr("Open target file: %1").arg(levelData.lvlfile));
+        openLvl->setVisible( (!levelData.lvlfile.isEmpty()) && (QFile(scene->WldData->path + "/" + levelData.lvlfile).exists()) );
+        openLvl->deleteLater();
+
+
+        ItemMenu->addSeparator()->deleteLater();
+
         QAction *setPathBG = ItemMenu->addAction(tr("Path background"));
         setPathBG->setCheckable(true);
         setPathBG->setChecked(levelData.pathbg);
@@ -90,7 +103,7 @@ void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         setAlVis->setChecked(levelData.alwaysVisible);
         setAlVis->deleteLater();
 
-        ItemMenu->addSeparator()->deleteLater();;
+        ItemMenu->addSeparator()->deleteLater();
         QAction *copyTile = ItemMenu->addAction(tr("Copy"));
         copyTile->deleteLater();
         QAction *cutTile = ItemMenu->addAction(tr("Cut"));
@@ -115,6 +128,12 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         event->accept();
 
+        if(selected==openLvl)
+        {
+            MainWinConnect::pMainWin->OpenFile(scene->WldData->path + "/" + levelData.lvlfile);
+            scene->contextMenuOpened = false;
+        }
+        else
         if(selected==setPathBG)
         {
             scene->contextMenuOpened = false;
