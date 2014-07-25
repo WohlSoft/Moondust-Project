@@ -105,6 +105,8 @@ void MainWindow::on_WLD_NoWorldMap_clicked(bool checked)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_HUB, checked);
+
         ui->actionWLDDisableMap->setChecked(checked);
         activeWldEditWin()->WldData.noworldmap = checked;
         activeWldEditWin()->WldData.modified = true;
@@ -116,6 +118,8 @@ void MainWindow::on_actionWLDDisableMap_triggered(bool checked)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_HUB, checked);
+
         ui->WLD_NoWorldMap->setChecked(checked);
         activeWldEditWin()->WldData.noworldmap = checked;
         activeWldEditWin()->WldData.modified = true;
@@ -128,6 +132,8 @@ void MainWindow::on_WLD_RestartLevel_clicked(bool checked)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_RESTARTAFTERFAIL, checked);
+
         ui->actionWLDFailRestart->setChecked(checked);
         activeWldEditWin()->WldData.restartlevel = checked;
         activeWldEditWin()->WldData.modified = true;
@@ -138,6 +144,8 @@ void MainWindow::on_actionWLDFailRestart_triggered(bool checked)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_RESTARTAFTERFAIL, checked);
+
         ui->WLD_RestartLevel->setChecked(checked);
         activeWldEditWin()->WldData.restartlevel = checked;
         activeWldEditWin()->WldData.modified = true;
@@ -170,8 +178,13 @@ void MainWindow::on_WLD_AutostartLvlBrowse_clicked()
     LevelFileList levelList(dirPath, ui->WLD_AutostartLvl->text());
     if( levelList.exec() == QDialog::Accepted )
     {
-        ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
-        on_WLD_AutostartLvl_textEdited(levelList.SelectedFile);
+        if(activeChildWindow()==3){
+            QList<QVariant> var;
+            var << activeWldEditWin()->WldData.autolevel << levelList.SelectedFile;
+            activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
+            ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
+            on_WLD_AutostartLvl_textEdited(levelList.SelectedFile);
+        }
     }
 
 }
@@ -181,6 +194,9 @@ void MainWindow::on_WLD_Stars_valueChanged(int arg1)
     if(world_settings_lock_fields) return;
     if (activeChildWindow()==3)
     {
+        QList<QVariant> var;
+        var << activeWldEditWin()->WldData.stars << arg1;
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_TOTALSTARS, var);
         activeWldEditWin()->WldData.stars = arg1;
         activeWldEditWin()->WldData.modified = true;
     }
