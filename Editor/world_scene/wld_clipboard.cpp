@@ -83,17 +83,17 @@ WorldData WldScene::copy(bool cut)
                     delete (*it);
                 }
             }
-//            else
-//            if( ObjType == "MUSICBOX")
-//            {
-//                ItemWater* sourceWater = (ItemWater *)(*it);
-//                copyData.water.push_back(sourceWater->waterData);
-//                if(cut){
-//                    sourceWater->removeFromArray();
-//                    removeItem(*it);
-//                    delete (*it);
-//                }
-//            }
+            else
+            if( ObjType == "MUSICBOX")
+            {
+                ItemMusic* sourceMusic = (ItemMusic *)(*it);
+                copyData.music.push_back(sourceMusic->musicData);
+                if(cut){
+                    sourceMusic->removeFromArray();
+                    removeItem(*it);
+                    delete (*it);
+                }
+            }
 
         }//fetch selected items
 
