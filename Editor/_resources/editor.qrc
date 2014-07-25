@@ -99,5 +99,9 @@
         <file>images/lock_scenery_op.png</file>
         <file>images/lock_scenery_cl.png</file>
         <file>images/lock_tile_op.png</file>
+        <file>images/overwrite.png</file>
+        <file>images/square_fill.png</file>
+        <file>images/resize_cancel.png</file>
+        <file>images/resize_accept.png</file>
     </qresource>
 </RCC>
