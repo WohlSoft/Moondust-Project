@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ITEM_PLACING_H
-#define ITEM_PLACING_H
+#ifndef LVL_ITEM_PLACING_H
+#define LVL_ITEM_PLACING_H
 
 #include "../file_formats/lvl_filedata.h"
 class LvlPlacingItems
