@@ -54,6 +54,26 @@ long dataconfigs::getWLevelI(unsigned long itemID)
     return j;
 }
 
+long dataconfigs::getCharacterI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+
+    for(j=0; j < characters.size(); j++)
+    {
+        if(characters[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+
+    if(!found) j=-1;
+    return j;
+}
+
 
 void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
 {
