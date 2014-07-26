@@ -1511,7 +1511,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../mainwindow.ui" line="121"/>
-        <location filename="../mainwindow.ui" line="7428"/>
+        <location filename="../mainwindow.ui" line="7400"/>
         <source>New</source>
         <translation>Новый</translation>
     </message>
@@ -1527,7 +1527,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../mainwindow.ui" line="175"/>
-        <location filename="../mainwindow.ui" line="5558"/>
+        <location filename="../mainwindow.ui" line="5547"/>
         <source>Level</source>
         <translation>Уровень</translation>
     </message>
@@ -1542,32 +1542,31 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Мир</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="224"/>
         <source>Disable characters</source>
-        <translation>Отключить персонажей</translation>
+        <translation type="vanished">Отключить персонажей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="240"/>
+        <location filename="../mainwindow.ui" line="229"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="258"/>
+        <location filename="../mainwindow.ui" line="247"/>
         <source>Window</source>
         <translation>Окно</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="264"/>
+        <location filename="../mainwindow.ui" line="253"/>
         <source>Tools</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="300"/>
+        <location filename="../mainwindow.ui" line="289"/>
         <source>Edit</source>
         <translation>Правка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="332"/>
+        <location filename="../mainwindow.ui" line="321"/>
         <source>General</source>
         <translation>Основное</translation>
     </message>
@@ -1576,14 +1575,14 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="vanished">Уровень</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="402"/>
+        <location filename="../mainwindow.ui" line="391"/>
         <source>Blocks</source>
         <translation>Блоки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="435"/>
-        <location filename="../mainwindow.ui" line="618"/>
-        <location filename="../mainwindow.ui" line="807"/>
+        <location filename="../mainwindow.ui" line="424"/>
+        <location filename="../mainwindow.ui" line="607"/>
+        <location filename="../mainwindow.ui" line="796"/>
         <source>Category:</source>
         <translation>Категория:</translation>
     </message>
@@ -1602,14 +1601,14 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>[пользовательские]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="597"/>
+        <location filename="../mainwindow.ui" line="586"/>
         <source>Backgrounds</source>
         <translation>Фон. объекты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="776"/>
-        <location filename="../mainwindow.ui" line="3081"/>
-        <location filename="../mainwindow.ui" line="5259"/>
+        <location filename="../mainwindow.ui" line="765"/>
+        <location filename="../mainwindow.ui" line="3070"/>
+        <location filename="../mainwindow.ui" line="5248"/>
         <source>NPC</source>
         <translation>иНП</translation>
     </message>
@@ -1626,22 +1625,22 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="vanished">Карта мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1159"/>
+        <location filename="../mainwindow.ui" line="1148"/>
         <source>Tiles</source>
         <translation>Плитки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1224"/>
+        <location filename="../mainwindow.ui" line="1213"/>
         <source>Scenery</source>
         <translation>Декорации</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1348"/>
+        <location filename="../mainwindow.ui" line="1337"/>
         <source>Levels</source>
         <translation>Уровни</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1401"/>
+        <location filename="../mainwindow.ui" line="1390"/>
         <source>Music Box</source>
         <translation>Музыка</translation>
     </message>
@@ -1666,14 +1665,14 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="vanished">Воспроизвести</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1481"/>
-        <location filename="../mainwindow.ui" line="1661"/>
-        <location filename="../mainwindow.ui" line="6867"/>
+        <location filename="../mainwindow.ui" line="1470"/>
+        <location filename="../mainwindow.ui" line="1650"/>
+        <location filename="../mainwindow.ui" line="6839"/>
         <source>Section Settings</source>
         <translation>Настройки секции</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1512"/>
+        <location filename="../mainwindow.ui" line="1501"/>
         <source>Music</source>
         <translation>Музыка</translation>
     </message>
@@ -1712,49 +1711,49 @@ Message limits: max line lenth is 28 characters</source>
 (Макс. длина одной строки 28 символов)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1563"/>
+        <location filename="../mainwindow.ui" line="1552"/>
         <source>Music file:</source>
         <translation>Музыкальный файл:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1607"/>
+        <location filename="../mainwindow.ui" line="1596"/>
         <source>Custom</source>
         <translation>Своя</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1682"/>
+        <location filename="../mainwindow.ui" line="1671"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
         <translation>Выходя за кадр, игрок входит в кадр с другой стороны</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1685"/>
-        <location filename="../mainwindow.ui" line="6655"/>
+        <location filename="../mainwindow.ui" line="1674"/>
+        <location filename="../mainwindow.ui" line="6667"/>
         <source>Warp section</source>
         <translation>Соединить правый/левый края</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1710"/>
+        <location filename="../mainwindow.ui" line="1699"/>
         <source>Off screen exit</source>
         <translation>Выход из уровня за кадр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1735"/>
+        <location filename="../mainwindow.ui" line="1724"/>
         <source>No turn back (disable moving to left)</source>
         <translation>Не возвращаться (только вправо)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1760"/>
-        <location filename="../mainwindow.ui" line="6691"/>
+        <location filename="../mainwindow.ui" line="1749"/>
+        <location filename="../mainwindow.ui" line="6703"/>
         <source>Underwater</source>
         <translation>Под водой</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1792"/>
+        <location filename="../mainwindow.ui" line="1781"/>
         <source>Style</source>
         <translation>Оформление</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1807"/>
+        <location filename="../mainwindow.ui" line="1796"/>
         <source>Background image</source>
         <translation>Фоновое изображение</translation>
     </message>
@@ -1775,49 +1774,49 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Пожалуйста, сначала сохраните файл, если вы хотите выбрать файл пользовательской музыки.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1862"/>
+        <location filename="../mainwindow.ui" line="1851"/>
         <source>Current Section</source>
         <translation>Текущая секция</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1883"/>
+        <location filename="../mainwindow.ui" line="1872"/>
         <source>Section:</source>
         <translation>Секция:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1931"/>
+        <location filename="../mainwindow.ui" line="1920"/>
         <source>Resize section</source>
         <translation>Изменить размер</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="960"/>
+        <location filename="../mainwindow.ui" line="949"/>
         <source>CommonEdit Bar</source>
         <translation>Правка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="983"/>
+        <location filename="../mainwindow.ui" line="972"/>
         <source>EditingTools</source>
         <translation>Инструменты редактирования</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1017"/>
+        <location filename="../mainwindow.ui" line="1006"/>
         <source>LevelObj Tools</source>
         <translation>Уровень</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1073"/>
+        <location filename="../mainwindow.ui" line="1062"/>
         <source>Level Sections Switch</source>
         <translation>Переключить секцию уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1947"/>
-        <location filename="../mainwindow.ui" line="7592"/>
+        <location filename="../mainwindow.ui" line="1936"/>
+        <location filename="../mainwindow.ui" line="7564"/>
         <source>Apply</source>
         <translation>Принять</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1960"/>
-        <location filename="../mainwindow.ui" line="7601"/>
+        <location filename="../mainwindow.ui" line="1949"/>
+        <location filename="../mainwindow.ui" line="7573"/>
         <source>Cancel</source>
         <translation>Отменить</translation>
     </message>
@@ -1826,48 +1825,48 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Проходы и двери</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2014"/>
+        <location filename="../mainwindow.ui" line="2003"/>
         <source>Warp to World map</source>
         <translation>Перейти на карту мира в</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2026"/>
-        <location filename="../mainwindow.ui" line="5708"/>
+        <location filename="../mainwindow.ui" line="2015"/>
+        <location filename="../mainwindow.ui" line="5697"/>
         <source>Set</source>
         <translation>Выбр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2039"/>
+        <location filename="../mainwindow.ui" line="2028"/>
         <source>Y:</source>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2062"/>
+        <location filename="../mainwindow.ui" line="2051"/>
         <source>X:</source>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2102"/>
+        <location filename="../mainwindow.ui" line="2091"/>
         <source>Main</source>
         <translation>Основное</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2124"/>
+        <location filename="../mainwindow.ui" line="2113"/>
         <source>0 - Instant</source>
         <translation>0 - Мгновенный</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2129"/>
+        <location filename="../mainwindow.ui" line="2118"/>
         <source>1 - Pipe</source>
         <translation>1 - Труба</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2134"/>
+        <location filename="../mainwindow.ui" line="2123"/>
         <source>2 - Door</source>
         <translation>2 - Дверь</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2148"/>
+        <location filename="../mainwindow.ui" line="2137"/>
         <source>Warp type</source>
         <translation>Тип прохода</translation>
     </message>
@@ -1876,128 +1875,128 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Без транспорта</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2174"/>
+        <location filename="../mainwindow.ui" line="2163"/>
         <source>Need stars</source>
         <translation>Нужно звёзд</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2197"/>
+        <location filename="../mainwindow.ui" line="2186"/>
         <source>Locked</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2210"/>
+        <location filename="../mainwindow.ui" line="2199"/>
         <source>Allow NPC</source>
         <translation>Р. предметы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2223"/>
+        <location filename="../mainwindow.ui" line="2212"/>
         <source>Set Entrance</source>
         <translation>Уст. Вход</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2236"/>
+        <location filename="../mainwindow.ui" line="2225"/>
         <source>Set Exit</source>
         <translation>Уст. Выход</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2295"/>
+        <location filename="../mainwindow.ui" line="2284"/>
         <source>Warp to other level</source>
         <translation>Пер. на уровень</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2307"/>
+        <location filename="../mainwindow.ui" line="2296"/>
         <source>Warp to</source>
         <translation>Дверь №</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2340"/>
+        <location filename="../mainwindow.ui" line="2329"/>
         <source>Level file</source>
         <translation>Файл уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2367"/>
+        <location filename="../mainwindow.ui" line="2356"/>
         <source>Level door</source>
         <translation>Дверь уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2379"/>
-        <location filename="../mainwindow.ui" line="2418"/>
+        <location filename="../mainwindow.ui" line="2368"/>
+        <location filename="../mainwindow.ui" line="2407"/>
         <source>Entrance</source>
         <translation>Вход</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2392"/>
-        <location filename="../mainwindow.ui" line="2521"/>
+        <location filename="../mainwindow.ui" line="2381"/>
+        <location filename="../mainwindow.ui" line="2510"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2406"/>
+        <location filename="../mainwindow.ui" line="2395"/>
         <source>Pipe direction</source>
         <translation>Направление трубы</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2436"/>
-        <location filename="../mainwindow.ui" line="2536"/>
-        <location filename="../mainwindow.ui" line="3571"/>
-        <location filename="../mainwindow.ui" line="4301"/>
-        <location filename="../mainwindow.ui" line="4649"/>
-        <location filename="../mainwindow.ui" line="5455"/>
+        <location filename="../mainwindow.ui" line="2425"/>
+        <location filename="../mainwindow.ui" line="2525"/>
+        <location filename="../mainwindow.ui" line="3560"/>
+        <location filename="../mainwindow.ui" line="4290"/>
+        <location filename="../mainwindow.ui" line="4638"/>
+        <location filename="../mainwindow.ui" line="5444"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="282"/>
         <source>Left</source>
         <translation>Лево</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2452"/>
-        <location filename="../mainwindow.ui" line="2552"/>
-        <location filename="../mainwindow.ui" line="3585"/>
-        <location filename="../mainwindow.ui" line="4356"/>
-        <location filename="../mainwindow.ui" line="4677"/>
-        <location filename="../mainwindow.ui" line="5475"/>
+        <location filename="../mainwindow.ui" line="2441"/>
+        <location filename="../mainwindow.ui" line="2541"/>
+        <location filename="../mainwindow.ui" line="3574"/>
+        <location filename="../mainwindow.ui" line="4345"/>
+        <location filename="../mainwindow.ui" line="4666"/>
+        <location filename="../mainwindow.ui" line="5464"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="289"/>
         <source>Right</source>
         <translation>Право</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2465"/>
-        <location filename="../mainwindow.ui" line="2565"/>
-        <location filename="../mainwindow.ui" line="4663"/>
+        <location filename="../mainwindow.ui" line="2454"/>
+        <location filename="../mainwindow.ui" line="2554"/>
+        <location filename="../mainwindow.ui" line="4652"/>
         <source>Up</source>
         <translation>Вверх</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2481"/>
-        <location filename="../mainwindow.ui" line="2581"/>
-        <location filename="../mainwindow.ui" line="4656"/>
+        <location filename="../mainwindow.ui" line="2470"/>
+        <location filename="../mainwindow.ui" line="2570"/>
+        <location filename="../mainwindow.ui" line="4645"/>
         <source>Down</source>
         <translation>Вниз</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3632"/>
-        <location filename="../mainwindow.ui" line="7322"/>
+        <location filename="../mainwindow.ui" line="3621"/>
+        <location filename="../mainwindow.ui" line="7294"/>
         <source>Layers</source>
         <translation>Слои</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3663"/>
+        <location filename="../mainwindow.ui" line="3652"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3673"/>
+        <location filename="../mainwindow.ui" line="3662"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3683"/>
+        <location filename="../mainwindow.ui" line="3672"/>
         <source>Lock</source>
         <translation>Блокировать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2628"/>
-        <location filename="../mainwindow.ui" line="2683"/>
-        <location filename="../mainwindow.ui" line="5533"/>
+        <location filename="../mainwindow.ui" line="2617"/>
+        <location filename="../mainwindow.ui" line="2672"/>
+        <location filename="../mainwindow.ui" line="5522"/>
         <source>Item Properties</source>
         <translation>Свойства объекта</translation>
     </message>
@@ -2018,12 +2017,12 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="obsolete">Аттрибуты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2898"/>
+        <location filename="../mainwindow.ui" line="2887"/>
         <source>Invisible</source>
         <translation>Невидимый</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2891"/>
+        <location filename="../mainwindow.ui" line="2880"/>
         <source>Slippery</source>
         <translation>Скользкий</translation>
     </message>
@@ -2036,8 +2035,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="obsolete">Имя слоя</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2795"/>
-        <location filename="../mainwindow.ui" line="7408"/>
+        <location filename="../mainwindow.ui" line="2784"/>
+        <location filename="../mainwindow.ui" line="7380"/>
         <source>Events</source>
         <translation>События</translation>
     </message>
@@ -2054,403 +2053,413 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Нет других объектов на слое</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6007"/>
+        <location filename="../mainwindow.ui" line="5986"/>
+        <source>Placing</source>
+        <translation>Расстановка</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="5999"/>
+        <source>Resizing</source>
+        <translation>Изменение размера</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="6019"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6010"/>
+        <location filename="../mainwindow.ui" line="6022"/>
         <source>Open (Ctrl+O)</source>
         <translation>Открыть (Ctrl+O)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6021"/>
+        <location filename="../mainwindow.ui" line="6033"/>
         <source>Exit program</source>
         <translation>Выйти</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6033"/>
+        <location filename="../mainwindow.ui" line="6045"/>
         <source>Level...</source>
         <translation>Уровень...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6042"/>
+        <location filename="../mainwindow.ui" line="6054"/>
         <source>World map...</source>
         <translation>Карта мира...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6051"/>
+        <location filename="../mainwindow.ui" line="6063"/>
         <source>NPC config...</source>
         <translation>Конфигуркция нИП...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6063"/>
+        <location filename="../mainwindow.ui" line="6075"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6066"/>
+        <location filename="../mainwindow.ui" line="6078"/>
         <source>Save (Ctrl+S)</source>
         <translation>Сохранить (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6084"/>
+        <location filename="../mainwindow.ui" line="6096"/>
         <source>Save as...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6087"/>
+        <location filename="../mainwindow.ui" line="6099"/>
         <source>Save as (Ctrl+Shift+S)</source>
         <translation>Сохранить как... (Ctrl+Shift+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6101"/>
+        <location filename="../mainwindow.ui" line="6113"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6109"/>
+        <location filename="../mainwindow.ui" line="6121"/>
         <source>Save all</source>
         <translation>Сохранить всё</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6112"/>
+        <location filename="../mainwindow.ui" line="6124"/>
         <source>Save all (Ctrl+Alt+S)</source>
         <translation>Сохранить всё (Ctrl+Alt+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6120"/>
+        <location filename="../mainwindow.ui" line="6132"/>
         <source>About</source>
         <translation>О Программе</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6134"/>
+        <location filename="../mainwindow.ui" line="6146"/>
         <source>Contents</source>
         <translation>Содержание</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6137"/>
+        <location filename="../mainwindow.ui" line="6149"/>
         <source>Contents (F1)</source>
         <translation>Содержание (F1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6155"/>
+        <location filename="../mainwindow.ui" line="6167"/>
         <source>Section 1</source>
         <translation>Секция 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6158"/>
+        <location filename="../mainwindow.ui" line="6170"/>
         <source>Section 1 (Ctrl+1)</source>
         <translation>Секция 1 (Ctrl+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6179"/>
+        <location filename="../mainwindow.ui" line="6191"/>
         <source>Section 2</source>
         <translation>Секция 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6182"/>
+        <location filename="../mainwindow.ui" line="6194"/>
         <source>Section 2 (Ctrl+2)</source>
         <translation>Секция 2 (Ctrl+2)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6203"/>
+        <location filename="../mainwindow.ui" line="6215"/>
         <source>Section 3</source>
         <translation>Секция 3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6206"/>
+        <location filename="../mainwindow.ui" line="6218"/>
         <source>Section 3 (Ctrl+3)</source>
         <translation>Секция 3 (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6227"/>
+        <location filename="../mainwindow.ui" line="6239"/>
         <source>Section 4</source>
         <translation>Секция 4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6230"/>
+        <location filename="../mainwindow.ui" line="6242"/>
         <source>Section 4 (Ctrl+4)</source>
         <translation>Секция 4 (Ctrl+3)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6251"/>
+        <location filename="../mainwindow.ui" line="6263"/>
         <source>Section 5</source>
         <translation>Секция 5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6254"/>
+        <location filename="../mainwindow.ui" line="6266"/>
         <source>Section 5 (Ctrl+5)</source>
         <translation>Секция 5 (Ctrl+5)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6275"/>
+        <location filename="../mainwindow.ui" line="6287"/>
         <source>Section 6</source>
         <translation>Секция 6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6278"/>
+        <location filename="../mainwindow.ui" line="6290"/>
         <source>Section 6 (Ctrl+6)</source>
         <translation>Секция 6 (Ctrl+6)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6299"/>
+        <location filename="../mainwindow.ui" line="6311"/>
         <source>Section 7</source>
         <translation>Секция 7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6302"/>
+        <location filename="../mainwindow.ui" line="6314"/>
         <source>Section 7 (Ctrl+7)</source>
         <translation>Секция 7 (Ctrl+7)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6323"/>
+        <location filename="../mainwindow.ui" line="6335"/>
         <source>Section 8</source>
         <translation>Секция 8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6326"/>
+        <location filename="../mainwindow.ui" line="6338"/>
         <source>Section 8 (Ctrl+8)</source>
         <translation>Секция 8 (Ctrl+8)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6347"/>
+        <location filename="../mainwindow.ui" line="6359"/>
         <source>Section 9</source>
         <translation>Секция 9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6350"/>
+        <location filename="../mainwindow.ui" line="6362"/>
         <source>Section 9 (Ctrl+9)</source>
         <translation>Секция 9 (Ctrl+9)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6371"/>
+        <location filename="../mainwindow.ui" line="6383"/>
         <source>Section 10</source>
         <translation>Секция 10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6374"/>
+        <location filename="../mainwindow.ui" line="6386"/>
         <source>Section 10 (Ctrl+0)</source>
         <translation>Секция 10 (Ctrl+0)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6395"/>
+        <location filename="../mainwindow.ui" line="6407"/>
         <source>Section 11</source>
         <translation>Секция 11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6398"/>
+        <location filename="../mainwindow.ui" line="6410"/>
         <source>Section 11 (Ctrl+Alt+1)</source>
         <translation>Секция 11 (Ctrl+Alt+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6419"/>
+        <location filename="../mainwindow.ui" line="6431"/>
         <source>Section 12</source>
         <translation>Секция 12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6422"/>
+        <location filename="../mainwindow.ui" line="6434"/>
         <source>Section 12 (Ctrl+Alt+2)</source>
         <translation>Секция 12 (Ctrl+Alt+2)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6443"/>
+        <location filename="../mainwindow.ui" line="6455"/>
         <source>Section 13</source>
         <translation>Секция 13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6446"/>
+        <location filename="../mainwindow.ui" line="6458"/>
         <source>Section 13 (Ctrl+Alt+3)</source>
         <translation>Секция 13 (Ctrl+Alt+3)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6467"/>
+        <location filename="../mainwindow.ui" line="6479"/>
         <source>Section 14</source>
         <translation>Секция 14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6470"/>
+        <location filename="../mainwindow.ui" line="6482"/>
         <source>Section 14 (Ctrl+Alt+4)</source>
         <translation>Секция 14 (Ctrl+Alt+4)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6491"/>
+        <location filename="../mainwindow.ui" line="6503"/>
         <source>Section 15</source>
         <translation>Секция 15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6494"/>
+        <location filename="../mainwindow.ui" line="6506"/>
         <source>Section 15 (Ctrl+Alt+5)</source>
         <translation>Секция 15 (Ctrl+Alt+5)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6515"/>
+        <location filename="../mainwindow.ui" line="6527"/>
         <source>Section 16</source>
         <translation>Секция 16</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6518"/>
+        <location filename="../mainwindow.ui" line="6530"/>
         <source>Section 16 (Ctrl+Alt+6)</source>
         <translation>Секция 16 (Ctrl+Alt+6)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6539"/>
+        <location filename="../mainwindow.ui" line="6551"/>
         <source>Section 17</source>
         <translation>Секция 17</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6542"/>
+        <location filename="../mainwindow.ui" line="6554"/>
         <source>Section 17 (Ctrl+Alt+7)</source>
         <translation>Секция 17 (Ctrl+Alt+7)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6563"/>
+        <location filename="../mainwindow.ui" line="6575"/>
         <source>Section 18</source>
         <translation>Секция 18</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6566"/>
+        <location filename="../mainwindow.ui" line="6578"/>
         <source>Section 18 (Ctrl+Alt+8)</source>
         <translation>Секция 18 (Ctrl+Alt+8)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6587"/>
+        <location filename="../mainwindow.ui" line="6599"/>
         <source>Section 19</source>
         <translation>Секция 19</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6590"/>
+        <location filename="../mainwindow.ui" line="6602"/>
         <source>Section 19 (Ctrl+Alt+9)</source>
         <translation>Секция 19 (Ctrl+Alt+9)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6611"/>
+        <location filename="../mainwindow.ui" line="6623"/>
         <source>Section 20</source>
         <translation>Секция 20</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6614"/>
+        <location filename="../mainwindow.ui" line="6626"/>
         <source>Section 20 (Ctrl+Alt+0)</source>
         <translation>Секция 20 (Ctrl+Alt+0)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6635"/>
+        <location filename="../mainwindow.ui" line="6647"/>
         <source>Section 21</source>
         <translation>Секция 21</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6638"/>
+        <location filename="../mainwindow.ui" line="6650"/>
         <source>Section 21 (Alt+1)</source>
         <translation>Секция 21 (Alt+1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6669"/>
+        <location filename="../mainwindow.ui" line="6681"/>
         <source>Offscreen exit</source>
         <translation>Выход из уровня за кадр</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6680"/>
+        <location filename="../mainwindow.ui" line="6692"/>
         <source>No turn back</source>
         <translation>Нельзя вернуться</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6699"/>
+        <location filename="../mainwindow.ui" line="6711"/>
         <source>Export to image...</source>
         <translation>Экспорт в изображение...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6702"/>
+        <location filename="../mainwindow.ui" line="6714"/>
         <source>Export current section to image (F12)</source>
         <translation>Экспортировать текущую секцию в изображение (F12)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6713"/>
-        <location filename="../mainwindow.ui" line="6774"/>
+        <location filename="../mainwindow.ui" line="6725"/>
+        <location filename="../mainwindow.ui" line="6746"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6721"/>
+        <location filename="../mainwindow.ui" line="6733"/>
         <source>Disable world map</source>
         <translation>Отключить карту мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7440"/>
+        <location filename="../mainwindow.ui" line="7412"/>
         <source>Level Search</source>
         <translation>Поиск элементов  уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7443"/>
+        <location filename="../mainwindow.ui" line="7415"/>
         <source>Search for an Item on the Level</source>
         <translation>Поиск элемента на уровне</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7451"/>
+        <location filename="../mainwindow.ui" line="7423"/>
         <source>Refresh menus</source>
         <translation>Обновить меню</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7459"/>
+        <location filename="../mainwindow.ui" line="7431"/>
         <source>Fullscreen</source>
         <translation>Во весь экран</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7467"/>
+        <location filename="../mainwindow.ui" line="7439"/>
         <source>Tilesets Editor</source>
         <translation>Редактор наборов плиток</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7472"/>
+        <location filename="../mainwindow.ui" line="7444"/>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
         <translation>Исправить лениво сделанную графику (LazyFixTool)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7477"/>
+        <location filename="../mainwindow.ui" line="7449"/>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
         <translation>Конвертировать GIF с масками в PNG (GIFs2PNG)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7482"/>
+        <location filename="../mainwindow.ui" line="7454"/>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
         <translation>Конвертировать PNG в GIF с масками (PNG2GIFs)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7494"/>
+        <location filename="../mainwindow.ui" line="7466"/>
         <source>World settings</source>
         <translation>Настройки мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7507"/>
+        <location filename="../mainwindow.ui" line="7479"/>
         <source>Lock tiles</source>
         <translation>Заблокировать все плитки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7520"/>
+        <location filename="../mainwindow.ui" line="7492"/>
         <source>Lock Sceneries</source>
         <translation>Заблокировать все декорации</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7533"/>
+        <location filename="../mainwindow.ui" line="7505"/>
         <source>Lock Paths</source>
         <translation>Заблокировать все пути</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7546"/>
+        <location filename="../mainwindow.ui" line="7518"/>
         <source>Lock Levels</source>
         <translation>Заблокировать все уровни</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7559"/>
+        <location filename="../mainwindow.ui" line="7531"/>
         <source>Lock Music Boxes</source>
         <translation>Заблокировать все музыкальные коробки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7571"/>
+        <location filename="../mainwindow.ui" line="7543"/>
         <source>Square Fill</source>
         <translation>Квадратная заливка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7583"/>
+        <location filename="../mainwindow.ui" line="7555"/>
         <source>Overwrite mode</source>
         <translation>Режим перезаписи</translation>
     </message>
@@ -2463,12 +2472,12 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Переиграть уровень при неудаче</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7396"/>
+        <location filename="../mainwindow.ui" line="7368"/>
         <source>Go to Section</source>
         <translation>Перейти к секции</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7419"/>
+        <location filename="../mainwindow.ui" line="7391"/>
         <source>Current configuration status...</source>
         <translation>Состояние текущей конфигуркции...</translation>
     </message>
@@ -2501,7 +2510,7 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Уровень</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6789"/>
+        <location filename="../mainwindow.ui" line="6761"/>
         <source>Level objects tool box</source>
         <translation>Объекты уровня</translation>
     </message>
@@ -2510,110 +2519,110 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Карта мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6825"/>
+        <location filename="../mainwindow.ui" line="6797"/>
         <source>Select and Move</source>
         <translation>Выбор и перемещение</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6828"/>
+        <location filename="../mainwindow.ui" line="6800"/>
         <source>Select (S)</source>
         <translation>Выбор (S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7295"/>
+        <location filename="../mainwindow.ui" line="7267"/>
         <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
         <translation>Удерживайте кнопку и двигайте мышью, чтобы нарисовать область зыбучего песка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6849"/>
+        <location filename="../mainwindow.ui" line="6821"/>
         <source>Eriser</source>
         <translation>Ластик</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2710"/>
-        <location filename="../mainwindow.ui" line="4882"/>
+        <location filename="../mainwindow.ui" line="2699"/>
+        <location filename="../mainwindow.ui" line="4871"/>
         <source>Block</source>
         <translation>Блок</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2731"/>
+        <location filename="../mainwindow.ui" line="2720"/>
         <source>Resize</source>
         <translation>Изменить размер</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2756"/>
+        <location filename="../mainwindow.ui" line="2745"/>
         <source>Block contents:</source>
         <translation>Содержимое блока:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2763"/>
-        <location filename="../mainwindow.ui" line="2973"/>
-        <location filename="../mainwindow.ui" line="3370"/>
-        <location filename="../mainwindow.ui" line="4920"/>
-        <location filename="../mainwindow.ui" line="5213"/>
-        <location filename="../mainwindow.ui" line="5352"/>
+        <location filename="../mainwindow.ui" line="2752"/>
+        <location filename="../mainwindow.ui" line="2962"/>
+        <location filename="../mainwindow.ui" line="3359"/>
+        <location filename="../mainwindow.ui" line="4909"/>
+        <location filename="../mainwindow.ui" line="5202"/>
+        <location filename="../mainwindow.ui" line="5341"/>
         <source>Layer:</source>
         <translation>Слой:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2805"/>
+        <location filename="../mainwindow.ui" line="2794"/>
         <source>Destroyed: </source>
         <translation>Сломано: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2827"/>
+        <location filename="../mainwindow.ui" line="2816"/>
         <source>Hited:</source>
         <translation>Стукнут:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2849"/>
-        <location filename="../mainwindow.ui" line="3282"/>
+        <location filename="../mainwindow.ui" line="2838"/>
+        <location filename="../mainwindow.ui" line="3271"/>
         <source>Layer empty:</source>
         <translation>Слой пуст:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2928"/>
-        <location filename="../mainwindow.ui" line="5110"/>
+        <location filename="../mainwindow.ui" line="2917"/>
+        <location filename="../mainwindow.ui" line="5099"/>
         <source>BGO</source>
         <translation>Ф.Об</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3458"/>
-        <location filename="../mainwindow.ui" line="3547"/>
-        <location filename="../mainwindow.ui" line="5431"/>
+        <location filename="../mainwindow.ui" line="3447"/>
+        <location filename="../mainwindow.ui" line="3536"/>
+        <location filename="../mainwindow.ui" line="5420"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="277"/>
         <source>Direction</source>
         <translation>Направление</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3578"/>
-        <location filename="../mainwindow.ui" line="5465"/>
+        <location filename="../mainwindow.ui" line="3567"/>
+        <location filename="../mainwindow.ui" line="5454"/>
         <source>Random</source>
         <translation>Случайно</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3102"/>
+        <location filename="../mainwindow.ui" line="3091"/>
         <source>Attach to:</source>
         <translation>Присоединить слой:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3275"/>
+        <location filename="../mainwindow.ui" line="3264"/>
         <source>Activate:</source>
         <translation>Активирован:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3203"/>
+        <location filename="../mainwindow.ui" line="3192"/>
         <source>Death:</source>
         <translation>Умер:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3225"/>
+        <location filename="../mainwindow.ui" line="3214"/>
         <source>Talk:</source>
         <translation>Поговорить:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3289"/>
-        <location filename="../mainwindow.ui" line="5379"/>
+        <location filename="../mainwindow.ui" line="3278"/>
+        <location filename="../mainwindow.ui" line="5368"/>
         <source>Friendly</source>
         <translation>Дружественный</translation>
     </message>
@@ -2623,186 +2632,186 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Редактор - Platformer Game Engine (В разработке)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="268"/>
+        <location filename="../mainwindow.ui" line="257"/>
         <source>Global configuration</source>
         <translation>Глобальная конфигурация</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="391"/>
-        <location filename="../mainwindow.ui" line="6786"/>
+        <location filename="../mainwindow.ui" line="380"/>
+        <location filename="../mainwindow.ui" line="6758"/>
         <source>Level Toolbox</source>
         <translation>Панель элементов Уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="521"/>
-        <location filename="../mainwindow.ui" line="714"/>
-        <location filename="../mainwindow.ui" line="797"/>
+        <location filename="../mainwindow.ui" line="510"/>
+        <location filename="../mainwindow.ui" line="703"/>
+        <location filename="../mainwindow.ui" line="786"/>
         <source>Filter:</source>
         <translation>Фильтр:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="532"/>
-        <location filename="../mainwindow.ui" line="753"/>
-        <location filename="../mainwindow.ui" line="925"/>
+        <location filename="../mainwindow.ui" line="521"/>
+        <location filename="../mainwindow.ui" line="742"/>
+        <location filename="../mainwindow.ui" line="914"/>
         <source>Text</source>
         <translation>Текст</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="537"/>
-        <location filename="../mainwindow.ui" line="758"/>
-        <location filename="../mainwindow.ui" line="930"/>
+        <location filename="../mainwindow.ui" line="526"/>
+        <location filename="../mainwindow.ui" line="747"/>
+        <location filename="../mainwindow.ui" line="919"/>
         <source>ID</source>
         <translation>ID</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="567"/>
-        <location filename="../mainwindow.ui" line="730"/>
-        <location filename="../mainwindow.ui" line="914"/>
+        <location filename="../mainwindow.ui" line="556"/>
+        <location filename="../mainwindow.ui" line="719"/>
+        <location filename="../mainwindow.ui" line="903"/>
         <source>Uniform icon size</source>
         <translation>Равномерный размер значков</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="580"/>
-        <location filename="../mainwindow.ui" line="707"/>
-        <location filename="../mainwindow.ui" line="938"/>
+        <location filename="../mainwindow.ui" line="569"/>
+        <location filename="../mainwindow.ui" line="696"/>
+        <location filename="../mainwindow.ui" line="927"/>
         <source>Group:</source>
         <translation>Группа:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1136"/>
+        <location filename="../mainwindow.ui" line="1125"/>
         <source>World Map Toolbox</source>
         <translation>Панель объектов карты мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1985"/>
-        <location filename="../mainwindow.ui" line="7102"/>
+        <location filename="../mainwindow.ui" line="1974"/>
+        <location filename="../mainwindow.ui" line="7074"/>
         <source>Warps and Doors</source>
         <translation>Проходы и Двери</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2738"/>
-        <location filename="../mainwindow.ui" line="3042"/>
+        <location filename="../mainwindow.ui" line="2727"/>
+        <location filename="../mainwindow.ui" line="3031"/>
         <source>Square fill</source>
         <translation>Квадратная заливка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3028"/>
+        <location filename="../mainwindow.ui" line="3017"/>
         <source>SMBX64 defines:</source>
         <translation>Опции SMBX64:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2989"/>
-        <location filename="../mainwindow.ui" line="5220"/>
+        <location filename="../mainwindow.ui" line="2978"/>
+        <location filename="../mainwindow.ui" line="5209"/>
         <source>Sort priority:</source>
         <translation>Приор. сорт.:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2955"/>
+        <location filename="../mainwindow.ui" line="2944"/>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
         <translation>Это - приоритет сортировки в массиве. С помощью этой опции возможно поставить фоновый объект на передний план. (если значение установлено в -1: будет использоваться глобальное значение для данного ID фонового объекта).
 Эта опция использует баг SMBX в рендеринге фоновых объектов. Чтобы эта опция сработала, нужно поместить хотя бы один фоновый объект переднего плана. Эта опция не сохраняется в LVL-файл, и после переоткрытия файла вам нужно повторно настроить  эту опцию.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3349"/>
-        <location filename="../mainwindow.ui" line="5372"/>
+        <location filename="../mainwindow.ui" line="3338"/>
+        <location filename="../mainwindow.ui" line="5361"/>
         <source>Don&apos;t move</source>
         <translation>Неподвижный</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3109"/>
-        <location filename="../mainwindow.ui" line="5386"/>
+        <location filename="../mainwindow.ui" line="3098"/>
+        <location filename="../mainwindow.ui" line="5375"/>
         <source>Set as Boss</source>
         <translation>Сделать Боссом</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3122"/>
-        <location filename="../mainwindow.ui" line="3401"/>
+        <location filename="../mainwindow.ui" line="3111"/>
+        <location filename="../mainwindow.ui" line="3390"/>
         <source>Generator</source>
         <translation>Генератор</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3428"/>
-        <location filename="../mainwindow.ui" line="4994"/>
-        <location filename="../mainwindow.ui" line="5206"/>
-        <location filename="../mainwindow.ui" line="5345"/>
+        <location filename="../mainwindow.ui" line="3417"/>
+        <location filename="../mainwindow.ui" line="4983"/>
+        <location filename="../mainwindow.ui" line="5195"/>
+        <location filename="../mainwindow.ui" line="5334"/>
         <source>Type:</source>
         <translation>Тип:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3439"/>
+        <location filename="../mainwindow.ui" line="3428"/>
         <source>Warp</source>
         <translation>Выползание</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3444"/>
+        <location filename="../mainwindow.ui" line="3433"/>
         <source>Projectile</source>
         <translation>Снаряд</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3530"/>
+        <location filename="../mainwindow.ui" line="3519"/>
         <source>Delay:</source>
         <translation>Задержка:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3142"/>
+        <location filename="../mainwindow.ui" line="3131"/>
         <source>Talk message:</source>
         <translation>Сообщение разговора:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3363"/>
+        <location filename="../mainwindow.ui" line="3352"/>
         <source>Contains of current NPC-Container</source>
         <translation>Содержимое конейнера нИП</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3762"/>
+        <location filename="../mainwindow.ui" line="3751"/>
         <source>Classic Events</source>
         <translation>Классические события</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3863"/>
+        <location filename="../mainwindow.ui" line="3852"/>
         <source>Layer visibly</source>
         <translation>Видимость слоёв</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3884"/>
+        <location filename="../mainwindow.ui" line="3873"/>
         <source>Disable smoke effects</source>
         <translation>Отключить эффект дыма</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3949"/>
+        <location filename="../mainwindow.ui" line="3938"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3975"/>
+        <location filename="../mainwindow.ui" line="3964"/>
         <source>Toggle</source>
         <translation>Переключить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4010"/>
+        <location filename="../mainwindow.ui" line="3999"/>
         <source>Hide</source>
         <translation>Скрыть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4046"/>
+        <location filename="../mainwindow.ui" line="4035"/>
         <source>Layers movement</source>
         <translation>Передвижение слоя</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4052"/>
+        <location filename="../mainwindow.ui" line="4041"/>
         <source>Set moving layer</source>
         <translation>Выбрать движущийся слой</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4066"/>
-        <location filename="../mainwindow.ui" line="4160"/>
+        <location filename="../mainwindow.ui" line="4055"/>
+        <location filename="../mainwindow.ui" line="4149"/>
         <source>Horisontal speed:</source>
         <translation>Горизонтальная скорость:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4086"/>
-        <location filename="../mainwindow.ui" line="4180"/>
+        <location filename="../mainwindow.ui" line="4075"/>
+        <location filename="../mainwindow.ui" line="4169"/>
         <source>Vertical speed:</source>
         <translation>Вертикальная скорость:</translation>
     </message>
@@ -2811,187 +2820,187 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Автопрокрутка секции</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4143"/>
+        <location filename="../mainwindow.ui" line="4132"/>
         <location filename="../main_window/dock/lvl_events_props.cpp" line="228"/>
         <source>Section</source>
         <translation>Секция</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4222"/>
+        <location filename="../mainwindow.ui" line="4211"/>
         <source>Section settings</source>
         <translation>Настройки секции</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4234"/>
+        <location filename="../mainwindow.ui" line="4223"/>
         <source>Current section:</source>
         <translation>Настройки для секции:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4256"/>
+        <location filename="../mainwindow.ui" line="4245"/>
         <source>Set size and position</source>
         <translation>Установить размер и позицию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4262"/>
-        <location filename="../mainwindow.ui" line="4400"/>
-        <location filename="../mainwindow.ui" line="4458"/>
+        <location filename="../mainwindow.ui" line="4251"/>
+        <location filename="../mainwindow.ui" line="4389"/>
+        <location filename="../mainwindow.ui" line="4447"/>
         <source>Don&apos;t change</source>
         <translation>Не менять</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4281"/>
+        <location filename="../mainwindow.ui" line="4270"/>
         <source>Capture...</source>
         <translation>Захватить...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4288"/>
-        <location filename="../mainwindow.ui" line="4407"/>
-        <location filename="../mainwindow.ui" line="4465"/>
+        <location filename="../mainwindow.ui" line="4277"/>
+        <location filename="../mainwindow.ui" line="4396"/>
+        <location filename="../mainwindow.ui" line="4454"/>
         <source>Reset to default</source>
         <translation>Восст. Исходный</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4317"/>
+        <location filename="../mainwindow.ui" line="4306"/>
         <source>Top</source>
         <translation>Верх</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4327"/>
+        <location filename="../mainwindow.ui" line="4316"/>
         <source>Define new:</source>
         <translation>Назначить нов.:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4340"/>
+        <location filename="../mainwindow.ui" line="4329"/>
         <source>Bottom</source>
         <translation>Низ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4394"/>
+        <location filename="../mainwindow.ui" line="4383"/>
         <source>Set music</source>
         <translation>Сменить музыку</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4414"/>
+        <location filename="../mainwindow.ui" line="4403"/>
         <source>Replace music to:</source>
         <translation>Сменить музыку на:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4452"/>
+        <location filename="../mainwindow.ui" line="4441"/>
         <source>Set background</source>
         <translation>Сменить фон</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4472"/>
+        <location filename="../mainwindow.ui" line="4461"/>
         <source>Replace background to:</source>
         <translation>Сменить фон на:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4520"/>
+        <location filename="../mainwindow.ui" line="4509"/>
         <source>Common</source>
         <translation>Общие</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4570"/>
+        <location filename="../mainwindow.ui" line="4559"/>
         <source>Test</source>
         <translation>Тест</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4590"/>
+        <location filename="../mainwindow.ui" line="4579"/>
         <source>Display message:</source>
         <translation>Показть сообщение:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4557"/>
+        <location filename="../mainwindow.ui" line="4546"/>
         <source>Play sound:</source>
         <translation>Воспроизвести звук:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4128"/>
+        <location filename="../mainwindow.ui" line="4117"/>
         <source>Autoscroll section</source>
         <translation>Автопрокрутка секции</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4532"/>
+        <location filename="../mainwindow.ui" line="4521"/>
         <source>Do end game:</source>
         <translation>Завершить игру:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4601"/>
+        <location filename="../mainwindow.ui" line="4590"/>
         <source>Nothing</source>
         <translation>Не завершать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4606"/>
+        <location filename="../mainwindow.ui" line="4595"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation>Конец игры &quot;Боузер побеждён&quot;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4636"/>
+        <location filename="../mainwindow.ui" line="4625"/>
         <source>Player Control hold keys</source>
         <translation>Зажать клавиши игрока</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4642"/>
+        <location filename="../mainwindow.ui" line="4631"/>
         <source>Run</source>
         <translation>Бег</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4670"/>
+        <location filename="../mainwindow.ui" line="4659"/>
         <source>Drop</source>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4684"/>
+        <location filename="../mainwindow.ui" line="4673"/>
         <source>Alt-run</source>
         <translation>Альт.бег</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4691"/>
+        <location filename="../mainwindow.ui" line="4680"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4698"/>
+        <location filename="../mainwindow.ui" line="4687"/>
         <source>Jump</source>
         <translation>Прыжок</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4705"/>
+        <location filename="../mainwindow.ui" line="4694"/>
         <source>Alt-jump</source>
         <translation>Альт.прыжок</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4734"/>
+        <location filename="../mainwindow.ui" line="4723"/>
         <source>Trigger event</source>
         <translation>Триггер события</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4750"/>
+        <location filename="../mainwindow.ui" line="4739"/>
         <source>Delay</source>
         <translation>Задержка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3824"/>
+        <location filename="../mainwindow.ui" line="3813"/>
         <source>Events list</source>
         <translation>Список событий</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4781"/>
+        <location filename="../mainwindow.ui" line="4770"/>
         <source>Autostart event</source>
         <translation>Автозапуск события</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4820"/>
+        <location filename="../mainwindow.ui" line="4809"/>
         <source>Create copy of event</source>
         <translation>Создать копию события</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4845"/>
+        <location filename="../mainwindow.ui" line="4834"/>
         <source>Search</source>
         <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5001"/>
+        <location filename="../mainwindow.ui" line="4990"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="39"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="49"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="179"/>
@@ -3003,16 +3012,16 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">[Пусто]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5028"/>
-        <location filename="../mainwindow.ui" line="5141"/>
-        <location filename="../mainwindow.ui" line="5317"/>
+        <location filename="../mainwindow.ui" line="5017"/>
+        <location filename="../mainwindow.ui" line="5130"/>
+        <location filename="../mainwindow.ui" line="5306"/>
         <source>Search?</source>
         <translation>Искать?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4903"/>
-        <location filename="../mainwindow.ui" line="5182"/>
-        <location filename="../mainwindow.ui" line="5296"/>
+        <location filename="../mainwindow.ui" line="4892"/>
+        <location filename="../mainwindow.ui" line="5171"/>
+        <location filename="../mainwindow.ui" line="5285"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="38"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="48"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="66"/>
@@ -3026,69 +3035,69 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Сбросить Поля Поиска</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="275"/>
+        <location filename="../mainwindow.ui" line="264"/>
         <source>Pattles and tilesets</source>
         <translation>Палитры и наборы плиток</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="281"/>
+        <location filename="../mainwindow.ui" line="270"/>
         <source>External tools</source>
         <translation>Внешние инструменты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1048"/>
+        <location filename="../mainwindow.ui" line="1037"/>
         <source>World map Toolbar</source>
         <translation>Панель инструментов карты мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1286"/>
+        <location filename="../mainwindow.ui" line="1275"/>
         <source>Paths</source>
         <translation>Пути</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2161"/>
+        <location filename="../mainwindow.ui" line="2150"/>
         <source>No Vehicles</source>
         <translation>Без транспортных средств</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4913"/>
-        <location filename="../mainwindow.ui" line="5199"/>
-        <location filename="../mainwindow.ui" line="5338"/>
+        <location filename="../mainwindow.ui" line="4902"/>
+        <location filename="../mainwindow.ui" line="5188"/>
+        <location filename="../mainwindow.ui" line="5327"/>
         <source>Data</source>
         <translation>Данные</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4944"/>
+        <location filename="../mainwindow.ui" line="4933"/>
         <source>Slippery:</source>
         <translation>Скользкий:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4961"/>
+        <location filename="../mainwindow.ui" line="4950"/>
         <source>Contains NPC:</source>
         <translation>Содержит NPC:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4987"/>
+        <location filename="../mainwindow.ui" line="4976"/>
         <source>Invisible:</source>
         <translation>Невидимый:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5059"/>
+        <location filename="../mainwindow.ui" line="5048"/>
         <source>Ev. Destroyed:</source>
         <translation>Сб. Сломано:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5066"/>
+        <location filename="../mainwindow.ui" line="5055"/>
         <source>Ev. Hited</source>
         <translation>Сб. Стукнут</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5073"/>
+        <location filename="../mainwindow.ui" line="5062"/>
         <source>Ev. Layer Empty:</source>
         <translation>Сб. Слой пуст:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5161"/>
+        <location filename="../mainwindow.ui" line="5150"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="67"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="77"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="195"/>
@@ -3096,7 +3105,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Поиск Фонового объекта</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5303"/>
+        <location filename="../mainwindow.ui" line="5292"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="95"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="105"/>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="216"/>
@@ -3104,129 +3113,123 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Поиск нИП</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5417"/>
+        <location filename="../mainwindow.ui" line="5406"/>
         <source>Contains Msg:</source>
         <translation>Содержит сбщ.:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5488"/>
+        <location filename="../mainwindow.ui" line="5477"/>
         <source>Case Sensitive?</source>
         <translation>Учесть регистр?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5579"/>
+        <location filename="../mainwindow.ui" line="5568"/>
         <source>Big path background</source>
         <translation>Большой фон пути</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5593"/>
+        <location filename="../mainwindow.ui" line="5582"/>
         <source>Path background</source>
         <translation>Фоновый путь</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5600"/>
+        <location filename="../mainwindow.ui" line="5589"/>
         <source>Game start point</source>
         <translation>Точка начала игры</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5614"/>
+        <location filename="../mainwindow.ui" line="5603"/>
         <source>Always visible</source>
         <translation>Всегда видим</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5621"/>
+        <location filename="../mainwindow.ui" line="5610"/>
         <source>Level file:</source>
         <translation>Файл уровня:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5628"/>
+        <location filename="../mainwindow.ui" line="5617"/>
         <source>Level title</source>
         <translation>Заголовок уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5635"/>
+        <location filename="../mainwindow.ui" line="5624"/>
         <source>Enter to door ID:</source>
         <translation>Войти в дверь №:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5651"/>
-        <location filename="../mainwindow.ui" line="5924"/>
+        <location filename="../mainwindow.ui" line="5640"/>
+        <location filename="../mainwindow.ui" line="5977"/>
         <source>Browse</source>
         <translation>Обзор</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5674"/>
+        <location filename="../mainwindow.ui" line="5663"/>
         <source>Go to coordinates:</source>
         <translation>Перейти к координатам:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5743"/>
+        <location filename="../mainwindow.ui" line="5732"/>
         <source>Open path by exists:</source>
         <translation>Открыть выходные пути:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5823"/>
+        <location filename="../mainwindow.ui" line="5812"/>
         <source>World Settings</source>
         <translation>Настройки мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5839"/>
+        <location filename="../mainwindow.ui" line="5867"/>
         <source>Intro level:</source>
         <translation>Входной уровень:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5852"/>
+        <location filename="../mainwindow.ui" line="5880"/>
         <source>Disable characters:</source>
         <translation>Отключить персонажей:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5897"/>
+        <location filename="../mainwindow.ui" line="5926"/>
         <source>Credits of this world (SMBX allows only 5 lines):</source>
         <translation>Авторы этого мира (SMBX допускает только 5 строк):</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5910"/>
+        <location filename="../mainwindow.ui" line="5939"/>
         <source>World title:</source>
         <translation>Название мира:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5917"/>
+        <location filename="../mainwindow.ui" line="5854"/>
         <source>Count</source>
         <translation>Сосчитать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5931"/>
+        <location filename="../mainwindow.ui" line="5960"/>
         <source>Total stars:</source>
         <translation>Всего звёзд:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5938"/>
+        <location filename="../mainwindow.ui" line="5953"/>
         <source>Hub-styled world (without world map)</source>
         <translation>Кооридоный мир (Без карты мира)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5945"/>
+        <location filename="../mainwindow.ui" line="5946"/>
         <source>Restart last level after fail</source>
         <translation>Перезап. посл. уровень после провала</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5974"/>
-        <location filename="../mainwindow.ui" line="5987"/>
-        <source>toolBar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="6729"/>
+        <location filename="../mainwindow.ui" line="6741"/>
         <source>Restart level after fail</source>
         <translation>Переиграть уровень после провала</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6804"/>
+        <location filename="../mainwindow.ui" line="6776"/>
         <source>World Toolbox</source>
         <translation>Панель объектов Карты Мира</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6852"/>
+        <location filename="../mainwindow.ui" line="6824"/>
         <source>Eriser (E)</source>
         <translation>Ластик (E)</translation>
     </message>
@@ -3235,186 +3238,186 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="vanished">Настройки секции уровня</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6878"/>
+        <location filename="../mainwindow.ui" line="6850"/>
         <source>Reload configurations</source>
         <translation>Перезагрузить конфигуркции</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6893"/>
+        <location filename="../mainwindow.ui" line="6865"/>
         <source>Reset position</source>
         <translation>Сбросить позицию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6908"/>
+        <location filename="../mainwindow.ui" line="6880"/>
         <source>Attach to grid</source>
         <translation>Выровнять по сетке</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6921"/>
+        <location filename="../mainwindow.ui" line="6893"/>
         <source>Lock all Blocks</source>
         <translation>Блокировка всех блоков</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6934"/>
+        <location filename="../mainwindow.ui" line="6906"/>
         <source>Lock all BGO</source>
         <translation>Блокировка всех фоновых объектов</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6947"/>
+        <location filename="../mainwindow.ui" line="6919"/>
         <source>Lock all NPC</source>
         <translation>Блокировка всех нИП</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6960"/>
+        <location filename="../mainwindow.ui" line="6932"/>
         <source>Lock all door objects</source>
         <translation>Блокировка всех дверей</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6973"/>
+        <location filename="../mainwindow.ui" line="6945"/>
         <source>Lock all water squares</source>
         <translation>Блокировка всех областей воды</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6985"/>
+        <location filename="../mainwindow.ui" line="6957"/>
         <source>Set first player position</source>
         <translation>Установить позицию первого игрока</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6988"/>
+        <location filename="../mainwindow.ui" line="6960"/>
         <source>Set first player start point</source>
         <translation>Установить начальную позицию первого игрока</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7000"/>
+        <location filename="../mainwindow.ui" line="6972"/>
         <source>Set second player position</source>
         <translation>Установить  позицию второго  игрока</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7003"/>
+        <location filename="../mainwindow.ui" line="6975"/>
         <source>Set second player start point</source>
         <translation>Установить начальную позицию второго игрока</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7015"/>
+        <location filename="../mainwindow.ui" line="6987"/>
         <source>Play music</source>
         <translation>Играть музыку</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7018"/>
+        <location filename="../mainwindow.ui" line="6990"/>
         <source>Play music (F11)</source>
         <translation>Играть музыку (F11)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7033"/>
+        <location filename="../mainwindow.ui" line="7005"/>
         <source>Reload file data</source>
         <translation>Перезагрузить файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7036"/>
+        <location filename="../mainwindow.ui" line="7008"/>
         <source>Reload current file data</source>
         <translation>Перезагрузить все данные текущего файла</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7054"/>
+        <location filename="../mainwindow.ui" line="7026"/>
         <source>Scroll hand</source>
         <translation>Прокрутка рукой</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7057"/>
+        <location filename="../mainwindow.ui" line="7029"/>
         <source>Scrolling (D)</source>
         <translation>Прокрутка (D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7072"/>
+        <location filename="../mainwindow.ui" line="7044"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7087"/>
+        <location filename="../mainwindow.ui" line="7059"/>
         <source>Redo</source>
         <translation>Вернуть</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7117"/>
+        <location filename="../mainwindow.ui" line="7089"/>
         <source>Animation</source>
         <translation>Анимация</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7120"/>
+        <location filename="../mainwindow.ui" line="7092"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If map have too many objects, recommends to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;diable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включить анимацию анимированных объектов&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Если на карте очень много объектов, то рекомендуеся  &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;отключить&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; эту опцию&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7131"/>
-        <location filename="../mainwindow.ui" line="7142"/>
-        <location filename="../mainwindow.ui" line="7153"/>
-        <location filename="../mainwindow.ui" line="7164"/>
-        <location filename="../mainwindow.ui" line="7175"/>
-        <location filename="../mainwindow.ui" line="7186"/>
-        <location filename="../mainwindow.ui" line="7197"/>
-        <location filename="../mainwindow.ui" line="7208"/>
-        <location filename="../mainwindow.ui" line="7219"/>
-        <location filename="../mainwindow.ui" line="7230"/>
+        <location filename="../mainwindow.ui" line="7103"/>
+        <location filename="../mainwindow.ui" line="7114"/>
+        <location filename="../mainwindow.ui" line="7125"/>
+        <location filename="../mainwindow.ui" line="7136"/>
+        <location filename="../mainwindow.ui" line="7147"/>
+        <location filename="../mainwindow.ui" line="7158"/>
+        <location filename="../mainwindow.ui" line="7169"/>
+        <location filename="../mainwindow.ui" line="7180"/>
+        <location filename="../mainwindow.ui" line="7191"/>
+        <location filename="../mainwindow.ui" line="7202"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;пусто&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7245"/>
+        <location filename="../mainwindow.ui" line="7217"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7248"/>
+        <location filename="../mainwindow.ui" line="7220"/>
         <source>Copy selected items</source>
         <translation>Копировать выбранные объекты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7259"/>
+        <location filename="../mainwindow.ui" line="7231"/>
         <source>Collisions</source>
         <translation>Коллизии</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7262"/>
+        <location filename="../mainwindow.ui" line="7234"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Placing item to simular item Protection&lt;/p&gt;&lt;p&gt;(If enabeld, the movement operation will be slower)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Защита от размещения объектов друг на друга&lt;/p&gt;&lt;p&gt;(Если опция ключена, процесс перемещения может быть замедлен)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7277"/>
+        <location filename="../mainwindow.ui" line="7249"/>
         <source>Draw Water zone</source>
         <translation>Нарисовать область воды</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7280"/>
+        <location filename="../mainwindow.ui" line="7252"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
         <translation>Удерживайте кнопку и двигайте мышью, чтобы нарисовать зону воды</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7292"/>
+        <location filename="../mainwindow.ui" line="7264"/>
         <source>Draw QuickSand zone</source>
         <translation>Нарисовать область зыбучего песка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7307"/>
+        <location filename="../mainwindow.ui" line="7279"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7333"/>
+        <location filename="../mainwindow.ui" line="7305"/>
         <source>[No opened files]</source>
         <translation>[Нет открытых файлов]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7348"/>
+        <location filename="../mainwindow.ui" line="7320"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7377"/>
+        <location filename="../mainwindow.ui" line="7349"/>
         <source>Select only</source>
         <translation>Только выбор</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="7385"/>
+        <location filename="../mainwindow.ui" line="7357"/>
         <source>Application settings</source>
         <translation>Настройки программы</translation>
     </message>
@@ -3462,7 +3465,7 @@ File: %1
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="28"/>
-        <location filename="../main_window/dock/wld_world_settings.cpp" line="231"/>
+        <location filename="../main_window/dock/wld_world_settings.cpp" line="249"/>
         <source>Abort</source>
         <translation>Прервать</translation>
     </message>
@@ -3641,10 +3644,10 @@ File: %1
         <translation>%1 монеток</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4971"/>
-        <location filename="../mainwindow.ui" line="5008"/>
-        <location filename="../mainwindow.ui" line="5192"/>
-        <location filename="../mainwindow.ui" line="5310"/>
+        <location filename="../mainwindow.ui" line="4960"/>
+        <location filename="../mainwindow.ui" line="4997"/>
+        <location filename="../mainwindow.ui" line="5181"/>
+        <location filename="../mainwindow.ui" line="5299"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="118"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="363"/>
         <location filename="../main_window/dock/lvl_item_props.cpp" line="786"/>
@@ -3813,12 +3816,12 @@ File: %1
         <translation>Сперва разместите объект на карту мира и вызовите &quot;Свойства&quot; через контекстное меню.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_world_settings.cpp" line="231"/>
+        <location filename="../main_window/dock/wld_world_settings.cpp" line="249"/>
         <source>Counting stars of placed levels</source>
         <translation>Счёт звёзд размещённых на уровнях</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_world_settings.cpp" line="232"/>
+        <location filename="../main_window/dock/wld_world_settings.cpp" line="250"/>
         <source>Counting stars...</source>
         <translation>Подсчёт звёзд...</translation>
     </message>
@@ -3937,7 +3940,7 @@ Do you want to continue?</source>
         <translation>Загружаются Звуки...</translation>
     </message>
     <message>
-        <location filename="../data_configs/conf_wld_level.cpp" line="87"/>
+        <location filename="../data_configs/conf_wld_level.cpp" line="107"/>
         <source>Loading Level images...</source>
         <translation>Загрузка изображений уровней...</translation>
     </message>
