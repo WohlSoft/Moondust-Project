@@ -78,6 +78,10 @@ void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         this->setSelected(1);
         ItemMenu->clear();
 
+        QAction *openLvl = ItemMenu->addAction(tr("Open target level: %1").arg(doorData.lname));
+        openLvl->setVisible( (!doorData.lname.isEmpty()) && (QFile(scene->LvlData->path + "/" + doorData.lname).exists()) );
+        openLvl->deleteLater();
+
         QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer));
             LayerName->deleteLater();
 
@@ -164,6 +168,12 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         event->accept();
 
+        if(selected==openLvl)
+        {
+            MainWinConnect::pMainWin->OpenFile(scene->LvlData->path + "/" + doorData.lname);
+            scene->contextMenuOpened = false;
+        }
+        else
         if(selected==jumpTo)
         {
             //scene->doCopy = true ;
