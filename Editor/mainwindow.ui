@@ -219,19 +219,8 @@
     <property name="title">
      <string>World</string>
     </property>
-    <widget class="QMenu" name="menuDisable_characters">
-     <property name="title">
-      <string>Disable characters</string>
-     </property>
-     <addaction name="actionWLDNoChar1"/>
-     <addaction name="actionWLDNoChar2"/>
-     <addaction name="actionWLDNoChar3"/>
-     <addaction name="actionWLDNoChar4"/>
-     <addaction name="actionWLDNoChar5"/>
-    </widget>
     <addaction name="actionWLDDisableMap"/>
     <addaction name="actionWLDFailRestart"/>
-    <addaction name="menuDisable_characters"/>
     <addaction name="separator"/>
     <addaction name="actionWLDProperties"/>
    </widget>
@@ -3855,7 +3844,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
+          <width>254</width>
           <height>313</height>
          </rect>
         </property>
@@ -4038,8 +4027,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>313</height>
+          <width>254</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4121,7 +4110,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>270</width>
-          <height>313</height>
+          <height>103</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4512,8 +4501,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>313</height>
+          <width>254</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4629,7 +4618,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>270</width>
-          <height>313</height>
+          <height>114</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4727,7 +4716,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>270</width>
-          <height>313</height>
+          <height>92</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4875,7 +4864,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>491</height>
+          <height>521</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5103,7 +5092,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>491</height>
+          <height>521</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5252,7 +5241,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>491</height>
+          <height>521</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5827,6 +5816,45 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QGridLayout" name="gridLayout_18" rowstretch="0,0,0,0,0,0,0,0,0,0,80" columnstretch="20,80,0">
+     <item row="9" column="0" colspan="3">
+      <widget class="QTextEdit" name="WLD_Credirs">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="autoFormatting">
+        <set>QTextEdit::AutoNone</set>
+       </property>
+       <property name="html">
+        <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="acceptRichText">
+        <bool>false</bool>
+       </property>
+       <property name="placeholderText">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="2">
+      <widget class="QPushButton" name="WLD_DoCountStars">
+       <property name="text">
+        <string>Count</string>
+       </property>
+      </widget>
+     </item>
      <item row="4" column="0" colspan="3">
       <widget class="QLabel" name="label_58">
        <property name="font">
@@ -5851,41 +5879,38 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
        <property name="title">
         <string>Disable characters:</string>
        </property>
+       <layout class="QFormLayout" name="DisableCharactersL">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
+        <property name="horizontalSpacing">
+         <number>2</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
+       </layout>
       </widget>
      </item>
-     <item row="9" column="0" colspan="3">
-      <widget class="QTextEdit" name="WLD_Credirs">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>80</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>80</height>
-        </size>
-       </property>
-       <property name="autoFormatting">
-        <set>QTextEdit::AutoNone</set>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;x&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="acceptRichText">
-        <bool>false</bool>
-       </property>
-       <property name="placeholderText">
-        <string notr="true"/>
+     <item row="5" column="0" colspan="2">
+      <widget class="QLineEdit" name="WLD_AutostartLvl"/>
+     </item>
+     <item row="6" column="1">
+      <widget class="QSpinBox" name="WLD_Stars">
+       <property name="maximum">
+        <number>999999999</number>
        </property>
       </widget>
      </item>
@@ -5915,24 +5940,10 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="6" column="2">
-      <widget class="QPushButton" name="WLD_DoCountStars">
+     <item row="3" column="0" colspan="3">
+      <widget class="QCheckBox" name="WLD_RestartLevel">
        <property name="text">
-        <string>Count</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="2">
-      <widget class="QPushButton" name="WLD_AutostartLvlBrowse">
-       <property name="text">
-        <string>Browse</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_59">
-       <property name="text">
-        <string>Total stars:</string>
+        <string>Restart last level after fail</string>
        </property>
       </widget>
      </item>
@@ -5943,25 +5954,15 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="3">
-      <widget class="QCheckBox" name="WLD_RestartLevel">
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_59">
        <property name="text">
-        <string>Restart last level after fail</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QSpinBox" name="WLD_Stars">
-       <property name="maximum">
-        <number>999999999</number>
+        <string>Total stars:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0" colspan="3">
       <widget class="QLineEdit" name="WLD_Title"/>
-     </item>
-     <item row="5" column="0" colspan="2">
-      <widget class="QLineEdit" name="WLD_AutostartLvl"/>
      </item>
      <item row="7" column="0" colspan="3">
       <widget class="Line" name="line_13">
@@ -5970,12 +5971,19 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
+     <item row="5" column="2">
+      <widget class="QPushButton" name="WLD_AutostartLvlBrowse">
+       <property name="text">
+        <string>Browse</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
   <widget class="QToolBar" name="PlacingToolbar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Placing</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -5988,7 +5996,7 @@ p, li { white-space: pre-wrap; }
   </widget>
   <widget class="QToolBar" name="ResizingToolbar">
    <property name="windowTitle">
-    <string>toolBar</string>
+    <string>Resizing</string>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -6731,46 +6739,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Restart level after fail</string>
-   </property>
-  </action>
-  <action name="actionWLDNoChar1">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string notr="true">Character 1</string>
-   </property>
-  </action>
-  <action name="actionWLDNoChar2">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string notr="true">Character 2</string>
-   </property>
-  </action>
-  <action name="actionWLDNoChar3">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string notr="true">Character 3</string>
-   </property>
-  </action>
-  <action name="actionWLDNoChar4">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string notr="true">Character 4</string>
-   </property>
-  </action>
-  <action name="actionWLDNoChar5">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string notr="true">Character 5</string>
    </property>
   </action>
   <action name="actionWLDProperties">

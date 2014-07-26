@@ -213,6 +213,16 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
         if( SMBX64::wBool(line) ) //Edisode without Link
             goto badfile;
         else FileData.nocharacter5 = SMBX64::wBoolR(line);
+
+        //Convert into the bool array
+        FileData.nocharacter<<
+             FileData.nocharacter1<<
+             FileData.nocharacter2<<
+             FileData.nocharacter3<<
+             FileData.nocharacter4<<
+             FileData.nocharacter5;
+
+
     }
 
     if(file_format >= 10)
@@ -512,6 +522,13 @@ QString FileFormats::WriteSMBX64WldFile(WorldData FileData)
 
     TextData += SMBX64::IntS(64);                     //Format version 64
     TextData += SMBX64::qStrS(FileData.EpisodeTitle);   //Episode title
+
+    FileData.nocharacter1 = (FileData.nocharacter.size()>0)?FileData.nocharacter[0]:false;
+    FileData.nocharacter2 = (FileData.nocharacter.size()>1)?FileData.nocharacter[1]:false;
+    FileData.nocharacter3 = (FileData.nocharacter.size()>2)?FileData.nocharacter[2]:false;
+    FileData.nocharacter4 = (FileData.nocharacter.size()>3)?FileData.nocharacter[3]:false;
+    FileData.nocharacter5 = (FileData.nocharacter.size()>4)?FileData.nocharacter[4]:false;
+
     TextData += SMBX64::BoolS(FileData.nocharacter1);
     TextData += SMBX64::BoolS(FileData.nocharacter2);
     TextData += SMBX64::BoolS(FileData.nocharacter3);
