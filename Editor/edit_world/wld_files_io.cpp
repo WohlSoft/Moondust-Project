@@ -202,7 +202,7 @@ bool WorldEdit::saveAs()
     return saveFile(fileName);
 }
 
-bool WorldEdit::saveFile(const QString &fileName)
+bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
@@ -230,9 +230,10 @@ bool WorldEdit::saveFile(const QString &fileName)
     WldData.modified = false;
     WldData.untitled = false;
 
-    MainWinConnect::pMainWin->AddToRecentFiles(fileName);
-    MainWinConnect::pMainWin->SyncRecentFiles();
-
+    if(addToRecent){
+        MainWinConnect::pMainWin->AddToRecentFiles(fileName);
+        MainWinConnect::pMainWin->SyncRecentFiles();
+    }
     return true;
 }
 
