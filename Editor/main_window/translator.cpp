@@ -135,6 +135,7 @@ void MainWindow::slotLanguageChanged(QAction* action)
         setEventData(-1);
         setSoundList();
         WldLvlExitTypeListReset();
+        setCurrentWorldSettings();
     }
 }
 
