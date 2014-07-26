@@ -407,6 +407,7 @@ public:
     long getSceneI(unsigned long itemID);
     long getPathI(unsigned long itemID);
     long getWLevelI(unsigned long itemID);
+    long getCharacterI(unsigned long itemID);
 
     long getSndI(unsigned long itemID);
     long getMusLvlI(unsigned long itemID);
