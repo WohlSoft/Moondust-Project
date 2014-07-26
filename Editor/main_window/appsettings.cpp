@@ -22,8 +22,11 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <math.h>
+#include <QProcessEnvironment>
+#include <QByteArray>
 
 #include "../common_features/logger_sets.h"
+#include "../file_formats/file_formats.h"
 
 AppSettings::AppSettings(QWidget *parent) :
     QDialog(parent),
@@ -131,11 +134,31 @@ void AppSettings::on_AssociateFiles_clicked()
     #ifdef __WIN32__
         QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
 
+        // add template
+        QFile l(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.lvl"));
+        QFile w(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.wld"));
+
+        if((success = l.open(QIODevice::WriteOnly))){
+            l.write(QByteArray(FileFormats::WriteSMBX64LvlFile(FileFormats::dummyLvlDataArray()).toStdString().c_str()));
+            l.close();
+        }
+        if((success = w.open(QIODevice::WriteOnly))){
+            w.write(QByteArray(FileFormats::WriteSMBX64WldFile(FileFormats::dummyWldDataArray()).toStdString().c_str()));
+            w.close();
+        }
+
+
         // file extension(s)
         registry_hkcr.setValue(".lvlx/Default", "PGEWohlstand.Level"); //Reserved
         registry_hkcr.setValue(".wldx/Default", "PGEWohlstand.World"); //Reserved
         registry_hkcr.setValue(".lvl/Default", "SMBX64.Level");
         registry_hkcr.setValue(".wld/Default", "SMBX64.World");
+
+        registry_hkcr.setValue(".lvl/ShellNew/FileName", "sample.lvl");
+        registry_hkcr.setValue(".wld/ShellNew/FileName", "sample.wld");
+        //registry_hkcr.setValue(".lvlx/Default", "PGWWohlstand.Level");
+        //registry_hkcr.setValue(".wldx/Default", "PGWWohlstand.World");
+
 
         registry_hkcr.setValue("PGEWohlstand.Level/Default", tr("PGE Level file", "File Types"));
         registry_hkcr.setValue("PGEWohlstand.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",1");
