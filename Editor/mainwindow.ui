@@ -5827,32 +5827,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </attribute>
    <widget class="QWidget" name="dockWidgetContents_3">
     <layout class="QGridLayout" name="gridLayout_18" rowstretch="0,0,0,0,0,0,0,0,0,0,80" columnstretch="20,80,0">
-     <item row="4" column="0" colspan="3">
-      <widget class="QLabel" name="label_58">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Intro level:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="0" colspan="3">
-      <widget class="QGroupBox" name="WLD_DisableCharacters">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>80</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Disable characters:</string>
-       </property>
-      </widget>
-     </item>
      <item row="9" column="0" colspan="3">
       <widget class="QTextEdit" name="WLD_Credirs">
        <property name="minimumSize">
@@ -5885,6 +5859,72 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
+     <item row="6" column="2">
+      <widget class="QPushButton" name="WLD_DoCountStars">
+       <property name="text">
+        <string>Count</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" colspan="3">
+      <widget class="QLabel" name="label_58">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Intro level:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0" colspan="3">
+      <widget class="QGroupBox" name="WLD_DisableCharacters">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>80</height>
+        </size>
+       </property>
+       <property name="title">
+        <string>Disable characters:</string>
+       </property>
+       <layout class="QFormLayout" name="DisableCharactersL">
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+        </property>
+        <property name="horizontalSpacing">
+         <number>2</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>2</number>
+        </property>
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
+       </layout>
+      </widget>
+     </item>
+     <item row="5" column="0" colspan="2">
+      <widget class="QLineEdit" name="WLD_AutostartLvl"/>
+     </item>
+     <item row="6" column="1">
+      <widget class="QSpinBox" name="WLD_Stars">
+       <property name="maximum">
+        <number>999999999</number>
+       </property>
+      </widget>
+     </item>
      <item row="8" column="0" colspan="3">
       <widget class="QLabel" name="label_60">
        <property name="font">
@@ -5911,24 +5951,10 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="6" column="2">
-      <widget class="QPushButton" name="WLD_DoCountStars">
+     <item row="3" column="0" colspan="3">
+      <widget class="QCheckBox" name="WLD_RestartLevel">
        <property name="text">
-        <string>Count</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="2">
-      <widget class="QPushButton" name="WLD_AutostartLvlBrowse">
-       <property name="text">
-        <string>Browse</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_59">
-       <property name="text">
-        <string>Total stars:</string>
+        <string>Restart last level after fail</string>
        </property>
       </widget>
      </item>
@@ -5939,30 +5965,27 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="3">
-      <widget class="QCheckBox" name="WLD_RestartLevel">
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_59">
        <property name="text">
-        <string>Restart last level after fail</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QSpinBox" name="WLD_Stars">
-       <property name="maximum">
-        <number>999999999</number>
+        <string>Total stars:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0" colspan="3">
       <widget class="QLineEdit" name="WLD_Title"/>
      </item>
-     <item row="5" column="0" colspan="2">
-      <widget class="QLineEdit" name="WLD_AutostartLvl"/>
-     </item>
      <item row="7" column="0" colspan="3">
       <widget class="Line" name="line_13">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QPushButton" name="WLD_AutostartLvlBrowse">
+       <property name="text">
+        <string>Browse</string>
        </property>
       </widget>
      </item>

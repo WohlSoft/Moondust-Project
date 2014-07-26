@@ -71,22 +71,22 @@ void MainWindow::setCurrentWorldSettings()
         ui->menuDisable_characters->clear();
         //ui->WLD_DisableCharacters
 
+        //Create absence data
+        if(edit->WldData.nocharacter.size() < configs.characters.size())
+        {
+            for(int i=0; i<=configs.characters.size()-edit->WldData.nocharacter.size(); i++ )
+                edit->WldData.nocharacter.push_back(false);
+        }
 
-        //Need to dinamicly add the character's list into menu and into groupbox.
-        //Actions must set/unset the edit->WldData.nocharacter1, edit->WldData.nocharacter2, ... values.
-        //
-        QVBoxLayout* l = new QVBoxLayout();
-        ui->WLD_DisableCharacters->setLayout(l);
         for(int i = 0; i < configs.characters.size(); ++i){
             QCheckBox* cur = new QCheckBox(configs.characters[i].name);
-            if(i < activeWldEditWin()->WldData.nocharacter.size()){
-                cur->setChecked(activeWldEditWin()->WldData.nocharacter[i]);
+            if(i < edit->WldData.nocharacter.size()){
+                cur->setChecked(edit->WldData.nocharacter[i]);
             }
             WLD_CharacterCheckBoxes[cur] = configs.characters[i].id;
             connect(cur, SIGNAL(clicked(bool)), this, SLOT(characterActivated(bool)));
-            l->addWidget(cur);
+            ui->WLD_DisableCharacters->layout()->addWidget(cur);
         }
-
 
         WriteToLog(QtDebugMsg, "-> Done");
     }
@@ -94,9 +94,17 @@ void MainWindow::setCurrentWorldSettings()
 }
 
 
-
-
-
+void MainWindow::characterActivated(bool checked)
+{
+    QCheckBox* ch = qobject_cast<QCheckBox*>(sender());
+    if(!ch)
+        return;
+    int ind = configs.getCharacterI(WLD_CharacterCheckBoxes[ch]);
+    if(ind==-1)
+        return;
+    if (activeChildWindow()==3)
+        activeWldEditWin()->WldData.nocharacter[ind] = checked;
+}
 
 
 
@@ -295,19 +303,3 @@ void MainWindow::on_WLD_Credirs_textChanged()
         activeWldEditWin()->WldData.modified = true;
     }
 }
-
-void MainWindow::characterActivated(bool checked)
-{
-    QCheckBox* ch = qobject_cast<QCheckBox*>(sender());
-    if(!ch)
-        return;
-    int ind = configs.getCharacterI(WLD_CharacterCheckBoxes[ch]);
-    if(ind==-1)
-        return;
-    if (activeChildWindow()==3)
-        activeWldEditWin()->WldData.nocharacter[ind] = checked;
-}
-
-
-
-
