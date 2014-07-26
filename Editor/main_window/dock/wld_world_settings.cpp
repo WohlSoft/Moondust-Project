@@ -68,7 +68,6 @@ void MainWindow::setCurrentWorldSettings()
         }
 
         WriteToLog(QtDebugMsg, "-> Clear Menu");
-        ui->menuDisable_characters->clear();
         //ui->WLD_DisableCharacters
 
         //Create absence data
