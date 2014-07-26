@@ -495,20 +495,20 @@ void LvlScene::drawSpace()
          //x, y, h, w;
 
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> Find minimal"));
-    j=-1;
+    j=0;
     do
     {
-        j++;
         l = LvlData->sections[j].size_left;
         r = LvlData->sections[j].size_right;
         t = LvlData->sections[j].size_top;
         b = LvlData->sections[j].size_bottom;
+        j++;
     }
     while(
-          ((LvlData->sections[j].size_left==0) &&
-          (LvlData->sections[j].size_right==0) &&
-          (LvlData->sections[j].size_top==0) &&
-          (LvlData->sections[j].size_bottom==0)) && (j<LvlData->sections.size())
+          ((LvlData->sections[j-1].size_left==0) &&
+          (LvlData->sections[j-1].size_right==0) &&
+          (LvlData->sections[j-1].size_top==0) &&
+          (LvlData->sections[j-1].size_bottom==0)) && (j<LvlData->sections.size())
     );
 
     for(i=0;i<LvlData->sections.size(); i++)

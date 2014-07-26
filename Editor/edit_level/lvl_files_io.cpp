@@ -202,7 +202,7 @@ bool leveledit::saveAs()
     return saveFile(fileName);
 }
 
-bool leveledit::saveFile(const QString &fileName)
+bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
@@ -244,9 +244,10 @@ bool leveledit::saveFile(const QString &fileName)
 
     LvlData.modified = false;
     LvlData.untitled = false;
-
-    MainWinConnect::pMainWin->AddToRecentFiles(fileName);
-    MainWinConnect::pMainWin->SyncRecentFiles();
+    if(addToRecent){
+        MainWinConnect::pMainWin->AddToRecentFiles(fileName);
+        MainWinConnect::pMainWin->SyncRecentFiles();
+    }
 
     return true;
 }
