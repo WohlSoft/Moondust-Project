@@ -2598,7 +2598,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="44"/>
         <source>Editor - Platformer Game Engine (Under Construction)</source>
-        <translation>Level Editor - Platformer Game Engine (Under Construction)</translation>
+        <translation type="unfinished">Editor - Platformer Game Engine (Under Construction)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="257"/>
