@@ -178,7 +178,7 @@ void MainWindow::on_actionWLDFailRestart_triggered(bool checked)
     }
 }
 
-
+/*
 void MainWindow::on_WLD_AutostartLvl_textEdited(const QString &arg1)
 {
     if(world_settings_lock_fields) return;
@@ -188,6 +188,19 @@ void MainWindow::on_WLD_AutostartLvl_textEdited(const QString &arg1)
         activeWldEditWin()->WldData.modified = true;
     }
 }
+*/
+
+
+void MainWindow::on_WLD_AutostartLvl_editingFinished()
+{
+    if(world_settings_lock_fields) return;
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->WldData.autolevel = ui->WLD_AutostartLvl->text();
+        activeWldEditWin()->WldData.modified = true;
+    }
+}
+
 
 void MainWindow::on_WLD_AutostartLvlBrowse_clicked()
 {
@@ -209,7 +222,7 @@ void MainWindow::on_WLD_AutostartLvlBrowse_clicked()
             var << activeWldEditWin()->WldData.autolevel << levelList.SelectedFile;
             activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
             ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
-            on_WLD_AutostartLvl_textEdited(levelList.SelectedFile);
+            on_WLD_AutostartLvl_editingFinished();
         }
     }
 
