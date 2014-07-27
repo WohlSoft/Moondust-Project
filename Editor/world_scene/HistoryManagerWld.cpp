@@ -198,7 +198,20 @@ void WldScene::historyBack()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingBigPathBackgroundLevel, 0, true, true, true, false, true);
         }else if(lastOperation.subtype == SETTING_ALWAYSVISIBLE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingAlwaysVisibleLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_GAMESTARTPOINT){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingGameStartPointLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_DOORID){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingDoorIDLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_PATHBYTOP){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingPathByTopLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_PATHBYRIGHT){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingPathByRightLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_PATHBYBOTTOM){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingPathByBottomLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_PATHBYLEFT){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingPathByLeftLevel, 0, true, true, true, false, true);
         }
+
         break;
     }
     default:
@@ -317,6 +330,18 @@ void WldScene::historyForward()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingBigPathBackgroundLevel, 0, true, true, true, false, true);
         }else if(lastOperation.subtype == SETTING_ALWAYSVISIBLE){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingAlwaysVisibleLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_GAMESTARTPOINT){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingGameStartPointLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_DOORID){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingDoorIDLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_PATHBYTOP){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingPathByTopLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_PATHBYRIGHT){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingPathByRightLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_PATHBYBOTTOM){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingPathByBottomLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_PATHBYLEFT){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingPathByLeftLevel, 0, true, true, true, false, true);
         }
         break;
     }
@@ -515,6 +540,90 @@ void WldScene::historyUndoSettingAlwaysVisibleLevel(WldScene::CallbackData cbDat
 void WldScene::historyRedoSettingAlwaysVisibleLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
 {
     ((ItemLevel*)cbData.item)->alwaysVisible(cbData.hist->extraData.toBool());
+}
+
+void WldScene::historyUndoSettingGameStartPointLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.gamestart = data.gamestart;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingGameStartPointLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.gamestart = cbData.hist->extraData.toBool();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingLevelfileLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.title = data.title;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingLevelfileLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.title = cbData.hist->extraData.toString();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingDoorIDLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.entertowarp = data.entertowarp;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingDoorIDLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.entertowarp = cbData.hist->extraData.toInt();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingPathByTopLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.top_exit = data.top_exit;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingPathByTopLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.top_exit = cbData.hist->extraData.toInt();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingPathByRightLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.right_exit = data.right_exit;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingPathByRightLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.right_exit = cbData.hist->extraData.toInt();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingPathByBottomLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.bottom_exit = data.bottom_exit;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingPathByBottomLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.bottom_exit = cbData.hist->extraData.toInt();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingPathByLeftLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.left_exit = data.left_exit;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingPathByLeftLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.left_exit = cbData.hist->extraData.toInt();
+    ((ItemLevel*)cbData.item)->arrayApply();
 }
 
 void WldScene::findGraphicsItem(WorldData toFind, WldScene::HistoryOperation *operation, WldScene::CallbackData customData, WldScene::callBackWorldTiles clbTiles, WldScene::callBackWorldPaths clbPaths, WldScene::callBackWorldScenery clbScenery, WldScene::callBackWorldLevels clbLevels, callBackWorldMusicbox clbMusic, bool ignoreTiles, bool ignorePaths, bool ignoreScenery, bool ignoreLevels, bool ignoreMusicbox)
