@@ -114,51 +114,51 @@
         <translation>Debug</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="82"/>
+        <location filename="../main_window/appsettings.cpp" line="83"/>
         <source>Set log file</source>
         <translation>Setzte Log Datei</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="83"/>
+        <location filename="../main_window/appsettings.cpp" line="84"/>
         <source>Text files (*.txt *.log)</source>
         <translation>Text Datei (*.txt *.log)</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="163"/>
+        <location filename="../main_window/appsettings.cpp" line="172"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
         <translation>PGE Level Datei</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="167"/>
+        <location filename="../main_window/appsettings.cpp" line="176"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
         <translation>PGE Welt Datei</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="171"/>
+        <location filename="../main_window/appsettings.cpp" line="180"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
         <translation>SMBX Level Datei</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="175"/>
+        <location filename="../main_window/appsettings.cpp" line="184"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>SMBX Welt Datei</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="216"/>
+        <location filename="../main_window/appsettings.cpp" line="224"/>
         <source>Success</source>
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="216"/>
+        <location filename="../main_window/appsettings.cpp" line="224"/>
         <source>All file associations have been set</source>
         <translation>Alle Dateierweiterungen wurden verknüpft</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="218"/>
+        <location filename="../main_window/appsettings.cpp" line="226"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -3905,7 +3905,7 @@ Möchtest du fortfahren?</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="218"/>
+        <location filename="../main_window/appsettings.cpp" line="226"/>
         <source>File association failed.</source>
         <translation>Dateiverknüpfung Fehlgeschlagen.</translation>
     </message>
@@ -4243,7 +4243,7 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <location filename="../edit_world/wld_draw.cpp" line="59"/>
         <source>2/%1 Applying Sceneries...</source>
-        <translation>2/%2 Setzte Umgebungsobjekte...</translation>
+        <translation>2/%1 Setzte Umgebungsobjekte...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_draw.cpp" line="68"/>
@@ -4252,8 +4252,12 @@ Möchtest du die Änderungen speichern?</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_draw.cpp" line="77"/>
-        <source>4/%1 Applying Leves...</source>
+        <source>4/%1 Applying Levels...</source>
         <translation>4/%1 Setzte Levels...</translation>
+    </message>
+    <message>
+        <source>4/%1 Applying Leves...</source>
+        <translation type="vanished">4/%1 Setzte Levels...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_draw.cpp" line="87"/>
