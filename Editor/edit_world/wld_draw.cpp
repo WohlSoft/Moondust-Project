@@ -74,7 +74,7 @@ bool WorldEdit::DrawObjects(QProgressDialog &progress)
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("4/%1 Applying Leves...").arg(TotalSteps));
+            progress.setLabelText(tr("4/%1 Applying Levels...").arg(TotalSteps));
 
     progress.setValue(progress.value()+1);
     progress.setValue(progress.value()+1);

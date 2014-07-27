@@ -27,6 +27,7 @@
 
 #include "../common_features/logger_sets.h"
 #include "../file_formats/file_formats.h"
+#include "../common_features/logger.h"
 
 AppSettings::AppSettings(QWidget *parent) :
     QDialog(parent),
@@ -133,16 +134,24 @@ void AppSettings::on_AssociateFiles_clicked()
 
     #ifdef __WIN32__
         QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
+        QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
 
         // add template
-        QFile l(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.lvl"));
-        QFile w(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.wld"));
+        WriteToLog(QtDebugMsg, registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.lvl"));
+        WriteToLog(QtDebugMsg, registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.wld"));
+        //registry_hkcr
+        //QFile l(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.lvl"));
+        //QFile w(QProcessEnvironment::systemEnvironment().value("windir","C:\\Windows").replace("\\","/")+QString("/ShellNew/sample.wld"));
+        QFile l(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.lvl"));
+        QFile w(registry_hkcu.value("Software/Microsoft/Windows/CurrentVersion/Explorer/Shell Folders/Templates").toString().replace("\\","/")+QString("/sample.wld"));
 
-        if((success = l.open(QIODevice::WriteOnly))){
+        success = l.open(QIODevice::WriteOnly);
+        if(success){
             l.write(QByteArray(FileFormats::WriteSMBX64LvlFile(FileFormats::dummyLvlDataArray()).toStdString().c_str()));
             l.close();
         }
-        if((success = w.open(QIODevice::WriteOnly))){
+        success = w.open(QIODevice::WriteOnly);
+        if(success){
             w.write(QByteArray(FileFormats::WriteSMBX64WldFile(FileFormats::dummyWldDataArray()).toStdString().c_str()));
             w.close();
         }
@@ -177,7 +186,6 @@ void AppSettings::on_AssociateFiles_clicked()
         registry_hkcr.setValue("SMBX64.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
 
         // User variable(s)
-        QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
         registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\"");
 
     #elif defined __APPLE__
