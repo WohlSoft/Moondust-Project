@@ -288,7 +288,7 @@ void MainWindow::on_WLD_PROPS_LVLFile_editingFinished()
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_LEVELFILE, QVariant(arg1));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_LEVELFILE, QVariant(ui->WLD_PROPS_LVLFile->text()));
     }
 
 }
