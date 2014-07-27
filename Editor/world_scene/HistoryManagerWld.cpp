@@ -210,6 +210,10 @@ void WldScene::historyBack()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingPathByBottomLevel, 0, true, true, true, false, true);
         }else if(lastOperation.subtype == SETTING_PATHBYLEFT){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingPathByLeftLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_GOTOX){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingGotoXLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_GOTOY){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingGotoYLevel, 0, true, true, true, false, true);
         }
 
         break;
@@ -342,7 +346,12 @@ void WldScene::historyForward()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingPathByBottomLevel, 0, true, true, true, false, true);
         }else if(lastOperation.subtype == SETTING_PATHBYLEFT){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingPathByLeftLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_GOTOX){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingGotoXLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_GOTOY){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingGotoYLevel, 0, true, true, true, false, true);
         }
+
         break;
     }
     default:
@@ -623,6 +632,30 @@ void WldScene::historyUndoSettingPathByLeftLevel(WldScene::CallbackData cbData, 
 void WldScene::historyRedoSettingPathByLeftLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
 {
     ((ItemLevel*)cbData.item)->levelData.left_exit = cbData.hist->extraData.toInt();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingGotoXLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.gotox = data.gotox;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingGotoXLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.gotox = cbData.hist->extraData.toInt();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingGotoYLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.gotoy = data.gotoy;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingGotoYLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.gotoy = cbData.hist->extraData.toInt();
     ((ItemLevel*)cbData.item)->arrayApply();
 }
 

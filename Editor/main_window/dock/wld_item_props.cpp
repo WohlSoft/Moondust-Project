@@ -524,7 +524,7 @@ void MainWindow::on_WLD_PROPS_GotoX_editingFinished()
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_GOTOX, QVariant((ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt()));
     }
 
 }
@@ -552,7 +552,7 @@ void MainWindow::on_WLD_PROPS_GotoY_editingFinished()
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_GOTOY, QVariant((ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt()));
     }
 }
 
