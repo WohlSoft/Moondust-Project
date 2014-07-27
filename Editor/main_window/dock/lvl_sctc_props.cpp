@@ -342,15 +342,18 @@ void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
     if( musicList.exec() == QDialog::Accepted )
     {
         ui->LVLPropsMusicCustom->setText( musicList.SelectedFile );
+        on_LVLPropsMusicCustom_editingFinished();
     }
 }
 
-void MainWindow::on_LVLPropsMusicCustom_textChanged(const QString &arg1)
+void MainWindow::on_LVLPropsMusicCustom_editingFinished()//_textChanged(const QString &arg1)
 {
     if(lockSctSettingsProps) return;
 
     if(activeChildWindow()==1)
     {
+        QString arg1 = ui->LVLPropsMusicCustom->text();
+
         QList<QVariant> cusMusicData;
         cusMusicData.push_back(activeLvlEditWin()->LvlData.sections[activeLvlEditWin()->LvlData.CurSection].music_file);
         cusMusicData.push_back(arg1.simplified().remove('\"'));
