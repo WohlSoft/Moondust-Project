@@ -260,7 +260,7 @@ void MainWindow::on_WLD_PROPS_GameStart_clicked(bool checked)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_GAMESTARTPOINT, QVariant(checked));
     }
 
 }
@@ -287,7 +287,7 @@ void MainWindow::on_WLD_PROPS_LVLFile_textEdited(const QString &arg1)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_LEVELFILE, QVariant(arg1));
     }
 
 }
@@ -314,7 +314,7 @@ void MainWindow::on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_LEVELFILE, QVariant(arg1));
     }
 }
 
@@ -340,7 +340,7 @@ void MainWindow::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_DOORID, QVariant(arg1));
     }
 
 }
@@ -412,7 +412,7 @@ void MainWindow::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBYTOP, QVariant(index-1));
     }
 
 }
@@ -439,7 +439,7 @@ void MainWindow::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBYLEFT, QVariant(index-1));
     }
 
 }
@@ -466,7 +466,7 @@ void MainWindow::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBYRIGHT, QVariant(index-1));
     }
 
 }
@@ -493,7 +493,7 @@ void MainWindow::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBYBOTTOM, QVariant(index-1));
     }
 
 
