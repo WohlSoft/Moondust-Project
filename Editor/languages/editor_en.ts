@@ -114,51 +114,51 @@
         <translation>Debug</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="82"/>
+        <location filename="../main_window/appsettings.cpp" line="83"/>
         <source>Set log file</source>
         <translation>Set log file</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="83"/>
+        <location filename="../main_window/appsettings.cpp" line="84"/>
         <source>Text files (*.txt *.log)</source>
         <translation>Text files (*.txt *.log)</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="163"/>
+        <location filename="../main_window/appsettings.cpp" line="172"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
         <translation>PGE Level file</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="167"/>
+        <location filename="../main_window/appsettings.cpp" line="176"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
         <translation>PGE World Map</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="171"/>
+        <location filename="../main_window/appsettings.cpp" line="180"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
         <translation>SMBX Level file</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="175"/>
+        <location filename="../main_window/appsettings.cpp" line="184"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>SMBX World Map</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="216"/>
+        <location filename="../main_window/appsettings.cpp" line="224"/>
         <source>Success</source>
         <translation>Success</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="216"/>
+        <location filename="../main_window/appsettings.cpp" line="224"/>
         <source>All file associations have been set</source>
         <translation>All file associations have been set</translation>
     </message>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="218"/>
+        <location filename="../main_window/appsettings.cpp" line="226"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
@@ -3924,7 +3924,7 @@ Do you want to continue?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/appsettings.cpp" line="218"/>
+        <location filename="../main_window/appsettings.cpp" line="226"/>
         <source>File association failed.</source>
         <translation>File association failed.</translation>
     </message>
@@ -4191,8 +4191,12 @@ Please, reconvert your images to the valid format and try to reload this level.<
     </message>
     <message>
         <location filename="../edit_world/wld_draw.cpp" line="77"/>
+        <source>4/%1 Applying Levels...</source>
+        <translation>4/%1 Applying Levels...</translation>
+    </message>
+    <message>
         <source>4/%1 Applying Leves...</source>
-        <translation>4/%1 Applying Leves...</translation>
+        <translation type="vanished">4/%1 Applying Leves...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_draw.cpp" line="87"/>
