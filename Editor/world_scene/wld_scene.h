@@ -207,7 +207,14 @@ public:
         SETTING_INTROLEVEL,
         SETTING_PATHBACKGROUND,
         SETTING_BIGPATHBACKGROUND,
-        SETTING_ALWAYSVISIBLE
+        SETTING_ALWAYSVISIBLE,
+        SETTING_GAMESTARTPOINT,
+        SETTING_LEVELFILE,
+        SETTING_DOORID,
+        SETTING_PATHBYTOP,
+        SETTING_PATHBYRIGHT,
+        SETTING_PATHBYBOTTOM,
+        SETTING_PATHBYLEFT
     };
 
     //typedefs
@@ -255,6 +262,20 @@ public:
     void historyRedoSettingBigPathBackgroundLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
     void historyRedoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingGameStartPointLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingGameStartPointLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingPathByTopLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathByTopLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingPathByRightLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathByRightLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingPathByBottomLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathByBottomLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingPathByLeftLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathByLeftLevel(CallbackData cbData, WorldLevels data);
 
     //miscellaneous
     void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
