@@ -214,7 +214,9 @@ public:
         SETTING_PATHBYTOP,
         SETTING_PATHBYRIGHT,
         SETTING_PATHBYBOTTOM,
-        SETTING_PATHBYLEFT
+        SETTING_PATHBYLEFT,
+        SETTING_GOTOX,
+        SETTING_GOTOY
     };
 
     //typedefs
@@ -276,6 +278,10 @@ public:
     void historyRedoSettingPathByBottomLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingPathByLeftLevel(CallbackData cbData, WorldLevels data);
     void historyRedoSettingPathByLeftLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingGotoXLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingGotoXLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingGotoYLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingGotoYLevel(CallbackData cbData, WorldLevels data);
 
     //miscellaneous
     void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
