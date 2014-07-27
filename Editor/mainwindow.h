@@ -203,7 +203,7 @@ public slots:
 
     //void on_LVLPropsMusicPlay_toggled(bool checked);
     void on_actionPlayMusic_triggered(bool checked);
-    void on_LVLPropsMusicCustom_textChanged(const QString &arg1);
+    void on_LVLPropsMusicCustom_editingFinished();//textChanged(const QString &arg1);
     void on_actionReset_position_triggered();
     void on_actionGridEn_triggered(bool checked);
     void on_LVLPropsBackImage_currentIndexChanged(int index);
@@ -327,12 +327,12 @@ private slots:
     void on_Exit_Left_clicked();
     void on_Exit_Right_clicked();
     void on_Exit_Down_clicked();
-    void on_WarpToMapX_textEdited(const QString &arg1);
-    void on_WarpToMapY_textEdited(const QString &arg1);
+    void on_WarpToMapX_editingFinished();
+    void on_WarpToMapY_editingFinished();
     void on_WarpGetXYFromWorldMap_clicked();
     void on_WarpLevelExit_clicked(bool checked);
     void on_WarpLevelEntrance_clicked(bool checked);
-    void on_WarpLevelFile_textChanged(const QString &arg1);
+    void on_WarpLevelFile_editingFinished();
     void on_WarpToExitNu_valueChanged(int arg1);
 
     //void on_goToWarpDoor_clicked();
