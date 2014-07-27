@@ -531,16 +531,20 @@ private slots:
     void on_WLD_PROPS_BigPathBG_clicked(bool checked);
     void on_WLD_PROPS_AlwaysVis_clicked(bool checked);
     void on_WLD_PROPS_GameStart_clicked(bool checked);
-    void on_WLD_PROPS_LVLFile_textEdited(const QString &arg1);
-    void on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1);
+    //void on_WLD_PROPS_LVLFile_textEdited(const QString &arg1);
+    //void on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1);
+    void on_WLD_PROPS_LVLFile_editingFinished();
+    void on_WLD_PROPS_LVLTitle_editingFinished();
     void on_WLD_PROPS_EnterTo_valueChanged(int arg1);
     void on_WLD_PROPS_LVLBrowse_clicked();
     void on_WLD_PROPS_ExitTop_currentIndexChanged(int index);
     void on_WLD_PROPS_ExitLeft_currentIndexChanged(int index);
     void on_WLD_PROPS_ExitRight_currentIndexChanged(int index);
     void on_WLD_PROPS_ExitBottom_currentIndexChanged(int index);
-    void on_WLD_PROPS_GotoX_textEdited(const QString &arg1);
-    void on_WLD_PROPS_GotoY_textEdited(const QString &arg1);
+    //void on_WLD_PROPS_GotoX_textEdited(const QString &arg1);
+    //void on_WLD_PROPS_GotoY_textEdited(const QString &arg1);
+    void on_WLD_PROPS_GotoX_editingFinished();
+    void on_WLD_PROPS_GotoY_editingFinished();
     void on_WLD_PROPS_GetPoint_clicked();
 
     void on_actionWorld_settings_triggered(bool checked);
@@ -554,7 +558,8 @@ private slots:
     void on_WLD_Title_textChanged(const QString &arg1);
     void on_WLD_NoWorldMap_clicked(bool checked);
     void on_WLD_RestartLevel_clicked(bool checked);
-    void on_WLD_AutostartLvl_textEdited(const QString &arg1);
+    //void on_WLD_AutostartLvl_textEdited(const QString &arg1);
+    void on_WLD_AutostartLvl_editingFinished();
     void on_WLD_AutostartLvlBrowse_clicked();
     void on_WLD_Stars_valueChanged(int arg1);
     void on_WLD_DoCountStars_clicked();
@@ -563,6 +568,7 @@ private slots:
     void on_actionWLDDisableMap_triggered(bool checked);
     void on_actionWLDFailRestart_triggered(bool checked);
     void on_actionWLDProperties_triggered();
+
 
 signals:
     void closeEditor();
