@@ -76,6 +76,18 @@ void AppSettings::applySettings()
     if(MainWindowView==QMdiArea::TabbedView)
         ui->MView_Tabs->setChecked(true);
 
+    if(LVLToolboxPos == QTabWidget::West){
+        ui->LVLToolboxVertical->setChecked(true);
+    }else{
+        ui->LVLToolboxHorizontal->setChecked(true);
+    }
+
+    if(WLDToolboxPos == QTabWidget::North){
+        ui->WLDToolboxHorizontal->setChecked(true);
+    }else{
+        ui->WLDToolboxVertical->setChecked(true);
+    }
+
 }
 
 void AppSettings::on_setLogFile_clicked()
@@ -101,6 +113,16 @@ void AppSettings::on_buttonBox_accepted()
         MainWindowView = QMdiArea::SubWindowView;
     if(ui->MView_Tabs->isChecked())
         MainWindowView = QMdiArea::TabbedView;
+
+    if(ui->LVLToolboxVertical->isChecked())
+        LVLToolboxPos = QTabWidget::West;
+    else
+        LVLToolboxPos = QTabWidget::North;
+
+    if(ui->WLDToolboxHorizontal->isChecked())
+        WLDToolboxPos = QTabWidget::North;
+    else
+        WLDToolboxPos = QTabWidget::West;
 
     logfile = ui->logFileName->text();
 
