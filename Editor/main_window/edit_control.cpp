@@ -294,6 +294,11 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         }
 }
 
+void MainWindow::on_actionLine_triggered(bool checked)
+{
+
+}
+
 void MainWindow::on_actionOverwriteMode_triggered(bool checked)
 {
     WriteToLog(QtDebugMsg, QString("Overwrite mode is -> %1").arg(checked));

@@ -74,7 +74,8 @@ public:
         MODE_DrawSquare,
         MODE_PasteFromClip,
         MODE_Resizing,
-        MODE_SelectingOnly
+        MODE_SelectingOnly,
+        MODE_Line
     };
 
 
