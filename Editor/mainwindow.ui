@@ -45,7 +45,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="_resources/editor.qrc">
-    <normaloff>:/images/mushroom16.png</normaloff>:/images/mushroom16.png</iconset>
+    <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -3844,7 +3844,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
+          <width>270</width>
           <height>313</height>
          </rect>
         </property>
@@ -4027,8 +4027,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>115</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4110,7 +4110,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>270</width>
-          <height>103</height>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4501,8 +4501,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>159</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4618,7 +4618,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>270</width>
-          <height>114</height>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4716,7 +4716,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>270</width>
-          <height>92</height>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4864,7 +4864,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>521</height>
+          <height>497</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5092,7 +5092,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>521</height>
+          <height>497</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5241,7 +5241,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>521</height>
+          <height>497</height>
          </rect>
         </property>
         <attribute name="label">
