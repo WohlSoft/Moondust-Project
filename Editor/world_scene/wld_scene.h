@@ -217,7 +217,8 @@ public:
         SETTING_PATHBYBOTTOM,
         SETTING_PATHBYLEFT,
         SETTING_GOTOX,
-        SETTING_GOTOY
+        SETTING_GOTOY,
+        SETTING_CHARACTER
     };
 
     //typedefs
@@ -297,7 +298,7 @@ public:
                           bool ignoreMusicbox = false);
     QPoint calcTopLeftCorner(WorldData* data);
     QString getHistoryText(HistoryOperation operation);
-    //QString getHistorySettingText(SettingSubType subType);
+    QString getHistorySettingText(SettingSubType subType);
 
     void openProps();
 
