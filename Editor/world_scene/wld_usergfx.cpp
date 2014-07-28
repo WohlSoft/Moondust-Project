@@ -27,6 +27,8 @@
 void WldScene::buildAnimators()
 {
     int i;
+
+    WriteToLog(QtDebugMsg, "WorldAnimators -> Build tiles animator");
     for(i=0; i<pConfigs->main_wtiles.size(); i++)
     {
         SimpleAnimator * aniTile = new SimpleAnimator(
@@ -45,6 +47,7 @@ void WldScene::buildAnimators()
         }
     }
 
+    WriteToLog(QtDebugMsg, "WorldAnimators -> Build sceneries animator");
     for(i=0; i<pConfigs->main_wscene.size(); i++)
     {
         SimpleAnimator * aniScene = new SimpleAnimator(
@@ -63,6 +66,7 @@ void WldScene::buildAnimators()
         }
     }
 
+    WriteToLog(QtDebugMsg, "WorldAnimators -> Build paths animator");
     for(i=0; i<pConfigs->main_wpaths.size(); i++)
     {
         SimpleAnimator * aniPath = new SimpleAnimator(
@@ -81,10 +85,11 @@ void WldScene::buildAnimators()
         }
     }
 
+    WriteToLog(QtDebugMsg, "WorldAnimators -> Build levels animator");
     for(i=0; i<pConfigs->main_wlevels.size(); i++)
     {
         SimpleAnimator * aniLevel = new SimpleAnimator(
-                         ((pConfigs->main_wpaths[i].image.isNull())?
+                         ((pConfigs->main_wlevels[i].image.isNull())?
                                 uLevelImg:
                                pConfigs->main_wlevels[i].image),
                               pConfigs->main_wlevels[i].animated,
@@ -93,12 +98,15 @@ void WldScene::buildAnimators()
                               );
 
         animates_Levels.push_back( aniLevel );
+
         if(pConfigs->main_wlevels[i].id < (unsigned int)index_levels.size())
         {
             index_levels[pConfigs->main_wlevels[i].id].ai = animates_Levels.size()-1;
         }
+        WriteToLog(QtDebugMsg, "WorldAnimators -> Item made");
     }
 
+    WriteToLog(QtDebugMsg, "WorldAnimators -> done");
 }
 
 void WldScene::loadUserData(QProgressDialog &progress)
