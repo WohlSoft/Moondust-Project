@@ -210,13 +210,15 @@ public:
         SETTING_ALWAYSVISIBLE,
         SETTING_GAMESTARTPOINT,
         SETTING_LEVELFILE,
+        SETTING_LEVELTITLE,
         SETTING_DOORID,
         SETTING_PATHBYTOP,
         SETTING_PATHBYRIGHT,
         SETTING_PATHBYBOTTOM,
         SETTING_PATHBYLEFT,
         SETTING_GOTOX,
-        SETTING_GOTOY
+        SETTING_GOTOY,
+        SETTING_CHARACTER
     };
 
     //typedefs
@@ -268,6 +270,8 @@ public:
     void historyRedoSettingGameStartPointLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
     void historyRedoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingLeveltitleLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingLeveltitleLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
     void historyRedoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingPathByTopLevel(CallbackData cbData, WorldLevels data);
@@ -294,7 +298,7 @@ public:
                           bool ignoreMusicbox = false);
     QPoint calcTopLeftCorner(WorldData* data);
     QString getHistoryText(HistoryOperation operation);
-    //QString getHistorySettingText(SettingSubType subType);
+    QString getHistorySettingText(SettingSubType subType);
 
     void openProps();
 
