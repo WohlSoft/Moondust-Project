@@ -181,6 +181,10 @@ void WldScene::historyBack()
             WldData->stars = extraData.toList()[0].toInt();
         }else if(subtype == SETTING_INTROLEVEL){
             WldData->autolevel = extraData.toList()[0].toString();
+        }else if(subtype == SETTING_CHARACTER){
+            int ind = MainWinConnect::pMainWin->configs.getCharacterI(extraData.toList()[0].toInt());
+            if(ind!=-1)
+                WldData->nocharacter[ind] = !extraData.toList()[1].toBool();
         }
 
         MainWinConnect::pMainWin->setCurrentWorldSettings();
@@ -214,6 +218,10 @@ void WldScene::historyBack()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingGotoXLevel, 0, true, true, true, false, true);
         }else if(lastOperation.subtype == SETTING_GOTOY){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingGotoYLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_LEVELFILE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingLevelfileLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_LEVELTITLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingLeveltitleLevel, 0, true, true, true, false, true);
         }
 
         break;
@@ -317,6 +325,10 @@ void WldScene::historyForward()
             WldData->stars = extraData.toList()[1].toInt();
         }else if(subtype == SETTING_INTROLEVEL){
             WldData->autolevel = extraData.toList()[1].toString();
+        }else if(subtype == SETTING_CHARACTER){
+            int ind = MainWinConnect::pMainWin->configs.getCharacterI(extraData.toList()[0].toInt());
+            if(ind!=-1)
+                WldData->nocharacter[ind] = extraData.toList()[1].toBool();
         }
 
         MainWinConnect::pMainWin->setCurrentWorldSettings();
@@ -350,6 +362,10 @@ void WldScene::historyForward()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingGotoXLevel, 0, true, true, true, false, true);
         }else if(lastOperation.subtype == SETTING_GOTOY){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingGotoYLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_LEVELFILE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingLevelfileLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_LEVELTITLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingLeveltitleLevel, 0, true, true, true, false, true);
         }
 
         break;
@@ -565,11 +581,23 @@ void WldScene::historyRedoSettingGameStartPointLevel(WldScene::CallbackData cbDa
 
 void WldScene::historyUndoSettingLevelfileLevel(WldScene::CallbackData cbData, WorldLevels data)
 {
-    ((ItemLevel*)cbData.item)->levelData.title = data.title;
+    ((ItemLevel*)cbData.item)->levelData.lvlfile = data.lvlfile;
     ((ItemLevel*)cbData.item)->arrayApply();
 }
 
 void WldScene::historyRedoSettingLevelfileLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.lvlfile = cbData.hist->extraData.toString();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingLeveltitleLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.title = data.title;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingLeveltitleLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
 {
     ((ItemLevel*)cbData.item)->levelData.title = cbData.hist->extraData.toString();
     ((ItemLevel*)cbData.item)->arrayApply();
@@ -974,6 +1002,34 @@ QString WldScene::getHistoryText(WldScene::HistoryOperation operation)
     case HistoryOperation::WORLDHISTORY_REMOVE: return tr("Remove");
     case HistoryOperation::WORLDHISTORY_PLACE: return tr("Place");
     case HistoryOperation::WORLDHISTORY_MOVE: return tr("Move");
+    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD: return tr("Changed Worldsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLDITEM: return tr("Changed Itemsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
+    default:
+        return tr("Unknown");
+    }
+}
+
+QString WldScene::getHistorySettingText(WldScene::SettingSubType subType)
+{
+    switch (subType) {
+    case SETTING_ALWAYSVISIBLE: return tr("Always Visible");
+    case SETTING_BIGPATHBACKGROUND: return tr("Big Path Background");
+    case SETTING_CHARACTER: return tr("Character");
+    case SETTING_DOORID: return tr("Door ID");
+    case SETTING_GAMESTARTPOINT: return tr("Game start point");
+    case SETTING_GOTOX: return tr("Goto X");
+    case SETTING_GOTOY: return tr("Goto Y");
+    case SETTING_HUB: return tr("Hub styled world");
+    case SETTING_INTROLEVEL: return tr("Intro Level");
+    case SETTING_LEVELFILE: return tr("Level file");
+    case SETTING_LEVELTITLE: return tr("Level title");
+    case SETTING_PATHBACKGROUND: return tr("Path Background");
+    case SETTING_PATHBYBOTTOM: return tr("Exit at bottom");
+    case SETTING_PATHBYLEFT: return tr("Exit at left");
+    case SETTING_PATHBYRIGHT: return tr("Exit at right");
+    case SETTING_PATHBYTOP: return tr("Exit at top");
+    case SETTING_RESTARTAFTERFAIL: return tr("Restart after fail");
+    case SETTING_TOTALSTARS: return tr("Total stars");
     default:
         return tr("Unknown");
     }

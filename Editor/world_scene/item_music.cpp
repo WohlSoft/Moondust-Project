@@ -115,7 +115,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         if(selected==play)
         {
             MainWinConnect::pMainWin->activeWldEditWin()->currentMusic = musicData.id;
-            MainWinConnect::pMainWin->setMusic(true);
+            MainWinConnect::pMainWin->setMusicButton(true);
+            MainWinConnect::pMainWin->on_actionPlayMusic_triggered(true);
             scene->contextMenuOpened = false;
         }
         else
