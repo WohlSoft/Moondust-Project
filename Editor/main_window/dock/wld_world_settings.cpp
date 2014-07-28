@@ -95,14 +95,18 @@ void MainWindow::setCurrentWorldSettings()
 
 void MainWindow::characterActivated(bool checked)
 {
-    QCheckBox* ch = qobject_cast<QCheckBox*>(sender());
-    if(!ch)
-        return;
-    int ind = configs.getCharacterI(WLD_CharacterCheckBoxes[ch]);
-    if(ind==-1)
-        return;
-    if (activeChildWindow()==3)
+    if(activeChildWindow()==3){
+        QCheckBox* ch = qobject_cast<QCheckBox*>(sender());
+        if(!ch)
+            return;
+        int ind = configs.getCharacterI(WLD_CharacterCheckBoxes[ch]);
+        if(ind==-1)
+            return;
+        QList<QVariant> chData;
+        chData << WLD_CharacterCheckBoxes[ch] << checked;
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_CHARACTER, chData);
         activeWldEditWin()->WldData.nocharacter[ind] = checked;
+    }
 }
 
 
