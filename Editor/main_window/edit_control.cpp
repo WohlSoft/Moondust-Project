@@ -235,7 +235,7 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
             switch(edit->scene->placingItem)
             {
                 case LvlScene::PLC_Block:
-                   ui->PROPS_BGOSquareFill->setChecked(checked);
+                   ui->PROPS_BlockSquareFill->setChecked(checked);
                    edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
                    WriteToLog(QtDebugMsg, QString("Block Square draw -> %1").arg(checked));
 
