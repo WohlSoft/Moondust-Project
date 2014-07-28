@@ -47,6 +47,8 @@ bool GlobalSettings::LevelEventsBoxVis=false;
 bool GlobalSettings::LevelSearchBoxVis=false;
 
 QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
+QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
+QTabWidget::TabPosition GlobalSettings::WLDToolboxPos = QTabWidget::West;
 
 int GlobalSettings::lastWinType=0;
 
@@ -205,6 +207,8 @@ void MainWindow::setUiDefults()
     ui->centralWidget->cascadeSubWindows();
 
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+    ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+    ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 
 //    //Start event detector
@@ -345,6 +349,9 @@ void MainWindow::loadSettings()
         GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
 
         GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
+        GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
+        GlobalSettings::WLDToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("world-toolbox-pos", static_cast<int>(QTabWidget::West)).toInt());
+
 
         ui->DoorsToolbox->setFloating(settings.value("doors-tool-box-float", true).toBool());
         ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
@@ -429,6 +436,8 @@ void MainWindow::saveSettings()
     settings.setValue("music-volume", MusicPlayer->volume());
 
     settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
+    settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
+    settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
 
     settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
     settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
@@ -479,6 +488,8 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->AnimationItemLimit = GlobalSettings::animatorItemsLimit;
 
     appSettings->MainWindowView = GlobalSettings::MainWindowView;
+    appSettings->LVLToolboxPos = GlobalSettings::LVLToolboxPos;
+    appSettings->WLDToolboxPos = GlobalSettings::WLDToolboxPos;
 
     appSettings->applySettings();
 
@@ -495,8 +506,12 @@ void MainWindow::on_actionApplication_settings_triggered()
         on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
 
         GlobalSettings::MainWindowView = appSettings->MainWindowView;
+        GlobalSettings::LVLToolboxPos = appSettings->LVLToolboxPos;
+        GlobalSettings::WLDToolboxPos = appSettings->WLDToolboxPos;
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+        ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+        ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
 
         saveSettings();
     }
