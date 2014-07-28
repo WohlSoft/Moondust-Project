@@ -154,7 +154,8 @@ SOURCES += main.cpp\
     main_window/dock/wld_item_props.cpp \
     world_scene/item_music.cpp \
     main_window/dock/wld_world_settings.cpp \
-    common_features/proxystyle.cpp
+    common_features/proxystyle.cpp \
+    main_window/savingnotificationdialog.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -212,7 +213,8 @@ HEADERS  += mainwindow.h \
     world_scene/item_level.h \
     world_scene/item_music.h \
     world_scene/wld_item_placing.h \
-    common_features/proxystyle.h
+    common_features/proxystyle.h \
+    main_window/savingnotificationdialog.h
 
 FORMS    += \
     mainwindow.ui \
@@ -230,7 +232,8 @@ FORMS    += \
     common_features/levelfilelist.ui \
     item_select_dialog/itemselectdialog.ui \
     tileset_configure_dialog/tilesetconfiguredialog.ui \
-    edit_world/world_edit.ui
+    edit_world/world_edit.ui \
+    main_window/savingnotificationdialog.ui
 
 RC_FILE = _resources/pge_editor.rc
 
