@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1502</width>
-     <height>18</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1108,7 +1108,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>149</height>
+     <height>158</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -2664,8 +2664,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>280</width>
-          <height>1330</height>
+          <width>275</width>
+          <height>1462</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3844,8 +3844,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>313</height>
+          <width>264</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4027,8 +4027,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>313</height>
+          <width>285</width>
+          <height>243</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4109,8 +4109,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>313</height>
+          <width>285</width>
+          <height>243</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4203,8 +4203,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>461</height>
+          <width>264</width>
+          <height>475</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4501,8 +4501,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>313</height>
+          <width>285</width>
+          <height>243</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4617,8 +4617,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>313</height>
+          <width>285</width>
+          <height>243</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4715,8 +4715,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>313</height>
+          <width>285</width>
+          <height>243</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4864,7 +4864,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>497</height>
+          <height>434</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5092,7 +5092,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>497</height>
+          <height>434</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5241,7 +5241,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>497</height>
+          <height>434</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5837,8 +5837,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -5992,6 +5992,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </attribute>
    <addaction name="actionSquareFill"/>
+   <addaction name="actionLine"/>
    <addaction name="actionOverwriteMode"/>
   </widget>
   <widget class="QToolBar" name="ResizingToolbar">
@@ -7571,6 +7572,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Cancel</string>
+   </property>
+  </action>
+  <action name="actionLine">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Line</string>
    </property>
   </action>
  </widget>

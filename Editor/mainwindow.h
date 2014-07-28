@@ -212,6 +212,7 @@ public slots:
     void on_actionRefresh_menu_and_toolboxes_triggered();
 
     void on_actionSquareFill_triggered(bool checked);
+    void on_actionLine_triggered(bool checked);
     void on_actionOverwriteMode_triggered(bool checked);
 
     void on_actionResizeApply_triggered();
@@ -569,6 +570,7 @@ private slots:
     void on_actionWLDDisableMap_triggered(bool checked);
     void on_actionWLDFailRestart_triggered(bool checked);
     void on_actionWLDProperties_triggered();
+
 
 signals:
     void closeEditor();
