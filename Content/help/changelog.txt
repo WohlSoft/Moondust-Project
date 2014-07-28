@@ -8,6 +8,7 @@ Editor 0.2.0
 - Apply/Cancel buttons of resizing process available on the toolbar
 - Fixed initial map positions on open/create files
 - Added item toolboxes tabs settings: you can display them horizontally or vertically
+- Improved LVL parser: filed with format <10 will automatically set BGO sorting priority for BGO 65 and boss flag for NPC-15, 39 and 86.
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized
