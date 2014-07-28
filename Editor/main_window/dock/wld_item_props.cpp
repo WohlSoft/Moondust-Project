@@ -270,6 +270,9 @@ void MainWindow::on_WLD_PROPS_LVLFile_editingFinished()
 {
     if(wld_tools_lock) return;
 
+    if(!ui->WLD_PROPS_LVLFile->isModified()) return;
+    ui->WLD_PROPS_LVLFile->setModified(false);
+
     if(wlvlPtr<0)
     {
         WldPlacingItems::LevelSet.lvlfile = ui->WLD_PROPS_LVLFile->text();
@@ -297,6 +300,9 @@ void MainWindow::on_WLD_PROPS_LVLFile_editingFinished()
 void MainWindow::on_WLD_PROPS_LVLTitle_editingFinished()
 {
     if(wld_tools_lock) return;
+
+    if(!ui->WLD_PROPS_LVLTitle->isModified()) return;
+    ui->WLD_PROPS_LVLTitle->setModified(false);
 
     if(wlvlPtr<0)
     {
@@ -363,6 +369,7 @@ void MainWindow::on_WLD_PROPS_LVLBrowse_clicked()
     if( levelList.exec() == QDialog::Accepted )
     {
         ui->WLD_PROPS_LVLFile->setText(levelList.SelectedFile);
+        ui->WLD_PROPS_LVLFile->setModified(true);
         on_WLD_PROPS_LVLFile_editingFinished();
 
         QRegExp lvlext = QRegExp("*.lvl");
@@ -386,6 +393,7 @@ void MainWindow::on_WLD_PROPS_LVLBrowse_clicked()
         if(!getLevelHead.LevelName.isEmpty())
         {
             ui->WLD_PROPS_LVLTitle->setText( getLevelHead.LevelName );
+            ui->WLD_PROPS_LVLTitle->setModified(true);
             on_WLD_PROPS_LVLTitle_editingFinished();
         }
     }
@@ -506,6 +514,9 @@ void MainWindow::on_WLD_PROPS_GotoX_editingFinished()
 {
     if(wld_tools_lock) return;
 
+    if(!ui->WLD_PROPS_GotoX->isModified()) return;
+    ui->WLD_PROPS_GotoX->setModified(false);
+
     if(wlvlPtr<0)
     {
         WldPlacingItems::LevelSet.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
@@ -533,6 +544,9 @@ void MainWindow::on_WLD_PROPS_GotoX_editingFinished()
 void MainWindow::on_WLD_PROPS_GotoY_editingFinished()
 {
     if(wld_tools_lock) return;
+
+    if(!ui->WLD_PROPS_GotoY->isModified()) return;
+    ui->WLD_PROPS_GotoY->setModified(false);
 
     if(wlvlPtr<0)
     {

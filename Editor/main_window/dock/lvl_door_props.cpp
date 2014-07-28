@@ -731,6 +731,9 @@ void MainWindow::on_WarpToMapX_editingFinished()//_textEdited(const QString &arg
 {
     if(lockSetSettings) return;
 
+    if(!ui->WarpToMapX->isModified()) return;
+    ui->WarpToMapX->setModified(false);
+
     int WinType = activeChildWindow();
     if (WinType==1)
     {
@@ -756,6 +759,9 @@ void MainWindow::on_WarpToMapX_editingFinished()//_textEdited(const QString &arg
 void MainWindow::on_WarpToMapY_editingFinished()//_textEdited(const QString &arg1)
 {
     if(lockSetSettings) return;
+
+    if(!ui->WarpToMapY->isModified()) return;
+    ui->WarpToMapY->setModified(false);
 
     int WinType = activeChildWindow();
     if (WinType==1)
@@ -921,6 +927,7 @@ void MainWindow::on_WarpBrowseLevels_clicked()
     if( levelList.exec() == QDialog::Accepted )
     {
         ui->WarpLevelFile->setText(levelList.SelectedFile);
+        ui->WarpLevelFile->setModified(true);
         on_WarpLevelFile_editingFinished();
     }
 }
@@ -928,6 +935,9 @@ void MainWindow::on_WarpBrowseLevels_clicked()
 void MainWindow::on_WarpLevelFile_editingFinished()//_textChanged(const QString &arg1)
 {
     if(lockSetSettings) return;
+
+    if(!ui->WarpLevelFile->isModified()) return;
+    ui->WarpLevelFile->setModified(false);
 
     int WinType = activeChildWindow();
     if (WinType==1)
