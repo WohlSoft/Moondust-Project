@@ -159,10 +159,28 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(curFile);
     WldData = FileFormats::dummyWldDataArray();
+    WldData.modified = true;
     WldData.untitled = true;
     StartWldData = WldData;
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
+
+    //Check if data configs exists
+    if( configs.check() )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+
+        QMessageBox::warning(this, tr("Configurations not loaded"),
+                             tr("Cannot create level file:\nbecause object configurations are not loaded\n."
+                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings."));
+
+        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
+
+        this->close();
+
+        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
+        return;
+    }
 
     scene = new WldScene(configs, WldData);
     scene->opts = options;
@@ -171,14 +189,14 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     //scene->drawSpace();
     scene->buildAnimators();
 
-    if(options.animationEnabled) scene->startAnimation();
-    setAutoUpdateTimer(31);
-
     if(!sceneCreated)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
     }
+
+    if(options.animationEnabled) scene->startAnimation();
+    setAutoUpdateTimer(31);
 
 }
 

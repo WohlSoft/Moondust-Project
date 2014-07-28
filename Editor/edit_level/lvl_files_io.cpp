@@ -163,6 +163,23 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
 
+    //Check if data configs exists
+    if( configs.check() )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+
+        QMessageBox::warning(this, tr("Configurations not loaded"),
+                             tr("Cannot create level file:\nbecause object configurations are not loaded\n."
+                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings."));
+
+        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
+
+        this->close();
+
+        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
+        return;
+    }
+
     scene = new LvlScene(configs, LvlData);
     scene->opts = options;
 
@@ -171,15 +188,14 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
     scene->drawSpace();
     scene->buildAnimators();
 
-    if(options.animationEnabled) scene->startBlockAnimation();
-    setAutoUpdateTimer(31);
-
     if(!sceneCreated)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
     }
 
+    if(options.animationEnabled) scene->startBlockAnimation();
+    setAutoUpdateTimer(31);
 }
 
 

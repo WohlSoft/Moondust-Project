@@ -87,6 +87,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
+    WriteToLog(QtDebugMsg, "LevelTools -> List ob blocks");
     //set custom Block items from loaded level
     if((ui->BlockCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
@@ -214,6 +215,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
+    WriteToLog(QtDebugMsg, "LevelTools -> List ob BGOs");
     //set custom BGO items from loaded level
     if((ui->BGOCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
@@ -341,6 +343,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
+
+    WriteToLog(QtDebugMsg, "LevelTools -> List ob NPCs");
     //set custom NPC items from loaded level
     if((ui->NPCCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
