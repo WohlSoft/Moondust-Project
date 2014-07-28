@@ -556,6 +556,7 @@ private slots:
 
     void on_WorldSettings_visibilityChanged(bool visible);
     //void on_WLD_Title_textChanged(const QString &arg1);
+    void on_WLD_Title_editingFinished();
     void on_WLD_NoWorldMap_clicked(bool checked);
     void on_WLD_RestartLevel_clicked(bool checked);
     //void on_WLD_AutostartLvl_textEdited(const QString &arg1);
@@ -568,9 +569,6 @@ private slots:
     void on_actionWLDDisableMap_triggered(bool checked);
     void on_actionWLDFailRestart_triggered(bool checked);
     void on_actionWLDProperties_triggered();
-
-
-    void on_WLD_Title_editingFinished();
 
 signals:
     void closeEditor();
