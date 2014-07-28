@@ -296,6 +296,7 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
 
 void MainWindow::on_actionLine_triggered(bool checked)
 {
+    if(checked) {}
 
 }
 
