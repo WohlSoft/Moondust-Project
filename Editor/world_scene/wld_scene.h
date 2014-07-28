@@ -210,6 +210,7 @@ public:
         SETTING_ALWAYSVISIBLE,
         SETTING_GAMESTARTPOINT,
         SETTING_LEVELFILE,
+        SETTING_LEVELTITLE,
         SETTING_DOORID,
         SETTING_PATHBYTOP,
         SETTING_PATHBYRIGHT,
@@ -268,6 +269,8 @@ public:
     void historyRedoSettingGameStartPointLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
     void historyRedoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingLeveltitleLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingLeveltitleLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
     void historyRedoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingPathByTopLevel(CallbackData cbData, WorldLevels data);

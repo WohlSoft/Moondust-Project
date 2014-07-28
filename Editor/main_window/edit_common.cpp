@@ -217,6 +217,7 @@ void MainWindow::on_actionGridEn_triggered(bool checked)
 void MainWindow::on_actionUndo_triggered()
 {
     ui->ItemProperties->hide();
+    ui->WLD_ItemProps->hide();
     if (activeChildWindow()==1)
     {
         //Here must be call
@@ -235,6 +236,7 @@ void MainWindow::on_actionUndo_triggered()
 void MainWindow::on_actionRedo_triggered()
 {
     ui->ItemProperties->hide();
+    ui->WLD_ItemProps->hide();
     if (activeChildWindow()==1)
     {
         //Here must be call

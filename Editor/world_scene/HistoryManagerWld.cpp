@@ -214,6 +214,10 @@ void WldScene::historyBack()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingGotoXLevel, 0, true, true, true, false, true);
         }else if(lastOperation.subtype == SETTING_GOTOY){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingGotoYLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_LEVELFILE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingLevelfileLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_LEVELTITLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyUndoSettingLeveltitleLevel, 0, true, true, true, false, true);
         }
 
         break;
@@ -350,6 +354,10 @@ void WldScene::historyForward()
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingGotoXLevel, 0, true, true, true, false, true);
         }else if(lastOperation.subtype == SETTING_GOTOY){
             findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingGotoYLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_LEVELFILE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingLevelfileLevel, 0, true, true, true, false, true);
+        }else if(lastOperation.subtype == SETTING_LEVELTITLE){
+            findGraphicsItem(modifiedSourceData, &lastOperation, cbData, 0, 0, 0, &WldScene::historyRedoSettingLeveltitleLevel, 0, true, true, true, false, true);
         }
 
         break;
@@ -565,11 +573,23 @@ void WldScene::historyRedoSettingGameStartPointLevel(WldScene::CallbackData cbDa
 
 void WldScene::historyUndoSettingLevelfileLevel(WldScene::CallbackData cbData, WorldLevels data)
 {
-    ((ItemLevel*)cbData.item)->levelData.title = data.title;
+    ((ItemLevel*)cbData.item)->levelData.lvlfile = data.lvlfile;
     ((ItemLevel*)cbData.item)->arrayApply();
 }
 
 void WldScene::historyRedoSettingLevelfileLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
+{
+    ((ItemLevel*)cbData.item)->levelData.lvlfile = cbData.hist->extraData.toString();
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyUndoSettingLeveltitleLevel(WldScene::CallbackData cbData, WorldLevels data)
+{
+    ((ItemLevel*)cbData.item)->levelData.title = data.title;
+    ((ItemLevel*)cbData.item)->arrayApply();
+}
+
+void WldScene::historyRedoSettingLeveltitleLevel(WldScene::CallbackData cbData, WorldLevels /*data*/)
 {
     ((ItemLevel*)cbData.item)->levelData.title = cbData.hist->extraData.toString();
     ((ItemLevel*)cbData.item)->arrayApply();
