@@ -296,8 +296,7 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
 
 void MainWindow::on_actionLine_triggered(bool checked)
 {
-    if(checked) {}
-
+    WriteToLog(QtDebugMsg, QString("Line mode is -> %1").arg(checked));
 }
 
 void MainWindow::on_actionOverwriteMode_triggered(bool checked)
