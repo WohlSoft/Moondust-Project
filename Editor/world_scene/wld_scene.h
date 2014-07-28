@@ -65,6 +65,8 @@ public:
     bool disableMoveItems;
     bool contextMenuOpened;
 
+    QPoint selectedPoint; // SELECTING Point on the map
+
     QPixmap musicBoxImg;
 
     enum EditMode
@@ -307,6 +309,8 @@ public:
 public slots:
     void selectionChanged();
 
+signals:
+    void pointSelected(QPoint point);
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
