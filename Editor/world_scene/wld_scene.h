@@ -218,7 +218,8 @@ public:
         SETTING_PATHBYLEFT,
         SETTING_GOTOX,
         SETTING_GOTOY,
-        SETTING_CHARACTER
+        SETTING_CHARACTER,
+        SETTING_WORLDTITLE
     };
 
     //typedefs
