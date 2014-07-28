@@ -67,8 +67,10 @@ void MainWindow::OpenFile(QString FilePath)
 
         leveledit *child = createLvlChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
-            statusBar()->showMessage(tr("Level file loaded"), 2000);
             child->show();
+            child->updateGeometry();
+            child->ResetPosition();
+            statusBar()->showMessage(tr("Level file loaded"), 2000);
             updateMenus(true);
             SetCurrentLevelSection(0);
             setDoorsToolbox();
@@ -98,7 +100,8 @@ void MainWindow::OpenFile(QString FilePath)
         WorldEdit *child = createWldChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
-
+            child->updateGeometry();
+            child->ResetPosition();
             updateMenus(true);            
             setCurrentWorldSettings();
             if(FileData.noworldmap)
