@@ -331,11 +331,6 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setMinimumDuration(500);
          //progress.setCancelButton(0);
 
-//    QTimer *timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT( xxx::processEvents() ) );
-//    timer->start(1);
-
-
     if(! DrawObjects(progress) )
     {
         LvlData.modified = false;
@@ -345,14 +340,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-//    timer->stop();
-//    delete timer;
-
     if( !progress.wasCanceled() )
         progress.close();
-
-    ui->graphicsView->verticalScrollBar()->setValue(265+LvlData.sections[0].size_bottom-602);
-    ui->graphicsView->horizontalScrollBar()->setValue(330+LvlData.sections[0].size_left);
 
     QApplication::restoreOverrideCursor();
 
