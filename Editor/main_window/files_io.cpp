@@ -154,6 +154,18 @@ void MainWindow::save()
     int WinType = activeChildWindow();
     if (WinType!=0)
     {
+        QProgressDialog progress(tr("Saving of file..."), tr("Abort"), 0, 1, this);
+             progress.setWindowTitle(tr("Saving"));
+             progress.setWindowModality(Qt::WindowModal);
+             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+             progress.setFixedSize(progress.size());
+             progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+             progress.setMinimumDuration(0);
+             progress.setAutoClose(false);
+             progress.setCancelButton(NULL);
+        progress.show();
+        qApp->processEvents();
+
         if(WinType==3)
             saved = activeWldEditWin()->save();
         if(WinType==2)
@@ -188,9 +200,22 @@ void MainWindow::save_all()
     npcedit *ChildWindow2=NULL;
     WorldEdit *ChildWindow3=NULL;
 
+    QProgressDialog progress(tr("Saving of files..."), tr("Abort"), 0, ui->centralWidget->subWindowList().size(), this);
+         progress.setWindowTitle(tr("Saving"));
+         progress.setWindowModality(Qt::WindowModal);
+         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+         progress.setFixedSize(progress.size());
+         progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+         progress.setMinimumDuration(0);
+         progress.setAutoClose(false);
+         progress.setCancelButton(NULL);
+    progress.show();
+    qApp->processEvents();
+
+    int counter=0;
     foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
-        if(QString(window->widget()->metaObject()->className())=="leveledit")
+        if(QString(window->widget()->metaObject()->className())=="WorldEdit")
         {
         ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
             ChildWindow3->save();
@@ -205,7 +230,13 @@ void MainWindow::save_all()
         ChildWindow2 = qobject_cast<npcedit *>(window->widget());
             ChildWindow2->save();
         }
+
+        progress.setValue(++counter);
+        qApp->processEvents();
     }
+
+    progress.close();
+
 }
 
 void MainWindow::close_sw()

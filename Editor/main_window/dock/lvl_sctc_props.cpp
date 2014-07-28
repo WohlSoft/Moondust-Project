@@ -342,6 +342,7 @@ void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
     if( musicList.exec() == QDialog::Accepted )
     {
         ui->LVLPropsMusicCustom->setText( musicList.SelectedFile );
+        ui->LVLPropsMusicCustom->setModified(true);
         on_LVLPropsMusicCustom_editingFinished();
     }
 }
@@ -349,6 +350,8 @@ void MainWindow::on_LVLPropsMusicCustomBrowse_clicked()
 void MainWindow::on_LVLPropsMusicCustom_editingFinished()//_textChanged(const QString &arg1)
 {
     if(lockSctSettingsProps) return;
+    if(!ui->LVLPropsMusicCustom->isModified()) return;
+    ui->LVLPropsMusicCustom->setModified(false);
 
     if(activeChildWindow()==1)
     {

@@ -198,6 +198,10 @@ void MainWindow::on_WLD_AutostartLvl_textEdited(const QString &arg1)
 void MainWindow::on_WLD_AutostartLvl_editingFinished()
 {
     if(world_settings_lock_fields) return;
+
+    if(!ui->WLD_AutostartLvl->isModified()) return;
+    ui->WLD_AutostartLvl->setModified(false);
+
     if (activeChildWindow()==3)
     {
         activeWldEditWin()->WldData.autolevel = ui->WLD_AutostartLvl->text();
@@ -226,6 +230,7 @@ void MainWindow::on_WLD_AutostartLvlBrowse_clicked()
             var << activeWldEditWin()->WldData.autolevel << levelList.SelectedFile;
             activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
             ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
+            ui->WLD_AutostartLvl->setModified(true);
             on_WLD_AutostartLvl_editingFinished();
         }
     }
