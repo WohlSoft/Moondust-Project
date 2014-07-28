@@ -44,6 +44,8 @@ public:
     int     loglevel;
 
     QMdiArea::ViewMode   MainWindowView;
+    QTabWidget::TabPosition LVLToolboxPos;
+    QTabWidget::TabPosition WLDToolboxPos;
 
     QString logfile;
 
