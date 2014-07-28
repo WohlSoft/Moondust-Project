@@ -57,9 +57,11 @@ void MainWindow::on_actionReload_triggered()
 
         leveledit *child = createLvlChild();
         if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts))) {
-            statusBar()->showMessage(tr("Level file reloaded"), 2000);
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
+            child->updateGeometry();
+            child->ResetPosition();
+            statusBar()->showMessage(tr("Level file reloaded"), 2000);
             updateMenus(true);
             SetCurrentLevelSection(0);
 
@@ -107,7 +109,9 @@ void MainWindow::on_actionReload_triggered()
         WorldEdit *child = createWldChild();
         if ( (bool)(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
-
+            ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
+            child->updateGeometry();
+            child->ResetPosition();
             updateMenus(true);
             setCurrentWorldSettings();
             if(FileData.noworldmap)
