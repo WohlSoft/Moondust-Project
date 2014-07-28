@@ -162,6 +162,10 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 MainWinConnect::pMainWin->on_cancelResize_clicked();
             }
         }
+        if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare){
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            return;
+        }
             //setSectionResizer(false, false);
         break;
     case (Qt::Key_Enter):
