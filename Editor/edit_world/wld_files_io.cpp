@@ -197,7 +197,6 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
 
     if(options.animationEnabled) scene->startAnimation();
     setAutoUpdateTimer(31);
-
 }
 
 
@@ -323,9 +322,6 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
 
     if( !progress.wasCanceled() )
         progress.close();
-
-    ui->graphicsView->verticalScrollBar()->setValue(265-602);
-    ui->graphicsView->horizontalScrollBar()->setValue(330);
 
     QApplication::restoreOverrideCursor();
 

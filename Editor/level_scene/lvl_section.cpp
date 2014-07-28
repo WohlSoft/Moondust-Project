@@ -107,8 +107,8 @@ void LvlScene::InitSection(int sect)
        LvlData->sections[sect].size_bottom = h;
 
        //set position to initialized section
-       LvlData->sections[sect].PositionY = y;
-       LvlData->sections[sect].PositionX = x;
+       LvlData->sections[sect].PositionY = y-10;
+       LvlData->sections[sect].PositionX = x-10;
 
        LvlData->sections[sect].bgcolor = 16291944;
 

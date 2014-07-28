@@ -221,6 +221,8 @@ LevelSection FileFormats::dummyLvlSection()
     dummySection.noback=false;
     dummySection.underwater=false;
     dummySection.music_file="";
+    dummySection.PositionX = -10;
+    dummySection.PositionY = -10;
 
     return dummySection;
 }
@@ -409,21 +411,22 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             goto badfile;
         else {
                section.size_left=line.toInt();
-               section.PositionX=line.toInt();
+               section.PositionX=line.toInt()-10;
              }
 
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //top
             goto badfile;
-        else section.size_top=line.toInt();
+        else
+            {
+                section.size_top=line.toInt();
+                section.PositionY=line.toInt()-10;
+            }
 
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //bottom
             goto badfile;
-        else {
-               section.size_bottom=line.toInt();
-               section.PositionY=line.toInt()-602;
-             }
+        else section.size_bottom=line.toInt();
 
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //right
