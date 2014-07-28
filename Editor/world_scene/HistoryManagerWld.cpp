@@ -185,6 +185,11 @@ void WldScene::historyBack()
             int ind = MainWinConnect::pMainWin->configs.getCharacterI(extraData.toList()[0].toInt());
             if(ind!=-1)
                 WldData->nocharacter[ind] = !extraData.toList()[1].toBool();
+        }else if(subtype == SETTING_WORLDTITLE){
+            WldData->EpisodeTitle = extraData.toList()[0].toString();
+            if(MainWinConnect::pMainWin->activeChildWindow()==3)
+                MainWinConnect::pMainWin->activeWldEditWin()->setWindowTitle(
+                            extraData.toList()[0].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : extraData.toList()[0].toString());
         }
 
         MainWinConnect::pMainWin->setCurrentWorldSettings();
@@ -329,6 +334,11 @@ void WldScene::historyForward()
             int ind = MainWinConnect::pMainWin->configs.getCharacterI(extraData.toList()[0].toInt());
             if(ind!=-1)
                 WldData->nocharacter[ind] = extraData.toList()[1].toBool();
+        }else if(subtype == SETTING_WORLDTITLE){
+            WldData->EpisodeTitle = extraData.toList()[1].toString();
+            if(MainWinConnect::pMainWin->activeChildWindow()==3)
+                MainWinConnect::pMainWin->activeWldEditWin()->setWindowTitle(
+                            extraData.toList()[1].toString() == "" ? MainWinConnect::pMainWin->activeWldEditWin()->userFriendlyCurrentFile() : extraData.toList()[1].toString());
         }
 
         MainWinConnect::pMainWin->setCurrentWorldSettings();
