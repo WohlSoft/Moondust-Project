@@ -37,6 +37,7 @@
 
 #include "../main_window/music_player.h"
 #include "../main_window/global_settings.h"
+#include "../main_window/savingnotificationdialog.h"
 
 
 void WorldEdit::ExportToImage_fn()
@@ -212,6 +213,25 @@ bool WorldEdit::save()
 
 bool WorldEdit::saveAs()
 {
+    SavingNotificationDialog* sav = new SavingNotificationDialog(false);
+    sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
+    sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
+    QLineEdit* wldNameBox = new QLineEdit();
+    sav->addUserItem(tr("Episode Title: "),wldNameBox);
+    sav->setAdjustSize(400,150);
+    wldNameBox->setText(WldData.EpisodeTitle);
+    if(sav->exec() == QDialog::Accepted){
+        WldData.EpisodeTitle = wldNameBox->text();
+        wldNameBox->deleteLater();
+        sav->deleteLater();
+        if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+            return false;
+        }
+    }else{
+        return false;
+    }
+
+
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
         (isUntitled)?GlobalSettings::savePath+QString("/")+curFile:curFile, QString("SMBX64 (1.3) World map file (*.wld)"));
     if (fileName.isEmpty())
@@ -345,17 +365,26 @@ void WorldEdit::documentWasModified()
 bool WorldEdit::maybeSave()
 {
     if (WldData.modified) {
-    QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
-                     tr("'%1' has been modified.\n"
-                        "Do you want to save your changes?")
-                     .arg(userFriendlyCurrentFile()),
-                     QMessageBox::Save | QMessageBox::Discard
-             | QMessageBox::Cancel);
-        if (ret == QMessageBox::Save)
-            return save();
-        else if (ret == QMessageBox::Cancel)
+        SavingNotificationDialog* sav = new SavingNotificationDialog(true);
+        sav->setSavingTitle(tr("'%1' has been modified.\n"
+                               "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
+        sav->setWindowTitle(userFriendlyCurrentFile()+tr(" not saved"));
+        QLineEdit* wldNameBox = new QLineEdit();
+        sav->addUserItem(tr("Episode title: "),wldNameBox);
+        sav->setAdjustSize(400,150);
+        wldNameBox->setText(WldData.EpisodeTitle);
+        if(sav->exec() == QDialog::Accepted){
+            WldData.EpisodeTitle = wldNameBox->text();
+            wldNameBox->deleteLater();
+            sav->deleteLater();
+            if(sav->savemode == SavingNotificationDialog::SAVE_SAVE){
+                return save();
+            }else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+                return false;
+            }
+        }else{
             return false;
+        }
     }
 
     return true;
