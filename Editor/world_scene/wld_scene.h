@@ -65,6 +65,8 @@ public:
     bool disableMoveItems;
     bool contextMenuOpened;
 
+    QPoint selectedPoint; // SELECTING Point on the map
+
     QPixmap musicBoxImg;
 
     enum EditMode
@@ -76,7 +78,8 @@ public:
         MODE_PasteFromClip,
         MODE_Resizing,
         MODE_SelectingOnly,
-	MODE_CheckSpot
+        MODE_Line,
+        MODE_CheckSpot
     };
 
 
@@ -84,6 +87,7 @@ public:
     void setItemPlacer(int itemType, unsigned long itemID=1);
     void updateCursoredNpcDirection();
     void setSquareDrawer();
+    void setLineDrawer();
     enum placingItemType
     {
         PLC_Tile=0,
@@ -173,7 +177,8 @@ public:
     //void setEventSctSizeResizer(long event, bool enabled, bool accept=false);
     //void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     //void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
-    void setScreenshotSelector(QPoint start, bool enabled, bool accept = false);
+    void setScreenshotSelector(bool enabled, bool accept = false);
+    QRectF captutedSize;
 
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
@@ -207,7 +212,19 @@ public:
         SETTING_INTROLEVEL,
         SETTING_PATHBACKGROUND,
         SETTING_BIGPATHBACKGROUND,
-        SETTING_ALWAYSVISIBLE
+        SETTING_ALWAYSVISIBLE,
+        SETTING_GAMESTARTPOINT,
+        SETTING_LEVELFILE,
+        SETTING_LEVELTITLE,
+        SETTING_DOORID,
+        SETTING_PATHBYTOP,
+        SETTING_PATHBYRIGHT,
+        SETTING_PATHBYBOTTOM,
+        SETTING_PATHBYLEFT,
+        SETTING_GOTOX,
+        SETTING_GOTOY,
+        SETTING_CHARACTER,
+        SETTING_WORLDTITLE
     };
 
     //typedefs
@@ -255,6 +272,26 @@ public:
     void historyRedoSettingBigPathBackgroundLevel(CallbackData cbData, WorldLevels data);
     void historyUndoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
     void historyRedoSettingAlwaysVisibleLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingGameStartPointLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingGameStartPointLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingLevelfileLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingLeveltitleLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingLeveltitleLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingDoorIDLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingPathByTopLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathByTopLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingPathByRightLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathByRightLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingPathByBottomLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathByBottomLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingPathByLeftLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingPathByLeftLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingGotoXLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingGotoXLevel(CallbackData cbData, WorldLevels data);
+    void historyUndoSettingGotoYLevel(CallbackData cbData, WorldLevels data);
+    void historyRedoSettingGotoYLevel(CallbackData cbData, WorldLevels data);
 
     //miscellaneous
     void findGraphicsItem(WorldData toFind, HistoryOperation * operation, CallbackData customData,
@@ -267,7 +304,7 @@ public:
                           bool ignoreMusicbox = false);
     QPoint calcTopLeftCorner(WorldData* data);
     QString getHistoryText(HistoryOperation operation);
-    //QString getHistorySettingText(SettingSubType subType);
+    QString getHistorySettingText(SettingSubType subType);
 
     void openProps();
 
@@ -275,6 +312,9 @@ public:
 public slots:
     void selectionChanged();
 
+signals:
+    void pointSelected(QPoint point);
+    void screenshotSizeCaptured();
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

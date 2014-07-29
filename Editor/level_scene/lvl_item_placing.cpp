@@ -62,6 +62,8 @@ QPoint LvlPlacingItems::gridOffset=QPoint(0,0);
 
 bool LvlPlacingItems::sizableBlock=false;
 bool LvlPlacingItems::fillingMode=false;
+bool LvlPlacingItems::lineMode=false;
+bool LvlPlacingItems::overwriteMode=false;
 
 
 void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
@@ -148,18 +150,31 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                             );
             LvlPlacingItems::blockSet.layer = "Default";
 
+            //Place sizable blocks in the square fill mode
             if(pConfigs->main_block[j].sizable)
             {
                 LvlPlacingItems::sizableBlock=true;
                 LvlPlacingItems::fillingMode=false;
+                LvlPlacingItems::lineMode=false;
                 setSquareDrawer(); return;
             }
 
+            LvlPlacingItems::bgoW = LvlPlacingItems::blockSet.w;
+            LvlPlacingItems::bgoH = LvlPlacingItems::blockSet.h;
+
+            //Square fill mode
             if(LvlPlacingItems::fillingMode)
             {
                 setSquareDrawer(); return;
             }
 
+            //Line mode
+            if(LvlPlacingItems::lineMode)
+            {
+                setLineDrawer(); return;
+            }
+
+            //Single item placing
             cursor = addPixmap(tImg.copy(0,
                                          LvlPlacingItems::blockSet.h*pConfigs->main_block[j].display_frame,
                                          LvlPlacingItems::blockSet.w,
@@ -250,11 +265,19 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::bgoW = w;
         LvlPlacingItems::bgoH = h;
 
+        //Square fill mode
         if(LvlPlacingItems::fillingMode)
         {
             setSquareDrawer(); return;
         }
 
+        //Line mode
+        if(LvlPlacingItems::lineMode)
+        {
+            setLineDrawer(); return;
+        }
+
+        //Single item placing
         cursor = addPixmap(tImg.copy(0, h*pConfigs->main_bgo[j].display_frame, w, h));
 
         cursor->setData(0, "BGO");
@@ -483,6 +506,36 @@ void LvlScene::setSquareDrawer()
     DrawMode=true;
 }
 
+
+void LvlScene::setLineDrawer()
+{
+    if(cursor)
+        {delete cursor;
+        cursor=NULL;}
+
+    QPen pen;
+
+    switch(placingItem)
+    {
+    case PLC_Block:
+    case PLC_BGO:
+    default:
+        pen = QPen(Qt::gray, 2);
+        break;
+    }
+
+    cursor = addLine(0,0,1,1, pen);
+
+    cursor->setData(0, "LineDrawer");
+    cursor->setData(25, "CURSOR");
+    cursor->setZValue(7000);
+    cursor->setOpacity( 0.5 );
+    cursor->setVisible(false);
+    cursor->setEnabled(true);
+
+    EditingMode = MODE_Line;
+    DrawMode=true;
+}
 
 
 void LvlScene::updateCursoredNpcDirection()

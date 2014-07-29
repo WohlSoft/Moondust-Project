@@ -34,6 +34,7 @@
 
 #include "../file_formats/file_formats.h"
 
+#include "../common_features/item_rectangles.h"
 
 QPoint WsourcePos=QPoint(0,0);
 int WgridSize=0, WoffsetX=0, WoffsetY=0;//, gridX, gridY, i=0;
@@ -110,49 +111,40 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     case (Qt::Key_Escape):
         if(!IsMoved)
             this->clearSelection();
-//        if(pResizer!=NULL )
-//        {
-//            switch(pResizer->type)
-//            {
-//            case 3:
-//                setPhysEnvResizer(NULL, false, false);
-//                break;
-//            case 2:
-//                setBlockResizer(NULL, false, false);
-//                break;
-//            case 1:
-//                setEventSctSizeResizer(-1, false, false);
-//                break;
-//            case 0:
-//            default:
-//                MainWinConnect::pMainWin->on_cancelResize_clicked();
-//            }
-//        }
+        if(pResizer!=NULL )
+        {
+            switch(pResizer->type)
+            {
+            case 0:
+                setScreenshotSelector(false, false);
+                break;
+            default:
+                break;
+            }
+        }
+        if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare || EditingMode == MODE_Line){
+            item_rectangles::clearArray();
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            return;
+        }
             //setSectionResizer(false, false);
         break;
-//    case (Qt::Key_Enter):
-//    case (Qt::Key_Return):
+    case (Qt::Key_Enter):
+    case (Qt::Key_Return):
 
-//        if(pResizer!=NULL )
-//        {
-//            switch(pResizer->type)
-//            {
-//            case 3:
-//                setPhysEnvResizer(NULL, false, true);
-//                break;
-//            case 2:
-//                setBlockResizer(NULL, false, true);
-//                break;
-//            case 1:
-//                setEventSctSizeResizer(-1, false, true);
-//                break;
-//            case 0:
-//            default:
-//                MainWinConnect::pMainWin->on_applyResize_clicked();
-//            }
-//        }
-//            //setSectionResizer(false, true);
-//        break;
+        if(pResizer!=NULL )
+        {
+            switch(pResizer->type)
+            {
+            case 0:
+                setScreenshotSelector(false, true);
+                break;
+            default:
+                break;
+            }
+        }
+            //setSectionResizer(false, true);
+        break;
 
     default:
         break;
@@ -259,6 +251,34 @@ if(contextMenuOpened) return;
             break;
 
         }
+        case MODE_Line:
+        {
+            if( mouseEvent->buttons() & Qt::RightButton )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+            }
+
+            WriteToLog(QtDebugMsg, QString("Line mode %1").arg(EditingMode));
+
+            if(cursor){
+                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                                  WldPlacingItems::gridSz,
+                                                  WldPlacingItems::gridOffset));
+                //cursor->setPos( drawStartPos );
+                cursor->setVisible(true);
+
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       WldPlacingItems::gridSz,
+                                       WldPlacingItems::gridOffset);
+                ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
+            }
+
+            QGraphicsScene::mousePressEvent(mouseEvent);
+            return;
+            break;
+
+        }
         case MODE_Resizing:
         {
             QGraphicsScene::mousePressEvent(mouseEvent);
@@ -354,8 +374,33 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                             ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                             );
+
+                item_rectangles::drawMatrix(this, QRect (((QGraphicsRectItem *)cursor)->x(),
+                                                        ((QGraphicsRectItem *)cursor)->y(),
+                                                        ((QGraphicsRectItem *)cursor)->rect().width(),
+                                                        ((QGraphicsRectItem *)cursor)->rect().height()),
+                                            QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
+                                            );
+
                 }
             }
+            break;
+        }
+    case MODE_Line:
+        {
+            if(cursor)
+            {
+                if(cursor->isVisible())
+                {
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       WldPlacingItems::gridSz,
+                                       WldPlacingItems::gridOffset);
+
+                ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
+
+                }
+            }
+            break;
         }
     case MODE_Resizing:
         {
@@ -541,6 +586,36 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             default:
                 break;
             }
+        item_rectangles::clearArray();
+        cursor->hide();
+        }
+        break;
+        }
+    case MODE_Line:
+        {
+
+        if(cursor)
+        {
+            // /////////// Don't draw with zero width or height //////////////
+            if( ((QGraphicsLineItem *)cursor)->line().p1() == ((QGraphicsLineItem *)cursor)->line().p2() )
+            {
+                cursor->hide();
+                break;
+            }
+            // ///////////////////////////////////////////////////////////////
+
+            switch(placingItem)
+            {
+            case PLC_Tile:
+                {
+                    break;
+                }
+            case PLC_Scene:
+                {
+                break;
+                }
+            }
+
         cursor->hide();
         }
         break;
@@ -864,6 +939,44 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 void WldScene::placeItemUnderCursor()
 {
     bool wasPlaced=false;
+
+    if(WldPlacingItems::overwriteMode)
+    {   //remove all colliaded items before placing
+        QGraphicsItem * xxx;
+        while( (xxx=itemCollidesWith(cursor)) != NULL )
+        {
+            if(xxx->data(0).toString()=="TILE")
+            {
+                ((ItemTile *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="SCENERY")
+            {
+                ((ItemScene *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="PATH")
+            {
+                ((ItemPath *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="LEVEL")
+            {
+                ((ItemLevel *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="MUSICBOX")
+            {
+                ((ItemMusic *)xxx)->removeFromArray();
+                delete xxx;
+            }
+        }
+    }
+
     if( itemCollidesWith(cursor) )
     {
         return;
@@ -1040,18 +1153,20 @@ void WldScene::removeItemUnderCursor()
     }
 }
 
-void WldScene::setScreenshotSelector(QPoint start, bool enabled, bool accept)
+void WldScene::setScreenshotSelector(bool enabled, bool accept)
 {
+    bool do_signal=false;
     if((enabled)&&(pResizer==NULL))
     {
-        pResizer = new ItemResizer( QSize(800, 600), Qt::yellow, 32 );
+        pResizer = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 32 );
         this->addItem(pResizer);
-        pResizer->setPos(start.x()-400, start.y()-300);
+        pResizer->setPos(captutedSize.x(), captutedSize.y());
         pResizer->type=0;
         pResizer->_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         MainWinConnect::pMainWin->activeWldEditWin()->changeCursor(5);
+        MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
     {
@@ -1062,20 +1177,23 @@ void WldScene::setScreenshotSelector(QPoint start, bool enabled, bool accept)
                 #ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
                 #endif
-                //long l = pResizer->pos().x();
-                //long t = pResizer->pos().y();
-                //long r = l+pResizer->_width;
-                //long b = t+pResizer->_height;
 
-                //WldData->modified = true;
+                captutedSize = QRectF( pResizer->pos().x(),
+                                       pResizer->pos().y(),
+                                       pResizer->_width,
+                                       pResizer->_height);
+                do_signal=true;
             }
             delete pResizer;
             pResizer = NULL;
             MainWinConnect::pMainWin->on_actionSelect_triggered();
+            MainWinConnect::pMainWin->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
         DrawMode=false;
     }
+
+    if(do_signal) screenshotSizeCaptured();
 }
 
 

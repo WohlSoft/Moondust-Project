@@ -121,6 +121,7 @@ LevelBGO FileFormats::dummyLvlBgo()
     dummyBGO.id = 0;
     dummyBGO.layer = "Default";
     dummyBGO.smbx64_sp = -1;
+    dummyBGO.smbx64_sp_apply = -1;
 
     dummyBGO.array_id  = 0;
     dummyBGO.index = 0;
@@ -221,6 +222,8 @@ LevelSection FileFormats::dummyLvlSection()
     dummySection.noback=false;
     dummySection.underwater=false;
     dummySection.music_file="";
+    dummySection.PositionX = -10;
+    dummySection.PositionY = -10;
 
     return dummySection;
 }
@@ -409,21 +412,22 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             goto badfile;
         else {
                section.size_left=line.toInt();
-               section.PositionX=line.toInt();
+               section.PositionX=line.toInt()-10;
              }
 
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //top
             goto badfile;
-        else section.size_top=line.toInt();
+        else
+            {
+                section.size_top=line.toInt();
+                section.PositionY=line.toInt()-10;
+            }
 
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //bottom
             goto badfile;
-        else {
-               section.size_bottom=line.toInt();
-               section.PositionY=line.toInt()-602;
-             }
+        else section.size_bottom=line.toInt();
 
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //right
@@ -627,7 +631,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         if(SMBX64::Int(line)) //BGO id
             goto badfile;
-        else bgodata.id= line.toInt();
+        else bgodata.id = line.toInt();
 
         if(file_format >= 10)
         {
@@ -636,10 +640,11 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 goto badfile;
             else bgodata.layer = removeQuotes(line);
         }
-        //else bgodata.layer = "Default";
 
         bgodata.smbx64_sp = -1;
-        bgodata.smbx64_sp_apply = -1;
+
+        if( (file_format < 10) && (bgodata.id==65) ) //set foreground for BGO-65 (SMBX 1.0)
+            bgodata.smbx64_sp = 80;
 
         bgodata.array_id = FileData.bgo_array_id;
         FileData.bgo_array_id++;
@@ -787,24 +792,16 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                  goto badfile;
              else npcdata.event_nomore = removeQuotes(line);
         }
-         /*
          else
          {
-            npcdata.special_data = -1;
-            npcdata.generator = false;
-            npcdata.generator_direct = -1;
-            npcdata.generator_type = -1;
-            npcdata.msg = "";
-            npcdata.friendly=false;
-            npcdata.nomove=false;
-            npcdata.legacyboss=false;
-            npcdata.layer="Default";
-            npcdata.event_activate="";
-            npcdata.event_die="";
-            npcdata.event_talk="";
-            npcdata.event_nomore="";
-         }*/
-
+             switch(npcdata.id)
+             {
+             //set boss flag to TRUE for old file formats
+             case 15: case 39: case 86:
+                 npcdata.legacyboss=true;
+             default: break;
+             }
+         }
 
          if(file_format >= 63)
          {

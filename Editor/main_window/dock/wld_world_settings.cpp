@@ -95,14 +95,18 @@ void MainWindow::setCurrentWorldSettings()
 
 void MainWindow::characterActivated(bool checked)
 {
-    QCheckBox* ch = qobject_cast<QCheckBox*>(sender());
-    if(!ch)
-        return;
-    int ind = configs.getCharacterI(WLD_CharacterCheckBoxes[ch]);
-    if(ind==-1)
-        return;
-    if (activeChildWindow()==3)
+    if(activeChildWindow()==3){
+        QCheckBox* ch = qobject_cast<QCheckBox*>(sender());
+        if(!ch)
+            return;
+        int ind = configs.getCharacterI(WLD_CharacterCheckBoxes[ch]);
+        if(ind==-1)
+            return;
+        QList<QVariant> chData;
+        chData << WLD_CharacterCheckBoxes[ch] << checked;
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_CHARACTER, chData);
         activeWldEditWin()->WldData.nocharacter[ind] = checked;
+    }
 }
 
 
@@ -112,19 +116,29 @@ void MainWindow::on_actionWLDProperties_triggered()
     ui->actionWorld_settings->trigger();
 }
 
-
-
-void MainWindow::on_WLD_Title_textChanged(const QString &arg1)
+void MainWindow::on_WLD_Title_editingFinished()
 {
     if(world_settings_lock_fields) return;
+
+    if(!ui->WLD_Title->isModified()) return;
+    ui->WLD_Title->setModified(false);
+
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->WldData.EpisodeTitle = arg1;
+        QList<QVariant> var;
+        var << activeWldEditWin()->WldData.EpisodeTitle << ui->WLD_Title->text();
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_WORLDTITLE, var);
+        activeWldEditWin()->WldData.EpisodeTitle = ui->WLD_Title->text();
         activeWldEditWin()->WldData.modified = true;
-        activeWldEditWin()->setWindowTitle(arg1 =="" ? activeWldEditWin()->userFriendlyCurrentFile() : arg1 );
+        activeWldEditWin()->setWindowTitle(ui->WLD_Title->text() =="" ? activeWldEditWin()->userFriendlyCurrentFile() : ui->WLD_Title->text() );
     }
-
 }
+
+//void MainWindow::on_WLD_Title_textChanged(const QString &arg1)
+//{
+
+
+//}
 
 void MainWindow::on_WLD_NoWorldMap_clicked(bool checked)
 {
@@ -178,7 +192,7 @@ void MainWindow::on_actionWLDFailRestart_triggered(bool checked)
     }
 }
 
-
+/*
 void MainWindow::on_WLD_AutostartLvl_textEdited(const QString &arg1)
 {
     if(world_settings_lock_fields) return;
@@ -188,6 +202,26 @@ void MainWindow::on_WLD_AutostartLvl_textEdited(const QString &arg1)
         activeWldEditWin()->WldData.modified = true;
     }
 }
+*/
+
+
+void MainWindow::on_WLD_AutostartLvl_editingFinished()
+{
+    if(world_settings_lock_fields) return;
+
+    if(!ui->WLD_AutostartLvl->isModified()) return;
+    ui->WLD_AutostartLvl->setModified(false);
+
+    if (activeChildWindow()==3)
+    {
+        QList<QVariant> var;
+        var << activeWldEditWin()->WldData.autolevel << ui->WLD_AutostartLvl->text();
+        activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
+        activeWldEditWin()->WldData.autolevel = ui->WLD_AutostartLvl->text();
+        activeWldEditWin()->WldData.modified = true;
+    }
+}
+
 
 void MainWindow::on_WLD_AutostartLvlBrowse_clicked()
 {
@@ -205,11 +239,9 @@ void MainWindow::on_WLD_AutostartLvlBrowse_clicked()
     if( levelList.exec() == QDialog::Accepted )
     {
         if(activeChildWindow()==3){
-            QList<QVariant> var;
-            var << activeWldEditWin()->WldData.autolevel << levelList.SelectedFile;
-            activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
             ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
-            on_WLD_AutostartLvl_textEdited(levelList.SelectedFile);
+            ui->WLD_AutostartLvl->setModified(true);
+            on_WLD_AutostartLvl_editingFinished();
         }
     }
 

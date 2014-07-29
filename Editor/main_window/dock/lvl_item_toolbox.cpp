@@ -87,6 +87,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
+    WriteToLog(QtDebugMsg, "LevelTools -> List ob blocks");
     //set custom Block items from loaded level
     if((ui->BlockCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
@@ -214,6 +215,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
+    WriteToLog(QtDebugMsg, "LevelTools -> List ob BGOs");
     //set custom BGO items from loaded level
     if((ui->BGOCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
@@ -341,6 +343,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
     tmpList.clear();
     tmpGrpList.clear();
 
+
+    WriteToLog(QtDebugMsg, "LevelTools -> List ob NPCs");
     //set custom NPC items from loaded level
     if((ui->NPCCatList->currentText()==customLabel)&&(setCat)&&(setGrp))
     {
@@ -526,9 +530,13 @@ void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
        activeLvlEditWin()->scene->disableMoveItems=false;
        activeLvlEditWin()->scene->DrawMode=true;
        activeLvlEditWin()->scene->EraserEnabled = false;
+
        LvlPlacingItems::fillingMode = false;
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
+       LvlPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
 
        activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
@@ -558,6 +566,9 @@ void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
        LvlPlacingItems::fillingMode = false;
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
+       LvlPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
 
        activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
@@ -589,6 +600,9 @@ void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
        LvlPlacingItems::fillingMode = false;
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(false);
+       LvlPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(false);
 
        LvlItemProps(2,FileFormats::dummyLvlBlock(),
                                  FileFormats::dummyLvlBgo(),

@@ -61,7 +61,8 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
 
     contextMenuOpened = false;
 
-    //Events flags
+    selectedPoint = QPoint(0, 0);
+
     cursor = NULL;
     resetCursor();
 

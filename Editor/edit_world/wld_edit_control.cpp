@@ -68,7 +68,7 @@ void WorldEdit::ResetPosition()
     //            LvlData.sections[LvlData.CurSection].size_bottom-602;
 
     //goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-602, false, QPoint(-10,10));
-    goTo(0, 0, false, QPoint(-10,10));
+    goTo(0, 0, false, QPoint(-10,-10));
 }
 
 void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset)

@@ -57,9 +57,11 @@ void MainWindow::on_actionReload_triggered()
 
         leveledit *child = createLvlChild();
         if ((bool) (child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts))) {
-            statusBar()->showMessage(tr("Level file reloaded"), 2000);
             child->show();
             ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
+            child->updateGeometry();
+            child->ResetPosition();
+            statusBar()->showMessage(tr("Level file reloaded"), 2000);
             updateMenus(true);
             SetCurrentLevelSection(0);
 
@@ -107,7 +109,9 @@ void MainWindow::on_actionReload_triggered()
         WorldEdit *child = createWldChild();
         if ( (bool)(child->loadFile(filePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
-
+            ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
+            child->updateGeometry();
+            child->ResetPosition();
             updateMenus(true);
             setCurrentWorldSettings();
             if(FileData.noworldmap)
@@ -137,6 +141,11 @@ void MainWindow::on_actionExport_to_image_triggered()
     if(activeChildWindow()==1)
     {
         activeLvlEditWin()->ExportToImage_fn();
+    }
+    else
+    if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->ExportToImage_fn();
     }
 }
 
@@ -217,6 +226,7 @@ void MainWindow::on_actionGridEn_triggered(bool checked)
 void MainWindow::on_actionUndo_triggered()
 {
     ui->ItemProperties->hide();
+    ui->WLD_ItemProps->hide();
     if (activeChildWindow()==1)
     {
         //Here must be call
@@ -235,6 +245,7 @@ void MainWindow::on_actionUndo_triggered()
 void MainWindow::on_actionRedo_triggered()
 {
     ui->ItemProperties->hide();
+    ui->WLD_ItemProps->hide();
     if (activeChildWindow()==1)
     {
         //Here must be call

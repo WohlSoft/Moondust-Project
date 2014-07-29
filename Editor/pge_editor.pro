@@ -70,7 +70,6 @@ SOURCES += main.cpp\
     level_scene/HistoryManager.cpp \
     level_scene/lvl_clipboard.cpp \
     level_scene/item_npc.cpp \
-    level_scene/place_new_item.cpp \
     level_scene/lvl_control.cpp \
     level_scene/lvl_items.cpp \
     level_scene/lvl_usergfx.cpp \
@@ -154,7 +153,12 @@ SOURCES += main.cpp\
     main_window/dock/wld_item_props.cpp \
     world_scene/item_music.cpp \
     main_window/dock/wld_world_settings.cpp \
-    common_features/proxystyle.cpp
+    common_features/proxystyle.cpp \
+    main_window/savingnotificationdialog.cpp \
+    wld_point_dialog/wld_setpoint.cpp \
+    level_scene/lvl_item_placing.cpp \
+    common_features/item_rectangles.cpp \
+    edit_world/wld_saveimage.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -212,7 +216,11 @@ HEADERS  += mainwindow.h \
     world_scene/item_level.h \
     world_scene/item_music.h \
     world_scene/wld_item_placing.h \
-    common_features/proxystyle.h
+    common_features/proxystyle.h \
+    main_window/savingnotificationdialog.h \
+    wld_point_dialog/wld_setpoint.h \
+    common_features/item_rectangles.h \
+    edit_world/wld_saveimage.h
 
 FORMS    += \
     mainwindow.ui \
@@ -230,7 +238,10 @@ FORMS    += \
     common_features/levelfilelist.ui \
     item_select_dialog/itemselectdialog.ui \
     tileset_configure_dialog/tilesetconfiguredialog.ui \
-    edit_world/world_edit.ui
+    edit_world/world_edit.ui \
+    main_window/savingnotificationdialog.ui \
+    wld_point_dialog/wld_setpoint.ui \
+    edit_world/wld_saveimage.ui
 
 RC_FILE = _resources/pge_editor.rc
 

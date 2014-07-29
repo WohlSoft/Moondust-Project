@@ -100,6 +100,7 @@ bool WorldEdit::DrawObjects(QProgressDialog &progress)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
+        connect(scene, SIGNAL(screenshotSizeCaptured()), this, SLOT(ExportingReady()));
     }
     if(!progress.wasCanceled())
         progress.setValue(progress.maximum());

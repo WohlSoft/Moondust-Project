@@ -50,6 +50,8 @@ void MainWindow::on_actionNewLevel_triggered()
     leveledit *child = createLvlChild();
     child->newFile(configs, GlobalSettings::LvlOpts);
     child->show();
+    child->updateGeometry();
+    child->ResetPosition();
     updateMenus(true);
     SetCurrentLevelSection(0);
     on_actionSelect_triggered();
@@ -66,12 +68,16 @@ void MainWindow::on_actionNewWorld_map_triggered()
 {
     //QMessageBox::information(this, "Comming soon", "World map editor in this version is not implemented", QMessageBox::Ok);
     WorldEdit *child = createWldChild();
+    WriteToLog(QtDebugMsg, "-> Init new file");
     child->newFile(configs, GlobalSettings::LvlOpts);
+    WriteToLog(QtDebugMsg, "-> show subwindow");
     child->show();
+    child->updateGeometry();
+    child->ResetPosition();
+    WriteToLog(QtDebugMsg, "-> call to update menus");
     updateMenus(true);
 
     WriteToLog(QtDebugMsg, "-> select action trigger");
-
     on_actionSelect_triggered();
 
     WriteToLog(QtDebugMsg, "-> done");

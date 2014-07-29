@@ -203,7 +203,7 @@ public slots:
 
     //void on_LVLPropsMusicPlay_toggled(bool checked);
     void on_actionPlayMusic_triggered(bool checked);
-    void on_LVLPropsMusicCustom_textChanged(const QString &arg1);
+    void on_LVLPropsMusicCustom_editingFinished();//textChanged(const QString &arg1);
     void on_actionReset_position_triggered();
     void on_actionGridEn_triggered(bool checked);
     void on_LVLPropsBackImage_currentIndexChanged(int index);
@@ -212,6 +212,7 @@ public slots:
     void on_actionRefresh_menu_and_toolboxes_triggered();
 
     void on_actionSquareFill_triggered(bool checked);
+    void on_actionLine_triggered(bool checked);
     void on_actionOverwriteMode_triggered(bool checked);
 
     void on_actionResizeApply_triggered();
@@ -327,12 +328,12 @@ private slots:
     void on_Exit_Left_clicked();
     void on_Exit_Right_clicked();
     void on_Exit_Down_clicked();
-    void on_WarpToMapX_textEdited(const QString &arg1);
-    void on_WarpToMapY_textEdited(const QString &arg1);
+    void on_WarpToMapX_editingFinished();
+    void on_WarpToMapY_editingFinished();
     void on_WarpGetXYFromWorldMap_clicked();
     void on_WarpLevelExit_clicked(bool checked);
     void on_WarpLevelEntrance_clicked(bool checked);
-    void on_WarpLevelFile_textChanged(const QString &arg1);
+    void on_WarpLevelFile_editingFinished();
     void on_WarpToExitNu_valueChanged(int arg1);
 
     //void on_goToWarpDoor_clicked();
@@ -531,16 +532,20 @@ private slots:
     void on_WLD_PROPS_BigPathBG_clicked(bool checked);
     void on_WLD_PROPS_AlwaysVis_clicked(bool checked);
     void on_WLD_PROPS_GameStart_clicked(bool checked);
-    void on_WLD_PROPS_LVLFile_textEdited(const QString &arg1);
-    void on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1);
+    //void on_WLD_PROPS_LVLFile_textEdited(const QString &arg1);
+    //void on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1);
+    void on_WLD_PROPS_LVLFile_editingFinished();
+    void on_WLD_PROPS_LVLTitle_editingFinished();
     void on_WLD_PROPS_EnterTo_valueChanged(int arg1);
     void on_WLD_PROPS_LVLBrowse_clicked();
     void on_WLD_PROPS_ExitTop_currentIndexChanged(int index);
     void on_WLD_PROPS_ExitLeft_currentIndexChanged(int index);
     void on_WLD_PROPS_ExitRight_currentIndexChanged(int index);
     void on_WLD_PROPS_ExitBottom_currentIndexChanged(int index);
-    void on_WLD_PROPS_GotoX_textEdited(const QString &arg1);
-    void on_WLD_PROPS_GotoY_textEdited(const QString &arg1);
+    //void on_WLD_PROPS_GotoX_textEdited(const QString &arg1);
+    //void on_WLD_PROPS_GotoY_textEdited(const QString &arg1);
+    void on_WLD_PROPS_GotoX_editingFinished();
+    void on_WLD_PROPS_GotoY_editingFinished();
     void on_WLD_PROPS_GetPoint_clicked();
 
     void on_actionWorld_settings_triggered(bool checked);
@@ -551,10 +556,12 @@ private slots:
     void on_actionLockMusicBoxes_triggered(bool checked);
 
     void on_WorldSettings_visibilityChanged(bool visible);
-    void on_WLD_Title_textChanged(const QString &arg1);
+    //void on_WLD_Title_textChanged(const QString &arg1);
+    void on_WLD_Title_editingFinished();
     void on_WLD_NoWorldMap_clicked(bool checked);
     void on_WLD_RestartLevel_clicked(bool checked);
-    void on_WLD_AutostartLvl_textEdited(const QString &arg1);
+    //void on_WLD_AutostartLvl_textEdited(const QString &arg1);
+    void on_WLD_AutostartLvl_editingFinished();
     void on_WLD_AutostartLvlBrowse_clicked();
     void on_WLD_Stars_valueChanged(int arg1);
     void on_WLD_DoCountStars_clicked();
@@ -563,6 +570,7 @@ private slots:
     void on_actionWLDDisableMap_triggered(bool checked);
     void on_actionWLDFailRestart_triggered(bool checked);
     void on_actionWLDProperties_triggered();
+
 
 signals:
     void closeEditor();

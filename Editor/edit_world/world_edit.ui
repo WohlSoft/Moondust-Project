@@ -35,6 +35,12 @@
    </property>
    <item>
     <widget class="QGraphicsView" name="graphicsView">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>400</height>
+      </size>
+     </property>
      <property name="backgroundBrush">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
