@@ -45,9 +45,11 @@ void WorldEdit::ExportToImage_fn()
     if(!sceneCreated) return;
     if(!scene) return;
 
-    scene->captutedSize = QRectF(ui->graphicsView->rect());
     scene->captutedSize.setX(ui->graphicsView->horizontalScrollBar()->value());
     scene->captutedSize.setY(ui->graphicsView->verticalScrollBar()->value());
+    scene->captutedSize.setWidth(ui->graphicsView->width());
+    scene->captutedSize.setHeight(ui->graphicsView->height());
+
     scene->setScreenshotSelector(true);
 }
 
@@ -80,7 +82,7 @@ void WorldEdit::ExportingReady() //slot
 
         QString fileName = QFileDialog::getSaveFileName(this, tr("Export selected area to image"),
             latest_export_path + "/" +
-            QString("%1_x%2_y%3.png").arg( QFileInfo(curFile).baseName() )
+            QString("%1_x%2_y%3.png").arg( (WldData.EpisodeTitle.isEmpty())? QFileInfo(curFile).baseName() : WldData.EpisodeTitle.replace(QChar(' '), QChar('_')) )
                                         .arg(scene->captutedSize.x())
                                         .arg(scene->captutedSize.y()), tr("PNG Image (*.png)"));
         if (fileName.isEmpty())
