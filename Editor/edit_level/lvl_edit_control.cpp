@@ -182,7 +182,7 @@ void leveledit::changeCursor(int mode)
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Erasing);
         break;
-    case 2:    // place New item
+    case 2:    // place New item [any modes (single, square, line)]
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::CrossCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);

@@ -70,7 +70,6 @@ SOURCES += main.cpp\
     level_scene/HistoryManager.cpp \
     level_scene/lvl_clipboard.cpp \
     level_scene/item_npc.cpp \
-    level_scene/place_new_item.cpp \
     level_scene/lvl_control.cpp \
     level_scene/lvl_items.cpp \
     level_scene/lvl_usergfx.cpp \
@@ -156,7 +155,8 @@ SOURCES += main.cpp\
     main_window/dock/wld_world_settings.cpp \
     common_features/proxystyle.cpp \
     main_window/savingnotificationdialog.cpp \
-    wld_point_dialog/wld_setpoint.cpp
+    wld_point_dialog/wld_setpoint.cpp \
+    level_scene/lvl_item_placing.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

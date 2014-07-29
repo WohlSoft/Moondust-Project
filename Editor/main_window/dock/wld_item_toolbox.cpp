@@ -275,6 +275,10 @@ void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
 
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
+
        activeWldEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
 //       LvlItemProps(1,FileFormats::dummyLvlBlock(),
@@ -305,6 +309,10 @@ void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
 
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
+
        activeWldEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
 //       LvlItemProps(1,FileFormats::dummyLvlBlock(),
@@ -333,6 +341,10 @@ void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
        WldPlacingItems::fillingMode = false;
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
+
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
 
@@ -363,6 +375,10 @@ void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
 
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
+
        activeWldEditWin()->scene->setItemPlacer(3, item->data(3).toInt() );
 
        WldItemProps(0, WldPlacingItems::LevelSet, true);
@@ -389,6 +405,10 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
        WldPlacingItems::fillingMode = false;
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(false);
+
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(false);
 
        activeWldEditWin()->scene->setItemPlacer(4, item->data(3).toInt() );
 
