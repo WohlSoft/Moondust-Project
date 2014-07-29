@@ -30,7 +30,7 @@ public:
     void addUserItem(const QString &desc, QWidget* wid);
 
 private slots:
-    void on_button_OK_clicked();
+    //void on_button_OK_clicked();
     void on_button_Discard_clicked();
     void on_button_Cancle_clicked();
 
