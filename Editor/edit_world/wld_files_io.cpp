@@ -45,6 +45,8 @@ void WorldEdit::ExportToImage_fn()
     if(!sceneCreated) return;
     if(!scene) return;
 
+    MainWinConnect::pMainWin->on_actionSelect_triggered();
+
     scene->captutedSize.setX(ui->graphicsView->horizontalScrollBar()->value());
     scene->captutedSize.setY(ui->graphicsView->verticalScrollBar()->value());
     scene->captutedSize.setWidth(ui->graphicsView->width());
@@ -174,7 +176,7 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
         WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
 
         QMessageBox::warning(this, tr("Configurations not loaded"),
-                             tr("Cannot create level file:\nbecause object configurations are not loaded\n."
+                             tr("Cannot create world file:\nbecause object configurations are not loaded\n."
                                 "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings."));
 
         WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
@@ -302,7 +304,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
         WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
 
         QMessageBox::warning(this, tr("Configurations not loaded"),
-                             tr("Cannot open level file %1:\nbecause object configurations are not loaded\n."
+                             tr("Cannot open level world %1:\nbecause object configurations are not loaded\n."
                                 "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings.")
                              .arg(fileName));
 

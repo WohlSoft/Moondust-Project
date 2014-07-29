@@ -1594,7 +1594,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Custom</string>
+       <string comment="Flag of custom music on the level">Custom</string>
       </property>
       <property name="tristate">
        <bool>false</bool>
@@ -1655,7 +1655,7 @@
        <rect>
         <x>11</x>
         <y>23</y>
-        <width>88</width>
+        <width>201</width>
         <height>17</height>
        </rect>
       </property>
@@ -1672,7 +1672,7 @@
        <string>Leaving for the screen, the player enters the screen on the other side</string>
       </property>
       <property name="text">
-       <string>Warp section</string>
+       <string comment="This must be translated as &quot;Connect left and right sides&quot;">Warp section</string>
       </property>
       <property name="tristate">
        <bool>false</bool>
@@ -1683,7 +1683,7 @@
        <rect>
         <x>11</x>
         <y>46</y>
-        <width>97</width>
+        <width>201</width>
         <height>17</height>
        </rect>
       </property>
@@ -1708,7 +1708,7 @@
        <rect>
         <x>11</x>
         <y>69</y>
-        <width>197</width>
+        <width>201</width>
         <height>17</height>
        </rect>
       </property>
@@ -1722,7 +1722,7 @@
        </font>
       </property>
       <property name="text">
-       <string>No turn back (disable moving to left)</string>
+       <string comment="Please, translate as &quot;One way scrolling&quot;">No turn back (disable moving to left)</string>
       </property>
       <property name="tristate">
        <bool>false</bool>
@@ -1733,7 +1733,7 @@
        <rect>
         <x>11</x>
         <y>92</y>
-        <width>82</width>
+        <width>201</width>
         <height>17</height>
        </rect>
       </property>
@@ -2148,7 +2148,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>No Vehicles</string>
+       <string comment="In the SMBX - this option named as &quot;No Yoshi&quot;">No Vehicles</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_4">
@@ -2197,7 +2197,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Allow NPC</string>
+       <string comment="Please, translate as &quot;Allow items&quot;">Allow NPC</string>
       </property>
      </widget>
      <widget class="QPushButton" name="WarpSetEntrance">
@@ -2294,7 +2294,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Warp to</string>
+       <string comment="Translate as &quot;Door #&quot;">Warp to</string>
       </property>
      </widget>
      <widget class="QSpinBox" name="WarpToExitNu">
@@ -4028,8 +4028,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>199</width>
-          <height>115</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4110,8 +4110,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>196</width>
-          <height>93</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4204,7 +4204,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>222</width>
+          <width>254</width>
           <height>461</height>
          </rect>
         </property>
@@ -4502,8 +4502,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
-          <height>159</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4618,8 +4618,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
-          <height>114</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4716,8 +4716,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>108</width>
-          <height>70</height>
+          <width>270</width>
+          <height>313</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5092,8 +5092,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>194</width>
-          <height>146</height>
+          <width>300</width>
+          <height>491</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5241,8 +5241,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>220</width>
-          <height>295</height>
+          <width>300</width>
+          <height>491</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6032,7 +6032,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="Exit">
    <property name="text">
-    <string>Exit program</string>
+    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;">Exit program</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
@@ -7544,6 +7544,9 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Square Fill</string>
    </property>
+   <property name="toolTip">
+    <string>Square Fill (Shift+S)</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Shift+S</string>
    </property>
@@ -7568,6 +7571,12 @@ p, li { white-space: pre-wrap; }
    <property name="text">
     <string>Apply</string>
    </property>
+   <property name="toolTip">
+    <string>Apply (Enter)</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Return</string>
+   </property>
   </action>
   <action name="actionResizeCancel">
    <property name="icon">
@@ -7576,6 +7585,12 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Cancel</string>
+   </property>
+   <property name="toolTip">
+    <string>Cancel (Esc)</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Esc</string>
    </property>
   </action>
   <action name="actionLine">
@@ -7588,6 +7603,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Line</string>
+   </property>
+   <property name="toolTip">
+    <string>Line (Shift+D)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Shift+D</string>
@@ -7602,10 +7620,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
    </property>
    <property name="text">
-    <string>World map Search</string>
+    <string comment="Must be like &quot;Search on the world map&quot;">World map Search</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+F</string>
+    <string notr="true">Ctrl+F</string>
    </property>
   </action>
  </widget>
