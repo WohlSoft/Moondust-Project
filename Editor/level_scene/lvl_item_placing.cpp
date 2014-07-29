@@ -63,6 +63,7 @@ QPoint LvlPlacingItems::gridOffset=QPoint(0,0);
 bool LvlPlacingItems::sizableBlock=false;
 bool LvlPlacingItems::fillingMode=false;
 bool LvlPlacingItems::lineMode=false;
+bool LvlPlacingItems::overwriteMode=false;
 
 
 void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
@@ -157,6 +158,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 LvlPlacingItems::lineMode=false;
                 setSquareDrawer(); return;
             }
+
+            LvlPlacingItems::bgoW = LvlPlacingItems::blockSet.w;
+            LvlPlacingItems::bgoH = LvlPlacingItems::blockSet.h;
 
             //Square fill mode
             if(LvlPlacingItems::fillingMode)

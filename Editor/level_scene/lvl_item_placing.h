@@ -35,6 +35,8 @@ public:
     static bool fillingMode;
     static bool lineMode;
 
+    static bool overwriteMode;
+
     static LevelBGO bgoSet;
     static long bgoW;
     static long bgoH;
