@@ -129,7 +129,7 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 //                MainWinConnect::pMainWin->on_cancelResize_clicked();
 //            }
 //        }
-        if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare){
+        if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare || EditingMode == MODE_Line){
             item_rectangles::clearArray();
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             return;
@@ -265,6 +265,34 @@ if(contextMenuOpened) return;
             break;
 
         }
+        case MODE_Line:
+        {
+            if( mouseEvent->buttons() & Qt::RightButton )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+            }
+
+            WriteToLog(QtDebugMsg, QString("Line mode %1").arg(EditingMode));
+
+            if(cursor){
+                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                                  WldPlacingItems::gridSz,
+                                                  WldPlacingItems::gridOffset));
+                //cursor->setPos( drawStartPos );
+                cursor->setVisible(true);
+
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       WldPlacingItems::gridSz,
+                                       WldPlacingItems::gridOffset);
+                ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
+            }
+
+            QGraphicsScene::mousePressEvent(mouseEvent);
+            return;
+            break;
+
+        }
         case MODE_Resizing:
         {
             QGraphicsScene::mousePressEvent(mouseEvent);
@@ -370,6 +398,23 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 }
             }
+            break;
+        }
+    case MODE_Line:
+        {
+            if(cursor)
+            {
+                if(cursor->isVisible())
+                {
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       WldPlacingItems::gridSz,
+                                       WldPlacingItems::gridOffset);
+
+                ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
+
+                }
+            }
+            break;
         }
     case MODE_Resizing:
         {
@@ -556,6 +601,35 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 break;
             }
         item_rectangles::clearArray();
+        cursor->hide();
+        }
+        break;
+        }
+    case MODE_Line:
+        {
+
+        if(cursor)
+        {
+            // /////////// Don't draw with zero width or height //////////////
+            if( ((QGraphicsLineItem *)cursor)->line().p1() == ((QGraphicsLineItem *)cursor)->line().p2() )
+            {
+                cursor->hide();
+                break;
+            }
+            // ///////////////////////////////////////////////////////////////
+
+            switch(placingItem)
+            {
+            case PLC_Tile:
+                {
+                    break;
+                }
+            case PLC_Scene:
+                {
+                break;
+                }
+            }
+
         cursor->hide();
         }
         break;
