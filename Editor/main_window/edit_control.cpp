@@ -382,6 +382,7 @@ void MainWindow::on_actionLine_triggered(bool checked)
 void MainWindow::on_actionOverwriteMode_triggered(bool checked)
 {
     LvlPlacingItems::overwriteMode = checked;
+    WldPlacingItems::overwriteMode = checked;
 }
 
 void MainWindow::resizeToolbarVisible(bool vis)
