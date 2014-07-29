@@ -32,6 +32,7 @@
 
 #include "../file_formats/file_formats.h"
 
+#include "../common_features/item_rectangles.h"
 
 QPoint sourcePos=QPoint(0,0);
 int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
@@ -162,7 +163,8 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
                 MainWinConnect::pMainWin->on_cancelResize_clicked();
             }
         }
-        if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare){
+        if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare || EditingMode == MODE_Line){
+            item_rectangles::clearArray();
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             return;
         }
@@ -516,6 +518,17 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                             ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                             );
+
+                if(((placingItem==PLC_Block)&&(!LvlPlacingItems::sizableBlock))||(placingItem==PLC_BGO))
+                {
+                item_rectangles::drawMatrix(this, QRect (((QGraphicsRectItem *)cursor)->x(),
+                                                        ((QGraphicsRectItem *)cursor)->y(),
+                                                        ((QGraphicsRectItem *)cursor)->rect().width(),
+                                                        ((QGraphicsRectItem *)cursor)->rect().height()),
+                                            QSize(LvlPlacingItems::bgoW, LvlPlacingItems::bgoH)
+                                            );
+                }
+
                 }
             }
             break;
@@ -659,6 +672,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                 plSqBlock.blocks.push_back(LvlPlacingItems::blockSet);
                             }
                         }
+                        item_rectangles::clearArray();
                         if(plSqBlock.blocks.size() > 0)
                         {
                             addPlaceHistory(plSqBlock);
@@ -694,6 +708,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             plSqBgo.bgo.push_back(LvlPlacingItems::bgoSet);
                         }
                     }
+                    item_rectangles::clearArray();
                     if(plSqBgo.bgo.size() > 0)
                     {
                         addPlaceHistory(plSqBgo);
