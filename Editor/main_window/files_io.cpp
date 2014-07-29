@@ -157,7 +157,7 @@ void MainWindow::save()
         QProgressDialog progress(tr("Saving of file..."), tr("Abort"), 0, 1, this);
              progress.setWindowTitle(tr("Saving"));
              progress.setWindowModality(Qt::WindowModal);
-             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
              progress.setFixedSize(progress.size());
              progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
              progress.setMinimumDuration(0);
