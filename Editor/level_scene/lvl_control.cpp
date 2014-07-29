@@ -392,6 +392,25 @@ if(contextMenuOpened) return;
             break;
 
         }
+        case MODE_Line:
+        {
+            if( mouseEvent->buttons() & Qt::RightButton )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+
+            }
+
+            if(cursor){
+                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                                  LvlPlacingItems::gridSz,
+                                                  LvlPlacingItems::gridOffset));
+                cursor->setPos(drawStartPos);
+                cursor->setVisible(true);
+            }
+            return;
+
+        }
         case MODE_Resizing:
         {
             QGraphicsScene::mousePressEvent(mouseEvent);
