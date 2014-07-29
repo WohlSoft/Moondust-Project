@@ -156,7 +156,8 @@ SOURCES += main.cpp\
     common_features/proxystyle.cpp \
     main_window/savingnotificationdialog.cpp \
     wld_point_dialog/wld_setpoint.cpp \
-    level_scene/lvl_item_placing.cpp
+    level_scene/lvl_item_placing.cpp \
+    common_features/item_rectangles.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -216,7 +217,8 @@ HEADERS  += mainwindow.h \
     world_scene/wld_item_placing.h \
     common_features/proxystyle.h \
     main_window/savingnotificationdialog.h \
-    wld_point_dialog/wld_setpoint.h
+    wld_point_dialog/wld_setpoint.h \
+    common_features/item_rectangles.h
 
 FORMS    += \
     mainwindow.ui \
