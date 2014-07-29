@@ -266,7 +266,7 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
             edit->scene->DrawMode=true;
             edit->scene->EraserEnabled = false;
             WldPlacingItems::fillingMode = checked;
-
+            WldPlacingItems::lineMode = false;
             ui->actionLine->setChecked(false);
 
             switch(edit->scene->placingItem)
@@ -337,46 +337,48 @@ void MainWindow::on_actionLine_triggered(bool checked)
         }
         edit->setFocus();
     }
-//    else
-//    if (activeChildWindow()==3)
-//    {
-//        WorldEdit * edit = activeWldEditWin();
+    else
+    if (activeChildWindow()==3)
+    {
+        WorldEdit * edit = activeWldEditWin();
 
-//        edit->scene->clearSelection();
-//        edit->changeCursor(2);
-//        edit->scene->EditingMode = 2;
-//        edit->scene->disableMoveItems=false;
-//        edit->scene->DrawMode=true;
-//        edit->scene->EraserEnabled = false;
-//        WldPlacingItems::fillingMode = checked;
+        edit->scene->clearSelection();
+        edit->changeCursor(2);
+        edit->scene->EditingMode = 2;
+        edit->scene->disableMoveItems=false;
+        edit->scene->DrawMode=true;
+        edit->scene->EraserEnabled = false;
+        WldPlacingItems::fillingMode = false;
+        WldPlacingItems::lineMode = checked;
+        ui->actionSquareFill->setChecked(false);
 
-//        switch(edit->scene->placingItem)
-//        {
-//            case WldScene::PLC_Tile:
-//               edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
-//               WriteToLog(QtDebugMsg, QString("Tile Square draw -> %1").arg(checked));
+        switch(edit->scene->placingItem)
+        {
+            case WldScene::PLC_Tile:
+               edit->scene->setItemPlacer(0, WldPlacingItems::TileSet.id );
+               WriteToLog(QtDebugMsg, QString("Tile Line draw -> %1").arg(checked));
 
-//            break;
-//            case WldScene::PLC_Scene:
-//               edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id );
-//               WriteToLog(QtDebugMsg, QString("Scenery Square draw -> %1").arg(checked));
+            break;
+            case WldScene::PLC_Scene:
+               edit->scene->setItemPlacer(1, WldPlacingItems::SceneSet.id );
+               WriteToLog(QtDebugMsg, QString("Scenery Line draw -> %1").arg(checked));
 
-//            break;
-//            case WldScene::PLC_Path:
-//               edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id );
-//               WriteToLog(QtDebugMsg, QString("Path Square draw -> %1").arg(checked));
+            break;
+            case WldScene::PLC_Path:
+               edit->scene->setItemPlacer(2, WldPlacingItems::PathSet.id );
+               WriteToLog(QtDebugMsg, QString("Path Line draw -> %1").arg(checked));
 
-//            break;
-//            case WldScene::PLC_Level:
-//               edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id );
-//               WriteToLog(QtDebugMsg, QString("Path Square draw -> %1").arg(checked));
+            break;
+            case WldScene::PLC_Level:
+               edit->scene->setItemPlacer(3, WldPlacingItems::LevelSet.id );
+               WriteToLog(QtDebugMsg, QString("Path Line draw -> %1").arg(checked));
 
-//            break;
+            break;
 
-//            default: break;
-//        }
-//        edit->setFocus();
-//    }
+            default: break;
+        }
+        edit->setFocus();
+    }
 }
 
 void MainWindow::on_actionOverwriteMode_triggered(bool checked)
