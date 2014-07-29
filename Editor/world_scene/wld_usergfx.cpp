@@ -143,13 +143,6 @@ void WldScene::loadUserData(QProgressDialog &progress)
     //Load Tiles
     for(i=0; i<pConfigs->main_wtiles.size(); i++) //Add user images
     {
-
-//        WriteToLog(QtDebugMsg, QString("Loop %1").arg(i));
-
-
-        WriteToLog(QtDebugMsg, QString("path %1%2").arg(uWLDDs).arg(pConfigs->main_wtiles[i].image_n));
-        WriteToLog(QtDebugMsg, QString("path %1%2").arg(uWLDs).arg(pConfigs->main_wtiles[i].image_n));
-
         bool custom=false;
             if((QFile::exists(uWLDD) ) &&
                   (QFile::exists(uWLDDs + pConfigs->main_wtiles[i].image_n)) )
