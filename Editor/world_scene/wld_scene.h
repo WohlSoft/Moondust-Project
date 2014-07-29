@@ -78,7 +78,8 @@ public:
         MODE_PasteFromClip,
         MODE_Resizing,
         MODE_SelectingOnly,
-	MODE_CheckSpot
+        MODE_Line,
+        MODE_CheckSpot
     };
 
 
@@ -86,6 +87,7 @@ public:
     void setItemPlacer(int itemType, unsigned long itemID=1);
     void updateCursoredNpcDirection();
     void setSquareDrawer();
+    void setLineDrawer();
     enum placingItemType
     {
         PLC_Tile=0,

@@ -141,6 +141,11 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
+        if(WldPlacingItems::lineMode)
+        {
+            setLineDrawer(); return;
+        }
+
         cursor = addPixmap(tImg.copy(0,h*pConfigs->main_wtiles[j].display_frame,w,h));
 
         cursor->setData(0, "TILE");
@@ -235,6 +240,11 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
+        if(WldPlacingItems::lineMode)
+        {
+            setLineDrawer(); return;
+        }
+
         cursor = addPixmap(tImg.copy(0,ih * pConfigs->main_wscene[j].display_frame ,iw,ih));
 
         cursor->setData(0, "SCENERY");
@@ -325,6 +335,11 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         if(WldPlacingItems::fillingMode)
         {
             setSquareDrawer(); return;
+        }
+
+        if(WldPlacingItems::lineMode)
+        {
+            setLineDrawer(); return;
         }
 
         cursor = addPixmap(tImg.copy(0,h * pConfigs->main_wpaths[j].display_frame, w ,h));
@@ -421,6 +436,11 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         if(WldPlacingItems::fillingMode)
         {
             setSquareDrawer(); return;
+        }
+
+        if(WldPlacingItems::lineMode)
+        {
+            setLineDrawer(); return;
         }
 
         cursor = addPixmap(tImg.copy(0, ih * pConfigs->main_wlevels[j].display_frame ,iw,ih));
@@ -523,6 +543,29 @@ void WldScene::setSquareDrawer()
     cursor->setEnabled(true);
 
     EditingMode = MODE_DrawSquare;
+    DrawMode=true;
+}
+
+void WldScene::setLineDrawer()
+{
+    if(cursor)
+        {delete cursor;
+        cursor=NULL;}
+
+    QPen pen;
+
+    pen = QPen(Qt::gray, 2);
+
+    cursor = addLine(0,0,1,1, pen);
+
+    cursor->setData(0, "Line");
+    cursor->setData(25, "CURSOR");
+    cursor->setZValue(7000);
+    cursor->setOpacity( 0.5 );
+    cursor->setVisible(false);
+    cursor->setEnabled(true);
+
+    EditingMode = MODE_Line;
     DrawMode=true;
 }
 
