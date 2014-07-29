@@ -1643,7 +1643,12 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         setSectionResizer(false, false);
         disableMoveItems=true;
         break;
+    case MODE_Line:
+        resetCursor();
+        setSectionResizer(false, false);
+        DrawMode=true;
     case MODE_Selecting:
+        break;
     default:
         resetCursor();
         setSectionResizer(false, false);
