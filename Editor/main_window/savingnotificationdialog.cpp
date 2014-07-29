@@ -6,8 +6,7 @@ SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, QWidg
     ui(new Ui::SavingNotificationDialog)
 {
     ui->setupUi(this);
-    if(!showDiscardButton)
-        ui->horizontalLayout->removeWidget(ui->button_Discard);
+    ui->button_Discard->setVisible(showDiscardButton);
 }
 
 SavingNotificationDialog::~SavingNotificationDialog()
@@ -15,9 +14,26 @@ SavingNotificationDialog::~SavingNotificationDialog()
     delete ui;
 }
 
-void SavingNotificationDialog::on_button_OK_clicked()
+void SavingNotificationDialog::setSavingTitle(const QString &title)
 {
-    savemode = SAVE_OK;
+    ui->label_Title->setText(title);
+}
+
+void SavingNotificationDialog::setAdjustSize(const int &width, const int &height)
+{
+    setMinimumSize(width, height);
+    setMaximumSize(width, height);
+}
+
+void SavingNotificationDialog::addUserItem(const QString &desc, QWidget *wid)
+{
+    ui->userItems->addWidget(new QLabel(desc), ui->userItems->count()/2, 1);
+    ui->userItems->addWidget(wid, ui->userItems->count()/2, 2);
+}
+
+void SavingNotificationDialog::on_button_Save_clicked()
+{
+    savemode = SAVE_SAVE;
     accept();
 }
 
@@ -30,5 +46,5 @@ void SavingNotificationDialog::on_button_Discard_clicked()
 void SavingNotificationDialog::on_button_Cancle_clicked()
 {
     savemode = SAVE_CANCLE;
-    reject();
+    accept();
 }

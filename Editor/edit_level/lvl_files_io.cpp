@@ -33,6 +33,7 @@
 #include "../common_features/mainwinconnect.h"
 #include "../main_window/music_player.h"
 #include "../main_window/global_settings.h"
+#include "../main_window/savingnotificationdialog.h"
 
 #include <QDebug>
 
@@ -210,6 +211,24 @@ bool leveledit::save()
 
 bool leveledit::saveAs()
 {
+    SavingNotificationDialog* sav = new SavingNotificationDialog(false);
+    sav->setSavingTitle(tr("Please enter a level title for '%1'!").arg(userFriendlyCurrentFile()));
+    sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
+    QLineEdit* lvlNameBox = new QLineEdit();
+    sav->addUserItem(tr("Level title: "),lvlNameBox);
+    sav->setAdjustSize(400,150);
+    lvlNameBox->setText(LvlData.LevelName);
+    if(sav->exec() == QDialog::Accepted){
+        LvlData.LevelName = lvlNameBox->text();
+        lvlNameBox->deleteLater();
+        sav->deleteLater();
+        if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+            return false;
+        }
+    }else{
+        return false;
+    }
+
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
         (isUntitled)?GlobalSettings::savePath+QString("/")+curFile:curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
     if (fileName.isEmpty())
@@ -365,17 +384,26 @@ void leveledit::documentWasModified()
 bool leveledit::maybeSave()
 {
     if (LvlData.modified) {
-    QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
-                     tr("'%1' has been modified.\n"
-                        "Do you want to save your changes?")
-                     .arg(userFriendlyCurrentFile()),
-                     QMessageBox::Save | QMessageBox::Discard
-             | QMessageBox::Cancel);
-        if (ret == QMessageBox::Save)
-            return save();
-        else if (ret == QMessageBox::Cancel)
+        SavingNotificationDialog* sav = new SavingNotificationDialog(true);
+        sav->setSavingTitle(tr("'%1' has been modified.\n"
+                               "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
+        sav->setWindowTitle(userFriendlyCurrentFile()+tr(" not saved"));
+        QLineEdit* lvlNameBox = new QLineEdit();
+        sav->addUserItem(tr("Level title: "),lvlNameBox);
+        sav->setAdjustSize(400,150);
+        lvlNameBox->setText(LvlData.LevelName);
+        if(sav->exec() == QDialog::Accepted){
+            LvlData.LevelName = lvlNameBox->text();
+            lvlNameBox->deleteLater();
+            sav->deleteLater();
+            if(sav->savemode == SavingNotificationDialog::SAVE_SAVE){
+                return save();
+            }else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+                return false;
+            }
+        }else{
             return false;
+        }
     }
 
     return true;
