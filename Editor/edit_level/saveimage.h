@@ -38,13 +38,10 @@ public:
     
 private slots:
     void on_imgHeight_valueChanged(int arg1);
-
     void on_imgWidth_valueChanged(int arg1);
-
-    void on_buttonBox_accepted();
-
     void on_SaveProportion_toggled(bool checked);
 
+    void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 
 private:
