@@ -9,6 +9,8 @@ Editor 0.2.0
 - Fixed initial map positions on open/create files
 - Added item toolboxes tabs settings: you can display them horizontally or vertically
 - Improved LVL parser: filed with format <10 will automatically set BGO sorting priority for BGO 65 and boss flag for NPC-15, 39 and 86.
+- Added overwrite mode: all collided items will be removed when you placing new item
+- Improved Square Fill tool: you will see yellow rectagnles and know, where will be placed new items
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized
