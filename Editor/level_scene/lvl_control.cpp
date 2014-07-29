@@ -1218,6 +1218,33 @@ void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 void LvlScene::placeItemUnderCursor()
 {
     bool wasPlaced=false;
+
+    if(LvlPlacingItems::overwriteMode)
+    {   //remove all colliaded items before placing
+        QGraphicsItem * xxx;
+        while( (xxx=itemCollidesWith(cursor)) != NULL )
+        {
+            if(xxx->data(0).toString()=="Block")
+            {
+                ((ItemBlock *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="BGO")
+            {
+                ((ItemBGO *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="NPC")
+            {
+                ((ItemNPC *)xxx)->removeFromArray();
+                delete xxx;
+            }
+        }
+    }
+
+
     if( itemCollidesWith(cursor) )
     {
         return;
