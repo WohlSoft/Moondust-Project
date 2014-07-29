@@ -55,6 +55,7 @@ QPoint WldPlacingItems::gridOffset=QPoint(0,0);
 
 bool WldPlacingItems::fillingMode=false;
 bool WldPlacingItems::lineMode=false;
+bool WldPlacingItems::overwriteMode=false;
 
 
 void WldScene::setItemPlacer(int itemType, unsigned long itemID)

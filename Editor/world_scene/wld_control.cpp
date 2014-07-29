@@ -34,6 +34,7 @@
 
 #include "../file_formats/file_formats.h"
 
+#include "../common_features/item_rectangles.h"
 
 QPoint WsourcePos=QPoint(0,0);
 int WgridSize=0, WoffsetX=0, WoffsetY=0;//, gridX, gridY, i=0;
@@ -129,6 +130,7 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 //            }
 //        }
         if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare){
+            item_rectangles::clearArray();
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             return;
         }
@@ -358,6 +360,14 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                             ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                             );
+
+                item_rectangles::drawMatrix(this, QRect (((QGraphicsRectItem *)cursor)->x(),
+                                                        ((QGraphicsRectItem *)cursor)->y(),
+                                                        ((QGraphicsRectItem *)cursor)->rect().width(),
+                                                        ((QGraphicsRectItem *)cursor)->rect().height()),
+                                            QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
+                                            );
+
                 }
             }
         }
@@ -545,6 +555,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             default:
                 break;
             }
+        item_rectangles::clearArray();
         cursor->hide();
         }
         break;
@@ -868,6 +879,44 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 void WldScene::placeItemUnderCursor()
 {
     bool wasPlaced=false;
+
+    if(WldPlacingItems::overwriteMode)
+    {   //remove all colliaded items before placing
+        QGraphicsItem * xxx;
+        while( (xxx=itemCollidesWith(cursor)) != NULL )
+        {
+            if(xxx->data(0).toString()=="TILE")
+            {
+                ((ItemTile *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="SCENERY")
+            {
+                ((ItemScene *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="PATH")
+            {
+                ((ItemPath *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="LEVEL")
+            {
+                ((ItemLevel *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="MUSICBOX")
+            {
+                ((ItemMusic *)xxx)->removeFromArray();
+                delete xxx;
+            }
+        }
+    }
+
     if( itemCollidesWith(cursor) )
     {
         return;

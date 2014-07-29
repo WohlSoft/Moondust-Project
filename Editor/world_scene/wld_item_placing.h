@@ -33,6 +33,7 @@ public:
 
     static bool fillingMode;
     static bool lineMode;
+    static bool overwriteMode;
 
     static int c_offset_x;
     static int c_offset_y;
