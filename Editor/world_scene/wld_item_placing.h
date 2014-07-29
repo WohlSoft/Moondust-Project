@@ -32,6 +32,7 @@ public:
     static WorldMusic MusicSet;
 
     static bool fillingMode;
+    static bool lineMode;
 
     static int c_offset_x;
     static int c_offset_y;

@@ -33,6 +33,7 @@ public:
 
     static bool sizableBlock;
     static bool fillingMode;
+    static bool lineMode;
 
     static LevelBGO bgoSet;
     static long bgoW;

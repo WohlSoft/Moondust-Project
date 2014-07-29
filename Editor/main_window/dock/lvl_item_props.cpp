@@ -628,23 +628,8 @@ void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
 
-    resetEditmodeButtons();
-   //placeBlock
-
-    ui->PROPS_BGOSquareFill->setChecked(checked);
-    if (activeChildWindow()==1)
-    {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(2);
-       activeLvlEditWin()->scene->EditingMode = 2;
-       activeLvlEditWin()->scene->disableMoveItems=false;
-       activeLvlEditWin()->scene->DrawMode=true;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       LvlPlacingItems::fillingMode = checked;
-       activeLvlEditWin()->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
-       WriteToLog(QtDebugMsg, QString("Block Square draw -> %1").arg(checked));
-       activeLvlEditWin()->setFocus();
-    }
+    on_actionSquareFill_triggered(checked);
+    ui->actionSquareFill->setChecked(checked);
 }
 
 
@@ -653,23 +638,8 @@ void MainWindow::on_PROPS_BGOSquareFill_clicked(bool checked)
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
 
-    resetEditmodeButtons();
-   //placeBlock
-
-    ui->PROPS_BlockSquareFill->setChecked(checked);
-    if (activeChildWindow()==1)
-    {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(2);
-       activeLvlEditWin()->scene->EditingMode = 2;
-       activeLvlEditWin()->scene->disableMoveItems=false;
-       activeLvlEditWin()->scene->DrawMode=true;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       LvlPlacingItems::fillingMode = checked;
-       activeLvlEditWin()->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
-       WriteToLog(QtDebugMsg, QString("BGO Square draw -> %1").arg(checked));
-       activeLvlEditWin()->setFocus();
-    }
+    on_actionSquareFill_triggered(checked);
+    ui->actionSquareFill->setChecked(checked);
 }
 
 
