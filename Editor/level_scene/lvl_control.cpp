@@ -716,8 +716,9 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
             }
+            LvlData->modified = true;
 
-        cursor->hide();
+            cursor->hide();
         }
         break;
         }
