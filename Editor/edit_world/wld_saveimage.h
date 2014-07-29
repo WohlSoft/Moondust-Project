@@ -17,6 +17,7 @@ public:
     QSize imageSize;
     bool saveProportion;
     bool hidePaths;
+    bool hideMusBoxes;
 
     ~WldSaveImage();
 
@@ -26,8 +27,10 @@ private slots:
     void on_imgWidth_valueChanged(int arg1);
     void on_SaveProportion_clicked(bool checked);
     void on_HidePaths_clicked(bool checked);
+    void on_HideMusBoxes_clicked(bool checked);
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
+
 
 private:
     Ui::WldSaveImage *ui;
