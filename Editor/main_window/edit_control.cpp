@@ -417,6 +417,23 @@ void MainWindow::on_actionResizeApply_triggered()
             }
         }
     }
+    else
+    if (activeChildWindow()==3)
+    {
+        WldScene * edit = activeWldEditWin()->scene;
+        ItemResizer * pResizer = edit->pResizer;
+        if(pResizer!=NULL )
+        {
+            switch(pResizer->type)
+            {
+            case 0:
+                edit->setScreenshotSelector(false, true);
+                break;
+            default:
+                break;
+            }
+        }
+    }
     ui->ResizingToolbar->setVisible(false);
 }
 
@@ -442,6 +459,23 @@ void MainWindow::on_actionResizeCancel_triggered()
             case 0:
             default:
                 on_cancelResize_clicked();
+            }
+        }
+    }
+    else
+    if (activeChildWindow()==3)
+    {
+        WldScene * edit = activeWldEditWin()->scene;
+        ItemResizer * pResizer = edit->pResizer;
+        if(pResizer!=NULL )
+        {
+            switch(pResizer->type)
+            {
+            case 0:
+                edit->setScreenshotSelector(false, false);
+                break;
+            default:
+                break;
             }
         }
     }

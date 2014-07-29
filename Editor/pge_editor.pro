@@ -157,7 +157,8 @@ SOURCES += main.cpp\
     main_window/savingnotificationdialog.cpp \
     wld_point_dialog/wld_setpoint.cpp \
     level_scene/lvl_item_placing.cpp \
-    common_features/item_rectangles.cpp
+    common_features/item_rectangles.cpp \
+    edit_world/wld_saveimage.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -218,7 +219,8 @@ HEADERS  += mainwindow.h \
     common_features/proxystyle.h \
     main_window/savingnotificationdialog.h \
     wld_point_dialog/wld_setpoint.h \
-    common_features/item_rectangles.h
+    common_features/item_rectangles.h \
+    edit_world/wld_saveimage.h
 
 FORMS    += \
     mainwindow.ui \
@@ -238,7 +240,8 @@ FORMS    += \
     tileset_configure_dialog/tilesetconfiguredialog.ui \
     edit_world/world_edit.ui \
     main_window/savingnotificationdialog.ui \
-    wld_point_dialog/wld_setpoint.ui
+    wld_point_dialog/wld_setpoint.ui \
+    edit_world/wld_saveimage.ui
 
 RC_FILE = _resources/pge_editor.rc
 

@@ -177,7 +177,8 @@ public:
     //void setEventSctSizeResizer(long event, bool enabled, bool accept=false);
     //void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     //void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
-    void setScreenshotSelector(QPoint start, bool enabled, bool accept = false);
+    void setScreenshotSelector(bool enabled, bool accept = false);
+    QRectF captutedSize;
 
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
@@ -313,6 +314,7 @@ public slots:
 
 signals:
     void pointSelected(QPoint point);
+    void screenshotSizeCaptured();
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

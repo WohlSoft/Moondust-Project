@@ -142,6 +142,11 @@ void MainWindow::on_actionExport_to_image_triggered()
     {
         activeLvlEditWin()->ExportToImage_fn();
     }
+    else
+    if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->ExportToImage_fn();
+    }
 }
 
 void MainWindow::on_actionReset_position_triggered()
