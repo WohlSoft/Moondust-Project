@@ -29,7 +29,7 @@
 #include "../file_formats/file_formats.h"
 #include "../world_scene/wld_scene.h"
 
-//#include "saveimage.h"
+#include "wld_saveimage.h"
 
 #include "../common_features/logger.h"
 
@@ -41,114 +41,114 @@
 
 void WorldEdit::ExportToImage_fn()
 {
-//        long x, y, h, w, th, tw;
+    if(!sceneCreated) return;
+    if(!scene) return;
 
-//        bool proportion;
-//        QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
-//        QSettings settings(inifile, QSettings::IniFormat);
-//        settings.beginGroup("Main");
-//        latest_export_path = settings.value("export-path", QApplication::applicationDirPath()).toString();
-//        proportion = settings.value("export-proportions", true).toBool();
-//        settings.endGroup();
-
-
-//        x=WldData.sections[WldData.CurSection].size_left;
-//        y=WldData.sections[WldData.CurSection].size_top;
-//        w=WldData.sections[WldData.CurSection].size_right;
-//        h=WldData.sections[WldData.CurSection].size_bottom;
-//        w=(long)fabs(x-w);
-//        h=(long)fabs(y-h);
-
-//        tw=w;
-//        th=h;
-//        QVector<long> imgSize;
-
-//        imgSize.push_back(th);
-//        imgSize.push_back(tw);
-//        imgSize.push_back((int)proportion);
-
-//        ExportToImage ExportImage(imgSize);
-//        ExportImage.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-//        ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
-//        if(ExportImage.exec()!=QDialog::Rejected)
-//            imgSize = ExportImage.imageSize;
-//        else return;
-
-//        if(imgSize.size()>=3)
-//            if((imgSize[0]<0)||(imgSize[1]<0))
-//                return;
-
-//        QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
-//            latest_export_path + "/" +
-//            QString("%1_Section_%2.png").arg( QFileInfo(curFile).baseName() ).arg(WldData.CurSection+1), tr("PNG Image (*.png)"));
-//        if (fileName.isEmpty())
-//            return;
-
-//        QFileInfo exported(fileName);
-
-//        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, this);
-//        progress.setWindowTitle(tr("Please wait..."));
-//        progress.setWindowModality(Qt::WindowModal);
-//        progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
-//        progress.setFixedSize(progress.size());
-//        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
-//        progress.setCancelButton(0);
-//        progress.setMinimumDuration(0);
-
-//        //progress.show();
-
-//        if(!progress.wasCanceled()) progress.setValue(0);
-
-//        qApp->processEvents();
-//        if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
-//        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(false);
-
-//        if(!progress.wasCanceled()) progress.setValue(10);
-//        qApp->processEvents();
-//        scene->clearSelection(); // Clear selection on export
-
-//        latest_export_path = exported.absoluteDir().path();
-//        proportion = imgSize[2];
-
-//        th=imgSize[0];
-//        tw=imgSize[1];
-
-//        qApp->processEvents();
-//        QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
-
-//        if(!progress.wasCanceled()) progress.setValue(20);
-
-//        qApp->processEvents();
-//        QPainter p(&img);
-
-//        if(!progress.wasCanceled()) progress.setValue(30);
-//        qApp->processEvents();
-//        scene->render(&p, QRectF(0,0,tw,th),QRectF(x,y,w,h));
-
-//        qApp->processEvents();
-//        p.end();
-
-//        if(!progress.wasCanceled()) progress.setValue(40);
-//        qApp->processEvents();
-//        img.save(fileName);
-
-//        qApp->processEvents();
-//        if(!progress.wasCanceled()) progress.setValue(90);
-
-//        qApp->processEvents();
-//        if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
-//        if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
-
-//        if(!progress.wasCanceled()) progress.setValue(100);
-//        if(!progress.wasCanceled())
-//            progress.close();
-
-//        settings.beginGroup("Main");
-//            settings.setValue("export-path", latest_export_path);
-//            settings.setValue("export-proportions", proportion);
-//        settings.endGroup();
+    scene->captutedSize = QRectF(ui->graphicsView->rect());
+    scene->captutedSize.setX(ui->graphicsView->horizontalScrollBar()->value());
+    scene->captutedSize.setY(ui->graphicsView->verticalScrollBar()->value());
+    scene->setScreenshotSelector(true);
 }
 
+void WorldEdit::ExportingReady() //slot
+{
+        long th, tw;
+
+        bool proportion;
+        QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+        QSettings settings(inifile, QSettings::IniFormat);
+        settings.beginGroup("Main");
+        latest_export_path = settings.value("export-path", QApplication::applicationDirPath()).toString();
+        proportion = settings.value("export-proportions", true).toBool();
+        settings.endGroup();
+
+        QSize imgSize;
+        WldSaveImage ExportImage(scene->captutedSize.toRect(),
+                                 scene->captutedSize.size().toSize(),
+                                 proportion);
+        ExportImage.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+        ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
+        if(ExportImage.exec()!=QDialog::Rejected)
+            imgSize = ExportImage.imageSize;
+        else return;
+
+        proportion = ExportImage.saveProportion;
+
+        if((imgSize.width()<0)||(imgSize.height()<0))
+            return;
+
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Export selected area to image"),
+            latest_export_path + "/" +
+            QString("%1_x%2_y%3.png").arg( QFileInfo(curFile).baseName() )
+                                        .arg(scene->captutedSize.x())
+                                        .arg(scene->captutedSize.y()), tr("PNG Image (*.png)"));
+        if (fileName.isEmpty())
+            return;
+
+        QFileInfo exported(fileName);
+
+        QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, this);
+        progress.setWindowTitle(tr("Please wait..."));
+        progress.setWindowModality(Qt::WindowModal);
+        progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
+        progress.setFixedSize(progress.size());
+        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+        progress.setCancelButton(0);
+        progress.setMinimumDuration(0);
+
+        //progress.show();
+
+        if(!progress.wasCanceled()) progress.setValue(0);
+
+        qApp->processEvents();
+        if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
+        //if(ExportImage.hidePaths()) scene->hideWarpsAndDoors(false);
+
+        if(!progress.wasCanceled()) progress.setValue(10);
+        qApp->processEvents();
+        scene->clearSelection(); // Clear selection on export
+
+        latest_export_path = exported.absoluteDir().path();
+
+        th=imgSize.height();
+        tw=imgSize.width();
+
+        qApp->processEvents();
+        QImage img(tw,th,QImage::Format_ARGB32_Premultiplied);
+        img.fill(Qt::black);
+
+        if(!progress.wasCanceled()) progress.setValue(20);
+
+        qApp->processEvents();
+        QPainter p(&img);
+
+        if(!progress.wasCanceled()) progress.setValue(30);
+        qApp->processEvents();
+        scene->render(&p, QRectF(0,0,tw,th), scene->captutedSize);
+
+        qApp->processEvents();
+        p.end();
+
+        if(!progress.wasCanceled()) progress.setValue(40);
+        qApp->processEvents();
+        img.save(fileName);
+
+        qApp->processEvents();
+        if(!progress.wasCanceled()) progress.setValue(90);
+
+        qApp->processEvents();
+        if(scene->opts.animationEnabled) scene->startAnimation(); // Restart animation
+        //if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
+
+        if(!progress.wasCanceled()) progress.setValue(100);
+        if(!progress.wasCanceled())
+            progress.close();
+
+        settings.beginGroup("Main");
+            settings.setValue("export-path", latest_export_path);
+            settings.setValue("export-proportions", proportion);
+        settings.endGroup();
+}
 
 
 void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
@@ -193,6 +193,7 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
+        connect(scene, SIGNAL(screenshotSizeCaptured()), this, SLOT(ExportingReady()));
     }
 
     if(options.animationEnabled) scene->startAnimation();

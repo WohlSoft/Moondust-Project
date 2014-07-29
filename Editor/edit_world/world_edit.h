@@ -80,6 +80,8 @@ private slots:
     virtual void leaveEvent(QEvent * leaveEvent);
     void updateScene();
 
+    void ExportingReady();
+
 private:
     void documentWasModified();
 
