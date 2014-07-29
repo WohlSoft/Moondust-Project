@@ -10,6 +10,7 @@ WldSaveImage::WldSaveImage(QRect sourceRect, QSize targetSize, bool proportion, 
     getRect = sourceRect;
     imageSize = targetSize;
     saveProportion = proportion;
+    hideMusBoxes = false;
     ui->setupUi(this);
 
     WldSaveImage_lock=true;
@@ -75,6 +76,7 @@ void WldSaveImage::on_buttonBox_accepted()
     imageSize.setWidth(ui->imgWidth->value());
     imageSize.setHeight(ui->imgHeight->value());
     saveProportion = ui->SaveProportion->isChecked();
+    hideMusBoxes=ui->HideMusBoxes->isChecked();
     hidePaths = ui->HidePaths->isChecked();
     accept();
 }
@@ -82,4 +84,9 @@ void WldSaveImage::on_buttonBox_accepted()
 void WldSaveImage::on_buttonBox_rejected()
 {
 
+}
+
+void WldSaveImage::on_HideMusBoxes_clicked(bool checked)
+{
+    hideMusBoxes = checked;
 }
