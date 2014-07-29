@@ -33,6 +33,7 @@
 #include "../common_features/mainwinconnect.h"
 #include "../main_window/music_player.h"
 #include "../main_window/global_settings.h"
+#include "../main_window/savingnotificationdialog.h"
 
 #include <QDebug>
 
@@ -163,6 +164,23 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
 
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::darkGray));
 
+    //Check if data configs exists
+    if( configs.check() )
+    {
+        WriteToLog(QtCriticalMsg, QString("Error! *.INI configs not loaded"));
+
+        QMessageBox::warning(this, tr("Configurations not loaded"),
+                             tr("Cannot create level file:\nbecause object configurations are not loaded\n."
+                                "Please check that the ""config/SMBX"" directory exists and contains the *.INI files with object settings."));
+
+        WriteToLog(QtCriticalMsg, QString(" << close subWindow"));
+
+        this->close();
+
+        WriteToLog(QtCriticalMsg, QString(" << closed, return false"));
+        return;
+    }
+
     scene = new LvlScene(configs, LvlData);
     scene->opts = options;
 
@@ -171,15 +189,14 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
     scene->drawSpace();
     scene->buildAnimators();
 
-    if(options.animationEnabled) scene->startBlockAnimation();
-    setAutoUpdateTimer(31);
-
     if(!sceneCreated)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
     }
 
+    if(options.animationEnabled) scene->startBlockAnimation();
+    setAutoUpdateTimer(31);
 }
 
 
@@ -194,6 +211,24 @@ bool leveledit::save()
 
 bool leveledit::saveAs()
 {
+    SavingNotificationDialog* sav = new SavingNotificationDialog(false);
+    sav->setSavingTitle(tr("Please enter a level title for '%1'!").arg(userFriendlyCurrentFile()));
+    sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
+    QLineEdit* lvlNameBox = new QLineEdit();
+    sav->addUserItem(tr("Level title: "),lvlNameBox);
+    sav->setAdjustSize(400,150);
+    lvlNameBox->setText(LvlData.LevelName);
+    if(sav->exec() == QDialog::Accepted){
+        LvlData.LevelName = lvlNameBox->text();
+        lvlNameBox->deleteLater();
+        sav->deleteLater();
+        if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+            return false;
+        }
+    }else{
+        return false;
+    }
+
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
         (isUntitled)?GlobalSettings::savePath+QString("/")+curFile:curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
     if (fileName.isEmpty())
@@ -315,11 +350,6 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
          progress.setMinimumDuration(500);
          //progress.setCancelButton(0);
 
-//    QTimer *timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT( xxx::processEvents() ) );
-//    timer->start(1);
-
-
     if(! DrawObjects(progress) )
     {
         LvlData.modified = false;
@@ -329,14 +359,8 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-//    timer->stop();
-//    delete timer;
-
     if( !progress.wasCanceled() )
         progress.close();
-
-    ui->graphicsView->verticalScrollBar()->setValue(265+LvlData.sections[0].size_bottom-602);
-    ui->graphicsView->horizontalScrollBar()->setValue(330+LvlData.sections[0].size_left);
 
     QApplication::restoreOverrideCursor();
 
@@ -360,17 +384,26 @@ void leveledit::documentWasModified()
 bool leveledit::maybeSave()
 {
     if (LvlData.modified) {
-    QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
-                     tr("'%1' has been modified.\n"
-                        "Do you want to save your changes?")
-                     .arg(userFriendlyCurrentFile()),
-                     QMessageBox::Save | QMessageBox::Discard
-             | QMessageBox::Cancel);
-        if (ret == QMessageBox::Save)
-            return save();
-        else if (ret == QMessageBox::Cancel)
+        SavingNotificationDialog* sav = new SavingNotificationDialog(true);
+        sav->setSavingTitle(tr("'%1' has been modified.\n"
+                               "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
+        sav->setWindowTitle(userFriendlyCurrentFile()+tr(" not saved"));
+        QLineEdit* lvlNameBox = new QLineEdit();
+        sav->addUserItem(tr("Level title: "),lvlNameBox);
+        sav->setAdjustSize(400,150);
+        lvlNameBox->setText(LvlData.LevelName);
+        if(sav->exec() == QDialog::Accepted){
+            LvlData.LevelName = lvlNameBox->text();
+            lvlNameBox->deleteLater();
+            sav->deleteLater();
+            if(sav->savemode == SavingNotificationDialog::SAVE_SAVE){
+                return save();
+            }else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+                return false;
+            }
+        }else{
             return false;
+        }
     }
 
     return true;

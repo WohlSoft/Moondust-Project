@@ -37,6 +37,7 @@ npcedit *MainWindow::createNPCChild()
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                  520,640);
 
+    ui->centralWidget->updateGeometry();
  /*   connect(child, SIGNAL(copyAvailable(bool)),
             cutAct, SLOT(setEnabled(bool)));
     connect(child, SIGNAL(copyAvailable(bool)),
@@ -65,6 +66,9 @@ leveledit *MainWindow::createLvlChild()
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                              800, 610);
     levelWindowP->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
+    levelWindowP->updateGeometry();
+    levelWindowP->update();
+    ui->centralWidget->updateGeometry();
 
     return child;
 }
@@ -86,6 +90,9 @@ WorldEdit *MainWindow::createWldChild()
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                              800, 610);
     levelWindowP->setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
+    levelWindowP->updateGeometry();
+    levelWindowP->update();
+    ui->centralWidget->updateGeometry();
 
     return child;
 }

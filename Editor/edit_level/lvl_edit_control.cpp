@@ -66,9 +66,9 @@ void leveledit::ResetPosition()
     LvlData.sections[LvlData.CurSection].PositionX =
             LvlData.sections[LvlData.CurSection].size_left;
     LvlData.sections[LvlData.CurSection].PositionY =
-            LvlData.sections[LvlData.CurSection].size_bottom-602;
+            LvlData.sections[LvlData.CurSection].size_bottom-ui->graphicsView->height()+25;
 
-    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-602, false, QPoint(-10,10));
+    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-this->height()+25, false, QPoint(-10,10));
 }
 
 void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
@@ -182,7 +182,7 @@ void leveledit::changeCursor(int mode)
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Erasing);
         break;
-    case 2:    // place New item
+    case 2:    // place New item [any modes (single, square, line)]
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::CrossCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);

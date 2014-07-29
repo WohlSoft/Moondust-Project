@@ -32,6 +32,7 @@
 
 #include "../file_formats/file_formats.h"
 
+#include "../common_features/item_rectangles.h"
 
 QPoint sourcePos=QPoint(0,0);
 int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
@@ -161,6 +162,11 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
             default:
                 MainWinConnect::pMainWin->on_cancelResize_clicked();
             }
+        }
+        if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare || EditingMode == MODE_Line){
+            item_rectangles::clearArray();
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            return;
         }
             //setSectionResizer(false, false);
         break;
@@ -338,6 +344,7 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 if(contextMenuOpened) return;
 
+WriteToLog(QtDebugMsg, QString("Placing mode %1").arg(EditingMode));
     switch(EditingMode)
     {
         case MODE_PlacingNew:
@@ -368,6 +375,7 @@ if(contextMenuOpened) return;
                 return;
             }
 
+            WriteToLog(QtDebugMsg, QString("Square mode %1").arg(EditingMode));
             if(cursor){
                 drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
                                                   LvlPlacingItems::gridSz,
@@ -381,6 +389,33 @@ if(contextMenuOpened) return;
 
                 QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
                 ((QGraphicsRectItem *)cursor)->setRect(0,0, hs.width(), hs.height());
+            }
+
+            QGraphicsScene::mousePressEvent(mouseEvent);
+            return;
+            break;
+        }
+        case MODE_Line:
+        {
+            if( mouseEvent->buttons() & Qt::RightButton )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+            }
+
+            WriteToLog(QtDebugMsg, QString("Line mode %1").arg(EditingMode));
+
+            if(cursor){
+                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                                                  LvlPlacingItems::gridSz,
+                                                  LvlPlacingItems::gridOffset));
+                //cursor->setPos( drawStartPos );
+                cursor->setVisible(true);
+
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       LvlPlacingItems::gridSz,
+                                       LvlPlacingItems::gridOffset);
+                ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
             }
 
             QGraphicsScene::mousePressEvent(mouseEvent);
@@ -483,8 +518,36 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
                             ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
                             );
+
+                if(((placingItem==PLC_Block)&&(!LvlPlacingItems::sizableBlock))||(placingItem==PLC_BGO))
+                {
+                item_rectangles::drawMatrix(this, QRect (((QGraphicsRectItem *)cursor)->x(),
+                                                        ((QGraphicsRectItem *)cursor)->y(),
+                                                        ((QGraphicsRectItem *)cursor)->rect().width(),
+                                                        ((QGraphicsRectItem *)cursor)->rect().height()),
+                                            QSize(LvlPlacingItems::bgoW, LvlPlacingItems::bgoH)
+                                            );
+                }
+
                 }
             }
+            break;
+        }
+    case MODE_Line:
+        {
+            if(cursor)
+            {
+                if(cursor->isVisible())
+                {
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                                       LvlPlacingItems::gridSz,
+                                       LvlPlacingItems::gridOffset);
+
+                ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
+
+                }
+            }
+            break;
         }
     case MODE_Resizing:
         {
@@ -609,6 +672,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                 plSqBlock.blocks.push_back(LvlPlacingItems::blockSet);
                             }
                         }
+                        item_rectangles::clearArray();
                         if(plSqBlock.blocks.size() > 0)
                         {
                             addPlaceHistory(plSqBlock);
@@ -644,11 +708,101 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             plSqBgo.bgo.push_back(LvlPlacingItems::bgoSet);
                         }
                     }
+                    item_rectangles::clearArray();
                     if(plSqBgo.bgo.size() > 0)
                     {
                         addPlaceHistory(plSqBgo);
                         //restart Animation
                     }
+                }
+            }
+            LvlData->modified = true;
+
+            cursor->hide();
+        }
+        break;
+        }
+    case MODE_Line:
+        {
+
+        if(cursor)
+        {
+
+            // /////////// Don't draw with zero width or height //////////////
+            if( ((QGraphicsLineItem *)cursor)->line().p1() == ((QGraphicsLineItem *)cursor)->line().p2() )
+            {
+                cursor->hide();
+                break;
+            }
+            // ///////////////////////////////////////////////////////////////
+
+            switch(placingItem)
+            {
+            case PLC_Block:
+                {
+
+//                    long x = cursor->scenePos().x();
+//                    long y = cursor->scenePos().y();
+//                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
+//                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
+//                    int repWidth = width/LvlPlacingItems::blockSet.w;
+//                    int repHeight = height/LvlPlacingItems::blockSet.h;
+
+//                    LevelData plSqBlock;
+//                    for(int i = 0; i < repWidth; i++){
+//                        for(int j = 0; j < repHeight; j++){
+//                            LvlPlacingItems::blockSet.x = x + i * LvlPlacingItems::blockSet.w;
+//                            LvlPlacingItems::blockSet.y = y + j * LvlPlacingItems::blockSet.h;
+
+//                            LvlData->blocks_array_id++;
+
+//                            LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
+
+//                            LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+//                            placeBlock(LvlPlacingItems::blockSet, true);
+//                            plSqBlock.blocks.push_back(LvlPlacingItems::blockSet);
+//                        }
+//                    }
+//                    if(plSqBlock.blocks.size() > 0)
+//                    {
+//                        addPlaceHistory(plSqBlock);
+//                        //restart Animation
+//                        //if(opts.animationEnabled) stopAnimation();
+//                        //if(opts.animationEnabled) startBlockAnimation();
+
+//                    }
+                    break;
+                }
+            case PLC_BGO:
+                {
+//                    long x = cursor->scenePos().x();
+//                    long y = cursor->scenePos().y();
+//                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
+//                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
+//                    int repWidth = width/LvlPlacingItems::bgoW;
+//                    int repHeight = height/LvlPlacingItems::bgoH;
+
+//                    LevelData plSqBgo;
+//                    for(int i = 0; i < repWidth; i++){
+//                        for(int j = 0; j < repHeight; j++){
+//                            LvlPlacingItems::bgoSet.x = x + i * LvlPlacingItems::bgoW;
+//                            LvlPlacingItems::bgoSet.y = y + j * LvlPlacingItems::bgoH;
+
+//                            LvlData->bgo_array_id++;
+
+//                            LvlPlacingItems::bgoSet.array_id = LvlData->bgo_array_id;
+
+//                            LvlData->bgo.push_back(LvlPlacingItems::bgoSet);
+//                            placeBGO(LvlPlacingItems::bgoSet, true);
+//                            plSqBgo.bgo.push_back(LvlPlacingItems::bgoSet);
+//                        }
+//                    }
+//                    if(plSqBgo.bgo.size() > 0)
+//                    {
+//                        addPlaceHistory(plSqBgo);
+//                        //restart Animation
+//                    }
+                break;
                 }
             }
 
@@ -1080,6 +1234,33 @@ void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 void LvlScene::placeItemUnderCursor()
 {
     bool wasPlaced=false;
+
+    if(LvlPlacingItems::overwriteMode)
+    {   //remove all colliaded items before placing
+        QGraphicsItem * xxx;
+        while( (xxx=itemCollidesWith(cursor)) != NULL )
+        {
+            if(xxx->data(0).toString()=="Block")
+            {
+                ((ItemBlock *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="BGO")
+            {
+                ((ItemBGO *)xxx)->removeFromArray();
+                delete xxx;
+            }
+            else
+            if(xxx->data(0).toString()=="NPC")
+            {
+                ((ItemNPC *)xxx)->removeFromArray();
+                delete xxx;
+            }
+        }
+    }
+
+
     if( itemCollidesWith(cursor) )
     {
         return;
@@ -1639,6 +1820,12 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         setSectionResizer(false, false);
         disableMoveItems=true;
         break;
+    case MODE_Line:
+        resetCursor();
+        setSectionResizer(false, false);
+        DrawMode=true;
+        break;
+
     case MODE_Selecting:
     default:
         resetCursor();

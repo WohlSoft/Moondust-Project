@@ -227,7 +227,7 @@ void MainWindow::on_WLD_PROPS_AlwaysVis_clicked(bool checked)
         QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(0).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->alwaysVisible(checked);
@@ -253,25 +253,29 @@ void MainWindow::on_WLD_PROPS_GameStart_clicked(bool checked)
         QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(0).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.gamestart = checked;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_GAMESTARTPOINT, QVariant(checked));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_LVLFile_textEdited(const QString &arg1)
+//void MainWindow::on_WLD_PROPS_LVLFile_textEdited(const QString &arg1)
+void MainWindow::on_WLD_PROPS_LVLFile_editingFinished()
 {
     if(wld_tools_lock) return;
 
+    if(!ui->WLD_PROPS_LVLFile->isModified()) return;
+    ui->WLD_PROPS_LVLFile->setModified(false);
+
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.lvlfile = arg1;
+        WldPlacingItems::LevelSet.lvlfile = ui->WLD_PROPS_LVLFile->text();
     }
     else
     if (activeChildWindow()==3)
@@ -280,25 +284,29 @@ void MainWindow::on_WLD_PROPS_LVLFile_textEdited(const QString &arg1)
         QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(0).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.lvlfile = arg1;
+                ((ItemLevel*)item)->levelData.lvlfile = ui->WLD_PROPS_LVLFile->text();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_LEVELFILE, QVariant(ui->WLD_PROPS_LVLFile->text()));
     }
 
 }
 
-void MainWindow::on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1)
+//void MainWindow::on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1)
+void MainWindow::on_WLD_PROPS_LVLTitle_editingFinished()
 {
     if(wld_tools_lock) return;
 
+    if(!ui->WLD_PROPS_LVLTitle->isModified()) return;
+    ui->WLD_PROPS_LVLTitle->setModified(false);
+
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.title = arg1;
+        WldPlacingItems::LevelSet.title = ui->WLD_PROPS_LVLTitle->text();
     }
     else
     if (activeChildWindow()==3)
@@ -307,14 +315,14 @@ void MainWindow::on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1)
         QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(0).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.title = arg1;
+                ((ItemLevel*)item)->levelData.title = ui->WLD_PROPS_LVLTitle->text();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_LEVELTITLE, QVariant(ui->WLD_PROPS_LVLTitle->text()));
     }
 }
 
@@ -333,14 +341,14 @@ void MainWindow::on_WLD_PROPS_EnterTo_valueChanged(int arg1)
         QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
         foreach(QGraphicsItem * item, items)
         {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
+            if(item->data(0).toString()=="LEVEL")
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
                 ((ItemLevel*)item)->levelData.entertowarp = arg1;
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_DOORID, QVariant(arg1));
     }
 
 }
@@ -361,7 +369,8 @@ void MainWindow::on_WLD_PROPS_LVLBrowse_clicked()
     if( levelList.exec() == QDialog::Accepted )
     {
         ui->WLD_PROPS_LVLFile->setText(levelList.SelectedFile);
-        on_WLD_PROPS_LVLFile_textEdited(levelList.SelectedFile);
+        ui->WLD_PROPS_LVLFile->setModified(true);
+        on_WLD_PROPS_LVLFile_editingFinished();
 
         QRegExp lvlext = QRegExp("*.lvl");
         lvlext.setPatternSyntax(QRegExp::Wildcard);
@@ -384,7 +393,8 @@ void MainWindow::on_WLD_PROPS_LVLBrowse_clicked()
         if(!getLevelHead.LevelName.isEmpty())
         {
             ui->WLD_PROPS_LVLTitle->setText( getLevelHead.LevelName );
-            on_WLD_PROPS_LVLTitle_textEdited( getLevelHead.LevelName );
+            ui->WLD_PROPS_LVLTitle->setModified(true);
+            on_WLD_PROPS_LVLTitle_editingFinished();
         }
     }
 
@@ -412,7 +422,7 @@ void MainWindow::on_WLD_PROPS_ExitTop_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBYTOP, QVariant(index-1));
     }
 
 }
@@ -439,7 +449,7 @@ void MainWindow::on_WLD_PROPS_ExitLeft_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBYLEFT, QVariant(index-1));
     }
 
 }
@@ -466,7 +476,7 @@ void MainWindow::on_WLD_PROPS_ExitRight_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBYRIGHT, QVariant(index-1));
     }
 
 }
@@ -493,19 +503,54 @@ void MainWindow::on_WLD_PROPS_ExitBottom_currentIndexChanged(int index)
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_PATHBYBOTTOM, QVariant(index-1));
     }
 
 
 }
 
-void MainWindow::on_WLD_PROPS_GotoX_textEdited(const QString &arg1)
+//void MainWindow::on_WLD_PROPS_GotoX_textEdited(const QString &arg1)
+void MainWindow::on_WLD_PROPS_GotoX_editingFinished()
 {
     if(wld_tools_lock) return;
 
+    if(!ui->WLD_PROPS_GotoX->isModified()) return;
+    ui->WLD_PROPS_GotoX->setModified(false);
+
     if(wlvlPtr<0)
     {
-        WldPlacingItems::LevelSet.gotox = (arg1.isEmpty())? -1 : arg1.toInt();
+        WldPlacingItems::LevelSet.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
+    }
+    else
+    if (activeChildWindow()==3)
+    {
+        WorldData selData;
+        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
+        foreach(QGraphicsItem * item, items)
+        {
+            if(item->data(0).toString()=="LEVEL")
+            {
+                selData.levels.push_back(((ItemLevel *) item)->levelData);
+                ((ItemLevel*)item)->levelData.gotox = (ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt();
+                ((ItemLevel*)item)->arrayApply();
+            }
+        }
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_GOTOX, QVariant((ui->WLD_PROPS_GotoX->text().isEmpty())? -1 : ui->WLD_PROPS_GotoX->text().toInt()));
+    }
+
+}
+
+//void MainWindow::on_WLD_PROPS_GotoY_textEdited(const QString &arg1)
+void MainWindow::on_WLD_PROPS_GotoY_editingFinished()
+{
+    if(wld_tools_lock) return;
+
+    if(!ui->WLD_PROPS_GotoY->isModified()) return;
+    ui->WLD_PROPS_GotoY->setModified(false);
+
+    if(wlvlPtr<0)
+    {
+        WldPlacingItems::LevelSet.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
     }
     else
     if (activeChildWindow()==3)
@@ -517,38 +562,11 @@ void MainWindow::on_WLD_PROPS_GotoX_textEdited(const QString &arg1)
             if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
             {
                 selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.gotox = (arg1.isEmpty())? -1 : arg1.toInt();
+                ((ItemLevel*)item)->levelData.gotoy = (ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt();
                 ((ItemLevel*)item)->arrayApply();
             }
         }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
-    }
-
-}
-
-void MainWindow::on_WLD_PROPS_GotoY_textEdited(const QString &arg1)
-{
-    if(wld_tools_lock) return;
-
-    if(wlvlPtr<0)
-    {
-        WldPlacingItems::LevelSet.gotoy = (arg1.isEmpty())? -1 : arg1.toInt();
-    }
-    else
-    if (activeChildWindow()==3)
-    {
-        WorldData selData;
-        QList<QGraphicsItem *> items = activeWldEditWin()->scene->selectedItems();
-        foreach(QGraphicsItem * item, items)
-        {
-            if(item->data(0).toString()=="LEVEL")/*&&((item->data(2).toInt()==blockPtr))*/
-            {
-                selData.levels.push_back(((ItemLevel *) item)->levelData);
-                ((ItemLevel*)item)->levelData.gotoy = (arg1.isEmpty())? -1 : arg1.toInt();
-                ((ItemLevel*)item)->arrayApply();
-            }
-        }
-        //activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_SLIPPERY, QVariant(checked));
+        activeWldEditWin()->scene->addChangeSettingsHistory(selData, WldScene::SETTING_GOTOY, QVariant((ui->WLD_PROPS_GotoY->text().isEmpty())? -1 : ui->WLD_PROPS_GotoY->text().toInt()));
     }
 }
 

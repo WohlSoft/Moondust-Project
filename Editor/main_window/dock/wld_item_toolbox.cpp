@@ -97,6 +97,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     unsigned int tableRows=0;
     unsigned int tableCols=0;
 
+    WriteToLog(QtDebugMsg, "WorldTools -> Table size");
     //get Table size
     foreach(obj_w_tile tileItem, configs.main_wtiles )
     {
@@ -104,10 +105,12 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
         if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
     }
 
+    WriteToLog(QtDebugMsg, "WorldTools -> set size");
     ui->WLD_TilesList->setRowCount(tableRows);
     ui->WLD_TilesList->setColumnCount(tableCols);
     ui->WLD_TilesList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
+    WriteToLog(QtDebugMsg, "WorldTools -> Table of tiles");
     foreach(obj_w_tile tileItem, configs.main_wtiles )
     {
             if(tileItem.animated)
@@ -120,7 +123,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
         QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.row, tileItem.col);
 
-        if (!Titem || Titem->text().isEmpty())
+        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
             Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
@@ -136,6 +139,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
         }
     }
 
+    WriteToLog(QtDebugMsg, "WorldTools -> List of sceneries");
     foreach(obj_w_scenery sceneItem, configs.main_wscene)
     {
             if(sceneItem.animated)
@@ -158,6 +162,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     tableRows=0;
     tableCols=0;
 
+    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size");
     //get Table size
     foreach(obj_w_path pathItem, configs.main_wpaths )
     {
@@ -165,10 +170,12 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
         if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
     }
 
+    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size define");
     ui->WLD_PathsList->setRowCount(tableRows);
     ui->WLD_PathsList->setColumnCount(tableCols);
     ui->WLD_PathsList->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
 
+    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths");
     foreach(obj_w_path pathItem, configs.main_wpaths )
     {
             if(pathItem.animated)
@@ -181,7 +188,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
         QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.row, pathItem.col);
 
-        if (!Titem || Titem->text().isEmpty())
+        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
             Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
@@ -197,6 +204,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
         }
     }
 
+    WriteToLog(QtDebugMsg, "WorldTools -> List of levels");
     foreach(obj_w_level levelItem, configs.main_wlevels)
     {
             if((configs.marker_wlvl.path==levelItem.id)||
@@ -219,6 +227,7 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
             ui->WLD_LevelList->addItem( item );
     }
 
+    WriteToLog(QtDebugMsg, "WorldTools -> List of musics");
     foreach(obj_music musicItem, configs.main_music_wld)
     {
             item = new QListWidgetItem();
@@ -238,10 +247,11 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     lock_Wgrp=false;
     lock_Wcat=false;
 
-    updateFilters();
+    //updateFilters();
 
     ui->menuNew->setEnabled(true);
     ui->actionNew->setEnabled(true);
+    WriteToLog(QtDebugMsg, "WorldTools -> done");
 }
 
 
@@ -264,6 +274,10 @@ void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
        WldPlacingItems::fillingMode = false;
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
+
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
@@ -295,6 +309,10 @@ void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
 
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
+
        activeWldEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
 //       LvlItemProps(1,FileFormats::dummyLvlBlock(),
@@ -323,6 +341,10 @@ void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
        WldPlacingItems::fillingMode = false;
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
+
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
 
@@ -353,6 +375,10 @@ void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(true);
 
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(true);
+
        activeWldEditWin()->scene->setItemPlacer(3, item->data(3).toInt() );
 
        WldItemProps(0, WldPlacingItems::LevelSet, true);
@@ -379,6 +405,10 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
        WldPlacingItems::fillingMode = false;
        ui->actionSquareFill->setChecked(false);
        ui->actionSquareFill->setEnabled(false);
+
+       WldPlacingItems::lineMode = false;
+       ui->actionLine->setChecked(false);
+       ui->actionLine->setEnabled(false);
 
        activeWldEditWin()->scene->setItemPlacer(4, item->data(3).toInt() );
 

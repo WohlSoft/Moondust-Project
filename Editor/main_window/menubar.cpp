@@ -130,9 +130,9 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionLevelProp->setEnabled( (WinType==1) );
 
-    ui->actionExport_to_image->setEnabled( (WinType==1) );
+    ui->actionExport_to_image->setEnabled( (WinType==1) || (WinType==3) );
 
-    ui->actionReset_position->setEnabled( (WinType==1) );
+    ui->actionReset_position->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionGo_to_Section->setEnabled( (WinType==1) );
 
     ui->actionSection_1->setEnabled( (WinType==1) );

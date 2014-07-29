@@ -58,6 +58,8 @@ public:
     static int lastWinType;
 
     static QMdiArea::ViewMode MainWindowView;
+    static QTabWidget::TabPosition LVLToolboxPos;
+    static QTabWidget::TabPosition WLDToolboxPos;
 
 };
 
