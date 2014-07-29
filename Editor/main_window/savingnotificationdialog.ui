@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string notr="true">SaveFile</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
@@ -69,7 +69,7 @@
      <item>
       <widget class="QPushButton" name="button_Cancle">
        <property name="text">
-        <string>Cancle</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>

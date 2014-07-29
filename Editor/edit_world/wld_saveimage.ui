@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>285</width>
-    <height>257</height>
+    <height>281</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -140,7 +140,7 @@ Bottom:____</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="6" column="0" colspan="2">
     <widget class="QCheckBox" name="HideMusBoxes">
      <property name="text">
       <string>Hide music boxes</string>
