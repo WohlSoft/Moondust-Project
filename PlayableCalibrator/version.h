@@ -17,24 +17,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "about.h"
-#include "ui_about.h"
-#include "../version.h"
+#include "../pge_version.h" //Global Project version file
 
-about::about(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::about)
-{
-    ui->setupUi(this);
-    ui->about1->setText(ui->about1->text().arg(_FILE_VERSION).arg(_FILE_RELEASE));
-}
+#ifndef EDITOR_VERSION_H
+#define EDITOR_VERSION_H
 
-about::~about()
-{
-    delete ui;
-}
+//Version of this program
+#define _FILE_VERSION "0.5.0"
+#define _FILE_RELEASE " Alpha"
 
-void about::on_pushButton_clicked()
-{
-    close();
-}
+#define _VF1 0
+#define _VF2 5
+#define _VF3 0
+#define _VF4 0
+
+#define _FILE_DESC "Playble Character Sprite Calibrator"
+
+#define _INTERNAL_NAME "pge_calibrator"
+
+#ifdef _WIN32
+	#define _ORIGINAL_NAME "pge_calibrator.exe" // for Windows platforms
+#else
+	#define _ORIGINAL_NAME "pge_calibrator" // for any other platforms
+#endif
+
+//Uncomment this for enable detal logging
+//#define DEBUG
+
+#endif

@@ -49,7 +49,8 @@ HEADERS += \
     libs/EasyBMP/EasyBMP.h \
     libs/EasyBMP/EasyBMP_BMP.h \
     libs/EasyBMP/EasyBMP_DataStructures.h \
-    libs/EasyBMP/EasyBMP_VariousBMPutilities.h
+    libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
+    version.h
 
 RESOURCES += \
     _resources/lazyfix_tool.qrc

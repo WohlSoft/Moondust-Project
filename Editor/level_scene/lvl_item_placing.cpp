@@ -43,8 +43,8 @@ long        LvlPlacingItems::npcGfxOffsetY=0;
 long        LvlPlacingItems::npcGrid=0;
 LevelBlock  LvlPlacingItems::blockSet=FileFormats::dummyLvlBlock();
 LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
-long        LvlPlacingItems::bgoW = 0;
-long        LvlPlacingItems::bgoH = 0;
+long        LvlPlacingItems::itemW = 0;
+long        LvlPlacingItems::itemH = 0;
 
 LevelWater  LvlPlacingItems::waterSet=FileFormats::dummyLvlWater();
 
@@ -159,8 +159,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 setSquareDrawer(); return;
             }
 
-            LvlPlacingItems::bgoW = LvlPlacingItems::blockSet.w;
-            LvlPlacingItems::bgoH = LvlPlacingItems::blockSet.h;
+            LvlPlacingItems::itemW = LvlPlacingItems::blockSet.w;
+            LvlPlacingItems::itemH = LvlPlacingItems::blockSet.h;
 
             //Square fill mode
             if(LvlPlacingItems::fillingMode)
@@ -262,8 +262,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         long w = tImg.width();
         long h = tImg.height()/( (pConfigs->main_bgo[j].animated)?pConfigs->main_bgo[j].frames:1);
 
-        LvlPlacingItems::bgoW = w;
-        LvlPlacingItems::bgoH = h;
+        LvlPlacingItems::itemW = w;
+        LvlPlacingItems::itemH = h;
 
         //Square fill mode
         if(LvlPlacingItems::fillingMode)
@@ -388,6 +388,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                     ( LvlPlacingItems::npcGfxOffsetX2 *
                       ((LvlPlacingItems::npcSet.direct==0)?-1:LvlPlacingItems::npcSet.direct))),
                     LvlPlacingItems::npcGfxOffsetY );
+
+        LvlPlacingItems::itemW = mergedSet.width;
+        LvlPlacingItems::itemH = mergedSet.height;
 
         cursor->setData(0, "NPC");
         cursor->setData(1, QString::number(itemID));

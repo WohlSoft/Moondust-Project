@@ -60,6 +60,8 @@ void WorldEdit::ExportingReady() //slot
         long th, tw;
 
         bool proportion;
+        bool hideMusic;
+        bool hidePathLevels;
         QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
@@ -78,6 +80,8 @@ void WorldEdit::ExportingReady() //slot
         else return;
 
         proportion = ExportImage.saveProportion;
+        hideMusic =  ExportImage.hideMusBoxes;
+        hidePathLevels =  ExportImage.hidePaths;
 
         if((imgSize.width()<0)||(imgSize.height()<0))
             return;
@@ -107,7 +111,8 @@ void WorldEdit::ExportingReady() //slot
 
         qApp->processEvents();
         if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
-        //if(ExportImage.hidePaths()) scene->hideWarpsAndDoors(false);
+        if(hideMusic) scene->hideMusicBoxes(false);
+        if(hidePathLevels) scene->hidePathAndLevels(false);
 
         if(!progress.wasCanceled()) progress.setValue(10);
         qApp->processEvents();
@@ -142,8 +147,11 @@ void WorldEdit::ExportingReady() //slot
         if(!progress.wasCanceled()) progress.setValue(90);
 
         qApp->processEvents();
+        if(hideMusic) scene->hideMusicBoxes(true);
+        if(hidePathLevels) scene->hidePathAndLevels(true);
+
         if(scene->opts.animationEnabled) scene->startAnimation(); // Restart animation
-        //if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
+
 
         if(!progress.wasCanceled()) progress.setValue(100);
         if(!progress.wasCanceled())
