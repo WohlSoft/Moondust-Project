@@ -4213,16 +4213,20 @@ Daten könnten fehlerhaft sein!</translation>
     <name>WLD_SetPoint</name>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="14"/>
-        <source>Dialog</source>
+        <source>Selecting point on the world map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wld_point_dialog/wld_setpoint.ui" line="55"/>
-        <source>Current Point: </source>
-        <translation>Aktuelle Position</translation>
+        <location filename="../wld_point_dialog/wld_setpoint.ui" line="59"/>
+        <source>Current Point:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wld_point_dialog/wld_setpoint.ui" line="112"/>
+        <source>Current Point: </source>
+        <translation type="vanished">Aktuelle Position</translation>
+    </message>
+    <message>
+        <location filename="../wld_point_dialog/wld_setpoint.ui" line="106"/>
         <source>Note: For scroll on the map, use the mousewheel. With pressed ALT key you can scroll horisontal</source>
         <translation>Achtung: Mausrad nutzen um zu scrollen. Mit der ALT Taste gedrückt kann man horinzontal scrollen</translation>
     </message>
@@ -4480,12 +4484,12 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
         <translation>Weltkarte</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="164"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="172"/>
         <source>Untitled %1</source>
         <translation>Unbennant %1</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="179"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="187"/>
         <source>Cannot create world file:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -4495,72 +4499,72 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
 </translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="239"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="247"/>
         <source>Save As</source>
         <translation>Speichern unter</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="251"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="259"/>
         <source>File save error</source>
         <translation>Schreibfehler</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="252"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="260"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>Kann Datei %1 nicht schreiben:
 %2.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="291"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="299"/>
         <source>Read file error</source>
         <translation>Lesefehler</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="292"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="300"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Kann Datei %1 nicht lesen:
 %2.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="178"/>
-        <location filename="../edit_world/wld_files_io.cpp" line="306"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="186"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="314"/>
         <source>Configurations not loaded</source>
         <translation>Konnte Konfiguartion nicht laden</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="85"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="89"/>
         <source>Export selected area to image</source>
         <translation>Exportiere ausgewählter Bereich zu Bild</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="89"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="93"/>
         <source>PNG Image (*.png)</source>
         <translation>PNG Bild (*.png)</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="95"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="99"/>
         <source>Saving section image...</source>
         <translation>Speichere Bereich als Bild...</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="96"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="100"/>
         <source>Please wait...</source>
         <translation>Bitte Warten...</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="221"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="229"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation>Bitte gib einen Episodentitel für &apos;%1&apos; ein!</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="222"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="230"/>
         <source>Saving </source>
         <translation>Speichere </translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="224"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="232"/>
         <source>Episode Title: </source>
         <translation>Episodentitel:</translation>
     </message>
@@ -4574,23 +4578,23 @@ Bitte Überprüfe ob die Konfiguationsdatein (*.INI-Datein)/SMBX Ordner mit dein
 </translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="331"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="339"/>
         <source>Loading World map data</source>
         <translation>Lade Weltkartendaten</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="377"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="385"/>
         <source>Episode title: </source>
         <translation>Episodentitel:</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="95"/>
-        <location filename="../edit_world/wld_files_io.cpp" line="331"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="99"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="339"/>
         <source>Abort</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="307"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="315"/>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -4600,7 +4604,7 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
 </translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="332"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="340"/>
         <source>Loading World data</source>
         <translation>Lade Weltkartendaten</translation>
     </message>
@@ -4609,12 +4613,12 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
         <translation type="obsolete">Laden der Level-Daten</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="375"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="383"/>
         <source> not saved</source>
         <translation> nicht gespeichert</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="373"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="381"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; wurde verändert.
