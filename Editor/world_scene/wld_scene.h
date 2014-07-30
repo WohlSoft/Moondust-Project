@@ -127,7 +127,9 @@ public:
 
     void startAnimation();
     void stopAnimation();
-    void hideWarpsAndDoors(bool visible);
+    //void hideWarpsAndDoors(bool visible);
+    void hideMusicBoxes(bool visible);
+    void hidePathAndLevels(bool visible);
 
     void setLocked(int type, bool lock);
 
