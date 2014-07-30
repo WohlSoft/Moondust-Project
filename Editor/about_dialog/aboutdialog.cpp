@@ -25,7 +25,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
     ui(new Ui::aboutDialog)
 {
     ui->setupUi(this);
-    ui->About1->setText(ui->About1->text().arg(_VERSION).arg(_RELEASE));
+    ui->About1->setText(ui->About1->text().arg(_FILE_VERSION).arg(_FILE_RELEASE));
 }
 
 aboutDialog::~aboutDialog()
