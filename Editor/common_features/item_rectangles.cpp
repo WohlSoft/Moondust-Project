@@ -36,6 +36,30 @@ void item_rectangles::drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize sma
     }
 }
 
+void item_rectangles::drawLine(QGraphicsScene *scene, QLine lineItem, QSize smallRect)
+{
+
+    //TEMPLATE!!!!!
+//    clearArray();
+
+//    //long x = bigRect.x();
+//    //long y = bigRect.y();
+//    //long width = lineItem.dx();
+//    //long height = lineItem.dy();
+//    //int repWidth = width/smallRect.width();
+//    //int repHeight = height/smallRect.height();
+//    QBrush brush = QBrush(Qt::darkYellow);
+
+//    //long x1 = x + i * smallRect.width();
+//    //long y1 = y + j * smallRect.height();
+//    rectArray.push_back(scene->addRect(0, 0, smallRect.width(),
+//                                       smallRect.height(),
+//                                       QPen(Qt::yellow, 2), brush));
+//    rectArray.last()->setPos(x1, y1);
+//    rectArray.last()->setOpacity(0.7);
+//    rectArray.last()->setZValue(7000);
+}
+
 
 QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
 {
@@ -52,15 +76,15 @@ QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
     if(a <= 90){
         if(a < relA/2){
             tarA = 0;
-        }else if(a < 90-relA/2){
+        }else if(a <= 90-(90-relA)/2 ){
             tarA = relA;
         }else{
             tarA = 90;
         }
     }else if(a <= 180){
-        if(a <= 90+relA/2 ){
+        if(a <= 90+(90-relA)/2 ){
             tarA = 90;
-        }else if(a < 180-relA/2 ){
+        }else if(a <= 180-relA/2 ){
             tarA = 180-relA;
         }else{
             tarA = 180;
@@ -68,13 +92,13 @@ QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
     }else if(a <= 270){
         if(a < 180+(relA/2)){
             tarA = 180;
-        }else if(a >= 180+relA/2){
+        }else if(a <= 270-(90-relA)/2){
             tarA = 180+relA;
         }else{
             tarA = 270;
         }
     }else{
-        if(a <= 270+(relA/2) ){
+        if(a <= 270+(90-relA)/2 ){
             tarA = 270;
         }else if(a < 360-relA/2){
             tarA = 360-relA;
