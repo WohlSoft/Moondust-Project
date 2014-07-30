@@ -207,6 +207,9 @@ public:
     void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
 
+    void resetResizers();
+    void applyResizers();
+
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
         enum HistoryType{
@@ -524,7 +527,6 @@ public:
     QString getHistorySettingText(SettingSubType subType);
     // ////////////////////////////////////////////
     void openProps();
-
 
 public slots:
     void selectionChanged();

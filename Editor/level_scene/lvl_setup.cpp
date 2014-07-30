@@ -28,29 +28,6 @@
 
 #include "../common_features/mainwinconnect.h"
 
-void LvlScene::resetResizers()
-{
-    if(pResizer!=NULL )
-    {
-        switch(pResizer->type)
-        {
-        case 3:
-            setPhysEnvResizer(NULL, false, false);
-            break;
-        case 2:
-            setBlockResizer(NULL, false, false);
-            break;
-        case 1:
-            setEventSctSizeResizer(-1, false, false);
-            break;
-        case 0:
-        default:
-            setSectionResizer(false, false);
-            MainWinConnect::pMainWin->on_cancelResize_clicked();
-        }
-    }
-}
-
 
 void LvlScene::SwitchEditingMode(int EdtMode)
 {

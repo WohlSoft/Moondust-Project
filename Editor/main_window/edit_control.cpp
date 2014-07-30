@@ -51,20 +51,14 @@ void MainWindow::on_actionSelect_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
     {
-       activeLvlEditWin()->changeCursor(0);
-       activeLvlEditWin()->scene->EditingMode = 0;
-       activeLvlEditWin()->scene->disableMoveItems=false;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       activeLvlEditWin()->scene->DrawMode=false;
+       activeLvlEditWin()->changeCursor(leveledit::MODE_Selecting);
+       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Selecting);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionSelect->isChecked()))
     {
-       activeWldEditWin()->changeCursor(0);
-       activeWldEditWin()->scene->EditingMode = 0;
-       activeWldEditWin()->scene->disableMoveItems=false;
-       activeWldEditWin()->scene->EraserEnabled = false;
-       activeWldEditWin()->scene->DrawMode=false;
+       activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
+       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
     }
 }
 
@@ -79,20 +73,14 @@ void MainWindow::on_actionSelectOnly_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionSelectOnly->isChecked()))
     {
-       activeLvlEditWin()->changeCursor(0);
-       activeLvlEditWin()->scene->EditingMode = 0;
-       activeLvlEditWin()->scene->disableMoveItems=true;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       activeLvlEditWin()->scene->DrawMode=false;
+       activeLvlEditWin()->changeCursor(leveledit::MODE_Selecting);
+       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_SelectingOnly);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionSelectOnly->isChecked()))
     {
-       activeWldEditWin()->changeCursor(0);
-       activeWldEditWin()->scene->EditingMode = 0;
-       activeWldEditWin()->scene->disableMoveItems=true;
-       activeWldEditWin()->scene->EraserEnabled = false;
-       activeWldEditWin()->scene->DrawMode=false;
+       activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
+       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SelectingOnly);
     }
 }
 
@@ -106,20 +94,14 @@ void MainWindow::on_actionEriser_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
     {
-       activeLvlEditWin()->changeCursor(1);
-       activeLvlEditWin()->scene->EditingMode = 1;
-       activeLvlEditWin()->scene->disableMoveItems=false;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       activeLvlEditWin()->scene->DrawMode=false;
+       activeLvlEditWin()->changeCursor(leveledit::MODE_Erasing);
+       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Erasing);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionEriser->isChecked()))
     {
-       activeWldEditWin()->changeCursor(1);
-       activeWldEditWin()->scene->EditingMode = 1;
-       activeWldEditWin()->scene->disableMoveItems=false;
-       activeWldEditWin()->scene->EraserEnabled = false;
-       activeWldEditWin()->scene->DrawMode=false;
+       activeWldEditWin()->changeCursor(WorldEdit::MODE_Erasing);
+       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Erasing);
     }
 
 }
@@ -135,21 +117,15 @@ void MainWindow::on_actionHandScroll_triggered()
     if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
     {
        activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(-1);
-       activeLvlEditWin()->scene->EditingMode = 0;
-       activeLvlEditWin()->scene->disableMoveItems=false;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       activeLvlEditWin()->scene->DrawMode=false;
+       activeLvlEditWin()->changeCursor(leveledit::MODE_HandDrag);
+       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Selecting);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionHandScroll->isChecked()))
     {
        activeWldEditWin()->scene->clearSelection();
-       activeWldEditWin()->changeCursor(-1);
-       activeWldEditWin()->scene->EditingMode = 0;
-       activeWldEditWin()->scene->disableMoveItems=false;
-       activeWldEditWin()->scene->EraserEnabled = false;
-       activeWldEditWin()->scene->DrawMode=false;
+       activeWldEditWin()->changeCursor(WorldEdit::MODE_HandDrag);
+       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
     }
 }
 
@@ -163,7 +139,7 @@ void MainWindow::on_actionSetFirstPlayer_triggered()
 
     if((activeChildWindow()==1))
     {
-        activeLvlEditWin()->changeCursor(2);
+        activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
         activeLvlEditWin()->scene->setItemPlacer( 5, 0 );
     }
 
@@ -178,7 +154,7 @@ void MainWindow::on_actionSetSecondPlayer_triggered()
 
     if((activeChildWindow()==1))
     {
-        activeLvlEditWin()->changeCursor(2);
+        activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
         activeLvlEditWin()->scene->setItemPlacer( 5, 1 );
     }
 
@@ -193,7 +169,7 @@ void MainWindow::on_actionDrawWater_triggered()
 
     if((activeChildWindow()==1))
     {
-        activeLvlEditWin()->changeCursor(3);
+        activeLvlEditWin()->changeCursor(leveledit::MODE_DrawSquares);
         activeLvlEditWin()->scene->setItemPlacer( 3, 0 );
     }
 }
@@ -207,7 +183,7 @@ void MainWindow::on_actionDrawSand_triggered()
 
     if((activeChildWindow()==1))
     {
-        activeLvlEditWin()->changeCursor(3);
+        activeLvlEditWin()->changeCursor(leveledit::MODE_DrawSquares);
         activeLvlEditWin()->scene->setItemPlacer( 3, 1 );
     }
 }
@@ -226,11 +202,9 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
             leveledit * edit = activeLvlEditWin();
 
             edit->scene->clearSelection();
-            edit->changeCursor(2);
-            edit->scene->EditingMode = 2;
-            edit->scene->disableMoveItems=false;
-            edit->scene->DrawMode=true;
-            edit->scene->EraserEnabled = false;
+            edit->changeCursor(leveledit::MODE_PlaceItem);
+            activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+
             LvlPlacingItems::fillingMode = checked;
             LvlPlacingItems::lineMode = false;
             ui->actionLine->setChecked(false);
@@ -260,11 +234,9 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
             WorldEdit * edit = activeWldEditWin();
 
             edit->scene->clearSelection();
-            edit->changeCursor(2);
-            edit->scene->EditingMode = 2;
-            edit->scene->disableMoveItems=false;
-            edit->scene->DrawMode=true;
-            edit->scene->EraserEnabled = false;
+            edit->changeCursor(WorldEdit::MODE_PlaceItem);
+            activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+
             WldPlacingItems::fillingMode = checked;
             WldPlacingItems::lineMode = false;
             ui->actionLine->setChecked(false);
@@ -308,11 +280,9 @@ void MainWindow::on_actionLine_triggered(bool checked)
         leveledit * edit = activeLvlEditWin();
 
         edit->scene->clearSelection();
-        edit->changeCursor(2);
-        edit->scene->EditingMode = 2;
-        edit->scene->disableMoveItems=false;
-        edit->scene->DrawMode=true;
-        edit->scene->EraserEnabled = false;
+        edit->changeCursor(leveledit::MODE_PlaceItem);
+        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+
         LvlPlacingItems::fillingMode = false;
         LvlPlacingItems::lineMode = checked;
         ui->actionSquareFill->setChecked(false);
@@ -343,11 +313,9 @@ void MainWindow::on_actionLine_triggered(bool checked)
         WorldEdit * edit = activeWldEditWin();
 
         edit->scene->clearSelection();
-        edit->changeCursor(2);
-        edit->scene->EditingMode = 2;
-        edit->scene->disableMoveItems=false;
-        edit->scene->DrawMode=true;
-        edit->scene->EraserEnabled = false;
+        edit->changeCursor(WorldEdit::MODE_PlaceItem);
+        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+
         WldPlacingItems::fillingMode = false;
         WldPlacingItems::lineMode = checked;
         ui->actionSquareFill->setChecked(false);
@@ -396,43 +364,12 @@ void MainWindow::on_actionResizeApply_triggered()
 {
     if (activeChildWindow()==1)
     {
-        LvlScene * edit = activeLvlEditWin()->scene;
-        ItemResizer * pResizer = edit->pResizer;
-        if(pResizer!=NULL )
-        {
-            switch(pResizer->type)
-            {
-            case 3:
-                edit->setPhysEnvResizer(NULL, false, true);
-                break;
-            case 2:
-                edit->setBlockResizer(NULL, false, true);
-                break;
-            case 1:
-                edit->setEventSctSizeResizer(-1, false, true);
-                break;
-            case 0:
-            default:
-                on_applyResize_clicked();
-            }
-        }
+        activeLvlEditWin()->scene->applyResizers();
     }
     else
     if (activeChildWindow()==3)
     {
-        WldScene * edit = activeWldEditWin()->scene;
-        ItemResizer * pResizer = edit->pResizer;
-        if(pResizer!=NULL )
-        {
-            switch(pResizer->type)
-            {
-            case 0:
-                edit->setScreenshotSelector(false, true);
-                break;
-            default:
-                break;
-            }
-        }
+        activeWldEditWin()->scene->applyResizers();
     }
     ui->ResizingToolbar->setVisible(false);
 }
@@ -441,43 +378,12 @@ void MainWindow::on_actionResizeCancel_triggered()
 {
     if (activeChildWindow()==1)
     {
-        LvlScene * edit = activeLvlEditWin()->scene;
-        ItemResizer * pResizer = edit->pResizer;
-        if(pResizer!=NULL )
-        {
-            switch(pResizer->type)
-            {
-            case 3:
-                edit->setPhysEnvResizer(NULL, false, false);
-                break;
-            case 2:
-                edit->setBlockResizer(NULL, false, false);
-                break;
-            case 1:
-                edit->setEventSctSizeResizer(-1, false, false);
-                break;
-            case 0:
-            default:
-                on_cancelResize_clicked();
-            }
-        }
+        activeLvlEditWin()->scene->resetResizers();;
     }
     else
     if (activeChildWindow()==3)
     {
-        WldScene * edit = activeWldEditWin()->scene;
-        ItemResizer * pResizer = edit->pResizer;
-        if(pResizer!=NULL )
-        {
-            switch(pResizer->type)
-            {
-            case 0:
-                edit->setScreenshotSelector(false, false);
-                break;
-            default:
-                break;
-            }
-        }
+        activeWldEditWin()->scene->resetResizers();
     }
     ui->ResizingToolbar->setVisible(false);
 }

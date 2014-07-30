@@ -175,11 +175,14 @@ public:
 
     // //////////////////////Resizer////////////////////////
     ItemResizer * pResizer; //reisizer pointer
+    void resetResizers();
+    void applyResizers();
     //void setSectionResizer(bool enabled, bool accept=false);
     //void setEventSctSizeResizer(long event, bool enabled, bool accept=false);
     //void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     //void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
     void setScreenshotSelector(bool enabled, bool accept = false);
+
     QRectF captutedSize;
 
     // ////////////HistoryManager///////////////////
@@ -309,7 +312,6 @@ public:
     QString getHistorySettingText(SettingSubType subType);
 
     void openProps();
-    void resetResizers();
 
 public slots:
     void selectionChanged();

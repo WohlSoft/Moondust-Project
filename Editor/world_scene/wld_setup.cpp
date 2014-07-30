@@ -27,22 +27,6 @@
 
 #include "../main_window/global_settings.h"
 
-
-void WldScene::resetResizers()
-{
-    if(pResizer!=NULL )
-    {
-        switch(pResizer->type)
-        {
-        case 0:
-            setScreenshotSelector(false, false);
-            break;
-        default:
-            break;
-        }
-    }
-}
-
 ////////////////////////////////////Animator////////////////////////////////
 void WldScene::startAnimation()
 {

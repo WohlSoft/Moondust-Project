@@ -193,6 +193,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             cursor->setOpacity( 0.8 );
             cursor->setVisible(false);
             cursor->setEnabled(true);
+
+            SwitchEditingMode(MODE_PlacingNew);
+
             break;
         }
     case 1: //bgos
@@ -294,6 +297,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         placingItem=PLC_BGO;
         LvlPlacingItems::bgoSet.id = itemID;
+
+        SwitchEditingMode(MODE_PlacingNew);
         break;
     }
     case 2: //npcs
@@ -458,7 +463,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         break;
         default: break;
     }
-    EditingMode = MODE_PlacingNew;
+
+    SwitchEditingMode(MODE_PlacingNew);
     DrawMode=true;
     contextMenuOpened=false;
 }
@@ -505,7 +511,7 @@ void LvlScene::setSquareDrawer()
     cursor->setVisible(false);
     cursor->setEnabled(true);
 
-    EditingMode = MODE_DrawSquare;
+    SwitchEditingMode(MODE_DrawSquare);
     DrawMode=true;
 }
 
@@ -536,8 +542,7 @@ void LvlScene::setLineDrawer()
     cursor->setVisible(false);
     cursor->setEnabled(true);
 
-    EditingMode = MODE_Line;
-    DrawMode=true;
+    SwitchEditingMode(MODE_Line);
 }
 
 
