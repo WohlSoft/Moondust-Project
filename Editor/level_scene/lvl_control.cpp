@@ -543,7 +543,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                            LvlPlacingItems::gridSz,
                                            LvlPlacingItems::gridOffset);
 
-                    QLineF s = snapLine(QLineF(drawStartPos.x(),drawStartPos.y(), (qreal)hs.x(), (qreal)hs.y()),(qreal)LvlPlacingItems::bgoW, (qreal)LvlPlacingItems::bgoH);
+                    QLineF s = snapLine(QLineF(drawStartPos.x(),drawStartPos.y(), (qreal)hs.x(), (qreal)hs.y()),(qreal)LvlPlacingItems::itemW, (qreal)LvlPlacingItems::itemH);
 
                     QPoint hw = applyGrid( s.p2().toPoint(),
                                         LvlPlacingItems::gridSz,
