@@ -554,6 +554,7 @@ private:
     void removeItemUnderCursor();
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
+    QLineF snapLine(QLineF mouseLine, qreal widthOfBox, qreal heightOfBox);
 
     void setSectionBG(LevelSection section);
 
