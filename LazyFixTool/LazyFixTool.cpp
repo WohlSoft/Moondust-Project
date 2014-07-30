@@ -28,6 +28,7 @@
 #include <QTextStream>
 #include <QtDebug>
 #include <QFileInfo>
+#include "version.h"
 
 #include "libs/EasyBMP/EasyBMP.h"
 extern "C"{
@@ -378,7 +379,7 @@ int main(int argc, char *argv[])
     bool walkSubDirs=false;
 
     std::cout<<"============================================================================\n";
-    std::cout<<"Lazily-made image masks fix tool by Wohlstand\n";
+    std::cout<<"Lazily-made image masks fix tool by Wohlstand. Version "<< _FILE_VERSION << _FILE_RELEASE << "\n";
     std::cout<<"============================================================================\n";
     std::cout<<"This program is distributed under the GNU GPLv3 license\n";
     std::cout<<"============================================================================\n";

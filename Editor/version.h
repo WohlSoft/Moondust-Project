@@ -33,8 +33,6 @@
 
 #define _FILE_DESC "Platformer Game Engine - Editor"
 
-#define _PRODUCT_NAME "Platformer Game Engine"
-
 #define _INTERNAL_NAME "pge_editor"
 
 #ifdef _WIN32
