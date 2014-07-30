@@ -18,7 +18,7 @@ void DevConsole::show()
 void DevConsole::log(const QString &logText, const QString &channel)
 {
     if(currentDevConsole)
-        currentDevConsole->log(logText, channel);
+        currentDevConsole->logToConsole(logText, channel);
 }
 
 DevConsole::DevConsole(QWidget *parent) :
