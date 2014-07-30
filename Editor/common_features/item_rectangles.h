@@ -11,6 +11,7 @@ public:
     static void clearArray();
     static void drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize smallRect);
 
+    static QLineF snapLine(QLineF mouseLine, QSizeF Box);
 };
 
 #endif // ITEM_RECTANGLES_H

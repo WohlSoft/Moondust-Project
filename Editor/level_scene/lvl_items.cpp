@@ -29,8 +29,6 @@
 
 #include "../common_features/grid.h"
 
-#include "../common_features/mainwinconnect.h"
-
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {
@@ -38,57 +36,6 @@ QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
         return Grid::applyGrid(source, gridSize, gridOffset);
     else
         return source;
-}
-
-QLineF LvlScene::snapLine(QLineF mouseLine, qreal widthOfBox, qreal heightOfBox)
-{
-    qreal a = mouseLine.angle();
-    qreal relA = QLineF(0,0, widthOfBox, -heightOfBox).angle();
-    qreal tarA = 0;
-
-    MainWinConnect::pMainWin->statusBar()->showMessage(QString("Angle %1, relative %2").arg(qRound(a)).arg(relA), 5000);
-
-    if(a == 0 ||
-            a == 90 ||
-            a == 180 ||
-            a == 270)
-        return QLineF::fromPolar(mouseLine.length(),a).translated(mouseLine.p1());
-
-    if(a <= 90){
-        if(a < relA/2){
-            tarA = 0;
-        }else if(a < 90-relA/2){
-            tarA = relA;
-        }else{
-            tarA = 90;
-        }
-    }else if(a <= 180){
-        if(a <= 90+relA/2 ){
-            tarA = 90;
-        }else if(a < 180-relA/2 ){
-            tarA = 180-relA;
-        }else{
-            tarA = 180;
-        }
-    }else if(a <= 270){
-        if(a < 180+(relA/2)){
-            tarA = 180;
-        }else if(a < 270-relA/2){
-            tarA = 270-relA;
-        }else{
-            tarA = 270;
-        }
-    }else{
-        if(a <= 270+(relA/2) ){
-            tarA = 270;
-        }else if(a < 360-relA/2){
-            tarA = 360-relA;
-        }else{
-            tarA = 360;
-        }
-    }
-
-    return QLineF::fromPolar(mouseLine.length(),tarA).translated(mouseLine.p1());;
 }
 
 
