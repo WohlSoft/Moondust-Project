@@ -160,7 +160,8 @@ SOURCES += main.cpp\
     common_features/item_rectangles.cpp \
     edit_world/wld_saveimage.cpp \
     level_scene/lvl_resizers.cpp \
-    world_scene/wld_resizers.cpp
+    world_scene/wld_resizers.cpp \
+    dev_console/devconsole.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -223,7 +224,8 @@ HEADERS  += mainwindow.h \
     wld_point_dialog/wld_setpoint.h \
     common_features/item_rectangles.h \
     edit_world/wld_saveimage.h \
-    version.h
+    version.h \
+    dev_console/devconsole.h
 
 FORMS    += \
     mainwindow.ui \
@@ -244,7 +246,8 @@ FORMS    += \
     edit_world/world_edit.ui \
     main_window/savingnotificationdialog.ui \
     wld_point_dialog/wld_setpoint.ui \
-    edit_world/wld_saveimage.ui
+    edit_world/wld_saveimage.ui \
+    dev_console/devconsole.ui
 
 RC_FILE = _resources/pge_editor.rc
 
