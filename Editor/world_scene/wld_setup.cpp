@@ -27,6 +27,22 @@
 
 #include "../main_window/global_settings.h"
 
+
+void WldScene::resetResizers()
+{
+    if(pResizer!=NULL )
+    {
+        switch(pResizer->type)
+        {
+        case 0:
+            setScreenshotSelector(false, false);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 ////////////////////////////////////Animator////////////////////////////////
 void WldScene::startAnimation()
 {
@@ -253,3 +269,68 @@ void WldScene::setLocked(int type, bool lock)
 
 }
 
+
+
+
+
+
+void WldScene::SwitchEditingMode(int EdtMode)
+{
+    //int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
+                     // 3 - drawing water/sand zone, 4 - placing from Buffer
+    //bool EraserEnabled;
+    //bool PasteFromBuffer;
+
+    //bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
+
+    //bool disableMoveItems;
+
+    //bool contextMenuOpened;
+    EraserEnabled=false;
+    PasteFromBuffer=false;
+    DrawMode=false;
+    disableMoveItems=false;
+
+    switch(EdtMode)
+    {
+    case MODE_PlacingNew:
+        DrawMode=true;
+        resetResizers();
+
+        break;
+    case MODE_DrawSquare:
+        resetResizers();
+        DrawMode=true;
+        break;
+
+    case MODE_Resizing:
+        resetCursor();
+        DrawMode=true;
+        disableMoveItems=true;
+        break;
+
+    case MODE_PasteFromClip:
+        resetCursor();
+        resetResizers();
+        disableMoveItems=true;
+        break;
+
+    case MODE_Erasing:
+        resetCursor();
+        resetResizers();
+        break;
+
+    case MODE_SelectingOnly:
+        resetCursor();
+        resetResizers();
+        disableMoveItems=true;
+        break;
+    case MODE_Selecting:
+    default:
+        resetCursor();
+        resetResizers();
+        break;
+    }
+    EditingMode = EdtMode;
+
+}
