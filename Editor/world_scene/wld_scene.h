@@ -309,7 +309,7 @@ public:
     QString getHistorySettingText(SettingSubType subType);
 
     void openProps();
-
+    void resetResizers();
 
 public slots:
     void selectionChanged();
