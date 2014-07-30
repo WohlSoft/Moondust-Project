@@ -32,16 +32,78 @@ void item_rectangles::drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize sma
             rectArray.push_back(scene->addRect(0, 0, smallRect.width(), smallRect.height(), QPen(Qt::yellow, 2), brush));
             rectArray.last()->setPos(x1, y1);
             rectArray.last()->setOpacity(0.7);
-            rectArray.last()->setZValue(7000);
+            rectArray.last()->setZValue(10000);
         }
     }
 }
 
-void item_rectangles::drawLine(QGraphicsScene *scene, QLine lineItem, QSize smallRect)
+void item_rectangles::drawLine(QGraphicsScene *scene, QLineF lineItem, QSize smallRect)
 {
+    clearArray();
 
-    //TEMPLATE!!!!!
-//    clearArray();
+    int h_dir=0;
+    int v_dir=0;
+
+    int angle = qRound(lineItem.angle());
+
+    //Calculate direction
+    switch(angle)
+    {
+        case 0:
+            h_dir=1;
+            break;
+        case 90:
+            v_dir=-1;
+            break;
+        case 180:
+            h_dir=-1;
+            break;
+        case 270:
+            v_dir=1;
+            break;
+        default:
+            if((angle>0)&&(angle<90))
+            {
+                h_dir=1;
+                v_dir=-1;
+            }
+            else if((angle>90)&&(angle<180))
+            {
+                h_dir=-1;
+                v_dir=-1;
+            }
+            else if((angle>180)&&(angle<270))
+            {
+                h_dir=-1;
+                v_dir=1;
+            }
+            else if((angle>270)&&(angle<360))
+            {
+                h_dir=1;
+                v_dir=1;
+            }
+        break;
+    }
+
+    long x = lineItem.p1().x();
+    long y = lineItem.p1().y();
+
+    long tW = fabs(qRound(lineItem.dx())); //targetWidth
+    long tH = fabs(qRound(lineItem.dy())); //targetHeight
+
+        QBrush brush = QBrush(Qt::darkYellow);
+
+    for(int k=0,l=0, i=0, j=0; (i<=tW)&&(j<=tH); i+=smallRect.width()*fabs(h_dir), j+=smallRect.height()*fabs(v_dir),k++,l++ )
+    {
+        long x1 = x + k * smallRect.width()*h_dir;
+        long y1 = y + l * smallRect.height()*v_dir;
+        rectArray.push_back(scene->addRect(0, 0, smallRect.width(),
+                                           smallRect.height(),
+                                           QPen(Qt::yellow, 2), brush));
+        rectArray.last()->setPos(x1, y1);
+        rectArray.last()->setOpacity(0.7);
+        rectArray.last()->setZValue(10000);
+    }
 
 //    //long x = bigRect.x();
 //    //long y = bigRect.y();
@@ -49,16 +111,6 @@ void item_rectangles::drawLine(QGraphicsScene *scene, QLine lineItem, QSize smal
 //    //long height = lineItem.dy();
 //    //int repWidth = width/smallRect.width();
 //    //int repHeight = height/smallRect.height();
-//    QBrush brush = QBrush(Qt::darkYellow);
-
-//    //long x1 = x + i * smallRect.width();
-//    //long y1 = y + j * smallRect.height();
-//    rectArray.push_back(scene->addRect(0, 0, smallRect.width(),
-//                                       smallRect.height(),
-//                                       QPen(Qt::yellow, 2), brush));
-//    rectArray.last()->setPos(x1, y1);
-//    rectArray.last()->setOpacity(0.7);
-//    rectArray.last()->setZValue(7000);
 }
 
 
