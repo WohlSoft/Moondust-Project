@@ -122,17 +122,7 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     case (Qt::Key_Enter):
     case (Qt::Key_Return):
 
-        if(pResizer!=NULL )
-        {
-            switch(pResizer->type)
-            {
-            case 0:
-                setScreenshotSelector(false, true);
-                break;
-            default:
-                break;
-            }
-        }
+        applyResizers();
             //setSectionResizer(false, true);
         break;
 

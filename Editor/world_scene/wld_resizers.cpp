@@ -28,6 +28,39 @@
 #include "../file_formats/file_formats.h"
 
 
+void WldScene::applyResizers()
+{
+    if(pResizer!=NULL )
+    {
+        switch(pResizer->type)
+        {
+        case 0:
+            setScreenshotSelector(false, true);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+
+void WldScene::resetResizers()
+{
+    if(pResizer!=NULL )
+    {
+        switch(pResizer->type)
+        {
+        case 0:
+            setScreenshotSelector(false, false);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+
+
 void WldScene::setScreenshotSelector(bool enabled, bool accept)
 {
     bool do_signal=false;

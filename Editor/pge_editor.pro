@@ -158,7 +158,9 @@ SOURCES += main.cpp\
     wld_point_dialog/wld_setpoint.cpp \
     level_scene/lvl_item_placing.cpp \
     common_features/item_rectangles.cpp \
-    edit_world/wld_saveimage.cpp
+    edit_world/wld_saveimage.cpp \
+    level_scene/lvl_resizers.cpp \
+    world_scene/wld_resizers.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

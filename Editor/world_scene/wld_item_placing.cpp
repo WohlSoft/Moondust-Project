@@ -513,8 +513,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 //        break;
         default: break;
     }
-    EditingMode = MODE_PlacingNew;
-    DrawMode=true;
+    SwitchEditingMode(MODE_PlacingNew);
     contextMenuOpened=false;
 }
 
@@ -542,8 +541,7 @@ void WldScene::setSquareDrawer()
     cursor->setVisible(false);
     cursor->setEnabled(true);
 
-    EditingMode = MODE_DrawSquare;
-    DrawMode=true;
+    SwitchEditingMode(MODE_DrawSquare);
 }
 
 void WldScene::setLineDrawer()
@@ -565,8 +563,8 @@ void WldScene::setLineDrawer()
     cursor->setVisible(false);
     cursor->setEnabled(true);
 
-    EditingMode = MODE_Line;
-    DrawMode=true;
+    SwitchEditingMode(MODE_Line);
+
 }
 
 

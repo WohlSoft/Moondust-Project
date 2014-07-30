@@ -145,7 +145,9 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     case (Qt::Key_Escape):
         if(!IsMoved)
             this->clearSelection();
+
         resetResizers();
+
         if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare || EditingMode == MODE_Line){
             item_rectangles::clearArray();
             MainWinConnect::pMainWin->on_actionSelect_triggered();
@@ -156,24 +158,7 @@ void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     case (Qt::Key_Enter):
     case (Qt::Key_Return):
 
-        if(pResizer!=NULL )
-        {
-            switch(pResizer->type)
-            {
-            case 3:
-                setPhysEnvResizer(NULL, false, true);
-                break;
-            case 2:
-                setBlockResizer(NULL, false, true);
-                break;
-            case 1:
-                setEventSctSizeResizer(-1, false, true);
-                break;
-            case 0:
-            default:
-                MainWinConnect::pMainWin->on_applyResize_clicked();
-            }
-        }
+        applyResizers();
             //setSectionResizer(false, true);
         break;
 
