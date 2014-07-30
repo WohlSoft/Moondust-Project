@@ -29,6 +29,9 @@ public:
     static long npcGfxOffsetX2;
     static long npcGfxOffsetY;
 
+    static long itemW;
+    static long itemH;
+
     static LevelBlock blockSet;
 
     static bool sizableBlock;
@@ -38,8 +41,6 @@ public:
     static bool overwriteMode;
 
     static LevelBGO bgoSet;
-    static long bgoW;
-    static long bgoH;
     static LevelWater waterSet;
 
     enum doorType{
