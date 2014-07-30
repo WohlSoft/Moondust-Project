@@ -1,4 +1,5 @@
 #include "item_rectangles.h"
+#include <qmath.h>
 
 QList<QGraphicsRectItem *> item_rectangles::rectArray;
 
@@ -67,25 +68,50 @@ QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
     qreal relA = QLineF(0,0, Box.width(), -Box.height()).angle();
     qreal tarA = 0;
 
-    if(a == 0 ||
-            a == 90 ||
-            a == 180 ||
-            a == 270)
-        return QLineF::fromPolar(mouseLine.length(),a).translated(mouseLine.p1());
+    bool isDiagonal=false;
+    bool isVertical=false;
 
+    if(a == 0)
+    {
+        tarA = a;
+        goto skipAngleCalculate;
+    }
+    else if(a == 90)
+    {
+        tarA = a;
+        isVertical=true;
+        goto skipAngleCalculate;
+    }
+    else if(a == 180)
+    {
+        tarA = a;
+        goto skipAngleCalculate;
+    }
+    else if(a == 270)
+    {
+        tarA = a;
+        isVertical=true;
+        goto skipAngleCalculate;
+    }
+
+    //Calculating target angle
     if(a <= 90){
         if(a < relA/2){
             tarA = 0;
         }else if(a <= 90-(90-relA)/2 ){
             tarA = relA;
+            isDiagonal=true;
         }else{
             tarA = 90;
+            isVertical=true;
         }
     }else if(a <= 180){
         if(a <= 90+(90-relA)/2 ){
             tarA = 90;
+            isVertical=true;
         }else if(a <= 180-relA/2 ){
             tarA = 180-relA;
+            isDiagonal=true;
         }else{
             tarA = 180;
         }
@@ -94,18 +120,31 @@ QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
             tarA = 180;
         }else if(a <= 270-(90-relA)/2){
             tarA = 180+relA;
+            isDiagonal=true;
         }else{
             tarA = 270;
+            isVertical=true;
         }
     }else{
         if(a <= 270+(90-relA)/2 ){
             tarA = 270;
+            isVertical=true;
         }else if(a < 360-relA/2){
             tarA = 360-relA;
+            isDiagonal=true;
         }else{
             tarA = 360;
         }
     }
 
-    return QLineF::fromPolar(mouseLine.length(),tarA).translated(mouseLine.p1());;
+
+    skipAngleCalculate:
+
+    qreal diagonalSize = qSqrt( qPow(Box.height(),2) + qPow(Box.width(),2) ); //get box diagonal size
+    qreal Lenght = mouseLine.length() -
+            ((isDiagonal)? qRound(mouseLine.length())%qRound(diagonalSize)   //Diagonal
+            : (isVertical ? qRound(mouseLine.length())%qRound(Box.height()): //Vertical
+              qRound(mouseLine.length())%qRound(Box.width()) ) );            //Horizontal
+
+    return QLineF::fromPolar(Lenght,tarA).translated(mouseLine.p1());;
 }
