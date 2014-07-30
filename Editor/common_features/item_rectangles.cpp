@@ -35,3 +35,53 @@ void item_rectangles::drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize sma
         }
     }
 }
+
+
+QLineF item_rectangles::snapLine(QLineF mouseLine, QSizeF Box)
+{
+    qreal a = mouseLine.angle();
+    qreal relA = QLineF(0,0, Box.width(), -Box.height()).angle();
+    qreal tarA = 0;
+
+    if(a == 0 ||
+            a == 90 ||
+            a == 180 ||
+            a == 270)
+        return QLineF::fromPolar(mouseLine.length(),a).translated(mouseLine.p1());
+
+    if(a <= 90){
+        if(a < relA/2){
+            tarA = 0;
+        }else if(a < 90-relA/2){
+            tarA = relA;
+        }else{
+            tarA = 90;
+        }
+    }else if(a <= 180){
+        if(a <= 90+relA/2 ){
+            tarA = 90;
+        }else if(a < 180-relA/2 ){
+            tarA = 180-relA;
+        }else{
+            tarA = 180;
+        }
+    }else if(a <= 270){
+        if(a < 180+(relA/2)){
+            tarA = 180;
+        }else if(a >= 180+relA/2){
+            tarA = 180+relA;
+        }else{
+            tarA = 270;
+        }
+    }else{
+        if(a <= 270+(relA/2) ){
+            tarA = 270;
+        }else if(a < 360-relA/2){
+            tarA = 360-relA;
+        }else{
+            tarA = 360;
+        }
+    }
+
+    return QLineF::fromPolar(mouseLine.length(),tarA).translated(mouseLine.p1());;
+}
