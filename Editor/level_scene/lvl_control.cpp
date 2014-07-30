@@ -525,7 +525,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                                         ((QGraphicsRectItem *)cursor)->y(),
                                                         ((QGraphicsRectItem *)cursor)->rect().width(),
                                                         ((QGraphicsRectItem *)cursor)->rect().height()),
-                                            QSize(LvlPlacingItems::bgoW, LvlPlacingItems::bgoH)
+                                            QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH)
                                             );
                 }
 
@@ -690,14 +690,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     long y = cursor->scenePos().y();
                     long width = ((QGraphicsRectItem *)cursor)->rect().width();
                     long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/LvlPlacingItems::bgoW;
-                    int repHeight = height/LvlPlacingItems::bgoH;
+                    int repWidth = width/LvlPlacingItems::itemW;
+                    int repHeight = height/LvlPlacingItems::itemH;
 
                     LevelData plSqBgo;
                     for(int i = 0; i < repWidth; i++){
                         for(int j = 0; j < repHeight; j++){
-                            LvlPlacingItems::bgoSet.x = x + i * LvlPlacingItems::bgoW;
-                            LvlPlacingItems::bgoSet.y = y + j * LvlPlacingItems::bgoH;
+                            LvlPlacingItems::bgoSet.x = x + i * LvlPlacingItems::itemW;
+                            LvlPlacingItems::bgoSet.y = y + j * LvlPlacingItems::itemH;
 
                             LvlData->bgo_array_id++;
 
