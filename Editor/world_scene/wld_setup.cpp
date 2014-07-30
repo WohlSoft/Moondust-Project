@@ -85,21 +85,34 @@ void WldScene::stopAnimation()
     update();
 }
 
-//void WldScene::hideWarpsAndDoors(bool visible)
-//{
-//    QMap<QString, LevelLayers> localLayers;
-//    for(int i = 0; i < WldData->layers.size(); ++i){
-//        localLayers[WldData->layers[i].name] = WldData->layers[i];
-//    }
+void WldScene::hideMusicBoxes(bool visible)
+{
+    foreach (QGraphicsItem* i, items())
+    {
+        if(i->data(0).toString()=="MUSICBOX"){
+            i->setVisible(visible);
+        }
+    }
+}
 
-//    foreach (QGraphicsItem* i, items()) {
-//        if(i->data(0).toString()=="Water"){
-//            i->setVisible(!localLayers[((ItemWater*)i)->waterData.layer].hidden && visible);
-//        }else if(i->data(0).toString()=="Door_exit" || i->data(0).toString()=="Door_enter"){
-//            i->setVisible(!localLayers[((ItemDoor*)i)->doorData.layer].hidden && visible);
-//        }
-//    }
-//}
+void WldScene::hidePathAndLevels(bool visible)
+{
+    foreach (QGraphicsItem* i, items())
+    {
+        if(i->data(0).toString()=="PATH")
+        {
+            i->setVisible(visible);
+        }
+        else
+        if(i->data(0).toString()=="LEVEL")
+        {
+            i->setVisible( visible ||
+                        ((ItemLevel)i).levelData.gamestart ||
+                        ((ItemLevel)i).levelData.alwaysVisible );
+        }
+    }
+}
+
 
 //void WldScene::applyLayersVisible()
 //{
