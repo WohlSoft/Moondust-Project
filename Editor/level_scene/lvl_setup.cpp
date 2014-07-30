@@ -58,6 +58,11 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         DrawMode=true;
         break;
 
+    case MODE_Line:
+        resetResizers();
+        DrawMode=true;
+        break;
+
     case MODE_Resizing:
         resetCursor();
         DrawMode=true;
@@ -79,10 +84,6 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         resetCursor();
         resetResizers();
         disableMoveItems=true;
-        break;
-    case MODE_Line:
-        resetResizers();
-        DrawMode=true;
         break;
 
     case MODE_Selecting:
