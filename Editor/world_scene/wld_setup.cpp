@@ -287,6 +287,11 @@ void WldScene::SwitchEditingMode(int EdtMode)
         DrawMode=true;
         break;
 
+    case MODE_Line:
+        resetResizers();
+        DrawMode=true;
+        break;
+
     case MODE_Resizing:
         resetCursor();
         DrawMode=true;

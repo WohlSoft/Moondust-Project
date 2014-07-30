@@ -372,11 +372,26 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(cursor->isVisible())
                 {
-                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                QPoint hs = applyGrid( mouseEvent->scenePos().toPoint(),
                                        WldPlacingItems::gridSz,
                                        WldPlacingItems::gridOffset);
 
-                ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
+                //((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
+
+                QLineF s = item_rectangles::snapLine(QLineF(drawStartPos.x(),drawStartPos.y(), (qreal)hs.x(), (qreal)hs.y()),
+                                                     QSizeF((qreal)WldPlacingItems::itemW, (qreal)WldPlacingItems::itemH) );
+
+                QPoint hw = applyGrid( s.p2().toPoint(),
+                                    WldPlacingItems::gridSz,
+                                    WldPlacingItems::gridOffset);
+
+                s.setP2(QPointF((qreal)hw.x(),(qreal)hw.y()));
+
+                ((QGraphicsLineItem *)cursor)->setLine(s);
+
+                item_rectangles::drawLine(this, s,
+                       QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
+                                            );
 
                 }
             }
@@ -584,6 +599,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
             // ///////////////////////////////////////////////////////////////
 
+            item_rectangles::clearArray();
             switch(placingItem)
             {
             case PLC_Tile:
@@ -592,7 +608,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
             case PLC_Scene:
                 {
-                break;
+                    break;
                 }
             }
 
