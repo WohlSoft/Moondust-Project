@@ -66,7 +66,8 @@ HEADERS  += calibrationmain.h \
     libs/giflib/gif_lib.h \
     libs/giflib/gif_lib_private.h \
     main/globals.h \
-    main/graphics.h
+    main/graphics.h \
+    version.h
 
 FORMS    += calibrationmain.ui \
     about/about.ui \

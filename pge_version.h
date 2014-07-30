@@ -33,6 +33,7 @@
 
 #define _COMPANY "Wohlhabend Network System"
 
+#define _PRODUCT_NAME "Platformer Game Engine"
 
 #ifdef _WIN64
 	#define OPERATION_SYSTEM "Windows"
