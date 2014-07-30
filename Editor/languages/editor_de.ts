@@ -71,29 +71,29 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="149"/>
         <source>View</source>
-        <translation type="unfinished">Ansicht</translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="155"/>
         <source>Level item Toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Level item Toolbox</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="161"/>
         <location filename="../main_window/appsettings.ui" line="197"/>
         <source>Display tabs horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontale Tabs</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="168"/>
         <location filename="../main_window/appsettings.ui" line="204"/>
         <source>Display tabs vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikale Tabs</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="191"/>
         <source>World item Toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Welt item Toolbox</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="215"/>
@@ -2417,7 +2417,7 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="7548"/>
         <source>Square Fill (Shift+S)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechteckfüller (Umschalt+S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7563"/>
@@ -2427,12 +2427,12 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="7575"/>
         <source>Apply (Enter)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anwenden (Enter)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7590"/>
         <source>Cancel (Esc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen (Esc)</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -2441,18 +2441,18 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="7605"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7608"/>
         <source>Line (Shift+D)</source>
-        <translation type="unfinished"></translation>
+        <translation>Linie (Umschalt+D)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7623"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weltkartensuche</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -3060,37 +3060,37 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../mainwindow.ui" line="1597"/>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
-        <translation type="unfinished">Benutzerdefiniert</translation>
+        <translation>Benutzerdefiniert</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1675"/>
         <source>Warp section</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="unfinished">Warp Bereich</translation>
+        <translation>Warp Bereich</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1725"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
-        <translation type="unfinished">Kein Zurück (deaktivert nach links gehen)</translation>
+        <translation>Kein Zurück (deaktivert nach links gehen)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2151"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keine Fahrzeuge</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2200"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation type="unfinished">NPC Zulassen</translation>
+        <translation>NPC Zulassen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2297"/>
         <source>Warp to</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation type="unfinished">Warp zu</translation>
+        <translation>Warp zu</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4903"/>
@@ -3240,7 +3240,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../mainwindow.ui" line="6035"/>
         <source>Exit program</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <translation type="unfinished">Beenden</translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6743"/>
@@ -3584,13 +3584,13 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../main_window/files_io.cpp" line="157"/>
         <source>Saving of file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere Datei...</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="158"/>
         <location filename="../main_window/files_io.cpp" line="204"/>
         <source>Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="176"/>
@@ -3601,7 +3601,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../main_window/files_io.cpp" line="203"/>
         <source>Saving of files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere Dateien...</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="258"/>
@@ -4059,17 +4059,17 @@ Datei: %1
     <message>
         <location filename="../main_window/savingnotificationdialog.ui" line="58"/>
         <source>Save</source>
-        <translation type="unfinished">Speichern</translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location filename="../main_window/savingnotificationdialog.ui" line="65"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwerfen</translation>
     </message>
     <message>
         <location filename="../main_window/savingnotificationdialog.ui" line="72"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -4219,12 +4219,12 @@ Daten könnten fehlerhaft sein!</translation>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="55"/>
         <source>Current Point: </source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuelle Position</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="112"/>
         <source>Note: For scroll on the map, use the mousewheel. With pressed ALT key you can scroll horisontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtung: Mausrad nutzen um zu scrollen. Mit der ALT Taste gedrückt kann man horinzontal scrollen</translation>
     </message>
 </context>
 <context>
@@ -4232,63 +4232,63 @@ Daten könnten fehlerhaft sein!</translation>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="14"/>
         <source>Export to image</source>
-        <translation type="unfinished">Export zu Bild</translation>
+        <translation>Export zu Bild</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="32"/>
         <source>Please, select target image size:</source>
-        <translation type="unfinished">Bitte Zielgröße wählen</translation>
+        <translation>Bitte Zielgröße wählen</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="42"/>
         <source>Height</source>
-        <translation type="unfinished">Höhe</translation>
+        <translation>Höhe</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiv, wird das Zielbild seine Proportion behalten&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiv, wird das Zielbild seine Proportion behalten&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="52"/>
         <source>Save proportion</source>
-        <translation type="unfinished">Speichere Größen</translation>
+        <translation>Speichere Größen</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="72"/>
         <source>Export selected rectangle to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporiere ausgew. Bereich zu Bild</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="82"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Das ist die &lt;span style=&quot; font-weight:600;&quot;&gt;Breite&lt;/span&gt; des Zielbilds. Das Zielbild wird auf diese Größe skaliert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Das ist die &lt;span style=&quot; font-weight:600;&quot;&gt;Breite&lt;/span&gt; des Zielbilds. Das Zielbild wird auf diese Größe skaliert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="85"/>
         <location filename="../edit_world/wld_saveimage.ui" line="111"/>
         <source> px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="108"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Das ist die &lt;span style=&quot; font-weight:600;&quot;&gt;Höhe&lt;/span&gt; des Zielbilds. Das Zielbild wird auf diese Größe skaliert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Das ist die &lt;span style=&quot; font-weight:600;&quot;&gt;Höhe&lt;/span&gt; des Zielbilds. Das Zielbild wird auf diese Größe skaliert.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="121"/>
         <source>Width</source>
-        <translation type="unfinished">Breite</translation>
+        <translation>Breite</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="139"/>
         <source>Hide all paths and levels like &quot;game already stated&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstecke alle Pfade, als würde das Spiel beginnen</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="146"/>
         <source>Hide music boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Verstecke Musikboxen</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.cpp" line="22"/>
@@ -4297,7 +4297,11 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</source>
-        <translation type="unfinished"></translation>
+        <translation>Wird exportiet als:
+Oben:	%1
+Links:	%2
+Rechts:	%3
+Unten:	%4</translation>
     </message>
 </context>
 <context>
@@ -4364,12 +4368,12 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1015"/>
         <source>Changed Worldsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Verändere Welteinstellung [%1]</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1016"/>
         <source>Changed Itemsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Verändere Itemeinstellung [%1]</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1018"/>
@@ -4380,92 +4384,92 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1025"/>
         <source>Always Visible</source>
-        <translation type="unfinished">Immer Sichtbar</translation>
+        <translation>Immer Sichtbar</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1026"/>
         <source>Big Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Großer Pfadhintergrund</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1027"/>
         <source>Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Charakter</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1028"/>
         <source>Door ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Tür ID</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1029"/>
         <source>Game start point</source>
-        <translation type="unfinished">Startpunkt</translation>
+        <translation>Startpunkt</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1030"/>
         <source>Goto X</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehe zu X</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1031"/>
         <source>Goto Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehe zu Y</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1032"/>
         <source>Hub styled world</source>
-        <translation type="unfinished"></translation>
+        <translation>Hub styled Welt</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1033"/>
         <source>Intro Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Intro Level</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1034"/>
         <source>Level file</source>
-        <translation type="unfinished">Level Datei</translation>
+        <translation>Level Datei</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1035"/>
         <source>Level title</source>
-        <translation type="unfinished">Level Titel</translation>
+        <translation>Level Titel</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1036"/>
         <source>Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfadhintergrund</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1037"/>
         <source>Exit at bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Unterer Ausgang</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1038"/>
         <source>Exit at left</source>
-        <translation type="unfinished"></translation>
+        <translation>Linker Ausgang</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1039"/>
         <source>Exit at right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechter Ausgang</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1040"/>
         <source>Exit at top</source>
-        <translation type="unfinished"></translation>
+        <translation>Oberer Ausgang</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1041"/>
         <source>Restart after fail</source>
-        <translation type="unfinished"></translation>
+        <translation>Starte Karte neu nach Spielers tod</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1042"/>
         <source>Total stars</source>
-        <translation type="unfinished"></translation>
+        <translation>Sterne insgesamt</translation>
     </message>
 </context>
 <context>
@@ -4485,7 +4489,10 @@ Bitte konventiere die kaputten Bilddateien und lade das Level neu.</translation>
         <source>Cannot create world file:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht Weltdatei erstellen:
+Weil Objektkonfiguation nicht geladen ist.
+Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und deine Objektkonfiguationen exsistieren.
+</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="239"/>
@@ -4525,37 +4532,37 @@ because object configurations are not loaded
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="85"/>
         <source>Export selected area to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportiere ausgewählter Bereich zu Bild</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="89"/>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished">PNG Bild (*.png)</translation>
+        <translation>PNG Bild (*.png)</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="95"/>
         <source>Saving section image...</source>
-        <translation type="unfinished">Speichere Bereich als Bild...</translation>
+        <translation>Speichere Bereich als Bild...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="96"/>
         <source>Please wait...</source>
-        <translation type="unfinished">Bitte Warten...</translation>
+        <translation>Bitte Warten...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="221"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte gib einen Episodentitel für &apos;%1&apos; ein!</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="222"/>
         <source>Saving </source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere </translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="224"/>
         <source>Episode Title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Episodentitel:</translation>
     </message>
     <message>
         <source>Cannot open level file %1:
@@ -4574,7 +4581,7 @@ Bitte Überprüfe ob die Konfiguationsdatein (*.INI-Datein)/SMBX Ordner mit dein
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="377"/>
         <source>Episode title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Episodentitel:</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="95"/>
@@ -4587,7 +4594,10 @@ Bitte Überprüfe ob die Konfiguationsdatein (*.INI-Datein)/SMBX Ordner mit dein
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht Weltdatei öffnen %1:
+Weil Objektkonfiguation nicht geladen ist.
+Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und deine Objektkonfiguationen exsistieren.
+</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="332"/>
@@ -4709,23 +4719,26 @@ Möchtest du die Änderungen speichern?</translation>
         <source>Cannot create level file:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht Leveldatei erstellen:
+Weil Objektkonfiguation nicht geladen ist.
+Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und deine Objektkonfiguationen exsistieren.
+</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="215"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte gib für einen Leveltitel für &apos;%1&apos; ein!</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="216"/>
         <source>Saving </source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere </translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="218"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="392"/>
         <source>Level title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Leveltitel: </translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="244"/>
