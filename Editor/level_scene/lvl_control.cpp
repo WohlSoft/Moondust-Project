@@ -457,9 +457,9 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->clearSelection();
             if(cursor)
             {
-                        cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
-                                                           QPoint(LvlPlacingItems::c_offset_x,
-                                                                  LvlPlacingItems::c_offset_y),
+                       cursor->setPos( QPointF(applyGrid( QPointF(mouseEvent->scenePos()-
+                                                           QPointF(LvlPlacingItems::c_offset_x,
+                                                                  LvlPlacingItems::c_offset_y)).toPoint(),
                                                          LvlPlacingItems::gridSz,
                                                          LvlPlacingItems::gridOffset)));
                        cursor->show();
@@ -521,6 +521,10 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     s.setP2(QPointF((qreal)hw.x(),(qreal)hw.y()));
 
                     ((QGraphicsLineItem *)cursor)->setLine(s);
+
+                    item_rectangles::drawLine(this, s,
+                           QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH)
+                                                );
 
                 }
             }
@@ -708,6 +712,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             // /////////// Don't draw with zero width or height //////////////
             if( ((QGraphicsLineItem *)cursor)->line().p1() == ((QGraphicsLineItem *)cursor)->line().p2() )
             {
+                item_rectangles::clearArray();
                 cursor->hide();
                 break;
             }
@@ -717,6 +722,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
             case PLC_Block:
                 {
+                      item_rectangles::clearArray();
 
 //                    long x = cursor->scenePos().x();
 //                    long y = cursor->scenePos().y();
@@ -752,6 +758,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
             case PLC_BGO:
                 {
+                      item_rectangles::clearArray();
 //                    long x = cursor->scenePos().x();
 //                    long y = cursor->scenePos().y();
 //                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
