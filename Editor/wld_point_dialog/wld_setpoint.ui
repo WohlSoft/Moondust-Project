@@ -7,11 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>818</width>
-    <height>680</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Selecting point on the world map</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../_resources/editor.qrc">
+    <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="2" rowspan="2">
@@ -52,7 +56,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Current Point: </string>
+      <string>Current Point:</string>
      </property>
     </widget>
    </item>
@@ -73,16 +77,6 @@
     <widget class="QLabel" name="y_point">
      <property name="text">
       <string notr="true">y_place</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3" rowspan="3">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -113,9 +107,21 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="3" rowspan="4">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../_resources/editor.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

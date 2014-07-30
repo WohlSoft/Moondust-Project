@@ -220,7 +220,8 @@ HEADERS  += mainwindow.h \
     main_window/savingnotificationdialog.h \
     wld_point_dialog/wld_setpoint.h \
     common_features/item_rectangles.h \
-    edit_world/wld_saveimage.h
+    edit_world/wld_saveimage.h \
+    version.h
 
 FORMS    += \
     mainwindow.ui \

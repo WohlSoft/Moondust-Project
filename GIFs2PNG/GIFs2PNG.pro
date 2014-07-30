@@ -38,3 +38,6 @@ RESOURCES += \
 
 OTHER_FILES += \
     _resources/gifs2png.rc
+
+HEADERS += \
+    version.h

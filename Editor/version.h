@@ -1,6 +1,5 @@
 /*
- * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
- * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
+ * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,24 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "about.h"
-#include "ui_about.h"
-#include "../version.h"
+#include "../pge_version.h" //Global Project version file
 
-about::about(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::about)
-{
-    ui->setupUi(this);
-    ui->about1->setText(ui->about1->text().arg(_FILE_VERSION).arg(_FILE_RELEASE));
-}
+#ifndef EDITOR_VERSION_H
+#define EDITOR_VERSION_H
 
-about::~about()
-{
-    delete ui;
-}
+//Version of this program
+#define _FILE_VERSION "0.1.2.3-dev"
+#define _FILE_RELEASE " Alpha"
 
-void about::on_pushButton_clicked()
-{
-    close();
-}
+#define _VF1 0
+#define _VF2 1
+#define _VF3 2
+#define _VF4 3
+
+
+#define _FILE_DESC "Platformer Game Engine - Editor"
+
+#define _INTERNAL_NAME "pge_editor"
+
+#ifdef _WIN32
+	#define _ORIGINAL_NAME "pge_editor.exe" // for Windows platforms
+#else
+	#define _ORIGINAL_NAME "pge_editor" // for any other platforms
+#endif
+
+//Uncomment this for enable detal logging
+//#define DEBUG
+
+#endif
