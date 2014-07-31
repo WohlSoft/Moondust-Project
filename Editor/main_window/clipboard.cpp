@@ -105,17 +105,15 @@ void MainWindow::on_actionPaste_triggered()
 
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->changeCursor(4);
-       activeLvlEditWin()->scene->EditingMode = 4;
-       activeLvlEditWin()->scene->EraserEnabled = false;
-       activeLvlEditWin()->scene->disableMoveItems=true;
+       activeLvlEditWin()->changeCursor(leveledit::MODE_Pasting);
+       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
 
        activeLvlEditWin()->scene->LvlBuffer = LvlBuffer;
     }
     else
     if (activeChildWindow()==3)
     {
-       activeWldEditWin()->changeCursor(4);
+       activeWldEditWin()->changeCursor(WorldEdit::MODE_Pasting);
        activeWldEditWin()->scene->EditingMode = 4;
        activeWldEditWin()->scene->EraserEnabled = false;
        activeWldEditWin()->scene->disableMoveItems=true;

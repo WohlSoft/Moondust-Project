@@ -35,9 +35,10 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item)
     //qreal betweenZ;
 
     QList<QGraphicsItem *> collisions = this->items(
-                item->pos().x(),item->pos().y(),
-                item->data(9).toReal(),item->data(10).toReal(),
-                Qt::IntersectsItemBoundingRect, Qt::AscendingOrder);
+                QRectF(item->scenePos().x()-10, item->scenePos().y()-10,
+                item->data(9).toReal()+20, item->data(10).toReal()+20 ),
+                Qt::IntersectsItemBoundingRect);
+
     //collidingItems(item, Qt::IntersectsItemBoundingRect);
     foreach (QGraphicsItem * it, collisions)
     {
@@ -68,7 +69,8 @@ QGraphicsItem * WldScene::itemCollidesWith(QGraphicsItem * item)
             { continue; }
             if( leftA >= rightB )
             { continue; }
-            return it;
+
+       return it; // Collision found!
     }
     return NULL;
 }

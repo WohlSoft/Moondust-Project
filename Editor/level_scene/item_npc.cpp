@@ -367,7 +367,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 {
                     selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                     ((ItemNPC *)SelItem)->removeFromArray();
-                    scene->removeItem(SelItem);
                     delete SelItem;
                     deleted = true;
                 }

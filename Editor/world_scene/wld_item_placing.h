@@ -44,6 +44,9 @@ public:
     static int gridSz;
     static QPoint gridOffset;
 
+    static QList<QPair<int, QVariant > > flags;
 };
+
+typedef QPair<int, QVariant > dataFlag_w;
 
 #endif // ITEM_PLACING_H

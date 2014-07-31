@@ -138,6 +138,8 @@ void MainWindow::on_actionReload_triggered()
 
 void MainWindow::on_actionExport_to_image_triggered()
 {
+    on_actionSelect_triggered();
+
     if(activeChildWindow()==1)
     {
         activeLvlEditWin()->ExportToImage_fn();

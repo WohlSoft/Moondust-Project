@@ -99,6 +99,7 @@ public:
     int placingItem;
     QGraphicsItem * cursor;
     void placeItemUnderCursor();
+    void placeItemsByRectArray();
     WorldData placingItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
@@ -127,7 +128,9 @@ public:
 
     void startAnimation();
     void stopAnimation();
-    void hideWarpsAndDoors(bool visible);
+    //void hideWarpsAndDoors(bool visible);
+    void hideMusicBoxes(bool visible);
+    void hidePathAndLevels(bool visible);
 
     void setLocked(int type, bool lock);
 
@@ -173,11 +176,14 @@ public:
 
     // //////////////////////Resizer////////////////////////
     ItemResizer * pResizer; //reisizer pointer
+    void resetResizers();
+    void applyResizers();
     //void setSectionResizer(bool enabled, bool accept=false);
     //void setEventSctSizeResizer(long event, bool enabled, bool accept=false);
     //void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     //void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
     void setScreenshotSelector(bool enabled, bool accept = false);
+
     QRectF captutedSize;
 
     // ////////////HistoryManager///////////////////
@@ -307,7 +313,6 @@ public:
     QString getHistorySettingText(SettingSubType subType);
 
     void openProps();
-
 
 public slots:
     void selectionChanged();
