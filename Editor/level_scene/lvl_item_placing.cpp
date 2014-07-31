@@ -65,7 +65,7 @@ bool LvlPlacingItems::fillingMode=false;
 bool LvlPlacingItems::lineMode=false;
 bool LvlPlacingItems::overwriteMode=false;
 
-QVector<dataFlag > LvlPlacingItems::flags;
+QList<QPair<int, QVariant > > LvlPlacingItems::flags;
 
 void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 {
@@ -164,33 +164,33 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::itemH = LvlPlacingItems::blockSet.h;
 
             LvlPlacingItems::flags.clear();
-            dataFlag flag;
+            QPair<int, QVariant > flag;
 
-                flag.key=0;
-                flag.data="Block";
+                flag.first=0;
+                flag.second="Block";
             LvlPlacingItems::flags.push_back(flag);
 
-                flag.key=1;
-                flag.data=QString::number(LvlPlacingItems::blockSet.id);
+                flag.first=1;
+                flag.second=QString::number(LvlPlacingItems::blockSet.id);
             LvlPlacingItems::flags.push_back(flag);
 
             if(pConfigs->main_block[j].sizable)
             {
-                flag.key=3;
-                flag.data = "sizable";
+                flag.first=3;
+                flag.second = "sizable";
             LvlPlacingItems::flags.push_back(flag);
             }
 
-                flag.key = 9;
-                flag.data = QString::number(LvlPlacingItems::blockSet.w);
+                flag.first = 9;
+                flag.second = QString::number(LvlPlacingItems::blockSet.w);
             LvlPlacingItems::flags.push_back(flag);
 
-                flag.key = 10;
-                flag.data = QString::number(LvlPlacingItems::blockSet.h);
+                flag.first = 10;
+                flag.second = QString::number(LvlPlacingItems::blockSet.h);
             LvlPlacingItems::flags.push_back(flag);
 
-                flag.key = 25;
-                flag.data = "CURSOR";
+                flag.first = 25;
+                flag.second = "CURSOR";
             LvlPlacingItems::flags.push_back(flag);
 
 
@@ -215,8 +215,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                                );
 
             //set data flags
-            foreach(dataFlag flag, LvlPlacingItems::flags)
-                cursor->setData(flag.key, flag.data);
+            for(int i=0; i<LvlPlacingItems::flags.size(); i++)
+                cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
 
             LvlPlacingItems::c_offset_x= qRound(qreal(LvlPlacingItems::blockSet.w) / 2);
             LvlPlacingItems::c_offset_y= qRound(qreal(LvlPlacingItems::blockSet.h) / 2);
@@ -301,26 +301,26 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
 
         LvlPlacingItems::flags.clear();
-        dataFlag flag;
+        QPair<int, QVariant > flag;
 
-            flag.key=0;
-            flag.data="BGO";
+            flag.first=0;
+            flag.second="BGO";
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.key=1;
-            flag.data=QString::number(itemID);
+            flag.first=1;
+            flag.second=QString::number(itemID);
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.key = 9;
-            flag.data = QString::number(w);
+            flag.first = 9;
+            flag.second = QString::number(w);
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.key = 10;
-            flag.data = QString::number(h);
+            flag.first = 10;
+            flag.second = QString::number(h);
         LvlPlacingItems::flags.push_back(flag);
 
-            flag.key = 25;
-            flag.data = "CURSOR";
+            flag.first = 25;
+            flag.second = "CURSOR";
         LvlPlacingItems::flags.push_back(flag);
 
         //Square fill mode
@@ -339,8 +339,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor = addPixmap(tImg.copy(0, h*pConfigs->main_bgo[j].display_frame, w, h));
 
         //set data flags
-        foreach(dataFlag flag, LvlPlacingItems::flags)
-            cursor->setData(flag.key, flag.data);
+        for(int i=0; i<LvlPlacingItems::flags.size(); i++)
+            cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
 
         LvlPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         LvlPlacingItems::c_offset_y= qRound(qreal(h) / 2);
@@ -560,8 +560,8 @@ void LvlScene::setSquareDrawer()
     cursor = addRect(0,0,1,1, pen, brush);
 
     //set data flags
-    foreach(dataFlag flag, LvlPlacingItems::flags)
-        cursor->setData(flag.key, flag.data);
+    for(int i=0; i<LvlPlacingItems::flags.size(); i++)
+        cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
 
     cursor->setData(0, "Square");
 
@@ -596,8 +596,8 @@ void LvlScene::setLineDrawer()
     cursor = addLine(0,0,1,1, pen);
 
     //set data flags
-    foreach(dataFlag flag, LvlPlacingItems::flags)
-        cursor->setData(flag.key, flag.data);
+    for(int i=0; i<LvlPlacingItems::flags.size(); i++)
+        cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
 
     cursor->setData(0, "LineDrawer");
 

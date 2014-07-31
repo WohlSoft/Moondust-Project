@@ -225,8 +225,7 @@ HEADERS  += mainwindow.h \
     common_features/item_rectangles.h \
     edit_world/wld_saveimage.h \
     version.h \
-    dev_console/devconsole.h \
-    common_features/data_flags.h
+    dev_console/devconsole.h
 
 FORMS    += \
     mainwindow.ui \
