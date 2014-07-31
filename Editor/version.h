@@ -42,6 +42,6 @@
 #endif
 
 //Uncomment this for enable detal logging
-//#define DEBUG
+//#define _DEBUG_
 
 #endif
