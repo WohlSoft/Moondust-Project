@@ -451,138 +451,9 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 cursor->hide();
                 break;
             }
-            // ///////////////////////////////////////////////////////////////
-
-            switch(placingItem)
-            {
-            case PLC_Tile:
-                {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/WldPlacingItems::itemW;
-                    int repHeight = height/WldPlacingItems::itemH;
-
-                    WorldData plSqTile;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            WldPlacingItems::TileSet.x = x + i * WldPlacingItems::itemW;
-                            WldPlacingItems::TileSet.y = y + j * WldPlacingItems::itemH;
-
-                            WldData->tile_array_id++;
-
-                            WldPlacingItems::TileSet.array_id = WldData->tile_array_id;
-
-                            WldData->tiles.push_back(WldPlacingItems::TileSet);
-                            placeTile(WldPlacingItems::TileSet, true);
-                            plSqTile.tiles.push_back(WldPlacingItems::TileSet);
-                        }
-                    }
-                    if(plSqTile.tiles.size() > 0)
-                    {
-                        //addPlaceHistory(plSqBgo);
-                    }
-                }
-            break;
-            case PLC_Scene:
-                {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/WldPlacingItems::itemW;
-                    int repHeight = height/WldPlacingItems::itemH;
-
-                    WorldData plSqScene;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            WldPlacingItems::SceneSet.x = x + i * WldPlacingItems::itemW;
-                            WldPlacingItems::SceneSet.y = y + j * WldPlacingItems::itemH;
-
-                            WldData->scene_array_id++;
-
-                            WldPlacingItems::SceneSet.array_id = WldData->scene_array_id;
-
-                            WldData->scenery.push_back(WldPlacingItems::SceneSet);
-                            placeScenery(WldPlacingItems::SceneSet, true);
-                            plSqScene.scenery.push_back(WldPlacingItems::SceneSet);
-                        }
-                    }
-                    if(plSqScene.scenery.size() > 0)
-                    {
-                        //addPlaceHistory(plSqScene);
-                        //restart Animation
-                    }
-                }
-            break;
-            case PLC_Path:
-                {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/WldPlacingItems::itemW;
-                    int repHeight = height/WldPlacingItems::itemH;
-
-                    WorldData plSqPath;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            WldPlacingItems::PathSet.x = x + i * WldPlacingItems::itemW;
-                            WldPlacingItems::PathSet.y = y + j * WldPlacingItems::itemH;
-
-                            WldData->path_array_id++;
-
-                            WldPlacingItems::PathSet.array_id = WldData->path_array_id;
-
-                            WldData->paths.push_back(WldPlacingItems::PathSet);
-                            placePath(WldPlacingItems::PathSet, true);
-                            plSqPath.paths.push_back(WldPlacingItems::PathSet);
-                        }
-                    }
-                    if(plSqPath.paths.size() > 0)
-                    {
-                        //addPlaceHistory(plSqPath);
-                        //restart Animation
-                    }
-                }
-            break;
-            case PLC_Level:
-                {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/WldPlacingItems::itemW;
-                    int repHeight = height/WldPlacingItems::itemH;
-
-                    WorldData plSqLevel;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            WldPlacingItems::LevelSet.x = x + i * WldPlacingItems::itemW;
-                            WldPlacingItems::LevelSet.y = y + j * WldPlacingItems::itemH;
-
-                            WldData->level_array_id++;
-
-                            WldPlacingItems::LevelSet.array_id = WldData->level_array_id;
-
-                            WldData->levels.push_back(WldPlacingItems::LevelSet);
-                            placeLevel(WldPlacingItems::LevelSet, true);
-                            plSqLevel.levels.push_back(WldPlacingItems::LevelSet);
-                        }
-                    }
-                    if(plSqLevel.levels.size() > 0)
-                    {
-                        //addPlaceHistory(plSqLevel);
-                        //restart Animation
-                    }
-                }
-            break;
-            default:
-                break;
-            }
-        item_rectangles::clearArray();
-        cursor->hide();
+            placeItemsByRectArray();
+            WldData->modified = true;
+            cursor->hide();
         }
         break;
         }
@@ -599,20 +470,9 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
             // ///////////////////////////////////////////////////////////////
 
-            item_rectangles::clearArray();
-            switch(placingItem)
-            {
-            case PLC_Tile:
-                {
-                    break;
-                }
-            case PLC_Scene:
-                {
-                    break;
-                }
-            }
-
-        cursor->hide();
+            placeItemsByRectArray();
+            WldData->modified = true;
+            cursor->hide();
         }
         break;
         }
@@ -929,6 +789,46 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
         WoffsetX = 0;
         WoffsetY = 0;
     }
+}
+
+
+void WldScene::placeItemsByRectArray()
+{
+    //This function placing items by yellow rectangles
+    if(item_rectangles::rectArray.isEmpty()) return;
+
+    QGraphicsItem * backup = cursor;
+    while(!item_rectangles::rectArray.isEmpty())
+    {
+        cursor = item_rectangles::rectArray.first();
+        item_rectangles::rectArray.pop_front();
+
+        foreach(dataFlag_w flag, WldPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
+
+        placeItemUnderCursor();
+
+        if(cursor) delete cursor;
+    }
+    cursor = backup;
+    cursor->hide();
+
+    if(!placingItems.tiles.isEmpty()||
+            !placingItems.scenery.isEmpty()||
+            !placingItems.paths.isEmpty()||
+            !placingItems.levels.isEmpty()||
+            !placingItems.music.isEmpty())
+    {
+
+        addPlaceHistory(placingItems);
+
+        placingItems.tiles.clear();
+        placingItems.scenery.clear();
+        placingItems.paths.clear();
+        placingItems.levels.clear();
+        placingItems.music.clear();
+    }
+
 }
 
 
