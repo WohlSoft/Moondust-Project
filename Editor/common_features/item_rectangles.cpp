@@ -29,8 +29,11 @@ void item_rectangles::drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize sma
         for(int j = 0; j < repHeight; j++){
             long x1 = x + i * smallRect.width();
             long y1 = y + j * smallRect.height();
-            rectArray.push_back(scene->addRect(0, 0, smallRect.width(), smallRect.height(), QPen(Qt::yellow, 2), brush));
+            rectArray.push_back(scene->addRect(1, 1, smallRect.width()-2, smallRect.height()-2,
+                                               QPen(Qt::yellow, 1),
+                                               brush));
             rectArray.last()->setPos(x1, y1);
+            rectArray.last()->setData(0, "YellowRectangle");
             rectArray.last()->setOpacity(0.7);
             rectArray.last()->setZValue(10000);
         }
@@ -97,20 +100,14 @@ void item_rectangles::drawLine(QGraphicsScene *scene, QLineF lineItem, QSize sma
     {
         long x1 = x + k * smallRect.width()*h_dir;
         long y1 = y + l * smallRect.height()*v_dir;
-        rectArray.push_back(scene->addRect(0, 0, smallRect.width(),
-                                           smallRect.height(),
+        rectArray.push_back(scene->addRect(1, 1, smallRect.width()-2,
+                                           smallRect.height()-2,
                                            QPen(Qt::yellow, 2), brush));
         rectArray.last()->setPos(x1, y1);
+        rectArray.last()->setData(0, "YellowRectangle");
         rectArray.last()->setOpacity(0.7);
         rectArray.last()->setZValue(10000);
     }
-
-//    //long x = bigRect.x();
-//    //long y = bigRect.y();
-//    //long width = lineItem.dx();
-//    //long height = lineItem.dy();
-//    //int repWidth = width/smallRect.width();
-//    //int repHeight = height/smallRect.height();
 }
 
 

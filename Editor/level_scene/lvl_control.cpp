@@ -319,6 +319,7 @@ WriteToLog(QtDebugMsg, QString("Placing mode %1").arg(EditingMode));
         {
             if( mouseEvent->buttons() & Qt::RightButton )
             {
+                item_rectangles::clearArray();
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
                 return;
             }
@@ -339,6 +340,7 @@ WriteToLog(QtDebugMsg, QString("Placing mode %1").arg(EditingMode));
         {
             if( mouseEvent->buttons() & Qt::RightButton )
             {
+                item_rectangles::clearArray();
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
                 return;
             }
@@ -367,6 +369,7 @@ WriteToLog(QtDebugMsg, QString("Placing mode %1").arg(EditingMode));
         {
             if( mouseEvent->buttons() & Qt::RightButton )
             {
+                item_rectangles::clearArray();
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
                 return;
             }
@@ -631,70 +634,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                     else
                     {
-                        long x = cursor->scenePos().x();
-                        long y = cursor->scenePos().y();
-                        long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                        long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                        int repWidth = width/LvlPlacingItems::blockSet.w;
-                        int repHeight = height/LvlPlacingItems::blockSet.h;
-
-                        LevelData plSqBlock;
-                        for(int i = 0; i < repWidth; i++){
-                            for(int j = 0; j < repHeight; j++){
-                                LvlPlacingItems::blockSet.x = x + i * LvlPlacingItems::blockSet.w;
-                                LvlPlacingItems::blockSet.y = y + j * LvlPlacingItems::blockSet.h;
-
-                                LvlData->blocks_array_id++;
-
-                                LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
-
-                                LvlData->blocks.push_back(LvlPlacingItems::blockSet);
-                                placeBlock(LvlPlacingItems::blockSet, true);
-                                plSqBlock.blocks.push_back(LvlPlacingItems::blockSet);
-                            }
-                        }
-                        item_rectangles::clearArray();
-                        if(plSqBlock.blocks.size() > 0)
-                        {
-                            addPlaceHistory(plSqBlock);
-                            //restart Animation
-                            //if(opts.animationEnabled) stopAnimation();
-                            //if(opts.animationEnabled) startBlockAnimation();
-
-                        }
+                        placeItemsByRectArray();
+                        break;
                     }
-                    break;
                 }
             case PLC_BGO:
                 {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/LvlPlacingItems::itemW;
-                    int repHeight = height/LvlPlacingItems::itemH;
-
-                    LevelData plSqBgo;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            LvlPlacingItems::bgoSet.x = x + i * LvlPlacingItems::itemW;
-                            LvlPlacingItems::bgoSet.y = y + j * LvlPlacingItems::itemH;
-
-                            LvlData->bgo_array_id++;
-
-                            LvlPlacingItems::bgoSet.array_id = LvlData->bgo_array_id;
-
-                            LvlData->bgo.push_back(LvlPlacingItems::bgoSet);
-                            placeBGO(LvlPlacingItems::bgoSet, true);
-                            plSqBgo.bgo.push_back(LvlPlacingItems::bgoSet);
-                        }
-                    }
-                    item_rectangles::clearArray();
-                    if(plSqBgo.bgo.size() > 0)
-                    {
-                        addPlaceHistory(plSqBgo);
-                        //restart Animation
-                    }
+                 placeItemsByRectArray();
+                 break;
                 }
             }
             LvlData->modified = true;
@@ -718,78 +665,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
             // ///////////////////////////////////////////////////////////////
 
-            switch(placingItem)
-            {
-            case PLC_Block:
-                {
-                      item_rectangles::clearArray();
+            WriteToLog(QtDebugMsg, "Line tool -> Placing blocks");
 
-//                    long x = cursor->scenePos().x();
-//                    long y = cursor->scenePos().y();
-//                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-//                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-//                    int repWidth = width/LvlPlacingItems::blockSet.w;
-//                    int repHeight = height/LvlPlacingItems::blockSet.h;
+            placeItemsByRectArray();
 
-//                    LevelData plSqBlock;
-//                    for(int i = 0; i < repWidth; i++){
-//                        for(int j = 0; j < repHeight; j++){
-//                            LvlPlacingItems::blockSet.x = x + i * LvlPlacingItems::blockSet.w;
-//                            LvlPlacingItems::blockSet.y = y + j * LvlPlacingItems::blockSet.h;
-
-//                            LvlData->blocks_array_id++;
-
-//                            LvlPlacingItems::blockSet.array_id = LvlData->blocks_array_id;
-
-//                            LvlData->blocks.push_back(LvlPlacingItems::blockSet);
-//                            placeBlock(LvlPlacingItems::blockSet, true);
-//                            plSqBlock.blocks.push_back(LvlPlacingItems::blockSet);
-//                        }
-//                    }
-//                    if(plSqBlock.blocks.size() > 0)
-//                    {
-//                        addPlaceHistory(plSqBlock);
-//                        //restart Animation
-//                        //if(opts.animationEnabled) stopAnimation();
-//                        //if(opts.animationEnabled) startBlockAnimation();
-
-//                    }
-                    break;
-                }
-            case PLC_BGO:
-                {
-                      item_rectangles::clearArray();
-//                    long x = cursor->scenePos().x();
-//                    long y = cursor->scenePos().y();
-//                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-//                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-//                    int repWidth = width/LvlPlacingItems::bgoW;
-//                    int repHeight = height/LvlPlacingItems::bgoH;
-
-//                    LevelData plSqBgo;
-//                    for(int i = 0; i < repWidth; i++){
-//                        for(int j = 0; j < repHeight; j++){
-//                            LvlPlacingItems::bgoSet.x = x + i * LvlPlacingItems::bgoW;
-//                            LvlPlacingItems::bgoSet.y = y + j * LvlPlacingItems::bgoH;
-
-//                            LvlData->bgo_array_id++;
-
-//                            LvlPlacingItems::bgoSet.array_id = LvlData->bgo_array_id;
-
-//                            LvlData->bgo.push_back(LvlPlacingItems::bgoSet);
-//                            placeBGO(LvlPlacingItems::bgoSet, true);
-//                            plSqBgo.bgo.push_back(LvlPlacingItems::bgoSet);
-//                        }
-//                    }
-//                    if(plSqBgo.bgo.size() > 0)
-//                    {
-//                        addPlaceHistory(plSqBgo);
-//                        //restart Animation
-//                    }
-                break;
-                }
-            }
-
+        LvlData->modified = true;
         cursor->hide();
         }
         break;
@@ -1212,6 +1092,38 @@ void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
          }
         }
     }
+}
+
+void LvlScene::placeItemsByRectArray()
+{
+    //This function placing items by yellow rectangles
+    if(item_rectangles::rectArray.isEmpty()) return;
+
+    QGraphicsItem * backup = cursor;
+    while(!item_rectangles::rectArray.isEmpty())
+    {
+        cursor = item_rectangles::rectArray.first();
+        item_rectangles::rectArray.pop_front();
+
+        foreach(dataFlag flag, LvlPlacingItems::flags)
+            cursor->setData(flag.key, flag.data);
+
+        placeItemUnderCursor();
+
+        if(cursor) delete cursor;
+    }
+    cursor = backup;
+    cursor->hide();
+
+    if(!placingItems.blocks.isEmpty()||
+            !placingItems.bgo.isEmpty()||
+            !placingItems.npc.isEmpty()){
+        addPlaceHistory(placingItems);
+        placingItems.blocks.clear();
+        placingItems.bgo.clear();
+        placingItems.npc.clear();
+    }
+
 }
 
 
