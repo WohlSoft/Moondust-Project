@@ -23,6 +23,7 @@
 #include <QDebug>
 
 #include "logger_sets.h"
+#include "../dev_console/devconsole.h"
 
 QString     LogWriter::DebugLogFile;
 QtMsgType   LogWriter::logLevel;
@@ -109,4 +110,21 @@ void LoadLogSettings()
 void WriteToLog(QtMsgType type, QString msg)
 {
     LogWriter::WriteToLog(type, msg);
+    switch (type) {
+    case QtDebugMsg:
+        DevConsole::log(msg, QString("Debug"));
+        break;
+    case QtWarningMsg:
+        DevConsole::log(msg, QString("Warning"));
+        break;
+    case QtCriticalMsg:
+        DevConsole::log(msg, QString("Critical"));
+        break;
+    case QtFatalMsg:
+        DevConsole::log(msg, QString("Fatal"));
+        break;
+    default:
+        DevConsole::log(msg);
+        break;
+    }
 }
