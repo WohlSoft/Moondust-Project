@@ -110,6 +110,10 @@ void LoadLogSettings()
 void WriteToLog(QtMsgType type, QString msg)
 {
     LogWriter::WriteToLog(type, msg);
+
+    if(!DevConsole::isConsoleShown())
+        return;
+
     switch (type) {
     case QtDebugMsg:
         DevConsole::log(msg, QString("Debug"));
