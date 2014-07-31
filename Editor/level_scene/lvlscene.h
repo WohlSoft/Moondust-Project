@@ -239,7 +239,8 @@ public:
             LEVELHISTORY_CHANGEDSETTINGSSECTION,
             LEVELHISTORY_CHANGEDSETTINGSLEVEL,
             LEVELHISTORY_REPLACEPLAYERPOINT,
-            LEVELHISTORY_RESIZEWATER
+            LEVELHISTORY_RESIZEWATER,
+            LEVELHISTORY_OVERWRITE
         };
         HistoryType type;
         //used most of Operations
@@ -350,6 +351,7 @@ public:
      */
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
+    void addOverwriteHistory(LevelData removedItems, LevelData placedItems);
     void addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
     void addChangeSettingsHistory(LevelData modifiedItems, SettingSubType subType, QVariant extraData);
