@@ -668,8 +668,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             WriteToLog(QtDebugMsg, "Line tool -> Placing items");
             placeItemsByRectArray();
 
-        LvlData->modified = true;
-        cursor->hide();
+            LvlData->modified = true;
+            cursor->hide();
         }
         break;
         }
@@ -1402,7 +1402,7 @@ void LvlScene::removeItemUnderCursor()
                  }
                 }
             }
-            removeItem(findItem);
+            //removeItem(findItem);
             delete findItem;
             if(deleted)addRemoveHistory(removedItems);
         }
