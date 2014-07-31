@@ -145,7 +145,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 {
                     removedItems.music.push_back(((ItemMusic *)SelItem)->musicData);
                     ((ItemMusic *)SelItem)->removeFromArray();
-                    scene->removeItem(SelItem);
                     delete SelItem;
                     //deleted=true;
                 }
