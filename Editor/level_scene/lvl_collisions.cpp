@@ -23,27 +23,30 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 
-
+#include "../common_features/logger.h"
 
 
 QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 {
-    qlonglong leftA, leftB;
-    qlonglong rightA, rightB;
-    qlonglong topA, topB;
-    qlonglong bottomA, bottomB;
+    qreal leftA, leftB;
+    qreal rightA, rightB;
+    qreal topA, topB;
+    qreal bottomA, bottomB;
     //qreal betweenZ;
 
     QList<QGraphicsItem *> collisions = this->items(
-                item->pos().x(),item->pos().y(),
-                item->data(9).toReal(),item->data(10).toReal(),
-                Qt::IntersectsItemBoundingRect, Qt::AscendingOrder);
-        //collidingItems(item, Qt::IntersectsItemBoundingRect);
+                QRectF(item->scenePos().x()-10, item->scenePos().y()-10,
+                item->data(9).toReal()+20, item->data(10).toReal()+20 ),
+                Qt::IntersectsItemBoundingRect);
+
+    //QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
+
     foreach (QGraphicsItem * it, collisions)
     {
-            if (it == item)
+            if(it == item)
                  continue;
-            if(!it->isVisible()) continue;
+            if(!it->isVisible())
+                continue;
             if(item->data(0).toString()=="Water")
                 return NULL;
             if(item->data(0).toString()=="Door_exit")
@@ -51,76 +54,111 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
             if(item->data(0).toString()=="Door_enter")
                 return NULL;
 
-            leftA = item->scenePos().x();
-            rightA = item->scenePos().x()+item->data(9).toLongLong();
-            topA = item->scenePos().y();
-            bottomA = item->scenePos().y()+item->data(10).toLongLong();
+            if(
+               (it->data(0).toString()!="Block")&&
+               (it->data(0).toString()!="BGO")&&
+               (it->data(0).toString()!="NPC")
+                    ) continue;
 
-            leftB = it->scenePos().x();
-            rightB = it->scenePos().x()+it->data(9).toLongLong();
-            topB = it->scenePos().y();
-            bottomB = it->scenePos().y()+it->data(10).toLongLong();
-
-            #ifdef _DEBUG_
-            if(it->data(0).toString()=="Block")
-                WriteToLog(QtDebugMsg, QString(" >>Collision with block detected"));
-            #endif
-
-
-          if((item->data(0).toString()=="Block")||(item->data(0).toString()=="NPC")||(item->data(0).toString()=="BGO"))
+          if(item->data(0).toString()=="NPC")
           {
-              if(item->data(0).toString()=="NPC")
+              if( item->data(8).toBool() ) // Disabled collisions with other NPCs
               {
-                  if( item->data(8).toBool() ) // Disabled collisions with other NPCs
-                  {
-                      if(item->data(1).toInt()!=it->data(1).toInt()) continue;
-                  }
-                  else
-                  {
-                      if(
-                              (
-                               (it->data(0).toString()=="Block")
-                               &&(!((ItemNPC *)item)->localProps.collision_with_blocks)
-                               )
-                              ||
-                              (
-                               (it->data(0).toString()=="NPC")
-                               &&(it->data(8).toBool())
-                               )
-                              ||
-                              ((it->data(0).toString()!="NPC")&&(it->data(0).toString()!="Block"))
-                         )
-                                continue;
-                  }
-
+                  if(item->data(1).toInt()!=it->data(1).toInt()) continue;
               }
               else
-                    if(item->data(0).toString()!=it->data(0).toString()) continue;
-
-              if(item->data(3).toString()=="sizable")
-              {//sizable Block
-                  #ifdef _DEBUG_
-                  WriteToLog(QtDebugMsg, QString("sizable block") );
-                  #endif
-                  continue;
+              {
+                  if(
+                          (
+                           (it->data(0).toString()=="Block")
+                           &&(!item->data(7).toBool()) //BlockCollision
+                           )
+                          ||
+                          (
+                           (it->data(0).toString()=="NPC")
+                           &&(it->data(8).toBool()) //NpcCollision
+                           )
+                          ||
+                          ((it->data(0).toString()!="NPC")&&(it->data(0).toString()!="Block"))
+                     )
+                            continue;
               }
 
-              if(item->data(0).toString()=="BGO")
-                if(item->data(1).toInt()!=it->data(1).toInt()) continue;
+          }
+          else
+          if(item->data(0).toString()=="Block")
+          {
+              if(
+                      (
+                       (it->data(0).toString()=="NPC")
+                       &&(!it->data(7).toBool()) //BlockCollision
+                       ) ||
+                      ((it->data(0).toString()!="NPC")&&(it->data(0).toString()!="Block"))
+                 )
+                        continue;
 
-                 if( bottomA <= topB )
-                 { continue; }
-                 if( topA >= bottomB )
-                 { continue; }
-                 if( rightA <= leftB )
-                 { continue; }
-                 if( leftA >= rightB )
-                 { continue; }
+          }
+          else
+                if(item->data(0).toString()!=it->data(0).toString()) continue;
 
-                 if(it->data(3).toString()!="sizable")
-                    return it;
+
+          if(item->data(3).toString()=="sizable")
+          {   // Don't collide with sizable block
+              #ifdef _DEBUG_
+              WriteToLog(QtDebugMsg, QString("sizable block") );
+              #endif
+              continue;
           }
 
+          if(it->data(3).toString()=="sizable") continue; // Don't collide with sizable block
+
+          if(item->data(0).toString()=="BGO")
+            if(item->data(1).toInt()!=it->data(1).toInt()) continue;
+
+          leftA = item->scenePos().x();
+          rightA = item->scenePos().x()+item->data(9).toReal();
+          topA = item->scenePos().y();
+          bottomA = item->scenePos().y()+item->data(10).toReal();
+
+          leftB = it->scenePos().x();
+          rightB = it->scenePos().x()+it->data(9).toReal();
+          topB = it->scenePos().y();
+          bottomB = it->scenePos().y()+it->data(10).toReal();
+
+          #ifdef _DEBUG_
+          WriteToLog(QtDebugMsg, QString("Collision check -> Item1 L%1 | T%2 | R%3 |  B%4")
+                     .arg(leftA).arg(topA).arg(rightA).arg(bottomA));
+          WriteToLog(QtDebugMsg, QString("Collision check -> Item2 R%3 | B%4 | L%1 |  T%2")
+                     .arg(leftB).arg(topB).arg(rightB).arg(bottomB));
+
+          WriteToLog(QtDebugMsg, QString("Collision check -> Item1 W%1, H%2")
+                     .arg(item->data(9).toReal()).arg(item->data(10).toReal()));
+          WriteToLog(QtDebugMsg, QString("Collision check -> Item2 W%1, H%2")
+                     .arg(it->data(9).toReal()).arg(it->data(10).toReal()));
+
+          WriteToLog(QtDebugMsg, QString("Collision check -> B%1 <= T%2 -> %3")
+                     .arg(bottomA).arg(topB).arg(bottomA <= topB));
+          WriteToLog(QtDebugMsg, QString("Collision check -> T%1 >= B%2 -> %3")
+                     .arg(topA).arg(bottomB).arg(topA >= bottomB));
+          WriteToLog(QtDebugMsg, QString("Collision check -> R%1 <= L%2 -> %3")
+                     .arg(rightA).arg(leftB).arg(rightA <= leftB));
+          WriteToLog(QtDebugMsg, QString("Collision check -> L%1 >= R%2 -> %3")
+                     .arg(leftA).arg(rightB).arg(leftA >= rightB));
+
+          //Collision check -> Item1 L-199776 | T-200288 | R-199744 |  B-200256
+          //Collision check -> Item2 R-199744 | B-200288 | L-199776 |  T-200320
+          #endif
+
+             if( bottomA <= topB )
+             { continue; }
+             if( topA >= bottomB )
+             { continue; }
+             if( rightA <= leftB )
+             { continue; }
+             if( leftA >= rightB )
+             { continue; }
+
+         return it; // Collision found!
     }
     return NULL;
 }

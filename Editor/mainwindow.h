@@ -572,6 +572,8 @@ private slots:
     void on_actionWLDProperties_triggered();
 
 
+    void on_actionShow_Development_Console_triggered();
+
 signals:
     void closeEditor();
 

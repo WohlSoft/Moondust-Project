@@ -4232,18 +4232,18 @@ Data may be corrupted!</translation>
     <name>WLD_SetPoint</name>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Selecting point on the world map</source>
+        <translation>Selecting point on the world map</translation>
     </message>
     <message>
-        <location filename="../wld_point_dialog/wld_setpoint.ui" line="55"/>
-        <source>Current Point: </source>
-        <translation type="unfinished"></translation>
+        <location filename="../wld_point_dialog/wld_setpoint.ui" line="59"/>
+        <source>Current Point:</source>
+        <translation>Current Point:</translation>
     </message>
     <message>
-        <location filename="../wld_point_dialog/wld_setpoint.ui" line="112"/>
+        <location filename="../wld_point_dialog/wld_setpoint.ui" line="106"/>
         <source>Note: For scroll on the map, use the mousewheel. With pressed ALT key you can scroll horisontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Note: For scroll on the map, use the mousewheel. With pressed ALT key you can scroll horisontal</translation>
     </message>
 </context>
 <context>
@@ -4533,12 +4533,12 @@ Please, reconvert your images to the valid format and try to reload this level.<
         <translation>5/%1 Applying Musics Boxes...</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="164"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="172"/>
         <source>Untitled %1</source>
         <translation>Untitled %1</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="179"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="187"/>
         <source>Cannot create world file:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -4547,57 +4547,57 @@ because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="239"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="247"/>
         <source>Save As</source>
         <translation>Save As</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="251"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="259"/>
         <source>File save error</source>
         <translation>File save error</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="252"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="260"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>Cannot save file %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="291"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="299"/>
         <source>Read file error</source>
         <translation>Read file error</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="292"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="300"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Cannot read file %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="178"/>
-        <location filename="../edit_world/wld_files_io.cpp" line="306"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="186"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="314"/>
         <source>Configurations not loaded</source>
         <translation>Configurations not loaded</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="85"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="89"/>
         <source>Export selected area to image</source>
         <translation>Export selected area to image</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="89"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="93"/>
         <source>PNG Image (*.png)</source>
         <translation>PNG Image (*.png)</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="95"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="99"/>
         <source>Saving section image...</source>
         <translation>Saving section image...</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="96"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="100"/>
         <source>Please wait...</source>
         <translation>Please wait...</translation>
     </message>
@@ -4610,17 +4610,17 @@ because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="221"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="229"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation>Please enter a episode title for &apos;%1&apos;!</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="222"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="230"/>
         <source>Saving </source>
         <translation>Saving</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="224"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="232"/>
         <source>Episode Title: </source>
         <translation>World title:</translation>
     </message>
@@ -4633,23 +4633,23 @@ Object configurations are not loaded
 Please check that the config/SMBX directory exists and contains the *.INI files with the object settings.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="331"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="339"/>
         <source>Loading World map data</source>
         <translation>Loading World map data</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="377"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="385"/>
         <source>Episode title: </source>
         <translation>World title:</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="95"/>
-        <location filename="../edit_world/wld_files_io.cpp" line="331"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="99"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="339"/>
         <source>Abort</source>
         <translation>Abort</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="307"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="315"/>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -4658,17 +4658,17 @@ because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="332"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="340"/>
         <source>Loading World data</source>
         <translation>Loading World data</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="375"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="383"/>
         <source> not saved</source>
         <translation> not saved</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="373"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="381"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; has been modified.

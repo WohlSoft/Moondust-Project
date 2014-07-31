@@ -56,6 +56,17 @@ public:
     void ResetPosition();
     void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0));
 
+    enum CusrorMode
+    {
+        MODE_HandDrag=-1,
+        MODE_Selecting=0,
+        MODE_Erasing,
+        MODE_PlaceItem,
+        MODE_DrawSquares,
+        MODE_Pasting,
+        MODE_Resizing
+    };
+
     void changeCursor(int mode);
 
     void ExportToImage_fn();

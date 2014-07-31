@@ -594,6 +594,9 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setData(1, QString::number(npc.id) );
     NPCItem->setData(2, QString::number(npc.array_id) );
 
+    NPCItem->setData(7, QString::number((int)NPCItem->localProps.collision_with_blocks) );
+    NPCItem->setData(8, QString::number((int)NPCItem->localProps.no_npc_collions) );
+
     NPCItem->setData(9, QString::number(NPCItem->localProps.width) ); //width
     NPCItem->setData(10, QString::number(NPCItem->localProps.height) ); //height
 

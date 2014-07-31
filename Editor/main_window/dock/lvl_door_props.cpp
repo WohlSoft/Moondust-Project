@@ -290,7 +290,6 @@ void MainWindow::on_WarpRemove_clicked()
             }
         }
 
-
         ui->WarpList->removeItem( ui->WarpList->currentIndex() );
 
         //if(ui->WarpList->count()<=0) ui->WarpRemove->setEnabled(false);
@@ -298,8 +297,6 @@ void MainWindow::on_WarpRemove_clicked()
     }
 
 }
-
-
 
 void MainWindow::on_WarpSetEntrance_clicked()
 {
@@ -346,11 +343,8 @@ void MainWindow::on_WarpSetEntrance_clicked()
        resetEditmodeButtons();
 
        edit->scene->clearSelection();
-       edit->changeCursor(2);
-       edit->scene->EditingMode = 2;
-       edit->scene->disableMoveItems=false;
-       edit->scene->DrawMode=true;
-       edit->scene->EraserEnabled = false;
+       edit->changeCursor(leveledit::MODE_PlaceItem);
+       edit->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
        edit->scene->setItemPlacer(4, ui->WarpList->currentData().toInt(), LvlPlacingItems::DOOR_Entrance);
 
        ui->ItemProperties->hide();
@@ -403,11 +397,8 @@ void MainWindow::on_WarpSetExit_clicked()
         resetEditmodeButtons();
 
         edit->scene->clearSelection();
-        edit->changeCursor(2);
-        edit->scene->EditingMode = 2;
-        edit->scene->disableMoveItems=false;
-        edit->scene->DrawMode=true;
-        edit->scene->EraserEnabled = false;
+        edit->changeCursor(leveledit::MODE_PlaceItem);
+        edit->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
         edit->scene->setItemPlacer(4, ui->WarpList->currentData().toInt(), LvlPlacingItems::DOOR_Exit);
 
        ui->ItemProperties->hide();

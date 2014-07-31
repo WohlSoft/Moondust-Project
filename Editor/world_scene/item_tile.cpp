@@ -123,7 +123,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 {
                     removedItems.tiles.push_back(((ItemTile *)SelItem)->tileData);
                     ((ItemTile *)SelItem)->removeFromArray();
-                    scene->removeItem(SelItem);
                     delete SelItem;
                     //deleted=true;
                 }

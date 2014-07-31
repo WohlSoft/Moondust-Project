@@ -97,6 +97,7 @@ public:
     int placingItem;
     QGraphicsItem * cursor;
     void placeItemUnderCursor();
+    void placeItemsByRectArray();
     LevelData placingItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
@@ -207,6 +208,9 @@ public:
     void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
 
+    void resetResizers();
+    void applyResizers();
+
     // ////////////HistoryManager///////////////////
     struct HistoryOperation{
         enum HistoryType{
@@ -235,7 +239,8 @@ public:
             LEVELHISTORY_CHANGEDSETTINGSSECTION,
             LEVELHISTORY_CHANGEDSETTINGSLEVEL,
             LEVELHISTORY_REPLACEPLAYERPOINT,
-            LEVELHISTORY_RESIZEWATER
+            LEVELHISTORY_RESIZEWATER,
+            LEVELHISTORY_OVERWRITE
         };
         HistoryType type;
         //used most of Operations
@@ -346,6 +351,7 @@ public:
      */
     void addRemoveHistory(LevelData removedItems);
 	void addPlaceHistory(LevelData placedItems);
+    void addOverwriteHistory(LevelData removedItems, LevelData placedItems);
     void addPlaceDoorHistory(int array_id, bool isEntrance, long x, long y);
     void addMoveHistory(LevelData sourceMovedItems, LevelData targetMovedItems);
     void addChangeSettingsHistory(LevelData modifiedItems, SettingSubType subType, QVariant extraData);
@@ -524,7 +530,6 @@ public:
     QString getHistorySettingText(SettingSubType subType);
     // ////////////////////////////////////////////
     void openProps();
-
 
 public slots:
     void selectionChanged();

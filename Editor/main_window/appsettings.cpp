@@ -154,7 +154,7 @@ void AppSettings::on_AssociateFiles_clicked()
 
     bool success = true;
 
-    #ifdef __WIN32__
+    #ifdef _WIN32
         QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
         QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
 

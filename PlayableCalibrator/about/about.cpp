@@ -19,12 +19,14 @@
 
 #include "about.h"
 #include "ui_about.h"
+#include "../version.h"
 
 about::about(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::about)
 {
     ui->setupUi(this);
+    ui->about1->setText(ui->about1->text().arg(_FILE_VERSION).arg(_FILE_RELEASE));
 }
 
 about::~about()

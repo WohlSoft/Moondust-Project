@@ -57,6 +57,7 @@ bool WldPlacingItems::fillingMode=false;
 bool WldPlacingItems::lineMode=false;
 bool WldPlacingItems::overwriteMode=false;
 
+QList<QPair<int, QVariant > > WldPlacingItems::flags;
 
 void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 {
@@ -136,6 +137,30 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
 
+
+        WldPlacingItems::flags.clear();
+        QPair<int, QVariant > flag;
+
+            flag.first=0;
+            flag.second="TILE";
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first=1;
+            flag.second=QString::number(itemID);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 9;
+            flag.second = QString::number(w);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 10;
+            flag.second = QString::number(h);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 25;
+            flag.second = "CURSOR";
+        WldPlacingItems::flags.push_back(flag);
+
         if(WldPlacingItems::fillingMode)
         {
             setSquareDrawer(); return;
@@ -148,13 +173,13 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         cursor = addPixmap(tImg.copy(0,h*pConfigs->main_wtiles[j].display_frame,w,h));
 
-        cursor->setData(0, "TILE");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(w));
-        cursor->setData(10, QString::number(h));
+        //set data flags
+        foreach(dataFlag_w flag, WldPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
+
+
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
-        cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -235,6 +260,30 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         long iw = tImg.width();
         long ih = tImg.height()/( (pConfigs->main_wscene[j].animated)?pConfigs->main_wscene[j].frames:1);
 
+        WldPlacingItems::flags.clear();
+        QPair<int, QVariant > flag;
+
+            flag.first=0;
+            flag.second="SCENERY";
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first=1;
+            flag.second=QString::number(itemID);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 9;
+            flag.second = QString::number(w);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 10;
+            flag.second = QString::number(h);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 25;
+            flag.second = "CURSOR";
+        WldPlacingItems::flags.push_back(flag);
+
+
         if(WldPlacingItems::fillingMode)
         {
             setSquareDrawer(); return;
@@ -247,10 +296,10 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         cursor = addPixmap(tImg.copy(0,ih * pConfigs->main_wscene[j].display_frame ,iw,ih));
 
-        cursor->setData(0, "SCENERY");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(w));
-        cursor->setData(10, QString::number(h));
+        //set data flags
+        foreach(dataFlag_w flag, WldPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
+
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
         cursor->setData(25, "CURSOR");
@@ -332,6 +381,29 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
 
+        WldPlacingItems::flags.clear();
+        QPair<int, QVariant > flag;
+
+            flag.first=0;
+            flag.second="PATH";
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first=1;
+            flag.second=QString::number(itemID);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 9;
+            flag.second = QString::number(w);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 10;
+            flag.second = QString::number(h);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 25;
+            flag.second = "CURSOR";
+        WldPlacingItems::flags.push_back(flag);
+
         if(WldPlacingItems::fillingMode)
         {
             setSquareDrawer(); return;
@@ -344,10 +416,10 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         cursor = addPixmap(tImg.copy(0,h * pConfigs->main_wpaths[j].display_frame, w ,h));
 
-        cursor->setData(0, "PATH");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(w));
-        cursor->setData(10, QString::number(h));
+        //set data flags
+        foreach(dataFlag_w flag, WldPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
+
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
         cursor->setData(25, "CURSOR");
@@ -433,6 +505,30 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::itemW = w;
         WldPlacingItems::itemH = h;
 
+        WldPlacingItems::flags.clear();
+        QPair<int, QVariant > flag;
+
+            flag.first=0;
+            flag.second="LEVEL";
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first=1;
+            flag.second=QString::number(itemID);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 9;
+            flag.second = QString::number(w);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 10;
+            flag.second = QString::number(h);
+        WldPlacingItems::flags.push_back(flag);
+
+            flag.first = 25;
+            flag.second = "CURSOR";
+        WldPlacingItems::flags.push_back(flag);
+
+
         if(WldPlacingItems::fillingMode)
         {
             setSquareDrawer(); return;
@@ -452,10 +548,10 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         ((QGraphicsPixmapItem*)cursor)->setOffset(imgOffsetX, imgOffsetY );
 
-        cursor->setData(0, "LEVEL");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(9, QString::number(w));
-        cursor->setData(10, QString::number(h));
+        //set data flags
+        foreach(dataFlag_w flag, WldPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
+
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
         cursor->setData(25, "CURSOR");
@@ -513,8 +609,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 //        break;
         default: break;
     }
-    EditingMode = MODE_PlacingNew;
-    DrawMode=true;
+    SwitchEditingMode(MODE_PlacingNew);
     contextMenuOpened=false;
 }
 
@@ -535,6 +630,10 @@ void WldScene::setSquareDrawer()
 
     cursor = addRect(0,0,1,1, pen, brush);
 
+    //set data flags
+    foreach(dataFlag_w flag, WldPlacingItems::flags)
+        cursor->setData(flag.first, flag.second);
+
     cursor->setData(0, "Square");
     cursor->setData(25, "CURSOR");
     cursor->setZValue(7000);
@@ -542,8 +641,7 @@ void WldScene::setSquareDrawer()
     cursor->setVisible(false);
     cursor->setEnabled(true);
 
-    EditingMode = MODE_DrawSquare;
-    DrawMode=true;
+    SwitchEditingMode(MODE_DrawSquare);
 }
 
 void WldScene::setLineDrawer()
@@ -558,6 +656,10 @@ void WldScene::setLineDrawer()
 
     cursor = addLine(0,0,1,1, pen);
 
+    //set data flags
+    foreach(dataFlag_w flag, WldPlacingItems::flags)
+        cursor->setData(flag.first, flag.second);
+
     cursor->setData(0, "Line");
     cursor->setData(25, "CURSOR");
     cursor->setZValue(7000);
@@ -565,8 +667,8 @@ void WldScene::setLineDrawer()
     cursor->setVisible(false);
     cursor->setEnabled(true);
 
-    EditingMode = MODE_Line;
-    DrawMode=true;
+    SwitchEditingMode(MODE_Line);
+
 }
 
 

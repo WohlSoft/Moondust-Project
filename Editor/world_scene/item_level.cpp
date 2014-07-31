@@ -204,7 +204,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
                 {
                     removedItems.levels.push_back(((ItemLevel *)SelItem)->levelData);
                     ((ItemLevel *)SelItem)->removeFromArray();
-                    scene->removeItem(SelItem);
                     delete SelItem;
                     //deleted=true;
                 }

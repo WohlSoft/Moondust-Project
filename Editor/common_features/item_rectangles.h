@@ -10,6 +10,9 @@ public:
     static QList<QGraphicsRectItem *> rectArray;
     static void clearArray();
     static void drawMatrix(QGraphicsScene *scene, QRect bigRect, QSize smallRect);
+    static void drawLine(QGraphicsScene *scene, QLineF lineItem, QSize smallRect);
+
+    static QLineF snapLine(QLineF mouseLine, QSizeF Box);
 
 };
 

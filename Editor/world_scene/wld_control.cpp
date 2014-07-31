@@ -111,17 +111,7 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     case (Qt::Key_Escape):
         if(!IsMoved)
             this->clearSelection();
-        if(pResizer!=NULL )
-        {
-            switch(pResizer->type)
-            {
-            case 0:
-                setScreenshotSelector(false, false);
-                break;
-            default:
-                break;
-            }
-        }
+        resetResizers();
         if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare || EditingMode == MODE_Line){
             item_rectangles::clearArray();
             MainWinConnect::pMainWin->on_actionSelect_triggered();
@@ -132,17 +122,7 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     case (Qt::Key_Enter):
     case (Qt::Key_Return):
 
-        if(pResizer!=NULL )
-        {
-            switch(pResizer->type)
-            {
-            case 0:
-                setScreenshotSelector(false, true);
-                break;
-            default:
-                break;
-            }
-        }
+        applyResizers();
             //setSectionResizer(false, true);
         break;
 
@@ -392,11 +372,26 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(cursor->isVisible())
                 {
-                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                QPoint hs = applyGrid( mouseEvent->scenePos().toPoint(),
                                        WldPlacingItems::gridSz,
                                        WldPlacingItems::gridOffset);
 
-                ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
+                //((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
+
+                QLineF s = item_rectangles::snapLine(QLineF(drawStartPos.x(),drawStartPos.y(), (qreal)hs.x(), (qreal)hs.y()),
+                                                     QSizeF((qreal)WldPlacingItems::itemW, (qreal)WldPlacingItems::itemH) );
+
+                QPoint hw = applyGrid( s.p2().toPoint(),
+                                    WldPlacingItems::gridSz,
+                                    WldPlacingItems::gridOffset);
+
+                s.setP2(QPointF((qreal)hw.x(),(qreal)hw.y()));
+
+                ((QGraphicsLineItem *)cursor)->setLine(s);
+
+                item_rectangles::drawLine(this, s,
+                       QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
+                                            );
 
                 }
             }
@@ -456,138 +451,9 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 cursor->hide();
                 break;
             }
-            // ///////////////////////////////////////////////////////////////
-
-            switch(placingItem)
-            {
-            case PLC_Tile:
-                {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/WldPlacingItems::itemW;
-                    int repHeight = height/WldPlacingItems::itemH;
-
-                    WorldData plSqTile;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            WldPlacingItems::TileSet.x = x + i * WldPlacingItems::itemW;
-                            WldPlacingItems::TileSet.y = y + j * WldPlacingItems::itemH;
-
-                            WldData->tile_array_id++;
-
-                            WldPlacingItems::TileSet.array_id = WldData->tile_array_id;
-
-                            WldData->tiles.push_back(WldPlacingItems::TileSet);
-                            placeTile(WldPlacingItems::TileSet, true);
-                            plSqTile.tiles.push_back(WldPlacingItems::TileSet);
-                        }
-                    }
-                    if(plSqTile.tiles.size() > 0)
-                    {
-                        //addPlaceHistory(plSqBgo);
-                    }
-                }
-            break;
-            case PLC_Scene:
-                {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/WldPlacingItems::itemW;
-                    int repHeight = height/WldPlacingItems::itemH;
-
-                    WorldData plSqScene;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            WldPlacingItems::SceneSet.x = x + i * WldPlacingItems::itemW;
-                            WldPlacingItems::SceneSet.y = y + j * WldPlacingItems::itemH;
-
-                            WldData->scene_array_id++;
-
-                            WldPlacingItems::SceneSet.array_id = WldData->scene_array_id;
-
-                            WldData->scenery.push_back(WldPlacingItems::SceneSet);
-                            placeScenery(WldPlacingItems::SceneSet, true);
-                            plSqScene.scenery.push_back(WldPlacingItems::SceneSet);
-                        }
-                    }
-                    if(plSqScene.scenery.size() > 0)
-                    {
-                        //addPlaceHistory(plSqScene);
-                        //restart Animation
-                    }
-                }
-            break;
-            case PLC_Path:
-                {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/WldPlacingItems::itemW;
-                    int repHeight = height/WldPlacingItems::itemH;
-
-                    WorldData plSqPath;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            WldPlacingItems::PathSet.x = x + i * WldPlacingItems::itemW;
-                            WldPlacingItems::PathSet.y = y + j * WldPlacingItems::itemH;
-
-                            WldData->path_array_id++;
-
-                            WldPlacingItems::PathSet.array_id = WldData->path_array_id;
-
-                            WldData->paths.push_back(WldPlacingItems::PathSet);
-                            placePath(WldPlacingItems::PathSet, true);
-                            plSqPath.paths.push_back(WldPlacingItems::PathSet);
-                        }
-                    }
-                    if(plSqPath.paths.size() > 0)
-                    {
-                        //addPlaceHistory(plSqPath);
-                        //restart Animation
-                    }
-                }
-            break;
-            case PLC_Level:
-                {
-                    long x = cursor->scenePos().x();
-                    long y = cursor->scenePos().y();
-                    long width = ((QGraphicsRectItem *)cursor)->rect().width();
-                    long height = ((QGraphicsRectItem *)cursor)->rect().height();
-                    int repWidth = width/WldPlacingItems::itemW;
-                    int repHeight = height/WldPlacingItems::itemH;
-
-                    WorldData plSqLevel;
-                    for(int i = 0; i < repWidth; i++){
-                        for(int j = 0; j < repHeight; j++){
-                            WldPlacingItems::LevelSet.x = x + i * WldPlacingItems::itemW;
-                            WldPlacingItems::LevelSet.y = y + j * WldPlacingItems::itemH;
-
-                            WldData->level_array_id++;
-
-                            WldPlacingItems::LevelSet.array_id = WldData->level_array_id;
-
-                            WldData->levels.push_back(WldPlacingItems::LevelSet);
-                            placeLevel(WldPlacingItems::LevelSet, true);
-                            plSqLevel.levels.push_back(WldPlacingItems::LevelSet);
-                        }
-                    }
-                    if(plSqLevel.levels.size() > 0)
-                    {
-                        //addPlaceHistory(plSqLevel);
-                        //restart Animation
-                    }
-                }
-            break;
-            default:
-                break;
-            }
-        item_rectangles::clearArray();
-        cursor->hide();
+            placeItemsByRectArray();
+            WldData->modified = true;
+            cursor->hide();
         }
         break;
         }
@@ -604,30 +470,14 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
             // ///////////////////////////////////////////////////////////////
 
-            switch(placingItem)
-            {
-            case PLC_Tile:
-                {
-                    break;
-                }
-            case PLC_Scene:
-                {
-                break;
-                }
-            }
-
-        cursor->hide();
+            placeItemsByRectArray();
+            WldData->modified = true;
+            cursor->hide();
         }
         break;
         }
     case MODE_PlacingNew:
         {
-    //        if(placingItem == PLC_Door)
-    //        {
-    //            MainWinConnect::pMainWin->on_actionSelect_triggered();
-    //            QGraphicsScene::mouseReleaseEvent(mouseEvent);
-    //            return;
-    //        }
             if(!placingItems.tiles.isEmpty()||
                     !placingItems.paths.isEmpty()||
                     !placingItems.scenery.isEmpty()||
@@ -936,6 +786,46 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 }
 
 
+void WldScene::placeItemsByRectArray()
+{
+    //This function placing items by yellow rectangles
+    if(item_rectangles::rectArray.isEmpty()) return;
+
+    QGraphicsItem * backup = cursor;
+    while(!item_rectangles::rectArray.isEmpty())
+    {
+        cursor = item_rectangles::rectArray.first();
+        item_rectangles::rectArray.pop_front();
+
+        foreach(dataFlag_w flag, WldPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
+
+        placeItemUnderCursor();
+
+        if(cursor) delete cursor;
+    }
+    cursor = backup;
+    cursor->hide();
+
+    if(!placingItems.tiles.isEmpty()||
+            !placingItems.scenery.isEmpty()||
+            !placingItems.paths.isEmpty()||
+            !placingItems.levels.isEmpty()||
+            !placingItems.music.isEmpty())
+    {
+
+        addPlaceHistory(placingItems);
+
+        placingItems.tiles.clear();
+        placingItems.scenery.clear();
+        placingItems.paths.clear();
+        placingItems.levels.clear();
+        placingItems.music.clear();
+    }
+
+}
+
+
 void WldScene::placeItemUnderCursor()
 {
     bool wasPlaced=false;
@@ -1153,108 +1043,3 @@ void WldScene::removeItemUnderCursor()
     }
 }
 
-void WldScene::setScreenshotSelector(bool enabled, bool accept)
-{
-    bool do_signal=false;
-    if((enabled)&&(pResizer==NULL))
-    {
-        pResizer = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 32 );
-        this->addItem(pResizer);
-        pResizer->setPos(captutedSize.x(), captutedSize.y());
-        pResizer->type=0;
-        pResizer->_minSize = QSizeF(800, 600);
-        this->setFocus(Qt::ActiveWindowFocusReason);
-        //DrawMode=true;
-        MainWinConnect::pMainWin->activeWldEditWin()->changeCursor(5);
-        MainWinConnect::pMainWin->resizeToolbarVisible(true);
-    }
-    else
-    {
-        if(pResizer!=NULL)
-        {
-            if(accept)
-            {
-                #ifdef _DEBUG_
-                WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
-                #endif
-
-                captutedSize = QRectF( pResizer->pos().x(),
-                                       pResizer->pos().y(),
-                                       pResizer->_width,
-                                       pResizer->_height);
-                do_signal=true;
-            }
-            delete pResizer;
-            pResizer = NULL;
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
-            MainWinConnect::pMainWin->resizeToolbarVisible(false);
-            //resetResizingSection=true;
-        }
-        DrawMode=false;
-    }
-
-    if(do_signal) screenshotSizeCaptured();
-}
-
-
-void WldScene::SwitchEditingMode(int EdtMode)
-{
-    //int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
-                     // 3 - drawing water/sand zone, 4 - placing from Buffer
-    //bool EraserEnabled;
-    //bool PasteFromBuffer;
-
-    //bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
-
-    //bool disableMoveItems;
-
-    //bool contextMenuOpened;
-    EraserEnabled=false;
-    PasteFromBuffer=false;
-    DrawMode=false;
-    disableMoveItems=false;
-
-    switch(EdtMode)
-    {
-    case MODE_PlacingNew:
-        DrawMode=true;
-        //setSectionResizer(false, false);
-
-        break;
-    case MODE_DrawSquare:
-        resetCursor();
-        //setSectionResizer(false, false);
-        DrawMode=true;
-        break;
-
-    case MODE_Resizing:
-        resetCursor();
-        DrawMode=true;
-        disableMoveItems=true;
-        break;
-
-    case MODE_PasteFromClip:
-        resetCursor();
-        //setSectionResizer(false, false);
-        disableMoveItems=true;
-        break;
-
-    case MODE_Erasing:
-        resetCursor();
-        //setSectionResizer(false, false);
-        break;
-
-    case MODE_SelectingOnly:
-        resetCursor();
-        //setSectionResizer(false, false);
-        disableMoveItems=true;
-        break;
-    case MODE_Selecting:
-    default:
-        resetCursor();
-        //setSectionResizer(false, false);
-        break;
-    }
-    EditingMode = EdtMode;
-
-}
