@@ -215,8 +215,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                                );
 
             //set data flags
-            for(int i=0; i<LvlPlacingItems::flags.size(); i++)
-                cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
+            foreach(dataFlag flag, LvlPlacingItems::flags)
+                cursor->setData(flag.first, flag.second);
 
             LvlPlacingItems::c_offset_x= qRound(qreal(LvlPlacingItems::blockSet.w) / 2);
             LvlPlacingItems::c_offset_y= qRound(qreal(LvlPlacingItems::blockSet.h) / 2);
@@ -339,8 +339,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor = addPixmap(tImg.copy(0, h*pConfigs->main_bgo[j].display_frame, w, h));
 
         //set data flags
-        for(int i=0; i<LvlPlacingItems::flags.size(); i++)
-            cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
+        foreach(dataFlag flag, LvlPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
 
         LvlPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         LvlPlacingItems::c_offset_y= qRound(qreal(h) / 2);
@@ -560,8 +560,8 @@ void LvlScene::setSquareDrawer()
     cursor = addRect(0,0,1,1, pen, brush);
 
     //set data flags
-    for(int i=0; i<LvlPlacingItems::flags.size(); i++)
-        cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
+    foreach(dataFlag flag, LvlPlacingItems::flags)
+        cursor->setData(flag.first, flag.second);
 
     cursor->setData(0, "Square");
 
@@ -596,8 +596,8 @@ void LvlScene::setLineDrawer()
     cursor = addLine(0,0,1,1, pen);
 
     //set data flags
-    for(int i=0; i<LvlPlacingItems::flags.size(); i++)
-        cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
+    foreach(dataFlag flag, LvlPlacingItems::flags)
+        cursor->setData(flag.first, flag.second);
 
     cursor->setData(0, "LineDrawer");
 
