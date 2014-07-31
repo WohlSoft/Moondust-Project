@@ -478,12 +478,6 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
     case MODE_PlacingNew:
         {
-    //        if(placingItem == PLC_Door)
-    //        {
-    //            MainWinConnect::pMainWin->on_actionSelect_triggered();
-    //            QGraphicsScene::mouseReleaseEvent(mouseEvent);
-    //            return;
-    //        }
             if(!placingItems.tiles.isEmpty()||
                     !placingItems.paths.isEmpty()||
                     !placingItems.scenery.isEmpty()||
