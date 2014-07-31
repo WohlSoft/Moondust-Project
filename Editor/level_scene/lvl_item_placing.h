@@ -19,8 +19,6 @@
 #ifndef LVL_ITEM_PLACING_H
 #define LVL_ITEM_PLACING_H
 
-#include "../common_features/data_flags.h"
-
 #include "../file_formats/lvl_filedata.h"
 class LvlPlacingItems
 {
@@ -63,7 +61,7 @@ public:
     static int gridSz;
     static QPoint gridOffset;
 
-    static QVector<dataFlag > flags;
+    static QList<QPair<int, QVariant > > flags;
 
 };
 

@@ -665,8 +665,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
             // ///////////////////////////////////////////////////////////////
 
-            WriteToLog(QtDebugMsg, "Line tool -> Placing blocks");
-
+            WriteToLog(QtDebugMsg, "Line tool -> Placing items");
             placeItemsByRectArray();
 
         LvlData->modified = true;
@@ -1105,8 +1104,8 @@ void LvlScene::placeItemsByRectArray()
         cursor = item_rectangles::rectArray.first();
         item_rectangles::rectArray.pop_front();
 
-        foreach(dataFlag flag, LvlPlacingItems::flags)
-            cursor->setData(flag.key, flag.data);
+        for(int i=0; i<LvlPlacingItems::flags.size(); i++)
+            cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
 
         placeItemUnderCursor();
 
