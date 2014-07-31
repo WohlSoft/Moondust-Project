@@ -1104,8 +1104,8 @@ void LvlScene::placeItemsByRectArray()
         cursor = item_rectangles::rectArray.first();
         item_rectangles::rectArray.pop_front();
 
-        for(int i=0; i<LvlPlacingItems::flags.size(); i++)
-            cursor->setData(LvlPlacingItems::flags[i].first, LvlPlacingItems::flags[i].second);
+        foreach(dataFlag flag, LvlPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
 
         placeItemUnderCursor();
 
