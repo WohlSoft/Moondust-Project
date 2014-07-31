@@ -34,10 +34,10 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
     qreal bottomA, bottomB;
     //qreal betweenZ;
 
-//    QList<QGraphicsItem *> collisions = this->items(
-//                QRectF(item->scenePos().x(),item->scenePos().y(),
-//                item->data(9).toReal(),item->data(10).toReal() ),
-//                Qt::IntersectsItemBoundingRect, Qt::AscendingOrder);
+    //    QList<QGraphicsItem *> collisions = this->items(
+    //                QRectF(item->scenePos().x()+1,item->scenePos().y()+1,
+    //                item->data(9).toReal()-2, item->data(10).toReal()-2 ),
+    //                Qt::IntersectsItemBoundingRect, Qt::AscendingOrder);
 
     QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
 
