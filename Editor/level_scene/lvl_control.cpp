@@ -302,6 +302,9 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
 }
 
 static QPointF drawStartPos = QPoint(0,0);
+static qlonglong last_block_arrayID=0;
+static qlonglong last_bgo_arrayID=0;
+static qlonglong last_npc_arrayID=0;
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
@@ -324,6 +327,10 @@ WriteToLog(QtDebugMsg, QString("Placing mode %1").arg(EditingMode));
                 return;
             }
 
+            last_block_arrayID=LvlData->blocks_array_id;
+            last_bgo_arrayID=LvlData->bgo_array_id;
+            last_npc_arrayID=LvlData->npc_array_id;
+
             if(cursor){
                 cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
                                                    QPoint(LvlPlacingItems::c_offset_x,
@@ -344,6 +351,10 @@ WriteToLog(QtDebugMsg, QString("Placing mode %1").arg(EditingMode));
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
                 return;
             }
+
+            last_block_arrayID=LvlData->blocks_array_id;
+            last_bgo_arrayID=LvlData->bgo_array_id;
+            last_npc_arrayID=LvlData->npc_array_id;
 
             WriteToLog(QtDebugMsg, QString("Square mode %1").arg(EditingMode));
             if(cursor){
@@ -373,6 +384,10 @@ WriteToLog(QtDebugMsg, QString("Placing mode %1").arg(EditingMode));
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
                 return;
             }
+
+            last_block_arrayID=LvlData->blocks_array_id;
+            last_bgo_arrayID=LvlData->bgo_array_id;
+            last_npc_arrayID=LvlData->npc_array_id;
 
             WriteToLog(QtDebugMsg, QString("Line mode %1").arg(EditingMode));
 
@@ -681,9 +696,23 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QGraphicsScene::mouseReleaseEvent(mouseEvent);
             return;
         }else{
+            if(!overwritedItems.blocks.isEmpty()||
+                !overwritedItems.bgo.isEmpty()||
+                !overwritedItems.npc.isEmpty() )
+            {
+                addOverwriteHistory(overwritedItems, placingItems);
+                overwritedItems.blocks.clear();
+                overwritedItems.bgo.clear();
+                overwritedItems.npc.clear();
+                placingItems.blocks.clear();
+                placingItems.bgo.clear();
+                placingItems.npc.clear();
+            }
+            else
             if(!placingItems.blocks.isEmpty()||
                     !placingItems.bgo.isEmpty()||
-                    !placingItems.npc.isEmpty()){
+                    !placingItems.npc.isEmpty())
+            {
                 addPlaceHistory(placingItems);
                 placingItems.blocks.clear();
                 placingItems.bgo.clear();
@@ -1114,6 +1143,19 @@ void LvlScene::placeItemsByRectArray()
     cursor = backup;
     cursor->hide();
 
+    if(!overwritedItems.blocks.isEmpty()||
+        !overwritedItems.bgo.isEmpty()||
+        !overwritedItems.npc.isEmpty() )
+    {
+        addOverwriteHistory(overwritedItems, placingItems);
+        overwritedItems.blocks.clear();
+        overwritedItems.bgo.clear();
+        overwritedItems.npc.clear();
+        placingItems.blocks.clear();
+        placingItems.bgo.clear();
+        placingItems.npc.clear();
+    }
+    else
     if(!placingItems.blocks.isEmpty()||
             !placingItems.bgo.isEmpty()||
             !placingItems.npc.isEmpty()){
@@ -1130,6 +1172,11 @@ void LvlScene::placeItemUnderCursor()
 {
     bool wasPlaced=false;
 
+//    last_block_arrayID=LvlData->blocks_array_id;
+//    last_bgo_arrayID=LvlData->bgo_array_id;
+//    last_npc_arrayID=LvlData->npc_array_id;
+
+
     if(LvlPlacingItems::overwriteMode)
     {   //remove all colliaded items before placing
         QGraphicsItem * xxx;
@@ -1137,24 +1184,29 @@ void LvlScene::placeItemUnderCursor()
         {
             if(xxx->data(0).toString()=="Block")
             {
+                if(xxx->data(2).toLongLong()>last_block_arrayID) break;
+                overwritedItems.blocks.push_back( ((ItemBlock *)xxx)->blockData );
                 ((ItemBlock *)xxx)->removeFromArray();
                 delete xxx;
             }
             else
             if(xxx->data(0).toString()=="BGO")
             {
+                if(xxx->data(2).toLongLong()>last_bgo_arrayID) break;
+                overwritedItems.bgo.push_back( ((ItemBGO *)xxx)->bgoData );
                 ((ItemBGO *)xxx)->removeFromArray();
                 delete xxx;
             }
             else
             if(xxx->data(0).toString()=="NPC")
             {
+                if(xxx->data(2).toLongLong()>last_npc_arrayID) break;
+                overwritedItems.npc.push_back( ((ItemNPC *)xxx)->npcData );
                 ((ItemNPC *)xxx)->removeFromArray();
                 delete xxx;
             }
         }
     }
-
 
     if( itemCollidesWith(cursor) )
     {

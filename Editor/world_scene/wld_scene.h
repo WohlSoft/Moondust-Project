@@ -191,6 +191,7 @@ public:
         enum HistoryType{
             WORLDHISTORY_REMOVE = 0,               //Removed from map
             WORLDHISTORY_PLACE,                    //Placed new
+            WORLDHISTORY_OVERWRITE,
             WORLDHISTORY_MOVE,                     //moved
             WORLDHISTORY_CHANGEDSETTINGSWORLD,
             WORLDHISTORY_CHANGEDSETTINGSWORLDITEM
@@ -242,6 +243,7 @@ public:
 
     void addRemoveHistory(WorldData removedItems);
     void addPlaceHistory(WorldData placedItems);
+    void addOverwriteHistory(WorldData removedItems, WorldData placedItems);
     void addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems);
     void addChangeWorldSettingsHistory(SettingSubType subtype, QVariant extraData);
     void addChangeSettingsHistory(WorldData modifiedItems, SettingSubType subType, QVariant extraData);
