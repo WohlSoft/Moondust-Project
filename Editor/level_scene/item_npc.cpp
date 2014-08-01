@@ -143,7 +143,6 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             newNpc = ItemMenu->addAction(tr("New NPC-Configuration"));
         newNpc->deleteLater();
         ItemMenu->addSeparator()->deleteLater();
-        //
 
         QMenu * chDir = ItemMenu->addMenu(
                     tr("Set %1").arg(
