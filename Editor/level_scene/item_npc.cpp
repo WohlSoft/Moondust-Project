@@ -62,6 +62,7 @@ ItemNPC::~ItemNPC()
     if(includedNPC!=NULL) delete includedNPC;
     if(grp!=NULL) delete grp;
     if(timer) delete timer;
+
 }
 
 
@@ -130,10 +131,20 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
             layerItems.push_back(setLayer);
         }
 
+        //
         ItemMenu->addSeparator()->deleteLater();
-        QAction *newNPC = ItemMenu->addAction(tr("New NPC-Configuration"));
-        newNPC->deleteLater();
+        QString path1 = scene->LvlData->path+QString("/npc-%1.txt").arg( npcData.id );
+        QString path2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
+        QAction *newNpc;
+        if(QFile().exists(path1))
+            newNpc = ItemMenu->addAction(tr("Edit NPC-Configuration"));
+        else if(QFile().exists(path2))
+            newNpc = ItemMenu->addAction(tr("Edit NPC-Configuraton"));
+        else
+            newNpc = ItemMenu->addAction(tr("New NPC-Configuration"));
+        newNpc->deleteLater();
         ItemMenu->addSeparator()->deleteLater();
+        //
 
         QMenu * chDir = ItemMenu->addMenu(
                     tr("Set %1").arg(
@@ -217,7 +228,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             scene->contextMenuOpened = false;
         }
         else
-        if(selected==newNPC){
+        if(selected==newNpc){
             QString path1 = scene->LvlData->path+QString("/npc-%1.txt").arg( npcData.id );
             QString path2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
 
@@ -520,7 +531,6 @@ void ItemNPC::setIncludedNPC(int npcID, bool init)
 
     QPixmap npcImg = QPixmap( scene->getNPCimg( npcID ) );
     includedNPC = scene->addPixmap( npcImg );
-
 
     //Default included NPC pos
     includedNPC->setPos(
