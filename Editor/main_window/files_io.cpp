@@ -60,7 +60,6 @@ void MainWindow::OpenFile(QString FilePath)
 
         LevelData FileData = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
         if( !FileData.ReadFileValid ) return;
-
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
