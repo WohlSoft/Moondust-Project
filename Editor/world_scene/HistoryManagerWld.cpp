@@ -52,6 +52,21 @@ void WldScene::addPlaceHistory(WorldData placedItems)
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
+void WldScene::addOverwriteHistory(WorldData removedItems, WorldData placedItems)
+{
+    cleanupRedoElements();
+
+    HistoryOperation ovOperation;
+    ovOperation.type = HistoryOperation::WORLDHISTORY_OVERWRITE;
+    ovOperation.data = placedItems;
+    ovOperation.data_mod = removedItems;
+
+    operationList.push_back(ovOperation);
+    historyIndex++;
+
+    MainWinConnect::pMainWin->refreshHistoryButtons();
+}
+
 void WldScene::addMoveHistory(WorldData sourceMovedItems, WorldData targetMovedItems)
 {
     cleanupRedoElements();
@@ -158,6 +173,55 @@ void WldScene::historyBack()
 
         break;
     }
+    case HistoryOperation::WORLDHISTORY_OVERWRITE:
+    {
+
+        //revert remove
+        WorldData deletedData = lastOperation.data_mod;
+
+        foreach (WorldTiles tile, deletedData.tiles)
+        {
+            //place them back
+            WldData->tiles.push_back(tile);
+            placeTile(tile);
+        }
+        foreach (WorldPaths path, deletedData.paths)
+        {
+            //place them back
+            WldData->paths.push_back(path);
+            placePath(path);
+        }
+        foreach (WorldScenery scenery, deletedData.scenery)
+        {
+            //place them back
+            WldData->scenery.push_back(scenery);
+            placeScenery(scenery);
+        }
+        foreach (WorldLevels level, deletedData.levels)
+        {
+            //place them back
+            WldData->levels.push_back(level);
+            placeLevel(level);
+        }
+        foreach (WorldMusic music, deletedData.music)
+        {
+            WldData->music.push_back(music);
+            placeMusicbox(music);
+        }
+
+        //revert place
+        WorldData placeData = lastOperation.data;
+
+        CallbackData cbData;
+        findGraphicsItem(placeData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels, &WldScene::historyRemoveMusic);
+
+
+        //refresh Animation control
+        if(opts.animationEnabled) stopAnimation();
+        if(opts.animationEnabled) startAnimation();
+
+        break;
+    }
     case HistoryOperation::WORLDHISTORY_MOVE:
     {
         //revert move
@@ -258,6 +322,53 @@ void WldScene::historyForward()
     }
     case HistoryOperation::WORLDHISTORY_PLACE:
     {
+        //revert remove
+        WorldData placedData = lastOperation.data;
+
+        foreach (WorldTiles tile, placedData.tiles)
+        {
+            //place them back
+            WldData->tiles.push_back(tile);
+            placeTile(tile);
+        }
+        foreach (WorldPaths path, placedData.paths)
+        {
+            //place them back
+            WldData->paths.push_back(path);
+            placePath(path);
+        }
+        foreach (WorldScenery scenery, placedData.scenery)
+        {
+            //place them back
+            WldData->scenery.push_back(scenery);
+            placeScenery(scenery);
+        }
+        foreach (WorldLevels level, placedData.levels)
+        {
+            //place them back
+            WldData->levels.push_back(level);
+            placeLevel(level);
+        }
+        foreach (WorldMusic music, placedData.music)
+        {
+            WldData->music.push_back(music);
+            placeMusicbox(music);
+        }
+
+        //refresh Animation control
+        if(opts.animationEnabled) stopAnimation();
+        if(opts.animationEnabled) startAnimation();
+
+        break;
+    }
+    case HistoryOperation::WORLDHISTORY_OVERWRITE:
+    {
+
+        //redo remove
+        WorldData deletedData = lastOperation.data_mod;
+
+        CallbackData cbData;
+        findGraphicsItem(deletedData, &lastOperation, cbData, &WldScene::historyRemoveTiles, &WldScene::historyRemovePath, &WldScene::historyRemoveScenery, &WldScene::historyRemoveLevels, &WldScene::historyRemoveMusic);
         //revert remove
         WorldData placedData = lastOperation.data;
 
@@ -1011,6 +1122,7 @@ QString WldScene::getHistoryText(WldScene::HistoryOperation operation)
     switch (operation.type) {
     case HistoryOperation::WORLDHISTORY_REMOVE: return tr("Remove");
     case HistoryOperation::WORLDHISTORY_PLACE: return tr("Place");
+    case HistoryOperation::WORLDHISTORY_OVERWRITE: return tr("Place & Overwrite");
     case HistoryOperation::WORLDHISTORY_MOVE: return tr("Move");
     case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLD: return tr("Changed Worldsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     case HistoryOperation::WORLDHISTORY_CHANGEDSETTINGSWORLDITEM: return tr("Changed Itemsetting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
