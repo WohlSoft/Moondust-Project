@@ -1065,11 +1065,10 @@ QPoint WldScene::calcTopLeftCorner(WorldData *data)
     }else if(!data->levels.isEmpty()){
         baseX = (int)data->levels[0].x;
         baseY = (int)data->levels[0].y;
-    }
-    /*else if(!data->music.isEmpty()){
+    }else if(!data->music.isEmpty()){
         baseX = (int)data->music[0].x;
         baseY = (int)data->music[0].y;
-    }*/
+    }
 
     foreach (WorldTiles tiles, data->tiles) {
         if((int)tiles.x<baseX){
@@ -1103,14 +1102,14 @@ QPoint WldScene::calcTopLeftCorner(WorldData *data)
             baseY = (int)level.y;
         }
     }
-//    foreach (WorldMusic music, data->music) {
-//        if((int)music.x<baseX){
-//            baseX = (int)music.x;
-//        }
-//        if((int)music.y<baseY){
-//            baseY = (int)music.y;
-//        }
-//    }
+    foreach (WorldMusic music, data->music) {
+        if((int)music.x<baseX){
+            baseX = (int)music.x;
+        }
+        if((int)music.y<baseY){
+            baseY = (int)music.y;
+        }
+    }
 
 
 
