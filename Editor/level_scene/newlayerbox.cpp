@@ -33,29 +33,43 @@ ToNewLayerBox::~ToNewLayerBox()
     delete ui;
 }
 
-void ToNewLayerBox::on_buttonBox_accepted()
+void ToNewLayerBox::closeEvent(QCloseEvent *event)
 {
-    lName = ui->layerName->text();
-    lLocked = ui->Lock->isChecked();
-    lHidden = ui->hide->isChecked();
+    reject();
+    event->accept();
+}
 
-    bool AlreadyExist=false;
-    foreach(LevelLayers layer, LvlData->layers)
+void ToNewLayerBox::on_buttonBox_clicked(QAbstractButton *button)
+{
+    if(ui->buttonBox->buttonRole(button)==QDialogButtonBox::AcceptRole)
     {
-        if( layer.name==lName )
+        lName = ui->layerName->text();
+        lLocked = ui->Lock->isChecked();
+        lHidden = ui->hide->isChecked();
+
+        bool AlreadyExist=false;
+        foreach(LevelLayers layer, LvlData->layers)
         {
-            AlreadyExist=true;
-            break;
+            if( layer.name==lName )
+            {
+                AlreadyExist=true;
+                break;
+            }
         }
-    }
-    if(AlreadyExist)
-    {
-        valid=false;
-        QMessageBox::warning(this,tr("Layer exists"), tr("Layer \"%1\" is exist, please, set other name.").arg(lName), QMessageBox::Ok);
+        if(AlreadyExist)
+        {
+            valid=false;
+            QMessageBox::warning(this,tr("Layer exists"), tr("Layer \"%1\" is exist, please, set other name.").arg(lName), QMessageBox::Ok);
+            return;
+        }
+        else
+        {
+            valid=true;
+            QDialog::accept();
+        }
     }
     else
     {
-        valid=true;
-        accept();
+            QDialog::reject();
     }
 }
