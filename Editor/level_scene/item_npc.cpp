@@ -133,13 +133,12 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 
         //
         ItemMenu->addSeparator()->deleteLater();
-        QString path1 = scene->LvlData->path+QString("/npc-%1.txt").arg( npcData.id );
-        QString path2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
+        QString NPCpath1 = scene->LvlData->path+QString("/npc-%1.txt").arg( npcData.id );
+        QString NPCpath2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
+
         QAction *newNpc;
-        if(QFile().exists(path1))
+        if( (QFile().exists(NPCpath2)) || (QFile().exists(NPCpath1)) )
             newNpc = ItemMenu->addAction(tr("Edit NPC-Configuration"));
-        else if(QFile().exists(path2))
-            newNpc = ItemMenu->addAction(tr("Edit NPC-Configuraton"));
         else
             newNpc = ItemMenu->addAction(tr("New NPC-Configuration"));
         newNpc->deleteLater();
@@ -229,19 +228,19 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         else
         if(selected==newNpc){
-            QString path1 = scene->LvlData->path+QString("/npc-%1.txt").arg( npcData.id );
-            QString path2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
+            //QString path1 = scene->LvlData->path+QString("/npc-%1.txt").arg( npcData.id );
+            //QString path2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
 
-            WriteToLog(QtDebugMsg, QString("NPC.txt path 1: %1").arg(path1));
-            WriteToLog(QtDebugMsg, QString("NPC.txt path 2: %1").arg(path2));
-            if( (!scene->LvlData->untitled) && (QFileInfo( path2 ).exists()) )
+            WriteToLog(QtDebugMsg, QString("NPC.txt path 1: %1").arg(NPCpath1));
+            WriteToLog(QtDebugMsg, QString("NPC.txt path 2: %1").arg(NPCpath2));
+            if( (!scene->LvlData->untitled) && (QFileInfo( NPCpath2 ).exists()) )
             {
-                MainWinConnect::pMainWin->OpenFile( path2 );
+                MainWinConnect::pMainWin->OpenFile( NPCpath2 );
             }
             else
-            if( (!scene->LvlData->untitled) && (QFileInfo( path1 ).exists()) )
+            if( (!scene->LvlData->untitled) && (QFileInfo( NPCpath1 ).exists()) )
             {
-                MainWinConnect::pMainWin->OpenFile( path1 );
+                MainWinConnect::pMainWin->OpenFile( NPCpath1 );
             }
             else
             {
