@@ -83,7 +83,6 @@ public:
     int imgOffsetY;
     int gridSize;
     bool no_npc_collions;
-
     //Locks
     bool isLocked;
     void setLocked(bool lock);
