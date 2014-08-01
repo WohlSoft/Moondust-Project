@@ -681,9 +681,23 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QGraphicsScene::mouseReleaseEvent(mouseEvent);
             return;
         }else{
+            if(!overwritedItems.blocks.isEmpty()||
+                !overwritedItems.bgo.isEmpty()||
+                !overwritedItems.npc.isEmpty() )
+            {
+                addOverwriteHistory(overwritedItems, placingItems);
+                overwritedItems.blocks.clear();
+                overwritedItems.bgo.clear();
+                overwritedItems.npc.clear();
+                placingItems.blocks.clear();
+                placingItems.bgo.clear();
+                placingItems.npc.clear();
+            }
+            else
             if(!placingItems.blocks.isEmpty()||
                     !placingItems.bgo.isEmpty()||
-                    !placingItems.npc.isEmpty()){
+                    !placingItems.npc.isEmpty())
+            {
                 addPlaceHistory(placingItems);
                 placingItems.blocks.clear();
                 placingItems.bgo.clear();
@@ -1114,6 +1128,19 @@ void LvlScene::placeItemsByRectArray()
     cursor = backup;
     cursor->hide();
 
+    if(!overwritedItems.blocks.isEmpty()||
+        !overwritedItems.bgo.isEmpty()||
+        !overwritedItems.npc.isEmpty() )
+    {
+        addOverwriteHistory(overwritedItems, placingItems);
+        overwritedItems.blocks.clear();
+        overwritedItems.bgo.clear();
+        overwritedItems.npc.clear();
+        placingItems.blocks.clear();
+        placingItems.bgo.clear();
+        placingItems.npc.clear();
+    }
+    else
     if(!placingItems.blocks.isEmpty()||
             !placingItems.bgo.isEmpty()||
             !placingItems.npc.isEmpty()){
@@ -1137,24 +1164,26 @@ void LvlScene::placeItemUnderCursor()
         {
             if(xxx->data(0).toString()=="Block")
             {
+                overwritedItems.blocks.push_back( ((ItemBlock *)xxx)->blockData );
                 ((ItemBlock *)xxx)->removeFromArray();
                 delete xxx;
             }
             else
             if(xxx->data(0).toString()=="BGO")
             {
+                overwritedItems.bgo.push_back( ((ItemBGO *)xxx)->bgoData );
                 ((ItemBGO *)xxx)->removeFromArray();
                 delete xxx;
             }
             else
             if(xxx->data(0).toString()=="NPC")
             {
+                overwritedItems.npc.push_back( ((ItemNPC *)xxx)->npcData );
                 ((ItemNPC *)xxx)->removeFromArray();
                 delete xxx;
             }
         }
     }
-
 
     if( itemCollidesWith(cursor) )
     {
