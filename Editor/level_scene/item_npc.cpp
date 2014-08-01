@@ -139,7 +139,7 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         if(QFile().exists(path1))
             newNpc = ItemMenu->addAction(tr("Edit NPC-Configuration"));
         else if(QFile().exists(path2))
-            newNpc = ItemMenu->addAction(tr("Edit NPC-Configuraton"));
+            newNpc = ItemMenu->addAction(tr("Edit NPC-Configuration"));
         else
             newNpc = ItemMenu->addAction(tr("New NPC-Configuration"));
         newNpc->deleteLater();
