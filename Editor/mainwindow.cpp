@@ -43,6 +43,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     if(!configs.loadconfigs())
     {
+        splash.setWindowFlags( splash.windowFlags() & ~Qt::WindowStaysOnTopHint );
         QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
         splash.finish(this);
         WriteToLog(QtFatalMsg, "<Error, application closed>");

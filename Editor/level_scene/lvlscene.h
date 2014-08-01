@@ -99,6 +99,7 @@ public:
     void placeItemUnderCursor();
     void placeItemsByRectArray();
     LevelData placingItems;
+    LevelData overwritedItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
 

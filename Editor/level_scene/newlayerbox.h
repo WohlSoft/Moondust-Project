@@ -20,6 +20,8 @@
 #define NEWLAYERBOX_H
 
 #include <QDialog>
+#include <QAbstractButton>
+#include <QCloseEvent>
 #include "../file_formats/lvl_filedata.h"
 
 namespace Ui {
@@ -40,8 +42,12 @@ public:
 
     LevelData * LvlData;
 
+protected:
+    virtual void closeEvent(QCloseEvent *event);
+
 private slots:
-    void on_buttonBox_accepted();
+    void on_buttonBox_clicked(QAbstractButton *button);
+
 
 private:
     Ui::ToNewLayerBox *ui;
