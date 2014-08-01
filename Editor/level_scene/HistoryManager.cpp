@@ -3651,6 +3651,7 @@ QString LvlScene::getHistoryText(LvlScene::HistoryOperation operation)
     switch (operation.type) {
     case HistoryOperation::LEVELHISTORY_REMOVE: return tr("Remove");
     case HistoryOperation::LEVELHISTORY_PLACE: return tr("Place");
+    case HistoryOperation::LEVELHISTORY_OVERWRITE: return tr("Place & Overwrite");
     case HistoryOperation::LEVELHISTORY_MOVE: return tr("Move");
     case HistoryOperation::LEVELHISTORY_CHANGEDSETTINGS: return tr("Changed Setting [%1]").arg(getHistorySettingText((SettingSubType)operation.subtype));
     case HistoryOperation::LEVELHISTORY_CHANGEDLAYER: return tr("Change Layer");
