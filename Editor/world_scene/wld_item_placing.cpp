@@ -589,27 +589,38 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setEnabled(true);
 
         break;
-//    case 5: //Check Spot
-//        placingItem=PLC_PlayerPoint;
-//        WldPlacingItems::playerID = itemID;
+    case 5: //Get point from a world map
+        placingItem=MODE_SetPoint;
+        WldPlacingItems::MusicSet.id = itemID;
 
-//        WldPlacingItems::gridSz=2;
-//        WldPlacingItems::gridOffset = QPoint(0,2);
+        WldPlacingItems::gridSz=32;
+        WldPlacingItems::gridOffset = QPoint(0,0);
 
-//        WldPlacingItems::c_offset_x = 16;
-//        WldPlacingItems::c_offset_y = 16;
+        WldPlacingItems::c_offset_x = 16;
+        WldPlacingItems::c_offset_y = 16;
 
-//        cursor = addPixmap(QString(":/player%1.png").arg(itemID+1));
-//        cursor->setData(25, "CURSOR");
-//        cursor->setZValue(7000);
-//        cursor->setOpacity( 0.8 );
-//        cursor->setVisible(true);
-//        cursor->setEnabled(true);
+        cursor = addRect(0,0, 32, 32);
+        cursor->setData(0, "WorldMapPoint");
+        cursor->setData(1, QString::number(itemID));
+        cursor->setData(9, QString::number(32));
+        cursor->setData(10, QString::number(32));
+        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::yellow));
+        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::yellow, 2,Qt::SolidLine));
+        cursor->setData(25, "CURSOR");
+        cursor->setZValue(7000);
+        cursor->setOpacity( 0.8 );
+        cursor->setVisible(false);
+        cursor->setEnabled(true);
 
-//        break;
+        SwitchEditingMode(MODE_SetPoint);
+
+        // restore last point
+        if(!selectedPointNotUsed) setPoint(selectedPoint);
+
+        break;
         default: break;
     }
-    SwitchEditingMode(MODE_PlacingNew);
+    if(itemType!=5) SwitchEditingMode(MODE_PlacingNew);
     contextMenuOpened=false;
 }
 

@@ -220,6 +220,9 @@ public slots:
 
     void resizeToolbarVisible(bool vis);
 
+    //Return Point from world map into a level properties
+    void WLD_returnPointToLevelProperties(QPoint p);
+
 private slots:
 
     //Actions

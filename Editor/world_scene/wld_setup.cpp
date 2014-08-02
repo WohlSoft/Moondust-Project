@@ -260,40 +260,39 @@ void WldScene::setLocked(int type, bool lock)
 
 void WldScene::SwitchEditingMode(int EdtMode)
 {
-    //int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
-                     // 3 - drawing water/sand zone, 4 - placing from Buffer
-    //bool EraserEnabled;
-    //bool PasteFromBuffer;
-
-    //bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
-
-    //bool disableMoveItems;
-
-    //bool contextMenuOpened;
-    EraserEnabled=false;
+    EraserEnabled=false; //All just selected items will be removed
     PasteFromBuffer=false;
-    DrawMode=false;
-    disableMoveItems=false;
+    DrawMode=false; //Placing/drawing on map, disable selecting and dragging items
+    disableMoveItems=false; // You can do anything with items, but can't move them
 
     switch(EdtMode)
     {
     case MODE_PlacingNew:
-        DrawMode=true;
         resetResizers();
-
+        unserPointSelector();
+        DrawMode=true;
         break;
+
     case MODE_DrawSquare:
         resetResizers();
+        unserPointSelector();
         DrawMode=true;
         break;
 
     case MODE_Line:
+        resetResizers();
+        unserPointSelector();
+        DrawMode=true;
+        break;
+
+    case MODE_SetPoint:
         resetResizers();
         DrawMode=true;
         break;
 
     case MODE_Resizing:
         resetCursor();
+        unserPointSelector();
         DrawMode=true;
         disableMoveItems=true;
         break;
@@ -301,24 +300,30 @@ void WldScene::SwitchEditingMode(int EdtMode)
     case MODE_PasteFromClip:
         resetCursor();
         resetResizers();
+        unserPointSelector();
         disableMoveItems=true;
         break;
 
     case MODE_Erasing:
         resetCursor();
         resetResizers();
+        unserPointSelector();
         break;
 
     case MODE_SelectingOnly:
         resetCursor();
         resetResizers();
+        unserPointSelector();
         disableMoveItems=true;
         break;
+
     case MODE_Selecting:
     default:
         resetCursor();
         resetResizers();
+        unserPointSelector();
         break;
+
     }
     EditingMode = EdtMode;
 
