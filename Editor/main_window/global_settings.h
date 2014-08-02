@@ -51,8 +51,10 @@ public:
     static bool LevelLayersBoxVis;
     static bool LevelEventsBoxVis;
     static bool LevelSearchBoxVis;
+
     static bool WorldToolBoxVis;
     static bool WorldSettingsToolboxVis;
+    static bool WorldSearchBoxVis;
 
     //Last active file type state
     static int lastWinType;

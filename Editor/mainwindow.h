@@ -577,10 +577,16 @@ private slots:
 
     void on_actionShow_Development_Console_triggered();
 
+
+    //World map Find toolbox
+    void on_actionWLD_SearchBox_triggered(bool checked);
+    void on_WorldFindDock_visibilityChanged(bool visible);
     void on_FindStartLevel_clicked();
+
 
 signals:
     void closeEditor();
+
 
 private:
 
