@@ -162,7 +162,9 @@ SOURCES += main.cpp\
     level_scene/lvl_resizers.cpp \
     world_scene/wld_resizers.cpp \
     dev_console/devconsole.cpp \
-    world_scene/item_point.cpp
+    world_scene/item_point.cpp \
+    main_window/dock/wld_search_toolbox.cpp
+
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
