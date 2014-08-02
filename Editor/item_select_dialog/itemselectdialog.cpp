@@ -30,7 +30,7 @@ static bool lock_grp=false;
 static bool lock_cat=false;
 
 ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData,
-                                   int curSelIDBlock, int curSelIDBGO, int curSelIDNPC, QWidget *parent) :
+                                   int curSelIDBlock, int curSelIDBGO, int curSelIDNPC, int curSelIDTile, int curSelIDScenery, int curSelIDPath, int curSelIDLevel, int curSelIDMusic, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItemSelectDialog)
 {
@@ -43,25 +43,54 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
     QListWidgetItem * empBlock = new QListWidgetItem();
     QListWidgetItem * empBGO = new QListWidgetItem();
     QListWidgetItem * empNPC = new QListWidgetItem();
+    QListWidgetItem * empTile = new QListWidgetItem();
+    QListWidgetItem * empScenery = new QListWidgetItem();
+    QListWidgetItem * empPath = new QListWidgetItem();
+    QListWidgetItem * empLevel = new QListWidgetItem();
+    QListWidgetItem * empMusic = new QListWidgetItem();
     empBlock->setFont(font);
     empBGO->setFont(font);
     empNPC->setFont(font);
+    empTile->setFont(font);
+    empScenery->setFont(font);
+    empPath->setFont(font);
+    empLevel->setFont(font);
+    empMusic->setFont(font);
     QString emTxt = tr("[Empty]");
     empBlock->setText(emTxt);
     empBGO->setText(emTxt);
     empNPC->setText(emTxt);
+    empTile->setText(emTxt);
+    empScenery->setText(emTxt);
+    empPath->setText(emTxt);
+    empLevel->setText(emTxt);
+    empMusic->setText(emTxt);
     empBlock->setData(3, QVariant(0));
     empBGO->setData(3, QVariant(0));
     empNPC->setData(3, QVariant(0));
+    empTile->setData(3, QVariant(0));
+    empScenery->setData(3, QVariant(0));
+    empPath->setData(3, QVariant(0));
+    empLevel->setData(3, QVariant(0));
+    empMusic->setData(3, QVariant(0));
 
     ui->Sel_List_Block->insertItem(0,empBlock);
     ui->Sel_List_BGO->insertItem(0,empBGO);
     ui->Sel_List_NPC->insertItem(0,empNPC);
-
+    ui->Sel_List_Tile->insertItem(0,empNPC);
+    ui->Sel_List_Scenery->insertItem(0,empNPC);
+    ui->Sel_List_Path->insertItem(0,empNPC);
+    ui->Sel_List_Level->insertItem(0,empNPC);
+    ui->Sel_List_Music->insertItem(0,empNPC);
 
     bool blockTab = tabs & TAB_BLOCK;
     bool bgoTab = tabs & TAB_BGO;
     bool npcTab = tabs & TAB_NPC;
+    bool tileTab = tabs & TAB_TILE;
+    bool sceneryTab = tabs & TAB_SCENERY;
+    bool pathTab = tabs & TAB_PATH;
+    bool levelTab = tabs & TAB_LEVEL;
+    bool musicTab = tabs & TAB_MUSIC;
     bool isCoinSel = npcExtraData & NPCEXTRA_ISCOINSELECTED;
 
     if(!blockTab)
@@ -72,6 +101,22 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
 
     if(!npcTab)
         ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC));
+
+    if(!tileTab)
+        ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Tile));
+
+    if(!sceneryTab)
+        ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Scenery));
+
+    if(!pathTab)
+        ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Path));
+
+    if(!levelTab)
+        ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Level));
+
+    if(!musicTab)
+        ui->Sel_TabCon_ItemType->removeTab(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Music));
+
 
     if(npcExtraData & NPCEXTRA_WITHCOINS){
         npcFromList = new QRadioButton(tr("NPC from List"));
@@ -140,11 +185,72 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
         }
     }
 
+    if(tileTab){
+        foreach (obj_w_tile tileItem, conf->main_wtiles) {
+            //Add category
+            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(tileItem.id));
+            item->setIcon( QIcon( tileItem.image ) );
+            item->setData(3, QString::number(tileItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            ui->Sel_List_Tile->addItem(item);
+        }
+    }
+
+    if(sceneryTab){
+        foreach (obj_w_scenery sceneryItem, conf->main_wscene) {
+            //Add category
+            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(sceneryItem.id));
+            item->setIcon( QIcon( sceneryItem.image ) );
+            item->setData(3, QString::number(sceneryItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            ui->Sel_List_Scenery->addItem(item);
+        }
+    }
+
+    if(pathTab){
+        foreach (obj_w_path pathItem, conf->main_wpaths) {
+            //Add category
+            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(pathItem.id));
+            item->setIcon( QIcon( pathItem.image ) );
+            item->setData(3, QString::number(pathItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            ui->Sel_List_Path->addItem(item);
+        }
+    }
+
+    if(levelTab){
+        foreach (obj_w_level levelItem, conf->main_wlevels) {
+            //Add category
+            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(levelItem.id));
+            item->setIcon( QIcon( levelItem.image ) );
+            item->setData(3, QString::number(levelItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            ui->Sel_List_Level->addItem(item);
+        }
+    }
+
+    if(musicTab){
+        foreach (obj_music musicItem, conf->main_music_wld) {
+            //Add category
+            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(musicItem.id));
+            item->setIcon( QIcon( QPixmap(":/images/playmusic.png") ) );
+            item->setData(3, QString::number(musicItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+            ui->Sel_List_Music->addItem(item);
+        }
+    }
+
+
     updateBoxes();
     on_Sel_TabCon_ItemType_currentChanged(ui->Sel_TabCon_ItemType->currentIndex());
 
     selectListItem(ui->Sel_List_Block, curSelIDBlock);
     selectListItem(ui->Sel_List_BGO, curSelIDBGO);
+    selectListItem(ui->Sel_List_Tile, curSelIDTile);
+    selectListItem(ui->Sel_List_Scenery, curSelIDScenery);
+    selectListItem(ui->Sel_List_Path, curSelIDPath);
+    selectListItem(ui->Sel_List_Level, curSelIDLevel);
+    selectListItem(ui->Sel_List_Music, curSelIDMusic);
     if(!isCoinSel)
         selectListItem(ui->Sel_List_NPC, curSelIDNPC);
 }
@@ -164,6 +270,21 @@ void ItemSelectDialog::removeEmptyEntry(int tabs)
 
     if(tabs & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
         delete ui->Sel_List_NPC->item(0);
+
+    if(tabs & TAB_TILE && ui->Sel_List_Tile->item(0)->data(3).toInt() == 0)
+        delete ui->Sel_List_Tile->item(0);
+
+    if(tabs & TAB_SCENERY && ui->Sel_List_Scenery->item(0)->data(3).toInt() == 0)
+        delete ui->Sel_List_Scenery->item(0);
+
+    if(tabs & TAB_PATH && ui->Sel_List_Path->item(0)->data(3).toInt() == 0)
+        delete ui->Sel_List_Path->item(0);
+
+    if(tabs & TAB_LEVEL && ui->Sel_List_Level->item(0)->data(3).toInt() == 0)
+        delete ui->Sel_List_Level->item(0);
+
+    if(tabs & TAB_MUSIC && ui->Sel_List_Music->item(0)->data(3).toInt() == 0)
+        delete ui->Sel_List_Music->item(0);
 
     removalFlags = tabs;
 
