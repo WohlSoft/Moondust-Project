@@ -32,7 +32,9 @@ class ItemSelectDialog : public QDialog
 
 public:
     explicit ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData = 0,
-                              int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0, QWidget *parent = 0);
+                              int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0,
+                              int curSelIDTile = 0, int curSelIDScenery = 0, int curSelIDPath = 0,
+                              int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = 0);
     ~ItemSelectDialog();
 
     int blockID;
@@ -44,7 +46,12 @@ public:
     enum Tabs{
         TAB_BLOCK = 1 << 0,
         TAB_BGO = 1 << 1,
-        TAB_NPC = 1 << 2
+        TAB_NPC = 1 << 2,
+        TAB_TILE = 1 << 3,
+        TAB_SCENERY = 1 << 4,
+        TAB_PATH = 1 << 5,
+        TAB_LEVEL = 1 << 6,
+        TAB_MUSIC = 1 << 7
     };
 
     enum NpcExtraFlags{

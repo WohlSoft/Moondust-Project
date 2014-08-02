@@ -574,6 +574,8 @@ private slots:
 
     void on_actionShow_Development_Console_triggered();
 
+    void on_FindStartLevel_clicked();
+
 signals:
     void closeEditor();
 
