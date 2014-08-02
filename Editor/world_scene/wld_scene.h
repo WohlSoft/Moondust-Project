@@ -65,9 +65,23 @@ public:
     bool disableMoveItems;
     bool contextMenuOpened;
 
+
+    SimpleAnimator * pointAnimation;
+    QPixmap pointImg;
+    bool isSelectionDialog; // If scene created in the point selection dialog
+                            // disable all cols via activeWldEditWin()-> and disable rightclick
+                            // for change mode into "select"
+
     QPoint selectedPoint; // SELECTING Point on the map
+    bool selectedPointNotUsed; //point is not selected (used because QPoint::isNull()
+                               //will work in the x0-y0, but this point are usable)
+                               //If value true, initial position will be 0x0, else already placed point
 
     QPixmap musicBoxImg;
+    void setPoint(QPoint p);   //Set Point item
+    void unserPointSelector(); //remove point item from world map
+
+    QGraphicsItem * pointTarget;
 
     enum EditMode
     {
@@ -79,7 +93,7 @@ public:
         MODE_Resizing,
         MODE_SelectingOnly,
         MODE_Line,
-        MODE_CheckSpot
+        MODE_SetPoint
     };
 
 

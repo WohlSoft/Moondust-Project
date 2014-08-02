@@ -570,6 +570,17 @@ void MainWindow::on_WLD_PROPS_GotoY_editingFinished()
     }
 }
 
+void MainWindow::WLD_returnPointToLevelProperties(QPoint p)
+{
+    ui->WLD_PROPS_GotoX->setText(QString::number(p.x()));
+    ui->WLD_PROPS_GotoY->setText(QString::number(p.y()));
+
+    ui->WLD_PROPS_GotoX->setModified(true);
+    on_WLD_PROPS_GotoX_editingFinished();
+    ui->WLD_PROPS_GotoY->setModified(true);
+    on_WLD_PROPS_GotoY_editingFinished();
+}
+
 void MainWindow::on_WLD_PROPS_GetPoint_clicked()
 {
     if(wld_tools_lock) return;
@@ -579,7 +590,31 @@ void MainWindow::on_WLD_PROPS_GetPoint_clicked()
         QMessageBox::information(this, QString(tr("Placing mode")), tr("Place item on the map first and call 'Properties' context menu item."), QMessageBox::Ok);
         return;
     }
+    else
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
+        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
 
+        WldPlacingItems::fillingMode = false;
+        ui->actionSquareFill->setChecked(false);
+        ui->actionSquareFill->setEnabled(false);
 
+        WldPlacingItems::lineMode = false;
+        ui->actionLine->setChecked(false);
+        ui->actionLine->setEnabled(false);
+        if(ui->WLD_PROPS_GotoX->text().isEmpty()||ui->WLD_PROPS_GotoY->text().isEmpty())
+        {
+            activeWldEditWin()->scene->selectedPointNotUsed = true;
+        }
+        else
+        {
+            activeWldEditWin()->scene->selectedPointNotUsed = false;
+            activeWldEditWin()->scene->selectedPoint=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
+        }
+
+        activeWldEditWin()->scene->setItemPlacer(5);
+        activeWldEditWin()->setFocus();
+    }
 
 }

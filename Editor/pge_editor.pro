@@ -161,7 +161,8 @@ SOURCES += main.cpp\
     edit_world/wld_saveimage.cpp \
     level_scene/lvl_resizers.cpp \
     world_scene/wld_resizers.cpp \
-    dev_console/devconsole.cpp
+    dev_console/devconsole.cpp \
+    world_scene/item_point.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -225,7 +226,8 @@ HEADERS  += mainwindow.h \
     common_features/item_rectangles.h \
     edit_world/wld_saveimage.h \
     version.h \
-    dev_console/devconsole.h
+    dev_console/devconsole.h \
+    world_scene/item_point.h
 
 FORMS    += \
     mainwindow.ui \

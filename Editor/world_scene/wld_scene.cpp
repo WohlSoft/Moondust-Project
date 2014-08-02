@@ -51,6 +51,8 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
     disableMoveItems = false;
     DrawMode=false;
 
+    isSelectionDialog=false;
+
     //Editing process flags
     IsMoved = false;
     haveSelected = false;
@@ -62,6 +64,10 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
     contextMenuOpened = false;
 
     selectedPoint = QPoint(0, 0);
+    selectedPointNotUsed=true;
+    pointTarget = NULL;
+    pointAnimation = NULL;
+    pointImg=QPixmap(":/images/set_point.png");
 
     cursor = NULL;
     resetCursor();
