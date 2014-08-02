@@ -95,13 +95,16 @@ void MainWindow::updateMenus(bool force)
     {
         GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
         GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
+        GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
         ui->WorldToolBox->setVisible( 0 );
         ui->WorldSettings->setVisible( 0 );
+        ui->WorldFindDock->setVisible( 0 );
     }
     if((GlobalSettings::lastWinType !=3) && (WinType==3))
     {
         ui->WorldToolBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
         ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
+        ui->WorldFindDock->setVisible( GlobalSettings::WorldSearchBoxVis );
     }
 
     GlobalSettings::lastWinType =   WinType;

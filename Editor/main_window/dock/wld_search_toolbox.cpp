@@ -22,6 +22,20 @@
 
 bool lockResetWorld = false;
 
+
+void MainWindow::on_actionWLD_SearchBox_triggered(bool checked)
+{
+    ui->WorldFindDock->setVisible(checked);
+    if(checked)ui->WorldFindDock->raise();
+}
+
+void MainWindow::on_WorldFindDock_visibilityChanged(bool visible)
+{
+    ui->actionWLD_SearchBox->setChecked(visible);
+}
+
+
+
 void MainWindow::on_FindStartLevel_clicked()
 {
     ItemSelectDialog* sel = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_TILE | ItemSelectDialog::TAB_SCENERY |

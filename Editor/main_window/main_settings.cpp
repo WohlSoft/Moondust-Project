@@ -39,6 +39,7 @@ int GlobalSettings::musicVolume=100;
 bool GlobalSettings::LevelToolBoxVis=true;
 bool GlobalSettings::WorldToolBoxVis=true;
 bool GlobalSettings::WorldSettingsToolboxVis=false;
+bool GlobalSettings::WorldSearchBoxVis=false;
 
 bool GlobalSettings::SectionToolBoxVis=false;
 bool GlobalSettings::LevelDoorsBoxVis=false;
@@ -155,6 +156,13 @@ void MainWindow::setUiDefults()
                 ui->WLD_ItemProps->height()
                 );
 
+    ui->WorldFindDock->setGeometry(
+                mwg.x()+mwg.width()-ui->WorldFindDock->width()-10,
+                mwg.y()+120,
+                ui->WorldFindDock->width(),
+                ui->WorldFindDock->height()
+                );
+
     loadSettings();
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)),
@@ -186,22 +194,23 @@ void MainWindow::setUiDefults()
     ui->WorldToolBox->hide();
     ui->WorldSettings->hide();
     ui->WLD_ItemProps->hide();
+    ui->WorldFindDock->hide();
 
-    ui->menuView->setEnabled(0);
+    ui->menuView->setEnabled(false);
 
-    ui->menuWindow->setEnabled(1);
+    ui->menuWindow->setEnabled(true);
 
-    ui->menuLevel->setEnabled(0);
-    ui->menuWorld->setEnabled(0);
-    ui->LevelObjectToolbar->setVisible(0);
-    ui->WorldObjectToolbar->setVisible(0);
+    ui->menuLevel->setEnabled(false);
+    ui->menuWorld->setEnabled(false);
+    ui->LevelObjectToolbar->setVisible(false);
+    ui->WorldObjectToolbar->setVisible(false);
 
-    ui->actionLVLToolBox->setVisible(0);
-    ui->actionWarpsAndDoors->setVisible(0);
-    ui->actionSection_Settings->setVisible(0);
-    ui->actionWarpsAndDoors->setVisible(0);
-    ui->actionWLDToolBox->setVisible(0);
-    ui->actionGridEn->setChecked(1);
+    ui->actionLVLToolBox->setVisible(false);
+    ui->actionWarpsAndDoors->setVisible(false);
+    ui->actionSection_Settings->setVisible(false);
+    ui->actionWarpsAndDoors->setVisible(false);
+    ui->actionWLDToolBox->setVisible(false);
+    ui->actionGridEn->setChecked(true);
 
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
@@ -340,6 +349,7 @@ void MainWindow::loadSettings()
 
         GlobalSettings::WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
         GlobalSettings::WorldSettingsToolboxVis = settings.value("world-props-visible", "false").toBool();
+        GlobalSettings::WorldSearchBoxVis = settings.value("world-search-visible", "false").toBool();
 
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
@@ -362,6 +372,7 @@ void MainWindow::loadSettings()
         //ui->WorldToolBox->setFloating(settings.value("world-item-box-float", false).toBool());
         ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
         ui->WLD_ItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
+        ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
 
         ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
@@ -372,6 +383,7 @@ void MainWindow::loadSettings()
         ui->WorldToolBox->restoreGeometry(settings.value("world-item-box-geometry", ui->WorldToolBox->saveGeometry()).toByteArray());
         ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
         ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
+        ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
@@ -399,6 +411,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("world-tb-visible", GlobalSettings::WorldToolBoxVis);
     settings.setValue("world-props-visible", GlobalSettings::WorldSettingsToolboxVis);
+    settings.setValue("world-search-visible", GlobalSettings::WorldSearchBoxVis);
 
     settings.setValue("level-tb-visible", GlobalSettings::LevelToolBoxVis);
     settings.setValue("section-tb-visible", GlobalSettings::SectionToolBoxVis);
@@ -417,6 +430,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-item-box-float", ui->WorldToolBox->isFloating());
     settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
     settings.setValue("world-itemprops-box-float", ui->WLD_ItemProps->isFloating());
+    settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
 
     settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
@@ -428,6 +442,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-item-box-geometry", ui->WorldToolBox->saveGeometry());
     settings.setValue("world-settings-box-geometry", ui->WorldSettings->saveGeometry());
     settings.setValue("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry());
+    settings.setValue("world-search-geometry", ui->WorldFindDock->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
