@@ -18,7 +18,7 @@
     <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="2" rowspan="2">
+   <item row="2" column="3" rowspan="2" colspan="4">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -31,7 +31,30 @@
      </property>
     </spacer>
    </item>
-   <item row="4" column="0" colspan="4">
+   <item row="0" column="5">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="7" rowspan="5">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="8">
     <widget class="QGraphicsView" name="graphicsView">
      <property name="minimumSize">
       <size>
@@ -47,7 +70,14 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="3">
+   <item row="4" column="0" colspan="7">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Note: For scroll on the map, use the mousewheel. With pressed ALT key you can scroll horisontal</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="7">
     <widget class="QLabel" name="label">
      <property name="font">
       <font>
@@ -60,7 +90,52 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="0" column="2">
+    <widget class="QPushButton" name="GotoPoint">
+     <property name="toolTip">
+      <string>You will change current position to the last selected point. If point is not set, position will not be changed.</string>
+     </property>
+     <property name="text">
+      <string>Go to point</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../_resources/editor.qrc">
+       <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="animation">
+     <property name="toolTip">
+      <string>Start and stop animation of placed on the map items.</string>
+     </property>
+     <property name="text">
+      <string>Animation</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../_resources/editor.qrc">
+       <normaloff>:/images/animation.png</normaloff>:/images/animation.png</iconset>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QPushButton" name="ResetPosition">
+     <property name="toolTip">
+      <string>You will return to the x0-y0 position of the map.</string>
+     </property>
+     <property name="text">
+      <string>Reset position</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../_resources/editor.qrc">
+       <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
     <widget class="QLabel" name="label_2">
      <property name="font">
       <font>
@@ -73,14 +148,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QLabel" name="y_point">
-     <property name="text">
-      <string notr="true">y_place</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QLabel" name="label_3">
      <property name="font">
       <font>
@@ -93,27 +161,17 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="2" column="1" colspan="2">
     <widget class="QLabel" name="x_point">
      <property name="text">
-      <string notr="true">x_place</string>
+      <string notr="true">[Empty]</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QLabel" name="label_4">
+   <item row="3" column="1" colspan="2">
+    <widget class="QLabel" name="y_point">
      <property name="text">
-      <string>Note: For scroll on the map, use the mousewheel. With pressed ALT key you can scroll horisontal</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3" rowspan="4">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <string notr="true">[Empty]</string>
      </property>
     </widget>
    </item>
@@ -122,38 +180,5 @@
  <resources>
   <include location="../_resources/editor.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>WLD_SetPoint</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>WLD_SetPoint</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
