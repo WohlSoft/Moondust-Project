@@ -29,12 +29,23 @@ static QString grp_npc = "";
 static bool lock_grp=false;
 static bool lock_cat=false;
 
-ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData,
+QString allWLabel_F = "[all]";
+QString customWLabel_F = "[custom]";
+
+bool lock_Wgrp_F=false;
+bool lock_Wcat_F=false;
+
+static QString grp_tiles = "";
+static QString grp_paths = "";
+static QString grp_scenes = "";
+
+ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData,
                                    int curSelIDBlock, int curSelIDBGO, int curSelIDNPC, int curSelIDTile, int curSelIDScenery, int curSelIDPath, int curSelIDLevel, int curSelIDMusic, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItemSelectDialog)
 {
-    conf = configs;
+
+    this->conf = conf;
     removalFlags = 0;
     ui->setupUi(this);
 
@@ -43,45 +54,35 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
     QListWidgetItem * empBlock = new QListWidgetItem();
     QListWidgetItem * empBGO = new QListWidgetItem();
     QListWidgetItem * empNPC = new QListWidgetItem();
-    QListWidgetItem * empTile = new QListWidgetItem();
     QListWidgetItem * empScenery = new QListWidgetItem();
-    QListWidgetItem * empPath = new QListWidgetItem();
     QListWidgetItem * empLevel = new QListWidgetItem();
     QListWidgetItem * empMusic = new QListWidgetItem();
     empBlock->setFont(font);
     empBGO->setFont(font);
     empNPC->setFont(font);
-    empTile->setFont(font);
     empScenery->setFont(font);
-    empPath->setFont(font);
     empLevel->setFont(font);
     empMusic->setFont(font);
     QString emTxt = tr("[Empty]");
     empBlock->setText(emTxt);
     empBGO->setText(emTxt);
     empNPC->setText(emTxt);
-    empTile->setText(emTxt);
     empScenery->setText(emTxt);
-    empPath->setText(emTxt);
     empLevel->setText(emTxt);
     empMusic->setText(emTxt);
     empBlock->setData(3, QVariant(0));
     empBGO->setData(3, QVariant(0));
     empNPC->setData(3, QVariant(0));
-    empTile->setData(3, QVariant(0));
     empScenery->setData(3, QVariant(0));
-    empPath->setData(3, QVariant(0));
     empLevel->setData(3, QVariant(0));
     empMusic->setData(3, QVariant(0));
 
     ui->Sel_List_Block->insertItem(0,empBlock);
     ui->Sel_List_BGO->insertItem(0,empBGO);
     ui->Sel_List_NPC->insertItem(0,empNPC);
-    ui->Sel_List_Tile->insertItem(0,empNPC);
-    ui->Sel_List_Scenery->insertItem(0,empNPC);
-    ui->Sel_List_Path->insertItem(0,empNPC);
-    ui->Sel_List_Level->insertItem(0,empNPC);
-    ui->Sel_List_Music->insertItem(0,empNPC);
+    ui->Sel_List_Scenery->insertItem(0,empScenery);
+    ui->Sel_List_Level->insertItem(0,empLevel);
+    ui->Sel_List_Music->insertItem(0,empMusic);
 
     bool blockTab = tabs & TAB_BLOCK;
     bool bgoTab = tabs & TAB_BGO;
@@ -185,16 +186,6 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
         }
     }
 
-    if(tileTab){
-        foreach (obj_w_tile tileItem, conf->main_wtiles) {
-            //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(tileItem.id));
-            item->setIcon( QIcon( tileItem.image ) );
-            item->setData(3, QString::number(tileItem.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-            ui->Sel_List_Tile->addItem(item);
-        }
-    }
 
     if(sceneryTab){
         foreach (obj_w_scenery sceneryItem, conf->main_wscene) {
@@ -204,17 +195,6 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
             item->setData(3, QString::number(sceneryItem.id) );
             item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
             ui->Sel_List_Scenery->addItem(item);
-        }
-    }
-
-    if(pathTab){
-        foreach (obj_w_path pathItem, conf->main_wpaths) {
-            //Add category
-            QListWidgetItem* item = new QListWidgetItem(QString("tile-%1").arg(pathItem.id));
-            item->setIcon( QIcon( pathItem.image ) );
-            item->setData(3, QString::number(pathItem.id) );
-            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
-            ui->Sel_List_Path->addItem(item);
         }
     }
 
@@ -242,15 +222,18 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraD
 
 
     updateBoxes();
+    setWldItemBoxes();
+
     on_Sel_TabCon_ItemType_currentChanged(ui->Sel_TabCon_ItemType->currentIndex());
 
     selectListItem(ui->Sel_List_Block, curSelIDBlock);
     selectListItem(ui->Sel_List_BGO, curSelIDBGO);
-    selectListItem(ui->Sel_List_Tile, curSelIDTile);
     selectListItem(ui->Sel_List_Scenery, curSelIDScenery);
-    selectListItem(ui->Sel_List_Path, curSelIDPath);
     selectListItem(ui->Sel_List_Level, curSelIDLevel);
     selectListItem(ui->Sel_List_Music, curSelIDMusic);
+
+    selectListItem(ui->Sel_List_Tile, curSelIDTile);
+    selectListItem(ui->Sel_List_Path, curSelIDPath);
     if(!isCoinSel)
         selectListItem(ui->Sel_List_NPC, curSelIDNPC);
 }
@@ -271,14 +254,14 @@ void ItemSelectDialog::removeEmptyEntry(int tabs)
     if(tabs & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
         delete ui->Sel_List_NPC->item(0);
 
-    if(tabs & TAB_TILE && ui->Sel_List_Tile->item(0)->data(3).toInt() == 0)
-        delete ui->Sel_List_Tile->item(0);
+    if(tabs & TAB_TILE && ui->Sel_List_Tile->item(0,0)->data(3).toInt() == 0)
+        delete ui->Sel_List_Tile->item(0,0);
 
     if(tabs & TAB_SCENERY && ui->Sel_List_Scenery->item(0)->data(3).toInt() == 0)
         delete ui->Sel_List_Scenery->item(0);
 
-    if(tabs & TAB_PATH && ui->Sel_List_Path->item(0)->data(3).toInt() == 0)
-        delete ui->Sel_List_Path->item(0);
+    if(tabs & TAB_PATH && ui->Sel_List_Path->item(0,0)->data(3).toInt() == 0)
+        delete ui->Sel_List_Path->item(0,0);
 
     if(tabs & TAB_LEVEL && ui->Sel_List_Level->item(0)->data(3).toInt() == 0)
         delete ui->Sel_List_Level->item(0);
@@ -386,7 +369,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
 
     }
     else
-    //set Block item box from global configs
+    //set Block item box from global conf
     foreach(obj_block blockItem, conf->main_block)
     {
         //Add Group
@@ -671,39 +654,273 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
         ui->Sel_Combo_CategoryNPC->addItems(tmpList);
     }
 
-    QFont font;
-    font.setItalic(true);
-    QListWidgetItem * empBlock = new QListWidgetItem();
-    QListWidgetItem * empBGO = new QListWidgetItem();
-    QListWidgetItem * empNPC = new QListWidgetItem();
-    empBlock->setFont(font);
-    empBGO->setFont(font);
-    empNPC->setFont(font);
-    QString emTxt = tr("[Empty]");
-    empBlock->setText(emTxt);
-    empBGO->setText(emTxt);
-    empNPC->setText(emTxt);
-    empBlock->setData(3, QVariant(0));
-    empBGO->setData(3, QVariant(0));
-    empNPC->setData(3, QVariant(0));
-
-    ui->Sel_List_Block->insertItem(0,empBlock);
-    ui->Sel_List_BGO->insertItem(0,empBGO);
-    ui->Sel_List_NPC->insertItem(0,empNPC);
-
-    if(removalFlags & TAB_BLOCK && ui->Sel_List_Block->item(0)->data(3).toInt() == 0)
-        delete ui->Sel_List_Block->item(0);
-
-    if(removalFlags & TAB_BGO && ui->Sel_List_BGO->item(0)->data(3).toInt() == 0)
-        delete ui->Sel_List_BGO->item(0);
-
-    if(removalFlags & TAB_NPC && ui->Sel_List_NPC->item(0)->data(3).toInt() == 0)
-        delete ui->Sel_List_NPC->item(0);
+    makeEmptyItem(ui->Sel_List_Block, TAB_BLOCK);
+    makeEmptyItem(ui->Sel_List_BGO, TAB_BGO);
+    makeEmptyItem(ui->Sel_List_NPC, TAB_NPC);
 
     lock_grp=false;
     lock_cat=false;
 
     updateFilters();
+}
+
+void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
+{
+    allWLabel_F    = MainWindow::tr("[all]");
+    customWLabel_F = MainWindow::tr("[custom]");
+
+
+    if(!setCat)
+    {
+        lock_Wcat_F=true;
+        cat_blocks = allWLabel_F;
+        cat_bgos = allWLabel_F;
+        cat_npcs = allWLabel_F;
+        if(!setGrp)
+        {
+            lock_Wgrp_F=true;
+            grp_tiles = allWLabel_F;
+            grp_paths = allWLabel_F;
+            grp_scenes = allWLabel_F;
+        }
+    }
+
+    WriteToLog(QtDebugMsg, "WorldTools -> Clear current");
+
+    util::memclear(ui->Sel_List_Tile);
+    util::memclear(ui->Sel_List_Scenery);
+    util::memclear(ui->Sel_List_Path);
+    util::memclear(ui->Sel_List_Level);
+    util::memclear(ui->Sel_List_Music);
+
+
+    //util::memclear(ui->BlockItemsList);
+    //util::memclear(ui->NPCItemsList);
+
+    WriteToLog(QtDebugMsg, "WorldTools -> Declare new");
+    QListWidgetItem * item;
+    QPixmap tmpI;
+
+    QStringList tmpList, tmpGrpList;
+    //bool found = false;
+
+    tmpList.clear();
+    tmpGrpList.clear();
+
+    unsigned int tableRows=0;
+    unsigned int tableCols=0;
+
+    WriteToLog(QtDebugMsg, "WorldTools -> Table size");
+
+    int roff = (removalFlags & TAB_TILE ? 0 : 1);
+
+    //get Table size
+    foreach(obj_w_tile tileItem, conf->main_wtiles )
+    {
+        if(tableRows<tileItem.row+1+roff) tableRows=tileItem.row+1+roff;
+        if(tableCols<tileItem.col+1) tableCols=tileItem.col+1;
+    }
+
+    WriteToLog(QtDebugMsg, "WorldTools -> set size");
+    ui->Sel_List_Tile->setRowCount(tableRows);
+    ui->Sel_List_Tile->setColumnCount(tableCols);
+    ui->Sel_List_Tile->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
+
+    WriteToLog(QtDebugMsg, "WorldTools -> Table of tiles");
+    foreach(obj_w_tile tileItem, conf->main_wtiles )
+    {
+            if(tileItem.animated)
+                tmpI = tileItem.image.copy(0,
+                            (int)round(tileItem.image.height() / tileItem.frames) * tileItem.display_frame,
+                            tileItem.image.width(),
+                            (int)round(tileItem.image.height() / tileItem.frames));
+            else
+                tmpI = tileItem.image;
+
+        QTableWidgetItem * Titem = ui->Sel_List_Tile->item(tileItem.row, tileItem.col);
+
+        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        {
+            Titem = new QTableWidgetItem();
+            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setText( NULL );
+            Titem->setSizeHint(QSize(32,32));
+            Titem->setData(3, QString::number(tileItem.id) );
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+            ui->Sel_List_Tile->setRowHeight(tileItem.row, 34);
+            ui->Sel_List_Tile->setColumnWidth(tileItem.col, 34);
+
+            ui->Sel_List_Tile->setItem(tileItem.row+roff,tileItem.col, Titem);
+        }
+    }
+
+    if(roff==1){
+        QTableWidgetItem * Titem = ui->Sel_List_Tile->item(0, 0);
+        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        {
+            Titem = new QTableWidgetItem();
+            QImage I(32,32,QImage::Format_ARGB32);
+            QPainter e(&I);
+            QFont t = e.font();
+            t.setPointSize(14);
+            e.setFont(t);
+            e.drawText(6,2,28,28,Qt::TextSingleLine,"E");
+            Titem->setIcon( QIcon( QPixmap::fromImage(I) ) );
+            Titem->setText( NULL );
+            Titem->setSizeHint(QSize(32,32));
+            Titem->setData(3, 0 );
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+            ui->Sel_List_Tile->setRowHeight(0, 34);
+            ui->Sel_List_Tile->setColumnWidth(0, 34);
+
+            ui->Sel_List_Tile->setItem(0,0, Titem);
+        }
+
+    }
+
+    WriteToLog(QtDebugMsg, "WorldTools -> List of sceneries");
+    foreach(obj_w_scenery sceneItem, conf->main_wscene)
+    {
+            if(sceneItem.animated)
+                tmpI = sceneItem.image.copy(0,
+                            (int)round(sceneItem.image.height() / sceneItem.frames) * sceneItem.display_frame,
+                            sceneItem.image.width(),
+                            (int)round(sceneItem.image.height() / sceneItem.frames));
+            else
+                tmpI = sceneItem.image;
+
+            item = new QListWidgetItem();
+            item->setIcon( QIcon( tmpI ) );
+            item->setText( NULL );
+            item->setData(3, QString::number(sceneItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->Sel_List_Scenery->addItem( item );
+    }
+
+    tableRows=0;
+    tableCols=0;
+
+    roff = (removalFlags & TAB_TILE ? 0 : 1);
+
+    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size");
+    //get Table size
+    foreach(obj_w_path pathItem, conf->main_wpaths )
+    {
+        if(tableRows<pathItem.row+1+roff) tableRows=pathItem.row+1+roff;
+        if(tableCols<pathItem.col+1) tableCols=pathItem.col+1;
+    }
+
+    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths size define");
+    ui->Sel_List_Path->setRowCount(tableRows);
+    ui->Sel_List_Path->setColumnCount(tableCols);
+    ui->Sel_List_Path->setStyleSheet("QTableWidget::item { padding: 0px; margin: 0px; }");
+
+    WriteToLog(QtDebugMsg, "WorldTools -> Table of paths");
+    foreach(obj_w_path pathItem, conf->main_wpaths )
+    {
+            if(pathItem.animated)
+                tmpI = pathItem.image.copy(0,
+                            (int)round(pathItem.image.height() / pathItem.frames)*pathItem.display_frame,
+                            pathItem.image.width(),
+                            (int)round(pathItem.image.height() / pathItem.frames));
+            else
+                tmpI = pathItem.image;
+
+        QTableWidgetItem * Titem = ui->Sel_List_Path->item(pathItem.row, pathItem.col);
+
+        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        {
+            Titem = new QTableWidgetItem();
+            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setText( NULL );
+            Titem->setSizeHint(QSize(32,32));
+            Titem->setData(3, QString::number(pathItem.id) );
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+            ui->Sel_List_Path->setRowHeight(pathItem.row+roff, 34);
+            ui->Sel_List_Path->setColumnWidth(pathItem.col, 34);
+
+            ui->Sel_List_Path->setItem(pathItem.row+roff,pathItem.col, Titem);
+        }
+    }
+
+    if(roff==1){
+        QTableWidgetItem * Titem = ui->Sel_List_Path->item(0, 0);
+        if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
+        {
+            Titem = new QTableWidgetItem();
+            QImage I(32,32,QImage::Format_ARGB32);
+            QPainter e(&I);
+            QFont t = e.font();
+            t.setPointSize(14);
+            e.setFont(t);
+            e.drawText(6,2,28,28,Qt::TextSingleLine,"E");
+            Titem->setIcon( QIcon( QPixmap::fromImage(I) ) );
+            Titem->setText( NULL );
+            Titem->setSizeHint(QSize(32,32));
+            Titem->setData(3, 0 );
+            Titem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+
+            ui->Sel_List_Path->setRowHeight(0, 34);
+            ui->Sel_List_Path->setColumnWidth(0, 34);
+
+            ui->Sel_List_Path->setItem(0,0, Titem);
+        }
+
+    }
+
+    WriteToLog(QtDebugMsg, "WorldTools -> List of levels");
+    foreach(obj_w_level levelItem, conf->main_wlevels)
+    {
+            if((conf->marker_wlvl.path==levelItem.id)||
+               (conf->marker_wlvl.bigpath==levelItem.id))
+                continue;
+            if(levelItem.animated)
+                tmpI = levelItem.image.copy(0,
+                            (int)round(levelItem.image.height() / levelItem.frames)*levelItem.display_frame,
+                            levelItem.image.width(),
+                            (int)round(levelItem.image.height() / levelItem.frames));
+            else
+                tmpI = levelItem.image;
+
+            item = new QListWidgetItem();
+            item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            item->setText( NULL );
+            item->setData(3, QString::number(levelItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->Sel_List_Level->addItem( item );
+    }
+
+    WriteToLog(QtDebugMsg, "WorldTools -> List of musics");
+    foreach(obj_music musicItem, conf->main_music_wld)
+    {
+            item = new QListWidgetItem();
+            item->setIcon( QIcon( QPixmap(":/images/playmusic.png").scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            item->setText( musicItem.name );
+            item->setData(3, QString::number(musicItem.id) );
+            item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
+            ui->Sel_List_Music->addItem( item );
+    }
+
+
+    makeEmptyItem(ui->Sel_List_Scenery, TAB_SCENERY);
+    makeEmptyItem(ui->Sel_List_Level, TAB_LEVEL);
+    makeEmptyItem(ui->Sel_List_Music, TAB_MUSIC);
+
+    tmpList.clear();
+    tmpGrpList.clear();
+
+    lock_Wgrp_F=false;
+    lock_Wcat_F=false;
+
+    //updateFilters();
+
+    WriteToLog(QtDebugMsg, "WorldTools -> done");
 }
 
 void ItemSelectDialog::updateFilters()
@@ -719,52 +936,36 @@ void ItemSelectDialog::updateFilters()
 
 void ItemSelectDialog::on_Sel_TabCon_ItemType_currentChanged(int index)
 {
-    if(!extraBlockWid.isEmpty()){
-        for(QList<QWidget*>::iterator it = extraBlockWid.begin(); it != extraBlockWid.end(); ++it){
-            ((QWidget*)(*it))->setVisible((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)==index : false));
-        }
-    }
-    if(!extraBGOWid.isEmpty()){
-        for(QList<QWidget*>::iterator it = extraBGOWid.begin(); it != extraBGOWid.end(); ++it){
-            ((QWidget*)(*it))->setVisible((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)==index : false));
-        }
-    }
-    if(!extraNPCWid.isEmpty()){
-        for(QList<QWidget*>::iterator it = extraNPCWid.begin(); it != extraNPCWid.end(); ++it){
-            ((QWidget*)(*it))->setVisible((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)==index : false));
-        }
-    }
+    Q_UNUSED(index)
 
-    //update label
-    if((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)==index : false)){
-        ui->Sel_Label_ExtraData->setVisible(!extraBlockWid.isEmpty());
-        if(extraBlockWid.isEmpty()){
-            ui->horizontalLayout->removeItem(ui->verticalLayout);
-        }else{
-            ui->horizontalLayout->addLayout(ui->verticalLayout);
-        }
-        return;
-    }
+    checkExtraDataVis(extraBlockWid, ui->Sel_Tab_Block);
+    checkExtraDataVis(extraBGOWid, ui->Sel_Tab_BGO);
+    checkExtraDataVis(extraNPCWid, ui->Sel_Tab_NPC);
+    checkExtraDataVis(extraTileWid, ui->Sel_Tab_Tile);
+    checkExtraDataVis(extraSceneryWid, ui->Sel_Tab_Scenery);
+    checkExtraDataVis(extraPathWid, ui->Sel_Tab_Path);
+    checkExtraDataVis(extraLevelWid, ui->Sel_Tab_Level);
+    checkExtraDataVis(extraMusicWid, ui->Sel_Tab_Music);
 
-    if((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)==index : false)){
-        ui->Sel_Label_ExtraData->setVisible(!extraBGOWid.isEmpty());
-        if(extraBGOWid.isEmpty()){
-            ui->horizontalLayout->removeItem(ui->verticalLayout);
-        }else{
-            ui->horizontalLayout->addLayout(ui->verticalLayout);
-        }
+    if(updateLabelVis(extraBlockWid, ui->Sel_Tab_Block))
         return;
-    }
+    if(updateLabelVis(extraBGOWid, ui->Sel_Tab_BGO))
+        return;
+    if(updateLabelVis(extraNPCWid, ui->Sel_Tab_NPC))
+        return;
+    if(updateLabelVis(extraTileWid, ui->Sel_Tab_Tile))
+        return;
+    if(updateLabelVis(extraSceneryWid, ui->Sel_Tab_Scenery))
+        return;
+    if(updateLabelVis(extraPathWid, ui->Sel_Tab_Path))
+        return;
+    if(updateLabelVis(extraLevelWid, ui->Sel_Tab_Level))
+        return;
+    if(updateLabelVis(extraMusicWid, ui->Sel_Tab_Music))
+        return;
 
-    if((ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)==index : false)){
-        ui->Sel_Label_ExtraData->setVisible(!extraNPCWid.isEmpty());
-        if(extraNPCWid.isEmpty()){
-            ui->horizontalLayout->removeItem(ui->verticalLayout);
-        }else{
-            ui->horizontalLayout->addLayout(ui->verticalLayout);
-        }
-        return;
-    }
+
+
 }
 
 void ItemSelectDialog::npcTypeChange(bool /*toggled*/)
@@ -783,19 +984,21 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
     blockID = 0;
     bgoID = 0;
     npcID = 0;
+    tileID = 0;
+    sceneryID = 0;
+    pathID = 0;
+    levelID = 0;
+    musicID = 0;
+
     isCoin = (npcCoins ? npcCoins->isChecked() : false);
 
-    if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_Block)!=-1){
-        if(!ui->Sel_List_Block->selectedItems().isEmpty()){
-            blockID = ui->Sel_List_Block->selectedItems()[0]->data(3).toInt();
-        }
-    }
-
-    if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_BGO)!=-1){
-        if(!ui->Sel_List_BGO->selectedItems().isEmpty()){
-            bgoID = ui->Sel_List_BGO->selectedItems()[0]->data(3).toInt();
-        }
-    }
+    blockID = extractID(ui->Sel_List_Block);
+    bgoID = extractID(ui->Sel_List_BGO);
+    tileID = extractID(ui->Sel_List_Tile);
+    sceneryID = extractID(ui->Sel_List_Scenery);
+    pathID = extractID(ui->Sel_List_Path);
+    levelID = extractID(ui->Sel_List_Level);
+    musicID = extractID(ui->Sel_List_Music);
 
     if(ui->Sel_TabCon_ItemType->indexOf(ui->Sel_Tab_NPC)!=-1){
         if(npcCoins){
@@ -812,6 +1015,8 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
             }
         }
     }
+
+
 
     this->accept();
 }
@@ -898,4 +1103,75 @@ void ItemSelectDialog::selectListItem(QListWidget* w, int array_id)
             w->setCurrentRow(i);
         }
     }
+}
+
+void ItemSelectDialog::selectListItem(QTableWidget *w, int array_id)
+{
+    for(int x = 0; x < w->columnCount(); ++x){
+        for(int y = 0; y < w->rowCount(); ++y){
+            QTableWidgetItem* i = w->item(x,y);
+            if(i){
+                if(i->data(3)==array_id){
+                    w->setCurrentItem(i);
+                }
+            }
+        }
+    }
+}
+
+void ItemSelectDialog::makeEmptyItem(QListWidget *wid, int rmflag)
+{
+    QFont font;
+    font.setItalic(true);
+    QListWidgetItem * empTar = new QListWidgetItem();
+    empTar->setFont(font);
+    QString emTxt = tr("[Empty]");
+    empTar->setText(emTxt);
+    empTar->setData(3, QVariant(0));
+    wid->insertItem(0,empTar);
+    if(removalFlags & rmflag && wid->item(0)->data(3).toInt() == 0)
+        delete wid->item(0);
+}
+
+void ItemSelectDialog::checkExtraDataVis(QList<QWidget*> &l, QWidget *t)
+{
+    if(!l.isEmpty()){
+        for(QList<QWidget*>::iterator it = l.begin(); it != l.end(); ++it){
+            ((QWidget*)(*it))->setVisible((ui->Sel_TabCon_ItemType->indexOf(t)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(t)==ui->Sel_TabCon_ItemType->currentIndex() : false));
+        }
+    }
+}
+
+bool ItemSelectDialog::updateLabelVis(QList<QWidget*> &l, QWidget *t)
+{
+    if((ui->Sel_TabCon_ItemType->indexOf(t)!=-1 ? ui->Sel_TabCon_ItemType->indexOf(t)==ui->Sel_TabCon_ItemType->currentIndex() : false)){
+        ui->Sel_Label_ExtraData->setVisible(!l.isEmpty());
+        if(l.isEmpty()){
+            ui->horizontalLayout->removeItem(ui->verticalLayout);
+        }else{
+            ui->horizontalLayout->addLayout(ui->verticalLayout);
+        }
+        return true;
+    }
+    return false;
+}
+
+int ItemSelectDialog::extractID(QListWidget *w)
+{
+    if(ui->Sel_TabCon_ItemType->indexOf(w->parentWidget())!=-1){
+        if(!w->selectedItems().isEmpty()){
+            return w->selectedItems()[0]->data(3).toInt();
+        }
+    }
+    return 0;
+}
+
+int ItemSelectDialog::extractID(QTableWidget *w)
+{
+    if(ui->Sel_TabCon_ItemType->indexOf(w->parentWidget())!=-1){
+        if(!w->selectedItems().isEmpty()){
+            return w->selectedItems()[0]->data(3).toInt();
+        }
+    }
+    return 0;
 }
