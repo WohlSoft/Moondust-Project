@@ -55,6 +55,9 @@ void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
             ui->WLD_PROPS_GotoX->setText((level.gotox==-1) ? "" : QString::number(level.gotox));
             ui->WLD_PROPS_GotoY->setText((level.gotoy==-1) ? "" : QString::number(level.gotoy));
 
+            ui->WLD_PROPS_GetPoint->setChecked(false);
+            ui->WLD_PROPS_GetPoint->setCheckable(false);
+
             if(newItem)
             {//Reset value to min, if it out of range
                 if(level.left_exit >= ui->WLD_PROPS_ExitLeft->count() )
@@ -579,6 +582,9 @@ void MainWindow::WLD_returnPointToLevelProperties(QPoint p)
     on_WLD_PROPS_GotoX_editingFinished();
     ui->WLD_PROPS_GotoY->setModified(true);
     on_WLD_PROPS_GotoY_editingFinished();
+
+    ui->WLD_PROPS_GetPoint->setChecked(false);
+    ui->WLD_PROPS_GetPoint->setCheckable(false);
 }
 
 void MainWindow::on_WLD_PROPS_GetPoint_clicked()
@@ -593,28 +599,43 @@ void MainWindow::on_WLD_PROPS_GetPoint_clicked()
     else
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
-
-        WldPlacingItems::fillingMode = false;
-        ui->actionSquareFill->setChecked(false);
-        ui->actionSquareFill->setEnabled(false);
-
-        WldPlacingItems::lineMode = false;
-        ui->actionLine->setChecked(false);
-        ui->actionLine->setEnabled(false);
-        if(ui->WLD_PROPS_GotoX->text().isEmpty()||ui->WLD_PROPS_GotoY->text().isEmpty())
+        if(ui->WLD_PROPS_GetPoint->isCheckable())
         {
-            activeWldEditWin()->scene->selectedPointNotUsed = true;
+            ui->WLD_PROPS_GetPoint->setChecked(false);
+            ui->WLD_PROPS_GetPoint->setCheckable(false);
+
+            activeWldEditWin()->scene->unserPointSelector();
+            activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
+            activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
         }
         else
         {
-            activeWldEditWin()->scene->selectedPointNotUsed = false;
-            activeWldEditWin()->scene->selectedPoint=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
-        }
+            ui->WLD_PROPS_GetPoint->setCheckable(true);
+            ui->WLD_PROPS_GetPoint->setChecked(true);
 
-        activeWldEditWin()->scene->setItemPlacer(5);
-        activeWldEditWin()->setFocus();
+            activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
+            activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
+
+            WldPlacingItems::fillingMode = false;
+            ui->actionSquareFill->setChecked(false);
+            ui->actionSquareFill->setEnabled(false);
+
+            WldPlacingItems::lineMode = false;
+            ui->actionLine->setChecked(false);
+            ui->actionLine->setEnabled(false);
+            if(ui->WLD_PROPS_GotoX->text().isEmpty()||ui->WLD_PROPS_GotoY->text().isEmpty())
+            {
+                activeWldEditWin()->scene->selectedPointNotUsed = true;
+            }
+            else
+            {
+                activeWldEditWin()->scene->selectedPointNotUsed = false;
+                activeWldEditWin()->scene->selectedPoint=QPoint(ui->WLD_PROPS_GotoX->text().toInt(), ui->WLD_PROPS_GotoY->text().toInt());
+            }
+
+            activeWldEditWin()->scene->setItemPlacer(5);
+            activeWldEditWin()->setFocus();
+        }
     }
 
 }

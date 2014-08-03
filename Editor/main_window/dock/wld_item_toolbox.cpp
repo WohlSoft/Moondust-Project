@@ -278,6 +278,8 @@ void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
 
        activeWldEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
 
+       WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+
        activeWldEditWin()->setFocus();
     }
 }
@@ -305,6 +307,8 @@ void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
 
        activeWldEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
 
+       WldItemProps(-1, FileFormats::dummyWldLevel(), true);
+
        activeWldEditWin()->setFocus();
     }
 }
@@ -330,6 +334,8 @@ void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
        ui->actionLine->setEnabled(true);
 
        activeWldEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
+
+       WldItemProps(-1, FileFormats::dummyWldLevel(), true);
 
        activeWldEditWin()->setFocus();
     }
@@ -387,6 +393,8 @@ void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
 
        activeWldEditWin()->currentMusic = item->data(3).toInt();
        setMusic( ui->actionPlayMusic->isChecked() );
+
+       WldItemProps(-1, FileFormats::dummyWldLevel(), true);
 
        activeWldEditWin()->setFocus();
     }
