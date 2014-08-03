@@ -23,7 +23,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>7</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -383,6 +383,15 @@
          </item>
          <item row="3" column="0" colspan="3">
           <widget class="QTableWidget" name="Sel_List_Tile">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
            <attribute name="horizontalHeaderVisible">
             <bool>false</bool>
            </attribute>
@@ -507,7 +516,32 @@
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_Scenery"/>
+          <widget class="QListWidget" name="Sel_List_Scenery">
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="textElideMode">
+            <enum>Qt::ElideNone</enum>
+           </property>
+           <property name="movement">
+            <enum>QListView::Snap</enum>
+           </property>
+           <property name="viewMode">
+            <enum>QListView::IconMode</enum>
+           </property>
+           <property name="uniformItemSizes">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -608,6 +642,15 @@
          </item>
          <item row="3" column="0" colspan="3">
           <widget class="QTableWidget" name="Sel_List_Path">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
            <attribute name="horizontalHeaderVisible">
             <bool>false</bool>
            </attribute>
@@ -732,7 +775,35 @@
           </widget>
          </item>
          <item row="3" column="0" colspan="3">
-          <widget class="QListWidget" name="Sel_List_Level"/>
+          <widget class="QListWidget" name="Sel_List_Level">
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="textElideMode">
+            <enum>Qt::ElideNone</enum>
+           </property>
+           <property name="movement">
+            <enum>QListView::Snap</enum>
+           </property>
+           <property name="isWrapping" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="viewMode">
+            <enum>QListView::IconMode</enum>
+           </property>
+           <property name="uniformItemSizes">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>

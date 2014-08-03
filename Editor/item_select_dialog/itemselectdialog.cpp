@@ -761,6 +761,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         {
             Titem = new QTableWidgetItem();
             QImage I(32,32,QImage::Format_ARGB32);
+            I.fill(Qt::transparent);
             QPainter e(&I);
             QFont t = e.font();
             t.setPointSize(14);
@@ -853,6 +854,7 @@ void ItemSelectDialog::setWldItemBoxes(bool setGrp, bool setCat)
         {
             Titem = new QTableWidgetItem();
             QImage I(32,32,QImage::Format_ARGB32);
+            I.fill(Qt::transparent);
             QPainter e(&I);
             QFont t = e.font();
             t.setPointSize(14);
