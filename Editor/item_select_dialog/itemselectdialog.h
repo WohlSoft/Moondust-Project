@@ -19,8 +19,10 @@
 #ifndef ITEMSELECTDIALOG_H
 #define ITEMSELECTDIALOG_H
 
+#include <QList>
 #include <QDialog>
 #include "data_configs/data_configs.h"
+
 
 namespace Ui {
 class ItemSelectDialog;
@@ -40,6 +42,11 @@ public:
     int blockID;
     int bgoID;
     int npcID;
+    int tileID;
+    int sceneryID;
+    int pathID;
+    int levelID;
+    int musicID;
 
     bool isCoin;
 
@@ -83,6 +90,16 @@ private slots:
 
 private:
     void selectListItem(QListWidget *w, int array_id);
+    void selectListItem(QTableWidget *w, int array_id);
+
+    void makeEmptyItem(QListWidget* wid, int rmflag);
+
+    void checkExtraDataVis(QList<QWidget*> &l, QWidget *t);
+    bool updateLabelVis(QList<QWidget*> &l, QWidget *t);
+
+    int extractID(QListWidget * w);
+    int extractID(QTableWidget * w);
+
 
     QRadioButton* npcFromList;
     QRadioButton* npcCoins;
@@ -93,6 +110,7 @@ private:
     void addExtraDataControl(QWidget* control);
 
     void updateBoxes(bool setGrp = false, bool setCat = false);
+    void setWldItemBoxes(bool setGrp = false, bool setCat = false);
     QString cat_blocks;
     QString cat_bgos;
     QString cat_npcs;
@@ -102,6 +120,11 @@ private:
     QList<QWidget*> extraBlockWid;
     QList<QWidget*> extraBGOWid;
     QList<QWidget*> extraNPCWid;
+    QList<QWidget*> extraTileWid;
+    QList<QWidget*> extraSceneryWid;
+    QList<QWidget*> extraPathWid;
+    QList<QWidget*> extraLevelWid;
+    QList<QWidget*> extraMusicWid;
 
     dataconfigs* conf;
     Ui::ItemSelectDialog *ui;

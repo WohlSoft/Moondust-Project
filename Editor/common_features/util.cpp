@@ -63,3 +63,14 @@ void util::memclear(QListWidget *wid)
         delete tmp;
     }
 }
+
+void util::memclear(QTableWidget *wid)
+{
+    QList<QTableWidgetItem*> items = wid->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    while(!items.isEmpty())
+    {
+        QTableWidgetItem *tmp = items.first();
+        items.pop_front();
+        delete tmp;
+    }
+}

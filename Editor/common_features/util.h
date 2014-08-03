@@ -24,12 +24,14 @@
 #include <qlistwidget.h>
 #include <qcombobox.h>
 #include <QListWidget>
+#include <qtablewidget.h>
 
 class util
 {
 public:
     static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
     static void memclear(QListWidget* wid);
+    static void memclear(QTableWidget* wid);
 };
 
 #endif // UTIL_H
