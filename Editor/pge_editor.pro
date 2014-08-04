@@ -126,9 +126,9 @@ SOURCES += main.cpp\
     data_configs/conf_wld_scene.cpp \
     data_configs/conf_wld_path.cpp \
     data_configs/conf_wld_level.cpp \
-    tileset_configure_dialog/tilesetconfiguredialog.cpp \
-    tileset_configure_dialog/piecesmodel.cpp \
-    tileset_configure_dialog/tileset.cpp \
+    tilesets/tilesetconfiguredialog.cpp \
+    tilesets/piecesmodel.cpp \
+    tilesets/tileset.cpp \
     edit_world/world_edit.cpp \
     edit_world/wld_draw.cpp \
     edit_world/wld_edit_control.cpp \
@@ -209,9 +209,9 @@ HEADERS  += mainwindow.h \
     item_select_dialog/itemselectdialog.h \
     common_features/simple_animator.h \
     common_features/util.h \
-    tileset_configure_dialog/tilesetconfiguredialog.h \
-    tileset_configure_dialog/piecesmodel.h \
-    tileset_configure_dialog/tileset.h \
+    tilesets/tilesetconfiguredialog.h \
+    tilesets/piecesmodel.h \
+    tilesets/tileset.h \
     edit_world/world_edit.h \
     world_scene/wld_scene.h \
     world_scene/item_tile.h \
@@ -246,7 +246,7 @@ FORMS    += \
     data_configs/configstatus.ui \
     common_features/levelfilelist.ui \
     item_select_dialog/itemselectdialog.ui \
-    tileset_configure_dialog/tilesetconfiguredialog.ui \
+    tilesets/tilesetconfiguredialog.ui \
     edit_world/world_edit.ui \
     main_window/savingnotificationdialog.ui \
     wld_point_dialog/wld_setpoint.ui \
