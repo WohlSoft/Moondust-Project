@@ -220,6 +220,9 @@ public slots:
 
     void resizeToolbarVisible(bool vis);
 
+    //Return Point from world map into a level properties
+    void WLD_returnPointToLevelProperties(QPoint p);
+
 private slots:
 
     //Actions
@@ -520,7 +523,9 @@ private slots:
     void on_Find_Button_ContainsNPCBlock_clicked();
 
     void on_actionSwitch_to_Fullscreen_triggered(bool checked);
+
     void on_actionConfigure_Tilesets_triggered();
+    void on_actionTileset_groups_editor_triggered();
 
     void on_WLD_TilesList_itemClicked(QTableWidgetItem *item);
     void on_WLD_SceneList_itemClicked(QListWidgetItem *item);
@@ -574,8 +579,16 @@ private slots:
 
     void on_actionShow_Development_Console_triggered();
 
+
+    //World map Find toolbox
+    void on_actionWLD_SearchBox_triggered(bool checked);
+    void on_WorldFindDock_visibilityChanged(bool visible);
+    void on_FindStartLevel_clicked();
+
+
 signals:
     void closeEditor();
+
 
 private:
 
