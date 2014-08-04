@@ -19,7 +19,7 @@
 #include "tilesetitembutton.h"
 
 
-TilesetItemButton::TilesetItemButton(dataconfigs *conf, QObject *parent) :
+TilesetItemButton::TilesetItemButton(dataconfigs *conf, QFrame *parent) :
     QFrame(parent)
 {
     m_config = conf;
