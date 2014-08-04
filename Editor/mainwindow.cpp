@@ -19,7 +19,7 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
-#include "tileset_configure_dialog/tilesetconfiguredialog.h"
+#include "tilesets/tilesetconfiguredialog.h"
 #include "npc_dialog/npcdialog.h"
 #include <QDesktopServices>
 #include "dev_console/devconsole.h"
