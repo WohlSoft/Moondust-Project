@@ -73,7 +73,7 @@
    <item row="4" column="0" colspan="7">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>Note: Use the mousewheel to scroll on the map. You can scroll horizontally if you hold the ALT key.</string>
+      <string>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the ALT key.</string>
      </property>
     </widget>
    </item>
