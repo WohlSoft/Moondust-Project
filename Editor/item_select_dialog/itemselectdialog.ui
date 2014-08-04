@@ -23,7 +23,7 @@
      <item>
       <widget class="QTabWidget" name="Sel_TabCon_ItemType">
        <property name="currentIndex">
-        <number>2</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="Sel_Tab_Block">
         <attribute name="title">
@@ -283,6 +283,627 @@
          </item>
          <item row="3" column="0" colspan="3">
           <widget class="QListWidget" name="Sel_List_NPC"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="Sel_Tab_Tile">
+        <attribute name="title">
+         <string>Tile</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="1" column="0">
+          <widget class="QLabel" name="Sel_Label_CategoryTile">
+           <property name="text">
+            <string>Category:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_GroupsTile">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="Sel_Label_GroupsTile">
+           <property name="text">
+            <string>Group:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="Sel_Text_Tile">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="Sel_Combo_FiltertypeTile">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Text</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ID</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_CategoryTile">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="Sel_Label_FilterTile">
+           <property name="text">
+            <string>Filter:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QTableWidget" name="Sel_List_Tile">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>32</number>
+           </attribute>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderMinimumSectionSize">
+            <number>32</number>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>32</number>
+           </attribute>
+           <attribute name="verticalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderMinimumSectionSize">
+            <number>32</number>
+           </attribute>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="Sel_Tab_Scenery">
+        <attribute name="title">
+         <string>Scenery</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="Sel_Label_GroupsScenery">
+           <property name="text">
+            <string>Group:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_GroupsScenery">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="Sel_Label_CategoryScenery">
+           <property name="text">
+            <string>Category:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_CategoryScenery">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="Sel_Label_FilterScenery">
+           <property name="text">
+            <string>Filter:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="Sel_Text_Scenery">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="Sel_Combo_FiltertypeScenery">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Text</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ID</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListWidget" name="Sel_List_Scenery">
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="textElideMode">
+            <enum>Qt::ElideNone</enum>
+           </property>
+           <property name="movement">
+            <enum>QListView::Snap</enum>
+           </property>
+           <property name="viewMode">
+            <enum>QListView::IconMode</enum>
+           </property>
+           <property name="uniformItemSizes">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="Sel_Tab_Path">
+        <attribute name="title">
+         <string>Path</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="Sel_Combo_FiltertypePath">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Text</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ID</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="Sel_Label_FilterPath">
+           <property name="text">
+            <string>Filter:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_CategoryPath">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_GroupsPath">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="Sel_Label_GroupsPath">
+           <property name="text">
+            <string>Group:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="Sel_Label_CategoryPath">
+           <property name="text">
+            <string>Category:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="Sel_Text_Path">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QTableWidget" name="Sel_List_Path">
+           <property name="selectionMode">
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <attribute name="horizontalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>32</number>
+           </attribute>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderMinimumSectionSize">
+            <number>32</number>
+           </attribute>
+           <attribute name="verticalHeaderVisible">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>32</number>
+           </attribute>
+           <attribute name="verticalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderMinimumSectionSize">
+            <number>32</number>
+           </attribute>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="Sel_Tab_Level">
+        <attribute name="title">
+         <string>Level</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_8">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="Sel_Label_GroupsLevel">
+           <property name="text">
+            <string>Group:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_GroupsLevel">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="Sel_Label_CategoryLevel">
+           <property name="text">
+            <string>Category:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_CategoryLevel">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="Sel_Label_FilterLevel">
+           <property name="text">
+            <string>Filter:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="Sel_Text_Level">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="Sel_Combo_FiltertypeLevel">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Text</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ID</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListWidget" name="Sel_List_Level">
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="textElideMode">
+            <enum>Qt::ElideNone</enum>
+           </property>
+           <property name="movement">
+            <enum>QListView::Snap</enum>
+           </property>
+           <property name="isWrapping" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="viewMode">
+            <enum>QListView::IconMode</enum>
+           </property>
+           <property name="uniformItemSizes">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="Sel_Tab_Music">
+        <attribute name="title">
+         <string>Music</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_9">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLabel" name="Sel_Label_GroupsMusic">
+           <property name="text">
+            <string>Group:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_GroupsMusic">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="Sel_Label_CategoryMusic">
+           <property name="text">
+            <string>Category:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QComboBox" name="Sel_Combo_CategoryMusic">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maxVisibleItems">
+            <number>50</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>[all]</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="Sel_Label_FilterMusic">
+           <property name="text">
+            <string>Filter:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="Sel_Text_Music">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QComboBox" name="Sel_Combo_FiltertypeMusic">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Text</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ID</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="3">
+          <widget class="QListWidget" name="Sel_List_Music"/>
          </item>
         </layout>
        </widget>

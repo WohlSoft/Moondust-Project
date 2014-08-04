@@ -16,22 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef TILESETITEMBUTTON_H
+#define TILESETITEMBUTTON_H
 
-#ifndef UTIL_H
-#define UTIL_H
+#include <QFrame>
+#include "../data_configs/data_configs.h"
 
-#include <qlineedit.h>
-#include <qlistwidget.h>
-#include <qcombobox.h>
-#include <QListWidget>
-#include <qtablewidget.h>
-
-class util
+class TilesetItemButton : public QFrame
 {
+    Q_OBJECT
+
 public:
-    static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
-    static void memclear(QListWidget* wid);
-    static void memclear(QTableWidget* wid);
+    explicit TilesetItemButton(dataconfigs* conf, QFrame *parent = 0);
+
+    dataconfigs *config() const;
+    void setConfig(dataconfigs *config);
+
+signals:
+
+public slots:
+
+protected:
+    void paintEvent(QPaintEvent* ev);
+
+
+private:
+    dataconfigs* m_config;
 };
 
-#endif // UTIL_H
+#endif // TILESETITEMBUTTON_H

@@ -104,5 +104,6 @@
         <file>images/resize_cancel.png</file>
         <file>images/resize_accept.png</file>
         <file>images/line_fill.png</file>
+        <file>images/set_point.png</file>
     </qresource>
 </RCC>

@@ -25,6 +25,8 @@
 #include "item_level.h"
 #include "item_music.h"
 
+#include "item_point.h"
+
 #include "../common_features/grid.h"
 
 
@@ -436,4 +438,42 @@ void WldScene::placeMusicbox(WorldMusic &musicbox, bool toGrid)
 
     if(PasteFromBuffer) MusicBoxItem->setSelected(true);
 
+}
+
+
+void WldScene::setPoint(QPoint p)
+{
+     selectedPoint = p;
+     selectedPointNotUsed=false;
+
+     if(!pointAnimation)
+     {
+        pointAnimation = new SimpleAnimator(pointImg, true, 4, 64);
+        pointAnimation->start();
+     }
+
+     if(!pointTarget)
+     {
+         pointTarget = new ItemPoint;
+         ((ItemPoint*)pointTarget)->gridSize = pConfigs->default_grid;
+         addItem(pointTarget);
+         ((ItemPoint*)pointTarget)->setScenePoint(this);
+         pointTarget->setData(0, "POINT");
+         pointTarget->setZValue(6000);
+     }
+     pointTarget->setPos(QPointF(p));
+
+}
+
+
+void WldScene::unserPointSelector()
+{
+     if(pointTarget) delete pointTarget;
+        pointTarget = NULL;
+     if(pointAnimation)
+     {
+         pointAnimation->stop();
+         delete pointAnimation;
+     }
+        pointAnimation = NULL;
 }

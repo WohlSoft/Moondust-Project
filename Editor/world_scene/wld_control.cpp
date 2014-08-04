@@ -50,6 +50,8 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     switch(keyEvent->key())
     {
     case (Qt::Key_Delete): //Delete action
+        if(isSelectionDialog) break; //Disable this key in the point selection dialog
+        if(EditingMode == MODE_SetPoint) return; // Disable this key in the pointSelection mode
         if(selectedList.isEmpty()) break;
 
         for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
@@ -109,9 +111,18 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 
         break;
     case (Qt::Key_Escape):
-        if(!IsMoved)
-            this->clearSelection();
-        resetResizers();
+
+        if(EditingMode != MODE_SetPoint)
+        {
+            if(!IsMoved)
+                this->clearSelection();
+            resetResizers();
+        }
+        else
+        {   //Reset mode to selection allows only in "editing" mode from MDI interface
+            if(!isSelectionDialog) MainWinConnect::pMainWin->on_actionSelect_triggered();
+            return;
+        }
         if(EditingMode == MODE_PlacingNew || EditingMode == MODE_DrawSquare || EditingMode == MODE_Line){
             item_rectangles::clearArray();
             MainWinConnect::pMainWin->on_actionSelect_triggered();
@@ -121,6 +132,9 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
         break;
     case (Qt::Key_Enter):
     case (Qt::Key_Return):
+
+        if(isSelectionDialog) break; //Disable this key in the point selection dialog
+        if(EditingMode == MODE_SetPoint) return; // Disable this key in the pointSelection mode
 
         applyResizers();
             //setSectionResizer(false, true);
@@ -162,7 +176,8 @@ void WldScene::selectionChanged()
 {
     if(this->selectedItems().isEmpty())
     {
-        MainWinConnect::pMainWin->WldItemProps(-1, FileFormats::dummyWldLevel());
+        if(EditingMode!=MODE_SetPoint)
+            MainWinConnect::pMainWin->WldItemProps(-1, FileFormats::dummyWldLevel());
     }
 
     #ifdef _DEBUG_
@@ -287,6 +302,29 @@ if(contextMenuOpened) return;
             }
             break;
         }
+        case MODE_SetPoint:
+        {
+            if( (!isSelectionDialog) && (mouseEvent->buttons() & Qt::RightButton) )
+            {
+                MainWinConnect::pMainWin->on_actionSelect_triggered();
+                return;
+            }
+
+            if(cursor){
+                cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
+                                                   QPoint(WldPlacingItems::c_offset_x,
+                                                          WldPlacingItems::c_offset_y),
+                                                   WldPlacingItems::gridSz,
+                                                   WldPlacingItems::gridOffset)));
+            }
+
+            setPoint(cursor->scenePos().toPoint());
+            pointSelected(selectedPoint);
+
+            QGraphicsScene::mousePressEvent(mouseEvent);
+            return;
+            break;
+        }
         case MODE_PasteFromClip: //Pasta
         {
             if( mouseEvent->buttons() & Qt::RightButton )
@@ -336,6 +374,21 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QGraphicsScene::mouseMoveEvent(mouseEvent);
             break;
         }
+    case MODE_SetPoint:
+    {
+        if(cursor)
+        {
+                    cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
+                                                       QPoint(WldPlacingItems::c_offset_x,
+                                                              WldPlacingItems::c_offset_y),
+                                                     WldPlacingItems::gridSz,
+                                                     WldPlacingItems::gridOffset)));
+                   cursor->show();
+        }
+        QGraphicsScene::mouseMoveEvent(mouseEvent);
+        break;
+    }
+
     case MODE_DrawSquare:
         {
             if(cursor)
@@ -490,6 +543,16 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 placingItems.levels.clear();
                 placingItems.music.clear();
             }
+            break;
+        }
+    case MODE_SetPoint:
+        if(!isSelectionDialog)
+        {
+            MainWinConnect::pMainWin->WLD_returnPointToLevelProperties(selectedPoint);
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            openProps();
+            QGraphicsScene::mouseReleaseEvent(mouseEvent);
+            return;
         }
     default:
         break;

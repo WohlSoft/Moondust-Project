@@ -19,8 +19,10 @@
 #ifndef ITEMSELECTDIALOG_H
 #define ITEMSELECTDIALOG_H
 
+#include <QList>
 #include <QDialog>
 #include "data_configs/data_configs.h"
+
 
 namespace Ui {
 class ItemSelectDialog;
@@ -32,19 +34,31 @@ class ItemSelectDialog : public QDialog
 
 public:
     explicit ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData = 0,
-                              int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0, QWidget *parent = 0);
+                              int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0,
+                              int curSelIDTile = 0, int curSelIDScenery = 0, int curSelIDPath = 0,
+                              int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = 0);
     ~ItemSelectDialog();
 
     int blockID;
     int bgoID;
     int npcID;
+    int tileID;
+    int sceneryID;
+    int pathID;
+    int levelID;
+    int musicID;
 
     bool isCoin;
 
     enum Tabs{
         TAB_BLOCK = 1 << 0,
         TAB_BGO = 1 << 1,
-        TAB_NPC = 1 << 2
+        TAB_NPC = 1 << 2,
+        TAB_TILE = 1 << 3,
+        TAB_SCENERY = 1 << 4,
+        TAB_PATH = 1 << 5,
+        TAB_LEVEL = 1 << 6,
+        TAB_MUSIC = 1 << 7
     };
 
     enum NpcExtraFlags{
@@ -76,6 +90,16 @@ private slots:
 
 private:
     void selectListItem(QListWidget *w, int array_id);
+    void selectListItem(QTableWidget *w, int array_id);
+
+    void makeEmptyItem(QListWidget* wid, int rmflag);
+
+    void checkExtraDataVis(QList<QWidget*> &l, QWidget *t);
+    bool updateLabelVis(QList<QWidget*> &l, QWidget *t);
+
+    int extractID(QListWidget * w);
+    int extractID(QTableWidget * w);
+
 
     QRadioButton* npcFromList;
     QRadioButton* npcCoins;
@@ -86,6 +110,7 @@ private:
     void addExtraDataControl(QWidget* control);
 
     void updateBoxes(bool setGrp = false, bool setCat = false);
+    void setWldItemBoxes(bool setGrp = false, bool setCat = false);
     QString cat_blocks;
     QString cat_bgos;
     QString cat_npcs;
@@ -95,6 +120,11 @@ private:
     QList<QWidget*> extraBlockWid;
     QList<QWidget*> extraBGOWid;
     QList<QWidget*> extraNPCWid;
+    QList<QWidget*> extraTileWid;
+    QList<QWidget*> extraSceneryWid;
+    QList<QWidget*> extraPathWid;
+    QList<QWidget*> extraLevelWid;
+    QList<QWidget*> extraMusicWid;
 
     dataconfigs* conf;
     Ui::ItemSelectDialog *ui;

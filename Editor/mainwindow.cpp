@@ -19,7 +19,8 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
-#include "tileset_configure_dialog/tilesetconfiguredialog.h"
+#include "tilesets/tilesetconfiguredialog.h"
+#include "tilesets/tilesetgroupeditor.h"
 #include "npc_dialog/npcdialog.h"
 #include <QDesktopServices>
 #include "dev_console/devconsole.h"
@@ -172,8 +173,19 @@ void MainWindow::on_actionConfigure_Tilesets_triggered()
     delete tilesetConfDia;
 }
 
+
+void MainWindow::on_actionTileset_groups_editor_triggered()
+{
+    TilesetGroupEditor * groupDialog = new TilesetGroupEditor;
+    groupDialog->exec();
+    delete groupDialog;
+}
+
+
 void MainWindow::on_actionShow_Development_Console_triggered()
 {
     DevConsole::show();
     DevConsole::log("Showing DevConsole!","View");
 }
+
+

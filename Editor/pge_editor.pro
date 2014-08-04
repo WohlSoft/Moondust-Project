@@ -126,9 +126,9 @@ SOURCES += main.cpp\
     data_configs/conf_wld_scene.cpp \
     data_configs/conf_wld_path.cpp \
     data_configs/conf_wld_level.cpp \
-    tileset_configure_dialog/tilesetconfiguredialog.cpp \
-    tileset_configure_dialog/piecesmodel.cpp \
-    tileset_configure_dialog/tileset.cpp \
+    tilesets/tilesetconfiguredialog.cpp \
+    tilesets/piecesmodel.cpp \
+    tilesets/tileset.cpp \
     edit_world/world_edit.cpp \
     edit_world/wld_draw.cpp \
     edit_world/wld_edit_control.cpp \
@@ -161,7 +161,12 @@ SOURCES += main.cpp\
     edit_world/wld_saveimage.cpp \
     level_scene/lvl_resizers.cpp \
     world_scene/wld_resizers.cpp \
-    dev_console/devconsole.cpp
+    dev_console/devconsole.cpp \
+    world_scene/item_point.cpp \
+    main_window/dock/wld_search_toolbox.cpp \
+    tilesets/tilesetgroupeditor.cpp \
+    tilesets/tilesetitembutton.cpp \
+    external_tools/gifs2png_gui.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -206,9 +211,9 @@ HEADERS  += mainwindow.h \
     item_select_dialog/itemselectdialog.h \
     common_features/simple_animator.h \
     common_features/util.h \
-    tileset_configure_dialog/tilesetconfiguredialog.h \
-    tileset_configure_dialog/piecesmodel.h \
-    tileset_configure_dialog/tileset.h \
+    tilesets/tilesetconfiguredialog.h \
+    tilesets/piecesmodel.h \
+    tilesets/tileset.h \
     edit_world/world_edit.h \
     world_scene/wld_scene.h \
     world_scene/item_tile.h \
@@ -225,7 +230,12 @@ HEADERS  += mainwindow.h \
     common_features/item_rectangles.h \
     edit_world/wld_saveimage.h \
     version.h \
-    dev_console/devconsole.h
+    dev_console/devconsole.h \
+    world_scene/item_point.h \
+    tilesets/tilesetgroupeditor.h \
+    defines.h \
+    tilesets/tilesetitembutton.h \
+    external_tools/gifs2png_gui.h
 
 FORMS    += \
     mainwindow.ui \
@@ -242,12 +252,14 @@ FORMS    += \
     data_configs/configstatus.ui \
     common_features/levelfilelist.ui \
     item_select_dialog/itemselectdialog.ui \
-    tileset_configure_dialog/tilesetconfiguredialog.ui \
+    tilesets/tilesetconfiguredialog.ui \
     edit_world/world_edit.ui \
     main_window/savingnotificationdialog.ui \
     wld_point_dialog/wld_setpoint.ui \
     edit_world/wld_saveimage.ui \
-    dev_console/devconsole.ui
+    dev_console/devconsole.ui \
+    tilesets/tilesetgroupeditor.ui \
+    external_tools/gifs2png_gui.ui
 
 RC_FILE = _resources/pge_editor.rc
 

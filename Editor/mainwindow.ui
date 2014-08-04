@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1502</width>
-    <height>2301</height>
+    <height>2723</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1502</width>
-     <height>26</height>
+     <height>18</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -265,6 +265,7 @@
       <string>Pattles and tilesets</string>
      </property>
      <addaction name="actionConfigure_Tilesets"/>
+     <addaction name="actionTileset_groups_editor"/>
     </widget>
     <widget class="QMenu" name="menuExternal_tools">
      <property name="title">
@@ -2666,8 +2667,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>275</width>
-          <height>1462</height>
+          <width>280</width>
+          <height>1330</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3846,8 +3847,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>436</height>
+          <width>270</width>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4029,8 +4030,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>243</height>
+          <width>199</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4111,8 +4112,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>243</height>
+          <width>196</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4205,8 +4206,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>475</height>
+          <width>222</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4503,8 +4504,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>243</height>
+          <width>193</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4619,8 +4620,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>243</height>
+          <width>193</width>
+          <height>114</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4717,8 +4718,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>243</height>
+          <width>108</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4866,7 +4867,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>428</height>
+          <height>467</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5093,8 +5094,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>428</height>
+          <width>194</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5242,8 +5243,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>428</height>
+          <width>220</width>
+          <height>295</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5839,8 +5840,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6009,6 +6010,227 @@ p, li { white-space: pre-wrap; }
    </attribute>
    <addaction name="actionResizeApply"/>
    <addaction name="actionResizeCancel"/>
+  </widget>
+  <widget class="QDockWidget" name="WorldFindDock">
+   <property name="minimumSize">
+    <size>
+     <width>265</width>
+     <height>400</height>
+    </size>
+   </property>
+   <property name="windowIcon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>World map Search</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5">
+    <layout class="QGridLayout" name="gridLayout_19">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QToolBox" name="toolBox">
+       <property name="currentIndex">
+        <number>3</number>
+       </property>
+       <property name="tabSpacing">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="WLDFindTile">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>100</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Tile</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="WLDFindScenery">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>100</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Scenery</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="WLDFindPath">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>100</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Path</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="WLDFindLevel">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>300</width>
+          <height>364</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Level</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_20">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="2" column="0" rowspan="4" colspan="6">
+          <widget class="Line" name="line_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0" colspan="3">
+          <widget class="QLabel" name="label_62">
+           <property name="text">
+            <string>Search?</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="Line" name="line_14">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="9" column="0" colspan="6">
+          <widget class="QPushButton" name="FindStartLevel">
+           <property name="text">
+            <string>Search Level</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="4">
+          <widget class="QLabel" name="label_63">
+           <property name="text">
+            <string>Path background: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="5">
+          <widget class="QCheckBox" name="WorldFind_Check_PathBackgroundActive">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="0" colspan="6">
+          <widget class="QPushButton" name="Find_Button_ResetLevel">
+           <property name="text">
+            <string>Reset Search Fields</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel" name="label_61">
+           <property name="text">
+            <string>Data</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QCheckBox" name="WorldFind_Check_PathBackground">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0" colspan="6">
+          <spacer name="verticalSpacer_18">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="WLDFindMusic">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>100</width>
+          <height>30</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Music</string>
+        </attribute>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <action name="OpenFile">
    <property name="checkable">
@@ -7630,6 +7852,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionShow_Development_Console">
    <property name="text">
     <string>Show Development Console</string>
+   </property>
+  </action>
+  <action name="actionTileset_groups_editor">
+   <property name="text">
+    <string>Tileset Groups Editor</string>
    </property>
   </action>
  </widget>
