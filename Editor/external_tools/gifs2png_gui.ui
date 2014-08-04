@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>gifs2png_gui</class>
+ <widget class="QDialog" name="gifs2png_gui">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>383</width>
+    <height>425</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Convert masked GIFs into the PNG</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
