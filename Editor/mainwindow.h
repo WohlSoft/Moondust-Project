@@ -523,7 +523,9 @@ private slots:
     void on_Find_Button_ContainsNPCBlock_clicked();
 
     void on_actionSwitch_to_Fullscreen_triggered(bool checked);
+
     void on_actionConfigure_Tilesets_triggered();
+    void on_actionTileset_groups_editor_triggered();
 
     void on_WLD_TilesList_itemClicked(QTableWidgetItem *item);
     void on_WLD_SceneList_itemClicked(QListWidgetItem *item);

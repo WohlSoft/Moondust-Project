@@ -265,6 +265,7 @@
       <string>Pattles and tilesets</string>
      </property>
      <addaction name="actionConfigure_Tilesets"/>
+     <addaction name="actionTileset_groups_editor"/>
     </widget>
     <widget class="QMenu" name="menuExternal_tools">
      <property name="title">
@@ -3847,7 +3848,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>270</width>
-          <height>542</height>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4029,8 +4030,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>542</height>
+          <width>199</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4111,8 +4112,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>542</height>
+          <width>196</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4205,8 +4206,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>542</height>
+          <width>222</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4503,8 +4504,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>542</height>
+          <width>193</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4619,8 +4620,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>542</height>
+          <width>193</width>
+          <height>114</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4717,8 +4718,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>542</height>
+          <width>108</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4866,7 +4867,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>509</height>
+          <height>467</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5093,8 +5094,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>509</height>
+          <width>194</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5242,8 +5243,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>509</height>
+          <width>220</width>
+          <height>295</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6060,8 +6061,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>275</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6073,8 +6074,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>275</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6086,8 +6087,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>275</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6100,7 +6101,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>275</height>
+          <height>364</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6218,8 +6219,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>275</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7851,6 +7852,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionShow_Development_Console">
    <property name="text">
     <string>Show Development Console</string>
+   </property>
+  </action>
+  <action name="actionTileset_groups_editor">
+   <property name="text">
+    <string>Tileset Groups Editor</string>
    </property>
   </action>
  </widget>
