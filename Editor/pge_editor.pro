@@ -164,8 +164,8 @@ SOURCES += main.cpp\
     dev_console/devconsole.cpp \
     world_scene/item_point.cpp \
     main_window/dock/wld_search_toolbox.cpp \
-    tilesets/tilesetgroupeditor.cpp
-
+    tilesets/tilesetgroupeditor.cpp \
+    tilesets/tilesetitembutton.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -232,7 +232,8 @@ HEADERS  += mainwindow.h \
     dev_console/devconsole.h \
     world_scene/item_point.h \
     tilesets/tilesetgroupeditor.h \
-    defines.h
+    defines.h \
+    tilesets/tilesetitembutton.h
 
 FORMS    += \
     mainwindow.ui \
