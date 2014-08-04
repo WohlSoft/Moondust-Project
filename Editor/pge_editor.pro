@@ -163,7 +163,8 @@ SOURCES += main.cpp\
     world_scene/wld_resizers.cpp \
     dev_console/devconsole.cpp \
     world_scene/item_point.cpp \
-    main_window/dock/wld_search_toolbox.cpp
+    main_window/dock/wld_search_toolbox.cpp \
+    tilesets/tilesetgroupeditor.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -229,7 +230,9 @@ HEADERS  += mainwindow.h \
     edit_world/wld_saveimage.h \
     version.h \
     dev_console/devconsole.h \
-    world_scene/item_point.h
+    world_scene/item_point.h \
+    tilesets/tilesetgroupeditor.h \
+    defines.h
 
 FORMS    += \
     mainwindow.ui \
@@ -251,7 +254,8 @@ FORMS    += \
     main_window/savingnotificationdialog.ui \
     wld_point_dialog/wld_setpoint.ui \
     edit_world/wld_saveimage.ui \
-    dev_console/devconsole.ui
+    dev_console/devconsole.ui \
+    tilesets/tilesetgroupeditor.ui
 
 RC_FILE = _resources/pge_editor.rc
 
