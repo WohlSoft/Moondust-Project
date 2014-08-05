@@ -2,6 +2,7 @@
 #define GIFS2PNG_GUI_H
 
 #include <QDialog>
+#include <QProcess>
 
 namespace Ui {
 class gifs2png_gui;
@@ -22,7 +23,10 @@ private slots:
 
     void on_close_clicked();
 
+    void consoleMessage();
+
 private:
+    QProcess * proc;
     Ui::gifs2png_gui *ui;
 };
 
