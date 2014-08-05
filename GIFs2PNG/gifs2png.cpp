@@ -82,7 +82,7 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
     if(!target.isNull())
     {
         target.save(OPath+tmp[0]+".png");
-        qDebug() << path+q;
+        QTextStream(stdout) << path+q <<"\n";
         if(removeMode)
         {
             QFile::remove( path+q );
@@ -90,7 +90,7 @@ void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
         }
     }
     else
-    qDebug() << path+q+" - WRONG!";
+    QTextStream(stdout) << path+q+" - WRONG!\n";
 }
 
 int main(int argc, char *argv[])
@@ -104,13 +104,15 @@ int main(int argc, char *argv[])
     bool removeMode=false;
     QStringList fileList;
 
+    bool nopause=false;
+
     bool walkSubDirs=false;
 
-    std::cout<<"============================================================================\n";
-    std::cout<<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
-    std::cout<<"============================================================================\n";
-    std::cout<<"This program is distributed under the GNU GPLv3 license \n";
-    std::cout<<"============================================================================\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"This program is distributed under the GNU GPLv3 license \n";
+    QTextStream(stdout) <<"============================================================================\n";
 
     if(a.arguments().size()==1)
     {
@@ -128,6 +130,10 @@ int main(int argc, char *argv[])
     if(a.arguments().filter("-W", Qt::CaseInsensitive).size()>0)
     {
         walkSubDirs=true;
+    }
+    if(a.arguments().filter("--nopause", Qt::CaseInsensitive).size()>0)
+    {
+        nopause=true;
     }
 
     imagesDir.setPath(a.arguments().at(1));
@@ -148,13 +154,13 @@ int main(int argc, char *argv[])
     else
         OPath=path;
 
-    std::cout<<"============================================================================\n";
-    std::cout<<"Converting images...\n";
-    std::cout<<"============================================================================\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Converting images...\n";
+    QTextStream(stdout) <<"============================================================================\n";
 
-    std::cout<< QString("Input path:  "+path+"\n").toStdString();
-    std::cout<< QString("Output path: "+OPath+"\n").toStdString();
-    std::cout<<"============================================================================\n";
+    QTextStream(stdout) << QString("Input path:  "+path+"\n");
+    QTextStream(stdout) << QString("Output path: "+OPath+"\n");
+    QTextStream(stdout) <<"============================================================================\n";
     fileList << imagesDir.entryList(filters);
 
     if(!walkSubDirs)
@@ -181,33 +187,32 @@ int main(int argc, char *argv[])
 
     }
 
-    std::cout<<"============================================================================\n";
-    std::cout<<"Done!\n\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Done!\n\n";
 
-    getchar();
+    if(!nopause) getchar();
 
-    exit(0);
-    return a.exec();
+    return 0;
 
 DisplayHelp:
-    std::cout<<"============================================================================\n";
-    std::cout<<"This utility will merge GIF images and his mask into solid PNG image:\n";
-    std::cout<<"============================================================================\n";
-    std::cout<<"Syntax:\n\n";
-    std::cout<<"   GIFs2PNG [--help] /path/to/folder [-O/path/to/out] [-R]\n\n";
-    std::cout<<" --help              - Display this help\n";
-    std::cout<<" /path/to/folder     - path to a directory with pair of GIF files\n";
-    std::cout<<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
-    std::cout<<" -R                  - Remove source images after succesfull converting\n";
-    std::cout<<" -W                  - Walk in subdirectores\n";
-    std::cout<<"\n\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"This utility will merge GIF images and his mask into solid PNG image:\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Syntax:\n\n";
+    QTextStream(stdout) <<"   GIFs2PNG [--help] /path/to/folder [-O/path/to/out] [-R]\n\n";
+    QTextStream(stdout) <<" --help              - Display this help\n";
+    QTextStream(stdout) <<" /path/to/folder     - path to a directory with pair of GIF files\n";
+    QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
+    QTextStream(stdout) <<" -R                  - Remove source images after succesfull converting\n";
+    QTextStream(stdout) <<" -W                  - Walk in subdirectores\n";
+    QTextStream(stdout) <<"\n\n";
 
     getchar();
 
     exit(0);
     return a.exec();
 WrongOutputPath:
-    std::cout<<"============================================================================\n";
-    std::cout<<"Wrong output path!\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Wrong output path!\n";
     goto DisplayHelp;
 }
