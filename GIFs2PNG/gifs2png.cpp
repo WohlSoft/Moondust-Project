@@ -22,6 +22,7 @@
 #include <QCoreApplication>
 #include <QImage>
 #include <QDir>
+#include <QDirIterator>
 #include <QString>
 #include <QTextStream>
 #include <QtDebug>
@@ -51,19 +52,59 @@ QImage setAlphaMask(QImage image, QImage mask)
     return target;
 }
 
+void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
+{
+    QRegExp isMask = QRegExp("*m.gif");
+    isMask.setPatternSyntax(QRegExp::Wildcard);
+
+    QRegExp isBackupDir = QRegExp("*/_backup/");
+    isBackupDir.setPatternSyntax(QRegExp::Wildcard);
+
+    if(isBackupDir.exactMatch(path))
+        return; //Skip backup directories
+
+    if(isMask.exactMatch(q))
+        return;
+
+    QImage target;
+    QString imgFileM;
+    QStringList tmp = q.split(".", QString::SkipEmptyParts);
+    if(tmp.size()==2)
+        imgFileM = tmp[0] + "m." + tmp[1];
+    else
+        return;
+
+    QImage image = QImage(path+q);
+    QImage mask = QImage(path+imgFileM);
+
+    target = setAlphaMask(image, mask);
+
+    if(!target.isNull())
+    {
+        target.save(OPath+tmp[0]+".png");
+        qDebug() << path+q;
+        if(removeMode)
+        {
+            QFile::remove( path+q );
+            QFile::remove( path+imgFileM );
+        }
+    }
+    else
+    qDebug() << path+q+" - WRONG!";
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::addLibraryPath(".");
     QCoreApplication a(argc, argv);
-
     QStringList filters;
-    QDir musicDir;
+    QDir imagesDir;
     QString path;
     QString OPath;
     bool removeMode=false;
     QStringList fileList;
-    QRegExp isMask = QRegExp("*m.gif");
-    isMask.setPatternSyntax(QRegExp::Wildcard);
+
+    bool walkSubDirs=false;
 
     std::cout<<"============================================================================\n";
     std::cout<<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
@@ -84,13 +125,17 @@ int main(int argc, char *argv[])
     {
         removeMode=true;
     }
+    if(a.arguments().filter("-W", Qt::CaseInsensitive).size()>0)
+    {
+        walkSubDirs=true;
+    }
 
-    musicDir.setPath(a.arguments().at(1));
+    imagesDir.setPath(a.arguments().at(1));
     filters << "*.gif" << "*.GIF";
-    musicDir.setSorting(QDir::Name);
-    musicDir.setNameFilters(filters);
+    imagesDir.setSorting(QDir::Name);
+    imagesDir.setNameFilters(filters);
 
-    path = musicDir.absolutePath() + "/";
+    path = imagesDir.absolutePath() + "/";
 
     if(a.arguments().filter("-O", Qt::CaseSensitive).size()>0)
     {
@@ -110,39 +155,30 @@ int main(int argc, char *argv[])
     std::cout<< QString("Input path:  "+path+"\n").toStdString();
     std::cout<< QString("Output path: "+OPath+"\n").toStdString();
     std::cout<<"============================================================================\n";
-    fileList << musicDir.entryList(filters);
+    fileList << imagesDir.entryList(filters);
 
+    if(!walkSubDirs)
     foreach(QString q, fileList)
     {
+        doMagicIn(path, q, OPath, removeMode);
+    }
+    else
+    {
+        QDirIterator dirsList(imagesDir.absolutePath(), filters,
+                                  QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                              QDirIterator::Subdirectories);
 
-        if(isMask.exactMatch(q))
-            continue;
+        while(dirsList.hasNext())
+          {
+                dirsList.next();
+                if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip LazyFix's Backup dirs
+                    continue;
+                //qDebug()<< QFileInfo(dirsList.filePath()).dir().absolutePath();
+                if(OPath==path) OPath = QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
+                doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath, removeMode);
+          }
 
-        QImage target;
-        QString imgFileM;
-        QStringList tmp = q.split(".", QString::SkipEmptyParts);
-        if(tmp.size()==2)
-            imgFileM = tmp[0] + "m." + tmp[1];
-        else
-            continue;
 
-        QImage image = QImage(path+q);
-        QImage mask = QImage(path+imgFileM);
-
-        target = setAlphaMask(image, mask);
-
-        if(!target.isNull())
-        {
-            target.save(OPath+tmp[0]+".png");
-            qDebug() << path+q;
-            if(removeMode)
-            {
-                QFile::remove( path+q );
-                QFile::remove( path+imgFileM );
-            }
-        }
-        else
-        qDebug() << path+q+" - WRONG!";
     }
 
     std::cout<<"============================================================================\n";
@@ -163,6 +199,7 @@ DisplayHelp:
     std::cout<<" /path/to/folder     - path to a directory with pair of GIF files\n";
     std::cout<<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
     std::cout<<" -R                  - Remove source images after succesfull converting\n";
+    std::cout<<" -W                  - Walk in subdirectores\n";
     std::cout<<"\n\n";
 
     getchar();
