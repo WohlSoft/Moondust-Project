@@ -1,22 +1,23 @@
-#include "gifs2png_gui.h"
-#include "ui_gifs2png_gui.h"
+#include "lazyfixtool_gui.h"
+#include "ui_lazyfixtool_gui.h"
 #include <QMessageBox>
 #include <QProcess>
 #include <QFileDialog>
 
-gifs2png_gui::gifs2png_gui(QWidget *parent) :
+
+LazyFixTool_gui::LazyFixTool_gui(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::gifs2png_gui)
+    ui(new Ui::LazyFixTool_gui)
 {
     ui->setupUi(this);
 }
 
-gifs2png_gui::~gifs2png_gui()
+LazyFixTool_gui::~LazyFixTool_gui()
 {
     delete ui;
 }
 
-void gifs2png_gui::on_BrowseInput_clicked()
+void LazyFixTool_gui::on_BrowseInput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Source Directory"),
                                                  QApplication::applicationDirPath(),
@@ -25,10 +26,9 @@ void gifs2png_gui::on_BrowseInput_clicked()
     if(dir.isEmpty()) return;
 
     ui->inputDir->setText(dir);
-
 }
 
-void gifs2png_gui::on_BrowseOutput_clicked()
+void LazyFixTool_gui::on_BrowseOutput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Target Directory"),
                                                  QApplication::applicationDirPath(),
@@ -39,7 +39,7 @@ void gifs2png_gui::on_BrowseOutput_clicked()
     ui->outputDir->setText(dir);
 }
 
-void gifs2png_gui::on_startTool_clicked()
+void LazyFixTool_gui::on_startTool_clicked()
 {
     if(ui->inputDir->text().isEmpty())
     {
@@ -50,9 +50,9 @@ void gifs2png_gui::on_startTool_clicked()
     QString command;
 
     #ifdef _WIN32
-    command = QApplication::applicationDirPath()+"/GIFs2PNG.exe";
+    command = QApplication::applicationDirPath()+"/LazyFixTool.exe";
     #else
-    command = QApplication::applicationDirPath()+"/GIFs2PNG";
+    command = QApplication::applicationDirPath()+"/LazyFixTool";
     #endif
 
     if(!QFile(command).exists())
@@ -66,12 +66,14 @@ void gifs2png_gui::on_startTool_clicked()
     if(!ui->outputDir->text().isEmpty()) args << QString("-O%1").arg(ui->outputDir->text());
 
     if(ui->WalkSubDirs->isChecked()) args << "-W";
-    if(ui->RemoveSource->isChecked()) args << "-R";
+    if(ui->noBackUp->isChecked()) args << "-N";
+    if(ui->grayMasks->isChecked()) args << "-G";
 
     QProcess::startDetached(command, args);
 }
 
-void gifs2png_gui::on_close_clicked()
+
+void LazyFixTool_gui::on_close_clicked()
 {
     this->close();
 }
