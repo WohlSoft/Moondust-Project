@@ -15,7 +15,7 @@ class DevConsole : public QWidget
 public:
     static void init();
     static void show();
-    static void log(const QString &logText, const QString &channel = QString("System"));
+    static void log(const QString &logText, const QString &channel = QString("System"), bool raise=false);
     static bool isConsoleShown();
 
 private slots:
@@ -27,7 +27,7 @@ private:
     explicit DevConsole(QWidget *parent = 0);
     ~DevConsole();
     Ui::DevConsole *ui;
-    void logToConsole(const QString &logText, const QString &channel);
+    void logToConsole(const QString &logText, const QString &channel, bool raise=false);
     QPlainTextEdit* getEditByIndex(const int &index);
     QPlainTextEdit* getCurrentEdit();
 
