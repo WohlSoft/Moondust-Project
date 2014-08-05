@@ -24,7 +24,7 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "1.2.0"
+#define _FILE_VERSION "1.2.1"
 #define _FILE_RELEASE ""
 
 #define _VF1 1
