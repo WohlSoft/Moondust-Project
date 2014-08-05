@@ -50,20 +50,36 @@ void MainWindow::on_actionShow_Development_Console_triggered()
     DevConsole::log("Showing DevConsole!","View");
 }
 
-
+LazyFixTool_gui * lazyfixGUI;
 void MainWindow::on_actionLazyFixTool_triggered()
 {
-    LazyFixTool_gui * lazyfixGUI = new LazyFixTool_gui;
-    lazyfixGUI->exec();
-    delete lazyfixGUI;
+    if(lazyfixGUI)
+    {
+        lazyfixGUI->show();
+        lazyfixGUI->raise();
+        lazyfixGUI->setFocus();
+        return;
+    }
+    lazyfixGUI = new LazyFixTool_gui;
+    lazyfixGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    lazyfixGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, lazyfixGUI->size(), qApp->desktop()->availableGeometry()));
+    lazyfixGUI->show();
 }
 
+gifs2png_gui * gifToPngGUI;
 void MainWindow::on_actionGIFs2PNG_triggered()
 {
-    gifs2png_gui * gifToPngGUI = new gifs2png_gui;
-    gifToPngGUI->exec();
-    delete gifToPngGUI;
-
+    if(gifToPngGUI)
+    {
+        gifToPngGUI->show();
+        gifToPngGUI->raise();
+        gifToPngGUI->setFocus();
+        return;
+    }
+    gifToPngGUI = new gifs2png_gui;
+    gifToPngGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    gifToPngGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, gifToPngGUI->size(), qApp->desktop()->availableGeometry()));
+    gifToPngGUI->show();
 }
 
 void MainWindow::on_actionPNG2GIFs_triggered()
