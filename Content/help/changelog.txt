@@ -11,6 +11,9 @@ Editor 0.2.0
 - Improved LVL parser: filed with format <10 will automatically set BGO sorting priority for BGO 65 and boss flag for NPC-15, 39 and 86.
 - Added overwrite mode: all collided items will be removed when you placing new item
 - Improved Square Fill tool: you will see yellow rectagnles and know, where will be placed new items
+- Fixed "add layer" dialog. Now if you define exist layer, you will be reasked for layer name.
+- Added point selection dialog. You can select point from a world map directly to the warp on the level.
+- Added dialogs for a console tools like a GIFs2PNG and LazyFixTool
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized
