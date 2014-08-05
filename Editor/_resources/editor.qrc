@@ -105,5 +105,8 @@
         <file>images/resize_accept.png</file>
         <file>images/line_fill.png</file>
         <file>images/set_point.png</file>
+        <file>images/extermal_tools/cat_gif2png_128.png</file>
+        <file>images/extermal_tools/cat_glasses_128.png</file>
+        <file>images/extermal_tools/cat_png2gif_128.png</file>
     </qresource>
 </RCC>

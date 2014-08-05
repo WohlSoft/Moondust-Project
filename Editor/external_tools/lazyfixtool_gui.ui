@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>gifs2png_gui</class>
- <widget class="QDialog" name="gifs2png_gui">
+ <class>LazyFixTool_gui</class>
+ <widget class="QDialog" name="LazyFixTool_gui">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>490</width>
-    <height>382</height>
+    <width>487</width>
+    <height>398</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,49 +17,23 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Convert masked GIFs into the PNG</string>
+   <string>LazyFix tool</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
-    <normaloff>:/images/extermal_tools/cat_gif2png_128.png</normaloff>:/images/extermal_tools/cat_gif2png_128.png</iconset>
+    <normaloff>:/images/extermal_tools/cat_glasses_128.png</normaloff>:/images/extermal_tools/cat_glasses_128.png</iconset>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QPushButton" name="BrowseInput">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>10</y>
-     <width>131</width>
-     <height>121</height>
+     <x>400</x>
+     <y>180</y>
+     <width>81</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string notr="true"/>
-   </property>
-   <property name="pixmap">
-    <pixmap resource="../_resources/editor.qrc">:/images/extermal_tools/cat_gif2png_128.png</pixmap>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>20</y>
-     <width>321</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <italic>false</italic>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string notr="true">GIFs2PNG Converter</string>
+    <string>Browse</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -68,11 +42,11 @@
      <x>10</x>
      <y>50</y>
      <width>321</width>
-     <height>51</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="text">
-    <string comment="About GIFs2PNG tool">This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</string>
+    <string comment="About GIFs2PNG tool">This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -91,6 +65,58 @@
     </rect>
    </property>
   </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>205</y>
+     <width>471</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output dir, where will be saved fixed images
+(if you not set, target will overwrite source images with back-up creation)</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>10</y>
+     <width>131</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string notr="true"/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="../_resources/editor.qrc">:/images/extermal_tools/cat_glasses_128.png</pixmap>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startTool">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>370</y>
+     <width>181</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Start</string>
+   </property>
+  </widget>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
@@ -107,19 +133,6 @@
     <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
    </property>
   </widget>
-  <widget class="QPushButton" name="BrowseInput">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>180</y>
-     <width>81</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Browse</string>
-   </property>
-  </widget>
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
@@ -131,6 +144,19 @@
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="close">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>370</y>
+     <width>101</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Close</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="outputDir">
@@ -156,52 +182,6 @@
     <string>Browse</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>205</y>
-     <width>471</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Output dir, where will be saved a PNG images
-(if you not set, target images will be stored into the same directory)</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="RemoveSource">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>300</y>
-     <width>471</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Remove source images after successful conversion</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="startTool">
-   <property name="geometry">
-    <rect>
-     <x>300</x>
-     <y>350</y>
-     <width>181</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Start</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
@@ -222,20 +202,40 @@
     <string>Flags</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="close">
+  <widget class="QCheckBox" name="WalkSubDirs">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>350</y>
-     <width>101</width>
-     <height>23</height>
+     <y>300</y>
+     <width>471</width>
+     <height>18</height>
     </rect>
    </property>
    <property name="text">
-    <string>Close</string>
+    <string>Walk in the sub-directories</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="WalkSubDirs">
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>321</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string notr="true">LazyFix tool</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="noBackUp">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -245,26 +245,20 @@
     </rect>
    </property>
    <property name="text">
-    <string>Walk in the sub-directories</string>
+    <string>Don't create back-up</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QCheckBox" name="grayMasks">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>100</y>
-     <width>331</width>
-     <height>31</height>
+     <y>340</y>
+     <width>471</width>
+     <height>18</height>
     </rect>
    </property>
    <property name="text">
-    <string>Note: If you got broken images after conversion, please run the LazyFix tool and retry conversion</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
+    <string>Make gray shades on masks is more dark</string>
    </property>
   </widget>
  </widget>
