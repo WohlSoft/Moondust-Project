@@ -576,6 +576,10 @@ private slots:
     void on_actionWLDFailRestart_triggered(bool checked);
     void on_actionWLDProperties_triggered();
 
+    // External tools
+    void on_actionLazyFixTool_triggered();
+    void on_actionGIFs2PNG_triggered();
+    void on_actionPNG2GIFs_triggered();
 
     void on_actionShow_Development_Console_triggered();
 
@@ -584,7 +588,6 @@ private slots:
     void on_actionWLD_SearchBox_triggered(bool checked);
     void on_WorldFindDock_visibilityChanged(bool visible);
     void on_FindStartLevel_clicked();
-
 
 signals:
     void closeEditor();
