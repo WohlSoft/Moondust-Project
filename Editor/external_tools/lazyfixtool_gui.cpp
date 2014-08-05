@@ -1,19 +1,20 @@
 #include "lazyfixtool_gui.h"
 #include "ui_lazyfixtool_gui.h"
 #include <QMessageBox>
-#include <QProcess>
 #include <QFileDialog>
-
+#include "../dev_console/devconsole.h"
 
 LazyFixTool_gui::LazyFixTool_gui(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LazyFixTool_gui)
 {
+    proc = new QProcess;
     ui->setupUi(this);
 }
 
 LazyFixTool_gui::~LazyFixTool_gui()
 {
+    delete proc;
     delete ui;
 }
 
@@ -68,8 +69,21 @@ void LazyFixTool_gui::on_startTool_clicked()
     if(ui->WalkSubDirs->isChecked()) args << "-W";
     if(ui->noBackUp->isChecked()) args << "-N";
     if(ui->grayMasks->isChecked()) args << "-G";
+    args << "--nopause";
 
-    QProcess::startDetached(command, args);
+    DevConsole::show();
+    DevConsole::log("Ready>>>", "LazyFix Tool");
+    DevConsole::log("----------------------------------", "LazyFix Tool", true);
+    proc->waitForFinished(1);
+    proc->start(command, args);
+    connect(proc, SIGNAL(readyReadStandardOutput()),this, SLOT(consoleMessage()) );
+    //connect(proc, SIGNAL(readyReadStandardError()), this, SLOT(consoleMessage()) );
+}
+
+void LazyFixTool_gui::consoleMessage()
+{
+    QByteArray strdata = proc->readAllStandardOutput();
+    DevConsole::log(strdata, "LazyFix Tool");
 }
 
 
