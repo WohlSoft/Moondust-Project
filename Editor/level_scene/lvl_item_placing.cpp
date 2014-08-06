@@ -632,9 +632,10 @@ void LvlScene::resetCursor()
         cursor=NULL;}
 
     DrawMode=false;
-    QPixmap cur(QSize(1,1));
-    cur.fill(Qt::black);
+    QPixmap cur(QSize(5,5));
+    cur.fill(Qt::transparent);
     cursor = addPixmap(QPixmap(cur));
+    ((QGraphicsPixmapItem*)cursor)->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     cursor->setZValue(1000);
     cursor->hide();
 }
