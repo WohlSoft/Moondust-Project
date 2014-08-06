@@ -23,6 +23,8 @@ TilesetItemButton::TilesetItemButton(dataconfigs *conf, QFrame *parent) :
     QFrame(parent)
 {
     m_config = conf;
+    setFrameStyle(QFrame::Panel | QFrame::Raised);
+    setLineWidth(2);
 }
 
 
@@ -39,8 +41,22 @@ void TilesetItemButton::setConfig(dataconfigs *config)
 
 void TilesetItemButton::paintEvent(QPaintEvent *ev)
 {
+    QPainter painter;
+    painter.begin(this);
+    painter.fillRect(ev->rect(), Qt::black);
 
+    painter.end();
 
     QFrame::paintEvent(ev);
+}
+
+void TilesetItemButton::mousePressEvent(QMouseEvent *ev)
+{
+    setFrameStyle(QFrame::Panel | QFrame::Sunken);
+}
+
+void TilesetItemButton::mouseReleaseEvent(QMouseEvent *ev)
+{
+    setFrameStyle(QFrame::Panel | QFrame::Raised);
 }
 
