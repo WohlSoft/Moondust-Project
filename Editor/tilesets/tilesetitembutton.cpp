@@ -39,11 +39,34 @@ void TilesetItemButton::setConfig(dataconfigs *config)
     m_config = config;
 }
 
+void TilesetItemButton::applyItem(const ItemTypes &i, const int &id, const int &width, const int &height)
+{
+    switch(i){
+    case ItemTypes::LVL_Block:
+    {
+
+        break;
+    }
+    case ItemTypes::LVL_BGO:
+    {
+
+        break;
+    }
+    case ItemTypes::LVL_NPC:
+    {
+
+        break;
+    }
+    default:
+        break;
+    }
+}
+
 void TilesetItemButton::paintEvent(QPaintEvent *ev)
 {
     QPainter painter;
     painter.begin(this);
-    painter.fillRect(ev->rect(), Qt::black);
+    painter.fillRect(contentsRect(), Qt::black);
 
     painter.end();
 
