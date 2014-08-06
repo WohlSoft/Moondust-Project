@@ -9,7 +9,7 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
     ui(new Ui::TilesetGroupEditor)
 {
     ui->setupUi(this);
-    //ui->PreviewBox->layout()->addWidget(new TilesetItemButton(&(MainWinConnect::pMainWin->configs)));
+    ui->PreviewBox->layout()->addWidget(new TilesetItemButton(&(MainWinConnect::pMainWin->configs)));
 }
 
 TilesetGroupEditor::~TilesetGroupEditor()
