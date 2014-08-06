@@ -16,7 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "item_block.h"
+#include "item_bgo.h"
+#include "item_npc.h"
 #include "item_water.h"
+#include "item_door.h"
+
 #include "../common_features/logger.h"
 
 #include "newlayerbox.h"
@@ -68,14 +73,14 @@ void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
     if((!scene->lock_water)&&(!isLocked))
     {
         //Remove selection from non-bgo items
-        if(this->isSelected())
-        {
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()!="Water") SelItem->setSelected(false);
-            }
-        }
-        else
+        if(!this->isSelected())
+        //{
+        //    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        //    {
+        //        if(SelItem->data(0).toString()!="Water") SelItem->setSelected(false);
+        //    }
+        //}
+        //else
         {
             scene->clearSelection();
             this->setSelected(true);
@@ -216,75 +221,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         else
         {
-            bool itemIsFound=false;
-            QString lName;
-            if(selected==newLayer)
-            {
-                scene->contextMenuOpened = false;
-                ToNewLayerBox * layerBox = new ToNewLayerBox(scene->LvlData);
-                layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-                layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
-                if(layerBox->exec()==QDialog::Accepted)
-                {
-                    itemIsFound=true;
-                    lName = layerBox->lName;
-
-                    //Store new layer into array
-                    LevelLayers nLayer;
-                    nLayer.name = lName;
-                    nLayer.hidden = layerBox->lHidden;
-                    scene->LvlData->layers_array_id++;
-                    nLayer.array_id = scene->LvlData->layers_array_id;
-                    scene->LvlData->layers.push_back(nLayer);
-
-                    //scene->SyncLayerList=true; //Refresh layer list
-                    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-                    MainWinConnect::pMainWin->setLayersBox();
-                    MainWinConnect::pMainWin->setLayerToolsLocked(false);
-                }
-                delete layerBox;
-            }
-            else
-            foreach(QAction * lItem, layerItems)
-            {
-                if(selected==lItem)
-                {
-                    itemIsFound=true;
-                    lName = lItem->data().toString();
-                    //FOUND!!!
-                 break;
-                }//Find selected layer's item
-            }
-
-            if(itemIsFound)
-            {
-                LevelData modData;
-                foreach(LevelLayers lr, scene->LvlData->layers)
-                { //Find layer's settings
-                    if(lr.name==lName)
-                    {
-                        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                        {
-
-                            if(SelItem->data(0).toString()=="Water")
-                            {
-                                modData.water.push_back(((ItemWater*) SelItem)->waterData);
-                                ((ItemWater *) SelItem)->waterData.layer = lr.name;
-                                ((ItemWater *) SelItem)->setVisible(!lr.hidden);
-                                ((ItemWater *) SelItem)->arrayApply();
-                            }
-                        }
-                        if(selected==newLayer){
-                            scene->addChangedNewLayerHistory(modData, lr);
-                        }
-                        break;
-                    }
-                }//Find layer's settings
-                if(selected!=newLayer){
-                    scene->addChangedLayerHistory(modData, lName);
-                }
-                scene->contextMenuOpened = false;
-            }
+            #include "item_set_layer.h"
         }
     }
     else

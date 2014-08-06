@@ -18,7 +18,12 @@
 
 #include "../common_features/logger.h"
 
+#include "item_block.h"
+#include "item_bgo.h"
 #include "item_npc.h"
+#include "item_water.h"
+#include "item_door.h"
+
 #include "itemmsgbox.h"
 
 #include "newlayerbox.h"
@@ -90,14 +95,14 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
     if((!scene->lock_npc)&&(!scene->DrawMode)&&(!isLocked))
     {
         //Remove selection from non-block items
-        if(this->isSelected())
-        {
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()!="NPC") SelItem->setSelected(false);
-            }
-        }
-        else
+        if(!this->isSelected())
+        //{
+        //    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+        //    {
+        //        if(SelItem->data(0).toString()!="NPC") SelItem->setSelected(false);
+        //    }
+        //}
+        //else
         {
             scene->clearSelection();
             this->setSelected(true);
@@ -137,10 +142,12 @@ void ItemNPC::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         QString NPCpath2 = scene->LvlData->path+"/"+scene->LvlData->filename+QString("/npc-%1.txt").arg( npcData.id );
 
         QAction *newNpc;
-        if( (QFile().exists(NPCpath2)) || (QFile().exists(NPCpath1)) )
+
+        if( (!scene->LvlData->untitled)&&((QFile().exists(NPCpath2)) || (QFile().exists(NPCpath1))) )
             newNpc = ItemMenu->addAction(tr("Edit NPC-Configuration"));
         else
             newNpc = ItemMenu->addAction(tr("New NPC-Configuration"));
+        newNpc->setEnabled(!scene->LvlData->untitled);
         newNpc->deleteLater();
         ItemMenu->addSeparator()->deleteLater();
 
@@ -390,75 +397,7 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         }
         else
         {
-            bool itemIsFound=false;
-            QString lName;
-            if(selected==newLayer)
-            {
-                scene->contextMenuOpened = false;
-                ToNewLayerBox * layerBox = new ToNewLayerBox(scene->LvlData);
-                layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-                layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
-                if(layerBox->exec()==QDialog::Accepted)
-                {
-                    itemIsFound=true;
-                    lName = layerBox->lName;
-
-                    //Store new layer into array
-                    LevelLayers nLayer;
-                    nLayer.name = lName;
-                    nLayer.hidden = layerBox->lHidden;
-                    scene->LvlData->layers_array_id++;
-                    nLayer.array_id = scene->LvlData->layers_array_id;
-                    scene->LvlData->layers.push_back(nLayer);
-
-                    //scene->SyncLayerList=true; //Refresh layer list
-                    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-                    MainWinConnect::pMainWin->setLayersBox();
-                    MainWinConnect::pMainWin->setLayerToolsLocked(false);
-                }
-                delete layerBox;
-            }
-            else
-            foreach(QAction * lItem, layerItems)
-            {
-                if(selected==lItem)
-                {
-                    itemIsFound=true;
-                    lName = lItem->data().toString();
-                    //FOUND!!!
-                 break;
-                }//Find selected layer's item
-            }
-
-            if(itemIsFound)
-            {
-                LevelData modData;
-                foreach(LevelLayers lr, scene->LvlData->layers)
-                { //Find layer's settings
-                    if(lr.name==lName)
-                    {
-                        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                        {
-
-                            if(SelItem->data(0).toString()=="NPC")
-                            {
-                                modData.npc.push_back(((ItemNPC*) SelItem)->npcData);
-                                ((ItemNPC *) SelItem)->npcData.layer = lr.name;
-                                ((ItemNPC *) SelItem)->setVisible(!lr.hidden);
-                                ((ItemNPC *) SelItem)->arrayApply();
-                            }
-                        }
-                        if(selected==newLayer){
-                            scene->addChangedNewLayerHistory(modData, lr);
-                        }
-                        break;
-                    }
-                }//Find layer's settings
-                if(selected!=newLayer){
-                    scene->addChangedLayerHistory(modData, lName);
-                }
-                scene->contextMenuOpened = false;
-            }
+            #include "item_set_layer.h"
         }
     }
     else
