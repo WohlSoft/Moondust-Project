@@ -22,6 +22,8 @@
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
+#include "item_water.h"
+#include "item_door.h"
 
 #include "../common_features/logger.h"
 
@@ -169,6 +171,36 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
     foreach (QGraphicsItem * it, collisions) {
             if (it == item)
                  continue;
+
+            //skip invisible items
+            if(!it->isVisible()) continue;
+
+            //skip locked items
+            if((it->data(0).toString()=="Block"))
+            {
+                if((lock_block)|| ((ItemBlock*)it)->isLocked) continue;
+            }
+            else
+            if((it->data(0).toString()=="BGO"))
+            {
+                if((lock_bgo)|| ((ItemBGO*)it)->isLocked) continue;
+            }
+            else
+            if((it->data(0).toString()=="NPC"))
+            {
+                if((lock_npc)|| ((ItemNPC*)it)->isLocked) continue;
+            }
+            else
+            if((it->data(0).toString()=="Water"))
+            {
+                if((lock_water)|| ((ItemWater*)it)->isLocked) continue;
+            }
+            else
+            if((it->data(0).toString()=="Door_enter")||(it->data(0).toString()=="Door_exit"))
+            {
+                if((lock_door)|| ((ItemDoor*)it)->isLocked) continue;
+            }
+
             if( (
                     (it->data(0).toString()=="Block")||
                     (it->data(0).toString()=="BGO")||
@@ -183,24 +215,3 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
     }
     return NULL;
 }
-
-/*
-QGraphicsItem * LvlScene::itemCollidesMouse(QGraphicsItem * item)
-{
-    QList<QGraphicsItem *> collisions = collidingItems(item, Qt::ContainsItemShape);
-    foreach (QGraphicsItem * it, collisions) {
-            if (it == item)
-                 continue;
-            if(item->data(0).toString()=="Water")
-                return NULL;
-            if(item->data(0).toString()=="Door_exit")
-                return NULL;
-            if(item->data(0).toString()=="Door_enter")
-                return NULL;
-
-        if( item->data(0).toString() ==  it->data(0).toString() )
-            return it;
-    }
-    return NULL;
-}
-*/
