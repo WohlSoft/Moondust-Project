@@ -50,12 +50,12 @@ void TilesetItemButton::paintEvent(QPaintEvent *ev)
     QFrame::paintEvent(ev);
 }
 
-void TilesetItemButton::mousePressEvent(QMouseEvent *ev)
+void TilesetItemButton::mousePressEvent(QMouseEvent *)
 {
     setFrameStyle(QFrame::Panel | QFrame::Sunken);
 }
 
-void TilesetItemButton::mouseReleaseEvent(QMouseEvent *ev)
+void TilesetItemButton::mouseReleaseEvent(QMouseEvent *)
 {
     setFrameStyle(QFrame::Panel | QFrame::Raised);
 }
