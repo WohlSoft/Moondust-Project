@@ -32,7 +32,7 @@ public:
 
     dataconfigs *config() const;
     void setConfig(dataconfigs *config);
-    void applyItem(const ItemTypes &i, const int &id, const int &width = -1, const int &height = -1);
+    void applyItem(const int &i, const int &id, const int &width = -1, const int &height = -1);
 
 signals:
 
