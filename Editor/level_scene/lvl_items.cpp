@@ -641,6 +641,7 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
     WATERItem->setData(0, "Water"); // ObjType
     WATERItem->setData(1, QString::number(0) );
     WATERItem->setData(2, QString::number(water.array_id) );
+    if(PasteFromBuffer) WATERItem->setSelected(true);
 }
 
 void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)

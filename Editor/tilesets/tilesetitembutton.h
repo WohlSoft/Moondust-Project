@@ -40,8 +40,8 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent* ev);
-    void mousePressEvent(QMouseEvent* ev);
-    void mouseReleaseEvent(QMouseEvent* ev);
+    void mousePressEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
 
 private:
     dataconfigs* m_config;

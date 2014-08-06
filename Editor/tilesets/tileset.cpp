@@ -347,7 +347,22 @@ void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
 
 void tileset::SaveSimpleTileset(const QString &path, const tileset::SimpleTileset &tileset)
 {
-    QSettings simpleTilesetINI(path,QSettings::IniFormat);
+    QString modifiedPath;
+#ifdef __linux__
+
+    if(!path.contains("*.ini"))
+    {
+        modifiedPath = path + ".ini";
+        //QMessageBox::information(mainwindow, "Information", path, QMessageBox.Ok);
+    }
+    else
+    {
+        modifiedPath = path;
+    }
+#elif _WIN32
+    modifiedPath = path;
+#endif
+    QSettings simpleTilesetINI(modifiedPath,QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
     simpleTilesetINI.clear();
     simpleTilesetINI.beginGroup("tileset"); //HEADER
