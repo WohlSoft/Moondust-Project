@@ -21,6 +21,7 @@
 
 #include <QFrame>
 #include "../data_configs/data_configs.h"
+#include "../defines.h"
 
 class TilesetItemButton : public QFrame
 {
@@ -31,6 +32,7 @@ public:
 
     dataconfigs *config() const;
     void setConfig(dataconfigs *config);
+    void applyItem(const ItemTypes &i, const int &id, const int &width = -1, const int &height = -1);
 
 signals:
 
