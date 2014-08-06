@@ -204,20 +204,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         else
         if(selected==remove)
         {
-            LevelData removedItems;
-            bool deleted=false;
             scene->contextMenuOpened = false;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()=="Water")
-                {
-                    removedItems.water.push_back(((ItemWater *)SelItem)->waterData);
-                    ((ItemWater *)SelItem)->removeFromArray();
-                    delete SelItem;
-                    deleted=true;
-                }
-            }
-            if(deleted) MainWinConnect::pMainWin->activeLvlEditWin()->scene->addRemoveHistory( removedItems );
+            scene->removeSelectedLvlItems();
         }
         else
         {

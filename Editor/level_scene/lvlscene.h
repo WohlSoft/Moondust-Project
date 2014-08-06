@@ -532,6 +532,10 @@ public:
     // ////////////////////////////////////////////
     void openProps();
 
+    void removeSelectedLvlItems();
+    void removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory=false);
+    void removeLvlItem(QGraphicsItem * item, bool globalHistory=false);
+
 public slots:
     void selectionChanged();
 

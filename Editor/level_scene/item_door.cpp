@@ -279,22 +279,8 @@ QAction *selected = ItemMenu->exec(event->screenPos());
         else
         if(selected==remove)
         {
-            //LevelData removedItems;
-            //bool deleted=false;
-
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
-                {
-                   // removedItems.doors.push_back(((ItemDoor *)SelItem)->doorData);
-                    ((ItemDoor *)SelItem)->removeFromArray();
-                    delete SelItem;
-                  //  deleted=true;
-                }
-            }
-            MainWinConnect::pMainWin->setDoorData(-2);
-            /* if(deleted) scene->addRemoveHistory( removedItems );*/
             scene->contextMenuOpened = false;
+            scene->removeSelectedLvlItems();
         }
         else
         if(selected==props)
