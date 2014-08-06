@@ -39,7 +39,7 @@ void TilesetItemButton::setConfig(dataconfigs *config)
     m_config = config;
 }
 
-void TilesetItemButton::applyItem(const ItemTypes &i, const int &id, const int &width, const int &height)
+void TilesetItemButton::applyItem(const int &i, const int &id, const int &width, const int &height)
 {
     switch(i){
     case ItemTypes::LVL_Block:
