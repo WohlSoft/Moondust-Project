@@ -40,107 +40,10 @@ int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
 
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 {
-    QList<QGraphicsItem*> selectedList = selectedItems();
-    LevelData historyBuffer;
-    bool deleted=false;
-
-    QString objType;
     switch(keyEvent->key())
     {
     case (Qt::Key_Delete): //Delete action
-        if(selectedList.isEmpty()) break;
-
-        for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-        {
-
-                objType=(*it)->data(0).toString();
-
-                if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
-
-                //remove data from main array before deletion item from scene
-                if( objType=="Block" )
-                {
-                    historyBuffer.blocks.push_back(((ItemBlock*)(*it))->blockData);
-                    ((ItemBlock *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-                else
-                if( objType=="BGO" )
-                {
-                    historyBuffer.bgo.push_back(((ItemBGO*)(*it))->bgoData);
-                    ((ItemBGO *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-                else
-                if( objType=="NPC" )
-                {
-                    historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
-                    ((ItemNPC *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-                else
-                if( objType=="Water" )
-                {
-                    historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
-                    ((ItemWater *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-                else
-                if(( objType=="Door_enter" )||( objType=="Door_exit" ))
-                {
-                    //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
-                    bool isEntrance = (objType=="Door_enter");
-                    /*addRemoveDoorHistory((*it)->data(2).toInt(), objType=="Door_enter",
-                                         (isEntrance ? ((ItemDoor *)(*it))->doorData.ix :
-                                                       ((ItemDoor *)(*it))->doorData.ox),
-                                         (isEntrance ? ((ItemDoor *)(*it))->doorData.iy :
-                                                       ((ItemDoor *)(*it))->doorData.oy));*/
-                    LevelDoors doorData = ((ItemDoor *)(*it))->doorData;
-                    if(isEntrance){
-                        doorData.isSetIn = true;
-                        doorData.isSetOut = false;
-                    }else{
-                        doorData.isSetIn = false;
-                        doorData.isSetOut = true;
-                    }
-                    historyBuffer.doors.push_back(doorData);
-                    ((ItemDoor *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    MainWinConnect::pMainWin->setDoorData(-2);
-                    deleted=true;
-                }
-                else
-                if(( objType=="player1" )||( objType=="player2" ))
-                {
-                    unsigned long player=1;
-
-                    if(objType=="player1")
-                        player=1;
-                    if(objType=="player2")
-                        player=2;
-
-                    for(int plr=0; plr<LvlData->players.size(); plr++)
-                    {
-                     if(LvlData->players[plr].id == player)
-                     {
-                         historyBuffer.players.push_back(LvlData->players[plr]);
-                         LvlData->players[plr].x = 0;
-                         LvlData->players[plr].y = 0;
-                         LvlData->players[plr].w = 0;
-                         LvlData->players[plr].h = 0;
-                         deleted=true;
-                         if((*it)) delete (*it);
-                         break;
-                     }
-                    }
-                }
-        }
-        if(deleted) addRemoveHistory(historyBuffer);
-
+        removeSelectedLvlItems();
         break;
     case (Qt::Key_Escape):
         if(!IsMoved)
@@ -217,20 +120,11 @@ void LvlScene::selectionChanged()
 {
     if(this->selectedItems().isEmpty())
     {
-        LevelBlock dummyBlock;
-        dummyBlock.array_id=0;
-
-        LevelBGO dummyBgo;
-        dummyBgo.array_id=0;
-
-        LevelNPC dummyNPC;
-        dummyNPC.array_id=0;
-
-        MainWinConnect::pMainWin->LvlItemProps(-1, dummyBlock, dummyBgo, dummyNPC);
+        MainWinConnect::pMainWin->LvlItemProps(-1, FileFormats::dummyLvlBlock(), FileFormats::dummyLvlBgo(), FileFormats::dummyLvlNpc());
     }
 
     #ifdef _DEBUG_
-    WriteToLog(QtDebugMsg, "Selection Changed!");
+        WriteToLog(QtDebugMsg, "Selection Changed!");
     #endif
 }
 
@@ -306,6 +200,10 @@ static qlonglong last_block_arrayID=0;
 static qlonglong last_bgo_arrayID=0;
 static qlonglong last_npc_arrayID=0;
 
+bool mouseLeft=false;
+bool mouseMid=false;
+bool mouseRight=false;
+
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     #ifdef _DEBUG_
@@ -314,6 +212,22 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     #endif
 
 if(contextMenuOpened) return;
+
+if( mouseEvent->buttons() & Qt::LeftButton )
+{
+    mouseLeft=true;
+    WriteToLog(QtDebugMsg, QString("Left mouse button pressed [edit mode: %1]").arg(EditingMode));
+}
+if( mouseEvent->buttons() & Qt::MiddleButton )
+{
+    mouseMid=true;
+    WriteToLog(QtDebugMsg, QString("Middle mouse button pressed [edit mode: %1]").arg(EditingMode));
+}
+if( mouseEvent->buttons() & Qt::RightButton )
+{
+    mouseRight=true;
+    WriteToLog(QtDebugMsg, QString("Right mouse button pressed [edit mode: %1]").arg(EditingMode));
+}
 
 WriteToLog(QtDebugMsg, QString("Placing mode %1").arg(EditingMode));
     switch(EditingMode)
@@ -580,6 +494,23 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+
+    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+    {
+        mouseLeft=false;
+        WriteToLog(QtDebugMsg, QString("Left mouse button released [edit mode: %1]").arg(EditingMode));
+    }
+    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+    {
+        mouseMid=false;
+        WriteToLog(QtDebugMsg, QString("Middle mouse button released [edit mode: %1]").arg(EditingMode));
+    }
+    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    {
+        mouseRight=false;
+        WriteToLog(QtDebugMsg, QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
+    }
+
     if(contextMenuOpened)
     {
         contextMenuOpened = false; //bug protector
@@ -719,7 +650,19 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 placingItems.npc.clear();
             }
         }
+        break;
     }
+    case MODE_Erasing:
+        if(!overwritedItems.blocks.isEmpty()||
+            !overwritedItems.bgo.isEmpty()||
+            !overwritedItems.npc.isEmpty() )
+        {
+            addRemoveHistory(overwritedItems);
+            overwritedItems.blocks.clear();
+            overwritedItems.bgo.clear();
+            overwritedItems.npc.clear();
+        }
+        break;
     default:
         break;
     }
@@ -759,88 +702,17 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if ((!selectedList.isEmpty())&&(IsMoved))
             {
 
+                if(EditingMode==MODE_Erasing)
+                {
+                    removeLvlItems(selectedList);
+                }
+                else
                 // correct selected items' coordinates
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 { ////////////////////////FIRST FETCH///////////////////////
-                    if(EditingMode==MODE_Erasing)
-                    {
-
-                        if(!(*it)->isVisible()) continue; //Invisible items can't be deleted
-
-                        //remove data from main array before deletion item from scene
-                        if( (*it)->data(0).toString()=="Block" )
-                        {
-                            historyBuffer.blocks.push_back(((ItemBlock*)(*it))->blockData);
-                            ((ItemBlock *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        else
-                        if( (*it)->data(0).toString()=="BGO" )
-                        {
-                            historyBuffer.bgo.push_back(((ItemBGO*)(*it))->bgoData);
-                            ((ItemBGO *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        else
-                        if( (*it)->data(0).toString()=="NPC" )
-                        {
-                            historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
-                            ((ItemNPC *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        else
-                        if( (*it)->data(0).toString()=="Water" )
-                        {
-                            historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
-                            ((ItemWater *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        else
-                        if(( (*it)->data(0).toString()=="Door_enter" )||( (*it)->data(0).toString()=="Door_exit" ))
-                        {
-                            //historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
-                            LevelDoors tData = ((ItemDoor*)(*it))->doorData;
-                            tData.isSetIn = ( (*it)->data(0).toString()=="Door_enter" );
-                            tData.isSetOut = ( (*it)->data(0).toString()=="Door_exit" );
-                            historyBuffer.doors.push_back(tData);
-                            ((ItemDoor *)(*it))->removeFromArray();
-                            deleted=true;
-                            MainWinConnect::pMainWin->setDoorData(-2);
-                        }
-                        else
-                        if(( (*it)->data(0).toString()=="player1" )||( (*it)->data(0).toString()=="player2" ))
-                        {
-                            unsigned long player=1;
-
-                            if((*it)->data(0).toString()=="player1")
-                                player=1;
-                            if((*it)->data(0).toString()=="player2")
-                                player=2;
-
-                            for(int plr=0; plr<LvlData->players.size(); plr++)
-                            {
-                             if(LvlData->players[plr].id == player)
-                             {
-                                 historyBuffer.players.push_back(LvlData->players[plr]);
-                                 LvlData->players[plr].x = 0;
-                                 LvlData->players[plr].y = 0;
-                                 LvlData->players[plr].w = 0;
-                                 LvlData->players[plr].h = 0;
-                                 //    Uncomment this after add player point history
-                                 deleted=true;
-                                 break;
-                             }
-                            }
-                        }
-                        removeItem((*it));
-                        deleteList.push_back((*it));
-                        continue;
-                    }
 
                     /////////////////////////GET DATA///////////////
-
                     setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
-
                     /////////////////////////GET DATA/////////////////////
 
                     //Check position
@@ -853,7 +725,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         #endif
                         continue;
                     }
-
                     ////////////////////Apply to GRID/////////////////////////////////
                     (*it)->setPos( QPointF(
                                        applyGrid( (*it)->scenePos().toPoint(),
@@ -866,15 +737,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 } ////////////////////////FIRST FETCH///////////////////////
 
-                if(!deleteList.isEmpty())
-                {
-                    while(!deleteList.isEmpty())
-                    {
-                        QGraphicsItem* tmp = deleteList.first();
-                        deleteList.pop_front();
-                        if(tmp!=NULL) delete tmp;
-                    }
-                }
                 selectedList = selectedItems();
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
@@ -1351,113 +1213,140 @@ void LvlScene::removeItemUnderCursor()
     if(contextMenuOpened) return;
 
     QGraphicsItem * findItem;
-    bool removeIt=true;
+    //bool removeIt=true;
     findItem = itemCollidesCursor(cursor);
-    if(findItem)
+    removeLvlItem(findItem, true);
+}
+
+
+void LvlScene::removeSelectedLvlItems()
+{
+    QList<QGraphicsItem*> selectedList = selectedItems();
+    if(selectedList.isEmpty()) return;
+    removeLvlItems(selectedList);
+}
+
+
+void LvlScene::removeLvlItem(QGraphicsItem * item, bool globalHistory)
+{
+    if(!item) return;
+    QList<QGraphicsItem * > items;
+    items.push_back(item);
+    removeLvlItems(items, globalHistory);
+}
+
+void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
+{
+    LevelData historyBuffer;
+    bool deleted=false;
+    QString objType;
+
+    for (QList<QGraphicsItem*>::iterator it = items.begin(); it != items.end(); it++)
     {
-        if(findItem->data(0).toString()=="Block")
-        {
-            if((lock_block)|| (((ItemBlock *)findItem)->isLocked) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="BGO")
-        {
-            if( (lock_bgo) || ((((ItemBGO *)findItem)->isLocked)) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="NPC")
-        {
-            if( (lock_npc) || ((((ItemNPC *)findItem)->isLocked)) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="Water")
-        {
-            if( (lock_water) || ((((ItemWater *)findItem)->isLocked)) )
-            removeIt=false;
-        }
-        else
-        if(((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))&&
-                (lock_door))
-            removeIt=false;
+            objType=(*it)->data(0).toString();
 
-        if(!findItem->isVisible()) //Invisible items can't be deleted
-            removeIt=false;
+            if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
 
-        if(removeIt)
-        {
-            LevelData removedItems;
-            bool deleted=false;
             //remove data from main array before deletion item from scene
-            if( findItem->data(0).toString()=="Block" )
+            if( objType=="Block" )
             {
-                removedItems.blocks.push_back(((ItemBlock *)findItem)->blockData);
-                ((ItemBlock *)findItem)->removeFromArray();
+                if((lock_block)|| (((ItemBlock *)(*it))->isLocked) ) continue;
+
+                historyBuffer.blocks.push_back(((ItemBlock*)(*it))->blockData);
+                ((ItemBlock *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
             else
-            if( findItem->data(0).toString()=="BGO" )
+            if( objType=="BGO" )
             {
-                removedItems.bgo.push_back(((ItemBGO *)findItem)->bgoData);
-                ((ItemBGO *)findItem)->removeFromArray();
+                if((lock_bgo)|| (((ItemBGO *)(*it))->isLocked) ) continue;
+
+                historyBuffer.bgo.push_back(((ItemBGO*)(*it))->bgoData);
+                ((ItemBGO *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
             else
-            if( findItem->data(0).toString()=="NPC" )
+            if( objType=="NPC" )
             {
-                removedItems.npc.push_back(((ItemNPC *)findItem)->npcData);
-                ((ItemNPC *)findItem)->removeFromArray();
+                if((lock_npc)|| (((ItemNPC *)(*it))->isLocked) ) continue;
+
+                historyBuffer.npc.push_back(((ItemNPC*)(*it))->npcData);
+                ((ItemNPC *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
             else
-            if( findItem->data(0).toString()=="Water" )
+            if( objType=="Water" )
             {
-                removedItems.water.push_back(((ItemWater *)findItem)->waterData);
-                ((ItemWater *)findItem)->removeFromArray();
+                if((lock_water)|| (((ItemWater *)(*it))->isLocked) ) continue;
+
+                historyBuffer.water.push_back(((ItemWater*)(*it))->waterData);
+                ((ItemWater *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
             else
-            if((findItem->data(0).toString()=="Door_enter")||(findItem->data(0).toString()=="Door_exit"))
+            if(( objType=="Door_enter" )||( objType=="Door_exit" ))
             {
-                LevelDoors tData = ((ItemDoor*)findItem)->doorData;
-                                            tData.isSetIn = (findItem->data(0).toString()=="Door_enter");
-                                            tData.isSetOut = (findItem->data(0).toString()=="Door_exit");
-                                            removedItems.doors.push_back(tData);
-                ((ItemDoor *)findItem)->removeFromArray();
+                if((lock_door)|| (((ItemDoor *)(*it))->isLocked) ) continue;
+
+                bool isEntrance = (objType=="Door_enter");
+                LevelDoors doorData = ((ItemDoor *)(*it))->doorData;
+                if(isEntrance){
+                    doorData.isSetIn = true;
+                    doorData.isSetOut = false;
+                }else{
+                    doorData.isSetIn = false;
+                    doorData.isSetOut = true;
+                }
+                historyBuffer.doors.push_back(doorData);
+                ((ItemDoor *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 MainWinConnect::pMainWin->setDoorData(-2);
                 deleted=true;
             }
             else
-            if(( findItem->data(0).toString()=="player1" )||( findItem->data(0).toString()=="player2" ))
+            if(( objType=="player1" )||( objType=="player2" ))
             {
                 unsigned long player=1;
 
-                if(findItem->data(0).toString()=="player1")
+                if(objType=="player1")
                     player=1;
-                if(findItem->data(0).toString()=="player2")
+                if(objType=="player2")
                     player=2;
 
                 for(int plr=0; plr<LvlData->players.size(); plr++)
                 {
                  if(LvlData->players[plr].id == player)
                  {
-                     removedItems.players.push_back(LvlData->players[plr]);
+                     historyBuffer.players.push_back(LvlData->players[plr]);
+
                      LvlData->players[plr].x = 0;
                      LvlData->players[plr].y = 0;
                      LvlData->players[plr].w = 0;
                      LvlData->players[plr].h = 0;
-                     //    Uncomment this after add player point history
                      deleted=true;
+                     if((*it)) delete (*it);
                      break;
                  }
                 }
             }
-            //removeItem(findItem);
-            delete findItem;
-            if(deleted)addRemoveHistory(removedItems);
+    }
+
+    if(deleted)
+    {
+        if(globalHistory)
+        {
+            overwritedItems.blocks << historyBuffer.blocks;
+            overwritedItems.bgo << historyBuffer.bgo;
+            overwritedItems.npc << historyBuffer.npc;
+            overwritedItems.water << historyBuffer.water;
+            overwritedItems.doors << historyBuffer.doors;
+            overwritedItems.players << historyBuffer.players;
         }
+        else
+            addRemoveHistory(historyBuffer);
     }
 }
-
