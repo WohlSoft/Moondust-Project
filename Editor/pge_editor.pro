@@ -238,7 +238,8 @@ HEADERS  += mainwindow.h \
     defines.h \
     tilesets/tilesetitembutton.h \
     external_tools/gifs2png_gui.h \
-    external_tools/lazyfixtool_gui.h
+    external_tools/lazyfixtool_gui.h \
+    level_scene/item_set_layer.h
 
 FORMS    += \
     mainwindow.ui \
