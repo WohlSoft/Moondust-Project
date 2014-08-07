@@ -102,17 +102,10 @@ public:
     LevelData overwritedItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
-
     // //////////////////////////////////
 
-    //Event Flags
-    //bool wasPasted;  Now is trash
-    //bool doCopy;
-    //bool doCut;
     bool historyChanged;
     bool resetPosition;
-    //bool SyncLayerList;
-    //bool resetResizingSection;
 
     //Copy function
     LevelData copy(bool cut = false);
