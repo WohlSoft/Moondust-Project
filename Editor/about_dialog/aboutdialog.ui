@@ -44,7 +44,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
-    <normaloff>:/images/mushroom16.png</normaloff>:/images/mushroom16.png</iconset>
+    <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>

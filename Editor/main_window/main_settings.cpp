@@ -95,7 +95,7 @@ void MainWindow::setDefaults()
 void MainWindow::setUiDefults()
 {
     #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/images/mac/mushroom.icns"));
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
     #endif
 
     //Apply objects into tools

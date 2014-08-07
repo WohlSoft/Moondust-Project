@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
-    <normaloff>:/mushroom.ico</normaloff>:/mushroom.ico</iconset>
+    <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">

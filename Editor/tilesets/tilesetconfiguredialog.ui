@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Configure Tileset [Work in Progress]</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../_resources/editor.qrc">
+    <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="1" rowspan="2">
     <layout class="QGridLayout" name="tilesetLayoutContainer">
@@ -161,6 +165,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../_resources/editor.qrc"/>
+ </resources>
  <connections/>
 </ui>
