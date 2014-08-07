@@ -45,7 +45,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="_resources/editor.qrc">
-    <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+    <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -498,7 +498,7 @@
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
-           <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+           <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
          </property>
          <property name="flags">
           <set>ItemIsSelectable|ItemIsEnabled</set>
@@ -684,7 +684,7 @@
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
-           <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+           <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
          </property>
          <property name="flags">
           <set>ItemIsSelectable|ItemIsEnabled</set>
@@ -873,7 +873,7 @@
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
-           <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+           <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
          </property>
          <property name="flags">
           <set>ItemIsSelectable|ItemIsEnabled</set>
