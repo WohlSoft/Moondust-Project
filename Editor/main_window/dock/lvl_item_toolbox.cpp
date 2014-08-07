@@ -115,7 +115,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
                     {
                         if(configs.main_block[i].id == block.id)
                         {
-                            j = 0;
+                            j = i;
                             isIndex=true;
                             break;
                         }
@@ -243,7 +243,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
                     {
                         if(configs.main_bgo[i].id == bgo.id)
                         {
-                            j = 0;
+                            j = i;
                             isIndex=true;
                             break;
                         }
