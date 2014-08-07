@@ -168,7 +168,8 @@ SOURCES += main.cpp\
     tilesets/tilesetitembutton.cpp \
     external_tools/gifs2png_gui.cpp \
     external_tools/lazyfixtool_gui.cpp \
-    main_window/tools_menu.cpp
+    main_window/tools_menu.cpp \
+    common_features/items.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -239,7 +240,8 @@ HEADERS  += mainwindow.h \
     tilesets/tilesetitembutton.h \
     external_tools/gifs2png_gui.h \
     external_tools/lazyfixtool_gui.h \
-    level_scene/item_set_layer.h
+    level_scene/item_set_layer.h \
+    common_features/items.h
 
 FORMS    += \
     mainwindow.ui \

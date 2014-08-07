@@ -180,32 +180,32 @@ void AppSettings::on_AssociateFiles_clicked()
 
 
         // file extension(s)
-        registry_hkcr.setValue(".lvlx/Default", "PGEWohlstand.Level"); //Reserved
-        registry_hkcr.setValue(".wldx/Default", "PGEWohlstand.World"); //Reserved
-        registry_hkcr.setValue(".lvl/Default", "SMBX64.Level");
-        registry_hkcr.setValue(".wld/Default", "SMBX64.World");
+        registry_hkcu.setValue("Software/Classes/.lvlx/Default", "PGEWohlstand.Level"); //Reserved
+        registry_hkcu.setValue("Software/Classes/.wldx/Default", "PGEWohlstand.World"); //Reserved
+        registry_hkcu.setValue("Software/Classes/.lvl/Default", "SMBX64.Level");
+        registry_hkcu.setValue("Software/Classes/.wld/Default", "SMBX64.World");
 
-        registry_hkcr.setValue(".lvl/ShellNew/FileName", "sample.lvl");
-        registry_hkcr.setValue(".wld/ShellNew/FileName", "sample.wld");
+        registry_hkcu.setValue("Software/Classes/.lvl/ShellNew/FileName", "sample.lvl");
+        registry_hkcu.setValue("Software/Classes/.wld/ShellNew/FileName", "sample.wld");
         //registry_hkcr.setValue(".lvlx/Default", "PGWWohlstand.Level");
         //registry_hkcr.setValue(".wldx/Default", "PGWWohlstand.World");
 
 
-        registry_hkcr.setValue("PGEWohlstand.Level/Default", tr("PGE Level file", "File Types"));
-        registry_hkcr.setValue("PGEWohlstand.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",1");
-        registry_hkcr.setValue("PGEWohlstand.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
+        registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/Default", tr("PGE Level file", "File Types"));
+        registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",1");
+        registry_hkcu.setValue("Software/Classes/PGEWohlstand.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
 
-        registry_hkcr.setValue("PGEWohlstand.World/Default", tr("PGE World Map", "File Types"));
-        registry_hkcr.setValue("PGEWohlstand.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",2");
-        registry_hkcr.setValue("PGEWohlstand.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
+        registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/Default", tr("PGE World Map", "File Types"));
+        registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",2");
+        registry_hkcu.setValue("Software/Classes/PGEWohlstand.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
 
-        registry_hkcr.setValue("SMBX64.Level/Default", tr("SMBX Level file", "File Types"));
-        registry_hkcr.setValue("SMBX64.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",3");
-        registry_hkcr.setValue("SMBX64.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
+        registry_hkcu.setValue("SMBX64.Level/Default", tr("SMBX Level file", "File Types"));
+        registry_hkcu.setValue("SMBX64.Level/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",3");
+        registry_hkcu.setValue("SMBX64.Level/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
 
-        registry_hkcr.setValue("SMBX64.World/Default", tr("SMBX World Map", "File Types"));
-        registry_hkcr.setValue("SMBX64.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",4");
-        registry_hkcr.setValue("SMBX64.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
+        registry_hkcu.setValue("Software/Classes/SMBX64.World/Default", tr("SMBX World Map", "File Types"));
+        registry_hkcu.setValue("Software/Classes/SMBX64.World/DefaultIcon/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\",4");
+        registry_hkcu.setValue("Software/Classes/SMBX64.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
 
         // User variable(s)
         registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\"");
