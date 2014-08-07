@@ -110,54 +110,62 @@ void MainWindow::setUiDefults()
     //MainWindow Geometry;
     QRect mwg = this->geometry();
 
+    int GOffset=240;
     //Define the default geometry for toolboxes
     ui->DoorsToolbox->setGeometry(
-                mwg.x()+mwg.width()-ui->DoorsToolbox->width()-10,
+                mwg.x()+mwg.width()-ui->DoorsToolbox->width()-GOffset,
                 mwg.y()+120,
                 ui->DoorsToolbox->width(),
                 ui->DoorsToolbox->height()
                 );
 
     ui->LevelSectionSettings->setGeometry(
-                mwg.x()+mwg.width()-ui->LevelSectionSettings->width()-10,
+                mwg.x()+mwg.width()-ui->LevelSectionSettings->width()-GOffset,
                 mwg.y()+120,
                 ui->LevelSectionSettings->width(),
                 ui->LevelSectionSettings->height()
                 );
     ui->LevelLayers->setGeometry(
-                mwg.x()+mwg.width()-ui->LevelLayers->width()-10,
+                mwg.x()+mwg.width()-ui->LevelLayers->width()-GOffset,
                 mwg.y()+120,
                 ui->LevelLayers->width(),
                 ui->LevelLayers->height()
                 );
     ui->LevelEventsToolBox->setGeometry(
-                mwg.x()+mwg.width()-ui->LevelEventsToolBox->width()-10,
+                mwg.x()+mwg.width()-ui->LevelEventsToolBox->width()-GOffset,
                 mwg.y()+120,
                 ui->LevelEventsToolBox->width(),
                 ui->LevelEventsToolBox->height()
                 );
     ui->ItemProperties->setGeometry(
-                mwg.x()+mwg.width()-ui->ItemProperties->width()-10,
+                mwg.x()+mwg.width()-ui->ItemProperties->width()-GOffset,
                 mwg.y()+120,
                 ui->ItemProperties->width(),
                 ui->ItemProperties->height()
                 );
     ui->FindDock->setGeometry(
-                mwg.x()+mwg.width()-ui->FindDock->width()-10,
+                mwg.x()+mwg.width()-ui->FindDock->width()-GOffset,
                 mwg.y()+120,
                 ui->FindDock->width(),
                 ui->FindDock->height()
                 );
 
     ui->WLD_ItemProps->setGeometry(
-                mwg.x()+mwg.width()-ui->WLD_ItemProps->width()-10,
+                mwg.x()+mwg.width()-ui->WLD_ItemProps->width()-GOffset,
                 mwg.y()+120,
                 ui->WLD_ItemProps->width(),
                 ui->WLD_ItemProps->height()
                 );
 
+    ui->WorldSettings->setGeometry(
+                mwg.x()+mwg.width()-ui->WorldSettings->width()-GOffset-200,
+                mwg.y()+120,
+                ui->WorldSettings->width(),
+                ui->WorldSettings->height()
+                );
+
     ui->WorldFindDock->setGeometry(
-                mwg.x()+mwg.width()-ui->WorldFindDock->width()-10,
+                mwg.x()+mwg.width()-ui->WorldFindDock->width()-GOffset,
                 mwg.y()+120,
                 ui->WorldFindDock->width(),
                 ui->WorldFindDock->height()
