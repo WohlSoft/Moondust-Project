@@ -180,6 +180,9 @@ void MainWindow::setUiDefults()
     ui->applyResize->setVisible(false);
     ui->cancelResize->setVisible(false);
 
+    ui->ResizingToolbar->setVisible(false);
+    ui->PlacingToolbar->setVisible(false);
+
     ui->LevelToolBox->hide();
 
 
