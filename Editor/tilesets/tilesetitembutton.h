@@ -33,6 +33,7 @@ public:
     dataconfigs *config() const;
     void setConfig(dataconfigs *config);
     void applyItem(const int &i, const int &id, const int &width = -1, const int &height = -1);
+    void applySize(const int &width, const int &height);
 
 signals:
 
@@ -45,6 +46,7 @@ protected:
 
 private:
     dataconfigs* m_config;
+    QPixmap m_drawItem;
 };
 
 #endif // TILESETITEMBUTTON_H

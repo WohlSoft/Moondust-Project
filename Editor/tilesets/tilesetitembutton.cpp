@@ -41,25 +41,56 @@ void TilesetItemButton::setConfig(dataconfigs *config)
 
 void TilesetItemButton::applyItem(const int &i, const int &id, const int &width, const int &height)
 {
+    int wid = (width == -1 ? contentsRect().width() : width);
+    int hei = (height == -1 ? contentsRect().height() : height);
     switch(i){
     case ItemTypes::LVL_Block:
     {
-
-        break;
+        long tarIndex = m_config->getBlockI(id);
+        if(tarIndex==-1){
+            m_drawItem = QPixmap(wid,hei);
+            return;
+        }
+        m_drawItem = m_config->main_block[tarIndex].image.copy(
+                    0,0,m_config->main_block[tarIndex].image.width(),
+                    qRound(qreal(m_config->main_block[tarIndex].image.height())/ m_config->main_block[tarIndex].frames) )
+                .scaled(wid,hei,Qt::KeepAspectRatio);
+        return;
     }
     case ItemTypes::LVL_BGO:
     {
-
-        break;
+        long tarIndex = m_config->getBgoI(id);
+        if(tarIndex==-1){
+            m_drawItem = QPixmap(wid,hei);
+            return;
+        }
+        m_drawItem = m_config->main_bgo[tarIndex].image.copy(
+                    0,0,m_config->main_bgo[tarIndex].image.width(),
+                    qRound(qreal(m_config->main_bgo[tarIndex].image.height())/ m_config->main_bgo[tarIndex].frames) )
+                .scaled(wid,hei,Qt::KeepAspectRatio);
+        return;
     }
     case ItemTypes::LVL_NPC:
     {
-
-        break;
+        long tarIndex = m_config->getNpcI(id);
+        if(tarIndex==-1){
+            m_drawItem = QPixmap(wid,hei);
+            return;
+        }
+        m_drawItem = m_config->main_npc[tarIndex].image.copy(0,0, m_config->main_npc[tarIndex].image.width(), m_config->main_npc[tarIndex].gfx_h )
+                .scaled(wid,hei,Qt::KeepAspectRatio);;
+        return;
     }
     default:
         break;
     }
+    m_drawItem = QPixmap(wid, hei);
+}
+
+void TilesetItemButton::applySize(const int &width, const int &height)
+{
+    setMinimumSize(width+lineWidth()*2,height+lineWidth()*2);
+    setMaximumSize(width+lineWidth()*2,height+lineWidth()*2);
 }
 
 void TilesetItemButton::paintEvent(QPaintEvent *ev)
@@ -67,6 +98,9 @@ void TilesetItemButton::paintEvent(QPaintEvent *ev)
     QPainter painter;
     painter.begin(this);
     painter.fillRect(contentsRect(), Qt::black);
+
+    if(!m_drawItem.isNull())
+        painter.drawPixmap(contentsRect(),m_drawItem,m_drawItem.rect());
 
     painter.end();
 

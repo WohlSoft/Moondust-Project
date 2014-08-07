@@ -3,6 +3,7 @@
 
 #include "tilesetitembutton.h"
 #include "../common_features/mainwinconnect.h"
+#include "../defines.h"
 
 TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
     QDialog(parent),
@@ -10,8 +11,8 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
 {
     ui->setupUi(this);
     TilesetItemButton* b = new TilesetItemButton(&(MainWinConnect::pMainWin->configs));
-    b->setMinimumSize(32,32);
-    b->setMaximumSize(32,32);
+    b->applySize(32,32);
+    b->applyItem(ItemTypes::LVL_Block,1,32,32);
     ui->PreviewBox->layout()->addWidget(b);
 }
 
