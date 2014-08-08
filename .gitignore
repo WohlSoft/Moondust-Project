@@ -29,3 +29,4 @@ Makefile
 
 +*.swp
 *.db
+*_plugin_import.cpp
