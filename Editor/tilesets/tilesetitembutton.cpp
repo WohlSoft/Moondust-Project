@@ -17,9 +17,10 @@
  */
 
 #include "tilesetitembutton.h"
+#include "../common_features/items.h"
 
 
-TilesetItemButton::TilesetItemButton(dataconfigs *conf, QFrame *parent) :
+TilesetItemButton::TilesetItemButton(dataconfigs *conf, QWidget *parent) :
     QFrame(parent)
 {
     m_config = conf;
@@ -43,48 +44,12 @@ void TilesetItemButton::applyItem(const int &i, const int &id, const int &width,
 {
     int wid = (width == -1 ? contentsRect().width() : width);
     int hei = (height == -1 ? contentsRect().height() : height);
-    switch(i){
-    case ItemTypes::LVL_Block:
-    {
-        long tarIndex = m_config->getBlockI(id);
-        if(tarIndex==-1){
-            m_drawItem = QPixmap(wid,hei);
-            return;
-        }
-        m_drawItem = m_config->main_block[tarIndex].image.copy(
-                    0,0,m_config->main_block[tarIndex].image.width(),
-                    qRound(qreal(m_config->main_block[tarIndex].image.height())/ m_config->main_block[tarIndex].frames) )
-                .scaled(wid,hei,Qt::KeepAspectRatio);
+    QPixmap p = Items::getItemGFX(i,id).scaled(wid,hei,Qt::KeepAspectRatio);
+    if(p.isNull()){
+        m_drawItem = QPixmap(wid,hei);
         return;
     }
-    case ItemTypes::LVL_BGO:
-    {
-        long tarIndex = m_config->getBgoI(id);
-        if(tarIndex==-1){
-            m_drawItem = QPixmap(wid,hei);
-            return;
-        }
-        m_drawItem = m_config->main_bgo[tarIndex].image.copy(
-                    0,0,m_config->main_bgo[tarIndex].image.width(),
-                    qRound(qreal(m_config->main_bgo[tarIndex].image.height())/ m_config->main_bgo[tarIndex].frames) )
-                .scaled(wid,hei,Qt::KeepAspectRatio);
-        return;
-    }
-    case ItemTypes::LVL_NPC:
-    {
-        long tarIndex = m_config->getNpcI(id);
-        if(tarIndex==-1){
-            m_drawItem = QPixmap(wid,hei);
-            return;
-        }
-        m_drawItem = m_config->main_npc[tarIndex].image.copy(0,0, m_config->main_npc[tarIndex].image.width(), m_config->main_npc[tarIndex].gfx_h )
-                .scaled(wid,hei,Qt::KeepAspectRatio);;
-        return;
-    }
-    default:
-        break;
-    }
-    m_drawItem = QPixmap(wid, hei);
+    m_drawItem = p;
 }
 
 void TilesetItemButton::applySize(const int &width, const int &height)

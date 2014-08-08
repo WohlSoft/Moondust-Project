@@ -28,7 +28,7 @@ class TilesetItemButton : public QFrame
     Q_OBJECT
 
 public:
-    explicit TilesetItemButton(dataconfigs* conf, QFrame *parent = 0);
+    explicit TilesetItemButton(dataconfigs* conf, QWidget *parent = 0);
 
     dataconfigs *config() const;
     void setConfig(dataconfigs *config);
