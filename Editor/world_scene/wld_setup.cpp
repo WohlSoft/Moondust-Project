@@ -107,8 +107,8 @@ void WldScene::hidePathAndLevels(bool visible)
         if(i->data(0).toString()=="LEVEL")
         {
             i->setVisible( visible ||
-                        ((ItemLevel)i).levelData.gamestart ||
-                        ((ItemLevel)i).levelData.alwaysVisible );
+                        ((ItemLevel *)i)->levelData.gamestart ||
+                        ((ItemLevel *)i)->levelData.alwaysVisible );
         }
     }
 }
