@@ -169,7 +169,8 @@ SOURCES += main.cpp\
     external_tools/gifs2png_gui.cpp \
     external_tools/lazyfixtool_gui.cpp \
     main_window/tools_menu.cpp \
-    common_features/items.cpp
+    common_features/items.cpp \
+    common_features/flowlayout.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -241,7 +242,8 @@ HEADERS  += mainwindow.h \
     external_tools/gifs2png_gui.h \
     external_tools/lazyfixtool_gui.h \
     level_scene/item_set_layer.h \
-    common_features/items.h
+    common_features/items.h \
+    common_features/flowlayout.h
 
 FORMS    += \
     mainwindow.ui \

@@ -95,7 +95,7 @@
     </spacer>
    </item>
    <item row="1" column="0" rowspan="4" colspan="2">
-    <widget class="QListWidget" name="tilesetLiset">
+    <widget class="QListWidget" name="tilesetList">
      <property name="maximumSize">
       <size>
        <width>150</width>

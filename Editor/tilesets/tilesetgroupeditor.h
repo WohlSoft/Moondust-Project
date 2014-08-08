@@ -2,6 +2,7 @@
 #define TILESETGROUPEDITOR_H
 
 #include <QDialog>
+#include "tileset.h"
 
 namespace Ui {
 class TilesetGroupEditor;
@@ -30,6 +31,8 @@ private slots:
 
 private:
     Ui::TilesetGroupEditor *ui;
+    void redrawAll();
+    QList<QPair<QString,tileset::SimpleTileset> > tilesets;
 };
 
 #endif // TILESETGROUPEDITOR_H
