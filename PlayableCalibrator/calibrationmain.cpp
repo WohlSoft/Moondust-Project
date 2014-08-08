@@ -18,7 +18,7 @@
  */
 
 #include <QPixmap>
-#include <QtDebug>
+//#include <QtDebug>
 #include <QSettings>
 
 #include "calibrationmain.h"

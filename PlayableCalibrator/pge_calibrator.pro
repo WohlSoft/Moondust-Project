@@ -25,9 +25,11 @@ QT       += core gui widgets
 
 TARGET = pge_calibrator
 TEMPLATE = app
+CONFIG += static
 
 RC_FILE = _resourses/caltool.rc
 
+QMAKE_CFLAGS += -Wno-sign-compare
 
 SOURCES += main.cpp\
         calibrationmain.cpp \

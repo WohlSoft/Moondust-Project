@@ -26,8 +26,12 @@ QT       += core gui
 
 TARGET = LazyFixTool
 CONFIG   += console
+CONFIG   -= app_bundle
+CONFIG   += static
 
 TEMPLATE = app
+
+QMAKE_CFLAGS += -Wno-sign-compare
 
 RC_FILE = _resources/lazyfix_tool.rc
 
