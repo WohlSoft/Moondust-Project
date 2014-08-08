@@ -1,10 +1,27 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "tilesetgroupeditor.h"
 #include "ui_tilesetgroupeditor.h"
 
 #include "tilesetitembutton.h"
 #include "../common_features/mainwinconnect.h"
 #include "../common_features/util.h"
-#include "../common_features/flowlayout.h"
 #include "../dev_console/devconsole.h"
 #include "../defines.h"
 
@@ -13,7 +30,9 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
     ui(new Ui::TilesetGroupEditor)
 {
     ui->setupUi(this);
-    ui->PreviewBox->setLayout(new FlowLayout(ui->PreviewBox));
+    layout = new FlowLayout();
+    delete ui->PreviewBox->layout();
+    ui->PreviewBox->setLayout(layout);
 //    TilesetItemButton* b = new TilesetItemButton(&(MainWinConnect::pMainWin->configs));
 //    b->applySize(32,32);
 //    b->applyItem(ItemTypes::LVL_Block,1,32,32);
@@ -23,6 +42,7 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
 
 TilesetGroupEditor::~TilesetGroupEditor()
 {
+    delete layout;
     delete ui;
 }
 
@@ -68,14 +88,17 @@ void TilesetGroupEditor::on_Save_clicked()
 void TilesetGroupEditor::redrawAll()
 {
     util::memclear(ui->tilesetList);
-    QGroupBox* preview = ui->PreviewBox;
-    while(preview->layout()->count() != 0){
-        preview->layout()->removeItem(preview->layout()->itemAt(0));
+    //QGroupBox* preview = ui->PreviewBox;
+    while(layout->count() != 0){
+        layout->removeItem(layout->itemAt(0));
     }
     for(int i = 0; i < tilesets.size(); ++i){
         ui->tilesetList->addItem(tilesets[i].first);
 
+        QGroupBox *f= new QGroupBox;
         QGridLayout* l = new QGridLayout();
+        f->setLayout(l);
+        f->setTitle("xxx :D");
         tileset::SimpleTileset* items = &tilesets[i].second;
         for(int j = 0; j < items->items.size(); ++j){
             tileset::SimpleTilesetItem* item = &items->items[j];
@@ -83,10 +106,9 @@ void TilesetGroupEditor::redrawAll()
             ib->applySize(32,32);
             ib->applyItem(items->type,item->id);
             l->addWidget(ib,item->row, item->col);
-
         }
         DevConsole::log(QString("Current GridLayout Items: %1").arg(l->count()), QString("Tileset"));
-        preview->layout()->addItem(l);
-        DevConsole::log(QString("Current FlowLayout Items: %1").arg(preview->layout()->count()), QString("Tileset"));
+        layout->addWidget(f);
+        DevConsole::log(QString("Current FlowLayout Items: %1").arg(layout->count()), QString("Tileset"));
     }
 }
