@@ -21,7 +21,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT       += gui widgets
 
 TARGET = pge_calibrator
 TEMPLATE = app
