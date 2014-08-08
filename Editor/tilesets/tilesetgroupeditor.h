@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "tileset.h"
 
+#include "../common_features/flowlayout.h"
+
 namespace Ui {
 class TilesetGroupEditor;
 }
@@ -17,19 +19,14 @@ public:
     ~TilesetGroupEditor();
 
 private slots:
-
-
     void on_addTileset_clicked();
-
     void on_RemoveTileset_clicked();
-
     void on_Close_clicked();
-
     void on_Open_clicked();
-
     void on_Save_clicked();
 
 private:
+    FlowLayout * layout;
     Ui::TilesetGroupEditor *ui;
     void redrawAll();
     QList<QPair<QString,tileset::SimpleTileset> > tilesets;
