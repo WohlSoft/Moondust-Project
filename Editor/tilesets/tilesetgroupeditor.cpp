@@ -72,7 +72,10 @@ void TilesetGroupEditor::on_addTileset_clicked()
 
 void TilesetGroupEditor::on_RemoveTileset_clicked()
 {
-
+    if(ui->tilesetList->selectedItems().size() == 0)
+        return;
+    tilesets.removeAt(ui->tilesetList->row(ui->tilesetList->selectedItems()[0]));
+    redrawAll();
 }
 
 void TilesetGroupEditor::on_Open_clicked()
@@ -89,9 +92,7 @@ void TilesetGroupEditor::redrawAll()
 {
     util::memclear(ui->tilesetList);
     //QGroupBox* preview = ui->PreviewBox;
-    while(layout->count() != 0){
-        layout->removeItem(layout->itemAt(0));
-    }
+    util::clearLayoutItems(layout);
     for(int i = 0; i < tilesets.size(); ++i){
         ui->tilesetList->addItem(tilesets[i].first);
 

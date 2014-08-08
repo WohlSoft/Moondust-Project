@@ -32,6 +32,7 @@ public:
     static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
     static void memclear(QListWidget* wid);
     static void memclear(QTableWidget* wid);
+    static void clearLayoutItems(QLayout* layout);
 };
 
 #endif // UTIL_H
