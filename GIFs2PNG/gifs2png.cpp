@@ -17,15 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-
 #include <QCoreApplication>
 #include <QImage>
 #include <QDir>
 #include <QDirIterator>
 #include <QString>
 #include <QTextStream>
-#include <QtDebug>
 #include <QFileInfo>
 #include "version.h"
 
