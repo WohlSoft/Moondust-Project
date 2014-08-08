@@ -166,7 +166,7 @@ int EGifPutExtensionTrailer(GifFileType *GifFile);
 int EGifPutExtension(GifFileType *GifFile, const int GifExtCode, 
 		     const int GifExtLen,
                      const void *GifExtension);
-int EGifPutCode(GifFileType *GifFile, int GifCodeSize,
+int EGifPutCode(GifFileType *GifFile, int,
                 const GifByteType *GifCodeBlock);
 int EGifPutCodeNext(GifFileType *GifFile,
                     const GifByteType *GifCodeBlock);
