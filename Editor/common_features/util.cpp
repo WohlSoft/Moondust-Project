@@ -18,8 +18,8 @@
 
 
 #include "util.h"
-
-
+#include <QLayout>
+#include <QWidgetItem>
 
 void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, QComboBox *typeBox)
 {
@@ -72,5 +72,18 @@ void util::memclear(QTableWidget *wid)
         QTableWidgetItem *tmp = items.first();
         items.pop_front();
         delete tmp;
+    }
+}
+
+void util::clearLayoutItems(QLayout *layout)
+{
+    QLayoutItem *child;
+    while ((child = layout->takeAt(0)) != 0) {
+        QWidgetItem* i = dynamic_cast<QWidgetItem*>(child);
+        if(i){
+            delete i->widget();
+        }
+
+        delete child;
     }
 }
