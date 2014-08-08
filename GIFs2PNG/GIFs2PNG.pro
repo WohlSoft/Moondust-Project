@@ -25,6 +25,8 @@ QT       += core gui
 
 TARGET = GIFs2PNG
 CONFIG   += console
+CONFIG   -= app_bundle
+CONFIG   += static
 
 TEMPLATE = app
 

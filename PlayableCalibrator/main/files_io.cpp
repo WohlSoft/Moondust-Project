@@ -73,6 +73,9 @@ void CalibrationMain::on_MakeTemplateB_clicked()
 {
     QGraphicsScene * temp1 = new QGraphicsScene;
     QGraphicsScene * temp2 = new QGraphicsScene;
+
+    createDirs();
+
     QFileInfo ourFile(currentFile);
     QString targetFile =  QApplication::applicationDirPath() + "/calibrator/templates/" + ourFile.baseName() + ".gif";
     QString targetFile2 =  QApplication::applicationDirPath() + "/calibrator/templates/" + ourFile.baseName() + "m.gif";
