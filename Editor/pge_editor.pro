@@ -30,7 +30,7 @@ TEMPLATE = app
 #CONFIG += c++11
 #QMAKE_CXXFLAGS += -std=c++11
 
-# CONFIG += static
+CONFIG += static
 
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
