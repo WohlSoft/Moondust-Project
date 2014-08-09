@@ -21,7 +21,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 }
 
                 if( confId != NULL)
-                    confId = (long*)j;
+                    * confId = j;
 
                 if(whole)
                     return scn->animates_Blocks[animator]->wholeImage();
@@ -32,41 +32,23 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
             {
                 QPixmap tmpI;
                 long j=0;
-                bool isIndex=false;
+
                 //Check for index
-                if(ItemID < (unsigned long)main->configs.index_blocks.size())
-                {
-                    if(ItemID == main->configs.main_block[main->configs.index_blocks[ItemID].i].id)
-                    {
-                        j = main->configs.index_blocks[ItemID].i;
-                        isIndex=true;
-                    }
-                }
-                //In index is false, fetch array
-                if(!isIndex)
-                {
-                    for(int i=0; i < main->configs.main_block.size(); i++)
-                    {
-                        if(main->configs.main_block[i].id == ItemID)
-                        {
-                            j = i;
-                            isIndex=true;
-                            break;
-                        }
-                    }
-                    if(!isIndex) j=0;
-                }
+                j = main->configs.getBlockI(ItemID);
 
                 if( confId != NULL)
-                    confId = (long*)j;
+                    * confId = j;
 
-                if((main->configs.main_block[j].animated)&&(!whole))
-                    tmpI = main->configs.main_block[j].image.copy(0,
-                                (int)round(main->configs.main_block[j].image.height() / main->configs.main_block[j].frames)*main->configs.main_block[j].display_frame,
-                                main->configs.main_block[j].image.width(),
-                                (int)round(main->configs.main_block[j].image.height() / main->configs.main_block[j].frames));
-                else
-                    tmpI = main->configs.main_block[j].image;
+                if(j>=0)
+                {
+                    if((main->configs.main_block[j].animated)&&(!whole))
+                        tmpI = main->configs.main_block[j].image.copy(0,
+                                    (int)round(main->configs.main_block[j].image.height() / main->configs.main_block[j].frames)*main->configs.main_block[j].display_frame,
+                                    main->configs.main_block[j].image.width(),
+                                    (int)round(main->configs.main_block[j].image.height() / main->configs.main_block[j].frames));
+                    else
+                        tmpI = main->configs.main_block[j].image;
+                }
 
                 return tmpI;
 
@@ -87,7 +69,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                     animator = scn->index_bgo[ItemID].ai;
                 }
                 if( confId != NULL)
-                    confId = (long*)j;
+                    * confId = j;
 
                 if(whole)
                     return scn->animates_BGO[animator]->wholeImage();
@@ -98,41 +80,23 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
             {
                 QPixmap tmpI;
                 long j=0;
-                bool isIndex=false;
+
                 //Check for index
-                if(ItemID < (unsigned long)main->configs.index_bgo.size())
-                {
-                    if(ItemID == main->configs.main_bgo[main->configs.index_bgo[ItemID].i].id)
-                    {
-                        j = main->configs.index_bgo[ItemID].i;
-                        isIndex=true;
-                    }
-                }
-                //In index is false, fetch array
-                if(!isIndex)
-                {
-                    for(int i=0; i < main->configs.main_bgo.size(); i++)
-                    {
-                        if(main->configs.main_bgo[i].id == ItemID)
-                        {
-                            j = i;
-                            isIndex=true;
-                            break;
-                        }
-                    }
-                    if(!isIndex) j=0;
-                }
+                j = main->configs.getBgoI(ItemID);
 
                 if( confId != NULL)
-                    confId = (long*)j;
+                    * confId = j;
 
-                if((main->configs.main_bgo[j].animated)&&(!whole))
-                    tmpI = main->configs.main_bgo[j].image.copy(0,
-                                (int)round(main->configs.main_bgo[j].image.height() / main->configs.main_bgo[j].frames)*main->configs.main_bgo[j].display_frame,
-                                main->configs.main_bgo[j].image.width(),
-                                (int)round(main->configs.main_bgo[j].image.height() / main->configs.main_bgo[j].frames));
-                else
-                    tmpI = main->configs.main_bgo[j].image;
+                if(j>=0)
+                {
+                    if((main->configs.main_bgo[j].animated)&&(!whole))
+                        tmpI = main->configs.main_bgo[j].image.copy(0,
+                                    (int)round(main->configs.main_bgo[j].image.height() / main->configs.main_bgo[j].frames)*main->configs.main_bgo[j].display_frame,
+                                    main->configs.main_bgo[j].image.width(),
+                                    (int)round(main->configs.main_bgo[j].image.height() / main->configs.main_bgo[j].frames));
+                    else
+                        tmpI = main->configs.main_bgo[j].image;
+                }
 
                 return tmpI;
             }
@@ -147,7 +111,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                     return scn->getNPCimg(ItemID, -1);
                 else
                 {
-                    int j;
+                    int j=0;
                     bool noimage=true, found=false;
                     QPixmap tImg;
                     //Check Index exists
@@ -181,7 +145,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                     }
 
                     if( confId != NULL)
-                        confId = (long*)j;
+                        * confId = j;
 
                     if((noimage)||(tImg.isNull()))
                     {
@@ -194,6 +158,32 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
             }
             else
             {
+                int j=0;
+                bool noimage=true;
+                QPixmap tImg;
+                //Check Index exists
+
+                j= main->configs.getNpcI(ItemID);
+
+                if(j>=0)
+                {   //get neccesary element directly
+                    tImg = main->configs.main_npc[j].image;
+                    noimage=false;
+                }
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if((noimage)||(tImg.isNull()))
+                {
+                    tImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.png");
+                }
+                else
+                {
+                    if(!whole)
+                        tImg= tImg.copy(0, main->configs.main_npc[j].gfx_h*main->configs.main_npc[j].display_frame, main->configs.main_npc[j].image.width(), main->configs.main_npc[j].gfx_h );
+                }
+                return tImg;
 
             }
             break;
