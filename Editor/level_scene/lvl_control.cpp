@@ -211,7 +211,8 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                .arg(contextMenuOpened).arg(DrawMode));
     #endif
 
-if(contextMenuOpened) return;
+//if(contextMenuOpened) return;
+    contextMenuOpened=false;
 
     //Discard multi mouse key
     if((mouseLeft)||(mouseMid)||(mouseRight))
@@ -388,7 +389,8 @@ if(contextMenuOpened) return;
 void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     //WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
-    if(contextMenuOpened) return;
+    //if(contextMenuOpened) return;
+    contextMenuOpened=false;
 
     switch(EditingMode)
     {
@@ -534,12 +536,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         WriteToLog(QtDebugMsg, QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
     }
 
-    if(contextMenuOpened)
-    {
-        contextMenuOpened = false; //bug protector
-        QGraphicsScene::mouseReleaseEvent(mouseEvent);
-        return;
-    }
+    contextMenuOpened=false;
+//    if(contextMenuOpened)
+//    {
+//        contextMenuOpened = false; //bug protector
+//        QGraphicsScene::mouseReleaseEvent(mouseEvent);
+//        return;
+//    }
 
     switch(EditingMode)
     {
