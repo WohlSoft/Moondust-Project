@@ -18,6 +18,12 @@ public:
     explicit TilesetGroupEditor(QWidget *parent = 0);
     ~TilesetGroupEditor();
 
+    struct SimpleTilesetGroup{
+        QString groupName;
+        QStringList tilesets;
+    };
+
+
 private slots:
     void on_addTileset_clicked();
     void on_RemoveTileset_clicked();

@@ -52,6 +52,7 @@ public:
 
     struct SimpleTileset{
         unsigned int rows, cols;
+        QString tileSetName;
         TilesetType type;
         QList<SimpleTilesetItem> items;
     };
