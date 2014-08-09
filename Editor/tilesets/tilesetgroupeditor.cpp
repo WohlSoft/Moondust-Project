@@ -99,7 +99,7 @@ void TilesetGroupEditor::redrawAll()
         QGroupBox *f= new QGroupBox;
         QGridLayout* l = new QGridLayout();
         f->setLayout(l);
-        f->setTitle("xxx :D");
+        f->setTitle(tilesets[i].first.section('.',0,0));
         tileset::SimpleTileset* items = &tilesets[i].second;
         for(int j = 0; j < items->items.size(); ++j){
             tileset::SimpleTilesetItem* item = &items->items[j];
