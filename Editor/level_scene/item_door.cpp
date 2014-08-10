@@ -37,6 +37,9 @@ ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     doorLabel=NULL;
     doorLabel_shadow=NULL;
     //image = new QGraphicsRectItem;
+    mouseLeft=false;
+    mouseMid=false;
+    mouseRight=false;
 }
 
 
@@ -59,244 +62,281 @@ void ItemDoor::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
+
+    //Discard multi-mouse keys
+    if((mouseLeft)||(mouseMid)||(mouseRight))
+    {
+        mouseEvent->accept();
+        return;
+    }
+
+    if( mouseEvent->buttons() & Qt::LeftButton )
+        mouseLeft=true;
+    if( mouseEvent->buttons() & Qt::MiddleButton )
+        mouseMid=true;
+    if( mouseEvent->buttons() & Qt::RightButton )
+        mouseRight=true;
+
     QGraphicsRectItem::mousePressEvent(mouseEvent);
 }
 
-void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+
+void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if((!scene->lock_door)&&(!scene->DrawMode)&&(!isLocked))
+    int multimouse=0;
+    bool callContext=false;
+    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
+        multimouse++;
+    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
+        multimouse++;
+    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
+        multimouse++;
+    if(multimouse>0)
     {
-        //Remove selection from non-bgo items
-        if(!this->isSelected())
-        //{
-        //    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-        //    {
-        //        if(SelItem->data(0).toString()!="Water") SelItem->setSelected(false);
-        //    }
-        //}
-        //else
+        mouseEvent->accept(); return;
+    }
+
+    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+        mouseLeft=false;
+
+    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+        mouseMid=false;
+
+    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    {
+        if(!scene->IsMoved) callContext=true;
+        mouseRight=false;
+    }
+
+    QGraphicsItem::mouseReleaseEvent(mouseEvent);
+
+    /////////////////////////CONTEXT MENU:///////////////////////////////
+    if((callContext)&&(!scene->contextMenuOpened))
+    {
+        if((!scene->lock_door)&&(!scene->DrawMode)&&(!isLocked))
         {
-            scene->clearSelection();
-            this->setSelected(true);
-        }
+            scene->contextMenuOpened = true; //bug protector
 
-        this->setSelected(1);
-        ItemMenu->clear();
+            //Remove selection from non-bgo items
+            if(!this->isSelected())
+            {
+                scene->clearSelection();
+                this->setSelected(true);
+            }
 
-        QAction *openLvl = ItemMenu->addAction(tr("Open target level: %1").arg(doorData.lname));
-        openLvl->setVisible( (!doorData.lname.isEmpty()) && (QFile(scene->LvlData->path + "/" + doorData.lname).exists()) );
-        openLvl->deleteLater();
+            this->setSelected(1);
+            ItemMenu->clear();
 
-        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer));
-            LayerName->deleteLater();
+            QAction *openLvl = ItemMenu->addAction(tr("Open target level: %1").arg(doorData.lname));
+            openLvl->setVisible( (!doorData.lname.isEmpty()) && (QFile(scene->LvlData->path + "/" + doorData.lname).exists()) );
+            openLvl->deleteLater();
 
-        QAction *setLayer;
-        QList<QAction *> layerItems;
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer));
+                LayerName->deleteLater();
 
-        QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-            LayerName->addSeparator()->deleteLater();;
-            newLayer->deleteLater();
+            QAction *setLayer;
+            QList<QAction *> layerItems;
 
-        foreach(LevelLayers layer, scene->LvlData->layers)
-        {
-            //Skip system layers
-            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+            QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+                LayerName->addSeparator()->deleteLater();;
+                newLayer->deleteLater();
 
-            setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
-            setLayer->setData(layer.name);
-            setLayer->setCheckable(true);
-            setLayer->setEnabled(true);
-            setLayer->setChecked( layer.name==doorData.layer );
-            setLayer->deleteLater();
-            layerItems.push_back(setLayer);
-        }
+            foreach(LevelLayers layer, scene->LvlData->layers)
+            {
+                //Skip system layers
+                if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-        ItemMenu->addSeparator()->deleteLater();;
+                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer->setData(layer.name);
+                setLayer->setCheckable(true);
+                setLayer->setEnabled(true);
+                setLayer->setChecked( layer.name==doorData.layer );
+                setLayer->deleteLater();
+                layerItems.push_back(setLayer);
+            }
 
-        QAction *jumpTo=NULL;
-        if(this->data(0).toString()=="Door_enter")
-        {
-            jumpTo = ItemMenu->addAction(tr("Jump to exit"));
-            jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
-            jumpTo->deleteLater();
-        }
-        else
-        if(this->data(0).toString()=="Door_exit")
-        {
-            jumpTo = ItemMenu->addAction(tr("Jump to entrance"));
-            jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
-            jumpTo->deleteLater();
-        }
+            ItemMenu->addSeparator()->deleteLater();;
 
-        ItemMenu->addSeparator()->deleteLater();
-
-
-        QAction * NoTransport = ItemMenu->addAction(tr("No Vehicles"));
-        NoTransport->setCheckable(true);
-        NoTransport->setChecked( doorData.noyoshi );
-        NoTransport->deleteLater();
-
-        QAction * AllowNPC = ItemMenu->addAction(tr("Allow NPC"));
-        AllowNPC->setCheckable(true);
-        AllowNPC->setChecked( doorData.allownpc );
-        AllowNPC->deleteLater();
-
-        QAction * Locked = ItemMenu->addAction(tr("Locked"));
-        Locked->setCheckable(true);
-        Locked->setChecked( doorData.locked );
-        Locked->deleteLater();
-
-        /*
-        ItemMenu->addSeparator();
-        QAction *copyDoor = ItemMenu->addAction(tr("Copy"));
-            copyDoor->setDisabled(true);
-        QAction *cutDoor = ItemMenu->addAction(tr("Cut"));
-            cutDoor->setDisabled(true);
-        */
-
-        ItemMenu->addSeparator()->deleteLater();;
-            QAction *remove = ItemMenu->addAction(tr("Remove"));
-            remove->deleteLater();
-
-        ItemMenu->addSeparator()->deleteLater();;
-            QAction *props = ItemMenu->addAction(tr("Properties..."));
-            props->deleteLater();
-
-        scene->contextMenuOpened = true; //bug protector
-QAction *selected = ItemMenu->exec(event->screenPos());
-
-        if(!selected)
-        {
-            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-            scene->contextMenuOpened = true;
-            return;
-        }
-        event->accept();
-
-        if(selected==openLvl)
-        {
-            MainWinConnect::pMainWin->OpenFile(scene->LvlData->path + "/" + doorData.lname);
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==jumpTo)
-        {
-            //scene->doCopy = true ;
+            QAction *jumpTo=NULL;
             if(this->data(0).toString()=="Door_enter")
             {
-                if(doorData.isSetOut)
-                MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(-300, -300));
+                jumpTo = ItemMenu->addAction(tr("Jump to exit"));
+                jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
+                jumpTo->deleteLater();
             }
             else
             if(this->data(0).toString()=="Door_exit")
             {
-                if(doorData.isSetIn)
-                MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(-300, -300));
+                jumpTo = ItemMenu->addAction(tr("Jump to entrance"));
+                jumpTo->setVisible( (doorData.isSetIn)&&(doorData.isSetOut) );
+                jumpTo->deleteLater();
             }
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==NoTransport)
-        {
-            LevelData modDoors;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+
+            ItemMenu->addSeparator()->deleteLater();
+
+
+            QAction * NoTransport = ItemMenu->addAction(tr("No Vehicles"));
+            NoTransport->setCheckable(true);
+            NoTransport->setChecked( doorData.noyoshi );
+            NoTransport->deleteLater();
+
+            QAction * AllowNPC = ItemMenu->addAction(tr("Allow NPC"));
+            AllowNPC->setCheckable(true);
+            AllowNPC->setChecked( doorData.allownpc );
+            AllowNPC->deleteLater();
+
+            QAction * Locked = ItemMenu->addAction(tr("Locked"));
+            Locked->setCheckable(true);
+            Locked->setChecked( doorData.locked );
+            Locked->deleteLater();
+
+            /*
+            ItemMenu->addSeparator();
+            QAction *copyDoor = ItemMenu->addAction(tr("Copy"));
+                copyDoor->setDisabled(true);
+            QAction *cutDoor = ItemMenu->addAction(tr("Cut"));
+                cutDoor->setDisabled(true);
+            */
+
+            ItemMenu->addSeparator()->deleteLater();;
+                QAction *remove = ItemMenu->addAction(tr("Remove"));
+                remove->deleteLater();
+
+            ItemMenu->addSeparator()->deleteLater();;
+                QAction *props = ItemMenu->addAction(tr("Properties..."));
+                props->deleteLater();
+
+    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+
+            if(!selected)
             {
-                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+                return;
+            }
+
+            if(selected==openLvl)
+            {
+                MainWinConnect::pMainWin->OpenFile(scene->LvlData->path + "/" + doorData.lname);
+            }
+            else
+            if(selected==jumpTo)
+            {
+                //scene->doCopy = true ;
+                if(this->data(0).toString()=="Door_enter")
                 {
-                    if(SelItem->data(0).toString()=="Door_exit"){
-                        LevelDoors door = ((ItemDoor *) SelItem)->doorData;
-                        door.isSetOut = true;
-                        door.isSetIn = false;
-                        modDoors.doors.push_back(door);
-                    }else if(SelItem->data(0).toString()=="Door_enter"){
-                        LevelDoors door = ((ItemDoor *) SelItem)->doorData;
-                        door.isSetOut = false;
-                        door.isSetIn = true;
-                        modDoors.doors.push_back(door);
-                    }
-                    ((ItemDoor *) SelItem)->doorData.noyoshi=NoTransport->isChecked();
-                    ((ItemDoor *) SelItem)->arrayApply();
+                    if(doorData.isSetOut)
+                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(-300, -300));
+                }
+                else
+                if(this->data(0).toString()=="Door_exit")
+                {
+                    if(doorData.isSetIn)
+                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(-300, -300));
                 }
             }
-            scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_NOYOSHI, QVariant(NoTransport->isChecked()));
-            MainWinConnect::pMainWin->setDoorData(-2);
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==AllowNPC)
-        {
-            LevelData modDoors;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            else
+            if(selected==NoTransport)
             {
-                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                LevelData modDoors;
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="Door_exit"){
-                        LevelDoors door = ((ItemDoor *) SelItem)->doorData;
-                        door.isSetOut = true;
-                        door.isSetIn = false;
-                        modDoors.doors.push_back(door);
-                    }else if(SelItem->data(0).toString()=="Door_enter"){
-                        LevelDoors door = ((ItemDoor *) SelItem)->doorData;
-                        door.isSetOut = false;
-                        door.isSetIn = true;
-                        modDoors.doors.push_back(door);
+                    if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                    {
+                        if(SelItem->data(0).toString()=="Door_exit"){
+                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            door.isSetOut = true;
+                            door.isSetIn = false;
+                            modDoors.doors.push_back(door);
+                        }else if(SelItem->data(0).toString()=="Door_enter"){
+                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            door.isSetOut = false;
+                            door.isSetIn = true;
+                            modDoors.doors.push_back(door);
+                        }
+                        ((ItemDoor *) SelItem)->doorData.noyoshi=NoTransport->isChecked();
+                        ((ItemDoor *) SelItem)->arrayApply();
                     }
-                    ((ItemDoor *) SelItem)->doorData.allownpc=AllowNPC->isChecked();
-                    ((ItemDoor *) SelItem)->arrayApply();
                 }
+                scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_NOYOSHI, QVariant(NoTransport->isChecked()));
+                MainWinConnect::pMainWin->setDoorData(-2);
             }
-            scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_ALLOWNPC, QVariant(AllowNPC->isChecked()));
-            MainWinConnect::pMainWin->setDoorData(-2);
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==Locked)
-        {
-            LevelData modDoors;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+            else
+            if(selected==AllowNPC)
             {
-                if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                LevelData modDoors;
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
                 {
-                    if(SelItem->data(0).toString()=="Door_exit"){
-                        LevelDoors door = ((ItemDoor *) SelItem)->doorData;
-                        door.isSetOut = true;
-                        door.isSetIn = false;
-                        modDoors.doors.push_back(door);
-                    }else if(SelItem->data(0).toString()=="Door_enter"){
-                        LevelDoors door = ((ItemDoor *) SelItem)->doorData;
-                        door.isSetOut = false;
-                        door.isSetIn = true;
-                        modDoors.doors.push_back(door);
+                    if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                    {
+                        if(SelItem->data(0).toString()=="Door_exit"){
+                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            door.isSetOut = true;
+                            door.isSetIn = false;
+                            modDoors.doors.push_back(door);
+                        }else if(SelItem->data(0).toString()=="Door_enter"){
+                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            door.isSetOut = false;
+                            door.isSetIn = true;
+                            modDoors.doors.push_back(door);
+                        }
+                        ((ItemDoor *) SelItem)->doorData.allownpc=AllowNPC->isChecked();
+                        ((ItemDoor *) SelItem)->arrayApply();
                     }
-                    ((ItemDoor *) SelItem)->doorData.locked=Locked->isChecked();
-                    ((ItemDoor *) SelItem)->arrayApply();
                 }
+                scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_ALLOWNPC, QVariant(AllowNPC->isChecked()));
+                MainWinConnect::pMainWin->setDoorData(-2);
             }
-            scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_LOCKED, QVariant(Locked->isChecked()));
-            MainWinConnect::pMainWin->setDoorData(-2);
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==remove)
-        {
-            scene->contextMenuOpened = false;
-            scene->removeSelectedLvlItems();
-        }
-        else
-        if(selected==props)
-        {
-            MainWinConnect::pMainWin->SwitchToDoor(doorData.array_id);
-            scene->contextMenuOpened = false;
-        }
-        else
-        {
-            #include "item_set_layer.h"
+            else
+            if(selected==Locked)
+            {
+                LevelData modDoors;
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if((SelItem->data(0).toString()=="Door_exit")||(SelItem->data(0).toString()=="Door_enter"))
+                    {
+                        if(SelItem->data(0).toString()=="Door_exit"){
+                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            door.isSetOut = true;
+                            door.isSetIn = false;
+                            modDoors.doors.push_back(door);
+                        }else if(SelItem->data(0).toString()=="Door_enter"){
+                            LevelDoors door = ((ItemDoor *) SelItem)->doorData;
+                            door.isSetOut = false;
+                            door.isSetIn = true;
+                            modDoors.doors.push_back(door);
+                        }
+                        ((ItemDoor *) SelItem)->doorData.locked=Locked->isChecked();
+                        ((ItemDoor *) SelItem)->arrayApply();
+                    }
+                }
+                scene->addChangeSettingsHistory(modDoors, LvlScene::SETTING_LOCKED, QVariant(Locked->isChecked()));
+                MainWinConnect::pMainWin->setDoorData(-2);
+            }
+            else
+            if(selected==remove)
+            {
+                scene->removeSelectedLvlItems();
+            }
+            else
+            if(selected==props)
+            {
+                MainWinConnect::pMainWin->SwitchToDoor(doorData.array_id);
+            }
+            else
+            {
+                #include "item_set_layer.h"
+            }
         }
     }
-    else
-    {
+
+}
+
+void ItemDoor::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
+{
+//    else
+//    {
         QGraphicsRectItem::contextMenuEvent(event);
-    }
+//    }
 }
 
 

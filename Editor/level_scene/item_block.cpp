@@ -64,6 +64,7 @@ void ItemBlock::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
+
     //Discard multi-mouse keys
     if((mouseLeft)||(mouseMid)||(mouseRight))
     {
@@ -113,19 +114,12 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     /////////////////////////CONTEXT MENU:///////////////////////////////
     if((callContext)&&(!scene->contextMenuOpened))
     {
-        scene->contextMenuOpened=true;
-
         if((!scene->lock_block)&&(!scene->DrawMode)&&(!isLocked))
         {
+            scene->contextMenuOpened=true;
+
             //Remove selection from non-block items
             if(!this->isSelected())
-            //        {
-            //            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            //            {
-            //                if(SelItem->data(0).toString()!="Block") SelItem->setSelected(false);
-            //            }
-            //        }
-            //        else
             {
                 scene->clearSelection();
                 this->setSelected(true);
@@ -189,17 +183,13 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QAction *props = ItemMenu->addAction(tr("Properties..."));
             props->deleteLater();
 
-            scene->contextMenuOpened = true;
-
-            ItemMenu->popup(mouseEvent->screenPos());
-     QAction *selected = ItemMenu->exec();
+     QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
 
             if(!selected)
             {
                 #ifdef _DEBUG_
                     WriteToLog(QtDebugMsg, "Context Menu <- NULL");
                 #endif
-                //scene->contextMenuOpened = true;
                 goto delItems;
             }
             //mouseEvent->accept();
@@ -208,16 +198,12 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             if(selected==cutBlock)
             {
-                //scene->doCut = true ;
                 MainWinConnect::pMainWin->on_actionCut_triggered();
-                //scene->contextMenuOpened = false;
             }
             else
             if(selected==copyBlock)
             {
-                //scene->doCopy = true ;
                 MainWinConnect::pMainWin->on_actionCopy_triggered();
-                //scene->contextMenuOpened = false;
             }
             else
             if(selected==invis)
@@ -233,7 +219,6 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
                 scene->addChangeSettingsHistory(selData, LvlScene::SETTING_INVISIBLE, QVariant(invis->isChecked()));
-                //scene->contextMenuOpened = false;
             }
             else
             if(selected==slipp)
@@ -249,18 +234,15 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
                 scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SLIPPERY, QVariant(invis->isChecked()));
-                //scene->contextMenuOpened = false;
             }
             else
             if(selected==resize)
             {
                 scene->setBlockResizer(this, true);
-                //scene->contextMenuOpened = false;
             }
             else
             if(selected==chNPC)
             {
-                //scene->contextMenuOpened = false;
                 LevelData selData;
                 ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
                                                            ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 1000 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
