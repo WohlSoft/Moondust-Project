@@ -81,6 +81,7 @@ void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     int multimouse=0;
+    bool callContext=false;
     if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
         multimouse++;
     if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
@@ -99,113 +100,111 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         mouseMid=false;
 
     if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    {
+        if(!scene->IsMoved) callContext=true;
         mouseRight=false;
+    }
 
     QGraphicsItem::mouseReleaseEvent(mouseEvent);
+
+    /////////////////////////CONTEXT MENU:///////////////////////////////
+    if((callContext)&&(!scene->contextMenuOpened))
+    {
+        if((!scene->lock_bgo)&&(!scene->DrawMode)&&(!isLocked))
+        {
+            scene->contextMenuOpened=true;
+            //Remove selection from non-bgo items
+            if(!this->isSelected())
+            {
+                scene->clearSelection();
+                this->setSelected(true);
+            }
+
+            this->setSelected(1);
+            ItemMenu->clear();
+
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
+            LayerName->deleteLater();
+
+            QAction *setLayer;
+            QList<QAction *> layerItems;
+
+            QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+            LayerName->addSeparator()->deleteLater();
+
+            foreach(LevelLayers layer, scene->LvlData->layers)
+            {
+                //Skip system layers
+                if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+
+                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer->setData(layer.name);
+                setLayer->setCheckable(true);
+                setLayer->setEnabled(true);
+                setLayer->setChecked( layer.name==bgoData.layer );
+                setLayer->deleteLater();
+                layerItems.push_back(setLayer);
+            }
+
+            ItemMenu->addSeparator();
+            QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
+            copyBGO->deleteLater();
+            QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
+            cutBGO->deleteLater();
+            ItemMenu->addSeparator()->deleteLater();
+            QAction *remove = ItemMenu->addAction(tr("Remove"));
+            remove->deleteLater();
+            ItemMenu->addSeparator()->deleteLater();;
+            QAction *props = ItemMenu->addAction(tr("Properties..."));
+            props->deleteLater();
+
+    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+
+            if(!selected)
+            {
+                #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+                #endif
+                return;
+            }
+
+            if(selected==cutBGO)
+            {
+                //scene->doCut = true ;
+                MainWinConnect::pMainWin->on_actionCut_triggered();
+            }
+            else
+            if(selected==copyBGO)
+            {
+                //scene->doCopy = true ;
+                MainWinConnect::pMainWin->on_actionCopy_triggered();
+            }
+            else
+            if(selected==remove)
+            {
+                scene->removeSelectedLvlItems();
+            }
+            else
+            if(selected==props)
+            {
+                scene->openProps();
+            }
+            else
+            {
+               #include "item_set_layer.h"
+            }
+        }
+
+    }
+
 }
 
 void ItemBGO::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_bgo)&&(!scene->DrawMode)&&(!isLocked))
-    {
-        //Remove selection from non-bgo items
-        if(!this->isSelected())
-        //{
-        //    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-        //    {
-        //        if(SelItem->data(0).toString()!="BGO") SelItem->setSelected(false);
-        //    }
-        //}
-        //else
-        {
-            scene->clearSelection();
-            this->setSelected(true);
-        }
-
-        this->setSelected(1);
-        ItemMenu->clear();
-
-        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
-        LayerName->deleteLater();
-
-        QAction *setLayer;
-        QList<QAction *> layerItems;
-
-        QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-        LayerName->addSeparator()->deleteLater();
-
-        foreach(LevelLayers layer, scene->LvlData->layers)
-        {
-            //Skip system layers
-            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
-
-            setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
-            setLayer->setData(layer.name);
-            setLayer->setCheckable(true);
-            setLayer->setEnabled(true);
-            setLayer->setChecked( layer.name==bgoData.layer );
-            setLayer->deleteLater();
-            layerItems.push_back(setLayer);
-        }
-
-        ItemMenu->addSeparator();
-        QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
-        copyBGO->deleteLater();
-        QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
-        cutBGO->deleteLater();
-        ItemMenu->addSeparator()->deleteLater();
-        QAction *remove = ItemMenu->addAction(tr("Remove"));
-        remove->deleteLater();
-        ItemMenu->addSeparator()->deleteLater();;
-        QAction *props = ItemMenu->addAction(tr("Properties..."));
-        props->deleteLater();
-
-        scene->contextMenuOpened = true; //bug protector
-QAction *selected = ItemMenu->exec(event->screenPos());
-
-        if(!selected)
-        {
-            #ifdef _DEBUG_
-            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-            #endif
-            scene->contextMenuOpened = true;
-            return;
-        }
-        event->accept();
-
-        if(selected==cutBGO)
-        {
-            //scene->doCut = true ;
-            MainWinConnect::pMainWin->on_actionCut_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==copyBGO)
-        {
-            //scene->doCopy = true ;
-            MainWinConnect::pMainWin->on_actionCopy_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==remove)
-        {
-            scene->contextMenuOpened = false;
-            scene->removeSelectedLvlItems();
-        }
-        else
-        if(selected==props)
-        {
-            scene->openProps();
-        }
-        else
-        {
-           #include "item_set_layer.h"
-        }
-    }
-    else
-    {
+//    else
+//    {
         QGraphicsItem::contextMenuEvent(event);
-    }
+//    }
 }
 
 
