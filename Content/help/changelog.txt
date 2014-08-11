@@ -1,5 +1,5 @@
 Editor 0.2.0
-- Added support of World Maps
+- Added support of the World Maps
 - Added customizing item tilesets
 - Added "name" field into customizing NPC.txt for define NPC's name
 - Fixed zombie bug: application process will correctly end his work
@@ -14,6 +14,7 @@ Editor 0.2.0
 - Fixed "add layer" dialog. Now if you define exist layer, you will be reasked for layer name.
 - Added point selection dialog. You can select point from a world map directly to the warp on the level.
 - Added dialogs for a console tools like a GIFs2PNG and LazyFixTool
+- Mouse control for level editing workspace was improved. Fixed a lot of bugs and fixed context menu on the Linux.
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized
