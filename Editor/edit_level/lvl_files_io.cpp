@@ -42,6 +42,7 @@ void leveledit::ExportToImage_fn()
         long x, y, h, w, th, tw;
 
         bool proportion;
+        bool forceTiled=false;
         QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
@@ -82,6 +83,8 @@ void leveledit::ExportToImage_fn()
         if (fileName.isEmpty())
             return;
 
+        forceTiled = ExportImage.TiledBackground();
+
         QFileInfo exported(fileName);
 
         QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, this);
@@ -100,6 +103,7 @@ void leveledit::ExportToImage_fn()
         qApp->processEvents();
         if(scene->opts.animationEnabled) scene->stopAnimation(); //Reset animation to 0 frame
         if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(false);
+        if(forceTiled) scene->setTiledBackground(true);
 
         if(!progress.wasCanceled()) progress.setValue(10);
         qApp->processEvents();
@@ -136,6 +140,7 @@ void leveledit::ExportToImage_fn()
         qApp->processEvents();
         if(scene->opts.animationEnabled) scene->startBlockAnimation(); // Restart animation
         if(ExportImage.HideWatersAndDoors()) scene->hideWarpsAndDoors(true);
+        if(forceTiled) scene->setTiledBackground(false);
 
         if(!progress.wasCanceled()) progress.setValue(100);
         if(!progress.wasCanceled())
