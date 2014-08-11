@@ -61,15 +61,9 @@ void ItemMusic::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
     if((!scene->lock_musbox)&&(!scene->DrawMode)&&(!isLocked))
     {
+        scene->contextMenuOpened = true;
         //Remove selection from non-bgo items
-        if(this->isSelected())
-        {
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()!="MUSICBOX") SelItem->setSelected(false);
-            }
-        }
-        else
+        if(!this->isSelected())
         {
             scene->clearSelection();
             this->setSelected(true);
@@ -95,11 +89,7 @@ void ItemMusic::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
         ItemMenu->addSeparator()->deleteLater();
         QAction *remove = ItemMenu->addAction(tr("Remove"));
         remove->deleteLater();
-        //ItemMenu->addSeparator()->deleteLater();;
-        //QAction *props = ItemMenu->addAction(tr("Properties..."));
-        //props->deleteLater();
 
-        scene->contextMenuOpened = true; //bug protector
 QAction *selected = ItemMenu->exec(event->screenPos());
 
         if(!selected)
@@ -107,7 +97,6 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             #ifdef _DEBUG_
             WriteToLog(QtDebugMsg, "Context Menu <- NULL");
             #endif
-            scene->contextMenuOpened = true;
             return;
         }
         event->accept();
@@ -117,117 +106,24 @@ QAction *selected = ItemMenu->exec(event->screenPos());
             MainWinConnect::pMainWin->activeWldEditWin()->currentMusic = musicData.id;
             MainWinConnect::pMainWin->setMusicButton(true);
             MainWinConnect::pMainWin->on_actionPlayMusic_triggered(true);
-            scene->contextMenuOpened = false;
         }
         else
         if(selected==cutTile)
         {
             //scene->doCut = true ;
             MainWinConnect::pMainWin->on_actionCut_triggered();
-            scene->contextMenuOpened = false;
         }
         else
         if(selected==copyTile)
         {
             //scene->doCopy = true ;
             MainWinConnect::pMainWin->on_actionCopy_triggered();
-            scene->contextMenuOpened = false;
         }
         else
         if(selected==remove)
         {
-            WorldData removedItems;
-            //bool deleted=false;
-            scene->contextMenuOpened = false;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()=="MUSICBOX")
-                {
-                    removedItems.music.push_back(((ItemMusic *)SelItem)->musicData);
-                    ((ItemMusic *)SelItem)->removeFromArray();
-                    delete SelItem;
-                    //deleted=true;
-                }
-            }
-            //if(deleted) MainWinConnect::pMainWin->activeLvlEditWin()->scene->addRemoveHistory( removedItems );
+            scene->removeSelectedWldItems();
         }
-//        else
-//        if(selected==props)
-//        {
-//            scene->openProps();
-//        }
-//        else
-//        {
-//            bool itemIsFound=false;
-//            QString lName;
-//            if(selected==newLayer)
-//            {
-//                scene->contextMenuOpened = false;
-//                ToNewLayerBox * layerBox = new ToNewLayerBox(scene->WldData);
-//                layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-//                layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
-//                if(layerBox->exec()==QDialog::Accepted)
-//                {
-//                    itemIsFound=true;
-//                    lName = layerBox->lName;
-
-//                    //Store new layer into array
-//                    LevelLayers nLayer;
-//                    nLayer.name = lName;
-//                    nLayer.hidden = layerBox->lHidden;
-//                    scene->WldData->layers_array_id++;
-//                    nLayer.array_id = scene->WldData->layers_array_id;
-//                    scene->WldData->layers.push_back(nLayer);
-
-//                    //scene->SyncLayerList=true; //Refresh layer list
-//                    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-//                    MainWinConnect::pMainWin->setLayersBox();
-//                    MainWinConnect::pMainWin->setLayerToolsLocked(false);
-//                }
-//                delete layerBox;
-//            }
-//            else
-//            foreach(QAction * lItem, layerItems)
-//            {
-//                if(selected==lItem)
-//                {
-//                    itemIsFound=true;
-//                    lName = lItem->data().toString();
-//                    //FOUND!!!
-//                 break;
-//                }//Find selected layer's item
-//            }
-
-//            if(itemIsFound)
-//            {
-//                LevelData modData;
-//                foreach(LevelLayers lr, scene->WldData->layers)
-//                { //Find layer's settings
-//                    if(lr.name==lName)
-//                    {
-//                        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-//                        {
-
-//                            if(SelItem->data(0).toString()=="BGO")
-//                            {
-//                                modData.bgo.push_back(((ItemMusic*) SelItem)->musicData);
-//                                ((ItemMusic *) SelItem)->musicData.layer = lr.name;
-//                                ((ItemMusic *) SelItem)->setVisible(!lr.hidden);
-//                                ((ItemMusic *) SelItem)->arrayApply();
-//                            }
-//                        }
-//                        if(selected==newLayer){
-//                            scene->addChangedNewLayerHistory(modData, lr);
-//                        }
-//                        break;
-//                    }
-//                }//Find layer's settings
-//                if(selected!=newLayer){
-//                    scene->addChangedLayerHistory(modData, lName);
-//                }
-//                scene->contextMenuOpened = false;
-//            }
-//        }
     }
     else
     {
