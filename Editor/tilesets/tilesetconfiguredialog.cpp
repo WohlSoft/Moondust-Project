@@ -38,7 +38,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
     connect(ui->spin_height,SIGNAL(valueChanged(int)),m_tileset,SLOT(setRows(int)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),this,SLOT(setUpItems(int)));
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)),this,SLOT(setUpTileset(int)));
-
+    connect(ui->TilesetName, SIGNAL(textChanged(QString)), m_tileset, SLOT(setName(QString)));
 }
 
 TilesetConfigureDialog::~TilesetConfigureDialog()
@@ -124,18 +124,28 @@ PiecesModel::PieceType TilesetConfigureDialog::toPieceType(tileset::TilesetType 
 
 void TilesetConfigureDialog::on_SaveTileset_clicked()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Tileset"),
-            QApplication::applicationDirPath() + "/" +  "configs/SMBX/", QString("PGE Tileset (*.ini)"));
-    if (fileName.isEmpty())
+    QDir(m_conf->config_dir).mkpath("tilesets/");
+
+//    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Tileset"),
+//            m_conf->config_dir, QString("PGE Tileset (*.ini)"));
+
+    bool ok;
+    QString fileName = QInputDialog::getText(this, tr("Please enter a filename!"),
+                                              tr("Filename:"), QLineEdit::Normal,
+                                              m_tileset->name(), &ok);
+    if (!ok || fileName.isEmpty())
         return;
 
-    tileset::SaveSimpleTileset(fileName,m_tileset->toSimpleTileset());
+    if(!fileName.endsWith(".ini"))
+        fileName += ".ini";
+
+    tileset::SaveSimpleTileset(m_conf->config_dir + "tilesets/" + fileName,m_tileset->toSimpleTileset());
 }
 
 void TilesetConfigureDialog::on_OpenTileset_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Tileset"),
-                                                    QApplication::applicationDirPath() + "/" +  "configs/SMBX/",QString("PGE Tileset (*.ini)"));
+                                                    m_conf->config_dir + "tilesets/",QString("PGE Tileset (*.ini)"));
     if (fileName.isEmpty())
         return;
 
@@ -143,6 +153,7 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
     if(!tileset::OpenSimpleTileset(fileName,simple)){
         QMessageBox::warning(this, tr("Failed to load tileset!"), tr("Failed to load tileset!\nData may be corrupted!"));
     }else{
+        ui->TilesetName->setText(simple.tileSetName);
         ui->spin_width->setValue(simple.cols);
         ui->spin_height->setValue(simple.rows);
         ui->comboBox->setCurrentIndex(static_cast<int>(simple.type));
