@@ -24,7 +24,8 @@ public:
     };
 
     SimpleTilesetGroup toSimpleTilesetGroup();
-
+    static void SaveSimpleTilesetGroup(const QString &path, const SimpleTilesetGroup &tileset);
+    static bool OpenSimpleTilesetGroup(const QString &path, SimpleTilesetGroup &tileset);
 
 private slots:
     void on_addTileset_clicked();

@@ -53,6 +53,44 @@ TilesetGroupEditor::SimpleTilesetGroup TilesetGroupEditor::toSimpleTilesetGroup(
     for(int i = 0; i < tilesets.size(); ++i){
         s.tilesets << tilesets[i].first;
     }
+    return s;
+}
+
+void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const TilesetGroupEditor::SimpleTilesetGroup &tilesetGroup)
+{
+    QString modifiedPath;
+#ifdef __linux__
+
+    if(!path.contains("*.ini"))
+    {
+        modifiedPath = path + ".ini";
+        //QMessageBox::information(mainwindow, "Information", path, QMessageBox.Ok);
+    }
+    else
+    {
+        modifiedPath = path;
+    }
+#elif _WIN32
+    modifiedPath = path;
+#endif
+    QSettings simpleTilesetGroupINI(modifiedPath,QSettings::IniFormat);
+    simpleTilesetGroupINI.setIniCodec("UTF-8");
+    simpleTilesetGroupINI.clear();
+    simpleTilesetGroupINI.beginGroup("tileset-group"); //HEADER
+    simpleTilesetGroupINI.setValue("category", "ND");
+    simpleTilesetGroupINI.setValue("name", tilesetGroup.groupName);
+    simpleTilesetGroupINI.setValue("tilesets-count", tilesetGroup.tilesets.size());
+    simpleTilesetGroupINI.endGroup();
+    simpleTilesetGroupINI.beginGroup("tilesets");
+    for(int i = 1; i < tilesetGroup.tilesets.size()+1; ++i){
+        simpleTilesetGroupINI.setValue(QString("tileset-%1").arg(i),tilesetGroup.tilesets[i-1]);
+    }
+    simpleTilesetGroupINI.endGroup();
+}
+
+bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, TilesetGroupEditor::SimpleTilesetGroup &tileset)
+{
+
 }
 
 void TilesetGroupEditor::on_Close_clicked()
