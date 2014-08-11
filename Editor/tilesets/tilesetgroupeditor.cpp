@@ -103,9 +103,25 @@ void TilesetGroupEditor::on_Close_clicked()
 
 void TilesetGroupEditor::on_addTileset_clicked()
 {
-    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset"), QApplication::applicationDirPath() + "/" +  "configs/SMBX/", QString("PGE Tileset (*.ini)"));
+    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset"), MainWinConnect::pMainWin->configs.config_dir+"tilesets/", QString("PGE Tileset (*.ini)"));
     if(f.isEmpty())
         return;
+
+    if(!f.startsWith(MainWinConnect::pMainWin->configs.config_dir+"tilesets/")){
+        QFile file(f);
+        QFile tar(f = (MainWinConnect::pMainWin->configs.config_dir+"tilesets/" + f.section("/",-1,-1)));
+        if(tar.exists()){
+            QMessageBox msgBox;
+            msgBox.setText(tr("There is already a file called '%1'\nImport anyway and overwrite?"));
+            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            if(msgBox.exec() == QMessageBox::Ok)
+                tar.remove();
+            else
+                return;
+        }
+        file.copy(f);
+    }
 
     tileset::SimpleTileset t;
     if(tileset::OpenSimpleTileset(f,t)){
@@ -149,7 +165,7 @@ void TilesetGroupEditor::redrawAll()
         QGroupBox *f= new QGroupBox;
         QGridLayout* l = new QGridLayout();
         f->setLayout(l);
-        f->setTitle(tilesets[i].first.section('.',0,0));
+        f->setTitle(tilesets[i].second.tileSetName);
         tileset::SimpleTileset* items = &tilesets[i].second;
         for(int j = 0; j < items->items.size(); ++j){
             tileset::SimpleTilesetItem* item = &items->items[j];
