@@ -34,6 +34,10 @@ private slots:
     void on_Open_clicked();
     void on_Save_clicked();
 
+    void on_tilesetUp_clicked();
+
+    void on_tilesetDown_clicked();
+
 private:
     FlowLayout * layout;
     Ui::TilesetGroupEditor *ui;

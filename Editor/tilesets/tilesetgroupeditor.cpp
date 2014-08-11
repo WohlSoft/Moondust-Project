@@ -234,3 +234,31 @@ void TilesetGroupEditor::redrawAll()
         DevConsole::log(QString("Current FlowLayout Items: %1").arg(layout->count()), QString("Tileset"));
     }
 }
+
+void TilesetGroupEditor::on_tilesetUp_clicked()
+{
+    if(ui->tilesetList->selectedItems().size() == 0)
+        return;
+
+    int i = ui->tilesetList->row(ui->tilesetList->selectedItems()[0]);
+
+    if(0 < i){
+        tilesets.swap(i,i-1);
+        redrawAll();
+        ui->tilesetList->setCurrentRow(i-1);
+    }
+}
+
+void TilesetGroupEditor::on_tilesetDown_clicked()
+{
+    if(ui->tilesetList->selectedItems().size() == 0)
+        return;
+
+    int i = ui->tilesetList->row(ui->tilesetList->selectedItems()[0]);
+
+    if(i+1 < tilesets.size() ){
+        tilesets.swap(i,i+1);
+        redrawAll();
+        ui->tilesetList->setCurrentRow(i+1);
+    }
+}
