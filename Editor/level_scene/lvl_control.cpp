@@ -543,16 +543,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         if(cursor)
         {
-
-            // /////////// Don't draw with zero width or height //////////////
-            if( ((QGraphicsLineItem *)cursor)->line().p1() == ((QGraphicsLineItem *)cursor)->line().p2() )
-            {
-                item_rectangles::clearArray();
-                cursor->hide();
-                break;
-            }
-            // ///////////////////////////////////////////////////////////////
-
             WriteToLog(QtDebugMsg, "Line tool -> Placing items");
             placeItemsByRectArray();
 

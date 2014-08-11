@@ -548,14 +548,6 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         if(cursor)
         {
-            // /////////// Don't draw with zero width or height //////////////
-            if( ((QGraphicsLineItem *)cursor)->line().p1() == ((QGraphicsLineItem *)cursor)->line().p2() )
-            {
-                cursor->hide();
-                break;
-            }
-            // ///////////////////////////////////////////////////////////////
-
             placeItemsByRectArray();
             WldData->modified = true;
             cursor->hide();
@@ -877,18 +869,34 @@ void WldScene::placeItemsByRectArray()
     cursor = backup;
     cursor->hide();
 
-    if(!placingItems.tiles.isEmpty()||
-            !placingItems.scenery.isEmpty()||
-            !placingItems.paths.isEmpty()||
-            !placingItems.levels.isEmpty()||
-            !placingItems.music.isEmpty())
+    if(!overwritedItems.tiles.isEmpty()||
+        !overwritedItems.scenery.isEmpty()||
+        !overwritedItems.paths.isEmpty()||
+        !overwritedItems.levels.isEmpty()||
+        !overwritedItems.music.isEmpty() )
     {
-
-        addPlaceHistory(placingItems);
-
+        addOverwriteHistory(overwritedItems, placingItems);
+        overwritedItems.tiles.clear();
+        overwritedItems.scenery.clear();
+        overwritedItems.paths.clear();
+        overwritedItems.levels.clear();
+        overwritedItems.music.clear();
         placingItems.tiles.clear();
-        placingItems.scenery.clear();
         placingItems.paths.clear();
+        placingItems.scenery.clear();
+        placingItems.levels.clear();
+        placingItems.music.clear();
+    }
+    else
+    if(!placingItems.tiles.isEmpty()||
+            !placingItems.paths.isEmpty()||
+            !placingItems.scenery.isEmpty()||
+            !placingItems.levels.isEmpty()||
+            !placingItems.music.isEmpty()){
+        addPlaceHistory(placingItems);
+        placingItems.tiles.clear();
+        placingItems.paths.clear();
+        placingItems.scenery.clear();
         placingItems.levels.clear();
         placingItems.music.clear();
     }
