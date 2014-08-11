@@ -33,10 +33,6 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
     layout = new FlowLayout();
     delete ui->PreviewBox->layout();
     ui->PreviewBox->setLayout(layout);
-//    TilesetItemButton* b = new TilesetItemButton(&(MainWinConnect::pMainWin->configs));
-//    b->applySize(32,32);
-//    b->applyItem(ItemTypes::LVL_Block,1,32,32);
-//    ui->PreviewBox->layout()->addWidget(b);
     ui->tilesetList->clear();
 }
 
@@ -116,13 +112,13 @@ void TilesetGroupEditor::on_Close_clicked()
 
 void TilesetGroupEditor::on_addTileset_clicked()
 {
-    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset"), MainWinConnect::pMainWin->configs.config_dir+"tilesets/", QString("PGE Tileset (*.ini)"));
+    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset"), MainWinConnect::configs->config_dir+"tilesets/", QString("PGE Tileset (*.ini)"));
     if(f.isEmpty())
         return;
 
-    if(!f.startsWith(MainWinConnect::pMainWin->configs.config_dir+"tilesets/")){
+    if(!f.startsWith(MainWinConnect::configs->config_dir+"tilesets/")){
         QFile file(f);
-        QFile tar(f = (MainWinConnect::pMainWin->configs.config_dir+"tilesets/" + f.section("/",-1,-1)));
+        QFile tar(f = (MainWinConnect::configs->config_dir+"tilesets/" + f.section("/",-1,-1)));
         if(tar.exists()){
             QMessageBox msgBox;
             msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?"));
@@ -159,13 +155,13 @@ void TilesetGroupEditor::on_RemoveTileset_clicked()
 
 void TilesetGroupEditor::on_Open_clicked()
 {
-    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset Group"), MainWinConnect::pMainWin->configs.config_dir+"group_tilesets/", QString("PGE Tileset Group (*.ini)"));
+    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset Group"), MainWinConnect::configs->config_dir+"group_tilesets/", QString("PGE Tileset Group (*.ini)"));
     if(f.isEmpty())
         return;
 
-    if(!f.startsWith(MainWinConnect::pMainWin->configs.config_dir+"group_tilesets/")){
+    if(!f.startsWith(MainWinConnect::configs->config_dir+"group_tilesets/")){
         QFile file(f);
-        QFile tar(f = (MainWinConnect::pMainWin->configs.config_dir+"group_tilesets/" + f.section("/",-1,-1)));
+        QFile tar(f = (MainWinConnect::configs->config_dir+"group_tilesets/" + f.section("/",-1,-1)));
         if(tar.exists()){
             QMessageBox msgBox;
             msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?"));
@@ -183,7 +179,7 @@ void TilesetGroupEditor::on_Open_clicked()
     if(OpenSimpleTilesetGroup(f,t)){
         ui->tilesetGroupName->setText(t.groupName);
         foreach (QString tarName, t.tilesets) {
-            QString rootTilesetDir = MainWinConnect::pMainWin->configs.config_dir+"tilesets/";
+            QString rootTilesetDir = MainWinConnect::configs->config_dir+"tilesets/";
             tileset::SimpleTileset st;
             if(tileset::OpenSimpleTileset(rootTilesetDir+tarName,st)){
                 tilesets << qMakePair<QString, tileset::SimpleTileset>(tarName,st);
@@ -198,7 +194,7 @@ void TilesetGroupEditor::on_Open_clicked()
 
 void TilesetGroupEditor::on_Save_clicked()
 {
-    QDir(MainWinConnect::pMainWin->configs.config_dir).mkpath("group_tilesets/");
+    QDir(MainWinConnect::configs->config_dir).mkpath("group_tilesets/");
 
     bool ok;
     QString fileName = QInputDialog::getText(this, tr("Please enter a filename!"),
@@ -210,7 +206,7 @@ void TilesetGroupEditor::on_Save_clicked()
     if(!fileName.endsWith(".ini"))
         fileName += ".ini";
 
-    SaveSimpleTilesetGroup(MainWinConnect::pMainWin->configs.config_dir + "group_tilesets/" + fileName,toSimpleTilesetGroup());
+    SaveSimpleTilesetGroup(MainWinConnect::configs->config_dir + "group_tilesets/" + fileName,toSimpleTilesetGroup());
 }
 
 void TilesetGroupEditor::redrawAll()
@@ -228,7 +224,7 @@ void TilesetGroupEditor::redrawAll()
         tileset::SimpleTileset* items = &tilesets[i].second;
         for(int j = 0; j < items->items.size(); ++j){
             tileset::SimpleTilesetItem* item = &items->items[j];
-            TilesetItemButton* ib = new TilesetItemButton(&MainWinConnect::pMainWin->configs);
+            TilesetItemButton* ib = new TilesetItemButton(MainWinConnect::configs);
             ib->applySize(32,32);
             ib->applyItem(items->type,item->id);
             l->addWidget(ib,item->row, item->col);
