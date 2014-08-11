@@ -39,7 +39,7 @@ void MainWindow::on_actionCopy_triggered()
        WldBuffer=activeWldEditWin()->scene->copy();
        q1 += WldBuffer.tiles.size();
        q2 += WldBuffer.scenery.size();
-       q3 += WldBuffer.path.size();
+       q3 += WldBuffer.paths.size();
        q4 += WldBuffer.levels.size();
        q5 += WldBuffer.music.size();
        statusBar()->showMessage(tr("%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been copied to clipboard").arg(q1).arg(q2).arg(q3).arg(q4).arg(q5), 2000);
@@ -67,7 +67,7 @@ void MainWindow::on_actionCut_triggered()
        WldBuffer=activeWldEditWin()->scene->copy(true);
        q1 += WldBuffer.tiles.size();
        q2 += WldBuffer.scenery.size();
-       q3 += WldBuffer.path.size();
+       q3 += WldBuffer.paths.size();
        q4 += WldBuffer.levels.size();
        q5 += WldBuffer.music.size();
        statusBar()->showMessage(tr("%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been moved to clipboard").arg(q1).arg(q2).arg(q3).arg(q4).arg(q5), 2000);
