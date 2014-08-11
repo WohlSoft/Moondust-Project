@@ -44,6 +44,13 @@ namespace lvl_control
     bool mouseRight=false;//Right mouse key is pressed
 
     bool mouseMoved=false; //Mouse was moved with right mouseKey
+
+    static QPointF drawStartPos = QPoint(0,0); // Stored start point of mouse movement with pressed key
+
+    //the last Array ID's, which used before hold mouse key
+    static qlonglong last_block_arrayID=0;
+    static qlonglong last_bgo_arrayID=0;
+    static qlonglong last_npc_arrayID=0;
 }
 
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
@@ -94,15 +101,6 @@ void LvlScene::selectionChanged()
         WriteToLog(QtDebugMsg, "Selection Changed!");
     #endif
 }
-
-
-
-static QPointF drawStartPos = QPoint(0,0); // Stored start point of mouse movement with pressed key
-
-//the last Array ID's, which used before hold mouse key
-static qlonglong last_block_arrayID=0;
-static qlonglong last_bgo_arrayID=0;
-static qlonglong last_npc_arrayID=0;
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
@@ -981,6 +979,7 @@ void LvlScene::placeItemsByRectArray()
 
 void LvlScene::placeItemUnderCursor()
 {
+    using namespace lvl_control;
     bool wasPlaced=false;
 
 //    last_block_arrayID=LvlData->blocks_array_id;
