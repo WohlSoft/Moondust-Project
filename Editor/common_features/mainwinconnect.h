@@ -25,6 +25,7 @@ class MainWinConnect
 {
 public:
     static MainWindow * pMainWin;
+    static dataconfigs * configs;
 };
 
 #endif // MAINWINCONNECT_H
