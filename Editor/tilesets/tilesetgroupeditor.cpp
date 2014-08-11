@@ -90,7 +90,10 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Tiles
 
 bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, TilesetGroupEditor::SimpleTilesetGroup &tileset)
 {
+    Q_UNUSED(path)
+    Q_UNUSED(tileset)
 
+    return false;
 }
 
 void TilesetGroupEditor::on_Close_clicked()
