@@ -37,16 +37,19 @@
 QPoint sourcePos=QPoint(0,0);
 int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
 
-bool mouseLeft=false; //Left mouse key is pressed
-bool mouseMid=false;  //Middle mouse key is pressed
-bool mouseRight=false;//Right mouse key is pressed
+namespace lvl_control
+{
+    bool mouseLeft=false; //Left mouse key is pressed
+    bool mouseMid=false;  //Middle mouse key is pressed
+    bool mouseRight=false;//Right mouse key is pressed
 
-bool mouseMoved=false; //Mouse was moved with right mouseKey
-
+    bool mouseMoved=false; //Mouse was moved with right mouseKey
+}
 
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
 void LvlScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 {
+    using namespace lvl_control;
     switch(keyEvent->key())
     {
     case (Qt::Key_Delete): //Delete action
@@ -103,6 +106,8 @@ static qlonglong last_npc_arrayID=0;
 
 void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    using namespace lvl_control;
+
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Mouse pressed -> [%1, %2] contextMenuOpened=%3, DrawMode=%4").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y())
                .arg(contextMenuOpened).arg(DrawMode));
@@ -293,6 +298,8 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    using namespace lvl_control;
+
     //WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
     //if(contextMenuOpened) return;
     contextMenuOpened=false;
@@ -413,6 +420,8 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    using namespace lvl_control;
+
     int multimouse=0;
     if( mouseLeft || (mouseLeft^(mouseEvent->buttons() & Qt::LeftButton)) )
         multimouse++;
@@ -447,13 +456,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     contextMenuOpened=false;
-//    if(contextMenuOpened)
-//    {
-//        contextMenuOpened = false; //bug protector
-//        QGraphicsScene::mouseReleaseEvent(mouseEvent);
-//        return;
-//    }
-
     if(!isLeftMouse)
     {
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
@@ -977,7 +979,6 @@ void LvlScene::placeItemsByRectArray()
 }
 
 
-
 void LvlScene::placeItemUnderCursor()
 {
     bool wasPlaced=false;
@@ -1155,7 +1156,6 @@ void LvlScene::placeItemUnderCursor()
     //if(opts.animationEnabled) startBlockAnimation();
 }
 
-
 void LvlScene::removeItemUnderCursor()
 {
     if(contextMenuOpened) return;
@@ -1173,7 +1173,6 @@ void LvlScene::removeSelectedLvlItems()
     if(selectedList.isEmpty()) return;
     removeLvlItems(selectedList);
 }
-
 
 void LvlScene::removeLvlItem(QGraphicsItem * item, bool globalHistory)
 {
