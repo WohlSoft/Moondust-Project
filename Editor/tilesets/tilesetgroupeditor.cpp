@@ -46,6 +46,15 @@ TilesetGroupEditor::~TilesetGroupEditor()
     delete ui;
 }
 
+TilesetGroupEditor::SimpleTilesetGroup TilesetGroupEditor::toSimpleTilesetGroup()
+{
+    SimpleTilesetGroup s;
+    s.groupName = ui->tilesetGroupName->text();
+    for(int i = 0; i < tilesets.size(); ++i){
+        s.tilesets << tilesets[i].first;
+    }
+}
+
 void TilesetGroupEditor::on_Close_clicked()
 {
     this->close();

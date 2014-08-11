@@ -23,6 +23,8 @@ public:
         QStringList tilesets;
     };
 
+    SimpleTilesetGroup toSimpleTilesetGroup();
+
 
 private slots:
     void on_addTileset_clicked();
