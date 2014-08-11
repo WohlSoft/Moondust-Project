@@ -88,12 +88,25 @@ void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const Tiles
     simpleTilesetGroupINI.endGroup();
 }
 
-bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, TilesetGroupEditor::SimpleTilesetGroup &tileset)
+bool TilesetGroupEditor::OpenSimpleTilesetGroup(const QString &path, TilesetGroupEditor::SimpleTilesetGroup &tilesetGroup)
 {
-    Q_UNUSED(path)
-    Q_UNUSED(tileset)
+    QSettings simpleTilesetINI(path,QSettings::IniFormat);
+    simpleTilesetINI.setIniCodec("UTF-8");
+    simpleTilesetINI.beginGroup("tileset-group");
+    if(!simpleTilesetINI.contains("tilesets-count"))
+        return false;
 
-    return false;
+    tilesetGroup.groupName = simpleTilesetINI.value("name","").toString();
+    int tc = simpleTilesetINI.value("tilesets-count",0).toInt()+1;
+    simpleTilesetINI.endGroup();
+    simpleTilesetINI.beginGroup("tilesets");
+    for(int i = 1; i < tc; ++i){
+        if(!simpleTilesetINI.contains(QString("tileset-%1").arg(i)))
+            return false;
+        tilesetGroup.tilesets << simpleTilesetINI.value(QString("tileset-%1").arg(i)).toString();
+    }
+    simpleTilesetINI.endGroup();
+    return true;
 }
 
 void TilesetGroupEditor::on_Close_clicked()
@@ -112,7 +125,7 @@ void TilesetGroupEditor::on_addTileset_clicked()
         QFile tar(f = (MainWinConnect::pMainWin->configs.config_dir+"tilesets/" + f.section("/",-1,-1)));
         if(tar.exists()){
             QMessageBox msgBox;
-            msgBox.setText(tr("There is already a file called '%1'\nImport anyway and overwrite?"));
+            msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?"));
             msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
             msgBox.setDefaultButton(QMessageBox::Cancel);
             if(msgBox.exec() == QMessageBox::Ok)
@@ -146,12 +159,58 @@ void TilesetGroupEditor::on_RemoveTileset_clicked()
 
 void TilesetGroupEditor::on_Open_clicked()
 {
+    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset Group"), MainWinConnect::pMainWin->configs.config_dir+"group_tilesets/", QString("PGE Tileset Group (*.ini)"));
+    if(f.isEmpty())
+        return;
+
+    if(!f.startsWith(MainWinConnect::pMainWin->configs.config_dir+"group_tilesets/")){
+        QFile file(f);
+        QFile tar(f = (MainWinConnect::pMainWin->configs.config_dir+"group_tilesets/" + f.section("/",-1,-1)));
+        if(tar.exists()){
+            QMessageBox msgBox;
+            msgBox.setText(tr("There is already a file called '%1'!\nImport anyway and overwrite?"));
+            msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
+            if(msgBox.exec() == QMessageBox::Ok)
+                tar.remove();
+            else
+                return;
+        }
+        file.copy(f);
+    }
+
+    SimpleTilesetGroup t;
+    if(OpenSimpleTilesetGroup(f,t)){
+        ui->tilesetGroupName->setText(t.groupName);
+        foreach (QString tarName, t.tilesets) {
+            QString rootTilesetDir = MainWinConnect::pMainWin->configs.config_dir+"tilesets/";
+            tileset::SimpleTileset st;
+            if(tileset::OpenSimpleTileset(rootTilesetDir+tarName,st)){
+                tilesets << qMakePair<QString, tileset::SimpleTileset>(tarName,st);
+            }
+        }
+        redrawAll();
+    }else{
+        QMessageBox::warning(this, tr("Failed to load tileset group!"), tr("Failed to load tileset group!\nData may be corrupted!"));
+    }
 
 }
 
 void TilesetGroupEditor::on_Save_clicked()
 {
+    QDir(MainWinConnect::pMainWin->configs.config_dir).mkpath("group_tilesets/");
 
+    bool ok;
+    QString fileName = QInputDialog::getText(this, tr("Please enter a filename!"),
+                                              tr("Filename:"), QLineEdit::Normal,
+                                              ui->tilesetGroupName->text(), &ok);
+    if (!ok || fileName.isEmpty())
+        return;
+
+    if(!fileName.endsWith(".ini"))
+        fileName += ".ini";
+
+    SaveSimpleTilesetGroup(MainWinConnect::pMainWin->configs.config_dir + "group_tilesets/" + fileName,toSimpleTilesetGroup());
 }
 
 void TilesetGroupEditor::redrawAll()

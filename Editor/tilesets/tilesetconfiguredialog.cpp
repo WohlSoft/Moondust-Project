@@ -126,9 +126,6 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
 {
     QDir(m_conf->config_dir).mkpath("tilesets/");
 
-//    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Tileset"),
-//            m_conf->config_dir, QString("PGE Tileset (*.ini)"));
-
     bool ok;
     QString fileName = QInputDialog::getText(this, tr("Please enter a filename!"),
                                               tr("Filename:"), QLineEdit::Normal,
