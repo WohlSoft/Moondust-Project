@@ -36,6 +36,10 @@ ItemMusic::ItemMusic(QGraphicsItem *parent)
     imageSize = QRectF(0,0,32,32);
     this->setData(9, QString::number(32));
     this->setData(10, QString::number(32));
+
+    mouseLeft=false;
+    mouseMid=false;
+    mouseRight=false;
 }
 
 
@@ -54,81 +58,129 @@ void ItemMusic::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
+
+    //Discard multi-mouse keys
+    if((mouseLeft)||(mouseMid)||(mouseRight))
+    {
+        mouseEvent->accept();
+        return;
+    }
+
+    if( mouseEvent->buttons() & Qt::LeftButton )
+        mouseLeft=true;
+    if( mouseEvent->buttons() & Qt::MiddleButton )
+        mouseMid=true;
+    if( mouseEvent->buttons() & Qt::RightButton )
+        mouseRight=true;
+
     QGraphicsItem::mousePressEvent(mouseEvent);
+}
+
+void ItemMusic::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    int multimouse=0;
+    bool callContext=false;
+    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
+        multimouse++;
+    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
+        multimouse++;
+    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
+        multimouse++;
+    if(multimouse>0)
+    {
+        mouseEvent->accept(); return;
+    }
+
+    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+        mouseLeft=false;
+
+    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+        mouseMid=false;
+
+    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    {
+        if(!scene->IsMoved) callContext=true;
+        mouseRight=false;
+    }
+
+    QGraphicsItem::mouseReleaseEvent(mouseEvent);
+
+
+    /////////////////////////CONTEXT MENU:///////////////////////////////
+    if((callContext)&&(!scene->contextMenuOpened))
+    {
+        if((!scene->lock_musbox)&&(!scene->DrawMode)&&(!isLocked))
+        {
+            scene->contextMenuOpened = true;
+            //Remove selection from non-bgo items
+            if(!this->isSelected())
+            {
+                scene->clearSelection();
+                this->setSelected(true);
+            }
+
+            this->setSelected(1);
+            ItemMenu->clear();
+
+            if(!musicTitle.isEmpty())
+            {
+                QAction *title = ItemMenu->addAction(QString("[%1]").arg(musicTitle));
+                title->setEnabled(false);
+                title->deleteLater();
+            }
+
+            QAction *play = ItemMenu->addAction(tr("Play this"));
+            play->deleteLater();
+            ItemMenu->addSeparator()->deleteLater();
+            QAction *copyTile = ItemMenu->addAction(tr("Copy"));
+            copyTile->deleteLater();
+            QAction *cutTile = ItemMenu->addAction(tr("Cut"));
+            cutTile->deleteLater();
+            ItemMenu->addSeparator()->deleteLater();
+            QAction *remove = ItemMenu->addAction(tr("Remove"));
+            remove->deleteLater();
+
+    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+
+            if(!selected)
+            {
+                #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+                #endif
+                return;
+            }
+
+            if(selected==play)
+            {
+                MainWinConnect::pMainWin->activeWldEditWin()->currentMusic = musicData.id;
+                MainWinConnect::pMainWin->setMusicButton(true);
+                MainWinConnect::pMainWin->on_actionPlayMusic_triggered(true);
+            }
+            else
+            if(selected==cutTile)
+            {
+                //scene->doCut = true ;
+                MainWinConnect::pMainWin->on_actionCut_triggered();
+            }
+            else
+            if(selected==copyTile)
+            {
+                //scene->doCopy = true ;
+                MainWinConnect::pMainWin->on_actionCopy_triggered();
+            }
+            else
+            if(selected==remove)
+            {
+                scene->removeSelectedWldItems();
+            }
+        }
+
+    }
 }
 
 void ItemMusic::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_musbox)&&(!scene->DrawMode)&&(!isLocked))
-    {
-        scene->contextMenuOpened = true;
-        //Remove selection from non-bgo items
-        if(!this->isSelected())
-        {
-            scene->clearSelection();
-            this->setSelected(true);
-        }
-
-        this->setSelected(1);
-        ItemMenu->clear();
-
-        if(!musicTitle.isEmpty())
-        {
-            QAction *title = ItemMenu->addAction(QString("[%1]").arg(musicTitle));
-            title->setEnabled(false);
-            title->deleteLater();
-        }
-
-        QAction *play = ItemMenu->addAction(tr("Play this"));
-        play->deleteLater();
-        ItemMenu->addSeparator()->deleteLater();
-        QAction *copyTile = ItemMenu->addAction(tr("Copy"));
-        copyTile->deleteLater();
-        QAction *cutTile = ItemMenu->addAction(tr("Cut"));
-        cutTile->deleteLater();
-        ItemMenu->addSeparator()->deleteLater();
-        QAction *remove = ItemMenu->addAction(tr("Remove"));
-        remove->deleteLater();
-
-QAction *selected = ItemMenu->exec(event->screenPos());
-
-        if(!selected)
-        {
-            #ifdef _DEBUG_
-            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-            #endif
-            return;
-        }
-        event->accept();
-
-        if(selected==play)
-        {
-            MainWinConnect::pMainWin->activeWldEditWin()->currentMusic = musicData.id;
-            MainWinConnect::pMainWin->setMusicButton(true);
-            MainWinConnect::pMainWin->on_actionPlayMusic_triggered(true);
-        }
-        else
-        if(selected==cutTile)
-        {
-            //scene->doCut = true ;
-            MainWinConnect::pMainWin->on_actionCut_triggered();
-        }
-        else
-        if(selected==copyTile)
-        {
-            //scene->doCopy = true ;
-            MainWinConnect::pMainWin->on_actionCopy_triggered();
-        }
-        else
-        if(selected==remove)
-        {
-            scene->removeSelectedWldItems();
-        }
-    }
-    else
-    {
-        QGraphicsItem::contextMenuEvent(event);
-    }
+    QGraphicsItem::contextMenuEvent(event);
 }
 
 
