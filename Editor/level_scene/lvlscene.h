@@ -119,8 +119,8 @@ public:
     void InitSection(int sect);
 
     void drawSpace();
-    void ChangeSectionBG(int BG_Id, int SectionID=-1);
-    void DrawBG(int x, int y, int w, int h, int sctID, QPixmap &srcimg, QPixmap &srcimg2, obj_BG &bgsetup);
+    void ChangeSectionBG(int BG_Id, int SectionID=-1, bool forceTiled=false);
+    void DrawBG(int x, int y, int w, int h, int sctID, QPixmap &srcimg, QPixmap &srcimg2, obj_BG &bgsetup, bool forceTiled=false);
 
     void buildAnimators();
     void loadUserData(QProgressDialog &progress);
@@ -141,6 +141,8 @@ public:
     void startBlockAnimation();
     void stopAnimation();
     void hideWarpsAndDoors(bool visible);
+
+    void setTiledBackground(bool forceTiled);
 
     void setLocked(int type, bool lock);
 
@@ -529,6 +531,7 @@ public:
     void removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory=false);
     void removeLvlItem(QGraphicsItem * item, bool globalHistory=false);
 
+
 public slots:
     void selectionChanged();
 
@@ -558,7 +561,7 @@ private:
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
 
-    void setSectionBG(LevelSection section);
+    void setSectionBG(LevelSection section, bool forceTiled=false);
 
     QPixmap uBlockImg;
 
