@@ -19,6 +19,8 @@
 #include "tilesetgroupeditor.h"
 #include "ui_tilesetgroupeditor.h"
 
+#include <QtDebug>
+
 #include "tilesetitembutton.h"
 #include "../common_features/mainwinconnect.h"
 #include "../common_features/util.h"
@@ -40,6 +42,8 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
     ui->tilesetList->setDragDropMode(QAbstractItemView::InternalMove);
     ui->tilesetList->viewport()->setAcceptDrops(true);
     ui->tilesetList->setDropIndicatorShown(true);
+
+    qDebug() << "connecting";
 
     connect(ui->tilesetList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(movedTileset(QModelIndex,int,int,QModelIndex,int)));
 
@@ -278,6 +282,8 @@ void TilesetGroupEditor::movedTileset(const QModelIndex &sourceParent, int sourc
     Q_UNUSED(sourceParent)
     Q_UNUSED(sourceEnd)
     Q_UNUSED(destinationParent)
+
+    qDebug()<<"Tilesets moved";
 
     tilesets.swap(sourceStart,destinationRow);
     redrawAll();
