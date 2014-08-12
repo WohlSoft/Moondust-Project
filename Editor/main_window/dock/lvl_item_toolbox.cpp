@@ -96,6 +96,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         {
             long j=0;
             leveledit * edit = activeLvlEditWin();
+
+            if(activeLvlEditWin()->sceneCreated)
             foreach(UserBlocks block, edit->scene->uBlocks)
             {
 
@@ -192,6 +194,8 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
             long j=0;
             //bool isIndex=false;
             leveledit * edit = activeLvlEditWin();
+
+            if(edit->sceneCreated)
             foreach(UserBGOs bgo, edit->scene->uBGOs)
             {
                 tmpI = GraphicsHelps::squareImage(
@@ -288,6 +292,7 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
             //long j=0;
             //bool isIndex=false;
             leveledit * edit = activeLvlEditWin();
+            if(edit->sceneCreated)
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {
 
