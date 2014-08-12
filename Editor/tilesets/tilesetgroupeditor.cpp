@@ -177,6 +177,7 @@ void TilesetGroupEditor::on_Open_clicked()
 
     SimpleTilesetGroup t;
     if(OpenSimpleTilesetGroup(f,t)){
+        tilesets.clear();
         ui->tilesetGroupName->setText(t.groupName);
         foreach (QString tarName, t.tilesets) {
             QString rootTilesetDir = MainWinConnect::configs->config_dir+"tilesets/";
