@@ -25,7 +25,9 @@
 
 #include "../../data_configs/custom_data.h"
 
+#include "../../common_features/items.h"
 
+#include "../../common_features/graphics_funcs.h"
 
 
 QString allWLabel = "[all]";
@@ -52,6 +54,8 @@ static QString grp_scenes = "";
 
 void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 {
+    if((setGrp)&&(activeChildWindow()!=3)) return;
+
     allWLabel    = MainWindow::tr("[all]");
     customWLabel = MainWindow::tr("[custom]");
 
@@ -113,20 +117,16 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     WriteToLog(QtDebugMsg, "WorldTools -> Table of tiles");
     foreach(obj_w_tile tileItem, configs.main_wtiles )
     {
-            if(tileItem.animated)
-                tmpI = tileItem.image.copy(0,
-                            (int)round(tileItem.image.height() / tileItem.frames) * tileItem.display_frame,
-                            tileItem.image.width(),
-                            (int)round(tileItem.image.height() / tileItem.frames));
-            else
-                tmpI = tileItem.image;
+        tmpI = GraphicsHelps::squareImage(
+                    Items::getItemGFX(ItemTypes::WLD_Tile, tileItem.id),
+                    QSize(32,32));
 
         QTableWidgetItem * Titem = ui->WLD_TilesList->item(tileItem.row, tileItem.col);
 
         if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
-            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( NULL );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, QString::number(tileItem.id) );
@@ -142,13 +142,9 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     WriteToLog(QtDebugMsg, "WorldTools -> List of sceneries");
     foreach(obj_w_scenery sceneItem, configs.main_wscene)
     {
-            if(sceneItem.animated)
-                tmpI = sceneItem.image.copy(0,
-                            (int)round(sceneItem.image.height() / sceneItem.frames) * sceneItem.display_frame,
-                            sceneItem.image.width(),
-                            (int)round(sceneItem.image.height() / sceneItem.frames));
-            else
-                tmpI = sceneItem.image;
+            tmpI = GraphicsHelps::squareImage(
+                        Items::getItemGFX(ItemTypes::WLD_Scenery, sceneItem.id),
+                        QSize(32,32));
 
             item = new QListWidgetItem();
             item->setIcon( QIcon( tmpI ) );
@@ -178,20 +174,16 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
     WriteToLog(QtDebugMsg, "WorldTools -> Table of paths");
     foreach(obj_w_path pathItem, configs.main_wpaths )
     {
-            if(pathItem.animated)
-                tmpI = pathItem.image.copy(0,
-                            (int)round(pathItem.image.height() / pathItem.frames)*pathItem.display_frame,
-                            pathItem.image.width(),
-                            (int)round(pathItem.image.height() / pathItem.frames));
-            else
-                tmpI = pathItem.image;
+        tmpI = GraphicsHelps::squareImage(
+                    Items::getItemGFX(ItemTypes::WLD_Path, pathItem.id),
+                    QSize(32,32));
 
         QTableWidgetItem * Titem = ui->WLD_PathsList->item(pathItem.row, pathItem.col);
 
         if ( (!Titem) || ( (Titem!=NULL)&&(Titem->text().isEmpty())) )
         {
             Titem = new QTableWidgetItem();
-            Titem->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
+            Titem->setIcon( QIcon( tmpI ) );
             Titem->setText( NULL );
             Titem->setSizeHint(QSize(32,32));
             Titem->setData(3, QString::number(pathItem.id) );
@@ -210,13 +202,10 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
             if((configs.marker_wlvl.path==levelItem.id)||
                (configs.marker_wlvl.bigpath==levelItem.id))
                 continue;
-            if(levelItem.animated)
-                tmpI = levelItem.image.copy(0,
-                            (int)round(levelItem.image.height() / levelItem.frames)*levelItem.display_frame,
-                            levelItem.image.width(),
-                            (int)round(levelItem.image.height() / levelItem.frames));
-            else
-                tmpI = levelItem.image;
+
+            tmpI = GraphicsHelps::squareImage(
+                        Items::getItemGFX(ItemTypes::WLD_Level, levelItem.id),
+                        QSize(32,32));
 
             item = new QListWidgetItem();
             item->setIcon( QIcon( tmpI.scaled( QSize(32,32), Qt::KeepAspectRatio ) ) );
