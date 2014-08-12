@@ -20,13 +20,15 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                     animator = scn->index_blocks[ItemID].ai;
                 }
 
+                if(j >= main->configs.main_block.size()) j=0;
+
                 if( confId != NULL)
                     * confId = j;
 
                 if(whole)
                     return scn->animates_Blocks[animator]->wholeImage();
                 else
-                    return scn->animates_Blocks[animator]->image(0);
+                    return scn->animates_Blocks[animator]->image(main->configs.main_block[j].display_frame);
             }
             else
             {
@@ -41,7 +43,9 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 if(j>=0)
                 {
-                    if((main->configs.main_block[j].animated)&&(!whole))
+                    if(j >= main->configs.main_block.size()) j=0;
+
+                    if((!whole)&&(main->configs.main_block[j].animated))
                         tmpI = main->configs.main_block[j].image.copy(0,
                                     (int)round(main->configs.main_block[j].image.height() / main->configs.main_block[j].frames)*main->configs.main_block[j].display_frame,
                                     main->configs.main_block[j].image.width(),
@@ -51,7 +55,6 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 }
 
                 return tmpI;
-
             }
 
             break;
@@ -68,13 +71,16 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                     j = scn->index_bgo[ItemID].i;
                     animator = scn->index_bgo[ItemID].ai;
                 }
+
+                if(j >= main->configs.main_bgo.size()) j=0;
+
                 if( confId != NULL)
                     * confId = j;
 
                 if(whole)
                     return scn->animates_BGO[animator]->wholeImage();
                 else
-                    return scn->animates_BGO[animator]->image(0);
+                    return scn->animates_BGO[animator]->image(main->configs.main_bgo[j].display_frame);
             }
             else
             {
@@ -89,6 +95,8 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 if(j>=0)
                 {
+                    if(j >= main->configs.main_bgo.size()) j=0;
+
                     if((main->configs.main_bgo[j].animated)&&(!whole))
                         tmpI = main->configs.main_bgo[j].image.copy(0,
                                     (int)round(main->configs.main_bgo[j].image.height() / main->configs.main_bgo[j].frames)*main->configs.main_bgo[j].display_frame,
@@ -186,6 +194,58 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 return tImg;
 
             }
+            break;
+        }
+    case ItemTypes::WLD_Tile:
+        {
+            if(main->activeChildWindow()==3)
+            {
+                WldScene *scn = main->activeWldEditWin()->scene;
+                long j=0;
+                long animator=0;
+                if(ItemID < (unsigned int)scn->index_tiles.size())
+                {
+                    j = scn->index_tiles[ItemID].i;
+                    animator = scn->index_tiles[ItemID].ai;
+                }
+
+                if(j >= main->configs.main_wtiles.size()) j=0;
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(whole)
+                    return scn->animates_Tiles[animator]->wholeImage();
+                else
+                    return scn->animates_Tiles[animator]->image(main->configs.main_wtiles[j].display_frame);
+            }
+            else
+            {
+                QPixmap tmpI;
+                long j=0;
+
+                //Check for index
+                j = main->configs.getTileI(ItemID);
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(j>=0)
+                {
+                    if(j >= main->configs.main_wtiles.size()) j=0;
+
+                    if((!whole)&&(main->configs.main_wtiles[j].animated))
+                        tmpI = main->configs.main_wtiles[j].image.copy(0,
+                                    (int)round(main->configs.main_wtiles[j].image.height() / main->configs.main_wtiles[j].frames)*main->configs.main_wtiles[j].display_frame,
+                                    main->configs.main_wtiles[j].image.width(),
+                                    (int)round(main->configs.main_wtiles[j].image.height() / main->configs.main_wtiles[j].frames));
+                    else
+                        tmpI = main->configs.main_wtiles[j].image;
+                }
+
+                return tmpI;
+            }
+
             break;
         }
     default:

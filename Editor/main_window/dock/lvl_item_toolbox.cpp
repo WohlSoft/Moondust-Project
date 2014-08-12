@@ -25,6 +25,10 @@
 
 #include "../../data_configs/custom_data.h"
 
+#include "../../common_features/items.h"
+
+#include "../../common_features/graphics_funcs.h"
+
 
 QString allLabel = "[all]";
 QString customLabel = "[custom]";
@@ -94,43 +98,13 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         if(activeChildWindow()==1)
         {
             long j=0;
-            bool isIndex=false;
             leveledit * edit = activeLvlEditWin();
             foreach(UserBlocks block, edit->scene->uBlocks)
             {
 
-                //Check for index
-                if(block.id < (unsigned long)configs.index_blocks.size())
-                {
-                    if(block.id == configs.main_block[configs.index_blocks[block.id].i].id)
-                    {
-                        j = configs.index_blocks[block.id].i;
-                        isIndex=true;
-                    }
-                }
-                //In index is false, fetch array
-                if(!isIndex)
-                {
-                    for(int i=0; i < configs.main_block.size(); i++)
-                    {
-                        if(configs.main_block[i].id == block.id)
-                        {
-                            j = i;
-                            isIndex=true;
-                            break;
-                        }
-                    }
-                    if(!isIndex) j=0;
-                }
-
-
-                if(configs.main_block[j].animated)
-                    tmpI = block.image.copy(0,
-                                (int)round(block.image.height() / configs.main_block[j].frames)*configs.main_block[j].display_frame,
-                                block.image.width(),
-                                (int)round(block.image.height() / configs.main_block[j].frames));
-                else
-                    tmpI = block.image;
+                tmpI = GraphicsHelps::squareImage(
+                            Items::getItemGFX(ItemTypes::LVL_Block, block.id, false, &j),
+                            QSize(48,48));
 
                 item = new QListWidgetItem( QString("block-%1").arg(block.id) );
                 item->setIcon( QIcon( tmpI ) );
@@ -175,13 +149,10 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
                 ((blockItem.group==grp_blocks)||(grp_blocks==allLabel)||(grp_blocks==""))&&
                 ((blockItem.category==cat_blocks)||(cat_blocks==allLabel)))
         {
-            if(blockItem.animated)
-                tmpI = blockItem.image.copy(0,
-                            (int)round(blockItem.image.height() / blockItem.frames)*blockItem.display_frame,
-                            blockItem.image.width(),
-                            (int)round(blockItem.image.height() / blockItem.frames));
-            else
-                tmpI = blockItem.image;
+
+            tmpI = GraphicsHelps::squareImage(
+                        Items::getItemGFX(ItemTypes::LVL_Block, blockItem.id),
+                        QSize(48,48));
 
             item = new QListWidgetItem( blockItem.name );
             item->setIcon( QIcon( tmpI ) );
@@ -222,43 +193,13 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
         if(activeChildWindow()==1)
         {
             long j=0;
-            bool isIndex=false;
+            //bool isIndex=false;
             leveledit * edit = activeLvlEditWin();
             foreach(UserBGOs bgo, edit->scene->uBGOs)
             {
-
-                //Check for index
-                if(bgo.id < (unsigned long)configs.index_bgo.size())
-                {
-                    if(bgo.id == configs.main_bgo[configs.index_bgo[bgo.id].i].id)
-                    {
-                        j = configs.index_bgo[bgo.id].i;
-                        isIndex=true;
-                    }
-                }
-                //In index is false, fetch array
-                if(!isIndex)
-                {
-                    for(int i=0; i < configs.main_bgo.size(); i++)
-                    {
-                        if(configs.main_bgo[i].id == bgo.id)
-                        {
-                            j = i;
-                            isIndex=true;
-                            break;
-                        }
-                    }
-                    if(!isIndex) j=0;
-                }
-
-
-                if(configs.main_bgo[j].animated)
-                    tmpI = bgo.image.copy(0,
-                                (int)round(bgo.image.height() / configs.main_bgo[j].frames) * configs.main_bgo[j].display_frame,
-                                bgo.image.width(),
-                                (int)round(bgo.image.height() / configs.main_bgo[j].frames));
-                else
-                    tmpI = bgo.image;
+                tmpI = GraphicsHelps::squareImage(
+                            Items::getItemGFX(ItemTypes::LVL_BGO, bgo.id, false, &j),
+                            QSize(48,48));
 
                 item = new QListWidgetItem( QString("bgo-%1").arg(bgo.id) );
                 item->setIcon( QIcon( tmpI ) );
@@ -304,13 +245,10 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
                 ((bgoItem.category==cat_bgos)||(cat_bgos==allLabel))
            )
         {
-            if(bgoItem.animated)
-                tmpI = bgoItem.image.copy(0,
-                            (int)round(bgoItem.image.height() / bgoItem.frames)*bgoItem.display_frame,
-                            bgoItem.image.width(),
-                            (int)round(bgoItem.image.height() / bgoItem.frames) );
-            else
-                tmpI = bgoItem.image;
+
+            tmpI = GraphicsHelps::squareImage(
+                        Items::getItemGFX(ItemTypes::LVL_BGO, bgoItem.id),
+                        QSize(48,48));
 
             item = new QListWidgetItem( bgoItem.name );
             item->setIcon( QIcon( tmpI ) );
@@ -356,7 +294,9 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {
 
-                tmpI = edit->scene->getNPCimg(npc.id);
+                tmpI = GraphicsHelps::squareImage(
+                            Items::getItemGFX(ItemTypes::LVL_NPC, npc.id),
+                            QSize(48,48));
 
                 item = new QListWidgetItem( npc.withTxt ?
                                     ((npc.sets.en_name)? npc.merged.name : QString("npc-%1").arg(npc.id))
@@ -404,7 +344,10 @@ void MainWindow::setItemBoxes(bool setGrp, bool setCat)
                 ((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
           )
         {
-            tmpI = npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
+
+            tmpI = GraphicsHelps::squareImage(
+                        Items::getItemGFX(ItemTypes::LVL_NPC, npcItem.id),
+                        QSize(48,48));
 
             item = new QListWidgetItem( npcItem.name );
             item->setIcon( QIcon( tmpI ) );
