@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Configure Tileset [Work in Progress]</string>
+   <string>Tileset Editor</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
