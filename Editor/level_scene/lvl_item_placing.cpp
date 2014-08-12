@@ -541,7 +541,7 @@ void LvlScene::setLineDrawer()
     case PLC_Block:
     case PLC_BGO:
     default:
-        pen = QPen(Qt::gray, 2);
+        pen = QPen(Qt::transparent, 2);
         break;
     }
 
