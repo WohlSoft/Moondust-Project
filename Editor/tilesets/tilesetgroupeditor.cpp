@@ -34,6 +34,15 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
     delete ui->PreviewBox->layout();
     ui->PreviewBox->setLayout(layout);
     ui->tilesetList->clear();
+
+    ui->tilesetList->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tilesetList->setDragEnabled(true);
+    ui->tilesetList->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->tilesetList->viewport()->setAcceptDrops(true);
+    ui->tilesetList->setDropIndicatorShown(true);
+
+    connect(ui->tilesetList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(movedTileset(QModelIndex,int,int,QModelIndex,int)));
+
 }
 
 TilesetGroupEditor::~TilesetGroupEditor()
@@ -262,4 +271,15 @@ void TilesetGroupEditor::on_tilesetDown_clicked()
         redrawAll();
         ui->tilesetList->setCurrentRow(i+1);
     }
+}
+
+void TilesetGroupEditor::movedTileset(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow)
+{
+    Q_UNUSED(sourceParent)
+    Q_UNUSED(sourceEnd)
+    Q_UNUSED(destinationParent)
+
+    tilesets.swap(sourceStart,destinationRow);
+    redrawAll();
+    ui->tilesetList->setCurrentRow(destinationRow);
 }

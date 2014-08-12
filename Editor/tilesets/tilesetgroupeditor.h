@@ -33,10 +33,10 @@ private slots:
     void on_Close_clicked();
     void on_Open_clicked();
     void on_Save_clicked();
-
     void on_tilesetUp_clicked();
-
     void on_tilesetDown_clicked();
+
+    void movedTileset ( const QModelIndex & sourceParent, int sourceStart, int sourceEnd, const QModelIndex & destinationParent, int destinationRow );
 
 private:
     FlowLayout * layout;
