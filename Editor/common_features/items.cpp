@@ -248,6 +248,162 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
             break;
         }
+    case ItemTypes::WLD_Scenery:
+        {
+            if(main->activeChildWindow()==3)
+            {
+                WldScene *scn = main->activeWldEditWin()->scene;
+                long j=0;
+                long animator=0;
+                if(ItemID < (unsigned int)scn->index_scenes.size())
+                {
+                    j = scn->index_scenes[ItemID].i;
+                    animator = scn->index_scenes[ItemID].ai;
+                }
+
+                if(j >= main->configs.main_wscene.size()) j=0;
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(whole)
+                    return scn->animates_Scenery[animator]->wholeImage();
+                else
+                    return scn->animates_Scenery[animator]->image(main->configs.main_wscene[j].display_frame);
+            }
+            else
+            {
+                QPixmap tmpI;
+                long j=0;
+
+                //Check for index
+                j = main->configs.getSceneI(ItemID);
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(j>=0)
+                {
+                    if(j >= main->configs.main_wscene.size()) j=0;
+
+                    if((!whole)&&(main->configs.main_wscene[j].animated))
+                        tmpI = main->configs.main_wscene[j].image.copy(0,
+                                    (int)round(main->configs.main_wscene[j].image.height() / main->configs.main_wscene[j].frames)*main->configs.main_wscene[j].display_frame,
+                                    main->configs.main_wscene[j].image.width(),
+                                    (int)round(main->configs.main_wscene[j].image.height() / main->configs.main_wscene[j].frames));
+                    else
+                        tmpI = main->configs.main_wscene[j].image;
+                }
+
+                return tmpI;
+            }
+
+            break;
+        }
+    case ItemTypes::WLD_Path:
+        {
+            if(main->activeChildWindow()==3)
+            {
+                WldScene *scn = main->activeWldEditWin()->scene;
+                long j=0;
+                long animator=0;
+                if(ItemID < (unsigned int)scn->index_paths.size())
+                {
+                    j = scn->index_paths[ItemID].i;
+                    animator = scn->index_paths[ItemID].ai;
+                }
+
+                if(j >= main->configs.main_wpaths.size()) j=0;
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(whole)
+                    return scn->animates_Paths[animator]->wholeImage();
+                else
+                    return scn->animates_Paths[animator]->image(main->configs.main_wpaths[j].display_frame);
+            }
+            else
+            {
+                QPixmap tmpI;
+                long j=0;
+
+                //Check for index
+                j = main->configs.getPathI(ItemID);
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(j>=0)
+                {
+                    if(j >= main->configs.main_wpaths.size()) j=0;
+
+                    if((!whole)&&(main->configs.main_wpaths[j].animated))
+                        tmpI = main->configs.main_wpaths[j].image.copy(0,
+                                    (int)round(main->configs.main_wpaths[j].image.height() / main->configs.main_wpaths[j].frames)*main->configs.main_wpaths[j].display_frame,
+                                    main->configs.main_wpaths[j].image.width(),
+                                    (int)round(main->configs.main_wpaths[j].image.height() / main->configs.main_wpaths[j].frames));
+                    else
+                        tmpI = main->configs.main_wpaths[j].image;
+                }
+
+                return tmpI;
+            }
+
+            break;
+        }
+    case ItemTypes::WLD_Level:
+        {
+            if(main->activeChildWindow()==3)
+            {
+                WldScene *scn = main->activeWldEditWin()->scene;
+                long j=0;
+                long animator=0;
+                if(ItemID < (unsigned int)scn->index_levels.size())
+                {
+                    j = scn->index_levels[ItemID].i;
+                    animator = scn->index_levels[ItemID].ai;
+                }
+
+                if(j >= main->configs.main_wlevels.size()) j=0;
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(whole)
+                    return scn->animates_Levels[animator]->wholeImage();
+                else
+                    return scn->animates_Levels[animator]->image(main->configs.main_wlevels[j].display_frame);
+            }
+            else
+            {
+                QPixmap tmpI;
+                long j=0;
+
+                //Check for index
+                j = main->configs.getWLevelI(ItemID);
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(j>=0)
+                {
+                    if(j >= main->configs.main_wlevels.size()) j=0;
+
+                    if((!whole)&&(main->configs.main_wlevels[j].animated))
+                        tmpI = main->configs.main_wlevels[j].image.copy(0,
+                                    (int)round(main->configs.main_wlevels[j].image.height() / main->configs.main_wlevels[j].frames)*main->configs.main_wlevels[j].display_frame,
+                                    main->configs.main_wlevels[j].image.width(),
+                                    (int)round(main->configs.main_wlevels[j].image.height() / main->configs.main_wlevels[j].frames));
+                    else
+                        tmpI = main->configs.main_wlevels[j].image;
+                }
+
+                return tmpI;
+            }
+
+            break;
+        }
     default:
         break;
     }
