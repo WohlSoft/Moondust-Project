@@ -224,13 +224,17 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             WriteToLog(QtDebugMsg, QString("Line mode %1").arg(EditingMode));
 
             if(cursor){
-                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
+                                                  QPoint(LvlPlacingItems::c_offset_x,
+                                                         LvlPlacingItems::c_offset_y),
                                                   LvlPlacingItems::gridSz,
                                                   LvlPlacingItems::gridOffset));
                 //cursor->setPos( drawStartPos );
                 cursor->setVisible(true);
 
-                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint()-
+                                       QPoint(LvlPlacingItems::c_offset_x,
+                                              LvlPlacingItems::c_offset_y),
                                        LvlPlacingItems::gridSz,
                                        LvlPlacingItems::gridOffset);
                 ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
@@ -360,7 +364,9 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(cursor->isVisible())
                 {
-                    QPoint hs = applyGrid( mouseEvent->scenePos().toPoint(),
+                    QPoint hs = applyGrid( mouseEvent->scenePos().toPoint()-
+                                           QPoint(LvlPlacingItems::c_offset_x,
+                                                  LvlPlacingItems::c_offset_y),
                                            LvlPlacingItems::gridSz,
                                            LvlPlacingItems::gridOffset);
 

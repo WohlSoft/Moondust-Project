@@ -242,13 +242,17 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             last_musicbox_arrayID=WldData->musicbox_array_id;
 
             if(cursor){
-                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
+                                                  QPoint(WldPlacingItems::c_offset_x,
+                                                         WldPlacingItems::c_offset_y),
                                                   WldPlacingItems::gridSz,
                                                   WldPlacingItems::gridOffset));
                 //cursor->setPos( drawStartPos );
                 cursor->setVisible(true);
 
-                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint()-
+                                       QPoint(WldPlacingItems::c_offset_x,
+                                              WldPlacingItems::c_offset_y),
                                        WldPlacingItems::gridSz,
                                        WldPlacingItems::gridOffset);
                 ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
@@ -414,7 +418,9 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(cursor->isVisible())
                 {
-                QPoint hs = applyGrid( mouseEvent->scenePos().toPoint(),
+                QPoint hs = applyGrid( mouseEvent->scenePos().toPoint()-
+                                       QPoint(WldPlacingItems::c_offset_x,
+                                              WldPlacingItems::c_offset_y),
                                        WldPlacingItems::gridSz,
                                        WldPlacingItems::gridOffset);
 
