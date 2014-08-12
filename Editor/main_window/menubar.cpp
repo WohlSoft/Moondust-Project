@@ -218,8 +218,6 @@ void MainWindow::updateMenus(bool force)
             GlobalSettings::LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
             ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
             ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
-
-            UpdateCustomItems(); // Update custom item lists for Level
         }
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
@@ -270,6 +268,8 @@ void MainWindow::updateMenus(bool force)
         ui->actionUndo->setEnabled(false);
         ui->actionRedo->setEnabled(false);
     }
+
+    UpdateCustomItems();
 
     updateWindowMenu();
 }

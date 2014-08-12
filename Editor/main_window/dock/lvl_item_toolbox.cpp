@@ -39,13 +39,8 @@ bool lock_cat=false;
 
 void MainWindow::UpdateCustomItems()
 {
-    if((ui->BlockCatList->currentText()==customLabel)||
-       (ui->BGOCatList->currentText()==customLabel)||
-       (ui->NPCCatList->currentText()==customLabel))
-    {
-        setItemBoxes(true);
-    }
-
+    setItemBoxes(true, true);
+    setWldItemBoxes(true, true);
 }
 
 static QString grp_blocks = "";
@@ -54,6 +49,8 @@ static QString grp_npc = "";
 
 void MainWindow::setItemBoxes(bool setGrp, bool setCat)
 {
+    if((setGrp)&&(activeChildWindow()!=1)) return;
+
     allLabel    = MainWindow::tr("[all]");
     customLabel = MainWindow::tr("[custom]");
 
