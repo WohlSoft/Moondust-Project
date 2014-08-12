@@ -9,7 +9,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
     {
     case ItemTypes::LVL_Block:
         {
-            if(main->activeChildWindow()==1)
+            if((main->activeChildWindow()==1)&&(main->activeLvlEditWin()->sceneCreated))
             {
                 LvlScene *scn = main->activeLvlEditWin()->scene;
                 long j=0;
@@ -61,7 +61,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
         }
     case ItemTypes::LVL_BGO:
         {
-            if(main->activeChildWindow()==1)
+            if((main->activeChildWindow()==1)&&(main->activeLvlEditWin()->sceneCreated))
             {
                 LvlScene *scn = main->activeLvlEditWin()->scene;
                 long j=0;
@@ -112,7 +112,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
         }
     case ItemTypes::LVL_NPC:
         {
-            if(main->activeChildWindow()==1)
+            if((main->activeChildWindow()==1)&&(main->activeLvlEditWin()->sceneCreated))
             {
                 LvlScene *scn = main->activeLvlEditWin()->scene;
                 if(!whole)
@@ -198,7 +198,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
         }
     case ItemTypes::WLD_Tile:
         {
-            if(main->activeChildWindow()==3)
+            if((main->activeChildWindow()==3)&&(main->activeWldEditWin()->sceneCreated))
             {
                 WldScene *scn = main->activeWldEditWin()->scene;
                 long j=0;
@@ -250,7 +250,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
         }
     case ItemTypes::WLD_Scenery:
         {
-            if(main->activeChildWindow()==3)
+            if((main->activeChildWindow()==3)&&(main->activeWldEditWin()->sceneCreated))
             {
                 WldScene *scn = main->activeWldEditWin()->scene;
                 long j=0;
@@ -302,7 +302,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
         }
     case ItemTypes::WLD_Path:
         {
-            if(main->activeChildWindow()==3)
+            if((main->activeChildWindow()==3)&&(main->activeWldEditWin()->sceneCreated))
             {
                 WldScene *scn = main->activeWldEditWin()->scene;
                 long j=0;
@@ -354,7 +354,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
         }
     case ItemTypes::WLD_Level:
         {
-            if(main->activeChildWindow()==3)
+            if((main->activeChildWindow()==3)&&(main->activeWldEditWin()->sceneCreated))
             {
                 WldScene *scn = main->activeWldEditWin()->scene;
                 long j=0;
