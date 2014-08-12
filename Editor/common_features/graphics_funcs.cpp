@@ -80,3 +80,25 @@ QImage GraphicsHelps::loadQImage(QString file)
         image = fromBMP(file);
     return image;
 }
+
+QPixmap GraphicsHelps::squareImage(QPixmap image, QSize targetSize=QSize(0,0) )
+{
+    QPixmap target = QPixmap(targetSize);
+    target.fill(Qt::transparent);
+    QPixmap source;
+
+    if( ( targetSize.width() < image.width() ) || ( targetSize.height() < image.height() ))
+        source = image.scaled(targetSize, Qt::KeepAspectRatio);
+    else
+        source = image;
+
+    QPainter p(&target);
+
+    int targetX = qRound( ( ( qreal(target.width()) - qreal(source.width()) ) / 2 ) );
+    int targetY = qRound( ( ( qreal(target.height()) - qreal(source.height()) ) / 2 ) );
+
+    p.drawPixmap( targetX, targetY,source.width(),source.height(), source );
+
+    p.end();
+    return target;
+}

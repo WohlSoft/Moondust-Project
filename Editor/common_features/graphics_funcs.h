@@ -17,6 +17,7 @@
  */
 
 #include <QPixmap>
+#include <QPainter>
 #include <QImage>
 
 #ifndef GRAPHICS_FUNCS_H
@@ -29,6 +30,7 @@ public:
     static QImage fromBMP(QString& file);
     static QPixmap loadPixmap(QString file);
     static QImage loadQImage(QString file);
+    static QPixmap squareImage(QPixmap image, QSize targetSize);
 };
 
 #endif // GRAPHICS_FUNCS_H
