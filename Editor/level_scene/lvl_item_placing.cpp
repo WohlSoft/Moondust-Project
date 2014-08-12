@@ -27,6 +27,8 @@
 
 #include "lvl_item_placing.h"
 
+#include "../common_features/items.h"
+
 /*
     static LevelNPC dummyLvlNpc();
     static LevelBlock dummyLvlBlock();
@@ -83,58 +85,11 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         {
             placingItem=PLC_Block;
 
-            bool noimage=true, found=false;
-            bool isUser=false;
-            int j;
+            long j;
 
-            noimage=true;
-            isUser=false;
+            tImg = Items::getItemGFX(ItemTypes::LVL_Block, itemID, false, &j);
 
-            //Check Index exists
-            if(itemID < (unsigned int)index_blocks.size())
-            {
-                j = index_blocks[itemID].i;
-
-                if(j<pConfigs->main_block.size())
-                {
-                if(pConfigs->main_block[j].id == itemID)
-                    found=true;
-                }
-            }
-
-            //if Index found
-            if(found)
-            {   //get neccesary element directly
-                WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Index %1").arg(itemID));
-                isUser=true;
-                noimage=false;
-                tImg = animates_Blocks[index_blocks[itemID].ai]->wholeImage();
-            }
-            else
-            {
-                //found neccesary element in arrays and select
-                for(j=0;j<uBlocks.size();j++)
-                {
-                    if(uBlocks[j].id == itemID)
-                    {
-                        isUser=true;
-                        noimage=false;
-                        tImg = uBlocks[j].image;
-                        break;
-                    }
-                }
-
-                j = pConfigs->getBlockI(itemID);
-                if(j>=0)
-                {
-                    noimage=false;
-                    if(!isUser)
-                        tImg = pConfigs->main_block[j].image;
-                }
-                WriteToLog(QtDebugMsg, QString("ItemPlacer -> Found by Fetch %1").arg(j));
-            }
-
-            if((noimage)||(tImg.isNull()))
+            if(tImg.isNull())
             {
                 tImg = uBlockImg;
             }
@@ -145,10 +100,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::blockSet.id = itemID;
 
             LvlPlacingItems::blockSet.w = tImg.width();
-            LvlPlacingItems::blockSet.h = tImg.height()/
-                            ( (pConfigs->main_block[j].animated)?
-                                pConfigs->main_block[j].frames:1
-                            );
+            LvlPlacingItems::blockSet.h = tImg.height();
             LvlPlacingItems::blockSet.layer = "Default";
 
             //Place sizable blocks in the square fill mode
@@ -200,6 +152,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 setSquareDrawer(); return;
             }
 
+            LvlPlacingItems::c_offset_x= qRound(qreal(LvlPlacingItems::blockSet.w) / 2);
+            LvlPlacingItems::c_offset_y= qRound(qreal(LvlPlacingItems::blockSet.h) / 2);
+
             //Line mode
             if(LvlPlacingItems::lineMode)
             {
@@ -207,19 +162,12 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             }
 
             //Single item placing
-            cursor = addPixmap(tImg.copy(0,
-                                         LvlPlacingItems::blockSet.h*pConfigs->main_block[j].display_frame,
-                                         LvlPlacingItems::blockSet.w,
-                                         LvlPlacingItems::blockSet.h
-                                         )
-                               );
+            cursor = addPixmap(tImg);
 
             //set data flags
             foreach(dataFlag flag, LvlPlacingItems::flags)
                 cursor->setData(flag.first, flag.second);
 
-            LvlPlacingItems::c_offset_x= qRound(qreal(LvlPlacingItems::blockSet.w) / 2);
-            LvlPlacingItems::c_offset_y= qRound(qreal(LvlPlacingItems::blockSet.h) / 2);
             cursor->setZValue(7000);
             cursor->setOpacity( 0.8 );
             cursor->setVisible(false);
@@ -231,56 +179,58 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
     case 1: //bgos
     {
-        int j;
-        bool noimage=true, found=false;
-        bool isUser=false;
+//        bool noimage=true, found=false;
+//        bool isUser=false;
 
-        noimage=true;
-        isUser=false;
+//        noimage=true;
+//        isUser=false;
 
-        //Check Index exists
-        if(itemID < (unsigned int)index_bgo.size())
-        {
-            j = index_bgo[itemID].i;
+//        //Check Index exists
+//        if(itemID < (unsigned int)index_bgo.size())
+//        {
+//            j = index_bgo[itemID].i;
 
-            if(j<pConfigs->main_bgo.size())
-            {
-                if(pConfigs->main_bgo[j].id == itemID)
-                    found=true;
-            }
-        }
+//            if(j<pConfigs->main_bgo.size())
+//            {
+//                if(pConfigs->main_bgo[j].id == itemID)
+//                    found=true;
+//            }
+//        }
 
-        //if Index found
-        if(found)
-        {   //get neccesary element directly
-            isUser=true;
-            noimage=false;
-            tImg = animates_BGO[index_bgo[itemID].ai]->wholeImage();
-        }
-        else
-        {
-            //fetching arrays
-            for(j=0;j<uBGOs.size();j++)
-            {
-                if(uBGOs[j].id==itemID)
-                {
-                    isUser=true;
-                    noimage=false;
-                    tImg = uBGOs[j].image;
-                    break;
-                }
-            }
+//        //if Index found
+//        if(found)
+//        {   //get neccesary element directly
+//            isUser=true;
+//            noimage=false;
+//            tImg = animates_BGO[index_bgo[itemID].ai]->wholeImage();
+//        }
+//        else
+//        {
+//            //fetching arrays
+//            for(j=0;j<uBGOs.size();j++)
+//            {
+//                if(uBGOs[j].id==itemID)
+//                {
+//                    isUser=true;
+//                    noimage=false;
+//                    tImg = uBGOs[j].image;
+//                    break;
+//                }
+//            }
 
-            j=pConfigs->getBgoI(itemID);
-            if(j>=0)
-            {
-                noimage=false;
-                if(!isUser)
-                tImg = pConfigs->main_bgo[j].image;
-            }
-        }
+//            j=pConfigs->getBgoI(itemID);
+//            if(j>=0)
+//            {
+//                noimage=false;
+//                if(!isUser)
+//                tImg = pConfigs->main_bgo[j].image;
+//            }
+//        }
 
-        if((noimage)||(tImg.isNull()))
+        long j;
+
+        tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, &j);
+        if(tImg.isNull())
         {
             tImg=uBgoImg;
         }
@@ -294,7 +244,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
 
         long w = tImg.width();
-        long h = tImg.height()/( (pConfigs->main_bgo[j].animated)?pConfigs->main_bgo[j].frames:1);
+        long h = tImg.height();//( (pConfigs->main_bgo[j].animated)?pConfigs->main_bgo[j].frames:1);
 
         LvlPlacingItems::itemW = w;
         LvlPlacingItems::itemH = h;
@@ -329,6 +279,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             setSquareDrawer(); return;
         }
 
+        LvlPlacingItems::c_offset_x= qRound(qreal(w) / 2);
+        LvlPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+
         //Line mode
         if(LvlPlacingItems::lineMode)
         {
@@ -336,20 +289,19 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
 
         //Single item placing
-        cursor = addPixmap(tImg.copy(0, h*pConfigs->main_bgo[j].display_frame, w, h));
+        cursor = addPixmap( tImg );
 
         //set data flags
         foreach(dataFlag flag, LvlPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        LvlPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        LvlPlacingItems::c_offset_y= qRound(qreal(h) / 2);
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
         cursor->setEnabled(true);
 
         placingItem=PLC_BGO;
+
         LvlPlacingItems::bgoSet.id = itemID;
 
         SwitchEditingMode(MODE_PlacingNew);
