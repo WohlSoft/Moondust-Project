@@ -264,6 +264,21 @@ void MainWindow::setUiDefults()
     curSearchNPC.id = 0;
     curSearchNPC.index = 0;
 
+    curSearchTile.id = 0;
+    curSearchTile.index = 0;
+
+    curSearchScenery.id = 0;
+    curSearchScenery.index = 0;
+
+    curSearchPath.id = 0;
+    curSearchPath.index = 0;
+
+    curSearchLevel.id = 0;
+    curSearchLevel.index = 0;
+
+    curSearchMusicbox.id = 0;
+    curSearchMusicbox.index = 0;
+
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->Find_Check_TypeBlock, SIGNAL(toggled(bool)), ui->Find_Button_TypeBlock, SLOT(setEnabled(bool)));

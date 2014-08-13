@@ -38,10 +38,5 @@ void MainWindow::on_WorldFindDock_visibilityChanged(bool visible)
 
 void MainWindow::on_FindStartLevel_clicked()
 {
-    ItemSelectDialog* sel = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_TILE | ItemSelectDialog::TAB_SCENERY |
-                                                 ItemSelectDialog::TAB_PATH | ItemSelectDialog::TAB_LEVEL | ItemSelectDialog::TAB_MUSIC);
-    sel->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    sel->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, sel->size(), qApp->desktop()->availableGeometry()));
-    sel->exec();
-    delete sel;
+
 }
