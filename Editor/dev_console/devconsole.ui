@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Development Console</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../_resources/editor.qrc">
+    <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -29,6 +33,20 @@
    <property name="spacing">
     <number>0</number>
    </property>
+   <item row="2" column="2">
+    <widget class="QPushButton" name="button_send">
+     <property name="text">
+      <string>Send Command</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_cmd">
+     <property name="text">
+      <string>Command: </string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" colspan="3">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -72,24 +90,10 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_cmd">
-     <property name="text">
-      <string>Command: </string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="1">
     <widget class="QLineEdit" name="edit_command"/>
    </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="button_send">
-     <property name="text">
-      <string>Send Command</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3">
+   <item row="4" column="0" colspan="3">
     <widget class="QPushButton" name="button_clearAllLogs">
      <property name="text">
       <string>Clear All Logs</string>
@@ -98,6 +102,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../_resources/editor.qrc"/>
+ </resources>
  <connections/>
 </ui>

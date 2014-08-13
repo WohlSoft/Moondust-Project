@@ -30,7 +30,7 @@ TEMPLATE = app
 #CONFIG += c++11
 #QMAKE_CXXFLAGS += -std=c++11
 
-# CONFIG += static
+CONFIG += static
 
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
@@ -166,7 +166,11 @@ SOURCES += main.cpp\
     main_window/dock/wld_search_toolbox.cpp \
     tilesets/tilesetgroupeditor.cpp \
     tilesets/tilesetitembutton.cpp \
-    external_tools/gifs2png_gui.cpp
+    external_tools/gifs2png_gui.cpp \
+    external_tools/lazyfixtool_gui.cpp \
+    main_window/tools_menu.cpp \
+    common_features/items.cpp \
+    common_features/flowlayout.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -235,7 +239,11 @@ HEADERS  += mainwindow.h \
     tilesets/tilesetgroupeditor.h \
     defines.h \
     tilesets/tilesetitembutton.h \
-    external_tools/gifs2png_gui.h
+    external_tools/gifs2png_gui.h \
+    external_tools/lazyfixtool_gui.h \
+    level_scene/item_set_layer.h \
+    common_features/items.h \
+    common_features/flowlayout.h
 
 FORMS    += \
     mainwindow.ui \
@@ -259,7 +267,8 @@ FORMS    += \
     edit_world/wld_saveimage.ui \
     dev_console/devconsole.ui \
     tilesets/tilesetgroupeditor.ui \
-    external_tools/gifs2png_gui.ui
+    external_tools/gifs2png_gui.ui \
+    external_tools/lazyfixtool_gui.ui
 
 RC_FILE = _resources/pge_editor.rc
 

@@ -21,16 +21,19 @@
 
 #include <QFrame>
 #include "../data_configs/data_configs.h"
+#include "../defines.h"
 
 class TilesetItemButton : public QFrame
 {
     Q_OBJECT
 
 public:
-    explicit TilesetItemButton(dataconfigs* conf, QFrame *parent = 0);
+    explicit TilesetItemButton(dataconfigs* conf, QWidget *parent = 0);
 
     dataconfigs *config() const;
     void setConfig(dataconfigs *config);
+    void applyItem(const int &i, const int &id, const int &width = -1, const int &height = -1);
+    void applySize(const int &width, const int &height);
 
 signals:
 
@@ -38,10 +41,12 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent* ev);
-
+    void mousePressEvent(QMouseEvent*);
+    void mouseReleaseEvent(QMouseEvent*);
 
 private:
     dataconfigs* m_config;
+    QPixmap m_drawItem;
 };
 
 #endif // TILESETITEMBUTTON_H

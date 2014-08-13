@@ -119,7 +119,7 @@ void LvlScene::InitSection(int sect)
 }
 
 
-void LvlScene::ChangeSectionBG(int BG_Id, int SectionID)
+void LvlScene::ChangeSectionBG(int BG_Id, int SectionID, bool forceTiled)
 {
     int sctID=0;
     if(SectionID<0)
@@ -141,12 +141,12 @@ void LvlScene::ChangeSectionBG(int BG_Id, int SectionID)
             LvlData->sections[sctID].background = BG_Id;
 
     WriteToLog(QtDebugMsg, "set Background to "+QString::number(BG_Id));
-    setSectionBG(LvlData->sections[sctID]);
+    setSectionBG(LvlData->sections[sctID], forceTiled);
 }
 
 
 // ////////////////////////Apply section background/////////////////////////////
-void LvlScene::setSectionBG(LevelSection section)
+void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
 {
     //QGraphicsPixmapItem * item=NULL;
     QGraphicsRectItem * itemRect=NULL;
@@ -225,7 +225,7 @@ void LvlScene::setSectionBG(LevelSection section)
         {
             //item = addPixmap(image);
             //item = new QGraphicsPixmapItem;
-            DrawBG(x, y, w, h, section.id, img, img2, pConfigs->main_bg[j]);
+            DrawBG(x, y, w, h, section.id, img, img2, pConfigs->main_bg[j], forceTiled);
             //BgItem[section.id]->setParentItem(item);
             //addItem(item);
             //item->setData(0, "BackGround"+QString::number(section.id) );
@@ -257,7 +257,7 @@ void LvlScene::setSectionBG(LevelSection section)
 
 // ////////////////////////////////////Draw BG image/////////////////////////////////////////////////
 void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
-                      QPixmap &srcimg, QPixmap &srcimg2, obj_BG &bgsetup)
+                      QPixmap &srcimg, QPixmap &srcimg2, obj_BG &bgsetup, bool forceTiled)
 {
     /* Old Algorith */
     //QPixmap BackImg;
@@ -292,7 +292,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
     attach = bgsetup.attached;
 
 // ///////////////////SingleRow BG///////////////////////////
-    if((bgsetup.type==0)&&(!bgsetup.editing_tiled))
+    if((bgsetup.type==0)&&(!bgsetup.editing_tiled)&&(!forceTiled))
     {
         WriteToLog(QtDebugMsg, "Draw BG -> Style: SingleRow BG");
 
@@ -338,7 +338,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
     else
 
 // ///////////////////DoubleRow BG////////////////////////
-    if((bgsetup.type==1)&&(!bgsetup.editing_tiled))
+    if((bgsetup.type==1)&&(!bgsetup.editing_tiled)&&(!forceTiled))
     {
         WriteToLog(QtDebugMsg, "Draw BG -> Style: DoubleRow BG");
 

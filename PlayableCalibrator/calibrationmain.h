@@ -57,6 +57,9 @@ public:
     void loadConfig(QString fileName);
     void saveConfig(QString fileName);
     void OpenFile(QString fileName);
+
+    void createDirs();
+
 protected:
     void closeEvent(QCloseEvent *event);
 

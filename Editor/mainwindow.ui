@@ -45,7 +45,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="_resources/editor.qrc">
-    <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+    <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -262,7 +262,7 @@
     </widget>
     <widget class="QMenu" name="menuPattles_and_tilesets">
      <property name="title">
-      <string>Pattles and tilesets</string>
+      <string>Palettes and tilesets</string>
      </property>
      <addaction name="actionConfigure_Tilesets"/>
      <addaction name="actionTileset_groups_editor"/>
@@ -271,9 +271,9 @@
      <property name="title">
       <string>External tools</string>
      </property>
-     <addaction name="actionFix_Lazily_made_graphics_LazyFixTool"/>
-     <addaction name="actionConvert_masked_gifs_to_PNG_GIFs2PNG"/>
-     <addaction name="actionConvert_PNG_to_GIF_with_mask_PNG2GIFs"/>
+     <addaction name="actionLazyFixTool"/>
+     <addaction name="actionGIFs2PNG"/>
+     <addaction name="actionPNG2GIFs"/>
     </widget>
     <addaction name="menuGlobal_configuration"/>
     <addaction name="actionRefresh_menu_and_toolboxes"/>
@@ -498,7 +498,7 @@
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
-           <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+           <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
          </property>
          <property name="flags">
           <set>ItemIsSelectable|ItemIsEnabled</set>
@@ -684,7 +684,7 @@
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
-           <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+           <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
          </property>
          <property name="flags">
           <set>ItemIsSelectable|ItemIsEnabled</set>
@@ -873,7 +873,7 @@
          </property>
          <property name="icon">
           <iconset resource="_resources/editor.qrc">
-           <normaloff>:/images/mushroom.png</normaloff>:/images/mushroom.png</iconset>
+           <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
          </property>
          <property name="flags">
           <set>ItemIsSelectable|ItemIsEnabled</set>
@@ -6061,8 +6061,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6074,8 +6074,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6087,8 +6087,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6219,8 +6219,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7664,17 +7664,17 @@ p, li { white-space: pre-wrap; }
     <string>Tilesets Editor</string>
    </property>
   </action>
-  <action name="actionFix_Lazily_made_graphics_LazyFixTool">
+  <action name="actionLazyFixTool">
    <property name="text">
     <string>Fix Lazily-made graphics (LazyFixTool)...</string>
    </property>
   </action>
-  <action name="actionConvert_masked_gifs_to_PNG_GIFs2PNG">
+  <action name="actionGIFs2PNG">
    <property name="text">
     <string>Convert GIF with mask to PNG (GIFs2PNG)...</string>
    </property>
   </action>
-  <action name="actionConvert_PNG_to_GIF_with_mask_PNG2GIFs">
+  <action name="actionPNG2GIFs">
    <property name="text">
     <string>Convert PNG to GIF with mask (PNG2GIFs)...</string>
    </property>

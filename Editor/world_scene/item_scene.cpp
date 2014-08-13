@@ -32,6 +32,10 @@ ItemScene::ItemScene(QGraphicsItem *parent)
 
     animatorID=-1;
     imageSize = QRectF(0,0,10,10);
+
+    mouseLeft=false;
+    mouseMid=false;
+    mouseRight=false;
 }
 
 
@@ -50,167 +54,108 @@ void ItemScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
+
+    //Discard multi-mouse keys
+    if((mouseLeft)||(mouseMid)||(mouseRight))
+    {
+        mouseEvent->accept();
+        return;
+    }
+
+    if( mouseEvent->buttons() & Qt::LeftButton )
+        mouseLeft=true;
+    if( mouseEvent->buttons() & Qt::MiddleButton )
+        mouseMid=true;
+    if( mouseEvent->buttons() & Qt::RightButton )
+        mouseRight=true;
+
     QGraphicsItem::mousePressEvent(mouseEvent);
+}
+
+void ItemScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    int multimouse=0;
+    bool callContext=false;
+    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
+        multimouse++;
+    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
+        multimouse++;
+    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
+        multimouse++;
+    if(multimouse>0)
+    {
+        mouseEvent->accept(); return;
+    }
+
+    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+        mouseLeft=false;
+
+    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+        mouseMid=false;
+
+    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    {
+        if(!scene->IsMoved) callContext=true;
+        mouseRight=false;
+    }
+
+    QGraphicsItem::mouseReleaseEvent(mouseEvent);
+
+    /////////////////////////CONTEXT MENU:///////////////////////////////
+    if((callContext)&&(!scene->contextMenuOpened))
+    {
+        if((!scene->lock_scene)&&(!scene->DrawMode)&&(!isLocked))
+        {
+            scene->contextMenuOpened = true; //bug protector
+            //Remove selection from non-bgo items
+            if(!this->isSelected())
+            {
+                scene->clearSelection();
+                this->setSelected(true);
+            }
+
+            this->setSelected(1);
+            ItemMenu->clear();
+
+            QAction *copyTile = ItemMenu->addAction(tr("Copy"));
+            copyTile->deleteLater();
+            QAction *cutTile = ItemMenu->addAction(tr("Cut"));
+            cutTile->deleteLater();
+            ItemMenu->addSeparator()->deleteLater();
+            QAction *remove = ItemMenu->addAction(tr("Remove"));
+            remove->deleteLater();
+
+    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+
+            if(!selected)
+            {
+                #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+                #endif
+                return;
+            }
+
+            if(selected==cutTile)
+            {
+                MainWinConnect::pMainWin->on_actionCut_triggered();
+            }
+            else
+            if(selected==copyTile)
+            {
+                MainWinConnect::pMainWin->on_actionCopy_triggered();
+            }
+            else
+            if(selected==remove)
+            {
+                scene->removeSelectedWldItems();
+            }
+        }
+    }
 }
 
 void ItemScene::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_scene)&&(!scene->DrawMode)&&(!isLocked))
-    {
-        //Remove selection from non-bgo items
-        if(this->isSelected())
-        {
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()!="SCENERY") SelItem->setSelected(false);
-            }
-        }
-        else
-        {
-            scene->clearSelection();
-            this->setSelected(true);
-        }
-
-        this->setSelected(1);
-        ItemMenu->clear();
-
-        QAction *copyTile = ItemMenu->addAction(tr("Copy"));
-        copyTile->deleteLater();
-        QAction *cutTile = ItemMenu->addAction(tr("Cut"));
-        cutTile->deleteLater();
-        ItemMenu->addSeparator()->deleteLater();
-        QAction *remove = ItemMenu->addAction(tr("Remove"));
-        remove->deleteLater();
-        //ItemMenu->addSeparator()->deleteLater();;
-        //QAction *props = ItemMenu->addAction(tr("Properties..."));
-        //props->deleteLater();
-
-        scene->contextMenuOpened = true; //bug protector
-QAction *selected = ItemMenu->exec(event->screenPos());
-
-        if(!selected)
-        {
-            #ifdef _DEBUG_
-            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-            #endif
-            scene->contextMenuOpened = true;
-            return;
-        }
-        event->accept();
-
-        if(selected==cutTile)
-        {
-            //scene->doCut = true ;
-            MainWinConnect::pMainWin->on_actionCut_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==copyTile)
-        {
-            //scene->doCopy = true ;
-            MainWinConnect::pMainWin->on_actionCopy_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==remove)
-        {
-            WorldData removedItems;
-            //bool deleted=false;
-            scene->contextMenuOpened = false;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()=="SCENERY")
-                {
-                    removedItems.scenery.push_back(((ItemScene *)SelItem)->sceneData);
-                    ((ItemScene *)SelItem)->removeFromArray();
-                    delete SelItem;
-                    //deleted=true;
-                }
-            }
-            //if(deleted) MainWinConnect::pMainWin->activeLvlEditWin()->scene->addRemoveHistory( removedItems );
-        }
-//        else
-//        if(selected==props)
-//        {
-//            scene->openProps();
-//        }
-//        else
-//        {
-//            bool itemIsFound=false;
-//            QString lName;
-//            if(selected==newLayer)
-//            {
-//                scene->contextMenuOpened = false;
-//                ToNewLayerBox * layerBox = new ToNewLayerBox(scene->WldData);
-//                layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-//                layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
-//                if(layerBox->exec()==QDialog::Accepted)
-//                {
-//                    itemIsFound=true;
-//                    lName = layerBox->lName;
-
-//                    //Store new layer into array
-//                    LevelLayers nLayer;
-//                    nLayer.name = lName;
-//                    nLayer.hidden = layerBox->lHidden;
-//                    scene->WldData->layers_array_id++;
-//                    nLayer.array_id = scene->WldData->layers_array_id;
-//                    scene->WldData->layers.push_back(nLayer);
-
-//                    //scene->SyncLayerList=true; //Refresh layer list
-//                    MainWinConnect::pMainWin->setLayerToolsLocked(true);
-//                    MainWinConnect::pMainWin->setLayersBox();
-//                    MainWinConnect::pMainWin->setLayerToolsLocked(false);
-//                }
-//                delete layerBox;
-//            }
-//            else
-//            foreach(QAction * lItem, layerItems)
-//            {
-//                if(selected==lItem)
-//                {
-//                    itemIsFound=true;
-//                    lName = lItem->data().toString();
-//                    //FOUND!!!
-//                 break;
-//                }//Find selected layer's item
-//            }
-
-//            if(itemIsFound)
-//            {
-//                LevelData modData;
-//                foreach(LevelLayers lr, scene->WldData->layers)
-//                { //Find layer's settings
-//                    if(lr.name==lName)
-//                    {
-//                        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-//                        {
-
-//                            if(SelItem->data(0).toString()=="BGO")
-//                            {
-//                                modData.bgo.push_back(((ItemScene*) SelItem)->sceneData);
-//                                ((ItemScene *) SelItem)->sceneData.layer = lr.name;
-//                                ((ItemScene *) SelItem)->setVisible(!lr.hidden);
-//                                ((ItemScene *) SelItem)->arrayApply();
-//                            }
-//                        }
-//                        if(selected==newLayer){
-//                            scene->addChangedNewLayerHistory(modData, lr);
-//                        }
-//                        break;
-//                    }
-//                }//Find layer's settings
-//                if(selected!=newLayer){
-//                    scene->addChangedLayerHistory(modData, lName);
-//                }
-//                scene->contextMenuOpened = false;
-//            }
-//        }
-    }
-    else
-    {
-        QGraphicsItem::contextMenuEvent(event);
-    }
+    QGraphicsItem::contextMenuEvent(event);
 }
 
 

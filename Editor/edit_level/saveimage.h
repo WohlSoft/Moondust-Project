@@ -35,6 +35,7 @@ public:
 
     ~ExportToImage();
     bool HideWatersAndDoors();
+    bool TiledBackground();
     
 private slots:
     void on_imgHeight_valueChanged(int arg1);

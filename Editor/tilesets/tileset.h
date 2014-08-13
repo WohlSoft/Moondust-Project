@@ -43,6 +43,7 @@ public:
     int rows() const;
     int cols() const;
     int getBaseSize() const;
+    QString name() const;
     TilesetType type() const;
     bool editMode() const;
 
@@ -52,6 +53,7 @@ public:
 
     struct SimpleTileset{
         unsigned int rows, cols;
+        QString tileSetName;
         TilesetType type;
         QList<SimpleTilesetItem> items;
     };
@@ -62,6 +64,9 @@ public:
     static void SaveSimpleTileset(const QString &path, const SimpleTileset &tileset);
     static bool OpenSimpleTileset(const QString &path, SimpleTileset &tileset);
 
+
+
+
 signals:
     void clickedItem(tileset::TilesetType type, long id);
 
@@ -71,6 +76,7 @@ public slots:
     void setBaseSize(int value);
     void setType(const TilesetType &type);
     void setEditMode(bool editMode);
+    void setName(const QString &name);
 
 protected:
     void paintEvent(QPaintEvent* ev);
@@ -96,6 +102,7 @@ private:
     int m_rows;
     int m_cols;
     int m_baseSize;
+    QString m_name;
     dataconfigs *m_conf;
     TilesetType m_type;
     bool m_editMode;

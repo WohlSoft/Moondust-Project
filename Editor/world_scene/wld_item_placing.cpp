@@ -166,6 +166,9 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
+        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
+        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+
         if(WldPlacingItems::lineMode)
         {
             setLineDrawer(); return;
@@ -177,9 +180,6 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
@@ -289,6 +289,9 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
+        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
+        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+
         if(WldPlacingItems::lineMode)
         {
             setLineDrawer(); return;
@@ -300,8 +303,6 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
@@ -409,6 +410,9 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
+        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
+        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+
         if(WldPlacingItems::lineMode)
         {
             setLineDrawer(); return;
@@ -420,8 +424,6 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
@@ -534,6 +536,9 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             setSquareDrawer(); return;
         }
 
+        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
+        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
+
         if(WldPlacingItems::lineMode)
         {
             setLineDrawer(); return;
@@ -552,8 +557,6 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         foreach(dataFlag_w flag, WldPlacingItems::flags)
             cursor->setData(flag.first, flag.second);
 
-        WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
-        WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
@@ -663,7 +666,7 @@ void WldScene::setLineDrawer()
 
     QPen pen;
 
-    pen = QPen(Qt::gray, 2);
+    pen = QPen(Qt::transparent, 2);
 
     cursor = addLine(0,0,1,1, pen);
 

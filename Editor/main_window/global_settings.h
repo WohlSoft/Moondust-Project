@@ -86,6 +86,7 @@ public:
     static long total_sound;
 
     static QString configName;
+    static QString configPath;
 
 };
 

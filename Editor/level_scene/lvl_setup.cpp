@@ -199,6 +199,12 @@ void LvlScene::hideWarpsAndDoors(bool visible)
     }
 }
 
+
+void LvlScene::setTiledBackground(bool forceTiled)
+{
+    ChangeSectionBG(LvlData->sections[LvlData->CurSection].background, -1, forceTiled);
+}
+
 void LvlScene::applyLayersVisible()
 {
     QList<QGraphicsItem*> ItemList = items();
