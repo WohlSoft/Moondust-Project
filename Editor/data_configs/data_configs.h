@@ -75,6 +75,7 @@ struct obj_bgo{
     unsigned int frames;
     //    frame-speed=125			; default = 125 ms, etc. 8 frames per sec
     unsigned int framespeed;
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
 
     unsigned int display_frame;
 };
@@ -116,6 +117,8 @@ struct obj_block{
     unsigned int frames;
     int framespeed;
 
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
+
     unsigned int display_frame;
 
     //Editor defaults
@@ -145,6 +148,7 @@ struct obj_BG{
     bool editing_tiled;
     bool animated;
     unsigned int frames;
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
 
     unsigned int display_frame;
 
@@ -232,6 +236,7 @@ struct obj_w_tile{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
     unsigned int display_frame;
 };
 
@@ -246,6 +251,7 @@ struct obj_w_scenery{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
     unsigned int display_frame;
 };
 
@@ -260,6 +266,7 @@ struct obj_w_level{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
     unsigned int display_frame;
 };
 
@@ -276,6 +283,7 @@ struct obj_w_path{
     bool animated;
     unsigned int frames;
     unsigned int framespeed; // Default 128 ms
+    unsigned int frame_h; //Hegth of the frame. Calculating automatically
     unsigned int display_frame;
 };
 

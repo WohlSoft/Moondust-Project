@@ -22,6 +22,8 @@
 #include <QMimeData>
 #include <QDrag>
 
+#include "../common_features/graphics_funcs.h"
+
 
 tileset::tileset(dataconfigs* conf, TilesetType type, QWidget *parent, int baseSize, int rows, int cols) :
     QWidget(parent)
@@ -203,11 +205,17 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
     {
         long tarIndex = m_conf->getBlockI(id);
         if(tarIndex==-1)
-            return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_block[tarIndex].image.copy(
-                    0,0,m_conf->main_block[tarIndex].image.width(),
-                    qRound(qreal(m_conf->main_block[tarIndex].image.height())/ m_conf->main_block[tarIndex].frames) )
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        {
+            QPixmap xxx = QPixmap(m_baseSize, m_baseSize);
+            xxx.fill(Qt::red);
+            return xxx;
+        }
+        return GraphicsHelps::squareImage(
+                    m_conf->main_block[tarIndex].image.copy(0,
+                    m_conf->main_block[tarIndex].frame_h*m_conf->main_block[tarIndex].display_frame,
+                    m_conf->main_block[tarIndex].image.width(),
+                    m_conf->main_block[tarIndex].frame_h ),
+                    QSize(m_baseSize,m_baseSize));
         break;
     }
     case LEVELTILESET_BGO:
@@ -215,10 +223,12 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getBgoI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_bgo[tarIndex].image.copy(
-                    0,0,m_conf->main_bgo[tarIndex].image.width(),
-                    qRound(qreal(m_conf->main_bgo[tarIndex].image.height())/ m_conf->main_bgo[tarIndex].frames) )
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        return GraphicsHelps::squareImage(
+                    m_conf->main_bgo[tarIndex].image.copy(0,
+                    m_conf->main_block[tarIndex].frame_h*m_conf->main_block[tarIndex].display_frame,
+                    m_conf->main_bgo[tarIndex].image.width(),
+                    m_conf->main_block[tarIndex].frame_h ),
+                    QSize(m_baseSize,m_baseSize));
         break;
     }
     case LEVELTILESET_NPC:
@@ -226,7 +236,11 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getNpcI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_npc[tarIndex].image.copy(0,0, m_conf->main_npc[tarIndex].image.width(), m_conf->main_npc[tarIndex].gfx_h );
+        return GraphicsHelps::squareImage(
+                    m_conf->main_npc[tarIndex].image.copy(0,
+                    m_conf->main_npc[tarIndex].gfx_h*m_conf->main_npc[tarIndex].display_frame,
+                    m_conf->main_npc[tarIndex].image.width(),m_conf->main_npc[tarIndex].gfx_h ),
+                    QSize(m_baseSize,m_baseSize));
         break;
     }
     case WORLDTILESET_TILE:
@@ -234,8 +248,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getTileI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_wtiles[tarIndex].image.copy(0,0,m_conf->main_wtiles[tarIndex].image.width(),
-                                                     qRound(qreal(m_conf->main_wtiles[tarIndex].image.height()) / m_conf->main_wtiles[tarIndex].frames))
+        return m_conf->main_wtiles[tarIndex].image.copy(0,
+                    m_conf->main_wtiles[tarIndex].frame_h,
+                    m_conf->main_wtiles[tarIndex].image.width(),
+                    m_conf->main_wtiles[tarIndex].frame_h)
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
@@ -244,8 +260,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getPathI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_wpaths[tarIndex].image.copy(0,0,m_conf->main_wpaths[tarIndex].image.width(),
-                                                     qRound(qreal(m_conf->main_wpaths[tarIndex].image.height()) / m_conf->main_wpaths[tarIndex].frames))
+        return m_conf->main_wpaths[tarIndex].image.copy(0,
+                 m_conf->main_wpaths[tarIndex].frame_h*m_conf->main_wpaths[tarIndex].display_frame,
+                 m_conf->main_wpaths[tarIndex].image.width(),
+                 m_conf->main_wpaths[tarIndex].frame_h)
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
@@ -254,9 +272,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getSceneI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_wscene[tarIndex].image.copy(0,0,m_conf->main_wscene[tarIndex].image.width(),
-                                                     qRound(qreal(m_conf->main_wscene[tarIndex].image.height()) / m_conf->main_wscene[tarIndex].frames))
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        return GraphicsHelps::squareImage(m_conf->main_wscene[tarIndex].image.copy(0,
+                 m_conf->main_wscene[tarIndex].frame_h*m_conf->main_wscene[tarIndex].display_frame,
+                 m_conf->main_wscene[tarIndex].image.width(),
+                 m_conf->main_wscene[tarIndex].frame_h), QSize(m_baseSize,m_baseSize));
         break;
     }
     case WORLDTILESET_LEVEL:
@@ -264,9 +283,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getWLevelI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_wlevels[tarIndex].image.copy(0,0,m_conf->main_wlevels[tarIndex].image.width(),
-                                                     qRound(qreal(m_conf->main_wlevels[tarIndex].image.height()) / m_conf->main_wlevels[tarIndex].frames))
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+        return GraphicsHelps::squareImage(m_conf->main_wlevels[tarIndex].image.copy(0,
+                 m_conf->main_wlevels[tarIndex].frame_h*m_conf->main_wlevels[tarIndex].display_frame,
+                 m_conf->main_wlevels[tarIndex].image.width(),
+                 m_conf->main_wlevels[tarIndex].frame_h), QSize(m_baseSize,m_baseSize));
         break;
     }
     default:

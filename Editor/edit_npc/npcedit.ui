@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>510</width>
-    <height>770</height>
+    <width>520</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,8 +21,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>610</height>
+    <width>520</width>
+    <height>700</height>
    </size>
   </property>
   <property name="font">
@@ -60,8 +60,8 @@
     <widget class="QFrame" name="frame">
      <property name="minimumSize">
       <size>
-       <width>481</width>
-       <height>688</height>
+       <width>500</width>
+       <height>680</height>
       </size>
      </property>
      <property name="frameShape">
@@ -105,7 +105,7 @@
      <widget class="QGroupBox" name="Physics">
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>260</x>
         <y>0</y>
         <width>231</width>
         <height>320</height>
@@ -441,7 +441,7 @@
      <widget class="QPushButton" name="DirectLeft">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>330</x>
         <y>330</y>
         <width>41</width>
         <height>23</height>
@@ -473,7 +473,7 @@
      <widget class="QGroupBox" name="Graphics">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>80</y>
         <width>241</width>
         <height>261</height>
@@ -857,7 +857,7 @@
      <widget class="QGroupBox" name="InGame">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>350</y>
         <width>241</width>
         <height>321</height>
@@ -1210,7 +1210,7 @@
      <widget class="QGroupBox" name="groupBox_4">
       <property name="geometry">
        <rect>
-        <x>250</x>
+        <x>260</x>
         <y>350</y>
         <width>231</width>
         <height>321</height>
@@ -1237,6 +1237,12 @@
        <property name="styleSheet">
         <string notr="true">background-color: rgb(0, 0, 0);
 border-color: rgb(132, 132, 132);</string>
+       </property>
+       <property name="viewportUpdateMode">
+        <enum>QGraphicsView::FullViewportUpdate</enum>
+       </property>
+       <property name="optimizationFlags">
+        <set>QGraphicsView::DontSavePainterState</set>
        </property>
       </widget>
      </widget>
@@ -1275,7 +1281,7 @@ border-color: rgb(132, 132, 132);</string>
      <widget class="QPushButton" name="DirectRight">
       <property name="geometry">
        <rect>
-        <x>370</x>
+        <x>380</x>
         <y>330</y>
         <width>41</width>
         <height>23</height>

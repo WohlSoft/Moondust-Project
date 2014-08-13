@@ -84,36 +84,30 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / (qreal(8) / qreal(local.framespeed)) ) : global.framespeed;
     merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
 
-    //Copy fixture size to GFX size
-    if((local.en_width)&&
-                (
-                ((merged.width <= (unsigned int)global.gfx_w)&&
-                 (merged.framestyle<2)&&(merged.framestyle>0))||
-
-                ( (merged.width != (unsigned int)global.gfx_w)&&(merged.framestyle==0) )
-                )
-            )
+    //Copy physical size to GFX size
+    if( (local.en_width) && (merged.custom_physics_to_gfx) )
         merged.gfx_w = merged.width;
     else
     {
         if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
             merged.width = captured.width();
 
-        merged.gfx_w = global.gfx_w;
+        merged.gfx_w = ( (captured.width()!=0) ? captured.width() : global.gfx_w );
     }
 
-    //Copy fixture size to GFX size
-    if((local.en_height)&&(merged.height != (unsigned int)global.gfx_h)&&(!merged.custom_animate)/*&&(merged.framestyle<2)*/)
+    //Copy physical size to GFX size
+    if( (local.en_height) && (merged.custom_physics_to_gfx) )
         merged.gfx_h = merged.height;
     else
         merged.gfx_h = global.gfx_h;
 
+
     if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
         merged.gfx_w = captured.width();
     else
-        merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
+        merged.gfx_w = (local.en_gfxwidth) ? (local.gfxwidth>0 ? local.gfxwidth : 1 ) : merged.gfx_w;
 
-    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
+    merged.gfx_h = (local.en_gfxheight) ? (local.gfxheight>0 ? local.gfxheight : 1 ) : merged.gfx_h;
 
 
     if(((int)merged.width>=(int)merged.grid))
@@ -138,6 +132,14 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     {
         merged.ani_bidir = false; //Disable bidirectional animation
         if((local.en_frames)) merged.custom_animate = false; //Disable custom animation
+    }
+
+    // Convert out of range frames by framestyle into animation with controlable diraction
+    if((merged.framestyle>0)&&(merged.gfx_h*merged.frames >= (unsigned int)captured.height()))
+    {
+        merged.framestyle = 0;
+        merged.ani_direct = false;
+        merged.ani_directed_direct = true;
     }
 
     merged.score = (local.en_score)?local.score:global.score;
