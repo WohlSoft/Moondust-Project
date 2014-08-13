@@ -48,6 +48,7 @@ private slots:
     void on_OpenTileset_clicked();
 
 private:
+    QString lastFileName;
     Ui::TilesetConfigureDialog *ui;
     tileset* m_tileset;
     PiecesModel* m_model;

@@ -20,6 +20,7 @@ public:
 
     struct SimpleTilesetGroup{
         QString groupName;
+        QString groupCat;
         QStringList tilesets;
     };
 
@@ -39,6 +40,7 @@ private slots:
     void movedTileset( const QModelIndex & sourceParent, int sourceStart, int sourceEnd, const QModelIndex & destinationParent, int destinationRow );
 
 private:
+    static QString lastFileName;
     FlowLayout * layout;
     Ui::TilesetGroupEditor *ui;
     void redrawAll();

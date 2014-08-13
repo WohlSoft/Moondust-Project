@@ -32,6 +32,8 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
     ui->listView->setModel(m_model = (new PiecesModel(conf, PiecesModel::LEVELPIECE_BLOCK)));
 
     m_conf = conf;
+    lastFileName = "";
+
     setUpItems(tileset::LEVELTILESET_BLOCK);
 
     connect(ui->spin_width,SIGNAL(valueChanged(int)),m_tileset,SLOT(setCols(int)));
@@ -129,9 +131,11 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
     bool ok;
     QString fileName = QInputDialog::getText(this, tr("Please enter a filename!"),
                                               tr("Filename:"), QLineEdit::Normal,
-                                              m_tileset->name(), &ok);
+                                              lastFileName.isEmpty()?m_tileset->name():lastFileName, &ok);
     if (!ok || fileName.isEmpty())
         return;
+
+    lastFileName = fileName;
 
     if(!fileName.endsWith(".ini"))
         fileName += ".ini";
@@ -145,6 +149,8 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
                                                     m_conf->config_dir + "tilesets/",QString("PGE Tileset (*.ini)"));
     if (fileName.isEmpty())
         return;
+
+    lastFileName = QFileInfo(fileName).baseName();
 
     tileset::SimpleTileset simple;
     if(!tileset::OpenSimpleTileset(fileName,simple)){
