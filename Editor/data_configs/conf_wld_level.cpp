@@ -173,6 +173,9 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
             slevel.animated = (tileset.value("animated", "0").toString()=="1");
             slevel.frames = tileset.value("frames", "1").toInt();
             slevel.framespeed = tileset.value("frame-speed", "125").toInt();
+
+            slevel.frame_h = (slevel.animated? qRound(qreal(slevel.image.height())/slevel.frames) : slevel.image.height());
+
             slevel.display_frame = tileset.value("display-frame", "0").toInt();
             slevel.id = i;
             main_wlevels.push_back(slevel);

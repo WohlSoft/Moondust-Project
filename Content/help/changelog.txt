@@ -16,6 +16,7 @@ Editor 0.2.0
 - Added dialogs for a console tools like a GIFs2PNG and LazyFixTool
 - Mouse control for level editing workspace was improved. Fixed a lot of bugs and fixed context menu on the Linux.
 - Custom graphics displaying even without "Custom" category
+- Item animator is Improved
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized

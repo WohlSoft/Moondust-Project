@@ -208,6 +208,9 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
                 sblock.animation_bid = blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
                 sblock.frames = blockset.value("frames", "1").toInt();
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
+
+                sblock.frame_h = (sblock.animated? qRound(qreal(sblock.image.height())/sblock.frames) : sblock.image.height());
+
                 sblock.display_frame = blockset.value("display-frame", "0").toInt();
 
                 long iTmp;

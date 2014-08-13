@@ -18,6 +18,8 @@
 
 #include "simple_animator.h"
 
+#include "logger.h"
+
 SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
 {
     timer=NULL;
@@ -33,8 +35,18 @@ SimpleAnimator::SimpleAnimator(QPixmap &sprite, bool enables, int framesq, int f
     speed=fspeed;
     framesQ = framesq;
 
+    if(mainImage.isNull())
+    {
+        animated=false;
+        WriteToLog(QtWarningMsg, "SimpleAnimator can't work with null images");
+        return;
+    }
+
     frameWidth = mainImage.width();
     frameHeight = mainImage.height();
+
+    // Frame must not be less than 1 pixel
+    if(framesQ>frameHeight) framesQ=frameHeight;
 
     if(animated)
         frameSize = qRound(qreal(frameHeight/framesQ));

@@ -349,7 +349,6 @@ bool MainWindow::doSearchNPC(leveledit *edit)
         for(int i = curSearchNPC.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="NPC"){
                 bool toBeFound = true;
-                LevelNPC tmp = ((ItemNPC*)gr[i])->npcData;
                 if(ui->Find_Check_TypeNPC->isChecked()&&curSearchNPC.id!=0&&toBeFound){
                     toBeFound = ((ItemNPC*)gr[i])->npcData.id == (unsigned int)curSearchNPC.id;
                 }

@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1502</width>
-     <height>18</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -2667,8 +2667,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>280</width>
-          <height>1330</height>
+          <width>275</width>
+          <height>1462</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3847,8 +3847,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>270</width>
-          <height>536</height>
+          <width>285</width>
+          <height>513</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4030,8 +4030,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>199</width>
-          <height>115</height>
+          <width>285</width>
+          <height>513</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4112,8 +4112,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>196</width>
-          <height>93</height>
+          <width>285</width>
+          <height>513</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4206,8 +4206,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>222</width>
-          <height>461</height>
+          <width>285</width>
+          <height>513</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4504,8 +4504,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
-          <height>159</height>
+          <width>285</width>
+          <height>513</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4620,8 +4620,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
-          <height>114</height>
+          <width>285</width>
+          <height>513</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4718,8 +4718,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>108</width>
-          <height>70</height>
+          <width>285</width>
+          <height>513</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4867,7 +4867,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>467</height>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5094,8 +5094,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>194</width>
-          <height>146</height>
+          <width>300</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5243,8 +5243,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>220</width>
-          <height>295</height>
+          <width>300</width>
+          <height>417</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5840,8 +5840,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6061,8 +6061,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>300</width>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6074,8 +6074,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>300</width>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6087,8 +6087,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>300</width>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6101,7 +6101,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>364</height>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6121,15 +6121,8 @@ p, li { white-space: pre-wrap; }
           <number>0</number>
          </property>
          <property name="spacing">
-          <number>0</number>
+          <number>3</number>
          </property>
-         <item row="2" column="0" rowspan="4" colspan="6">
-          <widget class="Line" name="line_15">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0" colspan="3">
           <widget class="QLabel" name="label_62">
            <property name="text">
@@ -6144,28 +6137,31 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="9" column="0" colspan="6">
+         <item row="10" column="0" colspan="6">
           <widget class="QPushButton" name="FindStartLevel">
            <property name="text">
             <string>Search Level</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="4">
+         <item row="7" column="4">
           <widget class="QLabel" name="label_63">
            <property name="text">
             <string>Path background: </string>
            </property>
           </widget>
          </item>
-         <item row="6" column="5">
+         <item row="7" column="5">
           <widget class="QCheckBox" name="WorldFind_Check_PathBackgroundActive">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="8" column="0" colspan="6">
+         <item row="9" column="0" colspan="6">
           <widget class="QPushButton" name="Find_Button_ResetLevel">
            <property name="text">
             <string>Reset Search Fields</string>
@@ -6192,14 +6188,14 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="7" column="1">
           <widget class="QCheckBox" name="WorldFind_Check_PathBackground">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
-         <item row="7" column="0" colspan="6">
+         <item row="8" column="0" colspan="6">
           <spacer name="verticalSpacer_18">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
@@ -6212,6 +6208,37 @@ p, li { white-space: pre-wrap; }
            </property>
           </spacer>
          </item>
+         <item row="2" column="0" rowspan="4" colspan="6">
+          <widget class="Line" name="line_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QCheckBox" name="Find_Check_TypeLevel">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="4">
+          <widget class="QLabel" name="label_64">
+           <property name="text">
+            <string>Type:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="5">
+          <widget class="QPushButton" name="Find_Button_TypeLevel">
+           <property name="text">
+            <string>[empty]</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="WLDFindMusic">
@@ -6219,8 +6246,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>300</width>
+          <height>311</height>
          </rect>
         </property>
         <attribute name="label">

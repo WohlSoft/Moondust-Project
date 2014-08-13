@@ -19,7 +19,12 @@
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
 #include "../../item_select_dialog/itemselectdialog.h"
-
+#include "../../file_formats/wld_filedata.h"
+#include "../../world_scene/item_level.h"
+#include "../../world_scene/item_music.h"
+#include "../../world_scene/item_path.h"
+#include "../../world_scene/item_scene.h"
+#include "../../world_scene/item_tile.h"
 bool lockResetWorld = false;
 
 
@@ -38,10 +43,30 @@ void MainWindow::on_WorldFindDock_visibilityChanged(bool visible)
 
 void MainWindow::on_FindStartLevel_clicked()
 {
-    ItemSelectDialog* sel = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_TILE | ItemSelectDialog::TAB_SCENERY |
-                                                 ItemSelectDialog::TAB_PATH | ItemSelectDialog::TAB_LEVEL | ItemSelectDialog::TAB_MUSIC);
-    sel->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    sel->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, sel->size(), qApp->desktop()->availableGeometry()));
-    sel->exec();
-    delete sel;
+
+}
+
+bool MainWindow::doSearchLevel(WorldEdit *edit)
+{
+    QList<QGraphicsItem*> gr = edit->scene->items();
+    if(curSearchLevel.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchLevel.index+1; i < gr.size(); ++i){
+            if(gr[i]->data(0).toString()=="LEVEL"){
+                bool toBeFound = true;
+                if(toBeFound){
+                    foreach (QGraphicsItem* i, edit->scene->selectedItems())
+                    {
+                        i->setSelected(false);
+                    }
+                    gr[i]->setSelected(true);
+                    edit->goTo(((ItemLevel*)gr[i])->levelData.x, ((ItemLevel*)gr[i])->levelData.y, false, QPoint(-300, -300));
+                    curSearchLevel.index = i;
+                    return false;
+                }
+            }
+        }
+    }
+    //end search
+    curSearchLevel.index = 0;
+    return true;
 }

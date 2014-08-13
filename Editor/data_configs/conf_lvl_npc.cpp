@@ -198,20 +198,6 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //        int gfx_offset_y;
         //    //    gfx-offst-y=2
             snpc.gfx_offset_y = npcset.value("gfx-offset-y", "0").toInt();
-        //        int grid;
-        //    //    grid=32
-            snpc.grid = npcset.value("grid", default_grid).toInt();
-        //    //    grid-offset-x=0
-        //        int grid_offset_x;
-            snpc.grid_offset_x = npcset.value("grid-offset-x", "0").toInt();
-        //    //    grid-offset-y=0
-        //        int grid_offset_y;
-            snpc.grid_offset_y = npcset.value("grid-offset-y", "0").toInt();
-
-            snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
-        //    //    frame-style=0	; (0-2) This option in some algorithms can be ignored
-        //        int framestyle;
-
 
             snpc.framestyle = npcset.value("frame-style", "0").toInt();
         //    //    frames=2
@@ -486,6 +472,37 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    adhesion=0		; allows to NPC walking on wall and on celling
         //        bool adhesion;
             snpc.adhesion = npcset.value("adhesion", "0").toBool();
+
+
+        // /////////GRID And snap/////////////////////////////
+        //        int grid;
+        //    //    grid=32
+            snpc.grid = npcset.value("grid", default_grid).toInt();
+        //    //    grid-offset-x=0
+        //        int grid_offset_x;
+            snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
+
+        // /////////Calculate the grid offset/////////////////
+        if(((int)snpc.width>=(int)snpc.grid))
+            snpc.grid_offset_x = -1 * qRound( qreal((int)snpc.width % snpc.grid)/2 );
+        else
+            snpc.grid_offset_x = qRound( qreal( snpc.grid - (int)snpc.width )/2 );
+
+        if(snpc.grid_attach_style==1) snpc.grid_offset_x += 16;
+
+        snpc.grid_offset_y = -snpc.height % snpc.grid;
+        // /////////Calculate the grid offset/////////////////
+
+        // /////////Manual redefine of the grid offset if not set/////////////////
+            snpc.grid_offset_x = npcset.value("grid-offset-x", snpc.grid_offset_x).toInt();
+        //    //    grid-offset-y=0
+        //        int grid_offset_y;
+            snpc.grid_offset_y = npcset.value("grid-offset-y", snpc.grid_offset_y).toInt();
+        // /////////Manual redefine of the grid offset if not set/////////////////
+
+        //    //    frame-style=0	; (0-2) This option in some algorithms can be ignored
+        //        int framestyle;
+            snpc.custom_physics_to_gfx = npcset.value("physics-to-gfx", "1").toBool();
 
         //    //    ;Events
         //    //    deactivate=1		; Deactivate on state offscreen > 4 sec ago
