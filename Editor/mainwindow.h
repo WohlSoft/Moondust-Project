@@ -641,6 +641,7 @@ private:
     bool doSearchBlock(leveledit* edit);
     bool doSearchBGO(leveledit* edit);
     bool doSearchNPC(leveledit* edit);
+    bool doSearchLevel(WorldEdit* edit);
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
     QMediaPlayer playSnd;
