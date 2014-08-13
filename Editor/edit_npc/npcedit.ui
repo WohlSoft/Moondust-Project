@@ -1238,6 +1238,12 @@
         <string notr="true">background-color: rgb(0, 0, 0);
 border-color: rgb(132, 132, 132);</string>
        </property>
+       <property name="viewportUpdateMode">
+        <enum>QGraphicsView::FullViewportUpdate</enum>
+       </property>
+       <property name="optimizationFlags">
+        <set>QGraphicsView::DontSavePainterState</set>
+       </property>
       </widget>
      </widget>
      <widget class="QGroupBox" name="isModBox">
