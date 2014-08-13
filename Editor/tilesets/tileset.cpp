@@ -272,11 +272,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getSceneI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_wscene[tarIndex].image.copy(0,
+        return GraphicsHelps::squareImage(m_conf->main_wscene[tarIndex].image.copy(0,
                  m_conf->main_wscene[tarIndex].frame_h*m_conf->main_wscene[tarIndex].display_frame,
                  m_conf->main_wscene[tarIndex].image.width(),
-                 m_conf->main_wscene[tarIndex].frame_h)
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+                 m_conf->main_wscene[tarIndex].frame_h), QSize(m_baseSize,m_baseSize));
         break;
     }
     case WORLDTILESET_LEVEL:
@@ -284,11 +283,10 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getWLevelI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_wlevels[tarIndex].image.copy(0,
+        return GraphicsHelps::squareImage(m_conf->main_wlevels[tarIndex].image.copy(0,
                  m_conf->main_wlevels[tarIndex].frame_h*m_conf->main_wlevels[tarIndex].display_frame,
                  m_conf->main_wlevels[tarIndex].image.width(),
-                 m_conf->main_wlevels[tarIndex].display_frame)
-                .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
+                 m_conf->main_wlevels[tarIndex].frame_h), QSize(m_baseSize,m_baseSize));
         break;
     }
     default:
