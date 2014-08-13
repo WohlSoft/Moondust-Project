@@ -56,6 +56,9 @@ struct obj_npc
 //    gfx-height-y=32
     int gfx_w;
 //    gfx-width-y=32
+
+    bool custom_physics_to_gfx; //The GFX size defining by physics size in the custom configs
+
     int grid;
 //    grid=32
 //    grid-offset-x=0
