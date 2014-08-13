@@ -45,7 +45,6 @@ LevelData LvlScene::copy(bool cut)
                 copyData.blocks.push_back(sourceBlock->blockData);
                 if(cut){
                     sourceBlock->removeFromArray();
-                    removeItem(*it);
                     delete (*it);
                 }
             }
@@ -56,7 +55,6 @@ LevelData LvlScene::copy(bool cut)
                 copyData.bgo.push_back(sourceBGO->bgoData);
                 if(cut){
                     sourceBGO->removeFromArray();
-                    removeItem(*it);
                     delete (*it);
                 }
             }
@@ -67,7 +65,6 @@ LevelData LvlScene::copy(bool cut)
                 copyData.npc.push_back(sourceNPC->npcData);
                 if(cut){
                     sourceNPC->removeFromArray();
-                    removeItem(*it);
                     delete (*it);
                 }
             }
@@ -78,7 +75,6 @@ LevelData LvlScene::copy(bool cut)
                 copyData.water.push_back(sourceWater->waterData);
                 if(cut){
                     sourceWater->removeFromArray();
-                    removeItem(*it);
                     delete (*it);
                 }
             }

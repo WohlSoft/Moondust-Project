@@ -19,11 +19,8 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
-#include "tilesets/tilesetconfiguredialog.h"
-#include "tilesets/tilesetgroupeditor.h"
 #include "npc_dialog/npcdialog.h"
 #include <QDesktopServices>
-#include "dev_console/devconsole.h"
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
@@ -164,28 +161,3 @@ void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
         this->showNormal();
     }
 }
-
-
-void MainWindow::on_actionConfigure_Tilesets_triggered()
-{
-    TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs);
-    tilesetConfDia->exec();
-    delete tilesetConfDia;
-}
-
-
-void MainWindow::on_actionTileset_groups_editor_triggered()
-{
-    TilesetGroupEditor * groupDialog = new TilesetGroupEditor;
-    groupDialog->exec();
-    delete groupDialog;
-}
-
-
-void MainWindow::on_actionShow_Development_Console_triggered()
-{
-    DevConsole::show();
-    DevConsole::log("Showing DevConsole!","View");
-}
-
-

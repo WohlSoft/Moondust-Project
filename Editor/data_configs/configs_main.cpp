@@ -36,6 +36,8 @@ long ConfStatus::total_music_spc=0;
 long ConfStatus::total_sound=0;
 
 QString ConfStatus::configName="";
+QString ConfStatus::configPath="";
+
 
 dataconfigs::dataconfigs()
 {
@@ -83,7 +85,7 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
 
     dirset.beginGroup("main");
 
-        ConfStatus::configName = dirset.value("config_name", config_dir).toString();
+        ConfStatus::configName = dirset.value("config_name", QDir(config_dir).dirName()).toString();
 
         dirs.worlds = QApplication::applicationDirPath() + "/" + dirset.value("worlds", "worlds").toString() + "/";
 
@@ -96,6 +98,8 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
 
         dirs.gcustom = QApplication::applicationDirPath() + "/" + dirset.value("custom-data", "data-custom").toString() + "/";
     dirset.endGroup();
+
+    ConfStatus::configPath = config_dir;
 
     dirset.beginGroup("graphics");
         default_grid = dirset.value("default-grid", 32).toInt();

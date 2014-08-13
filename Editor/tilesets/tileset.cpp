@@ -290,6 +290,16 @@ QString tileset::getMimeType()
     }
     return QString("image/x-pge-piece");
 }
+QString tileset::name() const
+{
+    return m_name;
+}
+
+void tileset::setName(const QString &name)
+{
+    m_name = name;
+}
+
 bool tileset::editMode() const
 {
     return m_editMode;
@@ -322,6 +332,7 @@ tileset::SimpleTileset tileset::toSimpleTileset()
     s.rows = m_rows;
     s.cols = m_cols;
     s.type = m_type;
+    s.tileSetName = m_name;
     for(int i = 0; i < pieceRects.size(); ++i){
         SimpleTilesetItem it;
         it.col = pieceRects[i].x() / m_baseSize;
@@ -338,6 +349,7 @@ void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
     setRows(tileset.rows);
     setCols(tileset.cols);
     setType(tileset.type);
+    setName(tileset.tileSetName);
     for(int i = 0; i < tileset.items.size(); ++i){
         piecePixmaps.append(getScaledPixmapById(tileset.items[i].id));
         pieceRects.append(QRect(tileset.items[i].col*m_baseSize, tileset.items[i].row*m_baseSize, m_baseSize, m_baseSize));
@@ -347,12 +359,28 @@ void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
 
 void tileset::SaveSimpleTileset(const QString &path, const tileset::SimpleTileset &tileset)
 {
-    QSettings simpleTilesetINI(path,QSettings::IniFormat);
+    QString modifiedPath;
+#ifdef __linux__
+
+    if(!path.contains("*.ini"))
+    {
+        modifiedPath = path + ".ini";
+        //QMessageBox::information(mainwindow, "Information", path, QMessageBox.Ok);
+    }
+    else
+    {
+        modifiedPath = path;
+    }
+#elif _WIN32
+    modifiedPath = path;
+#endif
+    QSettings simpleTilesetINI(modifiedPath,QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
     simpleTilesetINI.clear();
     simpleTilesetINI.beginGroup("tileset"); //HEADER
     simpleTilesetINI.setValue("rows",tileset.rows);
     simpleTilesetINI.setValue("cols",tileset.cols);
+    simpleTilesetINI.setValue("name",tileset.tileSetName);
     simpleTilesetINI.setValue("type",static_cast<int>(tileset.type));
     simpleTilesetINI.endGroup();
     for(int i = 0; i < tileset.items.size(); ++i){
@@ -373,6 +401,7 @@ bool tileset::OpenSimpleTileset(const QString &path, tileset::SimpleTileset &til
         tileset.rows = (unsigned int)simpleTilesetINI.value("rows",3).toInt();
         tileset.cols = (unsigned int)simpleTilesetINI.value("cols",3).toInt();
         tileset.type = static_cast<tileset::TilesetType>(simpleTilesetINI.value("type",0).toInt());
+        tileset.tileSetName = simpleTilesetINI.value("name", "").toString();
         simpleTilesetINI.endGroup();
         groups.removeAt(tilesetindex);
         for(int i = 0; i < groups.size(); ++i){

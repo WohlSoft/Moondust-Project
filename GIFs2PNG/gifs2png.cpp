@@ -17,14 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-
 #include <QCoreApplication>
 #include <QImage>
 #include <QDir>
+#include <QDirIterator>
 #include <QString>
 #include <QTextStream>
-#include <QtDebug>
 #include <QFileInfo>
 #include "version.h"
 
@@ -51,25 +49,67 @@ QImage setAlphaMask(QImage image, QImage mask)
     return target;
 }
 
+void doMagicIn(QString path, QString q, QString OPath, bool removeMode)
+{
+    QRegExp isMask = QRegExp("*m.gif");
+    isMask.setPatternSyntax(QRegExp::Wildcard);
+
+    QRegExp isBackupDir = QRegExp("*/_backup/");
+    isBackupDir.setPatternSyntax(QRegExp::Wildcard);
+
+    if(isBackupDir.exactMatch(path))
+        return; //Skip backup directories
+
+    if(isMask.exactMatch(q))
+        return;
+
+    QImage target;
+    QString imgFileM;
+    QStringList tmp = q.split(".", QString::SkipEmptyParts);
+    if(tmp.size()==2)
+        imgFileM = tmp[0] + "m." + tmp[1];
+    else
+        return;
+
+    QImage image = QImage(path+q);
+    QImage mask = QImage(path+imgFileM);
+
+    target = setAlphaMask(image, mask);
+
+    if(!target.isNull())
+    {
+        target.save(OPath+tmp[0]+".png");
+        QTextStream(stdout) << path+q <<"\n";
+        if(removeMode)
+        {
+            QFile::remove( path+q );
+            QFile::remove( path+imgFileM );
+        }
+    }
+    else
+    QTextStream(stdout) << path+q+" - WRONG!\n";
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::addLibraryPath(".");
     QCoreApplication a(argc, argv);
-
     QStringList filters;
-    QDir musicDir;
+    QDir imagesDir;
     QString path;
     QString OPath;
     bool removeMode=false;
     QStringList fileList;
-    QRegExp isMask = QRegExp("*m.gif");
-    isMask.setPatternSyntax(QRegExp::Wildcard);
 
-    std::cout<<"============================================================================\n";
-    std::cout<<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
-    std::cout<<"============================================================================\n";
-    std::cout<<"This program is distributed under the GNU GPLv3 license \n";
-    std::cout<<"============================================================================\n";
+    bool nopause=false;
+
+    bool walkSubDirs=false;
+
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Pair of GIFs to PNG converter tool by Wohlstand. Version "<<_FILE_VERSION<<_FILE_RELEASE<<"\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"This program is distributed under the GNU GPLv3 license \n";
+    QTextStream(stdout) <<"============================================================================\n";
 
     if(a.arguments().size()==1)
     {
@@ -84,13 +124,21 @@ int main(int argc, char *argv[])
     {
         removeMode=true;
     }
+    if(a.arguments().filter("-W", Qt::CaseInsensitive).size()>0)
+    {
+        walkSubDirs=true;
+    }
+    if(a.arguments().filter("--nopause", Qt::CaseInsensitive).size()>0)
+    {
+        nopause=true;
+    }
 
-    musicDir.setPath(a.arguments().at(1));
+    imagesDir.setPath(a.arguments().at(1));
     filters << "*.gif" << "*.GIF";
-    musicDir.setSorting(QDir::Name);
-    musicDir.setNameFilters(filters);
+    imagesDir.setSorting(QDir::Name);
+    imagesDir.setNameFilters(filters);
 
-    path = musicDir.absolutePath() + "/";
+    path = imagesDir.absolutePath() + "/";
 
     if(a.arguments().filter("-O", Qt::CaseSensitive).size()>0)
     {
@@ -103,74 +151,65 @@ int main(int argc, char *argv[])
     else
         OPath=path;
 
-    std::cout<<"============================================================================\n";
-    std::cout<<"Converting images...\n";
-    std::cout<<"============================================================================\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Converting images...\n";
+    QTextStream(stdout) <<"============================================================================\n";
 
-    std::cout<< QString("Input path:  "+path+"\n").toStdString();
-    std::cout<< QString("Output path: "+OPath+"\n").toStdString();
-    std::cout<<"============================================================================\n";
-    fileList << musicDir.entryList(filters);
+    QTextStream(stdout) << QString("Input path:  "+path+"\n");
+    QTextStream(stdout) << QString("Output path: "+OPath+"\n");
+    QTextStream(stdout) <<"============================================================================\n";
+    fileList << imagesDir.entryList(filters);
 
+    if(!walkSubDirs)
     foreach(QString q, fileList)
     {
+        doMagicIn(path, q, OPath, removeMode);
+    }
+    else
+    {
+        QDirIterator dirsList(imagesDir.absolutePath(), filters,
+                                  QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                              QDirIterator::Subdirectories);
 
-        if(isMask.exactMatch(q))
-            continue;
+        while(dirsList.hasNext())
+          {
+                dirsList.next();
+                if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip LazyFix's Backup dirs
+                    continue;
+                //qDebug()<< QFileInfo(dirsList.filePath()).dir().absolutePath();
+                if(OPath==path) OPath = QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
+                doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath, removeMode);
+          }
 
-        QImage target;
-        QString imgFileM;
-        QStringList tmp = q.split(".", QString::SkipEmptyParts);
-        if(tmp.size()==2)
-            imgFileM = tmp[0] + "m." + tmp[1];
-        else
-            continue;
 
-        QImage image = QImage(path+q);
-        QImage mask = QImage(path+imgFileM);
-
-        target = setAlphaMask(image, mask);
-
-        if(!target.isNull())
-        {
-            target.save(OPath+tmp[0]+".png");
-            qDebug() << path+q;
-            if(removeMode)
-            {
-                QFile::remove( path+q );
-                QFile::remove( path+imgFileM );
-            }
-        }
-        else
-        qDebug() << path+q+" - WRONG!";
     }
 
-    std::cout<<"============================================================================\n";
-    std::cout<<"Done!\n\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Done!\n\n";
 
-    getchar();
+    if(!nopause) getchar();
 
-    exit(0);
-    return a.exec();
+    return 0;
 
 DisplayHelp:
-    std::cout<<"============================================================================\n";
-    std::cout<<"This utility will merge GIF images and his mask into solid PNG image:\n";
-    std::cout<<"============================================================================\n";
-    std::cout<<"Syntax:\n\n";
-    std::cout<<"   GIFs2PNG [--help] /path/to/folder [-O/path/to/out] [-R]\n\n";
-    std::cout<<" --help              - Display this help\n";
-    std::cout<<" /path/to/folder     - path to a directory with pair of GIF files\n";
-    std::cout<<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
-    std::cout<<" -R                  - Remove source images after succesfull converting\n";
-    std::cout<<"\n\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"This utility will merge GIF images and his mask into solid PNG image:\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Syntax:\n\n";
+    QTextStream(stdout) <<"   GIFs2PNG [--help] /path/to/folder [-O/path/to/out] [-R]\n\n";
+    QTextStream(stdout) <<" --help              - Display this help\n";
+    QTextStream(stdout) <<" /path/to/folder     - path to a directory with pair of GIF files\n";
+    QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
+    QTextStream(stdout) <<" -R                  - Remove source images after succesfull converting\n";
+    QTextStream(stdout) <<" -W                  - Walk in subdirectores\n";
+    QTextStream(stdout) <<"\n\n";
 
     getchar();
 
     exit(0);
     return a.exec();
 WrongOutputPath:
-    std::cout<<"============================================================================\n";
-    std::cout<<"Wrong output path!\n";
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Wrong output path!\n";
     goto DisplayHelp;
 }

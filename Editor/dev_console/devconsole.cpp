@@ -21,13 +21,13 @@ void DevConsole::show()
     currentDevConsole->showNormal();
 }
 
-void DevConsole::log(const QString &logText, const QString &channel)
+void DevConsole::log(const QString &logText, const QString &channel, bool raise)
 {
     if(!currentDevConsole)
         init();
 
     if(currentDevConsole)
-        currentDevConsole->logToConsole(logText, channel);
+        currentDevConsole->logToConsole(logText, channel, raise);
 }
 
 bool DevConsole::isConsoleShown()
@@ -52,7 +52,7 @@ DevConsole::~DevConsole()
     delete ui;
 }
 
-void DevConsole::logToConsole(const QString &logText, const QString &channel)
+void DevConsole::logToConsole(const QString &logText, const QString &channel, bool raise)
 {
     for(int i = 0; i < ui->tabWidget->count(); ++i){
         if(ui->tabWidget->tabText(i)==channel){
@@ -61,6 +61,7 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel)
                 return;
             tarEdit->appendPlainText(logText);
             tarEdit->verticalScrollBar()->setValue(tarEdit->verticalScrollBar()->maximum());
+            if(raise) ui->tabWidget->setCurrentIndex(i);
             return;
         }
     }

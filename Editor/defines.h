@@ -4,6 +4,7 @@
 
 class ItemTypes
 {
+public:
     enum itemTypes
     {
         LVL_Block=0,

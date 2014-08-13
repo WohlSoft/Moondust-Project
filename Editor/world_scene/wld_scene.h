@@ -97,7 +97,7 @@ public:
     };
 
 
-    // ////////////ItemPlacers///////////
+    // ////////////ItemPlacers/////////////////////////////
     void setItemPlacer(int itemType, unsigned long itemID=1);
     void updateCursoredNpcDirection();
     void setSquareDrawer();
@@ -115,8 +115,10 @@ public:
     void placeItemUnderCursor();
     void placeItemsByRectArray();
     WorldData placingItems;
+    WorldData overwritedItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
+    // ////////////ItemPlacers/////////////////////////////
 
     //Copy function
     WorldData copy(bool cut = false);
@@ -329,6 +331,10 @@ public:
     QString getHistorySettingText(SettingSubType subType);
 
     void openProps();
+
+    void removeSelectedWldItems();
+    void removeWldItems(QList<QGraphicsItem * > items, bool globalHistory=false);
+    void removeWldItem(QGraphicsItem * item, bool globalHistory=false);
 
 public slots:
     void selectionChanged();

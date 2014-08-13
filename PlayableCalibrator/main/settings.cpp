@@ -30,8 +30,20 @@
 #include "animator/aniFrames.h"
 #include "main/globals.h"
 
+
+void CalibrationMain::createDirs()
+{
+    if(!QDir(QApplication::applicationDirPath() + "/calibrator").exists())
+        QDir().mkdir(QApplication::applicationDirPath() + "/calibrator");
+    if(!QDir(QApplication::applicationDirPath() + "/calibrator/spriteconf").exists())
+        QDir().mkdir(QApplication::applicationDirPath() + "/calibrator/spriteconf");
+    if(!QDir(QApplication::applicationDirPath() + "/calibrator/templates").exists())
+        QDir().mkdir(QApplication::applicationDirPath() + "/calibrator/templates");
+}
+
 void CalibrationMain::loadConfig(QString fileName)
 {
+    createDirs();
     currentConfig = fileName;
     QFileInfo ourFile(fileName);
     QString ini_sprite =  QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
@@ -143,6 +155,7 @@ void CalibrationMain::setSpriteAniData(QSettings &set)
 
 void CalibrationMain::saveConfig(QString fileName)
 {
+    createDirs();
     QFileInfo ourFile(fileName);
     QString ini_sprite =  QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QSettings conf(ini_sprite, QSettings::IniFormat);

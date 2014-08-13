@@ -39,83 +39,40 @@
 QPoint WsourcePos=QPoint(0,0);
 int WgridSize=0, WoffsetX=0, WoffsetY=0;//, gridX, gridY, i=0;
 
+namespace wld_control
+{
+    bool mouseLeft=false; //Left mouse key is pressed
+    bool mouseMid=false;  //Middle mouse key is pressed
+    bool mouseRight=false;//Right mouse key is pressed
 
+    bool mouseMoved=false; //Mouse was moved with right mouseKey
+
+    static QPointF drawStartPos = QPoint(0,0);
+
+    //the last Array ID's, which used before hold mouse key
+    static qlonglong last_tile_arrayID=0;
+    static qlonglong last_scene_arrayID=0;
+    static qlonglong last_path_arrayID=0;
+    static qlonglong last_level_arrayID=0;
+    static qlonglong last_musicbox_arrayID=0;
+}
+
+// //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
 void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 {
-    QList<QGraphicsItem*> selectedList = selectedItems();
-    WorldData historyBuffer;
-    bool deleted=false;
-
-    QString objType;
+    using namespace wld_control;
     switch(keyEvent->key())
     {
     case (Qt::Key_Delete): //Delete action
-        if(isSelectionDialog) break; //Disable this key in the point selection dialog
-        if(EditingMode == MODE_SetPoint) return; // Disable this key in the pointSelection mode
-        if(selectedList.isEmpty()) break;
-
-        for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-        {
-
-                objType=(*it)->data(0).toString();
-
-                if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
-
-                //remove data from main array before deletion item from scene
-                if( objType=="TILE" )
-                {
-                    historyBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
-                    ((ItemTile *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-                else
-                if( objType=="SCENERY" )
-                {
-                    historyBuffer.scenery.push_back(((ItemScene*)(*it))->sceneData);
-                    ((ItemScene *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-                else
-                if( objType=="PATH" )
-                {
-                    historyBuffer.paths.push_back(((ItemPath*)(*it))->pathData);
-                    ((ItemPath *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-                else
-                if( objType=="LEVEL" )
-                {
-                    historyBuffer.levels.push_back(((ItemLevel*)(*it))->levelData);
-                    ((ItemLevel *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-                else
-                if( objType=="MUSICBOX" )
-                {
-                    historyBuffer.music.push_back(((ItemMusic*)(*it))->musicData);
-                    ((ItemMusic *)(*it))->removeFromArray();
-                    if((*it)) delete (*it);
-                    deleted=true;
-                }
-
-        }
-        //dummy
-        if(deleted) {
-            historyBuffer.scenery.size();
-            addRemoveHistory(historyBuffer);
-        }
-
+        removeSelectedWldItems();
         break;
     case (Qt::Key_Escape):
 
         if(EditingMode != MODE_SetPoint)
         {
-            if(!IsMoved)
+            if(!mouseMoved)
                 this->clearSelection();
+
             resetResizers();
         }
         else
@@ -146,32 +103,6 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
     QGraphicsScene::keyReleaseEvent(keyEvent);
 }
 
-void WldScene::openProps()
-{
-    QList<QGraphicsItem * > items = this->selectedItems();
-    if(!items.isEmpty())
-    {
-        if(items.first()->data(0).toString()=="LEVEL")
-        {
-            MainWinConnect::pMainWin->WldItemProps(0,
-                          ((ItemLevel *)items.first())->levelData,
-                          false);
-        }
-        else
-        MainWinConnect::pMainWin->WldItemProps(-1,
-                                               FileFormats::dummyWldLevel(),
-                                               false);
-    }
-    else
-    {
-        MainWinConnect::pMainWin->WldItemProps(-1,
-                                               FileFormats::dummyWldLevel(),
-                                               false );
-    }
-
-    QGraphicsScene::selectionChanged();
-}
-
 void WldScene::selectionChanged()
 {
     if(this->selectedItems().isEmpty())
@@ -185,16 +116,52 @@ void WldScene::selectionChanged()
     #endif
 }
 
-static QPointF drawStartPos = QPoint(0,0);
-
 void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    using namespace wld_control;
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Mouse pressed -> [%1, %2] contextMenuOpened=%3, DrawMode=%4").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y())
                .arg(contextMenuOpened).arg(DrawMode));
     #endif
 
-if(contextMenuOpened) return;
+//if(contextMenuOpened) return;
+    contextMenuOpened=false;
+
+    IsMoved = false;
+
+    //Discard multi mouse key
+    int mSum = (int)( mouseEvent->buttons() );
+    if( mSum > 4 || mSum == 3 )
+    {
+        mouseEvent->accept();
+        WriteToLog(QtDebugMsg, QString("[MousePress] MultiMouse detected [%2] [edit mode: %1]").arg(EditingMode).arg(QString::number(mSum, 2)));
+        return;
+    }
+
+    mouseMoved=false;
+
+    if( mouseEvent->buttons() & Qt::LeftButton )
+    {
+        mouseLeft=true;
+        WriteToLog(QtDebugMsg, QString("Left mouse button pressed [edit mode: %1]").arg(EditingMode));
+    }
+    else
+        mouseLeft=false;
+
+    if( mouseEvent->buttons() & Qt::MiddleButton )
+    {
+        mouseMid=true;
+        WriteToLog(QtDebugMsg, QString("Middle mouse button pressed [edit mode: %1]").arg(EditingMode));
+    } else mouseMid=false;
+
+    if( mouseEvent->buttons() & Qt::RightButton )
+    {
+        mouseRight=true;
+        WriteToLog(QtDebugMsg, QString("Right mouse button pressed [edit mode: %1]").arg(EditingMode));
+    } else mouseRight=false;
+
+    WriteToLog(QtDebugMsg, QString("Current editing mode %1").arg(EditingMode));
+
 
     switch(EditingMode)
     {
@@ -205,6 +172,12 @@ if(contextMenuOpened) return;
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
                 return;
             }
+
+            last_tile_arrayID=WldData->tile_array_id;
+            last_scene_arrayID=WldData->scene_array_id;
+            last_path_arrayID=WldData->path_array_id;
+            last_level_arrayID=WldData->level_array_id;
+            last_musicbox_arrayID=WldData->musicbox_array_id;
 
             if(cursor){
                 cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
@@ -225,6 +198,12 @@ if(contextMenuOpened) return;
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
                 return;
             }
+
+            last_tile_arrayID=WldData->tile_array_id;
+            last_scene_arrayID=WldData->scene_array_id;
+            last_path_arrayID=WldData->path_array_id;
+            last_level_arrayID=WldData->level_array_id;
+            last_musicbox_arrayID=WldData->musicbox_array_id;
 
             if(cursor){
                 drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
@@ -256,14 +235,24 @@ if(contextMenuOpened) return;
 
             WriteToLog(QtDebugMsg, QString("Line mode %1").arg(EditingMode));
 
+            last_tile_arrayID=WldData->tile_array_id;
+            last_scene_arrayID=WldData->scene_array_id;
+            last_path_arrayID=WldData->path_array_id;
+            last_level_arrayID=WldData->level_array_id;
+            last_musicbox_arrayID=WldData->musicbox_array_id;
+
             if(cursor){
-                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint(),
+                drawStartPos = QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
+                                                  QPoint(WldPlacingItems::c_offset_x,
+                                                         WldPlacingItems::c_offset_y),
                                                   WldPlacingItems::gridSz,
                                                   WldPlacingItems::gridOffset));
                 //cursor->setPos( drawStartPos );
                 cursor->setVisible(true);
 
-                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint(),
+                QPoint hw = applyGrid( mouseEvent->scenePos().toPoint()-
+                                       QPoint(WldPlacingItems::c_offset_x,
+                                              WldPlacingItems::c_offset_y),
                                        WldPlacingItems::gridSz,
                                        WldPlacingItems::gridOffset);
                 ((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
@@ -350,11 +339,15 @@ if(contextMenuOpened) return;
 
 }
 
-
 void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    using namespace wld_control;
+
     //WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
-    if(contextMenuOpened) return;
+    //if(contextMenuOpened) return;
+    contextMenuOpened=false;
+
+    IsMoved=true;
 
     switch(EditingMode)
     {
@@ -425,7 +418,9 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 if(cursor->isVisible())
                 {
-                QPoint hs = applyGrid( mouseEvent->scenePos().toPoint(),
+                QPoint hs = applyGrid( mouseEvent->scenePos().toPoint()-
+                                       QPoint(WldPlacingItems::c_offset_x,
+                                              WldPlacingItems::c_offset_y),
                                        WldPlacingItems::gridSz,
                                        WldPlacingItems::gridOffset);
 
@@ -472,9 +467,10 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     haveSelected=(!selectedItems().isEmpty());
     if(haveSelected)
     {
-        if(!IsMoved)
+        if(!( mouseEvent->buttons() & Qt::LeftButton )) return;
+        if(!mouseMoved)
         {
-            IsMoved = true;
+            mouseMoved=true;
         }
     }
     QGraphicsScene::mouseMoveEvent(mouseEvent);
@@ -482,12 +478,55 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    using namespace wld_control;
+
+    int multimouse=0;
+    if( mouseLeft || (mouseLeft^(mouseEvent->buttons() & Qt::LeftButton)) )
+        multimouse++;
+    if( mouseMid || (mouseMid^(mouseEvent->buttons() & Qt::MiddleButton)) )
+        multimouse++;
+    if( mouseRight || (mouseRight^(mouseEvent->buttons() & Qt::RightButton)) )
+        multimouse++;
+
+    bool isLeftMouse=false;
+
+    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+    {
+        mouseLeft=false;
+        isLeftMouse=true;
+        WriteToLog(QtDebugMsg, QString("Left mouse button released [edit mode: %1]").arg(EditingMode));
+    }
+    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+    {
+        mouseMid=false;
+        WriteToLog(QtDebugMsg, QString("Middle mouse button released [edit mode: %1]").arg(EditingMode));
+    }
+    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    {
+        mouseRight=false;
+        WriteToLog(QtDebugMsg, QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
+    }
+
+    if(multimouse>1)
+    {
+        WriteToLog(QtDebugMsg, QString("Multiple mouse keys detected %1").arg(multimouse) );
+        mouseEvent->accept(); return;
+    }
+
     if(contextMenuOpened)
     {
         contextMenuOpened = false; //bug protector
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
         return;
     }
+
+    contextMenuOpened=false;
+    if(!isLeftMouse)
+    {
+        QGraphicsScene::mouseReleaseEvent(mouseEvent);
+        return;
+    }
+
 
     switch(EditingMode)
     {
@@ -515,14 +554,6 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         if(cursor)
         {
-            // /////////// Don't draw with zero width or height //////////////
-            if( ((QGraphicsLineItem *)cursor)->line().p1() == ((QGraphicsLineItem *)cursor)->line().p2() )
-            {
-                cursor->hide();
-                break;
-            }
-            // ///////////////////////////////////////////////////////////////
-
             placeItemsByRectArray();
             WldData->modified = true;
             cursor->hide();
@@ -531,6 +562,25 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
     case MODE_PlacingNew:
         {
+            if(!overwritedItems.tiles.isEmpty()||
+                !overwritedItems.scenery.isEmpty()||
+                !overwritedItems.paths.isEmpty()||
+                !overwritedItems.levels.isEmpty()||
+                !overwritedItems.music.isEmpty() )
+            {
+                addOverwriteHistory(overwritedItems, placingItems);
+                overwritedItems.tiles.clear();
+                overwritedItems.scenery.clear();
+                overwritedItems.paths.clear();
+                overwritedItems.levels.clear();
+                overwritedItems.music.clear();
+                placingItems.tiles.clear();
+                placingItems.paths.clear();
+                placingItems.scenery.clear();
+                placingItems.levels.clear();
+                placingItems.music.clear();
+            }
+            else
             if(!placingItems.tiles.isEmpty()||
                     !placingItems.paths.isEmpty()||
                     !placingItems.scenery.isEmpty()||
@@ -542,7 +592,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 placingItems.scenery.clear();
                 placingItems.levels.clear();
                 placingItems.music.clear();
-            }
+            }           
             break;
         }
     case MODE_SetPoint:
@@ -580,7 +630,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 paste( WldBuffer, mouseEvent->scenePos().toPoint() );
                 PasteFromBuffer = false;
-                IsMoved=false;
+                mouseMoved=false;
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
             }
 
@@ -590,56 +640,18 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QList<QGraphicsItem*> selectedList = selectedItems();
 
             // check for grid snap
-            if ((!selectedList.isEmpty())&&(IsMoved))
+            if ((!selectedList.isEmpty())&&(mouseMoved))
             {
 
+                if(EditingMode==MODE_Erasing)
+                {
+                    removeWldItems(selectedList);
+                }
+                else
                 // correct selected items' coordinates
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 { ////////////////////////FIRST FETCH///////////////////////
-                    if(EditingMode==MODE_Erasing)
-                    {
 
-                        if(!(*it)->isVisible()) continue; //Invisible items can't be deleted
-
-                        //remove data from main array before deletion item from scene
-                        if( (*it)->data(0).toString()=="TILE" )
-                        {
-                            historyBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
-                            ((ItemTile *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        else
-                        if( (*it)->data(0).toString()=="SCENERY" )
-                        {
-                            historyBuffer.scenery.push_back(((ItemScene *)(*it))->sceneData);
-                            ((ItemScene *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        else
-                        if( (*it)->data(0).toString()=="PATH" )
-                        {
-                            historyBuffer.paths.push_back(((ItemPath *)(*it))->pathData);
-                            ((ItemPath *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        else
-                        if( (*it)->data(0).toString()=="LEVEL" )
-                        {
-                            historyBuffer.levels.push_back(((ItemLevel *)(*it))->levelData);
-                            ((ItemLevel *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        else
-                        if( (*it)->data(0).toString()=="MUSICBOX" )
-                        {
-                            historyBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
-                            ((ItemMusic *)(*it))->removeFromArray();
-                            deleted=true;
-                        }
-                        removeItem((*it));
-                        deleteList.push_back((*it));
-                        continue;
-                    }
 
                     /////////////////////////GET DATA///////////////
 
@@ -651,7 +663,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     if( (WsourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
                     {
                         ///SKIP NON-MOVED ITEMS
-                        IsMoved=false;
+                        mouseMoved=false;
                         #ifdef _DEBUG_
                         WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
                         #endif
@@ -670,15 +682,6 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 } ////////////////////////FIRST FETCH///////////////////////
 
-                if(!deleteList.isEmpty())
-                {
-                    while(!deleteList.isEmpty())
-                    {
-                        QGraphicsItem* tmp = deleteList.first();
-                        deleteList.pop_front();
-                        if(tmp!=NULL) delete tmp;
-                    }
-                }
                 selectedList = selectedItems();
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
@@ -704,7 +707,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     if( (WsourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
                     {
                         ///SKIP NON-MOVED ITEMS
-                        IsMoved=false;
+                        mouseMoved=false;
                         #ifdef _DEBUG_
                         WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
                         #endif
@@ -789,9 +792,9 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }////////////////////////SECOND FETCH///////////////////////
 
-                if((EditingMode==MODE_Selecting)&&(IsMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
+                if((EditingMode==MODE_Selecting)&&(mouseMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
 
-                IsMoved = false;
+                mouseMoved = false;
 
                 QGraphicsScene::mouseReleaseEvent(mouseEvent);
                 return;
@@ -799,6 +802,9 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
      EraserEnabled = false;
      QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
+
+// //////////////////////////////////////////////EVENTS End/////////////////////////////////////////////////
+
 
 
 void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
@@ -848,7 +854,6 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
     }
 }
 
-
 void WldScene::placeItemsByRectArray()
 {
     //This function placing items by yellow rectangles
@@ -870,27 +875,43 @@ void WldScene::placeItemsByRectArray()
     cursor = backup;
     cursor->hide();
 
-    if(!placingItems.tiles.isEmpty()||
-            !placingItems.scenery.isEmpty()||
-            !placingItems.paths.isEmpty()||
-            !placingItems.levels.isEmpty()||
-            !placingItems.music.isEmpty())
+    if(!overwritedItems.tiles.isEmpty()||
+        !overwritedItems.scenery.isEmpty()||
+        !overwritedItems.paths.isEmpty()||
+        !overwritedItems.levels.isEmpty()||
+        !overwritedItems.music.isEmpty() )
     {
-
-        addPlaceHistory(placingItems);
-
+        addOverwriteHistory(overwritedItems, placingItems);
+        overwritedItems.tiles.clear();
+        overwritedItems.scenery.clear();
+        overwritedItems.paths.clear();
+        overwritedItems.levels.clear();
+        overwritedItems.music.clear();
         placingItems.tiles.clear();
-        placingItems.scenery.clear();
         placingItems.paths.clear();
+        placingItems.scenery.clear();
+        placingItems.levels.clear();
+        placingItems.music.clear();
+    }
+    else
+    if(!placingItems.tiles.isEmpty()||
+            !placingItems.paths.isEmpty()||
+            !placingItems.scenery.isEmpty()||
+            !placingItems.levels.isEmpty()||
+            !placingItems.music.isEmpty()){
+        addPlaceHistory(placingItems);
+        placingItems.tiles.clear();
+        placingItems.paths.clear();
+        placingItems.scenery.clear();
         placingItems.levels.clear();
         placingItems.music.clear();
     }
 
 }
 
-
 void WldScene::placeItemUnderCursor()
 {
+    using namespace wld_control;
     bool wasPlaced=false;
 
     if(WldPlacingItems::overwriteMode)
@@ -900,30 +921,40 @@ void WldScene::placeItemUnderCursor()
         {
             if(xxx->data(0).toString()=="TILE")
             {
+                if(xxx->data(2).toLongLong()>last_tile_arrayID) break;
+                overwritedItems.tiles.push_back( ((ItemTile *)xxx)->tileData );
                 ((ItemTile *)xxx)->removeFromArray();
                 delete xxx;
             }
             else
             if(xxx->data(0).toString()=="SCENERY")
             {
+                if(xxx->data(2).toLongLong()>last_scene_arrayID) break;
+                overwritedItems.scenery.push_back( ((ItemScene *)xxx)->sceneData );
                 ((ItemScene *)xxx)->removeFromArray();
                 delete xxx;
             }
             else
             if(xxx->data(0).toString()=="PATH")
             {
+                if(xxx->data(2).toLongLong()>last_path_arrayID) break;
+                overwritedItems.paths.push_back( ((ItemPath *)xxx)->pathData );
                 ((ItemPath *)xxx)->removeFromArray();
                 delete xxx;
             }
             else
             if(xxx->data(0).toString()=="LEVEL")
             {
+                if(xxx->data(2).toLongLong()>last_level_arrayID) break;
+                overwritedItems.levels.push_back( ((ItemLevel *)xxx)->levelData );
                 ((ItemLevel *)xxx)->removeFromArray();
                 delete xxx;
             }
             else
             if(xxx->data(0).toString()=="MUSICBOX")
             {
+                if(xxx->data(2).toLongLong()>last_musicbox_arrayID) break;
+                overwritedItems.music.push_back( ((ItemMusic *)xxx)->musicData );
                 ((ItemMusic *)xxx)->removeFromArray();
                 delete xxx;
             }
@@ -1016,93 +1047,127 @@ void WldScene::placeItemUnderCursor()
     //if(opts.animationEnabled) startBlockAnimation();
 }
 
-
 void WldScene::removeItemUnderCursor()
 {
     if(contextMenuOpened) return;
 
     QGraphicsItem * findItem;
-    bool removeIt=true;
     findItem = itemCollidesCursor(cursor);
-    if(findItem)
+    removeWldItem(findItem, true);
+}
+
+
+void WldScene::removeSelectedWldItems()
+{
+    QList<QGraphicsItem*> selectedList = selectedItems();
+    if(selectedList.isEmpty()) return;
+    removeWldItems(selectedList);
+}
+
+void WldScene::removeWldItem(QGraphicsItem * item, bool globalHistory)
+{
+    if(!item) return;
+    QList<QGraphicsItem * > items;
+    items.push_back(item);
+    removeWldItems(items, globalHistory);
+}
+
+void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
+{
+    WorldData historyBuffer;
+    bool deleted=false;
+    QString objType;
+
+    for (QList<QGraphicsItem*>::iterator it = items.begin(); it != items.end(); it++)
     {
-        if(findItem->data(0).toString()=="TILE")
-        {
-            if( (lock_tile)|| (((ItemTile *)findItem)->isLocked) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="SCENERY")
-        {
-            if( (lock_scene) || (((ItemScene *)findItem)->isLocked) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="PATH")
-        {
-            if( (lock_path) || (((ItemNPC *)findItem)->isLocked) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="LEVEL")
-        {
-            if( (lock_level) || (((ItemLevel *)findItem)->isLocked) )
-            removeIt=false;
-        }
-        else
-        if(findItem->data(0).toString()=="MUSICBOX")
-        {
-            if( (lock_musbox) || (((ItemMusic *)findItem)->isLocked) )
-            removeIt=false;
-        }
+            objType=(*it)->data(0).toString();
 
-        if(!findItem->isVisible()) //Invisible items can't be deleted
-            removeIt=false;
+            if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
 
-        if(removeIt)
-        {
-            WorldData removedItems;
-            bool deleted=false;
             //remove data from main array before deletion item from scene
-            if( findItem->data(0).toString()=="TILE" )
+            if( objType=="TILE" )
             {
-                removedItems.tiles.push_back(((ItemTile *)findItem)->tileData);
-                ((ItemTile *)findItem)->removeFromArray();
+                historyBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
+                ((ItemTile *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
             else
-            if( findItem->data(0).toString()=="SCENERY" )
+            if( objType=="SCENERY" )
             {
-                removedItems.scenery.push_back(((ItemScene *)findItem)->sceneData);
-                ((ItemScene *)findItem)->removeFromArray();
+                historyBuffer.scenery.push_back(((ItemScene*)(*it))->sceneData);
+                ((ItemScene *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
             else
-            if( findItem->data(0).toString()=="PATH" )
+            if( objType=="PATH" )
             {
-                removedItems.paths.push_back(((ItemPath *)findItem)->pathData);
-                ((ItemPath *)findItem)->removeFromArray();
+                historyBuffer.paths.push_back(((ItemPath*)(*it))->pathData);
+                ((ItemPath *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
             else
-            if( findItem->data(0).toString()=="LEVEL" )
+            if( objType=="LEVEL" )
             {
-                removedItems.levels.push_back(((ItemLevel *)findItem)->levelData);
-                ((ItemLevel *)findItem)->removeFromArray();
+                historyBuffer.levels.push_back(((ItemLevel*)(*it))->levelData);
+                ((ItemLevel *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
             else
-            if( findItem->data(0).toString()=="MUSICBOX" )
+            if( objType=="MUSICBOX" )
             {
-                removedItems.music.push_back(((ItemMusic *)findItem)->musicData);
-                ((ItemMusic *)findItem)->removeFromArray();
+                historyBuffer.music.push_back(((ItemMusic*)(*it))->musicData);
+                ((ItemMusic *)(*it))->removeFromArray();
+                if((*it)) delete (*it);
                 deleted=true;
             }
 
-              removeItem(findItem);
-            delete findItem;
-            if(deleted) addRemoveHistory(removedItems);
+    }
+
+    if(deleted)
+    {
+        if(globalHistory)
+        {
+            overwritedItems.tiles << historyBuffer.tiles;
+            overwritedItems.scenery << historyBuffer.scenery;
+            overwritedItems.paths << historyBuffer.paths;
+            overwritedItems.levels << historyBuffer.levels;
+            overwritedItems.music << historyBuffer.music;
         }
+        else
+            addRemoveHistory(historyBuffer);
     }
 }
 
+
+
+
+// /////////////////////////////Open properties window of selected item////////////////////////////////
+void WldScene::openProps()
+{
+    QList<QGraphicsItem * > items = this->selectedItems();
+    if(!items.isEmpty())
+    {
+        if(items.first()->data(0).toString()=="LEVEL")
+        {
+            MainWinConnect::pMainWin->WldItemProps(0,
+                          ((ItemLevel *)items.first())->levelData,
+                          false);
+        }
+        else
+        MainWinConnect::pMainWin->WldItemProps(-1,
+                                               FileFormats::dummyWldLevel(),
+                                               false);
+    }
+    else
+    {
+        MainWinConnect::pMainWin->WldItemProps(-1,
+                                               FileFormats::dummyWldLevel(),
+                                               false );
+    }
+
+    QGraphicsScene::selectionChanged();
+}
