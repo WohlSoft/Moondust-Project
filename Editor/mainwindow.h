@@ -621,16 +621,27 @@ private:
     enum currentSearch{
         SEARCH_BLOCK = 1 << 0,
         SEARCH_BGO = 1 << 1,
-        SEARCH_NPC = 1 << 2
+        SEARCH_NPC = 1 << 2,
+        SEARCH_TILE = 1 << 3,
+        SEARCH_SCENERY = 1 << 4,
+        SEARCH_PATH = 1 << 5,
+        SEARCH_LEVEL = 1 << 6,
+        SEARCH_MUSICBOX = 1 << 7
     };
     int currentSearches;
     LevelBlock curSearchBlock;
     LevelBGO curSearchBGO;
     LevelNPC curSearchNPC;
+    WorldTiles curSearchTile;
+    WorldScenery curSearchScenery;
+    WorldPaths curSearchPath;
+    WorldLevels curSearchLevel;
+    WorldMusic curSearchMusicbox;
     void resetAllSearchFields();
     bool doSearchBlock(leveledit* edit);
     bool doSearchBGO(leveledit* edit);
     bool doSearchNPC(leveledit* edit);
+    bool doSearchLevel(WorldEdit* edit);
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
     QMediaPlayer playSnd;
