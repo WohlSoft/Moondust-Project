@@ -208,6 +208,8 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //        int grid_offset_y;
             snpc.grid_offset_y = npcset.value("grid-offset-y", "0").toInt();
 
+            snpc.custom_physics_to_gfx = npcset.value("physics-to-gfx", "1").toBool();
+
             snpc.grid_attach_style = npcset.value("grid-attachement-style", "0").toInt();
         //    //    frame-style=0	; (0-2) This option in some algorithms can be ignored
         //        int framestyle;
