@@ -18,7 +18,7 @@
 
 #include "tilesetitembutton.h"
 #include "../common_features/items.h"
-
+#include "../common_features/graphics_funcs.h"
 
 TilesetItemButton::TilesetItemButton(dataconfigs *conf, QWidget *parent) :
     QFrame(parent)
@@ -44,7 +44,7 @@ void TilesetItemButton::applyItem(const int &i, const int &id, const int &width,
 {
     int wid = (width == -1 ? contentsRect().width() : width);
     int hei = (height == -1 ? contentsRect().height() : height);
-    QPixmap p = Items::getItemGFX(i,id).scaled(wid,hei,Qt::KeepAspectRatio);
+    QPixmap p = GraphicsHelps::squareImage(Items::getItemGFX(i,id), QSize(wid,hei));//.scaled(wid,hei,Qt::KeepAspectRatio);
     if(p.isNull()){
         m_drawItem = QPixmap(wid,hei);
         return;
