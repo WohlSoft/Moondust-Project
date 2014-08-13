@@ -759,12 +759,6 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     if(frameWidth<=0) frameWidth=1;
     if(frameWidth>mainImage.width()) frameWidth = mainImage.width();
 
-    if( framesQ*frameSize > frameHeight ) framesQ = qRound(qreal(frameHeight)/frameSize);
-
-
-    //framePos = QPoint(0,0);
-    //draw();
-
     int dir=direction;
 
     if(direction==0) //if direction=random
@@ -874,10 +868,12 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
 void ItemNPC::createAnimationFrames()
 {
     frames.clear();
-    for(int i=0; (frameSize*i <= frameHeight); i++)
+    for(int i=0; (frameSize*i < frameHeight); i++)
     {
         frames.push_back( mainImage.copy(QRect(0, frameSize*i, frameWidth, frameSize )) );
     }
+
+    WriteToLog(QtDebugMsg, QString("NPC -> created animation frames %1").arg(frames.size()));
 }
 
 void ItemNPC::AnimationStart()
