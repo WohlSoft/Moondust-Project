@@ -22,6 +22,8 @@
 #include <QIcon>
 #include <QMimeData>
 
+#include "../common_features/graphics_funcs.h"
+
 PiecesModel::PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize, QObject *parent)
     : QAbstractListModel(parent), m_PieceSize(pieceSize), m_conf(conf), m_type(pieceType)
 {
@@ -52,55 +54,77 @@ void PiecesModel::addPiece(const int &index)
     if(m_type==LEVELPIECE_BLOCK)
     {
         pixmapNames.insert(pixmaps.size(), m_conf->main_block[index].name);
-        pixmaps.insert(pixmaps.size(), m_conf->main_block[index].image.copy(0,0,m_conf->main_block[index].image.width(),
-                                                                            qRound(qreal(m_conf->main_block[index].image.height())/ m_conf->main_block[index].frames) ));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(m_conf->main_block[index].image
+                         .copy(0,
+                         m_conf->main_block[index].frame_h*m_conf->main_block[index].display_frame,
+                         m_conf->main_block[index].image.width(),
+                         m_conf->main_block[index].frame_h), QSize(16,16) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_block[index].id);
     }
     else
     if(m_type==LEVELPIECE_BGO)
     {
         pixmapNames.insert(pixmaps.size(), m_conf->main_bgo[index].name);
-        pixmaps.insert(pixmaps.size(), m_conf->main_bgo[index].image.copy(0,0,m_conf->main_bgo[index].image.width(),
-                                                                             qRound(qreal(m_conf->main_bgo[index].image.height()) / m_conf->main_bgo[index].frames)));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(m_conf->main_bgo[index].image.copy(0,
+                             m_conf->main_bgo[index].frame_h*m_conf->main_bgo[index].display_frame,
+                             m_conf->main_bgo[index].image.width(),
+                             m_conf->main_bgo[index].frame_h), QSize(16,16)));
         pixmapId.insert(pixmaps.size(), m_conf->main_bgo[index].id);
     }
     else
     if(m_type==LEVELPIECE_NPC)
     {
         pixmapNames.insert(pixmaps.size(), m_conf->main_npc[index].name);
-        pixmaps.insert(pixmaps.size(), m_conf->main_npc[index].image.copy(0,0, m_conf->main_npc[index].image.width(), m_conf->main_npc[index].gfx_h ));
+        pixmaps.insert(pixmaps.size(),
+                       GraphicsHelps::squareImage(m_conf->main_npc[index].image.copy(0,
+                             m_conf->main_npc[index].gfx_h*m_conf->main_npc[index].display_frame,
+                             m_conf->main_npc[index].image.width(),
+                             m_conf->main_npc[index].gfx_h ),
+                          QSize(16,16)));
         pixmapId.insert(pixmaps.size(), m_conf->main_npc[index].id);
     }
     else
     if(m_type==WORLDPIECE_TILE)
     {
         pixmapNames.insert(pixmaps.size(), QString("tile-%1").arg(index));
-        pixmaps.insert(pixmaps.size(), m_conf->main_wtiles[index].image.copy(0,0,m_conf->main_wtiles[index].image.width(),
-                                                                             qRound(qreal(m_conf->main_wtiles[index].image.height()) / m_conf->main_wtiles[index].frames)));
+        pixmaps.insert(pixmaps.size(),
+                       GraphicsHelps::squareImage(m_conf->main_wtiles[index].image.copy(0,
+                             m_conf->main_wtiles[index].frame_h,
+                             m_conf->main_wtiles[index].image.width(),
+                             m_conf->main_wtiles[index].frame_h), QSize(16,16)));
         pixmapId.insert(pixmaps.size(), m_conf->main_wtiles[index].id);
     }
     else
     if(m_type==WORLDPIECE_PATH)
     {
         pixmapNames.insert(pixmaps.size(), QString("path-%1").arg(index));
-        pixmaps.insert(pixmaps.size(), m_conf->main_wpaths[index].image.copy(0,0,m_conf->main_wpaths[index].image.width(),
-                                                                             qRound(qreal(m_conf->main_wpaths[index].image.height()) / m_conf->main_wpaths[index].frames)));
+        pixmaps.insert(pixmaps.size(),
+                       GraphicsHelps::squareImage(m_conf->main_wpaths[index].image.copy(0,
+                            m_conf->main_wpaths[index].frame_h*m_conf->main_wpaths[index].display_frame,
+                            m_conf->main_wpaths[index].image.width(),
+                            m_conf->main_wpaths[index].frame_h),QSize(16,16)));
         pixmapId.insert(pixmaps.size(), m_conf->main_wpaths[index].id);
     }
     else
     if(m_type==WORLDPIECE_SCENERY)
     {
         pixmapNames.insert(pixmaps.size(), QString("scenery-%1").arg(index));
-        pixmaps.insert(pixmaps.size(), m_conf->main_wscene[index].image.copy(0,0,m_conf->main_wscene[index].image.width(),
-                                                                             qRound(qreal(m_conf->main_wscene[index].image.height()) / m_conf->main_wscene[index].frames)));
+        pixmaps.insert(pixmaps.size(),
+                       GraphicsHelps::squareImage(m_conf->main_wscene[index].image.copy(0,
+                            m_conf->main_wscene[index].frame_h*m_conf->main_wscene[index].display_frame,
+                            m_conf->main_wscene[index].image.width(),
+                            m_conf->main_wscene[index].frame_h), QSize(16,16)) );
         pixmapId.insert(pixmaps.size(), m_conf->main_wscene[index].id);
     }
     else
     if(m_type==WORLDPIECE_LEVEL)
     {
         pixmapNames.insert(pixmaps.size(), QString("level-%1").arg(index));
-        pixmaps.insert(pixmaps.size(), m_conf->main_wlevels[index].image.copy(0,0,m_conf->main_wlevels[index].image.width(),
-                                                                             qRound(qreal(m_conf->main_wlevels[index].image.height()) / m_conf->main_wlevels[index].frames)));
+        pixmaps.insert(pixmaps.size(),
+                       GraphicsHelps::squareImage(m_conf->main_wlevels[index].image.copy(0,
+                          m_conf->main_wlevels[index].frame_h*m_conf->main_wlevels[index].display_frame,
+                          m_conf->main_wlevels[index].image.width(),
+                          m_conf->main_wlevels[index].frame_h), QSize(16,16)));
         pixmapId.insert(pixmaps.size(), m_conf->main_wlevels[index].id);
     }
     endInsertRows();
