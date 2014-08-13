@@ -151,6 +151,9 @@ void dataconfigs::loadWorldScene(QProgressDialog *prgs)
             sScene.animated = (sceneset.value("animated", "0").toString()=="1");
             sScene.frames = sceneset.value("frames", "1").toInt();
             sScene.framespeed = sceneset.value("frame-speed", "125").toInt();
+
+            sScene.frame_h = (sScene.animated? qRound(qreal(sScene.image.height())/sScene.frames) : sScene.image.height());
+
             sScene.display_frame = sceneset.value("display-frame", "0").toInt();
             sScene.id = i;
             main_wscene.push_back(sScene);
