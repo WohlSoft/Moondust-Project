@@ -101,12 +101,13 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     else
         merged.gfx_h = global.gfx_h;
 
+
     if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
         merged.gfx_w = captured.width();
     else
-        merged.gfx_w = (local.en_gfxwidth) ? local.gfxwidth : merged.gfx_w;
+        merged.gfx_w = (local.en_gfxwidth) ? (local.gfxwidth>0 ? local.gfxwidth : 1 ) : merged.gfx_w;
 
-    merged.gfx_h = (local.en_gfxheight) ? local.gfxheight : merged.gfx_h;
+    merged.gfx_h = (local.en_gfxheight) ? (local.gfxheight>0 ? local.gfxheight : 1 ) : merged.gfx_h;
 
 
     if(((int)merged.width>=(int)merged.grid))

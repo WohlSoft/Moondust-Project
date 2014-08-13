@@ -745,12 +745,22 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
 
     bool refreshFrames = false;
     if(localProps.gfx_h!=frameSize) refreshFrames = true;
+    if(localProps.gfx_w!=frameWidth) refreshFrames = true;
 
-    frameSize = localProps.gfx_h;
+    frameSize = localProps.gfx_h; // height of one frame
+    frameWidth = localProps.gfx_w; //width of target image
 
-    frameWidth = localProps.gfx_w;
+    frameHeight = mainImage.height(); // Height of target image
 
-    frameHeight = mainImage.height();
+    //Protectors
+    if(frameSize<=0) frameSize=1;
+    if(frameSize>mainImage.height()) frameSize = mainImage.height();
+
+    if(frameWidth<=0) frameWidth=1;
+    if(frameWidth>mainImage.width()) frameWidth = mainImage.width();
+
+    if( framesQ*frameSize > frameHeight ) framesQ = qRound(qreal(frameHeight)/frameSize);
+
 
     //framePos = QPoint(0,0);
     //draw();
@@ -866,7 +876,7 @@ void ItemNPC::createAnimationFrames()
     frames.clear();
     for(int i=0; (frameSize*i <= frameHeight); i++)
     {
-        frames.push_back( mainImage.copy(QRect(framePos.x(), frameSize*i, frameWidth, frameSize )) );
+        frames.push_back( mainImage.copy(QRect(0, frameSize*i, frameWidth, frameSize )) );
     }
 }
 
