@@ -463,91 +463,30 @@ void MainWindow::on_NPCUniform_clicked(bool checked)
 
 void MainWindow::on_BlockItemsList_itemClicked(QListWidgetItem *item)
 {
-    resetEditmodeButtons();
    //placeBlock
 
     if ((activeChildWindow()==1) && (ui->BlockItemsList->hasFocus()))
     {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
-
-       LvlPlacingItems::fillingMode = false;
-       ui->actionSquareFill->setChecked(false);
-       ui->actionSquareFill->setEnabled(true);
-       LvlPlacingItems::lineMode = false;
-       ui->actionLine->setChecked(false);
-       ui->actionLine->setEnabled(true);
-
-       activeLvlEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
-
-       LvlItemProps(0,LvlPlacingItems::blockSet,
-                                 FileFormats::dummyLvlBgo(),
-                                 FileFormats::dummyLvlNpc(), true);
-
-       ui->PlacingToolbar->setVisible(true);
-
-       activeLvlEditWin()->setFocus();
+        SwitchPlacingItem(ItemTypes::LVL_Block, item->data(3).toInt());
     }
 }
 
 void MainWindow::on_BGOItemsList_itemClicked(QListWidgetItem *item)
 {
-    resetEditmodeButtons();
-   //placeBGO
-
+    //placeBGO
     if ((activeChildWindow()==1) && (ui->BGOItemsList->hasFocus()))
     {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
-
-       LvlPlacingItems::fillingMode = false;
-       ui->actionSquareFill->setChecked(false);
-       ui->actionSquareFill->setEnabled(true);
-       LvlPlacingItems::lineMode = false;
-       ui->actionLine->setChecked(false);
-       ui->actionLine->setEnabled(true);
-
-       activeLvlEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
-
-       LvlItemProps(1,FileFormats::dummyLvlBlock(),
-                                 LvlPlacingItems::bgoSet,
-                                 FileFormats::dummyLvlNpc(), true);
-
-       ui->PlacingToolbar->setVisible(true);
-
-       activeLvlEditWin()->setFocus();
+        SwitchPlacingItem(ItemTypes::LVL_BGO, item->data(3).toInt());
     }
 
 }
 
 void MainWindow::on_NPCItemsList_itemClicked(QListWidgetItem *item)
 {
-    resetEditmodeButtons();
-
     //placeNPC
     if ((activeChildWindow()==1) && (ui->NPCItemsList->hasFocus()))
     {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
-
-       LvlPlacingItems::fillingMode = false;
-       ui->actionSquareFill->setChecked(false);
-       ui->actionSquareFill->setEnabled(false);
-       LvlPlacingItems::lineMode = false;
-       ui->actionLine->setChecked(false);
-       ui->actionLine->setEnabled(false);
-
-       activeLvlEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
-
-       LvlItemProps(2,FileFormats::dummyLvlBlock(),
-                                 FileFormats::dummyLvlBgo(),
-                                 LvlPlacingItems::npcSet, true);
-
-       ui->PlacingToolbar->setVisible(true);
-       activeLvlEditWin()->setFocus();
+        SwitchPlacingItem(ItemTypes::LVL_NPC, item->data(3).toInt());
     }
 
 }

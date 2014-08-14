@@ -105,6 +105,8 @@ public slots:
     void on_actionCut_triggered();
     void on_actionPaste_triggered();
 
+    void SwitchPlacingItem(int itemType, unsigned long itemID);
+
     //Common functions
     void save();
     void save_as();
@@ -225,6 +227,7 @@ public slots:
 
     //Return Point from world map into a level properties
     void WLD_returnPointToLevelProperties(QPoint p);
+
 
 private slots:
 
