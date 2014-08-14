@@ -95,17 +95,6 @@ void PiecesModel::addPiece(const int &index)
         pixmapId.insert(pixmaps.size(), m_conf->main_wtiles[index].id);
     }
     else
-    if(m_type==WORLDPIECE_PATH)
-    {
-        pixmapNames.insert(pixmaps.size(), QString("path-%1").arg(index));
-        pixmaps.insert(pixmaps.size(),
-                       GraphicsHelps::squareImage(m_conf->main_wpaths[index].image.copy(0,
-                            m_conf->main_wpaths[index].frame_h*m_conf->main_wpaths[index].display_frame,
-                            m_conf->main_wpaths[index].image.width(),
-                            m_conf->main_wpaths[index].frame_h),QSize(16,16)));
-        pixmapId.insert(pixmaps.size(), m_conf->main_wpaths[index].id);
-    }
-    else
     if(m_type==WORLDPIECE_SCENERY)
     {
         pixmapNames.insert(pixmaps.size(), QString("scenery-%1").arg(index));
@@ -115,6 +104,17 @@ void PiecesModel::addPiece(const int &index)
                             m_conf->main_wscene[index].image.width(),
                             m_conf->main_wscene[index].frame_h), QSize(16,16)) );
         pixmapId.insert(pixmaps.size(), m_conf->main_wscene[index].id);
+    }
+    else
+    if(m_type==WORLDPIECE_PATH)
+    {
+        pixmapNames.insert(pixmaps.size(), QString("path-%1").arg(index));
+        pixmaps.insert(pixmaps.size(),
+                       GraphicsHelps::squareImage(m_conf->main_wpaths[index].image.copy(0,
+                            m_conf->main_wpaths[index].frame_h*m_conf->main_wpaths[index].display_frame,
+                            m_conf->main_wpaths[index].image.width(),
+                            m_conf->main_wpaths[index].frame_h),QSize(16,16)));
+        pixmapId.insert(pixmaps.size(), m_conf->main_wpaths[index].id);
     }
     else
     if(m_type==WORLDPIECE_LEVEL)
@@ -137,8 +137,8 @@ QString PiecesModel::getMimeType() const
     case LEVELPIECE_BGO: return QString("text/x-pge-piece-bgo");
     case LEVELPIECE_NPC: return QString("text/x-pge-piece-npc");
     case WORLDPIECE_TILE: return QString("text/x-pge-piece-tile");
-    case WORLDPIECE_PATH: return QString("text/x-pge-piece-path");
     case WORLDPIECE_SCENERY: return QString("text/x-pge-piece-scenery");
+    case WORLDPIECE_PATH: return QString("text/x-pge-piece-path");
     case WORLDPIECE_LEVEL: return QString("text/x-pge-piece-level");
     default:
         break;
