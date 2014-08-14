@@ -44,12 +44,12 @@
        </item>
        <item>
         <property name="text">
-         <string>Path</string>
+         <string>Scenery</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Scenery</string>
+         <string>Path</string>
         </property>
        </item>
        <item>
