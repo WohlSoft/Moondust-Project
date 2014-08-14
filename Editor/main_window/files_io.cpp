@@ -166,11 +166,11 @@ void MainWindow::save()
         qApp->processEvents();
 
         if(WinType==3)
-            saved = activeWldEditWin()->save();
+            saved = activeWldEditWin()->save(true);
         if(WinType==2)
             saved = activeNpcEditWin()->save();
         if(WinType==1)
-            saved = activeLvlEditWin()->save();
+            saved = activeLvlEditWin()->save(true);
 
         if(saved) statusBar()->showMessage(tr("File saved"), 2000);
     }
@@ -183,11 +183,11 @@ void MainWindow::save_as()
     if (WinType!=0)
     {
         if(WinType==3)
-            saved = activeWldEditWin()->saveAs();
+            saved = activeWldEditWin()->saveAs(true);
         if(WinType==2)
             saved = activeNpcEditWin()->saveAs();
         if(WinType==1)
-            saved = activeLvlEditWin()->saveAs();
+            saved = activeLvlEditWin()->saveAs(true);
 
         if(saved) statusBar()->showMessage(tr("File saved"), 2000);
     }
