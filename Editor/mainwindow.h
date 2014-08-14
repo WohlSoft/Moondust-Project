@@ -139,6 +139,9 @@ public slots:
     //for search
     void toggleNewWindow(QMdiSubWindow *window);
     void resetAllSearches();
+    void resetAllSearchFieldsWLD();
+    void resetAllSearchesWLD();
+    void resetLevelSearch();
     void resetBlockSearch();
     void resetBGOSearch();
     void resetNPCSearch();
@@ -588,6 +591,10 @@ private slots:
     void on_actionWLD_SearchBox_triggered(bool checked);
     void on_WorldFindDock_visibilityChanged(bool visible);
     void on_FindStartLevel_clicked();
+
+    void on_Find_Button_TypeLevel_clicked();
+
+    void on_Find_Button_ResetLevel_clicked();
 
 signals:
     void closeEditor();
