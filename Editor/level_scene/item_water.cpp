@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,11 +13,15 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "item_block.h"
+#include "item_bgo.h"
+#include "item_npc.h"
 #include "item_water.h"
+#include "item_door.h"
+
 #include "../common_features/logger.h"
 
 #include "newlayerbox.h"
@@ -43,12 +48,16 @@ ItemWater::ItemWater(QGraphicsPolygonItem *parent)
     waterData.x=this->pos().x();
     waterData.y=this->pos().y();
     waterData.quicksand=false;
+
+    mouseLeft=false;
+    mouseMid=false;
+    mouseRight=false;
 }
 
 
 ItemWater::~ItemWater()
 {
- //   WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
+   // WriteToLog(QtDebugMsg, "!<-Water destroyed->!");
 }
 
 void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
@@ -60,212 +69,195 @@ void ItemWater::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         this->setSelected(false);
         return;
     }
+
+    //Discard multi-mouse keys
+    if((mouseLeft)||(mouseMid)||(mouseRight))
+    {
+        mouseEvent->accept();
+        return;
+    }
+
+    if( mouseEvent->buttons() & Qt::LeftButton )
+        mouseLeft=true;
+    if( mouseEvent->buttons() & Qt::MiddleButton )
+        mouseMid=true;
+    if( mouseEvent->buttons() & Qt::RightButton )
+        mouseRight=true;
+
+
     QGraphicsPolygonItem::mousePressEvent(mouseEvent);
+}
+
+void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    int multimouse=0;
+    bool callContext=false;
+    if(((mouseMid)||(mouseRight))&&( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) ))
+        multimouse++;
+    if( (((mouseLeft)||(mouseRight)))&&( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) ))
+        multimouse++;
+    if((((mouseLeft)||(mouseMid)))&&( mouseRight^(mouseEvent->buttons() & Qt::RightButton) ))
+        multimouse++;
+    if(multimouse>0)
+    {
+        mouseEvent->accept(); return;
+    }
+
+    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+        mouseLeft=false;
+
+    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+        mouseMid=false;
+
+    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    {
+        if(!scene->IsMoved) callContext=true;
+        mouseRight=false;
+    }
+
+    QGraphicsItem::mouseReleaseEvent(mouseEvent);
+
+    /////////////////////////CONTEXT MENU:///////////////////////////////
+    if((callContext)&&(!scene->contextMenuOpened))
+    {
+        if((!scene->lock_water)&&(!isLocked))
+        {
+            scene->contextMenuOpened = true; //bug protector
+
+            //Remove selection from non-bgo items
+            if(!this->isSelected())
+            {
+                scene->clearSelection();
+                this->setSelected(true);
+            }
+
+            this->setSelected(1);
+            ItemMenu->clear();
+
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer));
+            LayerName->deleteLater();
+
+            QAction *setLayer;
+            QList<QAction *> layerItems;
+
+            QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
+                LayerName->addSeparator()->deleteLater();
+                newLayer->deleteLater();
+
+            foreach(LevelLayers layer, scene->LvlData->layers)
+            {
+                //Skip system layers
+                if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
+
+                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer->setData(layer.name);
+                setLayer->setCheckable(true);
+                setLayer->setEnabled(true);
+                setLayer->setChecked( layer.name==waterData.layer );
+                setLayer->deleteLater();
+                layerItems.push_back(setLayer);
+            }
+
+            ItemMenu->addSeparator();
+
+            QMenu * WaterType = ItemMenu->addMenu(tr("Environment type"));
+                WaterType->deleteLater();
+
+            QAction *setAsWater = WaterType->addAction(tr("Water"));
+                setAsWater->setCheckable(true);
+                setAsWater->setChecked(!waterData.quicksand);
+                setAsWater->deleteLater();
+
+            QAction *setAsQuicksand = WaterType->addAction(tr("Quicksand"));
+                setAsQuicksand->setCheckable(true);
+                setAsQuicksand->setChecked(waterData.quicksand);
+                setAsQuicksand->deleteLater();
+
+            QAction *resize = ItemMenu->addAction(tr("Resize"));
+                resize->deleteLater();
+
+            ItemMenu->addSeparator()->deleteLater();
+            QAction *copyWater = ItemMenu->addAction(tr("Copy"));
+                copyWater->deleteLater();
+            QAction *cutWater = ItemMenu->addAction(tr("Cut"));
+                cutWater->deleteLater();
+
+            ItemMenu->addSeparator()->deleteLater();
+            QAction *remove = ItemMenu->addAction(tr("Remove"));
+                remove->deleteLater();
+
+    QAction *selected = ItemMenu->exec(mouseEvent->screenPos());
+
+            if(!selected)
+            {
+                WriteToLog(QtDebugMsg, "Context Menu <- NULL");
+                return;
+            }
+
+            if(selected==cutWater)
+            {
+                //scene->doCut = true ;
+                MainWinConnect::pMainWin->on_actionCut_triggered();
+            }
+            else
+            if(selected==copyWater)
+            {
+                //scene->doCopy = true ;
+                MainWinConnect::pMainWin->on_actionCopy_triggered();
+            }
+            else
+            if(selected==setAsWater)
+            {
+                LevelData modData;
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if(SelItem->data(0).toString()=="Water")
+                    {
+                        modData.water.push_back(((ItemWater *)SelItem)->waterData);
+                        ((ItemWater *)SelItem)->setType(0);
+                    }
+                }
+                scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(true));
+            }
+            else
+            if(selected==setAsQuicksand)
+            {
+                LevelData modData;
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if(SelItem->data(0).toString()=="Water")
+                    {
+                        modData.water.push_back(((ItemWater *)SelItem)->waterData);
+                        ((ItemWater *)SelItem)->setType(1);
+                    }
+                }
+                scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(false));
+            }
+            else
+            if(selected==resize)
+            {
+                scene->setPhysEnvResizer(this, true);
+            }
+            else
+            if(selected==remove)
+            {
+                scene->contextMenuOpened = false;
+            }
+            else
+            {
+                #include "item_set_layer.h"
+            }
+        }
+    }
+
 }
 
 void ItemWater::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 {
-    if((!scene->lock_water)&&(!isLocked))
-    {
-        //Remove selection from non-bgo items
-        if(this->isSelected())
-        {
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()!="Water") SelItem->setSelected(false);
-            }
-        }
-        else
-        {
-            scene->clearSelection();
-            this->setSelected(true);
-        }
-
-        this->setSelected(1);
-        ItemMenu->clear();
-
-        QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer));
-
-        QAction *setLayer;
-        QList<QAction *> layerItems;
-
-        QAction * newLayer = LayerName->addAction(tr("Add to new layer..."));
-            LayerName->addSeparator();
-
-        foreach(LevelLayers layer, scene->LvlData->layers)
-        {
-            //Skip system layers
-            if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
-
-            setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
-            setLayer->setData(layer.name);
-            setLayer->setCheckable(true);
-            setLayer->setEnabled(true);
-            setLayer->setChecked( layer.name==waterData.layer );
-            layerItems.push_back(setLayer);
-        }
-
-        ItemMenu->addSeparator();
-
-        QMenu * WaterType = ItemMenu->addMenu(tr("Environment type"));
-
-        QAction *setAsWater = WaterType->addAction(tr("Water"));
-            setAsWater->setCheckable(true);
-            setAsWater->setChecked(!waterData.quicksand);
-
-        QAction *setAsQuicksand = WaterType->addAction(tr("Quicksand"));
-            setAsQuicksand->setCheckable(true);
-            setAsQuicksand->setChecked(waterData.quicksand);
-
-        ItemMenu->addSeparator();
-        QAction *copyWater = ItemMenu->addAction(tr("Copy"));
-        QAction *cutWater = ItemMenu->addAction(tr("Cut"));
-
-        ItemMenu->addSeparator();
-        QAction *remove = ItemMenu->addAction(tr("Remove"));
-
-        scene->contextMenuOpened = true; //bug protector
-QAction *selected = ItemMenu->exec(event->screenPos());
-
-        if(!selected)
-        {
-            WriteToLog(QtDebugMsg, "Context Menu <- NULL");
-            scene->contextMenuOpened = true;
-            return;
-        }
-        event->accept();
-
-        if(selected==cutWater)
-        {
-            //scene->doCut = true ;
-            MainWinConnect::pMainWin->on_actionCut_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==copyWater)
-        {
-            //scene->doCopy = true ;
-            MainWinConnect::pMainWin->on_actionCopy_triggered();
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==setAsWater)
-        {
-            LevelData modData;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()=="Water")
-                {
-                    modData.water.push_back(((ItemWater *)SelItem)->waterData);
-                    ((ItemWater *)SelItem)->setType(0);
-                }
-            }
-            scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(true));
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==setAsQuicksand)
-        {
-            LevelData modData;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()=="Water")
-                {
-                    modData.water.push_back(((ItemWater *)SelItem)->waterData);
-                    ((ItemWater *)SelItem)->setType(1);
-                }
-            }
-            scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(false));
-            scene->contextMenuOpened = false;
-        }
-        else
-        if(selected==remove)
-        {
-            LevelData removedItems;
-            bool deleted=false;
-            foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-            {
-                if(SelItem->data(0).toString()=="Water")
-                {
-                    removedItems.water.push_back(((ItemWater *)SelItem)->waterData);
-                    ((ItemWater *)SelItem)->removeFromArray();
-                    scene->removeItem(SelItem);
-                    delete SelItem;
-                    deleted=true;
-                }
-            }
-            if(deleted) scene->addRemoveHistory( removedItems );
-            scene->contextMenuOpened = false;
-        }
-        else
-        {
-            bool itemIsFound=false;
-            QString lName;
-            if(selected==newLayer)
-            {
-                scene->contextMenuOpened = false;
-                ToNewLayerBox * layerBox = new ToNewLayerBox(scene->LvlData);
-                layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-                layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
-                if(layerBox->exec()==QDialog::Accepted)
-                {
-                    itemIsFound=true;
-                    lName = layerBox->lName;
-
-                    //Store new layer into array
-                    LevelLayers nLayer;
-                    nLayer.name = lName;
-                    nLayer.hidden = layerBox->lHidden;
-                    scene->LvlData->layers_array_id++;
-                    nLayer.array_id = scene->LvlData->layers_array_id;
-                    scene->LvlData->layers.push_back(nLayer);
-
-                    //scene->SyncLayerList=true; //Refresh layer list
-                    MainWinConnect::pMainWin->setLayersBox();
-                }
-            }
-            else
-            foreach(QAction * lItem, layerItems)
-            {
-                if(selected==lItem)
-                {
-                    itemIsFound=true;
-                    lName = lItem->data().toString();
-                    //FOUND!!!
-                 break;
-                }//Find selected layer's item
-            }
-
-            if(itemIsFound)
-            {
-                LevelData modData;
-                foreach(LevelLayers lr, scene->LvlData->layers)
-                { //Find layer's settings
-                    if(lr.name==lName)
-                    {
-                        foreach(QGraphicsItem * SelItem, scene->selectedItems() )
-                        {
-
-                            if(SelItem->data(0).toString()=="Water")
-                            {
-                                modData.water.push_back(((ItemWater*) SelItem)->waterData);
-                                ((ItemWater *) SelItem)->waterData.layer = lr.name;
-                                ((ItemWater *) SelItem)->setVisible(!lr.hidden);
-                                ((ItemWater *) SelItem)->arrayApply();
-                            }
-                        }
-                    break;
-                    }
-                }//Find layer's settings
-                scene->addChangedLayerHistory(modData, lName);
-             scene->contextMenuOpened = false;
-            }
-        }
-    }
-    else
-    {
+//    else
+//    {
         QGraphicsPolygonItem::contextMenuEvent(event);
-    }
+//    }
 }
 
 
@@ -356,6 +348,17 @@ void ItemWater::setType(int tp)
     arrayApply();
 }
 
+void ItemWater::setRectSize(QRect rect)
+{
+    waterData.x = rect.x();
+    waterData.y = rect.y();
+    waterData.w = rect.width();
+    waterData.h = rect.height();
+    waterSize = rect.size();
+    setPos(waterData.x, waterData.y);
+    drawWater();
+    arrayApply();
+}
 
 void ItemWater::setSize(QSize sz)
 {

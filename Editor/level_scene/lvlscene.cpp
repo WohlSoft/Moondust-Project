@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,12 +13,11 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#include "../edit_level/level_edit.h"
 
 #include "item_block.h"
 #include "item_bgo.h"
@@ -25,7 +25,7 @@
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
-    setItemIndexMethod(NoIndex);
+    setItemIndexMethod(QGraphicsScene::NoIndex);
 
     //Pointerss
     pConfigs = &configs; // Pointer to Main Configs
@@ -71,11 +71,9 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     resetCursor();
 
     //set dummy images if target not exist or wrong
-    uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.gif");
-    npcmask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
-    uNpcImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-    uNpcImg.setMask(npcmask);
-    uBgoImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
+    uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.png");
+    uNpcImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.png");
+    uBgoImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.png");
 
 
     //set Default Z Indexes

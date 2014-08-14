@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,8 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QtWidgets>
@@ -21,7 +21,8 @@
 #include "npcedit.h"
 #include "./ui_npcedit.h"
 #include "../file_formats/file_formats.h"
-
+#include "../main_window/global_settings.h"
+#include "../common_features/mainwinconnect.h"
 
 
 
@@ -39,7 +40,7 @@ void npcedit::newFile(unsigned long npcID)
 
     setDefaultData(npcID);
 
-    NpcData = DefaultNPCData; // create data templade
+    NpcData = DefaultNPCData; // create data template
     StartNPCData = DefaultNPCData;
     setDataBoxes();
 
@@ -85,6 +86,7 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     documentNotModified();
 
     loadPreview();
+    on_DirectLeft_clicked();
 
     return true;
 }
@@ -101,7 +103,7 @@ bool npcedit::save()
 bool npcedit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-      curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
+      (isUntitled)?GlobalSettings::savePath_npctxt+QString("/")+curFile:curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
     if (fileName.isEmpty())
         return false;
 
@@ -112,12 +114,14 @@ bool npcedit::saveFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Write file error"),
-                             tr("Cannot write file %1:\n%2.")
+        QMessageBox::warning(this, tr("File save error"),
+                             tr("Cannot save file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
         return false;
     }
+
+    GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();
 
     QTextStream out(&file);
     QApplication::setOverrideCursor(Qt::WaitCursor);
@@ -129,6 +133,9 @@ bool npcedit::saveFile(const QString &fileName)
 
     refreshImageFile();
     updatePreview();
+
+    MainWinConnect::pMainWin->AddToRecentFiles(fileName);
+    MainWinConnect::pMainWin->SyncRecentFiles();
 
     return true;
 }
