@@ -40,8 +40,8 @@ public:
         LEVELPIECE_BGO,
         LEVELPIECE_NPC,
         WORLDPIECE_TILE,
-        WORLDPIECE_PATH,
         WORLDPIECE_SCENERY,
+        WORLDPIECE_PATH,
         WORLDPIECE_LEVEL
     };
     explicit PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize = 32, QObject *parent = 0);
