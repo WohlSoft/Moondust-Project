@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,8 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QtWidgets>
@@ -22,14 +22,14 @@
 #include "./ui_npcedit.h"
 #include "../file_formats/file_formats.h"
 
-
+#include "../common_features/graphics_funcs.h"
 
 
 void npcedit::on_ResetNPCData_clicked()
 {
     NpcData = StartNPCData; //Restore first version
     setDataBoxes();
-    documentNotModified();
+    if(!isUntitled) documentNotModified();
 }
 
 
@@ -38,6 +38,7 @@ void npcedit::on_ResetNPCData_clicked()
 void npcedit::on_en_GFXOffsetX_clicked(bool checked)
 {
     ui->GFXOffSetX->setEnabled(checked);
+    ui->offsetx_label->setEnabled(checked);
     NpcData.en_gfxoffsetx=checked;
 
     updatePreview();
@@ -48,6 +49,7 @@ void npcedit::on_en_GFXOffsetX_clicked(bool checked)
 void npcedit::on_en_GFXOffsetY_clicked(bool checked)
 {
     ui->GFXOffSetY->setEnabled(checked);
+    ui->offsety_label->setEnabled(checked);
     NpcData.en_gfxoffsety=checked;
 
     updatePreview();
@@ -59,6 +61,7 @@ void npcedit::on_En_GFXw_clicked(bool checked)
 {
 
     ui->GFXw->setEnabled(checked);
+    ui->gwidth_label->setEnabled(checked);
     NpcData.en_gfxwidth=checked;
 
     updatePreview();
@@ -69,6 +72,7 @@ void npcedit::on_En_GFXw_clicked(bool checked)
 void npcedit::on_En_GFXh_clicked(bool checked)
 {
     ui->GFXh->setEnabled(checked);
+    ui->gheight_label->setEnabled(checked);
     NpcData.en_gfxheight=checked;
 
     updatePreview();
@@ -79,6 +83,7 @@ void npcedit::on_En_GFXh_clicked(bool checked)
 void npcedit::on_En_Frames_clicked(bool checked)
 {
     ui->Frames->setEnabled(checked);
+    ui->frames_label->setEnabled(checked);
     NpcData.en_frames=checked;
 
     updatePreview();
@@ -89,6 +94,7 @@ void npcedit::on_En_Frames_clicked(bool checked)
 void npcedit::on_En_Framespeed_clicked(bool checked)
 {
     ui->Framespeed->setEnabled(checked);
+    ui->framespeed_label->setEnabled(checked);
     NpcData.en_framespeed=checked;
 
     updatePreview();
@@ -99,6 +105,7 @@ void npcedit::on_En_Framespeed_clicked(bool checked)
 void npcedit::on_En_Framestyle_clicked(bool checked)
 {
     ui->FrameStyle->setEnabled(checked);
+    ui->framestyle_label->setEnabled(checked);
     NpcData.en_framestyle=checked;
 
     updatePreview();
@@ -154,6 +161,7 @@ void npcedit::on_En_DontHurt_clicked(bool checked)
 void npcedit::on_En_Score_clicked(bool checked)
 {
     ui->Score->setEnabled(checked);
+    ui->score_label->setEnabled(checked);
     NpcData.en_score=checked;
 
     documentWasModified();
@@ -190,6 +198,7 @@ void npcedit::on_En_NoIceball_clicked(bool checked)
 void npcedit::on_En_Width_clicked(bool checked)
 {
     ui->Width->setEnabled(checked);
+    ui->width_label->setEnabled(checked);
     NpcData.en_width=checked;
 
     updatePreview();
@@ -200,6 +209,7 @@ void npcedit::on_En_Width_clicked(bool checked)
 void npcedit::on_En_Height_clicked(bool checked)
 {
     ui->Height->setEnabled(checked);
+    ui->height_label->setEnabled(checked);
     NpcData.en_height=checked;
 
     updatePreview();
@@ -210,6 +220,7 @@ void npcedit::on_En_Height_clicked(bool checked)
 void npcedit::on_En_Speed_clicked(bool checked)
 {
     ui->Speed->setEnabled(checked);
+    ui->speed_label->setEnabled(checked);
     NpcData.en_speed=checked;
 
     documentWasModified();
@@ -486,8 +497,6 @@ void npcedit::on_En_NoHammer_clicked(bool checked)
     documentWasModified();
 }
 
-
-
 ////////////////////////////////////////////////////////////////
 void npcedit::on_NoHammer_stateChanged(int arg1)
 {
@@ -495,6 +504,43 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
     NpcData.nohammer=arg1;
 }
 ////////////////////////////////////////////////////////////////
+
+
+
+void npcedit::on_En_NoShell_clicked(bool checked)
+{
+    ui->NoShell->setEnabled(checked);
+    NpcData.en_noshell=checked;
+
+    documentWasModified();
+}
+
+void npcedit::on_NoShell_stateChanged(int checked)
+{
+    documentWasModified();
+    NpcData.noshell=checked;
+}
+////////////////////////////////////////////////////////////////
+
+
+
+void npcedit::on_En_Name_clicked(bool checked)
+{
+    ui->Name->setEnabled(checked);
+    NpcData.en_name=checked;
+
+    documentWasModified();
+}
+
+
+void npcedit::on_Name_textEdited(const QString &arg1)
+{
+    documentWasModified();
+    NpcData.name=arg1;
+}
+
+
+
 
 
 
@@ -654,15 +700,11 @@ void npcedit::loadImageFile()
     if(QFile::exists(imagePath + defaultNPC.image_n))
     {
         if(QFile::exists(imagePath + defaultNPC.mask_n))
-            npcMask = QBitmap(imagePath + defaultNPC.mask_n );
+            npcMask = GraphicsHelps::loadPixmap( imagePath + defaultNPC.mask_n );
         else
             npcMask = defaultNPC.mask;
 
-        npcImage = QPixmap( imagePath + defaultNPC.image_n );
-
-        if((npcImage.height()!=npcMask.height())||(npcImage.width()!=npcMask.width()))
-            npcMask = npcMask.copy(0,0,npcImage.width(),npcImage.height());
-        npcImage.setMask(npcMask);
+        npcImage = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(imagePath + defaultNPC.image_n ), npcMask);
 
         WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
     }

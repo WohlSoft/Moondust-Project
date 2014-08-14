@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,10 +13,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
@@ -38,6 +37,7 @@ npcedit *MainWindow::createNPCChild()
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                  520,640);
 
+    ui->centralWidget->updateGeometry();
  /*   connect(child, SIGNAL(copyAvailable(bool)),
             cutAct, SLOT(setEnabled(bool)));
     connect(child, SIGNAL(copyAvailable(bool)),
@@ -66,6 +66,33 @@ leveledit *MainWindow::createLvlChild()
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                              800, 610);
     levelWindowP->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
+    levelWindowP->updateGeometry();
+    levelWindowP->update();
+    ui->centralWidget->updateGeometry();
+
+    return child;
+}
+
+//Edit WORLD
+WorldEdit *MainWindow::createWldChild()
+{
+    WorldEdit *child = new WorldEdit;
+    QMdiSubWindow *worldWindow = new QMdiSubWindow;
+
+    worldWindow->setWidget(child);
+    worldWindow->setAttribute(Qt::WA_DeleteOnClose);
+
+    QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(worldWindow);
+    levelWindowP->setAttribute(Qt::WA_DeleteOnClose);
+
+    levelWindowP->setGeometry(
+                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
+                (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
+                             800, 610);
+    levelWindowP->setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
+    levelWindowP->updateGeometry();
+    levelWindowP->update();
+    ui->centralWidget->updateGeometry();
 
     return child;
 }
@@ -82,6 +109,8 @@ int MainWindow::activeChildWindow()
             return 1;
         if(QString(activeSubWindow->widget()->metaObject()->className())=="npcedit")
             return 2;
+        if(QString(activeSubWindow->widget()->metaObject()->className())=="WorldEdit")
+            return 3;
     }
 
     return 0;
@@ -100,6 +129,14 @@ leveledit *MainWindow::activeLvlEditWin()
         return qobject_cast<leveledit *>(activeSubWindow->widget());
     return 0;
 }
+
+WorldEdit *MainWindow::activeWldEditWin()
+{
+    if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
+        return qobject_cast<WorldEdit *>(activeSubWindow->widget());
+    return 0;
+}
+
 
 
 QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)
@@ -137,10 +174,28 @@ void MainWindow::setActiveSubWindow(QWidget *window)
 
 void MainWindow::SWCascade()
 {
+    if(GlobalSettings::MainWindowView!=QMdiArea::SubWindowView)
+        setSubView(); // Switch into SubWindow mode on call this menuitem
     ui->centralWidget->cascadeSubWindows();
 }
 
 void MainWindow::SWTile()
 {
+    if(GlobalSettings::MainWindowView!=QMdiArea::SubWindowView)
+        setSubView(); // Switch into SubWindow mode on call this menuitem
     ui->centralWidget->tileSubWindows();
+}
+
+void MainWindow::setSubView()
+{
+    GlobalSettings::MainWindowView = QMdiArea::SubWindowView;
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+    updateWindowMenu();
+}
+
+void MainWindow::setTabView()
+{
+    GlobalSettings::MainWindowView = QMdiArea::TabbedView;
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+    updateWindowMenu();
 }

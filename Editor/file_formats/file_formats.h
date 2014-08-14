@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,8 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef FILE_FORMATS_H
@@ -46,10 +46,14 @@ public:
     static bool wBool(QString in); //Worded BOOL
     static bool dBool(QString in); //Worded BOOL
 
+    //Convert from string to internal data
+    static bool wBoolR(QString in);
+
     //SMBX64 parameter string generators
     static QString IntS(long input);
     static QString BoolS(bool input);
     static QString qStrS(QString input);
+    static QString FloatS(float input);
 };
 
 
@@ -60,6 +64,7 @@ public:
     // SMBX64 LVL File
     static LevelData ReadLevelFile(QFile &inf);             //read
     static QString WriteSMBX64LvlFile(LevelData FileData);  //write
+    static LevelData dummyLvlDataArray();                   //Create new
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
@@ -70,6 +75,13 @@ public:
     static LevelEvents dummyLvlEvent();
     static LevelSection dummyLvlSection();
 
+    //Wld Data
+    static WorldTiles dummyWldTile();
+    static WorldScenery dummyWldScen();
+    static WorldPaths dummyWldPath();
+    static WorldLevels dummyWldLevel();
+    static WorldMusic dummyWldMusic();
+
     // SMBX64 NPC.TXT File
     static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); //read
     static QString WriteNPCTxtFile(NPCConfigFile FileData);                //write
@@ -78,8 +90,9 @@ public:
     static obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
     // SMBX64 WLD File
-    static WorldData ReadWorldFile(QFile &inf); //read
-
+    static WorldData ReadWorldFile(QFile &inf);             //read
+    static QString WriteSMBX64WldFile(WorldData FileData);  //Write
+    static WorldData dummyWldDataArray();                   //Create new
 
 
     //common

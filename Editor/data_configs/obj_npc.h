@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef OBJ_NPC_H
 #define OBJ_NPC_H
 
@@ -11,13 +29,15 @@ struct obj_npc
     unsigned long id;
 //    name="Goomba"
     QString name;
+//    group="Enemy" 		;The sort category
+    QString group;
 //    category="Enemy"		;The sort category
     QString category;
 //    image="npc-1.gif"		;NPC Image file
     QString image_n;
     QString mask_n;
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
 //    algorithm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
     int algorithm;
     //    ;If algorithm = 0, will using basic parametric alhorythm.
@@ -36,6 +56,9 @@ struct obj_npc
 //    gfx-height-y=32
     int gfx_w;
 //    gfx-width-y=32
+
+    bool custom_physics_to_gfx; //The GFX size defining by physics size in the custom configs
+
     int grid;
 //    grid=32
 //    grid-offset-x=0
@@ -81,10 +104,16 @@ struct obj_npc
 //    container=0			; NPC can containing inside other NPC (need enable special option type 2)
     bool container;
 
+    unsigned int display_frame;
+
+    bool no_npc_collions;
+//    ; this option disabling collisions in editor with other NPCs, but with NPC's of same ID collisions will be checked
+
 //    ; Special option
 //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
     bool special_option;
 //    ;special-name="Cheep-cheep"	; 60
+
     QString special_name;
 //    ;special-type=0			; 61 0 combobox, 1 - spin, 2 - npc-id
     int special_type;
@@ -97,6 +126,30 @@ struct obj_npc
 //    ;special-spin-min=0		; 66 milimal value of spin
     int special_spin_max;
 //    ;special-spin-max=25		; 67 maximal value of spin
+    int special_spin_value_offset;
+
+//    have-special-2=0			; Special NPC's option, what can used by NPC's algorithm
+    bool special_option_2; //Second special option
+//    special-2-npc-spin-required
+    QList<long > special_2_npc_spin_required;
+//    special-2-npc-box-required
+    QList<long > special_2_npc_box_required;
+
+//    ;special-2-name="Cheep-cheep"	; 60
+    QString special_2_name;
+//    ;special-2-type=0			; 61 0 combobox, 1 - spin
+    int special_2_type;
+//    ;special-combobox-size=3		; 62 quantity of options
+    QStringList special_2_combobox_opts;
+//    ;special-option-0="Swim"		; 63 set title for 0 option combobox
+//    ;special-option-1="Jump"		; 64 set title for 1 option combobox
+//    ;special-option-2="Projective"	; 65 set title for 2 option combobox
+    int special_2_spin_min;
+//    ;special-2-spin-min=0		; 66 milimal value of spin
+    int special_2_spin_max;
+//    ;special-2-spin-max=25		; 67 maximal value of spin
+    int special_2_spin_value_offset;
+    //special-2-spin-value-offset
 
 //    ;game process
 //    score=2				; Add scores to player (value 0-13)
@@ -195,6 +248,23 @@ struct obj_npc
     bool turn_on_cliff_detect;
 //    lava-protection=0	; NPC will not be burn in lava
     bool lava_protect;
+
+    bool is_star; //If this marker was set, this NPC will be markered as "star"
+    //Quantity placed NPC's with marker "star" will be save in LVL-file
+
+    //Editor defaults
+    bool default_friendly;
+    bool default_friendly_value;
+
+    bool default_nomovable;
+    bool default_nomovable_value;
+
+    bool default_boss;
+    bool default_boss_value;
+
+    bool default_special;
+    long default_special_value;
+
 
 };
 

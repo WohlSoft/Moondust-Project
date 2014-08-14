@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,15 +13,51 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "data_configs.h"
 
 #include "../main_window/global_settings.h"
+#include "../common_features/graphics_funcs.h"
 
-void dataconfigs::loadLevelBlocks()
+
+long dataconfigs::getBlockI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    if(itemID < (unsigned int)index_blocks.size())
+    {
+        j = index_blocks[itemID].i;
+
+        if(j < main_block.size())
+        {
+            if( main_block[j].id == itemID)
+                found=true;
+        }
+    }
+
+    if(!found)
+    {
+        for(j=0; j < main_block.size(); j++)
+        {
+            if(main_block[j].id==itemID)
+            {
+                found=true;
+                break;
+            }
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+
+static QString Temp01="";
+
+void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
 {
     unsigned int i;
 
@@ -32,7 +69,7 @@ void dataconfigs::loadLevelBlocks()
 
     if(!QFile::exists(block_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini: file not exist"));
+        addError(QString("ERROR LOADING lvl_blocks.ini: file does not exist"), QtCriticalMsg);
           return;
     }
 
@@ -40,11 +77,15 @@ void dataconfigs::loadLevelBlocks()
     blockset.setIniCodec("UTF-8");
 
     main_block.clear();   //Clear old
+    index_blocks.clear();
 
     blockset.beginGroup("blocks-main");
         block_total = blockset.value("total", "0").toInt();
         total_data +=block_total;
     blockset.endGroup();
+
+    if(prgs) prgs->setMaximum(block_total);
+    if(prgs) prgs->setLabelText(QApplication::tr("Loading Blocks..."));
 
     ConfStatus::total_blocks = block_total;
 
@@ -58,12 +99,34 @@ void dataconfigs::loadLevelBlocks()
     }
 
 
+    if(ConfStatus::total_blocks==0)
+    {
+        addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), QtCriticalMsg);
+        return;
+    }
+
+
         for(i=1; i<=block_total; i++)
         {
+            qApp->processEvents();
+            if(prgs)
+            {
+                if(!prgs->wasCanceled()) prgs->setValue(i);
+            }
+
             blockset.beginGroup( QString("block-%1").arg(i) );
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
-                sblock.type = blockset.value("type", "Other").toString();
+
+                if(sblock.name=="")
+                {
+                    addError(QString("BLOCK-%1 Item name isn't defined").arg(i));
+                    goto skipBLOCK;
+                }
+
+                sblock.group = blockset.value("group", "_NoGroup").toString();
+                sblock.category = blockset.value("category", "_Other").toString();
+                sblock.grid = blockset.value("grid", default_grid).toInt();
                 imgFile = blockset.value("image", "").toString();
 
                 sblock.image_n = imgFile;
@@ -75,15 +138,20 @@ void dataconfigs::loadLevelBlocks()
                     else
                         imgFileM = "";
                     sblock.mask_n = imgFileM;
-                    if(tmp.size()==2) mask = QBitmap(blockPath + imgFileM);
+                    mask = QPixmap();
+                    if(tmp.size()==2) mask = QPixmap(blockPath + imgFileM);
                     sblock.mask = mask;
-                    sblock.image = QPixmap(blockPath + imgFile);
-                    if(tmp.size()==2) sblock.image.setMask(mask);
+                    sblock.image = GraphicsHelps::setAlphaMask(QPixmap(blockPath + imgFile), sblock.mask);
+                    if(sblock.image.isNull())
+                    {
+                        addError(QString("LoadConfig -> BLOCK-%1 Brocken image file").arg(i));
+                        goto skipBLOCK;
+                    }
                 }
                 else
                 {
-                    sblock.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
-                    sblock.mask_n = "";
+                    addError(QString("BLOCK-%1 Image filename isn't defined").arg(i));
+                    goto skipBLOCK;
                 }
 
                 sblock.sizable = blockset.value("sizable", "0").toBool();
@@ -96,10 +164,10 @@ void dataconfigs::loadLevelBlocks()
                 sblock.dest_bomb = blockset.value("destruct-bomb", "0").toBool();
                 sblock.dest_fire = blockset.value("destruct-fireball", "0").toBool();
 
-                imgFile = blockset.value("spawn-on-destroy", "0").toString();
-                if(imgFile!="0")
+                Temp01 = blockset.value("spawn-on-destroy", "0").toString();
+                if(Temp01!="0")
                 {
-                    tmp =  imgFile.split("-", QString::SkipEmptyParts);
+                    tmp =  Temp01.split("-", QString::SkipEmptyParts);
                     if(tmp.size()==2)
                     {
                         if(tmp[0]=="npc")
@@ -135,9 +203,29 @@ void dataconfigs::loadLevelBlocks()
                 sblock.onhit_block= blockset.value("onhit-block", "2").toInt();
                 sblock.algorithm= blockset.value("algorithm", "2").toInt();
                 sblock.view = (int)(blockset.value("view", "background").toString()=="foreground");
-                sblock.animated = (blockset.value("animated", "0").toString()=="1");
+                sblock.animated = blockset.value("animated", "0").toBool();
+                sblock.animation_rev = blockset.value("animation-reverse", "0").toBool(); //Reverse animation
+                sblock.animation_bid = blockset.value("animation-bidirectional", "0").toBool(); //Bidirectional animation
                 sblock.frames = blockset.value("frames", "1").toInt();
                 sblock.framespeed = blockset.value("framespeed", "125").toInt();
+
+                sblock.frame_h = (sblock.animated? qRound(qreal(sblock.image.height())/sblock.frames) : sblock.image.height());
+
+                sblock.display_frame = blockset.value("display-frame", "0").toInt();
+
+                long iTmp;
+                iTmp = blockset.value("default-invisible", "-1").toInt();
+                sblock.default_invisible = (iTmp>=0);
+                sblock.default_invisible_value = (iTmp>=0)?(bool)iTmp:false;
+
+                iTmp = blockset.value("default-slippery", "-1").toInt();
+                sblock.default_slippery = (iTmp>=0);
+                sblock.default_slippery_value = (iTmp>=0)?(bool)iTmp:false;
+
+                iTmp = blockset.value("default-npc-content", "-1").toInt();
+                sblock.default_content = (iTmp>=0);
+                sblock.default_content_value = (iTmp>=0) ? iTmp : 0;
+
                 sblock.id = i;
                 main_block.push_back(sblock);
 
@@ -145,18 +233,19 @@ void dataconfigs::loadLevelBlocks()
                 if(i < (unsigned int)index_blocks.size())
                     index_blocks[i].i = i-1;
 
+            skipBLOCK:
             blockset.endGroup();
 
           if( blockset.status()!=QSettings::NoError)
           {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i));
+            addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), QtCriticalMsg);
             break;
           }
        }
 
        if((unsigned int)main_block.size()<block_total)
        {
-           WriteToLog(QtWarningMsg, QString("Not all blocks loaded: total:%1, loaded: %2)").arg(block_total).arg(main_block.size()));
+           addError(QString("Not all blocks loaded! Total: %1, Loaded: %2)").arg(block_total).arg(main_block.size()), QtWarningMsg);
        }
 
 }

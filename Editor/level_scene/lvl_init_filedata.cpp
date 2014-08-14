@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,26 +13,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#include "../edit_level/level_edit.h"
 
-
-
-/* ////////////////////////////////////The Trach///////////////////////////////////
-void LvlScene::placeBox(float x, float y)
-{
-    QGraphicsItem *	box = addPixmap(QPixmap(QApplication::applicationDirPath() + "/" + "data/graphics/level/block/block-8.gif"));
-    box->setPos(x, y);
-    if (itemCollidesWith(box))
-        removeItem(box);
-    else
-        box->setData(0, "Box");
-}
-*/
 
 // //////////////////////////Apply used sections///////////////////////////////////////
 void LvlScene::makeSectionBG(QProgressDialog &progress)
@@ -47,9 +34,9 @@ void LvlScene::makeSectionBG(QProgressDialog &progress)
 
         total++;
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            /*progress.setValue(progress.value()+1);
+        else*/ return;
     }
 
 }
@@ -66,9 +53,9 @@ void LvlScene::setBlocks(QProgressDialog &progress)
         //Add block to scene
         placeBlock(LvlData->blocks[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 }
 
@@ -86,9 +73,9 @@ void LvlScene::setBGO(QProgressDialog &progress)
         //add BGO to scene
         placeBGO(LvlData->bgo[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -105,9 +92,9 @@ void LvlScene::setNPC(QProgressDialog &progress)
         //add NPC to scene
         placeNPC(LvlData->npc[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -122,9 +109,9 @@ void LvlScene::setWaters(QProgressDialog &progress)
         //add Water to scene
         placeWater(LvlData->water[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -141,10 +128,9 @@ void LvlScene::setDoors(QProgressDialog &progress)
         //add Doors points to scene
         placeDoor(LvlData->doors[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else
-            return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 }
 

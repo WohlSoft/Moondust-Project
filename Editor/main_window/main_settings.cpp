@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,10 +13,8 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
@@ -27,188 +26,40 @@
 #include "global_settings.h"
 
 QString GlobalSettings::locale="";
-long GlobalSettings::animatorItemsLimit=10000;
+long GlobalSettings::animatorItemsLimit=25000;
+QString GlobalSettings::openPath=".";
+QString GlobalSettings::savePath=".";
+QString GlobalSettings::savePath_npctxt=".";
+
+LevelEditingSettings GlobalSettings::LvlOpts;
+
+bool GlobalSettings::autoPlayMusic=false;
+int GlobalSettings::musicVolume=100;
+
+bool GlobalSettings::LevelToolBoxVis=true;
+bool GlobalSettings::WorldToolBoxVis=true;
+bool GlobalSettings::WorldSettingsToolboxVis=false;
+bool GlobalSettings::WorldSearchBoxVis=false;
+
+bool GlobalSettings::SectionToolBoxVis=false;
+bool GlobalSettings::LevelDoorsBoxVis=false;
+bool GlobalSettings::LevelLayersBoxVis=false;
+bool GlobalSettings::LevelEventsBoxVis=false;
+bool GlobalSettings::LevelSearchBoxVis=false;
+
+QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
+QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
+QTabWidget::TabPosition GlobalSettings::WLDToolboxPos = QTabWidget::West;
+
+int GlobalSettings::lastWinType=0;
 
 QString LvlMusPlay::currentCustomMusic;
-long LvlMusPlay::currentMusicId;
+long LvlMusPlay::currentMusicId=0;
+long LvlMusPlay::currentWldMusicId=0;
+long LvlMusPlay::currentSpcMusicId=0;
 bool LvlMusPlay::musicButtonChecked;
 bool LvlMusPlay::musicForceReset=false;
-
-
-void MainWindow::setDefLang()
-{
-    /*
-     * //Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
-     */
-    WriteToLog(QtDebugMsg, QString("Lang->Translator loaging...."));
-
-    QString defaultLocale = QLocale::system().name();
-    defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
-
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
-    QSettings settings(inifile, QSettings::IniFormat);
-
-    settings.beginGroup("Main");
-            GlobalSettings::locale = settings.value("language", defaultLocale).toString();
-    settings.endGroup();
-
-    WriteToLog(QtDebugMsg, QString("Lang->config was loaded"));
-
-    WriteToLog(QtDebugMsg, QString("Lang->Setting slot...."));
-    connect(ui->menuLanguage, SIGNAL(triggered(QAction *)), this, SLOT(slotLanguageChanged(QAction *)));
-    WriteToLog(QtDebugMsg, QString("Lang->seted"));
-
-       m_langPath = QApplication::applicationDirPath();
-       m_langPath.append("/languages");
-
-       langListSync();
-
-       m_currLang = GlobalSettings::locale;
-       QLocale locale = QLocale(m_currLang);
-       QLocale::setDefault(locale);
-
-       bool ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-                WriteToLog(QtDebugMsg, QString("Translation: %1").arg((int)ok));
-       if(ok)
-        qApp->installTranslator(&m_translator);
-
-       ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-                WriteToLog(QtDebugMsg, QString("QT Translation: %1").arg((int)ok));
-       if(ok)
-        qApp->installTranslator(&m_translatorQt);
-
-       ui->retranslateUi(this);
-}
-
-void MainWindow::langListSync()
-{
-    // format systems language
-    ui->menuLanguage->clear();
-
-    QDir dir(m_langPath);
-    QStringList fileNames = dir.entryList(QStringList("editor_*.qm"));
-    for (int i = 0; i < fileNames.size(); ++i)
-        {
-            // get locale extracted by filename
-            QString locale;
-            locale = fileNames[i];                  // "TranslationExample_de.qm"
-            locale.truncate(locale.lastIndexOf('.'));   // "TranslationExample_de"
-            locale.remove(0, locale.indexOf('_') + 1);   // "de"
-
-            QString lang = QLocale::languageToString(QLocale(locale).language());
-            QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
-
-            QAction *action = new QAction(ico, lang, this);
-            action->setCheckable(true);
-            action->setData(locale);
-
-            WriteToLog(QtDebugMsg, QString("Locale: %1 %2").arg(m_langPath).arg(locale));
-
-            ui->menuLanguage->addAction(action);
-
-            if (GlobalSettings::locale == locale)
-            {
-                action->setChecked(true);
-            }
-        }
-
-    if(fileNames.size()==0)
-    {
-        QAction *action = ui->menuLanguage->addAction("[translates was not loaded!]");
-        action->setCheckable(false);
-        action->setDisabled(true);
-    }
-
-}
-
-void MainWindow::slotLanguageChanged(QAction* action)
-{
-    WriteToLog(QtDebugMsg, QString("Translation->SlotStarted"));
-    if(0 != action)
-    {
-        // load the language dependant on the action content
-        GlobalSettings::locale = m_currLang;
-        loadLanguage(action->data().toString());
-    }
-}
-
-bool MainWindow::switchTranslator(QTranslator& translator, const QString& filename)
-{
-    // remove the old translator
-    qApp->removeTranslator(&translator);
-    // load the new translator
-    bool ok = translator.load(filename);
-    WriteToLog(QtDebugMsg, QString("Translation: %1 %2").arg((int)ok).arg(filename));
-
-    if(ok)
-        qApp->installTranslator(&translator);
-    WriteToLog(QtDebugMsg, QString("Translation-> changed"));
-    return ok;
-}
-
-void MainWindow::loadLanguage(const QString& rLanguage)
-{
-    if(m_currLang != rLanguage)
-    {
-        m_currLang = rLanguage;
-        QLocale locale = QLocale(m_currLang);
-        GlobalSettings::locale = m_currLang;
-
-        QLocale::setDefault(locale);
-
-        QString languageName = QLocale::languageToString(locale.language());
-
-        bool ok = switchTranslator(m_translatorQt, m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-             ok = switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
-
-        WriteToLog(QtDebugMsg, QString("Translation->try to retranslate"));
-
-        if(ok)
-        {
-            ui->retranslateUi(this);
-            WriteToLog(QtDebugMsg, QString("Translation-> done"));
-        }
-        else
-               WriteToLog(QtDebugMsg, QString("Translation-> not changed (not okay)"));
-
-        //Sync dynamic menus
-        SyncRecentFiles();
-        updateWindowMenu();
-        langListSync();
-
-        ui->statusBar->showMessage(tr("Current Language changed to %1").arg(languageName));
-    }
-}
-
-/*
-void MainWindow::changeEvent(QEvent* event)
-{
-    if(NULL != event)
-    {
-        switch(event->type())
-        {
-        // this event is send if a translator is loaded
-        case QEvent::LanguageChange:
-            ui->retranslateUi(this);
-            break;
-        // this event is send, if the system, language changes
-        case QEvent::LocaleChange:
-            {
-                QString locale = QLocale::system().name();
-                locale.truncate(locale.lastIndexOf('_'));
-                loadLanguage(locale);
-            }
-            break;
-        default:
-            break;
-        }
-    }
-
-    QMainWindow::changeEvent(event);
-}*/
-
-
-
+int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
 
 void MainWindow::setDefaults()
 {
@@ -216,18 +67,21 @@ void MainWindow::setDefaults()
 
     MusicPlayer = new QMediaPlayer;
 
-    LvlOpts.animationEnabled = true;
-    LvlOpts.collisionsEnabled = true;
+    GlobalSettings::LvlOpts.animationEnabled = true;
+    GlobalSettings::LvlOpts.collisionsEnabled = true;
 
-    LastOpenDir = ".";
-    lastWinType=0;
-    LevelToolBoxVis = true; //Level toolbox
-    SectionToolBoxVis = false; //Section Settings
-    LevelDoorsBoxVis = false; //Doors box
-    LevelLayersBoxVis = false; //Layers box
+//    LastOpenDir = ".";
+//    lastWinType=0;
+//    LevelToolBoxVis = true; //Level toolbox
+//    SectionToolBoxVis = false; //Section Settings
+//    LevelDoorsBoxVis = false; //Doors box
+//    LevelLayersBoxVis = false; //Layers box
+//    LevelEventsBoxVis = false; //Events box
 
-    WorldToolBoxVis = false;
-    autoPlayMusic = false;
+    LvlItemPropsLock=true;
+
+//    WorldToolBoxVis = false;
+//    autoPlayMusic = false;
 
     LvlMusPlay::currentCustomMusic = "";
     LvlMusPlay::currentMusicId = 0;
@@ -241,12 +95,81 @@ void MainWindow::setDefaults()
 void MainWindow::setUiDefults()
 {
     #ifdef Q_OS_MAC
-    this->setWindowIcon(QIcon(":/images/mac/mushroom.icns"));
+    this->setWindowIcon(QIcon(":/cat_builder.icns"));
     #endif
 
-    //Applay objects into tools
+    //Apply objects into tools
     setLevelSectionData();
     setItemBoxes();
+    setWldItemBoxes();
+
+    setSoundList();
+
+    WldLvlExitTypeListReset();
+
+    //MainWindow Geometry;
+    QRect mwg = this->geometry();
+
+    int GOffset=240;
+    //Define the default geometry for toolboxes
+    ui->DoorsToolbox->setGeometry(
+                mwg.x()+mwg.width()-ui->DoorsToolbox->width()-GOffset,
+                mwg.y()+120,
+                ui->DoorsToolbox->width(),
+                ui->DoorsToolbox->height()
+                );
+
+    ui->LevelSectionSettings->setGeometry(
+                mwg.x()+mwg.width()-ui->LevelSectionSettings->width()-GOffset,
+                mwg.y()+120,
+                ui->LevelSectionSettings->width(),
+                ui->LevelSectionSettings->height()
+                );
+    ui->LevelLayers->setGeometry(
+                mwg.x()+mwg.width()-ui->LevelLayers->width()-GOffset,
+                mwg.y()+120,
+                ui->LevelLayers->width(),
+                ui->LevelLayers->height()
+                );
+    ui->LevelEventsToolBox->setGeometry(
+                mwg.x()+mwg.width()-ui->LevelEventsToolBox->width()-GOffset,
+                mwg.y()+120,
+                ui->LevelEventsToolBox->width(),
+                ui->LevelEventsToolBox->height()
+                );
+    ui->ItemProperties->setGeometry(
+                mwg.x()+mwg.width()-ui->ItemProperties->width()-GOffset,
+                mwg.y()+120,
+                ui->ItemProperties->width(),
+                ui->ItemProperties->height()
+                );
+    ui->FindDock->setGeometry(
+                mwg.x()+mwg.width()-ui->FindDock->width()-GOffset,
+                mwg.y()+120,
+                ui->FindDock->width(),
+                ui->FindDock->height()
+                );
+
+    ui->WLD_ItemProps->setGeometry(
+                mwg.x()+mwg.width()-ui->WLD_ItemProps->width()-GOffset,
+                mwg.y()+120,
+                ui->WLD_ItemProps->width(),
+                ui->WLD_ItemProps->height()
+                );
+
+    ui->WorldSettings->setGeometry(
+                mwg.x()+mwg.width()-ui->WorldSettings->width()-GOffset-200,
+                mwg.y()+120,
+                ui->WorldSettings->width(),
+                ui->WorldSettings->height()
+                );
+
+    ui->WorldFindDock->setGeometry(
+                mwg.x()+mwg.width()-ui->WorldFindDock->width()-GOffset,
+                mwg.y()+120,
+                ui->WorldFindDock->width(),
+                ui->WorldFindDock->height()
+                );
 
     loadSettings();
 
@@ -258,58 +181,188 @@ void MainWindow::setUiDefults()
     connect(windowMapper, SIGNAL(mapped(QWidget*)),
         this, SLOT(setActiveSubWindow(QWidget*)));
 
-    ui->actionPlayMusic->setChecked(autoPlayMusic);
+    ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
 
     ui->centralWidget->cascadeSubWindows();
 
     ui->applyResize->setVisible(false);
     ui->cancelResize->setVisible(false);
 
+    ui->ResizingToolbar->setVisible(false);
+    ui->PlacingToolbar->setVisible(false);
 
-    ui->WorldToolBox->hide();
     ui->LevelToolBox->hide();
 
 
     ui->DoorsToolbox->hide();
     ui->LevelLayers->hide();
+    ui->LevelEventsToolBox->hide();
     ui->LevelSectionSettings->hide();
 
     ui->ItemProperties->hide();
+    ui->FindDock->hide();
 
+    ui->WorldToolBox->hide();
+    ui->WorldSettings->hide();
+    ui->WLD_ItemProps->hide();
+    ui->WorldFindDock->hide();
 
-    ui->menuView->setEnabled(0);
+    ui->menuView->setEnabled(false);
 
-    ui->menuWindow->setEnabled(1);
+    ui->menuWindow->setEnabled(true);
 
-    ui->menuLevel->setEnabled(0);
-    ui->menuWorld->setEnabled(0);
-    ui->LevelObjectToolbar->setVisible(0);
+    ui->menuLevel->setEnabled(false);
+    ui->menuWorld->setEnabled(false);
+    ui->LevelObjectToolbar->setVisible(false);
+    ui->WorldObjectToolbar->setVisible(false);
 
-    ui->actionLVLToolBox->setVisible(0);
-    ui->actionWarpsAndDoors->setVisible(0);
-    ui->actionSection_Settings->setVisible(0);
-    ui->actionWarpsAndDoors->setVisible(0);
-    ui->actionWLDToolBox->setVisible(0);
-    ui->actionGridEn->setChecked(1);
+    ui->actionLVLToolBox->setVisible(false);
+    ui->actionWarpsAndDoors->setVisible(false);
+    ui->actionSection_Settings->setVisible(false);
+    ui->actionWarpsAndDoors->setVisible(false);
+    ui->actionWLDToolBox->setVisible(false);
+    ui->actionGridEn->setChecked(true);
 
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
 
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+    ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+    ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+    ui->centralWidget->setTabsClosable(true);
 
-    //Start event detector
-    TickTackLock = false;
+//    //Start event detector
+//    TickTackLock = false;
 
-    //set timer for event detector loop
-    TickTackTimer = new QTimer(this);
-    connect(
-            TickTackTimer, SIGNAL(timeout()),
-            this,
-            SLOT( TickTack() ) );
+//    //set timer for event detector loop
+//    TickTackTimer = new QTimer(this);
+//    connect(
+//            TickTackTimer, SIGNAL(timeout()),
+//            this,
+//            SLOT( TickTack() ) );
 
-    //start event detection loop
-    TickTackTimer->start(1);
+//    //start event detection loop
+//    TickTackTimer->start(1);
+    muVol = new QSlider(Qt::Horizontal);
+    muVol->setMaximumWidth(100);
+    muVol->setMinimum(0);
+    muVol->setMaximum(100);
+    muVol->setValue(GlobalSettings::musicVolume);
+    MusicPlayer->setVolume(GlobalSettings::musicVolume);
+    ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
+    ui->EditionToolBar->insertSeparator(ui->actionAnimation);
+
+    connect(muVol, SIGNAL(valueChanged(int)), MusicPlayer, SLOT(setVolume(int)));
+
+    curSearchBlock.id = 0;
+    curSearchBlock.index = 0;
+    curSearchBlock.npc_id = 0;
+
+    curSearchBGO.id = 0;
+    curSearchBGO.index = 0;
+
+    curSearchNPC.id = 0;
+    curSearchNPC.index = 0;
+
+    curSearchTile.id = 0;
+    curSearchTile.index = 0;
+
+    curSearchScenery.id = 0;
+    curSearchScenery.index = 0;
+
+    curSearchPath.id = 0;
+    curSearchPath.index = 0;
+
+    curSearchLevel.id = 0;
+    curSearchLevel.index = 0;
+
+    curSearchMusicbox.id = 0;
+    curSearchMusicbox.index = 0;
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
+    connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
+    //enable & disable
+    connect(ui->Find_Check_TypeBlock, SIGNAL(toggled(bool)), ui->Find_Button_TypeBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeBGO, SIGNAL(toggled(bool)), ui->Find_Button_TypeBGO, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeNPC, SIGNAL(toggled(bool)), ui->Find_Button_TypeNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_PriorityBGO, SIGNAL(toggled(bool)), ui->Find_Spin_PriorityBGO, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_LayerBlock, SIGNAL(toggled(bool)), ui->Find_Combo_LayerBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_LayerBGO, SIGNAL(toggled(bool)), ui->Find_Combo_LayerBGO, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_LayerNPC, SIGNAL(toggled(bool)), ui->Find_Combo_LayerNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_InvisibleBlock, SIGNAL(toggled(bool)), ui->Find_Check_InvisibleActiveBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_SlipperyBlock, SIGNAL(toggled(bool)), ui->Find_Check_SlipperyActiveBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_ContainsNPCBlock, SIGNAL(toggled(bool)), ui->Find_Button_ContainsNPCBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_EventDestoryedBlock, SIGNAL(toggled(bool)), ui->Find_Combo_EventDestoryedBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_EventHitedBlock, SIGNAL(toggled(bool)), ui->Find_Combo_EventHitedBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_EventLayerEmptyBlock, SIGNAL(toggled(bool)), ui->Find_Combo_EventLayerEmptyBlock, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_DirNPC, SIGNAL(toggled(bool)), ui->Find_Radio_DirLeftNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_DirNPC, SIGNAL(toggled(bool)), ui->Find_Radio_DirRandomNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_DirNPC, SIGNAL(toggled(bool)), ui->Find_Radio_DirRightNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_FriendlyNPC, SIGNAL(toggled(bool)), ui->Find_Check_FriendlyActiveNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_NotMoveNPC, SIGNAL(toggled(bool)), ui->Find_Check_NotMoveActiveNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_BossNPC, SIGNAL(toggled(bool)), ui->Find_Check_BossActiveNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_MsgNPC, SIGNAL(toggled(bool)), ui->Find_Edit_MsgNPC, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_MsgNPC, SIGNAL(toggled(bool)), ui->Find_Check_MsgSensitiveNPC, SLOT(setEnabled(bool)));
+
+    //for world search
+    connect(ui->Find_Check_TypeLevel, SIGNAL(toggled(bool)), ui->Find_Button_TypeLevel, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_PathBackground, SIGNAL(toggled(bool)), ui->Find_Check_PathBackgroundActive, SLOT(setEnabled(bool)));
+
+    //reset if modify
+    connect(ui->Find_Button_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Button_TypeBGO, SIGNAL(clicked()), this, SLOT(resetBGOSearch()));
+    connect(ui->Find_Button_TypeNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Spin_PriorityBGO, SIGNAL(valueChanged(int)), this, SLOT(resetBGOSearch()));
+    connect(ui->Find_Combo_LayerBlock, SIGNAL(activated(int)), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Combo_LayerBGO, SIGNAL(activated(int)), this, SLOT(resetBGOSearch()));
+    connect(ui->Find_Combo_LayerNPC, SIGNAL(activated(int)), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_InvisibleActiveBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Check_SlipperyActiveBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Button_ContainsNPCBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Combo_EventDestoryedBlock, SIGNAL(activated(int)), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Combo_EventHitedBlock, SIGNAL(activated(int)), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Combo_EventLayerEmptyBlock, SIGNAL(activated(int)), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Radio_DirLeftNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Radio_DirRandomNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Radio_DirRightNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_FriendlyActiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_NotMoveActiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_BossActiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Edit_MsgNPC, SIGNAL(textEdited(QString)), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_MsgSensitiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+
+    //for world
+    connect(ui->Find_Button_TypeLevel, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_PathBackgroundActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+
+    //also checkboxes
+    connect(ui->Find_Check_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Check_LayerBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Check_InvisibleBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Check_SlipperyBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Check_ContainsNPCBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Check_EventDestoryedBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+    connect(ui->Find_Check_EventLayerEmptyBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
+
+    connect(ui->Find_Check_TypeBGO, SIGNAL(clicked()), this, SLOT(resetBGOSearch()));
+    connect(ui->Find_Check_LayerBGO, SIGNAL(clicked()), this, SLOT(resetBGOSearch()));
+    connect(ui->Find_Check_PriorityBGO, SIGNAL(clicked()), this, SLOT(resetBGOSearch()));
+
+    connect(ui->Find_Check_TypeNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_LayerNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_DirNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_FriendlyNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_NotMoveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_BossNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+    connect(ui->Find_Check_MsgNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+
+    //for world
+    connect(ui->Find_Check_TypeLevel, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_PathBackground, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindow(QMdiSubWindow*)));
+
+    updateWindowMenu();
 }
 
 
@@ -320,28 +373,55 @@ void MainWindow::loadSettings()
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
-        LastOpenDir = settings.value("lastpath", ".").toString();
-        LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
-        WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
-        SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
-        LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
-        LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
+        //GlobalSettings::LastOpenDir = settings.value("lastpath", ".").toString();
+        GlobalSettings::openPath = settings.value("lastpath", ".").toString();
+        GlobalSettings::savePath = settings.value("lastsavepath", ".").toString();
+        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", ".").toString();
 
-        LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
-        LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
+        GlobalSettings::LevelToolBoxVis = settings.value("level-tb-visible", "true").toBool();
+        GlobalSettings::SectionToolBoxVis = settings.value("section-tb-visible", "false").toBool();
+        GlobalSettings::LevelDoorsBoxVis = settings.value("level-doors-vis", "false").toBool();
+        GlobalSettings::LevelLayersBoxVis = settings.value("level-layers-vis", "false").toBool();
+        GlobalSettings::LevelEventsBoxVis = settings.value("level-events-vis", "false").toBool();
+        GlobalSettings::LevelSearchBoxVis = settings.value("level-search-vis", "false").toBool();
+
+        GlobalSettings::WorldToolBoxVis = settings.value("world-tb-visible", "true").toBool();
+        GlobalSettings::WorldSettingsToolboxVis = settings.value("world-props-visible", "false").toBool();
+        GlobalSettings::WorldSearchBoxVis = settings.value("world-search-visible", "false").toBool();
+
+        GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
+        GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
-        autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
+        GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
+        GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
+
+        GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
+        GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
+        GlobalSettings::WLDToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("world-toolbox-pos", static_cast<int>(QTabWidget::West)).toInt());
+
 
         ui->DoorsToolbox->setFloating(settings.value("doors-tool-box-float", true).toBool());
         ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
         ui->LevelLayers->setFloating(settings.value("level-layers-float", true).toBool());
+        ui->LevelEventsToolBox->setFloating(settings.value("level-events-float", true).toBool());
         ui->ItemProperties->setFloating(settings.value("item-props-box-float", true).toBool());
+        ui->FindDock->setFloating(settings.value("level-search-float", true).toBool());
+        //ui->WorldToolBox->setFloating(settings.value("world-item-box-float", false).toBool());
+        ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
+        ui->WLD_ItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
+        ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
 
         ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
         ui->LevelLayers->restoreGeometry(settings.value("level-layers-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
+        ui->LevelEventsToolBox->restoreGeometry(settings.value("level-events-geometry", ui->LevelLayers->saveGeometry()).toByteArray());
         ui->ItemProperties->restoreGeometry(settings.value("item-props-box-geometry", ui->ItemProperties->saveGeometry()).toByteArray());
+        ui->FindDock->restoreGeometry(settings.value("level-search-geometry", ui->FindDock->saveGeometry()).toByteArray());
+        ui->WorldToolBox->restoreGeometry(settings.value("world-item-box-geometry", ui->WorldToolBox->saveGeometry()).toByteArray());
+        ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
+        ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
+        ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
@@ -363,31 +443,57 @@ void MainWindow::saveSettings()
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");
     settings.setValue("pos", pos());
-    settings.setValue("lastpath", LastOpenDir);
+    settings.setValue("lastpath", GlobalSettings::openPath);
+    settings.setValue("lastsavepath", GlobalSettings::savePath);
+    settings.setValue("lastsavepath-npctxt", GlobalSettings::savePath_npctxt);
 
-    settings.setValue("level-tb-visible", LevelToolBoxVis);
-    settings.setValue("world-tb-visible", WorldToolBoxVis);
-    settings.setValue("section-tb-visible", SectionToolBoxVis);
-    settings.setValue("level-layers-vis", LevelLayersBoxVis);
-    settings.setValue("level-doors-vis", LevelDoorsBoxVis);
+    settings.setValue("world-tb-visible", GlobalSettings::WorldToolBoxVis);
+    settings.setValue("world-props-visible", GlobalSettings::WorldSettingsToolboxVis);
+    settings.setValue("world-search-visible", GlobalSettings::WorldSearchBoxVis);
+
+    settings.setValue("level-tb-visible", GlobalSettings::LevelToolBoxVis);
+    settings.setValue("section-tb-visible", GlobalSettings::SectionToolBoxVis);
+    settings.setValue("level-layers-vis", GlobalSettings::LevelLayersBoxVis);
+    settings.setValue("level-events-vis", GlobalSettings::LevelEventsBoxVis);
+    settings.setValue("level-doors-vis", GlobalSettings::LevelDoorsBoxVis);
+    settings.setValue("level-search-vis", GlobalSettings::LevelSearchBoxVis);
 
     settings.setValue("doors-tool-box-float", ui->DoorsToolbox->isFloating());
     settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
     settings.setValue("level-layers-float", ui->LevelLayers->isFloating());
+    settings.setValue("level-events-float", ui->LevelEventsToolBox->isFloating());
     settings.setValue("item-props-box-float", ui->ItemProperties->isFloating());
+    settings.setValue("level-search-float", ui->FindDock->isFloating());
+
+    settings.setValue("world-item-box-float", ui->WorldToolBox->isFloating());
+    settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
+    settings.setValue("world-itemprops-box-float", ui->WLD_ItemProps->isFloating());
+    settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
 
     settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
     settings.setValue("level-layers-geometry", ui->LevelLayers->saveGeometry());
+    settings.setValue("level-events-geometry", ui->LevelEventsToolBox->saveGeometry());
     settings.setValue("item-props-box-geometry", ui->ItemProperties->saveGeometry());
+    settings.setValue("level-search-geometry", ui->FindDock->saveGeometry());
+
+    settings.setValue("world-item-box-geometry", ui->WorldToolBox->saveGeometry());
+    settings.setValue("world-settings-box-geometry", ui->WorldSettings->saveGeometry());
+    settings.setValue("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry());
+    settings.setValue("world-search-geometry", ui->WorldFindDock->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
 
-    settings.setValue("autoPlayMusic", autoPlayMusic);
+    settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
+    settings.setValue("music-volume", MusicPlayer->volume());
 
-    settings.setValue("animation", LvlOpts.animationEnabled);
-    settings.setValue("collisions", LvlOpts.collisionsEnabled);
+    settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
+    settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
+    settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
+
+    settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
+    settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
     settings.setValue("language", GlobalSettings::locale);
@@ -428,27 +534,40 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
 
-    appSettings->autoPlayMusic = autoPlayMusic;
-    appSettings->Animation = LvlOpts.animationEnabled;
-    appSettings->Collisions = LvlOpts.collisionsEnabled;
+    appSettings->autoPlayMusic = GlobalSettings::autoPlayMusic;
+    appSettings->Animation = GlobalSettings::LvlOpts.animationEnabled;
+    appSettings->Collisions = GlobalSettings::LvlOpts.collisionsEnabled;
 
     appSettings->AnimationItemLimit = GlobalSettings::animatorItemsLimit;
+
+    appSettings->MainWindowView = GlobalSettings::MainWindowView;
+    appSettings->LVLToolboxPos = GlobalSettings::LVLToolboxPos;
+    appSettings->WLDToolboxPos = GlobalSettings::WLDToolboxPos;
 
     appSettings->applySettings();
 
     if(appSettings->exec()==QDialog::Accepted)
     {
-        autoPlayMusic = appSettings->autoPlayMusic;
+        GlobalSettings::autoPlayMusic = appSettings->autoPlayMusic;
         GlobalSettings::animatorItemsLimit = appSettings->AnimationItemLimit;
-        LvlOpts.animationEnabled = appSettings->Animation;
-        LvlOpts.collisionsEnabled = appSettings->Collisions;
+        GlobalSettings::LvlOpts.animationEnabled = appSettings->Animation;
+        GlobalSettings::LvlOpts.collisionsEnabled = appSettings->Collisions;
 
-        ui->actionAnimation->setChecked(LvlOpts.animationEnabled);
-        on_actionAnimation_triggered(LvlOpts.animationEnabled);
-        ui->actionCollisions->setChecked(LvlOpts.collisionsEnabled);
-        on_actionCollisions_triggered(LvlOpts.collisionsEnabled);
+        ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
+        on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
+        ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
+        on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
+
+        GlobalSettings::MainWindowView = appSettings->MainWindowView;
+        GlobalSettings::LVLToolboxPos = appSettings->LVLToolboxPos;
+        GlobalSettings::WLDToolboxPos = appSettings->WLDToolboxPos;
+
+        ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+        ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
+        ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
 
         saveSettings();
     }
+    delete appSettings;
 
 }

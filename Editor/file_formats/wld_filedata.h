@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,12 +13,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef WLD_FILEDATA_H
 #define WLD_FILEDATA_H
+
+#include <QString>
+#include <QVector>
 
 //////////////////////World file Data//////////////////////
 struct WorldTiles
@@ -25,6 +28,10 @@ struct WorldTiles
     long x;
     long y;
     unsigned long id;
+
+    //editing
+    unsigned int array_id;
+    unsigned int index;
 };
 
 struct WorldScenery
@@ -32,6 +39,10 @@ struct WorldScenery
     long x;
     long y;
     unsigned long id;
+
+    //editing
+    unsigned int array_id;
+    unsigned int index;
 };
 
 struct WorldPaths
@@ -39,6 +50,10 @@ struct WorldPaths
     long x;
     long y;
     unsigned long id;
+
+    //editing
+    unsigned int array_id;
+    unsigned int index;
 };
 
 struct WorldLevels
@@ -59,6 +74,10 @@ struct WorldLevels
     long gotox;
     long gotoy;
     bool bigpathbg;
+
+    //editing
+    unsigned int array_id;
+    unsigned int index;
 };
 
 struct WorldMusic
@@ -66,20 +85,29 @@ struct WorldMusic
     long x;
     long y;
     unsigned long id;
+
+    //editing
+    unsigned int array_id;
+    unsigned int index;
 };
 
 struct WorldData
 {
     bool ReadFileValid;
+
     QString EpisodeTitle;
     bool nocharacter1;
     bool nocharacter2;
     bool nocharacter3;
     bool nocharacter4;
     bool nocharacter5;
+
+    QList<bool > nocharacter;
+
     QString autolevel;
     bool noworldmap;
     bool restartlevel;
+
     unsigned int stars;
 
     QString author1;
@@ -89,10 +117,24 @@ struct WorldData
     QString author5;
 
     QVector<WorldTiles > tiles;
+    unsigned int tile_array_id;
     QVector<WorldScenery > scenery;
+    unsigned int scene_array_id;
     QVector<WorldPaths > paths;
+    unsigned int path_array_id;
     QVector<WorldLevels > levels;
+    unsigned int level_array_id;
     QVector<WorldMusic > music;
+    unsigned int musicbox_array_id;
+
+    //editing:
+    int CurSection;
+    bool playmusic;
+    int currentMusic;
+    bool modified;
+    bool untitled;
+    QString filename;
+    QString path;
 
 };
 

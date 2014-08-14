@@ -76,5 +76,45 @@
         <file alias="images/mac/mushroom.hqx">mushroom.hqx</file>
         <file alias="images/mac/mushroom.icns">mushroom.icns</file>
         <file>splash.png</file>
+        <file>images/events.png</file>
+        <file>images/conf_bad.png</file>
+        <file>images/conf_good.png</file>
+        <file>images/conf_warn.png</file>
+        <file>images/splash_editor.png</file>
+        <file>images/animation.png</file>
+        <file>images/search.png</file>
+        <file>images/cat/cat_16.png</file>
+        <file>images/cat/cat_32.png</file>
+        <file>images/cat/cat_48.png</file>
+        <file>images/cat/cat_128.png</file>
+        <file>images/cat/cat_256.png</file>
+        <file>PressStart2P.ttf</file>
+        <file>images/lock_tile_cl.png</file>
+        <file>images/lock_musicbox_op.png</file>
+        <file>images/lock_musicbox_cl.png</file>
+        <file>images/lock_levels_op.png</file>
+        <file>images/lock_levels_cl.png</file>
+        <file>images/lock_paths_op.png</file>
+        <file>images/lock_paths_cl.png</file>
+        <file>images/lock_scenery_op.png</file>
+        <file>images/lock_scenery_cl.png</file>
+        <file>images/lock_tile_op.png</file>
+        <file>images/overwrite.png</file>
+        <file>images/square_fill.png</file>
+        <file>images/resize_cancel.png</file>
+        <file>images/resize_accept.png</file>
+        <file>images/line_fill.png</file>
+        <file>images/set_point.png</file>
+        <file>images/extermal_tools/cat_gif2png_128.png</file>
+        <file>images/extermal_tools/cat_glasses_128.png</file>
+        <file>images/extermal_tools/cat_png2gif_128.png</file>
+        <file>cat_builder.icns</file>
+        <file>cat_builder.ico</file>
+        <file>cat_builder.hqx</file>
+        <file>images/cat_builder/cat_builder_16.png</file>
+        <file>images/cat_builder/cat_builder_32.png</file>
+        <file>images/cat_builder/cat_builder_48.png</file>
+        <file>images/cat_builder/cat_builder_128.png</file>
+        <file>images/cat_builder/cat_builder_256.png</file>
     </qresource>
 </RCC>

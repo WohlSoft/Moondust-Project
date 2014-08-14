@@ -2,9 +2,10 @@
  * Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software; you can redistribute it and/or modify
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; version 2 of the License
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,12 +13,11 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#include "../edit_level/level_edit.h"
 
 #include "item_block.h"
 #include "item_bgo.h"
@@ -45,7 +45,6 @@ LevelData LvlScene::copy(bool cut)
                 copyData.blocks.push_back(sourceBlock->blockData);
                 if(cut){
                     sourceBlock->removeFromArray();
-                    removeItem(*it);
                     delete (*it);
                 }
             }
@@ -56,7 +55,6 @@ LevelData LvlScene::copy(bool cut)
                 copyData.bgo.push_back(sourceBGO->bgoData);
                 if(cut){
                     sourceBGO->removeFromArray();
-                    removeItem(*it);
                     delete (*it);
                 }
             }
@@ -67,7 +65,6 @@ LevelData LvlScene::copy(bool cut)
                 copyData.npc.push_back(sourceNPC->npcData);
                 if(cut){
                     sourceNPC->removeFromArray();
-                    removeItem(*it);
                     delete (*it);
                 }
             }
@@ -78,7 +75,6 @@ LevelData LvlScene::copy(bool cut)
                 copyData.water.push_back(sourceWater->waterData);
                 if(cut){
                     sourceWater->removeFromArray();
-                    removeItem(*it);
                     delete (*it);
                 }
             }
@@ -150,6 +146,8 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         }
     }
 
+
+    bool npcPlaced=false;
     foreach (LevelBlock block, BufferIn.blocks){
         //Gen Copy of Block
         LevelBlock dumpBlock = block;
@@ -188,6 +186,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         placeNPC(dumpNPC, true);
         LvlData->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
+        npcPlaced=true;
     }
     foreach (LevelWater water, BufferIn.water){
         //Gen Copy of Water
@@ -201,11 +200,17 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         newData.water.push_back(dumpWater);
     }
 
+    if(npcPlaced)
+    {
+        if(opts.animationEnabled) stopAnimation();
+        if(opts.animationEnabled) startBlockAnimation();
+    }
+
     LvlData->modified = true;
     addPlaceHistory(newData);
 
     //refresh Animation control
-    if(opts.animationEnabled) stopAnimation();
-    if(opts.animationEnabled) startBlockAnimation();
+    //if(opts.animationEnabled) stopAnimation();
+    //if(opts.animationEnabled) startBlockAnimation();
 
 }
