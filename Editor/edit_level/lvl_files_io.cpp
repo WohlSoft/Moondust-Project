@@ -205,33 +205,35 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
 }
 
 
-bool leveledit::save()
+bool leveledit::save(bool savOptionsDialog)
 {
     if (isUntitled) {
-        return saveAs();
+        return saveAs(savOptionsDialog);
     } else {
         return saveFile(curFile);
     }
 }
 
-bool leveledit::saveAs()
+bool leveledit::saveAs(bool savOptionsDialog)
 {
-    SavingNotificationDialog* sav = new SavingNotificationDialog(false);
-    sav->setSavingTitle(tr("Please enter a level title for '%1'!").arg(userFriendlyCurrentFile()));
-    sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
-    QLineEdit* lvlNameBox = new QLineEdit();
-    sav->addUserItem(tr("Level title: "),lvlNameBox);
-    sav->setAdjustSize(400,150);
-    lvlNameBox->setText(LvlData.LevelName);
-    if(sav->exec() == QDialog::Accepted){
-        LvlData.LevelName = lvlNameBox->text();
-        lvlNameBox->deleteLater();
-        sav->deleteLater();
-        if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+    if(savOptionsDialog){
+        SavingNotificationDialog* sav = new SavingNotificationDialog(false);
+        sav->setSavingTitle(tr("Please enter a level title for '%1'!").arg(userFriendlyCurrentFile()));
+        sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
+        QLineEdit* lvlNameBox = new QLineEdit();
+        sav->addUserItem(tr("Level title: "),lvlNameBox);
+        sav->setAdjustSize(400,150);
+        lvlNameBox->setText(LvlData.LevelName);
+        if(sav->exec() == QDialog::Accepted){
+            LvlData.LevelName = lvlNameBox->text();
+            lvlNameBox->deleteLater();
+            sav->deleteLater();
+            if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+                return false;
+            }
+        }else{
             return false;
         }
-    }else{
-        return false;
     }
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
@@ -403,7 +405,7 @@ bool leveledit::maybeSave()
             lvlNameBox->deleteLater();
             sav->deleteLater();
             if(sav->savemode == SavingNotificationDialog::SAVE_SAVE){
-                return save();
+                return save(false);
             }else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
                 return false;
             }
