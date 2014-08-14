@@ -225,9 +225,9 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
             return QPixmap(m_baseSize, m_baseSize);
         return GraphicsHelps::squareImage(
                     m_conf->main_bgo[tarIndex].image.copy(0,
-                    m_conf->main_block[tarIndex].frame_h*m_conf->main_block[tarIndex].display_frame,
+                    m_conf->main_bgo[tarIndex].frame_h*m_conf->main_bgo[tarIndex].display_frame,
                     m_conf->main_bgo[tarIndex].image.width(),
-                    m_conf->main_block[tarIndex].frame_h ),
+                    m_conf->main_bgo[tarIndex].frame_h ),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
