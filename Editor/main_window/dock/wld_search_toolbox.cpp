@@ -39,11 +39,59 @@ void MainWindow::on_WorldFindDock_visibilityChanged(bool visible)
     ui->actionWLD_SearchBox->setChecked(visible);
 }
 
+void MainWindow::on_Find_Button_ResetLevel_clicked()
+{
+    if(!(currentSearches & SEARCH_LEVEL)){
+        ui->Find_Check_TypeLevel->setChecked(true);
+        ui->Find_Button_TypeLevel->setText(tr("[empty]"));
+        curSearchLevel.id = 0;
+        ui->Find_Check_PathBackgroundActive->setChecked(false);
+    }else{
+        currentSearches ^= SEARCH_LEVEL;
+        ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
+        ui->FindStartLevel->setText(tr("Search Level"));
+        curSearchLevel.index = 0;
+    }
+}
+
+void MainWindow::on_Find_Button_TypeLevel_clicked()
+{
+    ItemSelectDialog* selBlock = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,curSearchLevel.id);
+    if(selBlock->exec()==QDialog::Accepted){
+        int selected = selBlock->levelID;
+        curSearchLevel.id = selected;
+        ui->Find_Button_TypeLevel->setText(((selected>0)?QString("Level-%1").arg(selected):tr("[empty]")));
+    }
+    delete selBlock;
+}
 
 
 void MainWindow::on_FindStartLevel_clicked()
 {
-
+    if(!(currentSearches & SEARCH_LEVEL)){ //start search
+        if(activeChildWindow()==3){
+            currentSearches |= SEARCH_LEVEL;
+            ui->FindStartLevel->setText(tr("Next Level"));
+            ui->Find_Button_ResetLevel->setText(tr("Stop Search"));
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchLevel(edit)){
+                currentSearches ^= SEARCH_LEVEL;
+                ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
+                ui->FindStartLevel->setText(tr("Search Level"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Level search completed!"));
+            }
+        }
+    }else{ //middle in a search
+        if(activeChildWindow()==3){
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchLevel(edit)){
+                currentSearches ^= SEARCH_LEVEL;
+                ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
+                ui->FindStartLevel->setText(tr("Search Level"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Level search completed!"));
+            }
+        }
+    }
 }
 
 bool MainWindow::doSearchLevel(WorldEdit *edit)
@@ -53,6 +101,12 @@ bool MainWindow::doSearchLevel(WorldEdit *edit)
         for(int i = curSearchLevel.index+1; i < gr.size(); ++i){
             if(gr[i]->data(0).toString()=="LEVEL"){
                 bool toBeFound = true;
+                if(ui->Find_Check_TypeLevel->isChecked()&&curSearchLevel.id!=0&&toBeFound){
+                    toBeFound = ((ItemLevel*)gr[i])->levelData.id == (unsigned int)curSearchLevel.id;
+                }
+                if(ui->Find_Check_PathBackground->isChecked()&&toBeFound){
+                    toBeFound = ((ItemLevel*)gr[i])->levelData.pathbg == ui->Find_Check_PathBackgroundActive->isChecked();
+                }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
                     {
@@ -69,4 +123,24 @@ bool MainWindow::doSearchLevel(WorldEdit *edit)
     //end search
     curSearchLevel.index = 0;
     return true;
+}
+
+void MainWindow::resetAllSearchFieldsWLD()
+{
+    resetAllSearchesWLD();
+
+    on_Find_Button_ResetLevel_clicked();
+}
+
+void MainWindow::resetAllSearchesWLD()
+{
+    resetLevelSearch();
+}
+
+void MainWindow::resetLevelSearch()
+{
+    if(lockResetWorld) return;
+    lockResetWorld = true;
+    if(currentSearches & SEARCH_LEVEL) on_Find_Button_ResetLevel_clicked();
+    lockResetWorld = false;
 }
