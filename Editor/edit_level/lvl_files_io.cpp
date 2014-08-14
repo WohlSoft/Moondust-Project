@@ -235,7 +235,8 @@ bool leveledit::saveAs()
     }
 
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-        (isUntitled)?GlobalSettings::savePath+QString("/")+curFile:curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
+        (isUntitled)?GlobalSettings::savePath+QString("/")+
+                     (LvlData.LevelName.isEmpty()?curFile:LvlData.LevelName):curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
     if (fileName.isEmpty())
         return false;
 
