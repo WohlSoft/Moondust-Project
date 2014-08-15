@@ -312,10 +312,8 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(!selectedItems().isEmpty())
                     {
+                        LvlBuffer=copy();
                         PasteFromBuffer=true;
-                        paste( copy(), mouseEvent->scenePos().toPoint() );
-                        PasteFromBuffer=false;
-                        return;
                     }
                 }
             }
@@ -449,7 +447,6 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             mouseMoved=true;
         }
     }
-
     QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
@@ -466,6 +463,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         multimouse++;
 
     bool isLeftMouse=false;
+    bool isMiddleMouse=false;
 
     if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
     {
@@ -476,6 +474,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
     {
         mouseMid=false;
+        isMiddleMouse=true;
         WriteToLog(QtDebugMsg, QString("Middle mouse button released [edit mode: %1]").arg(EditingMode));
     }
     if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
@@ -493,6 +492,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     contextMenuOpened=false;
     if(!isLeftMouse)
     {
+        if(PasteFromBuffer && GlobalSettings::MidMouse_allowDuplicate && isMiddleMouse &&
+                (EditingMode==MODE_Selecting||EditingMode==MODE_SelectingOnly))
+        {
+            clearSelection();
+            paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
+            PasteFromBuffer = false;
+        }
+
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
         return;
     }
