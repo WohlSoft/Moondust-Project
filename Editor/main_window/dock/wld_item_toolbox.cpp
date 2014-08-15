@@ -247,144 +247,51 @@ void MainWindow::setWldItemBoxes(bool setGrp, bool setCat)
 
 void MainWindow::on_WLD_TilesList_itemClicked(QTableWidgetItem *item)
 {
-    resetEditmodeButtons();
-   //placeTile
-
+    //placeTile
     if ((activeChildWindow()==3) && (ui->WLD_TilesList->hasFocus()))
     {
-       ui->PlacingToolbar->setVisible(true);
-       activeWldEditWin()->scene->clearSelection();
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
-
-       WldPlacingItems::fillingMode = false;
-       ui->actionSquareFill->setChecked(false);
-       ui->actionSquareFill->setEnabled(true);
-
-       WldPlacingItems::lineMode = false;
-       ui->actionLine->setChecked(false);
-       ui->actionLine->setEnabled(true);
-
-       activeWldEditWin()->scene->setItemPlacer(0, item->data(3).toInt() );
-
-       WldItemProps(-1, FileFormats::dummyWldLevel(), true);
-
-       activeWldEditWin()->setFocus();
+        SwitchPlacingItem(ItemTypes::WLD_Tile, item->data(3).toInt());
     }
 }
 
 
 void MainWindow::on_WLD_SceneList_itemClicked(QListWidgetItem *item)
 {
-    resetEditmodeButtons();
-   //placeScenery
-
+    //placeScenery
     if ((activeChildWindow()==3) && (ui->WLD_SceneList->hasFocus()))
     {
-       ui->PlacingToolbar->setVisible(true);
-       activeWldEditWin()->scene->clearSelection();
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
-
-       WldPlacingItems::fillingMode = false;
-       ui->actionSquareFill->setChecked(false);
-       ui->actionSquareFill->setEnabled(true);
-
-       WldPlacingItems::lineMode = false;
-       ui->actionLine->setChecked(false);
-       ui->actionLine->setEnabled(true);
-
-       activeWldEditWin()->scene->setItemPlacer(1, item->data(3).toInt() );
-
-       WldItemProps(-1, FileFormats::dummyWldLevel(), true);
-
-       activeWldEditWin()->setFocus();
+        SwitchPlacingItem(ItemTypes::WLD_Scenery, item->data(3).toInt());
     }
 }
 
 void MainWindow::on_WLD_PathsList_itemClicked(QTableWidgetItem *item)
 {
-    resetEditmodeButtons();
-   //placePath
-
+    //placePath
     if ((activeChildWindow()==3) && (ui->WLD_PathsList->hasFocus()))
     {
-       ui->PlacingToolbar->setVisible(true);
-       activeWldEditWin()->scene->clearSelection();
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
-
-       WldPlacingItems::fillingMode = false;
-       ui->actionSquareFill->setChecked(false);
-       ui->actionSquareFill->setEnabled(true);
-
-       WldPlacingItems::lineMode = false;
-       ui->actionLine->setChecked(false);
-       ui->actionLine->setEnabled(true);
-
-       activeWldEditWin()->scene->setItemPlacer(2, item->data(3).toInt() );
-
-       WldItemProps(-1, FileFormats::dummyWldLevel(), true);
-
-       activeWldEditWin()->setFocus();
+        SwitchPlacingItem(ItemTypes::WLD_Path, item->data(3).toInt());
     }
 }
 
 void MainWindow::on_WLD_LevelList_itemClicked(QListWidgetItem *item)
 {
-    resetEditmodeButtons();
-   //placeLevel
 
+    //placeLevel
     if ((activeChildWindow()==3) && (ui->WLD_LevelList->hasFocus()))
     {
-       ui->PlacingToolbar->setVisible(true);
-       activeWldEditWin()->scene->clearSelection();
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
-
-       WldPlacingItems::fillingMode = false;
-       ui->actionSquareFill->setChecked(false);
-       ui->actionSquareFill->setEnabled(true);
-
-       WldPlacingItems::lineMode = false;
-       ui->actionLine->setChecked(false);
-       ui->actionLine->setEnabled(true);
-
-       activeWldEditWin()->scene->setItemPlacer(3, item->data(3).toInt() );
-
-       WldItemProps(0, WldPlacingItems::LevelSet, true);
-
-       activeWldEditWin()->setFocus();
+        SwitchPlacingItem(ItemTypes::WLD_Level, item->data(3).toInt());
     }
 }
 
 void MainWindow::on_WLD_MusicList_itemClicked(QListWidgetItem *item)
 {
-    resetEditmodeButtons();
-   //placeLevel
-
+    //placeLevel
     if ((activeChildWindow()==3) && (ui->WLD_MusicList->hasFocus()))
     {
-       ui->PlacingToolbar->setVisible(true);
-       activeWldEditWin()->scene->clearSelection();
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
-       activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+        SwitchPlacingItem(ItemTypes::WLD_MusicBox, item->data(3).toInt());
 
-       WldPlacingItems::fillingMode = false;
-       ui->actionSquareFill->setChecked(false);
-       ui->actionSquareFill->setEnabled(false);
-
-       WldPlacingItems::lineMode = false;
-       ui->actionLine->setChecked(false);
-       ui->actionLine->setEnabled(false);
-
-       activeWldEditWin()->scene->setItemPlacer(4, item->data(3).toInt() );
-
-       activeWldEditWin()->currentMusic = item->data(3).toInt();
-       setMusic( ui->actionPlayMusic->isChecked() );
-
-       WldItemProps(-1, FileFormats::dummyWldLevel(), true);
-
-       activeWldEditWin()->setFocus();
+        //Play selected music
+        activeWldEditWin()->currentMusic = item->data(3).toInt();
+        setMusic( ui->actionPlayMusic->isChecked() );
     }
 }

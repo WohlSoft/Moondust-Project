@@ -54,6 +54,9 @@ void AppSettings::applySettings()
     logfile = LogWriter::DebugLogFile;
     logEnabled = LogWriter::enabled;
 
+    ui->Editor_Mid_AllowDupe->setChecked(midmouse_allowDupe);
+    ui->Editor_Mid_AllowPlacing->setChecked(midmouse_allowPlace);
+
     if(logEnabled)
         switch(loglevel)
         {
@@ -109,6 +112,9 @@ void AppSettings::on_buttonBox_accepted()
 
     Collisions = ui->Collisions->isChecked();
 
+    midmouse_allowDupe = ui->Editor_Mid_AllowDupe->isChecked();
+    midmouse_allowPlace = ui->Editor_Mid_AllowPlacing->isChecked();
+
     if(ui->MView_SubWindows->isChecked())
         MainWindowView = QMdiArea::SubWindowView;
     if(ui->MView_Tabs->isChecked())
@@ -155,7 +161,7 @@ void AppSettings::on_AssociateFiles_clicked()
     bool success = true;
 
     #ifdef _WIN32
-        QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
+        //QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
         QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
 
         // add template

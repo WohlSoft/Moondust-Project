@@ -34,6 +34,8 @@
 
 #include "../common_features/item_rectangles.h"
 
+#include "../defines.h"
+
 QPoint sourcePos=QPoint(0,0);
 int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
 
@@ -288,6 +290,35 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if((disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
                 && (Qt::ControlModifier != QApplication::keyboardModifiers()))
             { return; }
+
+            if( mouseEvent->buttons() & Qt::MiddleButton )
+            {
+                if(GlobalSettings::MidMouse_allowSwitchToPlace)
+                {
+                    if(selectedItems().size()==1)
+                    {
+                        QGraphicsItem * it = selectedItems().first();
+                        QString itp = it->data(0).toString();
+                        long itd = it->data(1).toInt();
+                        if(itp=="Block")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_Block, itd); return;}
+                        else if(itp=="BGO")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_BGO, itd); return;}
+                        else if(itp=="NPC")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_NPC, itd); return;}
+                    }
+                }
+                if(GlobalSettings::MidMouse_allowDuplicate)
+                {
+                    if(!selectedItems().isEmpty())
+                    {
+                        PasteFromBuffer=true;
+                        paste( copy(), mouseEvent->scenePos().toPoint() );
+                        PasteFromBuffer=false;
+                        return;
+                    }
+                }
+            }
 
             QGraphicsScene::mousePressEvent(mouseEvent);
 

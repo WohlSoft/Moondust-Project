@@ -50,6 +50,10 @@ public:
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
 
+    QString curFile;
+
+    bool isModyfied;
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -152,13 +156,10 @@ private:
     obj_npc defaultNPC;
     int direction;
 
-    bool isModyfied;
-
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
-    QString curFile;
     bool isUntitled;
     unsigned int FileType;
 };

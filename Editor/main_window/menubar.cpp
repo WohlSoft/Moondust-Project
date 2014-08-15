@@ -45,7 +45,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionSelectOnly->setEnabled( (WinType==1) || (WinType==3));
     ui->actionEriser->setEnabled( (WinType==1) || (WinType==3));
     ui->actionHandScroll->setEnabled( (WinType==1) || (WinType==3));
-    ui->actionReload->setEnabled( (WinType==1) || (WinType==3));
+    ui->actionReload->setEnabled( (WinType==1) || (WinType==2) || (WinType==3));
 
     ui->menuWorld->setEnabled(( WinType==3) );
     ui->actionWLDToolBox->setVisible( (WinType==3));
