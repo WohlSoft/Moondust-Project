@@ -80,6 +80,35 @@ void MainWindow::on_actionReload_triggered()
         }
     }
     else
+    if (activeChildWindow()==2)
+    {
+        filePath = activeNpcEditWin()->curFile;
+        QFile fileIn(filePath);
+
+        if (!fileIn.open(QIODevice::ReadOnly)) {
+        QMessageBox::critical(this, tr("File open error"),
+        tr("Can't open the file."), QMessageBox::Ok);
+            return;
+        }
+
+        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(fileIn);
+        if( !FileData.ReadFileValid ) return;
+        wnGeom = ui->centralWidget->activeSubWindow()->geometry();
+        activeNpcEditWin()->isModyfied = false;
+        //activeNpcEditWin()->close();
+        ui->centralWidget->activeSubWindow()->close();
+
+        npcedit *child = createNPCChild();
+        if (child->loadFile(filePath, FileData)) {
+            statusBar()->showMessage(tr("NPC Config reloaded"), 2000);
+            child->show();
+            ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
+            updateMenus(true);
+        } else {
+            child->close();
+        }
+    }
+    else
     if (activeChildWindow()==3)
     {
         WorldData FileData;
