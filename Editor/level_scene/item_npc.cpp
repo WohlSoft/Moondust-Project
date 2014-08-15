@@ -724,7 +724,7 @@ void ItemNPC::setScenePoint(LvlScene *theScene)
 ////////////////Animation///////////////////
 
 void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direct,
-                           bool customAni, int frFL, int frEL, int frFR, int frER, bool edit)
+                           bool customAni, int frFL, int frEL, int frFR, int frER, bool edit, bool updFrames)
 {
     animated = true;
     framesQ = frames;
@@ -743,7 +743,7 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     custom_frameFR = frFR;//first right
     custom_frameER = frER;//enf right
 
-    bool refreshFrames = false;
+    bool refreshFrames = updFrames;
     if(localProps.gfx_h!=frameSize) refreshFrames = true;
     if(localProps.gfx_w!=frameWidth) refreshFrames = true;
 
