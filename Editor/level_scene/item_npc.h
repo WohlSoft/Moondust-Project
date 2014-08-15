@@ -57,7 +57,8 @@ public:
 
     //////Animation////////
     void setAnimation(int frames, int framespeed, int framestyle, int direct,
-               bool customAnimate=false, int frFL=0, int frEL=-1, int frFR=0, int frER=-1, bool edit=false);
+               bool customAnimate=false, int frFL=0, int frEL=-1, int frFR=0, int frER=-1,
+               bool edit=false, bool updFrames=false);
     void AnimationStart();
     void AnimationStop();
     void draw();

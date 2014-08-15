@@ -170,7 +170,8 @@ SOURCES += main.cpp\
     external_tools/lazyfixtool_gui.cpp \
     main_window/tools_menu.cpp \
     common_features/items.cpp \
-    common_features/flowlayout.cpp
+    common_features/flowlayout.cpp \
+    main_window/edit_placincg_switch.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

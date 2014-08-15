@@ -17,6 +17,7 @@ Editor 0.2.0
 - Mouse control for level editing workspace was improved. Fixed a lot of bugs and fixed context menu on the Linux.
 - Custom graphics displaying even without "Custom" category
 - Item animator is Improved
+- Sizable blocks draw algorithm is improved: Sizable blocks will be displayed correctly in any sizes
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized

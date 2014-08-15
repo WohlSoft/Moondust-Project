@@ -543,61 +543,110 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
     img.fill(Qt::transparent);
     QPainter szblock(&img);
 
+    int fLnt = 0; // Free Lenght
+    int fWdt = 0; // Free Width
+
+    int dX=0; //Draw Offset. This need for crop junk on small sizes
+    int dY=0;
+
+    if(w < 2*x) dX = (2*x-w)/2; else dX=0;
+    if(h < 2*y) dY = (2*y-h)/2; else dY=0;
+
     //L
-    hc=0;
-    for(i=0; i<((h-2*y) / y); i++ )
+    if(h > 2*y)
     {
-        szblock.drawPixmap(0, x+hc, x, y, srcimg.copy(QRect(0, y, x, y)));
-            hc+=x;
+        hc=0;
+        for(i=0; i<((h-2*y) / y); i++ )
+        {
+            szblock.drawPixmap(0, x+hc, x-dX, y, srcimg.copy(0, y, x-dX, y));
+                hc+=x;
+        }
+            fLnt = (h-2*y)%y;
+            if( fLnt != 0) szblock.drawPixmap(0, x+hc, x-dX, fLnt, srcimg.copy(0, y, x-dX, fLnt) );
     }
 
     //T
-    hc=0;
-    for(i=0; i<( (w-2*x) / x); i++ )
+    if(w > 2*x)
     {
-        szblock.drawPixmap(x+hc, 0, x, y, srcimg.copy(QRect(x, 0, x, y)) );
-            hc+=x;
+        hc=0;
+        for(i=0; i<( (w-2*x) / x); i++ )
+        {
+            szblock.drawPixmap(x+hc, 0, x, y-dY, srcimg.copy(x, 0, x, y-dY) );
+                hc+=x;
+        }
+            fLnt = (w-2*x)%x;
+            if( fLnt != 0) szblock.drawPixmap(x+hc, 0, fLnt, y-dY, srcimg.copy(x, 0, fLnt, y-dY) );
     }
 
     //B
-    hc=0;
-    for(i=0; i< ( (w-2*x) / x); i++ )
+    if(w > 2*x)
     {
-        szblock.drawPixmap(x+hc, h-y, x, y, srcimg.copy(QRect(x, srcimg.width()-y, x, y )) );
-            hc+=x;
+        hc=0;
+        for(i=0; i< ( (w-2*x) / x); i++ )
+        {
+            szblock.drawPixmap(x+hc, h-y+dY, x, y-dY, srcimg.copy(x, srcimg.width()-y+dY, x, y-dY) );
+                hc+=x;
+        }
+            fLnt = (w-2*x)%x;
+            if( fLnt != 0) szblock.drawPixmap(x+hc, h-y+dY, fLnt, y-dY, srcimg.copy(x, srcimg.width()-y+dY, fLnt, y-dY) );
     }
 
     //R
-    hc=0;
-    for(i=0; i<((h-2*y) / y); i++ )
+    if(h > 2*y)
     {
-        szblock.drawPixmap(w-x, y+hc, x, y, srcimg.copy(QRect(srcimg.width()-x, y, x, y)));
-            hc+=x;
+        hc=0;
+        for(i=0; i<((h-2*y) / y); i++ )
+        {
+            szblock.drawPixmap(w-x+dX, y+hc, x-dX, y, srcimg.copy(srcimg.width()-x+dX, y, x-dX, y));
+                hc+=x;
+        }
+            fLnt = (h-2*y)%y;
+            if( fLnt != 0) szblock.drawPixmap(w-x+dX, y+hc, x-dX, fLnt, srcimg.copy(srcimg.width()-x+dX, y, x-dX, fLnt));
     }
 
     //C
-    hc=0;
-    wc=0;
-    for(i=0; i<((h-2*y) / y); i++ )
+    if( w > 2*x && h > 2*y)
     {
         hc=0;
-        for(j=0; j<((w-2*x) / x); j++ )
+        wc=0;
+        for(i=0; i<((h-2*y) / y); i++ )
         {
-        szblock.drawPixmap(x+hc, y+wc, x, y, srcimg.copy(QRect(x, y, x, y)));
-            hc+=x;
+            hc=0;
+            for(j=0; j<((w-2*x) / x); j++ )
+            {
+            szblock.drawPixmap(x+hc, y+wc, x, y, srcimg.copy(x, y, x, y));
+                hc+=x;
+            }
+                fLnt = (w-2*x)%x;
+                if(fLnt != 0 ) szblock.drawPixmap(x+hc, y+wc, fLnt, y, srcimg.copy(x, y, fLnt, y));
+            wc+=y;
         }
-        wc+=y;
+
+        fWdt = (h-2*y)%y;
+        if(fWdt !=0)
+        {
+            hc=0;
+            for(j=0; j<((w-2*x) / x); j++ )
+            {
+            szblock.drawPixmap(x+hc, y+wc, x, fWdt, srcimg.copy(x, y, x, fWdt));
+                hc+=x;
+            }
+                fLnt = (w-2*x)%x;
+                if(fLnt != 0 ) szblock.drawPixmap(x+hc, y+wc, fLnt, fWdt, srcimg.copy(x, y, fLnt, fWdt));
+
+        }
+
     }
 
     //Applay sizable formula
      //1
-    szblock.drawPixmap(0,0,y,x, srcimg.copy(QRect(0,0,y,x)));
+    szblock.drawPixmap(0,0,x-dX,y-dY, srcimg.copy(QRect(0,0,x-dX, y-dY)));
      //2
-    szblock.drawPixmap(w-y, 0, y, x, srcimg.copy(QRect(srcimg.width()-y, 0, y, x)) );
+    szblock.drawPixmap(w-x+dX, 0, x-dX, y-dY, srcimg.copy(QRect(srcimg.width()-x+dX, 0, x-dX, y-dY)) );
      //3
-    szblock.drawPixmap(w-y, h-x, y, x, srcimg.copy(QRect(srcimg.width()-y, srcimg.height()-x, y, x)) );
+    szblock.drawPixmap(w-x+dX, h-y+dY, x-dX, y-dY, srcimg.copy(QRect(srcimg.width()-x+dX, srcimg.height()-y+dY, x-dX, y-dY)) );
      //4
-    szblock.drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
+    szblock.drawPixmap(0, h-y+dY, x-dX, y-dY, srcimg.copy(QRect(0, srcimg.height()-y+dY, x-dX, y-dY)) );
 
     //img = QPixmap( * sizableImage);
     //delete sizableImage;

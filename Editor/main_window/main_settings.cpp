@@ -47,6 +47,10 @@ bool GlobalSettings::LevelLayersBoxVis=false;
 bool GlobalSettings::LevelEventsBoxVis=false;
 bool GlobalSettings::LevelSearchBoxVis=false;
 
+
+bool GlobalSettings::MidMouse_allowDuplicate=false;
+bool GlobalSettings::MidMouse_allowSwitchToPlace=false;
+
 QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
 QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
 QTabWidget::TabPosition GlobalSettings::WLDToolboxPos = QTabWidget::West;
@@ -281,6 +285,7 @@ void MainWindow::setUiDefults()
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
+    //enable & disable
     connect(ui->Find_Check_TypeBlock, SIGNAL(toggled(bool)), ui->Find_Button_TypeBlock, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_TypeBGO, SIGNAL(toggled(bool)), ui->Find_Button_TypeBGO, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_TypeNPC, SIGNAL(toggled(bool)), ui->Find_Button_TypeNPC, SLOT(setEnabled(bool)));
@@ -303,6 +308,9 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Check_MsgNPC, SIGNAL(toggled(bool)), ui->Find_Edit_MsgNPC, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_MsgNPC, SIGNAL(toggled(bool)), ui->Find_Check_MsgSensitiveNPC, SLOT(setEnabled(bool)));
 
+    //for world search
+    connect(ui->Find_Check_TypeLevel, SIGNAL(toggled(bool)), ui->Find_Button_TypeLevel, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_PathBackground, SIGNAL(toggled(bool)), ui->Find_Check_PathBackgroundActive, SLOT(setEnabled(bool)));
 
     //reset if modify
     connect(ui->Find_Button_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
@@ -327,6 +335,10 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Edit_MsgNPC, SIGNAL(textEdited(QString)), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_MsgSensitiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
 
+    //for world
+    connect(ui->Find_Button_TypeLevel, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_PathBackgroundActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+
     //also checkboxes
     connect(ui->Find_Check_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
     connect(ui->Find_Check_LayerBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
@@ -347,6 +359,10 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Check_NotMoveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_BossNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
     connect(ui->Find_Check_MsgNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
+
+    //for world
+    connect(ui->Find_Check_TypeLevel, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_PathBackground, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindow(QMdiSubWindow*)));
 
@@ -383,6 +399,9 @@ void MainWindow::loadSettings()
         restoreState(settings.value("windowState", saveState() ).toByteArray());
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
         GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
+
+        GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", false).toBool();
+        GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", false).toBool();
 
         GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
         GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
@@ -476,6 +495,9 @@ void MainWindow::saveSettings()
     settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
     settings.setValue("music-volume", MusicPlayer->volume());
 
+    settings.setValue("editor-midmouse-allowdupe", GlobalSettings::MidMouse_allowDuplicate);
+    settings.setValue("editor-midmouse-allowplace", GlobalSettings::MidMouse_allowSwitchToPlace);
+
     settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
     settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
     settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
@@ -532,6 +554,9 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->LVLToolboxPos = GlobalSettings::LVLToolboxPos;
     appSettings->WLDToolboxPos = GlobalSettings::WLDToolboxPos;
 
+    appSettings->midmouse_allowDupe = GlobalSettings::MidMouse_allowDuplicate;
+    appSettings->midmouse_allowPlace = GlobalSettings::MidMouse_allowSwitchToPlace;
+
     appSettings->applySettings();
 
     if(appSettings->exec()==QDialog::Accepted)
@@ -549,6 +574,8 @@ void MainWindow::on_actionApplication_settings_triggered()
         GlobalSettings::MainWindowView = appSettings->MainWindowView;
         GlobalSettings::LVLToolboxPos = appSettings->LVLToolboxPos;
         GlobalSettings::WLDToolboxPos = appSettings->WLDToolboxPos;
+        GlobalSettings::MidMouse_allowDuplicate = appSettings->midmouse_allowDupe;
+        GlobalSettings::MidMouse_allowSwitchToPlace = appSettings->midmouse_allowPlace;
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);

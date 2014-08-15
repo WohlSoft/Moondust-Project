@@ -214,38 +214,40 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
 }
 
 
-bool WorldEdit::save()
+bool WorldEdit::save(bool savOptionsDialog)
 {
     if (isUntitled) {
-        return saveAs();
+        return saveAs(savOptionsDialog);
     } else {
         return saveFile(curFile);
     }
 }
 
-bool WorldEdit::saveAs()
+bool WorldEdit::saveAs(bool savOptionsDialog)
 {
-    SavingNotificationDialog* sav = new SavingNotificationDialog(false);
-    sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
-    sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
-    QLineEdit* wldNameBox = new QLineEdit();
-    sav->addUserItem(tr("Episode Title: "),wldNameBox);
-    sav->setAdjustSize(400,150);
-    wldNameBox->setText(WldData.EpisodeTitle);
-    if(sav->exec() == QDialog::Accepted){
-        WldData.EpisodeTitle = wldNameBox->text();
-        wldNameBox->deleteLater();
-        sav->deleteLater();
-        if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+    if(savOptionsDialog){
+        SavingNotificationDialog* sav = new SavingNotificationDialog(false);
+        sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
+        sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
+        QLineEdit* wldNameBox = new QLineEdit();
+        sav->addUserItem(tr("Episode Title: "),wldNameBox);
+        sav->setAdjustSize(400,150);
+        wldNameBox->setText(WldData.EpisodeTitle);
+        if(sav->exec() == QDialog::Accepted){
+            WldData.EpisodeTitle = wldNameBox->text();
+            wldNameBox->deleteLater();
+            sav->deleteLater();
+            if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
+                return false;
+            }
+        }else{
             return false;
         }
-    }else{
-        return false;
     }
 
-
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-        (isUntitled)?GlobalSettings::savePath+QString("/")+curFile:curFile, QString("SMBX64 (1.3) World map file (*.wld)"));
+        (isUntitled)?GlobalSettings::savePath+QString("/")+
+                     (WldData.EpisodeTitle.isEmpty()?curFile:WldData.EpisodeTitle):curFile, QString("SMBX64 (1.3) World map file (*.wld)"));
     if (fileName.isEmpty())
         return false;
 
