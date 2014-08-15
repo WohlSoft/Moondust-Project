@@ -36,6 +36,8 @@
 
 #include "../common_features/item_rectangles.h"
 
+#include "../defines.h"
+
 QPoint WsourcePos=QPoint(0,0);
 int WgridSize=0, WoffsetX=0, WoffsetY=0;//, gridX, gridY, i=0;
 
@@ -329,6 +331,40 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if((disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
                 && (Qt::ControlModifier != QApplication::keyboardModifiers()))
             { return; }
+
+            if( mouseEvent->buttons() & Qt::MiddleButton )
+            {
+                if(GlobalSettings::MidMouse_allowSwitchToPlace)
+                {
+                    if(selectedItems().size()==1)
+                    {
+                        QGraphicsItem * it = selectedItems().first();
+                        QString itp = it->data(0).toString();
+                        long itd = it->data(1).toInt();
+                        if(itp=="TILE")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Tile, itd); return;}
+                        else if(itp=="SCENERY")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Scenery, itd); return;}
+                        else if(itp=="PATH")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Path, itd); return;}
+                        else if(itp=="LEVEL")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Level, itd); return;}
+                        else if(itp=="MUSICBOX")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_MusicBox, itd); return;}
+                    }
+                }
+                if(GlobalSettings::MidMouse_allowDuplicate)
+                {
+                    if(!selectedItems().isEmpty())
+                    {
+                        PasteFromBuffer=true;
+                        paste( copy(), mouseEvent->scenePos().toPoint() );
+                        PasteFromBuffer=false;
+                        return;
+                    }
+                }
+            }
+
 
             QGraphicsScene::mousePressEvent(mouseEvent);
 
