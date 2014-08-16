@@ -90,7 +90,7 @@ struct obj_npc
 //    ; this option useful for non-standart algorithmic sprites (for example, bosses)
 
 //    ;custom-animation-alg=0		; Custom animation algorithm
-    // 0 simple frame range, 1 - frame Jump
+    // 0 simple frame range, 1 - frame Jump; 2 - custom animation sequances
     int custom_ani_alg;
 //    ;custom-animation-fl=0		; First frame for LEFT
     int custom_ani_fl;
@@ -100,6 +100,9 @@ struct obj_npc
     int custom_ani_fr;
 //    ;custom-animation-er=0		; end frame for RIGHT / Jump step
     int custom_ani_er;
+
+    QList<int> frames_left;     //Frame srquence for left
+    QList<int> frames_right;    //Frame srquence for right
 
 //    container=0			; NPC can containing inside other NPC (need enable special option type 2)
     bool container;
