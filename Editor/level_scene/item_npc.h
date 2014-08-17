@@ -131,6 +131,10 @@ private:
     int custom_frameEL;//end left / jump step
     int custom_frameFR;//first right
     int custom_frameER;//enf right / jump step
+
+    bool frameSequance;
+    QList<int> frames_list;     //Current frame srquence
+
     LvlScene * scene;
     int frameCurrent;
     QTimer * timer;
