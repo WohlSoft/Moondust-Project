@@ -54,7 +54,9 @@ public:
 
     void setCurrentSection(int scId);
     void ResetPosition();
-    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0));
+    void ResetZoom();
+
+    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0), bool center=false);
 
     enum CusrorMode
     {
@@ -82,27 +84,16 @@ public:
     void setAutoUpdateTimer(int ms);
     void stopAutoUpdateTimer();
 
-public slots:
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
-
 protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
     virtual void mouseReleaseEvent( QMouseEvent * event );
     virtual void leaveEvent(QEvent * leaveEvent);
+    virtual void focusInEvent(QFocusEvent *event);
     void updateScene();
 
-    void moveH_slot();
-    void moveV_slot();
-
 private:
-    QTimer * hMover;
-    QTimer * vMover;
-    int hMove;
-    int vMove;
-
     void documentWasModified();
     Ui::leveledit *ui;
 
@@ -117,9 +108,6 @@ private:
     QString latest_export_path;
     unsigned int FileType;
 
-    //QGraphicsScene* pScene;
-    void moveH(int step);
-    void moveV(int step);
 };
 
 #endif // LEVELEDIT_H

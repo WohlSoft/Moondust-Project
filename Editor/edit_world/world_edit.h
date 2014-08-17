@@ -84,6 +84,7 @@ public:
     void stopAutoUpdateTimer();
 
 protected:
+    virtual void focusInEvent(QFocusEvent *event);
     void closeEvent(QCloseEvent *event);
 
 private slots:

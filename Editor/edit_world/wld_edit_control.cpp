@@ -89,8 +89,18 @@ void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
 //        }
     }
 
-    ui->graphicsView->horizontalScrollBar()->setValue(x + offset.x() );
-    ui->graphicsView->verticalScrollBar()->setValue(y + offset.y() );
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+    WriteToLog(QtDebugMsg, QString("Pos: %1, zoom %2, scenePos: %3")
+               .arg(ui->graphicsView->horizontalScrollBar()->value())
+               .arg(zoom).arg(x));
+
+    ui->graphicsView->horizontalScrollBar()->setValue( qRound(qreal(x)*zoom)+offset.x() );
+    ui->graphicsView->verticalScrollBar()->setValue( qRound(qreal(y)*zoom)+offset.y() );
 
     //scene->update();
     ui->graphicsView->update();
