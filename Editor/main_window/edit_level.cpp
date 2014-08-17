@@ -221,7 +221,7 @@ void MainWindow::on_actionGo_to_Section_triggered()
             int SectionId = edit->LvlData.CurSection;
             int xb = edit->LvlData.sections[SectionId].size_left;
             int yb = edit->LvlData.sections[SectionId].size_top;
-            edit->goTo(xb-10, yb-10);
+            edit->goTo(xb, yb, false, QPoint(-10, -10));
     }
 }
 

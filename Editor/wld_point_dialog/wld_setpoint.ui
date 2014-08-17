@@ -55,7 +55,7 @@
     </widget>
    </item>
    <item row="5" column="0" colspan="8">
-    <widget class="QGraphicsView" name="graphicsView">
+    <widget class="GraphicsWorkspace" name="graphicsView">
      <property name="minimumSize">
       <size>
        <width>800</width>
@@ -177,6 +177,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GraphicsWorkspace</class>
+   <extends>QGraphicsView</extends>
+   <header>common_features/graphicsworkspace.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../_resources/editor.qrc"/>
  </resources>

@@ -34,7 +34,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QGraphicsView" name="graphicsView">
+    <widget class="GraphicsWorkspace" name="graphicsView">
      <property name="minimumSize">
       <size>
        <width>500</width>
@@ -57,6 +57,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GraphicsWorkspace</class>
+   <extends>QGraphicsView</extends>
+   <header>common_features/graphicsworkspace.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../_resources/editor.qrc"/>
  </resources>

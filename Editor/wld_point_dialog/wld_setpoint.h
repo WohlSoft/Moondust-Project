@@ -49,6 +49,7 @@ public:
     void stopAutoUpdateTimer();
 
     void unloadData();
+    QWidget *gViewPort();
 
 protected:
     void closeEvent(QCloseEvent *event);
