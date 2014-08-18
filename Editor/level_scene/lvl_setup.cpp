@@ -128,19 +128,19 @@ void LvlScene::startBlockAnimation()
 //        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
 //        {
 //            tmp = (*it);
-//            ((ItemBlock *)tmp)->AnimationStart();
+//            dynamic_cast<ItemBlock *>(tmp)->AnimationStart();
 //        }
 //        else
 //        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
 //        {
 //            tmp = (*it);
-//            ((ItemBGO *)tmp)->AnimationStart();
+//            dynamic_cast<ItemBGO *>(tmp)->AnimationStart();
 //        }
 //        else
         if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
         {
             tmp = (*it);
-            ((ItemNPC *)tmp)->AnimationStart();
+            dynamic_cast<ItemNPC *>(tmp)->AnimationStart();
         }
     }
 
@@ -164,19 +164,19 @@ void LvlScene::stopAnimation()
 //        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
 //        {
 //            tmp = (*it);
-//            ((ItemBlock *)tmp)->AnimationStop();
+//            dynamic_cast<ItemBlock *>(tmp)->AnimationStop();
 //        }
 //        else
 //        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
 //        {
 //            tmp = (*it);
-//            ((ItemBGO *)tmp)->AnimationStop();
+//            dynamic_cast<ItemBGO *>(tmp)->AnimationStop();
 //        }
 //        else
         if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
         {
             tmp = (*it);
-            ((ItemNPC *)tmp)->AnimationStop();
+            dynamic_cast<ItemNPC *>(tmp)->AnimationStop();
         }
     }
 
@@ -216,9 +216,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemBlock *)tmp)->blockData.layer == layer.name)
+                if( dynamic_cast<ItemBlock *>(tmp)->blockData.layer == layer.name)
                 {
-                    ((ItemBlock *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemBlock *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -228,9 +228,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemBGO *)tmp)->bgoData.layer == layer.name)
+                if( dynamic_cast<ItemBGO *>(tmp)->bgoData.layer == layer.name)
                 {
-                    ((ItemBGO *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemBGO *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -240,9 +240,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemNPC *)tmp)->npcData.layer == layer.name)
+                if( dynamic_cast<ItemNPC *>(tmp)->npcData.layer == layer.name)
                 {
-                    ((ItemNPC *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemNPC *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -252,9 +252,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemWater *)tmp)->waterData.layer == layer.name)
+                if( dynamic_cast<ItemWater *>(tmp)->waterData.layer == layer.name)
                 {
-                    ((ItemWater *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemWater *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -264,9 +264,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemDoor *)tmp)->doorData.layer == layer.name)
+                if( dynamic_cast<ItemDoor *>(tmp)->doorData.layer == layer.name)
                 {
-                    ((ItemDoor *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemDoor *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -306,22 +306,22 @@ void LvlScene::setLocked(int type, bool lock)
         case 1://Block
             if((*it)->data(0).toString()=="Block")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemBlock *)(*it))->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemBlock *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemBlock *>(*it)->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemBlock *>(*it)->isLocked ) ) );
             }
             break;
         case 2://BGO
             if((*it)->data(0).toString()=="BGO")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemBGO *)(*it))->isLocked ) ));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemBGO *)(*it))->isLocked ) ));
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemBGO *>(*it)->isLocked ) ));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemBGO *>(*it)->isLocked ) ));
             }
             break;
         case 3://NPC
             if((*it)->data(0).toString()=="NPC")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemNPC *)(*it))->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemNPC *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemNPC *>(*it)->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemNPC *>(*it)->isLocked ) ) );
             }
             break;
         case 4://Water
