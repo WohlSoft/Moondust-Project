@@ -661,6 +661,7 @@ private:
     QMediaPlaylist CurrentMusic;
 
     QSlider* muVol;
+    QLineEdit* zoom;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;

@@ -95,6 +95,11 @@ void leveledit::zoomOut()
     }
 }
 
+QGraphicsView *leveledit::getGraphicsView()
+{
+    return ui->graphicsView;
+}
+
 
 void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)
 {

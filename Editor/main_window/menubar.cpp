@@ -21,6 +21,7 @@
 
 #include "global_settings.h"
 #include "music_player.h"
+#include "../common_features/graphicsworkspace.h"
 
 void MainWindow::updateMenus(bool force)
 {
@@ -138,6 +139,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionZoomIn->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionZoomOut->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionZoomReset->setEnabled( (WinType==1) || (WinType==3) );
+    zoom->setEnabled( (WinType==1) || (WinType==3));
 
     ui->actionReset_position->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionGo_to_Section->setEnabled( (WinType==1) );
@@ -192,6 +194,8 @@ void MainWindow::updateMenus(bool force)
                 }
             }
         }
+
+        //zoom->setText(QString::number(static_cast<GraphicsWorkspace *>(activeLvlEditWin()->getGraphicsView())->getZoomValue()));
 
         SetCurrentLevelSection(0, 1);
         setDoorsToolbox();
@@ -262,6 +266,8 @@ void MainWindow::updateMenus(bool force)
             GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
             GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
         }
+
+        //zoom->setText(QString::number(static_cast<GraphicsWorkspace *>(activeWldEditWin()->getGraphicsView())->getZoomValue()));
 
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
