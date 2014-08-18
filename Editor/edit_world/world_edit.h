@@ -57,6 +57,10 @@ public:
     void ResetPosition();
     void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0));
 
+    void ResetZoom();
+    void zoomIn();
+    void zoomOut();
+
     enum CusrorMode
     {
         MODE_HandDrag=-1,

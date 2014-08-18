@@ -227,6 +227,10 @@ void MainWindow::setUiDefults()
     ui->actionWLDToolBox->setVisible(false);
     ui->actionGridEn->setChecked(true);
 
+    ui->actionZoomReset->setEnabled(false);
+    ui->actionZoomIn->setEnabled(false);
+    ui->actionZoomOut->setEnabled(false);
+
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
 

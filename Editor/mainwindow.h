@@ -246,6 +246,11 @@ private slots:
     void on_actionSave_as_triggered();
     void on_actionClose_triggered();
     void on_actionSave_all_triggered();
+
+    void on_actionZoomIn_triggered();
+    void on_actionZoomOut_triggered();
+    void on_actionZoomReset_triggered();
+
     void on_actionSection_1_triggered();
     void on_actionSection_2_triggered();
     void on_actionSection_3_triggered();
@@ -589,14 +594,12 @@ private slots:
 
     void on_actionShow_Development_Console_triggered();
 
-
     //World map Find toolbox
     void on_actionWLD_SearchBox_triggered(bool checked);
     void on_WorldFindDock_visibilityChanged(bool visible);
     void on_FindStartLevel_clicked();
 
     void on_Find_Button_TypeLevel_clicked();
-
     void on_Find_Button_ResetLevel_clicked();
 
 signals:

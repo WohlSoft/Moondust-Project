@@ -79,6 +79,22 @@ void leveledit::ResetZoom()
     }
 }
 
+void leveledit::zoomIn()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomIn();
+    }
+}
+
+void leveledit::zoomOut()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomOut();
+    }
+}
+
 
 void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)
 {

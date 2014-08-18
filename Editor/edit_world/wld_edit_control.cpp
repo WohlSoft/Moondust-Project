@@ -71,6 +71,31 @@ void WorldEdit::ResetPosition()
     goTo(0, 0, false, QPoint(-10,-10));
 }
 
+void WorldEdit::ResetZoom()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(1.0);
+    }
+}
+
+void WorldEdit::zoomIn()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomIn();
+    }
+}
+
+void WorldEdit::zoomOut()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomOut();
+    }
+}
+
+
 void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
 {
 
