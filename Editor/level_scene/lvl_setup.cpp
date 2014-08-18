@@ -28,6 +28,8 @@
 
 #include "../common_features/mainwinconnect.h"
 
+#include "newlayerbox.h"
+
 
 void LvlScene::SwitchEditingMode(int EdtMode)
 {
@@ -344,3 +346,106 @@ void LvlScene::setLocked(int type, bool lock)
 
 }
 
+
+void LvlScene::setLayerToSelected()
+{
+    QString lName;
+    ToNewLayerBox * layerBox = new ToNewLayerBox(LvlData);
+    layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
+    if(layerBox->exec()==QDialog::Accepted)
+    {
+        lName = layerBox->lName;
+
+        //Store new layer into array
+        LevelLayers nLayer;
+        nLayer.name = lName;
+        nLayer.hidden = layerBox->lHidden;
+        LvlData->layers_array_id++;
+        nLayer.array_id = LvlData->layers_array_id;
+        LvlData->layers.push_back(nLayer);
+        //scene->SyncLayerList=true; //Refresh layer list
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        setLayerToSelected(lName, true);
+    }
+    delete layerBox;
+
+}
+
+void LvlScene::setLayerToSelected(QString lName, bool isNew)
+{
+    LevelData modData;
+    foreach(LevelLayers lr, LvlData->layers)
+    { //Find layer's settings
+        if(lr.name==lName)
+        {
+            foreach(QGraphicsItem * SelItem, selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="Block")
+                {
+                    modData.blocks.push_back(dynamic_cast<ItemBlock *>(SelItem)->blockData);
+                    dynamic_cast<ItemBlock *>(SelItem)->blockData.layer = lr.name;
+                    dynamic_cast<ItemBlock *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemBlock *>(SelItem)->arrayApply();
+                }
+                else
+                if(SelItem->data(0).toString()=="BGO")
+                {
+                    modData.bgo.push_back(dynamic_cast<ItemBGO *>(SelItem)->bgoData);
+                    dynamic_cast<ItemBGO *>(SelItem)->bgoData.layer = lr.name;
+                    dynamic_cast<ItemBGO *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemBGO *>(SelItem)->arrayApply();
+                }
+                else
+                if(SelItem->data(0).toString()=="NPC")
+                {
+                    modData.npc.push_back(dynamic_cast<ItemNPC *>(SelItem)->npcData);
+                    dynamic_cast<ItemNPC *>(SelItem)->npcData.layer = lr.name;
+                    dynamic_cast<ItemNPC *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemNPC *>(SelItem)->arrayApply();
+                }
+                else
+                if(SelItem->data(0).toString()=="Water")
+                {
+                    modData.water.push_back(dynamic_cast<ItemWater *>(SelItem)->waterData);
+                    dynamic_cast<ItemWater *>(SelItem)->waterData.layer = lr.name;
+                    dynamic_cast<ItemWater *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemWater *>(SelItem)->arrayApply();
+                }
+                else
+                if((SelItem->data(0).toString()=="Door_exit")  ||
+                        (SelItem->data(0).toString()=="Door_enter"))
+                {
+                    if(SelItem->data(0).toString()=="Door_exit"){
+                        LevelDoors tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
+                        tDoor.isSetOut = true;
+                        tDoor.isSetIn = false;
+                        modData.doors.push_back(tDoor);
+                    }
+                    else
+                    if(SelItem->data(0).toString()=="Door_enter"){
+                        LevelDoors tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
+                        tDoor.isSetOut = false;
+                        tDoor.isSetIn = true;
+                        modData.doors.push_back(tDoor);
+                    }
+                    dynamic_cast<ItemDoor *>(SelItem)->doorData.layer = lr.name;
+                    dynamic_cast<ItemDoor *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemDoor *>(SelItem)->arrayApply();
+                }
+            }
+            if(isNew)
+            {
+                addChangedNewLayerHistory(modData, lr);
+            }
+            break;
+        }
+    }//Find layer's settings
+
+    if(!isNew)
+    {
+        addChangedLayerHistory(modData, lName);
+    }
+}
