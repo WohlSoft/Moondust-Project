@@ -65,7 +65,7 @@ void MainWindow::setDefLang()
            m_currLang="en"; //set to English if no other translations are found
            QLocale locale = QLocale(m_currLang);
            QLocale::setDefault(locale);
-           ok = m_translator.load(m_langPath + QString("/editor_en.qm").arg(m_currLang));
+           ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
            if(ok)
             qApp->installTranslator(&m_translator);
 
