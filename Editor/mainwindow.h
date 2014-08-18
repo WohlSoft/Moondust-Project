@@ -229,6 +229,7 @@ public slots:
     void WLD_returnPointToLevelProperties(QPoint p);
 
 
+    void applyTextZoom();
 private slots:
 
     //Actions

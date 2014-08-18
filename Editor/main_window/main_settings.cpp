@@ -261,11 +261,12 @@ void MainWindow::setUiDefults()
     ui->EditionToolBar->insertSeparator(ui->actionAnimation);
 
     zoom = new QLineEdit();
-    zoom->setValidator(new QIntValidator(1,2000));
+    zoom->setValidator(new QIntValidator(0,2001));
     zoom->setText("100");
     zoom->setMaximumWidth(100);
     zoom->setEnabled(false);
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
+    connect(zoom, SIGNAL(editingFinished()), this, SLOT(applyTextZoom()));
 
     connect(muVol, SIGNAL(valueChanged(int)), MusicPlayer, SLOT(setVolume(int)));
 

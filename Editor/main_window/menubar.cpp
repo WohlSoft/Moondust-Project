@@ -195,7 +195,7 @@ void MainWindow::updateMenus(bool force)
             }
         }
 
-        //zoom->setText(QString::number(static_cast<GraphicsWorkspace *>(activeLvlEditWin()->getGraphicsView())->getZoomValue()));
+        zoom->setText(QString::number(activeLvlEditWin()->getZoom()));
 
         SetCurrentLevelSection(0, 1);
         setDoorsToolbox();
@@ -267,7 +267,7 @@ void MainWindow::updateMenus(bool force)
             GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
         }
 
-        //zoom->setText(QString::number(static_cast<GraphicsWorkspace *>(activeWldEditWin()->getGraphicsView())->getZoomValue()));
+        zoom->setText(QString::number(activeWldEditWin()->getZoom()));
 
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
@@ -369,5 +369,19 @@ void MainWindow::updateWindowMenu()
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
         windowMapper->setMapping(action, windows.at(i));
+    }
+}
+
+void MainWindow::applyTextZoom(){
+    bool ok = false;
+    int zoomPercent = 100;
+    zoomPercent = zoom->text().toInt(&ok);
+    if(!ok)
+        return;
+
+    if(activeChildWindow()==1){
+        activeLvlEditWin()->setZoom(zoomPercent);
+    }else if(activeChildWindow()==3){
+        activeWldEditWin()->setZoom(zoomPercent);
     }
 }
