@@ -33,22 +33,28 @@ void GraphicsWorkspace::setZoom(qreal zoom)
     scale(1.0/zoomValue, 1.0/zoomValue);
     zoomValue = zoom;
     scale(zoom, zoom);
+    emit zoomValueChanged(qRound(zoomValue*100));
+    emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
 }
 
 void GraphicsWorkspace::zoomIn()
 {
-    if(zoomValue>=scaleMax) return;
+    if(zoomValue*scaleFactor>=scaleMax) return;
 
     zoomValue *= scaleFactor;
     scale(scaleFactor, scaleFactor);
+    emit zoomValueChanged(qRound(zoomValue*100));
+    emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
 }
 
 void GraphicsWorkspace::zoomOut()
 {
-    if(zoomValue<=scaleMin) return;
+    if(zoomValue*scaleFactor<=scaleMin) return;
 
     zoomValue *= 1.0/scaleFactor;
     scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+    emit zoomValueChanged(qRound(zoomValue*100));
+    emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
 }
 
 
@@ -163,15 +169,19 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     {
       // Scale the view / do the zoom
       if(event->delta() > 0) {
-          if(zoomValue>=scaleMax) return;
+          if(zoomValue*scaleFactor>=scaleMax) return;
           // Zoom in
           zoomValue *= scaleFactor;
           scale(scaleFactor, scaleFactor);
+          emit zoomValueChanged(qRound(zoomValue*100));
+          emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
       } else {
-          if(zoomValue<=scaleMin) return;
+          if(zoomValue*scaleFactor<=scaleMin) return;
           // Zooming out
           zoomValue *= 1.0/scaleFactor;
           scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+          emit zoomValueChanged(qRound(zoomValue*100));
+          emit zoomValueChanged(QString::number(qRound(zoomValue*100)));
       }
       return;
     }

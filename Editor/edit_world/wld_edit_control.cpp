@@ -95,6 +95,12 @@ void WorldEdit::zoomOut()
     }
 }
 
+QGraphicsView *WorldEdit::getGraphicsView()
+{
+    return ui->graphicsView;
+}
+
+
 void WorldEdit::setZoom(int percent)
 {
     if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
