@@ -3952,32 +3952,32 @@ SMBX NPC Konfiguration (npc-*.TXT)
 Alle Datein (*.*)</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="301"/>
+        <location filename="../main_window/menubar.cpp" line="307"/>
         <source>Sub Windows</source>
         <translation>Fenster</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="310"/>
+        <location filename="../main_window/menubar.cpp" line="316"/>
         <source>Tab Windows</source>
         <translation>Tabs</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="322"/>
+        <location filename="../main_window/menubar.cpp" line="328"/>
         <source>Close current</source>
         <translation>Schließe aktuelle</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="332"/>
+        <location filename="../main_window/menubar.cpp" line="338"/>
         <source>Cascade</source>
         <translation>Kaskadiere</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="337"/>
+        <location filename="../main_window/menubar.cpp" line="343"/>
         <source>Tiled</source>
         <translation>Gefließt</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="345"/>
+        <location filename="../main_window/menubar.cpp" line="351"/>
         <source>[No files open]</source>
         <translation>[Keine Offnen Dateien]</translation>
     </message>
@@ -4712,9 +4712,13 @@ Daten könnten fehlerhaft sein!</translation>
         <translation>Wähle einen Punkt auf der Weltkarte</translation>
     </message>
     <message>
-        <location filename="../wld_point_dialog/wld_setpoint.ui" line="76"/>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the ALT key.</source>
-        <translation>Achtung: Benutze das Mausrad um zu scrollen. Mit der ALT Taste kann man horinzontal scrollen.</translation>
+        <translation type="vanished">Achtung: Benutze das Mausrad um zu scrollen. Mit der ALT Taste kann man horinzontal scrollen.</translation>
+    </message>
+    <message>
+        <location filename="../wld_point_dialog/wld_setpoint.ui" line="76"/>
+        <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
+        <translation>Achtung: Benutze das Mausrad um zu scrollen. Mit der CTRL Taste kann man horinzontal scrollen.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="89"/>
@@ -4734,7 +4738,7 @@ Daten könnten fehlerhaft sein!</translation>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="110"/>
         <source>Start and stop animation of placed on the map items.</source>
-        <translation>Startet oder stoppt Animation</translation>
+        <translation>Startet oder stoppt Animation.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="113"/>

@@ -3738,32 +3738,32 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="301"/>
+        <location filename="../main_window/menubar.cpp" line="307"/>
         <source>Sub Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="310"/>
+        <location filename="../main_window/menubar.cpp" line="316"/>
         <source>Tab Windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="322"/>
+        <location filename="../main_window/menubar.cpp" line="328"/>
         <source>Close current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="332"/>
+        <location filename="../main_window/menubar.cpp" line="338"/>
         <source>Cascade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="337"/>
+        <location filename="../main_window/menubar.cpp" line="343"/>
         <source>Tiled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="345"/>
+        <location filename="../main_window/menubar.cpp" line="351"/>
         <source>[No files open]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4462,7 +4462,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="76"/>
-        <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the ALT key.</source>
+        <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
