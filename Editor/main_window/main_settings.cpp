@@ -252,7 +252,8 @@ void MainWindow::setUiDefults()
 //    //start event detection loop
 //    TickTackTimer->start(1);
     muVol = new QSlider(Qt::Horizontal);
-    muVol->setMaximumWidth(100);
+    muVol->setMaximumWidth(70);
+    muVol->setMinimumWidth(70);
     muVol->setMinimum(0);
     muVol->setMaximum(100);
     muVol->setValue(GlobalSettings::musicVolume);
@@ -263,8 +264,9 @@ void MainWindow::setUiDefults()
     zoom = new QLineEdit();
     zoom->setValidator(new QIntValidator(0,2001));
     zoom->setText("100");
-    zoom->setMaximumWidth(100);
+    zoom->setMaximumWidth(50);
     zoom->setEnabled(false);
+
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
     connect(zoom, SIGNAL(editingFinished()), this, SLOT(applyTextZoom()));
 
