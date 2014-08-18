@@ -63,6 +63,8 @@ public:
     void setZoom(int percent);
     int  getZoom();
 
+    QGraphicsView* getGraphicsView();
+
     enum CusrorMode
     {
         MODE_HandDrag=-1,

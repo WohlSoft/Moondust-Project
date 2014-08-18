@@ -229,6 +229,7 @@ public slots:
     void WLD_returnPointToLevelProperties(QPoint p);
 
 
+    void applyTextZoom();
 private slots:
 
     //Actions
@@ -661,6 +662,7 @@ private:
     QMediaPlaylist CurrentMusic;
 
     QSlider* muVol;
+    QLineEdit* zoom;
 
     QMdiSubWindow *findMdiChild(const QString &fileName);
     QSignalMapper *windowMapper;

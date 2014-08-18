@@ -95,6 +95,10 @@ void leveledit::zoomOut()
     }
 }
 
+QGraphicsView *leveledit::getGraphicsView()
+{
+    return ui->graphicsView;
+}
 void leveledit::setZoom(int percent)
 {
     if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
