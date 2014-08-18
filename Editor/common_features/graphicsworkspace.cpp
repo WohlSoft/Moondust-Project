@@ -7,6 +7,10 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     keyTime=25;
 
     zoomValue=1.0;
+    scaleFactor = 1.15;
+
+    scaleMin=0.01;
+    scaleMax=20.0;
 
     connect(&lMover, SIGNAL(timeout()), this, SLOT(moveLeft()));
     connect(&rMover, SIGNAL(timeout()), this, SLOT(moveRight()));
@@ -24,18 +28,29 @@ qreal GraphicsWorkspace::zoom()
 
 void GraphicsWorkspace::setZoom(qreal zoom)
 {
-    if(zoomValue>1.0)
-    {
-        scale(1.0/zoomValue, 1.0/zoomValue);
-    }
-    else
-    if(zoomValue<1.0)
-    {
-        scale(zoomValue, zoomValue);
-    }
+    if(zoom>=scaleMax || zoom<=scaleMin) return;
+
+    scale(1.0/zoomValue, 1.0/zoomValue);
     zoomValue = zoom;
     scale(zoom, zoom);
 }
+
+void GraphicsWorkspace::zoomIn()
+{
+    if(zoomValue>=scaleMax) return;
+
+    zoomValue *= scaleFactor;
+    scale(scaleFactor, scaleFactor);
+}
+
+void GraphicsWorkspace::zoomOut()
+{
+    if(zoomValue<=scaleMin) return;
+
+    zoomValue *= 1.0/scaleFactor;
+    scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+}
+
 
 void GraphicsWorkspace::moveLeft()
 {
@@ -147,14 +162,15 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
     if(event->modifiers() & Qt::AltModifier)
     {
       // Scale the view / do the zoom
-      double scaleFactor = 1.15;
       if(event->delta() > 0) {
+          if(zoomValue>=scaleMax) return;
           // Zoom in
           zoomValue *= scaleFactor;
           scale(scaleFactor, scaleFactor);
       } else {
+          if(zoomValue<=scaleMin) return;
           // Zooming out
-          zoomValue /= scaleFactor;
+          zoomValue *= 1.0/scaleFactor;
           scale(1.0 / scaleFactor, 1.0 / scaleFactor);
       }
       return;

@@ -13,6 +13,8 @@ public:
     explicit GraphicsWorkspace(QWidget *parent = 0);
     qreal zoom();
     void setZoom(qreal zoom);
+    void zoomIn();
+    void zoomOut();
 
 signals:
 
@@ -33,6 +35,10 @@ private:
     int step;
     int keyTime;
     qreal zoomValue;
+
+    double scaleFactor;
+    double scaleMin;
+    double scaleMax;
 
 protected:
     virtual void 	focusOutEvent ( QFocusEvent * event );

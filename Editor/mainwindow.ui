@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1502</width>
-     <height>26</height>
+     <height>18</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1073,6 +1073,10 @@
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
+   <addaction name="actionZoomReset"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomOut"/>
+   <addaction name="separator"/>
    <addaction name="actionReset_position"/>
    <addaction name="actionGo_to_Section"/>
    <addaction name="separator"/>
@@ -2667,8 +2671,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>275</width>
-          <height>1462</height>
+          <width>280</width>
+          <height>1330</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3847,8 +3851,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>513</height>
+          <width>270</width>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4030,8 +4034,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>513</height>
+          <width>270</width>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4112,8 +4116,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>513</height>
+          <width>270</width>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4206,8 +4210,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>513</height>
+          <width>270</width>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4504,8 +4508,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>513</height>
+          <width>270</width>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4620,8 +4624,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>513</height>
+          <width>270</width>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4718,8 +4722,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>513</height>
+          <width>270</width>
+          <height>536</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4867,7 +4871,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>417</height>
+          <height>467</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5095,7 +5099,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>417</height>
+          <height>467</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5244,7 +5248,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>417</height>
+          <height>467</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5840,8 +5844,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6062,7 +6066,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>311</height>
+          <height>364</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6075,7 +6079,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>311</height>
+          <height>364</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6088,7 +6092,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>311</height>
+          <height>364</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6101,7 +6105,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>311</height>
+          <height>364</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6247,7 +6251,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>311</height>
+          <height>364</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7884,6 +7888,42 @@ p, li { white-space: pre-wrap; }
   <action name="actionTileset_groups_editor">
    <property name="text">
     <string>Tileset Groups Editor</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/zoom_in.png</normaloff>:/images/zoom_in.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/zoom_out.png</normaloff>:/images/zoom_out.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionZoomReset">
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/zoom_reset.png</normaloff>:/images/zoom_reset.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset Zoom</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+=</string>
    </property>
   </action>
  </widget>
