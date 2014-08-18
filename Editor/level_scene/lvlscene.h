@@ -146,6 +146,9 @@ public:
 
     void setLocked(int type, bool lock);
 
+    void setLayerToSelected();
+    void setLayerToSelected(QString lName, bool isNew=false);
+
     //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
     void sortBlockArrayByPos(QVector<LevelBlock > &blocks);
@@ -534,7 +537,6 @@ public:
 
 public slots:
     void selectionChanged();
-
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

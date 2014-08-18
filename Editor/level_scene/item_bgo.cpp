@@ -190,8 +190,22 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 scene->openProps();
             }
             else
+            if(selected==newLayer)
             {
-               #include "item_set_layer.h"
+                scene->setLayerToSelected();
+            }
+            else
+            {
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
             }
         }
 

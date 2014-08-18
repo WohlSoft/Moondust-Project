@@ -36,6 +36,7 @@
 
 #include "../defines.h"
 
+
 QPoint sourcePos=QPoint(0,0);
 int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
 
