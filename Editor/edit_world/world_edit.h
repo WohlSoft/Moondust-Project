@@ -61,6 +61,8 @@ public:
     void zoomIn();
     void zoomOut();
 
+    QGraphicsView* getGraphicsView();
+
     enum CusrorMode
     {
         MODE_HandDrag=-1,

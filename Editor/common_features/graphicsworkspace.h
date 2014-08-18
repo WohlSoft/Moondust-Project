@@ -17,6 +17,8 @@ public:
     void zoomOut();
 
 signals:
+    void zoomValueChanged(int percent);
+    void zoomValueChanged(const QString &percent);
 
 public slots:
 

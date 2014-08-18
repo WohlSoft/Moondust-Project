@@ -260,6 +260,13 @@ void MainWindow::setUiDefults()
     ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
     ui->EditionToolBar->insertSeparator(ui->actionAnimation);
 
+    zoom = new QLineEdit();
+    zoom->setValidator(new QIntValidator(1,2000));
+    zoom->setText("100");
+    zoom->setMaximumWidth(100);
+    zoom->setEnabled(false);
+    ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
+
     connect(muVol, SIGNAL(valueChanged(int)), MusicPlayer, SLOT(setVolume(int)));
 
     curSearchBlock.id = 0;

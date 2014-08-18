@@ -95,6 +95,11 @@ void WorldEdit::zoomOut()
     }
 }
 
+QGraphicsView *WorldEdit::getGraphicsView()
+{
+    return ui->graphicsView;
+}
+
 
 void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
 {
