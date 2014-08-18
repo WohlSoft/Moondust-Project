@@ -4028,32 +4028,32 @@ Please, select necessary world map in a list:</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="301"/>
+        <location filename="../main_window/menubar.cpp" line="307"/>
         <source>Sub Windows</source>
         <translation>Дочерние окна</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="310"/>
+        <location filename="../main_window/menubar.cpp" line="316"/>
         <source>Tab Windows</source>
         <translation>Вкладки</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="322"/>
+        <location filename="../main_window/menubar.cpp" line="328"/>
         <source>Close current</source>
         <translation>Закрыть текущее</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="332"/>
+        <location filename="../main_window/menubar.cpp" line="338"/>
         <source>Cascade</source>
         <translation>Окна каскадом</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="337"/>
+        <location filename="../main_window/menubar.cpp" line="343"/>
         <source>Tiled</source>
         <translation>Окна рядом</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="345"/>
+        <location filename="../main_window/menubar.cpp" line="351"/>
         <source>[No files open]</source>
         <translation>[Нет открытых файлов]</translation>
     </message>
@@ -4750,9 +4750,13 @@ Data may be corrupted!</source>
         <translation>Выбор точки на карте мира</translation>
     </message>
     <message>
-        <location filename="../wld_point_dialog/wld_setpoint.ui" line="76"/>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the ALT key.</source>
-        <translation>Замечание: Используйте колёсико мыши для прокрутки по карте. Вы можете прокрутить горизонтально вместе с зажатой клвавижей ALT на клавиатуре.</translation>
+        <translation type="vanished">Замечание: Используйте колёсико мыши для прокрутки по карте. Вы можете прокрутить горизонтально вместе с зажатой клвавижей ALT на клавиатуре.</translation>
+    </message>
+    <message>
+        <location filename="../wld_point_dialog/wld_setpoint.ui" line="76"/>
+        <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
+        <translation>Замечание: Используйте колёсико мыши для прокрутки по карте. Вы можете прокрутить горизонтально вместе с зажатой клвавижей CTRL на клавиатуре.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="89"/>
@@ -5486,7 +5490,7 @@ because object configurations are not loaded
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="229"/>
         <source>Make custom folder</source>
-        <translation>Создать пользовательскую папку</translation>
+        <translation>Создать польз. папку</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="264"/>
