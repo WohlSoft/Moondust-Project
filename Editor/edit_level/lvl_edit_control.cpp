@@ -99,6 +99,25 @@ QGraphicsView *leveledit::getGraphicsView()
 {
     return ui->graphicsView;
 }
+void leveledit::setZoom(int percent)
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(qreal(percent)/100.0);
+    }
+}
+
+int leveledit::getZoom()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        return qRound(static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom() * 100.0);
+    }
+    else
+    {
+        return 100;
+    }
+}
 
 
 void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)

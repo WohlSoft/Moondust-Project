@@ -60,6 +60,8 @@ public:
     void ResetZoom();
     void zoomIn();
     void zoomOut();
+    void setZoom(int percent);
+    int  getZoom();
 
     QGraphicsView* getGraphicsView();
 
