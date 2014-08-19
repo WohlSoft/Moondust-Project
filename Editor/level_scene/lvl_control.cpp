@@ -119,8 +119,11 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     IsMoved = false;
 
     //Discard multi mouse key
-    int mSum = (int)( mouseEvent->buttons() );
-    if( mSum > 4 || mSum == 3 )
+    int mSum = 0;
+    if( mouseEvent->buttons() & Qt::LeftButton ) mSum++;
+    if( mouseEvent->buttons() & Qt::MiddleButton ) mSum++;
+    if( mouseEvent->buttons() & Qt::RightButton ) mSum++;
+    if( mSum > 1 )
     {
         mouseEvent->accept();
         WriteToLog(QtDebugMsg, QString("[MousePress] MultiMouse detected [%2] [edit mode: %1]").arg(EditingMode).arg(QString::number(mSum, 2)));
@@ -128,7 +131,6 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     mouseMoved=false;
-
     if( mouseEvent->buttons() & Qt::LeftButton )
     {
         mouseLeft=true;
@@ -455,40 +457,40 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     using namespace lvl_control;
 
-    int multimouse=0;
-    if( mouseLeft || (mouseLeft^(mouseEvent->buttons() & Qt::LeftButton)) )
-        multimouse++;
-    if( mouseMid || (mouseMid^(mouseEvent->buttons() & Qt::MiddleButton)) )
-        multimouse++;
-    if( mouseRight || (mouseRight^(mouseEvent->buttons() & Qt::RightButton)) )
-        multimouse++;
+//    int multimouse=0;
+//    if( mouseLeft || (mouseLeft^(mouseEvent->buttons() & Qt::LeftButton)) )
+//        multimouse++;
+//    if( mouseMid || (mouseMid^(mouseEvent->buttons() & Qt::MiddleButton)) )
+//        multimouse++;
+//    if( mouseRight || (mouseRight^(mouseEvent->buttons() & Qt::RightButton)) )
+//        multimouse++;
 
     bool isLeftMouse=false;
     bool isMiddleMouse=false;
 
-    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+    if( mouseEvent->button() == Qt::LeftButton )
     {
         mouseLeft=false;
         isLeftMouse=true;
         WriteToLog(QtDebugMsg, QString("Left mouse button released [edit mode: %1]").arg(EditingMode));
     }
-    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+    if( mouseEvent->button() == Qt::MiddleButton )
     {
         mouseMid=false;
         isMiddleMouse=true;
         WriteToLog(QtDebugMsg, QString("Middle mouse button released [edit mode: %1]").arg(EditingMode));
     }
-    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    if( mouseEvent->button() == Qt::RightButton )
     {
         mouseRight=false;
         WriteToLog(QtDebugMsg, QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
     }
 
-    if(multimouse>1)
-    {
-        WriteToLog(QtDebugMsg, QString("Multiple mouse keys detected %1").arg(multimouse) );
-        mouseEvent->accept(); return;
-    }
+//    if(multimouse>1)
+//    {
+//        WriteToLog(QtDebugMsg, QString("Multiple mouse keys detected %1").arg(multimouse) );
+//        mouseEvent->accept(); return;
+//    }
 
     contextMenuOpened=false;
     if(!isLeftMouse)
