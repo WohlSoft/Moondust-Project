@@ -47,10 +47,17 @@ void WorldEdit::ExportToImage_fn()
 
     MainWinConnect::pMainWin->on_actionSelect_triggered();
 
-    scene->captutedSize.setX(ui->graphicsView->horizontalScrollBar()->value());
-    scene->captutedSize.setY(ui->graphicsView->verticalScrollBar()->value());
-    scene->captutedSize.setWidth(ui->graphicsView->width());
-    scene->captutedSize.setHeight(ui->graphicsView->height());
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+
+    scene->captutedSize.setX(qRound(qreal(ui->graphicsView->horizontalScrollBar()->value())/zoom)+10 );
+    scene->captutedSize.setY(qRound(qreal(ui->graphicsView->verticalScrollBar()->value())/zoom)+10 );
+    scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width())/zoom)-20);
+    scene->captutedSize.setHeight(qRound(qreal(ui->graphicsView->viewport()->height())/zoom)-20);
 
     scene->setScreenshotSelector(true);
 }
