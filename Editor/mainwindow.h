@@ -140,10 +140,15 @@ public slots:
 
     //for search
     void toggleNewWindow(QMdiSubWindow *window);
+    void toggleNewWindowWLD(QMdiSubWindow *window);
     void resetAllSearches();
     void resetAllSearchFieldsWLD();
     void resetAllSearchesWLD();
+    void resetTileSearch();
+    void resetScenerySearch();
+    void resetPathSearch();
     void resetLevelSearch();
+    void resetMusicSearch();
     void resetBlockSearch();
     void resetBGOSearch();
     void resetNPCSearch();
@@ -599,9 +604,21 @@ private slots:
     void on_actionWLD_SearchBox_triggered(bool checked);
     void on_WorldFindDock_visibilityChanged(bool visible);
     void on_FindStartLevel_clicked();
+    void on_FindStartTile_clicked();
+    void on_FindStartScenery_clicked();
+    void on_FindStartPath_clicked();
+    void on_FindStartMusic_clicked();
 
     void on_Find_Button_TypeLevel_clicked();
+    void on_Find_Button_TypeTile_clicked();
+    void on_Find_Button_TypeScenery_clicked();
+    void on_Find_Button_TypePath_clicked();
+    void on_Find_Button_TypeMusic_clicked();
     void on_Find_Button_ResetLevel_clicked();
+    void on_Find_Button_ResetMusic_clicked();
+    void on_Find_Button_ResetPath_clicked();
+    void on_Find_Button_ResetScenery_clicked();
+    void on_Find_Button_ResetTile_clicked();
 
 signals:
     void closeEditor();

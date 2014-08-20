@@ -54,15 +54,120 @@ void MainWindow::on_Find_Button_ResetLevel_clicked()
     }
 }
 
+void MainWindow::on_Find_Button_ResetMusic_clicked()
+{
+    if(!(currentSearches & SEARCH_MUSICBOX)){
+        ui->Find_Check_TypeMusic->setChecked(true);
+        ui->Find_Button_TypeMusic->setText(tr("[empty]"));
+        curSearchMusic.id = 0;
+    }else{
+        currentSearches ^= SEARCH_MUSICBOX;
+        ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
+        ui->FindStartMusic->setText(tr("Search Music"));
+        curSearchMusic.index = 0;
+    }
+}
+
+void MainWindow::on_Find_Button_ResetPath_clicked()
+{
+    if(!(currentSearches & SEARCH_PATH)){
+        ui->Find_Check_TypePath->setChecked(true);
+        ui->Find_Button_TypePath->setText(tr("[empty]"));
+        curSearchPath.id = 0;
+    }else{
+        currentSearches ^= SEARCH_PATH;
+        ui->Find_Button_ResetPath->setText(tr("Reset Search Fields"));
+        ui->FindStartPath->setText(tr("Search Path"));
+        curSearchPath.index = 0;
+    }
+}
+
+void MainWindow::on_Find_Button_ResetScenery_clicked()
+{
+    if(!(currentSearches & SEARCH_SCENERY)){
+        ui->Find_Check_TypeScenery->setChecked(true);
+        ui->Find_Button_TypeScenery->setText(tr("[empty]"));
+        curSearchScenery.id = 0;
+    }else{
+        currentSearches ^= SEARCH_SCENERY;
+        ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
+        ui->FindStartScenery->setText(tr("Search Scenery"));
+        curSearchScenery.index = 0;
+    }
+}
+
+void MainWindow::on_Find_Button_ResetTile_clicked()
+{
+    if(!(currentSearches & SEARCH_TILE)){
+        ui->Find_Check_TypeTile->setChecked(true);
+        ui->Find_Button_TypeTile->setText(tr("[empty]"));
+        curSearchTile.id = 0;
+    }else{
+        currentSearches ^= SEARCH_TILE;
+        ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
+        ui->FindStartTile->setText(tr("Search Tile"));
+        curSearchTile.index = 0;
+    }
+}
+
 void MainWindow::on_Find_Button_TypeLevel_clicked()
 {
-    ItemSelectDialog* selBlock = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,curSearchLevel.id);
-    if(selBlock->exec()==QDialog::Accepted){
-        int selected = selBlock->levelID;
+    ItemSelectDialog* selLevel = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,curSearchLevel.id);
+    if(selLevel->exec()==QDialog::Accepted){
+        int selected = selLevel->levelID;
         curSearchLevel.id = selected;
         ui->Find_Button_TypeLevel->setText(((selected>0)?QString("Level-%1").arg(selected):tr("[empty]")));
     }
-    delete selBlock;
+    delete selLevel;
+}
+
+void MainWindow::on_Find_Button_TypeTile_clicked()
+{
+    ItemSelectDialog* selTile = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_TILE,0,0,0,0,curSearchTile.id,0,0,0);
+    if(selTile->exec()==QDialog::Accepted){
+        int selected = selTile->tileID;
+        curSearchTile.id = selected;
+        ui->Find_Button_TypeTile->setText(((selected>0)?QString("Tile-%1").arg(selected):tr("[empty]")));
+    }
+    delete selTile;
+}
+
+void MainWindow::on_Find_Button_TypeScenery_clicked()
+{
+    ItemSelectDialog* selScenery = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_SCENERY,0,0,0,0,0,curSearchScenery.id,0,0);
+    if(selScenery->exec()==QDialog::Accepted){
+        int selected = selScenery->sceneryID;
+        curSearchScenery.id = selected;
+        ui->Find_Button_TypeScenery->setText(((selected>0)?QString("Scenery-%1").arg(selected):tr("[empty]")));
+    }
+    delete selScenery;
+}
+
+void MainWindow::on_Find_Button_TypePath_clicked()
+{
+    ItemSelectDialog* selPath = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_PATH,0,0,0,0,0,0,curSearchPath.id,0);
+    if(selPath->exec()==QDialog::Accepted){
+        int selected = selPath->pathID;
+        curSearchPath.id = selected;
+        ui->Find_Button_TypePath->setText(((selected>0)?QString("Path-%1").arg(selected):tr("[empty]")));
+    }
+    delete selPath;
+}
+
+void MainWindow::on_Find_Button_TypeMusic_clicked()
+{
+    ItemSelectDialog* selMusic = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_MUSIC,0,0,0,0,0,0,0,0,curSearchMusic.id);
+    if(selMusic->exec()==QDialog::Accepted){
+        int selected = selMusic->musicID;
+        curSearchMusic.id = selected;
+        int index = configs.getMusWldI(selected);
+        if(index!=-1){
+            ui->Find_Button_TypeMusic->setText(configs.main_music_wld[index].name);
+        }else{
+            ui->Find_Button_TypeMusic->setText(((selected>0)?QString("Music-%1").arg(selected):tr("[empty]")));
+        }
+    }
+    delete selMusic;
 }
 
 
@@ -89,6 +194,118 @@ void MainWindow::on_FindStartLevel_clicked()
                 ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
                 ui->FindStartLevel->setText(tr("Search Level"));
                 QMessageBox::information(this, tr("Search Complete"), tr("Level search completed!"));
+            }
+        }
+    }
+}
+
+void MainWindow::on_FindStartTile_clicked()
+{
+    if(!(currentSearches & SEARCH_TILE)){ //start search
+        if(activeChildWindow()==3){
+            currentSearches |= SEARCH_TILE;
+            ui->FindStartTile->setText(tr("Next Tile"));
+            ui->Find_Button_ResetTile->setText(tr("Stop Search"));
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchTile(edit)){
+                currentSearches ^= SEARCH_TILE;
+                ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
+                ui->FindStartTile->setText(tr("Search Tile"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Tile search completed!"));
+            }
+        }
+    }else{ //middle in a search
+        if(activeChildWindow()==3){
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchTile(edit)){
+                currentSearches ^= SEARCH_TILE;
+                ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
+                ui->FindStartTile->setText(tr("Search Tile"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Tile search completed!"));
+            }
+        }
+    }
+}
+
+void MainWindow::on_FindStartScenery_clicked()
+{
+    if(!(currentSearches & SEARCH_SCENERY)){ //start search
+        if(activeChildWindow()==3){
+            currentSearches |= SEARCH_SCENERY;
+            ui->FindStartScenery->setText(tr("Next Scenery"));
+            ui->Find_Button_ResetScenery->setText(tr("Stop Search"));
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchScenery(edit)){
+                currentSearches ^= SEARCH_SCENERY;
+                ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
+                ui->FindStartScenery->setText(tr("Search Scenery"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Scenery search completed!"));
+            }
+        }
+    }else{ //middle in a search
+        if(activeChildWindow()==3){
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchScenery(edit)){
+                currentSearches ^= SEARCH_SCENERY;
+                ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
+                ui->FindStartScenery->setText(tr("Search Scenery"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Scenery search completed!"));
+            }
+        }
+    }
+}
+
+void MainWindow::on_FindStartPath_clicked()
+{
+    if(!(currentSearches & SEARCH_PATH)){ //start search
+        if(activeChildWindow()==3){
+            currentSearches |= SEARCH_PATH;
+            ui->FindStartPath->setText(tr("Next Path"));
+            ui->Find_Button_ResetPath->setText(tr("Stop Search"));
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchPath(edit)){
+                currentSearches ^= SEARCH_PATH;
+                ui->Find_Button_ResetPath->setText(tr("Reset Search Fields"));
+                ui->FindStartPath->setText(tr("Search Path"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Path search completed!"));
+            }
+        }
+    }else{ //middle in a search
+        if(activeChildWindow()==3){
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchPath(edit)){
+                currentSearches ^= SEARCH_PATH;
+                ui->Find_Button_ResetPath->setText(tr("Reset Search Fields"));
+                ui->FindStartPath->setText(tr("Search Path"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Path search completed!"));
+            }
+        }
+    }
+}
+
+void MainWindow::on_FindStartMusic_clicked()
+{
+    if(!(currentSearches & SEARCH_MUSICBOX)){ //start search
+        if(activeChildWindow()==3){
+            currentSearches |= SEARCH_MUSICBOX;
+            ui->FindStartMusic->setText(tr("Next Music"));
+            ui->Find_Button_ResetMusic->setText(tr("Stop Search"));
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchMusic(edit)){
+                currentSearches ^= SEARCH_MUSICBOX;
+                ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
+                ui->FindStartMusic->setText(tr("Search Music"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Music search completed!"));
+            }
+        }
+    }else{ //middle in a search
+        if(activeChildWindow()==3){
+            WorldEdit* edit = activeWldEditWin();
+            if(doSearchMusic(edit)){
+                currentSearches ^= SEARCH_MUSICBOX;
+                ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
+                ui->FindStartMusic->setText(tr("Search Music"));
+                QMessageBox::information(this, tr("Search Complete"), tr("Music search completed!"));
             }
         }
     }
@@ -214,7 +431,7 @@ bool MainWindow::doSearchMusic(WorldEdit *edit)
     QList<QGraphicsItem*> gr = edit->scene->items();
     if(curSearchMusic.index+1 < (unsigned int)gr.size()){
         for(int i = curSearchMusic.index+1; i < gr.size(); ++i){
-            if(gr[i]->data(0).toString()=="MUSIC"){
+            if(gr[i]->data(0).toString()=="MUSICBOX"){
                 bool toBeFound = true;
                 if(ui->Find_Check_TypeMusic->isChecked()&&curSearchMusic.id!=0&&toBeFound){
                     toBeFound = ((ItemMusic*)gr[i])->musicData.id == (unsigned int)curSearchMusic.id;
@@ -241,12 +458,44 @@ void MainWindow::resetAllSearchFieldsWLD()
 {
     resetAllSearchesWLD();
 
+    on_Find_Button_ResetTile_clicked();
+    on_Find_Button_ResetScenery_clicked();
+    on_Find_Button_ResetPath_clicked();
     on_Find_Button_ResetLevel_clicked();
+    on_Find_Button_ResetMusic_clicked();
 }
 
 void MainWindow::resetAllSearchesWLD()
 {
+    resetTileSearch();
+    resetScenerySearch();
+    resetPathSearch();
     resetLevelSearch();
+    resetMusicSearch();
+}
+
+void MainWindow::resetTileSearch()
+{
+    if(lockResetWorld) return;
+    lockResetWorld = true;
+    if(currentSearches & SEARCH_TILE) on_Find_Button_ResetTile_clicked();
+    lockResetWorld = false;
+}
+
+void MainWindow::resetScenerySearch()
+{
+    if(lockResetWorld) return;
+    lockResetWorld = true;
+    if(currentSearches & SEARCH_SCENERY) on_Find_Button_ResetScenery_clicked();
+    lockResetWorld = false;
+}
+
+void MainWindow::resetPathSearch()
+{
+    if(lockResetWorld) return;
+    lockResetWorld = true;
+    if(currentSearches & SEARCH_PATH) on_Find_Button_ResetPath_clicked();
+    lockResetWorld = false;
 }
 
 void MainWindow::resetLevelSearch()
@@ -255,4 +504,17 @@ void MainWindow::resetLevelSearch()
     lockResetWorld = true;
     if(currentSearches & SEARCH_LEVEL) on_Find_Button_ResetLevel_clicked();
     lockResetWorld = false;
+}
+
+void MainWindow::resetMusicSearch()
+{
+    if(lockResetWorld) return;
+    lockResetWorld = true;
+    if(currentSearches & SEARCH_MUSICBOX) on_Find_Button_ResetMusic_clicked();
+    lockResetWorld = false;
+}
+
+void MainWindow::toggleNewWindowWLD(QMdiSubWindow */*window*/)
+{
+    resetAllSearchesWLD();
 }
