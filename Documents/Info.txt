@@ -1,15 +1,15 @@
 =====Documentation pack=====
 
 PGE-1
-	Descriptions and specifications for new engining standard, what will be used in project.
-	This is the exchanged SMBX64 standard with more features and avaliable to configure most
-	existing objects and creating of new
+	Descriptions and specifications for the new file format, which will take advantage of the new features of the editor.
+	This is an enhanced version of the SMBX64 standard with more features, allowing for customization of most
+	existing objects in the engine, as well as the creation of new ones. This format will NOT be compatible with SMBX!
 
 SMBX64 standard
-	Standard, using in SMBX 1.3 / SMBX 1.3.0.1. This is a classical SMBX standard.
-	All objects are rigidly connected to the his ID: algorithms, sizes, parameters, etc.
-	The NPC elements can partially be customizing with special TXT files, placed with level file in same folder,
-	or in subfolder with name, equal to level filename. All NPC's algorithmes rigidly connected to ID.
+	This is the format used in SMBX 1.3 / SMBX 1.3.0.1. This is the classic SMBX standard.
+	All objects are rigidly connected to their ID: algorithms, sizes, parameters, etc.
+	The NPC elements can be partially customized with special TXT files, placed with the level file in same folder,
+	or in a subfolder with the same name as the level. All NPC's algorithms are rigidly connected to ID.
 	Level sprites supports only 292 NPCs, 638 blocks, 58 Background images, 190 background objects and 148 effect animations.
 	Music supports 56 level music files with custom music pointer, numbered as 24.
-	World musics have 16 music files and not supports customizing.
+	World music has 16 music files and does not support customizing.
