@@ -14,8 +14,8 @@ Syntax:
    PNG2GIFs [--help] [-R] [-W] /path/to/folder [-O/path/to/out]
 
  --help              - Display this help
- /path/to/folder     - path to a directory with pairs of PNG files
- -O/path/to/out      - path to a directory where the GIF images will be saved
+ /path/to/folder     - path to a directory with PNG files
+ -O/path/to/out      - path to a directory where the pairs of GIF images will be saved
  -R                  - Remove source images after successful conversion
  -W                  - Also look for images in subdirectories
 
@@ -24,12 +24,12 @@ if -O is not specified, GIF images will be saved in the same folder as where you
 Examples:
 
 On Windows:
-PNG2GIFs "C:\SMBX GFX PNG\npc" -O C:\SMBX\graphics\npc 
+PNG2GIFs "C:\SMBX GFX PNG\npc" -OC:\SMBX\graphics\npc 
 PNG2GIFs D:\XXX\graphics\block
 PNG2GIFs block-45.png
 
 On Linux/Mac OS X
-PNG2GIFs "~/Graphics/PNG/npc" -O ~/Wine/SMBX/graphics/npc
+PNG2GIFs "~/Graphics/PNG/npc" -O~/Wine/SMBX/graphics/npc
 PNG2GIFs /home/vasya/Images/xxx/gif
 PNG2GIFs . ../npc_png
 
