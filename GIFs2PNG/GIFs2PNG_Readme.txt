@@ -10,7 +10,8 @@ Usage:
 --------------------------------------------------------------------------------
 Syntax:
 
-   GIFs2PNG [--help] /path/to/folder [-O/path/to/out]
+   GIFs2PNG [--help] [-R]  file1.gif [file2.gif] [...] [-O/path/to/out]
+   GIFs2PNG [--help] [-R] [-W] /path/to/folder [-O/path/to/out]
 
  --help              - Display this help
  /path/to/folder     - path to a directory with pairs of GIF files
@@ -23,11 +24,11 @@ if -O will not be defined, PNG images will be saves in same folder, where placed
 Examples:
 
 On Windows:
-GIFs2PNG C:\SMBX\graphics\npc "-OC:\SMBX GFX PNG\npc"
+GIFs2PNG C:\SMBX\graphics\npc -O"C:\SMBX GFX PNG\npc"
 GIFs2PNG D:\XXX\graphics\block
 
 On Linux/MacOS X
-GIFs2PNG ~/Wine/SMBX/graphics/npc "-O~/Graphics/PNG/npc"
+GIFs2PNG ~/Wine/SMBX/graphics/npc -O"~/Graphics/PNG/npc"
 GIFs2PNG /home/vasya/Images/xxx/gif
 GIFs2PNG . ../npc_png
 
@@ -35,6 +36,10 @@ GIFs2PNG . ../npc_png
 
 
 Change Log:
+
+1.0.5
+-Added support for conversion by filelist instead whole directories
+-Fixed output path bug
 
 1.0.1
 -Added walking in subdirectories
