@@ -26,11 +26,11 @@ if -O will not be defined, the new images will be saved in the same folder as wh
 Examples:
 
 On Windows:
-LazyFixTool C:\SMBX\graphics\npc -O "C:\SMBX GFX PNG\npc"
+LazyFixTool C:\SMBX\graphics\npc -O"C:\SMBX GFX PNG\npc"
 LazyFixTool D:\XXX\graphics\block
 
 On Linux/MacOS X
-LazyFixTool ~/Wine/SMBX/graphics/npc -O ~/Graphics/PNG/npc
+LazyFixTool ~/Wine/SMBX/graphics/npc -O~/Graphics/PNG/npc
 LazyFixTool /home/vasya/Images/xxx/gif
 LazyFixTool . ../npc_png
 
