@@ -94,6 +94,90 @@ void MainWindow::on_FindStartLevel_clicked()
     }
 }
 
+bool MainWindow::doSearchTile(WorldEdit *edit)
+{
+    QList<QGraphicsItem*> gr = edit->scene->items();
+    if(curSearchTile.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchTile.index+1; i < gr.size(); ++i){
+            if(gr[i]->data(0).toString()=="TILE"){
+                bool toBeFound = true;
+                if(ui->Find_Check_TypeTile->isChecked()&&curSearchTile.id!=0&&toBeFound){
+                    toBeFound = ((ItemTile*)gr[i])->tileData.id == (unsigned int)curSearchTile.id;
+                }
+                if(toBeFound){
+                    foreach (QGraphicsItem* i, edit->scene->selectedItems())
+                    {
+                        i->setSelected(false);
+                    }
+                    gr[i]->setSelected(true);
+                    edit->goTo(((ItemTile*)gr[i])->tileData.x, ((ItemTile*)gr[i])->tileData.y, false, QPoint(-300, -300));
+                    curSearchTile.index = i;
+                    return false;
+                }
+            }
+        }
+    }
+    //end search
+    curSearchTile.index = 0;
+    return true;
+}
+
+bool MainWindow::doSearchScenery(WorldEdit *edit)
+{
+    QList<QGraphicsItem*> gr = edit->scene->items();
+    if(curSearchScenery.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchScenery.index+1; i < gr.size(); ++i){
+            if(gr[i]->data(0).toString()=="SCENERY"){
+                bool toBeFound = true;
+                if(ui->Find_Check_TypeScenery->isChecked()&&curSearchScenery.id!=0&&toBeFound){
+                    toBeFound = ((ItemScene*)gr[i])->sceneData.id == (unsigned int)curSearchScenery.id;
+                }
+                if(toBeFound){
+                    foreach (QGraphicsItem* i, edit->scene->selectedItems())
+                    {
+                        i->setSelected(false);
+                    }
+                    gr[i]->setSelected(true);
+                    edit->goTo(((ItemScene*)gr[i])->sceneData.x, ((ItemScene*)gr[i])->sceneData.y, false, QPoint(-300, -300));
+                    curSearchScenery.index = i;
+                    return false;
+                }
+            }
+        }
+    }
+    //end search
+    curSearchScenery.index = 0;
+    return true;
+}
+
+bool MainWindow::doSearchPath(WorldEdit *edit)
+{
+    QList<QGraphicsItem*> gr = edit->scene->items();
+    if(curSearchPath.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchPath.index+1; i < gr.size(); ++i){
+            if(gr[i]->data(0).toString()=="PATH"){
+                bool toBeFound = true;
+                if(ui->Find_Check_TypePath->isChecked()&&curSearchPath.id!=0&&toBeFound){
+                    toBeFound = ((ItemPath*)gr[i])->pathData.id == (unsigned int)curSearchPath.id;
+                }
+                if(toBeFound){
+                    foreach (QGraphicsItem* i, edit->scene->selectedItems())
+                    {
+                        i->setSelected(false);
+                    }
+                    gr[i]->setSelected(true);
+                    edit->goTo(((ItemPath*)gr[i])->pathData.x, ((ItemPath*)gr[i])->pathData.y, false, QPoint(-300, -300));
+                    curSearchPath.index = i;
+                    return false;
+                }
+            }
+        }
+    }
+    //end search
+    curSearchPath.index = 0;
+    return true;
+}
+
 bool MainWindow::doSearchLevel(WorldEdit *edit)
 {
     QList<QGraphicsItem*> gr = edit->scene->items();
@@ -122,6 +206,34 @@ bool MainWindow::doSearchLevel(WorldEdit *edit)
     }
     //end search
     curSearchLevel.index = 0;
+    return true;
+}
+
+bool MainWindow::doSearchMusic(WorldEdit *edit)
+{
+    QList<QGraphicsItem*> gr = edit->scene->items();
+    if(curSearchMusic.index+1 < (unsigned int)gr.size()){
+        for(int i = curSearchMusic.index+1; i < gr.size(); ++i){
+            if(gr[i]->data(0).toString()=="MUSIC"){
+                bool toBeFound = true;
+                if(ui->Find_Check_TypeMusic->isChecked()&&curSearchMusic.id!=0&&toBeFound){
+                    toBeFound = ((ItemMusic*)gr[i])->musicData.id == (unsigned int)curSearchMusic.id;
+                }
+                if(toBeFound){
+                    foreach (QGraphicsItem* i, edit->scene->selectedItems())
+                    {
+                        i->setSelected(false);
+                    }
+                    gr[i]->setSelected(true);
+                    edit->goTo(((ItemMusic*)gr[i])->musicData.x, ((ItemMusic*)gr[i])->musicData.y, false, QPoint(-300, -300));
+                    curSearchMusic.index = i;
+                    return false;
+                }
+            }
+        }
+    }
+    //end search
+    curSearchMusic.index = 0;
     return true;
 }
 

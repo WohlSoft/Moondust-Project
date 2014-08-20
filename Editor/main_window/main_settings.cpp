@@ -294,8 +294,8 @@ void MainWindow::setUiDefults()
     curSearchLevel.id = 0;
     curSearchLevel.index = 0;
 
-    curSearchMusicbox.id = 0;
-    curSearchMusicbox.index = 0;
+    curSearchMusic.id = 0;
+    curSearchMusic.index = 0;
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
