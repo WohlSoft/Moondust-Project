@@ -45,6 +45,7 @@ public:
 
     bool    midmouse_allowDupe;
     bool    midmouse_allowPlace;
+    bool    midmouse_allowDragMode;
 
     QMdiArea::ViewMode   MainWindowView;
     QTabWidget::TabPosition LVLToolboxPos;
