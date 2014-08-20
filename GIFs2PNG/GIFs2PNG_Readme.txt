@@ -24,11 +24,11 @@ if -O will not be defined, PNG images will be saves in the same folder as where 
 Examples:
 
 On Windows:
-GIFs2PNG C:\SMBX\graphics\npc -O "C:\SMBX GFX PNG\npc"
+GIFs2PNG C:\SMBX\graphics\npc -O"C:\SMBX GFX PNG\npc"
 GIFs2PNG D:\XXX\graphics\block
 
 On Linux/MacOS X
-GIFs2PNG ~/Wine/SMBX/graphics/npc -O "~/Graphics/PNG/npc"
+GIFs2PNG ~/Wine/SMBX/graphics/npc -O"~/Graphics/PNG/npc"
 GIFs2PNG /home/vasya/Images/xxx/gif
 GIFs2PNG . ../npc_png
 
