@@ -259,10 +259,10 @@ DisplayHelp:
     QTextStream(stdout) <<"   GIFs2PNG [--help] [-R] file1.gif [file2.gif] [...] [-O/path/to/out]\n";
     QTextStream(stdout) <<"   GIFs2PNG [--help] [-W] [-R] /path/to/folder [-O/path/to/out]\n\n";
     QTextStream(stdout) <<" --help              - Display this help\n";
-    QTextStream(stdout) <<" /path/to/folder     - path to a directory with pair of GIF files\n";
+    QTextStream(stdout) <<" /path/to/folder     - path to a directory with pairs of GIF files\n";
     QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the PNG images will be saved\n";
     QTextStream(stdout) <<" -R                  - Remove source images after succesfull converting\n";
-    QTextStream(stdout) <<" -W                  - Walk in subdirectores\n";
+    QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
     QTextStream(stdout) <<"\n\n";
 
     getchar();

@@ -542,9 +542,9 @@ DisplayHelp:
     QTextStream(stdout) <<" --help              - Display this help\n";
     QTextStream(stdout) <<" /path/to/folder     - path to a directory with a pair of GIF files\n";
     QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the new images will be saved\n";
-    QTextStream(stdout) <<" -W                  - Walk in subdirectores\n";
+    QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
     QTextStream(stdout) <<" -N                  - Don't create backup\n";
-    QTextStream(stdout) <<" -G                  - Make gray shades on masks is more dark\n";
+    QTextStream(stdout) <<" -G                  - Make gray shades on masks darker\n";
     QTextStream(stdout) <<"\n\n";
 
     getchar();
