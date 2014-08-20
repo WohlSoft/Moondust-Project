@@ -650,12 +650,16 @@ private:
     WorldScenery curSearchScenery;
     WorldPaths curSearchPath;
     WorldLevels curSearchLevel;
-    WorldMusic curSearchMusicbox;
+    WorldMusic curSearchMusic;
     void resetAllSearchFields();
     bool doSearchBlock(leveledit* edit);
     bool doSearchBGO(leveledit* edit);
     bool doSearchNPC(leveledit* edit);
+    bool doSearchTile(WorldEdit *edit);
+    bool doSearchScenery(WorldEdit *edit);
+    bool doSearchPath(WorldEdit *edit);
     bool doSearchLevel(WorldEdit* edit);
+    bool doSearchMusic(WorldEdit *edit);
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
     QMediaPlayer playSnd;
