@@ -61,6 +61,7 @@ public:
     // Editor flags
     static bool MidMouse_allowDuplicate;
     static bool MidMouse_allowSwitchToPlace;
+    static bool MidMouse_allowSwitchToDrag;
 
     //Last active file type state
     static int lastWinType;

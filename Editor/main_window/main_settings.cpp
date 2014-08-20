@@ -50,6 +50,7 @@ bool GlobalSettings::LevelSearchBoxVis=false;
 
 bool GlobalSettings::MidMouse_allowDuplicate=false;
 bool GlobalSettings::MidMouse_allowSwitchToPlace=false;
+bool GlobalSettings::MidMouse_allowSwitchToDrag=false;
 
 QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
 QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
@@ -429,6 +430,7 @@ void MainWindow::loadSettings()
 
         GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", false).toBool();
         GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", false).toBool();
+        GlobalSettings::MidMouse_allowSwitchToDrag = settings.value("editor-midmouse-allowdrag", false).toBool();
 
         GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
         GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
@@ -524,6 +526,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("editor-midmouse-allowdupe", GlobalSettings::MidMouse_allowDuplicate);
     settings.setValue("editor-midmouse-allowplace", GlobalSettings::MidMouse_allowSwitchToPlace);
+    settings.setValue("editor-midmouse-allowdrag", GlobalSettings::MidMouse_allowSwitchToDrag);
 
     settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
     settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
@@ -583,6 +586,7 @@ void MainWindow::on_actionApplication_settings_triggered()
 
     appSettings->midmouse_allowDupe = GlobalSettings::MidMouse_allowDuplicate;
     appSettings->midmouse_allowPlace = GlobalSettings::MidMouse_allowSwitchToPlace;
+    appSettings->midmouse_allowDragMode = GlobalSettings::MidMouse_allowSwitchToDrag;
 
     appSettings->applySettings();
 
@@ -603,6 +607,7 @@ void MainWindow::on_actionApplication_settings_triggered()
         GlobalSettings::WLDToolboxPos = appSettings->WLDToolboxPos;
         GlobalSettings::MidMouse_allowDuplicate = appSettings->midmouse_allowDupe;
         GlobalSettings::MidMouse_allowSwitchToPlace = appSettings->midmouse_allowPlace;
+        GlobalSettings::MidMouse_allowSwitchToDrag = appSettings->midmouse_allowDragMode;
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
