@@ -1,5 +1,5 @@
-GIFs2PNG - this is a free console utility, what merge GIF images wilth his mask
-and save them into PNG format.
+GIFs2PNG - this is a free console utility, which merges GIF images with their mask
+and saves them into PNG format.
 --------------------------------------------------------------------------------
 This is a part of the Platformer Game Engine by Wohlstand
 --------------------------------------------------------------------------------
@@ -16,10 +16,10 @@ Syntax:
  --help              - Display this help
  /path/to/folder     - path to a directory with pairs of GIF files
  -O/path/to/out      - path to a directory where the PNG images will be saved
- -R                  - Remove source images after succesfull converting
- -W                  - Walk in subdirectores
+ -R                  - Remove source images after successful conversion
+ -W                  - Also look for images in subdirectories
 
-if -O will not be defined, PNG images will be saves in same folder, where placed GIF images.
+if -O will not be defined, PNG images will be saves in the same folder as where you placed GIF images.
 --------------------------------------------------------------------------------
 Examples:
 
