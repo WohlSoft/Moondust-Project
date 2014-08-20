@@ -403,10 +403,10 @@ DisplayHelp:
     QTextStream(stdout) <<"   PNG2GIFs [--help] [-R] file1.png [file2.png] [...] [-O/path/to/out]\n";
     QTextStream(stdout) <<"   PNG2GIFs [--help] [-W] [-R] /path/to/folder [-O/path/to/out]\n\n";
     QTextStream(stdout) <<" --help              - Display this help\n";
-    QTextStream(stdout) <<" /path/to/folder     - path to a directory with a PNG files\n";
-    QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the new images will be saved\n";
-    QTextStream(stdout) <<" -W                  - Walk in subdirectores\n";
-    QTextStream(stdout) <<" -R                  - Remove source\n";
+    QTextStream(stdout) <<" /path/to/folder     - path to a directory with PNG files\n";
+    QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the pairs of GIF images will be saved\n";
+    QTextStream(stdout) <<" -R                  - Remove source images after successful conversion\n";
+    QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
     QTextStream(stdout) <<"\n\n";
 
     getchar();
