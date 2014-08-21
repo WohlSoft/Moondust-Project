@@ -162,7 +162,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
 
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
-    setWindowTitle(curFile);
+    setWindowTitle(QString(curFile).replace("&", "&&&"));
     LvlData = FileFormats::dummyLvlDataArray();
     LvlData.untitled = true;
     StartLvlData = LvlData;
@@ -496,7 +496,7 @@ void leveledit::setCurrentFile(const QString &fileName)
     LvlData.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
-    setWindowTitle(LvlData.LevelName=="" ? userFriendlyCurrentFile() : LvlData.LevelName);
+    setWindowTitle(QString(LvlData.LevelName=="" ? userFriendlyCurrentFile() : LvlData.LevelName).replace("&", "&&&"));
 }
 
 QString leveledit::strippedName(const QString &fullFileName)
