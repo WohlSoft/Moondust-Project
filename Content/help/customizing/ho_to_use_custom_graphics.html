@@ -4,14 +4,111 @@
 <head>
 <meta content="en-us" http-equiv="Content-Language" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>Platformer Game Engine - Editor &gt; </title>
+<title>Platformer Game Engine - Editor &gt; How to use the custom graphics</title>
 <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 
 <body>
 <p style="text-align: center">
 <img alt="Editor splash" src="../images/splash_editor.png" /></p>
-<h1 style="text-align: left">Page Title</h1>
+<h1 style="text-align: left">How to use the custom graphics</h1>
+<p style="text-align: left">In some times need to replace the global images by 
+your own. You can do it without overwriting of the images. You can simulate many 
+of the items you will need to make your game episode unique and colorful on your 
+own.</p>
+<p style="text-align: left">The process is quite simple, but for those of you 
+who don't know how, here is an in depth look at using custom graphics.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">......................</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<h3 style="text-align: left">Customizing notes</h3>
+<p style="text-align: left">- On customizing of animated items be careful, your 
+sprite must be have the same frames number which in the original image.</p>
+<p style="text-align: left">- If you creating the custom BGO's, please, be 
+careful by using these graphics in the SMBX. If size of custom BGO larger than 
+original item image which you replacing, it will be cropped in the SMBX. Don't 
+use larger images if you wanna use levels in the SMBX. Same for a Tiles, 
+Sceneries, Paths and Levels on the world map.</p>
+<p style="text-align: left">- On customizing NPC's, you must create the image 
+sprite with same image size and frames number. If you create custom image size, 
+you should to create the npc-*.txt config file for define the properties for 
+your custom NPC.</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<h3 style="text-align: left"><strong><a name="Graphics_format_support">Graphics 
+formats support</a></strong></h3>
+<p style="text-align: center">&nbsp;</p>
+<p style="text-align: center"><strong>The PGE support these graphics formats:</strong></p>
+<p style="text-align: center">
+<table style="border-collapse: collapse; width: 730px; border: 1px solid #000000" align="center">
+	<tr>
+		<th style="width: 71px; border: 1px solid #000000">Format</th>
+		<th style="width: 420px; border: 1px solid #000000">Description</th>
+		<th style="border: 1px solid #000000">Notes</th>
+	</tr>
+	<tr>
+		<td style="text-align: center; width: 71px; color: #008000; border: 1px solid #000000">
+		GIF</td>
+		<td style="text-align: center; width: 420px; border: 1px solid #000000">
+		CompuServe GIF, witout transparency (with using of the masks)</td>
+		<td style="border: 1px solid #000000"></td>
+	</tr>
+	<tr>
+		<td style="text-align: center; width: 71px; color: #008000; border: 1px solid #000000">
+		GIF</td>
+		<td style="text-align: center; width: 420px; border: 1px solid #000000">
+		CompuServe GIF, with own transparency</td>
+		<td style="border: 1px solid #000000">SMBX will fill transparency by 
+		black</td>
+	</tr>
+	<tr>
+		<td style="text-align: center; width: 71px; color: #008000; border: 1px solid #000000">
+		BMP</td>
+		<td style="text-align: center; width: 420px; border: 1px solid #000000">
+		Uncompressed image format (with using of the masks)</td>
+		<td style="border: 1px solid #000000">&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="text-align: center; width: 71px; color: #0000FF; border: 1px solid #000000">
+		PNG</td>
+		<td style="text-align: center; width: 420px; border: 1px solid #000000">
+		Portable Network Graphics, with alpha-channel transparency</td>
+		<td style="text-align: center; border: 1px solid #000000">Not support by 
+		SMBX</td>
+	</tr>
+	<tr>
+		<td style="text-align: center; width: 71px; color: #0000FF; border: 1px solid #000000">
+		JPG</td>
+		<td style="text-align: center; width: 420px; border: 1px solid #000000">
+		&nbsp;Joint Photographic EG, Lossy-data compressed</td>
+		<td style="text-align: center; border: 1px solid #000000">Not support by 
+		SMBX</td>
+	</tr>
+	<tr>
+		<td style="text-align: center; width: 71px; color: #0000FF; border: 1px solid #000000">
+		TIF</td>
+		<td style="text-align: center; width: 420px; border: 1px solid #000000">
+		Tagged Image File Format</td>
+		<td style="text-align: center; border: 1px solid #000000">Not support by 
+		SMBX</td>
+	</tr>
+	<tr>
+		<td style="text-align: center; width: 71px; color: #0000FF; border: 1px solid #000000">
+		TGA</td>
+		<td style="text-align: center; width: 420px; border: 1px solid #000000">
+		Truevision TGA</td>
+		<td style="text-align: center; border: 1px solid #000000">Not support by 
+		SMBX</td>
+	</tr>
+	</table>
+</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
+<p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 
 
