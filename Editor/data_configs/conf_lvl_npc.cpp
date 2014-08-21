@@ -266,6 +266,7 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    ; this option useful for non-standart algorithmic sprites (for example, bosses)
 
         //    //    ;custom-animation-alg=0		; Custom animation algorithm - 0 simple frame range, 1 - frame Jump
+            //  2 - defined frame sequance
         //        int custom_ani_alg;
             snpc.custom_ani_alg = npcset.value("custom-animation-alg", "0").toInt();
         //    //    ;custom-animation-fl=0		; First frame for LEFT
@@ -280,6 +281,29 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    ;custom-animation-er=0		; end frame for RIGHT / Jump step
         //        int custom_ani_er;
             snpc.custom_ani_er = npcset.value("custom-animation-er", "-1").toInt();
+
+            snpc.frames_left.clear();
+            snpc.frames_right.clear();
+
+            if(snpc.custom_ani_alg==2)
+            {
+                QStringList tmp;
+                QString common = npcset.value("ani-frames-cmn", "0").toString(); // Common frames list
+
+                WriteToLog(QtDebugMsg, QString("Frames Sequance %1").arg(common) );
+
+                tmp = npcset.value("ani-frames-left", common).toString().remove(' ').split(","); //left direction
+                foreach(QString x, tmp)
+                    snpc.frames_left.push_back(x.toInt());
+
+                WriteToLog(QtDebugMsg, QString("Frames Sequance Left %1").arg(snpc.frames_left.size()) );
+
+                tmp = npcset.value("ani-frames-right", common).toString().remove(' ').split(","); //right direction
+                foreach(QString x, tmp)
+                    snpc.frames_right.push_back(x.toInt());
+
+                WriteToLog(QtDebugMsg, QString("Frames Sequance Left %1").arg(snpc.frames_right.size()) );
+            }
 
 
         //    //    container=0			; NPC can containing inside other NPC (need enable special option type 2)

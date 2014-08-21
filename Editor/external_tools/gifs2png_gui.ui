@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>506</width>
-    <height>382</height>
+    <width>500</width>
+    <height>359</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
-    <normaloff>:/images/extermal_tools/cat_gif2png_128.png</normaloff>:/images/extermal_tools/cat_gif2png_128.png</iconset>
+    <normaloff>:/images/external_tools/cat_gif2png_128.png</normaloff>:/images/external_tools/cat_gif2png_128.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,10,0,0,0,0,0,0,0,0,0">
    <property name="sizeConstraint">
@@ -78,7 +78,7 @@
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Output dir, where will be saved a PNG images
-(if you not set, target images will be stored into the same directory)</string>
+(if this field will not be set, target images will be stored into the same directory)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -98,7 +98,7 @@
    <item row="10" column="0" colspan="5">
     <widget class="QCheckBox" name="WalkSubDirs">
      <property name="text">
-      <string>Walk in the sub-directories</string>
+      <string>Look for images in subdirectories</string>
      </property>
     </widget>
    </item>
@@ -139,7 +139,7 @@
       <string notr="true"/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../_resources/editor.qrc">:/images/extermal_tools/cat_gif2png_128.png</pixmap>
+      <pixmap resource="../_resources/editor.qrc">:/images/external_tools/cat_gif2png_128.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

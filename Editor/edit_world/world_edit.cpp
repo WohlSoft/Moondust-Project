@@ -44,16 +44,20 @@ WorldEdit::WorldEdit(QWidget *parent) :
     ui->graphicsView->verticalScrollBar()->setTracking(true);
 }
 
+void WorldEdit::focusInEvent(QFocusEvent *event)
+{
+    ui->graphicsView->setFocus();
+    QWidget::focusInEvent(event);
+}
+
 
 void WorldEdit::updateScene()
 {
         if(scene->opts.animationEnabled)
-            scene->update(
-                                         ui->graphicsView->horizontalScrollBar()->value(),
-                                         ui->graphicsView->verticalScrollBar()->value(),
-                                         ui->graphicsView->width(),
-                                         ui->graphicsView->height()
-                                         );
+        {
+            QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+            scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );
+        }
 }
 
 void WorldEdit::setAutoUpdateTimer(int ms)
@@ -76,3 +80,4 @@ void WorldEdit::stopAutoUpdateTimer()
         delete updateTimer;
     }
 }
+

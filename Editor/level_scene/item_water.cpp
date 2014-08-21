@@ -134,7 +134,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->setSelected(1);
             ItemMenu->clear();
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer).replace("&", "&&&"));
             LayerName->deleteLater();
 
             QAction *setLayer;
@@ -149,7 +149,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -241,11 +241,25 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             else
             if(selected==remove)
             {
-                scene->contextMenuOpened = false;
+                scene->removeSelectedLvlItems();
+            }
+            else
+            if(selected==newLayer)
+            {
+                scene->setLayerToSelected();
             }
             else
             {
-                #include "item_set_layer.h"
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
             }
         }
     }

@@ -21,16 +21,16 @@
 
 void MainWindow::SyncRecentFiles()
 {
-    ui->action_recent1->setText(recentOpen[0]);
-    ui->action_recent2->setText(recentOpen[1]);
-    ui->action_recent3->setText(recentOpen[2]);
-    ui->action_recent4->setText(recentOpen[3]);
-    ui->action_recent5->setText(recentOpen[4]);
-    ui->action_recent6->setText(recentOpen[5]);
-    ui->action_recent7->setText(recentOpen[6]);
-    ui->action_recent8->setText(recentOpen[7]);
-    ui->action_recent9->setText(recentOpen[8]);
-    ui->action_recent10->setText(recentOpen[9]);
+    ui->action_recent1->setText(QString(recentOpen[0]).replace("&", "&&&"));
+    ui->action_recent2->setText(QString(recentOpen[1]).replace("&", "&&&"));
+    ui->action_recent3->setText(QString(recentOpen[2]).replace("&", "&&&"));
+    ui->action_recent4->setText(QString(recentOpen[3]).replace("&", "&&&"));
+    ui->action_recent5->setText(QString(recentOpen[4]).replace("&", "&&&"));
+    ui->action_recent6->setText(QString(recentOpen[5]).replace("&", "&&&"));
+    ui->action_recent7->setText(QString(recentOpen[6]).replace("&", "&&&"));
+    ui->action_recent8->setText(QString(recentOpen[7]).replace("&", "&&&"));
+    ui->action_recent9->setText(QString(recentOpen[8]).replace("&", "&&&"));
+    ui->action_recent10->setText(QString(recentOpen[9]).replace("&", "&&&"));
 
     ui->action_recent1->setEnabled(!(recentOpen[0]=="<empty>"));
     ui->action_recent2->setEnabled(!(recentOpen[1]=="<empty>"));
@@ -47,6 +47,8 @@ void MainWindow::SyncRecentFiles()
 void MainWindow::AddToRecentFiles(QString FilePath)
 {
     int index;
+    FilePath.replace('\\', '/');
+
     if((index = recentOpen.indexOf(FilePath))!=-1){
         recentOpen.removeAt(index);
         recentOpen.push_front(FilePath);
@@ -62,52 +64,52 @@ void MainWindow::AddToRecentFiles(QString FilePath)
 
 void MainWindow::on_action_recent1_triggered()
 {
-    OpenFile(ui->action_recent1->text());
+    OpenFile(QString(ui->action_recent1->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent2_triggered()
 {
-    OpenFile(ui->action_recent2->text());
+    OpenFile(QString(ui->action_recent2->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent3_triggered()
 {
-    OpenFile(ui->action_recent3->text());
+    OpenFile(QString(ui->action_recent3->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent4_triggered()
 {
-    OpenFile(ui->action_recent4->text());
+    OpenFile(QString(ui->action_recent4->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent5_triggered()
 {
-    OpenFile(ui->action_recent5->text());
+    OpenFile(QString(ui->action_recent5->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent6_triggered()
 {
-    OpenFile(ui->action_recent6->text());
+    OpenFile(QString(ui->action_recent6->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent7_triggered()
 {
-    OpenFile(ui->action_recent7->text());
+    OpenFile(QString(ui->action_recent7->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent8_triggered()
 {
-    OpenFile(ui->action_recent8->text());
+    OpenFile(QString(ui->action_recent8->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent9_triggered()
 {
-    OpenFile(ui->action_recent9->text());
+    OpenFile(QString(ui->action_recent9->text()).replace("&&&", "&"));
 }
 
 void MainWindow::on_action_recent10_triggered()
 {
-    OpenFile(ui->action_recent10->text());
+    OpenFile(QString(ui->action_recent10->text()).replace("&&&", "&"));
 }
 
 

@@ -56,6 +56,7 @@ void AppSettings::applySettings()
 
     ui->Editor_Mid_AllowDupe->setChecked(midmouse_allowDupe);
     ui->Editor_Mid_AllowPlacing->setChecked(midmouse_allowPlace);
+    ui->Editor_Mid_AllowDrag->setChecked(midmouse_allowDragMode);
 
     if(logEnabled)
         switch(loglevel)
@@ -114,6 +115,7 @@ void AppSettings::on_buttonBox_accepted()
 
     midmouse_allowDupe = ui->Editor_Mid_AllowDupe->isChecked();
     midmouse_allowPlace = ui->Editor_Mid_AllowPlacing->isChecked();
+    midmouse_allowDragMode = ui->Editor_Mid_AllowDrag->isChecked();
 
     if(ui->MView_SubWindows->isChecked())
         MainWindowView = QMdiArea::SubWindowView;

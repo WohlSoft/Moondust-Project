@@ -128,7 +128,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             this->setSelected(1);
             ItemMenu->clear();
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
 
             QAction *setLayer;
             QList<QAction *> layerItems;
@@ -142,7 +142,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?tr(" [hidden]"):"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?tr(" [hidden]"):"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -190,7 +190,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 #ifdef _DEBUG_
                     WriteToLog(QtDebugMsg, "Context Menu <- NULL");
                 #endif
-                goto delItems;
+                return;
             }
             //mouseEvent->accept();
 
@@ -286,10 +286,23 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 scene->openProps();
             }
             else
+            if(selected==newLayer)
             {
-                #include "item_set_layer.h"
+                scene->setLayerToSelected();
             }
-            delItems:;
+            else
+            {
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
+            }
         }
     }
 }

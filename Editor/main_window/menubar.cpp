@@ -21,6 +21,7 @@
 
 #include "global_settings.h"
 #include "music_player.h"
+#include "../common_features/graphicsworkspace.h"
 
 void MainWindow::updateMenus(bool force)
 {
@@ -135,6 +136,11 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionExport_to_image->setEnabled( (WinType==1) || (WinType==3) );
 
+    ui->actionZoomIn->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionZoomOut->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionZoomReset->setEnabled( (WinType==1) || (WinType==3) );
+    zoom->setEnabled( (WinType==1) || (WinType==3));
+
     ui->actionReset_position->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionGo_to_Section->setEnabled( (WinType==1) );
 
@@ -188,6 +194,8 @@ void MainWindow::updateMenus(bool force)
                 }
             }
         }
+
+        zoom->setText(QString::number(activeLvlEditWin()->getZoom()));
 
         SetCurrentLevelSection(0, 1);
         setDoorsToolbox();
@@ -258,6 +266,8 @@ void MainWindow::updateMenus(bool force)
             GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
             GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
         }
+
+        zoom->setText(QString::number(activeWldEditWin()->getZoom()));
 
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
@@ -347,11 +357,7 @@ void MainWindow::updateWindowMenu()
 
     for (int i = 0; i < windows.size(); ++i) {
         QString text;
-        if (i < 9) {
-            text = QString("&%1").arg( windows.at(i)->windowTitle() ) ;
-        } else {
-            text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
-        }
+        text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
         action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
@@ -359,5 +365,19 @@ void MainWindow::updateWindowMenu()
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
         windowMapper->setMapping(action, windows.at(i));
+    }
+}
+
+void MainWindow::applyTextZoom(){
+    bool ok = false;
+    int zoomPercent = 100;
+    zoomPercent = zoom->text().toInt(&ok);
+    if(!ok)
+        return;
+
+    if(activeChildWindow()==1){
+        activeLvlEditWin()->setZoom(zoomPercent);
+    }else if(activeChildWindow()==3){
+        activeWldEditWin()->setZoom(zoomPercent);
     }
 }

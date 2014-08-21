@@ -71,6 +71,56 @@ void WorldEdit::ResetPosition()
     goTo(0, 0, false, QPoint(-10,-10));
 }
 
+void WorldEdit::ResetZoom()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(1.0);
+    }
+}
+
+void WorldEdit::zoomIn()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomIn();
+    }
+}
+
+void WorldEdit::zoomOut()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomOut();
+    }
+}
+
+QGraphicsView *WorldEdit::getGraphicsView()
+{
+    return ui->graphicsView;
+}
+
+
+void WorldEdit::setZoom(int percent)
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(qreal(percent)/100.0);
+    }
+}
+
+int WorldEdit::getZoom()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        return qRound(static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom() * 100.0);
+    }
+    else
+    {
+        return 100;
+    }
+}
+
 void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
 {
 
@@ -89,8 +139,18 @@ void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
 //        }
     }
 
-    ui->graphicsView->horizontalScrollBar()->setValue(x + offset.x() );
-    ui->graphicsView->verticalScrollBar()->setValue(y + offset.y() );
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+    WriteToLog(QtDebugMsg, QString("Pos: %1, zoom %2, scenePos: %3")
+               .arg(ui->graphicsView->horizontalScrollBar()->value())
+               .arg(zoom).arg(x));
+
+    ui->graphicsView->horizontalScrollBar()->setValue( qRound(qreal(x)*zoom)+offset.x() );
+    ui->graphicsView->verticalScrollBar()->setValue( qRound(qreal(y)*zoom)+offset.y() );
 
     //scene->update();
     ui->graphicsView->update();

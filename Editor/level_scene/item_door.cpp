@@ -127,11 +127,11 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->setSelected(1);
             ItemMenu->clear();
 
-            QAction *openLvl = ItemMenu->addAction(tr("Open target level: %1").arg(doorData.lname));
+            QAction *openLvl = ItemMenu->addAction(tr("Open target level: %1").arg(doorData.lname).replace("&", "&&&"));
             openLvl->setVisible( (!doorData.lname.isEmpty()) && (QFile(scene->LvlData->path + "/" + doorData.lname).exists()) );
             openLvl->deleteLater();
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer).replace("&", "&&&"));
                 LayerName->deleteLater();
 
             QAction *setLayer;
@@ -146,7 +146,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -225,13 +225,13 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 if(this->data(0).toString()=="Door_enter")
                 {
                     if(doorData.isSetOut)
-                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(-300, -300));
+                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(0, 0), true);
                 }
                 else
                 if(this->data(0).toString()=="Door_exit")
                 {
                     if(doorData.isSetIn)
-                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(-300, -300));
+                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(0, 0), true);
                 }
             }
             else
@@ -323,8 +323,22 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 MainWinConnect::pMainWin->SwitchToDoor(doorData.array_id);
             }
             else
+            if(selected==newLayer)
             {
-                #include "item_set_layer.h"
+                scene->setLayerToSelected();
+            }
+            else
+            {
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
             }
         }
     }
