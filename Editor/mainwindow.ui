@@ -4871,7 +4871,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>405</height>
+          <height>408</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6066,7 +6066,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>357</height>
+          <height>347</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6187,8 +6187,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>183</width>
-          <height>122</height>
+          <width>300</width>
+          <height>347</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6431,8 +6431,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
-          <height>141</height>
+          <width>300</width>
+          <height>347</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6454,6 +6454,63 @@ p, li { white-space: pre-wrap; }
          <property name="spacing">
           <number>3</number>
          </property>
+         <item row="8" column="1">
+          <widget class="QCheckBox" name="Find_Check_BigPathBackground"/>
+         </item>
+         <item row="11" column="1">
+          <widget class="QCheckBox" name="Find_Check_GameStartPoint"/>
+         </item>
+         <item row="10" column="1">
+          <widget class="QCheckBox" name="Find_Check_AlwaysVisible"/>
+         </item>
+         <item row="12" column="4">
+          <widget class="QLabel" name="label_80">
+           <property name="text">
+            <string>Level file</string>
+           </property>
+          </widget>
+         </item>
+         <item row="13" column="1">
+          <widget class="QCheckBox" name="Find_Check_ContainsTitle"/>
+         </item>
+         <item row="8" column="4">
+          <widget class="QLabel" name="label_77">
+           <property name="text">
+            <string>Big Path Background</string>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="4">
+          <widget class="QLabel" name="label_78">
+           <property name="text">
+            <string>Always Visible</string>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="4">
+          <widget class="QLabel" name="label_79">
+           <property name="text">
+            <string>Game start point</string>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="1">
+          <widget class="QCheckBox" name="Find_Check_LevelFile"/>
+         </item>
+         <item row="13" column="4">
+          <widget class="QLabel" name="label_81">
+           <property name="text">
+            <string>Contains Title</string>
+           </property>
+          </widget>
+         </item>
+         <item row="12" column="5">
+          <widget class="QLineEdit" name="Find_Edit_LevelFile">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="0" colspan="3">
           <widget class="QLabel" name="label_62">
            <property name="text">
@@ -6468,49 +6525,12 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="10" column="0" colspan="6">
-          <widget class="QPushButton" name="FindStartLevel">
-           <property name="text">
-            <string>Search Level</string>
-           </property>
-          </widget>
-         </item>
          <item row="7" column="4">
           <widget class="QLabel" name="label_63">
            <property name="text">
-            <string>Path background: </string>
+            <string>Path background</string>
            </property>
           </widget>
-         </item>
-         <item row="7" column="5">
-          <widget class="QCheckBox" name="Find_Check_PathBackgroundActive">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="0" colspan="6">
-          <widget class="QPushButton" name="Find_Button_ResetLevel">
-           <property name="text">
-            <string>Reset Search Fields</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
          <item row="0" column="4">
           <widget class="QLabel" name="label_61">
@@ -6523,26 +6543,6 @@ p, li { white-space: pre-wrap; }
           <widget class="QCheckBox" name="Find_Check_PathBackground">
            <property name="text">
             <string/>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0" colspan="6">
-          <spacer name="verticalSpacer_18">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>20</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="2" column="0" rowspan="4" colspan="6">
-          <widget class="Line" name="line_15">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
@@ -6563,10 +6563,111 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="6" column="5">
+         <item row="12" column="6">
+          <widget class="QPushButton" name="Find_Button_LevelFile">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string notr="true">...</string>
+           </property>
+          </widget>
+         </item>
+         <item row="16" column="0" colspan="7">
+          <widget class="QPushButton" name="FindStartLevel">
+           <property name="text">
+            <string>Search Level</string>
+           </property>
+          </widget>
+         </item>
+         <item row="15" column="0" colspan="7">
+          <widget class="QPushButton" name="Find_Button_ResetLevel">
+           <property name="text">
+            <string>Reset Search Fields</string>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="5" colspan="2">
+          <widget class="QCheckBox" name="Find_Check_GameStartPointActive">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="10" column="5" colspan="2">
+          <widget class="QCheckBox" name="Find_Check_AlwaysVisibleActive">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="8" column="5" colspan="2">
+          <widget class="QCheckBox" name="Find_Check_BigPathBackgroundActive">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="5" colspan="2">
+          <widget class="QCheckBox" name="Find_Check_PathBackgroundActive">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="5" colspan="2">
           <widget class="QPushButton" name="Find_Button_TypeLevel">
            <property name="text">
             <string>[empty]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0" rowspan="4" colspan="7">
+          <widget class="Line" name="line_15">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5" colspan="2">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="14" column="0" colspan="7">
+          <spacer name="verticalSpacer_18">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="13" column="5" colspan="2">
+          <widget class="QLineEdit" name="Find_Edit_ContainsTitle">
+           <property name="enabled">
+            <bool>false</bool>
            </property>
           </widget>
          </item>

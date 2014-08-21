@@ -152,6 +152,7 @@ public slots:
     void resetBlockSearch();
     void resetBGOSearch();
     void resetNPCSearch();
+    void selectLevelForSearch();
 
     //SubWindow functions
     npcedit *createNPCChild();
@@ -677,6 +678,8 @@ private:
     bool doSearchPath(WorldEdit *edit);
     bool doSearchLevel(WorldEdit* edit);
     bool doSearchMusic(WorldEdit *edit);
+
+
     // //////////////////////////////////////////////
     QMediaPlayer * MusicPlayer;
     QMediaPlayer playSnd;

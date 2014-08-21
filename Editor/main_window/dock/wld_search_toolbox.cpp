@@ -25,6 +25,7 @@
 #include "../../world_scene/item_path.h"
 #include "../../world_scene/item_scene.h"
 #include "../../world_scene/item_tile.h"
+#include "../../common_features/levelfilelist.h"
 bool lockResetWorld = false;
 
 
@@ -45,7 +46,18 @@ void MainWindow::on_Find_Button_ResetLevel_clicked()
         ui->Find_Check_TypeLevel->setChecked(true);
         ui->Find_Button_TypeLevel->setText(tr("[empty]"));
         curSearchLevel.id = 0;
+        ui->Find_Check_PathBackground->setChecked(false);
         ui->Find_Check_PathBackgroundActive->setChecked(false);
+        ui->Find_Check_BigPathBackground->setChecked(false);
+        ui->Find_Check_BigPathBackgroundActive->setChecked(false);
+        ui->Find_Check_AlwaysVisible->setChecked(false);
+        ui->Find_Check_AlwaysVisibleActive->setChecked(false);
+        ui->Find_Check_GameStartPoint->setChecked(false);
+        ui->Find_Check_GameStartPointActive->setChecked(false);
+        ui->Find_Check_LevelFile->setChecked(false);
+        ui->Find_Edit_LevelFile->setText("");
+        ui->Find_Check_ContainsTitle->setChecked(false);
+        ui->Find_Edit_ContainsTitle->setText("");
     }else{
         currentSearches ^= SEARCH_LEVEL;
         ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
@@ -408,6 +420,21 @@ bool MainWindow::doSearchLevel(WorldEdit *edit)
                 if(ui->Find_Check_PathBackground->isChecked()&&toBeFound){
                     toBeFound = ((ItemLevel*)gr[i])->levelData.pathbg == ui->Find_Check_PathBackgroundActive->isChecked();
                 }
+                if(ui->Find_Check_BigPathBackground->isChecked()&&toBeFound){
+                    toBeFound = ((ItemLevel*)gr[i])->levelData.bigpathbg == ui->Find_Check_BigPathBackgroundActive->isChecked();
+                }
+                if(ui->Find_Check_AlwaysVisible->isChecked()&&toBeFound){
+                    toBeFound = ((ItemLevel*)gr[i])->levelData.alwaysVisible == ui->Find_Check_AlwaysVisibleActive->isChecked();
+                }
+                if(ui->Find_Check_GameStartPoint->isChecked()&&toBeFound){
+                    toBeFound = ((ItemLevel*)gr[i])->levelData.gamestart == ui->Find_Check_GameStartPointActive->isChecked();
+                }
+                if(ui->Find_Check_LevelFile->isChecked()&&toBeFound){
+                    toBeFound = ((ItemLevel*)gr[i])->levelData.lvlfile.contains(ui->Find_Edit_LevelFile->text(), Qt::CaseInsensitive);
+                }
+                if(ui->Find_Check_ContainsTitle->isChecked()&&toBeFound){
+                    toBeFound = ((ItemLevel*)gr[i])->levelData.title.contains(ui->Find_Edit_ContainsTitle->text(), Qt::CaseInsensitive);
+                }
                 if(toBeFound){
                     foreach (QGraphicsItem* i, edit->scene->selectedItems())
                     {
@@ -517,4 +544,18 @@ void MainWindow::resetMusicSearch()
 void MainWindow::toggleNewWindowWLD(QMdiSubWindow */*window*/)
 {
     resetAllSearchesWLD();
+}
+
+void MainWindow::selectLevelForSearch(){
+    QString dirPath;
+    if(activeChildWindow()==3)
+    {
+        dirPath = activeWldEditWin()->WldData.path;
+    }
+    else
+        return;
+
+    LevelFileList levelList(dirPath, ui->WLD_PROPS_LVLFile->text());
+    if( levelList.exec() == QDialog::Accepted )
+        ui->Find_Edit_LevelFile->setText(levelList.SelectedFile);
 }
