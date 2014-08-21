@@ -569,6 +569,12 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             PasteFromBuffer = false;
         }
 
+        if(GlobalSettings::MidMouse_allowSwitchToDrag && isMiddleMouse &&
+                (EditingMode==MODE_Selecting||EditingMode==MODE_SelectingOnly) && selectedItems().isEmpty())
+        {
+            MainWinConnect::pMainWin->on_actionHandScroll_triggered();
+        }
+
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
         return;
     }

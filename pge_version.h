@@ -36,9 +36,9 @@
 #define _PRODUCT_NAME "Platformer Game Engine"
 
 #ifdef _WIN64
-	#define OPERATION_SYSTEM "Windows"
-#elif  _WIN32
 	#define OPERATION_SYSTEM "Windows x64"
+#elif  _WIN32
+	#define OPERATION_SYSTEM "Windows"
 #elif defined __APPLE__
 	#define OPERATION_SYSTEM "MacOSX"
 #elif defined __FreeBSD__
