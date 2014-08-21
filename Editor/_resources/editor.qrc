@@ -119,5 +119,6 @@
         <file>images/external_tools/cat_gif2png_128.png</file>
         <file>images/external_tools/cat_glasses_128.png</file>
         <file>images/external_tools/cat_png2gif_128.png</file>
+        <file alias="fonts/degits.png">images/font_degits.png</file>
     </qresource>
 </RCC>

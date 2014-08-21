@@ -36,12 +36,13 @@ ItemWater::ItemWater(QGraphicsPolygonItem *parent)
     waterSize = QSize(32,32);
     penWidth=2;
 
-    _pen.setColor(Qt::darkBlue);
+    _pen = QPen(Qt::darkBlue);
     _pen.setWidth(penWidth);
-    _pen.setCapStyle(Qt::SquareCap);
+    _pen.setCapStyle(Qt::FlatCap);
     _pen.setJoinStyle(Qt::MiterJoin);
     _pen.setMiterLimit(0);
     this->setPen(_pen);
+    this->setBrush(QBrush(Qt::NoBrush));
 
     waterData.w=32;
     waterData.h=32;
@@ -395,13 +396,17 @@ void ItemWater::drawWater()
 {
     long x, y, h, w;
 
-    x = penWidth;//waterData.x;
-    y = penWidth;//waterData.y;
+    x = 1;//waterData.x;
+    y = 1;//waterData.y;
     w = waterData.w-penWidth;
     h = waterData.h-penWidth;
 
-    _pen.setColor(((waterData.quicksand)?Qt::yellow:Qt::green));
-    this->setPen(_pen);
+    //    _pen.setColor(((waterData.quicksand)?Qt::yellow:Qt::green));
+    //    _pen.setCapStyle(Qt::SquareCap);
+    //    _pen.setJoinStyle(Qt::MiterJoin);
+    //    setPen(_pen);
+
+    setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin));
 
     //this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
     //this->setBrush(Qt::NoBrush);
@@ -410,16 +415,16 @@ void ItemWater::drawWater()
     QVector<QPointF > points;
     points.clear();
     // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
-    points.push_back(QPointF(x, y));
+    points.push_back(QPointF(x+3, y));
     points.push_back(QPointF(x+w, y));
     points.push_back(QPointF(x+w,y+h));
     points.push_back(QPointF(x, y+h));
-    points.push_back(QPointF(x, y));
+    points.push_back(QPointF(x, y+3));
 
     points.push_back(QPointF(x, y+h));
     points.push_back(QPointF(x+w,y+h));
     points.push_back(QPointF(x+w, y));
-    points.push_back(QPointF(x, y));
+    points.push_back(QPointF(x+3, y));
 
     this->setPolygon( QPolygonF(points) );
 /*
@@ -446,7 +451,7 @@ void ItemWater::setLocked(bool lock)
 
 QRectF ItemWater::boundingRect() const
 {
-    return QRectF(0,0,waterSize.width()+penWidth,waterSize.height()+penWidth);
+    return QRectF(-1,-1,waterSize.width()+penWidth,waterSize.height()+penWidth);
 }
 
 void ItemWater::setContextMenu(QMenu &menu)
