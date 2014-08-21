@@ -21,7 +21,7 @@ gifs2png_gui::~gifs2png_gui()
 void gifs2png_gui::on_BrowseInput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Source Directory"),
-                                                 ui->inputDir->text().isEmpty()?QApplication::applicationDirPath():ui->inputDir->text(),
+                                                 (ui->inputDir->text().isEmpty() ? QApplication::applicationDirPath() : ui->inputDir->text()),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
@@ -33,7 +33,7 @@ void gifs2png_gui::on_BrowseInput_clicked()
 void gifs2png_gui::on_BrowseOutput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Target Directory"),
-                                                 ui->outputDir->text().isEmpty()?QApplication::applicationDirPath():ui->outputDir->text(),
+                                                 (ui->outputDir->text().isEmpty() ? QApplication::applicationDirPath():ui->outputDir->text() ),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
@@ -64,12 +64,12 @@ void gifs2png_gui::on_startTool_clicked()
     }
 
     QStringList args;
-    args << ui->inputDir->text();
-    if(!ui->outputDir->text().isEmpty()) args << QString("-O%1").arg(ui->outputDir->text());
-
     if(ui->WalkSubDirs->isChecked()) args << "-W";
     if(ui->RemoveSource->isChecked()) args << "-R";
     args << "--nopause";
+    args << ui->inputDir->text();
+    if(!ui->outputDir->text().isEmpty()) args << QString("-O%1").arg(ui->outputDir->text());
+
 
     DevConsole::show();
     DevConsole::log("Ready>>>", "GIFs2PNG");
