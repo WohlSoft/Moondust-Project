@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Convert masked GIFs into the PNG</string>
+   <string>Convert masked GIFs into the PNG format</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
@@ -50,7 +50,7 @@
    <item row="1" column="0" colspan="3">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string comment="About GIFs2PNG tool">This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</string>
+      <string comment="About GIFs2PNG tool">This is a console tool which converts SMBX graphics, which have a gif format with a separate transparency mask, into PNG format with an internal transparency.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -77,8 +77,8 @@
    <item row="6" column="0" colspan="5">
     <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</string>
+      <string>Output dir, where the PNG images will be saved
+(if this field is not set, target images will be saved into the same directory)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -149,7 +149,7 @@
    <item row="2" column="0" colspan="3">
     <widget class="QLabel" name="label_7">
      <property name="text">
-      <string>Note: If you got broken images after conversion, please run the LazyFix tool and retry conversion</string>
+      <string>Note: If you get broken images after conversion, please run the LazyFix tool and retry conversion.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
