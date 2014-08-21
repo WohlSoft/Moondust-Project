@@ -159,7 +159,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Sit down</string>
+     <string>Crouch/Duck</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="Dig">
@@ -328,7 +328,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Sword attak</string>
+     <string>Sword attack</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="JumpSwordUp">
@@ -354,7 +354,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Down+Sword attak</string>
+     <string>Down+Sword attack</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="JumpSwordDown">
@@ -380,7 +380,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Hurted</string>
+     <string>Hurt</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="RideOnYoshi">
@@ -393,7 +393,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Ride On Yoshi</string>
+     <string>Ride on Yoshi</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="RideOnYoshiSit">
@@ -406,7 +406,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Ride On Yoshi (sit)</string>
+     <string>Ride on Yoshi (sit)</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="RideOnYoshiSit_2">
