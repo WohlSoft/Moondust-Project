@@ -102,3 +102,20 @@ QPixmap GraphicsHelps::squareImage(QPixmap image, QSize targetSize=QSize(0,0) )
     p.end();
     return target;
 }
+
+QPixmap GraphicsHelps::drawDegitFont(int number)
+{
+    QPixmap font=QPixmap(":/fonts/degits.png");
+    QString text=QString::number(number);
+    QPixmap img(text.size()*18, 16);
+
+    img.fill(Qt::transparent);
+    QPainter p(&img);
+
+    for(int i=0; i<text.size(); i++)
+    {
+        p.drawPixmap(QRect(18*i, 0, 16,16), font, QRect(0, QString(text[i]).toInt()*16, 16,16));
+    }
+    p.end();
+    return img;
+}
