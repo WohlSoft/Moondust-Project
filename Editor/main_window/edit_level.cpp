@@ -34,7 +34,7 @@ void MainWindow::on_actionLevelProp_triggered()
             activeLvlEditWin()->scene->addChangeLevelSettingsHistory(LvlScene::SETTING_LEVELNAME, QVariant(lvlsetData));
             activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
             activeLvlEditWin()->LvlData.modified = true;
-            activeLvlEditWin()->setWindowTitle( LevProps.LevelTitle.isEmpty() ? activeLvlEditWin()->userFriendlyCurrentFile() : LevProps.LevelTitle );
+            activeLvlEditWin()->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? activeLvlEditWin()->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );
             updateWindowMenu();
         }
     }

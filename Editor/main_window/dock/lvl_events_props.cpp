@@ -247,7 +247,7 @@ void MainWindow::setEventData(long index)
                         evnmsg.resize(18);
                         evnmsg.push_back("...");
                     }
-                    ui->LVLEvent_Cmn_Msg->setText( evnmsg );
+                    ui->LVLEvent_Cmn_Msg->setText( evnmsg.replace("&", "&&&") );
 
                     ui->LVLEvent_Cmn_PlaySnd->setCurrentIndex(0);
                     for(int i=0; i<ui->LVLEvent_Cmn_PlaySnd->count(); i++)
@@ -1749,7 +1749,7 @@ void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
                 evnmsg.resize(18);
                 evnmsg.push_back("...");
             }
-            ui->LVLEvent_Cmn_Msg->setText( evnmsg );
+            ui->LVLEvent_Cmn_Msg->setText( evnmsg.replace("&", "&&&") );
             edit->LvlData.modified=true;
         }
 

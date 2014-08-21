@@ -357,11 +357,7 @@ void MainWindow::updateWindowMenu()
 
     for (int i = 0; i < windows.size(); ++i) {
         QString text;
-        if (i < 9) {
-            text = QString("&%1").arg( windows.at(i)->windowTitle() ) ;
-        } else {
-            text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
-        }
+        text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
         action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );

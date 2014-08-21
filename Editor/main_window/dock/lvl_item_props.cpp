@@ -379,7 +379,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             npcmsg.resize(18);
             npcmsg.push_back("...");
         }
-        ui->PROPS_NpcTMsg->setText( npcmsg );
+        ui->PROPS_NpcTMsg->setText( npcmsg.replace("&", "&&&") );
 
         ui->PROPS_NpcFri->setChecked( npc.friendly );
         ui->PROPS_NPCNoMove->setChecked( npc.nomove );
@@ -1248,7 +1248,7 @@ void MainWindow::on_PROPS_NpcTMsg_clicked()
             npcmsg.resize(18);
             npcmsg.push_back("...");
         }
-        ui->PROPS_NpcTMsg->setText( npcmsg );
+        ui->PROPS_NpcTMsg->setText( npcmsg.replace("&", "&&&") );
     }
     delete msgBox;
 
