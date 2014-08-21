@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/editor.qrc">
-    <normaloff>:/images/extermal_tools/cat_glasses_128.png</normaloff>:/images/extermal_tools/cat_glasses_128.png</iconset>
+    <normaloff>:/images/external_tools/cat_glasses_128.png</normaloff>:/images/external_tools/cat_glasses_128.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="0,10,0,0,0,0,0,0,0,0,0,0">
    <property name="sizeConstraint">
@@ -115,7 +115,7 @@
       <string notr="true"/>
      </property>
      <property name="pixmap">
-      <pixmap resource="../_resources/editor.qrc">:/images/extermal_tools/cat_glasses_128.png</pixmap>
+      <pixmap resource="../_resources/editor.qrc">:/images/external_tools/cat_glasses_128.png</pixmap>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
