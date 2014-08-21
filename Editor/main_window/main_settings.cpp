@@ -50,6 +50,7 @@ bool GlobalSettings::LevelSearchBoxVis=false;
 
 bool GlobalSettings::MidMouse_allowDuplicate=false;
 bool GlobalSettings::MidMouse_allowSwitchToPlace=false;
+bool GlobalSettings::MidMouse_allowSwitchToDrag=false;
 
 QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
 QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
@@ -227,6 +228,10 @@ void MainWindow::setUiDefults()
     ui->actionWLDToolBox->setVisible(false);
     ui->actionGridEn->setChecked(true);
 
+    ui->actionZoomReset->setEnabled(false);
+    ui->actionZoomIn->setEnabled(false);
+    ui->actionZoomOut->setEnabled(false);
+
     setAcceptDrops(true);
     ui->centralWidget->cascadeSubWindows();
 
@@ -248,13 +253,23 @@ void MainWindow::setUiDefults()
 //    //start event detection loop
 //    TickTackTimer->start(1);
     muVol = new QSlider(Qt::Horizontal);
-    muVol->setMaximumWidth(100);
+    muVol->setMaximumWidth(70);
+    muVol->setMinimumWidth(70);
     muVol->setMinimum(0);
     muVol->setMaximum(100);
     muVol->setValue(GlobalSettings::musicVolume);
     MusicPlayer->setVolume(GlobalSettings::musicVolume);
     ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
     ui->EditionToolBar->insertSeparator(ui->actionAnimation);
+
+    zoom = new QLineEdit();
+    zoom->setValidator(new QIntValidator(0,2001));
+    zoom->setText("100");
+    zoom->setMaximumWidth(50);
+    zoom->setEnabled(false);
+
+    ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
+    connect(zoom, SIGNAL(editingFinished()), this, SLOT(applyTextZoom()));
 
     connect(muVol, SIGNAL(valueChanged(int)), MusicPlayer, SLOT(setVolume(int)));
 
@@ -280,8 +295,8 @@ void MainWindow::setUiDefults()
     curSearchLevel.id = 0;
     curSearchLevel.index = 0;
 
-    curSearchMusicbox.id = 0;
-    curSearchMusicbox.index = 0;
+    curSearchMusic.id = 0;
+    curSearchMusic.index = 0;
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
@@ -310,7 +325,17 @@ void MainWindow::setUiDefults()
 
     //for world search
     connect(ui->Find_Check_TypeLevel, SIGNAL(toggled(bool)), ui->Find_Button_TypeLevel, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeTile, SIGNAL(toggled(bool)), ui->Find_Button_TypeTile, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeScenery, SIGNAL(toggled(bool)), ui->Find_Button_TypeScenery, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypePath, SIGNAL(toggled(bool)), ui->Find_Button_TypePath, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_TypeMusic, SIGNAL(toggled(bool)), ui->Find_Button_TypeMusic, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_PathBackground, SIGNAL(toggled(bool)), ui->Find_Check_PathBackgroundActive, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_BigPathBackground, SIGNAL(toggled(bool)), ui->Find_Check_BigPathBackgroundActive, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_AlwaysVisible, SIGNAL(toggled(bool)), ui->Find_Check_AlwaysVisibleActive, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_GameStartPoint, SIGNAL(toggled(bool)), ui->Find_Check_GameStartPointActive, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_LevelFile, SIGNAL(toggled(bool)), ui->Find_Edit_LevelFile, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_LevelFile, SIGNAL(toggled(bool)), ui->Find_Button_LevelFile, SLOT(setEnabled(bool)));
+    connect(ui->Find_Check_ContainsTitle, SIGNAL(toggled(bool)), ui->Find_Edit_ContainsTitle, SLOT(setEnabled(bool)));
 
     //reset if modify
     connect(ui->Find_Button_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
@@ -336,8 +361,18 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Check_MsgSensitiveNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
 
     //for world
+    connect(ui->Find_Button_TypeTile, SIGNAL(clicked()), this, SLOT(resetTileSearch()));
+    connect(ui->Find_Button_TypeScenery, SIGNAL(clicked()), this, SLOT(resetScenerySearch()));
+    connect(ui->Find_Button_TypePath, SIGNAL(clicked()), this, SLOT(resetPathSearch()));
     connect(ui->Find_Button_TypeLevel, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Button_TypeMusic, SIGNAL(clicked()), this, SLOT(resetMusicSearch()));
     connect(ui->Find_Check_PathBackgroundActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_BigPathBackgroundActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_AlwaysVisibleActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_GameStartPointActive, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Edit_LevelFile, SIGNAL(textEdited(QString)), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Edit_ContainsTitle, SIGNAL(textEdited(QString)), this, SLOT(resetLevelSearch()));
 
     //also checkboxes
     connect(ui->Find_Check_TypeBlock, SIGNAL(clicked()), this, SLOT(resetBlockSearch()));
@@ -361,10 +396,21 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Check_MsgNPC, SIGNAL(clicked()), this, SLOT(resetNPCSearch()));
 
     //for world
+    connect(ui->Find_Check_TypeTile, SIGNAL(clicked()), this, SLOT(resetTileSearch()));
+    connect(ui->Find_Check_TypeScenery, SIGNAL(clicked()), this, SLOT(resetScenerySearch()));
+    connect(ui->Find_Check_TypePath, SIGNAL(clicked()), this, SLOT(resetPathSearch()));
     connect(ui->Find_Check_TypeLevel, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_TypeMusic, SIGNAL(clicked()), this, SLOT(resetMusicSearch()));
     connect(ui->Find_Check_PathBackground, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_BigPathBackground, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_AlwaysVisible, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_GameStartPoint, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_LevelFile, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
+    connect(ui->Find_Check_ContainsTitle, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
 
+    connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(selectLevelForSearch()));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindow(QMdiSubWindow*)));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
 
     updateWindowMenu();
 }
@@ -402,6 +448,7 @@ void MainWindow::loadSettings()
 
         GlobalSettings::MidMouse_allowDuplicate = settings.value("editor-midmouse-allowdupe", false).toBool();
         GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", false).toBool();
+        GlobalSettings::MidMouse_allowSwitchToDrag = settings.value("editor-midmouse-allowdrag", false).toBool();
 
         GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
         GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
@@ -497,6 +544,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("editor-midmouse-allowdupe", GlobalSettings::MidMouse_allowDuplicate);
     settings.setValue("editor-midmouse-allowplace", GlobalSettings::MidMouse_allowSwitchToPlace);
+    settings.setValue("editor-midmouse-allowdrag", GlobalSettings::MidMouse_allowSwitchToDrag);
 
     settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
     settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
@@ -556,6 +604,7 @@ void MainWindow::on_actionApplication_settings_triggered()
 
     appSettings->midmouse_allowDupe = GlobalSettings::MidMouse_allowDuplicate;
     appSettings->midmouse_allowPlace = GlobalSettings::MidMouse_allowSwitchToPlace;
+    appSettings->midmouse_allowDragMode = GlobalSettings::MidMouse_allowSwitchToDrag;
 
     appSettings->applySettings();
 
@@ -576,6 +625,7 @@ void MainWindow::on_actionApplication_settings_triggered()
         GlobalSettings::WLDToolboxPos = appSettings->WLDToolboxPos;
         GlobalSettings::MidMouse_allowDuplicate = appSettings->midmouse_allowDupe;
         GlobalSettings::MidMouse_allowSwitchToPlace = appSettings->midmouse_allowPlace;
+        GlobalSettings::MidMouse_allowSwitchToDrag = appSettings->midmouse_allowDragMode;
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);

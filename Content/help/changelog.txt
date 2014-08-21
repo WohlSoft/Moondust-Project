@@ -18,6 +18,10 @@ Editor 0.2.0
 - Custom graphics displaying even without "Custom" category
 - Item animator is Improved
 - Sizable blocks draw algorithm is improved: Sizable blocks will be displayed correctly in any sizes
+- Added support for animation sequances, which allow more flexible animations for NPC's
+- Better scrolling by keyboard and by mouse wheel. (Added new hot-keys)
+- Added zoom support by mouseWheel and ALT key.
+- Added PNG2GIFs converter which creating masked GIF images from PNG image with transparency.
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized

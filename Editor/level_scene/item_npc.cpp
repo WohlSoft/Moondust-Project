@@ -46,7 +46,8 @@ ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     gridSize = 1;
     frameSize=1;
 
-    CurrentFrame=0;
+    CurrentFrame=0; //Real frame
+    frameCurrent=0; //Timer frame
 
     imgOffsetX=0;
     imgOffsetY=0;
@@ -151,7 +152,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->setSelected(1);
             ItemMenu->clear();
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(npcData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(npcData.layer).replace("&", "&&&"));
 
             QAction *setLayer;
             QList<QAction *> layerItems;
@@ -166,7 +167,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -409,8 +410,22 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 scene->openProps();
             }
             else
+            if(selected==newLayer)
             {
-                #include "item_set_layer.h"
+                scene->setLayerToSelected();
+            }
+            else
+            {
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
             }
         }
     }
@@ -733,6 +748,8 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     direction = direct;
     frameStep = 1;
 
+    frameSequance = false;
+
     aniBiDirect = localProps.ani_bidir;
     customAniAlg = localProps.custom_ani_alg;
 
@@ -779,6 +796,12 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
             frameFirst = custom_frameFL;
             switch(customAniAlg)
             {
+            case 2:
+                frameSequance = true;
+                frames_list = localProps.frames_left;
+                frameFirst = 0;
+                frameLast = frames_list.size()-1;
+                break;
             case 1:
                 frameStep = custom_frameEL;
                 frameLast = -1; break;
@@ -791,6 +814,11 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
             frameFirst = custom_frameFR;
             switch(customAniAlg)
             {
+            case 2:
+                frameSequance = true;
+                frames_list = localProps.frames_right;
+                frameFirst = 0;
+                frameLast = frames_list.size()-1; break;
             case 1:
                 frameStep = custom_frameER;
                 frameLast = -1; break;
@@ -881,6 +909,7 @@ void ItemNPC::AnimationStart()
     if(!animated) return;
     if((frameLast>0)&&((frameLast-frameFirst)<=0)) return; //Don't start singleFrame animation
 
+    frameCurrent = frameFirst;
     timer->start(frameSpeed);
 }
 
@@ -926,20 +955,20 @@ void ItemNPC::nextFrame()
     if(!aniDirect)
     {
         //frameCurrent += frameSize * frameStep;
-        CurrentFrame += frameStep;
+        frameCurrent += frameStep;
 
-        if ( ((CurrentFrame >= frames.size()-(frameStep-1) )&&(frameLast<=-1)) ||
-             ((CurrentFrame > frameLast )&&(frameLast>=0)) )
+        if ( ((frameCurrent >= frames.size()-(frameStep-1) )&&(frameLast<=-1)) ||
+             ((frameCurrent > frameLast )&&(frameLast>=0)) )
             {
                 if(!aniBiDirect)
                 {
-                     CurrentFrame = frameFirst;
+                     frameCurrent = frameFirst;
                     //frameCurrent = frameFirst * frameSize;
                     //framePos.setY( frameFirst * frameSize );
                 }
                 else
                 {
-                    CurrentFrame -= frameStep*2;
+                    frameCurrent -= frameStep*2;
                     aniDirect=!aniDirect;
                     //framePos.setY( framePos.y() - frameSize*frameStep );
                 }
@@ -948,24 +977,24 @@ void ItemNPC::nextFrame()
     else
     {
         //frameCurrent -= frameSize * frameStep;
-        CurrentFrame -= frameStep;
+        frameCurrent -= frameStep;
 
-        if ( CurrentFrame < frameFirst )
+        if ( frameCurrent < frameFirst )
             {
                 if(!aniBiDirect)
                 {
-                    CurrentFrame = ((frameLast==-1)? frames.size()-1 : frameLast);
+                    frameCurrent = ((frameLast==-1)? frames.size()-1 : frameLast);
                     //frameCurrent = ( ((frameLast==-1)? frameHeight : frameLast*frameSize)-frameSize);
                     //framePos.setY( ((frameLast==-1) ? frameHeight : frameLast*frameSize)-frameSize );
                 }
                 else
                 {
-                    CurrentFrame+=frameStep*2;
+                    frameCurrent+=frameStep*2;
                     aniDirect=!aniDirect;
                     //frameCurrent += frameSize*frameStep*2;
                     //framePos.setY( framePos.y() + frameSize*frameStep );
                 }
             }
     }
-    setFrame(CurrentFrame);
+    setFrame( frameSequance ? frames_list[frameCurrent] : frameCurrent);
 }

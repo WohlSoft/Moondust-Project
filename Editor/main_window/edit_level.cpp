@@ -34,7 +34,7 @@ void MainWindow::on_actionLevelProp_triggered()
             activeLvlEditWin()->scene->addChangeLevelSettingsHistory(LvlScene::SETTING_LEVELNAME, QVariant(lvlsetData));
             activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
             activeLvlEditWin()->LvlData.modified = true;
-            activeLvlEditWin()->setWindowTitle( LevProps.LevelTitle.isEmpty() ? activeLvlEditWin()->userFriendlyCurrentFile() : LevProps.LevelTitle );
+            activeLvlEditWin()->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? activeLvlEditWin()->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );
             updateWindowMenu();
         }
     }
@@ -221,7 +221,7 @@ void MainWindow::on_actionGo_to_Section_triggered()
             int SectionId = edit->LvlData.CurSection;
             int xb = edit->LvlData.sections[SectionId].size_left;
             int yb = edit->LvlData.sections[SectionId].size_top;
-            edit->goTo(xb-10, yb-10);
+            edit->goTo(xb, yb, false, QPoint(-10, -10));
     }
 }
 

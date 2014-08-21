@@ -39,15 +39,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
     splash.show();
 
-    if(!configs.loadconfigs())
-    {
-        splash.setWindowFlags( splash.windowFlags() & ~Qt::WindowStaysOnTopHint );
-        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
-        splash.finish(this);
-        WriteToLog(QtFatalMsg, "<Error, application closed>");
-        exit(EXIT_FAILURE);
-        return;
-    }
+    bool ok=configs.loadconfigs();
 
     splash.finish(this);
 
@@ -56,8 +48,15 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     WriteToLog(QtDebugMsg, QString("Setting Lang..."));
     setDefLang();
-
     setUiDefults(); //Apply default UI settings
+
+    if(!ok)
+    {
+        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
+        WriteToLog(QtFatalMsg, "<Error, application closed>");
+        this->close();
+        return;
+    }
 }
 
 MainWindow::~MainWindow()
@@ -161,3 +160,4 @@ void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
         this->showNormal();
     }
 }
+

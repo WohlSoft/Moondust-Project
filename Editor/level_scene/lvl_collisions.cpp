@@ -27,7 +27,9 @@
 
 #include "../common_features/logger.h"
 
+#include "../common_features/timecounter.h"
 
+//static bool xxx=false;
 QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
 {
     qreal leftA, leftB;
@@ -36,12 +38,27 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
     qreal bottomA, bottomB;
     //qreal betweenZ;
 
-    QList<QGraphicsItem *> collisions = this->items(
+    //xxx=!xxx;
+
+    QList<QGraphicsItem *> collisions;
+
+    //TimeCounter t;
+    //t.start();
+    //if(xxx)
+    // ~15 ms on big maps
+        collisions = this->items(
                 QRectF(item->scenePos().x()-10, item->scenePos().y()-10,
                 item->data(9).toReal()+20, item->data(10).toReal()+20 ),
                 Qt::IntersectsItemBoundingRect);
 
-    //QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
+    //else
+
+        // ~32 ms on big maps
+        //collisions = item->collidingItems(Qt::IntersectsItemBoundingRect);
+
+    //WriteToLog(QtDebugMsg, QString("Collision %1 in %2").arg(xxx).arg(t.current()));
+    //t.stop();
+
 
     foreach (QGraphicsItem * it, collisions)
     {
@@ -178,27 +195,27 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
             //skip locked items
             if((it->data(0).toString()=="Block"))
             {
-                if((lock_block)|| ((ItemBlock*)it)->isLocked) continue;
+                if((lock_block)|| dynamic_cast<ItemBlock*>(it)->isLocked) continue;
             }
             else
             if((it->data(0).toString()=="BGO"))
             {
-                if((lock_bgo)|| ((ItemBGO*)it)->isLocked) continue;
+                if((lock_bgo)|| dynamic_cast<ItemBGO*>(it)->isLocked) continue;
             }
             else
             if((it->data(0).toString()=="NPC"))
             {
-                if((lock_npc)|| ((ItemNPC*)it)->isLocked) continue;
+                if((lock_npc)|| dynamic_cast<ItemNPC*>(it)->isLocked) continue;
             }
             else
             if((it->data(0).toString()=="Water"))
             {
-                if((lock_water)|| ((ItemWater*)it)->isLocked) continue;
+                if((lock_water)|| dynamic_cast<ItemWater*>(it)->isLocked) continue;
             }
             else
             if((it->data(0).toString()=="Door_enter")||(it->data(0).toString()=="Door_exit"))
             {
-                if((lock_door)|| ((ItemDoor*)it)->isLocked) continue;
+                if((lock_door)|| dynamic_cast<ItemDoor*>(it)->isLocked) continue;
             }
 
             if( (

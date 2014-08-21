@@ -9,29 +9,34 @@ This utility will fix lazily-made image masks:
 ============================================================================
 Syntax:
 
-   LazyFixTool [--help] /path/to/folder [-O/path/to/out] [-W] [-N] [-G]
+   LazyFixTool [--help] [-N] [-G] file1.gif [file2.gif] [...] [-O/path/to/out]
+   LazyFixTool [--help] [-W] [-N] [-G] /path/to/folder [-O/path/to/out]
 
  --help              - Display this help
  /path/to/folder     - path to a directory with a pair of GIF files
  -O/path/to/out      - path to a directory where the new images will be saved
-                       Note: (with -W flag will be ignored)
- -W                  - Walk in subdirectores
+ -W                  - Also look for images in subdirectories
  -N                  - Don't create backup
- -G                  - Make gray shades on masks is more dark
+ -G                  - Make gray shades on masks darker
 
 
 
-if -O will not be defined, the PNG images will be saved in the same folder, where the GIF images are placed.
+if -O will not be defined, the new images will be saved in the same folder as where the GIF images are placed.
 --------------------------------------------------------------------------------
 Examples:
 
 On Windows:
-LazyFixTool C:\SMBX\graphics\npc "-OC:\SMBX GFX PNG\npc"
+LazyFixTool C:\SMBX\graphics\npc -O"C:\SMBX GFX PNG\npc"
 LazyFixTool D:\XXX\graphics\block
 
 On Linux/MacOS X
-LazyFixTool ~/Wine/SMBX/graphics/npc "-O~/Graphics/PNG/npc"
+LazyFixTool ~/Wine/SMBX/graphics/npc -O~/Graphics/PNG/npc
 LazyFixTool /home/vasya/Images/xxx/gif
 LazyFixTool . ../npc_png
 
 --------------------------------------------------------------------------------
+
+Changelog:
+1.3.0
+-Fixed backup directory creating
+-Added support for single-fine conversion

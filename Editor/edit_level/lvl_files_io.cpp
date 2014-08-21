@@ -162,7 +162,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
 
     isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
-    setWindowTitle(curFile);
+    setWindowTitle(QString(curFile).replace("&", "&&&"));
     LvlData = FileFormats::dummyLvlDataArray();
     LvlData.untitled = true;
     StartLvlData = LvlData;
@@ -216,17 +216,24 @@ bool leveledit::save(bool savOptionsDialog)
 
 bool leveledit::saveAs(bool savOptionsDialog)
 {
+    bool makeCustomFolder = false;
+
     if(savOptionsDialog){
         SavingNotificationDialog* sav = new SavingNotificationDialog(false);
         sav->setSavingTitle(tr("Please enter a level title for '%1'!").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(tr("Saving ") + userFriendlyCurrentFile());
         QLineEdit* lvlNameBox = new QLineEdit();
+        QCheckBox* mkDirCustom = new QCheckBox();
+        mkDirCustom->setText(QString(""));
         sav->addUserItem(tr("Level title: "),lvlNameBox);
+        sav->addUserItem(tr("Make custom folder"), mkDirCustom);
         sav->setAdjustSize(400,150);
         lvlNameBox->setText(LvlData.LevelName);
         if(sav->exec() == QDialog::Accepted){
             LvlData.LevelName = lvlNameBox->text();
+            makeCustomFolder = mkDirCustom->isChecked();
             lvlNameBox->deleteLater();
+            mkDirCustom->deleteLater();
             sav->deleteLater();
             if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE){
                 return false;
@@ -241,6 +248,11 @@ bool leveledit::saveAs(bool savOptionsDialog)
                      (LvlData.LevelName.isEmpty()?curFile:LvlData.LevelName):curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
     if (fileName.isEmpty())
         return false;
+
+    if(makeCustomFolder){
+        QDir dir = fileName.section("/",0,-2);
+        dir.mkdir(fileName.section("/",-1,-1).section(".",0,0));
+    }
 
     return saveFile(fileName);
 }
@@ -484,7 +496,7 @@ void leveledit::setCurrentFile(const QString &fileName)
     LvlData.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
-    setWindowTitle(LvlData.LevelName=="" ? userFriendlyCurrentFile() : LvlData.LevelName);
+    setWindowTitle(QString(LvlData.LevelName=="" ? userFriendlyCurrentFile() : LvlData.LevelName).replace("&", "&&&"));
 }
 
 QString leveledit::strippedName(const QString &fullFileName)

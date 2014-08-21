@@ -171,7 +171,8 @@ SOURCES += main.cpp\
     main_window/tools_menu.cpp \
     common_features/items.cpp \
     common_features/flowlayout.cpp \
-    main_window/edit_placincg_switch.cpp
+    main_window/edit_placincg_switch.cpp \
+    common_features/graphicsworkspace.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -242,9 +243,9 @@ HEADERS  += mainwindow.h \
     tilesets/tilesetitembutton.h \
     external_tools/gifs2png_gui.h \
     external_tools/lazyfixtool_gui.h \
-    level_scene/item_set_layer.h \
     common_features/items.h \
-    common_features/flowlayout.h
+    common_features/flowlayout.h \
+    common_features/graphicsworkspace.h
 
 FORMS    += \
     mainwindow.ui \
