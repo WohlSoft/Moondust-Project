@@ -74,6 +74,9 @@ void MainWindow::updateMenus(bool force)
 
         GlobalSettings::LevelSearchBoxVis = ui->FindDock->isVisible();
 
+        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
         ui->LevelSectionSettings->setVisible( 0 );
         ui->DoorsToolbox->setVisible( 0 );
@@ -89,14 +92,19 @@ void MainWindow::updateMenus(bool force)
         ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
         ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
-    }
 
+        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
+        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
+    }
 
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
     {
         GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
         GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
         GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
+        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+
         ui->WorldToolBox->setVisible( 0 );
         ui->WorldSettings->setVisible( 0 );
         ui->WorldFindDock->setVisible( 0 );
@@ -106,7 +114,19 @@ void MainWindow::updateMenus(bool force)
         ui->WorldToolBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
         ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
         ui->WorldFindDock->setVisible( GlobalSettings::WorldSearchBoxVis );
+
+        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
+        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
     }
+
+    if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
+    {
+        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        ui->Tileset_Item_Box->setVisible( 0 );
+        ui->debuggerBox->setVisible( 0 );
+    }
+
 
     GlobalSettings::lastWinType =   WinType;
 

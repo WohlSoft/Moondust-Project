@@ -174,7 +174,8 @@ SOURCES += main.cpp\
     main_window/edit_placincg_switch.cpp \
     common_features/graphicsworkspace.cpp \
     external_tools/png2gifs_gui.cpp \
-    main_window/dock/tileset_item_box.cpp
+    main_window/dock/tileset_item_box.cpp \
+    main_window/dock/debugger.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

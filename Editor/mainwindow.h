@@ -627,6 +627,12 @@ private slots:
     void on_Tileset_Item_Box_visibilityChanged(bool visible);
     void on_actionTilesetBox_triggered(bool checked);
 
+    //Debugger
+    void on_actionDebugger_triggered(bool checked);
+
+    void on_debuggerBox_visibilityChanged(bool visible);
+    void on_DEBUG_GotoPoint_clicked();
+
 signals:
     void closeEditor();
 
