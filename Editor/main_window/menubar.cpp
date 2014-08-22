@@ -122,6 +122,7 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionWLDToolBox->setVisible( (WinType==3) );
     ui->actionWorld_settings->setVisible( (WinType==3) );
+    ui->actionWLD_SearchBox->setVisible( (WinType==3) );
 
     ui->menuLevel->setEnabled( (WinType==1) );
 
