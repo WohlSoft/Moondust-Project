@@ -621,6 +621,12 @@ private slots:
     void on_Find_Button_ResetScenery_clicked();
     void on_Find_Button_ResetTile_clicked();
 
+    //Tileset ItemBox
+    void on_tilesetGroup_currentIndexChanged(int index);
+    void on_newTileset_clicked();
+    void on_Tileset_Item_Box_visibilityChanged(bool visible);
+    void on_actionTilesetBox_triggered(bool checked);
+
 signals:
     void closeEditor();
 

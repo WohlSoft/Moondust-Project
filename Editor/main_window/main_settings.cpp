@@ -176,6 +176,15 @@ void MainWindow::setUiDefults()
                 ui->WorldFindDock->height()
                 );
 
+    ui->Tileset_Item_Box->setGeometry(
+                mwg.x()+GOffset,
+                mwg.y()+mwg.height()-600,
+                800,
+                300
+                );
+
+    ui->Tileset_Item_Box->hide();
+
     loadSettings();
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)),
@@ -211,6 +220,8 @@ void MainWindow::setUiDefults()
     ui->WorldSettings->hide();
     ui->WLD_ItemProps->hide();
     ui->WorldFindDock->hide();
+
+    ui->Tileset_Item_Box->hide();
 
     ui->menuView->setEnabled(false);
 
@@ -465,6 +476,7 @@ void MainWindow::loadSettings()
         ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
         ui->WLD_ItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
         ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
+        ui->Tileset_Item_Box->setFloating(settings.value("tileset-box-float", true).toBool());
 
         ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
@@ -476,6 +488,7 @@ void MainWindow::loadSettings()
         ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
         ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
         ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
+        ui->Tileset_Item_Box->restoreGeometry(settings.value("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
@@ -523,6 +536,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
     settings.setValue("world-itemprops-box-float", ui->WLD_ItemProps->isFloating());
     settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
+    settings.setValue("tileset-box-float", ui->Tileset_Item_Box->isFloating());
 
     settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
@@ -535,6 +549,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-settings-box-geometry", ui->WorldSettings->saveGeometry());
     settings.setValue("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry());
     settings.setValue("world-search-geometry", ui->WorldFindDock->saveGeometry());
+    settings.setValue("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
