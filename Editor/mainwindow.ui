@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1494</width>
-    <height>2862</height>
+    <width>1478</width>
+    <height>3235</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -105,7 +105,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1494</width>
+     <width>1478</width>
      <height>20</height>
     </rect>
    </property>
@@ -238,7 +238,9 @@
     <addaction name="actionLevelEvents"/>
     <addaction name="actionLVLSearchBox"/>
     <addaction name="actionWLD_SearchBox"/>
+    <addaction name="separator"/>
     <addaction name="actionTilesetBox"/>
+    <addaction name="actionDebugger"/>
     <addaction name="separator"/>
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
@@ -3854,7 +3856,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>454</height>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4036,8 +4038,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>454</height>
+          <width>195</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4118,8 +4120,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>454</height>
+          <width>192</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4212,7 +4214,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>231</width>
           <height>461</height>
          </rect>
         </property>
@@ -4510,8 +4512,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>454</height>
+          <width>188</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4626,8 +4628,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>454</height>
+          <width>190</width>
+          <height>110</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4724,8 +4726,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>454</height>
+          <width>104</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4873,7 +4875,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>435</height>
+          <height>516</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5100,8 +5102,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>435</height>
+          <width>190</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5249,8 +5251,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>435</height>
+          <width>219</width>
+          <height>289</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6068,7 +6070,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>352</height>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6189,8 +6191,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>352</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6311,8 +6313,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>352</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6433,8 +6435,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>352</height>
+          <width>229</width>
+          <height>220</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6680,8 +6682,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>352</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6929,6 +6931,161 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
     </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="debuggerBox">
+   <property name="minimumSize">
+    <size>
+     <width>280</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="windowIcon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Debugger</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_6">
+    <widget class="QGroupBox" name="DEBUG_MousePoint">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>120</width>
+       <height>65</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>120</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Mouse coordinates</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_27" columnstretch="0,80">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_83">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">X:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="DEBUG_MouseX">
+        <property name="text">
+         <string notr="true">MouseX</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_84">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="DEBUG_MouseY">
+        <property name="text">
+         <string notr="true">MouseY</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="GotoPoint">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>10</y>
+       <width>134</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>134</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Go to point:</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_28">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_85">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">X:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="DEBUG_GotoX">
+        <property name="inputMethodHints">
+         <set>Qt::ImhDigitsOnly</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_86">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="DEBUG_GotoY">
+        <property name="inputMethodHints">
+         <set>Qt::ImhDigitsOnly</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QPushButton" name="DEBUG_GotoPoint">
+        <property name="text">
+         <string>Go!</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
   <action name="OpenFile">
@@ -8600,6 +8757,18 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Tileset Item Box</string>
+   </property>
+  </action>
+  <action name="actionDebugger">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+   </property>
+   <property name="text">
+    <string>Debugger</string>
    </property>
   </action>
  </widget>

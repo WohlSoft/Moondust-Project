@@ -58,6 +58,9 @@ public:
     static bool WorldSettingsToolboxVis;
     static bool WorldSearchBoxVis;
 
+    static bool TilesetBoxVis;
+    static bool DebuggerBoxVis;
+
     // Editor flags
     static bool MidMouse_allowDuplicate;
     static bool MidMouse_allowSwitchToPlace;
