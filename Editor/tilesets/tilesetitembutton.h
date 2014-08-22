@@ -34,9 +34,12 @@ public:
     void setConfig(dataconfigs *config);
     void applyItem(const int &i, const int &id, const int &width = -1, const int &height = -1);
     void applySize(const int &width, const int &height);
+    ItemTypes::itemTypes itemType() const;
+    unsigned int id() const;
+    bool isItemSet();
 
 signals:
-
+    void clicked(int itemType, unsigned long id);
 public slots:
 
 protected:
@@ -46,6 +49,8 @@ protected:
 
 private:
     dataconfigs* m_config;
+    ItemTypes::itemTypes m_itemType;
+    unsigned int m_id;
     QPixmap m_drawItem;
 };
 
