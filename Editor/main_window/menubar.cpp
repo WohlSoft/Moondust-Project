@@ -265,6 +265,8 @@ void MainWindow::updateMenus(bool force)
             WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
             GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
             GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
+            ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
+            ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
         }
 
         zoom->setText(QString::number(activeWldEditWin()->getZoom()));
