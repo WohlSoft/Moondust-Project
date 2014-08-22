@@ -172,7 +172,8 @@ SOURCES += main.cpp\
     common_features/items.cpp \
     common_features/flowlayout.cpp \
     main_window/edit_placincg_switch.cpp \
-    common_features/graphicsworkspace.cpp
+    common_features/graphicsworkspace.cpp \
+    external_tools/png2gifs_gui.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -245,7 +246,8 @@ HEADERS  += mainwindow.h \
     external_tools/lazyfixtool_gui.h \
     common_features/items.h \
     common_features/flowlayout.h \
-    common_features/graphicsworkspace.h
+    common_features/graphicsworkspace.h \
+    external_tools/png2gifs_gui.h
 
 FORMS    += \
     mainwindow.ui \
@@ -270,7 +272,8 @@ FORMS    += \
     dev_console/devconsole.ui \
     tilesets/tilesetgroupeditor.ui \
     external_tools/gifs2png_gui.ui \
-    external_tools/lazyfixtool_gui.ui
+    external_tools/lazyfixtool_gui.ui \
+    external_tools/png2gifs_gui.ui
 
 RC_FILE = _resources/pge_editor.rc
 
