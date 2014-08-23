@@ -24,6 +24,7 @@ Editor 0.2.0
 - Added PNG2GIFs converter which creating masked GIF images from PNG image with transparency.
 - Added Italian translation
 - Design of the warp points and physical environment zones are improved
+- Added debugger box
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized
