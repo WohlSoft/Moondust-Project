@@ -312,7 +312,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
             setPoint(cursor->scenePos().toPoint());
-            pointSelected(selectedPoint);
+            emit pointSelected(selectedPoint);
 
             QGraphicsScene::mousePressEvent(mouseEvent);
             return;
