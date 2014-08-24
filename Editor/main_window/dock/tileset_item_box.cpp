@@ -29,19 +29,6 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
 
 }
 
-
-
-//void MainWindow::on_LevelToolBox_visibilityChanged(bool visible)
-//{
-//    ui->actionLVLToolBox->setChecked(visible);
-//}
-
-//void MainWindow::on_actionLVLToolBox_triggered(bool checked)
-//{
-//    ui->LevelToolBox->setVisible(checked);
-//    if(checked) ui->LevelToolBox->raise();
-//}
-
 void MainWindow::on_Tileset_Item_Box_visibilityChanged(bool visible)
 {
     ui->actionTilesetBox->setChecked(visible);
@@ -54,6 +41,11 @@ void MainWindow::on_actionTilesetBox_triggered(bool checked)
 }
 
 
+ // Create and refresh tileset box data
+void MainWindow::setTileSetBox()
+{
+
+}
 
 
 
