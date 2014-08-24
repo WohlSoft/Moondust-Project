@@ -103,5 +103,5 @@ void WldScene::setScreenshotSelector(bool enabled, bool accept)
         DrawMode=false;
     }
 
-    if(do_signal) screenshotSizeCaptured();
+    if(do_signal) emit screenshotSizeCaptured();
 }

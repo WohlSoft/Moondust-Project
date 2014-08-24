@@ -176,7 +176,7 @@ void TilesetGroupEditor::on_RemoveTileset_clicked()
 
 void TilesetGroupEditor::on_Open_clicked()
 {
-    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset Group"), MainWinConnect::configs->config_dir+"group_tilesets/", QString("PGE Tileset Group (*.ini)"));
+    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset Group"), MainWinConnect::configs->config_dir+"group_tilesets/", QString("PGE Tileset Group (*.tsgrp.ini)"));
     if(f.isEmpty())
         return;
 
@@ -226,8 +226,8 @@ void TilesetGroupEditor::on_Save_clicked()
     if (!ok || fileName.isEmpty())
         return;
 
-    if(!fileName.endsWith(".ini"))
-        fileName += ".ini";
+    if(!fileName.endsWith(".tsgrp.ini"))
+        fileName += ".tsgrp.ini";
 
     SaveSimpleTilesetGroup(MainWinConnect::configs->config_dir + "group_tilesets/" + fileName,toSimpleTilesetGroup());
 }
