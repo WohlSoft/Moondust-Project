@@ -137,8 +137,8 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
 
     lastFileName = fileName;
 
-    if(!fileName.endsWith(".ini"))
-        fileName += ".ini";
+    if(!fileName.endsWith(".tileset.ini"))
+        fileName += ".tileset.ini";
 
     tileset::SaveSimpleTileset(m_conf->config_dir + "tilesets/" + fileName,m_tileset->toSimpleTileset());
 }
@@ -146,7 +146,7 @@ void TilesetConfigureDialog::on_SaveTileset_clicked()
 void TilesetConfigureDialog::on_OpenTileset_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Tileset"),
-                                                    m_conf->config_dir + "tilesets/",QString("PGE Tileset (*.ini)"));
+                                                    m_conf->config_dir + "tilesets/",QString("PGE Tileset (*.tileset.ini)"));
     if (fileName.isEmpty())
         return;
 
