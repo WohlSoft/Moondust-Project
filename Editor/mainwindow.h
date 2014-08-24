@@ -53,6 +53,9 @@
 #include "common_features/musicfilelist.h"
 #include "common_features/logger.h"
 
+#include "tilesets/tileset.h"
+#include "tilesets/tilesetgroupeditor.h"
+
 
 QT_BEGIN_NAMESPACE
     class QMimeData;
@@ -236,6 +239,12 @@ public slots:
 
 
     void applyTextZoom();
+    //for tileset box
+    void prepareTilesetGroup(const TilesetGroupEditor::SimpleTilesetGroup &tilesetGroups);
+    QWidget *findTabWidget(const QString &categoryItem);
+    QWidget *makeCategory(const QString &categoryItem);
+    QFrame *getFrameTilesetOfTab(QWidget *catTab);
+    QComboBox *getGroupComboboxOfTab(QWidget *catTab);
 private slots:
 
     //Actions
