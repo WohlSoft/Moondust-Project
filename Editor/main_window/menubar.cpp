@@ -219,9 +219,12 @@ void MainWindow::updateMenus(bool force)
         zoom->setText(QString::number(activeLvlEditWin()->getZoom()));
 
         SetCurrentLevelSection(0, 1);
+
         setDoorsToolbox();
         setLayersBox();
         setEventsBox();
+
+        setTileSetBox();
 
         //Sync lists in properties windows
         EventListsSync();

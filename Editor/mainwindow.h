@@ -137,6 +137,8 @@ public slots:
     void setSoundList();
     void WldLvlExitTypeListReset();
 
+    void setTileSetBox(); //Refresh tileset box's data
+
 
     void DragAndDroppedLayer(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
     void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
@@ -245,6 +247,10 @@ public slots:
     QWidget *makeCategory(const QString &categoryItem);
     QFrame *getFrameTilesetOfTab(QWidget *catTab);
     QComboBox *getGroupComboboxOfTab(QWidget *catTab);
+
+    //Debugger
+    void Debugger_UpdateMousePosition(QPoint p, bool isOffScreen=false);
+
 private slots:
 
     //Actions
