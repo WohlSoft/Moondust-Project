@@ -32,6 +32,22 @@ void MainWindow::on_actionDebugger_triggered(bool checked)
     if(checked) ui->debuggerBox->raise();
 }
 
+void MainWindow::Debugger_UpdateMousePosition(QPoint p, bool isOffScreen)
+{
+    if(!ui->actionDebugger->isVisible()) return; //SpeedUp
+
+    if(isOffScreen)
+    {
+        ui->DEBUG_MouseX->setText("");
+        ui->DEBUG_MouseY->setText("");
+    }
+    else
+    {
+        ui->DEBUG_MouseX->setText(QString::number(p.x()));
+        ui->DEBUG_MouseY->setText(QString::number(p.y()));
+    }
+}
+
 
 void MainWindow::on_DEBUG_GotoPoint_clicked()
 {
