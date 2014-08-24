@@ -441,8 +441,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         cursor = addRect(0,0, 32, 32);
 
-        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::darkMagenta));
-        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::darkMagenta, 2,Qt::SolidLine));
+        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(QColor(qRgb(0xff,0x00,0x7f))));
+        ((QGraphicsRectItem *)cursor)->setPen(QPen(QColor(qRgb(0xff,0x00,0x7f)), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );

@@ -455,8 +455,8 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     direction = doorDir;
 
     long ix, iy, ox, oy;
-    QColor cEnter(Qt::magenta);
-    QColor cExit(Qt::darkMagenta);
+    QColor cEnter(qRgb(0xff,0x00,0x7f));
+    QColor cExit(qRgb(0xc4,0x00,0x62));//c40062
     cEnter.setAlpha(50);
     cExit.setAlpha(50);
 
@@ -483,7 +483,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     {
         doorData.isSetIn=true;
         setBrush(QBrush(cEnter));
-        setPen(QPen(Qt::magenta, 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+        setPen(QPen(QBrush(QColor(qRgb(0xff,0x00,0x7f))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
 
         //doorLabel_shadow->setDefaultTextColor(Qt::black);
         //doorLabel_shadow->setFont(font1);
@@ -500,7 +500,7 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     {
         doorData.isSetOut=true;
         setBrush(QBrush(cExit));
-        setPen( QPen(Qt::darkMagenta, 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin) );
+        setPen( QPen(QBrush(QColor(qRgb(0xc4,0x00,0x62))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin) );
 
         //doorLabel_shadow->setDefaultTextColor(Qt::black);
         //doorLabel_shadow->setFont(font1);
