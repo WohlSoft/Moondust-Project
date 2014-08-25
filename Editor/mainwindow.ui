@@ -2674,7 +2674,7 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-656</y>
           <width>279</width>
           <height>1319</height>
          </rect>
@@ -3346,7 +3346,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <item row="5" column="0" colspan="2">
              <widget class="QCheckBox" name="PROPS_NPCNoMove">
               <property name="text">
-               <string>Don't move</string>
+               <string>Doesn't move</string>
               </property>
              </widget>
             </item>
@@ -4038,8 +4038,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>195</width>
-          <height>115</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4120,8 +4120,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>192</width>
-          <height>93</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4214,7 +4214,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
+          <width>255</width>
           <height>461</height>
          </rect>
         </property>
@@ -4512,8 +4512,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4628,8 +4628,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4726,8 +4726,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5102,8 +5102,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>146</height>
+          <width>300</width>
+          <height>516</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5251,8 +5251,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>289</height>
+          <width>300</width>
+          <height>516</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5369,7 +5369,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="10" column="3">
           <widget class="QLabel" name="label_49">
            <property name="text">
-            <string>Don't move</string>
+            <string>Doesn't move</string>
            </property>
           </widget>
          </item>
@@ -6191,8 +6191,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6313,8 +6313,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6435,8 +6435,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>229</width>
-          <height>220</height>
+          <width>300</width>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6682,8 +6682,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6843,7 +6843,7 @@ p, li { white-space: pre-wrap; }
      <item>
       <widget class="QTabWidget" name="TileSetsCategories">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
