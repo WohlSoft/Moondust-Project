@@ -82,14 +82,10 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     bgoZb = -100; // backround BGO
 
     blockZ = 1; // standart block
-    playerZ = 5; //player Point
-
-    bgoZf = 50; // foreground BGO
-
     npcZb = 20; // background NPC
-
     npcZs = 30; // standart NPC
-
+    playerZ = 35; //player Point
+    bgoZf = 50; // foreground BGO
     blockZl = 100; //LavaBlock
     npcZf = 150; // foreground NPC
     waterZ = 500;
