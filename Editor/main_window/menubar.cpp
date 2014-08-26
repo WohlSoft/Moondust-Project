@@ -305,7 +305,7 @@ void MainWindow::updateMenus(bool force)
         ui->actionRedo->setEnabled(false);
     }
 
-    UpdateCustomItems();
+    UpdateLvlCustomItems();
 
     updateWindowMenu();
 }

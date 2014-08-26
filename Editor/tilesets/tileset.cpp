@@ -25,7 +25,7 @@
 #include "../common_features/graphics_funcs.h"
 
 
-tileset::tileset(dataconfigs* conf, TilesetType type, QWidget *parent, int baseSize, int rows, int cols) :
+tileset::tileset(dataconfigs* conf, int type, QWidget *parent, int baseSize, int rows, int cols) :
     QWidget(parent)
 {
     setEditMode(true);
@@ -201,7 +201,7 @@ const QRect tileset::targetSquare(const QPoint &position) const
 QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
 {
     switch (m_type) {
-    case LEVELTILESET_BLOCK:
+    case ItemTypes::LVL_Block:
     {
         long tarIndex = m_conf->getBlockI(id);
         if(tarIndex==-1)
@@ -218,7 +218,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
                     QSize(m_baseSize,m_baseSize));
         break;
     }
-    case LEVELTILESET_BGO:
+    case ItemTypes::LVL_BGO:
     {
         long tarIndex = m_conf->getBgoI(id);
         if(tarIndex==-1)
@@ -231,7 +231,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
                     QSize(m_baseSize,m_baseSize));
         break;
     }
-    case LEVELTILESET_NPC:
+    case ItemTypes::LVL_NPC:
     {
         long tarIndex = m_conf->getNpcI(id);
         if(tarIndex==-1)
@@ -243,7 +243,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
                     QSize(m_baseSize,m_baseSize));
         break;
     }
-    case WORLDTILESET_TILE:
+    case ItemTypes::WLD_Tile:
     {
         long tarIndex = m_conf->getTileI(id);
         if(tarIndex==-1)
@@ -255,7 +255,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
-    case WORLDTILESET_PATH:
+    case ItemTypes::WLD_Path:
     {
         long tarIndex = m_conf->getPathI(id);
         if(tarIndex==-1)
@@ -267,7 +267,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
-    case WORLDTILESET_SCENERY:
+    case ItemTypes::WLD_Scenery:
     {
         long tarIndex = m_conf->getSceneI(id);
         if(tarIndex==-1)
@@ -278,7 +278,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
                  m_conf->main_wscene[tarIndex].frame_h), QSize(m_baseSize,m_baseSize));
         break;
     }
-    case WORLDTILESET_LEVEL:
+    case ItemTypes::WLD_Level:
     {
         long tarIndex = m_conf->getWLevelI(id);
         if(tarIndex==-1)
@@ -298,13 +298,13 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
 QString tileset::getMimeType()
 {
     switch (m_type) {
-    case LEVELTILESET_BLOCK: return QString("text/x-pge-piece-block");
-    case LEVELTILESET_BGO: return QString("text/x-pge-piece-bgo");
-    case LEVELTILESET_NPC: return QString("text/x-pge-piece-npc");
-    case WORLDTILESET_TILE: return QString("text/x-pge-piece-tile");
-    case WORLDTILESET_PATH: return QString("text/x-pge-piece-path");
-    case WORLDTILESET_SCENERY: return QString("text/x-pge-piece-scenery");
-    case WORLDTILESET_LEVEL: return QString("text/x-pge-piece-level");
+    case ItemTypes::LVL_Block: return QString("text/x-pge-piece-block");
+    case ItemTypes::LVL_BGO: return QString("text/x-pge-piece-bgo");
+    case ItemTypes::LVL_NPC: return QString("text/x-pge-piece-npc");
+    case ItemTypes::WLD_Tile: return QString("text/x-pge-piece-tile");
+    case ItemTypes::WLD_Path: return QString("text/x-pge-piece-path");
+    case ItemTypes::WLD_Scenery: return QString("text/x-pge-piece-scenery");
+    case ItemTypes::WLD_Level: return QString("text/x-pge-piece-level");
     default:
         break;
     }
@@ -331,12 +331,12 @@ void tileset::setEditMode(bool editMode)
     setAcceptDrops(editMode);
 }
 
-tileset::TilesetType tileset::type() const
+int tileset::type() const
 {
     return m_type;
 }
 
-void tileset::setType(const TilesetType &type)
+void tileset::setType(const int &type)
 {
     m_type = type;
 }
@@ -346,7 +346,7 @@ int tileset::getBaseSize() const
     return m_baseSize;
 }
 
-tileset::SimpleTileset tileset::toSimpleTileset()
+SimpleTileset tileset::toSimpleTileset()
 {
     SimpleTileset s;
     s.rows = m_rows;
@@ -363,7 +363,7 @@ tileset::SimpleTileset tileset::toSimpleTileset()
     return s;
 }
 
-void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
+void tileset::loadSimpleTileset(const SimpleTileset &tileset)
 {
     clear();
     setRows(tileset.rows);
@@ -377,7 +377,7 @@ void tileset::loadSimpleTileset(const tileset::SimpleTileset &tileset)
     }
 }
 
-void tileset::SaveSimpleTileset(const QString &path, const tileset::SimpleTileset &tileset)
+void tileset::SaveSimpleTileset(const QString &path, const SimpleTileset &tileset)
 {
     QString modifiedPath;
 #ifdef __linux__
@@ -410,7 +410,7 @@ void tileset::SaveSimpleTileset(const QString &path, const tileset::SimpleTilese
     }
 }
 
-bool tileset::OpenSimpleTileset(const QString &path, tileset::SimpleTileset &tileset)
+bool tileset::OpenSimpleTileset(const QString &path, SimpleTileset &tileset)
 {
     QSettings simpleTilesetINI(path,QSettings::IniFormat);
     simpleTilesetINI.setIniCodec("UTF-8");
@@ -420,8 +420,9 @@ bool tileset::OpenSimpleTileset(const QString &path, tileset::SimpleTileset &til
         simpleTilesetINI.beginGroup("tileset");
         tileset.rows = (unsigned int)simpleTilesetINI.value("rows",3).toInt();
         tileset.cols = (unsigned int)simpleTilesetINI.value("cols",3).toInt();
-        tileset.type = static_cast<tileset::TilesetType>(simpleTilesetINI.value("type",0).toInt());
+        tileset.type = simpleTilesetINI.value("type",0).toInt();
         tileset.tileSetName = simpleTilesetINI.value("name", "").toString();
+        tileset.fileName = QFileInfo(path).fileName();
         simpleTilesetINI.endGroup();
         groups.removeAt(tilesetindex);
         for(int i = 0; i < groups.size(); ++i){

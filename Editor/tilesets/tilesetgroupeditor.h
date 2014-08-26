@@ -5,6 +5,7 @@
 #include "tileset.h"
 
 #include "../common_features/flowlayout.h"
+#include "../data_configs/obj_tilesets.h"
 
 namespace Ui {
 class TilesetGroupEditor;
@@ -17,12 +18,6 @@ class TilesetGroupEditor : public QDialog
 public:
     explicit TilesetGroupEditor(QWidget *parent = 0);
     ~TilesetGroupEditor();
-
-    struct SimpleTilesetGroup{
-        QString groupName;
-        QString groupCat;
-        QStringList tilesets;
-    };
 
     SimpleTilesetGroup toSimpleTilesetGroup();
     static void SaveSimpleTilesetGroup(const QString &path, const SimpleTilesetGroup &tileset);
@@ -44,7 +39,7 @@ private:
     FlowLayout * layout;
     Ui::TilesetGroupEditor *ui;
     void redrawAll();
-    QList<QPair<QString,tileset::SimpleTileset> > tilesets;
+    QList<QPair<QString,SimpleTileset> > tilesets;
 };
 
 #endif // TILESETGROUPEDITOR_H

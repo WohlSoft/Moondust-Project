@@ -175,7 +175,8 @@ SOURCES += main.cpp\
     common_features/graphicsworkspace.cpp \
     external_tools/png2gifs_gui.cpp \
     main_window/dock/tileset_item_box.cpp \
-    main_window/dock/debugger.cpp
+    main_window/dock/debugger.cpp \
+    data_configs/conf_tilesets.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -250,7 +251,13 @@ HEADERS  += mainwindow.h \
     common_features/flowlayout.h \
     common_features/graphicsworkspace.h \
     external_tools/png2gifs_gui.h \
-    main_window/dock/tileset_item_box.h
+    main_window/dock/tileset_item_box.h \
+    data_configs/obj_block.h \
+    data_configs/obj_bgo.h \
+    data_configs/obj_BG.h \
+    data_configs/obj_wld_items.h \
+    data_configs/dc_indexing.h \
+    data_configs/obj_tilesets.h
 
 FORMS    += \
     mainwindow.ui \
