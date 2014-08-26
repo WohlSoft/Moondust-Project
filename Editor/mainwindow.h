@@ -247,6 +247,7 @@ public slots:
     QWidget *makeCategory(const QString &categoryItem);
     QFrame *getFrameTilesetOfTab(QWidget *catTab);
     QComboBox *getGroupComboboxOfTab(QWidget *catTab);
+    void clearTilesetGroups();
 
     //Debugger
     void Debugger_UpdateMousePosition(QPoint p, bool isOffScreen=false);

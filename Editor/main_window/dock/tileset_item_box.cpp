@@ -44,7 +44,17 @@ void MainWindow::on_actionTilesetBox_triggered(bool checked)
  // Create and refresh tileset box data
 void MainWindow::setTileSetBox()
 {
-
+    clearTilesetGroups();
+    QStringList filters("*.tsgrp.ini");
+    QDir grpDir = configs.config_dir + "group_tilesets/";
+    QStringList entries;
+    entries = grpDir.entryList(filters, QDir::Files);
+    foreach (QString f, entries) {
+        TilesetGroupEditor::SimpleTilesetGroup grp;
+        if(!TilesetGroupEditor::OpenSimpleTilesetGroup(configs.config_dir + "group_tilesets/" + f,grp))
+            continue;
+        prepareTilesetGroup(grp);
+    }
 }
 
 
@@ -81,16 +91,40 @@ QWidget* MainWindow::findTabWidget(const QString &categoryItem){
 }
 
 QWidget* MainWindow::makeCategory(const QString &categoryItem){
-    QWidget* catWid = new QWidget();
-    QGridLayout* catLayout = new QGridLayout();
-    QComboBox* catgrp = new QComboBox();
-    QFrame* catTileset = new QFrame();
-    catWid->setLayout(catLayout);
-    catLayout->addWidget(new QLabel(tr("Groups: ")), 0, 0);
-    catLayout->addWidget(catgrp, 0, 1);
-    catLayout->addItem(new QSpacerItem(207, 20, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, 2);
-    catLayout->addWidget(catTileset, 1, 0, -1, -1);
-    ui->TileSetsCategories->addTab(catWid, categoryItem);
+    QTabWidget* TileSetsCategories = ui->TileSetsCategories;
+    QWidget* catWid;
+    QGridLayout* catLayout;
+    QLabel* grpLabel;
+    QComboBox* tilesetGroup;
+    QSpacerItem* spItem;
+    QFrame* TileSets;
+
+    catWid = new QWidget();
+    catLayout = new QGridLayout(catWid);
+    catLayout->setSpacing(6);
+    catLayout->setContentsMargins(11, 11, 11, 11);
+    grpLabel = new QLabel(catWid);
+
+    catLayout->addWidget(grpLabel, 0, 0, 1, 1);
+
+    tilesetGroup = new QComboBox(catWid);
+
+    catLayout->addWidget(tilesetGroup, 0, 1, 1, 1);
+
+    spItem = new QSpacerItem(1283, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    catLayout->addItem(spItem, 0, 2, 1, 1);
+
+    TileSets = new QFrame(catWid);
+    TileSets->setFrameShape(QFrame::StyledPanel);
+    TileSets->setFrameShadow(QFrame::Raised);
+
+    catLayout->addWidget(TileSets, 1, 0, 1, 3);
+
+    TileSetsCategories->addTab(catWid, QString());
+    TileSetsCategories->setTabText(TileSetsCategories->indexOf(catWid), categoryItem);
+
+
     return catWid;
 }
 
@@ -105,5 +139,22 @@ void MainWindow::prepareTilesetGroup(const TilesetGroupEditor::SimpleTilesetGrou
 
     if(!util::contains(c,tilesetGroups.groupName)){
         c->addItem(tilesetGroups.groupName);
+    }
+}
+
+void MainWindow::clearTilesetGroups(){
+    QTabWidget* cat = ui->TileSetsCategories;
+    int i = 0;
+    int f = cat->count();
+    while(f > i){ //include custom tab
+        if(cat->tabText(i) == tr("Custom")){
+            ++i;
+            continue;
+        }
+
+        QWidget* acCat = cat->widget(i);
+        cat->removeTab(i);
+        delete acCat;
+        f = cat->count();
     }
 }
