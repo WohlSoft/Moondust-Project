@@ -108,7 +108,7 @@ void MainWindow::setUiDefults()
 
     //Apply objects into tools
     setLevelSectionData();
-    setItemBoxes();
+    setLvlItemBoxes();
     setWldItemBoxes();
 
     setSoundList();
@@ -431,7 +431,7 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Check_ContainsTitle, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
 
     connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(selectLevelForSearch()));
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindow(QMdiSubWindow*)));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
 
     updateWindowMenu();

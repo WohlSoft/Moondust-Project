@@ -50,7 +50,7 @@ void MainWindow::setTileSetBox()
     QStringList entries;
     entries = grpDir.entryList(filters, QDir::Files);
     foreach (QString f, entries) {
-        TilesetGroupEditor::SimpleTilesetGroup grp;
+        SimpleTilesetGroup grp;
         if(!TilesetGroupEditor::OpenSimpleTilesetGroup(configs.config_dir + "group_tilesets/" + f,grp))
             continue;
         prepareTilesetGroup(grp);
@@ -128,7 +128,7 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem){
     return catWid;
 }
 
-void MainWindow::prepareTilesetGroup(const TilesetGroupEditor::SimpleTilesetGroup &tilesetGroups){
+void MainWindow::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups){
     QWidget *t = findTabWidget(tilesetGroups.groupCat);
     if(!t){
         t = makeCategory(tilesetGroups.groupCat);

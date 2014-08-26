@@ -24,7 +24,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
     ui(new Ui::TilesetConfigureDialog)
 {
     ui->setupUi(this);
-    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,tileset::LEVELTILESET_BLOCK,0,64,3,3)));
+    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,ItemTypes::LVL_Block,0,64,3,3)));
 
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
@@ -34,7 +34,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QWidget *paren
     m_conf = conf;
     lastFileName = "";
 
-    setUpItems(tileset::LEVELTILESET_BLOCK);
+    setUpItems(ItemTypes::LVL_Block);
 
     connect(ui->spin_width,SIGNAL(valueChanged(int)),m_tileset,SLOT(setCols(int)));
     connect(ui->spin_height,SIGNAL(valueChanged(int)),m_tileset,SLOT(setRows(int)));
@@ -53,62 +53,62 @@ void TilesetConfigureDialog::on_pushButton_clicked()
     m_tileset->clear();
 }
 
-void TilesetConfigureDialog::setUpItems(int type)
-{
-    setUpItems(static_cast<tileset::TilesetType>(type));
-}
+//void TilesetConfigureDialog::setUpItems(int type)
+//{
+//    setUpItems(type);
+//}
 
 void TilesetConfigureDialog::setUpTileset(int type)
 {
     m_tileset->clear();
-    m_tileset->setType(static_cast<tileset::TilesetType>(type));
+    m_tileset->setType(type);
 }
 
-void TilesetConfigureDialog::setUpItems(tileset::TilesetType type)
+void TilesetConfigureDialog::setUpItems(int type)
 {
     delete m_model;
     ui->listView->setModel(m_model = (new PiecesModel(m_conf, toPieceType(type))));
 
     switch (type) {
-    case tileset::LEVELTILESET_BLOCK:
+    case ItemTypes::LVL_Block:
     {
         for(int i = 0; i < m_conf->main_block.size(); ++i){
             m_model->addPiece(i);
         }
         break;
     }
-    case tileset::LEVELTILESET_BGO:
+    case ItemTypes::LVL_BGO:
     {
         for(int i = 0; i < m_conf->main_bgo.size(); ++i){
             m_model->addPiece(i);
         }
         break;
     }
-    case tileset::LEVELTILESET_NPC:
+    case ItemTypes::LVL_NPC:
     {
         for(int i = 0; i < m_conf->main_npc.size(); ++i){
             m_model->addPiece(i);
         }
         break;
     }
-    case tileset::WORLDTILESET_TILE:
+    case ItemTypes::WLD_Tile:
     {
         for(int i = 0; i < m_conf->main_wtiles.size(); ++i){
             m_model->addPiece(i);
         }
         break;
     }
-    case tileset::WORLDTILESET_SCENERY:
+    case ItemTypes::WLD_Scenery:
         for(int i = 0; i < m_conf->main_wscene.size(); ++i){
             m_model->addPiece(i);
         }
         break;
-    case tileset::WORLDTILESET_PATH:
+    case ItemTypes::WLD_Path:
         for(int i = 0; i < m_conf->main_wpaths.size(); ++i){
             m_model->addPiece(i);
         }
         break;
-    case tileset::WORLDTILESET_LEVEL:
+    case ItemTypes::WLD_Level:
         for(int i = 0; i < m_conf->main_wlevels.size(); ++i){
             m_model->addPiece(i);
         }
@@ -119,9 +119,9 @@ void TilesetConfigureDialog::setUpItems(tileset::TilesetType type)
 
 }
 
-PiecesModel::PieceType TilesetConfigureDialog::toPieceType(tileset::TilesetType type)
+PiecesModel::PieceType TilesetConfigureDialog::toPieceType(int type)
 {
-    return static_cast<PiecesModel::PieceType>(static_cast<int>(type));
+    return static_cast<PiecesModel::PieceType>(type);
 }
 
 void TilesetConfigureDialog::on_SaveTileset_clicked()
@@ -152,7 +152,7 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
 
     lastFileName = QFileInfo(fileName).baseName();
 
-    tileset::SimpleTileset simple;
+    SimpleTileset simple;
     if(!tileset::OpenSimpleTileset(fileName,simple)){
         QMessageBox::warning(this, tr("Failed to load tileset!"), tr("Failed to load tileset!\nData may be corrupted!"));
     }else{

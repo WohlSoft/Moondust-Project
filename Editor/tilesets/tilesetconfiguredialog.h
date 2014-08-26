@@ -53,8 +53,8 @@ private:
     tileset* m_tileset;
     PiecesModel* m_model;
     dataconfigs* m_conf;
-    void setUpItems(tileset::TilesetType type);
-    PiecesModel::PieceType toPieceType(tileset::TilesetType type);
+    //void setUpItems(ItemTypes type);
+    PiecesModel::PieceType toPieceType(int type);
 };
 
 #endif // TILESETCONFIGUREDIALOG_H
