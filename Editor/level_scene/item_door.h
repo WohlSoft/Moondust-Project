@@ -87,8 +87,8 @@ private:
     LvlScene * scene;
 
     QGraphicsItemGroup * grp;
-    QGraphicsTextItem * doorLabel;
-    QGraphicsTextItem * doorLabel_shadow;
+    QGraphicsPixmapItem * doorLabel;
+    //QGraphicsTextItem * doorLabel_shadow;
 
 };
 

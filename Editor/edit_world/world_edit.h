@@ -55,7 +55,7 @@ public:
 
     void setCurrentSection(int scId);
     void ResetPosition();
-    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0));
+    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0), bool center=false);
 
     void ResetZoom();
     void zoomIn();

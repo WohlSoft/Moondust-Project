@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1502</width>
-    <height>2723</height>
+    <width>1478</width>
+    <height>3235</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -105,8 +105,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1502</width>
-     <height>26</height>
+     <width>1478</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -237,6 +237,10 @@
     <addaction name="actionLayersBox"/>
     <addaction name="actionLevelEvents"/>
     <addaction name="actionLVLSearchBox"/>
+    <addaction name="actionWLD_SearchBox"/>
+    <addaction name="separator"/>
+    <addaction name="actionTilesetBox"/>
+    <addaction name="actionDebugger"/>
     <addaction name="separator"/>
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
@@ -2671,8 +2675,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>275</width>
-          <height>1462</height>
+          <width>279</width>
+          <height>1319</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3342,7 +3346,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <item row="5" column="0" colspan="2">
              <widget class="QCheckBox" name="PROPS_NPCNoMove">
               <property name="text">
-               <string>Don't move</string>
+               <string>Doesn't move</string>
               </property>
              </widget>
             </item>
@@ -3851,8 +3855,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>513</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4034,8 +4038,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>227</width>
-          <height>132</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4066,7 +4070,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_LayerMov_spX">
            <property name="decimals">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="minimum">
             <double>-99999999.000000000000000</double>
@@ -4086,7 +4090,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="3" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_LayerMov_spY">
            <property name="decimals">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="minimum">
             <double>-99999999.000000000000000</double>
@@ -4116,8 +4120,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>223</width>
-          <height>103</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4160,7 +4164,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spX">
            <property name="decimals">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="minimum">
             <double>-99999999.000000000000000</double>
@@ -4180,7 +4184,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="4" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spY">
            <property name="decimals">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="minimum">
             <double>-99999999.000000000000000</double>
@@ -4210,8 +4214,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>260</width>
-          <height>475</height>
+          <width>255</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4508,8 +4512,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>213</width>
-          <height>190</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4624,8 +4628,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>226</width>
-          <height>130</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4722,8 +4726,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>118</width>
-          <height>80</height>
+          <width>272</width>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4871,7 +4875,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>408</height>
+          <height>516</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5098,8 +5102,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>224</width>
-          <height>168</height>
+          <width>190</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5247,8 +5251,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>258</width>
-          <height>335</height>
+          <width>219</width>
+          <height>289</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5365,7 +5369,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="10" column="3">
           <widget class="QLabel" name="label_49">
            <property name="text">
-            <string>Don't move</string>
+            <string>Doesn't move</string>
            </property>
           </widget>
          </item>
@@ -5844,8 +5848,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6066,7 +6070,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>347</height>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6187,8 +6191,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>347</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6309,8 +6313,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>183</width>
-          <height>122</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6431,8 +6435,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>347</height>
+          <width>229</width>
+          <height>220</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6678,8 +6682,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>183</width>
-          <height>122</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6798,6 +6802,290 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
     </layout>
+   </widget>
+  </widget>
+  <widget class="TilesetItemBox" name="Tileset_Item_Box">
+   <property name="minimumSize">
+    <size>
+     <width>208</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Tileset Item Box</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QTabWidget" name="TileSetsCategories">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string notr="true">Category</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_25">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_82">
+           <property name="text">
+            <string>Group:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="tilesetGroup">
+           <item>
+            <property name="text">
+             <string notr="true">One Of Tileset's Groups</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>1283</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="1" column="0" colspan="3">
+          <widget class="QFrame" name="TileSets">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="custom_cat">
+        <attribute name="title">
+         <string>Custom</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_26">
+         <item row="0" column="0">
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>1386</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="QPushButton" name="newTileset">
+           <property name="text">
+            <string>New tileset</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0" colspan="2">
+          <widget class="QFrame" name="customTilesets">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="debuggerBox">
+   <property name="minimumSize">
+    <size>
+     <width>280</width>
+     <height>300</height>
+    </size>
+   </property>
+   <property name="windowIcon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Debugger</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_6">
+    <widget class="QGroupBox" name="DEBUG_MousePoint">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>120</width>
+       <height>65</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>120</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Mouse coordinates</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_27" columnstretch="0,80">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_83">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">X:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="DEBUG_MouseX">
+        <property name="text">
+         <string notr="true">MouseX</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_84">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="DEBUG_MouseY">
+        <property name="text">
+         <string notr="true">MouseY</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="GotoPoint">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>10</y>
+       <width>134</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>134</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Go to point:</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_28">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_85">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">X:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="DEBUG_GotoX">
+        <property name="inputMethodHints">
+         <set>Qt::ImhDigitsOnly</set>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_86">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string notr="true">Y:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="DEBUG_GotoY">
+        <property name="inputMethodHints">
+         <set>Qt::ImhDigitsOnly</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QPushButton" name="DEBUG_GotoPoint">
+        <property name="text">
+         <string>Go!</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
   <action name="OpenFile">
@@ -8463,8 +8751,36 @@ p, li { white-space: pre-wrap; }
     <string notr="true">Ctrl+=</string>
    </property>
   </action>
+  <action name="actionTilesetBox">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Tileset Item Box</string>
+   </property>
+  </action>
+  <action name="actionDebugger">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
+   </property>
+   <property name="text">
+    <string>Debugger</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>TilesetItemBox</class>
+   <extends>QDockWidget</extends>
+   <header>main_window/dock/tileset_item_box.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="_resources/editor.qrc"/>
  </resources>

@@ -150,6 +150,8 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
     updateMenus(true);
 }
 
+
+
 void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
 {
     if(checked){
@@ -160,4 +162,5 @@ void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
         this->showNormal();
     }
 }
+
 

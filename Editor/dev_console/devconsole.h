@@ -21,6 +21,11 @@ public:
 private slots:
     void on_button_clearAllLogs_clicked();
     void clearCurrentLog();
+    void on_button_send_clicked();
+    void on_edit_command_returnPressed();
+
+protected:
+    void closeEvent ( QCloseEvent * event);
 
 private:
     static DevConsole *currentDevConsole;
@@ -31,6 +36,7 @@ private:
     QPlainTextEdit* getEditByIndex(const int &index);
     QPlainTextEdit* getCurrentEdit();
 
+    void doCommand();
 };
 
 #endif // DEVCONSOLE_H

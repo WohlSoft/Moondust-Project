@@ -312,7 +312,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
             setPoint(cursor->scenePos().toPoint());
-            pointSelected(selectedPoint);
+            emit pointSelected(selectedPoint);
 
             QGraphicsScene::mousePressEvent(mouseEvent);
             return;
@@ -378,6 +378,8 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     using namespace wld_control;
+
+    MainWinConnect::pMainWin->Debugger_UpdateMousePosition(mouseEvent->scenePos().toPoint());
 
     //WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
     //if(contextMenuOpened) return;

@@ -38,7 +38,7 @@ void MainWindow::OpenFile(QString FilePath)
     QFile file(FilePath);
 
 
-    QMdiSubWindow *existing = findMdiChild(FilePath);
+    QMdiSubWindow *existing = findOpenedFileWin(FilePath);
             if (existing) {
                 ui->centralWidget->setActiveSubWindow(existing);
                 return;

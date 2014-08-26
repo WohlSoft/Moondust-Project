@@ -23,6 +23,8 @@
 TilesetItemButton::TilesetItemButton(dataconfigs *conf, QWidget *parent) :
     QFrame(parent)
 {
+    m_id = 0;
+    m_itemType = ItemTypes::LVL_Block;
     m_config = conf;
     setFrameStyle(QFrame::Panel | QFrame::Raised);
     setLineWidth(2);
@@ -50,6 +52,8 @@ void TilesetItemButton::applyItem(const int &i, const int &id, const int &width,
         return;
     }
     m_drawItem = p;
+    m_id = (unsigned int)id;
+    m_itemType = static_cast<ItemTypes::itemTypes>(i);
 }
 
 void TilesetItemButton::applySize(const int &width, const int &height)
@@ -74,6 +78,8 @@ void TilesetItemButton::paintEvent(QPaintEvent *ev)
 
 void TilesetItemButton::mousePressEvent(QMouseEvent *)
 {
+    if(isItemSet())
+        emit clicked(static_cast<int>(m_itemType), (unsigned long)m_id);
     setFrameStyle(QFrame::Panel | QFrame::Sunken);
 }
 
@@ -81,4 +87,19 @@ void TilesetItemButton::mouseReleaseEvent(QMouseEvent *)
 {
     setFrameStyle(QFrame::Panel | QFrame::Raised);
 }
+unsigned int TilesetItemButton::id() const
+{
+    return m_id;
+}
+
+bool TilesetItemButton::isItemSet()
+{
+    return !m_drawItem.isNull() && m_id!=0;
+}
+
+ItemTypes::itemTypes TilesetItemButton::itemType() const
+{
+    return m_itemType;
+}
+
 

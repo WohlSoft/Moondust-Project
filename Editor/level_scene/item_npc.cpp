@@ -220,7 +220,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 fri->setChecked( npcData.friendly );
                 fri->deleteLater();
 
-            QAction *stat = ItemMenu->addAction(tr("Not movable"));
+            QAction *stat = ItemMenu->addAction(tr("Doesn't move"));
                 stat->setCheckable(1);
                 stat->setChecked( npcData.nomove );
                 stat->deleteLater();
