@@ -21,7 +21,11 @@
 
 #include <QString>
 #include <QPixmap>
-#include <QBitmap>
+
+// //Defines:// //
+//  obj_npc     //
+//  npc_Markers //
+// //////////// //
 
 struct obj_npc
 {
@@ -267,8 +271,38 @@ struct obj_npc
 
     bool default_special;
     long default_special_value;
+};
 
+
+
+struct npc_Markers
+{
+//    ;Defines for SMBX64
+    unsigned long bubble;
+//    bubble=283	; NPC-Container for packed in bubble
+    unsigned long egg;
+//    egg=96		; NPC-Container for packed in egg
+    unsigned long lakitu;
+//    lakitu=284	; NPC-Container for spawn by lakitu
+    unsigned long buried;
+//    burred=91	; NPC-Container for packed in herb
+
+    unsigned long ice_cube;
+//    icecube=263	; NPC-Container for frozen NPCs
+
+//    ;markers
+//    iceball=265
+    unsigned long iceball;
+//    fireball=13
+    unsigned long fireball;
+//    hammer=171
+    unsigned long hammer;
+//    boomerang=292
+    unsigned long boomerang;
+//    coin-in-block=10
+    unsigned long coin_in_block;
 
 };
+
 
 #endif // OBJ_NPC_H

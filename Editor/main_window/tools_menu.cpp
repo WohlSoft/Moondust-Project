@@ -27,6 +27,7 @@
 
 #include "../external_tools/lazyfixtool_gui.h"
 #include "../external_tools/gifs2png_gui.h"
+#include "../external_tools/png2gifs_gui.h"
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
@@ -82,8 +83,19 @@ void MainWindow::on_actionGIFs2PNG_triggered()
     gifToPngGUI->show();
 }
 
+png2gifs_gui * pngToGifGUI;
 void MainWindow::on_actionPNG2GIFs_triggered()
 {
-
+    if(pngToGifGUI)
+    {
+        pngToGifGUI->show();
+        pngToGifGUI->raise();
+        pngToGifGUI->setFocus();
+        return;
+    }
+    pngToGifGUI = new png2gifs_gui;
+    pngToGifGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    pngToGifGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, pngToGifGUI->size(), qApp->desktop()->availableGeometry()));
+    pngToGifGUI->show();
 }
 

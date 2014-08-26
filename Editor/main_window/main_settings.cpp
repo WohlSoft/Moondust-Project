@@ -47,6 +47,9 @@ bool GlobalSettings::LevelLayersBoxVis=false;
 bool GlobalSettings::LevelEventsBoxVis=false;
 bool GlobalSettings::LevelSearchBoxVis=false;
 
+bool GlobalSettings::TilesetBoxVis=false;
+bool GlobalSettings::DebuggerBoxVis=false;
+
 
 bool GlobalSettings::MidMouse_allowDuplicate=false;
 bool GlobalSettings::MidMouse_allowSwitchToPlace=false;
@@ -105,7 +108,7 @@ void MainWindow::setUiDefults()
 
     //Apply objects into tools
     setLevelSectionData();
-    setItemBoxes();
+    setLvlItemBoxes();
     setWldItemBoxes();
 
     setSoundList();
@@ -176,6 +179,22 @@ void MainWindow::setUiDefults()
                 ui->WorldFindDock->height()
                 );
 
+    ui->Tileset_Item_Box->setGeometry(
+                mwg.x()+GOffset,
+                mwg.y()+mwg.height()-600,
+                800,
+                300
+                );
+
+    ui->debuggerBox->setGeometry(
+                mwg.x()+mwg.width()-ui->debuggerBox->width()-GOffset,
+                mwg.y()+120,
+                ui->debuggerBox->width(),
+                ui->debuggerBox->height()
+                );
+
+    ui->Tileset_Item_Box->hide();
+
     loadSettings();
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)),
@@ -211,6 +230,9 @@ void MainWindow::setUiDefults()
     ui->WorldSettings->hide();
     ui->WLD_ItemProps->hide();
     ui->WorldFindDock->hide();
+
+    ui->Tileset_Item_Box->hide();
+    ui->debuggerBox->hide();
 
     ui->menuView->setEnabled(false);
 
@@ -409,7 +431,7 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Check_ContainsTitle, SIGNAL(clicked()), this, SLOT(resetLevelSearch()));
 
     connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(selectLevelForSearch()));
-    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindow(QMdiSubWindow*)));
+    connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
 
     updateWindowMenu();
@@ -439,6 +461,9 @@ void MainWindow::loadSettings()
         GlobalSettings::WorldSettingsToolboxVis = settings.value("world-props-visible", "false").toBool();
         GlobalSettings::WorldSearchBoxVis = settings.value("world-search-visible", "false").toBool();
 
+        GlobalSettings::TilesetBoxVis = settings.value("tileset-box-visible", "false").toBool();
+        GlobalSettings::DebuggerBoxVis = settings.value("debugger-box-visible", "false").toBool();
+
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
@@ -465,6 +490,8 @@ void MainWindow::loadSettings()
         ui->WorldSettings->setFloating(settings.value("world-settings-box-float", true).toBool());
         ui->WLD_ItemProps->setFloating(settings.value("world-itemprops-box-float", true).toBool());
         ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
+        ui->Tileset_Item_Box->setFloating(settings.value("tileset-box-float", true).toBool());
+        ui->debuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
 
         ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
@@ -476,6 +503,8 @@ void MainWindow::loadSettings()
         ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
         ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
         ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
+        ui->Tileset_Item_Box->restoreGeometry(settings.value("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry()).toByteArray());
+        ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
 
@@ -512,6 +541,9 @@ void MainWindow::saveSettings()
     settings.setValue("level-doors-vis", GlobalSettings::LevelDoorsBoxVis);
     settings.setValue("level-search-vis", GlobalSettings::LevelSearchBoxVis);
 
+    settings.setValue("tileset-box-visible", GlobalSettings::TilesetBoxVis);
+    settings.setValue("debugger-box-visible", GlobalSettings::DebuggerBoxVis);
+
     settings.setValue("doors-tool-box-float", ui->DoorsToolbox->isFloating());
     settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
     settings.setValue("level-layers-float", ui->LevelLayers->isFloating());
@@ -523,6 +555,8 @@ void MainWindow::saveSettings()
     settings.setValue("world-settings-box-float", ui->WorldSettings->isFloating());
     settings.setValue("world-itemprops-box-float", ui->WLD_ItemProps->isFloating());
     settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
+    settings.setValue("tileset-box-float", ui->Tileset_Item_Box->isFloating());
+    settings.setValue("debugger-box-float", ui->debuggerBox->isFloating());
 
     settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
@@ -535,6 +569,9 @@ void MainWindow::saveSettings()
     settings.setValue("world-settings-box-geometry", ui->WorldSettings->saveGeometry());
     settings.setValue("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry());
     settings.setValue("world-search-geometry", ui->WorldFindDock->saveGeometry());
+
+    settings.setValue("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry());
+    settings.setValue("debugger-box-geometry", ui->debuggerBox->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());

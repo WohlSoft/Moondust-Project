@@ -7,7 +7,7 @@ class ItemTypes
 public:
     enum itemTypes
     {
-        LVL_Block=0,
+        LVL_Block   = 0,
         LVL_BGO,
         LVL_NPC,
         WLD_Tile,

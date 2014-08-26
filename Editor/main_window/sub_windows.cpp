@@ -143,7 +143,7 @@ WorldEdit *MainWindow::activeWldEditWin()
 
 
 
-QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)
+QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
 {
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
     leveledit *ChildWindow0;

@@ -28,6 +28,8 @@
 
 #include "../common_features/mainwinconnect.h"
 
+#include "../common_features/graphics_funcs.h"
+
 
 ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     : QGraphicsRectItem(parent)
@@ -35,7 +37,7 @@ ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     isLocked=false;
     itemSize = QSize(32,32);
     doorLabel=NULL;
-    doorLabel_shadow=NULL;
+    //doorLabel_shadow=NULL;
     //image = new QGraphicsRectItem;
     mouseLeft=false;
     mouseMid=false;
@@ -47,7 +49,7 @@ ItemDoor::~ItemDoor()
 {
     //WriteToLog(QtDebugMsg, "!<-Door destroy->!");
     if(doorLabel!=NULL) delete doorLabel;
-    if(doorLabel_shadow!=NULL) delete doorLabel_shadow;
+    //if(doorLabel_shadow!=NULL) delete doorLabel_shadow;
     if(grp!=NULL) delete grp;
 
     //WriteToLog(QtDebugMsg, "!<-Door destroyed->!");
@@ -453,8 +455,8 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     direction = doorDir;
 
     long ix, iy, ox, oy;
-    QColor cEnter(Qt::magenta);
-    QColor cExit(Qt::darkMagenta);
+    QColor cEnter(qRgb(0xff,0x00,0x7f));
+    QColor cExit(qRgb(0xc4,0x00,0x62));//c40062
     cEnter.setAlpha(50);
     cExit.setAlpha(50);
 
@@ -463,31 +465,32 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     ox = doorData.ox;
     oy = doorData.oy;
 
-    QFont font1, font2;
-    font1.setWeight(50);
-    font1.setBold(1);
-    font1.setPointSize(14);
+    //    QFont font1, font2;
+    //    font1.setWeight(50);
+    //    font1.setBold(1);
+    //    font1.setPointSize(14);
 
-    font2.setWeight(14);
-    font2.setBold(0);
-    font2.setPointSize(12);
+    //    font2.setWeight(14);
+    //    font2.setBold(0);
+    //    font2.setPointSize(12);
 
-    setRect(0, 0, itemSize.width(), itemSize.height());
+    setRect(1, 1, itemSize.width()-2, itemSize.height()-2);
 
-    doorLabel_shadow = new QGraphicsTextItem(QString::number(doorData.array_id));
-    doorLabel = new QGraphicsTextItem(QString::number(doorData.array_id));
+    //doorLabel_shadow = new QGraphicsTextItem(QString::number(doorData.array_id));
+    doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(doorData.array_id));
+
     if(direction==D_Entrance)
     {
         doorData.isSetIn=true;
         setBrush(QBrush(cEnter));
-        setPen(QPen(Qt::magenta, 2,Qt::SolidLine));
+        setPen(QPen(QBrush(QColor(qRgb(0xff,0x00,0x7f))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
 
-        doorLabel_shadow->setDefaultTextColor(Qt::black);
-        doorLabel_shadow->setFont(font1);
-        doorLabel_shadow->setPos(ix-5, iy-2);
-        doorLabel->setDefaultTextColor(Qt::white);
-        doorLabel->setFont(font2);
-        doorLabel->setPos(ix-3, iy);
+        //doorLabel_shadow->setDefaultTextColor(Qt::black);
+        //doorLabel_shadow->setFont(font1);
+        //doorLabel_shadow->setPos(ix-4, iy-7);
+        //doorLabel->setDefaultTextColor(Qt::white);
+        //doorLabel->setFont(font2);
+        doorLabel->setPos(ix+2, iy+2);
 
         this->setPos(ix, iy);
 
@@ -497,26 +500,26 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     {
         doorData.isSetOut=true;
         setBrush(QBrush(cExit));
-        setPen( QPen(Qt::darkMagenta, 2,Qt::SolidLine) );
+        setPen( QPen(QBrush(QColor(qRgb(0xc4,0x00,0x62))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin) );
 
-        doorLabel_shadow->setDefaultTextColor(Qt::black);
-        doorLabel_shadow->setFont(font1);
-        doorLabel_shadow->setPos(ox+10, oy+8);
-        doorLabel->setDefaultTextColor(Qt::white);
-        doorLabel->setFont(font2);
-        doorLabel->setPos(ox+12, oy+10);
+        //doorLabel_shadow->setDefaultTextColor(Qt::black);
+        //doorLabel_shadow->setFont(font1);
+        //doorLabel_shadow->setPos(ox+10, oy+8);
+        //doorLabel->setDefaultTextColor(Qt::white);
+        //doorLabel->setFont(font2);
+        doorLabel->setPos(ox+16, oy+16);
 
         this->setPos(ox, oy);
 
         this->setData(0, "Door_exit"); // ObjType
     }
     grp->addToGroup(doorLabel);
-    grp->addToGroup(doorLabel_shadow);
+    //grp->addToGroup(doorLabel_shadow);
 
     this->setFlag(QGraphicsItem::ItemIsSelectable, (!scene->lock_door));
     this->setFlag(QGraphicsItem::ItemIsMovable, (!scene->lock_door));
 
-    doorLabel_shadow->setZValue(scene->doorZ+0.0000001);
+    //doorLabel_shadow->setZValue(scene->doorZ+0.0000001);
     doorLabel->setZValue(scene->doorZ+0.0000002);
 
     this->setData(1, QString::number(0) );
@@ -540,7 +543,7 @@ void ItemDoor::setLocked(bool lock)
 
 QRectF ItemDoor::boundingRect() const
 {
-    return QRectF(0,0,itemSize.width(),itemSize.height());
+    return QRectF(-1,-1,itemSize.width()+2,itemSize.height()+2);
 }
 
 void ItemDoor::setContextMenu(QMenu &menu)
@@ -553,6 +556,6 @@ void ItemDoor::setScenePoint(LvlScene *theScene)
     scene = theScene;
     grp = new QGraphicsItemGroup(this);
     doorLabel = NULL;
-    doorLabel_shadow = NULL;
+    //doorLabel_shadow = NULL;
 }
 

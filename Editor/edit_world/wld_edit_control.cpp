@@ -121,8 +121,11 @@ int WorldEdit::getZoom()
     }
 }
 
-void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
+void WorldEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)
 {
+
+    if(center)
+        offset= QPoint(-ui->graphicsView->viewport()->width()/2, -ui->graphicsView->viewport()->height()/2);
 
     if(SwitchToSection)
     {

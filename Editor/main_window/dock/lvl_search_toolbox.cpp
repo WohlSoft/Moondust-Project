@@ -395,7 +395,7 @@ bool MainWindow::doSearchNPC(leveledit *edit)
     return true;
 }
 
-void MainWindow::toggleNewWindow(QMdiSubWindow */*window*/)
+void MainWindow::toggleNewWindowLVL(QMdiSubWindow */*window*/)
 {
     resetAllSearches();
 }
