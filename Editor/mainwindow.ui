@@ -2674,7 +2674,7 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-656</y>
+          <y>0</y>
           <width>279</width>
           <height>1319</height>
          </rect>
@@ -4070,7 +4070,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_LayerMov_spX">
            <property name="decimals">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="minimum">
             <double>-99999999.000000000000000</double>
@@ -4090,7 +4090,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="3" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_LayerMov_spY">
            <property name="decimals">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="minimum">
             <double>-99999999.000000000000000</double>
@@ -4164,7 +4164,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="2" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spX">
            <property name="decimals">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="minimum">
             <double>-99999999.000000000000000</double>
@@ -4184,7 +4184,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <item row="4" column="1">
           <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spY">
            <property name="decimals">
-            <number>1</number>
+            <number>5</number>
            </property>
            <property name="minimum">
             <double>-99999999.000000000000000</double>
@@ -5102,8 +5102,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>516</height>
+          <width>190</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5251,8 +5251,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>516</height>
+          <width>219</width>
+          <height>289</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6191,8 +6191,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>429</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6313,8 +6313,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>429</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6435,8 +6435,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>429</height>
+          <width>229</width>
+          <height>220</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6682,8 +6682,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>429</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
