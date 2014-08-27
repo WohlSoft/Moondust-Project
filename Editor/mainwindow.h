@@ -362,6 +362,7 @@ public:
         QFrame *getFrameTilesetOfTab(QWidget *catTab);
         QComboBox *getGroupComboboxOfTab(QWidget *catTab);
         void clearTilesetGroups();
+        void makeCurrentTileset();
 
     private slots:
         void on_actionConfigure_Tilesets_triggered();
@@ -921,7 +922,7 @@ public:
         void resetLevelSearch();
         void resetMusicSearch();
 
-    private slots:
+private slots:
         void on_actionWLDDisableMap_triggered(bool checked);
         void on_actionWLDFailRestart_triggered(bool checked);
         void on_actionWLDProperties_triggered();
