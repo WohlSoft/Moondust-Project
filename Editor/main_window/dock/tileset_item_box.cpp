@@ -20,6 +20,9 @@
 #include "../../ui_mainwindow.h"
 #include "tileset_item_box.h"
 #include "../../common_features/util.h"
+#include "../../data_configs/obj_tilesets.h"
+#include "../../data_configs/data_configs.h"
+#include "../../tilesets/tilesetitembutton.h"
 
 #include <QMessageBox>
 
@@ -73,7 +76,13 @@ void MainWindow::on_newTileset_clicked()
 }
 
 QFrame* MainWindow::getFrameTilesetOfTab(QWidget* catTab){
-    return catTab->findChild<QFrame*>();
+    QList<QFrame*> framechildren = catTab->findChildren<QFrame*>();
+    foreach(QFrame* f, framechildren){
+        if(qobject_cast<QLabel*>(f)!=0)
+            continue;
+        return f;
+    }
+    return 0;
 }
 
 QComboBox* MainWindow::getGroupComboboxOfTab(QWidget* catTab){
@@ -99,6 +108,7 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem){
     QSpacerItem* spItem;
     QFrame* TileSets;
 
+
     catWid = new QWidget();
     catLayout = new QGridLayout(catWid);
     catLayout->setSpacing(6);
@@ -116,6 +126,7 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem){
     catLayout->addItem(spItem, 0, 2, 1, 1);
 
     TileSets = new QFrame(catWid);
+    Q_UNUSED(new FlowLayout(TileSets));
     TileSets->setFrameShape(QFrame::StyledPanel);
     TileSets->setFrameShadow(QFrame::Raised);
 
@@ -156,5 +167,48 @@ void MainWindow::clearTilesetGroups(){
         cat->removeTab(i);
         delete acCat;
         f = cat->count();
+    }
+}
+
+void MainWindow::makeCurrentTileset(){
+    QTabWidget* cat = ui->TileSetsCategories;
+    if(!(cat->tabText(cat->currentIndex()) == tr("Custom"))){
+        QWidget* current = cat->currentWidget();
+        if(!current)
+            return;
+        QFrame* currentFrame = getFrameTilesetOfTab(current);
+        QComboBox* currentCombo = getGroupComboboxOfTab(current);
+        if(!currentFrame || !currentCombo)
+            return;
+
+        qDeleteAll(currentFrame->findChildren<QGroupBox*>());
+
+        if(currentFrame->layout() == 0)
+            currentFrame->setLayout(new FlowLayout());
+
+        QString currentGroup = currentCombo->currentText();
+        for(int i = 0; i < configs.main_tilesets_grp.size(); ++i){
+            if(configs.main_tilesets_grp[i].groupName == currentGroup){
+                QStringList l = configs.main_tilesets_grp[i].tilesets;
+                foreach(QString s, l){
+                    for(int j = 0; j < configs.main_tilesets.size(); ++j){
+                        if(s == configs.main_tilesets[j].fileName){
+                            SimpleTileset &s = configs.main_tilesets[j];
+                            QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName,currentFrame);
+                            ((FlowLayout*)currentFrame->layout())->addWidget(tilesetNameWrapper);
+                            QGridLayout* l = new QGridLayout(tilesetNameWrapper);
+                            for(int k = 0; k < s.items.size(); ++k){
+                                SimpleTilesetItem &item = s.items[k];
+                                TilesetItemButton* tbutton = new TilesetItemButton(&configs,tilesetNameWrapper);
+                                tbutton->applySize(32,32);
+                                tbutton->applyItem(s.type, item.id);
+                                l->addWidget(tbutton, item.row, item.col);
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
     }
 }

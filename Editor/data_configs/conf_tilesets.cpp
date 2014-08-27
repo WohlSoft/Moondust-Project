@@ -42,7 +42,7 @@ void dataconfigs::loadTilesets()
 
         foreach(QString file, files)
         {
-            if(tileset::OpenSimpleTileset(file, xxx))
+            if(tileset::OpenSimpleTileset(tileset_dir + file, xxx))
             {
                 main_tilesets.push_back(xxx);
             }
@@ -64,7 +64,7 @@ void dataconfigs::loadTilesets()
 
         foreach(QString file, files)
         {
-            if(TilesetGroupEditor::OpenSimpleTilesetGroup(file, xxx))
+            if(TilesetGroupEditor::OpenSimpleTilesetGroup(tileset_grp_dir + file, xxx))
             {
                 main_tilesets_grp.push_back(xxx);
             }
