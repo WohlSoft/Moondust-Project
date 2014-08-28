@@ -27,6 +27,15 @@
 
 #include <QMessageBox>
 
+//class tBoxFrame : public QFrame
+//{
+//public:
+//    tBoxFrame(QWidget *parent=0):
+//        QFrame(parent)
+//    {}
+//};
+
+
 TilesetItemBox::TilesetItemBox(QWidget *parent) :
     QDockWidget(parent)
 {
@@ -77,9 +86,11 @@ QFrame* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
 {
     QList<QFrame*> framechildren = catTab->findChildren<QFrame*>();
     foreach(QFrame* f, framechildren){
-        if(qobject_cast<QLabel*>(f)!=0)
-            continue;
-        return f;
+        // if(qobject_cast<QLabel*>(f)!=0)
+        // continue;
+        //DevConsole::log(QString("Class name %1").arg(f->metaObject()->className()), "Debug");
+        if(QString(f->metaObject()->className())=="QFrame")
+            return f;
     }
     return 0;
 }
@@ -113,6 +124,7 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem){
     catLayout->setSpacing(6);
     catLayout->setContentsMargins(11, 11, 11, 11);
     grpLabel = new QLabel(catWid);
+    grpLabel->setText(tr("Group:"));
     catLayout->addWidget(grpLabel, 0, 0, 1, 1);
 
     tilesetGroup = new QComboBox(catWid);
