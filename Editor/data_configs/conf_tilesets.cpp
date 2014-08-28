@@ -38,17 +38,14 @@ void dataconfigs::loadTilesets()
         tilesetDir.setSorting(QDir::Name);
         tilesetDir.setNameFilters(filters);
         QStringList files = tilesetDir.entryList(filters);
-        SimpleTileset xxx;
-
         foreach(QString file, files)
         {
+            SimpleTileset xxx;
             if(tileset::OpenSimpleTileset(tileset_dir + file, xxx))
             {
                 main_tilesets.push_back(xxx);
             }
         }
-
-
     }
 
     if(QDir(tileset_grp_dir).exists())
@@ -60,10 +57,9 @@ void dataconfigs::loadTilesets()
         tilesetDir.setNameFilters(filters);
 
         QStringList files = tilesetDir.entryList(filters);
-        SimpleTilesetGroup xxx;
-
         foreach(QString file, files)
         {
+            SimpleTilesetGroup xxx;
             if(TilesetGroupEditor::OpenSimpleTilesetGroup(tileset_grp_dir + file, xxx))
             {
                 main_tilesets_grp.push_back(xxx);
