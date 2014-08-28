@@ -124,10 +124,13 @@
       <bool>true</bool>
      </property>
      <property name="dragEnabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="dragDropMode">
-      <enum>QAbstractItemView::InternalMove</enum>
+      <enum>QAbstractItemView::NoDragDrop</enum>
+     </property>
+     <property name="defaultDropAction">
+      <enum>Qt::MoveAction</enum>
      </property>
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
