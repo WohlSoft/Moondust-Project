@@ -34,6 +34,9 @@ void MainWindow::on_actionConfigure_Tilesets_triggered()
     TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs);
     tilesetConfDia->exec();
     delete tilesetConfDia;
+
+    configs.loadTilesets();
+    setTileSetBox();
 }
 
 
@@ -42,6 +45,9 @@ void MainWindow::on_actionTileset_groups_editor_triggered()
     TilesetGroupEditor * groupDialog = new TilesetGroupEditor;
     groupDialog->exec();
     delete groupDialog;
+
+    configs.loadTilesets();
+    setTileSetBox();
 }
 
 

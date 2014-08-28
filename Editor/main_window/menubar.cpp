@@ -224,8 +224,6 @@ void MainWindow::updateMenus(bool force)
         setLayersBox();
         setEventsBox();
 
-        setTileSetBox();
-
         //Sync lists in properties windows
         EventListsSync();
         setLayerLists();
@@ -305,8 +303,8 @@ void MainWindow::updateMenus(bool force)
         ui->actionRedo->setEnabled(false);
     }
 
+    setTileSetBox();
     UpdateLvlCustomItems();
-
     updateWindowMenu();
 }
 

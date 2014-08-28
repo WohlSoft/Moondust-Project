@@ -359,10 +359,12 @@ public:
         void prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups);
         QWidget *findTabWidget(const QString &categoryItem);
         QWidget *makeCategory(const QString &categoryItem);
-        QFrame *getFrameTilesetOfTab(QWidget *catTab);
+        QScrollArea *getFrameTilesetOfTab(QWidget *catTab);
         QComboBox *getGroupComboboxOfTab(QWidget *catTab);
         void clearTilesetGroups();
         void makeCurrentTileset();
+        void makeSelectedTileset(int tabIndex);
+        void makeAllTilesets();
 
     private slots:
         void on_actionConfigure_Tilesets_triggered();
