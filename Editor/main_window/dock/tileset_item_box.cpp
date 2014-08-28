@@ -23,6 +23,7 @@
 #include "../../data_configs/obj_tilesets.h"
 #include "../../data_configs/data_configs.h"
 #include "../../tilesets/tilesetitembutton.h"
+#include "../../dev_console/devconsole.h"
 
 #include <QMessageBox>
 
@@ -48,14 +49,11 @@ void MainWindow::on_actionTilesetBox_triggered(bool checked)
 void MainWindow::setTileSetBox()
 {
     clearTilesetGroups();
-    QStringList filters("*.tsgrp.ini");
-    QDir grpDir = configs.config_dir + "group_tilesets/";
-    QStringList entries;
-    entries = grpDir.entryList(filters, QDir::Files);
-    foreach (QString f, entries) {
-        SimpleTilesetGroup grp;
-        if(!TilesetGroupEditor::OpenSimpleTilesetGroup(configs.config_dir + "group_tilesets/" + f,grp))
-            continue;
+    //QStringList filters("*.tsgrp.ini");
+    //QDir grpDir = configs.config_dir + "group_tilesets/";
+    //QStringList entries;
+    //entries = grpDir.entryList(filters, QDir::Files);
+    foreach (SimpleTilesetGroup grp, configs.main_tilesets_grp) {
         prepareTilesetGroup(grp);
     }
 }
@@ -65,7 +63,7 @@ void MainWindow::setTileSetBox()
 void MainWindow::on_tilesetGroup_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
-
+    makeCurrentTileset();
 }
 
 
@@ -75,7 +73,8 @@ void MainWindow::on_newTileset_clicked()
     QMessageBox::information(this, "test", "test", QMessageBox::Ok);
 }
 
-QFrame* MainWindow::getFrameTilesetOfTab(QWidget* catTab){
+QFrame* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
+{
     QList<QFrame*> framechildren = catTab->findChildren<QFrame*>();
     foreach(QFrame* f, framechildren){
         if(qobject_cast<QLabel*>(f)!=0)
@@ -114,17 +113,13 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem){
     catLayout->setSpacing(6);
     catLayout->setContentsMargins(11, 11, 11, 11);
     grpLabel = new QLabel(catWid);
-
     catLayout->addWidget(grpLabel, 0, 0, 1, 1);
 
     tilesetGroup = new QComboBox(catWid);
 
     catLayout->addWidget(tilesetGroup, 0, 1, 1, 1);
-
     spItem = new QSpacerItem(1283, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
     catLayout->addItem(spItem, 0, 2, 1, 1);
-
     TileSets = new QFrame(catWid);
     Q_UNUSED(new FlowLayout(TileSets));
     TileSets->setFrameShape(QFrame::StyledPanel);
@@ -151,6 +146,7 @@ void MainWindow::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups){
     if(!util::contains(c,tilesetGroups.groupName)){
         c->addItem(tilesetGroups.groupName);
     }
+    connect(c, SIGNAL(currentIndexChanged(int)), this, SLOT(on_tilesetGroup_currentIndexChanged(int)));
 }
 
 void MainWindow::clearTilesetGroups(){
@@ -170,12 +166,19 @@ void MainWindow::clearTilesetGroups(){
     }
 }
 
-void MainWindow::makeCurrentTileset(){
+void MainWindow::makeCurrentTileset()
+{
     QTabWidget* cat = ui->TileSetsCategories;
-    if(!(cat->tabText(cat->currentIndex()) == tr("Custom"))){
-        QWidget* current = cat->currentWidget();
+    if(!(cat->tabText(cat->currentIndex()) == tr("Custom")))
+    {
+        QWidget* current = cat->widget( cat->currentIndex() );
         if(!current)
             return;
+
+        QString category = cat->tabText(cat->currentIndex());
+
+        DevConsole::log(QString("Category %1").arg(cat->tabText(cat->currentIndex())), "Debug");
+
         QFrame* currentFrame = getFrameTilesetOfTab(current);
         QComboBox* currentCombo = getGroupComboboxOfTab(current);
         if(!currentFrame || !currentCombo)
@@ -187,27 +190,39 @@ void MainWindow::makeCurrentTileset(){
             currentFrame->setLayout(new FlowLayout());
 
         QString currentGroup = currentCombo->currentText();
-        for(int i = 0; i < configs.main_tilesets_grp.size(); ++i){
-            if(configs.main_tilesets_grp[i].groupName == currentGroup){
+        for(int i = 0; i < configs.main_tilesets_grp.size(); i++)
+        {
+            if((configs.main_tilesets_grp[i].groupCat == category)
+             &&(configs.main_tilesets_grp[i].groupName == currentGroup))//category
+            {
+                DevConsole::log(QString("Group %1").arg(configs.main_tilesets_grp[i].groupName), "Debug");
+                DevConsole::log(QString("Tilesets %1").arg(configs.main_tilesets_grp[i].tilesets.size()), "Debug");
+
                 QStringList l = configs.main_tilesets_grp[i].tilesets;
-                foreach(QString s, l){
-                    for(int j = 0; j < configs.main_tilesets.size(); ++j){
-                        if(s == configs.main_tilesets[j].fileName){
+                foreach(QString s, l)
+                {
+                    for(int j = 0; j < configs.main_tilesets.size(); j++)
+                    {
+                        if(s == configs.main_tilesets[j].fileName)
+                        {
                             SimpleTileset &s = configs.main_tilesets[j];
-                            QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName,currentFrame);
+                            QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, currentFrame);
                             ((FlowLayout*)currentFrame->layout())->addWidget(tilesetNameWrapper);
                             QGridLayout* l = new QGridLayout(tilesetNameWrapper);
-                            for(int k = 0; k < s.items.size(); ++k){
+                            for(int k=0; k<s.items.size(); k++)
+                            {
                                 SimpleTilesetItem &item = s.items[k];
                                 TilesetItemButton* tbutton = new TilesetItemButton(&configs,tilesetNameWrapper);
                                 tbutton->applySize(32,32);
                                 tbutton->applyItem(s.type, item.id);
                                 l->addWidget(tbutton, item.row, item.col);
+                                connect(tbutton, SIGNAL(clicked(int,ulong)), this, SLOT(SwitchPlacingItem(int,ulong)));
                             }
-
+                            break;
                         }
                     }
                 }
+            break;
             }
         }
     }
