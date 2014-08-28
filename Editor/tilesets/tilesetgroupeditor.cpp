@@ -38,17 +38,19 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
     delete ui->PreviewBox->layout();
     ui->PreviewBox->setLayout(layout);
     ui->tilesetList->clear();
-
     ui->tilesetList->setSelectionMode(QAbstractItemView::SingleSelection);
     //ui->tilesetList->setDragEnabled(true);
-    ui->tilesetList->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->tilesetList->setDragDropMode(QAbstractItemView::NoDragDrop);
     //ui->tilesetList->viewport()->setAcceptDrops(true);
     //ui->tilesetList->setDropIndicatorShown(true);
     lastFileName="";
 
     //qDebug() << "connecting";
 
-    connect(ui->tilesetList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(movedTileset(QModelIndex,int,int,QModelIndex,int)));
+//    connect(ui->tilesetList->model(),
+//            SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)),
+//            this,
+//            SLOT(movedTileset(QModelIndex,int,int,QModelIndex,int)));
 
 }
 
@@ -238,7 +240,10 @@ void TilesetGroupEditor::redrawAll()
     //QGroupBox* preview = ui->PreviewBox;
     util::clearLayoutItems(layout);
     for(int i = 0; i < tilesets.size(); ++i){
-        ui->tilesetList->addItem(tilesets[i].first);
+        QListWidgetItem * xxx=new QListWidgetItem;
+        xxx->setText(tilesets[i].first);
+        xxx->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        ui->tilesetList->addItem(xxx);
 
         QGroupBox *f= new QGroupBox;
         QGridLayout* l = new QGridLayout();
