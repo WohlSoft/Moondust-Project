@@ -18,6 +18,10 @@ public:
     static void log(const QString &logText, const QString &channel = QString("System"), bool raise=false);
     static bool isConsoleShown();
 
+    static void retranslate();
+
+    void retranslateP();
+
 private slots:
     void on_button_clearAllLogs_clicked();
     void clearCurrentLog();

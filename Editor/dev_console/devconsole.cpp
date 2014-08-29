@@ -31,6 +31,18 @@ void DevConsole::show()
     currentDevConsole->showNormal();
 }
 
+void DevConsole::retranslate()
+{
+    if(!currentDevConsole) return;
+
+    currentDevConsole->retranslateP();
+}
+
+void DevConsole::retranslateP()
+{
+    ui->retranslateUi(this);
+}
+
 void DevConsole::log(const QString &logText, const QString &channel, bool raise)
 {
     if(!currentDevConsole)
