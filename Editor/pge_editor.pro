@@ -37,6 +37,7 @@ TEMPLATE = app
 CONFIG += c++11
 
 CONFIG += static
+CONFIG += thread
 
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
