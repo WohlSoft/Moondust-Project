@@ -74,20 +74,8 @@ SimpleTilesetGroup TilesetGroupEditor::toSimpleTilesetGroup()
 void TilesetGroupEditor::SaveSimpleTilesetGroup(const QString &path, const SimpleTilesetGroup &tilesetGroup)
 {
     QString modifiedPath;
-#ifdef __linux__
-
-    if(!path.contains("*.ini"))
-    {
-        modifiedPath = path + ".ini";
-        //QMessageBox::information(mainwindow, "Information", path, QMessageBox.Ok);
-    }
-    else
-    {
-        modifiedPath = path;
-    }
-#elif _WIN32
     modifiedPath = path;
-#endif
+
     QSettings simpleTilesetGroupINI(modifiedPath,QSettings::IniFormat);
     simpleTilesetGroupINI.setIniCodec("UTF-8");
     simpleTilesetGroupINI.clear();
