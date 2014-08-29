@@ -24,6 +24,8 @@
 
 QT       += core gui
 
+DESTDIR = ../bin
+
 TARGET = LazyFixTool
 CONFIG   += console
 CONFIG   -= app_bundle
