@@ -24,6 +24,12 @@
 
 QT       += gui widgets multimedia
 
+DESTDIR = ../bin
+
+translates.path = ../bin/languages
+translates.files = languages/*.qm languages/*.png
+INSTALLS = translates
+
 TARGET = pge_editor
 TEMPLATE = app
 
