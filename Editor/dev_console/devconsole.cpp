@@ -3,7 +3,9 @@
 
 #include <QScrollBar>
 #include <QSettings>
+
 #include "../version.h"
+
 #include "../common_features/mainwinconnect.h"
 
 DevConsole *DevConsole::currentDevConsole = 0;
@@ -164,7 +166,7 @@ void DevConsole::doCommand()
     else
     if(cmd.startsWith("version", Qt::CaseInsensitive))
     {
-        log(QString("-> "_FILE_DESC", version "_FILE_VERSION _FILE_RELEASE), ui->tabWidget->tabText(0));
+        log(QString("-> " _FILE_DESC ", version " _FILE_VERSION _FILE_RELEASE), ui->tabWidget->tabText(0));
     }
     else
     if(cmd.startsWith("quit", Qt::CaseInsensitive))
