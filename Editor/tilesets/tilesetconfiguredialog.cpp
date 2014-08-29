@@ -51,6 +51,8 @@ TilesetConfigureDialog::~TilesetConfigureDialog()
 void TilesetConfigureDialog::on_pushButton_clicked()
 {
     m_tileset->clear();
+    lastFileName="";
+    ui->TilesetName->setText("");
 }
 
 //void TilesetConfigureDialog::setUpItems(int type)
