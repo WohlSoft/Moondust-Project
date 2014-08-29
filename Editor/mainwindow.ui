@@ -5102,8 +5102,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>146</height>
+          <width>300</width>
+          <height>516</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5251,8 +5251,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>289</height>
+          <width>300</width>
+          <height>516</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6191,8 +6191,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6313,8 +6313,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6435,8 +6435,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>229</width>
-          <height>220</height>
+          <width>300</width>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6682,8 +6682,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>429</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6850,15 +6850,33 @@ p, li { white-space: pre-wrap; }
          <string notr="true">Category</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_25">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item row="0" column="0">
           <widget class="QLabel" name="label_82">
            <property name="text">
-            <string>Group:</string>
+            <string notr="true">Group:</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
           <widget class="QComboBox" name="tilesetGroup">
+           <property name="currentText">
+            <string notr="true">One Of Tileset's Groups</string>
+           </property>
            <item>
             <property name="text">
              <string notr="true">One Of Tileset's Groups</string>
@@ -6893,9 +6911,24 @@ p, li { white-space: pre-wrap; }
        </widget>
        <widget class="QWidget" name="custom_cat">
         <attribute name="title">
-         <string>Custom</string>
+         <string notr="true">Custom</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_26">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item row="0" column="0">
           <spacer name="horizontalSpacer_8">
            <property name="orientation">
@@ -6917,13 +6950,20 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item row="1" column="0" colspan="2">
-          <widget class="QFrame" name="customTilesets">
-           <property name="frameShape">
-            <enum>QFrame::StyledPanel</enum>
+          <widget class="QScrollArea" name="customTilesets">
+           <property name="widgetResizable">
+            <bool>true</bool>
            </property>
-           <property name="frameShadow">
-            <enum>QFrame::Raised</enum>
-           </property>
+           <widget class="QWidget" name="scrollAreaWidgetContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>1470</width>
+              <height>228</height>
+             </rect>
+            </property>
+           </widget>
           </widget>
          </item>
         </layout>

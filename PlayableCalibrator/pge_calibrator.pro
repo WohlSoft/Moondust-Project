@@ -23,6 +23,8 @@
 
 QT       += gui widgets
 
+DESTDIR = ../bin
+
 TARGET = pge_calibrator
 TEMPLATE = app
 CONFIG += static
