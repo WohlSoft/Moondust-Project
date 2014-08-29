@@ -70,12 +70,13 @@ TilesetItemBox::TilesetItemBox(QWidget *parent) :
 void MainWindow::on_Tileset_Item_Box_visibilityChanged(bool visible)
 {
     ui->actionTilesetBox->setChecked(visible);
+    if(visible) setTileSetBox();  //!< update when it show
 }
 
 void MainWindow::on_actionTilesetBox_triggered(bool checked)
 {
-        ui->Tileset_Item_Box->setVisible(checked);
-        if(checked) ui->Tileset_Item_Box->raise();
+    ui->Tileset_Item_Box->setVisible(checked);
+    if(checked) ui->Tileset_Item_Box->raise();
 }
 
 
@@ -83,6 +84,7 @@ void MainWindow::on_actionTilesetBox_triggered(bool checked)
 void MainWindow::setTileSetBox()
 {
     if(lockTilesetBox) return;
+    if(!ui->Tileset_Item_Box->isVisible()) return; //!< Don't update invisible
 
     pge_tilesetbox::current = ui->TileSetsCategories->currentIndex();
 
