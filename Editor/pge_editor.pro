@@ -27,8 +27,8 @@ QT       += gui widgets multimedia
 TARGET = pge_editor
 TEMPLATE = app
 
-#CONFIG += c++11
-#QMAKE_CXXFLAGS += -std=c++11
+CONFIG += c++11
+QMAKE_CXXFLAGS += -std=c++11
 
 CONFIG += static
 
