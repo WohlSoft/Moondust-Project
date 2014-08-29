@@ -29,11 +29,37 @@
 #include <QMessageBox>
 #include <QScrollArea>
 
+//#include <QElapsedTimer>
+//#include <QtConcurrent/QtConcurrentRun>
+
 namespace pge_tilesetbox
 {
     int current = 0;
     int comboCurrent = 0;
 }
+
+
+// THREAD TEST
+//void loopForever()
+//{
+//    QElapsedTimer tickTack;
+//    tickTack.start();
+//    int ticks=0;
+//    while(1)
+//    {
+//        if(ticks>20) break;
+
+//        DevConsole::log(QString("Tick %1").arg(ticks), "Timer");
+//        while(1)
+//        {
+//            if(tickTack.elapsed()>=1000) break;
+//        }
+//        ticks++;
+//        tickTack.restart();
+//    }
+//}
+//QFuture<void> future;
+// THREAD TEST
 
 TilesetItemBox::TilesetItemBox(QWidget *parent) :
     QDockWidget(parent)
@@ -88,8 +114,11 @@ void MainWindow::on_tilesetGroup_currentIndexChanged(int index)
 
 void MainWindow::on_newTileset_clicked()
 {
+    // THREAD TEST
+    //future = QtConcurrent::run(loopForever); //<! Tiny test with thread
     QMessageBox::information(this, "test", "test", QMessageBox::Ok);
 }
+
 
 QScrollArea* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
 {
