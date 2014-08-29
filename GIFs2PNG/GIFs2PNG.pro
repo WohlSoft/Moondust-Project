@@ -23,6 +23,8 @@
 
 QT       += core gui
 
+DESTDIR = ../bin
+
 TARGET = GIFs2PNG
 CONFIG   += console
 CONFIG   -= app_bundle

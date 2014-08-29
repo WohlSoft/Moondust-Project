@@ -24,11 +24,17 @@
 
 QT       += gui widgets multimedia
 
+DESTDIR = ../bin
+
+translates.path = ../bin/languages
+translates.files += languages/*.qm
+translates.files += languages/*.png
+INSTALLS = translates
+
 TARGET = pge_editor
 TEMPLATE = app
 
-#CONFIG += c++11
-#QMAKE_CXXFLAGS += -std=c++11
+CONFIG += c++11
 
 CONFIG += static
 

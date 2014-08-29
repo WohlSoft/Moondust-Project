@@ -359,9 +359,12 @@ public:
         void prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups);
         QWidget *findTabWidget(const QString &categoryItem);
         QWidget *makeCategory(const QString &categoryItem);
-        QFrame *getFrameTilesetOfTab(QWidget *catTab);
+        QScrollArea *getFrameTilesetOfTab(QWidget *catTab);
         QComboBox *getGroupComboboxOfTab(QWidget *catTab);
         void clearTilesetGroups();
+        void makeCurrentTileset();
+        void makeSelectedTileset(int tabIndex);
+        void makeAllTilesets();
 
     private slots:
         void on_actionConfigure_Tilesets_triggered();
@@ -371,6 +374,9 @@ public:
         void on_newTileset_clicked();
         void on_Tileset_Item_Box_visibilityChanged(bool visible);
         void on_actionTilesetBox_triggered(bool checked);
+    private:
+        bool lockTilesetBox;
+
 // ////////////////////////////////////////////////////////
 
 
@@ -921,7 +927,7 @@ public:
         void resetLevelSearch();
         void resetMusicSearch();
 
-    private slots:
+private slots:
         void on_actionWLDDisableMap_triggered(bool checked);
         void on_actionWLDFailRestart_triggered(bool checked);
         void on_actionWLDProperties_triggered();

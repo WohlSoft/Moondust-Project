@@ -87,6 +87,7 @@ void MainWindow::setDefaults()
 //    LevelEventsBoxVis = false; //Events box
 
     LvlItemPropsLock=true;
+    lockTilesetBox=false;
 
 //    WorldToolBoxVis = false;
 //    autoPlayMusic = false;
@@ -433,6 +434,9 @@ void MainWindow::setUiDefults()
     connect(ui->Find_Button_LevelFile, SIGNAL(clicked()), this, SLOT(selectLevelForSearch()));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowLVL(QMdiSubWindow*)));
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(toggleNewWindowWLD(QMdiSubWindow*)));
+
+    //for tileset dock
+    //connect(ui->TileSetsCategories, SIGNAL(currentChanged(int)), this, SLOT(makeCurrentTileset()));
 
     updateWindowMenu();
 }
