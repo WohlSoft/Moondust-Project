@@ -24,6 +24,7 @@
 #include "../../data_configs/data_configs.h"
 #include "../../tilesets/tilesetitembutton.h"
 #include "../../dev_console/devconsole.h"
+#include "../../common_features/logger.h"
 
 #include <QMessageBox>
 #include <QScrollArea>
@@ -55,6 +56,8 @@ void MainWindow::on_actionTilesetBox_triggered(bool checked)
  // Create and refresh tileset box data
 void MainWindow::setTileSetBox()
 {
+    if(lockTilesetBox) return;
+
     pge_tilesetbox::current = ui->TileSetsCategories->currentIndex();
 
     clearTilesetGroups();
@@ -76,6 +79,8 @@ void MainWindow::setTileSetBox()
 void MainWindow::on_tilesetGroup_currentIndexChanged(int index)
 {
     Q_UNUSED(index);
+    WriteToLog(QtDebugMsg, "TilesetBox -> change combobox's index");
+    if(lockTilesetBox) return;
     makeCurrentTileset();
 }
 
@@ -88,6 +93,8 @@ void MainWindow::on_newTileset_clicked()
 
 QScrollArea* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
 {
+    WriteToLog(QtDebugMsg, "TilesetBox -> find QScroll Area");
+
     QList<QScrollArea*> framechildren = catTab->findChildren<QScrollArea*>();
     foreach(QScrollArea* f, framechildren){
         // if(qobject_cast<QLabel*>(f)!=0)
@@ -99,11 +106,17 @@ QScrollArea* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
     return 0;
 }
 
-QComboBox* MainWindow::getGroupComboboxOfTab(QWidget* catTab){
-    return catTab->findChild<QComboBox*>();
+QComboBox* MainWindow::getGroupComboboxOfTab(QWidget* catTab)
+{
+    WriteToLog(QtDebugMsg, "TilesetBox -> findCombobox");
+    QComboBox* comboxes = catTab->findChild<QComboBox*>();
+    return comboxes;
 }
 
-QWidget* MainWindow::findTabWidget(const QString &categoryItem){
+QWidget* MainWindow::findTabWidget(const QString &categoryItem)
+{
+    WriteToLog(QtDebugMsg, "TilesetBox -> find Tab");
+
     QTabWidget* cat = ui->TileSetsCategories;
     for(int i = 0; i < cat->count(); ++i){
         if(cat->tabText(i) == categoryItem){
@@ -113,9 +126,11 @@ QWidget* MainWindow::findTabWidget(const QString &categoryItem){
     return 0;
 }
 
-QWidget* MainWindow::makeCategory(const QString &categoryItem){
+QWidget* MainWindow::makeCategory(const QString &categoryItem)
+{
     QTabWidget* TileSetsCategories = ui->TileSetsCategories;
     QWidget* catWid;
+    QWidget* scrollWid;
     QGridLayout* catLayout;
     QLabel* grpLabel;
     QComboBox* tilesetGroup;
@@ -125,6 +140,7 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem){
 
 
     catWid = new QWidget();
+    scrollWid = new QWidget();
     catLayout = new QGridLayout(catWid);
     catLayout->setSpacing(0);
     catLayout->setContentsMargins(0, 0, 0, 0);
@@ -139,14 +155,15 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem){
     spItem = new QSpacerItem(1283, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
     catLayout->addItem(spItem, 0, 2, 1, 1);
     TileSets = new QScrollArea(catWid);
-    TileSets->setWidget(new QWidget());
-    theLayOut = new FlowLayout(TileSets->widget());
-    theLayOut->setSizeConstraint(QLayout::SetNoConstraint);
+    TileSets->setWidget(scrollWid);
     TileSets->setWidgetResizable(true);
     TileSets->setFrameShape(QFrame::StyledPanel);
     TileSets->setFrameShadow(QFrame::Raised);
     TileSets->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     TileSets->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+    theLayOut = new FlowLayout(scrollWid);
+    theLayOut->setSizeConstraint(QLayout::SetNoConstraint);
 
     catLayout->addWidget(TileSets, 1, 0, 1, 3);
 
@@ -156,7 +173,10 @@ QWidget* MainWindow::makeCategory(const QString &categoryItem){
     return catWid;
 }
 
-void MainWindow::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups){
+void MainWindow::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups)
+{
+    if(lockTilesetBox) return;
+
     QWidget *t = findTabWidget(tilesetGroups.groupCat);
     if(!t){
         t = makeCategory(tilesetGroups.groupCat);
@@ -173,12 +193,17 @@ void MainWindow::prepareTilesetGroup(const SimpleTilesetGroup &tilesetGroups){
     connect(c, SIGNAL(currentIndexChanged(int)), this, SLOT(on_tilesetGroup_currentIndexChanged(int)));
 }
 
-void MainWindow::clearTilesetGroups(){
+void MainWindow::clearTilesetGroups()
+{
+    if(lockTilesetBox) return;
+
     QTabWidget* cat = ui->TileSetsCategories;
     int i = 0;
     int f = cat->count();
-    while(f > i){ //include custom tab
-        if(cat->tabText(i) == tr("Custom")){
+    while(f > i)
+    { //include custom tab
+        if(cat->tabText(i) == "Custom")
+        {
             ++i;
             continue;
         }
@@ -193,8 +218,10 @@ void MainWindow::clearTilesetGroups(){
 
 void MainWindow::makeSelectedTileset(int tabIndex)
 {
+    if(lockTilesetBox) return;
+
     QTabWidget* cat = ui->TileSetsCategories;
-    if(!(cat->tabText(tabIndex) == tr("Custom")))
+    if(!(cat->tabText(tabIndex) == "Custom"))
     {
         QWidget* current = cat->widget( tabIndex );
         if(!current)
@@ -209,16 +236,20 @@ void MainWindow::makeSelectedTileset(int tabIndex)
         if(!currentFrame || !currentCombo)
             return;
 
-        qDeleteAll(currentFrame->findChildren<QGroupBox*>());
+        QWidget* scrollWid = currentFrame->widget();
+        if(!scrollWid)
+            return;
 
-        if(currentFrame->widget()->layout() == 0)
-            currentFrame->widget()->setLayout(new FlowLayout());
+        qDeleteAll(scrollWid->findChildren<QGroupBox*>());
+
+        if(scrollWid->layout() == 0)
+            scrollWid->setLayout(new FlowLayout());
 
         currentFrame->setWidgetResizable(true);
 
         DevConsole::log(QString("size %1 %2")
-                        .arg(currentFrame->widget()->layout()->geometry().width())
-                        .arg(currentFrame->widget()->layout()->geometry().height())
+                        .arg(scrollWid->layout()->geometry().width())
+                        .arg(scrollWid->layout()->geometry().height())
                         , "Debug");
 
         QString currentGroup = currentCombo->currentText();
@@ -238,8 +269,8 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                         if(s == configs.main_tilesets[j].fileName)
                         {
                             SimpleTileset &s = configs.main_tilesets[j];
-                            QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, currentFrame->widget());
-                            ((FlowLayout*)currentFrame->widget()->layout())->addWidget(tilesetNameWrapper);
+                            QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, scrollWid);
+                            ((FlowLayout*)scrollWid->layout())->addWidget(tilesetNameWrapper);
                             QGridLayout* l = new QGridLayout(tilesetNameWrapper);
                             for(int k=0; k<s.items.size(); k++)
                             {
@@ -262,12 +293,16 @@ void MainWindow::makeSelectedTileset(int tabIndex)
 
 void MainWindow::makeCurrentTileset()
 {
+    if(lockTilesetBox) return;
+
     QTabWidget* cat = ui->TileSetsCategories;
     makeSelectedTileset(cat->currentIndex());
 }
 
 void MainWindow::makeAllTilesets()
 {
+    if(lockTilesetBox) return;
+
     using namespace pge_tilesetbox;
     QTabWidget* cat = ui->TileSetsCategories;
 

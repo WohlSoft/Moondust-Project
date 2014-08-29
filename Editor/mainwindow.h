@@ -374,6 +374,9 @@ public:
         void on_newTileset_clicked();
         void on_Tileset_Item_Box_visibilityChanged(bool visible);
         void on_actionTilesetBox_triggered(bool checked);
+    private:
+        bool lockTilesetBox;
+
 // ////////////////////////////////////////////////////////
 
 
