@@ -87,6 +87,7 @@ void MainWindow::setDefaults()
 //    LevelEventsBoxVis = false; //Events box
 
     LvlItemPropsLock=true;
+    lockTilesetBox=false;
 
 //    WorldToolBoxVis = false;
 //    autoPlayMusic = false;
