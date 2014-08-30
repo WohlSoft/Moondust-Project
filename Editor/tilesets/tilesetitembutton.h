@@ -28,7 +28,7 @@ class TilesetItemButton : public QFrame
     Q_OBJECT
 
 public:
-    explicit TilesetItemButton(dataconfigs* conf, QWidget *parent = 0);
+    explicit TilesetItemButton(dataconfigs* conf, QGraphicsScene *scene=0, QWidget *parent = 0);
 
     dataconfigs *config() const;
     void setConfig(dataconfigs *config);
@@ -52,6 +52,7 @@ private:
     ItemTypes::itemTypes m_itemType;
     unsigned int m_id;
     QPixmap m_drawItem;
+    QGraphicsScene *scn;
 };
 
 #endif // TILESETITEMBUTTON_H

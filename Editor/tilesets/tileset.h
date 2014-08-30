@@ -28,17 +28,14 @@ class tileset : public QWidget
 {
     Q_OBJECT
 public:
-//    enum TilesetType{
-//        LEVELTILESET_BLOCK = 0,
-//        LEVELTILESET_BGO,
-//        LEVELTILESET_NPC,
-//        WORLDTILESET_TILE,
-//        WORLDTILESET_SCENERY,
-//        WORLDTILESET_PATH,
-//        WORLDTILESET_LEVEL
-//    };
+    enum GFXMode
+    {
+        GFX_Staff=0,
+        GFX_Level,
+        GFX_World
+    };
 
-    explicit tileset(dataconfigs *conf, int type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
+    explicit tileset(dataconfigs *conf, int type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3, QGraphicsScene *scene=0);
 
     void clear();
 
@@ -81,6 +78,9 @@ private:
     const QRect targetSquare(const QPoint &position) const;
     QPixmap getScaledPixmapById(const unsigned int &id) const;
     QString getMimeType();
+
+    GFXMode mode;
+    QGraphicsScene *scn;
 
     QList<QPixmap> piecePixmaps;
     QList<QRect> pieceRects;
