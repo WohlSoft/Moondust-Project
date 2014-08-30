@@ -23,11 +23,21 @@
 #include <QDrag>
 
 #include "../common_features/graphics_funcs.h"
+#include "../common_features/items.h"
 
 
-tileset::tileset(dataconfigs* conf, int type, QWidget *parent, int baseSize, int rows, int cols) :
+tileset::tileset(dataconfigs* conf, int type, QWidget *parent, int baseSize, int rows, int cols, QGraphicsScene *scene) :
     QWidget(parent)
 {
+    mode = GFX_Staff;
+    scn = scene;
+    if(scene!=NULL)
+    {
+        if(QString(scn->metaObject()->className())=="LvlScene") mode = GFX_Level;
+        else
+        if(QString(scn->metaObject()->className())=="WldScene") mode = GFX_World;
+    }
+
     setEditMode(true);
     m_baseSize = baseSize;
     m_rows = rows;
@@ -211,10 +221,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
             return xxx;
         }
         return GraphicsHelps::squareImage(
-                    m_conf->main_block[tarIndex].image.copy(0,
-                    m_conf->main_block[tarIndex].frame_h*m_conf->main_block[tarIndex].display_frame,
-                    m_conf->main_block[tarIndex].image.width(),
-                    m_conf->main_block[tarIndex].frame_h ),
+                    Items::getItemGFX(m_type, m_conf->main_block[tarIndex].id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
@@ -224,10 +231,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
         return GraphicsHelps::squareImage(
-                    m_conf->main_bgo[tarIndex].image.copy(0,
-                    m_conf->main_bgo[tarIndex].frame_h*m_conf->main_bgo[tarIndex].display_frame,
-                    m_conf->main_bgo[tarIndex].image.width(),
-                    m_conf->main_bgo[tarIndex].frame_h ),
+                    Items::getItemGFX(m_type, m_conf->main_bgo[tarIndex].id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
@@ -237,9 +241,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
         return GraphicsHelps::squareImage(
-                    m_conf->main_npc[tarIndex].image.copy(0,
-                    m_conf->main_npc[tarIndex].gfx_h*m_conf->main_npc[tarIndex].display_frame,
-                    m_conf->main_npc[tarIndex].image.width(),m_conf->main_npc[tarIndex].gfx_h ),
+                    Items::getItemGFX(m_type, m_conf->main_npc[tarIndex].id, false, NULL, scn),
                     QSize(m_baseSize,m_baseSize));
         break;
     }
@@ -248,10 +250,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getTileI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_wtiles[tarIndex].image.copy(0,
-                    m_conf->main_wtiles[tarIndex].frame_h,
-                    m_conf->main_wtiles[tarIndex].image.width(),
-                    m_conf->main_wtiles[tarIndex].frame_h)
+        return Items::getItemGFX(m_type, m_conf->main_wtiles[tarIndex].id, false, NULL, scn)
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
@@ -260,10 +259,7 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getPathI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return m_conf->main_wpaths[tarIndex].image.copy(0,
-                 m_conf->main_wpaths[tarIndex].frame_h*m_conf->main_wpaths[tarIndex].display_frame,
-                 m_conf->main_wpaths[tarIndex].image.width(),
-                 m_conf->main_wpaths[tarIndex].frame_h)
+        return Items::getItemGFX(m_type, m_conf->main_wpaths[tarIndex].id, false, NULL, scn)
                 .scaled(m_baseSize,m_baseSize,Qt::KeepAspectRatio);
         break;
     }
@@ -272,10 +268,9 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getSceneI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return GraphicsHelps::squareImage(m_conf->main_wscene[tarIndex].image.copy(0,
-                 m_conf->main_wscene[tarIndex].frame_h*m_conf->main_wscene[tarIndex].display_frame,
-                 m_conf->main_wscene[tarIndex].image.width(),
-                 m_conf->main_wscene[tarIndex].frame_h), QSize(m_baseSize,m_baseSize));
+        return GraphicsHelps::squareImage(
+                    Items::getItemGFX(m_type, m_conf->main_wscene[tarIndex].id, false, NULL, scn),
+                    QSize(m_baseSize,m_baseSize));
         break;
     }
     case ItemTypes::WLD_Level:
@@ -283,10 +278,9 @@ QPixmap tileset::getScaledPixmapById(const unsigned int &id) const
         long tarIndex = m_conf->getWLevelI(id);
         if(tarIndex==-1)
             return QPixmap(m_baseSize, m_baseSize);
-        return GraphicsHelps::squareImage(m_conf->main_wlevels[tarIndex].image.copy(0,
-                 m_conf->main_wlevels[tarIndex].frame_h*m_conf->main_wlevels[tarIndex].display_frame,
-                 m_conf->main_wlevels[tarIndex].image.width(),
-                 m_conf->main_wlevels[tarIndex].frame_h), QSize(m_baseSize,m_baseSize));
+        return GraphicsHelps::squareImage(
+                    Items::getItemGFX(m_type, m_conf->main_wlevels[tarIndex].id, false, NULL, scn),
+                    QSize(m_baseSize,m_baseSize));
         break;
     }
     default:

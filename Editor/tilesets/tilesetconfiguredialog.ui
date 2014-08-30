@@ -18,6 +18,35 @@
     <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Items</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QListView" name="listView">
+     <property name="minimumSize">
+      <size>
+       <width>150</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="movement">
+      <enum>QListView::Snap</enum>
+     </property>
+     <property name="viewMode">
+      <enum>QListView::IconMode</enum>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="1" rowspan="2">
     <layout class="QGridLayout" name="tilesetLayoutContainer">
      <item row="4" column="1" colspan="3">
@@ -156,20 +185,17 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
-    <widget class="QListView" name="listView">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>0</height>
-      </size>
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="customOnly">
+     <property name="text">
+      <string>Show custom only</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="specific">
      <property name="text">
-      <string>Items</string>
+      <string>Current Level/World specific</string>
      </property>
     </widget>
    </item>

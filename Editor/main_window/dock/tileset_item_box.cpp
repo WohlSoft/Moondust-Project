@@ -26,6 +26,8 @@
 #include "../../dev_console/devconsole.h"
 #include "../../common_features/logger.h"
 
+#include "../../tilesets/tilesetconfiguredialog.h"
+
 #include <QMessageBox>
 #include <QScrollArea>
 
@@ -118,7 +120,23 @@ void MainWindow::on_newTileset_clicked()
 {
     // THREAD TEST
     //future = QtConcurrent::run(loopForever); //<! Tiny test with thread
-    QMessageBox::information(this, "test", "test", QMessageBox::Ok);
+    //QMessageBox::information(this, "test", "test", QMessageBox::Ok);
+
+
+    TilesetConfigureDialog* tilesetConfDia;
+
+    if(activeChildWindow()==1)
+        tilesetConfDia = new TilesetConfigureDialog(&configs, activeLvlEditWin()->scene, this);
+    else if(activeChildWindow()==3)
+        tilesetConfDia = new TilesetConfigureDialog(&configs, activeWldEditWin()->scene, this);
+    else
+        tilesetConfDia = new TilesetConfigureDialog(&configs, NULL, this);
+
+    tilesetConfDia->exec();
+    delete tilesetConfDia;
+
+    configs.loadTilesets();
+    setTileSetBox();
 }
 
 
@@ -303,10 +321,12 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                             QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, scrollWid);
                             ((FlowLayout*)scrollWid->layout())->addWidget(tilesetNameWrapper);
                             QGridLayout* l = new QGridLayout(tilesetNameWrapper);
+                            l->setContentsMargins(4,4,4,4);
+                            l->setSpacing(2);
                             for(int k=0; k<s.items.size(); k++)
                             {
                                 SimpleTilesetItem &item = s.items[k];
-                                TilesetItemButton* tbutton = new TilesetItemButton(&configs,tilesetNameWrapper);
+                                TilesetItemButton* tbutton = new TilesetItemButton(&configs, NULL, tilesetNameWrapper);
                                 tbutton->applySize(32,32);
                                 tbutton->applyItem(s.type, item.id);
                                 l->addWidget(tbutton, item.row, item.col);
