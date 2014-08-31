@@ -79,7 +79,6 @@ QPixmap SimpleAnimator::image(int frame)
         return frames[CurrentFrame];//mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));
     else
         return frames[frame];//mainImage.copy(QRect(framePos.x(), frameSize*frame, frameWidth, frameSize ));
-
 }
 
 QPixmap SimpleAnimator::wholeImage()
@@ -132,12 +131,10 @@ void SimpleAnimator::nextFrame()
 
 void SimpleAnimator::createAnimationFrames()
 {
-
     for(int i=0;i<framesQ;i++)
     {
         frames.push_back( mainImage.copy(QRect(framePos.x(), frameSize *i, frameWidth, frameSize )) );
     }
-
 }
 
 
