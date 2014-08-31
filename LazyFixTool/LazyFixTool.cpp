@@ -64,7 +64,7 @@ bool toGif(QImage& img, QString& path){
     if(QFile(path).exists()) // Remove old file
         QFile::remove(path);
 
-    GifFileType* t = EGifOpenFileName(path.toStdString().c_str(),true, &errcode);
+    GifFileType* t = EGifOpenFileName(path.toLocal8Bit().data(),true, &errcode);
     if(!t){
         EGifCloseFile(t, &errcode);
         QTextStream(stdout)  << "Can't open\n";
@@ -168,7 +168,7 @@ QImage fromBMP(QString &file)
     QImage errImg;
 
     BMP tarBMP;
-    if(!tarBMP.ReadFromFile(file.toStdString().c_str())){
+    if(!tarBMP.ReadFromFile( file.toLocal8Bit().data() )){
         //WriteToLog(QtCriticalMsg, QString("Error: File does not exsist"));
         return errImg; //Check if empty with errImg.isNull();
     }
@@ -227,7 +227,7 @@ void doMagicIn(QString path, QString q, QString OPath)
         QImage image = loadQImage(path+q);
         if(image.isNull()) return;
 
-        QTextStream(stdout) << path+q+"\n";
+        QTextStream(stdout) << QString(path+q+"\n").toUtf8().data();
 
         saveTo = QString(OPath+(tmp[0].toLower())+".gif");
         //overwrite source image (convert BMP to GIF)
@@ -275,7 +275,7 @@ void doMagicIn(QString path, QString q, QString OPath)
         //Save before fix
         //target.save(OPath+tmp[0]+"_before.png");
         //mask.save(OPath+tmp[0]+"_mask_before.png");
-        QTextStream(stdout) << path+q+"\n";
+        QTextStream(stdout) << QString(path+q+"\n").toUtf8().data();
 
 
     //fix
@@ -483,8 +483,8 @@ int main(int argc, char *argv[])
     QTextStream(stdout) <<"============================================================================\n";
 
     if(!singleFiles)
-        QTextStream(stdout) << QString("Input path:  "+path+"\n");
-    QTextStream(stdout) << QString("Output path: "+OPath+"\n");
+        QTextStream(stdout) << QString("Input path:  "+path+"\n").toUtf8().data();
+    QTextStream(stdout) << QString("Output path: "+OPath+"\n").toUtf8().data();
     QTextStream(stdout) <<"============================================================================\n";
     if(singleFiles) //By files
     {
