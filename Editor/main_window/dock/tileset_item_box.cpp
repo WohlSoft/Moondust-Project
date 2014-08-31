@@ -278,7 +278,9 @@ void MainWindow::makeSelectedTileset(int tabIndex)
 
         QString category = cat->tabText( tabIndex );
 
+        #ifdef _DEBUG_
         DevConsole::log(QString("Category %1").arg(cat->tabText(cat->currentIndex())), "Debug");
+        #endif
 
         QScrollArea* currentFrame = getFrameTilesetOfTab(current);
         QComboBox* currentCombo = getGroupComboboxOfTab(current);
@@ -296,10 +298,12 @@ void MainWindow::makeSelectedTileset(int tabIndex)
 
         currentFrame->setWidgetResizable(true);
 
+        #ifdef _DEBUG_
         DevConsole::log(QString("size %1 %2")
                         .arg(scrollWid->layout()->geometry().width())
                         .arg(scrollWid->layout()->geometry().height())
                         , "Debug");
+        #endif
 
         QString currentGroup = currentCombo->currentText();
         for(int i = 0; i < configs.main_tilesets_grp.size(); i++)
@@ -307,8 +311,10 @@ void MainWindow::makeSelectedTileset(int tabIndex)
             if((configs.main_tilesets_grp[i].groupCat == category)
              &&(configs.main_tilesets_grp[i].groupName == currentGroup))//category
             {
+                #ifdef _DEBUG_
                 DevConsole::log(QString("Group %1").arg(configs.main_tilesets_grp[i].groupName), "Debug");
                 DevConsole::log(QString("Tilesets %1").arg(configs.main_tilesets_grp[i].tilesets.size()), "Debug");
+                #endif
 
                 QStringList l = configs.main_tilesets_grp[i].tilesets;
                 foreach(QString s, l)
@@ -337,6 +343,105 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                     }
                 }
             break;
+            }
+        }
+    }
+    else
+    {
+        QWidget* current = cat->widget( tabIndex );
+        if(!current)
+            return;
+
+        QString category = cat->tabText( tabIndex );
+
+        #ifdef _DEBUG_
+        DevConsole::log(QString("Category %1").arg(cat->tabText(cat->currentIndex())), "Debug");
+        #endif
+
+        QScrollArea* currentFrame = getFrameTilesetOfTab(current);
+        //        QComboBox* currentCombo = getGroupComboboxOfTab(current);
+        //        if(!currentFrame || !currentCombo)
+        //            return;
+
+        QWidget* scrollWid = currentFrame->widget();
+        if(!scrollWid)
+            return;
+
+        qDeleteAll(scrollWid->findChildren<QGroupBox*>());
+
+        if(scrollWid->layout() == 0)
+            scrollWid->setLayout(new FlowLayout());
+
+        currentFrame->setWidgetResizable(true);
+
+        #ifdef _DEBUG_
+        DevConsole::log(QString("size %1 %2")
+                        .arg(scrollWid->layout()->geometry().width())
+                        .arg(scrollWid->layout()->geometry().height())
+                        , "Debug");
+        #endif
+
+
+        QVector<SimpleTileset> ctsets;
+        ctsets.clear();
+
+        QString path;
+        QString cfolder;
+        bool doIt=false;
+        if(activeChildWindow()==1)
+        {
+            path = activeLvlEditWin()->LvlData.path+"/";
+            cfolder = activeLvlEditWin()->LvlData.filename+"/";
+            doIt = !activeLvlEditWin()->LvlData.untitled;
+        }
+        else
+        if(activeChildWindow()==3)
+        {
+            path = activeWldEditWin()->WldData.path+"/";
+            cfolder = activeWldEditWin()->WldData.filename+"/";
+            doIt = !activeWldEditWin()->WldData.untitled;
+        }
+
+        if(doIt)
+        {
+            QStringList paths;
+            paths << path << path+cfolder;
+
+            foreach(QString p, paths)
+            {
+                QStringList filters;
+                filters << "*.tileset.ini";
+                QDir tilesetDir(p);
+                tilesetDir.setSorting(QDir::Name);
+                tilesetDir.setNameFilters(filters);
+                QStringList files = tilesetDir.entryList(filters);
+                foreach(QString file, files)
+                {
+                    SimpleTileset xxx;
+                    if(tileset::OpenSimpleTileset(p + file, xxx))
+                    {
+                        ctsets.push_back(xxx);
+                    }
+                }
+            }
+
+            for(int j = 0; j < ctsets.size(); j++)
+            {
+                SimpleTileset &s = ctsets[j];
+                QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, scrollWid);
+                ((FlowLayout*)scrollWid->layout())->addWidget(tilesetNameWrapper);
+                QGridLayout* l = new QGridLayout(tilesetNameWrapper);
+                l->setContentsMargins(4,4,4,4);
+                l->setSpacing(2);
+                for(int k=0; k<s.items.size(); k++)
+                {
+                    SimpleTilesetItem &item = s.items[k];
+                    TilesetItemButton* tbutton = new TilesetItemButton(&configs, NULL, tilesetNameWrapper);
+                    tbutton->applySize(32,32);
+                    tbutton->applyItem(s.type, item.id);
+                    l->addWidget(tbutton, item.row, item.col);
+                    connect(tbutton, SIGNAL(clicked(int,ulong)), this, SLOT(SwitchPlacingItem(int,ulong)));
+                }
             }
         }
     }
