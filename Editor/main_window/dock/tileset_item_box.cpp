@@ -352,12 +352,6 @@ void MainWindow::makeSelectedTileset(int tabIndex)
         if(!current)
             return;
 
-        QString category = cat->tabText( tabIndex );
-
-        #ifdef _DEBUG_
-        DevConsole::log(QString("Category %1").arg(cat->tabText(cat->currentIndex())), "Debug");
-        #endif
-
         QScrollArea* currentFrame = getFrameTilesetOfTab(current);
         //        QComboBox* currentCombo = getGroupComboboxOfTab(current);
         //        if(!currentFrame || !currentCombo)

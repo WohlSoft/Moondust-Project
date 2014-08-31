@@ -292,10 +292,19 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
     if (fileName.isEmpty())
         return;
 
-    lastFileName = QFileInfo(fileName).baseName();
+    openTileset(fileName, ui->customOnly->isChecked());
+
+}
+
+void TilesetConfigureDialog::openTileset(QString filePath, bool isCustom)
+{
+    if (filePath.isEmpty())
+        return;
+
+    lastFileName = QFileInfo(filePath).baseName();
 
     SimpleTileset simple;
-    if(!tileset::OpenSimpleTileset(fileName,simple)){
+    if(!tileset::OpenSimpleTileset(filePath,simple)){
         QMessageBox::warning(this, tr("Failed to load tileset!"), tr("Failed to load tileset!\nData may be corrupted!"));
     }else{
         ui->TilesetName->setText(simple.tileSetName);
@@ -305,6 +314,8 @@ void TilesetConfigureDialog::on_OpenTileset_clicked()
         setUpItems(simple.type);
         m_tileset->loadSimpleTileset(simple);
     }
+
+    ui->customOnly->setChecked(isCustom);
 }
 
 
