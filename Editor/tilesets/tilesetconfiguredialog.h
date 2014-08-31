@@ -43,6 +43,8 @@ public:
         GFX_World
     };
 
+    void openTileset(QString filePath, bool isCustom);
+
 private slots:
     void on_pushButton_clicked();
     void setUpItems(int type);
