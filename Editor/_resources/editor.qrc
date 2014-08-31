@@ -121,5 +121,7 @@
         <file>images/external_tools/cat_png2gif_128.png</file>
         <file alias="fonts/degits.png">images/font_degits.png</file>
         <file>images/bug.png</file>
+        <file>images/pencil_16x16.png</file>
+        <file>images/copy_16x16.png</file>
     </qresource>
 </RCC>
