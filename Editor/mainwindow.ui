@@ -363,12 +363,6 @@
      <height>206</height>
     </size>
    </property>
-   <property name="maximumSize">
-    <size>
-     <width>524287</width>
-     <height>524287</height>
-    </size>
-   </property>
    <property name="focusPolicy">
     <enum>Qt::NoFocus</enum>
    </property>
@@ -1119,7 +1113,7 @@
    <property name="minimumSize">
     <size>
      <width>200</width>
-     <height>158</height>
+     <height>200</height>
     </size>
    </property>
    <property name="windowIcon">
@@ -3856,7 +3850,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>456</height>
+          <height>499</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4039,7 +4033,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>456</height>
+          <height>499</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4121,7 +4115,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>456</height>
+          <height>499</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4214,8 +4208,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
-          <height>461</height>
+          <width>272</width>
+          <height>499</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4513,7 +4507,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>456</height>
+          <height>499</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4629,7 +4623,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>456</height>
+          <height>499</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4727,7 +4721,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>456</height>
+          <height>499</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4875,7 +4869,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>516</height>
+          <height>546</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5103,7 +5097,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>516</height>
+          <height>546</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5252,7 +5246,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>516</height>
+          <height>546</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6070,7 +6064,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>429</height>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6192,7 +6186,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>429</height>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6314,7 +6308,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>429</height>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6436,7 +6430,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>429</height>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6683,7 +6677,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>429</height>
+          <height>456</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6807,8 +6801,8 @@ p, li { white-space: pre-wrap; }
   <widget class="TilesetItemBox" name="Tileset_Item_Box">
    <property name="minimumSize">
     <size>
-     <width>208</width>
-     <height>300</height>
+     <width>200</width>
+     <height>200</height>
     </size>
    </property>
    <property name="floating">
@@ -6960,7 +6954,7 @@ p, li { white-space: pre-wrap; }
               <x>0</x>
               <y>0</y>
               <width>1470</width>
-              <height>228</height>
+              <height>128</height>
              </rect>
             </property>
            </widget>
