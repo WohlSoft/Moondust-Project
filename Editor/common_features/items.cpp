@@ -142,54 +142,23 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 else
                     scn = main->activeLvlEditWin()->scene;
 
-                if(!whole)
-                    return scn->getNPCimg(ItemID, -1);
-                else
+                long j=0;
+                long animator=0;
+                if(ItemID < (unsigned int)scn->index_npc.size())
                 {
-                    int j=0;
-                    bool noimage=true, found=false;
-                    QPixmap tImg;
-                    //Check Index exists
-                    if(ItemID < (unsigned int)scn->index_npc.size())
-                    {
-                        j = scn->index_npc[ItemID].gi;
-
-                        if(j<main->configs.main_npc.size())
-                        {
-                        if(main->configs.main_npc[j].id == ItemID)
-                            found=true;
-                        }
-                    }
-
-                    if(found)
-                    {   //get neccesary element directly
-                        if(scn->index_npc[ItemID].type==1)
-                        {
-                            if(scn->uNPCs[scn->index_npc[ItemID].i].withImg)
-                            {
-                                noimage=false;
-                                tImg = scn->uNPCs[scn->index_npc[ItemID].i].image;
-                            }
-                        }
-
-                        if(!noimage)
-                        {
-                            tImg = main->configs.main_npc[ scn->index_npc[ItemID].gi].image;
-                            noimage=false;
-                        }
-                    }
-
-                    if( confId != NULL)
-                        * confId = j;
-
-                    if((noimage)||(tImg.isNull()))
-                    {
-                        tImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.png");
-                    }
-
-                    return tImg;
-
+                    j = scn->index_npc[ItemID].i;
+                    animator = scn->index_npc[ItemID].ai;
                 }
+
+                if(j >= main->configs.main_npc.size()) j=0;
+
+                if( confId != NULL)
+                    * confId = j;
+
+                if(whole)
+                    return scn->animates_NPC[animator]->wholeImage();
+                else
+                    return scn->animates_NPC[animator]->image(-1, main->configs.main_npc[j].display_frame);
             }
             else
             {
