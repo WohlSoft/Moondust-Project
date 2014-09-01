@@ -38,9 +38,8 @@ public:
     QPixmap image(int dir, int frame=-1);
     QPixmap wholeImage();
 
-    void setFrame(int y);
-    void setframeL(int y);
-    void setframeR(int y);
+    void setFrameL(int y);
+    void setFrameR(int y);
 
     void start();
     void stop();
@@ -57,19 +56,12 @@ private:
 
     QVector<QPixmap> frames; //Whole image
     void createAnimationFrames();
-    int CurrentFrame;
-
-    int frameFirst;
-    int frameLast;
 
     bool animated;
 
     int frameSpeed;
     int frameStyle;
 
-    int direction;
-
-    bool aniDirect;
     bool aniBiDirect;
 
     int curDirect;
@@ -83,7 +75,6 @@ private:
     int custom_frameER;//enf right / jump step
 
     bool frameSequance;
-    QList<int> frames_list;     //Current frame srquence
 
     QList<int> frames_listL;     //Current frame srquence
     QList<int> frames_listR;     //Current frame srquence
@@ -97,6 +88,9 @@ private:
     int frameHeight; //sprite height
 
     //Animation alhorithm
+    bool aniDirectL;
+    bool aniDirectR;
+
     int CurrentFrameL;
     int CurrentFrameR;
 
