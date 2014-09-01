@@ -13,9 +13,9 @@
    height="142.89597"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="section_19.svg"
-   inkscape:export-filename="D:\Developer\PlatGenWohl_Editor_qt5\_resources\images\19.png"
+   inkscape:export-filename="D:\Developer\PlatfornerGameEngine\Editor\_resources\images\19_n.png"
    inkscape:export-xdpi="15.114804"
    inkscape:export-ydpi="15.114804">
   <defs
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="130.66301"
+     inkscape:cx="72.579239"
      inkscape:cy="54.351096"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -38,9 +38,9 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:window-width="1280"
-     inkscape:window-height="972"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="940"
+     inkscape:window-x="-4"
+     inkscape:window-y="24"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -61,7 +61,7 @@
      style="display:inline"
      transform="translate(-85.923883,-26.57258)">
     <rect
-       style="fill:#7ba8d3;fill-opacity:1;stroke:#000000;stroke-width:4.40046309999999960;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#7ba8d3;fill-opacity:1;stroke:#000000;stroke-width:4.4004631;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2991"
        width="135.86044"
        height="138.4955"
@@ -69,21 +69,6 @@
        y="28.772812"
        ry="7.0710678" />
     <flowRoot
-       xml:space="preserve"
-       id="flowRoot3761"
-       style="font-size:120px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"
-       transform="matrix(0.85431774,0,0,1.1474047,-12.783543,-23.251171)"><flowRegion
-         id="flowRegion3763"><rect
-           id="rect3765"
-           width="217.62881"
-           height="144.28519"
-           x="120.71323"
-           y="43.219788"
-           style="font-size:120px" /></flowRegion><flowPara
-         style="font-size:120px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Algerian;-inkscape-font-specification:Algerian"
-         id="flowPara4236">19</flowPara><flowPara
-         style="font-size:120px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Algerian;-inkscape-font-specification:Algerian"
-         id="flowPara4435" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot3769"
        style="font-size:12px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial Bold"><flowRegion
@@ -94,4 +79,24 @@
            x="128.28937"
            y="73.524368" /></flowRegion><flowPara
          id="flowPara3775" /></flowRoot>  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Слой">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3761"
+       style="font-size:120px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Arial;-inkscape-font-specification:Arial Bold"
+       transform="matrix(0.85431774,0,0,1.1474047,-98.707426,-49.823752)"><flowRegion
+         id="flowRegion3763"><rect
+           id="rect3765"
+           width="217.62881"
+           height="144.28519"
+           x="120.71323"
+           y="43.219788"
+           style="font-size:120px" /></flowRegion><flowPara
+         style="font-size:120px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Algerian;-inkscape-font-specification:Algerian"
+         id="flowPara4236">19</flowPara><flowPara
+         style="font-size:120px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Algerian;-inkscape-font-specification:Algerian"
+         id="flowPara4435" /></flowRoot>  </g>
 </svg>

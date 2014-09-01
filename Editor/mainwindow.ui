@@ -7308,7 +7308,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/01.png</normaloff>:/images/01.png</iconset>
+     <normaloff>:/sections/sections/01_n.png</normaloff>
+     <normalon>:/sections/sections/01.png</normalon>:/sections/sections/01_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 1</string>
@@ -7332,7 +7333,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/02.png</normaloff>:/images/02.png</iconset>
+     <normaloff>:/sections/sections/02_n.png</normaloff>
+     <normalon>:/sections/sections/02.png</normalon>:/sections/sections/02_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 2</string>
@@ -7356,7 +7358,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/03.png</normaloff>:/images/03.png</iconset>
+     <normaloff>:/sections/sections/03_n.png</normaloff>
+     <normalon>:/sections/sections/03.png</normalon>:/sections/sections/03_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 3</string>
@@ -7380,7 +7383,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/04.png</normaloff>:/images/04.png</iconset>
+     <normaloff>:/sections/sections/04_n.png</normaloff>
+     <normalon>:/sections/sections/04.png</normalon>:/sections/sections/04_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 4</string>
@@ -7404,7 +7408,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/05.png</normaloff>:/images/05.png</iconset>
+     <normaloff>:/sections/sections/05_n.png</normaloff>
+     <normalon>:/sections/sections/05.png</normalon>:/sections/sections/05_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 5</string>
@@ -7428,7 +7433,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/06.png</normaloff>:/images/06.png</iconset>
+     <normaloff>:/sections/sections/06_n.png</normaloff>
+     <normalon>:/sections/sections/06.png</normalon>:/sections/sections/06_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 6</string>
@@ -7452,7 +7458,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/07.png</normaloff>:/images/07.png</iconset>
+     <normaloff>:/sections/sections/07_n.png</normaloff>
+     <normalon>:/sections/sections/07.png</normalon>:/sections/sections/07_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 7</string>
@@ -7476,7 +7483,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/08.png</normaloff>:/images/08.png</iconset>
+     <normaloff>:/sections/sections/08_n.png</normaloff>
+     <normalon>:/sections/sections/08.png</normalon>:/sections/sections/08_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 8</string>
@@ -7500,7 +7508,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/09.png</normaloff>:/images/09.png</iconset>
+     <normaloff>:/sections/sections/09_n.png</normaloff>
+     <normalon>:/sections/sections/09.png</normalon>:/sections/sections/09_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 9</string>
@@ -7524,7 +7533,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/10.png</normaloff>:/images/10.png</iconset>
+     <normaloff>:/sections/sections/10_n.png</normaloff>
+     <normalon>:/sections/sections/10.png</normalon>:/sections/sections/10_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 10</string>
@@ -7548,7 +7558,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/11.png</normaloff>:/images/11.png</iconset>
+     <normaloff>:/sections/sections/11_n.png</normaloff>
+     <normalon>:/sections/sections/11.png</normalon>:/sections/sections/11_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 11</string>
@@ -7572,7 +7583,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/12.png</normaloff>:/images/12.png</iconset>
+     <normaloff>:/sections/sections/12_n.png</normaloff>
+     <normalon>:/sections/sections/12.png</normalon>:/sections/sections/12_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 12</string>
@@ -7596,7 +7608,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/13.png</normaloff>:/images/13.png</iconset>
+     <normaloff>:/sections/sections/13_n.png</normaloff>
+     <normalon>:/sections/sections/13.png</normalon>:/sections/sections/13_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 13</string>
@@ -7620,7 +7633,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/14.png</normaloff>:/images/14.png</iconset>
+     <normaloff>:/sections/sections/14_n.png</normaloff>
+     <normalon>:/sections/sections/14.png</normalon>:/sections/sections/14_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 14</string>
@@ -7644,7 +7658,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/15.png</normaloff>:/images/15.png</iconset>
+     <normaloff>:/sections/sections/15_n.png</normaloff>
+     <normalon>:/sections/sections/15.png</normalon>:/sections/sections/15_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 15</string>
@@ -7668,7 +7683,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/16.png</normaloff>:/images/16.png</iconset>
+     <normaloff>:/sections/sections/16_n.png</normaloff>
+     <normalon>:/sections/sections/16.png</normalon>:/sections/sections/16_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 16</string>
@@ -7692,7 +7708,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/17.png</normaloff>:/images/17.png</iconset>
+     <normaloff>:/sections/sections/17_n.png</normaloff>
+     <normalon>:/sections/sections/17.png</normalon>:/sections/sections/17_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 17</string>
@@ -7716,7 +7733,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/18.png</normaloff>:/images/18.png</iconset>
+     <normaloff>:/sections/sections/18_n.png</normaloff>
+     <normalon>:/sections/sections/18.png</normalon>:/sections/sections/18_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 18</string>
@@ -7740,7 +7758,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/19.png</normaloff>:/images/19.png</iconset>
+     <normaloff>:/sections/sections/19_n.png</normaloff>
+     <normalon>:/sections/sections/19.png</normalon>:/sections/sections/19_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 19</string>
@@ -7764,7 +7783,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/20.png</normaloff>:/images/20.png</iconset>
+     <normaloff>:/sections/sections/20_n.png</normaloff>
+     <normalon>:/sections/sections/20.png</normalon>:/sections/sections/20_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 20</string>
@@ -7788,7 +7808,8 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/21.png</normaloff>:/images/21.png</iconset>
+     <normaloff>:/sections/sections/21_n.png</normaloff>
+     <normalon>:/sections/sections/21.png</normalon>:/sections/sections/21_n.png</iconset>
    </property>
    <property name="text">
     <string>Section 21</string>
