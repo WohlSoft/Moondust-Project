@@ -38,6 +38,7 @@ struct bgoIndexes
 struct npcIndexes
 {
     unsigned long i; //Target array index
+    unsigned long ai; //Animator array index
     unsigned long gi; //Target array index by GlobalConfig
     unsigned int type;//0 - internal GFX, 1 - user defined GFX
 };

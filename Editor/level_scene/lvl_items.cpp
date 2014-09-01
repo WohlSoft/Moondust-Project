@@ -279,15 +279,18 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     ItemNPC *NPCItem = new ItemNPC;
 
+    long animator=0;
+
     //Check Index exists
     if(npc.id < (unsigned int)index_npc.size())
     {
         j = index_npc[npc.id].gi;
+        animator  = index_npc[npc.id].ai;
 
         if(j<pConfigs->main_npc.size())
         {
-        if(pConfigs->main_npc[j].id == npc.id)
-            found=true;
+            if(pConfigs->main_npc[j].id == npc.id)
+                found=true;
         }
     }
 
@@ -376,7 +379,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setData(8, QString::number((int)mergedSet.no_npc_collions));
 
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
-    NPCItem->setMainPixmap(tImg);
+    //NPCItem->setMainPixmap(tImg);
 
         //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
     NPCItem->setContextMenu(npcMenu);
@@ -428,15 +431,17 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         WriteToLog(QtDebugMsg, "NPC place -> set animation");
     #endif
 
-    NPCItem->setAnimation(NPCItem->localProps.frames,
-                          NPCItem->localProps.framespeed,
-                          NPCItem->localProps.framestyle,
-                          npc.direct,
-                          NPCItem->localProps.custom_animate,
-                          NPCItem->localProps.custom_ani_fl,
-                          NPCItem->localProps.custom_ani_el,
-                          NPCItem->localProps.custom_ani_fr,
-                          NPCItem->localProps.custom_ani_er);
+    NPCItem->setAnimator(animator);
+    NPCItem->changeDirection(npc.direct);
+//    NPCItem->setAnimation(NPCItem->localProps.frames,
+//                          NPCItem->localProps.framespeed,
+//                          NPCItem->localProps.framestyle,
+//                          npc.direct,
+//                          NPCItem->localProps.custom_animate,
+//                          NPCItem->localProps.custom_ani_fl,
+//                          NPCItem->localProps.custom_ani_el,
+//                          NPCItem->localProps.custom_ani_fr,
+//                          NPCItem->localProps.custom_ani_er);
 
     #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set flags");

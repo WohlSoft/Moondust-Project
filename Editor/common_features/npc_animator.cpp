@@ -147,28 +147,28 @@ AdvNpcAnimator::AdvNpcAnimator(QPixmap &sprite, obj_npc &config)
                 frameLastR = (int)(framesQ/2)-1;
 
             break;
-
         case 1: //Left-Right sprite
             framesQ=setup.frames*2;
              //left
-                frameFirstR = 0;
-                frameLastR = (int)(framesQ / 2)-1;
+                frameFirstL = 0;
+                frameLastL = (int)(framesQ / 2)-1;
              //Right
                 frameFirstR = (int)(framesQ / 2);
                 frameLastR = framesQ-1;
 
             break;
-
         case 0: //Single sprite
         default:
             frameFirstL = 0;
-            frameLastR = framesQ-1;
+            frameLastL = framesQ-1;
 
-            frameFirstL = 0;
+            frameFirstR = 0;
             frameLastR = framesQ-1;
             break;
         }
     }
+
+    WriteToLog(QtDebugMsg, QString("NPC-%1, framestyle is %2").arg(setup.id).arg(setup.framestyle));
 
     //curDirect  = dir;
     //setOffset(imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
