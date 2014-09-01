@@ -35,6 +35,7 @@
 #include <QDebug>
 
 #include "../common_features/simple_animator.h"
+#include "../common_features/npc_animator.h"
 
 #include "../file_formats/lvl_filedata.h"
 #include "../file_formats/npc_filedata.h"
@@ -161,6 +162,7 @@ public:
 
     QVector<SimpleAnimator * > animates_BGO;
     QVector<SimpleAnimator * > animates_Blocks;
+    QVector<AdvNpcAnimator * > animates_NPC;
 
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
 

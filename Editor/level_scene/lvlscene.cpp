@@ -114,6 +114,7 @@ LvlScene::~LvlScene()
     uBGs.clear();
     uBGOs.clear();
     uBlocks.clear();
+    uNPCs.clear();
 }
 
 

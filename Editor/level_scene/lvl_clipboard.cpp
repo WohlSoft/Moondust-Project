@@ -146,8 +146,6 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         }
     }
 
-
-    bool npcPlaced=false;
     foreach (LevelBlock block, BufferIn.blocks){
         //Gen Copy of Block
         LevelBlock dumpBlock = block;
@@ -186,7 +184,6 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         placeNPC(dumpNPC, true);
         LvlData->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
-        npcPlaced=true;
     }
     foreach (LevelWater water, BufferIn.water){
         //Gen Copy of Water
@@ -198,12 +195,6 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         placeWater(dumpWater, true);
         LvlData->water.push_back(dumpWater);
         newData.water.push_back(dumpWater);
-    }
-
-    if(npcPlaced)
-    {
-        if(opts.animationEnabled) stopAnimation();
-        if(opts.animationEnabled) startBlockAnimation();
     }
 
     LvlData->modified = true;
