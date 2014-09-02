@@ -44,7 +44,7 @@ public:
     };
 
     void openTileset(QString filePath, bool isCustom);
-
+    void loadSimpleTileset(const SimpleTileset &tileset, bool isCustom);
 private slots:
     void on_pushButton_clicked();
     void setUpItems(int type);
