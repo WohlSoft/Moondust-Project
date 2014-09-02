@@ -365,6 +365,8 @@ public:
         void makeCurrentTileset();
         void makeSelectedTileset(int tabIndex);
         void makeAllTilesets();
+        void editSelectedTileset();
+        QVector<SimpleTileset> loadCustomTilesets();
 
     private slots:
         void on_actionConfigure_Tilesets_triggered();
