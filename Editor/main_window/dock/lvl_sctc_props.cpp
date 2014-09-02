@@ -219,7 +219,7 @@ void MainWindow::setLevelSectionData()
     ui->LVLEvent_SctBg_List->clear();  //Background list in events
 
     QPixmap empty(100,70);
-    empty.fill(QColor(Qt::white));
+    empty.fill(QColor(Qt::black));
 
     ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), "0" );
     ui->LVLEvent_SctBg_List->addItem(QIcon(empty), tr("[No image]"), "0" );

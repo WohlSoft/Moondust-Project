@@ -325,6 +325,7 @@ void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, boo
     ui->comboBox->setCurrentIndex(static_cast<int>(tileset.type));
     setUpItems(tileset.type);
     m_tileset->loadSimpleTileset(tileset);
+    lastFileName = QString(tileset.fileName).remove(".tileset.ini");
 
     ui->specific->setChecked(isCustom);
 }
