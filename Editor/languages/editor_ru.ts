@@ -4759,12 +4759,12 @@ File: %1
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="191"/>
         <source>Show custom only</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать пользовательскую графику</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="198"/>
         <source>Current Level/World specific</source>
-        <translation type="unfinished"></translation>
+        <translation>Только для текущего Уровня/Мира</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="76"/>

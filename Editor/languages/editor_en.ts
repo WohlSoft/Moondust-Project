@@ -4720,12 +4720,12 @@ File: %1
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="191"/>
         <source>Show custom only</source>
-        <translation type="unfinished"></translation>
+        <translation>Show custom only</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="198"/>
         <source>Current Level/World specific</source>
-        <translation type="unfinished"></translation>
+        <translation>Current Level/World specific</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="76"/>
