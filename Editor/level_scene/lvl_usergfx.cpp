@@ -236,6 +236,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 uBlock.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLDs + pConfigs->main_block[i].image_n ), uBlock.mask);
                 if(uBlock.image.isNull()) WrongImagesDetected=true;
 
+                uBlock.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                 uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
                 custom=true;
@@ -257,6 +259,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                 uBlock.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLs + pConfigs->main_block[i].image_n ), uBlock.mask);
                 if(uBlock.image.isNull()) WrongImagesDetected=true;
+
+                uBlock.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                 uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
@@ -358,6 +362,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 uBGO.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLDs + pConfigs->main_bgo[i].image_n ), uBGO.mask);
                 if(uBGO.image.isNull()) WrongImagesDetected=true;
 
+                uBGO.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
                 custom=true;
@@ -379,6 +385,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                 uBGO.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLs + pConfigs->main_bgo[i].image_n ), uBGO.mask);
                 if(uBGO.image.isNull()) WrongImagesDetected=true;
+
+                uBGO.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
@@ -490,6 +498,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                  uNPC.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLDs + pConfigs->main_npc[i].image_n ), uNPC.mask);
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
 
+                 uNPC.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;
              }
@@ -503,6 +513,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                  uNPC.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLs + pConfigs->main_npc[i].image_n ), uNPC.mask);
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
+
+                 uNPC.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;

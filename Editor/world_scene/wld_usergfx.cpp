@@ -155,6 +155,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 uTile.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wtiles[i].image_n ), uTile.mask);
                 if(uTile.image.isNull()) WrongImagesDetected=true;
 
+                uTile.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                 uTile.id = pConfigs->main_wtiles[i].id;
                 uTiles.push_back(uTile);
                 custom=true;
@@ -176,6 +178,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
                 uTile.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wtiles[i].image_n ), uTile.mask);
                 if(uTile.image.isNull()) WrongImagesDetected=true;
+
+                uTile.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                 uTile.id = pConfigs->main_wtiles[i].id;
                 uTiles.push_back(uTile);
@@ -246,6 +250,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 uScenery.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wscene[i].image_n ), uScenery.mask);
                 if(uScenery.image.isNull()) WrongImagesDetected=true;
 
+                uScenery.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                 uScenery.id = pConfigs->main_wscene[i].id;
                 uScenes.push_back(uScenery);
                 custom=true;
@@ -267,6 +273,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
                 uScenery.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wscene[i].image_n ), uScenery.mask);
                 if(uScenery.image.isNull()) WrongImagesDetected=true;
+
+                uScenery.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                 uScenery.id = pConfigs->main_wscene[i].id;
                 uScenes.push_back(uScenery);
@@ -332,6 +340,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 uPath.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wpaths[i].image_n ), uPath.mask);
                 if(uPath.image.isNull()) WrongImagesDetected=true;
 
+                uPath.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                 uPath.id = pConfigs->main_wpaths[i].id;
                 uPaths.push_back(uPath);
                 custom=true;
@@ -353,6 +363,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
                 uPath.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wpaths[i].image_n ), uPath.mask);
                 if(uPath.image.isNull()) WrongImagesDetected=true;
+
+                uPath.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                 uPath.id = pConfigs->main_wpaths[i].id;
                 uPaths.push_back(uPath);
@@ -418,6 +430,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
                 uLevel.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wlevels[i].image_n ), uLevel.mask);
                 if(uLevel.image.isNull()) WrongImagesDetected=true;
 
+                uLevel.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                 uLevel.id = pConfigs->main_wlevels[i].id;
                 uLevels.push_back(uLevel);
                 custom=true;
@@ -439,6 +453,8 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
                 uLevel.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wlevels[i].image_n ), uLevel.mask);
                 if(uLevel.image.isNull()) WrongImagesDetected=true;
+
+                uLevel.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                 uLevel.id = pConfigs->main_wlevels[i].id;
                 uLevels.push_back(uLevel);
