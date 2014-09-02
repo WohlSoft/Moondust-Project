@@ -32,7 +32,12 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     setDefaults(); // Apply default common settings
 
-    QPixmap splashimg(":/images/splash_editor.png");
+
+    configs.setConfigPath("SMBX");
+    configs.loadBasics();
+
+    QPixmap splashimg(configs.splash_logo);
+
     QSplashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
     splash.setDisabled(true);
