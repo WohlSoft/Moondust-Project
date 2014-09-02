@@ -404,6 +404,9 @@ public:
     private slots:
         void on_actionLoad_configs_triggered(); //!< Reload config
         void on_actionCurConfig_triggered();    //!< Config status
+        void on_actionChangeConfig_triggered(); //!< Change configuration
+    private:
+        QString currentConfigDir;
 // ////////////////////////////////////////////////////////
 
 // //////////////////External tools////////////////////////
@@ -976,8 +979,6 @@ private slots:
         void on_actionLockLevels_triggered(bool checked);
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
-
-
 
 
 signals:

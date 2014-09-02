@@ -20,6 +20,8 @@
 #include "mainwindow.h"
 
 #include "npc_dialog/npcdialog.h"
+#include "data_configs/config_manager.h"
+
 #include <QDesktopServices>
 
 MainWindow::MainWindow(QMdiArea *parent) :
@@ -32,8 +34,34 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     setDefaults(); // Apply default common settings
 
+    // Config manager
+    ConfigManager *cmanager = new ConfigManager();
+    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
+    QString configPath = cmanager->isPreLoaded();
+    if(configPath.isEmpty())
+    {
+        if(cmanager->exec()==QDialog::Accepted)
+        {
+            configPath = cmanager->currentConfig;
+        }
+        else
+        {
+            delete cmanager;
+            ui->setupUi(this);
+            setDefLang();
+            setUiDefults(); //Apply default UI settings
+            WriteToLog(QtWarningMsg, "<Configuration is not selected>");
+            this->close();
+            return;
+        }
+    }
 
-    configs.setConfigPath("SMBX");
+    currentConfigDir = configPath;
+
+    delete cmanager;
+
+    configs.setConfigPath(configPath);
     configs.loadBasics();
 
     QPixmap splashimg(configs.splash_logo);

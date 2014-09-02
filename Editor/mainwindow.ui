@@ -263,6 +263,8 @@
      </property>
      <addaction name="actionCurConfig"/>
      <addaction name="actionLoad_configs"/>
+     <addaction name="separator"/>
+     <addaction name="actionChangeConfig"/>
     </widget>
     <widget class="QMenu" name="menuPattles_and_tilesets">
      <property name="title">
@@ -8856,6 +8858,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Debugger</string>
+   </property>
+  </action>
+  <action name="actionChangeConfig">
+   <property name="text">
+    <string>Change configuration...</string>
    </property>
   </action>
  </widget>

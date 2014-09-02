@@ -597,6 +597,8 @@ void MainWindow::saveSettings()
 
     settings.setValue("language", GlobalSettings::locale);
 
+    settings.setValue("current-config", currentConfigDir);
+
     settings.endGroup();
 
     settings.beginGroup("Recent");
