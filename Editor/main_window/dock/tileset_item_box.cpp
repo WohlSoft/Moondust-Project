@@ -139,7 +139,8 @@ void MainWindow::on_newTileset_clicked()
     setTileSetBox();
 }
 
-void MainWindow::editSelectedTileset(){
+void MainWindow::editSelectedTileset()
+{
     TilesetConfigureDialog* tilesetConfDia;
 
     if(activeChildWindow()==1)
@@ -174,8 +175,9 @@ void MainWindow::editSelectedTileset(){
     QVector<SimpleTileset> ctilesets = loadCustomTilesets();
     for(int i = 0; i < ctilesets.size(); ++i){
         SimpleTileset &aTileset = ctilesets[i];
-        if(aTileset.tileSetName == tilesetName){
-            tilesetConfDia->loadSimpleTileset(aTileset,true);
+        if(aTileset.tileSetName == tilesetName)
+        {
+            tilesetConfDia->loadSimpleTileset(aTileset, aTileset.customDir);
             tilesetConfDia->exec();
             break;
         }
@@ -449,6 +451,7 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                 }
                 QPushButton* b = new QPushButton(QIcon(":/images/pencil_16x16.png"),"",tilesetNameWrapper);
                 b->setMaximumSize(32,32);
+                b->setFlat(true);
                 l->addWidget(b, 0, mostRighter);
                 connect(b, SIGNAL(clicked()), this, SLOT(editSelectedTileset()));
             }
@@ -494,6 +497,7 @@ QVector<SimpleTileset> MainWindow::loadCustomTilesets(){
                 SimpleTileset xxx;
                 if(tileset::OpenSimpleTileset(p + file, xxx))
                 {
+                    xxx.customDir = (p == path+cfolder);
                     ctsets.push_back(xxx);
                 }
             }
