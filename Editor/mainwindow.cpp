@@ -34,13 +34,19 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     setDefaults(); // Apply default common settings
 
+    //Create empty config directory if not exists
+    if(!QDir(QApplication::applicationDirPath() + "/" +  "configs").exists())
+        QDir().mkdir(QApplication::applicationDirPath() + "/" +  "configs");
+
     // Config manager
     ConfigManager *cmanager = new ConfigManager();
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath = cmanager->isPreLoaded();
+    //If application runned first time or target configuration is not exist
     if(configPath.isEmpty())
     {
+        //Ask for configuration
         if(cmanager->exec()==QDialog::Accepted)
         {
             configPath = cmanager->currentConfig;
