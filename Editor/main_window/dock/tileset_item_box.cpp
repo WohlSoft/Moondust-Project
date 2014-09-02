@@ -447,7 +447,7 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                     }
                     connect(tbutton, SIGNAL(clicked(int,ulong)), this, SLOT(SwitchPlacingItem(int,ulong)));
                 }
-                QPushButton* b = new QPushButton("E",tilesetNameWrapper);
+                QPushButton* b = new QPushButton(QIcon(":/images/pencil_16x16.png"),"",tilesetNameWrapper);
                 b->setMaximumSize(32,32);
                 l->addWidget(b, 0, mostRighter);
                 connect(b, SIGNAL(clicked()), this, SLOT(editSelectedTileset()));
