@@ -63,12 +63,45 @@ void dataconfigs::addError(QString bug, QtMsgType level)
     errorsList<<bug;
 }
 
+void dataconfigs::setConfigPath(QString p)
+{
+    config_dir = QApplication::applicationDirPath() + "/" +  "configs/" + p + "/";
+}
+
+void dataconfigs::loadBasics()
+{
+    QString gui_ini = config_dir + "main.ini";
+    QSettings guiset(gui_ini, QSettings::IniFormat);
+    guiset.setIniCodec("UTF-8");
+
+    guiset.beginGroup("gui");
+        splash_logo = guiset.value("editor-splash", "").toString();
+    guiset.endGroup();
+
+    guiset.beginGroup("main");
+        data_dir = (guiset.value("application-dir", "0").toBool() ?
+                        QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+    guiset.endGroup();
+
+    //Default splash image
+    if(splash_logo .isEmpty())
+        splash_logo = ":/images/splash_editor.png";
+    else
+    {
+        splash_logo = data_dir + splash_logo;
+        if(QPixmap(splash_logo).isNull())
+        {
+            WriteToLog(QtWarningMsg, QString("Wrong splash image: %1").arg(splash_logo));
+            splash_logo = ":/images/splash_editor.png";
+        }
+    }
+}
+
 bool dataconfigs::loadconfigs(QProgressDialog *prgs)
 {
     //unsigned long i;//, prgs=0;
 
     total_data=0;
-    config_dir = QApplication::applicationDirPath() + "/" +  "configs/SMBX/";
     default_grid=0;
     errorsList.clear();
 
@@ -85,18 +118,21 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
 
     dirset.beginGroup("main");
 
+        data_dir = (dirset.value("application-dir", false).toBool() ?
+                        QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+
         ConfStatus::configName = dirset.value("config_name", QDir(config_dir).dirName()).toString();
 
-        dirs.worlds = QApplication::applicationDirPath() + "/" + dirset.value("worlds", "worlds").toString() + "/";
+        dirs.worlds = data_dir + dirset.value("worlds", "worlds").toString() + "/";
 
-        dirs.music = QApplication::applicationDirPath() + "/" + dirset.value("music", "data/music").toString() + "/";
-        dirs.sounds = QApplication::applicationDirPath() + "/" + dirset.value("sound", "data/sound").toString() + "/";
+        dirs.music = data_dir + dirset.value("music", "data/music").toString() + "/";
+        dirs.sounds = data_dir + dirset.value("sound", "data/sound").toString() + "/";
 
-        dirs.glevel = QApplication::applicationDirPath() + "/" + dirset.value("graphics-level", "data/graphics/level").toString() + "/";
-        dirs.gworld= QApplication::applicationDirPath() + "/" + dirset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
-        dirs.gplayble = QApplication::applicationDirPath() + "/" + dirset.value("graphics-characters", "data/graphics/characters").toString() + "/";
+        dirs.glevel = data_dir + dirset.value("graphics-level", "data/graphics/level").toString() + "/";
+        dirs.gworld= data_dir + dirset.value("graphics-worldmap", "data/graphics/worldmap").toString() + "/";
+        dirs.gplayble = data_dir + dirset.value("graphics-characters", "data/graphics/characters").toString() + "/";
 
-        dirs.gcustom = QApplication::applicationDirPath() + "/" + dirset.value("custom-data", "data-custom").toString() + "/";
+        dirs.gcustom = data_dir + dirset.value("custom-data", "data-custom").toString() + "/";
     dirset.endGroup();
 
     ConfStatus::configPath = config_dir;

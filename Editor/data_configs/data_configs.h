@@ -90,6 +90,9 @@ public:
     bool loadconfigs(QProgressDialog *prgs=NULL);
     DataFolders dirs;
     QString config_dir;
+    QString data_dir;
+
+    QString splash_logo;
 
     //Playable Characters
     QVector<obj_playable_character > characters;
@@ -159,6 +162,9 @@ public:
 
 
     void  loadTilesets();
+
+    void setConfigPath(QString p);
+    void loadBasics();
 
 private:
 
