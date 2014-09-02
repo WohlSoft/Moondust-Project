@@ -71,27 +71,27 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="175"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="181"/>
         <source>Middle mouse button features</source>
-        <translation type="unfinished"></translation>
+        <translation>Mittleclick-Funktionen</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="187"/>
         <source>Duplicate selected items into mouse position</source>
-        <translation type="unfinished"></translation>
+        <translation>Dupliziere ausgewählte Items zu Mausposition</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="194"/>
         <source>Switch placing mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechsele zu Platziermodus vom ausgewählten Objekt</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="201"/>
         <source>Switch to drag scroll without selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechsel zu Scrollen, wenn keine Auswahl</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="225"/>
@@ -809,7 +809,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="227"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegt Nicht</translation>
     </message>
     <message>
         <source>Not movable</source>
@@ -1120,12 +1120,12 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="53"/>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingangsordner mit den GIF Dateien (*.gif und *m.gif)</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="70"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Auch in Sub-Ordner suchen</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="77"/>
@@ -1163,7 +1163,8 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="165"/>
         <source>Output dir, where will be saved fixed images
 (If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgangsordner, wo die reparierten Bilder abgespeichert werden
+(Wenn nicht gesetzt, dann wird Eingangsordner übernommen)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved fixed images
@@ -2280,39 +2281,39 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="309"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="319"/>
         <source>Search Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Musik</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6828"/>
         <location filename="../mainwindow.ui" line="8846"/>
         <source>Tileset Item Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Tileset Itembox</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6955"/>
         <source>New tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Neuer Tileset</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6998"/>
         <location filename="../mainwindow.ui" line="8858"/>
         <source>Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Debugger</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7014"/>
         <source>Mouse coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Maus Koordinaten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7098"/>
         <source>Go to point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehe zu Punkt:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7147"/>
         <source>Go!</source>
-        <translation type="unfinished"></translation>
+        <translation>Los!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7166"/>
@@ -2637,7 +2638,7 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="8260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aktiviert Animation&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Wenn die Karte zu viele Objekte hat, wird empfolen diese Option zu&lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;deaktivieren&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8580"/>
@@ -2747,17 +2748,17 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="8811"/>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Reinzommen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8823"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Rauszoomen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8835"/>
         <source>Reset Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Setzte Zoom zurück</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -3454,7 +3455,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../mainwindow.ui" line="3349"/>
         <location filename="../mainwindow.ui" line="5379"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewegt Nicht</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4920"/>
@@ -3623,7 +3624,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="225"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="235"/>
         <source>Search Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Tile</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6312"/>
@@ -3631,7 +3632,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="253"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="263"/>
         <source>Search Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Umbgebungsobjekt</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6328"/>
@@ -3644,22 +3645,22 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="281"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="291"/>
         <source>Search Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Pfad</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6490"/>
         <source>Big Path Background</source>
-        <translation type="unfinished">Großer Pfadhintergrund</translation>
+        <translation>Großer Pfadhintergrund</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6497"/>
         <source>Always Visible</source>
-        <translation type="unfinished">Immer Sichtbar</translation>
+        <translation>Immer Sichtbar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6514"/>
         <source>Contains Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Beeinhaltet Titel</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6596"/>
@@ -3986,7 +3987,7 @@ Bitte wähle eine Weltkarte in der Liste aus:</translation>
     <message>
         <location filename="../main_window/edit_common.cpp" line="103"/>
         <source>NPC Config reloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade NPC Konfiguartion neu</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="632"/>
@@ -4390,57 +4391,57 @@ Alle Datein (*.*)</translation>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="191"/>
         <source>Next Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster Leve</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="198"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="208"/>
         <source>Level search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Levelsuche abgeschlossen!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="219"/>
         <source>Next Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster Tile</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="226"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="236"/>
         <source>Tile search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilesuche abgeschlossen!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="247"/>
         <source>Next Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster Umgebungsobjekt</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="254"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="264"/>
         <source>Scenery search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Umgebungssuche abgeschlossen!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="275"/>
         <source>Next Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster Pfad</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="282"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="292"/>
         <source>Path search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Pfadsuche abgeschlossen!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="303"/>
         <source>Next Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächster Musik</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="310"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="320"/>
         <source>Music search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Musiksuche abgeschlossen!</translation>
     </message>
 </context>
 <context>
@@ -4704,12 +4705,12 @@ Datei: %1
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="191"/>
         <source>Show custom only</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur Benutzerdefinierte</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="198"/>
         <source>Current Level/World specific</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur Level-/Weltspezifisch</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="76"/>
@@ -5556,12 +5557,13 @@ Möchtest du die Änderungen speichern?</translation>
         <location filename="../external_tools/gifs2png_gui.ui" line="80"/>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgangsordner, wo die PNG-Datei gespeichert wird
+(wenn nicht gesetzt, wird das Bild im selben Ordner wie die Eingangsordner gespeichert)</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="101"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Auch in Sub-Ordner suchen</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="111"/>
@@ -5690,7 +5692,7 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="229"/>
         <source>Make custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstelle Ordner für Benutzerdefinierte Inhalte</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="264"/>
@@ -6157,87 +6159,88 @@ Möchtest du die Änderung speichern?</translation>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="26"/>
         <source>Convert PNG into the masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertiere PNG zu maskierte GIFs</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="53"/>
         <source>This is a console tool which convert the PNG images with own transparency into SMBX graphics which have a gif format with transparence mask format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dies ist ein Konsolentool, welches PNG in SMBX GIF Graphiken mit Transparenzmasken umwandelt.</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="66"/>
         <location filename="../external_tools/png2gifs_gui.ui" line="132"/>
         <source>Browse</source>
-        <translation type="unfinished">Durchsuchen</translation>
+        <translation>Durchsuchen</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="80"/>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgangsordner, wo die SMBX GIF Graphiken mit Transparenzmasken gespeichert werden
+(wenn nicht gesetzt, wird das Bild im selben Ordner wie die Eingangsordner gespeichert)</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="94"/>
         <source>Start</source>
-        <translation type="unfinished">Starten</translation>
+        <translation>Starten</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="101"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Auch in Sub-Ordner suchen</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="111"/>
         <source>Close</source>
-        <translation type="unfinished">Schließen</translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="125"/>
         <source>Flags</source>
-        <translation type="unfinished">Extras</translation>
+        <translation>Extras</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="155"/>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingangsordner mit den PNG Dateien (*.png)</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="165"/>
         <source>Remove source images after successful conversion</source>
-        <translation type="unfinished">Lösche Eingangsdateien nach der Konvertierung</translation>
+        <translation>Lösche Eingangsdateien nach der Konvertierung</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="23"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished">Öffne Eingangsordner</translation>
+        <translation>Öffne Eingangsordner</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="35"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished">Öffne Zielordner</translation>
+        <translation>Öffne Zielordner</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="48"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished">Eingangsordner nicht gesetzt!</translation>
+        <translation>Eingangsordner nicht gesetzt</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="48"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished">Bitte setzte den Eingangsordner</translation>
+        <translation>Bitte setzte den Eingangsordner</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="62"/>
         <source>Tool is not found</source>
-        <translation type="unfinished">Tool nicht gefunden</translation>
+        <translation>Tool nicht gefunden</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="62"/>
         <source>Can&apos;t run application: 
 %1
 Please, check the application directory.</source>
-        <translation type="unfinished">Kann nicht ausführen: 
+        <translation>Kann nicht ausführen: 
 %1
 Bitte überprüfe den Anwendungspfad.</translation>
     </message>
