@@ -318,6 +318,16 @@ void TilesetConfigureDialog::openTileset(QString filePath, bool isCustom)
     ui->customOnly->setChecked(isCustom);
 }
 
+void TilesetConfigureDialog::loadSimpleTileset(const SimpleTileset &tileset, bool isCustom){
+    ui->TilesetName->setText(tileset.tileSetName);
+    ui->spin_width->setValue(tileset.cols);
+    ui->spin_height->setValue(tileset.rows);
+    ui->comboBox->setCurrentIndex(static_cast<int>(tileset.type));
+    setUpItems(tileset.type);
+    m_tileset->loadSimpleTileset(tileset);
+    ui->customOnly->setChecked(isCustom);
+}
+
 
 void TilesetConfigureDialog::on_customOnly_clicked()
 {

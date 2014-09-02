@@ -139,6 +139,54 @@ void MainWindow::on_newTileset_clicked()
     setTileSetBox();
 }
 
+void MainWindow::editSelectedTileset(){
+    TilesetConfigureDialog* tilesetConfDia;
+
+    if(activeChildWindow()==1)
+        tilesetConfDia = new TilesetConfigureDialog(&configs, activeLvlEditWin()->scene, this);
+    else if(activeChildWindow()==3)
+        tilesetConfDia = new TilesetConfigureDialog(&configs, activeWldEditWin()->scene, this);
+    else
+        tilesetConfDia = new TilesetConfigureDialog(&configs, NULL, this);
+
+
+    QPushButton* b = qobject_cast<QPushButton*>(sender());
+    if(!b){
+        delete tilesetConfDia;
+        return;
+    }
+
+
+
+    QWidget* parent = b->parentWidget();
+    if(!parent){
+        delete tilesetConfDia;
+        return;
+    }
+
+    QGroupBox* box = qobject_cast<QGroupBox*>(parent);
+    if(!box){
+        delete tilesetConfDia;
+        return;
+    }
+
+    QString tilesetName = box->title();
+    QVector<SimpleTileset> ctilesets = loadCustomTilesets();
+    for(int i = 0; i < ctilesets.size(); ++i){
+        SimpleTileset &aTileset = ctilesets[i];
+        if(aTileset.tileSetName == tilesetName){
+            tilesetConfDia->loadSimpleTileset(aTileset,true);
+            tilesetConfDia->exec();
+            break;
+        }
+    }
+
+    delete tilesetConfDia;
+
+    configs.loadTilesets();
+    setTileSetBox();
+}
+
 
 QScrollArea* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
 {
@@ -376,51 +424,11 @@ void MainWindow::makeSelectedTileset(int tabIndex)
         #endif
 
 
-        QVector<SimpleTileset> ctsets;
-        ctsets.clear();
-
-        QString path;
-        QString cfolder;
-        bool doIt=false;
-        if(activeChildWindow()==1)
-        {
-            path = activeLvlEditWin()->LvlData.path+"/";
-            cfolder = activeLvlEditWin()->LvlData.filename+"/";
-            doIt = !activeLvlEditWin()->LvlData.untitled;
-        }
-        else
-        if(activeChildWindow()==3)
-        {
-            path = activeWldEditWin()->WldData.path+"/";
-            cfolder = activeWldEditWin()->WldData.filename+"/";
-            doIt = !activeWldEditWin()->WldData.untitled;
-        }
-
-        if(doIt)
-        {
-            QStringList paths;
-            paths << path << path+cfolder;
-
-            foreach(QString p, paths)
-            {
-                QStringList filters;
-                filters << "*.tileset.ini";
-                QDir tilesetDir(p);
-                tilesetDir.setSorting(QDir::Name);
-                tilesetDir.setNameFilters(filters);
-                QStringList files = tilesetDir.entryList(filters);
-                foreach(QString file, files)
-                {
-                    SimpleTileset xxx;
-                    if(tileset::OpenSimpleTileset(p + file, xxx))
-                    {
-                        ctsets.push_back(xxx);
-                    }
-                }
-            }
-
+        QVector<SimpleTileset> ctsets = loadCustomTilesets();
+        if(!ctsets.isEmpty()){
             for(int j = 0; j < ctsets.size(); j++)
             {
+                unsigned int mostRighter = 0;
                 SimpleTileset &s = ctsets[j];
                 QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, scrollWid);
                 ((FlowLayout*)scrollWid->layout())->addWidget(tilesetNameWrapper);
@@ -434,11 +442,64 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                     tbutton->applySize(32,32);
                     tbutton->applyItem(s.type, item.id);
                     l->addWidget(tbutton, item.row, item.col);
+                    if(item.col >= mostRighter){
+                        mostRighter = item.col + 1;
+                    }
                     connect(tbutton, SIGNAL(clicked(int,ulong)), this, SLOT(SwitchPlacingItem(int,ulong)));
+                }
+                QPushButton* b = new QPushButton("E",tilesetNameWrapper);
+                b->setMaximumSize(32,32);
+                l->addWidget(b, 0, mostRighter);
+                connect(b, SIGNAL(clicked()), this, SLOT(editSelectedTileset()));
+            }
+        }
+    }
+}
+
+QVector<SimpleTileset> MainWindow::loadCustomTilesets(){
+    QVector<SimpleTileset> ctsets;
+
+    QString path;
+    QString cfolder;
+    bool doIt=false;
+    if(activeChildWindow()==1)
+    {
+        path = activeLvlEditWin()->LvlData.path+"/";
+        cfolder = activeLvlEditWin()->LvlData.filename+"/";
+        doIt = !activeLvlEditWin()->LvlData.untitled;
+    }
+    else
+    if(activeChildWindow()==3)
+    {
+        path = activeWldEditWin()->WldData.path+"/";
+        cfolder = activeWldEditWin()->WldData.filename+"/";
+        doIt = !activeWldEditWin()->WldData.untitled;
+    }
+
+    if(doIt)
+    {
+        QStringList paths;
+        paths << path << path+cfolder;
+
+        foreach(QString p, paths)
+        {
+            QStringList filters;
+            filters << "*.tileset.ini";
+            QDir tilesetDir(p);
+            tilesetDir.setSorting(QDir::Name);
+            tilesetDir.setNameFilters(filters);
+            QStringList files = tilesetDir.entryList(filters);
+            foreach(QString file, files)
+            {
+                SimpleTileset xxx;
+                if(tileset::OpenSimpleTileset(p + file, xxx))
+                {
+                    ctsets.push_back(xxx);
                 }
             }
         }
     }
+    return ctsets;
 }
 
 void MainWindow::makeCurrentTileset()
