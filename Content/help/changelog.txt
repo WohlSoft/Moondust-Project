@@ -1,31 +1,31 @@
 Editor 0.2.0
-- Added support of the World Maps
-- Added customizing item tilesets
-- Added "name" field into customizing NPC.txt for define NPC's name
-- Fixed zombie bug: application process will correctly end his work
-- Insivible frames of some items are visible!
-- Square fill tool button will be appeared on toolbar when you switched in the placing mode.
+- Added support for World Maps
+- Added customizable item tilesets
+- Added "name" field into NPC customizer for defining the NPC's name
+- Fixed zombie bug: application process will correctly end work when closed
+- Invisible frames of some items are now visible!
+- Square fill tool button will appear on the toolbar when you switch the placing mode
 - Apply/Cancel buttons of resizing process available on the toolbar
 - Fixed initial map positions on open/create files
-- Added item toolboxes tabs settings: you can display them horizontally or vertically
-- Improved LVL parser: filed with format <10 will automatically set BGO sorting priority for BGO 65 and boss flag for NPC-15, 39 and 86.
-- Added overwrite mode: all collided items will be removed when you placing new item
-- Improved Square Fill tool: you will see yellow rectagnles and know, where will be placed new items
-- Fixed "add layer" dialog. Now if you define exist layer, you will be reasked for layer name.
-- Added point selection dialog. You can select point from a world map directly to the warp on the level.
+- Added settings for the item toolbox tabs: you can display them horizontally or vertically
+- Improved LVL parser: ordering/layering format <10 will automatically set BGO sorting priority for BGO 65 and boss flag for NPC-15, 39 and 86.
+- Added overwrite mode: all overlapping items will be removed when placing a new item in the same location
+- Improved Square Fill tool: you will see yellow rectangles, which show where the new items will be placed
+- Fixed "add layer" dialog. Now if you try to define an already existing layer, you will be asked to input a different layer name
+- Added point selection dialog. You can select a point from a world map directly to the warp on the level.
 - Added dialogs for a console tools like a GIFs2PNG and LazyFixTool
-- Mouse control for level editing workspace was improved. Fixed a lot of bugs and fixed context menu on the Linux.
+- Mouse control for level editing workspace was improved. Fixed a lot of bugs and fixed context menus on Linux systems.
 - Custom graphics displaying even without "Custom" category
-- Item animator is Improved
+- Item animator is improved
 - Sizable blocks draw algorithm is improved: Sizable blocks will be displayed correctly in any sizes
 - Added support for animation sequances, which allow more flexible animations for NPC's
 - Better scrolling by keyboard and by mouse wheel. (Added new hot-keys)
-- Added zoom support by mouseWheel and ALT key.
-- Added PNG2GIFs converter which creating masked GIF images from PNG image with transparency.
+- Added zoom support by mouse-wheel and ALT key.
+- Added PNG2GIFs converter which creates masked GIF images from a PNG image with transparency.
 - Added Italian translation
-- Design of the warp points and physical environment zones are improved, also Magenta color replaced by Crimson
+- Design of warp points and physical environment zones are improved, also magenta-colored bounding box has been changed to Crimson
 - Added debugger box
-- Backgrounds selecting list now with thumbnails!
+- Background-selecting list now has thumbnails for previewing!
 
 Editor 0.1.1
 - Animation rendering has been improved and optimized
