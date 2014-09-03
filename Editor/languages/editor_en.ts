@@ -1269,23 +1269,23 @@ Please, check the application directory.</translation>
         <translation>Searching for custom Blocks %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="339"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="343"/>
         <source>Search User BGOs %1</source>
         <translation>Searching for custom BGOs %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="428"/>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="440"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="436"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="448"/>
         <source>Search User NPCs %1</source>
         <translation>Searching for custom NPCs %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="602"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="614"/>
         <source>Wrong custom images</source>
         <translation>Wrong custom image files</translation>
     </message>
     <message>
-        <location filename="../level_scene/lvl_usergfx.cpp" line="603"/>
+        <location filename="../level_scene/lvl_usergfx.cpp" line="615"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -2999,9 +2999,8 @@ Message limits: max line lenth is 28 characters</source>
         <translation>Friendly</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="44"/>
         <source>Editor - Platformer Game Engine (Under Construction)</source>
-        <translation>Editor - Platformer Game Engine (Under Construction)</translation>
+        <translation type="vanished">Editor - Platformer Game Engine (Under Construction)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="262"/>
@@ -3289,6 +3288,11 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
         <location filename="../mainwindow.ui" line="4559"/>
         <source>Play sound:</source>
         <translation>Play sound:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="44"/>
+        <source>Editor - Platformer Game Engine</source>
+        <translation>Editor - Platformer Game Engine</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="271"/>
@@ -5178,27 +5182,27 @@ Bottom:	%4</translation>
         <translation>Search Custom Tiles %1</translation>
     </message>
     <message>
-        <location filename="../world_scene/wld_usergfx.cpp" line="225"/>
+        <location filename="../world_scene/wld_usergfx.cpp" line="229"/>
         <source>Search User Sceneries %1</source>
         <translation>Search Custom Sceneries %1</translation>
     </message>
     <message>
-        <location filename="../world_scene/wld_usergfx.cpp" line="311"/>
+        <location filename="../world_scene/wld_usergfx.cpp" line="319"/>
         <source>Search User Paths %1</source>
         <translation>Search Custom  Paths %1</translation>
     </message>
     <message>
-        <location filename="../world_scene/wld_usergfx.cpp" line="397"/>
+        <location filename="../world_scene/wld_usergfx.cpp" line="409"/>
         <source>Search User Levels %1</source>
         <translation>Search Custom Levels %1</translation>
     </message>
     <message>
-        <location filename="../world_scene/wld_usergfx.cpp" line="488"/>
+        <location filename="../world_scene/wld_usergfx.cpp" line="504"/>
         <source>Wrong custom images</source>
         <translation>Wrong custom image files</translation>
     </message>
     <message>
-        <location filename="../world_scene/wld_usergfx.cpp" line="489"/>
+        <location filename="../world_scene/wld_usergfx.cpp" line="505"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -5385,12 +5389,12 @@ Please, reconvert your images to the valid format and try to reload this level.<
         <translation>5/%1 Applying Musics Boxes...</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="179"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="193"/>
         <source>Untitled %1</source>
         <translation>Untitled %1</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="194"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="208"/>
         <source>Cannot create world file:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -5399,57 +5403,57 @@ because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="255"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="269"/>
         <source>Save As</source>
         <translation>Save As</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="268"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="282"/>
         <source>File save error</source>
         <translation>File save error</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="269"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="283"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>Cannot save file %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="308"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="322"/>
         <source>Read file error</source>
         <translation>Read file error</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="309"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="323"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Cannot read file %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="193"/>
-        <location filename="../edit_world/wld_files_io.cpp" line="323"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="207"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="337"/>
         <source>Configurations not loaded</source>
         <translation>Configurations not loaded</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="96"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="107"/>
         <source>Export selected area to image</source>
         <translation>Export selected area to image</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="100"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="111"/>
         <source>PNG Image (*.png)</source>
         <translation>PNG Image (*.png)</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="106"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="120"/>
         <source>Saving section image...</source>
         <translation>Saving section image...</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="107"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="121"/>
         <source>Please wait...</source>
         <translation>Please wait...</translation>
     </message>
@@ -5462,17 +5466,17 @@ because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="237"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="251"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation>Please enter a episode title for &apos;%1&apos;!</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="238"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="252"/>
         <source>Saving </source>
         <translation>Saving</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="240"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="254"/>
         <source>Episode Title: </source>
         <translation>World title:</translation>
     </message>
@@ -5485,23 +5489,23 @@ Object configurations are not loaded
 Please check that the config/SMBX directory exists and contains the *.INI files with the object settings.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="348"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="362"/>
         <source>Loading World map data</source>
         <translation>Loading World map data</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="394"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="408"/>
         <source>Episode title: </source>
         <translation>World title:</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="106"/>
-        <location filename="../edit_world/wld_files_io.cpp" line="348"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="120"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="362"/>
         <source>Abort</source>
         <translation>Abort</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="324"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="338"/>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
@@ -5510,17 +5514,17 @@ because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="349"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="363"/>
         <source>Loading World data</source>
         <translation>Loading World data</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="392"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="406"/>
         <source> not saved</source>
         <translation> not saved</translation>
     </message>
     <message>
-        <location filename="../edit_world/wld_files_io.cpp" line="390"/>
+        <location filename="../edit_world/wld_files_io.cpp" line="404"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; has been modified.
@@ -5535,7 +5539,7 @@ Do you want to save your changes?</translation>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../about_dialog/aboutdialog.ui" line="153"/>
+        <location filename="../about_dialog/aboutdialog.ui" line="152"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
