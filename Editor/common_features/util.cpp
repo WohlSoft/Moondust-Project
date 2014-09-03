@@ -97,3 +97,19 @@ bool util::contains(const QComboBox *b, const QString &s)
     }
     return false;
 }
+
+
+QString util::filePath(QString s)
+{
+    QString t = s;
+    t.replace('\\', '_');
+    t.replace('/', '_');
+    t.replace(':', '_');
+    t.replace('*', '_');
+    t.replace('?', '_');
+    t.replace('\"', '_');
+    t.replace('<', '_');
+    t.replace('>', '_');
+    t.replace('|', '_');
+    return t;
+}
