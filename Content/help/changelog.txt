@@ -4,7 +4,7 @@ Editor 0.2.0
 - Added "name" field into customizing NPC.txt for define NPC's name
 - Fixed zombie bug: application process will correctly end his work
 - Insivible frames of some items are visible!
-- Square fill tool buttom will be appeared on toolbar when you switched in the placing mode.
+- Square fill tool button will be appeared on toolbar when you switched in the placing mode.
 - Apply/Cancel buttons of resizing process available on the toolbar
 - Fixed initial map positions on open/create files
 - Added item toolboxes tabs settings: you can display them horizontally or vertically
