@@ -48,6 +48,7 @@ public:
     void setScenePoint(LvlScene *theScene=NULL);
 
     QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     QPixmap mainImage;
 
@@ -88,6 +89,8 @@ public:
     bool isLocked;
     void setLocked(bool lock);
 
+    void setAnimator(long aniID);
+
 protected:
     bool mouseLeft;
     bool mouseMid;
@@ -102,6 +105,10 @@ private slots:
 
 private:
 
+    bool extAnimator;
+    long animatorID;
+    QRectF imageSize;
+
     bool DisableScene;
 
     QGraphicsItemGroup * grp;
@@ -112,6 +119,8 @@ private:
     QVector<QPixmap> frames; //Whole image
     void createAnimationFrames();
     int CurrentFrame;
+
+    QRectF offseted;
 
 
     bool animated;

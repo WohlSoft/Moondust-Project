@@ -16,6 +16,14 @@
     <height>450</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Liberation Sans</family>
+    <pointsize>8</pointsize>
+    <weight>75</weight>
+    <bold>true</bold>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Settings</string>
   </property>
@@ -26,6 +34,13 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QTabWidget" name="mainSettings">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>

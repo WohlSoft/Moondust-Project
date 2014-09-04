@@ -99,6 +99,22 @@ void LvlScene::buildAnimators()
         }
     }
 
+    for(i=0; i<pConfigs->main_npc.size(); i++) //Add user images
+    {
+        AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
+                         ((pConfigs->main_npc[i].image.isNull())?
+                                uNpcImg:
+                               pConfigs->main_npc[i].image),
+                              pConfigs->main_npc[i]
+                              );
+
+        animates_NPC.push_back( aniNPC );
+        if(pConfigs->main_npc[i].id < (unsigned int)index_npc.size())
+        {
+            index_npc[pConfigs->main_npc[i].id].ai = animates_NPC.size()-1;
+        }
+    }
+
 }
 
 void LvlScene::loadUserData(QProgressDialog &progress)
@@ -220,6 +236,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 uBlock.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLDs + pConfigs->main_block[i].image_n ), uBlock.mask);
                 if(uBlock.image.isNull()) WrongImagesDetected=true;
 
+                uBlock.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                 uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
                 custom=true;
@@ -241,6 +259,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                 uBlock.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLs + pConfigs->main_block[i].image_n ), uBlock.mask);
                 if(uBlock.image.isNull()) WrongImagesDetected=true;
+
+                uBlock.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                 uBlock.id = pConfigs->main_block[i].id;
                 uBlocks.push_back(uBlock);
@@ -342,6 +362,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 uBGO.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLDs + pConfigs->main_bgo[i].image_n ), uBGO.mask);
                 if(uBGO.image.isNull()) WrongImagesDetected=true;
 
+                uBGO.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
                 custom=true;
@@ -363,6 +385,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                 uBGO.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLs + pConfigs->main_bgo[i].image_n ), uBGO.mask);
                 if(uBGO.image.isNull()) WrongImagesDetected=true;
+
+                uBGO.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                 uBGO.id = pConfigs->main_bgo[i].id;
                 uBGOs.push_back(uBGO);
@@ -429,6 +453,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
              QSize capturedS = QSize(0,0);
 
+             if(!pConfigs->main_npc[i].image.isNull())
+                 capturedS = pConfigs->main_npc[i].image.size();
+
              // /////////////////////// Looking for user's NPC.txt ////////////////////////////
              // //(for use custom image filename, need to parse NPC.txt before iamges)/////////
              if((QFile::exists(uLVLD) ) &&
@@ -471,6 +498,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                  uNPC.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLDs + pConfigs->main_npc[i].image_n ), uNPC.mask);
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
 
+                 uNPC.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
+
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;
              }
@@ -484,6 +513,8 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                  uNPC.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uLVLs + pConfigs->main_npc[i].image_n ), uNPC.mask);
                  if(uNPC.image.isNull()) WrongImagesDetected=true;
+
+                 uNPC.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
 
                  uNPC.id = pConfigs->main_npc[i].id;
                  uNPC.withImg = true;
@@ -506,30 +537,30 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
                      autoConf.gfxwidth = capturedS.width();
                      //autoConf.en_gfxwidth = true;
-                     unsigned int defGFX_h;
-                     switch(pConfigs->main_npc[i].framestyle)
-                     {
-                     case 0:
-                         defGFX_h = (int)round(capturedS.height() / pConfigs->main_npc[i].frames);
-                         break;
-                     case 1:
-                         defGFX_h = (int)round((capturedS.height() / pConfigs->main_npc[i].frames)/2 );
-                         break;
-                     case 2:
-                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/4);
-                         break;
-                     case 3:
-                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/4);
-                         break;
-                     case 4:
-                         defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/8);
-                         break;
-                     default:
-                         defGFX_h=0;
-                         break;
-                     }
+                        // unsigned int defGFX_h;
+                        // switch(pConfigs->main_npc[i].framestyle)
+                        // {
+                        // case 0:
+                        //     defGFX_h = (int)round(capturedS.height() / pConfigs->main_npc[i].frames);
+                        //     break;
+                        // case 1:
+                        //     defGFX_h = (int)round((capturedS.height() / pConfigs->main_npc[i].frames)/2 );
+                        //     break;
+                        // case 2:
+                        //     defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/4);
+                        //     break;
+                        // case 3:
+                        //     defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/4);
+                        //     break;
+                        // case 4:
+                        //     defGFX_h = (int)round((capturedS.height()/pConfigs->main_npc[i].frames)/8);
+                        //     break;
+                        // default:
+                        //     defGFX_h=0;
+                        //     break;
+                        // }
 
-                     capturedS.setHeight(defGFX_h);
+                     //capturedS.setHeight(defGFX_h);
 
                      uNPC.merged = FileFormats::mergeNPCConfigs(
                                  pConfigs->main_npc[i],
@@ -549,6 +580,24 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                      index_npc[uNPC.id].i = (uNPCs.size()-1);
                  }
              }
+
+
+             AdvNpcAnimator * aniNPC = new AdvNpcAnimator(
+                         ((uNPC.withImg)?
+                              ((uNPCs.last().image.isNull())?
+                                 uNpcImg:
+                                     uNPCs.last().image)
+                                  :
+                              ((pConfigs->main_npc[i].image.isNull())?
+                                 uNpcImg:
+                                    pConfigs->main_npc[i].image)
+                              ),
+                                 ((uNPC.withTxt)? uNPCs.last().merged : pConfigs->main_npc[i])
+                                   );
+             animates_NPC.push_back( aniNPC );
+             index_npc[pConfigs->main_npc[i].id].ai = animates_NPC.size()-1;
+
+
          if(progress.wasCanceled())
              /*progress.setValue(progress.value()+1);
          else*/ return;

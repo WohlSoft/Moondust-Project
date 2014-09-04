@@ -510,7 +510,7 @@ void MainWindow::loadSettings()
         ui->Tileset_Item_Box->restoreGeometry(settings.value("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry()).toByteArray());
         ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
 
-        GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "10000").toInt();
+        GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "25000").toInt();
 
     settings.endGroup();
 
@@ -596,6 +596,8 @@ void MainWindow::saveSettings()
     settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
     settings.setValue("language", GlobalSettings::locale);
+
+    settings.setValue("current-config", currentConfigDir);
 
     settings.endGroup();
 

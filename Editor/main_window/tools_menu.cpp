@@ -31,7 +31,7 @@
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
-    TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs);
+    TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs, NULL);
     tilesetConfDia->exec();
     delete tilesetConfDia;
 
@@ -42,7 +42,13 @@ void MainWindow::on_actionConfigure_Tilesets_triggered()
 
 void MainWindow::on_actionTileset_groups_editor_triggered()
 {
-    TilesetGroupEditor * groupDialog = new TilesetGroupEditor;
+    TilesetGroupEditor * groupDialog;
+    if(activeChildWindow()==1)
+        groupDialog = new TilesetGroupEditor(activeLvlEditWin()->scene, this);
+    else if(activeChildWindow()==3)
+        groupDialog = new TilesetGroupEditor(activeWldEditWin()->scene, this);
+    else
+        groupDialog = new TilesetGroupEditor(NULL, this);
     groupDialog->exec();
     delete groupDialog;
 

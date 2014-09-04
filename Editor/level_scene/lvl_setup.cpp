@@ -122,29 +122,21 @@ void LvlScene::startBlockAnimation()
     {
         blockA->start();
     }
-
-    QList<QGraphicsItem*> ItemList = items();
-    QGraphicsItem *tmp;
-    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    foreach(AdvNpcAnimator * npcA, animates_NPC)
     {
-//        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
-//        {
-//            tmp = (*it);
-//            dynamic_cast<ItemBlock *>(tmp)->AnimationStart();
-//        }
-//        else
-//        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
-//        {
-//            tmp = (*it);
-//            dynamic_cast<ItemBGO *>(tmp)->AnimationStart();
-//        }
-//        else
-        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            dynamic_cast<ItemNPC *>(tmp)->AnimationStart();
-        }
+        npcA->start();
     }
+
+//    QList<QGraphicsItem*> ItemList = items();
+//    QGraphicsItem *tmp;
+//    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+//    {
+//        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            dynamic_cast<ItemNPC *>(tmp)->AnimationStart();
+//        }
+//    }
 
 }
 
@@ -158,29 +150,21 @@ void LvlScene::stopAnimation()
     {
         blockA->stop();
     }
-
-    QList<QGraphicsItem*> ItemList = items();
-    QGraphicsItem *tmp;
-    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    foreach(AdvNpcAnimator * npcA, animates_NPC)
     {
-//        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
-//        {
-//            tmp = (*it);
-//            dynamic_cast<ItemBlock *>(tmp)->AnimationStop();
-//        }
-//        else
-//        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
-//        {
-//            tmp = (*it);
-//            dynamic_cast<ItemBGO *>(tmp)->AnimationStop();
-//        }
-//        else
-        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            dynamic_cast<ItemNPC *>(tmp)->AnimationStop();
-        }
+        npcA->stop();
     }
+
+//    QList<QGraphicsItem*> ItemList = items();
+//    QGraphicsItem *tmp;
+//    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+//    {
+//        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            dynamic_cast<ItemNPC *>(tmp)->AnimationStop();
+//        }
+//    }
 
     update();
 }

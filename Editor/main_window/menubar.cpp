@@ -228,6 +228,8 @@ void MainWindow::updateMenus(bool force)
         EventListsSync();
         setLayerLists();
 
+        setLevelSectionData();
+
         if(LvlMusPlay::musicType!=LvlMusPlay::LevelMusic) LvlMusPlay::musicForceReset=true;
         LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
         setMusic( ui->actionPlayMusic->isChecked() );

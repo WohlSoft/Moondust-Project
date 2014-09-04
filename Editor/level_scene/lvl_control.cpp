@@ -1112,10 +1112,6 @@ void LvlScene::placeItemUnderCursor()
             placeNPC(LvlPlacingItems::npcSet, true);
 
             placingItems.npc.push_back(LvlPlacingItems::npcSet);
-
-            if(opts.animationEnabled) stopAnimation();
-            if(opts.animationEnabled) startBlockAnimation();
-
             wasPlaced=true;
         }
         else

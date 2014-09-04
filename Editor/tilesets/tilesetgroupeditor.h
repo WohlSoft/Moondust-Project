@@ -16,7 +16,7 @@ class TilesetGroupEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit TilesetGroupEditor(QWidget *parent = 0);
+    explicit TilesetGroupEditor(QGraphicsScene *scene = 0, QWidget *parent = 0);
     ~TilesetGroupEditor();
 
     SimpleTilesetGroup toSimpleTilesetGroup();
@@ -39,6 +39,7 @@ private:
     FlowLayout * layout;
     Ui::TilesetGroupEditor *ui;
     void redrawAll();
+    QGraphicsScene * scn;
     QList<QPair<QString,SimpleTileset> > tilesets;
 };
 

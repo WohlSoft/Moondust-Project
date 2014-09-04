@@ -31,6 +31,7 @@ struct SimpleTileset{
     QString tileSetName;
     QString fileName;
     int type;
+    bool customDir;
     QList<SimpleTilesetItem> items;
 };
 

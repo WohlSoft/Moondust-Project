@@ -128,9 +128,6 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
 
             //WriteToLog(QtDebugMsg, QString("NPC Config -> read header data... npc-%1").arg(i));
             npcset.beginGroup( QString("npc-"+QString::number(i)) );
-        //    //    [npc-1]
-        //        unsigned long id;
-            snpc.id = i;
         //    //    name="Goomba"
         //        QString name;
             snpc.name = npcset.value("name", "").toString();
@@ -594,9 +591,13 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
             snpc.default_special = (iTmp>=0);
             snpc.default_special_value = (iTmp>=0) ? iTmp : 0;
 
+            //    //    [npc-1]
+            //        unsigned long id;
+            snpc.id = i;
+
             main_npc.push_back(snpc);
 
-           // WriteToLog(QtDebugMsg, "NPC Config -> Pushed");
+            // WriteToLog(QtDebugMsg, "NPC Config -> Pushed");
 
             //Add to Index
             if(i < (unsigned int)index_npc.size())

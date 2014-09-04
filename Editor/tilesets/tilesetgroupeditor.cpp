@@ -29,10 +29,11 @@
 
 QString TilesetGroupEditor::lastFileName="";
 
-TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
+TilesetGroupEditor::TilesetGroupEditor(QGraphicsScene *scene, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TilesetGroupEditor)
 {
+    scn = scene;
     ui->setupUi(this);
     layout = new FlowLayout();
     delete ui->PreviewBox->layout();
@@ -53,6 +54,7 @@ TilesetGroupEditor::TilesetGroupEditor(QWidget *parent) :
 //            SLOT(movedTileset(QModelIndex,int,int,QModelIndex,int)));
 
 }
+
 
 TilesetGroupEditor::~TilesetGroupEditor()
 {
@@ -235,12 +237,14 @@ void TilesetGroupEditor::redrawAll()
 
         QGroupBox *f= new QGroupBox;
         QGridLayout* l = new QGridLayout();
+        l->setContentsMargins(4,4,4,4);
+        l->setSpacing(2);
         f->setLayout(l);
         f->setTitle(tilesets[i].second.tileSetName);
         SimpleTileset* items = &tilesets[i].second;
         for(int j = 0; j < items->items.size(); ++j){
             SimpleTilesetItem* item = &items->items[j];
-            TilesetItemButton* ib = new TilesetItemButton(MainWinConnect::configs);
+            TilesetItemButton* ib = new TilesetItemButton(MainWinConnect::configs, scn);
             ib->applySize(32,32);
             ib->applyItem(items->type,item->id);
             l->addWidget(ib,item->row, item->col);
