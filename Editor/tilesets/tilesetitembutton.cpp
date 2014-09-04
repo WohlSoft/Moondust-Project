@@ -65,7 +65,7 @@ void TilesetItemButton::paintEvent(QPaintEvent *ev)
 {
     QPainter painter;
     painter.begin(this);
-    painter.fillRect(contentsRect(), Qt::black);
+    painter.fillRect(contentsRect(), Qt::darkGray);
 
     if(!m_drawItem.isNull())
         painter.drawPixmap(contentsRect(),m_drawItem,m_drawItem.rect());
