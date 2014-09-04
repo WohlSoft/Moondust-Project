@@ -34,11 +34,17 @@ class TilesetConfigureDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TilesetConfigureDialog(dataconfigs* conf, QWidget *parent = 0);
+    explicit TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene *scene=0, QWidget *parent = 0);
     ~TilesetConfigureDialog();
+    enum GFXMode
+    {
+        GFX_Staff=0,
+        GFX_Level,
+        GFX_World
+    };
 
-
-
+    void openTileset(QString filePath, bool isCustom);
+    void loadSimpleTileset(const SimpleTileset &tileset, bool isCustom);
 private slots:
     void on_pushButton_clicked();
     void setUpItems(int type);
@@ -47,9 +53,15 @@ private slots:
 
     void on_OpenTileset_clicked();
 
+    void on_customOnly_clicked();
+
 private:
     QString lastFileName;
     Ui::TilesetConfigureDialog *ui;
+
+    GFXMode mode;
+    QGraphicsScene *scn;
+
     tileset* m_tileset;
     PiecesModel* m_model;
     dataconfigs* m_conf;

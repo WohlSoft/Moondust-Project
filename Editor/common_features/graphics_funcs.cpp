@@ -51,7 +51,7 @@ QImage GraphicsHelps::fromBMP(QString &file)
     QImage errImg;
 
     BMP tarBMP;
-    if(!tarBMP.ReadFromFile(file.toStdString().c_str())){
+    if(!tarBMP.ReadFromFile( file.toLocal8Bit().data() )){
         WriteToLog(QtCriticalMsg, QString("Error: File does not exsist"));
         return errImg; //Check if empty with errImg.isNull();
     }
@@ -75,9 +75,9 @@ QPixmap GraphicsHelps::loadPixmap(QString file)
 
 QImage GraphicsHelps::loadQImage(QString file)
 {
-    QImage image = QImage(file);
+    QImage image = QImage( file );
     if(image.isNull())
-        image = fromBMP(file);
+        image = fromBMP( file);
     return image;
 }
 

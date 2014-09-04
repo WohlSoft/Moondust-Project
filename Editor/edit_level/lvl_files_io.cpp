@@ -476,6 +476,12 @@ void leveledit::closeEvent(QCloseEvent *event)
             scene->animates_Blocks.pop_front();
             if(tmp!=NULL) delete tmp;
         }
+        while(! scene->animates_NPC.isEmpty() )
+        {
+            AdvNpcAnimator* tmp = scene->animates_NPC.first();
+            scene->animates_NPC.pop_front();
+            if(tmp!=NULL) delete tmp;
+        }
         WriteToLog(QtDebugMsg, "!<-Delete scene->!");
         delete scene;
         sceneCreated=false;

@@ -46,6 +46,10 @@ ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     gridSize = 1;
     frameSize=1;
 
+    extAnimator=false;
+    animatorID=-1;
+    imageSize = QRectF(0,0,10,10);
+
     CurrentFrame=0; //Real frame
     frameCurrent=0; //Timer frame
 
@@ -475,15 +479,46 @@ void ItemNPC::changeDirection(int dir)
 {
     npcData.direct = dir;
 
-    //AnimationStop();
+    if(!extAnimator)
+    {
+        setAnimation(localProps.frames, localProps.framespeed, localProps.framestyle, dir,
+        localProps.custom_animate,
+            localProps.custom_ani_fl,
+            localProps.custom_ani_el,
+            localProps.custom_ani_fr,
+            localProps.custom_ani_er,
+        true);
+    }
+    else
+    {
 
-    setAnimation(localProps.frames, localProps.framespeed, localProps.framestyle, dir,
-    localProps.custom_animate,
-        localProps.custom_ani_fl,
-        localProps.custom_ani_el,
-        localProps.custom_ani_fr,
-        localProps.custom_ani_er,
-    true);
+        direction = dir;
+        if(direction==0) //if direction=random
+        {
+            direction=((0==qrand()%2)?-1:1); //set randomly 1 or -1
+        }
+        curDirect = direction;
+        double BurriedOffset = 0;
+
+        if(!DisableScene)
+            BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
+
+        imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
+        imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
+                                 - BurriedOffset);
+
+        setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
+
+        offseted = imageSize;
+        offseted.setLeft(offseted.left()+this->offset().x());
+        offseted.setTop(offseted.top()+this->offset().y());
+        offseted.setRight(offseted.right()+this->offset().x());
+        offseted.setBottom(offseted.bottom()+this->offset().y());
+
+        update();
+
+    }
+
     arrayApply();
 }
 
@@ -697,6 +732,7 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     mainImage = pixmap;
     this->setPixmap(mainImage);
     double BurriedOffset = 0;
+    imageSize = pixmap.rect();
 
     if(!DisableScene)
         BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
@@ -708,6 +744,12 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     //grid_attach_style
 
     setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
+
+    offseted = imageSize;
+    offseted.setLeft(offseted.left()+this->offset().x());
+    offseted.setTop(offseted.top()+this->offset().y());
+    offseted.setRight(offseted.right()+this->offset().x());
+    offseted.setBottom(offseted.bottom()+this->offset().y());
 }
 
 void ItemNPC::setNpcData(LevelNPC inD)
@@ -719,9 +761,38 @@ void ItemNPC::setNpcData(LevelNPC inD)
 QRectF ItemNPC::boundingRect() const
 {
     if(!animated)
-        return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, mainImage.width(), mainImage.height());
+        return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, imageSize.width(), imageSize.height());
     else
         return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, localProps.gfx_w, localProps.gfx_h);
+}
+
+
+void ItemNPC::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    if(!extAnimator)
+    {
+        QGraphicsPixmapItem::paint(painter,option, widget); return;
+    }
+
+    if(animatorID<0)
+    {
+        painter->drawRect(QRect(imgOffsetX,imgOffsetY,1,1));
+        return;
+    }
+
+    if(scene->animates_NPC.size()>animatorID)
+        painter->drawPixmap(offseted, scene->animates_NPC[animatorID]->image(curDirect), scene->animates_NPC[animatorID]->image(curDirect).rect());
+    else
+        painter->drawRect(QRect(0,0,32,32));
+
+    if(this->isSelected())
+    {
+        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+        painter->drawRect(offseted.x()+1,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
+        painter->setPen(QPen(QBrush(Qt::magenta), 2, Qt::DotLine));
+        painter->drawRect(offseted.x()+1/*imgOffsetX+1+(offset().x()/2)*/,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
+    }
+
 }
 
 void ItemNPC::setContextMenu(QMenu &menu)
@@ -735,6 +806,44 @@ void ItemNPC::setScenePoint(LvlScene *theScene)
     grp = new QGraphicsItemGroup(this);
 }
 
+
+void ItemNPC::setAnimator(long aniID)
+{
+    if(DisableScene) return;
+
+    if(aniID<scene->animates_NPC.size())
+    imageSize = QRectF(0,0,
+                scene->animates_NPC[aniID]->image(-1).width(),
+                scene->animates_NPC[aniID]->image(-1).height()
+                );
+    //this->setPixmap(scene->animates_Blocks[aniID]->image());
+    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
+    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
+
+    //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
+    animatorID = aniID;
+    extAnimator = true;
+    animated = true;
+
+    double BurriedOffset = 0;
+    if(!DisableScene)
+        BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
+
+    imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
+    imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
+                             - BurriedOffset);
+
+    this->setPixmap(QPixmap(imageSize.width(), imageSize.height()));
+
+    setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
+
+    offseted = imageSize;
+    offseted.setLeft(offseted.left()+this->offset().x());
+    offseted.setTop(offseted.top()+this->offset().y());
+    offseted.setRight(offseted.right()+this->offset().x());
+    offseted.setBottom(offseted.bottom()+this->offset().y());
+
+}
 
 ////////////////Animation///////////////////
 

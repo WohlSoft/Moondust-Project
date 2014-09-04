@@ -62,7 +62,7 @@ bool toGif(QImage& img, QString& path){
     if(QFile(path).exists()) // Remove old file
         QFile::remove(path);
 
-    GifFileType* t = EGifOpenFileName(path.toStdString().c_str(),true, &errcode);
+    GifFileType* t = EGifOpenFileName(path.toLocal8Bit().data(),true, &errcode);
     if(!t){
         EGifCloseFile(t, &errcode);
         QTextStream(stdout)  << "Can't open\n";

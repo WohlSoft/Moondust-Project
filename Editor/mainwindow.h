@@ -365,6 +365,8 @@ public:
         void makeCurrentTileset();
         void makeSelectedTileset(int tabIndex);
         void makeAllTilesets();
+        void editSelectedTileset();
+        QVector<SimpleTileset> loadCustomTilesets();
 
     private slots:
         void on_actionConfigure_Tilesets_triggered();
@@ -402,6 +404,9 @@ public:
     private slots:
         void on_actionLoad_configs_triggered(); //!< Reload config
         void on_actionCurConfig_triggered();    //!< Config status
+        void on_actionChangeConfig_triggered(); //!< Change configuration
+    private:
+        QString currentConfigDir;
 // ////////////////////////////////////////////////////////
 
 // //////////////////External tools////////////////////////
@@ -974,8 +979,6 @@ private slots:
         void on_actionLockLevels_triggered(bool checked);
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
-
-
 
 
 signals:

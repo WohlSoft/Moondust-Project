@@ -184,7 +184,9 @@ SOURCES += main.cpp\
     external_tools/png2gifs_gui.cpp \
     main_window/dock/tileset_item_box.cpp \
     main_window/dock/debugger.cpp \
-    data_configs/conf_tilesets.cpp
+    data_configs/conf_tilesets.cpp \
+    common_features/npc_animator.cpp \
+    data_configs/config_manager.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -265,7 +267,9 @@ HEADERS  += mainwindow.h \
     data_configs/obj_BG.h \
     data_configs/obj_wld_items.h \
     data_configs/dc_indexing.h \
-    data_configs/obj_tilesets.h
+    data_configs/obj_tilesets.h \
+    common_features/npc_animator.h \
+    data_configs/config_manager.h
 
 FORMS    += \
     mainwindow.ui \
@@ -291,7 +295,8 @@ FORMS    += \
     tilesets/tilesetgroupeditor.ui \
     external_tools/gifs2png_gui.ui \
     external_tools/lazyfixtool_gui.ui \
-    external_tools/png2gifs_gui.ui
+    external_tools/png2gifs_gui.ui \
+    data_configs/config_manager.ui
 
 RC_FILE = _resources/pge_editor.rc
 
