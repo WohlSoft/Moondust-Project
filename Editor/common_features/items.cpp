@@ -146,7 +146,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
                 long animator=0;
                 if(ItemID < (unsigned int)scn->index_npc.size())
                 {
-                    j = scn->index_npc[ItemID].i;
+                    j = scn->index_npc[ItemID].gi-1;
                     animator = scn->index_npc[ItemID].ai;
                 }
 
