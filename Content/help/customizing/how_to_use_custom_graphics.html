@@ -11,13 +11,11 @@
 <body>
 <p style="text-align: center">
 <a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /><a/></p>
-<h1 style="text-align: left">How to use the custom graphics</h1>
-<p style="text-align: left">In some times need to replace the global images by 
-your own. You can do it without overwriting of the images. You can simulate many 
-of the items you will need to make your game episode unique and colorful on your 
-own.</p>
+<h1 style="text-align: left">How to use custom graphics</h1>
+<p style="text-align: left">Sometimes there comes a time where you'll find the need to replace the default images with
+your own custom graphics. This is possible without overwriting any of the default images. Custom graphics are able to make your own game episode unique and colorful.</p>
 <p style="text-align: left">The process is quite simple, but for those of you 
-who don't know how, here is an in depth look at using custom graphics.</p>
+who don't know how, here is an in depth look at using custom graphics with the editor.</p>
 <p style="text-align: left">&nbsp;</p>
 <ul>
 	<li>
@@ -26,7 +24,7 @@ who don't know how, here is an in depth look at using custom graphics.</p>
 	</li>
 	<li>
 	<p style="text-align: left"><a href="#Customizing_level_graphics">
-	Customizing of the level graphics</a></p>
+	Customizing level graphics</a></p>
 	<ul>
 		<li>
 		<p style="text-align: left"><a href="#Blocks">Blocks</a></p>
@@ -66,61 +64,55 @@ who don't know how, here is an in depth look at using custom graphics.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <h3 style="text-align: left"><a name="Level_and_episode_folders">Level and episode folders</a></h3>
-<p style="text-align: left">For customize graphics you don't need replace global 
-data, you can put your graphics in the per level or per episode folder of your 
-game. All level files of the episode placed together in the one folder.</p>
+<p style="text-align: left">For using custom graphics it's not necessary to replace any global data, you simply have to put your graphics in the per level or per episode folder of your 
+game. All level files of the episode are placed together in this one folder.</p>
 <p style="text-align: left"><span style="text-decoration: underline">Level 
-Custom Folders</span> - is a folders which have same name which have level file. 
-For example, we have level "Dracula.lvlx", and level custom folder will be a 
+Custom Folders</span> - are folders which have the same name as the level file. 
+For example, the level "Dracula.lvlx"''s folder would be named
 "Dracula".</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/tree.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">If you put custom graphic files with level files 
-together - will be customized to all other levels in this episode, but when you 
-will put your graphics in the level custom folder, the graphics will be 
+<p style="text-align: left">Putting custom graphic files with a bunch of level files 
+together means they will be customized to all other levels in the episode, but when you 
+ put the graphics in the level custom folder, the graphics will be 
 customized for this level only.</p>
-<p style="text-align: left">Also you can replace graphics in the world map. You 
-can create the <span style="text-decoration: underline">World Custom Folder</span>, 
+<p style="text-align: left">It's also possible to replace graphics in world maps. And accordingly, the same goes for creating a <span style="text-decoration: underline">World Custom Folder</span>, 
 the folder which have same name which this world map file is have.
 <span style="text-decoration: underline">Note:</span> if you will play your 
-episode by SMBX game engine, you shouldn't make world custom folder, because 
-SMBX is not support custom folders for world map. You can place your graphics in 
-the episode folder with world map file together.</p>
+episode by SMBX game engine, you shouldn't make a world custom folder, because 
+SMBX doesn't support custom folders for world maps. You'll have to instead place your graphics in 
+the episode folder with the world map files together.</p>
 <p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Customizing_level_graphics">Customizing of 
-the level graphics</a></h3>
+<h3 style="text-align: left"><a name="Customizing_level_graphics">Customizing the level graphics</a></h3>
 <p style="text-align: left"><span style="text-decoration: underline"><strong>
-<a name="Blocks">Blocks</a></strong></span>. To replace the blocks you need create graphics files 
-with names like "<span style="text-decoration: underline">block-*.ext</span>". 
-Where * - is a ID of block which you is relpacing. Where the "ext" is an image 
-file extension. The SMBX using a GIF format without transparency. If you want 
-use the transparency, you should to create the transparency mask for your image. 
-The mask image will have name like "<span style="text-decoration: underline">block-*m.ext</span>". 
-Example: "<span style="text-decoration: underline">block-23.gif</span>" for 
+<a name="Blocks">Blocks</a></strong></span>. To replace the blocks you need to create graphic files 
+with names like "<span style="text-decoration: underline">block-*.ext</span>". * stands for the ID of the block you are replacing, and "ext" is an image 
+file extension. SMBX uses the GIF format without transparency. If you want to 
+use  transparency, create a transparency mask for your image. 
+The mask image should have a name like "<span style="text-decoration: underline">block-*m.ext</span>". An example would be "<span style="text-decoration: underline">block-23.gif</span>" for the 
 source image and "<span style="text-decoration: underline">block-23m.gif</span>" 
-for mask image to define transparency pixels.&nbsp;(<a href="opacity_masks_images.html">Read 
-more about Mask images</a>). The filename of target image file for customizing 
-you can look in the global image directory of your config pack. <em>For the SMBX 
+for the mask image, for defining the transparency pixels.&nbsp;(<a href="opacity_masks_images.html">Read 
+more about mask images</a>). The filename of the target image file you're customizing can be found in the global image directory of your config pack. <em>For SMBX 
 you should use the GIF format with mask images.</em></p>
-<p style="text-align: left"><em>The blocks have a three types of graphics:</em></p>
+<p style="text-align: left"><em>The blocks have three types of graphics:</em></p>
 <p style="text-align: left">- Static</p>
 <p style="text-align: left">- Animated</p>
 <p style="text-align: left">- Sizable.</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left"><em>&nbsp;&nbsp; -Static</em> blocks have the one 
-static frame. You can use images with any sizes, but you should use the same 
-format which using your game config which is used for your level and episode.</p>
+<p style="text-align: left"><em>&nbsp;&nbsp; -Static</em> blocks have  one 
+static frame. You can use images with any sizes, but you have to use the same 
+format which your game confiig uses for levels and episodes.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">
-<em>Example of the static image</em></p>
+<em>Example of a static image</em></p>
 <p style="text-align: center">
 <img alt="" height="32" src="../screenshots/Customizing/brick.png" width="32" /></p>
 <p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><em>&nbsp;&nbsp; -Animated</em> blocks have the 
+<p style="text-align: left"><em>&nbsp;&nbsp; -Animated</em> blocks have a 
 vertical frameset image. Each frame must have same height and your image must 
-have same frames number which have original block</p>
+have same frame number as the original block</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center; vertical-align: middle;">
 <em>Frameset for 4 frames and animation</em></p>
@@ -129,13 +121,12 @@ have same frames number which have original block</p>
 <img alt="" style="vertical-align: middle;" src="../screenshots/Customizing/block_animated.gif" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;&nbsp; <em>-Sizable</em> blocks&nbsp;have one image 
-which deviding into 9 pieces which calling as "Corners", "Sides" and "Center". 
-Sizable blocks can have any size and can be resized. The sizable blocks always 
-displaying under most of BGO's.</p>
+<p style="text-align: left">&nbsp;&nbsp; <em>-Sizable</em> blocks&nbsp;have one image divided into 9 pieces which are called "Corners", "Sides" and "Center&quot;. 
+Sizable blocks can have any size and also can be resized. The sizable blocks are 
+displayed under most of the BGO's.</p>
 <p style="text-align: left">&nbsp;&nbsp;&nbsp;
-<span style="text-decoration: underline">Note</span> If you customizing block 
-for SMBX, image should have image size in the 96x96 pixels.</p>
+<span style="text-decoration: underline">Note</span> If you're customizing a block 
+for SMBX, the image should have a size of 96x96 pixels.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center"><em>Resizable block and its source sprite</em></p>
 <div style="text-align: center; vertical-align : middle; height: 188px;">
@@ -144,11 +135,11 @@ for SMBX, image should have image size in the 96x96 pixels.</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><span style="text-decoration: underline"><strong>
-<a name="Background_objects">Background objects</a></strong></span>. Is a simple scenery of levels. Sceneries 
-have only two types: Static and Animated. BGO images is similar to Blocks, but 
-have one difference: If you will use your episodes for SMBX, images must have 
-the SAME size which have original sprite. The image filesnames of BGO's usually 
-is a "<span style="text-decoration: underline">background-*.ext</span>".</p>
+<a name="Background_objects">Background objects</a></strong></span>. Are the simple scenery of levels. Sceneries 
+have only two types: Static and Animated. BGO images are similar to Blocks, but 
+have one difference: If you're going to use your episode with SMBX, the images must have 
+the SAME size as the original sprite. The image filesnames of BGO's usually 
+are something like "<span style="text-decoration: underline">background-*.ext</span>".</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center"><em>Static picture</em></p>
 <p style="text-align: center">
@@ -159,23 +150,20 @@ is a "<span style="text-decoration: underline">background-*.ext</span>".</p>
 <img alt="" src="../screenshots/Customizing/sign_animated.png" style="vertical-align: middle" />&nbsp;
 <img alt="" src="../screenshots/Customizing/sign_animated.gif" style="vertical-align: middle" /></p>
 <p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><span style="text-decoration: underline">Be careful 
-for using BGO's:</span> the BGO's shared by Z-position: background-2 Z-level, is 
-a most lower Z-level, these BGO's displaying under sizable blocks. Background-1 
+<p style="text-align: left"><span style="text-decoration: underline">A not about being careful 
+when using BGOs:</span> the BGOs are shared by the Z-position: background-2 Z-level, which is the most lowest Z-level, these BGOs are displayed under sizable blocks. Background-1 
 Z-level is a displaying over sizable blocks, but under playable character and 
 NPC's and blocks. The foregound level is a displaying over anything, but under 
 blocks and BGO's which the "foreground-2" Z-level.
-<span style="text-decoration: underline">Note for SMBX</span>: In the SMBX BGO's 
-defining its Z-positiob by array data position. I.e. each BGO have own sorting 
-priority, which defining the BGO's Z-position.</p>
+<span style="text-decoration: underline">Note related to SMBX</span>: In SMBX the BGOs define their Z-position by array data position. I.e. each BGO has its own sorting 
+priority which defines the BGO's Z-position.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/level_items_layers.png" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><span style="text-decoration: underline"><strong>
-<a name="Non-Playable_Characters">Non-Playable Characters</a></strong></span> have the own graphics standard. You 
-should use custom graphics with same size and with same animation frames on the 
+<a name="Non-Playable_Characters">Non-Playable Characters</a></strong></span> have their own graphics standards. You would have to use custom graphics with the same size and animation frames as the 
 sprite. If you want to use custom frames number, custom size, you can define all 
 graphical settings in the special config file, which naming as NPC.txt (<a href="../customnpcconf/npc_txt.html">read 
 more</a>). The image filenames of NPC's usually is a "<span style="text-decoration: underline">npc-*.ext</span>".</p>
@@ -310,21 +298,21 @@ which moving with diffirence speeds.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Customizing_World_graphics">Customizing of 
-the world graphics</a></h3>
-<p style="text-align: left">World graphics usually placing together with your 
-world map file, but you can put all images in the World Custom Directory (not 
+<h3 style="text-align: left"><a name="Customizing_World_graphics">Customizing world graphics</a></h3>
+<p style="text-align: left">World graphics are usually placed together with the 
+world map file, but you can place all the images in the World Custom Directory (not 
 supported by SMBX).</p>
 <p style="text-align: left"><span style="text-decoration: underline">Tiles</span>,
 <span style="text-decoration: underline">Paths</span>,
-<span style="text-decoration: underline">Sceneries</span>. The graphics similar 
-to the BGO for levels. Images have a two types: statically and animated. Image 
-files usually have names "<span style="text-decoration: underline">tile-*.ext</span>", 
+<span style="text-decoration: underline">Sceneries</span>. The graphics are similar 
+to the BGOs in levels. Images have two types: static and animated. Image 
+files usually have names like "<span style="text-decoration: underline">tile-*.ext</span>", 
 "<span style="text-decoration: underline">path-*.ext</span>" and "<span style="text-decoration: underline">scene-*.ext</span>".</p>
+<p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><span style="text-decoration: underline">Levels</span>. 
-Level images have tiny diffirence from other images: image always attaching to 
-bottom-center position of item, where image was used. The image files of levels 
-usually is a "<span style="text-decoration: underline">level-*.ext</span>".</p>
+  Level images have some minor differences from other images. Mainly images always attaching to 
+  bottom-center position of item, where image was used. The image files of levels 
+  usually is a "<span style="text-decoration: underline">level-*.ext</span>".</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
@@ -414,7 +402,7 @@ formats support</a></strong></h3>
 		<td style="text-align: center; border: 1px solid #000000">Not support by 
 		SMBX</td>
 	</tr>
-	</table>
+</table>
 </p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
