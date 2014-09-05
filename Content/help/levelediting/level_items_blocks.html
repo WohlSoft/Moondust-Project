@@ -13,7 +13,7 @@
 <a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /><a/></p>
 <h1 style="text-align: left">Level editing &gt; Level items &gt; blocks</h1>
 <p style="text-align: left"><strong>Blocks</strong> - the 
-solid objects which are tiles with his shape and size. The main construction 
+a solid objects which are tiles with his shape and size. The main construction 
 material of which level consists. The majority of blocks 
 interacts from players on whom it can stand about which the player can hit which 
 can be a limiting wall. There are blocks the touch to which hurt to the game 
@@ -50,21 +50,20 @@ blocks.</p>
 Each block have flags:</p>
 <p style="text-align: left">
 <strong>Invisible</strong> - The block will be invisible and will appear only on 
-hit it. This flag useful for place on the map secret bonuses or make locks for 
-move up.</p>
+hit it. This flag useful for place some secret bonuses or make one way holes.</p>
 <p style="text-align: left">
 <strong>Slippery</strong> - The block's top surface will be slippery.</p>
 <p style="text-align: left">
 &nbsp;</p>
 <p style="text-align: left">
-<strong>Contained NPC</strong> - NPC, which will appear from block on hit it.</p>
+<strong>Contained NPC</strong> - NPC which will appear from block when player hit it.</p>
 <p style="text-align: left">
 Block can contain the some number of coins, or one of NPC.</p>
 <p style="text-align: center">
 &nbsp;</p>
 <p style="text-align: left">
-<strong>Layer </strong>- here defined the layer, what is owner of this block. 
-All items at first are a members of "Default" layer.</p>
+<strong>Layer </strong>- here was defined the layer which is owner of this block. 
+All items at first are a members of the "Default" layer.</p>
 <p style="text-align: left">
 &nbsp;</p>
 <p style="text-align: left">
@@ -76,10 +75,10 @@ crashed, destroyed, etc.</p>
 <strong>Hit</strong> - This slot activating if blocks was be hit, kicked, beated 
 from side or bottom.</p>
 <p style="text-align: left">
-<strong>Layer is empty</strong> - (In SMBX this option named as "<span style="text-decoration: underline">No 
-more objects in layer</span>") this slot activating if was activated the 
-"destroyed" slot and if on same layer, which is an owner if this block, haven't 
-other objects.</p>
+<strong>Layer is empty</strong> - (In SMBX this slot was&nbsp; called as "<span style="text-decoration: underline">No 
+more objects in layer</span>") this slot activating when was activated the 
+"destroyed" slot and when layer which owner of this block is haven't other 
+objects.</p>
 <p style="text-align: center">
 &nbsp;</p>
 <p style="text-align: center">
@@ -97,8 +96,9 @@ other objects.</p>
 <h3 style="text-align: left">
 <strong><a name="Sizable_blocks">Sizable blocks</a></strong></h3>
 <p style="text-align: left">
-This is special block type, what can have any size. Instead standard blocks, 
-this block placing by drawing and its size defining by drawed by your rectangle:</p>
+This is a special block type which can have any sizes. Unlike standard blocks, 
+this block placing by rectangle drawing and it's size is defining by size of rectangle 
+when you release mouse key:</p>
 <p style="text-align: left">
 &nbsp;</p>
 <p style="text-align: center">
@@ -110,16 +110,18 @@ this block placing by drawing and its size defining by drawed by your rectangle:
 <p style="text-align: left">
 &nbsp;</p>
 <p style="text-align: left">
-This blocks can be resized. Instead standard blocks, this blocks displaying in 
-lower background and will displaying always under BGO.</p>
+This blocks can be resized. Unlike standard blocks, these blocks displaying in 
+the low background layer and displaying always under BGO (but some BGO in the 
+exception can be shown under sizable blocks).</p>
 <p style="text-align: left">
 &nbsp;</p>
 <p style="text-align: left">
-For start resizing, you must call "Resize" from item toolbox or by "Resize" item 
-of context menu. Will be appeared blue rectangle, this is the sizer. Move corder 
-dots for define new size. When you done resizing, press ENTER key for accept new 
-size, and block will be displayed with new size. Or press ESC key to cancel 
-resizing and leave the current block size.</p>
+To start resizing, you should open the "Resize" context menu item 
+and you will see a blue rectangle which a "sizer". Move corner 
+dots to define new size of block. When you done resizing press the ENTER key for accept new 
+size, and then block will have a new size. If you will press the ESC key you 
+will cancel 
+resizing and block will keep current it's size.</p>
 <p style="text-align: center">
 &nbsp;</p>
 <p style="text-align: center">
