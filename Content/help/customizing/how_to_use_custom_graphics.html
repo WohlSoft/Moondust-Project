@@ -48,15 +48,14 @@ who don't know how, here is an in depth look at using custom graphics with the e
 	</li>
 	<li>
 	<p style="text-align: left"><a href="#Customizing_World_graphics">
-	Customizing of the world graphics</a></p>
+	Customizing the world graphics</a></p>
 	</li>
 	<li>
 	<p style="text-align: left"><a href="#Customizing_notes"><strong>Customizing 
 	notes</strong></a></p>
 	</li>
 	<li>
-	<p style="text-align: left"><a href="#Graphics_format_support"><em>Graphics 
-	formats support</em></a></p>
+	<p style="text-align: left"><a href="#Graphics_format_support"><em>Graphic formats supported</em></a></p>
 	</li>
 </ul>
 <p style="text-align: left">&nbsp;</p>
@@ -64,11 +63,11 @@ who don't know how, here is an in depth look at using custom graphics with the e
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <h3 style="text-align: left"><a name="Level_and_episode_folders">Level and episode folders</a></h3>
-<p style="text-align: left">For using custom graphics it's not necessary to replace any global data, you simply have to put your graphics in the per level or per episode folder of your 
-game. All level files of the episode are placed together in this one folder.</p>
+<p style="text-align: left">When using custom graphics, it's not necessary to replace any global data, you simply have to put your graphics in the per level or per episode folder of your 
+game. All level files of an episode are placed together in this one folder.</p>
 <p style="text-align: left"><span style="text-decoration: underline">Level 
 Custom Folders</span> - are folders which have the same name as the level file. 
-For example, the level "Dracula.lvlx"''s folder would be named
+For example, the folder name for the level "Dracula.lvlx" would be
 "Dracula".</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">
@@ -77,15 +76,13 @@ For example, the level "Dracula.lvlx"''s folder would be named
 <p style="text-align: left">Putting custom graphic files with a bunch of level files 
 together means they will be customized to all other levels in the episode, but when you 
  put the graphics in the level custom folder, the graphics will be 
-customized for this level only.</p>
-<p style="text-align: left">It's also possible to replace graphics in world maps. And accordingly, the same goes for creating a <span style="text-decoration: underline">World Custom Folder</span>, 
-the folder which have same name which this world map file is have.
-<span style="text-decoration: underline">Note:</span> if you will play your 
-episode by SMBX game engine, you shouldn't make a world custom folder, because 
-SMBX doesn't support custom folders for world maps. You'll have to instead place your graphics in 
-the episode folder with the world map files together.</p>
+customized for that level only.</p>
+<p style="text-align: left">It's also possible to replace graphics in world maps. Accordingly, the same goes for creating a <span style="text-decoration: underline">World Custom Folder</span>, 
+the folder which has the same name as the world map file.
+<span style="text-decoration: underline">Note:</span> If you're going to play your episode with the SMBX game engine, you shouldn't make a world custom folder, as SMBX doesn't support custom folders for world maps. Instead you'll have to place your graphics in 
+the episode folder along with the world map files.</p>
 <p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Customizing_level_graphics">Customizing the level graphics</a></h3>
+<h3 style="text-align: left"><a name="Customizing_level_graphics">Customizing level graphics</a></h3>
 <p style="text-align: left"><span style="text-decoration: underline"><strong>
 <a name="Blocks">Blocks</a></strong></span>. To replace the blocks you need to create graphic files 
 with names like "<span style="text-decoration: underline">block-*.ext</span>". * stands for the ID of the block you are replacing, and "ext" is an image 
@@ -94,7 +91,7 @@ use  transparency, create a transparency mask for your image.
 The mask image should have a name like "<span style="text-decoration: underline">block-*m.ext</span>". An example would be "<span style="text-decoration: underline">block-23.gif</span>" for the 
 source image and "<span style="text-decoration: underline">block-23m.gif</span>" 
 for the mask image, for defining the transparency pixels.&nbsp;(<a href="opacity_masks_images.html">Read 
-more about mask images</a>). The filename of the target image file you're customizing can be found in the global image directory of your config pack. <em>For SMBX 
+more about mask images</a>). The filename of the target image file you're customizing can be found in the global image directory of your config pack. <em>Keep in mind that for SMBX 
 you should use the GIF format with mask images.</em></p>
 <p style="text-align: left"><em>The blocks have three types of graphics:</em></p>
 <p style="text-align: left">- Static</p>
@@ -163,23 +160,22 @@ priority which defines the BGO's Z-position.</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><span style="text-decoration: underline"><strong>
-<a name="Non-Playable_Characters">Non-Playable Characters</a></strong></span> have their own graphics standards. You would have to use custom graphics with the same size and animation frames as the 
-sprite. If you want to use custom frames number, custom size, you can define all 
-graphical settings in the special config file, which naming as NPC.txt (<a href="../customnpcconf/npc_txt.html">read 
+<a name="Non-Playable_Characters">Non-Playable Characters</a></strong></span> have their own graphic standards. You would have to use custom graphics with the same size and animation frames as the original sprite to replace them. If you want to use custom frame numbers, custom sizes, you can define all those (
+graphical settings) in the special config file called NPC.txt (<a href="../customnpcconf/npc_txt.html">read 
 more</a>). The image filenames of NPC's usually is a "<span style="text-decoration: underline">npc-*.ext</span>".</p>
-<p style="text-align: left">NPC have multiple graphics types:</p>
-<p style="text-align: left">- Statical, you can use one image with one frame for 
+<p style="text-align: left">NPCs have multiple graphics types:</p>
+<p style="text-align: left">- Statical, you can use one image with one frame for an 
 item.</p>
 <p style="text-align: center">
 <img alt="" height="32" src="../screenshots/Customizing/npc_static.png" width="32" /></p>
 <p style="text-align: center">&nbsp;</p>
-<p style="text-align: left">- Animated simple, have animated frames like blocks or BGO.</p>
+<p style="text-align: left">- Animated simple, these have animated frames like blocks or BGO.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/npc_animated.png" style="vertical-align: middle" />&nbsp;
 <img alt="" src="../screenshots/Customizing/npc_animated.gif" style="vertical-align: middle" /></p>
 <p style="text-align: center">&nbsp;</p>
-<p style="text-align: left">- Animated with left-right direction defining. Allows to define images for left 
-and right NPC's direction.</p>
+<p style="text-align: left">- Animated with left-right defined direction. Allows defining images for the NPC's left 
+and right direction.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/npc_animated_style1.png" style="vertical-align: middle" />&nbsp;&nbsp;&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/npc_animated_style_ani.gif" style="vertical-align: middle" /></p>
@@ -198,9 +194,9 @@ frames with round rotation (NPC should can adhease to celling and walls).</p>
 <img alt="" src="../screenshots/Customizing/npc_animated_style3.png" style="vertical-align: middle" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/npc_animated_style_ani3.gif" style="vertical-align: middle" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">- Animated with special animation algorithm. The NPC 
-have algorithmic pre-defined frame sequance, and you can't redefine them if you 
-will use your NPC in the original SMBX.</p>
+<p style="text-align: left">- Animated with the special animation algorithm. The NPC 
+ has an algorithmic pre-defined frame sequence, you can't redefine it if you 
+will use your NPC in SMBX.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/npc_animated_style_alg.png" style="vertical-align: middle" />&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/npc_animated_style_ani_alg.gif" style="vertical-align: middle" /></p>
@@ -261,9 +257,7 @@ height).</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/Background_doubleRow_s.gif" style="vertical-align: middle" />&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/Background_doubleRow_r.gif" style="vertical-align: middle" /></p>
-<p style="text-align: left"><span style="text-decoration: underline">Note for 
-the editor:</span> Single-row and Double-row backgrounds will be displayed only 
-in the bottom or in the top (which attachment type have this background) with 
+<p style="text-align: left"><span style="text-decoration: underline">An editor related note:</span> Single-row and Double-row backgrounds will only be displayed at the bottom or  top (which attachment type have this background) with 
 only horisontal repeating. If you want to see your background like tiled, you 
 need when you exporting image set the "Tiled background" flag. Also in the INI 
 configs available flag which called as "tiled in the editor" which will make 
@@ -318,29 +312,26 @@ files usually have names like "<span style="text-decoration: underline">tile-*.e
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
 <h3 style="text-align: left; color: #9B0000;">
-<a name="Customizing_notes" style="color: #CE0404">Customizing notes</a></h3>
-<p style="text-align: left">- On customizing of animated items be careful, your 
-sprite must be have the same frames number which in the original image.</p>
-<p style="text-align: left">- If you creating the custom BGO's, please, be 
-careful by using these graphics in the SMBX. If size of custom BGO larger than 
-original item image which you replacing, it will be cropped in the SMBX. Don't 
-use larger images if you wanna use levels in the SMBX. Same for a Tiles, 
-Sceneries, Paths and Levels on the world map.</p>
-<p style="text-align: left">- On customizing NPC's, you must create the image 
-sprite with same image size and frames number. If you create custom image size, 
-you should to create the npc-*.txt config file for define the properties for 
+<a name="Customizing_notes" style="color: #CE0404">Things to note when customizing</a></h3>
+<p style="text-align: left">- When customizing an animated item, make sure that your 
+sprite has the same number of frames as in the original image.</p>
+<p style="text-align: left">- Remember that if the size of a custom BGO is larger than the 
+original image you are replacing, it will be cropped in SMBX. In other words, don't 
+use custom images larger than the image you're replacing if you want to use them in levels for SMBX. This also applies to Tiles, 
+Sceneries, Paths and Levels in the World map.</p>
+<p style="text-align: left">- When customizing a NPC, you'll have to create the image 
+sprite with the same image size and number of frames as the original. If you're creating a custom image size, remember to create the npc-*.txt config file for defining the properties of 
 your custom NPC.</p>
-<p style="text-align: left">- Be careful with filenames on the UNIX-Like 
-Operating systems, files with names "thecat" and "TheCat" - is a difference 
-files.</p>
+<p style="text-align: left">- Remember to be careful with your filenames in UNIX-Like 
+operating systems, an example would be something like "thecat" and "TheCat", both are recognized as entirely different files.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><strong><a name="Graphics_format_support">Graphics 
-formats support</a></strong></h3>
+<h3 style="text-align: left"><strong><a name="Graphics_format_support">Graphic 
+formats supported</a></strong></h3>
 <p style="text-align: center">&nbsp;</p>
-<p style="text-align: center"><strong>The PGE support these graphics formats:</strong></p>
+<p style="text-align: center"><strong>The PGE supports the following graphic formats:</strong></p>
 <p style="text-align: center">
 <table style="border-collapse: collapse; width: 730px; border: 1px solid #000000" align="center">
 	<tr>
@@ -352,16 +343,15 @@ formats support</a></strong></h3>
 		<td style="text-align: center; width: 71px; color: #008000; border: 1px solid #000000">
 		GIF</td>
 		<td style="text-align: center; width: 420px; border: 1px solid #000000">
-		CompuServe GIF, witout transparency (with using of the masks)</td>
+		CompuServe GIF, without transparency (with using the masks)</td>
 		<td style="border: 1px solid #000000"></td>
 	</tr>
 	<tr>
 		<td style="text-align: center; width: 71px; color: #0091C5; border: 1px solid #000000">
 		GIF</td>
 		<td style="text-align: center; width: 420px; border: 1px solid #000000">
-		CompuServe GIF, with own transparency</td>
-		<td style="border: 1px solid #000000">SMBX will fill transparency by 
-		black</td>
+		CompuServe GIF, with it's own transparency</td>
+		<td style="border: 1px solid #000000">SMBX will fill the transparency with black</td>
 	</tr>
 	<tr>
 		<td style="text-align: center; width: 71px; color: #008000; border: 1px solid #000000; height: 22px;">
@@ -374,8 +364,8 @@ formats support</a></strong></h3>
 		<td style="text-align: center; width: 71px; color: #0000FF; border: 1px solid #000000">
 		PNG</td>
 		<td style="text-align: center; width: 420px; border: 1px solid #000000">
-		Portable Network Graphics, with alpha-channel transparency</td>
-		<td style="text-align: center; border: 1px solid #000000">Not support by 
+		Portable Network graphic, with alpha-channel transparency</td>
+		<td style="text-align: center; border: 1px solid #000000">Not supported by 
 		SMBX</td>
 	</tr>
 	<tr>
@@ -383,7 +373,7 @@ formats support</a></strong></h3>
 		JPG</td>
 		<td style="text-align: center; width: 420px; border: 1px solid #000000">
 		&nbsp;Joint Photographic EG, Lossy-data compressed</td>
-		<td style="text-align: center; border: 1px solid #000000">Not support by 
+		<td style="text-align: center; border: 1px solid #000000">Not supported by 
 		SMBX</td>
 	</tr>
 	<tr>
@@ -391,7 +381,7 @@ formats support</a></strong></h3>
 		TIF</td>
 		<td style="text-align: center; width: 420px; border: 1px solid #000000">
 		Tagged Image File Format</td>
-		<td style="text-align: center; border: 1px solid #000000">Not support by 
+		<td style="text-align: center; border: 1px solid #000000">Not supported by 
 		SMBX</td>
 	</tr>
 	<tr>
@@ -399,7 +389,7 @@ formats support</a></strong></h3>
 		TGA</td>
 		<td style="text-align: center; width: 420px; border: 1px solid #000000">
 		Truevision TGA</td>
-		<td style="text-align: center; border: 1px solid #000000">Not support by 
+		<td style="text-align: center; border: 1px solid #000000">Not supported by 
 		SMBX</td>
 	</tr>
 </table>
