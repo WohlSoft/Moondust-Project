@@ -20,7 +20,62 @@
 
 #include "../main_window/global_settings.h"
 
-void dataconfigs::loadMusic()
+long dataconfigs::getMusLvlI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < main_music_lvl.size(); j++)
+    {
+        if(main_music_lvl[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+long dataconfigs::getMusWldI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < main_music_wld.size(); j++)
+    {
+        if(main_music_wld[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+long dataconfigs::getMusSpcI(unsigned long itemID)
+{
+    long j;
+    bool found=false;
+
+    for(j=0; j < main_music_spc.size(); j++)
+    {
+        if(main_music_spc[j].id==itemID)
+        {
+            found=true;
+            break;
+        }
+    }
+
+    if(!found) j=-1;
+    return j;
+}
+
+
+void dataconfigs::loadMusic(QProgressDialog *prgs)
 {
     unsigned int i;
 
@@ -36,8 +91,8 @@ void dataconfigs::loadMusic()
 
     if(!QFile::exists(music_ini))
     {
-        WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini: file not exist"));
-          return;
+        addError(QString("ERROR LOADING music.ini: file does not exist"), QtCriticalMsg);
+        return;
     }
 
     QSettings musicset(music_ini, QSettings::IniFormat);
@@ -58,6 +113,9 @@ void dataconfigs::loadMusic()
         total_data +=music_spc_total;
     musicset.endGroup();
 
+    if(prgs) prgs->setMaximum(music_lvl_total+music_wld_total+music_spc_total);
+    if(prgs) prgs->setLabelText(QApplication::tr("Loading Music..."));
+
     ConfStatus::total_music_lvl = music_lvl_total;
     ConfStatus::total_music_wld = music_wld_total;
     ConfStatus::total_music_spc = music_spc_total;
@@ -65,19 +123,49 @@ void dataconfigs::loadMusic()
 
     //////////////////////////////
 
+    if(ConfStatus::total_music_lvl==0)
+    {
+        addError(QString("ERROR LOADING music.ini: number of Level Music items not define, or empty config"), QtCriticalMsg);
+    }
+    if(ConfStatus::total_music_wld==0)
+    {
+        addError(QString("ERROR LOADING music.ini: number of World Music items not define, or empty config"), QtCriticalMsg);
+    }
+    if(ConfStatus::total_music_spc==0)
+    {
+        addError(QString("ERROR LOADING music.ini: number of Special Music items not define, or empty config"), QtCriticalMsg);
+    }
+
     //World music
     for(i=1; i<=music_wld_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         musicset.beginGroup( QString("world-music-"+QString::number(i)) );
             smusic_wld.name = musicset.value("name", "").toString();
+            if(smusic_wld.name.isEmpty())
+            {
+                addError(QString("WLD-Music-%1 Item name isn't defined").arg(i));
+                goto skipWldMusic;
+            }
             smusic_wld.file = musicset.value("file", "").toString();
+            if(smusic_wld.file.isEmpty())
+            {
+                addError(QString("WLD-Music-%1 Item file isn't defined").arg(i));
+                goto skipWldMusic;
+            }
             smusic_wld.id = i;
             main_music_wld.push_back(smusic_wld);
+        skipWldMusic:
         musicset.endGroup();
 
         if( musicset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (world music %2)").arg(musicset.status()).arg(i));
+            addError(QString("ERROR LOADING music.ini N:%1 (world music %2)").arg(musicset.status()).arg(i), QtCriticalMsg);
             break;
         }
     }
@@ -85,16 +173,34 @@ void dataconfigs::loadMusic()
     //Special music
     for(i=1; i<=music_spc_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         musicset.beginGroup( QString("special-music-"+QString::number(i)) );
             smusic_spc.name = musicset.value("name", "").toString();
+            if(smusic_spc.name.isEmpty())
+            {
+                addError(QString("SPC-Music-%1 Item name isn't defined").arg(i));
+                goto skipSpcMusic;
+            }
             smusic_spc.file = musicset.value("file", "").toString();
+            if(smusic_spc.file.isEmpty())
+            {
+                addError(QString("SPC-Music-%1 Item file isn't defined").arg(i));
+                goto skipSpcMusic;
+            }
             smusic_spc.id = i;
             main_music_spc.push_back(smusic_spc);
+
+        skipSpcMusic:
         musicset.endGroup();
 
         if( musicset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i));
+            addError(QString(QString("ERROR LOADING music.ini N:%1 (special music %2)").arg(musicset.status()).arg(i)), QtCriticalMsg);
             break;
         }
     }
@@ -102,16 +208,33 @@ void dataconfigs::loadMusic()
     //Level music
     for(i=1; i<=music_lvl_total; i++)
     {
+        qApp->processEvents();
+        if(prgs)
+        {
+            if(!prgs->wasCanceled()) prgs->setValue(i);
+        }
+
         musicset.beginGroup( QString("level-music-"+QString::number(i)) );
             smusic_lvl.name = musicset.value("name", "").toString();
+            if(smusic_lvl.name.isEmpty())
+            {
+                addError(QString("LVL-Music-%1 Item name isn't defined").arg(i));
+                goto skipLvlMusic;
+            }
             smusic_lvl.file = musicset.value("file", "").toString();
+            if(smusic_lvl.file.isEmpty()&&(i != music_custom_id))
+            {
+                addError(QString("LVL-Music-%1 Item file isn't defined").arg(i));
+                goto skipLvlMusic;
+            }
             smusic_lvl.id = i;
             main_music_lvl.push_back(smusic_lvl);
+        skipLvlMusic:
         musicset.endGroup();
 
         if( musicset.status() != QSettings::NoError )
         {
-            WriteToLog(QtCriticalMsg, QString("ERROR LOADING OF music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i));
+            addError(QString("ERROR LOADING music.ini N:%1 (level-music %2)").arg(musicset.status()).arg(i), QtCriticalMsg);
             break;
         }
     }

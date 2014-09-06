@@ -83,8 +83,10 @@ struct LevelBGO
 
     //editing
     long smbx64_sp;
+    long smbx64_sp_apply; // Used only in save file process
     unsigned int array_id;
     unsigned int index;
+
 };
 
 struct LevelNPC
@@ -94,6 +96,7 @@ struct LevelNPC
     int direct;
     unsigned long id;
     long special_data;
+    long special_data2;
     bool generator;
     int generator_direct;
     int generator_type;
@@ -112,6 +115,7 @@ struct LevelNPC
     //editing
     unsigned int array_id;
     unsigned int index;
+    bool is_star;
 };
 
 struct LevelDoors
@@ -251,6 +255,7 @@ struct LevelData
     int CurSection;
     bool playmusic;
     bool modified;
+    bool untitled;
     QString filename;
     QString path;
 };

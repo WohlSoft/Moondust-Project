@@ -17,21 +17,8 @@
  */
 
 #include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#include "../edit_level/level_edit.h"
 
-
-
-/* ////////////////////////////////////The Trach///////////////////////////////////
-void LvlScene::placeBox(float x, float y)
-{
-    QGraphicsItem *	box = addPixmap(QPixmap(QApplication::applicationDirPath() + "/" + "data/graphics/level/block/block-8.gif"));
-    box->setPos(x, y);
-    if (itemCollidesWith(box))
-        removeItem(box);
-    else
-        box->setData(0, "Box");
-}
-*/
 
 // //////////////////////////Apply used sections///////////////////////////////////////
 void LvlScene::makeSectionBG(QProgressDialog &progress)
@@ -47,9 +34,9 @@ void LvlScene::makeSectionBG(QProgressDialog &progress)
 
         total++;
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            /*progress.setValue(progress.value()+1);
+        else*/ return;
     }
 
 }
@@ -66,9 +53,9 @@ void LvlScene::setBlocks(QProgressDialog &progress)
         //Add block to scene
         placeBlock(LvlData->blocks[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 }
 
@@ -86,9 +73,9 @@ void LvlScene::setBGO(QProgressDialog &progress)
         //add BGO to scene
         placeBGO(LvlData->bgo[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -105,9 +92,9 @@ void LvlScene::setNPC(QProgressDialog &progress)
         //add NPC to scene
         placeNPC(LvlData->npc[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -122,9 +109,9 @@ void LvlScene::setWaters(QProgressDialog &progress)
         //add Water to scene
         placeWater(LvlData->water[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 
 }
@@ -141,10 +128,9 @@ void LvlScene::setDoors(QProgressDialog &progress)
         //add Doors points to scene
         placeDoor(LvlData->doors[i]);
 
-        if(!progress.wasCanceled())
-            progress.setValue(progress.value()+1);
-        else
-            return;
+        if(progress.wasCanceled())
+            //progress.setValue(progress.value()+1);
+        /*else*/ return;
     }
 }
 

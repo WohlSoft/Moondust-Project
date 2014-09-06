@@ -17,7 +17,7 @@
  */
 
 #include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#include "../edit_level/level_edit.h"
 
 #include "item_block.h"
 #include "item_bgo.h"
@@ -25,7 +25,7 @@
 
 LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
-    setItemIndexMethod(NoIndex);
+    setItemIndexMethod(QGraphicsScene::NoIndex);
 
     //Pointerss
     pConfigs = &configs; // Pointer to Main Configs
@@ -71,11 +71,9 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     resetCursor();
 
     //set dummy images if target not exist or wrong
-    uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.gif");
-    npcmask = QBitmap(QApplication::applicationDirPath() + "/" + "data/unknown_npcm.gif");
-    uNpcImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.gif");
-    uNpcImg.setMask(npcmask);
-    uBgoImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
+    uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.png");
+    uNpcImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.png");
+    uBgoImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.png");
 
 
     //set Default Z Indexes
@@ -84,14 +82,10 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     bgoZb = -100; // backround BGO
 
     blockZ = 1; // standart block
-    playerZ = 5; //player Point
-
-    bgoZf = 50; // foreground BGO
-
     npcZb = 20; // background NPC
-
     npcZs = 30; // standart NPC
-
+    playerZ = 35; //player Point
+    bgoZf = 50; // foreground BGO
     blockZl = 100; //LavaBlock
     npcZf = 150; // foreground NPC
     waterZ = 500;
@@ -120,6 +114,7 @@ LvlScene::~LvlScene()
     uBGs.clear();
     uBGOs.clear();
     uBlocks.clear();
+    uNPCs.clear();
 }
 
 

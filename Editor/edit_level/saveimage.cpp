@@ -41,6 +41,16 @@ ExportToImage::~ExportToImage()
     delete ui;
 }
 
+bool ExportToImage::HideWatersAndDoors()
+{
+    return ui->HideWarpsWaters->isChecked();
+}
+
+bool ExportToImage::TiledBackground()
+{
+    return ui->tiledBackround->isChecked();
+}
+
 void ExportToImage::on_imgHeight_valueChanged(int arg1)
 {
     if( (ui->SaveProportion->isChecked()) && (ui->imgHeight->hasFocus()) )

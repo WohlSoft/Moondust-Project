@@ -16,23 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtWidgets>
 #include "mainwindow.h"
-#include <QDebug>
 
 #include <QSharedMemory>
 #include <QSystemSemaphore>
 
 #include "common_features/logger.h"
+#include "common_features/proxystyle.h"
 
-//Regular expressions for File Formats
+#include <iostream>
+#include <stdlib.h>
 
 int main(int argc, char *argv[])
 {
     QApplication::addLibraryPath(".");
-    QApplication a(argc, argv);
 
-    LoadLogSettings();
+    QApplication *a = new QApplication(argc, argv);
+    a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
 
     //Check if application is already running//////////////////
     QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     }
 
     QString sendToMem;
-    foreach(QString str, a.arguments())
+    foreach(QString str, a->arguments())
     {
         sendToMem+= str + "|";
     }
@@ -62,20 +62,38 @@ int main(int argc, char *argv[])
     }
     sema.release();
 
+    shmem.disconnect();
+
     if(isRunning)
     {
-        WriteToLog(QtDebugMsg, "--> Application Already running, aborting <--");
+        QApplication::quit();
+        QApplication::exit();
+        delete a;
         return 0;
     }
 
+    LoadLogSettings();
+
     // ////////////////////////////////////////////////////
+    a->setStyle(new PGE_ProxyStyle);
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
-    MainWindow w;
-    w.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, QSize(qApp->desktop()->width()-100, qApp->desktop()->height()-100), qApp->desktop()->availableGeometry()));
-    w.show();
+    MainWindow *w = new MainWindow;
+    w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, QSize(qApp->desktop()->width()-100, qApp->desktop()->height()-100), qApp->desktop()->availableGeometry()));
 
-    w.openFilesByArgs(a.arguments());
+    a->connect( a, SIGNAL(lastWindowClosed()), a, SLOT( quit() ) );
+    a->connect( w, SIGNAL( closeEditor()), a, SLOT( quit() ) );
+    a->connect( w, SIGNAL( closeEditor()), a, SLOT( closeAllWindows() ) );
 
-    return a.exec();
+    w->showNormal();
+    w->activateWindow();
+    w->raise();
+
+    w->openFilesByArgs(a->arguments());
+
+    int ret=a->exec();
+    QApplication::quit();
+    QApplication::exit();
+    delete a;
+    return ret;
 }

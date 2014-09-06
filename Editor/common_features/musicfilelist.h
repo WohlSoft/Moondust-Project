@@ -32,7 +32,7 @@ class MusicFileList : public QDialog
 
 public:
     QString SelectedFile;
-    explicit MusicFileList(QString Folder, QWidget *parent = 0);
+    explicit MusicFileList(QString Folder, QString current="", QWidget *parent = 0);
     ~MusicFileList();
 
 private slots:

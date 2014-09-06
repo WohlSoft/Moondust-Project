@@ -19,20 +19,29 @@
 #ifndef CUSTOM_DATA_H
 #define CUSTOM_DATA_H
 
+#include "../file_formats/npc_filedata.h"
+#include "../data_configs/obj_npc.h"
 #include <QPixmap>
 #include <QBitmap>
+
+struct UserIMGs
+{
+    QPixmap image;
+    QPixmap mask;
+    unsigned long id;
+};
 
 struct UserBGOs
 {
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
     unsigned long id;
 };
 
 struct UserBlocks
 {
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
     unsigned long id;
 };
 
@@ -40,7 +49,7 @@ struct UserNPCs
 {
     bool withImg;
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
     unsigned long id;
 
     bool withTxt;

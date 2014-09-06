@@ -17,7 +17,7 @@
  */
 
 #include "lvlscene.h"
-#include "../edit_level/leveledit.h"
+#include "../edit_level/level_edit.h"
 
 #include "item_block.h"
 #include "item_bgo.h"
@@ -25,6 +25,80 @@
 #include "item_water.h"
 #include "item_door.h"
 #include "../main_window/global_settings.h"
+
+#include "../common_features/mainwinconnect.h"
+
+#include "newlayerbox.h"
+
+
+void LvlScene::SwitchEditingMode(int EdtMode)
+{
+    //int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
+                     // 3 - drawing water/sand zone, 4 - placing from Buffer
+    //bool EraserEnabled;
+    //bool PasteFromBuffer;
+
+    //bool DrawMode; //Placing/drawing on map, disable selecting and dragging items
+
+    //bool disableMoveItems;
+
+    //bool contextMenuOpened;
+    EraserEnabled=false;
+    PasteFromBuffer=false;
+    DrawMode=false;
+    disableMoveItems=false;
+
+    switch(EdtMode)
+    {
+    case MODE_PlacingNew:
+        DrawMode=true;
+        resetResizers();
+
+        break;
+    case MODE_DrawSquare:
+        resetResizers();
+        DrawMode=true;
+        break;
+
+    case MODE_Line:
+        resetResizers();
+        DrawMode=true;
+        break;
+
+    case MODE_Resizing:
+        resetCursor();
+        DrawMode=true;
+        disableMoveItems=true;
+        break;
+
+    case MODE_PasteFromClip:
+        resetCursor();
+        resetResizers();
+        disableMoveItems=true;
+        break;
+
+    case MODE_Erasing:
+        resetCursor();
+        resetResizers();
+        break;
+
+    case MODE_SelectingOnly:
+        resetCursor();
+        resetResizers();
+        disableMoveItems=true;
+        break;
+
+    case MODE_Selecting:
+    default:
+        resetCursor();
+        resetResizers();
+        break;
+    }
+    EditingMode = EdtMode;
+
+}
+
+
 
 ////////////////////////////////////Animator////////////////////////////////
 void LvlScene::startBlockAnimation()
@@ -40,56 +114,81 @@ void LvlScene::startBlockAnimation()
         return;
     }
 
-    QList<QGraphicsItem*> ItemList = items();
-    QGraphicsItem *tmp;
-    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    foreach(SimpleAnimator * bgoA, animates_BGO)
     {
-        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBlock *)tmp)->AnimationStart();
-        }
-        else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBGO *)tmp)->AnimationStart();
-        }
-        else
-        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemNPC *)tmp)->AnimationStart();
-        }
+        bgoA->start();
     }
+    foreach(SimpleAnimator * blockA, animates_Blocks)
+    {
+        blockA->start();
+    }
+    foreach(AdvNpcAnimator * npcA, animates_NPC)
+    {
+        npcA->start();
+    }
+
+//    QList<QGraphicsItem*> ItemList = items();
+//    QGraphicsItem *tmp;
+//    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+//    {
+//        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            dynamic_cast<ItemNPC *>(tmp)->AnimationStart();
+//        }
+//    }
 
 }
 
 void LvlScene::stopAnimation()
 {
-    QList<QGraphicsItem*> ItemList = items();
-    QGraphicsItem *tmp;
-    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    foreach(SimpleAnimator * bgoA, animates_BGO)
     {
-        if(((*it)->data(0)=="Block")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBlock *)tmp)->AnimationStop();
-        }
-        else
-        if(((*it)->data(0)=="BGO")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemBGO *)tmp)->AnimationStop();
-        }
-        else
-        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
-        {
-            tmp = (*it);
-            ((ItemNPC *)tmp)->AnimationStop();
-        }
+        bgoA->stop();
+    }
+    foreach(SimpleAnimator * blockA, animates_Blocks)
+    {
+        blockA->stop();
+    }
+    foreach(AdvNpcAnimator * npcA, animates_NPC)
+    {
+        npcA->stop();
     }
 
+//    QList<QGraphicsItem*> ItemList = items();
+//    QGraphicsItem *tmp;
+//    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+//    {
+//        if(((*it)->data(0)=="NPC")&&((*it)->data(4)=="animated"))
+//        {
+//            tmp = (*it);
+//            dynamic_cast<ItemNPC *>(tmp)->AnimationStop();
+//        }
+//    }
+
+    update();
+}
+
+void LvlScene::hideWarpsAndDoors(bool visible)
+{
+    QMap<QString, LevelLayers> localLayers;
+    for(int i = 0; i < LvlData->layers.size(); ++i){
+        localLayers[LvlData->layers[i].name] = LvlData->layers[i];
+    }
+
+    foreach (QGraphicsItem* i, items()) {
+        if(i->data(0).toString()=="Water"){
+            i->setVisible(!localLayers[((ItemWater*)i)->waterData.layer].hidden && visible);
+        }else if(i->data(0).toString()=="Door_exit" || i->data(0).toString()=="Door_enter"){
+            i->setVisible(!localLayers[((ItemDoor*)i)->doorData.layer].hidden && visible);
+        }
+    }
+}
+
+
+void LvlScene::setTiledBackground(bool forceTiled)
+{
+    ChangeSectionBG(LvlData->sections[LvlData->CurSection].background, -1, forceTiled);
 }
 
 void LvlScene::applyLayersVisible()
@@ -103,9 +202,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemBlock *)tmp)->blockData.layer == layer.name)
+                if( dynamic_cast<ItemBlock *>(tmp)->blockData.layer == layer.name)
                 {
-                    ((ItemBlock *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemBlock *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -115,9 +214,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemBGO *)tmp)->bgoData.layer == layer.name)
+                if( dynamic_cast<ItemBGO *>(tmp)->bgoData.layer == layer.name)
                 {
-                    ((ItemBGO *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemBGO *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -127,9 +226,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemNPC *)tmp)->npcData.layer == layer.name)
+                if( dynamic_cast<ItemNPC *>(tmp)->npcData.layer == layer.name)
                 {
-                    ((ItemNPC *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemNPC *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -139,9 +238,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemWater *)tmp)->waterData.layer == layer.name)
+                if( dynamic_cast<ItemWater *>(tmp)->waterData.layer == layer.name)
                 {
-                    ((ItemWater *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemWater *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -151,9 +250,9 @@ void LvlScene::applyLayersVisible()
             tmp = (*it);
             foreach(LevelLayers layer, LvlData->layers)
             {
-                if( ((ItemDoor *)tmp)->doorData.layer == layer.name)
+                if( dynamic_cast<ItemDoor *>(tmp)->doorData.layer == layer.name)
                 {
-                    ((ItemDoor *)tmp)->setVisible( !layer.hidden ); break;
+                    dynamic_cast<ItemDoor *>(tmp)->setVisible( !layer.hidden ); break;
                 }
             }
         }
@@ -193,22 +292,22 @@ void LvlScene::setLocked(int type, bool lock)
         case 1://Block
             if((*it)->data(0).toString()=="Block")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemBlock *)(*it))->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemBlock *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemBlock *>(*it)->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemBlock *>(*it)->isLocked ) ) );
             }
             break;
         case 2://BGO
             if((*it)->data(0).toString()=="BGO")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemBGO *)(*it))->isLocked ) ));
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemBGO *)(*it))->isLocked ) ));
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemBGO *>(*it)->isLocked ) ));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemBGO *>(*it)->isLocked ) ));
             }
             break;
         case 3://NPC
             if((*it)->data(0).toString()=="NPC")
             {
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemNPC *)(*it))->isLocked ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemNPC *)(*it))->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || dynamic_cast<ItemNPC *>(*it)->isLocked ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || dynamic_cast<ItemNPC *>(*it)->isLocked ) ) );
             }
             break;
         case 4://Water
@@ -231,3 +330,106 @@ void LvlScene::setLocked(int type, bool lock)
 
 }
 
+
+void LvlScene::setLayerToSelected()
+{
+    QString lName;
+    ToNewLayerBox * layerBox = new ToNewLayerBox(LvlData);
+    layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
+    if(layerBox->exec()==QDialog::Accepted)
+    {
+        lName = layerBox->lName;
+
+        //Store new layer into array
+        LevelLayers nLayer;
+        nLayer.name = lName;
+        nLayer.hidden = layerBox->lHidden;
+        LvlData->layers_array_id++;
+        nLayer.array_id = LvlData->layers_array_id;
+        LvlData->layers.push_back(nLayer);
+        //scene->SyncLayerList=true; //Refresh layer list
+        MainWinConnect::pMainWin->setLayerToolsLocked(true);
+        MainWinConnect::pMainWin->setLayersBox();
+        MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        setLayerToSelected(lName, true);
+    }
+    delete layerBox;
+
+}
+
+void LvlScene::setLayerToSelected(QString lName, bool isNew)
+{
+    LevelData modData;
+    foreach(LevelLayers lr, LvlData->layers)
+    { //Find layer's settings
+        if(lr.name==lName)
+        {
+            foreach(QGraphicsItem * SelItem, selectedItems() )
+            {
+                if(SelItem->data(0).toString()=="Block")
+                {
+                    modData.blocks.push_back(dynamic_cast<ItemBlock *>(SelItem)->blockData);
+                    dynamic_cast<ItemBlock *>(SelItem)->blockData.layer = lr.name;
+                    dynamic_cast<ItemBlock *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemBlock *>(SelItem)->arrayApply();
+                }
+                else
+                if(SelItem->data(0).toString()=="BGO")
+                {
+                    modData.bgo.push_back(dynamic_cast<ItemBGO *>(SelItem)->bgoData);
+                    dynamic_cast<ItemBGO *>(SelItem)->bgoData.layer = lr.name;
+                    dynamic_cast<ItemBGO *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemBGO *>(SelItem)->arrayApply();
+                }
+                else
+                if(SelItem->data(0).toString()=="NPC")
+                {
+                    modData.npc.push_back(dynamic_cast<ItemNPC *>(SelItem)->npcData);
+                    dynamic_cast<ItemNPC *>(SelItem)->npcData.layer = lr.name;
+                    dynamic_cast<ItemNPC *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemNPC *>(SelItem)->arrayApply();
+                }
+                else
+                if(SelItem->data(0).toString()=="Water")
+                {
+                    modData.water.push_back(dynamic_cast<ItemWater *>(SelItem)->waterData);
+                    dynamic_cast<ItemWater *>(SelItem)->waterData.layer = lr.name;
+                    dynamic_cast<ItemWater *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemWater *>(SelItem)->arrayApply();
+                }
+                else
+                if((SelItem->data(0).toString()=="Door_exit")  ||
+                        (SelItem->data(0).toString()=="Door_enter"))
+                {
+                    if(SelItem->data(0).toString()=="Door_exit"){
+                        LevelDoors tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
+                        tDoor.isSetOut = true;
+                        tDoor.isSetIn = false;
+                        modData.doors.push_back(tDoor);
+                    }
+                    else
+                    if(SelItem->data(0).toString()=="Door_enter"){
+                        LevelDoors tDoor = dynamic_cast<ItemDoor *>(SelItem)->doorData;
+                        tDoor.isSetOut = false;
+                        tDoor.isSetIn = true;
+                        modData.doors.push_back(tDoor);
+                    }
+                    dynamic_cast<ItemDoor *>(SelItem)->doorData.layer = lr.name;
+                    dynamic_cast<ItemDoor *>(SelItem)->setVisible(!lr.hidden);
+                    dynamic_cast<ItemDoor *>(SelItem)->arrayApply();
+                }
+            }
+            if(isNew)
+            {
+                addChangedNewLayerHistory(modData, lr);
+            }
+            break;
+        }
+    }//Find layer's settings
+
+    if(!isNew)
+    {
+        addChangedLayerHistory(modData, lName);
+    }
+}

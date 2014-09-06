@@ -20,16 +20,58 @@
 #define GLOBAL_SETTINGS_H
 
 #include <QString>
+#include <QMdiArea>
+
+struct LevelEditingSettings
+{
+    bool animationEnabled;
+    bool collisionsEnabled;
+};
 
 class GlobalSettings
 {
 public:
-    static QString locale;
-    static long animatorItemsLimit;
 
+    static LevelEditingSettings LvlOpts;
+
+    static QString locale; //Current language
+    static long animatorItemsLimit; //If level map have too many items, animation will be stopped
+
+    //Paths
     static QString savePath;
     static QString savePath_npctxt;
     static QString openPath;
+
+    //Music player
+    static bool autoPlayMusic;
+    static int musicVolume;
+
+    //Toolboxes visibly states
+    static bool LevelToolBoxVis;
+    static bool SectionToolBoxVis;
+    static bool LevelDoorsBoxVis;
+    static bool LevelLayersBoxVis;
+    static bool LevelEventsBoxVis;
+    static bool LevelSearchBoxVis;
+
+    static bool WorldToolBoxVis;
+    static bool WorldSettingsToolboxVis;
+    static bool WorldSearchBoxVis;
+
+    static bool TilesetBoxVis;
+    static bool DebuggerBoxVis;
+
+    // Editor flags
+    static bool MidMouse_allowDuplicate;
+    static bool MidMouse_allowSwitchToPlace;
+    static bool MidMouse_allowSwitchToDrag;
+
+    //Last active file type state
+    static int lastWinType;
+
+    static QMdiArea::ViewMode MainWindowView;
+    static QTabWidget::TabPosition LVLToolboxPos;
+    static QTabWidget::TabPosition WLDToolboxPos;
 
 };
 
@@ -42,6 +84,11 @@ public:
     static long total_bg;
     static long total_npc;
 
+    static long total_wtile;
+    static long total_wpath;
+    static long total_wscene;
+    static long total_wlvl;
+
     static long total_music_lvl;
     static long total_music_wld;
     static long total_music_spc;
@@ -49,6 +96,7 @@ public:
     static long total_sound;
 
     static QString configName;
+    static QString configPath;
 
 };
 

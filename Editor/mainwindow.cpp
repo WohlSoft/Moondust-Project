@@ -20,28 +20,65 @@
 #include "mainwindow.h"
 
 #include "npc_dialog/npcdialog.h"
+#include "data_configs/config_manager.h"
+
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     //thread1 = new QThread;
+    this->setAttribute(Qt::WA_QuitOnClose, true);
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 
     setDefaults(); // Apply default common settings
 
-    QPixmap splashimg(":/splash.png");
+    //Create empty config directory if not exists
+    if(!QDir(QApplication::applicationDirPath() + "/" +  "configs").exists())
+        QDir().mkdir(QApplication::applicationDirPath() + "/" +  "configs");
+
+    // Config manager
+    ConfigManager *cmanager = new ConfigManager();
+    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
+    QString configPath = cmanager->isPreLoaded();
+    //If application runned first time or target configuration is not exist
+    if(configPath.isEmpty())
+    {
+        //Ask for configuration
+        if(cmanager->exec()==QDialog::Accepted)
+        {
+            configPath = cmanager->currentConfig;
+        }
+        else
+        {
+            delete cmanager;
+            ui->setupUi(this);
+            setDefLang();
+            setUiDefults(); //Apply default UI settings
+            WriteToLog(QtWarningMsg, "<Configuration is not selected>");
+            this->close();
+            return;
+        }
+    }
+
+    currentConfigDir = configPath;
+
+    delete cmanager;
+
+    configs.setConfigPath(configPath);
+    configs.loadBasics();
+
+    QPixmap splashimg(configs.splash_logo);
+
     QSplashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
+    splash.setDisabled(true);
+    splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
     splash.show();
 
-    if(!configs.loadconfigs())
-    {
-        QMessageBox::critical(this, "Configuration error", "Configuration can't be load.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
-        splash.finish(this);
-        WriteToLog(QtFatalMsg, "<Application emergency closed>");
-        exit(EXIT_FAILURE);
-        return;
-    }
+    bool ok=configs.loadconfigs();
 
     splash.finish(this);
 
@@ -50,14 +87,22 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     WriteToLog(QtDebugMsg, QString("Setting Lang..."));
     setDefLang();
-
     setUiDefults(); //Apply default UI settings
+
+    if(!ok)
+    {
+        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
+        WriteToLog(QtFatalMsg, "<Error, application closed>");
+        this->close();
+        return;
+    }
 }
 
 MainWindow::~MainWindow()
 {
-    //TickTackLock = false;
+    MusicPlayer->stop();
     delete ui;
+    delete MusicPlayer;
     WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
 
@@ -68,8 +113,11 @@ MainWindow::~MainWindow()
 //Exit from application
 void MainWindow::on_Exit_triggered()
 {
-    MainWindow::close();
-    exit(0);
+    //ui->centralWidget->closeAllSubWindows();
+    if(!MainWindow::close())
+        return;
+    //qApp->quit();
+    //exit(0);
 }
 
 //Open About box
@@ -115,84 +163,43 @@ void MainWindow::refreshHistoryButtons()
             ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
             ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
         }
-    }
-}
-
-
-//Scene Event Detector
-//void MainWindow::TickTack()
-//{
-//    if(TickTackLock) return;
-
-//    TickTackLock = true;
-
-//    try
-//    {
-//        if(activeChildWindow()==1)
-//        {
-//            if(activeLvlEditWin()->sceneCreated)
-//            {
-                //Capturing flags from active Window
-                /*if(activeLvlEditWin()->scene->wasPasted)
-                {
-                    activeLvlEditWin()->changeCursor(0);
-                    activeLvlEditWin()->scene->wasPasted=false;
-                    activeLvlEditWin()->scene->disableMoveItems=false;
-                }
-                else
-                if(activeLvlEditWin()->scene->doCut)
-                {
-                    on_actionCut_triggered();
-                    activeLvlEditWin()->scene->doCut=false;
-                }
-                else
-                if(activeLvlEditWin()->scene->doCopy)
-                {
-                    on_actionCopy_triggered();
-                    activeLvlEditWin()->scene->doCopy=false;
-                }
-                else
-                if(activeLvlEditWin()->scene->historyChanged)
-                {
-                    ui->actionUndo->setEnabled( activeLvlEditWin()->scene->canUndo() );
-                    ui->actionRedo->setEnabled( activeLvlEditWin()->scene->canRedo() );
-                    activeLvlEditWin()->scene->historyChanged = false;
-                }
-
-                else
-                if(activeLvlEditWin()->scene->resetPosition)
-                {
-                    on_actionReset_position_triggered();
-                    activeLvlEditWin()->scene->resetPosition = false;
-                }
-                else
-                if(activeLvlEditWin()->scene->SyncLayerList)
-                {
-                    setLayersBox();
-                    activeLvlEditWin()->scene->SyncLayerList = false;
-                }
-                else
-                if(activeLvlEditWin()->scene->resetResizingSection)
-                {
-                    ui->ResizeSection->setVisible(true);
-                    ui->applyResize->setVisible(false);
-                    ui->cancelResize->setVisible(false);
-                    activeLvlEditWin()->scene->resetResizingSection = false;
-                }
-            }
-        }
-
-        else
-        if(activeChildWindow()==2)
+    }else if(activeChildWindow()==3){
+        if(activeWldEditWin()->sceneCreated)
         {
-            if(activeNpcEditWin()->NpcData.ReadFileValid);
+            ui->actionUndo->setEnabled( activeWldEditWin()->scene->canUndo() );
+            ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
         }
     }
-    catch(int e)
-    {
-        WriteToLog(QtWarningMsg, QString("CLASS TYPE MISMATCH IN TIMER ON WINDOWS SWITCH: %1").arg(e));
-    }
 
-    TickTackLock = false;
 }
-*/
+
+void MainWindow::on_actionContents_triggered()
+{
+    QDesktopServices::openUrl( QUrl::fromLocalFile( QApplication::applicationDirPath() + "/help/manual_editor.html" ) );
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+    ui->menuNew->exec( this->cursor().pos() );
+}
+
+
+void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
+{
+    updateMenus(true);
+}
+
+
+
+void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
+{
+    if(checked){
+        //this->hide();
+        this->showFullScreen();
+    }else{
+        //this->hide();
+        this->showNormal();
+    }
+}
+
+

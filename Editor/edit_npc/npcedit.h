@@ -50,6 +50,10 @@ public:
     QString userFriendlyCurrentFile();
     QString currentFile() { return curFile; }
 
+    QString curFile;
+
+    bool isModyfied;
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -121,6 +125,13 @@ private slots:
 
     void on_DirectRight_clicked();
 
+    void on_En_NoShell_clicked(bool checked);
+    void on_NoShell_stateChanged(int checked);
+
+    void on_En_Name_clicked(bool checked);
+
+    void on_Name_textEdited(const QString &arg1);
+
 private:
     Ui::npcedit *ui;
 
@@ -141,17 +152,14 @@ private:
     QGraphicsRectItem * physics;
 
     QPixmap npcImage;
-    QBitmap npcMask;
+    QPixmap npcMask;
     obj_npc defaultNPC;
     int direction;
-
-    bool isModyfied;
 
     bool maybeSave();
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
-    QString curFile;
     bool isUntitled;
     unsigned int FileType;
 };

@@ -18,6 +18,7 @@
 
 #ifndef NPC_FILEDATA_H
 #define NPC_FILEDATA_H
+#include <QString>
 
 struct NPCConfigFile
 {
@@ -50,8 +51,10 @@ struct NPCConfigFile
     bool en_framespeed;
     bool en_framestyle;
     bool en_noiceball;
+    //Extended
     bool en_nohammer;
     bool en_noshell;
+    bool en_name;
     /* Using options flags END */
 
     int gfxoffsetx;
@@ -80,9 +83,10 @@ struct NPCConfigFile
     unsigned int framespeed;
     unsigned int framestyle;
     bool noiceball;
-
+    //Extended
     bool nohammer;
     bool noshell;
+    QString name;
 };
 
 #endif // NPC_FILEDATA_H

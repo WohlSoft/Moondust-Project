@@ -28,16 +28,67 @@ void MainWindow::on_WorldToolBox_visibilityChanged(bool visible)
         ui->actionWLDToolBox->setChecked(visible);
 }
 
-void MainWindow::on_actionWLDToolBox_triggered()
+void MainWindow::on_actionWLDToolBox_triggered(bool checked)
 {
-    if(ui->actionWLDToolBox->isChecked())
-    {
-        ui->WorldToolBox->setVisible(true);
-        ui->WorldToolBox->raise();
-    }
-    else
-        ui->WorldToolBox->setVisible(false);
+    ui->WorldToolBox->setVisible(checked);
+    if(checked) ui->WorldToolBox->raise();
 }
 
 
+void MainWindow::on_WorldSettings_visibilityChanged(bool visible)
+{
+    ui->actionWorld_settings->setChecked(visible);
+}
 
+
+void MainWindow::on_actionWorld_settings_triggered(bool checked)
+{
+    ui->WorldSettings->setVisible(checked);
+    if(checked) ui->WorldSettings->raise();
+}
+
+
+// //////////////////////// Locks Begin //////////////////////////////
+
+void MainWindow::on_actionLockTiles_triggered(bool checked)
+{
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->setLocked(1, checked);
+    }
+
+}
+
+void MainWindow::on_actionLockScenes_triggered(bool checked)
+{
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->setLocked(2, checked);
+    }
+}
+
+void MainWindow::on_actionLockPaths_triggered(bool checked)
+{
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->setLocked(3, checked);
+    }
+}
+
+void MainWindow::on_actionLockLevels_triggered(bool checked)
+{
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->setLocked(4, checked);
+    }
+}
+
+void MainWindow::on_actionLockMusicBoxes_triggered(bool checked)
+{
+    if (activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->setLocked(5, checked);
+    }
+}
+
+// //////////////////////// Locks End //////////////////////////////

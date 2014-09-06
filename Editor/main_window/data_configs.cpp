@@ -19,31 +19,39 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 
+#include "../data_configs/configstatus.h"
+#include "../data_configs/config_manager.h"
+
 
 void MainWindow::on_actionLoad_configs_triggered()
 {
-    //thread1->start();
-    //moveToThread(thread1);
 
-    QProgressDialog progress(tr("Reloading configurations"), tr("Abort"), 0,100, this);
-    progress.setWindowTitle("Please, wait...");
-    progress.setWindowModality(Qt::WindowModal);
+    QProgressDialog progress("Please wait...", tr("Abort"), 0,100, this);
+    progress.setWindowTitle(tr("Reloading configurations"));
+    //progress.setWindowModality(Qt::WindowModal);
+    progress.setModal(true);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
     progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
     progress.setCancelButton(0);
-    progress.show();
+    progress.setMinimumDuration(0);
+    progress.setAutoClose(false);
+    //progress.show();
 
     if(!progress.wasCanceled()) progress.setValue(1);
 
     //Reload configs
-    configs.loadconfigs();
+    qApp->processEvents();
+    configs.loadconfigs(&progress);
 
     if(!progress.wasCanceled())  progress.setValue(100);
 
-    setItemBoxes(false); //Apply item boxes from reloaded configs
+    setLvlItemBoxes(false); //Apply item boxes from reloaded configs
+    setWldItemBoxes(false);
+
     setLevelSectionData();
     setSoundList();
+    clearFilter();
 
     //Set tools from loaded configs
     //setLevelSectionData();
@@ -51,9 +59,39 @@ void MainWindow::on_actionLoad_configs_triggered()
     if(!progress.wasCanceled())
         progress.close();
 
-    QMessageBox::information(this, tr("Reload configuration"),
+    QMessageBox::information(this, tr("Reloading configuration"),
     tr("Configuration succesfully reloaded!"),
     QMessageBox::Ok);
 }
 
 
+
+void MainWindow::on_actionCurConfig_triggered()
+{
+    ConfigStatus * cnfWindow = new ConfigStatus(configs);
+    cnfWindow->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cnfWindow->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cnfWindow->size(), qApp->desktop()->availableGeometry()));
+    cnfWindow->exec();
+    delete cnfWindow;
+    //if(cnfWindow->exec()==QDialog::Accepted)
+}
+
+
+
+
+void MainWindow::on_actionChangeConfig_triggered()
+{
+    // Config manager
+    ConfigManager *cmanager = new ConfigManager();
+    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
+    QString configPath;
+
+    if(cmanager->exec()==QDialog::Accepted)
+    {
+        configPath = cmanager->currentConfig;
+        currentConfigDir = configPath;
+        QMessageBox::information(this, tr("Configuration changed"), tr("The Configuration was switched!\nTo start work with new configuration, please restart application."), QMessageBox::Ok);
+    }
+    delete cmanager;
+}
