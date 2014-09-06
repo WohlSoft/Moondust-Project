@@ -43,6 +43,8 @@ public:
     ~ItemWater();
 
     void setSize(QSize sz);
+    void setRectSize(QRect rect);
+
     void setType(int tp);
     void setWaterData(LevelWater inD);
 
@@ -78,9 +80,12 @@ public:
     bool isLocked;
 
 protected:
+    bool mouseLeft;
+    bool mouseMid;
+    bool mouseRight;
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    //virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent);
 
 private:
     LvlScene * scene;

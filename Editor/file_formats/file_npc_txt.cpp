@@ -57,7 +57,10 @@ NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()
     FileData.en_framespeed=false;
     FileData.en_framestyle=false;
     FileData.en_noiceball=false;
+
     FileData.en_nohammer=false;
+    FileData.en_noshell=false;
+    FileData.en_name=false;
     return FileData;
 }
 
@@ -67,6 +70,8 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     merged = global;
     merged.image = QPixmap();   //Clear image values
     merged.mask = QPixmap();
+
+    merged.name = (local.en_name)?local.name:global.name;
 
     merged.gfx_offset_x = (local.en_gfxoffsetx)?local.gfxoffsetx:global.gfx_offset_x;
     merged.gfx_offset_y = (local.en_gfxoffsety)?local.gfxoffsety:global.gfx_offset_y;
@@ -79,39 +84,30 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     merged.framespeed = (local.en_framespeed)? qRound( qreal(global.framespeed) / (qreal(8) / qreal(local.framespeed)) ) : global.framespeed;
     merged.framestyle = (local.en_framestyle)?local.framestyle:global.framestyle;
 
-    merged.frames = (local.en_frames)?local.frames:global.frames;
-
-    if((local.en_frames)||(local.en_framestyle))
-        merged.ani_bidir = false; //Disable bidirectional animation
-
-    //Copy fixture size to GFX size
-    if((local.en_width)&&
-                (
-                ((merged.width <= (unsigned int)global.gfx_w)&&(merged.framestyle<2)&&(merged.framestyle>0))||
-                ((merged.width != (unsigned int)global.gfx_w)&&(merged.framestyle==0))
-                )
-            )
+    //Copy physical size to GFX size
+    if( (local.en_width) && (merged.custom_physics_to_gfx) )
         merged.gfx_w = merged.width;
     else
     {
         if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
             merged.width = captured.width();
 
-        merged.gfx_w = global.gfx_w;
+        merged.gfx_w = ( (captured.width()!=0) ? captured.width() : global.gfx_w );
     }
 
-    //Copy fixture size to GFX size
-    if((local.en_height)&&(global.height <= (unsigned int)global.gfx_h)&&(merged.framestyle<2))
+    //Copy physical size to GFX size
+    if( (local.en_height) && (merged.custom_physics_to_gfx) )
         merged.gfx_h = merged.height;
     else
         merged.gfx_h = global.gfx_h;
 
+
     if((!local.en_gfxwidth)&&(captured.width()!=0)&&(global.gfx_w!=captured.width()))
         merged.gfx_w = captured.width();
     else
-        merged.gfx_w = (local.en_gfxwidth)?local.gfxwidth:merged.gfx_w;
+        merged.gfx_w = (local.en_gfxwidth) ? (local.gfxwidth>0 ? local.gfxwidth : 1 ) : merged.gfx_w;
 
-    merged.gfx_h = (local.en_gfxheight)?local.gfxheight:merged.gfx_h;
+    merged.gfx_h = (local.en_gfxheight) ? (local.gfxheight>0 ? local.gfxheight : 1 ) : merged.gfx_h;
 
 
     if(((int)merged.width>=(int)merged.grid))
@@ -123,6 +119,28 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
 
     merged.grid_offset_y = -merged.height % merged.grid;
 
+
+    if((merged.framestyle==0)&&((local.en_gfxheight)||(local.en_height))&&(!local.en_frames))
+    {
+        merged.frames = qRound(qreal(captured.height())/qreal(merged.gfx_h));
+        //merged.custom_animate = false;
+    }
+    else
+        merged.frames = (local.en_frames)?local.frames:global.frames;
+
+    if((local.en_frames)||(local.en_framestyle))
+    {
+        merged.ani_bidir = false; //Disable bidirectional animation
+        if((local.en_frames)) merged.custom_animate = false; //Disable custom animation
+    }
+
+    // Convert out of range frames by framestyle into animation with controlable diraction
+    if((merged.framestyle>0)&&(merged.gfx_h*merged.frames >= (unsigned int)captured.height()))
+    {
+        merged.framestyle = 0;
+        merged.ani_direct = false;
+        merged.ani_directed_direct = true;
+    }
 
     merged.score = (local.en_score)?local.score:global.score;
     merged.block_player = (local.en_playerblock)?local.playerblock:global.block_player;
@@ -164,17 +182,6 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
 
 NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
 {
-    //Regs
-    QRegExp isint("\\d+");     //Check "Is Numeric"
-    //QRegExp boolwords("^(#TRUE#|#FALSE#)$");
-    QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-    QRegExp issfloat("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-    QRegExp booldeg("^(1|0)$");
-    //QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-    //QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
-    //QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
-
-
     int str_count=0;        //Line Counter
     //int i;                  //counters
     QString line;           //Current Line data
@@ -182,7 +189,7 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     QTextStream in(&inf);   //Read File
 
     in.setAutoDetectUnicode(true); //Test Fix for MacOS
-    in.setLocale(QLocale::system());   //Test Fix for MacOS
+    in.setLocale(QLocale::system()); //Test Fix for MacOS
     in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
 
     NPCConfigFile FileData = CreateEmpytNpcTXTArray();
@@ -193,20 +200,24 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     while((!line.isNull()))
     {
 
+       QString ln = line;
        if(line.replace(QString(" "), QString(""))=="")
        {
            str_count++;line = in.readLine();
            continue;
        } //Skip empty strings
 
-       Params=line.replace(QString(" "), QString("")). //Delete spaces
-               split("=", QString::SkipEmptyParts); // splited the Parameter and value (example: chicken=2)
+       line=ln;
 
-       if (Params.count() != 2) goto badfile;   // If string not contain strings with "=" as separator
+       Params=line.split("=", QString::SkipEmptyParts); // split the Parameter and value (example: chicken=2)
+       if (Params.count() != 2) goto badfile;   // If string does not contain strings with "=" as separator
+
+       Params[0] = Params[0].replace(QString(" "), QString("")); //Delete spaces
 
        if(Params[0]=="gfxoffsetx")
         {
-           if(!issint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::sInt(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -219,12 +230,14 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxoffsety")
         {
-           if(!issint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::sInt(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
            else
            {
+               Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
                FileData.gfxoffsety=Params[1].toInt();
                FileData.en_gfxoffsety=true;
            }
@@ -232,7 +245,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="width")
         {
-           if(!isint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -245,12 +259,14 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="height")
         {
-           if(!isint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
            else
            {
+               Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
                FileData.height=Params[1].toInt();
                FileData.en_height=true;
            }
@@ -258,7 +274,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxwidth")
         {
-           if(!isint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -271,7 +288,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="gfxheight")
         {
-           if(!isint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -284,7 +302,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="score")
         {
-           if(!isint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -297,7 +316,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="playerblock")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -310,7 +330,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="playerblocktop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -323,7 +344,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="npcblock")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -336,7 +358,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="npcblocktop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -349,7 +372,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="grabside")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
              if(!IgnoreBad) goto badfile;
            }
@@ -362,7 +386,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="grabtop")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if (!IgnoreBad)goto badfile;
            }
@@ -375,7 +400,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="jumphurt")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -388,7 +414,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nohurt")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -401,7 +428,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noblockcollision")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -414,7 +442,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="cliffturn")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -427,7 +456,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noyoshi")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -440,7 +470,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="foreground")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -453,7 +484,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="speed")
         {
-           if(!issfloat.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::sFloat(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -466,7 +498,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nofireball")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -479,7 +512,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="nogravity")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -492,7 +526,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="frames")
         {
-           if(!isint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -505,7 +540,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="framespeed")
         {
-           if(!isint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -518,7 +554,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="framestyle")
         {
-           if(!isint.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::Int(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -531,7 +568,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noiceball")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
               if(!IgnoreBad) goto badfile;
            }
@@ -541,10 +579,11 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
                FileData.en_noiceball=true;
            }
         }
-       else // Non SMBX64 parameters (not working in SMBX <=1.3)
+       else // Non-SMBX64 parameters (not working in SMBX <=1.3)
        if(Params[0]=="nohammer")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -557,7 +596,8 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
        else
        if(Params[0]=="noshell")
         {
-           if(!booldeg.exactMatch(Params[1]))
+           Params[1] = Params[1].replace(QString(" "), QString("")); //Delete spaces
+           if(SMBX64::dBool(Params[1]))
            {
                if(!IgnoreBad) goto badfile;
            }
@@ -566,6 +606,15 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
                FileData.noshell=(bool)Params[1].toInt();
                FileData.en_noshell=true;
            }
+        }
+       else
+       if(Params[0]=="name")
+        {
+           if(!SMBX64::qStr(Params[1]))
+               FileData.name = removeQuotes(Params[1]);
+           else
+               FileData.name = Params[1];
+               FileData.en_name=true;
         }
        else
        {
@@ -582,7 +631,7 @@ return FileData;
 
 
 badfile:    //If file format not corrects
-BadFileMsg(inf.fileName(), str_count, line+Params[0]);
+BadFileMsg(inf.fileName(), str_count, line+"\n"+Params[0]);
 FileData.ReadFileValid=false;
 return FileData;
 }
@@ -688,10 +737,6 @@ QString FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     {
         TextData += "nofireball=" + QString::number((int)FileData.nofireball) +"\n";
     }
-    if(FileData.en_nohammer)
-    {
-        TextData += "nohammer=" + QString::number((int)FileData.nohammer) +"\n";
-    }
     if(FileData.en_nogravity)
     {
         TextData += "nogravity=" + QString::number((int)FileData.nogravity) +"\n";
@@ -711,6 +756,20 @@ QString FileFormats::WriteNPCTxtFile(NPCConfigFile FileData)
     if(FileData.en_framestyle)
     {
         TextData += "framestyle=" + QString::number(FileData.framestyle) +"\n";
+    }
+
+    //Extended
+    if(FileData.en_nohammer)
+    {
+        TextData += "nohammer=" + QString::number((int)FileData.nohammer) +"\n";
+    }
+    if(FileData.en_noshell)
+    {
+        TextData += "noshell=" + QString::number((int)FileData.noshell) +"\n";
+    }
+    if(FileData.en_name)
+    {
+        TextData += "name=" + SMBX64::qStrS(FileData.name);
     }
 
     return TextData;

@@ -20,10 +20,11 @@
 
 
 MainWindow * MainWinConnect::pMainWin;
-
+dataconfigs * MainWinConnect::configs;
 
 
 void MainWindow::setPointer()
 {
     MainWinConnect::pMainWin = this;
+    MainWinConnect::configs = &configs;
 }

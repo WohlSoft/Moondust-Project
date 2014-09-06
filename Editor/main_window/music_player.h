@@ -20,22 +20,32 @@
 #define MUSIC_PLAYER_H
 
 #include <QString>
-#include <QMediaPlayer>
+//#include <QMediaPlayer>
 
-class GlobalMusicPlayer
-{
-    public:
-        static QMediaPlaylist CurrentMusic;
+//class GlobalMusicPlayer
+//{
+//    public:
+//        //static QMediaPlaylist CurrentMusic;
 
-};
+//};
 
 class LvlMusPlay
 {
 public:
+    enum MusicType{
+        LevelMusic=0,
+        WorldMusic,
+        SpecialMusic
+    };
+
     static QString currentCustomMusic;
     static long currentMusicId;
     static bool musicButtonChecked;
     static bool musicForceReset;
+    static long currentWldMusicId;
+    static long currentSpcMusicId;
+    static int musicType;
+
 };
 
 #endif // MUSIC_PLAYER_H

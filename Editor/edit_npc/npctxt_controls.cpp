@@ -22,7 +22,7 @@
 #include "./ui_npcedit.h"
 #include "../file_formats/file_formats.h"
 
-
+#include "../common_features/graphics_funcs.h"
 
 
 void npcedit::on_ResetNPCData_clicked()
@@ -497,8 +497,6 @@ void npcedit::on_En_NoHammer_clicked(bool checked)
     documentWasModified();
 }
 
-
-
 ////////////////////////////////////////////////////////////////
 void npcedit::on_NoHammer_stateChanged(int arg1)
 {
@@ -506,6 +504,43 @@ void npcedit::on_NoHammer_stateChanged(int arg1)
     NpcData.nohammer=arg1;
 }
 ////////////////////////////////////////////////////////////////
+
+
+
+void npcedit::on_En_NoShell_clicked(bool checked)
+{
+    ui->NoShell->setEnabled(checked);
+    NpcData.en_noshell=checked;
+
+    documentWasModified();
+}
+
+void npcedit::on_NoShell_stateChanged(int checked)
+{
+    documentWasModified();
+    NpcData.noshell=checked;
+}
+////////////////////////////////////////////////////////////////
+
+
+
+void npcedit::on_En_Name_clicked(bool checked)
+{
+    ui->Name->setEnabled(checked);
+    NpcData.en_name=checked;
+
+    documentWasModified();
+}
+
+
+void npcedit::on_Name_textEdited(const QString &arg1)
+{
+    documentWasModified();
+    NpcData.name=arg1;
+}
+
+
+
 
 
 
@@ -641,7 +676,8 @@ void npcedit::updatePreview()
                           npcPreview->localProps.custom_ani_fl,
                           npcPreview->localProps.custom_ani_el,
                           npcPreview->localProps.custom_ani_fr,
-                          npcPreview->localProps.custom_ani_er, true);
+                          npcPreview->localProps.custom_ani_er,
+                          true, true);
     npcPreview->AnimationStart();
 
     physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);
@@ -665,15 +701,11 @@ void npcedit::loadImageFile()
     if(QFile::exists(imagePath + defaultNPC.image_n))
     {
         if(QFile::exists(imagePath + defaultNPC.mask_n))
-            npcMask = QBitmap(imagePath + defaultNPC.mask_n );
+            npcMask = GraphicsHelps::loadPixmap( imagePath + defaultNPC.mask_n );
         else
             npcMask = defaultNPC.mask;
 
-        npcImage = QPixmap( imagePath + defaultNPC.image_n );
-
-        if((npcImage.height()!=npcMask.height())||(npcImage.width()!=npcMask.width()))
-            npcMask = npcMask.copy(0,0,npcImage.width(),npcImage.height());
-        npcImage.setMask(npcMask);
+        npcImage = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(imagePath + defaultNPC.image_n ), npcMask);
 
         WriteToLog(QtDebugMsg, QString("Image size %1 %2").arg(npcImage.width()).arg(npcImage.height()));
     }

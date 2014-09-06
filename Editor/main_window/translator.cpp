@@ -19,6 +19,7 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 #include "../common_features/logger_sets.h"
+#include "../dev_console/devconsole.h"
 
 #include "global_settings.h"
 
@@ -45,7 +46,7 @@ void MainWindow::setDefLang()
 
     WriteToLog(QtDebugMsg, QString("Lang->Setting slot...."));
     connect(ui->menuLanguage, SIGNAL(triggered(QAction *)), this, SLOT(slotLanguageChanged(QAction *)));
-    WriteToLog(QtDebugMsg, QString("Lang->seted"));
+    WriteToLog(QtDebugMsg, QString("Lang->set"));
 
        m_langPath = QApplication::applicationDirPath();
        m_langPath.append("/languages");
@@ -62,10 +63,10 @@ void MainWindow::setDefLang()
         qApp->installTranslator(&m_translator);
        else
        {
-           m_currLang="en"; //set to English if not exist
+           m_currLang="en"; //set to English if no other translations are found
            QLocale locale = QLocale(m_currLang);
            QLocale::setDefault(locale);
-           ok = m_translator.load(m_langPath + QString("/editor_en.qm").arg(m_currLang));
+           ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
            if(ok)
             qApp->installTranslator(&m_translator);
 
@@ -73,7 +74,7 @@ void MainWindow::setDefLang()
        }
 
        ok = m_translatorQt.load(m_langPath + QString("/qt_%1.qm").arg(m_currLang));
-                WriteToLog(QtDebugMsg, QString("QT Translation: %1").arg((int)ok));
+                WriteToLog(QtDebugMsg, QString("Qt Translation: %1").arg((int)ok));
        if(ok)
         qApp->installTranslator(&m_translatorQt);
 
@@ -114,7 +115,7 @@ void MainWindow::langListSync()
 
     if(fileNames.size()==0)
     {
-        QAction *action = ui->menuLanguage->addAction("[translates was not loaded!]");
+        QAction *action = ui->menuLanguage->addAction("[translations not found]");
         action->setCheckable(false);
         action->setDisabled(true);
     }
@@ -126,13 +127,30 @@ void MainWindow::slotLanguageChanged(QAction* action)
     WriteToLog(QtDebugMsg, QString("Translation->SlotStarted"));
     if(0 != action)
     {
-        // load the language dependant on the action content
+        // load the language depending on the action content
         GlobalSettings::locale = m_currLang;
 
+        lockTilesetBox=true;
+
+        int doorType = ui->WarpType->currentIndex(); //backup combobox's index
+        int npcGenType = ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
+
         loadLanguage(action->data().toString());
-        setItemBoxes();
+
+        ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
+        ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
+
+        lockTilesetBox=false;
+
+        setLvlItemBoxes();
         setLevelSectionData();
+        setEventData(-1);
         setSoundList();
+        WldLvlExitTypeListReset();
+        setCurrentWorldSettings();
+        setTileSetBox();
+
+        DevConsole::retranslate();
     }
 }
 
@@ -165,7 +183,7 @@ void MainWindow::loadLanguage(const QString& rLanguage)
         bool ok = switchTranslator(m_translatorQt, m_langPath + QString("/qt_%1.qm").arg(m_currLang));
              ok = switchTranslator(m_translator, m_langPath + QString("/editor_%1.qm").arg(m_currLang));
 
-        WriteToLog(QtDebugMsg, QString("Translation->try to retranslate"));
+        WriteToLog(QtDebugMsg, QString("Translation-> try to retranslate"));
 
         if(ok)
         {
@@ -173,14 +191,16 @@ void MainWindow::loadLanguage(const QString& rLanguage)
             WriteToLog(QtDebugMsg, QString("Translation-> done"));
         }
         else
-               WriteToLog(QtDebugMsg, QString("Translation-> not changed (not okay)"));
+            WriteToLog(QtDebugMsg, QString("Translation-> not changed (not okay)"));
 
         //Sync dynamic menus
         SyncRecentFiles();
         updateWindowMenu();
         langListSync();
 
-        ui->statusBar->showMessage(tr("Current Language changed to %1").arg(languageName));
+        clearFilter();
+
+        ui->statusBar->showMessage(tr("Current Language changed to %1").arg(languageName), 2000);
     }
 }
 

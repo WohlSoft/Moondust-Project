@@ -46,10 +46,14 @@ public:
     static bool wBool(QString in); //Worded BOOL
     static bool dBool(QString in); //Worded BOOL
 
+    //Convert from string to internal data
+    static bool wBoolR(QString in);
+
     //SMBX64 parameter string generators
     static QString IntS(long input);
     static QString BoolS(bool input);
     static QString qStrS(QString input);
+    static QString FloatS(float input);
 };
 
 
@@ -71,6 +75,13 @@ public:
     static LevelEvents dummyLvlEvent();
     static LevelSection dummyLvlSection();
 
+    //Wld Data
+    static WorldTiles dummyWldTile();
+    static WorldScenery dummyWldScen();
+    static WorldPaths dummyWldPath();
+    static WorldLevels dummyWldLevel();
+    static WorldMusic dummyWldMusic();
+
     // SMBX64 NPC.TXT File
     static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); //read
     static QString WriteNPCTxtFile(NPCConfigFile FileData);                //write
@@ -79,8 +90,9 @@ public:
     static obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
     // SMBX64 WLD File
-    static WorldData ReadWorldFile(QFile &inf); //read
-
+    static WorldData ReadWorldFile(QFile &inf);             //read
+    static QString WriteSMBX64WldFile(WorldData FileData);  //Write
+    static WorldData dummyWldDataArray();                   //Create new
 
 
     //common

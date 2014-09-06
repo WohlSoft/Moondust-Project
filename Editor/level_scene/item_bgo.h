@@ -35,38 +35,33 @@
 #include "lvlscene.h"
 #include "../file_formats/lvl_filedata.h"
 
-class ItemBGO : public QObject, public QGraphicsPixmapItem
+class ItemBGO : public QObject, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
-    ItemBGO(QGraphicsPixmapItem *parent=0);
+    ItemBGO(QGraphicsItem *parent=0);
     ~ItemBGO();
 
-    void setMainPixmap(const QPixmap &pixmap);
     void setBGOData(LevelBGO inD);
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
 
     QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    QPixmap mainImage;
     QMenu *ItemMenu;
-//    QGraphicsScene * scene;
-//    QGraphicsPixmapItem * image;
+
 
     //////Animation////////
-    void setAnimation(int frames, int framespeed);
-    void AnimationStart();
-    void AnimationStop();
-    void draw();
+    void setAnimator(long aniID);
+
 
     void setLayer(QString layer);
 
     void arrayApply();
     void removeFromArray();
 
-    QPoint fPos() const;
-    void setFrame(int);
     LevelBGO bgoData;
 
     int gridSize;
@@ -78,29 +73,19 @@ public:
     void setLocked(bool lock);
 
 protected:
+    bool mouseLeft;
+    bool mouseMid;
+    bool mouseRight;
     virtual void contextMenuEvent( QGraphicsSceneContextMenuEvent * event );
     virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-    //virtual void mouseReleaseEvent( QGraphicsSceneMouseEvent * event);
-
-private slots:
-    void nextFrame();
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
-    bool animated;
-    int frameSpeed;
-    LvlScene * scene;
-    int frameCurrent;
-    QTimer * timer;
-    QPoint framePos;
-    int framesQ;
-    int frameSize; // size of one frame
-    int frameWidth; // sprite width
-    int frameHeight; //sprite height
-    QPixmap currentImage;
+    long animatorID;
+    QRectF imageSize;
 
-    //Animation alhorithm
-    int frameFirst;
-    int frameLast;
+    bool animated;
+    LvlScene * scene;
 
 };
 

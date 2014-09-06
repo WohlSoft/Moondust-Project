@@ -22,7 +22,7 @@
 #include <QGraphicsScene>
 #include <QProgressDialog>
 
-#include "leveledit.h"
+#include "level_edit.h"
 #include "../ui_leveledit.h"
 
 #include "../file_formats/lvl_filedata.h"
@@ -56,6 +56,7 @@ leveledit::~leveledit()
     //free(scene);
     delete ui;
     MainWinConnect::pMainWin->updateMenus(true);
+    WriteToLog(QtDebugMsg, "LevelEdit -> Class destroyed");
 }
 
 
@@ -65,22 +66,74 @@ void leveledit::ResetPosition()
     LvlData.sections[LvlData.CurSection].PositionX =
             LvlData.sections[LvlData.CurSection].size_left;
     LvlData.sections[LvlData.CurSection].PositionY =
-            LvlData.sections[LvlData.CurSection].size_bottom-602;
+            LvlData.sections[LvlData.CurSection].size_bottom-ui->graphicsView->viewport()->height()+25;
 
-    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-602, false, QPoint(-10,10));
+    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-ui->graphicsView->viewport()->height()+25, false, QPoint(-10,10));
 }
 
-void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
+void leveledit::ResetZoom()
 {
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(1.0);
+    }
+}
+
+void leveledit::zoomIn()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomIn();
+    }
+}
+
+void leveledit::zoomOut()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomOut();
+    }
+}
+
+QGraphicsView *leveledit::getGraphicsView()
+{
+    return ui->graphicsView;
+}
+void leveledit::setZoom(int percent)
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(qreal(percent)/100.0);
+    }
+}
+
+int leveledit::getZoom()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        return qRound(static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom() * 100.0);
+    }
+    else
+    {
+        return 100;
+    }
+}
+
+
+void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)
+{
+    if(center)
+        offset= QPoint(-ui->graphicsView->viewport()->width()/2, -ui->graphicsView->viewport()->height()/2);
 
     if(SwitchToSection)
     {
+        int padding=128;
         for(int i=0; i<LvlData.sections.size(); i++)
         {
-            if( (x >= LvlData.sections[i].size_left) &&
-                (x <= LvlData.sections[i].size_right) &&
-                (y >= LvlData.sections[i].size_top) &&
-                (y <= LvlData.sections[i].size_bottom) )
+            if( (x >= LvlData.sections[i].size_left-padding) &&
+                (x <= LvlData.sections[i].size_right+padding) &&
+                (y >= LvlData.sections[i].size_top-padding) &&
+                (y <= LvlData.sections[i].size_bottom+padding) )
             {
                     MainWinConnect::pMainWin->SetCurrentLevelSection(i);
                     break;
@@ -88,8 +141,18 @@ void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
         }
     }
 
-    ui->graphicsView->horizontalScrollBar()->setValue(x + offset.x() );
-    ui->graphicsView->verticalScrollBar()->setValue(y + offset.y() );
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+    WriteToLog(QtDebugMsg, QString("Pos: %1, zoom %2, scenePos: %3")
+               .arg(ui->graphicsView->horizontalScrollBar()->value())
+               .arg(zoom).arg(x));
+
+    ui->graphicsView->horizontalScrollBar()->setValue( qRound(qreal(x)*zoom)+offset.x() );
+    ui->graphicsView->verticalScrollBar()->setValue( qRound(qreal(y)*zoom)+offset.y() );
 
     scene->update();
     ui->graphicsView->update();
@@ -109,11 +172,20 @@ void leveledit::setCurrentSection(int scId)
                .arg(ui->graphicsView->verticalScrollBar()->value())
                );
 
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+    QPoint target = QPoint(
+                qRound(qreal(ui->graphicsView->horizontalScrollBar()->value())/zoom),
+                qRound(qreal(ui->graphicsView->verticalScrollBar()->value())/zoom)
+                           );
+
     //Save currentPosition on Section
-    LvlData.sections[LvlData.CurSection].PositionX =
-            ui->graphicsView->horizontalScrollBar()->value();
-    LvlData.sections[LvlData.CurSection].PositionY =
-            ui->graphicsView->verticalScrollBar()->value();
+    LvlData.sections[LvlData.CurSection].PositionX = target.x();
+    LvlData.sections[LvlData.CurSection].PositionY = target.y();
 
     //Change Current Section
     LvlData.CurSection = scId;
@@ -163,25 +235,25 @@ void leveledit::changeCursor(int mode)
 {
     switch(mode)
     {
-    case (-1): // Hand Dragger
+    case (MODE_HandDrag): // Hand Dragger
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Selecting);
         break;
-    case 0:    // Selector
+    case MODE_Selecting:    // Selector
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Selecting);
         break;
-    case 1:    // Eriser
+    case MODE_Erasing:    // Eriser
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_rubber.png"), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Erasing);
         break;
-    case 2:    // place New item
+    case MODE_PlaceItem:    // place New item [any modes (single, square, line)]
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::CrossCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
@@ -189,7 +261,7 @@ void leveledit::changeCursor(int mode)
         ui->graphicsView->viewport()->setMouseTracking(true);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
         break;
-    case 3:    // Draw water zones
+    case MODE_DrawSquares:    // Draw water zones
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::CrossCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
@@ -197,14 +269,14 @@ void leveledit::changeCursor(int mode)
         ui->graphicsView->viewport()->setMouseTracking(true);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_DrawSquare);
         break;
-    case 4:    // paste from Buffer
+    case MODE_Pasting:    // paste from Buffer
         scene->clearSelection();
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_pasta.png"), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
         break;
-    case 5:    // Resizing mode
+    case MODE_Resizing:    // Resizing mode
         ui->graphicsView->setInteractive(true);
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);

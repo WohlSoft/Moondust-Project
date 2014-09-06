@@ -44,14 +44,13 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     ui->centralWidget->closeAllSubWindows();
 
-
     if (ui->centralWidget->currentSubWindow()) {
         event->ignore();
-
     }
     else
     {
         saveSettings();
-    event->accept();
+        closeEditor();
+        event->accept();
     }
 }

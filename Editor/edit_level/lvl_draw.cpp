@@ -22,7 +22,7 @@
 #include <QGraphicsScene>
 #include <QProgressDialog>
 
-#include "leveledit.h"
+#include "level_edit.h"
 #include "../ui_leveledit.h"
 
 #include "../file_formats/lvl_filedata.h"
@@ -39,44 +39,65 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
     int TotalSteps = 6;
 
         if(!progress.wasCanceled())
+
             progress.setLabelText(tr("1/%1 Loading user data").arg(TotalSteps));
 
+    qApp->processEvents();
     scene->loadUserData(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("1/%1 Applying Backgrounds").arg(TotalSteps));
+
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
     scene->makeSectionBG(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("2/%1 Applying BGOs...").arg(TotalSteps));
+
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
     scene->setBGO(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("3/%1 Applying Blocks...").arg(TotalSteps));
+
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
     scene->setBlocks(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("4/%1 Applying NPCs...").arg(TotalSteps));
+
+    progress.setValue(progress.value()+1);
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
     scene->setNPC(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
-            progress.setLabelText(tr("5/%1 Applying Waters...").arg(TotalSteps));
+            progress.setLabelText(tr("5/%1 Applying Water...").arg(TotalSteps));
+
+    progress.setValue(progress.value()+1);
+    qApp->processEvents();
     scene->setWaters(progress);
 
         if(progress.wasCanceled()) return false;
 
         if(!progress.wasCanceled())
             progress.setLabelText(tr("6/%1 Applying Doors...").arg(TotalSteps));
+
+
+    qApp->processEvents();
     scene->setDoors(progress);
 
         if(progress.wasCanceled()) return false;
@@ -87,7 +108,7 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
 
 
     if(scene->opts.animationEnabled)
-        scene->startBlockAnimation();//Apply block animation
+        scene->startBlockAnimation(); //Apply block animation
 
     scene->applyLayersVisible();
 

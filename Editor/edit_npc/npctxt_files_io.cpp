@@ -22,7 +22,7 @@
 #include "./ui_npcedit.h"
 #include "../file_formats/file_formats.h"
 #include "../main_window/global_settings.h"
-
+#include "../common_features/mainwinconnect.h"
 
 
 
@@ -40,7 +40,7 @@ void npcedit::newFile(unsigned long npcID)
 
     setDefaultData(npcID);
 
-    NpcData = DefaultNPCData; // create data templade
+    NpcData = DefaultNPCData; // create data template
     StartNPCData = DefaultNPCData;
     setDataBoxes();
 
@@ -114,8 +114,8 @@ bool npcedit::saveFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("Write file error"),
-                             tr("Cannot write file %1:\n%2.")
+        QMessageBox::warning(this, tr("File save error"),
+                             tr("Cannot save file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
         return false;
@@ -133,6 +133,9 @@ bool npcedit::saveFile(const QString &fileName)
 
     refreshImageFile();
     updatePreview();
+
+    MainWinConnect::pMainWin->AddToRecentFiles(fileName);
+    MainWinConnect::pMainWin->SyncRecentFiles();
 
     return true;
 }

@@ -61,14 +61,15 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QGraphicsView" name="graphicsView">
-     <property name="autoFillBackground">
-      <bool>false</bool>
+    <widget class="GraphicsWorkspace" name="graphicsView">
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>400</height>
+      </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(98, 98, 98);
-color: rgb(255, 255, 255);
-font: 75 16pt &quot;Cordia New&quot;;</string>
+     <property name="autoFillBackground">
+      <bool>true</bool>
      </property>
      <property name="frameShape">
       <enum>QFrame::Box</enum>
@@ -79,19 +80,29 @@ font: 75 16pt &quot;Cordia New&quot;;</string>
      <property name="dragMode">
       <enum>QGraphicsView::RubberBandDrag</enum>
      </property>
+     <property name="cacheMode">
+      <set>QGraphicsView::CacheBackground</set>
+     </property>
      <property name="viewportUpdateMode">
-      <enum>QGraphicsView::BoundingRectViewportUpdate</enum>
+      <enum>QGraphicsView::MinimalViewportUpdate</enum>
      </property>
      <property name="rubberBandSelectionMode">
       <enum>Qt::IntersectsItemShape</enum>
      </property>
      <property name="optimizationFlags">
-      <set>QGraphicsView::DontAdjustForAntialiasing|QGraphicsView::DontClipPainter|QGraphicsView::DontSavePainterState</set>
+      <set>QGraphicsView::DontAdjustForAntialiasing|QGraphicsView::DontSavePainterState</set>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GraphicsWorkspace</class>
+   <extends>QGraphicsView</extends>
+   <header>common_features/graphicsworkspace.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../_resources/editor.qrc"/>
  </resources>

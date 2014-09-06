@@ -21,7 +21,11 @@
 
 #include <QString>
 #include <QPixmap>
-#include <QBitmap>
+
+// //Defines:// //
+//  obj_npc     //
+//  npc_Markers //
+// //////////// //
 
 struct obj_npc
 {
@@ -29,13 +33,15 @@ struct obj_npc
     unsigned long id;
 //    name="Goomba"
     QString name;
+//    group="Enemy" 		;The sort category
+    QString group;
 //    category="Enemy"		;The sort category
     QString category;
 //    image="npc-1.gif"		;NPC Image file
     QString image_n;
     QString mask_n;
     QPixmap image;
-    QBitmap mask;
+    QPixmap mask;
 //    algorithm="0"			;NPC's alhorytm. Alhoritm have states and events (onDie, onTail, onCollisionWithFlyBlock...)
     int algorithm;
     //    ;If algorithm = 0, will using basic parametric alhorythm.
@@ -54,6 +60,9 @@ struct obj_npc
 //    gfx-height-y=32
     int gfx_w;
 //    gfx-width-y=32
+
+    bool custom_physics_to_gfx; //The GFX size defining by physics size in the custom configs
+
     int grid;
 //    grid=32
 //    grid-offset-x=0
@@ -85,7 +94,7 @@ struct obj_npc
 //    ; this option useful for non-standart algorithmic sprites (for example, bosses)
 
 //    ;custom-animation-alg=0		; Custom animation algorithm
-    // 0 simple frame range, 1 - frame Jump
+    // 0 simple frame range, 1 - frame Jump; 2 - custom animation sequances
     int custom_ani_alg;
 //    ;custom-animation-fl=0		; First frame for LEFT
     int custom_ani_fl;
@@ -96,13 +105,22 @@ struct obj_npc
 //    ;custom-animation-er=0		; end frame for RIGHT / Jump step
     int custom_ani_er;
 
+    QList<int> frames_left;     //Frame srquence for left
+    QList<int> frames_right;    //Frame srquence for right
+
 //    container=0			; NPC can containing inside other NPC (need enable special option type 2)
     bool container;
+
+    unsigned int display_frame;
+
+    bool no_npc_collions;
+//    ; this option disabling collisions in editor with other NPCs, but with NPC's of same ID collisions will be checked
 
 //    ; Special option
 //    have-special=0			; Special NPC's option, what can used by NPC's algorithm
     bool special_option;
 //    ;special-name="Cheep-cheep"	; 60
+
     QString special_name;
 //    ;special-type=0			; 61 0 combobox, 1 - spin, 2 - npc-id
     int special_type;
@@ -115,8 +133,31 @@ struct obj_npc
 //    ;special-spin-min=0		; 66 milimal value of spin
     int special_spin_max;
 //    ;special-spin-max=25		; 67 maximal value of spin
-
     int special_spin_value_offset;
+
+//    have-special-2=0			; Special NPC's option, what can used by NPC's algorithm
+    bool special_option_2; //Second special option
+//    special-2-npc-spin-required
+    QList<long > special_2_npc_spin_required;
+//    special-2-npc-box-required
+    QList<long > special_2_npc_box_required;
+
+//    ;special-2-name="Cheep-cheep"	; 60
+    QString special_2_name;
+//    ;special-2-type=0			; 61 0 combobox, 1 - spin
+    int special_2_type;
+//    ;special-combobox-size=3		; 62 quantity of options
+    QStringList special_2_combobox_opts;
+//    ;special-option-0="Swim"		; 63 set title for 0 option combobox
+//    ;special-option-1="Jump"		; 64 set title for 1 option combobox
+//    ;special-option-2="Projective"	; 65 set title for 2 option combobox
+    int special_2_spin_min;
+//    ;special-2-spin-min=0		; 66 milimal value of spin
+    int special_2_spin_max;
+//    ;special-2-spin-max=25		; 67 maximal value of spin
+    int special_2_spin_value_offset;
+    //special-2-spin-value-offset
+
 //    ;game process
 //    score=2				; Add scores to player (value 0-13)
 //    ; 0, 10, 100, 200, 400, 800, 1000, 2000, 4000, 8000, 1up, 2up, 5up, 3up
@@ -215,6 +256,53 @@ struct obj_npc
 //    lava-protection=0	; NPC will not be burn in lava
     bool lava_protect;
 
+    bool is_star; //If this marker was set, this NPC will be markered as "star"
+    //Quantity placed NPC's with marker "star" will be save in LVL-file
+
+    //Editor defaults
+    bool default_friendly;
+    bool default_friendly_value;
+
+    bool default_nomovable;
+    bool default_nomovable_value;
+
+    bool default_boss;
+    bool default_boss_value;
+
+    bool default_special;
+    long default_special_value;
 };
+
+
+
+struct npc_Markers
+{
+//    ;Defines for SMBX64
+    unsigned long bubble;
+//    bubble=283	; NPC-Container for packed in bubble
+    unsigned long egg;
+//    egg=96		; NPC-Container for packed in egg
+    unsigned long lakitu;
+//    lakitu=284	; NPC-Container for spawn by lakitu
+    unsigned long buried;
+//    burred=91	; NPC-Container for packed in herb
+
+    unsigned long ice_cube;
+//    icecube=263	; NPC-Container for frozen NPCs
+
+//    ;markers
+//    iceball=265
+    unsigned long iceball;
+//    fireball=13
+    unsigned long fireball;
+//    hammer=171
+    unsigned long hammer;
+//    boomerang=292
+    unsigned long boomerang;
+//    coin-in-block=10
+    unsigned long coin_in_block;
+
+};
+
 
 #endif // OBJ_NPC_H

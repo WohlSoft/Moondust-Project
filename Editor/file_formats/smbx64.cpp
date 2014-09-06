@@ -59,8 +59,18 @@ bool SMBX64::dBool(QString in) //Digital BOOL
 }
 
 
+//Convert from string to internal data
+bool SMBX64::wBoolR(QString in)
+{
+    return ((in=="#TRUE#")?true:false);
+}
+
+
 //SMBX64 parameter string generators
 QString SMBX64::IntS(long input)
+{  return QString::number(input)+"\n"; }
+
+QString SMBX64::FloatS(float input)
 {  return QString::number(input)+"\n"; }
 
 QString SMBX64::BoolS(bool input)

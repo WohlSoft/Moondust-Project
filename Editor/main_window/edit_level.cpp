@@ -28,7 +28,14 @@ void MainWindow::on_actionLevelProp_triggered()
         LevelProps LevProps(activeLvlEditWin()->LvlData);
         if(LevProps.exec()==QDialog::Accepted)
         {
+            QList<QVariant> lvlsetData;
+            lvlsetData.push_back(activeLvlEditWin()->LvlData.LevelName);
+            lvlsetData.push_back(LevProps.LevelTitle);
+            activeLvlEditWin()->scene->addChangeLevelSettingsHistory(LvlScene::SETTING_LEVELNAME, QVariant(lvlsetData));
             activeLvlEditWin()->LvlData.LevelName = LevProps.LevelTitle;
+            activeLvlEditWin()->LvlData.modified = true;
+            activeLvlEditWin()->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? activeLvlEditWin()->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );
+            updateWindowMenu();
         }
     }
 
@@ -41,15 +48,10 @@ void MainWindow::on_LevelToolBox_visibilityChanged(bool visible)
     ui->actionLVLToolBox->setChecked(visible);
 }
 
-void MainWindow::on_actionLVLToolBox_triggered()
+void MainWindow::on_actionLVLToolBox_triggered(bool checked)
 {
-    if(ui->actionLVLToolBox->isChecked())
-    {
-        ui->LevelToolBox->setVisible(true);
-        ui->LevelToolBox->raise();
-    }
-    else
-        ui->LevelToolBox->setVisible(false);
+    ui->LevelToolBox->setVisible(checked);
+    if(checked) ui->LevelToolBox->raise();
 }
 
 
@@ -59,15 +61,10 @@ void MainWindow::on_LevelSectionSettings_visibilityChanged(bool visible)
         ui->actionSection_Settings->setChecked(visible);
 }
 
-void MainWindow::on_actionSection_Settings_triggered()
+void MainWindow::on_actionSection_Settings_triggered(bool checked)
 {
-    if(ui->actionSection_Settings->isChecked())
-    {
-        ui->LevelSectionSettings->setVisible(true);
-        ui->LevelSectionSettings->raise();
-    }
-    else
-        ui->LevelSectionSettings->setVisible(false);
+    ui->LevelSectionSettings->setVisible(checked);
+    if(checked) ui->LevelSectionSettings->raise();
 }
 
 void MainWindow::on_DoorsToolbox_visibilityChanged(bool visible)
@@ -92,6 +89,18 @@ void MainWindow::on_actionLevelEvents_triggered(bool checked)
     ui->LevelEventsToolBox->setVisible(checked);
     if(checked) ui->LevelEventsToolBox->raise();
 }
+
+void MainWindow::on_FindDock_visibilityChanged(bool visible)
+{
+    ui->actionLVLSearchBox->setChecked(visible);
+}
+
+void MainWindow::on_actionLVLSearchBox_triggered(bool checked)
+{
+    ui->FindDock->setVisible(checked);
+    if(checked) ui->FindDock->raise();
+}
+
 
 
 
@@ -212,18 +221,7 @@ void MainWindow::on_actionGo_to_Section_triggered()
             int SectionId = edit->LvlData.CurSection;
             int xb = edit->LvlData.sections[SectionId].size_left;
             int yb = edit->LvlData.sections[SectionId].size_top;
-            edit->goTo(xb-10, yb-10);
-    }
-}
-
-// //////////////////////////////////////////////////////////////
-
-
-void MainWindow::on_actionGridEn_triggered(bool checked)
-{
-    if (activeChildWindow()==1)
-    {
-       activeLvlEditWin()->scene->grid = checked;
+            edit->goTo(xb, yb, false, QPoint(-10, -10));
     }
 }
 

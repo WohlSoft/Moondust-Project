@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ITEM_PLACING_H
-#define ITEM_PLACING_H
+#ifndef LVL_ITEM_PLACING_H
+#define LVL_ITEM_PLACING_H
 
 #include "../file_formats/lvl_filedata.h"
 class LvlPlacingItems
@@ -25,20 +25,32 @@ class LvlPlacingItems
 public:
     static LevelNPC npcSet;
     static long npcGrid;
+    static long npcGfxOffsetX1;
+    static long npcGfxOffsetX2;
+    static long npcGfxOffsetY;
+
+    static long itemW;
+    static long itemH;
+
     static LevelBlock blockSet;
 
     static bool sizableBlock;
     static bool fillingMode;
+    static bool lineMode;
+
+    static bool overwriteMode;
 
     static LevelBGO bgoSet;
-    static long bgoW;
-    static long bgoH;
     static LevelWater waterSet;
 
     enum doorType{
         DOOR_Entrance=0,
         DOOR_Exit
     };
+
+
+    static int c_offset_x;
+    static int c_offset_y;
 
     static int doorType;
     static long doorArrayId;
@@ -49,6 +61,9 @@ public:
     static int gridSz;
     static QPoint gridOffset;
 
+    static QList<QPair<int, QVariant > > flags;
 };
+
+typedef QPair<int, QVariant > dataFlag;
 
 #endif // ITEM_PLACING_H

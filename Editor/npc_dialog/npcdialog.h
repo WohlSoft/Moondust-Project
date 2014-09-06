@@ -40,6 +40,7 @@ public:
     int mode;
 
     void setState(int npcID, int mode=0);
+    void updateSearch(QString searchStr);
 
 private slots:
     void on_npcList_doubleClicked(const QModelIndex &index);
@@ -51,6 +52,10 @@ private slots:
     void on_NPCfromList_toggled(bool checked);
 
     void on_coinsNPC_toggled(bool checked);
+
+    void on_searchEdit_textChanged(const QString &arg1);
+
+    void on_searchTypeBox_currentIndexChanged(int index);
 
 private:
     dataconfigs * pConfigs;
