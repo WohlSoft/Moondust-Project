@@ -6,4 +6,3 @@ Object lists
 
 File format info
 	SMBX64 file format descriptions: *.lvl, *.wld, *.sav
-woot
