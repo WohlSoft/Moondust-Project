@@ -12,8 +12,8 @@
 <p style="text-align: center">
 <a title="Contents" href="../manual_editor.html"><img alt="Editor splash" src="../images/splash_editor.png" /><a/></p>
 <h1 style="text-align: left">How to use custom graphics</h1>
-<p style="text-align: left">Sometimes there comes a time where you'll find the need to replace the default images with
-your own custom graphics. This is possible without overwriting any of the default images. Custom graphics are able to make your own game episode unique and colorful.</p>
+<p style="text-align: left">There usually comes a time when you find the need to replace the default images with
+your own custom graphics. This is possible without overwriting any of the default images. Custom graphics are a great way to make your game episode unique and colorful.</p>
 <p style="text-align: left">The process is quite simple, but for those of you 
 who don't know how, here is an in depth look at using custom graphics with the editor.</p>
 <p style="text-align: left">&nbsp;</p>
@@ -51,8 +51,7 @@ who don't know how, here is an in depth look at using custom graphics with the e
 	Customizing the world graphics</a></p>
 	</li>
 	<li>
-	<p style="text-align: left"><a href="#Customizing_notes"><strong>Customizing 
-	notes</strong></a></p>
+	<p style="text-align: left"><a href="#Customizing_notes"><strong>Things to note when customizing</strong></a></p>
 	</li>
 	<li>
 	<p style="text-align: left"><a href="#Graphics_format_support"><em>Graphic formats supported</em></a></p>
@@ -68,12 +67,12 @@ game. All level files of an episode are placed together in this one folder.</p>
 <p style="text-align: left"><span style="text-decoration: underline">Level 
 Custom Folders</span> - are folders which have the same name as the level file. 
 For example, the folder name for the level "Dracula.lvlx" would be
-"Dracula".</p>
+"Dracula&quot;.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/tree.png" /></p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">Putting custom graphic files with a bunch of level files 
+<p style="text-align: left">Placing custom graphic files with a bunch of level files 
 together means they will be customized to all other levels in the episode, but when you 
  put the graphics in the level custom folder, the graphics will be 
 customized for that level only.</p>
@@ -84,19 +83,19 @@ the episode folder along with the world map files.</p>
 <p style="text-align: left">&nbsp;</p>
 <h3 style="text-align: left"><a name="Customizing_level_graphics">Customizing level graphics</a></h3>
 <p style="text-align: left"><span style="text-decoration: underline"><strong>
-<a name="Blocks">Blocks</a></strong></span>. To replace the blocks you need to create graphic files 
-with names like "<span style="text-decoration: underline">block-*.ext</span>". * stands for the ID of the block you are replacing, and "ext" is an image 
+<a name="Blocks">Blocks</a></strong></span>. To replace the blocks, you'll need to create graphic files 
+with names such as"<span style="text-decoration: underline">block-*.ext</span>". * standing for the ID of the block you are replacing, and "ext" is an image 
 file extension. SMBX uses the GIF format without transparency. If you want to 
-use  transparency, create a transparency mask for your image. 
+use  transparency, you will have to create a transparency mask for your image. 
 The mask image should have a name like "<span style="text-decoration: underline">block-*m.ext</span>". An example would be "<span style="text-decoration: underline">block-23.gif</span>" for the 
 source image and "<span style="text-decoration: underline">block-23m.gif</span>" 
-for the mask image, for defining the transparency pixels.&nbsp;(<a href="opacity_masks_images.html">Read 
-more about mask images</a>). The filename of the target image file you're customizing can be found in the global image directory of your config pack. <em>Keep in mind that for SMBX 
-you should use the GIF format with mask images.</em></p>
+for the mask image, which defines the transparency pixels.&nbsp;(<a href="opacity_masks_images.html">Read 
+more about mask images</a>). The filename of the target image file you're customizing, can be found in the global image directory of your config pack. <em>Keep in mind that for SMBX 
+you should use the GIF format for mask images.</em></p>
 <p style="text-align: left"><em>The blocks have three types of graphics:</em></p>
 <p style="text-align: left">- Static</p>
 <p style="text-align: left">- Animated</p>
-<p style="text-align: left">- Sizable.</p>
+<p style="text-align: left">- Sizable</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><em>&nbsp;&nbsp; -Static</em> blocks have  one 
 static frame. You can use images with any sizes, but you have to use the same 
@@ -118,12 +117,12 @@ have same frame number as the original block</p>
 <img alt="" style="vertical-align: middle;" src="../screenshots/Customizing/block_animated.gif" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: left">&nbsp;&nbsp; <em>-Sizable</em> blocks&nbsp;have one image divided into 9 pieces which are called "Corners", "Sides" and "Center&quot;. 
-Sizable blocks can have any size and also can be resized. The sizable blocks are 
+<p style="text-align: left">&nbsp;&nbsp; <em>-Sizable</em> blocks are one image divided into 9 pieces which are called "Corners", "Sides" and "Center&quot;. 
+Sizable blocks can also have any size along with being resized. Sizable blocks are 
 displayed under most of the BGO's.</p>
 <p style="text-align: left">&nbsp;&nbsp;&nbsp;
-<span style="text-decoration: underline">Note</span> If you're customizing a block 
-for SMBX, the image should have a size of 96x96 pixels.</p>
+<span style="text-decoration: underline">Note</span>: If you're customizing a block 
+for SMBX, the image should have an image size of 96x96 pixels.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center"><em>Resizable block and its source sprite</em></p>
 <div style="text-align: center; vertical-align : middle; height: 188px;">
@@ -147,12 +146,11 @@ are something like "<span style="text-decoration: underline">background-*.ext</s
 <img alt="" src="../screenshots/Customizing/sign_animated.png" style="vertical-align: middle" />&nbsp;
 <img alt="" src="../screenshots/Customizing/sign_animated.gif" style="vertical-align: middle" /></p>
 <p style="text-align: center">&nbsp;</p>
-<p style="text-align: left"><span style="text-decoration: underline">A not about being careful 
-when using BGOs:</span> the BGOs are shared by the Z-position: background-2 Z-level, which is the most lowest Z-level, these BGOs are displayed under sizable blocks. Background-1 
-Z-level is a displaying over sizable blocks, but under playable character and 
-NPC's and blocks. The foregound level is a displaying over anything, but under 
+<p style="text-align: left"><span style="text-decoration: underline">Being careful 
+when using BGOs:</span> the BGOs are shared by the Z-position: background-2 Z-level, which is the lowest Z-level, these BGOs are displayed under sizable blocks. Background-1 
+Z-level is displayed over sizable blocks, but under playable characters, NPCs, and blocks. The foregound level is a displaying over anything, but under 
 blocks and BGO's which the "foreground-2" Z-level.
-<span style="text-decoration: underline">Note related to SMBX</span>: In SMBX the BGOs define their Z-position by array data position. I.e. each BGO has its own sorting 
+<span style="text-decoration: underline">Note related to SMBX</span>: In SMBX the BGOs define their Z-position by an array data position. I.e. each BGO has its own sorting 
 priority which defines the BGO's Z-position.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/level_items_layers.png" /></p>
@@ -181,22 +179,19 @@ and right direction.</p>
 <img alt="" src="../screenshots/Customizing/npc_animated_style_ani.gif" style="vertical-align: middle" /></p>
 <p style="text-align: center">&nbsp;</p>
 <p style="text-align: left">- Animated with left-right-upper directions 
-defining, Allows to define images for left and right NPC's directions and also 
-left</p>
-<p style="text-align: left">&nbsp;and right directions for upper state.</p>
+defined, allows defining  images for left and right NPC's directions, along with left and right directions for upper state.</p>
 <p style="text-align: center">
-<img alt="" src="../screenshots/Customizing/npc_animated_style2.png" style="vertical-align: middle" />&nbsp;&nbsp;&nbsp;&nbsp;
+  <img alt="" src="../screenshots/Customizing/npc_animated_style2.png" style="vertical-align: middle" />&nbsp;&nbsp;&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/npc_animated_style_ani2.gif" style="vertical-align: middle" /></p>
 <p style="text-align: center">&nbsp;</p>
-<p style="text-align: left">- Animated with rotation. Allows to define NPC's 
-frames with round rotation (NPC should can adhease to celling and walls).</p>
+<p style="text-align: left">- Animated with rotation. Allows you to define the NPC's 
+frames with round rotation (the NPC should be able to adhease to the celling and walls).</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/npc_animated_style3.png" style="vertical-align: middle" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/npc_animated_style_ani3.gif" style="vertical-align: middle" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">- Animated with the special animation algorithm. The NPC 
- has an algorithmic pre-defined frame sequence, you can't redefine it if you 
-will use your NPC in SMBX.</p>
+ has an algorithmic pre-defined frame sequence, this is not possible to redefine if you're going to use the NPC in SMBX.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/npc_animated_style_alg.png" style="vertical-align: middle" />&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/npc_animated_style_ani_alg.gif" style="vertical-align: middle" /></p>
@@ -208,35 +203,29 @@ about NPC customization</a>)</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><span style="text-decoration: underline">
 <a name="Playable_Characters"><strong>
-Playable Characters</strong>.</a></span> Is a 10x10 matrix-sprite which have size 
-1000x1000 pixels and 100 frames totally. Each frame of playable character can 
-have maximum of size is 100x100 pixels. When you customizing playable character, the 
-frames must be calibrated to SAME physics config which have the original 
-frameset of your playable character. <span style="text-decoration: underline">
-Note:</span> SMBX haven't possibles for edit collision (hit) boxes for playable 
-character's frames, and you should use predefined collision boxes positions for 
-draw your sprite of your character.</p>
+Playable Characters</strong>.</a></span> These are a 10x10 matrix-sprite which has a size 
+of 1000x1000 pixels and about 100 frames in total. Each frame of the playable character can 
+have a maximum size of 100x100 pixels. When you're customizing a playable character, make sure that the 
+frames are calibrated to the SAME physics config as the original 
+frameset of the playable character. <span style="text-decoration: underline">
+Note:</span> It's not possible to edit collision (hit) boxes for the playable 
+character's frames in SMBX, and thus you should make use of pre-defined collision box positions when drawing the sprite of your character.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><span style="text-decoration: underline"><strong>
-<a name="Backgrounds">Backgrounds</a></strong></span> - Is the images which displaying under all your 
-items on level. The backgrounds usually have image filenames like "<span style="text-decoration: underline">background-2-*.ext</span>".</p>
-<p style="text-align: left">Backgrounds have two types if images: statical and 
-animated like BGO's, but backgrounds have own displaying modes: <strong>
-single-row</strong>, <strong>double-row</strong> and <strong>tiled</strong>.</p>
+<a name="Backgrounds">Backgrounds</a></strong></span> - Are the images which are displayed under all the 
+items in a level. Backgrounds usually have image filenames like "<span style="text-decoration: underline">background-2-*.ext</span>".</p>
+<p style="text-align: left">Backgrounds have mainly two types of images: statical, and 
+animated like BGOs. Although  backgrounds also have their own displaying modes, which are<strong> single-row</strong>, <strong>double-row</strong> and <strong>tiled</strong>.</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: center">- <span style="text-decoration: underline">
-<strong>single-row</strong></span> backgrounds have one row which repeating horisontally, but is 
-not repeating vertically.<br />
-The single-row backgrounds moving vertically 
-proportionally to section's height.</p>
-<p style="text-align: center">Image height must be more than 600 pixels (default 
-section height).</p>
+<p style="text-align: center">- single-row backgrounds have one row which repeats horizontally, but which does not repeat vertically.<br />
+Single-row backgrounds move vertically in proportion to the section's height.</p>
+<p style="text-align: center">The image height must be greater than 600 pixels (which is the default section height).</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><em>Screen only and real demo (horisontal)</em></p>
+<p style="text-align: center"><em>Screen only and real demo (horizontal)</em></p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/Background_singleRow_screen.gif" style="vertical-align: middle" />&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/Background_singleRow_h.gif" style="vertical-align: middle" /></p>
@@ -247,17 +236,17 @@ section height).</p>
 <img alt="" src="../screenshots/Customizing/Background_singleRow_vertic.gif" style="vertical-align: middle" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">- <span style="text-decoration: underline">
-<strong>double-row</strong></span> backgrounds is a composite background which use two images for 
+<strong>double-row</strong></span> backgrounds are composite backgrounds which use two images for 
 each row.<br />
-The double-row background is not moving vertically.<br />
-Summary height of both images must be more than 600 pixels (default section 
+The double-row backgrounds do not move vertically.<br />
+The summary height of both images must be greater than 600 pixels (which is the default section 
 height).</p>
 <p style="text-align: center">&nbsp;</p>
 <p style="text-align: center"><em>Screen only and real demo</em></p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/Background_doubleRow_s.gif" style="vertical-align: middle" />&nbsp;&nbsp;
 <img alt="" src="../screenshots/Customizing/Background_doubleRow_r.gif" style="vertical-align: middle" /></p>
-<p style="text-align: left"><span style="text-decoration: underline">An editor related note:</span> Single-row and Double-row backgrounds will only be displayed at the bottom or  top (which attachment type have this background) with 
+<p style="text-align: left"><span style="text-decoration: underline">An editor related note:</span> Single-row and Double-row backgrounds will only be displayed at the bottom or  top (which attachment types have these backgrounds) with 
 only horisontal repeating. If you want to see your background like tiled, you 
 need when you exporting image set the "Tiled background" flag. Also in the INI 
 configs available flag which called as "tiled in the editor" which will make 
@@ -275,16 +264,12 @@ pixels).</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: center">- <span style="text-decoration: underline">
-<strong>tiled</strong></span> 
-background repeats by both directions: horisontally and vertically. Image can 
-have any sizes.</p>
+<strong>Tiled</strong></span> backgrounds repeat by both directions, horizontally and vertically. The image can have any size.</p>
 <p style="text-align: center">
 <img alt="" height="336" src="../screenshots/Customizing/Background_tiled.gif" width="433" /></p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
-<p style="text-align: center"><span style="text-decoration: underline">Note:</span> 
-Some backgrounds have the magic effect, which deviding your image into strips 
-which moving with diffirence speeds.</p>
+<p style="text-align: center"><span style="text-decoration: underline"> Note:</span>  Some backgrounds have the magic effect, that divides the image into strips which move at different speeds.</p>
 <p style="text-align: center">
 <img alt="" src="../screenshots/Customizing/Background_singleRow_magic_s.gif" style="vertical-align: middle" />&nbsp;
 <img alt="" src="../screenshots/Customizing/Background_singleRow_magic.gif" style="vertical-align: middle" /></p>
@@ -292,21 +277,22 @@ which moving with diffirence speeds.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
 <p style="text-align: left">&nbsp;</p>
-<h3 style="text-align: left"><a name="Customizing_World_graphics">Customizing world graphics</a></h3>
+<h3 style="text-align: left"><a name="Customizing_World_graphics">Customizing the world graphics</a></h3>
 <p style="text-align: left">World graphics are usually placed together with the 
-world map file, but you can place all the images in the World Custom Directory (not 
+world map file, but you can place the images instead in the World Custom Directory (this is not 
 supported by SMBX).</p>
+<p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><span style="text-decoration: underline">Tiles</span>,
-<span style="text-decoration: underline">Paths</span>,
-<span style="text-decoration: underline">Sceneries</span>. The graphics are similar 
-to the BGOs in levels. Images have two types: static and animated. Image 
-files usually have names like "<span style="text-decoration: underline">tile-*.ext</span>", 
+  <span style="text-decoration: underline">Paths</span>,
+  <span style="text-decoration: underline">Sceneries</span>. These graphics are similar 
+  to the BGOs used in levels. The images have two types which are, static and animated. These image 
+  files also usually have names such as "<span style="text-decoration: underline">tile-*.ext</span>", 
 "<span style="text-decoration: underline">path-*.ext</span>" and "<span style="text-decoration: underline">scene-*.ext</span>".</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><span style="text-decoration: underline">Levels</span>. 
-  Level images have some minor differences from other images. Mainly images always attaching to 
-  bottom-center position of item, where image was used. The image files of levels 
-  usually is a "<span style="text-decoration: underline">level-*.ext</span>".</p>
+  Level images have some minor differences in comparison to other images. They always attach to an item's 
+  bottom-center position, where they are used. The image files of levels 
+  are usually named something like "<span style="text-decoration: underline">level-*.ext</span>".</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
@@ -317,13 +303,13 @@ files usually have names like "<span style="text-decoration: underline">tile-*.e
 sprite has the same number of frames as in the original image.</p>
 <p style="text-align: left">- Remember that if the size of a custom BGO is larger than the 
 original image you are replacing, it will be cropped in SMBX. In other words, don't 
-use custom images larger than the image you're replacing if you want to use them in levels for SMBX. This also applies to Tiles, 
+use custom images larger than the image you're replacing if you intend to use them in levels created for SMBX. This also applies to Tiles, 
 Sceneries, Paths and Levels in the World map.</p>
 <p style="text-align: left">- When customizing a NPC, you'll have to create the image 
 sprite with the same image size and number of frames as the original. If you're creating a custom image size, remember to create the npc-*.txt config file for defining the properties of 
 your custom NPC.</p>
-<p style="text-align: left">- Remember to be careful with your filenames in UNIX-Like 
-operating systems, an example would be something like "thecat" and "TheCat", both are recognized as entirely different files.</p>
+<p style="text-align: left">- Remember to be careful with how you name your files under UNIX-like 
+operating systems, an example would be "thecat" and "TheCat", remember that both are recognized as entirely different files.</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left">&nbsp;</p>
 <p style="text-align: left"><a class="return_to_top" href="#">Return to top</a></p>
@@ -343,7 +329,7 @@ formats supported</a></strong></h3>
 		<td style="text-align: center; width: 71px; color: #008000; border: 1px solid #000000">
 		GIF</td>
 		<td style="text-align: center; width: 420px; border: 1px solid #000000">
-		CompuServe GIF, without transparency (with using the masks)</td>
+		CompuServe GIF, without transparency (using the masks)</td>
 		<td style="border: 1px solid #000000"></td>
 	</tr>
 	<tr>
@@ -357,7 +343,7 @@ formats supported</a></strong></h3>
 		<td style="text-align: center; width: 71px; color: #008000; border: 1px solid #000000; height: 22px;">
 		BMP</td>
 		<td style="text-align: center; width: 420px; border: 1px solid #000000; height: 22px;">
-		Uncompressed image format (with using of the masks)</td>
+		Uncompressed image format (using the masks)</td>
 		<td style="border: 1px solid #000000; height: 22px;"></td>
 	</tr>
 	<tr>
