@@ -2495,7 +2495,7 @@ Message limits: max line lenth is 28 characters</source>
     <message>
         <location filename="../mainwindow.ui" line="7395"/>
         <source>Section 4 (Ctrl+4)</source>
-        <translation>Section 4 (Ctrl+3)</translation>
+        <translation>Section 4 (Ctrl+4)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7417"/>
