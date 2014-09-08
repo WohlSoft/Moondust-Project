@@ -76,10 +76,23 @@ struct LevelBlock
 
 struct LevelBGO
 {
+    //SMBX64
     long x;
     long y;
     unsigned long id; //Block ID
     QString layer;
+
+    //Extended
+    enum zmodes{
+        Background2=-2,
+        Background1=-1,
+        ZDefault=0,
+        Foreground1=1,
+        Foreground2=2
+    };
+
+    int   z_mode;//!< Mode of displaying of BGO
+    qreal z_offset; //Offset of Z-value from default
 
     //editing
     long smbx64_sp;
