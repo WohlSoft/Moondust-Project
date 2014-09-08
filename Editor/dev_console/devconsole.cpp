@@ -3,6 +3,7 @@
 
 #include <QScrollBar>
 #include <QSettings>
+#include <QCryptographicHash>
 
 #include "../version.h"
 
@@ -173,6 +174,7 @@ void DevConsole::registerCommands()
     registerCommand("version", &DevConsole::doVersion, tr("Prints the version"));
     registerCommand("quit", &DevConsole::doQuit, tr("Quits the program"));
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
+    registerCommand("md5", &DevConsole::doMd5, tr(" [md5 SomeString] Calculating MD5 hash of string"));
 }
 
 void DevConsole::doCommand()
@@ -205,6 +207,19 @@ void DevConsole::doTest(QStringList /*args*/)
 {
     log("-> All good!", ui->tabWidget->tabText(0));
 }
+
+void DevConsole::doMd5(QStringList args)
+{
+    QString src;
+
+    foreach(QString s, args)
+        src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+
+    QString encoded = QString(QCryptographicHash::hash(src.toUtf8(), QCryptographicHash::Md5).toHex());
+
+    log(QString("MD5 hash: %1").arg(encoded), ui->tabWidget->tabText(0));
+}
+
 
 void DevConsole::doVersion(QStringList /*args*/)
 {
