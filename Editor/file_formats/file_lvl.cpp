@@ -116,10 +116,16 @@ LevelBlock  FileFormats::dummyLvlBlock()
 LevelBGO FileFormats::dummyLvlBgo()
 {
     LevelBGO dummyBGO;
+    //SMBX64
     dummyBGO.x = 0;
     dummyBGO.y = 0;
     dummyBGO.id = 0;
     dummyBGO.layer = "Default";
+
+    //Extended
+    dummyBGO.z_mode = LevelBGO::ZDefault;
+    dummyBGO.z_offset = 0;
+
     dummyBGO.smbx64_sp = -1;
     dummyBGO.smbx64_sp_apply = -1;
 
