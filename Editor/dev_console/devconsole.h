@@ -53,6 +53,7 @@ private:
     void doVersion(QStringList);
     void doQuit(QStringList);
     void doSavesettings(QStringList);
+    void doFlood(QStringList args);
 };
 
 #endif // DEVCONSOLE_H
