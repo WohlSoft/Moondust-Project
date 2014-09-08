@@ -175,6 +175,7 @@ void DevConsole::registerCommands()
     registerCommand("quit", &DevConsole::doQuit, tr("Quits the program"));
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
     registerCommand("md5", &DevConsole::doMd5, tr(" [md5 SomeString] Calculating MD5 hash of string"));
+    registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
 }
 
 void DevConsole::doCommand()
@@ -236,4 +237,19 @@ void DevConsole::doSavesettings(QStringList /*args*/)
 {
     MainWinConnect::pMainWin->saveSettings();
     log("-> Application Settings was saved!", ui->tabWidget->tabText(0));
+}
+
+void DevConsole::doFlood(QStringList args)
+{
+    if(args.size() > 0){
+        bool succ;
+        int floodSize = args[0].toInt(&succ);
+        if(!succ)
+            return;
+        log("Flooding with " + QString::number(floodSize*1024*1024) + "bytes");
+        char* fl = new char[floodSize*1024*1024];
+        if(fl == 0)
+            log("No memory assigned");
+        Q_UNUSED(fl)
+    }
 }
