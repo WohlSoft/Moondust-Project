@@ -186,7 +186,12 @@ SOURCES += main.cpp\
     main_window/dock/debugger.cpp \
     data_configs/conf_tilesets.cpp \
     common_features/npc_animator.cpp \
-    data_configs/config_manager.cpp
+    data_configs/config_manager.cpp \
+    file_formats/lvl_filedata.cpp \
+    file_formats/file_lvlx.cpp \
+    file_formats/npc_filedata.cpp \
+    file_formats/wld_filedata.cpp \
+    file_formats/pge_x.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \

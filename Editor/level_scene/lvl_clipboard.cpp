@@ -72,7 +72,7 @@ LevelData LvlScene::copy(bool cut)
             if( ObjType == "Water")
             {
                 ItemWater* sourceWater = (ItemWater *)(*it);
-                copyData.water.push_back(sourceWater->waterData);
+                copyData.physez.push_back(sourceWater->waterData);
                 if(cut){
                     sourceWater->removeFromArray();
                     delete (*it);
@@ -105,9 +105,9 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
     }else if(!BufferIn.npc.isEmpty()){
         baseX = BufferIn.npc[0].x;
         baseY = BufferIn.npc[0].y;
-    }else if(!BufferIn.water.isEmpty()){
-        baseX = BufferIn.water[0].x;
-        baseY = BufferIn.water[0].y;
+    }else if(!BufferIn.physez.isEmpty()){
+        baseX = BufferIn.physez[0].x;
+        baseY = BufferIn.physez[0].y;
     }else{
         //nothing to paste
         return;
@@ -137,7 +137,7 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
             baseY = npc.y;
         }
     }
-    foreach (LevelWater water, BufferIn.water){
+    foreach (LevelPhysEnv water, BufferIn.physez){
         if(water.x<baseX){
             baseX = water.x;
         }
@@ -185,16 +185,16 @@ void LvlScene::paste(LevelData BufferIn, QPoint pos)
         LvlData->npc.push_back(dumpNPC);
         newData.npc.push_back(dumpNPC);
     }
-    foreach (LevelWater water, BufferIn.water){
+    foreach (LevelPhysEnv water, BufferIn.physez){
         //Gen Copy of Water
-        LevelWater dumpWater = water;
+        LevelPhysEnv dumpWater = water;
         dumpWater.x = (long)pos.x() + water.x - baseX;
         dumpWater.y = (long)pos.y() + water.y - baseY;
         LvlData->npc_array_id++;
         dumpWater.array_id = LvlData->npc_array_id;
         placeWater(dumpWater, true);
-        LvlData->water.push_back(dumpWater);
-        newData.water.push_back(dumpWater);
+        LvlData->physez.push_back(dumpWater);
+        newData.physez.push_back(dumpWater);
     }
 
     LvlData->modified = true;

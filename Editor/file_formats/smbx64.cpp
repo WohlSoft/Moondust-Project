@@ -18,43 +18,52 @@
 
 #include "file_formats.h"
 
-QRegExp isint = QRegExp("\\d+");     //Check "Is Numeric"
-QRegExp issint = QRegExp("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-QRegExp issfloat = QRegExp("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-QRegExp boolwords = QRegExp("^(#TRUE#|#FALSE#)$");
-QRegExp booldeg = QRegExp("^(1|0)$");
+namespace smbx64Format
+{
+    QRegExp isint = QRegExp("\\d+");     //Check "Is Numeric"
+    QRegExp issint = QRegExp("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
+    QRegExp issfloat = QRegExp("^[\\-]?(\\d*)?[\\(.|,)]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
+    QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");
+    QRegExp boolwords = QRegExp("^(#TRUE#|#FALSE#)$");
+    QRegExp booldeg = QRegExp("^(1|0)$");
+}
 
 // /////////////Validators///////////////
 //returns TRUE on wrong data
 
 bool SMBX64::Int(QString in) // UNSIGNED INT
 {
+    using namespace smbx64Format;
     return !isint.exactMatch(in);
 }
 
 bool SMBX64::sInt(QString in) // SIGNED INT
 {
+    using namespace smbx64Format;
     return !issint.exactMatch(in);
 }
 
 bool SMBX64::sFloat(QString in) // SIGNED FLOAT
 {
+    using namespace smbx64Format;
     return !issfloat.exactMatch(in);
 }
 
 bool SMBX64::qStr(QString in) // QUOTED STRING
 {
+    using namespace smbx64Format;
     return !qstr.exactMatch(in);
 }
 
 bool SMBX64::wBool(QString in) //Worded BOOL
 {
+    using namespace smbx64Format;
     return !boolwords.exactMatch(in);
 }
 
 bool SMBX64::dBool(QString in) //Digital BOOL
 {
+    using namespace smbx64Format;
     return !booldeg.exactMatch(in);
 }
 
@@ -62,6 +71,7 @@ bool SMBX64::dBool(QString in) //Digital BOOL
 //Convert from string to internal data
 bool SMBX64::wBoolR(QString in)
 {
+    using namespace smbx64Format;
     return ((in=="#TRUE#")?true:false);
 }
 

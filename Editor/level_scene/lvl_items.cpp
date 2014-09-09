@@ -474,7 +474,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     #endif
 }
 
-void LvlScene::placeWater(LevelWater &water, bool toGrid)
+void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
 {
     ItemWater *WATERItem = new ItemWater();
     //QGraphicsPolygonItem *	WATERItem;

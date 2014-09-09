@@ -179,7 +179,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             QAction * NoTransport = ItemMenu->addAction(tr("No Vehicles"));
             NoTransport->setCheckable(true);
-            NoTransport->setChecked( doorData.noyoshi );
+            NoTransport->setChecked( doorData.novehicles );
             NoTransport->deleteLater();
 
             QAction * AllowNPC = ItemMenu->addAction(tr("Allow NPC"));
@@ -255,7 +255,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             door.isSetIn = true;
                             modDoors.doors.push_back(door);
                         }
-                        ((ItemDoor *) SelItem)->doorData.noyoshi=NoTransport->isChecked();
+                        ((ItemDoor *) SelItem)->doorData.novehicles=NoTransport->isChecked();
                         ((ItemDoor *) SelItem)->arrayApply();
                     }
                 }
