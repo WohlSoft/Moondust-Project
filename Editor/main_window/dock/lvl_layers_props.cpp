@@ -222,7 +222,7 @@ void MainWindow::RemoveLayerItems(QString layerName)
         {
             if(((ItemWater *)(*it))->waterData.layer==layerName)
             {
-                delData.water.push_back(((ItemWater *)(*it))->waterData);
+                delData.physez.push_back(((ItemWater *)(*it))->waterData);
                 ((ItemWater *)(*it))->removeFromArray();
                 delete (*it);
                 //activeLvlEditWin()->scene->removeItem((*it));
@@ -470,7 +470,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visib
         {
             if(((ItemWater *)(*it))->waterData.layer==layerName)
             {
-                modData.water.push_back(((ItemWater *)(*it))->waterData);
+                modData.physez.push_back(((ItemWater *)(*it))->waterData);
                 ((ItemWater *)(*it))->waterData.layer = newLayerName;
                 (*it)->setVisible(visible);
                 ((ItemWater *)(*it))->arrayApply();

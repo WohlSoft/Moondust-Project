@@ -93,7 +93,7 @@ void MainWindow::setDoorData(long index)
                     ui->WarpLock->setChecked(door.locked);
 
                     ui->WarpNoYoshi->setEnabled(true);
-                    ui->WarpNoYoshi->setChecked(door.noyoshi);
+                    ui->WarpNoYoshi->setChecked(door.novehicles);
 
                     ui->WarpType->setEnabled(true);
                     ui->WarpType->setCurrentIndex(door.type);
@@ -423,7 +423,7 @@ void MainWindow::on_WarpNoYoshi_clicked(bool checked)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
-                edit->LvlData.doors[i].noyoshi = checked; break;
+                edit->LvlData.doors[i].novehicles = checked; break;
             }
         }
         edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_NOYOSHI, QVariant(checked));

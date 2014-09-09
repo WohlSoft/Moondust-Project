@@ -543,14 +543,14 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     LvlPlacingItems::waterSet.w = dynamic_cast<QGraphicsRectItem *>(cursor)->rect().width();
                     LvlPlacingItems::waterSet.h = dynamic_cast<QGraphicsRectItem *>(cursor)->rect().height();
                     //here define placing water item.
-                    LvlData->water_array_id++;
+                    LvlData->physenv_array_id++;
 
-                    LvlPlacingItems::waterSet.array_id = LvlData->water_array_id;
-                    LvlData->water.push_back(LvlPlacingItems::waterSet);
+                    LvlPlacingItems::waterSet.array_id = LvlData->physenv_array_id;
+                    LvlData->physez.push_back(LvlPlacingItems::waterSet);
 
                     placeWater(LvlPlacingItems::waterSet, true);
                     LevelData plWater;
-                    plWater.water.push_back(LvlPlacingItems::waterSet);
+                    plWater.physez.push_back(LvlPlacingItems::waterSet);
                     addPlaceHistory(plWater);
                     break;
                 }
@@ -815,11 +815,11 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         if( ObjType == "Water")
                         {
                             //Applay move into main array
-                            historySourceBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
+                            historySourceBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
                             dynamic_cast<ItemWater *>(*it)->waterData.x = (long)(*it)->scenePos().x();
                             dynamic_cast<ItemWater *>(*it)->waterData.y = (long)(*it)->scenePos().y();
                             dynamic_cast<ItemWater *>(*it)->arrayApply();
-                            historyBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
+                            historyBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
                             LvlData->modified = true;
                         }
                         else
@@ -1271,7 +1271,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
             {
                 if((lock_water)|| (dynamic_cast<ItemWater *>(*it)->isLocked) ) continue;
 
-                historyBuffer.water.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
+                historyBuffer.physez.push_back(dynamic_cast<ItemWater *>(*it)->waterData);
                 dynamic_cast<ItemWater *>(*it)->removeFromArray();
                 if((*it)) delete (*it);
                 deleted=true;
@@ -1331,7 +1331,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
             overwritedItems.blocks << historyBuffer.blocks;
             overwritedItems.bgo << historyBuffer.bgo;
             overwritedItems.npc << historyBuffer.npc;
-            overwritedItems.water << historyBuffer.water;
+            overwritedItems.physez << historyBuffer.physez;
             overwritedItems.doors << historyBuffer.doors;
             overwritedItems.players << historyBuffer.players;
         }
