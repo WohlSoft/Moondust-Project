@@ -340,7 +340,7 @@ public:
     typedef void (LvlScene::*callBackLevelBlock)(CallbackData, LevelBlock);
     typedef void (LvlScene::*callBackLevelBGO)(CallbackData, LevelBGO);
     typedef void (LvlScene::*callBackLevelNPC)(CallbackData, LevelNPC);
-    typedef void (LvlScene::*callBackLevelWater)(CallbackData, LevelWater);
+    typedef void (LvlScene::*callBackLevelWater)(CallbackData, LevelPhysEnv);
     typedef void (LvlScene::*callBackLevelDoors)(CallbackData, LevelDoors, bool); //bool isEntrance [true = entrance, false = exit]
     typedef void (LvlScene::*callBackLevelPlayerPoints)(CallbackData, PlayerPoint);
     //add historys
@@ -361,7 +361,7 @@ public:
     void addChangedLayerHistory(LevelData changedItems, QString newLayerName);
     void addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                long newLeft, long newTop, long newRight, long newBottom);
-    void addResizeWaterHistory(LevelWater wt, long oldLeft, long oldTop, long oldRight, long oldBottom,
+    void addResizeWaterHistory(LevelPhysEnv wt, long oldLeft, long oldTop, long oldRight, long oldBottom,
                                long newLeft, long newTop, long newRight, long newBottom);
     void addAddWarpHistory(int array_id, int listindex, int doorindex);
     void addRemoveWarpHistory(LevelDoors removedDoor);
@@ -392,20 +392,20 @@ public:
     void historyRedoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyRedoMoveNPC(CallbackData cbData, LevelNPC data);
-    void historyRedoMoveWater(CallbackData cbData, LevelWater data);
+    void historyRedoMoveWater(CallbackData cbData, LevelPhysEnv data);
     void historyRedoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyRedoMovePlayerPoint(CallbackData cbData, PlayerPoint data);
     void historyUndoMoveBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoMoveBGO(CallbackData cbData, LevelBGO data);
     void historyUndoMoveNPC(CallbackData cbData, LevelNPC data);
-    void historyUndoMoveWater(CallbackData cbData, LevelWater data);
+    void historyUndoMoveWater(CallbackData cbData, LevelPhysEnv data);
     void historyUndoMoveDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyUndoMovePlayerPoint(CallbackData cbData, PlayerPoint data);
     //Callbackfunctions: Remove
     void historyRemoveBlocks(CallbackData cbData, LevelBlock data);
     void historyRemoveBGO(CallbackData cbData, LevelBGO data);
     void historyRemoveNPC(CallbackData cbData, LevelNPC data);
-    void historyRemoveWater(CallbackData cbData, LevelWater data);
+    void historyRemoveWater(CallbackData cbData, LevelPhysEnv data);
     void historyRemovePlayerPoint(CallbackData cbData, PlayerPoint data);
     //Callbackfunctions: [Change Settings] Hide
     void historyUndoSettingsInvisibleBlock(CallbackData cbData, LevelBlock data);
@@ -434,8 +434,8 @@ public:
     void historyUndoSettingsChangeNPCNPC(CallbackData cbData, LevelNPC data);
     void historyRedoSettingsChangeNPCNPC(CallbackData cbData, LevelNPC data);
     //Callbackfunctions: [Change Settings] Water Type
-    void historyUndoSettingsTypeWater(CallbackData cbData, LevelWater data);
-    void historyRedoSettingsTypeWater(CallbackData cbData, LevelWater data);
+    void historyUndoSettingsTypeWater(CallbackData cbData, LevelPhysEnv data);
+    void historyRedoSettingsTypeWater(CallbackData cbData, LevelPhysEnv data);
     //Callbackfunctions: [Change Settings] No Yoshi
     void historyUndoSettingsNoYoshiDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyRedoSettingsNoYoshiDoors(CallbackData cbData, LevelDoors data, bool isEntrance);
@@ -490,26 +490,26 @@ public:
     void historyUndoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyUndoChangeLayerBGO(CallbackData cbData, LevelBGO data);
     void historyUndoChangeLayerNPC(CallbackData cbData, LevelNPC data);
-    void historyUndoChangeLayerWater(CallbackData cbData, LevelWater data);
+    void historyUndoChangeLayerWater(CallbackData cbData, LevelPhysEnv data);
     void historyUndoChangeLayerDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     void historyRedoChangeLayerBlocks(CallbackData cbData, LevelBlock data);
     void historyRedoChangeLayerBGO(CallbackData cbData, LevelBGO data);
     void historyRedoChangeLayerNPC(CallbackData cbData, LevelNPC data);
-    void historyRedoChangeLayerWater(CallbackData cbData, LevelWater data);
+    void historyRedoChangeLayerWater(CallbackData cbData, LevelPhysEnv data);
     void historyRedoChangeLayerDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     //Callbackfunctions: Change sizeable Block size
     void historyUndoResizeBlock(CallbackData cbData, LevelBlock data);
     void historyRedoResizeBlock(CallbackData cbData, LevelBlock data);
     //Callbackfunctions: Change sizeable Water size
-    void historyUndoResizeWater(CallbackData cbData, LevelWater data);
-    void historyRedoResizeWater(CallbackData cbData, LevelWater data);
+    void historyUndoResizeWater(CallbackData cbData, LevelPhysEnv data);
+    void historyRedoResizeWater(CallbackData cbData, LevelPhysEnv data);
     //Callbackfunctions: Undo place of Doors
     void historyRemoveDoors(CallbackData cbData, LevelDoors door, bool isEntrance);
     //Callbackfunctions: Set Visible
     void historyUpdateVisibleBlocks(CallbackData cbData, LevelBlock data);
     void historyUpdateVisibleBGO(CallbackData cbData, LevelBGO data);
     void historyUpdateVisibleNPC(CallbackData cbData, LevelNPC data);
-    void historyUpdateVisibleWater(CallbackData cbData, LevelWater data);
+    void historyUpdateVisibleWater(CallbackData cbData, LevelPhysEnv data);
     void historyUpdateVisibleDoor(CallbackData cbData, LevelDoors data, bool isEntrance);
     //History functions requiring callback-functions
     void findGraphicsItem(LevelData toFind, HistoryOperation * operation, CallbackData customData,
@@ -554,7 +554,7 @@ private:
     void placeBlock(LevelBlock &block, bool toGrid=false);
     void placeBGO(LevelBGO &bgo, bool toGrid=false);
     void placeNPC(LevelNPC &npc, bool toGrid=false);
-    void placeWater(LevelWater &water, bool toGrid=false);
+    void placeWater(LevelPhysEnv &water, bool toGrid=false);
     void placePlayerPoint(PlayerPoint plr, bool init=false);
 
     void placeDoor(LevelDoors &door, bool toGrid=false);

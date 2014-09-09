@@ -214,7 +214,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(SelItem->data(0).toString()=="Water")
                     {
-                        modData.water.push_back(((ItemWater *)SelItem)->waterData);
+                        modData.physez.push_back(((ItemWater *)SelItem)->waterData);
                         ((ItemWater *)SelItem)->setType(0);
                     }
                 }
@@ -228,7 +228,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(SelItem->data(0).toString()=="Water")
                     {
-                        modData.water.push_back(((ItemWater *)SelItem)->waterData);
+                        modData.physez.push_back(((ItemWater *)SelItem)->waterData);
                         ((ItemWater *)SelItem)->setType(1);
                     }
                 }
@@ -294,9 +294,9 @@ void ItemWater::setLayer(QString layer)
 void ItemWater::arrayApply()
 {
     bool found=false;
-    if(waterData.index < (unsigned int)scene->LvlData->water.size())
+    if(waterData.index < (unsigned int)scene->LvlData->physez.size())
     { //Check index
-        if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
+        if(waterData.array_id == scene->LvlData->physez[waterData.index].array_id)
         {
             found=true;
         }
@@ -305,15 +305,15 @@ void ItemWater::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->LvlData->water[waterData.index] = waterData; //apply current bgoData
+        scene->LvlData->physez[waterData.index] = waterData; //apply current bgoData
     }
     else
-    for(int i=0; i<scene->LvlData->water.size(); i++)
+    for(int i=0; i<scene->LvlData->physez.size(); i++)
     { //after find it into array
-        if(scene->LvlData->water[i].array_id == waterData.array_id)
+        if(scene->LvlData->physez[i].array_id == waterData.array_id)
         {
             waterData.index = i;
-            scene->LvlData->water[i] = waterData;
+            scene->LvlData->physez[i] = waterData;
             break;
         }
     }
@@ -322,9 +322,9 @@ void ItemWater::arrayApply()
 void ItemWater::removeFromArray()
 {
     bool found=false;
-    if(waterData.index < (unsigned int)scene->LvlData->water.size())
+    if(waterData.index < (unsigned int)scene->LvlData->physez.size())
     { //Check index
-        if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
+        if(waterData.array_id == scene->LvlData->physez[waterData.index].array_id)
         {
             found=true;
         }
@@ -332,14 +332,14 @@ void ItemWater::removeFromArray()
 
     if(found)
     { //directlry
-        scene->LvlData->water.remove(waterData.index);
+        scene->LvlData->physez.remove(waterData.index);
     }
     else
-    for(int i=0; i<scene->LvlData->water.size(); i++)
+    for(int i=0; i<scene->LvlData->physez.size(); i++)
     {
-        if(scene->LvlData->water[i].array_id == waterData.array_id)
+        if(scene->LvlData->physez[i].array_id == waterData.array_id)
         {
-            scene->LvlData->water.remove(i); break;
+            scene->LvlData->physez.remove(i); break;
         }
     }
 }
@@ -385,7 +385,7 @@ void ItemWater::setSize(QSize sz)
 }
 
 
-void ItemWater::setWaterData(LevelWater inD)
+void ItemWater::setWaterData(LevelPhysEnv inD)
 {
     waterData = inD;
     waterSize = QSize(waterData.w, waterData.h);
