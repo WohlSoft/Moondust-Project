@@ -20,6 +20,7 @@ public:
 
     static void retranslate();
 
+    void registerCommands();
     void retranslateP();
 
 private slots:
@@ -40,7 +41,20 @@ private:
     QPlainTextEdit* getEditByIndex(const int &index);
     QPlainTextEdit* getCurrentEdit();
 
+    //Command area
+    typedef void (DevConsole::*command)(QStringList);
+    QMap<QString,QPair<command, QString> > commands;
+    void registerCommand(const QString commandName, command cmd, const QString helpText = QString());
+    void registerCommand(const std::initializer_list<QString> commandNames, DevConsole::command cmd, const QString helpText);
     void doCommand();
+
+    void doHelp(QStringList args);
+    void doTest(QStringList args);
+    void doVersion(QStringList);
+    void doQuit(QStringList);
+    void doSavesettings(QStringList);
+    void doMd5(QStringList args);
+    void doFlood(QStringList args);
 };
 
 #endif // DEVCONSOLE_H
