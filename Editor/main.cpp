@@ -27,8 +27,16 @@
 #include <iostream>
 #include <stdlib.h>
 
+namespace PGECrashHandler {
+    void crashByFlood(){
+        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("PGE crashed because of out of memory! :("));
+        std::exit(1);
+    }
+}
+
 int main(int argc, char *argv[])
 {
+    std::set_new_handler(PGECrashHandler::crashByFlood);
     QApplication::addLibraryPath(".");
 
     QApplication *a = new QApplication(argc, argv);
