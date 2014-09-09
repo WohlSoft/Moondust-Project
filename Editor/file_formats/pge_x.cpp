@@ -54,7 +54,7 @@ QString PGEFile::strArrayS(QStringList input)
 
     for(int i=0; i< input.size(); i++)
     {
-        output.append(qStrS(input[i])+(i<input.size()?",":""));
+        output.append(qStrS(input[i])+(i<input.size()-1?",":""));
     }
 
     output.append("]");
@@ -68,7 +68,7 @@ QString PGEFile::intArrayS(QList<int> input)
     output.append("[");
     for(int i=0; i< input.size(); i++)
     {
-        output.append(QString::number(input[i])+(i<input.size()?",":""));
+        output.append(QString::number(input[i])+(i<input.size()-1?",":""));
     }
     output.append("]");
     return output;
