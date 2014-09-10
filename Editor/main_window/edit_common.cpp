@@ -35,6 +35,7 @@ void MainWindow::on_actionReload_triggered()
         filePath = activeLvlEditWin()->curFile;
 
         QFile fileIn(filePath);
+        QFileInfo in_1(filePath);
 
         if (!fileIn.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("File open error"),
@@ -42,7 +43,12 @@ void MainWindow::on_actionReload_triggered()
             return;
         }
 
-        FileData = FileFormats::ReadLevelFile(fileIn); //function in file_formats.cpp
+        if(in_1.suffix().toLower() == "lvl")
+            FileData = FileFormats::ReadLevelFile(fileIn);         //Read SMBX LVL File
+        else
+            FileData = FileFormats::ReadExtendedLevelFile(fileIn); //Read PGE LVLX File
+
+        //FileData = FileFormats::ReadLevelFile(fileIn); //function in file_formats.cpp
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}

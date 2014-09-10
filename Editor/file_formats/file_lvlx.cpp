@@ -26,7 +26,272 @@
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-//LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
+LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
+{
+    QTextStream in(&inf);   //Read File
+
+    in.setAutoDetectUnicode(true); //Test Fix for MacOS
+    in.setLocale(QLocale::system());   //Test Fix for MacOS
+    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+
+    int str_count=0;        //Line Counter
+    int i;                  //counters
+    //int file_format=0;        //File format number
+    QString line;           //Current Line data
+    LevelData FileData;
+
+    LevelSection section;
+    //int sct;
+    PlayerPoint player;
+    LevelBlock blocks;
+    LevelBGO bgodata;
+    LevelNPC npcdata;
+    LevelDoors doors;
+    LevelPhysEnv waters;
+    LevelLayers layers;
+    LevelEvents events;
+    LevelEvents_layers events_layers;
+    LevelEvents_Sets events_sets;
+
+    FileData = dummyLvlDataArray();
+
+    //Begin all ArrayID's here;
+    FileData.blocks_array_id = 1;
+    FileData.bgo_array_id = 1;
+    FileData.npc_array_id = 1;
+    FileData.doors_array_id = 1;
+    FileData.physenv_array_id = 1;
+    FileData.layers_array_id = 1;
+    FileData.events_array_id = 1;
+
+    QString errorString;
+
+    typedef QPair<QString, QStringList> LVLXSct;
+    LVLXSct LVLXsection;
+
+    QList<LVLXSct > LVLXTree;
+
+    ///////////////////////////////////////Begin file///////////////////////////////////////
+    //Read Sections
+    bool sectionOpened=false;
+
+    while(!in.atEnd())
+    {
+        LVLXsection.first = in.readLine();
+        LVLXsection.second.clear();
+
+        if(QString(LVLXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
+
+        sectionOpened=true;
+        QString data;
+        while(!in.atEnd())
+        {
+            data = in.readLine();
+            if(data==LVLXsection.first+"_END") {sectionOpened=false; break;} // Close Section
+            LVLXsection.second.push_back(data);
+        }
+        LVLXTree.push_back(LVLXsection);
+
+        WriteToLog(QtDebugMsg, QString("Section %1, lines %2, %3")
+                   .arg(LVLXsection.first)
+                   .arg(LVLXsection.second.size())
+                   .arg(sectionOpened?"opened":"closed")
+                   );
+    }
+
+    if(sectionOpened)
+    {
+        errorString=QString("Section [%1] is not closed").arg(LVLXsection.first);
+        goto badfile;
+    }
+
+    foreach(LVLXSct sct, LVLXTree) //look sections
+    {
+
+        WriteToLog(QtDebugMsg, QString("Section %1")
+                   .arg(sct.first) );
+
+            bool good;
+            for(i=0; i<sct.second.size();i++) //Look Entries
+            {
+                QList<QStringList > sectData = PGEFile::splitDataLine(sct.second[i], &good);
+                line = sct.second[i];
+
+                if(!good)
+                {
+                    errorString=QString("Wrong data string format [%1]").arg(sct.second[i]);
+                    goto badfile;
+                }
+
+                errorString=QString("Wrong value data type");
+
+                //Scan values
+                if(sct.first=="HEAD") // Head
+                {
+                    foreach(QStringList value, sectData) //Look markers and values
+                    {
+                          if(value[0]=="TL") //Level Title
+                          {
+                              if(PGEFile::IsQStr(value[1]))
+                                  FileData.LevelName = PGEFile::X2STR(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="SZ") //Starz number
+                          {
+                              if(PGEFile::IsIntU(value[1]))
+                                  FileData.stars = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                    }
+                }//Header
+
+                else
+                if(sct.first=="SECTION") //Level Sections
+                {
+                    section = dummyLvlSection();
+                    foreach(QStringList value, sectData) //Look markers and values
+                    {
+                          if(value[0]=="SC") //Section ID
+                          {
+                              if(PGEFile::IsIntU(value[1]))
+                                  section.id = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="L") //Left side
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                              {
+                                  section.size_left= value[1].toInt();
+                                  section.PositionX=value[1].toInt()-10;
+                              }
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="R")//Right side
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  section.size_right= value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="T") //Top side
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                              {
+                                  section.size_top= value[1].toInt();
+                                  section.PositionY=value[1].toInt()-10;
+                              }
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="B")//Bottom side
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  section.size_bottom= value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="MZ")//Stuff music ID
+                          {
+                              if(PGEFile::IsIntU(value[1]))
+                                  section.music_id= value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="BG")//Stuff music ID
+                          {
+                              if(PGEFile::IsIntU(value[1]))
+                                  section.background= value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="MF")//External music file path
+                          {
+                              if(PGEFile::IsQStr(value[1]))
+                                  section.music_file=PGEFile::X2STR(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="CS")//Connect sides
+                          {
+                              if(PGEFile::IsBool(value[1]))
+                                  section.IsWarp=(bool)value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="OE")//Offscreen exit
+                          {
+                              if(PGEFile::IsBool(value[1]))
+                                  section.OffScreenEn=(bool)value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="SR")//Right-way scroll only (No Turn-back)
+                          {
+                              if(PGEFile::IsBool(value[1]))
+                                  section.noback=(bool)value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="UW")//Underwater bit
+                          {
+                              if(PGEFile::IsBool(value[1]))
+                                  section.underwater=(bool)value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+
+                    } //Level Sections
+
+                    //add captured value into array
+                    bool found=false;
+                    int q=0;
+                    for(q=0; q<FileData.sections.size();q++)
+                    {
+                        if(FileData.sections[q].id==section.id){found=true; break;}
+                    }
+                    if(found)
+                        FileData.sections[q] = section;
+                    else
+                        FileData.sections.push_back(section);
+
+                }//Level Section
+
+                //PGEFile::X2STR(value[1]);
+                //value[1].toInt();
+                //(bool)value[1].toInt();
+
+            }
+
+        //}//Head Section end
+
+    }
+
+    ///////////////////////////////////////EndFile///////////////////////////////////////
+
+    FileData.ReadFileValid=true;
+    return FileData;
+
+    badfile:    //If file format is not correct
+    BadFileMsg(inf.fileName()+"\nError message: "+errorString, str_count, line);
+    FileData.ReadFileValid=false;
+    return FileData;
+}
 
 
 
@@ -84,6 +349,8 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
             TextData += PGEFile::value("OE", PGEFile::BoolS(FileData.sections[i].OffScreenEn));  // Offscreen exit
         if(FileData.sections[i].noback)
             TextData += PGEFile::value("SR", PGEFile::BoolS(FileData.sections[i].noback));  // Right-way scroll only (No Turn-back)
+        if(FileData.sections[i].underwater)
+            TextData += PGEFile::value("UW", PGEFile::BoolS(FileData.sections[i].underwater));  // Underwater bit
         //TextData += PGEFile::value("SL", PGEFile::BoolS(FileData.sections[i].noforward));  // Left-way scroll only (No Turn-forward)
         TextData += "\n";
     }
