@@ -44,9 +44,11 @@ int main(int argc, char *argv[])
     std::set_new_handler(PGECrashHandler::crashByFlood);
     QApplication::addLibraryPath(".");
 
-    SingleApplication *a = new SingleApplication(argc, argv);
+    QApplication *a = new QApplication(argc, argv);
 
-    if(!a->shouldContinue())
+    SingleApplication *as = new SingleApplication(argc, argv);
+
+    if(!as->shouldContinue())
     {
         std::cout << "Editor already runned!\n";
         return 0;
@@ -54,43 +56,43 @@ int main(int argc, char *argv[])
 
     a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
 
-    //Check if application is already running//////////////////
-    QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
-    bool isRunning;
+//    //Check if application is already running//////////////////
+//    QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
+//    bool isRunning;
 
-    if(sema.acquire())
-    {
-        QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-        shmem.attach();
-    }
+//    if(sema.acquire())
+//    {
+//        QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
+//        shmem.attach();
+//    }
 
-    QString sendToMem;
-    foreach(QString str, a->arguments())
-    {
-        sendToMem+= str + "|";
-    }
+//    QString sendToMem;
+//    foreach(QString str, a->arguments())
+//    {
+//        sendToMem+= str + "|";
+//    }
 
-    QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-    if (shmem.attach())
-    {
-        isRunning = true;
-    }
-    else
-    {
-        shmem.create(1);
-        isRunning = false;
-    }
-    sema.release();
+//    QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
+//    if (shmem.attach())
+//    {
+//        isRunning = true;
+//    }
+//    else
+//    {
+//        shmem.create(1);
+//        isRunning = false;
+//    }
+//    sema.release();
 
-    shmem.disconnect();
+//    shmem.disconnect();
 
-    if(isRunning)
-    {
-        QApplication::quit();
-        QApplication::exit();
-        delete a;
-        return 0;
-    }
+//    if(isRunning)
+//    {
+//        QApplication::quit();
+//        QApplication::exit();
+//        delete a;
+//        return 0;
+//    }
 
     LoadLogSettings();
 
@@ -111,12 +113,13 @@ int main(int argc, char *argv[])
 
     w->openFilesByArgs(a->arguments());
 
-    w->connect(a, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
+    w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
 
     int ret=a->exec();
 
     QApplication::quit();
     QApplication::exit();
     delete a;
+    delete as;
     return ret;
 }

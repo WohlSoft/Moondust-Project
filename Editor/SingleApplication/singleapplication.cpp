@@ -7,8 +7,7 @@
  * @param argc
  * @param argv
  */
-SingleApplication::SingleApplication(int argc, char *argv[]) :
-  QApplication(argc, argv)
+SingleApplication::SingleApplication(int argc, char *argv[])
 {
   _shouldContinue = false; // By default this is not the main process
 
