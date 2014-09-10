@@ -72,7 +72,8 @@ void LocalServer::exec()
     server->waitForNewConnection(100);
     for(int i = 0; i < clients.size(); ++i)
     {
-      if(clients[i]->waitForReadyRead(100)){
+      if(clients[i]->waitForReadyRead(100))
+      {
         QByteArray data = clients[i]->readAll();
         emit privateDataReceived(QString::fromUtf8(data));
       }
