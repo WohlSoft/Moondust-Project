@@ -3,13 +3,13 @@
 
 #include "localserver.h"
 
-#include <QApplication>
+#include <QObject>
 #include <QLocalSocket>
 
 /**
  * @brief The Application class handles trivial application initialization procedures
  */
-class SingleApplication : public QApplication
+class SingleApplication : public QObject
 {
   Q_OBJECT
 public:
