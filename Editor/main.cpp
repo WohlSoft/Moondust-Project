@@ -21,15 +21,20 @@
 #include <QSharedMemory>
 #include <QSystemSemaphore>
 
+
 #include "common_features/logger.h"
 #include "common_features/proxystyle.h"
+
+#include "SingleApplication/singleapplication.h"
 
 #include <iostream>
 #include <stdlib.h>
 
 namespace PGECrashHandler {
     void crashByFlood(){
-        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("We're sorry, but PGE has crashed. Reason: Out of memory! :( To prevent this, try closing other uneccessary programs to free up more memory."));
+        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("We're sorry, but PGE has crashed. Reason: Out of memory! :(\n"
+                                                                                  "To prevent this, try closing other uneccessary programs to free up more memory."));
+
         std::exit(1);
     }
 }
@@ -39,7 +44,14 @@ int main(int argc, char *argv[])
     std::set_new_handler(PGECrashHandler::crashByFlood);
     QApplication::addLibraryPath(".");
 
-    QApplication *a = new QApplication(argc, argv);
+    SingleApplication *a = new SingleApplication(argc, argv);
+
+    if(!a->shouldContinue())
+    {
+        std::cout << "Editor already runned!\n";
+        return 0;
+    }
+
     a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
 
     //Check if application is already running//////////////////
@@ -99,7 +111,10 @@ int main(int argc, char *argv[])
 
     w->openFilesByArgs(a->arguments());
 
+    w->connect(a, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
+
     int ret=a->exec();
+
     QApplication::quit();
     QApplication::exit();
     delete a;
