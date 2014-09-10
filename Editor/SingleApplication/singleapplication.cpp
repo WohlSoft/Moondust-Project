@@ -1,5 +1,5 @@
 #include "singleapplication.h"
-
+#include <QtDebug>
 /**
  * @brief SingleApplication::SingleApplication
  *  Constructor. Checks and fires up LocalServer or closes the program
@@ -17,11 +17,16 @@ SingleApplication::SingleApplication(int argc, char *argv[])
   socket->connectToServer(LOCAL_SERVER_NAME);
   if(socket->waitForConnected(100))
   {
-    socket->write("CMD:showUp");
+
+    QString str = QString("CMD:showUp");
+    QByteArray bytes;
+
     for(int i=1;i<argc; i++)
     {
-        socket->write(QString("\n%1").arg(argv[i]).toUtf8());
+       str.append(QString("\n%1").arg(QString::fromLocal8Bit(argv[i])));
     }
+    bytes = str.toUtf8();
+    socket->write(bytes);
     socket->flush();
     QThread::msleep(100);
     socket->close();
