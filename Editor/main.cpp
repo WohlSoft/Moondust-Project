@@ -29,7 +29,7 @@
 
 namespace PGECrashHandler {
     void crashByFlood(){
-        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("PGE crashed because of out of memory! :("));
+        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("We're sorry, but PGE has crashed. Reason: Out of memory! :( To prevent this, try closing other uneccessary programs to free up more memory."));
         std::exit(1);
     }
 }
