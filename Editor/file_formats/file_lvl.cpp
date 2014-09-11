@@ -192,6 +192,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     //Player's point config
     for(i=0;i<2;i++)
     {
+        players=dummyLvlPlayerPoint();
+
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //1 Player x
             goto badfile;

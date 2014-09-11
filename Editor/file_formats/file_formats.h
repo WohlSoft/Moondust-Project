@@ -132,7 +132,9 @@ public:
     static LevelBlock dummyLvlBlock();
     static LevelBGO dummyLvlBgo();
     static LevelPhysEnv dummyLvlPhysEnv();
+    static LevelLayers dummyLvlLayer();
     static LevelEvents dummyLvlEvent();
+    static PlayerPoint dummyLvlPlayerPoint(int id=0);
     static LevelSection dummyLvlSection();
 
     //Wld Data
