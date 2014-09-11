@@ -52,6 +52,7 @@ struct PlayerPoint
     long y;
     long h;
     long w;
+    int direction;
 };
 
 struct LevelBlock

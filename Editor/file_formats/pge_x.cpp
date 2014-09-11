@@ -262,22 +262,22 @@ QString PGEFile::restoreStr(QString input)
     QString output = input;
     output.replace("\\n", "\n");
     output.replace("\\\"", "\"");
-    output.replace("\\\\", "\\");
     output.replace("\\;", ";");
     output.replace("\\:", ":");
     output.replace("\\[", "[");
     output.replace("\\]", "]");
     output.replace("\\,", ",");
     output.replace("\\%", "%");
+    output.replace("\\\\", "\\");
     return output;
 }
 
 QString PGEFile::escapeStr(QString input)
 {
     QString output = input;
+    output.replace("\\", "\\\\");
     output.replace("\n", "\\n");
     output.replace("\"", "\\\"");
-    output.replace("\\", "\\\\");
     output.replace(";", "\\;");
     output.replace(":", "\\:");
     output.replace("[", "\\[");

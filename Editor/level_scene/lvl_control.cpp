@@ -1127,13 +1127,9 @@ void LvlScene::placeItemUnderCursor()
                  oData.push_back((qlonglong)pnt.y);
                  oData.push_back((qlonglong)pnt.w);
                  oData.push_back((qlonglong)pnt.h);
+                 pnt = FileFormats::dummyLvlPlayerPoint(pnt.id);
                  pnt.x = cursor->scenePos().x();
                  pnt.y = cursor->scenePos().y();
-                 pnt.w = 24;
-                 if(LvlPlacingItems::playerID==0)
-                    pnt.h = 54;
-                 else
-                    pnt.h = 60;
                  placePlayerPoint(pnt);
 
                  addPlacePlayerPointHistory(pnt, QVariant(oData));
