@@ -374,7 +374,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
                 (
                     blockData.y+((blockData.h-npcImg.height())/2)
                  ));
-    includedNPC->setZValue(scene->blockZ + 10);
+    includedNPC->setZValue(scene->Z_Block + 10);
     includedNPC->setOpacity(qreal(0.6));
     grp->addToGroup(includedNPC);
 
@@ -387,7 +387,7 @@ void ItemBlock::arrayApply()
 {
     bool found=false;
     if(this->data(3).toString()=="sizable")
-        this->setZValue( scene->blockZs + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
+        this->setZValue( scene->Z_blockSizable + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
     if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
     { //Check index
         if(blockData.array_id == scene->LvlData->blocks[blockData.index].array_id)

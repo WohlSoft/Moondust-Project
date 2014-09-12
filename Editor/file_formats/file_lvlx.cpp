@@ -417,31 +417,72 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                 }//Blocks
 
 
-                //PGEFile::X2STR(value[1]);
-                //value[1].toInt();
-                //(bool)value[1].toInt();
-
                 else
                 if(sct.first=="BGO") // BGO
                 {
+                    bgodata = dummyLvlBgo();
                     foreach(QStringList value, sectData) //Look markers and values
                     {
-                            //  if(value[0]=="TL") //Level Title
-                            //  {
-                            //      if(PGEFile::IsQStr(value[1]))
-                            //          FileData.LevelName = PGEFile::X2STR(value[1]);
-                            //      else
-                            //          goto badfile;
-                            //  }
-                            //  else
-                            //  if(value[0]=="SZ") //Starz number
-                            //  {
-                            //      if(PGEFile::IsIntU(value[1]))
-                            //          FileData.stars = value[1].toInt();
-                            //      else
-                            //          goto badfile;
-                            //  }
+                              if(value[0]=="ID") //BGO ID
+                              {
+                                  if(PGEFile::IsIntU(value[1]))
+                                      bgodata.id = value[1].toInt();
+                                  else
+                                      goto badfile;
+                              }
+                              else
+                              if(value[0]=="X") //X Position
+                              {
+                                  if(PGEFile::IsIntS(value[1]))
+                                      bgodata.x = value[1].toInt();
+                                  else
+                                      goto badfile;
+                              }
+                              else
+                              if(value[0]=="Y") //Y Position
+                              {
+                                  if(PGEFile::IsIntS(value[1]))
+                                      bgodata.y = value[1].toInt();
+                                  else
+                                      goto badfile;
+                              }
+                              else
+                              if(value[0]=="ZO") //Z Offset
+                              {
+                                  if(PGEFile::IsFloat(value[1]))
+                                      bgodata.z_offset = value[1].toDouble();
+                                  else
+                                      goto badfile;
+                              }
+                              else
+                              if(value[0]=="ZP") //Z Position
+                              {
+                                  if(PGEFile::IsIntS(value[1]))
+                                      bgodata.z_mode = value[1].toInt();
+                                  else
+                                      goto badfile;
+                              }
+                              else
+                              if(value[0]=="SP") //SMBX64 Sorting priority
+                              {
+                                  if(PGEFile::IsIntS(value[1]))
+                                      bgodata.smbx64_sp = value[1].toInt();
+                                  else
+                                      goto badfile;
+                              }
+                              else
+                              if(value[0]=="LR") //Layer name
+                              {
+                                  if(PGEFile::IsQStr(value[1]))
+                                      bgodata.layer = PGEFile::X2STR(value[1]);
+                                  else
+                                      goto badfile;
+                              }
                     }
+
+                    bgodata.array_id = FileData.bgo_array_id++;
+                    bgodata.index = FileData.bgo.size();
+                    FileData.bgo.push_back(bgodata);
                 }//BGO
 
                 else
@@ -466,6 +507,10 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                             //  }
                     }
                 }//NPC
+
+                //PGEFile::X2STR(value[1]);
+                //value[1].toInt();
+                //(bool)value[1].toInt();
 
                 else
                 if(sct.first=="PHYSICS") // PHYSICS
