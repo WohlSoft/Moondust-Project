@@ -244,7 +244,7 @@ LevelLayers FileFormats::dummyLvlLayer()
 PlayerPoint FileFormats::dummyLvlPlayerPoint(int id)
 {
     PlayerPoint dummyPlayer;
-    dummyPlayer.id=0;
+    dummyPlayer.id=id;
     dummyPlayer.x=0;
     dummyPlayer.y=0;
     dummyPlayer.w=24;
