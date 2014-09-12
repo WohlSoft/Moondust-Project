@@ -135,15 +135,15 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     if(pConfigs->main_block[j].sizable)
     {
         BlockImage->setMainPixmap();
-        BlockImage->setZValue( blockZs + ((double)block.y/(double)100000000000) + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
+        BlockImage->setZValue( Z_blockSizable + ((double)block.y/(double)100000000000) + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
         //sbZ += 0.0000000001;
     }
     else
     {
         if(pConfigs->main_block[j].view==1)
-            BlockImage->setZValue(blockZl); // applay lava block Z
+            BlockImage->setZValue(Z_BlockFore); // applay lava block Z
         else
-            BlockImage->setZValue(blockZ); // applay standart block Z
+            BlockImage->setZValue(Z_Block); // applay standart block Z
     }
 
     BlockImage->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_block));
@@ -260,11 +260,10 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     BGOItem->setData(1, QString::number(bgo.id) );
     BGOItem->setData(2, QString::number(bgo.array_id) );
 
+    BGOItem->zMode = pConfigs->main_bgo[j].view;
+    BGOItem->zOffset = pConfigs->main_bgo[j].zOffset;
+    BGOItem->setZMode(bgo.z_mode, bgo.z_offset, true);
 
-    if(pConfigs->main_bgo[j].view!=0)
-        BGOItem->setZValue(bgoZf + pConfigs->main_bgo[j].zOffset);
-    else
-        BGOItem->setZValue(bgoZb + pConfigs->main_bgo[j].zOffset);
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }
 
@@ -391,12 +390,12 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     addItem(NPCItem);
 
     if(NPCItem->localProps.foreground)
-        NPCItem->setZValue(npcZf);
+        NPCItem->setZValue(Z_npcFore);
     else
     if(NPCItem->localProps.background)
-        NPCItem->setZValue(npcZb);
+        NPCItem->setZValue(Z_npcBack);
     else
-        NPCItem->setZValue(npcZs);
+        NPCItem->setZValue(Z_npcStd);
 
     #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set Generator");
@@ -504,7 +503,7 @@ void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
     WATERItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
     WATERItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));
 
-    WATERItem->setZValue(waterZ);
+    WATERItem->setZValue(Z_sys_PhysEnv);
 
     WATERItem->setData(0, "Water"); // ObjType
     WATERItem->setData(1, QString::number(0) );
@@ -544,7 +543,7 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
         {
             player = addPixmap(QPixmap(":/player"+QString::number(plr.id)+".png"));
             player->setPos(plr.x, plr.y);
-            player->setZValue(playerZ);
+            player->setZValue(Z_Player);
             player->setData(0, "player"+QString::number(plr.id) );
             player->setData(2, QString::number(plr.id));
             player->setFlag(QGraphicsItem::ItemIsSelectable, true);

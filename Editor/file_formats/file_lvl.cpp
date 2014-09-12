@@ -216,7 +216,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
         players.id = i+1;
 
-    FileData.players.push_back(players);    //Add player in array
+        if(players.x!=0 && players.y!=0 && players.w !=0 && players.h != 0) //Don't add into array non-exist point
+            FileData.players.push_back(players);    //Add player in array
     }
 
 
@@ -339,7 +340,10 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         bgodata.smbx64_sp = -1;
 
         if( (file_format < 10) && (bgodata.id==65) ) //set foreground for BGO-65 (SMBX 1.0)
+        {
+            bgodata.z_mode = LevelBGO::Foreground1;
             bgodata.smbx64_sp = 80;
+        }
 
         bgodata.array_id = FileData.bgo_array_id;
         FileData.bgo_array_id++;
@@ -1128,14 +1132,27 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         //append dummy section data, if array size is less than 21
 
     //Players start point
-    for(i=0; i<FileData.players.size() && i<2; i++ )
+    int playerpoints=0;
+    for(j=1;j<=2 && playerpoints<2;j++)
     {
-        TextData += SMBX64::IntS(FileData.players[i].x);
-        TextData += SMBX64::IntS(FileData.players[i].y);
-        TextData += SMBX64::IntS(FileData.players[i].w);
-        TextData += SMBX64::IntS(FileData.players[i].h);
+        bool found=false;
+        for(i=0; i<FileData.players.size(); i++ )
+        {
+            if(FileData.players[i].id!=(unsigned int)j) continue;
+            TextData += SMBX64::IntS(FileData.players[i].x);
+            TextData += SMBX64::IntS(FileData.players[i].y);
+            TextData += SMBX64::IntS(FileData.players[i].w);
+            TextData += SMBX64::IntS(FileData.players[i].h);
+            playerpoints++;found=true;
+        }
+        if(!found)
+        {
+            TextData += "0\n0\n0\n0\n";
+            playerpoints++;
+        }
+
     }
-    for( ;i<2; i++ ) //Protector
+    for( ;playerpoints<2; playerpoints++ ) //Protector
         TextData += "0\n0\n0\n0\n";
 
 

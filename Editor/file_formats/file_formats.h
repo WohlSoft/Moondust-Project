@@ -94,7 +94,7 @@ public:
     //PGE Extended File parameter string generators
     static QString IntS(long input);
     static QString BoolS(bool input);
-    static QString FloatS(float input);
+    static QString FloatS(double input);
     static QString qStrS(QString input);
     static QString hStrS(QString input);
     static QString strArrayS(QStringList input);

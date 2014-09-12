@@ -1117,27 +1117,46 @@ void LvlScene::placeItemUnderCursor()
         else
         if(placingItem == PLC_PlayerPoint)
         {
-            foreach(PlayerPoint pnt, LvlData->players)
+            bool found=false;
+            int q=0;
+            for(q=0; q < LvlData->players.size();q++)
             {
-             if(pnt.id == (unsigned int)LvlPlacingItems::playerID+1)
-             {
-                 QList<QVariant> oData;
-                 oData.push_back(pnt.id);
-                 oData.push_back((qlonglong)pnt.x);
-                 oData.push_back((qlonglong)pnt.y);
-                 oData.push_back((qlonglong)pnt.w);
-                 oData.push_back((qlonglong)pnt.h);
-                 pnt = FileFormats::dummyLvlPlayerPoint(pnt.id);
-                 pnt.x = cursor->scenePos().x();
-                 pnt.y = cursor->scenePos().y();
-                 placePlayerPoint(pnt);
-
-                 addPlacePlayerPointHistory(pnt, QVariant(oData));
-
-                 break;
-             }
+                 if(LvlData->players[q].id == (unsigned int)LvlPlacingItems::playerID+1)
+                 {
+                     found=true;
+                     break;
+                 }
             }
 
+                PlayerPoint pnt = FileFormats::dummyLvlPlayerPoint(LvlPlacingItems::playerID+1);
+                pnt.x = cursor->scenePos().x();
+                pnt.y = cursor->scenePos().y();
+
+                if(!found)
+                {
+                    q = LvlData->players.size();
+                    LvlData->players.push_back(pnt);
+                }
+                else
+                    LvlData->players[q]=pnt;
+
+                QList<QVariant> oData;
+                oData.push_back(LvlData->players[q].id);
+                oData.push_back((qlonglong)LvlData->players[q].x);
+                oData.push_back((qlonglong)LvlData->players[q].y);
+                oData.push_back((qlonglong)LvlData->players[q].w);
+                oData.push_back((qlonglong)LvlData->players[q].h);
+
+                placePlayerPoint(LvlData->players[q]);
+
+                WriteToLog(QtDebugMsg, QString("Placing player point %1 with position %2 %3, %4")
+                           .arg(LvlPlacingItems::playerID+1)
+                           .arg(cursor->scenePos().x())
+                           .arg(cursor->scenePos().y())
+                           .arg(found?"changed":"added into array")
+                           );
+
+            addPlacePlayerPointHistory(LvlData->players[q], QVariant(oData));
         }
         else
         if(placingItem == PLC_Door)
@@ -1308,10 +1327,7 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
                  {
                      historyBuffer.players.push_back(LvlData->players[plr]);
 
-                     LvlData->players[plr].x = 0;
-                     LvlData->players[plr].y = 0;
-                     LvlData->players[plr].w = 0;
-                     LvlData->players[plr].h = 0;
+                     LvlData->players.remove(plr);
                      deleted=true;
                      if((*it)) delete (*it);
                      break;

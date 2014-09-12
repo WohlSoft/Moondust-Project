@@ -163,7 +163,7 @@ QString PGEFile::BoolS(bool input)
     return QString((input)?"1":"0");
 }
 
-QString PGEFile::FloatS(float input)
+QString PGEFile::FloatS(double input)
 {
     return QString::number(input);
 }

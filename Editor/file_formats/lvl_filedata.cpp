@@ -296,12 +296,12 @@ LevelData FileFormats::dummyLvlDataArray()
     }
 
     //Create players array
-    PlayerPoint players = dummyLvlPlayerPoint();
-        for(int i=0; i<2;i++)
-        {
-            players.id++;
-            NewFileData.players.push_back(players);
-        }
+    //PlayerPoint players = dummyLvlPlayerPoint();
+    //    for(int i=0; i<2;i++)
+    //    {
+    //        players.id++;
+    //        NewFileData.players.push_back(players);
+    //    }
 
 
     //Create system layers
