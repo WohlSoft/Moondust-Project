@@ -1145,16 +1145,16 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                           else
                           if(value[0]=="MX") //Layer motion speed X
                           {
-                              if(PGEFile::IsIntS(value[1]))
-                                  event.layer_speed_x = value[1].toInt();
+                              if(PGEFile::IsFloat(value[1]))
+                                  event.layer_speed_x = value[1].toDouble();
                               else
                                   goto badfile;
                           }
                           else
                           if(value[0]=="MY") //Layer motion speed Y
                           {
-                              if(PGEFile::IsIntS(value[1]))
-                                  event.layer_speed_y = value[1].toInt();
+                              if(PGEFile::IsFloat(value[1]))
+                                  event.layer_speed_y = value[1].toDouble();
                               else
                                   goto badfile;
                           }
@@ -1169,16 +1169,16 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                           else
                           if(value[0]=="AX") //Autoscroll speed X
                           {
-                              if(PGEFile::IsIntS(value[1]))
-                                  event.move_camera_x = value[1].toInt();
+                              if(PGEFile::IsFloat(value[1]))
+                                  event.move_camera_x = value[1].toDouble();
                               else
                                   goto badfile;
                           }
                           else
                           if(value[0]=="AY") //Autoscroll speed Y
                           {
-                              if(PGEFile::IsIntS(value[1]))
-                                  event.move_camera_y = value[1].toInt();
+                              if(PGEFile::IsFloat(value[1]))
+                                  event.move_camera_y = value[1].toDouble();
                               else
                                   goto badfile;
                           }

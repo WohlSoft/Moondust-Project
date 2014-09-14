@@ -185,7 +185,7 @@ QString PGEFile::BoolS(bool input)
 
 QString PGEFile::FloatS(double input)
 {
-    return QString::number(input);
+    return QString::number(input, 'g', 10);
 }
 
 QString PGEFile::qStrS(QString input)
