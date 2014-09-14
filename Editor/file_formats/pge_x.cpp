@@ -92,7 +92,7 @@ bool PGEFile::IsStringArray(QString in) // String array
     using namespace PGEExtendedFormat;
     bool valid=true;
     int i=0, depth=0, comma=0;
-    while(i<=in.size())
+    while(i<in.size())
     {
         switch(depth)
         {
@@ -127,8 +127,28 @@ bool PGEFile::IsStringArray(QString in) // String array
 }
 
 
+QStringList PGEFile::X2STRArr(QString src)
+{
+    QStringList strArr;
+    src.remove("[").remove("]");
+    strArr = src.split(',');
+    for(int i=0; i<strArr.size(); i++)
+    {
+        strArr[i] = X2STR(strArr[i]);
+    }
 
+    return strArr;
+}
 
+QList<bool > PGEFile::X2BollArr(QString src)
+{
+    QList<bool > arr;
+
+    for(int i=0;i<src.size();i++)
+        arr.push_back(src[i]=='1');
+
+    return arr;
+}
 
 QList<QStringList > PGEFile::splitDataLine(QString src_data, bool *valid)
 {

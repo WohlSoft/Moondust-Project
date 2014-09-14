@@ -20,6 +20,7 @@
 #include "../edit_level/level_edit.h"
 #include "file_formats.h"
 
+#include <QMessageBox>
 
 
 //*********************************************************
@@ -29,10 +30,7 @@
 LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
 {
     QTextStream in(&inf);   //Read File
-
-    in.setAutoDetectUnicode(true); //Test Fix for MacOS
-    in.setLocale(QLocale::system());   //Test Fix for MacOS
-    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+    in.setCodec("UTF-8");
 
     int str_count=0;        //Line Counter
     int i;                  //counters
@@ -50,8 +48,8 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     LevelPhysEnv physiczone;
     LevelLayers layer;
     LevelEvents event;
-    LevelEvents_layers events_layers;
-    LevelEvents_Sets events_sets;
+    //LevelEvents_layers events_layers;
+    //LevelEvents_Sets events_sets;
 
     //Begin all ArrayID's here;
     FileData.blocks_array_id = 1;
@@ -75,6 +73,7 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     //Read Sections
     bool sectionOpened=false;
 
+    //Read PGE-X Tree
     while(!in.atEnd())
     {
         LVLXsection.first = in.readLine();
@@ -114,6 +113,15 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
             bool good;
             for(i=0; i<sct.second.size();i++) //Look Entries
             {
+                if(QString(sct.second[i]).remove(' ').isEmpty()) continue; //Skip empty strings
+
+                if(sct.first=="JOKES")
+                {
+                    QMessageBox::information(nullptr, "Jokes", sct.second[i], QMessageBox::Ok);
+                    continue;
+                }
+
+
                 QList<QStringList > sectData = PGEFile::splitDataLine(sct.second[i], &good);
                 line = sct.second[i];
 
@@ -874,11 +882,6 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                     FileData.doors.push_back(door);
                 }//DOORS
 
-
-                //PGEFile::X2STR(value[1]);
-                //value[1].toInt();
-                //(bool)value[1].toInt();
-
                 else
                 if(sct.first=="LAYERS")
                 {
@@ -956,27 +959,255 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                 else
                 if(sct.first=="EVENTS_CLASSIC") //SMBX-compatible events
                 {
+                    event = dummyLvlEvent();
+
                     foreach(QStringList value, sectData) //Look markers and values
                     {
-                        //  if(value[0]=="TL") //Level Title
-                        //  {
-                        //      if(PGEFile::IsIntU(value[1]))
-                        //          physiczone.id = value[1].toInt();
-                        //      else
-                        //          goto badfile;
-                        //  }
-                        //  else
-                        //  if(value[0]=="SZ") //Starz number
-                        //  {
-                        //      if(PGEFile::IsIntS(value[1]))
-                        //          physiczone.x = value[1].toInt();
-                        //      else
-                        //          goto badfile;
-                        //  }
+                          if(value[0]=="ET") //Event Title
+                          {
+                              if(PGEFile::IsQStr(value[1]))
+                                  event.name = PGEFile::X2STR(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="MG") //Event Message
+                          {
+                              if(PGEFile::IsQStr(value[1]))
+                                  event.msg = PGEFile::X2STR(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="SD") //Play Sound ID
+                          {
+                              if(PGEFile::IsIntU(value[1]))
+                                  event.sound_id = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="EG") //End game algorithm
+                          {
+                              if(PGEFile::IsIntU(value[1]))
+                                  event.end_game = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="LH") //Hide layers
+                          {
+                              if(PGEFile::IsStringArray(value[1]))
+                                  event.layers_hide = PGEFile::X2STRArr(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="LS") //Show layers
+                          {
+                              if(PGEFile::IsStringArray(value[1]))
+                                  event.layers_show = PGEFile::X2STRArr(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="LT") //Toggle layers
+                          {
+                              if(PGEFile::IsStringArray(value[1]))
+                                  event.layers_toggle = PGEFile::X2STRArr(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="SM") //Switch music
+                          {
+                              if(PGEFile::IsStringArray(value[1]))
+                              {
+                                  QStringList musicSets = PGEFile::X2STRArr(value[1]);
+                                  int q=0;
+                                  for(q=0;q<event.sets.size() && q<musicSets.size(); q++)
+                                  {
+                                      if(!PGEFile::IsIntS(musicSets[q])) goto badfile;
+                                      event.sets[q].music_id = musicSets[q].toInt();
+                                  }
+                              }
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="SB") //Switch background
+                          {
+                              if(PGEFile::IsStringArray(value[1]))
+                              {
+                                  QStringList bgSets = PGEFile::X2STRArr(value[1]);
+                                  int q=0;
+                                  for(q=0;q<event.sets.size() && q<bgSets.size(); q++)
+                                  {
+                                      if(!PGEFile::IsIntS(bgSets[q])) goto badfile;
+                                      event.sets[q].background_id = bgSets[q].toInt();
+                                  }
+                              }
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="SS") //Section Size
+                          {
+                              if(PGEFile::IsStringArray(value[1]))
+                              {
+                                  QStringList bgSets = PGEFile::X2STRArr(value[1]);
+                                  int q=0;
+                                  for(q=0;q<event.sets.size() && q<bgSets.size(); q++)
+                                  {
+                                      QStringList sizes = bgSets[q].split(',');
+                                      if(sizes.size()!=4) goto badfile;
+                                      if(!PGEFile::IsIntS(sizes[0])) goto badfile;
+                                      event.sets[q].position_left = sizes[0].toInt();
+                                      if(!PGEFile::IsIntS(sizes[1])) goto badfile;
+                                      event.sets[q].position_top = sizes[1].toInt();
+                                      if(!PGEFile::IsIntS(sizes[2])) goto badfile;
+                                      event.sets[q].position_bottom = sizes[2].toInt();
+                                      if(!PGEFile::IsIntS(sizes[3])) goto badfile;
+                                      event.sets[q].position_right = sizes[3].toInt();
+                                  }
+                              }
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="TE") //Trigger event
+                          {
+                              if(PGEFile::IsQStr(value[1]))
+                                  event.trigger = PGEFile::X2STR(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="TD") //Trigger delay
+                          {
+                              if(PGEFile::IsIntU(value[1]))
+                                  event.trigger_timer = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="DS") //Disable smoke
+                          {
+                              if(PGEFile::IsBool(value[1]))
+                                  event.nosmoke = (bool)value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="AU") //Auto start
+                          {
+                              if(PGEFile::IsBool(value[1]))
+                                  event.autostart = (bool)value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="AU") //Auto start
+                          {
+                              if(PGEFile::IsBool(value[1]))
+                                  event.autostart = (bool)value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="PC") //Player controls
+                          {
+                              if(PGEFile::IsBoolArray(value[1]))
+                              {
+                                  QList<bool > controls = PGEFile::X2BollArr(value[1]);
+                                  if(controls.size()>=1) event.ctrl_up = controls[0];
+                                  if(controls.size()>=2) event.ctrl_down = controls[1];
+                                  if(controls.size()>=3) event.ctrl_left = controls[2];
+                                  if(controls.size()>=4) event.ctrl_right = controls[3];
+                                  if(controls.size()>=5) event.ctrl_run = controls[4];
+                                  if(controls.size()>=6) event.ctrl_jump = controls[5];
+                                  if(controls.size()>=7) event.ctrl_drop = controls[6];
+                                  if(controls.size()>=8) event.ctrl_start = controls[7];
+                                  if(controls.size()>=9) event.ctrl_altrun = controls[8];
+                                  if(controls.size()>=10) event.ctrl_altjump = controls[9];
+                              }
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="ML") //Move layer
+                          {
+                              if(PGEFile::IsQStr(value[1]))
+                                  event.movelayer = PGEFile::X2STR(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="MX") //Layer motion speed X
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  event.layer_speed_x = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="MY") //Layer motion speed Y
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  event.layer_speed_y = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="AS") //Autoscroll section ID
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  event.scroll_section = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="AX") //Autoscroll speed X
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  event.move_camera_x = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="AY") //Autoscroll speed Y
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  event.move_camera_y = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                    }
+
+                    //add captured value into array
+                    bool found=false;
+                    int q=0;
+                    for(q=0; q<FileData.events.size();q++)
+                    {
+                        if(FileData.events[q].name==event.name){found=true; break;}
+                    }
+                    if(found)
+                    {
+                        event.array_id = FileData.events[q].array_id;
+                        FileData.events[q] = event;
+                    }
+                    else
+                    {
+                        event.array_id = FileData.events_array_id++;
+                        FileData.events.push_back(event);
                     }
                 }//EVENTS_CLASSIC
 
-
+                //PGEFile::X2BollArr(value[1].toInt());
+                //PGEFile::X2STRArr(value[1]);
+                //PGEFile::X2STR(value[1]);
+                //value[1].toInt();
+                //(bool)value[1].toInt();
 
             }
 
@@ -1344,7 +1575,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
         for(i=0;i<FileData.events.size();i++)
         {
 
-            TextData += PGEFile::value("LR", PGEFile::qStrS(FileData.events[i].name));  // Event name
+            TextData += PGEFile::value("ET", PGEFile::qStrS(FileData.events[i].name));  // Event name
 
             if(!FileData.events[i].msg.isEmpty())
                 TextData += PGEFile::value("MG", PGEFile::qStrS(FileData.events[i].msg));  // Show Message
