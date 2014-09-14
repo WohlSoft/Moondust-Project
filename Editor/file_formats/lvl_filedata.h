@@ -62,7 +62,7 @@ struct LevelBlock
     long h;
     long w;
     unsigned long id; //Block ID
-    unsigned long npc_id;
+    long npc_id;
     bool invisible;
     bool slippery;
     QString layer;

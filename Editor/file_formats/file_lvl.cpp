@@ -254,7 +254,37 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //Containing NPC id
             goto badfile;
-        else blocks.npc_id = line.toInt();
+        else
+        {
+            long xnpcID = line.toInt();
+            //Convert NPC-ID value from SMBX1/2 to SMBX64
+            if(file_format<18)
+            {
+                switch(xnpcID)
+                {
+                    case 100://Mushroom
+                        xnpcID = 1009; break;
+                    case 101://Goomba
+                        xnpcID = 1001; break;
+                    case 102://Fire flower
+                        xnpcID = 1014; break;
+                    case 103://Super leaf
+                        xnpcID = 1034; break;
+                    case 104://Shoe
+                        xnpcID = 1035; break;
+                    default:
+                        break;
+                }
+            }
+            if(xnpcID != 0)
+            {
+                if(xnpcID > 1000)
+                    xnpcID = xnpcID-1000;
+                else
+                    xnpcID *= -1;
+            }
+            blocks.npc_id = xnpcID;
+        }
 
         str_count++;line = in.readLine();
         if(SMBX64::wBool(line)) //Invisible
@@ -1175,7 +1205,15 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::IntS((*block).h);
         TextData += SMBX64::IntS((*block).w);
         TextData += SMBX64::IntS((*block).id);
-        TextData += SMBX64::IntS((*block).npc_id);
+        int npcID = (*block).npc_id;
+        if(npcID < 0)
+        {
+            npcID *= -1; if(npcID>99) npcID = 99;
+        }
+        else
+        if(npcID!=0)
+            npcID+=1000;
+        TextData += SMBX64::IntS(npcID);
         TextData += SMBX64::BoolS((*block).invisible);
         TextData += SMBX64::BoolS((*block).slippery);
         TextData += SMBX64::qStrS((*block).layer);
