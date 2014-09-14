@@ -328,6 +328,7 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
     // ////////////////// Write Extended LVL file (LVLX)/////////////////////
     else if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
     {
+        out.setCodec("UTF-8");
         out << FileFormats::WriteExtendedLvlFile(LvlData);
     }
     // //////////////////////////////////////////////////////////////////////

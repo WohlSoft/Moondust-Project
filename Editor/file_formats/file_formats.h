@@ -62,31 +62,16 @@ public:
     PGEFile() {}
 
     // /////////////Validators///////////////
-    //returns TRUE on wrong data
-    //static bool Int(QString in); // UNSIGNED INT
-    //static bool sInt(QString in); // SIGNED INT
-
-    //static bool Float(QString in); // UNSIGNED FLOAT
-    //static bool sFloat(QString in); // SIGNED FLOAT
-
-    //static bool Bool(QString in); //Digit BOOL
-
-    //static bool qStr(QString in); // QUOTED STRING
-    //static bool heStr(QString in); // Hex Encoded String
-
-    //static bool intArray(QString in); //Integer array
-    //static bool strArray(QString in); //String array
-    //static bool BoolArray(QString in); //Bool array
-
-    static bool IsQStr(QString in);
-    static bool IsHex(QString in);
-    static bool IsIntU(QString in);
-    static bool IsIntS(QString in);
-    static bool IsFloat(QString in);
-    static bool IsBool(QString in);
-    static bool IsBoolArray(QString in);
-    static bool IsIntArray(QString in);
-    static bool IsStringArray(QString in);
+    //returns TRUE on valid data
+    static bool IsQStr(QString in);// QUOTED STRING
+    static bool IsHex(QString in);// Hex Encoded String
+    static bool IsIntU(QString in);// UNSIGNED INT
+    static bool IsIntS(QString in);// SIGNED INT
+    static bool IsFloat(QString in);// FLOAT
+    static bool IsBool(QString in);//BOOL
+    static bool IsBoolArray(QString in);//Boolean array
+    static bool IsIntArray(QString in);//Integer array
+    static bool IsStringArray(QString in);//String array
 
     //Split string into data values
     static QList<QStringList> splitDataLine(QString src_data, bool *valid = 0);
@@ -102,6 +87,8 @@ public:
     static QString BoolArrayS(QList<bool > input);
 
     static QString X2STR(QString input);
+    static QStringList X2STRArr(QString src);
+    static QList<bool> X2BollArr(QString src);
 
     static QString escapeStr(QString input);
     static QString restoreStr(QString input);
