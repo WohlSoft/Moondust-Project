@@ -563,12 +563,31 @@ void LvlScene::historyBack()
             hasToUpdateDoorData = true;
         }
 
-        foreach(PlayerPoint plr, deletedData.players){
-            for(int i = 0; i < LvlData->players.size(); i++){
-                if(LvlData->players[i].id == plr.id){
-                    LvlData->players[i] = plr;
-                }
+        foreach(PlayerPoint plr, deletedData.players)
+        {
+            bool found=false;
+            int q=0;
+            for(q=0; q < LvlData->players.size();q++)
+            {
+                 if(LvlData->players[q].id == plr.id)
+                 {
+                     found=true;
+                     break;
+                 }
             }
+            if(!found)
+            {
+                q = LvlData->players.size();
+                LvlData->players.push_back(plr);
+            }
+            else
+                LvlData->players[q]=plr;
+
+            //            for(int i = 0; i < LvlData->players.size(); i++){
+            //                if(LvlData->players[i].id == plr.id){
+            //                    LvlData->players[i] = plr;
+            //                }
+            //            }
             placePlayerPoint(plr);
         }
 
@@ -662,12 +681,30 @@ void LvlScene::historyBack()
             hasToUpdateDoorData = true;
         }
 
-        foreach(PlayerPoint plr, deletedData.players){
-            for(int i = 0; i < LvlData->players.size(); i++){
-                if(LvlData->players[i].id == plr.id){
-                    LvlData->players[i] = plr;
-                }
+        foreach(PlayerPoint plr, deletedData.players)
+        {
+            bool found=false;
+            int q=0;
+            for(q=0; q < LvlData->players.size();q++)
+            {
+                 if(LvlData->players[q].id == plr.id)
+                 {
+                     found=true;
+                     break;
+                 }
             }
+            if(!found)
+            {
+                q = LvlData->players.size();
+                LvlData->players.push_back(plr);
+            }
+            else
+                LvlData->players[q]=plr;
+//            for(int i = 0; i < LvlData->players.size(); i++){
+//                if(LvlData->players[i].id == plr.id){
+//                    LvlData->players[i] = plr;
+//                }
+//            }
             placePlayerPoint(plr);
         }
 
@@ -2374,7 +2411,8 @@ void LvlScene::historyForward()
     {
         LevelData placedData = lastOperation.data;
         //revert place
-        foreach(PlayerPoint plr, placedData.players){
+        foreach(PlayerPoint plr, placedData.players)
+        {
             for(int i = 0; i < LvlData->players.size(); i++){
                 if(LvlData->players[i].id == plr.id){
                     LvlData->players[i] = plr;
@@ -2619,9 +2657,11 @@ void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoi
     bool wasPlaced = false;
     PlayerPoint oPoint;
     if(!cbData.hist->extraData.isNull()){
-        if(cbData.hist->extraData.type() == QVariant::List){
+        if(cbData.hist->extraData.type() == QVariant::List)
+        {
             QList<QVariant> mData = cbData.hist->extraData.toList();
-            if(mData.size() == 5){
+            if(mData.size() == 5)
+            {
                 oPoint.id = (unsigned int)mData[0].toInt();
                 oPoint.x = (long)mData[1].toLongLong();
                 oPoint.y = (long)mData[2].toLongLong();
@@ -2631,18 +2671,21 @@ void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoi
             }
         }
     }
-    for(int i = 0; i < LvlData->players.size(); i++){
-        if(wasPlaced){
-            if(LvlData->players[i].id == data.id){
+    for(int i = 0; i < LvlData->players.size(); i++)
+    {
+        if(wasPlaced)
+        {
+            if(LvlData->players[i].id == data.id)
+            {
                 placePlayerPoint(oPoint);
                 break;
             }
-        }else{
-            if(LvlData->players[i].id == data.id){
-                LvlData->players[i].x = 0;
-                LvlData->players[i].y = 0;
-                LvlData->players[i].w = 0;
-                LvlData->players[i].h = 0;
+        }
+        else
+        {
+            if(LvlData->players[i].id == data.id)
+            {
+                LvlData->players.remove(i);
                 delete cbData.item;
                 break;
             }
@@ -3494,7 +3537,8 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         MainWinConnect::pMainWin->setDoorData(-2); //update Door data
     }
 
-    if(!ignorePlayer){
+    if(!ignorePlayer)
+    {
         foreach (QGraphicsItem* item, sortedGraphPlayers)
         {
             if(sortedPlayers.size()!=0)
