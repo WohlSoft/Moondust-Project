@@ -217,7 +217,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setRight->setChecked(npcData.direct==1);
                 setRight->deleteLater();
 
-            ItemMenu->addSeparator()->deleteLater();;
+            ItemMenu->addSeparator()->deleteLater();
 
             QAction *fri = ItemMenu->addAction(tr("Friendly"));
                 fri->setCheckable(1);
