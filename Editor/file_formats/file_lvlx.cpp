@@ -313,7 +313,7 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                           else
                           if(value[0]=="D")
                           {
-                              if(PGEFile::IsIntU(value[1]))
+                              if(PGEFile::IsIntS(value[1]))
                                   player.direction = value[1].toInt();
                               else
                                   goto badfile;
@@ -1300,7 +1300,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
         TextData += PGEFile::value("ID", PGEFile::IntS(FileData.players[i].id));  // Player ID
         TextData += PGEFile::value("X", PGEFile::IntS(FileData.players[i].x));  // Player X
         TextData += PGEFile::value("Y", PGEFile::IntS(FileData.players[i].y));  // Player Y
-        TextData += PGEFile::value("D", PGEFile::IntS(1));  // Direction -1 left, 1 right
+        TextData += PGEFile::value("D", PGEFile::IntS(FileData.players[i].direction));  // Direction -1 left, 1 right
 
         TextData += "\n";
     }

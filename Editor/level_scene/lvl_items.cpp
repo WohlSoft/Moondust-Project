@@ -532,11 +532,8 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
     if(found)
     {
         player->setPos(plr.x, plr.y);
-        for(int i=0; i<LvlData->players.size(); i++)
-        {
-         if(LvlData->players[i].id == plr.id)
-         { LvlData->players[i] = plr; break; }
-        }
+        player->pointData = plr;
+        player->arrayApply();
     }
     else
     {
