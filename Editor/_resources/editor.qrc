@@ -102,6 +102,7 @@
         <file>images/bug.png</file>
         <file>images/pencil_16x16.png</file>
         <file>images/copy_16x16.png</file>
+        <file alias="player.png">images/player_point.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>

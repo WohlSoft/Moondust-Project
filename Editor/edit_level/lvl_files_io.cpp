@@ -29,6 +29,7 @@
 #include "../level_scene/lvlscene.h"
 #include "saveimage.h"
 #include "../common_features/logger.h"
+#include "../common_features/util.h"
 
 #include "../common_features/mainwinconnect.h"
 #include "../main_window/music_player.h"
@@ -243,15 +244,39 @@ bool leveledit::saveAs(bool savOptionsDialog)
         }
     }
 
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-        (isUntitled)?GlobalSettings::savePath+QString("/")+
-                     (LvlData.LevelName.isEmpty()?curFile:LvlData.LevelName):curFile, QString("SMBX64 (1.3) Level file (*.lvl)"));
-    if (fileName.isEmpty())
-        return false;
+    bool isNotDone=true;
+    QString fileName = (isUntitled)?GlobalSettings::savePath+QString("/")+
+                                    (LvlData.LevelName.isEmpty()?curFile:util::filePath(LvlData.LevelName)):curFile;
 
-    if(makeCustomFolder){
-        QDir dir = fileName.section("/",0,-2);
-        dir.mkdir(fileName.section("/",-1,-1).section(".",0,0));
+
+    QString selectedFilter;
+    if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
+        selectedFilter = "Extended Level file (*.lvlx)";
+    else
+        selectedFilter = "SMBX64 (1.3) Level file (*.lvl)";
+
+    QString filter = QString("SMBX64 (1.3) Level file (*.lvl);;"
+                             "Extended Level file (*.lvlx)");
+    while(isNotDone)
+    {
+        fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter);
+
+        if (fileName.isEmpty())
+            return false;
+
+        if( (!fileName.endsWith(".lvl", Qt::CaseInsensitive)) && (!fileName.endsWith(".lvlx", Qt::CaseInsensitive)) )
+        {
+            QMessageBox::warning(this, tr("Extension is not set"),
+               tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
+            continue;
+        }
+
+        if(makeCustomFolder)
+        {
+            QDir dir = fileName.section("/",0,-2);
+            dir.mkdir(fileName.section("/",-1,-1).section(".",0,0));
+        }
+        isNotDone=false;
     }
 
     return saveFile(fileName);
@@ -270,36 +295,52 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
 
     GlobalSettings::savePath = QFileInfo(fileName).path();
 
+
+    if( (!fileName.endsWith(".lvl", Qt::CaseInsensitive)) && (!fileName.endsWith(".lvlx", Qt::CaseInsensitive)) )
+    {
+        QMessageBox::warning(this, tr("Extension is not set"),
+           tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
+        return false;
+    }
+
     QTextStream out(&file);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-
-
     // ////////////////////// Write SMBX64 LVL //////////////////////////////
-
-    //set SMBX64 specified option to BGO
-    for(int q=0; q< LvlData.bgo.size(); q++)
+    if(fileName.endsWith(".lvl", Qt::CaseInsensitive))
     {
-        if(LvlData.bgo[q].smbx64_sp < 0)
+        //set SMBX64 specified option to BGO
+        for(int q=0; q< LvlData.bgo.size(); q++)
         {
-            if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
-                LvlData.bgo[q].smbx64_sp_apply = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
+            if(LvlData.bgo[q].smbx64_sp < 0)
+            {
+                if( LvlData.bgo[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_bgo.size() )
+                    LvlData.bgo[q].smbx64_sp_apply = MainWinConnect::pMainWin->configs.index_bgo[LvlData.bgo[q].id].smbx64_sp;
+            }
+            else
+                LvlData.bgo[q].smbx64_sp_apply = LvlData.bgo[q].smbx64_sp;
+            //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
         }
-        else
-            LvlData.bgo[q].smbx64_sp_apply = LvlData.bgo[q].smbx64_sp;
-        //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
+        out << FileFormats::WriteSMBX64LvlFile(LvlData);
     }
+    // //////////////////////////////////////////////////////////////////////
 
-
-    out << FileFormats::WriteSMBX64LvlFile(LvlData);
+    // ////////////////// Write Extended LVL file (LVLX)/////////////////////
+    else if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
+    {
+        out.setCodec("UTF-8");
+        out << FileFormats::WriteExtendedLvlFile(LvlData);
+    }
     // //////////////////////////////////////////////////////////////////////
 
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
 
+
     LvlData.modified = false;
     LvlData.untitled = false;
-    if(addToRecent){
+    if(addToRecent)
+    {
         MainWinConnect::pMainWin->AddToRecentFiles(fileName);
         MainWinConnect::pMainWin->SyncRecentFiles();
     }

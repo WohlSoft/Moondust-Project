@@ -393,7 +393,7 @@ void LvlScene::setLayerToSelected(QString lName, bool isNew)
                 else
                 if(SelItem->data(0).toString()=="Water")
                 {
-                    modData.water.push_back(dynamic_cast<ItemWater *>(SelItem)->waterData);
+                    modData.physez.push_back(dynamic_cast<ItemWater *>(SelItem)->waterData);
                     dynamic_cast<ItemWater *>(SelItem)->waterData.layer = lr.name;
                     dynamic_cast<ItemWater *>(SelItem)->setVisible(!lr.hidden);
                     dynamic_cast<ItemWater *>(SelItem)->arrayApply();

@@ -48,7 +48,7 @@ LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
 long        LvlPlacingItems::itemW = 0;
 long        LvlPlacingItems::itemH = 0;
 
-LevelWater  LvlPlacingItems::waterSet=FileFormats::dummyLvlWater();
+LevelPhysEnv  LvlPlacingItems::waterSet=FileFormats::dummyLvlPhysEnv();
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
 long LvlPlacingItems::doorArrayId = 0;

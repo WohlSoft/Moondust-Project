@@ -41,7 +41,7 @@ public:
     static bool overwriteMode;
 
     static LevelBGO bgoSet;
-    static LevelWater waterSet;
+    static LevelPhysEnv waterSet;
 
     enum doorType{
         DOOR_Entrance=0,
