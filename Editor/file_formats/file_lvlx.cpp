@@ -313,7 +313,7 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                           else
                           if(value[0]=="D")
                           {
-                              if(PGEFile::IsIntU(value[1]))
+                              if(PGEFile::IsIntS(value[1]))
                                   player.direction = value[1].toInt();
                               else
                                   goto badfile;
