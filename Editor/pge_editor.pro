@@ -193,7 +193,8 @@ SOURCES += main.cpp\
     file_formats/wld_filedata.cpp \
     file_formats/pge_x.cpp \
     SingleApplication/localserver.cpp \
-    SingleApplication/singleapplication.cpp
+    SingleApplication/singleapplication.cpp \
+    level_scene/item_playerpoint.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -278,7 +279,8 @@ HEADERS  += mainwindow.h \
     common_features/npc_animator.h \
     data_configs/config_manager.h \
     SingleApplication/localserver.h \
-    SingleApplication/singleapplication.h
+    SingleApplication/singleapplication.h \
+    level_scene/item_playerpoint.h
 
 FORMS    += \
     mainwindow.ui \

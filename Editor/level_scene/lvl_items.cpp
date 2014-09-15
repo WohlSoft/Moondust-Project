@@ -26,6 +26,7 @@
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
+#include "item_playerpoint.h"
 
 #include "../common_features/grid.h"
 
@@ -513,15 +514,15 @@ void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
 
 void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 {
-    QGraphicsItem *	player = NULL;
+    ItemPlayerPoint *	player = NULL;
     bool found=false;
     if(!init)
     {
         foreach(QGraphicsItem * plrt, this->items())
         {
-            if( plrt->data(0).toString()=="player"+QString::number(plr.id) )
+            if( (plrt->data(0).toString()=="playerPoint")&&((unsigned int)plrt->data(2).toInt()==plr.id) )
             {
-                player = plrt;
+                player = dynamic_cast<ItemPlayerPoint *>(plrt);
                 found=true;
                 break;
             }
@@ -541,21 +542,10 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
     {
         if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
         {
-            player = addPixmap(QPixmap(":/player"+QString::number(plr.id)+".png"));
-            player->setPos(plr.x, plr.y);
-            player->setZValue(Z_Player);
-            player->setData(0, "player"+QString::number(plr.id) );
-            player->setData(2, QString::number(plr.id));
-            player->setFlag(QGraphicsItem::ItemIsSelectable, true);
-            player->setFlag(QGraphicsItem::ItemIsMovable, true);
-            if(!init)
-            {
-                for(int i=0; i<LvlData->players.size(); i++)
-                {
-                 if(LvlData->players[i].id == plr.id)
-                 { LvlData->players[i] = plr; break; }
-                }
-            }
+            player = new ItemPlayerPoint();
+            player->setScenePoint(this);
+            this->addItem(player);
+            player->setPointData(plr, init);
         }
     }
 

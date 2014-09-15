@@ -25,6 +25,7 @@
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
+#include "item_playerpoint.h"
 
 #include "../common_features/mainwinconnect.h"
 #include "../common_features/grid.h"
@@ -874,25 +875,13 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             LvlData->modified = true;
                         }
                         else
-                        if(( ObjType == "player1" ) || ( ObjType == "player2" ))
+                        if(ObjType == "playerPoint" )
                         {
-                            int plrId=0;
-                            if( ObjType == "player1" )
-                                plrId=1;
-                            if( ObjType == "player2" )
-                                plrId=2;
-
-                            for(int g=0; g<LvlData->players.size(); g++)
-                            {
-                             if(LvlData->players[g].id == (unsigned int)plrId)
-                             {
-                                 historySourceBuffer.players.push_back(LvlData->players[g]);
-                                 LvlData->players[g].x = (long)(*it)->scenePos().x();
-                                 LvlData->players[g].y = (long)(*it)->scenePos().y();
-                                 historyBuffer.players.push_back(LvlData->players[g]);
-                                 break;
-                             }
-                            }
+                             historySourceBuffer.players.push_back(dynamic_cast<ItemPlayerPoint *>(*it)->pointData);
+                             dynamic_cast<ItemPlayerPoint *>(*it)->pointData.x =(long)(*it)->scenePos().x();
+                             dynamic_cast<ItemPlayerPoint *>(*it)->pointData.y =(long)(*it)->scenePos().y();
+                             dynamic_cast<ItemPlayerPoint *>(*it)->arrayApply();
+                             historyBuffer.players.push_back(dynamic_cast<ItemPlayerPoint *>(*it)->pointData);
                         }
                     }
                 }////////////////////////SECOND FETCH///////////////////////
@@ -957,24 +946,10 @@ void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
         gridSize = qRound(qreal(pConfigs->default_grid)/2);
     }
     else
-    if(( ObjType == "player1" ) || ( ObjType == "player2" ))
+    if( ObjType == "playerPoint" )
     {
-        offsetY = 2;
         gridSize = 2 ;
-        int plrId=0;
-        if( ObjType == "player1" )
-            plrId=1;
-        if( ObjType == "player2" )
-            plrId=2;
-
-        foreach(PlayerPoint pnt, LvlData->players)
-        {
-         if(pnt.id == (unsigned int)plrId)
-         {
-             sourcePos = QPoint(pnt.x, pnt.y);
-             break;
-         }
-        }
+        sourcePos = QPoint(dynamic_cast<ItemPlayerPoint *>(it)->pointData.x, dynamic_cast<ItemPlayerPoint *>(it)->pointData.y);
     }
 }
 
@@ -1117,46 +1092,27 @@ void LvlScene::placeItemUnderCursor()
         else
         if(placingItem == PLC_PlayerPoint)
         {
-            bool found=false;
-            int q=0;
-            for(q=0; q < LvlData->players.size();q++)
-            {
-                 if(LvlData->players[q].id == (unsigned int)LvlPlacingItems::playerID+1)
-                 {
-                     found=true;
-                     break;
-                 }
-            }
-
                 PlayerPoint pnt = FileFormats::dummyLvlPlayerPoint(LvlPlacingItems::playerID+1);
                 pnt.x = cursor->scenePos().x();
                 pnt.y = cursor->scenePos().y();
 
-                if(!found)
-                {
-                    q = LvlData->players.size();
-                    LvlData->players.push_back(pnt);
-                }
-                else
-                    LvlData->players[q]=pnt;
 
                 QList<QVariant> oData;
-                oData.push_back(LvlData->players[q].id);
-                oData.push_back((qlonglong)LvlData->players[q].x);
-                oData.push_back((qlonglong)LvlData->players[q].y);
-                oData.push_back((qlonglong)LvlData->players[q].w);
-                oData.push_back((qlonglong)LvlData->players[q].h);
+                oData.push_back(pnt.id);
+                oData.push_back((qlonglong)pnt.x);
+                oData.push_back((qlonglong)pnt.y);
+                oData.push_back((qlonglong)pnt.w);
+                oData.push_back((qlonglong)pnt.h);
 
-                placePlayerPoint(LvlData->players[q]);
+                placePlayerPoint(pnt);
 
                 WriteToLog(QtDebugMsg, QString("Placing player point %1 with position %2 %3, %4")
                            .arg(LvlPlacingItems::playerID+1)
                            .arg(cursor->scenePos().x())
                            .arg(cursor->scenePos().y())
-                           .arg(found?"changed":"added into array")
                            );
 
-            addPlacePlayerPointHistory(LvlData->players[q], QVariant(oData));
+            addPlacePlayerPointHistory(pnt, QVariant(oData));
         }
         else
         if(placingItem == PLC_Door)
@@ -1208,9 +1164,6 @@ void LvlScene::placeItemUnderCursor()
     {
         LvlData->modified = true;
     }
-
-    //if(opts.animationEnabled) stopAnimation();
-    //if(opts.animationEnabled) startBlockAnimation();
 }
 
 void LvlScene::removeItemUnderCursor()
@@ -1312,27 +1265,12 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
                 deleted=true;
             }
             else
-            if(( objType=="player1" )||( objType=="player2" ))
+            if( objType=="playerPoint" )
             {
-                unsigned long player=1;
-
-                if(objType=="player1")
-                    player=1;
-                if(objType=="player2")
-                    player=2;
-
-                for(int plr=0; plr<LvlData->players.size(); plr++)
-                {
-                 if(LvlData->players[plr].id == player)
-                 {
-                     historyBuffer.players.push_back(LvlData->players[plr]);
-
-                     LvlData->players.remove(plr);
-                     deleted=true;
-                     if((*it)) delete (*it);
-                     break;
-                 }
-                }
+                 historyBuffer.players.push_back(dynamic_cast<ItemPlayerPoint *>(*it)->pointData);
+                 dynamic_cast<ItemPlayerPoint *>(*it)->removeFromArray();
+                 if((*it)) delete (*it);
+                 deleted=true;
             }
     }
 
