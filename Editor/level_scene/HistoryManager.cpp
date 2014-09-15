@@ -566,23 +566,23 @@ void LvlScene::historyBack()
 
         foreach(PlayerPoint plr, deletedData.players)
         {
-            bool found=false;
-            int q=0;
-            for(q=0; q < LvlData->players.size();q++)
-            {
-                 if(LvlData->players[q].id == plr.id)
-                 {
-                     found=true;
-                     break;
-                 }
-            }
-            if(!found)
-            {
-                q = LvlData->players.size();
-                LvlData->players.push_back(plr);
-            }
-            else
-                LvlData->players[q]=plr;
+            //bool found=false;
+            //int q=0;
+            //for(q=0; q < LvlData->players.size();q++)
+            //{
+            //     if(LvlData->players[q].id == plr.id)
+            //     {
+            //         found=true;
+            //         break;
+            //     }
+            //}
+            //if(!found)
+            //{
+            //    q = LvlData->players.size();
+            //    LvlData->players.push_back(plr);
+            //}
+            //else
+            //    LvlData->players[q]=plr;
 
             //            for(int i = 0; i < LvlData->players.size(); i++){
             //                if(LvlData->players[i].id == plr.id){
@@ -684,23 +684,23 @@ void LvlScene::historyBack()
 
         foreach(PlayerPoint plr, deletedData.players)
         {
-            bool found=false;
-            int q=0;
-            for(q=0; q < LvlData->players.size();q++)
-            {
-                 if(LvlData->players[q].id == plr.id)
-                 {
-                     found=true;
-                     break;
-                 }
-            }
-            if(!found)
-            {
-                q = LvlData->players.size();
-                LvlData->players.push_back(plr);
-            }
-            else
-                LvlData->players[q]=plr;
+//            bool found=false;
+//            int q=0;
+//            for(q=0; q < LvlData->players.size();q++)
+//            {
+//                 if(LvlData->players[q].id == plr.id)
+//                 {
+//                     found=true;
+//                     break;
+//                 }
+//            }
+//            if(!found)
+//            {
+//                q = LvlData->players.size();
+//                LvlData->players.push_back(plr);
+//            }
+//            else
+//                LvlData->players[q]=plr;
 //            for(int i = 0; i < LvlData->players.size(); i++){
 //                if(LvlData->players[i].id == plr.id){
 //                    LvlData->players[i] = plr;
@@ -2414,11 +2414,11 @@ void LvlScene::historyForward()
         //revert place
         foreach(PlayerPoint plr, placedData.players)
         {
-            for(int i = 0; i < LvlData->players.size(); i++){
-                if(LvlData->players[i].id == plr.id){
-                    LvlData->players[i] = plr;
-                }
-            }
+            //for(int i = 0; i < LvlData->players.size(); i++){
+            //    if(LvlData->players[i].id == plr.id){
+            //        LvlData->players[i] = plr;
+            //    }
+            //}
             placePlayerPoint(plr);
         }
 
@@ -2652,9 +2652,11 @@ void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoi
     dynamic_cast<ItemPlayerPoint *>(cbData.item)->removeFromArray();
     removeItem(cbData.item);
     delete (cbData.item);
+
     bool wasPlaced = false;
     PlayerPoint oPoint;
-    if(!cbData.hist->extraData.isNull()){
+    if(!cbData.hist->extraData.isNull())
+    {
         if(cbData.hist->extraData.type() == QVariant::List)
         {
             QList<QVariant> mData = cbData.hist->extraData.toList();
@@ -2665,18 +2667,12 @@ void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoi
                 oPoint.y = (long)mData[2].toLongLong();
                 oPoint.w = (long)mData[3].toLongLong();
                 oPoint.h = (long)mData[4].toLongLong();
-                wasPlaced = true;
+                if(oPoint.id>0) wasPlaced = true;
             }
         }
     }
-    for(int i = 0; i < LvlData->players.size(); i++)
-    {
-        if(wasPlaced)
-        {
-            placePlayerPoint(oPoint);
-            break;
-        }
-    }
+
+    if(wasPlaced) placePlayerPoint(oPoint);
 }
 
 void LvlScene::historyUndoSettingsInvisibleBlock(LvlScene::CallbackData cbData, LevelBlock data)
