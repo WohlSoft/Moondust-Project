@@ -158,7 +158,8 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
                 sblock.danger = blockset.value("danger", "0").toInt();
                 sblock.collision = blockset.value("collision", "1").toInt();
                 sblock.slopeslide = blockset.value("slope-slide", "0").toBool();
-                sblock.fixture = blockset.value("fixture-type", "0").toInt();
+                sblock.phys_shape = blockset.value("fixture-type", "0").toInt();// Leaved for compatibility
+                sblock.phys_shape = blockset.value("shape-type", sblock.phys_shape).toInt();//new value-name
                 sblock.lava = blockset.value("lava", "0").toBool();
                 sblock.destruct = blockset.value("destruct", "0").toBool();
                 sblock.dest_bomb = blockset.value("destruct-bomb", "0").toBool();
