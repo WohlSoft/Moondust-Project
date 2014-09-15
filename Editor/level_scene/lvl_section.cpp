@@ -247,7 +247,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
         if(itemRect!=NULL)
         {
             itemRect->setData(0, QString("BackGround%1").arg(section.id) );
-            itemRect->setZValue(bgZ);
+            itemRect->setZValue(Z_backImage);
         }
 
     } //Don't draw on reserved section entry
@@ -324,14 +324,14 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
         item->setData(0, QString("BackGround%1").arg(sctID) );
         item->setPos(x, y+toY);
-        item->setZValue(bgZ);
+        item->setZValue(Z_backImage);
 
         if(R1H < sctH)
         {
             item = addRect(0, 0, sctW, sctH-R1H, Qt::NoPen, QBrush(FillColor));
             item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y+RectPlus);
-            item->setZValue(bgZ);
+            item->setZValue(Z_backImage);
         }
 
     }
@@ -364,7 +364,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
         item = addRect(0, 0, sctW, R1H-R1Hc, Qt::NoPen, QBrush(srcimg.copy(0, R1Ho, R1W, R1H-R1Hc)));
         item->setData(0, QString("BackGround%1").arg(sctID) );
         item->setPos(x, y+toY);
-        item->setZValue(bgZ);
+        item->setZValue(Z_backImage);
         // /////////////////////Draw first row//////////////////
 
         WriteToLog(QtDebugMsg, "Draw BG -> Draw second row");
@@ -395,7 +395,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             item = addRect(0, 0, sctW, R2H-R2Hc, Qt::NoPen, QBrush( srcimg2.copy(0, R2Ho, R2W, R2H-R2Hc) ));
             item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x, y+toY);
-            item->setZValue(bgZ+0.0000000001);
+            item->setZValue(Z_backImage+0.0000000001);
             // /////////////////////Draw second row//////////////////
 
         } else
@@ -408,7 +408,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             item = addRect(0, 0, sctW, sctH-R1H-RectPlus, Qt::NoPen, QBrush(FillColor));
             item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
-            item->setZValue(bgZ);
+            item->setZValue(Z_backImage);
         }
 
     }
@@ -435,14 +435,14 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
                            );
             item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
-            item->setZValue(bgZ);
+            item->setZValue(Z_backImage);
 
             if(sctH >= R1H)
             {
                 item = addRect(0, 0, sctW, sctH-RectPlus, Qt::NoPen, QBrush(srcimg));
                 item->setData(0, "BackGround"+QString::number(sctID) );
                 item->setPos(x,y+RectPlus);
-                item->setZValue(bgZ);
+                item->setZValue(Z_backImage);
             }
 
         }
@@ -452,7 +452,7 @@ void LvlScene::DrawBG(int x, int y, int w, int h, int sctID,
             item = addRect(0, 0, sctW, sctH, Qt::NoPen, QBrush(srcimg));
             item->setData(0, QString("BackGround%1").arg(sctID) );
             item->setPos(x,y);
-            item->setZValue(bgZ);
+            item->setZValue(Z_backImage);
         }
     }
 
@@ -562,8 +562,8 @@ void LvlScene::drawSpace()
     WriteToLog(QtDebugMsg, QString("Draw intersection space-> add polygon to Item"));
     item = addPolygon(bigSpace, QPen(Qt::NoPen), QBrush(Qt::black));//Add inactive space
     item2 = addPolygon(QPolygon(drawing), QPen(Qt::red, 2));
-    item->setZValue(spaceZ1);
-    item2->setZValue(spaceZ2);
+    item->setZValue(Z_sys_interspace1);
+    item2->setZValue(Z_sys_sctBorder);
     item->setOpacity(qreal(0.4));
     item->setData(0, "Space");
     item2->setData(0, "SectionBorder");

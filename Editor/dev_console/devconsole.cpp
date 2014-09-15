@@ -9,6 +9,8 @@
 
 #include "../common_features/mainwinconnect.h"
 
+#include "../file_formats/file_formats.h"
+
 DevConsole *DevConsole::currentDevConsole = 0;
 
 void DevConsole::init()
@@ -174,7 +176,8 @@ void DevConsole::registerCommands()
     registerCommand("version", &DevConsole::doVersion, tr("Prints the version"));
     registerCommand("quit", &DevConsole::doQuit, tr("Quits the program"));
     registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
-    registerCommand("md5", &DevConsole::doMd5, tr(" [md5 SomeString] Calculating MD5 hash of string"));
+    registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculating MD5 hash of string"));
+    registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Args: {String array} validating the PGE-X string array"));
     registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
 }
 
@@ -221,6 +224,17 @@ void DevConsole::doMd5(QStringList args)
     log(QString("MD5 hash: %1").arg(encoded), ui->tabWidget->tabText(0));
 }
 
+void DevConsole::doValidateStrArray(QStringList args)
+{
+    QString src;
+
+    foreach(QString s, args)
+        src.append(s+(args.indexOf(s)<args.size()-1 ? " " : ""));
+
+    log(QString("%1").arg(src), ui->tabWidget->tabText(0));
+    log(QString("String array is: %1").arg(PGEFile::IsStringArray(src)?"valid":"wrong" ), ui->tabWidget->tabText(0));
+}
+
 
 void DevConsole::doVersion(QStringList /*args*/)
 {
@@ -253,3 +267,4 @@ void DevConsole::doFlood(QStringList args)
         Q_UNUSED(fl)
     }
 }
+

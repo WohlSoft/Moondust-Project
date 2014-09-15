@@ -62,36 +62,41 @@ public:
     PGEFile() {}
 
     // /////////////Validators///////////////
-    //returns TRUE on wrong data
-    //static bool Int(QString in); // UNSIGNED INT
-    //static bool sInt(QString in); // SIGNED INT
+    //returns TRUE on valid data
+    static bool IsQStr(QString in);// QUOTED STRING
+    static bool IsHex(QString in);// Hex Encoded String
+    static bool IsIntU(QString in);// UNSIGNED INT
+    static bool IsIntS(QString in);// SIGNED INT
+    static bool IsFloat(QString in);// FLOAT
+    static bool IsBool(QString in);//BOOL
+    static bool IsBoolArray(QString in);//Boolean array
+    static bool IsIntArray(QString in);//Integer array
+    static bool IsStringArray(QString in);//String array
 
-    //static bool Float(QString in); // UNSIGNED FLOAT
-    //static bool sFloat(QString in); // SIGNED FLOAT
-
-    //static bool Bool(QString in); //Digit BOOL
-
-    //static bool qStr(QString in); // QUOTED STRING
-    //static bool heStr(QString in); // Hex Encoded String
-
-    //static bool intArray(QString in); //Integer array
-    //static bool strArray(QString in); //String array
-    //static bool BoolArray(QString in); //Bool array
-
+    //Split string into data values
+    static QList<QStringList> splitDataLine(QString src_data, bool *valid = 0);
 
     //PGE Extended File parameter string generators
     static QString IntS(long input);
     static QString BoolS(bool input);
-    static QString FloatS(float input);
+    static QString FloatS(double input);
     static QString qStrS(QString input);
     static QString hStrS(QString input);
     static QString strArrayS(QStringList input);
     static QString intArrayS(QList<int > input);
     static QString BoolArrayS(QList<bool > input);
 
+    static QString X2STR(QString input);
+    static QStringList X2STRArr(QString src);
+    static QList<bool> X2BollArr(QString src);
 
     static QString escapeStr(QString input);
+    static QString restoreStr(QString input);
+    static QString encodeEscape(QString input);
+    static QString decodeEscape(QString input);
+
     static QString value(QString marker, QString data);
+
 };
 
 
@@ -99,12 +104,13 @@ class FileFormats
 {
 public:
     //File format read functions
+
+    static LevelData dummyLvlDataArray();                   //Create new
     // SMBX64 LVL File
     static LevelData ReadLevelFile(QFile &inf);             //read
     static QString WriteSMBX64LvlFile(LevelData FileData);  //write
-    static LevelData dummyLvlDataArray();                   //Create new
-
     // PGE Extended Level File
+    static LevelData ReadExtendedLevelFile(QFile &inf);
     static QString WriteExtendedLvlFile(LevelData FileData); //Write
 
     // Lvl Data
@@ -113,7 +119,9 @@ public:
     static LevelBlock dummyLvlBlock();
     static LevelBGO dummyLvlBgo();
     static LevelPhysEnv dummyLvlPhysEnv();
+    static LevelLayers dummyLvlLayer();
     static LevelEvents dummyLvlEvent();
+    static PlayerPoint dummyLvlPlayerPoint(int id=0);
     static LevelSection dummyLvlSection();
 
     //Wld Data

@@ -34,8 +34,8 @@ struct obj_bgo{
     QString category;
     //    grid=32				; 32 | 16 Default="32"
     unsigned int grid;
-    //    view=background			; background | foreground, default="background"
-    unsigned int view;
+    //    view=background			; background2 | background | foreground | foreground2, default="background"
+    int view; //-1, 0, 1, 2
     int offsetX;
     int offsetY;
     int zOffset;

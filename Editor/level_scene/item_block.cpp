@@ -245,8 +245,9 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 LevelData selData;
                 ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
-                                                           ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 1000 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                                           (blockData.npc_id < 1000 && blockData.npc_id != 0 ? blockData.npc_id : blockData.npc_id-1000));
+                                                           ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 0 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                           (blockData.npc_id <0 && blockData.npc_id != 0 ? blockData.npc_id *-1 : blockData.npc_id)
+                                                                  );
                 npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
                 npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
                 if(npcList->exec()==QDialog::Accepted)
@@ -255,9 +256,9 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     int selected_npc=0;
                     if(npcList->npcID!=0){
                         if(npcList->isCoin)
-                            selected_npc = npcList->npcID;
+                            selected_npc = npcList->npcID * -1;
                         else
-                            selected_npc = npcList->npcID+1000;
+                            selected_npc = npcList->npcID;
                     }
 
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
@@ -364,7 +365,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
         return;
     }
 
-    QPixmap npcImg = QPixmap( scene->getNPCimg( ((npcID > 1000)? (npcID-1000) : scene->pConfigs->marker_npc.coin_in_block ) ) );
+    QPixmap npcImg = QPixmap( scene->getNPCimg( ((npcID > 0)? (npcID) : scene->pConfigs->marker_npc.coin_in_block ) ) );
     includedNPC = scene->addPixmap( npcImg );
 
     includedNPC->setPos(
@@ -374,7 +375,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
                 (
                     blockData.y+((blockData.h-npcImg.height())/2)
                  ));
-    includedNPC->setZValue(scene->blockZ + 10);
+    includedNPC->setZValue(scene->Z_Block + 10);
     includedNPC->setOpacity(qreal(0.6));
     grp->addToGroup(includedNPC);
 
@@ -387,7 +388,7 @@ void ItemBlock::arrayApply()
 {
     bool found=false;
     if(this->data(3).toString()=="sizable")
-        this->setZValue( scene->blockZs + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
+        this->setZValue( scene->Z_blockSizable + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
     if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
     { //Check index
         if(blockData.array_id == scene->LvlData->blocks[blockData.index].array_id)
