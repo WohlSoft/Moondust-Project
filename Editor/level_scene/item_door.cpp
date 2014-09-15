@@ -520,12 +520,12 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     this->setFlag(QGraphicsItem::ItemIsMovable, (!scene->lock_door));
 
     //doorLabel_shadow->setZValue(scene->doorZ+0.0000001);
-    doorLabel->setZValue(scene->doorZ+0.0000002);
+    doorLabel->setZValue(scene->Z_sys_door+0.0000002);
 
     this->setData(1, QString::number(0) );
     this->setData(2, QString::number(doorData.array_id) );
 
-    this->setZValue(scene->doorZ);
+    this->setZValue(scene->Z_sys_door);
 
     if(!init)
     {

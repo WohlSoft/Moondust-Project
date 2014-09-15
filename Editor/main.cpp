@@ -21,56 +21,78 @@
 #include <QSharedMemory>
 #include <QSystemSemaphore>
 
+
 #include "common_features/logger.h"
 #include "common_features/proxystyle.h"
+
+#include "SingleApplication/singleapplication.h"
 
 #include <iostream>
 #include <stdlib.h>
 
+namespace PGECrashHandler {
+    void crashByFlood(){
+        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("We're sorry, but PGE has crashed. Reason: Out of memory! :(\n"
+                                                                                  "To prevent this, try closing other uneccessary programs to free up more memory."));
+
+        std::exit(1);
+    }
+}
+
 int main(int argc, char *argv[])
 {
+    std::set_new_handler(PGECrashHandler::crashByFlood);
     QApplication::addLibraryPath(".");
 
     QApplication *a = new QApplication(argc, argv);
-    a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
 
-    //Check if application is already running//////////////////
-    QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
-    bool isRunning;
+    SingleApplication *as = new SingleApplication(argc, argv);
 
-    if(sema.acquire())
+    if(!as->shouldContinue())
     {
-        QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-        shmem.attach();
-    }
-
-    QString sendToMem;
-    foreach(QString str, a->arguments())
-    {
-        sendToMem+= str + "|";
-    }
-
-    QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-    if (shmem.attach())
-    {
-        isRunning = true;
-    }
-    else
-    {
-        shmem.create(1);
-        isRunning = false;
-    }
-    sema.release();
-
-    shmem.disconnect();
-
-    if(isRunning)
-    {
-        QApplication::quit();
-        QApplication::exit();
-        delete a;
+        std::cout << "Editor already runned!\n";
         return 0;
     }
+
+    a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
+
+//    //Check if application is already running//////////////////
+//    QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
+//    bool isRunning;
+
+//    if(sema.acquire())
+//    {
+//        QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
+//        shmem.attach();
+//    }
+
+//    QString sendToMem;
+//    foreach(QString str, a->arguments())
+//    {
+//        sendToMem+= str + "|";
+//    }
+
+//    QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
+//    if (shmem.attach())
+//    {
+//        isRunning = true;
+//    }
+//    else
+//    {
+//        shmem.create(1);
+//        isRunning = false;
+//    }
+//    sema.release();
+
+//    shmem.disconnect();
+
+//    if(isRunning)
+//    {
+//        QApplication::quit();
+//        QApplication::exit();
+//        delete a;
+//        return 0;
+//    }
 
     LoadLogSettings();
 
@@ -91,9 +113,13 @@ int main(int argc, char *argv[])
 
     w->openFilesByArgs(a->arguments());
 
+    w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
+
     int ret=a->exec();
+
     QApplication::quit();
     QApplication::exit();
     delete a;
+    delete as;
     return ret;
 }

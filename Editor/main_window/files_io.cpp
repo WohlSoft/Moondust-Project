@@ -55,10 +55,16 @@ void MainWindow::OpenFile(QString FilePath)
 
     GlobalSettings::openPath = in_1.absoluteDir().absolutePath();
 
-    if(in_1.suffix().toLower() == "lvl")
+    if((in_1.suffix().toLower() == "lvl")||(in_1.suffix().toLower() == "lvlx"))
     {
 
-        LevelData FileData = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
+        LevelData FileData;
+
+        if(in_1.suffix().toLower() == "lvl")
+            FileData = FileFormats::ReadLevelFile(file);         //Read SMBX LVL File
+        else
+            FileData = FileFormats::ReadExtendedLevelFile(file); //Read PGE LVLX File
+
         if( !FileData.ReadFileValid ) return;
         FileData.filename = in_1.baseName();
         FileData.path = in_1.absoluteDir().absolutePath();

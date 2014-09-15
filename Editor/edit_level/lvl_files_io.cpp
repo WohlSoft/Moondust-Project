@@ -29,6 +29,7 @@
 #include "../level_scene/lvlscene.h"
 #include "saveimage.h"
 #include "../common_features/logger.h"
+#include "../common_features/util.h"
 
 #include "../common_features/mainwinconnect.h"
 #include "../main_window/music_player.h"
@@ -245,7 +246,8 @@ bool leveledit::saveAs(bool savOptionsDialog)
 
     bool isNotDone=true;
     QString fileName = (isUntitled)?GlobalSettings::savePath+QString("/")+
-                                    (LvlData.LevelName.isEmpty()?curFile:LvlData.LevelName):curFile;
+                                    (LvlData.LevelName.isEmpty()?curFile:util::filePath(LvlData.LevelName)):curFile;
+
 
     QString selectedFilter;
     if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
@@ -326,6 +328,7 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
     // ////////////////// Write Extended LVL file (LVLX)/////////////////////
     else if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
     {
+        out.setCodec("UTF-8");
         out << FileFormats::WriteExtendedLvlFile(LvlData);
     }
     // //////////////////////////////////////////////////////////////////////

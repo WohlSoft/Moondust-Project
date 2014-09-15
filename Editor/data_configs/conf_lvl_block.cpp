@@ -224,7 +224,7 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
 
                 iTmp = blockset.value("default-npc-content", "-1").toInt();
                 sblock.default_content = (iTmp>=0);
-                sblock.default_content_value = (iTmp>=0) ? iTmp : 0;
+                sblock.default_content_value = (iTmp>=0) ? (iTmp<1000? iTmp*-1 : iTmp-1000) : 0;
 
                 sblock.id = i;
                 main_block.push_back(sblock);

@@ -231,6 +231,38 @@ LevelSection FileFormats::dummyLvlSection()
     return dummySection;
 }
 
+LevelLayers FileFormats::dummyLvlLayer()
+{
+    LevelLayers dummyLayer;
+    dummyLayer.array_id = 0;
+    dummyLayer.name = "";
+    dummyLayer.hidden = false;
+    dummyLayer.locked = false;
+    return dummyLayer;
+}
+
+PlayerPoint FileFormats::dummyLvlPlayerPoint(int id)
+{
+    PlayerPoint dummyPlayer;
+    dummyPlayer.id=id;
+    dummyPlayer.x=0;
+    dummyPlayer.y=0;
+    dummyPlayer.w=24;
+    switch(id)
+    {
+    case 1:
+        dummyPlayer.h=54;
+        break;
+    case 2:
+        dummyPlayer.h=60;
+        break;
+    default:
+        dummyPlayer.h=32;
+    }
+
+    dummyPlayer.direction=1;
+    return dummyPlayer;
+}
 
 LevelData FileFormats::dummyLvlDataArray()
 {
@@ -264,17 +296,12 @@ LevelData FileFormats::dummyLvlDataArray()
     }
 
     //Create players array
-    PlayerPoint players;
-        players.x = 0;
-        players.y = 0;
-        players.w = 0;
-        players.h = 0;
-        players.id=0;
-        for(int i=0; i<2;i++)
-        {
-            players.id++;
-            NewFileData.players.push_back(players);
-        }
+    //PlayerPoint players = dummyLvlPlayerPoint();
+    //    for(int i=0; i<2;i++)
+    //    {
+    //        players.id++;
+    //        NewFileData.players.push_back(players);
+    //    }
 
 
     //Create system layers
