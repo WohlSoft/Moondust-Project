@@ -88,6 +88,8 @@ private slots:
     void on_Sel_Combo_FiltertypeBGO_currentIndexChanged(int index);
     void on_Sel_Combo_FiltertypeNPC_currentIndexChanged(int index);
 
+    void on_Sel_List_NPC_itemDoubleClicked(QListWidgetItem *);
+
 private:
     void selectListItem(QListWidget *w, int array_id);
     void selectListItem(QTableWidget *w, int array_id);

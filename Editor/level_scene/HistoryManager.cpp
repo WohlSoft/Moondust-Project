@@ -198,14 +198,14 @@ void LvlScene::addResizeBlockHistory(LevelBlock bl, long oldLeft, long oldTop, l
     MainWinConnect::pMainWin->refreshHistoryButtons();
 }
 
-void LvlScene::addResizeWaterHistory(LevelWater wt, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
+void LvlScene::addResizeWaterHistory(LevelPhysEnv wt, long oldLeft, long oldTop, long oldRight, long oldBottom, long newLeft, long newTop, long newRight, long newBottom)
 {
     cleanupRedoElements();
 
     HistoryOperation resizeWtOperation;
     resizeWtOperation.type = HistoryOperation::LEVELHISTORY_RESIZEWATER;
     LevelData wtData;
-    wtData.water.push_back(wt);
+    wtData.physez.push_back(wt);
     resizeWtOperation.data = wtData;
     QList<QVariant> oldSizes;
     QList<QVariant> newSizes;
@@ -524,10 +524,10 @@ void LvlScene::historyBack()
 
         }
 
-        foreach (LevelWater water, deletedData.water)
+        foreach (LevelPhysEnv water, deletedData.physez)
         {
             //place them back
-            LvlData->water.push_back(water);
+            LvlData->physez.push_back(water);
             placeWater(water);
         }
 
@@ -563,12 +563,31 @@ void LvlScene::historyBack()
             hasToUpdateDoorData = true;
         }
 
-        foreach(PlayerPoint plr, deletedData.players){
-            for(int i = 0; i < LvlData->players.size(); i++){
-                if(LvlData->players[i].id == plr.id){
-                    LvlData->players[i] = plr;
-                }
+        foreach(PlayerPoint plr, deletedData.players)
+        {
+            bool found=false;
+            int q=0;
+            for(q=0; q < LvlData->players.size();q++)
+            {
+                 if(LvlData->players[q].id == plr.id)
+                 {
+                     found=true;
+                     break;
+                 }
             }
+            if(!found)
+            {
+                q = LvlData->players.size();
+                LvlData->players.push_back(plr);
+            }
+            else
+                LvlData->players[q]=plr;
+
+            //            for(int i = 0; i < LvlData->players.size(); i++){
+            //                if(LvlData->players[i].id == plr.id){
+            //                    LvlData->players[i] = plr;
+            //                }
+            //            }
             placePlayerPoint(plr);
         }
 
@@ -623,10 +642,10 @@ void LvlScene::historyBack()
 
         }
 
-        foreach (LevelWater water, deletedData.water)
+        foreach (LevelPhysEnv water, deletedData.physez)
         {
             //place them back
-            LvlData->water.push_back(water);
+            LvlData->physez.push_back(water);
             placeWater(water);
         }
 
@@ -662,12 +681,30 @@ void LvlScene::historyBack()
             hasToUpdateDoorData = true;
         }
 
-        foreach(PlayerPoint plr, deletedData.players){
-            for(int i = 0; i < LvlData->players.size(); i++){
-                if(LvlData->players[i].id == plr.id){
-                    LvlData->players[i] = plr;
-                }
+        foreach(PlayerPoint plr, deletedData.players)
+        {
+            bool found=false;
+            int q=0;
+            for(q=0; q < LvlData->players.size();q++)
+            {
+                 if(LvlData->players[q].id == plr.id)
+                 {
+                     found=true;
+                     break;
+                 }
             }
+            if(!found)
+            {
+                q = LvlData->players.size();
+                LvlData->players.push_back(plr);
+            }
+            else
+                LvlData->players[q]=plr;
+//            for(int i = 0; i < LvlData->players.size(); i++){
+//                if(LvlData->players[i].id == plr.id){
+//                    LvlData->players[i] = plr;
+//                }
+//            }
             placePlayerPoint(plr);
         }
 
@@ -961,7 +998,7 @@ void LvlScene::historyBack()
 
 
         if(subtype == SETTING_NOYOSHI){
-            doorp[index].noyoshi = !extraData.toBool();
+            doorp[index].novehicles = !extraData.toBool();
         }
         else
         if(subtype == SETTING_ALLOWNPC){
@@ -1212,43 +1249,43 @@ void LvlScene::historyBack()
         }
         else
         if(subtype == SETTING_EV_KUP){
-            eventp[index].up = !extraData.toBool();
+            eventp[index].ctrl_up = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KDOWN){
-            eventp[index].down = !extraData.toBool();
+            eventp[index].ctrl_down = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KLEFT){
-            eventp[index].left = !extraData.toBool();
+            eventp[index].ctrl_left = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KRIGHT){
-            eventp[index].right = !extraData.toBool();
+            eventp[index].ctrl_right = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KRUN){
-            eventp[index].run = !extraData.toBool();
+            eventp[index].ctrl_run = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KALTRUN){
-            eventp[index].altrun = !extraData.toBool();
+            eventp[index].ctrl_altrun = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KJUMP){
-            eventp[index].jump = !extraData.toBool();
+            eventp[index].ctrl_jump = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KALTJUMP){
-            eventp[index].altjump = !extraData.toBool();
+            eventp[index].ctrl_altjump = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KDROP){
-            eventp[index].drop = !extraData.toBool();
+            eventp[index].ctrl_drop = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KSTART){
-            eventp[index].start = !extraData.toBool();
+            eventp[index].ctrl_start = !extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_TRIACTIVATE){
@@ -1308,8 +1345,8 @@ void LvlScene::historyBack()
             LvlData->npc.push_back(n);
             placeNPC(n);
         }
-        foreach (LevelWater w, lastOperation.data.water) {
-            LvlData->water.push_back(w);
+        foreach (LevelPhysEnv w, lastOperation.data.physez) {
+            LvlData->physez.push_back(w);
             placeWater(w);
         }
 
@@ -1549,10 +1586,10 @@ void LvlScene::historyForward()
             placeNPC(npc);
         }
 
-        foreach (LevelWater water, placedData.water)
+        foreach (LevelPhysEnv water, placedData.physez)
         {
             //place them back
-            LvlData->water.push_back(water);
+            LvlData->physez.push_back(water);
             placeWater(water);
         }
 
@@ -1599,10 +1636,10 @@ void LvlScene::historyForward()
             placeNPC(npc);
         }
 
-        foreach (LevelWater water, placedData.water)
+        foreach (LevelPhysEnv water, placedData.physez)
         {
             //place them back
-            LvlData->water.push_back(water);
+            LvlData->physez.push_back(water);
             placeWater(water);
         }
 
@@ -1889,7 +1926,7 @@ void LvlScene::historyForward()
 
 
         if(subtype == SETTING_NOYOSHI){
-            doorp[index].noyoshi = extraData.toBool();
+            doorp[index].novehicles = extraData.toBool();
         }
         else
         if(subtype == SETTING_ALLOWNPC){
@@ -2148,43 +2185,43 @@ void LvlScene::historyForward()
         }
         else
         if(subtype == SETTING_EV_KUP){
-            eventp[index].up = extraData.toBool();
+            eventp[index].ctrl_up = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KDOWN){
-            eventp[index].down = extraData.toBool();
+            eventp[index].ctrl_down = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KLEFT){
-            eventp[index].left = extraData.toBool();
+            eventp[index].ctrl_left = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KRIGHT){
-            eventp[index].right = extraData.toBool();
+            eventp[index].ctrl_right = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KRUN){
-            eventp[index].run = extraData.toBool();
+            eventp[index].ctrl_run = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KALTRUN){
-            eventp[index].altrun = extraData.toBool();
+            eventp[index].ctrl_altrun = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KJUMP){
-            eventp[index].jump = extraData.toBool();
+            eventp[index].ctrl_jump = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KALTJUMP){
-            eventp[index].altjump = extraData.toBool();
+            eventp[index].ctrl_altjump = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KDROP){
-            eventp[index].drop = extraData.toBool();
+            eventp[index].ctrl_drop = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_KSTART){
-            eventp[index].start = extraData.toBool();
+            eventp[index].ctrl_start = extraData.toBool();
         }
         else
         if(subtype == SETTING_EV_TRIACTIVATE){
@@ -2374,7 +2411,8 @@ void LvlScene::historyForward()
     {
         LevelData placedData = lastOperation.data;
         //revert place
-        foreach(PlayerPoint plr, placedData.players){
+        foreach(PlayerPoint plr, placedData.players)
+        {
             for(int i = 0; i < LvlData->players.size(); i++){
                 if(LvlData->players[i].id == plr.id){
                     LvlData->players[i] = plr;
@@ -2464,7 +2502,7 @@ void LvlScene::historyRedoMoveNPC(LvlScene::CallbackData cbData, LevelNPC data)
     ((ItemNPC *)(cbData.item))->arrayApply();
 }
 
-void LvlScene::historyRedoMoveWater(LvlScene::CallbackData cbData, LevelWater data)
+void LvlScene::historyRedoMoveWater(LvlScene::CallbackData cbData, LevelPhysEnv data)
 {
     long diffX = data.x - cbData.x;
     long diffY = data.y - cbData.y;
@@ -2543,7 +2581,7 @@ void LvlScene::historyUndoMoveNPC(LvlScene::CallbackData cbData, LevelNPC data)
     ((ItemNPC *)(cbData.item))->arrayApply();
 }
 
-void LvlScene::historyUndoMoveWater(LvlScene::CallbackData cbData, LevelWater data)
+void LvlScene::historyUndoMoveWater(LvlScene::CallbackData cbData, LevelPhysEnv data)
 {
     cbData.item->setPos(QPointF(data.x,data.y));
     ((ItemWater *)(cbData.item))->waterData.x = (long)cbData.item->scenePos().x();
@@ -2607,7 +2645,7 @@ void LvlScene::historyRemoveNPC(LvlScene::CallbackData cbData, LevelNPC /*data*/
     delete cbData.item;
 }
 
-void LvlScene::historyRemoveWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+void LvlScene::historyRemoveWater(LvlScene::CallbackData cbData, LevelPhysEnv /*data*/)
 {
     ((ItemWater *)cbData.item)->removeFromArray();
     removeItem(cbData.item);
@@ -2619,9 +2657,11 @@ void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoi
     bool wasPlaced = false;
     PlayerPoint oPoint;
     if(!cbData.hist->extraData.isNull()){
-        if(cbData.hist->extraData.type() == QVariant::List){
+        if(cbData.hist->extraData.type() == QVariant::List)
+        {
             QList<QVariant> mData = cbData.hist->extraData.toList();
-            if(mData.size() == 5){
+            if(mData.size() == 5)
+            {
                 oPoint.id = (unsigned int)mData[0].toInt();
                 oPoint.x = (long)mData[1].toLongLong();
                 oPoint.y = (long)mData[2].toLongLong();
@@ -2631,18 +2671,21 @@ void LvlScene::historyRemovePlayerPoint(LvlScene::CallbackData cbData, PlayerPoi
             }
         }
     }
-    for(int i = 0; i < LvlData->players.size(); i++){
-        if(wasPlaced){
-            if(LvlData->players[i].id == data.id){
+    for(int i = 0; i < LvlData->players.size(); i++)
+    {
+        if(wasPlaced)
+        {
+            if(LvlData->players[i].id == data.id)
+            {
                 placePlayerPoint(oPoint);
                 break;
             }
-        }else{
-            if(LvlData->players[i].id == data.id){
-                LvlData->players[i].x = 0;
-                LvlData->players[i].y = 0;
-                LvlData->players[i].w = 0;
-                LvlData->players[i].h = 0;
+        }
+        else
+        {
+            if(LvlData->players[i].id == data.id)
+            {
+                LvlData->players.remove(i);
                 delete cbData.item;
                 break;
             }
@@ -2749,25 +2792,25 @@ void LvlScene::historyRedoSettingsChangeNPCNPC(LvlScene::CallbackData cbData, Le
     ((ItemNPC*)cbData.item)->setIncludedNPC(cbData.hist->extraData.toInt());
 }
 
-void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater data)
+void LvlScene::historyUndoSettingsTypeWater(LvlScene::CallbackData cbData, LevelPhysEnv data)
 {
     ((ItemWater*)cbData.item)->setType(data.quicksand ? 1 : 0);
 }
 
-void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+void LvlScene::historyRedoSettingsTypeWater(LvlScene::CallbackData cbData, LevelPhysEnv /*data*/)
 {
     ((ItemWater*)cbData.item)->setType(cbData.hist->extraData.toBool() ? 0 : 1);
 }
 
 void LvlScene::historyUndoSettingsNoYoshiDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
 {
-    ((ItemDoor*)cbData.item)->doorData.noyoshi = !cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->doorData.novehicles = !cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
 }
 
 void LvlScene::historyRedoSettingsNoYoshiDoors(LvlScene::CallbackData cbData, LevelDoors /*data*/, bool /*isEntrance*/)
 {
-    ((ItemDoor*)cbData.item)->doorData.noyoshi = cbData.hist->extraData.toBool();
+    ((ItemDoor*)cbData.item)->doorData.novehicles = cbData.hist->extraData.toBool();
     ((ItemDoor*)cbData.item)->arrayApply();
 }
 
@@ -3002,7 +3045,7 @@ void LvlScene::historyUndoChangeLayerNPC(LvlScene::CallbackData cbData, LevelNPC
     targetItem->arrayApply();
 }
 
-void LvlScene::historyUndoChangeLayerWater(LvlScene::CallbackData cbData, LevelWater data)
+void LvlScene::historyUndoChangeLayerWater(LvlScene::CallbackData cbData, LevelPhysEnv data)
 {
     ItemWater* targetItem = (ItemWater*)cbData.item;
     QString oldLayer = data.layer;
@@ -3076,7 +3119,7 @@ void LvlScene::historyRedoChangeLayerNPC(LvlScene::CallbackData cbData, LevelNPC
     targetItem->arrayApply();
 }
 
-void LvlScene::historyRedoChangeLayerWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+void LvlScene::historyRedoChangeLayerWater(LvlScene::CallbackData cbData, LevelPhysEnv /*data*/)
 {
     ItemWater* targetItem = (ItemWater*)cbData.item;
     QString newLayer = cbData.hist->extraData.toString();
@@ -3127,7 +3170,7 @@ void LvlScene::historyRedoResizeBlock(LvlScene::CallbackData cbData, LevelBlock 
     ((ItemBlock *)cbData.item)->setBlockSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
 }
 
-void LvlScene::historyUndoResizeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+void LvlScene::historyUndoResizeWater(LvlScene::CallbackData cbData, LevelPhysEnv /*data*/)
 {
     QList<QVariant> package = cbData.hist->extraData.toList();
     QList<QVariant> oldSizes = package[0].toList();
@@ -3138,7 +3181,7 @@ void LvlScene::historyUndoResizeWater(LvlScene::CallbackData cbData, LevelWater 
     ((ItemWater *)cbData.item)->setRectSize(QRect(tarLeft, tarTop, tarRight-tarLeft, tarBottom-tarTop));
 }
 
-void LvlScene::historyRedoResizeWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+void LvlScene::historyRedoResizeWater(LvlScene::CallbackData cbData, LevelPhysEnv /*data*/)
 {
     QList<QVariant> package = cbData.hist->extraData.toList();
     QList<QVariant> oldSizes = package[1].toList();
@@ -3171,7 +3214,7 @@ void LvlScene::historyUpdateVisibleNPC(LvlScene::CallbackData cbData, LevelNPC /
     cbData.item->setVisible(!cbData.hist->data.layers[0].hidden);
 }
 
-void LvlScene::historyUpdateVisibleWater(LvlScene::CallbackData cbData, LevelWater /*data*/)
+void LvlScene::historyUpdateVisibleWater(LvlScene::CallbackData cbData, LevelPhysEnv /*data*/)
 {
     cbData.item->setVisible(!cbData.hist->data.layers[0].hidden);
 }
@@ -3232,10 +3275,10 @@ void LvlScene::findGraphicsItem(LevelData toFind,
             sortedNPC[npc.array_id] = npc;
         }
     }
-    QMap<int, LevelWater> sortedWater;
+    QMap<int, LevelPhysEnv> sortedWater;
     if(!ignoreWater)
     {
-        foreach (LevelWater water, toFind.water) {
+        foreach (LevelPhysEnv water, toFind.physez) {
             sortedWater[water.array_id] = water;
         }
     }
@@ -3416,7 +3459,7 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         {
             if(sortedWater.size()!=0)
             {
-                QMap<int, LevelWater>::iterator beginItem = sortedWater.begin();
+                QMap<int, LevelPhysEnv>::iterator beginItem = sortedWater.begin();
                 unsigned int currentArrayId = (*beginItem).array_id;
                 if((unsigned int)item->data(2).toInt()>currentArrayId)
                 {
@@ -3494,7 +3537,8 @@ void LvlScene::findGraphicsItem(LevelData toFind,
         MainWinConnect::pMainWin->setDoorData(-2); //update Door data
     }
 
-    if(!ignorePlayer){
+    if(!ignorePlayer)
+    {
         foreach (QGraphicsItem* item, sortedGraphPlayers)
         {
             if(sortedPlayers.size()!=0)
@@ -3564,9 +3608,9 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
     }else if(!data->npc.isEmpty()){
         baseX = (int)data->npc[0].x;
         baseY = (int)data->npc[0].y;
-    }else if(!data->water.isEmpty()){
-        baseX = (int)data->water[0].x;
-        baseY = (int)data->water[0].y;
+    }else if(!data->physez.isEmpty()){
+        baseX = (int)data->physez[0].x;
+        baseY = (int)data->physez[0].y;
     }else if(!data->doors.isEmpty()){
         if(data->doors[0].isSetIn&&!data->doors[0].isSetOut){
             baseX = data->doors[0].ix;
@@ -3606,7 +3650,7 @@ QPoint LvlScene::calcTopLeftCorner(LevelData *data)
             baseY = (int)npc.y;
         }
     }
-    foreach (LevelWater water, data->water) {
+    foreach (LevelPhysEnv water, data->physez) {
         if((int)water.x<baseX){
             baseX = (int)water.x;
         }

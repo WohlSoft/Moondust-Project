@@ -46,7 +46,7 @@ public:
     void setRectSize(QRect rect);
 
     void setType(int tp);
-    void setWaterData(LevelWater inD);
+    void setWaterData(LevelPhysEnv inD);
 
     void setContextMenu(QMenu &menu);
     void setScenePoint(LvlScene *theScene);
@@ -66,7 +66,7 @@ public:
     void arrayApply();
     void removeFromArray();
 
-    LevelWater waterData;
+    LevelPhysEnv waterData;
 
     int gridSize;
     int gridOffsetX;

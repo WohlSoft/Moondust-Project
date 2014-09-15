@@ -18,7 +18,6 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     connect(&dMover, SIGNAL(timeout()), this, SLOT(moveDown()));
 
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-
 }
 
 qreal GraphicsWorkspace::zoom()
@@ -29,7 +28,6 @@ qreal GraphicsWorkspace::zoom()
 void GraphicsWorkspace::setZoom(qreal zoom)
 {
     if(zoom>=scaleMax || zoom<=scaleMin) return;
-
     scale(1.0/zoomValue, 1.0/zoomValue);
     zoomValue = zoom;
     scale(zoom, zoom);

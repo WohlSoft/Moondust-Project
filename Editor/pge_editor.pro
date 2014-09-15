@@ -186,7 +186,15 @@ SOURCES += main.cpp\
     main_window/dock/debugger.cpp \
     data_configs/conf_tilesets.cpp \
     common_features/npc_animator.cpp \
-    data_configs/config_manager.cpp
+    data_configs/config_manager.cpp \
+    file_formats/lvl_filedata.cpp \
+    file_formats/file_lvlx.cpp \
+    file_formats/npc_filedata.cpp \
+    file_formats/wld_filedata.cpp \
+    file_formats/pge_x.cpp \
+    SingleApplication/localserver.cpp \
+    SingleApplication/singleapplication.cpp \
+    level_scene/item_playerpoint.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -269,7 +277,10 @@ HEADERS  += mainwindow.h \
     data_configs/dc_indexing.h \
     data_configs/obj_tilesets.h \
     common_features/npc_animator.h \
-    data_configs/config_manager.h
+    data_configs/config_manager.h \
+    SingleApplication/localserver.h \
+    SingleApplication/singleapplication.h \
+    level_scene/item_playerpoint.h
 
 FORMS    += \
     mainwindow.ui \

@@ -20,6 +20,7 @@
 #include "ui_itemselectdialog.h"
 #include "../common_features/mainwinconnect.h"
 #include "../common_features/util.h"
+#include "../common_features/graphics_funcs.h"
 
 static QString allLabel = "[all]";
 static QString customLabel = "[custom]";
@@ -148,7 +149,12 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         foreach(obj_block blockItem, conf->main_block)
         {
             //Add category
-            QPixmap tmpI = blockItem.image;
+            QPixmap tmpI = GraphicsHelps::squareImage(
+                                blockItem.image.copy(0,
+                                             blockItem.frame_h*blockItem.display_frame,
+                                                blockItem.image.width(),
+                                                blockItem.frame_h),
+                                                      QSize(16,16));
 
             QListWidgetItem* item = new QListWidgetItem( blockItem.name );
             item->setIcon( QIcon( tmpI ) );
@@ -176,7 +182,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
         foreach(obj_npc npcItem, conf->main_npc)
         {
             //Add category
-            QPixmap tmpI = npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
+            QPixmap tmpI = GraphicsHelps::squareImage(
+                        npcItem.image.copy(0,npcItem.gfx_h*npcItem.display_frame, npcItem.image.width(), npcItem.gfx_h ),
+                        QSize(16,16) );
 
             QListWidgetItem* item = new QListWidgetItem( npcItem.name );
             item->setIcon( QIcon( tmpI ) );
@@ -578,7 +586,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {
 
-                tmpI = edit->scene->getNPCimg(npc.id);
+                tmpI = GraphicsHelps::squareImage(edit->scene->getNPCimg(npc.id),QSize(16,16));
 
                 item = new QListWidgetItem( QString("npc-%1").arg(npc.id) );
                 item->setIcon( QIcon( tmpI ) );
@@ -624,7 +632,8 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
                 ((npcItem.category==cat_npcs)||(cat_npcs==allLabel))
           )
         {
-            tmpI = npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h );
+            tmpI = GraphicsHelps::squareImage(npcItem.image.copy(0,0, npcItem.image.width(), npcItem.gfx_h ),
+                                              QSize(16,16));
 
             item = new QListWidgetItem( npcItem.name );
             item->setIcon( QIcon( tmpI ) );
@@ -981,6 +990,12 @@ void ItemSelectDialog::npcTypeChange(bool /*toggled*/)
     isCoin = npcCoins->isChecked();
 }
 
+
+void ItemSelectDialog::on_Sel_List_NPC_itemDoubleClicked(QListWidgetItem *)
+{
+    on_Sel_DiaButtonBox_accepted();
+}
+
 void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
 {
     blockID = 0;
@@ -1017,8 +1032,6 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
             }
         }
     }
-
-
 
     this->accept();
 }
