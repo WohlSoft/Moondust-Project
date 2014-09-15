@@ -468,10 +468,12 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    ; Size of NPC's body (Collision box)
         //    //    fixture-height=32
         //        unsigned int height;
-            snpc.height = npcset.value("fixture-height", "0").toInt();
+            snpc.height = npcset.value("fixture-height", "0").toInt();//Leaved for compatibility
+            snpc.height = npcset.value("physical-height", snpc.height).toInt();
         //    //    fixture-width=32
         //        unsigned int width;
-            snpc.width = npcset.value("fixture-width", "0").toInt();
+            snpc.width = npcset.value("fixture-width", "0").toInt();//Leaved for compatibility
+            snpc.width = npcset.value("physical-width", snpc.width).toInt();
         //    //    block-npc=1		; NPC is a solid object for NPC's
         //        bool block_npc;
             snpc.block_npc = npcset.value("block-npc", "0").toBool();
