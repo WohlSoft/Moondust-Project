@@ -1300,7 +1300,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
         TextData += PGEFile::value("ID", PGEFile::IntS(FileData.players[i].id));  // Player ID
         TextData += PGEFile::value("X", PGEFile::IntS(FileData.players[i].x));  // Player X
         TextData += PGEFile::value("Y", PGEFile::IntS(FileData.players[i].y));  // Player Y
-        TextData += PGEFile::value("D", PGEFile::IntS(1));  // Direction -1 left, 1 right
+        TextData += PGEFile::value("D", PGEFile::IntS(FileData.players[i].direction));  // Direction -1 left, 1 right
 
         TextData += "\n";
     }
