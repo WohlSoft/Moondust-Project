@@ -569,6 +569,7 @@ private:
     void removeItemUnderCursor();
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
+    void applyGroupGrid(QList<QGraphicsItem *> items);
 
     void setSectionBG(LevelSection section, bool forceTiled=false);
 
