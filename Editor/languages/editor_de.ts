@@ -220,12 +220,12 @@
     <message>
         <location filename="../data_configs/config_manager.ui" line="14"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurationsmanager</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.ui" line="24"/>
         <source>Please, select the game configuration which defining the game settings and stuff</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wähle eine Spielkonfiguration aus</translation>
     </message>
 </context>
 <context>
@@ -2776,7 +2776,7 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="8865"/>
         <source>Change configuration...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechsele Konfiguration...</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -3891,7 +3891,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../mainwindow.ui" line="8475"/>
         <source>[No opened files]</source>
-        <translation>[Keine Offnen Dateien]</translation>
+        <translation>[Keine offenen Dateien]</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8490"/>
@@ -3945,13 +3945,14 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <location filename="../main_window/data_configs.cpp" line="94"/>
         <source>Configuration changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguration geändert</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="94"/>
         <source>The Configuration was switched!
 To start work with new configuration, please restart application.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Konfiguration wurde geändert!
+Die Konfiguartion wird beim nächste Neustart der Anwendung verwendet.</translation>
     </message>
     <message>
         <source>Reload configuration</source>
