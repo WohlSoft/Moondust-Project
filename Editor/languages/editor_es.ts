@@ -61,64 +61,64 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="147"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="153"/>
         <source>Associate file extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Asociar extensiones</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="190"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="196"/>
         <source>Middle mouse button features</source>
-        <translation type="unfinished"></translation>
+        <translation>Características del botón medio del mouse</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="202"/>
         <source>Duplicate selected items into mouse position</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicar elementos seleccionados en la posición del mouse</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="209"/>
         <source>Switch placing mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar modo colocación para el elemento seleccionado</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="216"/>
         <source>Switch to drag scroll without selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambia a arrastrar sin selección</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="240"/>
         <source>View</source>
-        <translation type="unfinished">Ver</translation>
+        <translation>Ver</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="246"/>
         <source>Level item Toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Caja de herramientas de items</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="252"/>
         <location filename="../main_window/appsettings.ui" line="288"/>
         <source>Display tabs horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar pestañas horizontal</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="259"/>
         <location filename="../main_window/appsettings.ui" line="295"/>
         <source>Display tabs vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar pestañas vertical</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="282"/>
         <source>World item Toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Caja de herramientas de mundo</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="306"/>
@@ -179,40 +179,40 @@
         <location filename="../main_window/appsettings.cpp" line="202"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Archivo de nivel PGE</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="206"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mapa PGE</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="210"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Archivo de nivel SMBX</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="214"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mapa SMBX</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="254"/>
         <source>Success</source>
-        <translation type="unfinished"></translation>
+        <translation>Éxito</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="254"/>
         <source>All file associations have been set</source>
-        <translation type="unfinished"></translation>
+        <translation>Todas las asociaciones se hicieron</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.cpp" line="256"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error</translation>
     </message>
 </context>
 <context>
@@ -220,12 +220,12 @@
     <message>
         <location filename="../data_configs/config_manager.ui" line="14"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestor de configuración</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.ui" line="24"/>
         <source>Please, select the game configuration which defining the game settings and stuff</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, seleccione el juego que definirá las opciones y elementos</translation>
     </message>
 </context>
 <context>
@@ -427,37 +427,37 @@
     <message>
         <location filename="../dev_console/devconsole.ui" line="14"/>
         <source>Development Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Consola de desarrollo</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="42"/>
         <source>Send Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Enviar comando</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="49"/>
         <source>Command: </source>
-        <translation type="unfinished"></translation>
+        <translation>Comando:</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="60"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="88"/>
         <source>Clear System Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar log</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="123"/>
         <source>Clear All Logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar todos los logs</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="102"/>
         <source>Clear %1 Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar %1 Log</translation>
     </message>
 </context>
 <context>
@@ -521,7 +521,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="137"/>
         <source>Tiled background</source>
-        <translation type="unfinished"></translation>
+        <translation>Fondo en azulejos</translation>
     </message>
 </context>
 <context>
@@ -620,7 +620,7 @@
     <message>
         <location filename="../level_scene/item_door.cpp" line="132"/>
         <source>Open target level: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Abriendo nivel destino: %1</translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="136"/>
@@ -677,7 +677,7 @@
     <message>
         <location filename="../world_scene/item_level.cpp" line="126"/>
         <source>Open target file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir archivo destino: %1</translation>
     </message>
     <message>
         <location filename="../world_scene/item_level.cpp" line="133"/>
@@ -774,7 +774,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="191"/>
         <source>Edit NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar configuración de PNJ</translation>
     </message>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="193"/>
@@ -814,7 +814,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/item_npc.cpp" line="227"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>No se mueve</translation>
     </message>
     <message>
         <source>Not movable</source>
@@ -998,27 +998,27 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="291"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloque</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="425"/>
         <source>Scenery</source>
-        <translation type="unfinished">Decoraciones</translation>
+        <translation>Decoraciones</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="550"/>
         <source>Path</source>
-        <translation type="unfinished">Directorio</translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="684"/>
         <source>Level</source>
-        <translation type="unfinished">Nivel</translation>
+        <translation>Nivel</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="812"/>
         <source>Music</source>
-        <translation type="unfinished">Música</translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../item_select_dialog/itemselectdialog.ui" line="917"/>
@@ -1107,92 +1107,95 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="26"/>
         <source>LazyFix tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Herramienta &quot;LazyFix&quot;</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="63"/>
         <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="53"/>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de entrada que contiene los GIFs (*.gif y *m.gif)</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="70"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar imágenes en subdirectorios</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="77"/>
         <source>Make gray shades on masks is more dark</source>
-        <translation type="unfinished"></translation>
+        <translation>Hacer sombras grises en máscaras más oscuras</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="84"/>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="145"/>
         <source>Browse</source>
-        <translation type="unfinished">Explorar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="98"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Flags</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="128"/>
         <source>Don&apos;t create back-up</source>
-        <translation type="unfinished"></translation>
+        <translation>No crear repuestos</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="135"/>
         <source>Start</source>
-        <translation type="unfinished">Comenzar</translation>
+        <translation>Comenzar</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="152"/>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ésta es una herramienta de consola que arregla las máscaras de GIFs para SMBX malhechas. Ésta utilidad hace una máscara correcta por comparación de colores. Las imágenes se sobreescribirán, pero siempre creando directorios de repuesto y si la imágen se convierte mal, puede restaurar la vieja.</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.ui" line="165"/>
         <source>Output dir, where will be saved fixed images
 (If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de salida, donde se guardarán las imágenes arregladas
+(Si este campo no se define, las imágenes serán guardadas en la misma carpeta donde están los GIFs, con creación de repuestos)</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.cpp" line="23"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir directorio fuente</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.cpp" line="34"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir directorio destino</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.cpp" line="47"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>El directorio fuente no está definido</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.cpp" line="47"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, elija su directorio fuente</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.cpp" line="61"/>
         <source>Tool is not found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encuentra la herramienta</translation>
     </message>
     <message>
         <location filename="../external_tools/lazyfixtool_gui.cpp" line="61"/>
         <source>Can&apos;t run application: 
 %1
 Please, check the application directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede ejecutar:
+%1
+Por favor, controle la ruta de aplicación.</translation>
     </message>
 </context>
 <context>
@@ -1287,7 +1290,7 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3654"/>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Colocar y sobreescribir</translation>
     </message>
     <message>
         <location filename="../level_scene/HistoryManager.cpp" line="3655"/>
@@ -2504,7 +2507,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="271"/>
         <source>Palettes and tilesets</source>
-        <translation type="unfinished"></translation>
+        <translation>Paletas y tileses</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="382"/>
@@ -2557,19 +2560,19 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="1603"/>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
-        <translation type="unfinished">Personalizado</translation>
+        <translation>Personalizado</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1681"/>
         <source>Warp section</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="unfinished">Zona de sesgo</translation>
+        <translation>Zona de sesgo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1731"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
-        <translation type="unfinished">Sin retorno (deshabilitar movimiento a izquierda)</translation>
+        <translation>Sin retorno (deshabilitar movimiento a izquierda)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1981"/>
@@ -2581,25 +2584,25 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="2157"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sin vehículos</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2206"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar PNJ</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2303"/>
         <source>Warp to</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation type="unfinished">Trasladar a</translation>
+        <translation>Trasladar a</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3351"/>
         <location filename="../mainwindow.ui" line="5381"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>No se mueve</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4130"/>
@@ -2874,12 +2877,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="6006"/>
         <source>Placing</source>
-        <translation type="unfinished"></translation>
+        <translation>Colocando</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6020"/>
         <source>Resizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionando</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6805"/>
@@ -2887,7 +2890,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="309"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="319"/>
         <source>Search Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar música</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7168"/>
@@ -3212,7 +3215,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="8262"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilita animación en objetos animados. Si el mapa tiene demasiados objetos, es recomendado desactivar esta opción</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8582"/>
@@ -3287,73 +3290,73 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="8713"/>
         <source>Square Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Relleno cuadrado</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8716"/>
         <source>Square Fill (Shift+S)</source>
-        <translation type="unfinished"></translation>
+        <translation>Relleno cuadrado (Shift+S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8731"/>
         <source>Overwrite mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de sobreescritura</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8743"/>
         <source>Apply (Enter)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar (Enter)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8758"/>
         <source>Cancel (Esc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar (Esc)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8773"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Línea</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8776"/>
         <source>Line (Shift+D)</source>
-        <translation type="unfinished"></translation>
+        <translation>Línea (Shift+D)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8791"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar en el mapa</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8799"/>
         <source>Show Development Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar consola</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8804"/>
         <source>Tileset Groups Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de grupos de tilesets</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8813"/>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom +</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8825"/>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom -</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8837"/>
         <source>Reset Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Reiniciar Zoom</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8865"/>
         <source>Change configuration...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar configuración...</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -3553,12 +3556,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="6046"/>
         <source>World map Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar en el mapa</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6086"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6192"/>
@@ -3566,7 +3569,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="225"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="235"/>
         <source>Search Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar azulejo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6314"/>
@@ -3574,12 +3577,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="253"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="263"/>
         <source>Search Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar decoración</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6330"/>
         <source>Path</source>
-        <translation type="unfinished">Directorio</translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6436"/>
@@ -3587,22 +3590,22 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="281"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="291"/>
         <source>Search Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar camino</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6492"/>
         <source>Big Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Fondo de camino grande</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6499"/>
         <source>Always Visible</source>
-        <translation type="unfinished">Siempre visible</translation>
+        <translation>Siempre visible</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6516"/>
         <source>Contains Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Contiene título</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6598"/>
@@ -3610,45 +3613,45 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="197"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="207"/>
         <source>Search Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar nivel</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6830"/>
         <location filename="../mainwindow.ui" line="8848"/>
         <source>Tileset Item Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caja de tileset</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6957"/>
         <source>New tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo tileset</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7000"/>
         <location filename="../mainwindow.ui" line="8860"/>
         <source>Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Depurador</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7016"/>
         <source>Mouse coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Coordenadas del mouse</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7100"/>
         <source>Go to point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir a punto:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7149"/>
         <source>Go!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Ir!</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7182"/>
         <source>Exit program</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <translation type="unfinished">Salir del programa</translation>
+        <translation>Salir del programa</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7911"/>
@@ -3877,13 +3880,14 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/data_configs.cpp" line="94"/>
         <source>Configuration changed</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración cambiada</translation>
     </message>
     <message>
         <location filename="../main_window/data_configs.cpp" line="94"/>
         <source>The Configuration was switched!
 To start work with new configuration, please restart application.</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La configuración fue cambiada!
+Para trabajar con la nueva configuración, por favor reinicie la aplicación.</translation>
     </message>
     <message>
         <source>Reload configuration</source>
@@ -3897,25 +3901,28 @@ To start work with new configuration, please restart application.</source>
     <message>
         <location filename="../main_window/dock/lvl_door_props.cpp" line="806"/>
         <source>World map files not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos de mapa no encontrados</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_door_props.cpp" line="807"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No tiene habilitados los archivos de mapa con este archivo de nivel.
+Por favor, ponga éste archivo de nivel con un mapa, o cree un nuevo mundo en la misma carpeta con éste nivel.
+Ruta de archivo: %1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_door_props.cpp" line="818"/>
         <source>Select world map file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione archivo de mapa</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_door_props.cpp" line="819"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Encontrados más de un archivo de mapa.
+Por favor, seleccione el mapa necesario en la lista:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_door_props.cpp" line="830"/>
@@ -3949,7 +3956,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../main_window/edit_common.cpp" line="103"/>
         <source>NPC Config reloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración PNJ recargada</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_props.cpp" line="632"/>
@@ -4018,13 +4025,13 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../main_window/files_io.cpp" line="156"/>
         <source>Saving of file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardado de archivo...</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="157"/>
         <location filename="../main_window/files_io.cpp" line="203"/>
         <source>Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardando</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="175"/>
@@ -4035,7 +4042,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../main_window/files_io.cpp" line="202"/>
         <source>Saving of files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardado de archivos...</translation>
     </message>
     <message>
         <location filename="../main_window/files_io.cpp" line="257"/>
@@ -4186,7 +4193,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../main_window/clipboard.cpp" line="45"/>
         <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been copied to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 azulejos, %2 decoraciones, %3 caminos, %4 niveles, %5 cajas de música copiados al portapapeles</translation>
     </message>
     <message>
         <location filename="../main_window/clipboard.cpp" line="62"/>
@@ -4196,7 +4203,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../main_window/clipboard.cpp" line="73"/>
         <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been moved to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 azulejos, %2 decoraciones, %3 caminos, %4 niveles, %5 cajas de música movidos al portapapeles</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_toolbox.cpp" line="33"/>
@@ -4321,77 +4328,77 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="596"/>
         <source>Placing mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de colocado</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="596"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>Colocar elemento en el mapa primero y vea las &apos;Propiedades&apos; en el menú contextual.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_world_settings.cpp" line="281"/>
         <source>Counting stars of placed levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Contar estrellas en niveles puestos</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_world_settings.cpp" line="282"/>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation>Contando estrellas...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="191"/>
         <source>Next Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente nivel</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="198"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="208"/>
         <source>Level search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Búsqueda de nivel completada!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="219"/>
         <source>Next Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente azulejo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="226"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="236"/>
         <source>Tile search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Búsqueda de azulejos completada!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="247"/>
         <source>Next Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente decoración</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="254"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="264"/>
         <source>Scenery search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Búsqueda de decoraciones completa!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="275"/>
         <source>Next Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente camino</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="282"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="292"/>
         <source>Path search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Búsqueda de caminos completa!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="303"/>
         <source>Next Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente música</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="310"/>
         <location filename="../main_window/dock/wld_search_toolbox.cpp" line="320"/>
         <source>Music search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Búsqueda de música completa!</translation>
     </message>
 </context>
 <context>
@@ -4530,7 +4537,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/appsettings.cpp" line="256"/>
         <source>File association failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Asociación de archivos fallida.</translation>
     </message>
 </context>
 <context>
@@ -4565,17 +4572,17 @@ File: %1
     <message>
         <location filename="../main_window/savingnotificationdialog.ui" line="58"/>
         <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <location filename="../main_window/savingnotificationdialog.ui" line="65"/>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Descartar</translation>
     </message>
     <message>
         <location filename="../main_window/savingnotificationdialog.ui" line="72"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -4587,7 +4594,7 @@ File: %1
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="141"/>
         <source>Tileset name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre del conjunto:</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="155"/>
@@ -4627,7 +4634,7 @@ File: %1
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="14"/>
         <source>Tileset Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de conjuntos de bloques</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="61"/>
@@ -4642,32 +4649,32 @@ File: %1
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="71"/>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejo</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="81"/>
         <source>Path</source>
-        <translation type="unfinished">Directorio</translation>
+        <translation>Directorio</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="191"/>
         <source>Show custom only</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar sólo personalizados</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="198"/>
         <source>Current Level/World specific</source>
-        <translation type="unfinished"></translation>
+        <translation>Específico de mundo/nivel actual</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="76"/>
         <source>Scenery</source>
-        <translation type="unfinished">Decoraciones</translation>
+        <translation>Decoraciones</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.ui" line="86"/>
         <source>Level</source>
-        <translation type="unfinished">Nivel</translation>
+        <translation>Nivel</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -4685,12 +4692,12 @@ File: %1
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.cpp" line="242"/>
         <source>Please enter a filename!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Por favor ponga un nombre!</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.cpp" line="243"/>
         <source>Filename:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de archivo:</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetconfiguredialog.cpp" line="290"/>
@@ -4715,112 +4722,114 @@ Data may be corrupted!</source>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="17"/>
         <source>Tileset Group editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de grupos de tilesets</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="27"/>
         <source>Up</source>
-        <translation type="unfinished">Arriba</translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="52"/>
         <source>Tileset group name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de grupo:</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="62"/>
         <source>Category:</source>
-        <translation type="unfinished">Categoría:</translation>
+        <translation>Categoría:</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="71"/>
         <source>Open</source>
-        <translation type="unfinished">Abrir</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="91"/>
         <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="98"/>
         <source>Tilesets list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista de conjuntos (tilesets):</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="164"/>
         <source>Preview</source>
-        <translation type="unfinished">Previsualización</translation>
+        <translation>Previsualización</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="172"/>
         <source>Down</source>
-        <translation type="unfinished">Abajo</translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="179"/>
         <source>Remove tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="186"/>
         <source>Add tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir uno</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.ui" line="206"/>
         <source>Save</source>
-        <translation type="unfinished">Guardar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="128"/>
         <source>Select Tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar tileset</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="137"/>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="180"/>
         <source>There is already a file called &apos;%1&apos;!
 Import anyway and overwrite?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ya hay un archivo &apos;%1&apos;!
+¿Importar y sobreescribir?</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="156"/>
         <source>Failed to load tileset!</source>
-        <translation type="unfinished">¡Falló la carga de baldozas!</translation>
+        <translation>¡Falló la carga de baldozas!</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="156"/>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation type="unfinished">¡Falló la carga de baldosas!
+        <translation>¡Falló la carga de baldosas!
 ¡Los datos pueden estar corruptos!</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="171"/>
         <source>Select Tileset Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar grupo</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="205"/>
         <source>Failed to load tileset group!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡No se pudo cargar grupo!</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="205"/>
         <source>Failed to load tileset group!
 Data may be corrupted!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡No se pudo cargar grupo!
+¡Los datos pueden ser corruptos!</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="215"/>
         <source>Please enter a filename!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Por favor coloque un nombre de archivo!</translation>
     </message>
     <message>
         <location filename="../tilesets/tilesetgroupeditor.cpp" line="216"/>
         <source>Filename:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de archivo:</translation>
     </message>
 </context>
 <context>
@@ -4861,125 +4870,128 @@ Data may be corrupted!</source>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="14"/>
         <source>Selecting point on the world map</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar punto en el mapa</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="76"/>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nota: Usar la rueda del mouse para desplazarse por el mapa. Se puede desplazar horizontalmente presionando CTRL.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="89"/>
         <source>Current Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto actual:</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="96"/>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puede cambiar la posición actual al último punto seleccionado. Si el punto no se fijó, la posición no será cambiada.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="99"/>
         <source>Go to point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir al punto</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="110"/>
         <source>Start and stop animation of placed on the map items.</source>
-        <translation type="unfinished"></translation>
+        <translation>Empezar y terminar animación de elementos colocados en el mapa.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="113"/>
         <source>Animation</source>
-        <translation type="unfinished">Animación</translation>
+        <translation>Animación</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="127"/>
         <source>You will return to the x0-y0 position of the map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Returnará a x0-y0 en el mapa.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.ui" line="130"/>
         <source>Reset position</source>
-        <translation type="unfinished">Reiniciar posición</translation>
+        <translation>Reiniciar posición</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="139"/>
         <source>Read file error</source>
-        <translation type="unfinished">Error de lectura</translation>
+        <translation>Error de lectura</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="140"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede leer archivo %1:
+%2.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="160"/>
         <source>Configurations not loaded</source>
-        <translation type="unfinished">Configuraciones no cargadas</translation>
+        <translation>Configuraciones no cargadas</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="161"/>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede abrir nivel %1:
+porque las configuraciones no están cargadas. 
+Por favor vea que config/SMBX realmente existe y contiene los archivos INI con objetos.</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="203"/>
         <source>Loading World map data</source>
-        <translation type="unfinished">Cargando datos del mapa</translation>
+        <translation>Cargando datos del mapa</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="203"/>
         <source>Abort</source>
-        <translation type="unfinished">Abortar</translation>
+        <translation>Abortar</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="204"/>
         <source>Loading World data</source>
-        <translation type="unfinished">Cargando datos del mundo</translation>
+        <translation>Cargando datos del mundo</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="253"/>
         <source>1/%1 Loading user data</source>
-        <translation type="unfinished">1/%1 Cargando datos de usuario</translation>
+        <translation>1/%1 Cargando datos de usuario</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="261"/>
         <source>1/%1 Applying Tiles</source>
-        <translation type="unfinished">1/%1 Aplicando baldozas</translation>
+        <translation>1/%1 Aplicando baldozas</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="270"/>
         <source>2/%1 Applying Sceneries...</source>
-        <translation type="unfinished">2/%1 Aplicando decoraciones...</translation>
+        <translation>2/%1 Aplicando decoraciones...</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="279"/>
         <source>3/%1 Applying Paths...</source>
-        <translation type="unfinished">3/%1 Aplicando caminos...</translation>
+        <translation>3/%1 Aplicando caminos...</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="288"/>
         <source>4/%1 Applying Levels...</source>
-        <translation type="unfinished">4/%1 Aplicando niveles...</translation>
+        <translation>4/%1 Aplicando niveles...</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="298"/>
         <source>5/%1 Applying Musics...</source>
-        <translation type="unfinished">5/%1 Aplicando músicas...</translation>
+        <translation>5/%1 Aplicando músicas...</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="430"/>
         <source>Point is not selected</source>
-        <translation type="unfinished"></translation>
+        <translation>El punto no está seleccionado</translation>
     </message>
     <message>
         <location filename="../wld_point_dialog/wld_setpoint.cpp" line="430"/>
         <source>Select the point on the world map first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar el punto en el mapa primero.</translation>
     </message>
 </context>
 <context>
@@ -4987,63 +4999,63 @@ because object configurations are not loaded
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="14"/>
         <source>Export to image</source>
-        <translation type="unfinished">Exportar a imagen</translation>
+        <translation>Exportar a imagen</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="32"/>
         <source>Please, select target image size:</source>
-        <translation type="unfinished">Por favor, seleccione un tamaño:</translation>
+        <translation>Por favor, seleccione un tamaño:</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="42"/>
         <source>Height</source>
-        <translation type="unfinished">Altura</translation>
+        <translation>Altura</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="52"/>
         <source>Save proportion</source>
-        <translation type="unfinished">Guardar proporción</translation>
+        <translation>Guardar proporción</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="72"/>
         <source>Export selected rectangle to image</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="82"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="85"/>
         <location filename="../edit_world/wld_saveimage.ui" line="111"/>
         <source> px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="108"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="121"/>
         <source>Width</source>
-        <translation type="unfinished">Ancho</translation>
+        <translation>Ancho</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="139"/>
         <source>Hide all paths and levels like &quot;game already stated&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar todos los caminos y niveles como &quot;juego recién empezado&quot;</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.ui" line="146"/>
         <source>Hide music boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar cajas de música</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_saveimage.cpp" line="22"/>
@@ -5052,7 +5064,11 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</source>
-        <translation type="unfinished"></translation>
+        <translation>Será exportado:
+Arriba:	%1
+Izquierda:	%2
+Derecha:	%3
+Abajo:	%4</translation>
     </message>
 </context>
 <context>
@@ -5114,7 +5130,7 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1124"/>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Colocar y sobreescribir</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1125"/>
@@ -5124,12 +5140,12 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1126"/>
         <source>Changed Worldsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiada la opción [%1]</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1127"/>
         <source>Changed Itemsetting [%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiada la opción [%1]</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1129"/>
@@ -5140,92 +5156,92 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1136"/>
         <source>Always Visible</source>
-        <translation type="unfinished">Siempre visible</translation>
+        <translation>Siempre visible</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1137"/>
         <source>Big Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Fondo de camino grande</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1138"/>
         <source>Character</source>
-        <translation type="unfinished"></translation>
+        <translation>Personaje</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1139"/>
         <source>Door ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID de puerta</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1140"/>
         <source>Game start point</source>
-        <translation type="unfinished">Punto de comienzo</translation>
+        <translation>Punto de comienzo</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1141"/>
         <source>Goto X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir a X</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1142"/>
         <source>Goto Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Ir a Y</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1143"/>
         <source>Hub styled world</source>
-        <translation type="unfinished"></translation>
+        <translation>Mundo con Hub</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1144"/>
         <source>Intro Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel de introducción</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1145"/>
         <source>Level file</source>
-        <translation type="unfinished">Archivo de nivel</translation>
+        <translation>Archivo de nivel</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1146"/>
         <source>Level title</source>
-        <translation type="unfinished">Título del nivel</translation>
+        <translation>Título del nivel</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1147"/>
         <source>Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Fondo de camino</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1148"/>
         <source>Exit at bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Salir abajo</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1149"/>
         <source>Exit at left</source>
-        <translation type="unfinished"></translation>
+        <translation>Salir a la izquierda</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1150"/>
         <source>Exit at right</source>
-        <translation type="unfinished"></translation>
+        <translation>Salir a la derecha</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1151"/>
         <source>Exit at top</source>
-        <translation type="unfinished"></translation>
+        <translation>Salir arriba</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1152"/>
         <source>Restart after fail</source>
-        <translation type="unfinished"></translation>
+        <translation>Reiniciar luego de perder</translation>
     </message>
     <message>
         <location filename="../world_scene/HistoryManagerWld.cpp" line="1153"/>
         <source>Total stars</source>
-        <translation type="unfinished"></translation>
+        <translation>Total de estrellas</translation>
     </message>
 </context>
 <context>
@@ -5279,7 +5295,9 @@ Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este
         <source>Cannot create world file:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede archivo:
+porque las configuraciones del proyecto no están cargadas.
+Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="269"/>
@@ -5319,37 +5337,37 @@ because object configurations are not loaded
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="107"/>
         <source>Export selected area to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar área seleccionada a imagen</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="111"/>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished">Imagen PNG (*.png)</translation>
+        <translation>Imagen PNG (*.png)</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="120"/>
         <source>Saving section image...</source>
-        <translation type="unfinished">Guardar sección en imagen...</translation>
+        <translation>Guardar sección en imagen...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="121"/>
         <source>Please wait...</source>
-        <translation type="unfinished">Por favor, espere...</translation>
+        <translation>Por favor, espere...</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="251"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Por favor póngale título a &apos;%1&apos;!</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="252"/>
         <source>Saving </source>
-        <translation type="unfinished"></translation>
+        <translation>Guardando</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="254"/>
         <source>Episode Title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Título:</translation>
     </message>
     <message>
         <source>Cannot open level file %1:
@@ -5367,7 +5385,7 @@ Por favor, compruebe que la configuración/directorio SMBX realmente existen y c
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="408"/>
         <source>Episode title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Título:</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="120"/>
@@ -5380,7 +5398,9 @@ Por favor, compruebe que la configuración/directorio SMBX realmente existen y c
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede abrir archivo %1:
+porque las configuraciones no están cargadas.
+Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="363"/>
@@ -5418,92 +5438,95 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="26"/>
         <source>Convert masked GIFs into the PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir de GIFs a PNG</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="53"/>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ésta es una herramienta de consola que convierte gráficos SMBX con formato GIF con máscara en PNG con transparencia propia.</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="66"/>
         <location filename="../external_tools/gifs2png_gui.ui" line="132"/>
         <source>Browse</source>
-        <translation type="unfinished">Explorar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="94"/>
         <source>Start</source>
-        <translation type="unfinished">Comenzar</translation>
+        <translation>Comenzar</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="80"/>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dirección de salida, donde se guardarán las imágenes PNG
+(si este campo no está definido, las imágenes se guardarán en el mismo directorio)</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="101"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar imágenes en subdirectorios</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="111"/>
         <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="125"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Flags</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="152"/>
         <source>Note: If you got broken images after conversion, please run the LazyFix tool and retry conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Nota: Si tiene imágenes corruptas luego de la conversión, por favor ejecute LazyFix y reintente la conversión</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="168"/>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>El directorio de entrada que contiene los archivos GIF (*.gif y *m.gif)</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.ui" line="178"/>
         <source>Remove source images after successful conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover imágenes originales luego de la conversión</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.cpp" line="23"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir directorio fuente</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.cpp" line="35"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir directorio destino</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.cpp" line="48"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>El directorio fuente no está definido</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.cpp" line="48"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, defina el directorio fuente</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.cpp" line="62"/>
         <source>Tool is not found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encuentra la herramienta</translation>
     </message>
     <message>
         <location filename="../external_tools/gifs2png_gui.cpp" line="62"/>
         <source>Can&apos;t run application: 
 %1
 Please, check the application directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede ejecutar aplicación:
+%1
+Por favor, controle el directorio de la misma.</translation>
     </message>
 </context>
 <context>
@@ -5549,28 +5572,30 @@ Please, check the application directory.</source>
         <source>Cannot create level file:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede crear archivo:
+porque las configuraciones no están cargadas.
+Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="223"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Por favor póngale título a &apos;%1&apos;!</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="224"/>
         <source>Saving </source>
-        <translation type="unfinished"></translation>
+        <translation>Guardando</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="228"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="412"/>
         <source>Level title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Título:</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="229"/>
         <source>Make custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Hacer carpeta personalizada</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="264"/>
@@ -6028,87 +6053,90 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="26"/>
         <source>Convert PNG into the masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir PNG en masked GIFs</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="53"/>
         <source>This is a console tool which convert the PNG images with own transparency into SMBX graphics which have a gif format with transparence mask format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ésta es una herramienta de consola que convierte imágenes PNG con transparencia propia en gráficos SMBX que contienen formato GIF con máscara de transparencia.</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="66"/>
         <location filename="../external_tools/png2gifs_gui.ui" line="132"/>
         <source>Browse</source>
-        <translation type="unfinished">Explorar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="80"/>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de salida, donde será guardado el archivo GIF (*.gif y *m.gif)
+(si este campo no se define, las imágenes serán guardadas en el mismo directorio)</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="94"/>
         <source>Start</source>
-        <translation type="unfinished">Comenzar</translation>
+        <translation>Comenzar</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="101"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar imágenes en subdirectorios</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="111"/>
         <source>Close</source>
-        <translation type="unfinished">Cerrar</translation>
+        <translation>Cerrar</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="125"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="155"/>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio de entrada que contiene las imágenes PNG con transparencia propia.(*.png)</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.ui" line="165"/>
         <source>Remove source images after successful conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover imágenes fuente luego de la conversión</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="23"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir directorio fuente</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="35"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir directorio destino</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="48"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>El directorio fuente no fue fijado</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="48"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, elija su directorio fuente</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="62"/>
         <source>Tool is not found</source>
-        <translation type="unfinished"></translation>
+        <translation>La herramienta no se encuentra</translation>
     </message>
     <message>
         <location filename="../external_tools/png2gifs_gui.cpp" line="62"/>
         <source>Can&apos;t run application: 
 %1
 Please, check the application directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede ejecutar aplicación:
+%1
+Por favor, controle el directorio de la aplicación.</translation>
     </message>
 </context>
 <context>
