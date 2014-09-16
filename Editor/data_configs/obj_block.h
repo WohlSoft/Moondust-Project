@@ -37,7 +37,7 @@ struct obj_block{
     int danger;
     int collision;
     bool slopeslide;
-    int fixture;
+    int phys_shape;
     bool lava;
     bool destruct;
     bool dest_bomb;
