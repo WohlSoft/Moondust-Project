@@ -16,6 +16,9 @@
 #include <QPainter>
 #include <QRubberBand>
 
+#include <QStyleHintReturnMask>
+#include <QStyleOptionRubberBand>
+
 class GraphicsWorkspace : public QGraphicsView
 {
     Q_OBJECT
