@@ -294,6 +294,10 @@ void ItemWater::setLayer(QString layer)
 void ItemWater::arrayApply()
 {
     bool found=false;
+
+    waterData.x = qRound(this->scenePos().x());
+    waterData.y = qRound(this->scenePos().y());
+
     if(waterData.index < (unsigned int)scene->LvlData->physez.size())
     { //Check index
         if(waterData.array_id == scene->LvlData->physez[waterData.index].array_id)
