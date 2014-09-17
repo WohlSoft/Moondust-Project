@@ -1,4 +1,5 @@
 #include "graphicsworkspace.h"
+#include "logger.h"
 
 bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event);
 
@@ -375,6 +376,7 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     updateRubberBand(event);
 #endif
 
+    WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler start");
     storeMouseEvent(event);
     lastMouseEvent.setAccepted(false);
 
@@ -418,20 +420,25 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     // in QGraphicsScenePrivate::dispatchHoverEvent, hence the
     // cachedItemsUnderMouse list will be empty. We therefore do the look-up
     // for cursor items here if not all items use the default cursor.
-    if (/*scene()->d_func()->allItemsIgnoreHoverEvents && !scene()->d_func()->allItemsUseDefaultCursor
-        && */ cachedItemsUnderMouse.isEmpty()) {
+    if(/*scene()->d_func()->allItemsIgnoreHoverEvents && !scene()->d_func()->allItemsUseDefaultCursor
+        && */ cachedItemsUnderMouse.isEmpty())
+    {
         cachedItemsUnderMouse = scene()->items(
                     QRectF(mapToScene(mouseEvent.screenPos()),
                            mapToScene(mouseEvent.screenPos()+QPoint(1,1))),
                     Qt::IntersectsItemBoundingRect);
     }
     // Find the topmost item under the mouse with a cursor.
-    foreach (QGraphicsItem *item, cachedItemsUnderMouse) {
-        if (item->hasCursor()) {
-            _q_setViewportCursor(item->cursor());
-            return;
-        }
+    foreach (QGraphicsItem *item, cachedItemsUnderMouse)
+    {
+        if(item)
+            if (item->hasCursor())
+            {
+                _q_setViewportCursor(item->cursor());
+                return;
+            }
     }
+    cachedItemsUnderMouse.clear();
 
     // No items with cursors found; revert to the view cursor.
     if (hasStoredOriginalCursor) {
@@ -440,6 +447,8 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
         viewport()->setCursor(originalCursor);
     }
 #endif
+
+    WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler End");
 }
 
 
