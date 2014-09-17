@@ -387,6 +387,8 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
 void ItemBlock::arrayApply()
 {
     bool found=false;
+    blockData.x = qRound(this->scenePos().x());
+    blockData.y = qRound(this->scenePos().y());
     if(this->data(3).toString()=="sizable")
         this->setZValue( scene->Z_blockSizable + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
     if(blockData.index < (unsigned int)scene->LvlData->blocks.size())

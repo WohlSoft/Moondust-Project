@@ -30,7 +30,7 @@
 #include "../common_features/timecounter.h"
 
 //static bool xxx=false;
-QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
+QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp)
 {
     qreal leftA, leftB;
     qreal rightA, rightB;
@@ -46,10 +46,14 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
     //t.start();
     //if(xxx)
     // ~15 ms on big maps
+    if(itemgrp && !itemgrp->isEmpty())
+        collisions = *itemgrp;
+    else
         collisions = this->items(
                 QRectF(item->scenePos().x()-10, item->scenePos().y()-10,
                 item->data(9).toReal()+20, item->data(10).toReal()+20 ),
                 Qt::IntersectsItemBoundingRect);
+
 
     //else
 

@@ -697,7 +697,9 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     removeLvlItems(selectedList);
                 }
                 else
+                applyGroupGrid(selectedList);
                 // correct selected items' coordinates
+                    /*
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 { ////////////////////////FIRST FETCH///////////////////////
 
@@ -726,6 +728,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     //////////////////////////////////////////////////////////////////
 
                 } ////////////////////////FIRST FETCH///////////////////////
+                */
 
                 selectedList = selectedItems();
 

@@ -33,6 +33,7 @@
 #include <QApplication>
 #include <QtCore>
 #include <QDebug>
+#include <QList>
 
 #include "../common_features/simple_animator.h"
 #include "../common_features/npc_animator.h"
@@ -164,7 +165,7 @@ public:
     QVector<SimpleAnimator * > animates_Blocks;
     QVector<AdvNpcAnimator * > animates_NPC;
 
-    QGraphicsItem * itemCollidesWith(QGraphicsItem * item);
+    QGraphicsItem * itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp = 0);
 
     LevelData  * LvlData;
 
@@ -569,6 +570,10 @@ private:
     void removeItemUnderCursor();
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
+    void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
+    void applyArrayForItemGroup(QList<QGraphicsItem * >items, bool force=false);
+
+    void applyArrayForItem(QGraphicsItem * item);
 
     void setSectionBG(LevelSection section, bool forceTiled=false);
 

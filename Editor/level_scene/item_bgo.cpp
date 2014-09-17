@@ -334,6 +334,8 @@ void ItemBGO::setLayer(QString layer)
 void ItemBGO::arrayApply()
 {
     bool found=false;
+    bgoData.x = qRound(this->scenePos().x());
+    bgoData.y = qRound(this->scenePos().y());
     if(bgoData.index < (unsigned int)scene->LvlData->bgo.size())
     { //Check index
         if(bgoData.array_id == scene->LvlData->bgo[bgoData.index].array_id)

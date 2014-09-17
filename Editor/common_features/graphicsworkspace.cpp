@@ -1,14 +1,6 @@
 #include "graphicsworkspace.h"
 
-#include <QStyleHintReturnMask>
-#include <QStyleOptionRubberBand>
-
-
-//namespace pge_graphicsworkspace
-//{
 bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event);
-//}
-
 
 GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     QGraphicsView(parent),
@@ -24,6 +16,8 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     hasStoredOriginalCursor=false;
     handScrollMotions=0;
     originalCursor = this->cursor();
+    rubberBandSelectionMode = Qt::IntersectsItemBoundingRect;
+    this->setRubberBandSelectionMode(Qt::IntersectsItemBoundingRect);
     step=32;
     keyTime=25;
 
@@ -263,7 +257,7 @@ void GraphicsWorkspace::mousePressEvent(QMouseEvent *event)
     // allowed, so we store the event at the very top of this function.
     ///d->storeMouseEvent(event);
     useLastMouseEvent = true;
-    bool multiSelect = (event->modifiers() & Qt::ControlModifier) != 0;
+    bool multiSelect = (event->modifiers() & Qt::ShiftModifier) != 0;
     lastMouseEvent = QMouseEvent(QEvent::MouseMove, event->localPos(), event->windowPos(), event->screenPos(),
                                  event->button(), event->buttons(), event->modifiers());//d->storeMouseEvent(event);
     ///d->storeMouseEvent(event); //END
@@ -647,3 +641,9 @@ void GraphicsWorkspace::mouseReleaseEvent(QMouseEvent *event)
 
 }
 
+#ifdef QT_SHARED // avoid conflict with symbol in static lib
+bool qt_sendSpontaneousEvent(QObject *receiver, QEvent *event)
+{
+    return QApplication::sendSpontaneousEvent(receiver, event);
+}
+#endif
