@@ -40,7 +40,7 @@ QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 }
 
 
-void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items)
+void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
 {
     if(items.size()==0)
         return;
@@ -117,7 +117,7 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items)
     QPoint offset;
     if(lead)
     {
-        if( sourcePosMax==lead->scenePos().toPoint() )
+        if( sourcePosMax==lead->scenePos().toPoint() && !force )
             return;
 
         offset=lead->scenePos().toPoint();
@@ -136,9 +136,44 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items)
                     target.setX( it->scenePos().toPoint().x()-offset.x() );
                     target.setY( it->scenePos().toPoint().y()-offset.y() );
                     it->setPos(target);
+                    if(force) applyArrayForItem(it);
                 }
             }
         }
+    }
+}
+
+void LvlScene::applyArrayForItem(QGraphicsItem * item)
+{
+    QString ObjType = item->data(0).toString();
+    if( ObjType == "NPC")
+    {
+        dynamic_cast<ItemNPC *>(item)->arrayApply();
+    }
+    else
+    if( ObjType == "Block")
+    {
+        dynamic_cast<ItemBlock *>(item)->arrayApply();
+    }
+    else
+    if( ObjType == "BGO")
+    {
+        dynamic_cast<ItemBGO *>(item)->arrayApply();
+    }
+    else
+    if( ObjType == "Water")
+    {
+        dynamic_cast<ItemWater *>(item)->arrayApply();
+    }
+    else
+    if(( ObjType == "Door_enter")||( ObjType == "Door_exit"))
+    {
+        dynamic_cast<ItemDoor *>(item)->arrayApply();
+    }
+    else
+    if( ObjType == "playerPoint" )
+    {
+        dynamic_cast<ItemPlayerPoint *>(item)->arrayApply();
     }
 }
 
