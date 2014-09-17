@@ -143,6 +143,13 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
     }
 }
 
+
+void LvlScene::applyArrayForItemGroup(QList<QGraphicsItem * >items, bool force)
+{
+    foreach(QGraphicsItem * it, items)
+        applyArrayForItem(it, force);
+}
+
 void LvlScene::applyArrayForItem(QGraphicsItem * item)
 {
     QString ObjType = item->data(0).toString();
