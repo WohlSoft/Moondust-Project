@@ -678,6 +678,9 @@ void ItemNPC::arrayApply()
 
     bool found=false;
 
+    npcData.x = qRound(this->scenePos().x());
+    npcData.y = qRound(this->scenePos().y());
+
     if(npcData.index < (unsigned int)scene->LvlData->npc.size())
     { //Check index
         if(npcData.array_id == scene->LvlData->npc[npcData.index].array_id)

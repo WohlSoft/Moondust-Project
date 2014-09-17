@@ -1,3 +1,7 @@
+Editor 0.3.0
+- Added support of multi-selection with holded shift key
+- More smart grid snapping of the selected items group
+
 Editor 0.2.0
 - Added support for World Maps
 - Added customizable item tilesets

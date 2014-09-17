@@ -219,6 +219,9 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 void ItemPlayerPoint::arrayApply()
 {
 
+    pointData.x = qRound(this->scenePos().x());
+    pointData.y = qRound(this->scenePos().y());
+
     for(int i=0; i<scene->LvlData->players.size();i++)
     {
         if(pointData.id==scene->LvlData->players[i].id)
