@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SMBX64 Playble Sprite Calibrator</string>
+   <string>SMBX64 Playable Sprite Calibrator</string>
   </property>
   <property name="windowIcon">
    <iconset resource="_resourses/images.qrc">
@@ -174,7 +174,7 @@
       <bool>false</bool>
      </property>
      <property name="text">
-      <string>Applay to all</string>
+      <string>Apply to all</string>
      </property>
     </widget>
    </item>

@@ -247,7 +247,7 @@ void MainWindow::setEventData(long index)
                         evnmsg.resize(18);
                         evnmsg.push_back("...");
                     }
-                    ui->LVLEvent_Cmn_Msg->setText( evnmsg );
+                    ui->LVLEvent_Cmn_Msg->setText( evnmsg.replace("&", "&&&") );
 
                     ui->LVLEvent_Cmn_PlaySnd->setCurrentIndex(0);
                     for(int i=0; i<ui->LVLEvent_Cmn_PlaySnd->count(); i++)
@@ -263,16 +263,16 @@ void MainWindow::setEventData(long index)
                         ui->LVLEvent_Cmn_EndGame->setCurrentIndex(event.end_game);
 
                     //Player Control key hold
-                    ui->LVLEvent_Key_AltJump->setChecked(event.altjump);
-                    ui->LVLEvent_Key_AltRun->setChecked(event.altrun);
-                    ui->LVLEvent_Key_Jump->setChecked(event.jump);
-                    ui->LVLEvent_Key_Run->setChecked(event.run);
-                    ui->LVLEvent_Key_Start->setChecked(event.start);
-                    ui->LVLEvent_Key_Drop->setChecked(event.drop);
-                    ui->LVLEvent_Key_Left->setChecked(event.left);
-                    ui->LVLEvent_Key_Right->setChecked(event.right);
-                    ui->LVLEvent_Key_Up->setChecked(event.up);
-                    ui->LVLEvent_Key_Down->setChecked(event.down);
+                    ui->LVLEvent_Key_AltJump->setChecked(event.ctrl_altjump);
+                    ui->LVLEvent_Key_AltRun->setChecked(event.ctrl_altrun);
+                    ui->LVLEvent_Key_Jump->setChecked(event.ctrl_jump);
+                    ui->LVLEvent_Key_Run->setChecked(event.ctrl_run);
+                    ui->LVLEvent_Key_Start->setChecked(event.ctrl_start);
+                    ui->LVLEvent_Key_Drop->setChecked(event.ctrl_drop);
+                    ui->LVLEvent_Key_Left->setChecked(event.ctrl_left);
+                    ui->LVLEvent_Key_Right->setChecked(event.ctrl_right);
+                    ui->LVLEvent_Key_Up->setChecked(event.ctrl_up);
+                    ui->LVLEvent_Key_Down->setChecked(event.ctrl_down);
 
                     //Trigger Event
                     ui->LVLEvent_TriggerEvent->setCurrentIndex(0);
@@ -1749,7 +1749,7 @@ void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
                 evnmsg.resize(18);
                 evnmsg.push_back("...");
             }
-            ui->LVLEvent_Cmn_Msg->setText( evnmsg );
+            ui->LVLEvent_Cmn_Msg->setText( evnmsg.replace("&", "&&&") );
             edit->LvlData.modified=true;
         }
 
@@ -1844,7 +1844,7 @@ void MainWindow::on_LVLEvent_Key_Up_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KUP, QVariant(checked));
-        edit->LvlData.events[i].up = checked;
+        edit->LvlData.events[i].ctrl_up = checked;
         edit->LvlData.modified=true;
     }
 
@@ -1863,7 +1863,7 @@ void MainWindow::on_LVLEvent_Key_Down_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KDOWN, QVariant(checked));
-        edit->LvlData.events[i].down = checked;
+        edit->LvlData.events[i].ctrl_down = checked;
         edit->LvlData.modified=true;
     }
 }
@@ -1881,7 +1881,7 @@ void MainWindow::on_LVLEvent_Key_Left_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KLEFT, QVariant(checked));
-        edit->LvlData.events[i].left = checked;
+        edit->LvlData.events[i].ctrl_left = checked;
         edit->LvlData.modified=true;
     }
 }
@@ -1899,7 +1899,7 @@ void MainWindow::on_LVLEvent_Key_Right_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KRIGHT, QVariant(checked));
-        edit->LvlData.events[i].right = checked;
+        edit->LvlData.events[i].ctrl_right = checked;
         edit->LvlData.modified=true;
     }
 }
@@ -1917,7 +1917,7 @@ void MainWindow::on_LVLEvent_Key_Run_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KRUN, QVariant(checked));
-        edit->LvlData.events[i].run = checked;
+        edit->LvlData.events[i].ctrl_run = checked;
         edit->LvlData.modified=true;
     }
 }
@@ -1935,7 +1935,7 @@ void MainWindow::on_LVLEvent_Key_AltRun_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KALTRUN, QVariant(checked));
-        edit->LvlData.events[i].altrun = checked;
+        edit->LvlData.events[i].ctrl_altrun = checked;
         edit->LvlData.modified=true;
     }
 }
@@ -1953,7 +1953,7 @@ void MainWindow::on_LVLEvent_Key_Jump_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KJUMP, QVariant(checked));
-        edit->LvlData.events[i].jump = checked;
+        edit->LvlData.events[i].ctrl_jump = checked;
         edit->LvlData.modified=true;
     }
 }
@@ -1971,7 +1971,7 @@ void MainWindow::on_LVLEvent_Key_AltJump_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KALTJUMP, QVariant(checked));
-        edit->LvlData.events[i].altjump = checked;
+        edit->LvlData.events[i].ctrl_altjump = checked;
         edit->LvlData.modified=true;
     }
 }
@@ -1989,7 +1989,7 @@ void MainWindow::on_LVLEvent_Key_Drop_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KDROP, QVariant(checked));
-        edit->LvlData.events[i].drop = checked;
+        edit->LvlData.events[i].ctrl_drop = checked;
         edit->LvlData.modified=true;
     }
 }
@@ -2007,7 +2007,7 @@ void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
         if(i<0) return;
 
         edit->scene->addChangeEventSettingsHistory(edit->LvlData.events[i].array_id, LvlScene::SETTING_EV_KSTART, QVariant(checked));
-        edit->LvlData.events[i].start = checked;
+        edit->LvlData.events[i].ctrl_start = checked;
         edit->LvlData.modified=true;
     }
 }

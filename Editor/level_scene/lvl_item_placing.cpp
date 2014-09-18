@@ -48,7 +48,7 @@ LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
 long        LvlPlacingItems::itemW = 0;
 long        LvlPlacingItems::itemH = 0;
 
-LevelWater  LvlPlacingItems::waterSet=FileFormats::dummyLvlWater();
+LevelPhysEnv  LvlPlacingItems::waterSet=FileFormats::dummyLvlPhysEnv();
 
 int LvlPlacingItems::doorType=LvlPlacingItems::DOOR_Entrance;
 long LvlPlacingItems::doorArrayId = 0;
@@ -441,8 +441,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         cursor = addRect(0,0, 32, 32);
 
-        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(Qt::darkMagenta));
-        ((QGraphicsRectItem *)cursor)->setPen(QPen(Qt::darkMagenta, 2,Qt::SolidLine));
+        ((QGraphicsRectItem *)cursor)->setBrush(QBrush(QColor(qRgb(0xff,0x00,0x7f))));
+        ((QGraphicsRectItem *)cursor)->setPen(QPen(QColor(qRgb(0xff,0x00,0x7f)), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );

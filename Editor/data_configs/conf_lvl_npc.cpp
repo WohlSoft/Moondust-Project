@@ -128,9 +128,6 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
 
             //WriteToLog(QtDebugMsg, QString("NPC Config -> read header data... npc-%1").arg(i));
             npcset.beginGroup( QString("npc-"+QString::number(i)) );
-        //    //    [npc-1]
-        //        unsigned long id;
-            snpc.id = i;
         //    //    name="Goomba"
         //        QString name;
             snpc.name = npcset.value("name", "").toString();
@@ -266,6 +263,7 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    ; this option useful for non-standart algorithmic sprites (for example, bosses)
 
         //    //    ;custom-animation-alg=0		; Custom animation algorithm - 0 simple frame range, 1 - frame Jump
+            //  2 - defined frame sequance
         //        int custom_ani_alg;
             snpc.custom_ani_alg = npcset.value("custom-animation-alg", "0").toInt();
         //    //    ;custom-animation-fl=0		; First frame for LEFT
@@ -280,6 +278,29 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    ;custom-animation-er=0		; end frame for RIGHT / Jump step
         //        int custom_ani_er;
             snpc.custom_ani_er = npcset.value("custom-animation-er", "-1").toInt();
+
+            snpc.frames_left.clear();
+            snpc.frames_right.clear();
+
+            if(snpc.custom_ani_alg==2)
+            {
+                QStringList tmp;
+                QString common = npcset.value("ani-frames-cmn", "0").toString(); // Common frames list
+
+                WriteToLog(QtDebugMsg, QString("Frames Sequance %1").arg(common) );
+
+                tmp = npcset.value("ani-frames-left", common).toString().remove(' ').split(","); //left direction
+                foreach(QString x, tmp)
+                    snpc.frames_left.push_back(x.toInt());
+
+                WriteToLog(QtDebugMsg, QString("Frames Sequance Left %1").arg(snpc.frames_left.size()) );
+
+                tmp = npcset.value("ani-frames-right", common).toString().remove(' ').split(","); //right direction
+                foreach(QString x, tmp)
+                    snpc.frames_right.push_back(x.toInt());
+
+                WriteToLog(QtDebugMsg, QString("Frames Sequance Left %1").arg(snpc.frames_right.size()) );
+            }
 
 
         //    //    container=0			; NPC can containing inside other NPC (need enable special option type 2)
@@ -447,10 +468,12 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
         //    //    ; Size of NPC's body (Collision box)
         //    //    fixture-height=32
         //        unsigned int height;
-            snpc.height = npcset.value("fixture-height", "0").toInt();
+            snpc.height = npcset.value("fixture-height", "0").toInt();//Leaved for compatibility
+            snpc.height = npcset.value("physical-height", snpc.height).toInt();
         //    //    fixture-width=32
         //        unsigned int width;
-            snpc.width = npcset.value("fixture-width", "0").toInt();
+            snpc.width = npcset.value("fixture-width", "0").toInt();//Leaved for compatibility
+            snpc.width = npcset.value("physical-width", snpc.width).toInt();
         //    //    block-npc=1		; NPC is a solid object for NPC's
         //        bool block_npc;
             snpc.block_npc = npcset.value("block-npc", "0").toBool();
@@ -570,9 +593,13 @@ void dataconfigs::loadLevelNPC(QProgressDialog *prgs)
             snpc.default_special = (iTmp>=0);
             snpc.default_special_value = (iTmp>=0) ? iTmp : 0;
 
+            //    //    [npc-1]
+            //        unsigned long id;
+            snpc.id = i;
+
             main_npc.push_back(snpc);
 
-           // WriteToLog(QtDebugMsg, "NPC Config -> Pushed");
+            // WriteToLog(QtDebugMsg, "NPC Config -> Pushed");
 
             //Add to Index
             if(i < (unsigned int)index_npc.size())

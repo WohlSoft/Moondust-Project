@@ -676,7 +676,8 @@ void npcedit::updatePreview()
                           npcPreview->localProps.custom_ani_fl,
                           npcPreview->localProps.custom_ani_el,
                           npcPreview->localProps.custom_ani_fr,
-                          npcPreview->localProps.custom_ani_er, true);
+                          npcPreview->localProps.custom_ani_er,
+                          true, true);
     npcPreview->AnimationStart();
 
     physics->setRect(0,0, npcPreview->localProps.width, npcPreview->localProps.height);

@@ -34,13 +34,15 @@ public:
 
     static LevelEditingSettings LvlOpts;
 
-    static QString locale;
-    static long animatorItemsLimit;
+    static QString locale; //Current language
+    static long animatorItemsLimit; //If level map have too many items, animation will be stopped
 
+    //Paths
     static QString savePath;
     static QString savePath_npctxt;
     static QString openPath;
 
+    //Music player
     static bool autoPlayMusic;
     static int musicVolume;
 
@@ -55,6 +57,14 @@ public:
     static bool WorldToolBoxVis;
     static bool WorldSettingsToolboxVis;
     static bool WorldSearchBoxVis;
+
+    static bool TilesetBoxVis;
+    static bool DebuggerBoxVis;
+
+    // Editor flags
+    static bool MidMouse_allowDuplicate;
+    static bool MidMouse_allowSwitchToPlace;
+    static bool MidMouse_allowSwitchToDrag;
 
     //Last active file type state
     static int lastWinType;

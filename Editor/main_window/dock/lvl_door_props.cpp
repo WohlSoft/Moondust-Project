@@ -93,7 +93,7 @@ void MainWindow::setDoorData(long index)
                     ui->WarpLock->setChecked(door.locked);
 
                     ui->WarpNoYoshi->setEnabled(true);
-                    ui->WarpNoYoshi->setChecked(door.noyoshi);
+                    ui->WarpNoYoshi->setChecked(door.novehicles);
 
                     ui->WarpType->setEnabled(true);
                     ui->WarpType->setCurrentIndex(door.type);
@@ -322,7 +322,7 @@ void MainWindow::on_WarpSetEntrance_clicked()
 
         if(placed)
         {
-               edit->goTo(edit->LvlData.doors[i].ix, edit->LvlData.doors[i].iy, true, QPoint(-300, -300));
+               edit->goTo(edit->LvlData.doors[i].ix, edit->LvlData.doors[i].iy, true, QPoint(0, 0), true);
                //deselect all and select placed one
                foreach (QGraphicsItem* i, edit->scene->selectedItems())
                {
@@ -377,7 +377,7 @@ void MainWindow::on_WarpSetExit_clicked()
 
         if(placed)
         {
-               edit->goTo(edit->LvlData.doors[i].ox, edit->LvlData.doors[i].oy, true, QPoint(-300, -300));
+               edit->goTo(edit->LvlData.doors[i].ox, edit->LvlData.doors[i].oy, true, QPoint(0, 0), true);
                //deselect all and select placed one
                foreach (QGraphicsItem* i, edit->scene->selectedItems())
                {
@@ -423,7 +423,7 @@ void MainWindow::on_WarpNoYoshi_clicked(bool checked)
         {
             if(edit->LvlData.doors[i].array_id==(unsigned int)ui->WarpList->currentData().toInt())
             {
-                edit->LvlData.doors[i].noyoshi = checked; break;
+                edit->LvlData.doors[i].novehicles = checked; break;
             }
         }
         edit->scene->addChangeWarpSettingsHistory(ui->WarpList->currentData().toInt(), LvlScene::SETTING_NOYOSHI, QVariant(checked));
@@ -852,9 +852,9 @@ void MainWindow::on_WarpGetXYFromWorldMap_clicked()
                 pointDialog->pointSelected(
                             QPoint(ui->WarpToMapX->text().toInt(),
                                    ui->WarpToMapY->text().toInt())    );
-                pointDialog->goTo(ui->WarpToMapX->text().toInt(), ui->WarpToMapY->text().toInt(),
+                pointDialog->goTo(ui->WarpToMapX->text().toInt()+16, ui->WarpToMapY->text().toInt()+16,
                                   false,
-                                    QPoint(-qRound(qreal(pointDialog->width())/2.2), -qRound(qreal(pointDialog->height())/2.5))
+                                    QPoint(-qRound(qreal(pointDialog->gViewPort()->width())/2), -qRound(qreal(pointDialog->gViewPort()->height())/2))
                                   );
                 pointDialog->scene->setPoint( pointDialog->mapPoint );
             }

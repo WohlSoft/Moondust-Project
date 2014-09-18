@@ -51,7 +51,7 @@ QImage GraphicsHelps::fromBMP(QString &file)
     QImage errImg;
 
     BMP tarBMP;
-    if(!tarBMP.ReadFromFile(file.toStdString().c_str())){
+    if(!tarBMP.ReadFromFile( file.toLocal8Bit().data() )){
         WriteToLog(QtCriticalMsg, QString("Error: File does not exsist"));
         return errImg; //Check if empty with errImg.isNull();
     }
@@ -75,9 +75,9 @@ QPixmap GraphicsHelps::loadPixmap(QString file)
 
 QImage GraphicsHelps::loadQImage(QString file)
 {
-    QImage image = QImage(file);
+    QImage image = QImage( file );
     if(image.isNull())
-        image = fromBMP(file);
+        image = fromBMP( file);
     return image;
 }
 
@@ -101,4 +101,21 @@ QPixmap GraphicsHelps::squareImage(QPixmap image, QSize targetSize=QSize(0,0) )
 
     p.end();
     return target;
+}
+
+QPixmap GraphicsHelps::drawDegitFont(int number)
+{
+    QPixmap font=QPixmap(":/fonts/degits.png");
+    QString text=QString::number(number);
+    QPixmap img(text.size()*18, 16);
+
+    img.fill(Qt::transparent);
+    QPainter p(&img);
+
+    for(int i=0; i<text.size(); i++)
+    {
+        p.drawPixmap(QRect(18*i, 0, 16,16), font, QRect(0, QString(text[i]).toInt()*16, 16,16));
+    }
+    p.end();
+    return img;
 }

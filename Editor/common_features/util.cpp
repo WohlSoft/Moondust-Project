@@ -87,3 +87,29 @@ void util::clearLayoutItems(QLayout *layout)
         delete child;
     }
 }
+
+bool util::contains(const QComboBox *b, const QString &s)
+{
+    for(int i = 0; i < b->count(); ++i){
+        if(b->itemText(i) == s){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+QString util::filePath(QString s)
+{
+    QString t = s;
+    t.replace('\\', '_');
+    t.replace('/', '_');
+    t.replace(':', '_');
+    t.replace('*', '_');
+    t.replace('?', '_');
+    t.replace('\"', '_');
+    t.replace('<', '_');
+    t.replace('>', '_');
+    t.replace('|', '_');
+    return t;
+}

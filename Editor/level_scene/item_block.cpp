@@ -128,7 +128,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             this->setSelected(1);
             ItemMenu->clear();
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(blockData.layer).replace("&", "&&&"));
 
             QAction *setLayer;
             QList<QAction *> layerItems;
@@ -142,7 +142,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?tr(" [hidden]"):"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?tr(" [hidden]"):"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -190,7 +190,7 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 #ifdef _DEBUG_
                     WriteToLog(QtDebugMsg, "Context Menu <- NULL");
                 #endif
-                goto delItems;
+                return;
             }
             //mouseEvent->accept();
 
@@ -245,8 +245,9 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             {
                 LevelData selData;
                 ItemSelectDialog * npcList = new ItemSelectDialog(scene->pConfigs, ItemSelectDialog::TAB_NPC,
-                                                           ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 1000 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                                           (blockData.npc_id < 1000 && blockData.npc_id != 0 ? blockData.npc_id : blockData.npc_id-1000));
+                                                           ItemSelectDialog::NPCEXTRA_WITHCOINS | (blockData.npc_id < 0 && blockData.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                           (blockData.npc_id <0 && blockData.npc_id != 0 ? blockData.npc_id *-1 : blockData.npc_id)
+                                                                  );
                 npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
                 npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
                 if(npcList->exec()==QDialog::Accepted)
@@ -255,9 +256,9 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     int selected_npc=0;
                     if(npcList->npcID!=0){
                         if(npcList->isCoin)
-                            selected_npc = npcList->npcID;
+                            selected_npc = npcList->npcID * -1;
                         else
-                            selected_npc = npcList->npcID+1000;
+                            selected_npc = npcList->npcID;
                     }
 
                     foreach(QGraphicsItem * SelItem, scene->selectedItems() )
@@ -286,10 +287,23 @@ void ItemBlock::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 scene->openProps();
             }
             else
+            if(selected==newLayer)
             {
-                #include "item_set_layer.h"
+                scene->setLayerToSelected();
             }
-            delItems:;
+            else
+            {
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
+            }
         }
     }
 }
@@ -351,7 +365,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
         return;
     }
 
-    QPixmap npcImg = QPixmap( scene->getNPCimg( ((npcID > 1000)? (npcID-1000) : scene->pConfigs->marker_npc.coin_in_block ) ) );
+    QPixmap npcImg = QPixmap( scene->getNPCimg( ((npcID > 0)? (npcID) : scene->pConfigs->marker_npc.coin_in_block ) ) );
     includedNPC = scene->addPixmap( npcImg );
 
     includedNPC->setPos(
@@ -361,7 +375,7 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
                 (
                     blockData.y+((blockData.h-npcImg.height())/2)
                  ));
-    includedNPC->setZValue(scene->blockZ + 10);
+    includedNPC->setZValue(scene->Z_Block + 10);
     includedNPC->setOpacity(qreal(0.6));
     grp->addToGroup(includedNPC);
 
@@ -373,8 +387,10 @@ void ItemBlock::setIncludedNPC(int npcID, bool init)
 void ItemBlock::arrayApply()
 {
     bool found=false;
+    blockData.x = qRound(this->scenePos().x());
+    blockData.y = qRound(this->scenePos().y());
     if(this->data(3).toString()=="sizable")
-        this->setZValue( scene->blockZs + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
+        this->setZValue( scene->Z_blockSizable + ((double)blockData.y / (double) 100000000000) + 1 - ((double)blockData.w * (double)0.0000000000000001) );
     if(blockData.index < (unsigned int)scene->LvlData->blocks.size())
     { //Check index
         if(blockData.array_id == scene->LvlData->blocks[blockData.index].array_id)
@@ -533,74 +549,120 @@ QPixmap ItemBlock::drawSizableBlock(int w, int h, QPixmap srcimg)
 {
     int x,y, i, j;
     int hc, wc;
-    QPixmap img(w, h);
-    //QPixmap * sizableImage;
-    //QPainter * szblock;
-    x=32;
-    y=32;
 
-    //sizableImage = new QPixmap(QSize(w, h));
+    QPixmap img(w, h);
+
+    x = qRound(qreal(srcimg.width())/3);  // Width of one piece
+    y = qRound(qreal(srcimg.height())/3); // Height of one piece
+
     img.fill(Qt::transparent);
     QPainter szblock(&img);
 
-    //L
-    hc=0;
-    for(i=0; i<((h-2*y) / y); i++ )
-    {
-        szblock.drawPixmap(0, x+hc, x, y, srcimg.copy(QRect(0, y, x, y)));
-            hc+=x;
-    }
+    int fLnt = 0; // Free Lenght
+    int fWdt = 0; // Free Width
 
-    //T
-    hc=0;
-    for(i=0; i<( (w-2*x) / x); i++ )
-    {
-        szblock.drawPixmap(x+hc, 0, x, y, srcimg.copy(QRect(x, 0, x, y)) );
-            hc+=x;
-    }
+    int dX=0; //Draw Offset. This need for crop junk on small sizes
+    int dY=0;
 
-    //B
-    hc=0;
-    for(i=0; i< ( (w-2*x) / x); i++ )
-    {
-        szblock.drawPixmap(x+hc, h-y, x, y, srcimg.copy(QRect(x, srcimg.width()-y, x, y )) );
-            hc+=x;
-    }
+    if(w < 2*x) dX = (2*x-w)/2; else dX=0;
+    if(h < 2*y) dY = (2*y-h)/2; else dY=0;
 
-    //R
-    hc=0;
-    for(i=0; i<((h-2*y) / y); i++ )
-    {
-        szblock.drawPixmap(w-x, y+hc, x, y, srcimg.copy(QRect(srcimg.width()-x, y, x, y)));
-            hc+=x;
-    }
-
-    //C
-    hc=0;
-    wc=0;
-    for(i=0; i<((h-2*y) / y); i++ )
+    //L Draw left border
+    if(h > 2*y)
     {
         hc=0;
-        for(j=0; j<((w-2*x) / x); j++ )
+        for(i=0; i<((h-2*y) / y); i++ )
         {
-        szblock.drawPixmap(x+hc, y+wc, x, y, srcimg.copy(QRect(x, y, x, y)));
-            hc+=x;
+            szblock.drawPixmap(0, x+hc, x-dX, y, srcimg.copy(0, y, x-dX, y));
+                hc+=x;
         }
-        wc+=y;
+            fLnt = (h-2*y)%y;
+            if( fLnt != 0) szblock.drawPixmap(0, x+hc, x-dX, fLnt, srcimg.copy(0, y, x-dX, fLnt) );
     }
 
-    //Applay sizable formula
-     //1
-    szblock.drawPixmap(0,0,y,x, srcimg.copy(QRect(0,0,y,x)));
-     //2
-    szblock.drawPixmap(w-y, 0, y, x, srcimg.copy(QRect(srcimg.width()-y, 0, y, x)) );
-     //3
-    szblock.drawPixmap(w-y, h-x, y, x, srcimg.copy(QRect(srcimg.width()-y, srcimg.height()-x, y, x)) );
-     //4
-    szblock.drawPixmap(0, h-x, y, x, srcimg.copy(QRect(0, srcimg.height()-x, y, x)) );
+    //T Draw top border
+    if(w > 2*x)
+    {
+        hc=0;
+        for(i=0; i<( (w-2*x) / x); i++ )
+        {
+            szblock.drawPixmap(x+hc, 0, x, y-dY, srcimg.copy(x, 0, x, y-dY) );
+                hc+=x;
+        }
+            fLnt = (w-2*x)%x;
+            if( fLnt != 0) szblock.drawPixmap(x+hc, 0, fLnt, y-dY, srcimg.copy(x, 0, fLnt, y-dY) );
+    }
 
-    //img = QPixmap( * sizableImage);
-    //delete sizableImage;
-    //delete szblock;
+    //B Draw bottom border
+    if(w > 2*x)
+    {
+        hc=0;
+        for(i=0; i< ( (w-2*x) / x); i++ )
+        {
+            szblock.drawPixmap(x+hc, h-y+dY, x, y-dY, srcimg.copy(x, srcimg.width()-y+dY, x, y-dY) );
+                hc+=x;
+        }
+            fLnt = (w-2*x)%x;
+            if( fLnt != 0) szblock.drawPixmap(x+hc, h-y+dY, fLnt, y-dY, srcimg.copy(x, srcimg.width()-y+dY, fLnt, y-dY) );
+    }
+
+    //R Draw right border
+    if(h > 2*y)
+    {
+        hc=0;
+        for(i=0; i<((h-2*y) / y); i++ )
+        {
+            szblock.drawPixmap(w-x+dX, y+hc, x-dX, y, srcimg.copy(srcimg.width()-x+dX, y, x-dX, y));
+                hc+=x;
+        }
+            fLnt = (h-2*y)%y;
+            if( fLnt != 0) szblock.drawPixmap(w-x+dX, y+hc, x-dX, fLnt, srcimg.copy(srcimg.width()-x+dX, y, x-dX, fLnt));
+    }
+
+    //C Draw center
+    if( w > 2*x && h > 2*y)
+    {
+        hc=0;
+        wc=0;
+        for(i=0; i<((h-2*y) / y); i++ )
+        {
+            hc=0;
+            for(j=0; j<((w-2*x) / x); j++ )
+            {
+            szblock.drawPixmap(x+hc, y+wc, x, y, srcimg.copy(x, y, x, y));
+                hc+=x;
+            }
+                fLnt = (w-2*x)%x;
+                if(fLnt != 0 ) szblock.drawPixmap(x+hc, y+wc, fLnt, y, srcimg.copy(x, y, fLnt, y));
+            wc+=y;
+        }
+
+        fWdt = (h-2*y)%y;
+        if(fWdt !=0)
+        {
+            hc=0;
+            for(j=0; j<((w-2*x) / x); j++ )
+            {
+            szblock.drawPixmap(x+hc, y+wc, x, fWdt, srcimg.copy(x, y, x, fWdt));
+                hc+=x;
+            }
+                fLnt = (w-2*x)%x;
+                if(fLnt != 0 ) szblock.drawPixmap(x+hc, y+wc, fLnt, fWdt, srcimg.copy(x, y, fLnt, fWdt));
+
+        }
+
+    }
+
+    //Draw corners
+     //1 Left-top
+    szblock.drawPixmap(0,0,x-dX,y-dY, srcimg.copy(QRect(0,0,x-dX, y-dY)));
+     //2 Right-top
+    szblock.drawPixmap(w-x+dX, 0, x-dX, y-dY, srcimg.copy(QRect(srcimg.width()-x+dX, 0, x-dX, y-dY)) );
+     //3 Right-bottom
+    szblock.drawPixmap(w-x+dX, h-y+dY, x-dX, y-dY, srcimg.copy(QRect(srcimg.width()-x+dX, srcimg.height()-y+dY, x-dX, y-dY)) );
+     //4 Left-bottom
+    szblock.drawPixmap(0, h-y+dY, x-dX, y-dY, srcimg.copy(QRect(0, srcimg.height()-y+dY, x-dX, y-dY)) );
+
+    szblock.end();
     return img;
 }

@@ -19,6 +19,7 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 #include "../common_features/logger_sets.h"
+#include "../dev_console/devconsole.h"
 
 #include "global_settings.h"
 
@@ -65,7 +66,7 @@ void MainWindow::setDefLang()
            m_currLang="en"; //set to English if no other translations are found
            QLocale locale = QLocale(m_currLang);
            QLocale::setDefault(locale);
-           ok = m_translator.load(m_langPath + QString("/editor_en.qm").arg(m_currLang));
+           ok = m_translator.load(m_langPath + QString("/editor_%1.qm").arg(m_currLang));
            if(ok)
             qApp->installTranslator(&m_translator);
 
@@ -129,13 +130,27 @@ void MainWindow::slotLanguageChanged(QAction* action)
         // load the language depending on the action content
         GlobalSettings::locale = m_currLang;
 
+        lockTilesetBox=true;
+
+        int doorType = ui->WarpType->currentIndex(); //backup combobox's index
+        int npcGenType = ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
+
         loadLanguage(action->data().toString());
-        setItemBoxes();
+
+        ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
+        ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
+
+        lockTilesetBox=false;
+
+        setLvlItemBoxes();
         setLevelSectionData();
         setEventData(-1);
         setSoundList();
         WldLvlExitTypeListReset();
         setCurrentWorldSettings();
+        setTileSetBox();
+
+        DevConsole::retranslate();
     }
 }
 
@@ -176,7 +191,7 @@ void MainWindow::loadLanguage(const QString& rLanguage)
             WriteToLog(QtDebugMsg, QString("Translation-> done"));
         }
         else
-               WriteToLog(QtDebugMsg, QString("Translation-> not changed (not okay)"));
+            WriteToLog(QtDebugMsg, QString("Translation-> not changed (not okay)"));
 
         //Sync dynamic menus
         SyncRecentFiles();
@@ -185,7 +200,7 @@ void MainWindow::loadLanguage(const QString& rLanguage)
 
         clearFilter();
 
-        ui->statusBar->showMessage(tr("Current Language changed to %1").arg(languageName));
+        ui->statusBar->showMessage(tr("Current Language changed to %1").arg(languageName), 2000);
     }
 }
 

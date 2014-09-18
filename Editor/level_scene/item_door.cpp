@@ -28,6 +28,8 @@
 
 #include "../common_features/mainwinconnect.h"
 
+#include "../common_features/graphics_funcs.h"
+
 
 ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     : QGraphicsRectItem(parent)
@@ -35,7 +37,7 @@ ItemDoor::ItemDoor(QGraphicsRectItem *parent)
     isLocked=false;
     itemSize = QSize(32,32);
     doorLabel=NULL;
-    doorLabel_shadow=NULL;
+    //doorLabel_shadow=NULL;
     //image = new QGraphicsRectItem;
     mouseLeft=false;
     mouseMid=false;
@@ -47,7 +49,7 @@ ItemDoor::~ItemDoor()
 {
     //WriteToLog(QtDebugMsg, "!<-Door destroy->!");
     if(doorLabel!=NULL) delete doorLabel;
-    if(doorLabel_shadow!=NULL) delete doorLabel_shadow;
+    //if(doorLabel_shadow!=NULL) delete doorLabel_shadow;
     if(grp!=NULL) delete grp;
 
     //WriteToLog(QtDebugMsg, "!<-Door destroyed->!");
@@ -127,11 +129,11 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->setSelected(1);
             ItemMenu->clear();
 
-            QAction *openLvl = ItemMenu->addAction(tr("Open target level: %1").arg(doorData.lname));
+            QAction *openLvl = ItemMenu->addAction(tr("Open target level: %1").arg(doorData.lname).replace("&", "&&&"));
             openLvl->setVisible( (!doorData.lname.isEmpty()) && (QFile(scene->LvlData->path + "/" + doorData.lname).exists()) );
             openLvl->deleteLater();
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(doorData.layer).replace("&", "&&&"));
                 LayerName->deleteLater();
 
             QAction *setLayer;
@@ -146,7 +148,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -177,7 +179,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             QAction * NoTransport = ItemMenu->addAction(tr("No Vehicles"));
             NoTransport->setCheckable(true);
-            NoTransport->setChecked( doorData.noyoshi );
+            NoTransport->setChecked( doorData.novehicles );
             NoTransport->deleteLater();
 
             QAction * AllowNPC = ItemMenu->addAction(tr("Allow NPC"));
@@ -225,13 +227,13 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 if(this->data(0).toString()=="Door_enter")
                 {
                     if(doorData.isSetOut)
-                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(-300, -300));
+                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ox, doorData.oy, true, QPoint(0, 0), true);
                 }
                 else
                 if(this->data(0).toString()=="Door_exit")
                 {
                     if(doorData.isSetIn)
-                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(-300, -300));
+                    MainWinConnect::pMainWin->activeLvlEditWin()->goTo(doorData.ix, doorData.iy, true, QPoint(0, 0), true);
                 }
             }
             else
@@ -253,7 +255,7 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                             door.isSetIn = true;
                             modDoors.doors.push_back(door);
                         }
-                        ((ItemDoor *) SelItem)->doorData.noyoshi=NoTransport->isChecked();
+                        ((ItemDoor *) SelItem)->doorData.novehicles=NoTransport->isChecked();
                         ((ItemDoor *) SelItem)->arrayApply();
                     }
                 }
@@ -323,8 +325,22 @@ void ItemDoor::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 MainWinConnect::pMainWin->SwitchToDoor(doorData.array_id);
             }
             else
+            if(selected==newLayer)
             {
-                #include "item_set_layer.h"
+                scene->setLayerToSelected();
+            }
+            else
+            {
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
             }
         }
     }
@@ -391,6 +407,8 @@ void ItemDoor::arrayApply()
             {
                 if((door->data(0).toString()=="Door_exit")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
                 {
+                    doorData.ox = qRound(this->scenePos().x());
+                    doorData.oy = qRound(this->scenePos().y());
                     ((ItemDoor *)door)->doorData = doorData;
                     break;
                 }
@@ -405,6 +423,8 @@ void ItemDoor::arrayApply()
             {
                 if((door->data(0).toString()=="Door_enter")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
                 {
+                    doorData.ix = qRound(this->scenePos().x());
+                    doorData.iy = qRound(this->scenePos().y());
                     ((ItemDoor *)door)->doorData = doorData;
                     break;
                 }
@@ -439,8 +459,8 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     direction = doorDir;
 
     long ix, iy, ox, oy;
-    QColor cEnter(Qt::magenta);
-    QColor cExit(Qt::darkMagenta);
+    QColor cEnter(qRgb(0xff,0x00,0x7f));
+    QColor cExit(qRgb(0xc4,0x00,0x62));//c40062
     cEnter.setAlpha(50);
     cExit.setAlpha(50);
 
@@ -449,31 +469,32 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     ox = doorData.ox;
     oy = doorData.oy;
 
-    QFont font1, font2;
-    font1.setWeight(50);
-    font1.setBold(1);
-    font1.setPointSize(14);
+    //    QFont font1, font2;
+    //    font1.setWeight(50);
+    //    font1.setBold(1);
+    //    font1.setPointSize(14);
 
-    font2.setWeight(14);
-    font2.setBold(0);
-    font2.setPointSize(12);
+    //    font2.setWeight(14);
+    //    font2.setBold(0);
+    //    font2.setPointSize(12);
 
-    setRect(0, 0, itemSize.width(), itemSize.height());
+    setRect(1, 1, itemSize.width()-2, itemSize.height()-2);
 
-    doorLabel_shadow = new QGraphicsTextItem(QString::number(doorData.array_id));
-    doorLabel = new QGraphicsTextItem(QString::number(doorData.array_id));
+    //doorLabel_shadow = new QGraphicsTextItem(QString::number(doorData.array_id));
+    doorLabel = new QGraphicsPixmapItem(GraphicsHelps::drawDegitFont(doorData.array_id));
+
     if(direction==D_Entrance)
     {
         doorData.isSetIn=true;
         setBrush(QBrush(cEnter));
-        setPen(QPen(Qt::magenta, 2,Qt::SolidLine));
+        setPen(QPen(QBrush(QColor(qRgb(0xff,0x00,0x7f))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
 
-        doorLabel_shadow->setDefaultTextColor(Qt::black);
-        doorLabel_shadow->setFont(font1);
-        doorLabel_shadow->setPos(ix-5, iy-2);
-        doorLabel->setDefaultTextColor(Qt::white);
-        doorLabel->setFont(font2);
-        doorLabel->setPos(ix-3, iy);
+        //doorLabel_shadow->setDefaultTextColor(Qt::black);
+        //doorLabel_shadow->setFont(font1);
+        //doorLabel_shadow->setPos(ix-4, iy-7);
+        //doorLabel->setDefaultTextColor(Qt::white);
+        //doorLabel->setFont(font2);
+        doorLabel->setPos(ix+2, iy+2);
 
         this->setPos(ix, iy);
 
@@ -483,32 +504,32 @@ void ItemDoor::setDoorData(LevelDoors inD, int doorDir, bool init)
     {
         doorData.isSetOut=true;
         setBrush(QBrush(cExit));
-        setPen( QPen(Qt::darkMagenta, 2,Qt::SolidLine) );
+        setPen( QPen(QBrush(QColor(qRgb(0xc4,0x00,0x62))), 2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin) );
 
-        doorLabel_shadow->setDefaultTextColor(Qt::black);
-        doorLabel_shadow->setFont(font1);
-        doorLabel_shadow->setPos(ox+10, oy+8);
-        doorLabel->setDefaultTextColor(Qt::white);
-        doorLabel->setFont(font2);
-        doorLabel->setPos(ox+12, oy+10);
+        //doorLabel_shadow->setDefaultTextColor(Qt::black);
+        //doorLabel_shadow->setFont(font1);
+        //doorLabel_shadow->setPos(ox+10, oy+8);
+        //doorLabel->setDefaultTextColor(Qt::white);
+        //doorLabel->setFont(font2);
+        doorLabel->setPos(ox+16, oy+16);
 
         this->setPos(ox, oy);
 
         this->setData(0, "Door_exit"); // ObjType
     }
     grp->addToGroup(doorLabel);
-    grp->addToGroup(doorLabel_shadow);
+    //grp->addToGroup(doorLabel_shadow);
 
     this->setFlag(QGraphicsItem::ItemIsSelectable, (!scene->lock_door));
     this->setFlag(QGraphicsItem::ItemIsMovable, (!scene->lock_door));
 
-    doorLabel_shadow->setZValue(scene->doorZ+0.0000001);
-    doorLabel->setZValue(scene->doorZ+0.0000002);
+    //doorLabel_shadow->setZValue(scene->doorZ+0.0000001);
+    doorLabel->setZValue(scene->Z_sys_door+0.0000002);
 
     this->setData(1, QString::number(0) );
     this->setData(2, QString::number(doorData.array_id) );
 
-    this->setZValue(scene->doorZ);
+    this->setZValue(scene->Z_sys_door);
 
     if(!init)
     {
@@ -526,7 +547,7 @@ void ItemDoor::setLocked(bool lock)
 
 QRectF ItemDoor::boundingRect() const
 {
-    return QRectF(0,0,itemSize.width(),itemSize.height());
+    return QRectF(-1,-1,itemSize.width()+2,itemSize.height()+2);
 }
 
 void ItemDoor::setContextMenu(QMenu &menu)
@@ -539,6 +560,6 @@ void ItemDoor::setScenePoint(LvlScene *theScene)
     scene = theScene;
     grp = new QGraphicsItemGroup(this);
     doorLabel = NULL;
-    doorLabel_shadow = NULL;
+    //doorLabel_shadow = NULL;
 }
 

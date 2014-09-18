@@ -245,6 +245,6 @@ void WldScene::paste(WorldData BufferIn, QPoint pos)
     }
 
     WldData->modified = true;
-    //addPlaceHistory(newData);
+    addPlaceHistory(newData);
 
 }

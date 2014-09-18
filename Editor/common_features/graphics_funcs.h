@@ -31,6 +31,7 @@ public:
     static QPixmap loadPixmap(QString file);
     static QImage loadQImage(QString file);
     static QPixmap squareImage(QPixmap image, QSize targetSize);
+    static QPixmap drawDegitFont(int number);
 };
 
 #endif // GRAPHICS_FUNCS_H

@@ -16,7 +16,7 @@ public:
     /// \param confId pointer, where will be write the config index by item type
     /// \return The Pixmap
     ///
-    static QPixmap getItemGFX(int itemType, unsigned long ItemID, bool whole=false, long  *confId = NULL);
+    static QPixmap getItemGFX(int itemType, unsigned long ItemID, bool whole=false, long  *confId = NULL, QGraphicsScene *scene=NULL);
 };
 
 #endif // ITEMS_H

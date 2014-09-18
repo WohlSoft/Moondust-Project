@@ -21,7 +21,11 @@
 
 #include <QString>
 #include <QPixmap>
-#include <QBitmap>
+
+// //Defines:// //
+//  obj_npc     //
+//  npc_Markers //
+// //////////// //
 
 struct obj_npc
 {
@@ -90,7 +94,7 @@ struct obj_npc
 //    ; this option useful for non-standart algorithmic sprites (for example, bosses)
 
 //    ;custom-animation-alg=0		; Custom animation algorithm
-    // 0 simple frame range, 1 - frame Jump
+    // 0 simple frame range, 1 - frame Jump; 2 - custom animation sequances
     int custom_ani_alg;
 //    ;custom-animation-fl=0		; First frame for LEFT
     int custom_ani_fl;
@@ -100,6 +104,9 @@ struct obj_npc
     int custom_ani_fr;
 //    ;custom-animation-er=0		; end frame for RIGHT / Jump step
     int custom_ani_er;
+
+    QList<int> frames_left;     //Frame srquence for left
+    QList<int> frames_right;    //Frame srquence for right
 
 //    container=0			; NPC can containing inside other NPC (need enable special option type 2)
     bool container;
@@ -264,8 +271,38 @@ struct obj_npc
 
     bool default_special;
     long default_special_value;
+};
 
+
+
+struct npc_Markers
+{
+//    ;Defines for SMBX64
+    unsigned long bubble;
+//    bubble=283	; NPC-Container for packed in bubble
+    unsigned long egg;
+//    egg=96		; NPC-Container for packed in egg
+    unsigned long lakitu;
+//    lakitu=284	; NPC-Container for spawn by lakitu
+    unsigned long buried;
+//    burred=91	; NPC-Container for packed in herb
+
+    unsigned long ice_cube;
+//    icecube=263	; NPC-Container for frozen NPCs
+
+//    ;markers
+//    iceball=265
+    unsigned long iceball;
+//    fireball=13
+    unsigned long fireball;
+//    hammer=171
+    unsigned long hammer;
+//    boomerang=292
+    unsigned long boomerang;
+//    coin-in-block=10
+    unsigned long coin_in_block;
 
 };
+
 
 #endif // OBJ_NPC_H

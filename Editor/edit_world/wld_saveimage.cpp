@@ -83,7 +83,7 @@ void WldSaveImage::on_buttonBox_accepted()
 
 void WldSaveImage::on_buttonBox_rejected()
 {
-
+    reject();
 }
 
 void WldSaveImage::on_HideMusBoxes_clicked(bool checked)

@@ -23,10 +23,19 @@
 #include <QMimeData>
 
 #include "../common_features/graphics_funcs.h"
+#include "../common_features/items.h"
 
-PiecesModel::PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize, QObject *parent)
+PiecesModel::PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize, QGraphicsScene *scene, QObject *parent)
     : QAbstractListModel(parent), m_PieceSize(pieceSize), m_conf(conf), m_type(pieceType)
 {
+    mode = GFX_Staff;
+    scn = scene;
+    if(scn!=NULL)
+    {
+        if(QString(scn->metaObject()->className())=="LvlScene") mode = GFX_Level;
+        else
+        if(QString(scn->metaObject()->className())=="WldScene") mode = GFX_World;
+    }
 }
 
 QVariant PiecesModel::data(const QModelIndex &index, int role) const
@@ -54,77 +63,63 @@ void PiecesModel::addPiece(const int &index)
     if(m_type==LEVELPIECE_BLOCK)
     {
         pixmapNames.insert(pixmaps.size(), m_conf->main_block[index].name);
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(m_conf->main_block[index].image
-                         .copy(0,
-                         m_conf->main_block[index].frame_h*m_conf->main_block[index].display_frame,
-                         m_conf->main_block[index].image.width(),
-                         m_conf->main_block[index].frame_h), QSize(16,16) ));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
+                           Items::getItemGFX(ItemTypes::LVL_Block,
+                                    m_conf->main_block[index].id, false, NULL, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_block[index].id);
     }
     else
     if(m_type==LEVELPIECE_BGO)
     {
         pixmapNames.insert(pixmaps.size(), m_conf->main_bgo[index].name);
-        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(m_conf->main_bgo[index].image.copy(0,
-                             m_conf->main_bgo[index].frame_h*m_conf->main_bgo[index].display_frame,
-                             m_conf->main_bgo[index].image.width(),
-                             m_conf->main_bgo[index].frame_h), QSize(16,16)));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
+                           Items::getItemGFX(ItemTypes::LVL_BGO,
+                                    m_conf->main_bgo[index].id, false, NULL, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_bgo[index].id);
     }
     else
     if(m_type==LEVELPIECE_NPC)
     {
         pixmapNames.insert(pixmaps.size(), m_conf->main_npc[index].name);
-        pixmaps.insert(pixmaps.size(),
-                       GraphicsHelps::squareImage(m_conf->main_npc[index].image.copy(0,
-                             m_conf->main_npc[index].gfx_h*m_conf->main_npc[index].display_frame,
-                             m_conf->main_npc[index].image.width(),
-                             m_conf->main_npc[index].gfx_h ),
-                          QSize(16,16)));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
+                           Items::getItemGFX(ItemTypes::LVL_NPC,
+                                    m_conf->main_npc[index].id, false, NULL, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_npc[index].id);
     }
     else
     if(m_type==WORLDPIECE_TILE)
     {
-        pixmapNames.insert(pixmaps.size(), QString("tile-%1").arg(index));
-        pixmaps.insert(pixmaps.size(),
-                       GraphicsHelps::squareImage(m_conf->main_wtiles[index].image.copy(0,
-                             m_conf->main_wtiles[index].frame_h,
-                             m_conf->main_wtiles[index].image.width(),
-                             m_conf->main_wtiles[index].frame_h), QSize(16,16)));
+        pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
+                           Items::getItemGFX(ItemTypes::WLD_Tile,
+                                    m_conf->main_wtiles[index].id, false, NULL, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_wtiles[index].id);
     }
     else
     if(m_type==WORLDPIECE_SCENERY)
     {
-        pixmapNames.insert(pixmaps.size(), QString("scenery-%1").arg(index));
-        pixmaps.insert(pixmaps.size(),
-                       GraphicsHelps::squareImage(m_conf->main_wscene[index].image.copy(0,
-                            m_conf->main_wscene[index].frame_h*m_conf->main_wscene[index].display_frame,
-                            m_conf->main_wscene[index].image.width(),
-                            m_conf->main_wscene[index].frame_h), QSize(16,16)) );
+        pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
+                           Items::getItemGFX(ItemTypes::WLD_Scenery,
+                                    m_conf->main_wscene[index].id, false, NULL, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_wscene[index].id);
     }
     else
     if(m_type==WORLDPIECE_PATH)
     {
-        pixmapNames.insert(pixmaps.size(), QString("path-%1").arg(index));
-        pixmaps.insert(pixmaps.size(),
-                       GraphicsHelps::squareImage(m_conf->main_wpaths[index].image.copy(0,
-                            m_conf->main_wpaths[index].frame_h*m_conf->main_wpaths[index].display_frame,
-                            m_conf->main_wpaths[index].image.width(),
-                            m_conf->main_wpaths[index].frame_h),QSize(16,16)));
+        pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
+                           Items::getItemGFX(ItemTypes::WLD_Path,
+                                    m_conf->main_wpaths[index].id, false, NULL, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_wpaths[index].id);
     }
     else
     if(m_type==WORLDPIECE_LEVEL)
     {
-        pixmapNames.insert(pixmaps.size(), QString("level-%1").arg(index));
-        pixmaps.insert(pixmaps.size(),
-                       GraphicsHelps::squareImage(m_conf->main_wlevels[index].image.copy(0,
-                          m_conf->main_wlevels[index].frame_h*m_conf->main_wlevels[index].display_frame,
-                          m_conf->main_wlevels[index].image.width(),
-                          m_conf->main_wlevels[index].frame_h), QSize(16,16)));
+        pixmapNames.insert(pixmaps.size(), QString("%1").arg(index));
+        pixmaps.insert(pixmaps.size(), GraphicsHelps::squareImage(
+                           Items::getItemGFX(ItemTypes::WLD_Level,
+                                    m_conf->main_wlevels[index].id, false, NULL, scn), QSize(32,32) ));
         pixmapId.insert(pixmaps.size(), m_conf->main_wlevels[index].id);
     }
     endInsertRows();

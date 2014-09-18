@@ -21,316 +21,9 @@
 #include "file_formats.h"
 
 
-
-
-//*********************************************************
-//*******************Dummy arrays**************************
-//*********************************************************
-
-
-//Default dataSets
-LevelNPC    FileFormats::dummyLvlNpc()
-{
-    LevelNPC dummyNPC;
-    dummyNPC.x = 0;
-    dummyNPC.y = 0 ;
-    dummyNPC.direct = -1;
-    dummyNPC.id=0;
-    dummyNPC.special_data=0;
-    dummyNPC.special_data2=0;
-    dummyNPC.generator=false;
-    dummyNPC.generator_type=1;
-    dummyNPC.generator_direct=1;
-    dummyNPC.generator_period=20;
-    dummyNPC.msg="";
-    dummyNPC.friendly=false;
-    dummyNPC.nomove=false;
-    dummyNPC.legacyboss=false;
-    dummyNPC.layer = "Default";
-    dummyNPC.event_activate="";
-    dummyNPC.event_die="";
-    dummyNPC.event_talk="";
-    dummyNPC.event_nomore="";
-    dummyNPC.attach_layer="";
-
-    dummyNPC.array_id=0;
-    dummyNPC.index=0;
-    dummyNPC.is_star=false;
-    return dummyNPC;
-}
-
-LevelDoors  FileFormats::dummyLvlDoor()
-{
-    LevelDoors dummyDoor;
-
-    dummyDoor.ix = 0;
-    dummyDoor.iy = 0;
-    dummyDoor.isSetIn = false;
-    dummyDoor.ox = 0;
-    dummyDoor.oy = 0;
-    dummyDoor.isSetOut = false;
-    dummyDoor.idirect=1;
-    dummyDoor.odirect=1;
-    dummyDoor.type=0;
-    dummyDoor.lname = "";
-    dummyDoor.warpto = 0;
-    dummyDoor.lvl_i = false;
-    dummyDoor.lvl_o = false;
-    dummyDoor.world_x = -1;
-    dummyDoor.world_y = -1;
-    dummyDoor.stars = 0;
-    dummyDoor.layer = "Default";
-    dummyDoor.unknown = false;
-    dummyDoor.noyoshi = false;
-    dummyDoor.allownpc = false;
-    dummyDoor.locked = false;
-
-    dummyDoor.array_id = 0;
-    dummyDoor.index = 0;
-
-    return dummyDoor;
-}
-
-
-LevelBlock  FileFormats::dummyLvlBlock()
-{
-    LevelBlock dummyBlock;
-    dummyBlock.x = 0;
-    dummyBlock.y = 0;
-    dummyBlock.w = 0;
-    dummyBlock.h = 0;
-    dummyBlock.id = 0;
-    dummyBlock.npc_id = 0;
-    dummyBlock.invisible = false;
-    dummyBlock.slippery = false;
-    dummyBlock.layer = "Default";
-    dummyBlock.event_destroy = "";
-    dummyBlock.event_hit = "";
-    dummyBlock.event_no_more = "";
-
-    dummyBlock.array_id = 0;
-    dummyBlock.index = 0;
-    return dummyBlock;
-}
-
-LevelBGO FileFormats::dummyLvlBgo()
-{
-    LevelBGO dummyBGO;
-    dummyBGO.x = 0;
-    dummyBGO.y = 0;
-    dummyBGO.id = 0;
-    dummyBGO.layer = "Default";
-    dummyBGO.smbx64_sp = -1;
-    dummyBGO.smbx64_sp_apply = -1;
-
-    dummyBGO.array_id  = 0;
-    dummyBGO.index = 0;
-    return dummyBGO;
-}
-
-
-LevelWater FileFormats::dummyLvlWater()
-{
-    LevelWater dummyWater;
-    dummyWater.x  = 0;
-    dummyWater.y = 0;
-    dummyWater.w = 0;
-    dummyWater.h = 0;
-    dummyWater.unknown = 0;
-    dummyWater.quicksand = false;
-    dummyWater.layer = "Default";
-
-    dummyWater.array_id = 0;
-    dummyWater.index = 0;
-    return dummyWater;
-}
-
-LevelEvents FileFormats::dummyLvlEvent()
-{
-    LevelEvents dummyEvent;
-
-    dummyEvent.name="";
-    dummyEvent.msg="";
-    dummyEvent.sound_id=0;
-    dummyEvent.end_game=0;
-    dummyEvent.trigger="";
-    dummyEvent.trigger_timer=0;
-    dummyEvent.nosmoke=false;
-    dummyEvent.altjump=false;
-    dummyEvent.altrun=false;
-    dummyEvent.down=false;
-    dummyEvent.drop=false;
-    dummyEvent.jump=false;
-    dummyEvent.left=false;
-    dummyEvent.right=false;
-    dummyEvent.run=false;
-    dummyEvent.start=false;
-    dummyEvent.up=false;
-    dummyEvent.autostart=false;
-    dummyEvent.movelayer="";
-    dummyEvent.layer_speed_x=0.0;
-    dummyEvent.layer_speed_y=0.0;
-    dummyEvent.move_camera_x=0.0;
-    dummyEvent.move_camera_y=0.0;
-    dummyEvent.scroll_section=0;
-
-    LevelEvents_layers events_layers;
-    dummyEvent.layers.clear();
-    for(int j=0; j< 21; j++)
-    {
-        events_layers.hide="";
-        events_layers.show="";
-        events_layers.toggle="";
-        dummyEvent.layers.push_back(events_layers);
-    }
-    dummyEvent.layers_hide.clear();
-    dummyEvent.layers_show.clear();
-    dummyEvent.layers_toggle.clear();
-
-    LevelEvents_Sets events_sets;
-    dummyEvent.sets.clear();
-    for(int j=0; j< 21; j++)
-    {
-        events_sets.music_id=-1;
-        events_sets.background_id=-1;
-        events_sets.position_left=-1;
-        events_sets.position_top=0;
-        events_sets.position_bottom=0;
-        events_sets.position_right=0;
-        dummyEvent.sets.push_back(events_sets);
-    }
-
-
-    dummyEvent.array_id=0;
-    return dummyEvent;
-}
-
-
-LevelSection FileFormats::dummyLvlSection()
-{
-    LevelSection dummySection;
-    dummySection.id = 0;
-    dummySection.size_top=0;
-    dummySection.size_bottom=0;
-    dummySection.size_left=0;
-    dummySection.size_right=0;
-    dummySection.music_id=0;
-    dummySection.bgcolor=16291944;
-    dummySection.IsWarp=false;
-    dummySection.OffScreenEn=false;
-    dummySection.background=0;
-    dummySection.noback=false;
-    dummySection.underwater=false;
-    dummySection.music_file="";
-    dummySection.PositionX = -10;
-    dummySection.PositionY = -10;
-
-    return dummySection;
-}
-
-
-LevelData FileFormats::dummyLvlDataArray()
-{
-    LevelData NewFileData;
-
-    NewFileData.ReadFileValid = true;
-    NewFileData.modified = true;
-    NewFileData.untitled = true;
-
-    NewFileData.CurSection=0;
-    NewFileData.playmusic=0;
-
-    NewFileData.LevelName = "";
-    NewFileData.stars = 0;
-
-    NewFileData.bgo_array_id = 0;
-    NewFileData.blocks_array_id = 0;
-    NewFileData.doors_array_id = 1;
-    NewFileData.events_array_id = 0;
-    NewFileData.layers_array_id = 0;
-    NewFileData.npc_array_id = 0;
-    NewFileData.water_array_id = 0;
-
-    //Create Section array
-    LevelSection section;
-    for(int i=0; i<21;i++)
-    {
-        section = dummyLvlSection();
-        section.id = i;
-        NewFileData.sections.push_back( section );
-    }
-
-    //Create players array
-    PlayerPoint players;
-        players.x = 0;
-        players.y = 0;
-        players.w = 0;
-        players.h = 0;
-        players.id=0;
-        for(int i=0; i<2;i++)
-        {
-            players.id++;
-            NewFileData.players.push_back(players);
-        }
-
-
-    //Create system layers
-        //Default
-        //Destroyed Blocks
-        //Spawned NPCs
-
-    LevelLayers layers;
-        layers.hidden = false;
-        layers.name = "Default";
-        layers.array_id = NewFileData.layers_array_id++;
-        NewFileData.layers.push_back(layers);
-
-        layers.hidden = true;
-        layers.name = "Destroyed Blocks";
-        layers.array_id = NewFileData.layers_array_id++;
-        NewFileData.layers.push_back(layers);
-
-        layers.hidden = false;
-        layers.name = "Spawned NPCs";
-        layers.array_id = NewFileData.layers_array_id++;
-        NewFileData.layers.push_back(layers);
-
-    //Create system events
-        //Level - Start
-        //P Switch - Start
-        //P Switch - End
-
-    LevelEvents events = dummyLvlEvent();
-
-        events.array_id = NewFileData.events_array_id;
-        NewFileData.events_array_id++;
-
-        events.name = "Level - Start";
-        NewFileData.events.push_back(events);
-
-        events.array_id = NewFileData.events_array_id;
-        NewFileData.events_array_id++;
-
-        events.name = "P Switch - Start";
-        NewFileData.events.push_back(events);
-
-        events.array_id = NewFileData.events_array_id;
-        NewFileData.events_array_id++;
-
-        events.name = "P Switch - End";
-        NewFileData.events.push_back(events);
-
-
-return NewFileData;
-}
-
-
-
-
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-
 
 //Level File Read
 LevelData FileFormats::ReadLevelFile(QFile &inf)
@@ -354,7 +47,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     LevelBGO bgodata;
     LevelNPC npcdata;
     LevelDoors doors;
-    LevelWater waters;
+    LevelPhysEnv waters;
     LevelLayers layers;
     LevelEvents events;
     LevelEvents_layers events_layers;
@@ -365,7 +58,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     FileData.bgo_array_id = 1;
     FileData.npc_array_id = 1;
     FileData.doors_array_id = 1;
-    FileData.water_array_id = 1;
+    FileData.physenv_array_id = 1;
     FileData.layers_array_id = 1;
     FileData.events_array_id = 1;
 
@@ -499,6 +192,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     //Player's point config
     for(i=0;i<2;i++)
     {
+        players=dummyLvlPlayerPoint();
+
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //1 Player x
             goto badfile;
@@ -521,7 +216,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
         players.id = i+1;
 
-    FileData.players.push_back(players);    //Add player in array
+        if(players.x!=0 && players.y!=0 && players.w !=0 && players.h != 0) //Don't add into array non-exist point
+            FileData.players.push_back(players);    //Add player in array
     }
 
 
@@ -558,7 +254,37 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         if(SMBX64::sInt(line)) //Containing NPC id
             goto badfile;
-        else blocks.npc_id = line.toInt();
+        else
+        {
+            long xnpcID = line.toInt();
+            //Convert NPC-ID value from SMBX1/2 to SMBX64
+            if(file_format<18)
+            {
+                switch(xnpcID)
+                {
+                    case 100://Mushroom
+                        xnpcID = 1009; break;
+                    case 101://Goomba
+                        xnpcID = 1001; break;
+                    case 102://Fire flower
+                        xnpcID = 1014; break;
+                    case 103://Super leaf
+                        xnpcID = 1034; break;
+                    case 104://Shoe
+                        xnpcID = 1035; break;
+                    default:
+                        break;
+                }
+            }
+            if(xnpcID != 0)
+            {
+                if(xnpcID > 1000)
+                    xnpcID = xnpcID-1000;
+                else
+                    xnpcID *= -1;
+            }
+            blocks.npc_id = xnpcID;
+        }
 
         str_count++;line = in.readLine();
         if(SMBX64::wBool(line)) //Invisible
@@ -644,7 +370,10 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         bgodata.smbx64_sp = -1;
 
         if( (file_format < 10) && (bgodata.id==65) ) //set foreground for BGO-65 (SMBX 1.0)
+        {
+            bgodata.z_mode = LevelBGO::Foreground1;
             bgodata.smbx64_sp = 80;
+        }
 
         bgodata.array_id = FileData.bgo_array_id;
         FileData.bgo_array_id++;
@@ -942,7 +671,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //No Yoshi
                 goto badfile;
-            else doors.noyoshi = SMBX64::wBoolR(line);
+            else doors.novehicles = SMBX64::wBoolR(line);
 
             str_count++;line = in.readLine();
             if(SMBX64::wBool(line)) //Allow NPC
@@ -975,7 +704,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
         str_count++;line = in.readLine();
         while(line!="\"next\"")
         {
-            waters = dummyLvlWater();
+            waters = dummyLvlPhysEnv();
             if(SMBX64::sInt(line)) //Water x
                 goto badfile;
             else waters.x = line.toInt();
@@ -1016,12 +745,12 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 goto badfile;
             else waters.layer = removeQuotes(line);
 
-            waters.array_id = FileData.water_array_id;
-            FileData.water_array_id++;
+            waters.array_id = FileData.physenv_array_id;
+            FileData.physenv_array_id++;
 
-            waters.index = FileData.water.size(); //Apply element index
+            waters.index = FileData.physez.size(); //Apply element index
 
-        FileData.water.push_back(waters); //Add Water area into array
+        FileData.physez.push_back(waters); //Add Water area into array
         str_count++;line = in.readLine();
         }
     }
@@ -1040,6 +769,8 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             if(SMBX64::wBool(line)) //hidden layer
                 goto badfile;
             else layers.hidden = SMBX64::wBoolR(line);
+
+            layers.locked = false;
 
             layers.array_id = FileData.layers_array_id;
             FileData.layers_array_id++;
@@ -1163,52 +894,52 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //Hold ALT-JUMP player control
                     goto badfile;
-                else events.altjump = SMBX64::wBoolR(line);
+                else events.ctrl_altjump = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //ALT-RUN
                     goto badfile;
-                else events.altrun = SMBX64::wBoolR(line);
+                else events.ctrl_altrun = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //DOWN
                     goto badfile;
-                else events.down = SMBX64::wBoolR(line);
+                else events.ctrl_down = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //DROP
                     goto badfile;
-                else events.drop = SMBX64::wBoolR(line);
+                else events.ctrl_drop = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //JUMP
                     goto badfile;
-                else events.jump = SMBX64::wBoolR(line);
+                else events.ctrl_jump = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //LEFT
                     goto badfile;
-                else events.left = SMBX64::wBoolR(line);
+                else events.ctrl_left = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //RIGHT
                     goto badfile;
-                else events.right = SMBX64::wBoolR(line);
+                else events.ctrl_right = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //RUN
                     goto badfile;
-                else events.run = SMBX64::wBoolR(line);
+                else events.ctrl_run = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //START
                     goto badfile;
-                else events.start = SMBX64::wBoolR(line);
+                else events.ctrl_start = SMBX64::wBoolR(line);
 
                 str_count++;line = in.readLine();
                 if(SMBX64::wBool(line)) //UP
                     goto badfile;
-                else events.up = SMBX64::wBoolR(line);
+                else events.ctrl_up = SMBX64::wBoolR(line);
             }
             /*
             else
@@ -1431,14 +1162,27 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         //append dummy section data, if array size is less than 21
 
     //Players start point
-    for(i=0; i<FileData.players.size() && i<2; i++ )
+    int playerpoints=0;
+    for(j=1;j<=2 && playerpoints<2;j++)
     {
-        TextData += SMBX64::IntS(FileData.players[i].x);
-        TextData += SMBX64::IntS(FileData.players[i].y);
-        TextData += SMBX64::IntS(FileData.players[i].w);
-        TextData += SMBX64::IntS(FileData.players[i].h);
+        bool found=false;
+        for(i=0; i<FileData.players.size(); i++ )
+        {
+            if(FileData.players[i].id!=(unsigned int)j) continue;
+            TextData += SMBX64::IntS(FileData.players[i].x);
+            TextData += SMBX64::IntS(FileData.players[i].y);
+            TextData += SMBX64::IntS(FileData.players[i].w);
+            TextData += SMBX64::IntS(FileData.players[i].h);
+            playerpoints++;found=true;
+        }
+        if(!found)
+        {
+            TextData += "0\n0\n0\n0\n";
+            playerpoints++;
+        }
+
     }
-    for( ;i<2; i++ ) //Protector
+    for( ;playerpoints<2; playerpoints++ ) //Protector
         TextData += "0\n0\n0\n0\n";
 
 
@@ -1461,7 +1205,15 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::IntS((*block).h);
         TextData += SMBX64::IntS((*block).w);
         TextData += SMBX64::IntS((*block).id);
-        TextData += SMBX64::IntS((*block).npc_id);
+        int npcID = (*block).npc_id;
+        if(npcID < 0)
+        {
+            npcID *= -1; if(npcID>99) npcID = 99;
+        }
+        else
+        if(npcID!=0)
+            npcID+=1000;
+        TextData += SMBX64::IntS(npcID);
         TextData += SMBX64::BoolS((*block).invisible);
         TextData += SMBX64::BoolS((*block).slippery);
         TextData += SMBX64::qStrS((*block).layer);
@@ -1578,22 +1330,22 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
         TextData += SMBX64::IntS(FileData.doors[i].stars);
         TextData += SMBX64::qStrS(FileData.doors[i].layer);
         TextData += SMBX64::BoolS(FileData.doors[i].unknown);
-        TextData += SMBX64::BoolS(FileData.doors[i].noyoshi);
+        TextData += SMBX64::BoolS(FileData.doors[i].novehicles);
         TextData += SMBX64::BoolS(FileData.doors[i].allownpc);
         TextData += SMBX64::BoolS(FileData.doors[i].locked);
     }
     TextData += "\"next\"\n";//Separator
 
     //Water
-    for(i=0; i<FileData.water.size(); i++)
+    for(i=0; i<FileData.physez.size(); i++)
     {
-        TextData += SMBX64::IntS(FileData.water[i].x);
-        TextData += SMBX64::IntS(FileData.water[i].y);
-        TextData += SMBX64::IntS(FileData.water[i].w);
-        TextData += SMBX64::IntS(FileData.water[i].h);
-        TextData += SMBX64::IntS(FileData.water[i].unknown);
-        TextData += SMBX64::BoolS(FileData.water[i].quicksand);
-        TextData += SMBX64::qStrS(FileData.water[i].layer);
+        TextData += SMBX64::IntS(FileData.physez[i].x);
+        TextData += SMBX64::IntS(FileData.physez[i].y);
+        TextData += SMBX64::IntS(FileData.physez[i].w);
+        TextData += SMBX64::IntS(FileData.physez[i].h);
+        TextData += SMBX64::IntS(FileData.physez[i].unknown);
+        TextData += SMBX64::BoolS(FileData.physez[i].quicksand);
+        TextData += SMBX64::qStrS(FileData.physez[i].layer);
     }
     TextData += "\"next\"\n";//Separator
 
@@ -1655,16 +1407,16 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
 
         TextData += SMBX64::BoolS(FileData.events[i].nosmoke);
 
-        TextData += SMBX64::BoolS(FileData.events[i].altjump);
-        TextData += SMBX64::BoolS(FileData.events[i].altrun);
-        TextData += SMBX64::BoolS(FileData.events[i].down);
-        TextData += SMBX64::BoolS(FileData.events[i].drop);
-        TextData += SMBX64::BoolS(FileData.events[i].jump);
-        TextData += SMBX64::BoolS(FileData.events[i].left);
-        TextData += SMBX64::BoolS(FileData.events[i].right);
-        TextData += SMBX64::BoolS(FileData.events[i].run);
-        TextData += SMBX64::BoolS(FileData.events[i].start);
-        TextData += SMBX64::BoolS(FileData.events[i].up);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_altjump);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_altrun);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_down);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_drop);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_jump);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_left);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_right);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_run);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_start);
+        TextData += SMBX64::BoolS(FileData.events[i].ctrl_up);
 
         TextData += SMBX64::BoolS(FileData.events[i].autostart);
 

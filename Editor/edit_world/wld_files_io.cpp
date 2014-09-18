@@ -33,6 +33,8 @@
 
 #include "../common_features/logger.h"
 
+#include "../common_features/util.h"
+
 #include "../common_features/mainwinconnect.h"
 
 #include "../main_window/music_player.h"
@@ -47,10 +49,17 @@ void WorldEdit::ExportToImage_fn()
 
     MainWinConnect::pMainWin->on_actionSelect_triggered();
 
-    scene->captutedSize.setX(ui->graphicsView->horizontalScrollBar()->value());
-    scene->captutedSize.setY(ui->graphicsView->verticalScrollBar()->value());
-    scene->captutedSize.setWidth(ui->graphicsView->width());
-    scene->captutedSize.setHeight(ui->graphicsView->height());
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+
+    scene->captutedSize.setX(qRound(qreal(ui->graphicsView->horizontalScrollBar()->value())/zoom)+10 );
+    scene->captutedSize.setY(qRound(qreal(ui->graphicsView->verticalScrollBar()->value())/zoom)+10 );
+    scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width())/zoom)-20);
+    scene->captutedSize.setHeight(qRound(qreal(ui->graphicsView->viewport()->height())/zoom)-20);
 
     scene->setScreenshotSelector(true);
 }
@@ -76,8 +85,15 @@ void WorldEdit::ExportingReady() //slot
         ExportImage.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
         ExportImage.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, ExportImage.size(), qApp->desktop()->availableGeometry()));
         if(ExportImage.exec()!=QDialog::Rejected)
+        {
+            WriteToLog(QtDebugMsg, "ImageExport -> accepted");
             imgSize = ExportImage.imageSize;
-        else return;
+            WriteToLog(QtDebugMsg, QString("ImageExport -> Image size %1x%2").arg(imgSize.width()).arg(imgSize.height()));
+        }
+        else {
+            WriteToLog(QtDebugMsg, "ImageExport -> Rejected");
+            return;
+        }
 
         proportion = ExportImage.saveProportion;
         hideMusic =  ExportImage.hideMusBoxes;
@@ -86,14 +102,19 @@ void WorldEdit::ExportingReady() //slot
         if((imgSize.width()<0)||(imgSize.height()<0))
             return;
 
+        WriteToLog(QtDebugMsg, "ImageExport -> Open file dialog");
+
         QString fileName = QFileDialog::getSaveFileName(this, tr("Export selected area to image"),
             latest_export_path + "/" +
-            QString("%1_x%2_y%3.png").arg( (WldData.EpisodeTitle.isEmpty())? QFileInfo(curFile).baseName() : WldData.EpisodeTitle.replace(QChar(' '), QChar('_')) )
+            QString("%1_x%2_y%3.png").arg( (WldData.EpisodeTitle.isEmpty())? QFileInfo(curFile).baseName() : util::filePath(WldData.EpisodeTitle.replace(QChar(' '), QChar('_'))) )
                                         .arg(scene->captutedSize.x())
                                         .arg(scene->captutedSize.y()), tr("PNG Image (*.png)"));
+
+        WriteToLog(QtDebugMsg, "ImageExport -> Check file dialog...");
         if (fileName.isEmpty())
             return;
 
+        WriteToLog(QtDebugMsg, "ImageExport -> Start exporting...");
         QFileInfo exported(fileName);
 
         QProgressDialog progress(tr("Saving section image..."), tr("Abort"), 0, 100, this);
@@ -480,7 +501,7 @@ void WorldEdit::setCurrentFile(const QString &fileName)
     WldData.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
-    setWindowTitle(WldData.EpisodeTitle =="" ? userFriendlyCurrentFile() : WldData.EpisodeTitle );
+    setWindowTitle(QString(WldData.EpisodeTitle =="" ? userFriendlyCurrentFile() : WldData.EpisodeTitle).replace("&", "&&&") );
 }
 
 QString WorldEdit::strippedName(const QString &fullFileName)

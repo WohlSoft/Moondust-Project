@@ -64,7 +64,7 @@ bool toGif(QImage& img, QString& path){
     if(QFile(path).exists()) // Remove old file
         QFile::remove(path);
 
-    GifFileType* t = EGifOpenFileName(path.toStdString().c_str(),true, &errcode);
+    GifFileType* t = EGifOpenFileName(path.toLocal8Bit().data(),true, &errcode);
     if(!t){
         EGifCloseFile(t, &errcode);
         QTextStream(stdout)  << "Can't open\n";
@@ -168,7 +168,7 @@ QImage fromBMP(QString &file)
     QImage errImg;
 
     BMP tarBMP;
-    if(!tarBMP.ReadFromFile(file.toStdString().c_str())){
+    if(!tarBMP.ReadFromFile( file.toLocal8Bit().data() )){
         //WriteToLog(QtCriticalMsg, QString("Error: File does not exsist"));
         return errImg; //Check if empty with errImg.isNull();
     }
@@ -219,6 +219,7 @@ void doMagicIn(QString path, QString q, QString OPath)
     //skip unexists pairs
     if(!QFile(path+q).exists())
         return;
+
     if(!QFile(path+imgFileM).exists())
     {
         QString saveTo;
@@ -226,7 +227,7 @@ void doMagicIn(QString path, QString q, QString OPath)
         QImage image = loadQImage(path+q);
         if(image.isNull()) return;
 
-        QTextStream(stdout) << path+q+"\n";
+        QTextStream(stdout) << QString(path+q+"\n").toUtf8().data();
 
         saveTo = QString(OPath+(tmp[0].toLower())+".gif");
         //overwrite source image (convert BMP to GIF)
@@ -245,8 +246,14 @@ void doMagicIn(QString path, QString q, QString OPath)
     if(!noBackUp)
     {
         //create backup dir
-        if(!QDir(path+"_backup").exists())
-            QDir().mkdir(path+"_backup");
+        QDir backup(path+"_backup/");
+        if(!backup.exists())
+        {
+            QTextStream(stdout) << QString("Create backup with path %1\n").arg(path+"_backup");
+            if(!backup.mkdir("."))
+                QTextStream(stderr) << QString("WARNING! Can't create backup directory %1\n").arg(path+"_backup");
+
+        }
 
         //create Back UP of source images
         if(!QFile(path+"_backup/"+q).exists())
@@ -268,7 +275,7 @@ void doMagicIn(QString path, QString q, QString OPath)
         //Save before fix
         //target.save(OPath+tmp[0]+"_before.png");
         //mask.save(OPath+tmp[0]+"_mask_before.png");
-        QTextStream(stdout) << path+q+"\n";
+        QTextStream(stdout) << QString(path+q+"\n").toUtf8().data();
 
 
     //fix
@@ -358,7 +365,7 @@ void doMagicIn(QString path, QString q, QString OPath)
 
     }
     else
-    QTextStream(stdout) << path+q+" - WRONG!\n";
+    QTextStream(stderr) << path+q+" - WRONG!\n";
 }
 
 int main(int argc, char *argv[])
@@ -374,6 +381,11 @@ int main(int argc, char *argv[])
 
     bool walkSubDirs=false;
     bool nopause=false;
+    bool cOpath=false;
+    bool singleFiles=false;
+
+    QString argPath;
+    QString argOPath;
 
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Lazily-made image masks fix tool by Wohlstand. Version "<< _FILE_VERSION << _FILE_RELEASE << "\n";
@@ -381,84 +393,136 @@ int main(int argc, char *argv[])
     QTextStream(stdout) <<"This program is distributed under the GNU GPLv3 license\n";
     QTextStream(stdout) <<"============================================================================\n";
 
+    QRegExp isGif = QRegExp("*.gif");
+    isGif.setPatternSyntax(QRegExp::Wildcard);
+
+    QRegExp isMask = QRegExp("*m.gif");
+    isMask.setPatternSyntax(QRegExp::Wildcard);
+
     if(a.arguments().size()==1)
     {
         goto DisplayHelp;
     }
 
-    if(a.arguments().filter("--help", Qt::CaseInsensitive).size()>0)
+    for(int arg=0; arg<a.arguments().size(); arg++)
     {
-        goto DisplayHelp;
+        if(a.arguments().at(arg)=="--help")
+        {
+            goto DisplayHelp;
+        }
+        else
+        if(a.arguments().at(arg)=="-N")
+        {
+            noBackUp=true;
+        }
+        else
+        if(a.arguments().at(arg)=="-W")
+        {
+            walkSubDirs=true;
+        }
+        else
+        if(a.arguments().at(arg)=="-G")
+        {
+            DarkGray=true;
+        }
+        else
+        if(a.arguments().at(arg)=="--nopause")
+        {
+            nopause=true;
+        }
+        else
+        {
+            //if begins from "-O"
+            if(a.arguments().at(arg).size()>=2 && a.arguments().at(arg).at(0)=='-'&& a.arguments().at(arg).at(1)=='O')
+              {  argOPath=a.arguments().at(arg); argOPath.remove(0,2); }
+            else
+            {
+                if(isMask.exactMatch(a.arguments().at(arg)))
+                    continue;
+                else
+                    if(isGif.exactMatch(a.arguments().at(arg)))
+                    {
+                        fileList << a.arguments().at(arg);
+                        singleFiles=true;
+                    }
+                else
+                    argPath=a.arguments().at(arg);
+            }
+        }
     }
 
-    if(a.arguments().filter("-W", Qt::CaseInsensitive).size()>0)
+    if(!singleFiles)
     {
-        walkSubDirs=true;
+        if(argPath.isEmpty()) goto WrongInputPath;
+        if(!QDir(argPath).exists()) goto WrongInputPath;
+
+        imagesDir.setPath(argPath);
+        filters << "*.gif" << "*.GIF";
+        imagesDir.setSorting(QDir::Name);
+        imagesDir.setNameFilters(filters);
+
+        path = imagesDir.absolutePath() + "/";
     }
 
-    if(a.arguments().filter("-N", Qt::CaseInsensitive).size()>0)
+    if(!argOPath.isEmpty())
     {
-       noBackUp=true;
-    }
-
-    if(a.arguments().filter("-G", Qt::CaseInsensitive).size()>0)
-    {
-       DarkGray=true;
-    }
-
-    if(a.arguments().filter("--nopause", Qt::CaseInsensitive).size()>0)
-    {
-        nopause=true;
-    }
-
-    imagesDir.setPath(a.arguments().at(1));
-    filters << "*.gif" << "*.GIF";
-    imagesDir.setSorting(QDir::Name);
-    imagesDir.setNameFilters(filters);
-
-    path = imagesDir.absolutePath() + "/";
-
-    if(a.arguments().filter("-O", Qt::CaseSensitive).size()>0)
-    {
-        OPath = a.arguments().filter("-O", Qt::CaseSensitive).first().remove(0,2);
+        OPath = argOPath;
         if(!QFileInfo(OPath).isDir())
             goto WrongOutputPath;
 
         OPath = QDir(OPath).absolutePath() + "/";
     }
     else
+    {
+        cOpath=true;
         OPath=path;
+    }
 
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Converting images...\n";
     QTextStream(stdout) <<"============================================================================\n";
 
-    QTextStream(stdout) << QString("Input path:  "+path+"\n");
-    QTextStream(stdout) << QString("Output path: "+OPath+"\n");
+    if(!singleFiles)
+        QTextStream(stdout) << QString("Input path:  "+path+"\n").toUtf8().data();
+    QTextStream(stdout) << QString("Output path: "+OPath+"\n").toUtf8().data();
     QTextStream(stdout) <<"============================================================================\n";
-    fileList << imagesDir.entryList(filters);
-
-    if(!walkSubDirs)
-    foreach(QString q, fileList)
+    if(singleFiles) //By files
     {
-        doMagicIn(path, q, OPath);
+        foreach(QString q, fileList)
+        {
+            path=QFileInfo(q).absoluteDir().path()+"/";
+            QString fname = QFileInfo(q).fileName();
+            if(cOpath) OPath=path;
+            doMagicIn(path, fname, OPath);
+        }
     }
     else
     {
-        QDirIterator dirsList(imagesDir.absolutePath(), filters,
-                                  QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
-                              QDirIterator::Subdirectories);
+        fileList << imagesDir.entryList(filters);
+        if(!walkSubDirs)
+        foreach(QString q, fileList)
+        {
+            doMagicIn(path, q, OPath);
+        }
+        else
+        {
+            QDirIterator dirsList(imagesDir.absolutePath(), filters,
+                                      QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
+                                  QDirIterator::Subdirectories);
 
-        while(dirsList.hasNext())
-          {
-                dirsList.next();
-                if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip Backup dirs
-                    continue;
-                //qDebug()<< QFileInfo(dirsList.filePath()).dir().absolutePath();
-                doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), QFileInfo(dirsList.filePath()).dir().absolutePath()+"/");
-          }
+            while(dirsList.hasNext())
+              {
+                    dirsList.next();
+                    if(QFileInfo(dirsList.filePath()).dir().dirName()=="_backup") //Skip Backup dirs
+                        continue;
+
+                    if(cOpath) OPath=QFileInfo(dirsList.filePath()).dir().absolutePath()+"/";
+
+                    doMagicIn(QFileInfo(dirsList.filePath()).dir().absolutePath()+"/", dirsList.fileName(), OPath);
+              }
 
 
+        }
     }
 
     QTextStream(stdout) <<"============================================================================\n";
@@ -473,20 +537,24 @@ DisplayHelp:
     QTextStream(stdout) <<"This utility will fix lazily-made image masks:\n";
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Syntax:\n\n";
-    QTextStream(stdout) <<"   LazyFixTool [--help] /path/to/folder [-O/path/to/out] [-W] [-N] [-G]\n\n";
+    QTextStream(stdout) <<"   LazyFixTool [--help] [-N] [-G] file1.gif [file2.gif] [...] [-O/path/to/out]\n";
+    QTextStream(stdout) <<"   LazyFixTool [--help] [-W] [-N] [-G] /path/to/folder [-O/path/to/out]\n\n";
     QTextStream(stdout) <<" --help              - Display this help\n";
     QTextStream(stdout) <<" /path/to/folder     - path to a directory with a pair of GIF files\n";
     QTextStream(stdout) <<" -O/path/to/out      - path to a directory where the new images will be saved\n";
-    QTextStream(stdout) <<"                       Note: (with -W flag will be ignored)\n";
-    QTextStream(stdout) <<" -W                  - Walk in subdirectores\n";
+    QTextStream(stdout) <<" -W                  - Also look for images in subdirectories\n";
     QTextStream(stdout) <<" -N                  - Don't create backup\n";
-    QTextStream(stdout) <<" -G                  - Make gray shades on masks is more dark\n";
+    QTextStream(stdout) <<" -G                  - Make gray shades on masks darker\n";
     QTextStream(stdout) <<"\n\n";
 
     getchar();
 
     exit(0);
-    return a.exec();
+    return 0;
+WrongInputPath:
+    QTextStream(stdout) <<"============================================================================\n";
+    QTextStream(stdout) <<"Wrong output path!\n";
+    goto DisplayHelp;
 WrongOutputPath:
     QTextStream(stdout) <<"============================================================================\n";
     QTextStream(stdout) <<"Wrong output path!\n";

@@ -46,7 +46,12 @@ ItemNPC::ItemNPC(bool noScene, QGraphicsPixmapItem *parent)
     gridSize = 1;
     frameSize=1;
 
-    CurrentFrame=0;
+    extAnimator=false;
+    animatorID=-1;
+    imageSize = QRectF(0,0,10,10);
+
+    CurrentFrame=0; //Real frame
+    frameCurrent=0; //Timer frame
 
     imgOffsetX=0;
     imgOffsetY=0;
@@ -151,7 +156,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->setSelected(1);
             ItemMenu->clear();
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(npcData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(npcData.layer).replace("&", "&&&"));
 
             QAction *setLayer;
             QList<QAction *> layerItems;
@@ -166,7 +171,7 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -212,14 +217,14 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setRight->setChecked(npcData.direct==1);
                 setRight->deleteLater();
 
-            ItemMenu->addSeparator()->deleteLater();;
+            ItemMenu->addSeparator()->deleteLater();
 
             QAction *fri = ItemMenu->addAction(tr("Friendly"));
                 fri->setCheckable(1);
                 fri->setChecked( npcData.friendly );
                 fri->deleteLater();
 
-            QAction *stat = ItemMenu->addAction(tr("Not movable"));
+            QAction *stat = ItemMenu->addAction(tr("Doesn't move"));
                 stat->setCheckable(1);
                 stat->setChecked( npcData.nomove );
                 stat->deleteLater();
@@ -409,8 +414,22 @@ void ItemNPC::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 scene->openProps();
             }
             else
+            if(selected==newLayer)
             {
-                #include "item_set_layer.h"
+                scene->setLayerToSelected();
+            }
+            else
+            {
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
             }
         }
     }
@@ -460,15 +479,46 @@ void ItemNPC::changeDirection(int dir)
 {
     npcData.direct = dir;
 
-    //AnimationStop();
+    if(!extAnimator)
+    {
+        setAnimation(localProps.frames, localProps.framespeed, localProps.framestyle, dir,
+        localProps.custom_animate,
+            localProps.custom_ani_fl,
+            localProps.custom_ani_el,
+            localProps.custom_ani_fr,
+            localProps.custom_ani_er,
+        true);
+    }
+    else
+    {
 
-    setAnimation(localProps.frames, localProps.framespeed, localProps.framestyle, dir,
-    localProps.custom_animate,
-        localProps.custom_ani_fl,
-        localProps.custom_ani_el,
-        localProps.custom_ani_fr,
-        localProps.custom_ani_er,
-    true);
+        direction = dir;
+        if(direction==0) //if direction=random
+        {
+            direction=((0==qrand()%2)?-1:1); //set randomly 1 or -1
+        }
+        curDirect = direction;
+        double BurriedOffset = 0;
+
+        if(!DisableScene)
+            BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
+
+        imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
+        imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
+                                 - BurriedOffset);
+
+        setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
+
+        offseted = imageSize;
+        offseted.setLeft(offseted.left()+this->offset().x());
+        offseted.setTop(offseted.top()+this->offset().y());
+        offseted.setRight(offseted.right()+this->offset().x());
+        offseted.setBottom(offseted.bottom()+this->offset().y());
+
+        update();
+
+    }
+
     arrayApply();
 }
 
@@ -628,6 +678,9 @@ void ItemNPC::arrayApply()
 
     bool found=false;
 
+    npcData.x = qRound(this->scenePos().x());
+    npcData.y = qRound(this->scenePos().y());
+
     if(npcData.index < (unsigned int)scene->LvlData->npc.size())
     { //Check index
         if(npcData.array_id == scene->LvlData->npc[npcData.index].array_id)
@@ -682,6 +735,7 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     mainImage = pixmap;
     this->setPixmap(mainImage);
     double BurriedOffset = 0;
+    imageSize = pixmap.rect();
 
     if(!DisableScene)
         BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
@@ -693,6 +747,12 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     //grid_attach_style
 
     setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
+
+    offseted = imageSize;
+    offseted.setLeft(offseted.left()+this->offset().x());
+    offseted.setTop(offseted.top()+this->offset().y());
+    offseted.setRight(offseted.right()+this->offset().x());
+    offseted.setBottom(offseted.bottom()+this->offset().y());
 }
 
 void ItemNPC::setNpcData(LevelNPC inD)
@@ -704,9 +764,38 @@ void ItemNPC::setNpcData(LevelNPC inD)
 QRectF ItemNPC::boundingRect() const
 {
     if(!animated)
-        return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, mainImage.width(), mainImage.height());
+        return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, imageSize.width(), imageSize.height());
     else
         return QRectF(0+imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), 0+imgOffsetY, localProps.gfx_w, localProps.gfx_h);
+}
+
+
+void ItemNPC::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    if(!extAnimator)
+    {
+        QGraphicsPixmapItem::paint(painter,option, widget); return;
+    }
+
+    if(animatorID<0)
+    {
+        painter->drawRect(QRect(imgOffsetX,imgOffsetY,1,1));
+        return;
+    }
+
+    if(scene->animates_NPC.size()>animatorID)
+        painter->drawPixmap(offseted, scene->animates_NPC[animatorID]->image(curDirect), scene->animates_NPC[animatorID]->image(curDirect).rect());
+    else
+        painter->drawRect(QRect(0,0,32,32));
+
+    if(this->isSelected())
+    {
+        painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
+        painter->drawRect(offseted.x()+1,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
+        painter->setPen(QPen(QBrush(Qt::magenta), 2, Qt::DotLine));
+        painter->drawRect(offseted.x()+1/*imgOffsetX+1+(offset().x()/2)*/,imgOffsetY+1,imageSize.width()-2,imageSize.height()-2);
+    }
+
 }
 
 void ItemNPC::setContextMenu(QMenu &menu)
@@ -721,10 +810,48 @@ void ItemNPC::setScenePoint(LvlScene *theScene)
 }
 
 
+void ItemNPC::setAnimator(long aniID)
+{
+    if(DisableScene) return;
+
+    if(aniID<scene->animates_NPC.size())
+    imageSize = QRectF(0,0,
+                scene->animates_NPC[aniID]->image(-1).width(),
+                scene->animates_NPC[aniID]->image(-1).height()
+                );
+    //this->setPixmap(scene->animates_Blocks[aniID]->image());
+    this->setData(9, QString::number(qRound(imageSize.width())) ); //width
+    this->setData(10, QString::number(qRound(imageSize.height())) ); //height
+
+    //WriteToLog(QtDebugMsg, QString("BGO Animator ID: %1").arg(aniID));
+    animatorID = aniID;
+    extAnimator = true;
+    animated = true;
+
+    double BurriedOffset = 0;
+    if(!DisableScene)
+        BurriedOffset=(((scene->pConfigs->marker_npc.buried == npcData.id)&&(localProps.gfx_offset_y==0))? (double)localProps.gfx_h : 0 );
+
+    imgOffsetX = (int)round( - ( ( (double)localProps.gfx_w - (double)localProps.width ) / 2 ) );
+    imgOffsetY = (int)round( - (double)localProps.gfx_h + (double)localProps.height + (double)localProps.gfx_offset_y
+                             - BurriedOffset);
+
+    this->setPixmap(QPixmap(imageSize.width(), imageSize.height()));
+
+    setOffset( imgOffsetX+(-((double)localProps.gfx_offset_x)*curDirect), imgOffsetY );
+
+    offseted = imageSize;
+    offseted.setLeft(offseted.left()+this->offset().x());
+    offseted.setTop(offseted.top()+this->offset().y());
+    offseted.setRight(offseted.right()+this->offset().x());
+    offseted.setBottom(offseted.bottom()+this->offset().y());
+
+}
+
 ////////////////Animation///////////////////
 
 void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direct,
-                           bool customAni, int frFL, int frEL, int frFR, int frER, bool edit)
+                           bool customAni, int frFL, int frEL, int frFR, int frER, bool edit, bool updFrames)
 {
     animated = true;
     framesQ = frames;
@@ -732,6 +859,8 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     frameStyle = framestyle;
     direction = direct;
     frameStep = 1;
+
+    frameSequance = false;
 
     aniBiDirect = localProps.ani_bidir;
     customAniAlg = localProps.custom_ani_alg;
@@ -743,7 +872,7 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
     custom_frameFR = frFR;//first right
     custom_frameER = frER;//enf right
 
-    bool refreshFrames = false;
+    bool refreshFrames = updFrames;
     if(localProps.gfx_h!=frameSize) refreshFrames = true;
     if(localProps.gfx_w!=frameWidth) refreshFrames = true;
 
@@ -779,6 +908,12 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
             frameFirst = custom_frameFL;
             switch(customAniAlg)
             {
+            case 2:
+                frameSequance = true;
+                frames_list = localProps.frames_left;
+                frameFirst = 0;
+                frameLast = frames_list.size()-1;
+                break;
             case 1:
                 frameStep = custom_frameEL;
                 frameLast = -1; break;
@@ -791,6 +926,11 @@ void ItemNPC::setAnimation(int frames, int framespeed, int framestyle, int direc
             frameFirst = custom_frameFR;
             switch(customAniAlg)
             {
+            case 2:
+                frameSequance = true;
+                frames_list = localProps.frames_right;
+                frameFirst = 0;
+                frameLast = frames_list.size()-1; break;
             case 1:
                 frameStep = custom_frameER;
                 frameLast = -1; break;
@@ -881,6 +1021,7 @@ void ItemNPC::AnimationStart()
     if(!animated) return;
     if((frameLast>0)&&((frameLast-frameFirst)<=0)) return; //Don't start singleFrame animation
 
+    frameCurrent = frameFirst;
     timer->start(frameSpeed);
 }
 
@@ -926,20 +1067,20 @@ void ItemNPC::nextFrame()
     if(!aniDirect)
     {
         //frameCurrent += frameSize * frameStep;
-        CurrentFrame += frameStep;
+        frameCurrent += frameStep;
 
-        if ( ((CurrentFrame >= frames.size()-(frameStep-1) )&&(frameLast<=-1)) ||
-             ((CurrentFrame > frameLast )&&(frameLast>=0)) )
+        if ( ((frameCurrent >= frames.size()-(frameStep-1) )&&(frameLast<=-1)) ||
+             ((frameCurrent > frameLast )&&(frameLast>=0)) )
             {
                 if(!aniBiDirect)
                 {
-                     CurrentFrame = frameFirst;
+                     frameCurrent = frameFirst;
                     //frameCurrent = frameFirst * frameSize;
                     //framePos.setY( frameFirst * frameSize );
                 }
                 else
                 {
-                    CurrentFrame -= frameStep*2;
+                    frameCurrent -= frameStep*2;
                     aniDirect=!aniDirect;
                     //framePos.setY( framePos.y() - frameSize*frameStep );
                 }
@@ -948,24 +1089,24 @@ void ItemNPC::nextFrame()
     else
     {
         //frameCurrent -= frameSize * frameStep;
-        CurrentFrame -= frameStep;
+        frameCurrent -= frameStep;
 
-        if ( CurrentFrame < frameFirst )
+        if ( frameCurrent < frameFirst )
             {
                 if(!aniBiDirect)
                 {
-                    CurrentFrame = ((frameLast==-1)? frames.size()-1 : frameLast);
+                    frameCurrent = ((frameLast==-1)? frames.size()-1 : frameLast);
                     //frameCurrent = ( ((frameLast==-1)? frameHeight : frameLast*frameSize)-frameSize);
                     //framePos.setY( ((frameLast==-1) ? frameHeight : frameLast*frameSize)-frameSize );
                 }
                 else
                 {
-                    CurrentFrame+=frameStep*2;
+                    frameCurrent+=frameStep*2;
                     aniDirect=!aniDirect;
                     //frameCurrent += frameSize*frameStep*2;
                     //framePos.setY( framePos.y() + frameSize*frameStep );
                 }
             }
     }
-    setFrame(CurrentFrame);
+    setFrame( frameSequance ? frames_list[frameCurrent] : frameCurrent);
 }

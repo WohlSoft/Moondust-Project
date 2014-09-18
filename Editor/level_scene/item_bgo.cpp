@@ -28,6 +28,7 @@
 
 #include "../common_features/mainwinconnect.h"
 
+#include <QInputDialog>
 
 ItemBGO::ItemBGO(QGraphicsItem *parent)
     : QGraphicsItem(parent)
@@ -39,6 +40,8 @@ ItemBGO::ItemBGO(QGraphicsItem *parent)
 
     animatorID=-1;
     imageSize = QRectF(0,0,10,10);
+
+    zMode = LevelBGO::ZDefault;
 
     mouseLeft=false;
     mouseMid=false;
@@ -123,7 +126,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->setSelected(1);
             ItemMenu->clear();
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(bgoData.layer).replace("&", "&&&"));
             LayerName->deleteLater();
 
             QAction *setLayer;
@@ -137,7 +140,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -145,8 +148,27 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setLayer->deleteLater();
                 layerItems.push_back(setLayer);
             }
+            ItemMenu->addSeparator()->deleteLater();
+            QAction *ZOffset = ItemMenu->addAction(tr("Change Z-Offset..."));
+            QMenu *ZMode = ItemMenu->addMenu(tr("Z-Layer"));
 
-            ItemMenu->addSeparator();
+            QAction *ZMode_bg2 = ZMode->addAction(tr("Background-2"));
+            ZMode_bg2->setCheckable(true);
+            ZMode_bg2->setChecked(bgoData.z_mode==LevelBGO::Background2);
+            QAction *ZMode_bg1 = ZMode->addAction(tr("Background"));
+            ZMode_bg1->setCheckable(true);
+            ZMode_bg1->setChecked(bgoData.z_mode==LevelBGO::Background1);
+            QAction *ZMode_def = ZMode->addAction(tr("Default"));
+            ZMode_def->setCheckable(true);
+            ZMode_def->setChecked(bgoData.z_mode==LevelBGO::ZDefault);
+            QAction *ZMode_fg1 = ZMode->addAction(tr("Foreground"));
+            ZMode_fg1->setCheckable(true);
+            ZMode_fg1->setChecked(bgoData.z_mode==LevelBGO::Foreground1);
+            QAction *ZMode_fg2 = ZMode->addAction(tr("Foreground-2"));
+            ZMode_fg2->setCheckable(true);
+            ZMode_fg2->setChecked(bgoData.z_mode==LevelBGO::Foreground2);
+
+            ItemMenu->addSeparator()->deleteLater();
             QAction *copyBGO = ItemMenu->addAction(tr("Copy"));
             copyBGO->deleteLater();
             QAction *cutBGO = ItemMenu->addAction(tr("Cut"));
@@ -154,7 +176,7 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             ItemMenu->addSeparator()->deleteLater();
             QAction *remove = ItemMenu->addAction(tr("Remove"));
             remove->deleteLater();
-            ItemMenu->addSeparator()->deleteLater();;
+            ItemMenu->addSeparator()->deleteLater();
             QAction *props = ItemMenu->addAction(tr("Properties..."));
             props->deleteLater();
 
@@ -185,13 +207,99 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 scene->removeSelectedLvlItems();
             }
             else
+                if(selected==ZMode_bg2)
+                {
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(0).toString()=="BGO")
+                        {
+                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background2, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                        }
+                    }
+                }
+                else
+                if(selected==ZMode_bg1)
+                {
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(0).toString()=="BGO")
+                        {
+                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::Background1, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                        }
+                    }
+                }
+                else
+                if(selected==ZMode_def)
+                {
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(0).toString()=="BGO")
+                        {
+                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::ZDefault, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                        }
+                    }
+                }
+                else
+                if(selected==ZMode_fg1)
+                {
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(0).toString()=="BGO")
+                        {
+                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground1, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                        }
+                    }
+                }
+                else
+                if(selected==ZMode_fg2)
+                {
+                    foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                    {
+                        if(SelItem->data(0).toString()=="BGO")
+                        {
+                            ((ItemBGO *) SelItem)->setZMode(LevelBGO::Foreground2, ((ItemBGO *) SelItem)->bgoData.z_offset);
+                        }
+                    }
+                }
+            else
+            if(selected==ZOffset)
+            {
+                bool ok;
+                qreal newzOffset = QInputDialog::getDouble(nullptr, tr("Z-Offset"),
+                                                           tr("Please enter the Z-value offset:"),
+                                                           bgoData.z_offset,
+                                                           -500, 500,7, &ok);
+                if(ok)
+                foreach(QGraphicsItem * SelItem, scene->selectedItems() )
+                {
+                    if(SelItem->data(0).toString()=="BGO")
+                    {
+                        ((ItemBGO *) SelItem)->setZMode(((ItemBGO *) SelItem)->bgoData.z_mode, newzOffset);
+                    }
+                }
+            }
+            else
             if(selected==props)
             {
                 scene->openProps();
             }
             else
+            if(selected==newLayer)
             {
-               #include "item_set_layer.h"
+                scene->setLayerToSelected();
+            }
+            else
+            {
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
             }
         }
 
@@ -226,6 +334,8 @@ void ItemBGO::setLayer(QString layer)
 void ItemBGO::arrayApply()
 {
     bool found=false;
+    bgoData.x = qRound(this->scenePos().x());
+    bgoData.y = qRound(this->scenePos().y());
     if(bgoData.index < (unsigned int)scene->LvlData->bgo.size())
     { //Check index
         if(bgoData.array_id == scene->LvlData->bgo[bgoData.index].array_id)
@@ -279,6 +389,44 @@ void ItemBGO::removeFromArray()
 void ItemBGO::setBGOData(LevelBGO inD)
 {
     bgoData = inD;
+}
+
+void ItemBGO::setZMode(int mode, qreal offset, bool init)
+{
+    bgoData.z_mode = mode;
+    bgoData.z_offset = offset;
+
+    qreal targetZ=0;
+    switch(zMode)
+    {
+        case -1:
+            targetZ = scene->Z_BGOBack2 + zOffset + bgoData.z_offset; break;
+        case 1:
+            targetZ = scene->Z_BGOFore1 + zOffset + bgoData.z_offset; break;
+        case 2:
+            targetZ = scene->Z_BGOFore2 + zOffset + bgoData.z_offset; break;
+        case 0:
+        default:
+            targetZ = scene->Z_BGOBack1 + zOffset + bgoData.z_offset;
+    }
+
+
+    switch(bgoData.z_mode)
+    {
+        case LevelBGO::Background2:
+            targetZ = scene->Z_BGOBack2 + zOffset + bgoData.z_offset; break;
+        case LevelBGO::Background1:
+            targetZ = scene->Z_BGOBack1 + zOffset + bgoData.z_offset; break;
+        case LevelBGO::Foreground1:
+            targetZ = scene->Z_BGOFore1 + zOffset + bgoData.z_offset; break;
+        case LevelBGO::Foreground2:
+            targetZ = scene->Z_BGOFore2 + zOffset + bgoData.z_offset; break;
+        default:
+        break;
+    }
+    setZValue(targetZ);
+
+    if(!init) arrayApply();
 }
 
 

@@ -18,6 +18,7 @@
 
 #ifndef DATACONFIGS_H
 #define DATACONFIGS_H
+
 #include <QVector>
 #include <QPixmap>
 #include <QBitmap>
@@ -29,8 +30,15 @@
 
 #include <QDebug>
 
+#include "obj_block.h"
+#include "obj_bgo.h"
 #include "obj_npc.h"
+#include "obj_BG.h"
 
+#include "obj_wld_items.h"
+
+#include "dc_indexing.h"
+#include "obj_tilesets.h"
 
 struct DataFolders
 {
@@ -44,283 +52,6 @@ struct DataFolders
     QString gplayble;
 
     QString gcustom;
-};
-
-struct obj_bgo{
-    //    [background-1]
-    unsigned long id;
-    //    name="Smallest bush"		;background name, default="background-%n"
-    QString name;
-    //    group="scenery"			;Background group, default="All about my pigeon"
-    QString group;
-    //    category="scenery"		;Background categoty, default="Scenery"
-    QString category;
-    //    grid=32				; 32 | 16 Default="32"
-    unsigned int grid;
-    //    view=background			; background | foreground, default="background"
-    unsigned int view;
-    int offsetX;
-    int offsetY;
-    int zOffset;
-    //    image="background-1.gif"	;Image file with level file ; the image mask will be have *m.gif name.
-    QString image_n;
-    QString mask_n;
-    QPixmap image;
-    QPixmap mask;
-    //    climbing=0			; default = 0
-    bool climbing;
-    //    animated = 0			; default = 0 - no
-    bool animated;
-    //    frames = 1			; default = 1
-    unsigned int frames;
-    //    frame-speed=125			; default = 125 ms, etc. 8 frames per sec
-    unsigned int framespeed;
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-
-    unsigned int display_frame;
-};
-
-struct obj_block{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-        QPixmap mask;
-    QString name;
-    //    grid=32				; 32 | 16 Default="32"
-    unsigned int grid;
-    QString group;
-    QString category;
-    bool sizable;
-    int danger;
-    int collision;
-    bool slopeslide;
-    int fixture;
-    bool lava;
-    bool destruct;
-    bool dest_bomb;
-    bool dest_fire;
-    bool spawn; //split string by "-" in != "0"
-        int spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
-        unsigned long spawn_obj_id;
-    unsigned long effect;
-    bool bounce;
-    bool hitable;
-    bool onhit;
-    unsigned long onhit_block;
-    unsigned long algorithm;
-
-    unsigned int view;
-    bool animated;
-    bool animation_rev; //Reverse animation
-    bool animation_bid; //Bidirectional animation
-    unsigned int frames;
-    int framespeed;
-
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-
-    unsigned int display_frame;
-
-    //Editor defaults
-    bool default_slippery; //Slippery flag
-    bool default_slippery_value;
-
-    bool default_invisible; //Invisible flag
-    bool default_invisible_value;
-
-    bool default_content; //Content value
-    long default_content_value;
-
-};
-
-struct obj_BG{
-
-    unsigned long id;
-    QString name;
-
-    QString image_n;
-
-    QPixmap image;
-    unsigned int type;//convert from string
-    float repeat_h;
-    unsigned int repead_v;
-    unsigned int attached;
-    bool editing_tiled;
-    bool animated;
-    unsigned int frames;
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-
-    unsigned int display_frame;
-
-    bool magic;
-    unsigned int magic_strips;
-    QString magic_splits;
-    QString magic_speeds;
-
-    QString second_image_n;
-    QPixmap second_image;
-
-    float second_repeat_h;
-    unsigned int second_repeat_v;
-    unsigned int second_attached;
-
-};
-
-
-struct npc_Markers
-{
-//    ;Defines for SMBX64
-    unsigned long bubble;
-//    bubble=283	; NPC-Container for packed in bubble
-    unsigned long egg;
-//    egg=96		; NPC-Container for packed in egg
-    unsigned long lakitu;
-//    lakitu=284	; NPC-Container for spawn by lakitu
-    unsigned long buried;
-//    burred=91	; NPC-Container for packed in herb
-
-    unsigned long ice_cube;
-//    icecube=263	; NPC-Container for frozen NPCs
-
-//    ;markers
-//    iceball=265
-    unsigned long iceball;
-//    fireball=13
-    unsigned long fireball;
-//    hammer=171
-    unsigned long hammer;
-//    boomerang=292
-    unsigned long boomerang;
-//    coin-in-block=10
-    unsigned long coin_in_block;
-
-};
-
-//////////////Indexing objects////////////////
-struct blocksIndexes
-{
-    unsigned long i; //Target array index
-    unsigned long ai; //Animator array index
-    unsigned int type;//0 - internal GFX, 1 - user defined GFX
-};
-
-struct bgoIndexes
-{
-    unsigned long i; //Target array index
-    unsigned long ai; //Animator array index
-    unsigned int type;//0 - internal GFX, 1 - user defined GFX
-    long smbx64_sp;//smbx64-sort-priority, array sorting priority, need for compatible with SMBX 1.3
-};
-
-struct npcIndexes
-{
-    unsigned long i; //Target array index
-    unsigned long gi; //Target array index by GlobalConfig
-    unsigned int type;//0 - internal GFX, 1 - user defined GFX
-};
-
-
-
-////////////////////World map items///////////////////////////
-struct obj_w_tile{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-        QPixmap mask;
-        unsigned long row;
-        unsigned long col;
-
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
-
-struct obj_w_scenery{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-        QPixmap mask;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
-
-struct obj_w_level{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-        QPixmap mask;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
-
-struct obj_w_path{
-    unsigned long id;
-        QString image_n;
-        QString mask_n;
-        QPixmap image;
-        QPixmap mask;
-        unsigned long row;
-        unsigned long col;
-    QString group;
-    QString category;
-    bool animated;
-    unsigned int frames;
-    unsigned int framespeed; // Default 128 ms
-    unsigned int frame_h; //Hegth of the frame. Calculating automatically
-    unsigned int display_frame;
-};
-
-//////////////Indexing objects////////////////
-struct wTileIndexes
-{
-    unsigned long i; //Target array index
-    unsigned long ai; //Animator array index
-    unsigned int type;//0 - internal GFX, 1 - user defined GFX
-};
-
-struct wSceneIndexes
-{
-    unsigned long i; //Target array index
-    unsigned long ai; //Animator array index
-    unsigned int type;//0 - internal GFX, 1 - user defined GFX
-};
-
-struct wLevelIndexes
-{
-    unsigned long i; //Target array index
-    unsigned long ai; //Animator array index
-    unsigned int type;//0 - internal GFX, 1 - user defined GFX
-};
-struct wPathIndexes
-{
-    unsigned long i; //Target array index
-    unsigned long ai; //Animator array index
-    unsigned int type;//0 - internal GFX, 1 - user defined GFX
-};
-
-
-//Markers
-struct wld_levels_Markers
-{
-    unsigned long path;
-    unsigned long bigpath;
 };
 
 
@@ -359,6 +90,9 @@ public:
     bool loadconfigs(QProgressDialog *prgs=NULL);
     DataFolders dirs;
     QString config_dir;
+    QString data_dir;
+
+    QString splash_logo;
 
     //Playable Characters
     QVector<obj_playable_character > characters;
@@ -397,6 +131,10 @@ public:
 
     QVector<obj_sound > main_sound;
 
+    //Tilesets
+    QVector<SimpleTileset>      main_tilesets;
+    QVector<SimpleTilesetGroup> main_tilesets_grp;
+
     bool check(); //Returns true, if something config entry is not initialized
 
     //Graphics
@@ -421,6 +159,12 @@ public:
     long getMusLvlI(unsigned long itemID);
     long getMusWldI(unsigned long itemID);
     long getMusSpcI(unsigned long itemID);
+
+
+    void  loadTilesets();
+
+    void setConfigPath(QString p);
+    void loadBasics();
 
 private:
 
