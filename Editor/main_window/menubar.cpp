@@ -23,9 +23,23 @@
 #include "music_player.h"
 #include "../common_features/graphicsworkspace.h"
 
+namespace mainwindowMenuBar
+{
+    QMdiSubWindow *LastActiveSubWindow = NULL;
+}
+
 void MainWindow::updateMenus(bool force)
 {
-    if(!force) if(!this->isActiveWindow()) return;
+    using namespace mainwindowMenuBar;
+    if(!force)
+    {
+        //Don't update if window is not active
+        if(!this->isActiveWindow()) return;
+         //Don't update if this is - same subWindow
+        if(LastActiveSubWindow==ui->centralWidget->activeSubWindow()) return;
+    }
+
+    LastActiveSubWindow = ui->centralWidget->activeSubWindow();
 
     WriteToLog(QtDebugMsg, QString("Update menus"));
 
