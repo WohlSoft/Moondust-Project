@@ -29,6 +29,10 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+
+#undef main
 
 namespace PGECrashHandler {
     void crashByFlood(){
@@ -53,6 +57,12 @@ int main(int argc, char *argv[])
         std::cout << "Editor already runned!\n";
         return 0;
     }
+
+    SDL_Init(SDL_INIT_AUDIO);
+    int iniFlags = Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG );
+    qDebug() << QString("MP3 %1").arg( (int)(iniFlags&MIX_INIT_MP3) );
+    qDebug() << QString("OGG %1").arg( (int)(iniFlags&MIX_INIT_OGG) );
+    Mix_OpenAudio(44100, AUDIO_S16, 2, 4096);
 
     a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
 
@@ -121,5 +131,7 @@ int main(int argc, char *argv[])
     QApplication::exit();
     delete a;
     delete as;
+
+    SDL_Quit();
     return ret;
 }
