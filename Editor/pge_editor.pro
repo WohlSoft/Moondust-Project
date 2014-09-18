@@ -39,6 +39,10 @@ CONFIG += c++11
 CONFIG += static
 CONFIG += thread
 
+LIBS += -lSDL2 -lSDL2_mixer
+win32: LIBS += -lSDL2main
+win32: LIBS += libversion
+
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
     languages/editor_uk.ts \
