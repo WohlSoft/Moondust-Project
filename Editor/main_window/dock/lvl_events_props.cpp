@@ -33,6 +33,8 @@
 
 #include "../../common_features/util.h"
 
+//#include <QSoundEffect>
+
 long currentEventArrayID=0;
 bool lockSetEventSettings=false;
 
@@ -41,6 +43,8 @@ long curSectionField=0;
 
 bool cloneEvent=false;
 long cloneEventId=0;
+
+//QSoundEffect snd;
 
 void MainWindow::setEventsBox()
 {
@@ -1797,6 +1801,11 @@ void MainWindow::on_LVLEvent_playSnd_clicked()
 
     if(!found) return;
     if(!QFileInfo::exists(sndPath)) return;
+
+    //snd.setSource(QUrl(sndPath));
+    //snd.setLoopCount(1);
+    //snd.setVolume(1.0);
+    //snd.play();
 
     playSnd.setMedia(QMediaContent(QUrl(sndPath)));
     playSnd.setVolume(100);
