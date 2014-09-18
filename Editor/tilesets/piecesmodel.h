@@ -44,7 +44,16 @@ public:
         WORLDPIECE_PATH,
         WORLDPIECE_LEVEL
     };
-    explicit PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize = 32, QObject *parent = 0);
+
+    enum GFXMode
+    {
+        GFX_Staff=0,
+        GFX_Level,
+        GFX_World
+    };
+
+
+    explicit PiecesModel(dataconfigs* conf, PieceType pieceType, int pieceSize = 32, QGraphicsScene *scene=0, QObject *parent = 0);
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -61,6 +70,10 @@ public:
 
 
 private:
+
+    GFXMode mode;
+    QGraphicsScene *scn;
+
     QString getMimeType() const;
     QList<QPixmap> pixmaps;
     QList<QString> pixmapNames;

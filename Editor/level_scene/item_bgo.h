@@ -58,6 +58,7 @@ public:
 
 
     void setLayer(QString layer);
+    void setZMode(int mode, qreal offset, bool init=false);
 
     void arrayApply();
     void removeFromArray();
@@ -67,10 +68,14 @@ public:
     int gridSize;
     int gridOffsetX;
     int gridOffsetY;
+    int zMode;
+    qreal zOffset;
 
     //Locks
     bool isLocked;
     void setLocked(bool lock);
+
+
 
 protected:
     bool mouseLeft;

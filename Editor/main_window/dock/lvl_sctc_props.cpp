@@ -218,15 +218,74 @@ void MainWindow::setLevelSectionData()
     ui->LVLEvent_SctMus_List->clear(); //Music list in events
     ui->LVLEvent_SctBg_List->clear();  //Background list in events
 
-    ui->LVLPropsBackImage->addItem( tr("[No image]"), "0" );
-    ui->LVLEvent_SctBg_List->addItem( tr("[No image]"), "0" );
+    QPixmap empty(100,70);
+    empty.fill(QColor(Qt::black));
+
+    ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), "0" );
+    ui->LVLEvent_SctBg_List->addItem(QIcon(empty), tr("[No image]"), "0" );
     ui->LVLPropsMusicNumber->addItem( tr("[Silence]"), "0" );
     ui->LVLEvent_SctMus_List->addItem( tr("[Silence]"), "0" );
 
+    ui->LVLPropsBackImage->setIconSize(QSize(100,70));
+    ui->LVLEvent_SctBg_List->setIconSize(QSize(100,70));
+
+    QAbstractItemView *abVw = ui->LVLPropsBackImage->view();
+            QListView *listVw = qobject_cast<QListView*>(abVw);
+            if (listVw) {
+                listVw->setSpacing(2);
+                listVw->setViewMode(QListView::IconMode);
+                listVw->setUniformItemSizes(true);
+            }
+
+    abVw = ui->LVLEvent_SctBg_List->view();
+            listVw = qobject_cast<QListView*>(abVw);
+            if (listVw) {
+                listVw->setSpacing(2);
+                listVw->setViewMode(QListView::IconMode);
+                listVw->setUniformItemSizes(true);
+            }
+
+
     for(i=0; i< configs.main_bg.size();i++)
     {
-        ui->LVLPropsBackImage->addItem(configs.main_bg[i].name, QString::number(configs.main_bg[i].id));
-        ui->LVLEvent_SctBg_List->addItem(configs.main_bg[i].name, QString::number(configs.main_bg[i].id));
+        QPixmap bgThumb(100,70);
+        bgThumb.fill(QColor(Qt::white));
+        QPainter xx(&bgThumb);
+
+        QPixmap tmp;
+        tmp = configs.main_bg[i].image.scaledToHeight(70);
+
+        if (activeChildWindow()==1)
+        {
+            leveledit * edit = activeLvlEditWin();
+            for(int q=0; q<edit->scene->uBGs.size();q++)
+            {
+                if(edit->scene->uBGs[q].id==configs.main_bg[i].id)
+                {
+                    if(!edit->scene->uBGs[q].image.isNull())
+                        tmp = edit->scene->uBGs[q].image.scaledToHeight(70);
+                    break;
+                }
+            }
+        }
+
+        if(!tmp.isNull())
+        {
+            int d=0;
+            for(int i=0; i<100; i+=tmp.width() )
+            {
+                xx.drawPixmap(i,0, tmp.width(), tmp.height(), tmp);
+                d+=tmp.width();
+            }
+            if(d<100)
+            {
+                xx.drawPixmap(d,0, tmp.width()-(100-d), tmp.height(), tmp);
+            }
+        }
+        xx.end();
+
+        ui->LVLPropsBackImage->addItem(QIcon(bgThumb), configs.main_bg[i].name, QString::number(configs.main_bg[i].id));
+        ui->LVLEvent_SctBg_List->addItem(QIcon(bgThumb), configs.main_bg[i].name, QString::number(configs.main_bg[i].id));
     }
 
     for(i=0; i< configs.main_music_lvl.size();i++)

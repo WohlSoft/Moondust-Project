@@ -27,20 +27,33 @@
 
 #include "../external_tools/lazyfixtool_gui.h"
 #include "../external_tools/gifs2png_gui.h"
+#include "../external_tools/png2gifs_gui.h"
 
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
-    TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs);
+    TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs, NULL);
     tilesetConfDia->exec();
     delete tilesetConfDia;
+
+    configs.loadTilesets();
+    setTileSetBox();
 }
 
 
 void MainWindow::on_actionTileset_groups_editor_triggered()
 {
-    TilesetGroupEditor * groupDialog = new TilesetGroupEditor;
+    TilesetGroupEditor * groupDialog;
+    if(activeChildWindow()==1)
+        groupDialog = new TilesetGroupEditor(activeLvlEditWin()->scene, this);
+    else if(activeChildWindow()==3)
+        groupDialog = new TilesetGroupEditor(activeWldEditWin()->scene, this);
+    else
+        groupDialog = new TilesetGroupEditor(NULL, this);
     groupDialog->exec();
     delete groupDialog;
+
+    configs.loadTilesets();
+    setTileSetBox();
 }
 
 
@@ -82,8 +95,19 @@ void MainWindow::on_actionGIFs2PNG_triggered()
     gifToPngGUI->show();
 }
 
+png2gifs_gui * pngToGifGUI;
 void MainWindow::on_actionPNG2GIFs_triggered()
 {
-
+    if(pngToGifGUI)
+    {
+        pngToGifGUI->show();
+        pngToGifGUI->raise();
+        pngToGifGUI->setFocus();
+        return;
+    }
+    pngToGifGUI = new png2gifs_gui;
+    pngToGifGUI->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    pngToGifGUI->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, pngToGifGUI->size(), qApp->desktop()->availableGeometry()));
+    pngToGifGUI->show();
 }
 

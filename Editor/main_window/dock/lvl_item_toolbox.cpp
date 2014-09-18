@@ -37,9 +37,9 @@ bool lock_grp=false;
 bool lock_cat=false;
 
 
-void MainWindow::UpdateCustomItems()
+void MainWindow::UpdateLvlCustomItems()
 {
-    setItemBoxes(true, true);
+    setLvlItemBoxes(true, true);
     setWldItemBoxes(true, true);
 }
 
@@ -47,7 +47,7 @@ static QString grp_blocks = "";
 static QString grp_bgo = "";
 static QString grp_npc = "";
 
-void MainWindow::setItemBoxes(bool setGrp, bool setCat)
+void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
 {
     if((setGrp)&&(activeChildWindow()!=1)) return;
 
@@ -393,21 +393,21 @@ void MainWindow::on_BlockGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
     grp_blocks=arg1;
-    setItemBoxes(true);
+    setLvlItemBoxes(true);
 }
 
 void MainWindow::on_BGOGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
     grp_bgo=arg1;
-    setItemBoxes(true);
+    setLvlItemBoxes(true);
 }
 
 void MainWindow::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 {
     if(lock_grp) return;
     grp_npc=arg1;
-    setItemBoxes(true);
+    setLvlItemBoxes(true);
 }
 
 // ///////////////////////////////////
@@ -415,7 +415,7 @@ void MainWindow::on_BlockCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
     cat_blocks=arg1;
-    setItemBoxes(true, true);
+    setLvlItemBoxes(true, true);
 }
 
 
@@ -423,7 +423,7 @@ void MainWindow::on_BGOCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
     cat_bgos=arg1;
-    setItemBoxes(true, true);
+    setLvlItemBoxes(true, true);
 }
 
 
@@ -431,7 +431,7 @@ void MainWindow::on_NPCCatList_currentIndexChanged(const QString &arg1)
 {
     if(lock_cat) return;
     cat_npcs=arg1;
-    setItemBoxes(true, true);
+    setLvlItemBoxes(true, true);
 }
 
 
@@ -442,20 +442,20 @@ void MainWindow::on_NPCCatList_currentIndexChanged(const QString &arg1)
 void MainWindow::on_BGOUniform_clicked(bool checked)
 {
     ui->BGOItemsList->setUniformItemSizes(checked);
-    setItemBoxes(true, true);
+    setLvlItemBoxes(true, true);
 }
 
 void MainWindow::on_BlockUniform_clicked(bool checked)
 {
     ui->BlockItemsList->setUniformItemSizes(checked);
-    setItemBoxes(true, true);
+    setLvlItemBoxes(true, true);
 }
 
 
 void MainWindow::on_NPCUniform_clicked(bool checked)
 {
     ui->NPCItemsList->setUniformItemSizes(checked);
-    setItemBoxes(true, true);
+    setLvlItemBoxes(true, true);
 }
 
 

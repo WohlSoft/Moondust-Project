@@ -20,6 +20,7 @@ qrc_*.cpp
 Makefile
 *-build-*
 *build-*
+bin
 
 # ignore Qt-Makefile
 *.Debug

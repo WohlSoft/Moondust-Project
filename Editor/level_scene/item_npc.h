@@ -48,6 +48,7 @@ public:
     void setScenePoint(LvlScene *theScene=NULL);
 
     QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     QPixmap mainImage;
 
@@ -57,7 +58,8 @@ public:
 
     //////Animation////////
     void setAnimation(int frames, int framespeed, int framestyle, int direct,
-               bool customAnimate=false, int frFL=0, int frEL=-1, int frFR=0, int frER=-1, bool edit=false);
+               bool customAnimate=false, int frFL=0, int frEL=-1, int frFR=0, int frER=-1,
+               bool edit=false, bool updFrames=false);
     void AnimationStart();
     void AnimationStop();
     void draw();
@@ -87,6 +89,8 @@ public:
     bool isLocked;
     void setLocked(bool lock);
 
+    void setAnimator(long aniID);
+
 protected:
     bool mouseLeft;
     bool mouseMid;
@@ -101,6 +105,10 @@ private slots:
 
 private:
 
+    bool extAnimator;
+    long animatorID;
+    QRectF imageSize;
+
     bool DisableScene;
 
     QGraphicsItemGroup * grp;
@@ -111,6 +119,8 @@ private:
     QVector<QPixmap> frames; //Whole image
     void createAnimationFrames();
     int CurrentFrame;
+
+    QRectF offseted;
 
 
     bool animated;
@@ -130,6 +140,10 @@ private:
     int custom_frameEL;//end left / jump step
     int custom_frameFR;//first right
     int custom_frameER;//enf right / jump step
+
+    bool frameSequance;
+    QList<int> frames_list;     //Current frame srquence
+
     LvlScene * scene;
     int frameCurrent;
     QTimer * timer;

@@ -37,13 +37,11 @@ WLD_SetPoint::~WLD_SetPoint()
 
 void WLD_SetPoint::updateScene()
 {
-        if(scene->opts.animationEnabled)
-            scene->update(
-                                         ui->graphicsView->horizontalScrollBar()->value(),
-                                         ui->graphicsView->verticalScrollBar()->value(),
-                                         ui->graphicsView->width(),
-                                         ui->graphicsView->height()
-                        );
+    if(scene->opts.animationEnabled)
+    {
+        QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
+        scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );
+    }
 }
 
 
@@ -98,8 +96,18 @@ void WLD_SetPoint::goTo(long x, long y, bool SwitchToSection, QPoint offset)
 //        }
     }
 
-    ui->graphicsView->horizontalScrollBar()->setValue(x + offset.x() );
-    ui->graphicsView->verticalScrollBar()->setValue(y + offset.y() );
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+    WriteToLog(QtDebugMsg, QString("Pos: %1, zoom %2, scenePos: %3")
+               .arg(ui->graphicsView->horizontalScrollBar()->value())
+               .arg(zoom).arg(x));
+
+    ui->graphicsView->horizontalScrollBar()->setValue( qRound(qreal(x)*zoom)+offset.x() );
+    ui->graphicsView->verticalScrollBar()->setValue( qRound(qreal(y)*zoom)+offset.y() );
 
     //scene->update();
     ui->graphicsView->update();
@@ -390,6 +398,11 @@ void WLD_SetPoint::unloadData()
     //ui->graphicsView->cl
 }
 
+QWidget *WLD_SetPoint::gViewPort()
+{
+    return ui->graphicsView->viewport();
+}
+
 void WLD_SetPoint::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
@@ -448,9 +461,10 @@ void WLD_SetPoint::on_GotoPoint_clicked()
 {
     if(!mapPointIsNull)
     {
-        goTo(mapPoint.x(), mapPoint.y(),
+        goTo(mapPoint.x()+16, mapPoint.y()+16,
                                           false,
-                                            QPoint(-qRound(qreal(this->width())/2.2), -qRound(qreal(this->height())/2.5))
+                                            QPoint(-qRound(qreal(ui->graphicsView->viewport()->width())/2),
+                                                   -qRound(qreal(ui->graphicsView->viewport()->height())/2))
                                           );
     }
 }

@@ -20,6 +20,8 @@
 #include "mainwindow.h"
 
 #include "npc_dialog/npcdialog.h"
+#include "data_configs/config_manager.h"
+
 #include <QDesktopServices>
 
 MainWindow::MainWindow(QMdiArea *parent) :
@@ -32,22 +34,51 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     setDefaults(); // Apply default common settings
 
-    QPixmap splashimg(":/images/splash_editor.png");
+    //Create empty config directory if not exists
+    if(!QDir(QApplication::applicationDirPath() + "/" +  "configs").exists())
+        QDir().mkdir(QApplication::applicationDirPath() + "/" +  "configs");
+
+    // Config manager
+    ConfigManager *cmanager = new ConfigManager();
+    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
+    QString configPath = cmanager->isPreLoaded();
+    //If application runned first time or target configuration is not exist
+    if(configPath.isEmpty())
+    {
+        //Ask for configuration
+        if(cmanager->exec()==QDialog::Accepted)
+        {
+            configPath = cmanager->currentConfig;
+        }
+        else
+        {
+            delete cmanager;
+            ui->setupUi(this);
+            setDefLang();
+            setUiDefults(); //Apply default UI settings
+            WriteToLog(QtWarningMsg, "<Configuration is not selected>");
+            this->close();
+            return;
+        }
+    }
+
+    currentConfigDir = configPath;
+
+    delete cmanager;
+
+    configs.setConfigPath(configPath);
+    configs.loadBasics();
+
+    QPixmap splashimg(configs.splash_logo);
+
     QSplashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
     splash.setDisabled(true);
     splash.setWindowFlags( splash.windowFlags() |  Qt::WindowStaysOnTopHint );
     splash.show();
 
-    if(!configs.loadconfigs())
-    {
-        splash.setWindowFlags( splash.windowFlags() & ~Qt::WindowStaysOnTopHint );
-        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
-        splash.finish(this);
-        WriteToLog(QtFatalMsg, "<Error, application closed>");
-        exit(EXIT_FAILURE);
-        return;
-    }
+    bool ok=configs.loadconfigs();
 
     splash.finish(this);
 
@@ -56,8 +87,15 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     WriteToLog(QtDebugMsg, QString("Setting Lang..."));
     setDefLang();
-
     setUiDefults(); //Apply default UI settings
+
+    if(!ok)
+    {
+        QMessageBox::critical(this, "Configuration error", "Configuration can't be loaded.\nSee in debug_log.txt for more information.", QMessageBox::Ok);
+        WriteToLog(QtFatalMsg, "<Error, application closed>");
+        this->close();
+        return;
+    }
 }
 
 MainWindow::~MainWindow()
@@ -151,6 +189,8 @@ void MainWindow::on_actionRefresh_menu_and_toolboxes_triggered()
     updateMenus(true);
 }
 
+
+
 void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
 {
     if(checked){
@@ -161,3 +201,5 @@ void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
         this->showNormal();
     }
 }
+
+

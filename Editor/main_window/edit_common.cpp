@@ -35,6 +35,7 @@ void MainWindow::on_actionReload_triggered()
         filePath = activeLvlEditWin()->curFile;
 
         QFile fileIn(filePath);
+        QFileInfo in_1(filePath);
 
         if (!fileIn.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("File open error"),
@@ -42,7 +43,12 @@ void MainWindow::on_actionReload_triggered()
             return;
         }
 
-        FileData = FileFormats::ReadLevelFile(fileIn); //function in file_formats.cpp
+        if(in_1.suffix().toLower() == "lvl")
+            FileData = FileFormats::ReadLevelFile(fileIn);         //Read SMBX LVL File
+        else
+            FileData = FileFormats::ReadExtendedLevelFile(fileIn); //Read PGE LVLX File
+
+        //FileData = FileFormats::ReadLevelFile(fileIn); //function in file_formats.cpp
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
@@ -77,6 +83,35 @@ void MainWindow::on_actionReload_triggered()
                 WriteToLog(QtDebugMsg, ">>Option set");
             ui->centralWidget->activeSubWindow()->close();
                 WriteToLog(QtDebugMsg, ">>Windows closed");
+        }
+    }
+    else
+    if (activeChildWindow()==2)
+    {
+        filePath = activeNpcEditWin()->curFile;
+        QFile fileIn(filePath);
+
+        if (!fileIn.open(QIODevice::ReadOnly)) {
+        QMessageBox::critical(this, tr("File open error"),
+        tr("Can't open the file."), QMessageBox::Ok);
+            return;
+        }
+
+        NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(fileIn);
+        if( !FileData.ReadFileValid ) return;
+        wnGeom = ui->centralWidget->activeSubWindow()->geometry();
+        activeNpcEditWin()->isModyfied = false;
+        //activeNpcEditWin()->close();
+        ui->centralWidget->activeSubWindow()->close();
+
+        npcedit *child = createNPCChild();
+        if (child->loadFile(filePath, FileData)) {
+            statusBar()->showMessage(tr("NPC Config reloaded"), 2000);
+            child->show();
+            ui->centralWidget->activeSubWindow()->setGeometry(wnGeom);
+            updateMenus(true);
+        } else {
+            child->close();
         }
     }
     else

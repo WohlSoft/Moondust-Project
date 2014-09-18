@@ -33,6 +33,8 @@ public:
     static void memclear(QListWidget* wid);
     static void memclear(QTableWidget* wid);
     static void clearLayoutItems(QLayout* layout);
+    static bool contains(const QComboBox* b, const QString &s);
+    static QString filePath(QString s);
 };
 
 #endif // UTIL_H

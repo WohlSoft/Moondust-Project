@@ -36,6 +36,8 @@
 
 #include "../common_features/item_rectangles.h"
 
+#include "../defines.h"
+
 QPoint WsourcePos=QPoint(0,0);
 int WgridSize=0, WoffsetX=0, WoffsetY=0;//, gridX, gridY, i=0;
 
@@ -130,8 +132,11 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     IsMoved = false;
 
     //Discard multi mouse key
-    int mSum = (int)( mouseEvent->buttons() );
-    if( mSum > 4 || mSum == 3 )
+    int mSum = 0;
+    if( mouseEvent->buttons() & Qt::LeftButton ) mSum++;
+    if( mouseEvent->buttons() & Qt::MiddleButton ) mSum++;
+    if( mouseEvent->buttons() & Qt::RightButton ) mSum++;
+    if( mSum > 1 )
     {
         mouseEvent->accept();
         WriteToLog(QtDebugMsg, QString("[MousePress] MultiMouse detected [%2] [edit mode: %1]").arg(EditingMode).arg(QString::number(mSum, 2)));
@@ -139,7 +144,6 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     mouseMoved=false;
-
     if( mouseEvent->buttons() & Qt::LeftButton )
     {
         mouseLeft=true;
@@ -308,7 +312,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
             setPoint(cursor->scenePos().toPoint());
-            pointSelected(selectedPoint);
+            emit pointSelected(selectedPoint);
 
             QGraphicsScene::mousePressEvent(mouseEvent);
             return;
@@ -330,6 +334,38 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 && (Qt::ControlModifier != QApplication::keyboardModifiers()))
             { return; }
 
+            if( mouseEvent->buttons() & Qt::MiddleButton )
+            {
+                if(GlobalSettings::MidMouse_allowSwitchToPlace)
+                {
+                    if(selectedItems().size()==1)
+                    {
+                        QGraphicsItem * it = selectedItems().first();
+                        QString itp = it->data(0).toString();
+                        long itd = it->data(1).toInt();
+                        if(itp=="TILE")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Tile, itd); return;}
+                        else if(itp=="SCENERY")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Scenery, itd); return;}
+                        else if(itp=="PATH")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Path, itd); return;}
+                        else if(itp=="LEVEL")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_Level, itd); return;}
+                        else if(itp=="MUSICBOX")
+                        {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::WLD_MusicBox, itd); return;}
+                    }
+                }
+                if(GlobalSettings::MidMouse_allowDuplicate)
+                {
+                    if(!selectedItems().isEmpty())
+                    {
+                        WldBuffer = copy();
+                        PasteFromBuffer=true;
+                    }
+                }
+            }
+
+
             QGraphicsScene::mousePressEvent(mouseEvent);
 
             break;
@@ -342,6 +378,8 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     using namespace wld_control;
+
+    MainWinConnect::pMainWin->Debugger_UpdateMousePosition(mouseEvent->scenePos().toPoint());
 
     //WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
     //if(contextMenuOpened) return;
@@ -480,38 +518,40 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     using namespace wld_control;
 
-    int multimouse=0;
-    if( mouseLeft || (mouseLeft^(mouseEvent->buttons() & Qt::LeftButton)) )
-        multimouse++;
-    if( mouseMid || (mouseMid^(mouseEvent->buttons() & Qt::MiddleButton)) )
-        multimouse++;
-    if( mouseRight || (mouseRight^(mouseEvent->buttons() & Qt::RightButton)) )
-        multimouse++;
+//    int multimouse=0;
+//    if( mouseLeft || (mouseLeft^(mouseEvent->buttons() & Qt::LeftButton)) )
+//        multimouse++;
+//    if( mouseMid || (mouseMid^(mouseEvent->buttons() & Qt::MiddleButton)) )
+//        multimouse++;
+//    if( mouseRight || (mouseRight^(mouseEvent->buttons() & Qt::RightButton)) )
+//        multimouse++;
 
     bool isLeftMouse=false;
+    bool isMiddleMouse=false;
 
-    if( mouseLeft^(mouseEvent->buttons() & Qt::LeftButton) )
+    if( mouseEvent->button() == Qt::LeftButton )
     {
         mouseLeft=false;
         isLeftMouse=true;
         WriteToLog(QtDebugMsg, QString("Left mouse button released [edit mode: %1]").arg(EditingMode));
     }
-    if( mouseMid^(mouseEvent->buttons() & Qt::MiddleButton) )
+    if( mouseEvent->button() == Qt::MiddleButton )
     {
         mouseMid=false;
+        isMiddleMouse=true;
         WriteToLog(QtDebugMsg, QString("Middle mouse button released [edit mode: %1]").arg(EditingMode));
     }
-    if( mouseRight^(mouseEvent->buttons() & Qt::RightButton) )
+    if( mouseEvent->button() == Qt::RightButton )
     {
         mouseRight=false;
         WriteToLog(QtDebugMsg, QString("Right mouse button released [edit mode: %1]").arg(EditingMode));
     }
 
-    if(multimouse>1)
-    {
-        WriteToLog(QtDebugMsg, QString("Multiple mouse keys detected %1").arg(multimouse) );
-        mouseEvent->accept(); return;
-    }
+//    if(multimouse>1)
+//    {
+//        WriteToLog(QtDebugMsg, QString("Multiple mouse keys detected %1").arg(multimouse) );
+//        mouseEvent->accept(); return;
+//    }
 
     if(contextMenuOpened)
     {
@@ -523,6 +563,20 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     contextMenuOpened=false;
     if(!isLeftMouse)
     {
+        if(PasteFromBuffer && GlobalSettings::MidMouse_allowDuplicate && isMiddleMouse &&
+                (EditingMode==MODE_Selecting||EditingMode==MODE_SelectingOnly))
+        {
+            clearSelection();
+            paste( WldBuffer, mouseEvent->scenePos().toPoint() );
+            PasteFromBuffer = false;
+        }
+
+        if(GlobalSettings::MidMouse_allowSwitchToDrag && isMiddleMouse &&
+                (EditingMode==MODE_Selecting||EditingMode==MODE_SelectingOnly) && selectedItems().isEmpty())
+        {
+            MainWinConnect::pMainWin->on_actionHandScroll_triggered();
+        }
+
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
         return;
     }

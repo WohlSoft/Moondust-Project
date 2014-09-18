@@ -20,23 +20,22 @@
 #define TILESET_H
 
 #include <QWidget>
+
+#include "../defines.h"
 #include "../data_configs/data_configs.h"
 
 class tileset : public QWidget
 {
     Q_OBJECT
 public:
-    enum TilesetType{
-        LEVELTILESET_BLOCK = 0,
-        LEVELTILESET_BGO,
-        LEVELTILESET_NPC,
-        WORLDTILESET_TILE,
-        WORLDTILESET_SCENERY,
-        WORLDTILESET_PATH,
-        WORLDTILESET_LEVEL
+    enum GFXMode
+    {
+        GFX_Staff=0,
+        GFX_Level,
+        GFX_World
     };
 
-    explicit tileset(dataconfigs *conf, TilesetType type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3);
+    explicit tileset(dataconfigs *conf, int type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3, QGraphicsScene *scene=0);
 
     void clear();
 
@@ -44,19 +43,8 @@ public:
     int cols() const;
     int getBaseSize() const;
     QString name() const;
-    TilesetType type() const;
+    int type() const;
     bool editMode() const;
-
-    struct SimpleTilesetItem{
-        unsigned int row,col,id;
-    };
-
-    struct SimpleTileset{
-        unsigned int rows, cols;
-        QString tileSetName;
-        TilesetType type;
-        QList<SimpleTilesetItem> items;
-    };
 
     SimpleTileset toSimpleTileset();
     void loadSimpleTileset(const SimpleTileset &tileset);
@@ -65,16 +53,14 @@ public:
     static bool OpenSimpleTileset(const QString &path, SimpleTileset &tileset);
 
 
-
-
 signals:
-    void clickedItem(tileset::TilesetType type, long id);
+    void clickedItem(int type, long id);
 
 public slots:
     void setRows(int rows);
     void setCols(int cols);
     void setBaseSize(int value);
-    void setType(const TilesetType &type);
+    void setType(const int &type);
     void setEditMode(bool editMode);
     void setName(const QString &name);
 
@@ -93,6 +79,9 @@ private:
     QPixmap getScaledPixmapById(const unsigned int &id) const;
     QString getMimeType();
 
+    GFXMode mode;
+    QGraphicsScene *scn;
+
     QList<QPixmap> piecePixmaps;
     QList<QRect> pieceRects;
     QList<long> pieceID;
@@ -104,7 +93,7 @@ private:
     int m_baseSize;
     QString m_name;
     dataconfigs *m_conf;
-    TilesetType m_type;
+    int m_type;
     bool m_editMode;
 
     void updateSize();

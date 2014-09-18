@@ -24,18 +24,26 @@
 
 QT       += gui widgets multimedia
 
+DESTDIR = ../bin
+
+translates.path = ../bin/languages
+translates.files += languages/*.qm
+translates.files += languages/*.png
+INSTALLS = translates
+
 TARGET = pge_editor
 TEMPLATE = app
 
-#CONFIG += c++11
-#QMAKE_CXXFLAGS += -std=c++11
+CONFIG += c++11
 
 CONFIG += static
+CONFIG += thread
 
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
     languages/editor_uk.ts \
     languages/editor_de.ts \
+    languages/editor_pl.ts \
     languages/editor_es.ts \
     languages/editor_nl.ts \
     languages/editor_it.ts \
@@ -171,7 +179,22 @@ SOURCES += main.cpp\
     main_window/tools_menu.cpp \
     common_features/items.cpp \
     common_features/flowlayout.cpp \
-    main_window/edit_placincg_switch.cpp
+    main_window/edit_placincg_switch.cpp \
+    common_features/graphicsworkspace.cpp \
+    external_tools/png2gifs_gui.cpp \
+    main_window/dock/tileset_item_box.cpp \
+    main_window/dock/debugger.cpp \
+    data_configs/conf_tilesets.cpp \
+    common_features/npc_animator.cpp \
+    data_configs/config_manager.cpp \
+    file_formats/lvl_filedata.cpp \
+    file_formats/file_lvlx.cpp \
+    file_formats/npc_filedata.cpp \
+    file_formats/wld_filedata.cpp \
+    file_formats/pge_x.cpp \
+    SingleApplication/localserver.cpp \
+    SingleApplication/singleapplication.cpp \
+    level_scene/item_playerpoint.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -242,9 +265,22 @@ HEADERS  += mainwindow.h \
     tilesets/tilesetitembutton.h \
     external_tools/gifs2png_gui.h \
     external_tools/lazyfixtool_gui.h \
-    level_scene/item_set_layer.h \
     common_features/items.h \
-    common_features/flowlayout.h
+    common_features/flowlayout.h \
+    common_features/graphicsworkspace.h \
+    external_tools/png2gifs_gui.h \
+    main_window/dock/tileset_item_box.h \
+    data_configs/obj_block.h \
+    data_configs/obj_bgo.h \
+    data_configs/obj_BG.h \
+    data_configs/obj_wld_items.h \
+    data_configs/dc_indexing.h \
+    data_configs/obj_tilesets.h \
+    common_features/npc_animator.h \
+    data_configs/config_manager.h \
+    SingleApplication/localserver.h \
+    SingleApplication/singleapplication.h \
+    level_scene/item_playerpoint.h
 
 FORMS    += \
     mainwindow.ui \
@@ -269,7 +305,9 @@ FORMS    += \
     dev_console/devconsole.ui \
     tilesets/tilesetgroupeditor.ui \
     external_tools/gifs2png_gui.ui \
-    external_tools/lazyfixtool_gui.ui
+    external_tools/lazyfixtool_gui.ui \
+    external_tools/png2gifs_gui.ui \
+    data_configs/config_manager.ui
 
 RC_FILE = _resources/pge_editor.rc
 

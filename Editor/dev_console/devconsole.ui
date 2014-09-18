@@ -33,6 +33,9 @@
    <property name="spacing">
     <number>0</number>
    </property>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="edit_command"/>
+   </item>
    <item row="2" column="2">
     <widget class="QPushButton" name="button_send">
      <property name="text">
@@ -90,18 +93,63 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="edit_command"/>
-   </item>
-   <item row="4" column="0" colspan="3">
-    <widget class="QPushButton" name="button_clearAllLogs">
-     <property name="text">
-      <string>Clear All Logs</string>
+   <item row="3" column="0" rowspan="2" colspan="3">
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="button_clearAllLogs">
+        <property name="text">
+         <string>Clear All Logs</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>plainTextEdit</tabstop>
+  <tabstop>button_send</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>button_clearAllLogs</tabstop>
+  <tabstop>button_cl_sysLog</tabstop>
+  <tabstop>edit_command</tabstop>
+ </tabstops>
  <resources>
   <include location="../_resources/editor.qrc"/>
  </resources>

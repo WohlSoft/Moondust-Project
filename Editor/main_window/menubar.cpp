@@ -21,6 +21,7 @@
 
 #include "global_settings.h"
 #include "music_player.h"
+#include "../common_features/graphicsworkspace.h"
 
 void MainWindow::updateMenus(bool force)
 {
@@ -45,7 +46,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionSelectOnly->setEnabled( (WinType==1) || (WinType==3));
     ui->actionEriser->setEnabled( (WinType==1) || (WinType==3));
     ui->actionHandScroll->setEnabled( (WinType==1) || (WinType==3));
-    ui->actionReload->setEnabled( (WinType==1) || (WinType==3));
+    ui->actionReload->setEnabled( (WinType==1) || (WinType==2) || (WinType==3));
 
     ui->menuWorld->setEnabled(( WinType==3) );
     ui->actionWLDToolBox->setVisible( (WinType==3));
@@ -73,6 +74,9 @@ void MainWindow::updateMenus(bool force)
 
         GlobalSettings::LevelSearchBoxVis = ui->FindDock->isVisible();
 
+        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
         ui->LevelSectionSettings->setVisible( 0 );
         ui->DoorsToolbox->setVisible( 0 );
@@ -88,14 +92,19 @@ void MainWindow::updateMenus(bool force)
         ui->LevelLayers->setVisible( GlobalSettings::LevelLayersBoxVis );
         ui->LevelEventsToolBox->setVisible( GlobalSettings::LevelEventsBoxVis );
         ui->FindDock->setVisible(GlobalSettings::LevelSearchBoxVis);
-    }
 
+        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
+        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
+    }
 
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
     {
         GlobalSettings::WorldToolBoxVis = ui->WorldToolBox->isVisible(); //Save current visible status
         GlobalSettings::WorldSettingsToolboxVis = ui->WorldSettings->isVisible();
         GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
+        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+
         ui->WorldToolBox->setVisible( 0 );
         ui->WorldSettings->setVisible( 0 );
         ui->WorldFindDock->setVisible( 0 );
@@ -105,7 +114,19 @@ void MainWindow::updateMenus(bool force)
         ui->WorldToolBox->setVisible( GlobalSettings::WorldToolBoxVis ); //Restore saved visible status
         ui->WorldSettings->setVisible( GlobalSettings::WorldSettingsToolboxVis );
         ui->WorldFindDock->setVisible( GlobalSettings::WorldSearchBoxVis );
+
+        ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
+        ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
     }
+
+    if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
+    {
+        GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
+        GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        ui->Tileset_Item_Box->setVisible( 0 );
+        ui->debuggerBox->setVisible( 0 );
+    }
+
 
     GlobalSettings::lastWinType =   WinType;
 
@@ -121,6 +142,7 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionWLDToolBox->setVisible( (WinType==3) );
     ui->actionWorld_settings->setVisible( (WinType==3) );
+    ui->actionWLD_SearchBox->setVisible( (WinType==3) );
 
     ui->menuLevel->setEnabled( (WinType==1) );
 
@@ -134,6 +156,11 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevelProp->setEnabled( (WinType==1) );
 
     ui->actionExport_to_image->setEnabled( (WinType==1) || (WinType==3) );
+
+    ui->actionZoomIn->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionZoomOut->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionZoomReset->setEnabled( (WinType==1) || (WinType==3) );
+    zoom->setEnabled( (WinType==1) || (WinType==3));
 
     ui->actionReset_position->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionGo_to_Section->setEnabled( (WinType==1) );
@@ -189,7 +216,10 @@ void MainWindow::updateMenus(bool force)
             }
         }
 
+        zoom->setText(QString::number(activeLvlEditWin()->getZoom()));
+
         SetCurrentLevelSection(0, 1);
+
         setDoorsToolbox();
         setLayersBox();
         setEventsBox();
@@ -197,6 +227,8 @@ void MainWindow::updateMenus(bool force)
         //Sync lists in properties windows
         EventListsSync();
         setLayerLists();
+
+        setLevelSectionData();
 
         if(LvlMusPlay::musicType!=LvlMusPlay::LevelMusic) LvlMusPlay::musicForceReset=true;
         LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
@@ -257,7 +289,11 @@ void MainWindow::updateMenus(bool force)
             WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
             GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
             GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
+            ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
+            ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
         }
+
+        zoom->setText(QString::number(activeWldEditWin()->getZoom()));
 
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
@@ -269,8 +305,8 @@ void MainWindow::updateMenus(bool force)
         ui->actionRedo->setEnabled(false);
     }
 
-    UpdateCustomItems();
-
+    setTileSetBox();
+    UpdateLvlCustomItems();
     updateWindowMenu();
 }
 
@@ -347,11 +383,7 @@ void MainWindow::updateWindowMenu()
 
     for (int i = 0; i < windows.size(); ++i) {
         QString text;
-        if (i < 9) {
-            text = QString("&%1").arg( windows.at(i)->windowTitle() ) ;
-        } else {
-            text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
-        }
+        text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
         action->setChecked( windows[i] == ui->centralWidget->activeSubWindow() );
@@ -359,5 +391,19 @@ void MainWindow::updateWindowMenu()
 
         connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
         windowMapper->setMapping(action, windows.at(i));
+    }
+}
+
+void MainWindow::applyTextZoom(){
+    bool ok = false;
+    int zoomPercent = 100;
+    zoomPercent = zoom->text().toInt(&ok);
+    if(!ok)
+        return;
+
+    if(activeChildWindow()==1){
+        activeLvlEditWin()->setZoom(zoomPercent);
+    }else if(activeChildWindow()==3){
+        activeWldEditWin()->setZoom(zoomPercent);
     }
 }

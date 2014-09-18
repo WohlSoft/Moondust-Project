@@ -66,22 +66,74 @@ void leveledit::ResetPosition()
     LvlData.sections[LvlData.CurSection].PositionX =
             LvlData.sections[LvlData.CurSection].size_left;
     LvlData.sections[LvlData.CurSection].PositionY =
-            LvlData.sections[LvlData.CurSection].size_bottom-ui->graphicsView->height()+25;
+            LvlData.sections[LvlData.CurSection].size_bottom-ui->graphicsView->viewport()->height()+25;
 
-    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-this->height()+25, false, QPoint(-10,10));
+    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-ui->graphicsView->viewport()->height()+25, false, QPoint(-10,10));
 }
 
-void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
+void leveledit::ResetZoom()
 {
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(1.0);
+    }
+}
+
+void leveledit::zoomIn()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomIn();
+    }
+}
+
+void leveledit::zoomOut()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoomOut();
+    }
+}
+
+QGraphicsView *leveledit::getGraphicsView()
+{
+    return ui->graphicsView;
+}
+void leveledit::setZoom(int percent)
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(qreal(percent)/100.0);
+    }
+}
+
+int leveledit::getZoom()
+{
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        return qRound(static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom() * 100.0);
+    }
+    else
+    {
+        return 100;
+    }
+}
+
+
+void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)
+{
+    if(center)
+        offset= QPoint(-ui->graphicsView->viewport()->width()/2, -ui->graphicsView->viewport()->height()/2);
 
     if(SwitchToSection)
     {
+        int padding=128;
         for(int i=0; i<LvlData.sections.size(); i++)
         {
-            if( (x >= LvlData.sections[i].size_left) &&
-                (x <= LvlData.sections[i].size_right) &&
-                (y >= LvlData.sections[i].size_top) &&
-                (y <= LvlData.sections[i].size_bottom) )
+            if( (x >= LvlData.sections[i].size_left-padding) &&
+                (x <= LvlData.sections[i].size_right+padding) &&
+                (y >= LvlData.sections[i].size_top-padding) &&
+                (y <= LvlData.sections[i].size_bottom+padding) )
             {
                     MainWinConnect::pMainWin->SetCurrentLevelSection(i);
                     break;
@@ -89,8 +141,18 @@ void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset)
         }
     }
 
-    ui->graphicsView->horizontalScrollBar()->setValue(x + offset.x() );
-    ui->graphicsView->verticalScrollBar()->setValue(y + offset.y() );
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+    WriteToLog(QtDebugMsg, QString("Pos: %1, zoom %2, scenePos: %3")
+               .arg(ui->graphicsView->horizontalScrollBar()->value())
+               .arg(zoom).arg(x));
+
+    ui->graphicsView->horizontalScrollBar()->setValue( qRound(qreal(x)*zoom)+offset.x() );
+    ui->graphicsView->verticalScrollBar()->setValue( qRound(qreal(y)*zoom)+offset.y() );
 
     scene->update();
     ui->graphicsView->update();
@@ -110,11 +172,20 @@ void leveledit::setCurrentSection(int scId)
                .arg(ui->graphicsView->verticalScrollBar()->value())
                );
 
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+    QPoint target = QPoint(
+                qRound(qreal(ui->graphicsView->horizontalScrollBar()->value())/zoom),
+                qRound(qreal(ui->graphicsView->verticalScrollBar()->value())/zoom)
+                           );
+
     //Save currentPosition on Section
-    LvlData.sections[LvlData.CurSection].PositionX =
-            ui->graphicsView->horizontalScrollBar()->value();
-    LvlData.sections[LvlData.CurSection].PositionY =
-            ui->graphicsView->verticalScrollBar()->value();
+    LvlData.sections[LvlData.CurSection].PositionX = target.x();
+    LvlData.sections[LvlData.CurSection].PositionY = target.y();
 
     //Change Current Section
     LvlData.CurSection = scId;

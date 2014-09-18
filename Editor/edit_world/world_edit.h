@@ -55,7 +55,15 @@ public:
 
     void setCurrentSection(int scId);
     void ResetPosition();
-    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0));
+    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0), bool center=false);
+
+    void ResetZoom();
+    void zoomIn();
+    void zoomOut();
+    void setZoom(int percent);
+    int  getZoom();
+
+    QGraphicsView* getGraphicsView();
 
     enum CusrorMode
     {
@@ -84,6 +92,7 @@ public:
     void stopAutoUpdateTimer();
 
 protected:
+    virtual void focusInEvent(QFocusEvent *event);
     void closeEvent(QCloseEvent *event);
 
 private slots:

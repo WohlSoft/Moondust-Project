@@ -36,12 +36,13 @@ ItemWater::ItemWater(QGraphicsPolygonItem *parent)
     waterSize = QSize(32,32);
     penWidth=2;
 
-    _pen.setColor(Qt::darkBlue);
+    _pen = QPen(Qt::darkBlue);
     _pen.setWidth(penWidth);
-    _pen.setCapStyle(Qt::SquareCap);
+    _pen.setCapStyle(Qt::FlatCap);
     _pen.setJoinStyle(Qt::MiterJoin);
     _pen.setMiterLimit(0);
     this->setPen(_pen);
+    this->setBrush(QBrush(Qt::NoBrush));
 
     waterData.w=32;
     waterData.h=32;
@@ -134,7 +135,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->setSelected(1);
             ItemMenu->clear();
 
-            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer));
+            QMenu * LayerName = ItemMenu->addMenu(tr("Layer: ")+QString("[%1]").arg(waterData.layer).replace("&", "&&&"));
             LayerName->deleteLater();
 
             QAction *setLayer;
@@ -149,7 +150,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 //Skip system layers
                 if((layer.name=="Destroyed Blocks")||(layer.name=="Spawned NPCs")) continue;
 
-                setLayer = LayerName->addAction( layer.name+((layer.hidden)?" [hidden]":"") );
+                setLayer = LayerName->addAction( layer.name.replace("&", "&&&")+((layer.hidden)?" [hidden]":"") );
                 setLayer->setData(layer.name);
                 setLayer->setCheckable(true);
                 setLayer->setEnabled(true);
@@ -213,7 +214,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(SelItem->data(0).toString()=="Water")
                     {
-                        modData.water.push_back(((ItemWater *)SelItem)->waterData);
+                        modData.physez.push_back(((ItemWater *)SelItem)->waterData);
                         ((ItemWater *)SelItem)->setType(0);
                     }
                 }
@@ -227,7 +228,7 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     if(SelItem->data(0).toString()=="Water")
                     {
-                        modData.water.push_back(((ItemWater *)SelItem)->waterData);
+                        modData.physez.push_back(((ItemWater *)SelItem)->waterData);
                         ((ItemWater *)SelItem)->setType(1);
                     }
                 }
@@ -241,11 +242,25 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             else
             if(selected==remove)
             {
-                scene->contextMenuOpened = false;
+                scene->removeSelectedLvlItems();
+            }
+            else
+            if(selected==newLayer)
+            {
+                scene->setLayerToSelected();
             }
             else
             {
-                #include "item_set_layer.h"
+                //Fetch layers menu
+                foreach(QAction * lItem, layerItems)
+                {
+                    if(selected==lItem)
+                    {
+                        //FOUND!!!
+                        scene->setLayerToSelected(lItem->data().toString());
+                        break;
+                    }//Find selected layer's item
+                }
             }
         }
     }
@@ -279,9 +294,13 @@ void ItemWater::setLayer(QString layer)
 void ItemWater::arrayApply()
 {
     bool found=false;
-    if(waterData.index < (unsigned int)scene->LvlData->water.size())
+
+    waterData.x = qRound(this->scenePos().x());
+    waterData.y = qRound(this->scenePos().y());
+
+    if(waterData.index < (unsigned int)scene->LvlData->physez.size())
     { //Check index
-        if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
+        if(waterData.array_id == scene->LvlData->physez[waterData.index].array_id)
         {
             found=true;
         }
@@ -290,15 +309,15 @@ void ItemWater::arrayApply()
     //Apply current data in main array
     if(found)
     { //directlry
-        scene->LvlData->water[waterData.index] = waterData; //apply current bgoData
+        scene->LvlData->physez[waterData.index] = waterData; //apply current bgoData
     }
     else
-    for(int i=0; i<scene->LvlData->water.size(); i++)
+    for(int i=0; i<scene->LvlData->physez.size(); i++)
     { //after find it into array
-        if(scene->LvlData->water[i].array_id == waterData.array_id)
+        if(scene->LvlData->physez[i].array_id == waterData.array_id)
         {
             waterData.index = i;
-            scene->LvlData->water[i] = waterData;
+            scene->LvlData->physez[i] = waterData;
             break;
         }
     }
@@ -307,9 +326,9 @@ void ItemWater::arrayApply()
 void ItemWater::removeFromArray()
 {
     bool found=false;
-    if(waterData.index < (unsigned int)scene->LvlData->water.size())
+    if(waterData.index < (unsigned int)scene->LvlData->physez.size())
     { //Check index
-        if(waterData.array_id == scene->LvlData->water[waterData.index].array_id)
+        if(waterData.array_id == scene->LvlData->physez[waterData.index].array_id)
         {
             found=true;
         }
@@ -317,14 +336,14 @@ void ItemWater::removeFromArray()
 
     if(found)
     { //directlry
-        scene->LvlData->water.remove(waterData.index);
+        scene->LvlData->physez.remove(waterData.index);
     }
     else
-    for(int i=0; i<scene->LvlData->water.size(); i++)
+    for(int i=0; i<scene->LvlData->physez.size(); i++)
     {
-        if(scene->LvlData->water[i].array_id == waterData.array_id)
+        if(scene->LvlData->physez[i].array_id == waterData.array_id)
         {
-            scene->LvlData->water.remove(i); break;
+            scene->LvlData->physez.remove(i); break;
         }
     }
 }
@@ -370,7 +389,7 @@ void ItemWater::setSize(QSize sz)
 }
 
 
-void ItemWater::setWaterData(LevelWater inD)
+void ItemWater::setWaterData(LevelPhysEnv inD)
 {
     waterData = inD;
     waterSize = QSize(waterData.w, waterData.h);
@@ -381,13 +400,17 @@ void ItemWater::drawWater()
 {
     long x, y, h, w;
 
-    x = penWidth;//waterData.x;
-    y = penWidth;//waterData.y;
+    x = 1;//waterData.x;
+    y = 1;//waterData.y;
     w = waterData.w-penWidth;
     h = waterData.h-penWidth;
 
-    _pen.setColor(((waterData.quicksand)?Qt::yellow:Qt::green));
-    this->setPen(_pen);
+    //    _pen.setColor(((waterData.quicksand)?Qt::yellow:Qt::green));
+    //    _pen.setCapStyle(Qt::SquareCap);
+    //    _pen.setJoinStyle(Qt::MiterJoin);
+    //    setPen(_pen);
+
+    setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), penWidth, Qt::SolidLine, Qt::FlatCap, Qt::MiterJoin));
 
     //this->setPen(QPen(((waterData.quicksand)?Qt::yellow:Qt::green), 4));
     //this->setBrush(Qt::NoBrush);
@@ -396,16 +419,16 @@ void ItemWater::drawWater()
     QVector<QPointF > points;
     points.clear();
     // {{x, y},{x+w, y},{x+w,y+h},{x, y+h}}
-    points.push_back(QPointF(x, y));
+    points.push_back(QPointF(x+3, y));
     points.push_back(QPointF(x+w, y));
     points.push_back(QPointF(x+w,y+h));
     points.push_back(QPointF(x, y+h));
-    points.push_back(QPointF(x, y));
+    points.push_back(QPointF(x, y+3));
 
     points.push_back(QPointF(x, y+h));
     points.push_back(QPointF(x+w,y+h));
     points.push_back(QPointF(x+w, y));
-    points.push_back(QPointF(x, y));
+    points.push_back(QPointF(x+3, y));
 
     this->setPolygon( QPolygonF(points) );
 /*
@@ -432,7 +455,7 @@ void ItemWater::setLocked(bool lock)
 
 QRectF ItemWater::boundingRect() const
 {
-    return QRectF(0,0,waterSize.width()+penWidth,waterSize.height()+penWidth);
+    return QRectF(-1,-1,waterSize.width()+penWidth,waterSize.height()+penWidth);
 }
 
 void ItemWater::setContextMenu(QMenu &menu)

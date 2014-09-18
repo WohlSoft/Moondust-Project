@@ -22,6 +22,35 @@
 #include "../world_scene/wld_item_placing.h"
 #include "../level_scene/lvl_item_placing.h"
 
+
+void MainWindow::on_actionZoomIn_triggered()
+{
+    if(activeChildWindow()==1)
+        activeLvlEditWin()->zoomIn();
+    else
+    if(activeChildWindow()==3)
+        activeWldEditWin()->zoomIn();
+
+}
+
+void MainWindow::on_actionZoomOut_triggered()
+{
+    if(activeChildWindow()==1)
+        activeLvlEditWin()->zoomOut();
+    else
+    if(activeChildWindow()==3)
+        activeWldEditWin()->zoomOut();
+}
+
+void MainWindow::on_actionZoomReset_triggered()
+{
+    if(activeChildWindow()==1)
+        activeLvlEditWin()->ResetZoom();
+    else
+    if(activeChildWindow()==3)
+        activeWldEditWin()->ResetZoom();
+}
+
 /////////////////Switch edit mode////////////////////////////////////////////
 
 void MainWindow::resetEditmodeButtons()

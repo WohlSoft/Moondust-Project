@@ -27,8 +27,72 @@
 
 #include "../common_features/logger.h"
 
+#include "../common_features/timecounter.h"
 
-QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
+//Checking group collisions. Return true if was found even one passed collision in this group
+bool LvlScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
+{
+    if(!items)
+        return false;
+    if(items->empty())
+        return false;
+    if(items->size()==1)
+    {
+        WriteToLog(QtDebugMsg, QString("Collision check: single item"));
+        return (itemCollidesWith(items->first(), NULL)!=NULL);
+    }
+
+    //9 - width, 10 - height
+    QRectF findZone = QRectF(items->first()->scenePos(),
+                      QSizeF(items->first()->data(9).toInt(),
+                            items->first()->data(10).toInt()) );
+    //get Zone
+    foreach(QGraphicsItem * it, *items)
+    {
+        if(!it) continue;
+        if(it->scenePos().x()-10 < findZone.left()) findZone.setLeft(it->scenePos().x());
+        if(it->scenePos().y()-10 < findZone.top()) findZone.setTop(it->scenePos().y());
+
+        if(it->scenePos().x()+it->data(9).toInt() > findZone.right())
+            findZone.setRight(it->scenePos().x()+it->data(9).toInt());
+        if(it->scenePos().y()+it->data(10).toInt() > findZone.bottom())
+            findZone.setBottom(it->scenePos().y()+it->data(10).toInt());
+    }
+
+    findZone.setLeft(findZone.left()-10);
+    findZone.setRight(findZone.right()+10);
+    findZone.setTop(findZone.top()-10);
+    findZone.setBottom(findZone.bottom()+10);
+
+    QList<QGraphicsItem *> CheckZone;
+    CheckZone = this->items( findZone, Qt::IntersectsItemBoundingRect);
+    WriteToLog(QtDebugMsg, QString("Collision check: found items for check %1").arg(CheckZone.size()));
+    WriteToLog(QtDebugMsg, QString("Collision rect: x%1 y%2 w%3 h%4").arg(findZone.x())
+               .arg(findZone.y()).arg(findZone.width()).arg(findZone.height()));
+
+    //Don't collide with items which in the group
+    for(int i=0;i<CheckZone.size(); i++)
+    {
+        for(int j=0;j<(*items).size(); j++)
+        {
+            if(CheckZone[i] == (*items)[j])
+            {
+                CheckZone.removeOne(CheckZone[i]);
+                i--;
+            }
+        }
+    }
+
+    foreach(QGraphicsItem * it, *items)
+    {
+        if(itemCollidesWith(it, &CheckZone)!=NULL)
+            return true;
+    }
+    return false;
+
+}
+
+QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp)
 {
     qreal leftA, leftB;
     qreal rightA, rightB;
@@ -36,12 +100,31 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item)
     qreal bottomA, bottomB;
     //qreal betweenZ;
 
-    QList<QGraphicsItem *> collisions = this->items(
+    //xxx=!xxx;
+
+    QList<QGraphicsItem *> collisions;
+
+    //TimeCounter t;
+    //t.start();
+    //if(xxx)
+    // ~15 ms on big maps
+    if(itemgrp && !itemgrp->isEmpty())
+        collisions = *itemgrp;
+    else
+        collisions = this->items(
                 QRectF(item->scenePos().x()-10, item->scenePos().y()-10,
                 item->data(9).toReal()+20, item->data(10).toReal()+20 ),
                 Qt::IntersectsItemBoundingRect);
 
-    //QList<QGraphicsItem *> collisions = collidingItems(item, Qt::IntersectsItemBoundingRect);
+
+    //else
+
+        // ~32 ms on big maps
+        //collisions = item->collidingItems(Qt::IntersectsItemBoundingRect);
+
+    //WriteToLog(QtDebugMsg, QString("Collision %1 in %2").arg(xxx).arg(t.current()));
+    //t.stop();
+
 
     foreach (QGraphicsItem * it, collisions)
     {
@@ -178,27 +261,27 @@ QGraphicsItem * LvlScene::itemCollidesCursor(QGraphicsItem * item)
             //skip locked items
             if((it->data(0).toString()=="Block"))
             {
-                if((lock_block)|| ((ItemBlock*)it)->isLocked) continue;
+                if((lock_block)|| dynamic_cast<ItemBlock*>(it)->isLocked) continue;
             }
             else
             if((it->data(0).toString()=="BGO"))
             {
-                if((lock_bgo)|| ((ItemBGO*)it)->isLocked) continue;
+                if((lock_bgo)|| dynamic_cast<ItemBGO*>(it)->isLocked) continue;
             }
             else
             if((it->data(0).toString()=="NPC"))
             {
-                if((lock_npc)|| ((ItemNPC*)it)->isLocked) continue;
+                if((lock_npc)|| dynamic_cast<ItemNPC*>(it)->isLocked) continue;
             }
             else
             if((it->data(0).toString()=="Water"))
             {
-                if((lock_water)|| ((ItemWater*)it)->isLocked) continue;
+                if((lock_water)|| dynamic_cast<ItemWater*>(it)->isLocked) continue;
             }
             else
             if((it->data(0).toString()=="Door_enter")||(it->data(0).toString()=="Door_exit"))
             {
-                if((lock_door)|| ((ItemDoor*)it)->isLocked) continue;
+                if((lock_door)|| dynamic_cast<ItemDoor*>(it)->isLocked) continue;
             }
 
             if( (

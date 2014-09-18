@@ -26,6 +26,7 @@
 #include "item_npc.h"
 #include "item_water.h"
 #include "item_door.h"
+#include "item_playerpoint.h"
 
 #include "../common_features/grid.h"
 
@@ -36,6 +37,214 @@ QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
         return Grid::applyGrid(source, gridSize, gridOffset);
     else
         return source;
+}
+
+
+void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
+{
+    if(items.size()==0)
+        return;
+
+    QPoint sourcePos=QPoint(0,0);
+    QPoint sourcePosMax=QPoint(0,0);
+    int gridSize=0,gridSizeMax=0, offsetX=0, offsetY=0, offsetXMax=0, offsetYMax=0;//, gridX, gridY, i=0;
+    QGraphicsItem * lead = NULL;
+    //QGraphicsItemGroup *tmp = NULL;
+    QString ObjType;
+
+    foreach(QGraphicsItem * it, items)
+    {
+        if(!it) continue;
+        offsetX=0;
+        offsetY=0;
+        ObjType = it->data(0).toString();
+        if( ObjType == "NPC")
+        {
+            sourcePos = QPoint(  dynamic_cast<ItemNPC *>(it)->npcData.x, dynamic_cast<ItemNPC *>(it)->npcData.y);
+            gridSize = dynamic_cast<ItemNPC *>(it)->gridSize;
+            offsetX = dynamic_cast<ItemNPC *>(it)->localProps.grid_offset_x;
+            offsetY = dynamic_cast<ItemNPC *>(it)->localProps.grid_offset_y;
+        }
+        else
+        if( ObjType == "Block")
+        {
+            sourcePos = QPoint(  dynamic_cast<ItemBlock *>(it)->blockData.x, dynamic_cast<ItemBlock *>(it)->blockData.y);
+            gridSize = dynamic_cast<ItemBlock *>(it)->gridSize;
+            //WriteToLog(QtDebugMsg, QString(" >>Check collision for Block"));
+        }
+        else
+        if( ObjType == "BGO")
+        {
+            sourcePos = QPoint(  dynamic_cast<ItemBGO *>(it)->bgoData.x, dynamic_cast<ItemBGO *>(it)->bgoData.y);
+            gridSize = dynamic_cast<ItemBGO *>(it)->gridSize;
+            offsetX = dynamic_cast<ItemBGO *>(it)->gridOffsetX;
+            offsetY = dynamic_cast<ItemBGO *>(it)->gridOffsetY;
+        }
+        else
+        if( ObjType == "Water")
+        {
+            sourcePos = QPoint(  dynamic_cast<ItemWater *>(it)->waterData.x, dynamic_cast<ItemWater *>(it)->waterData.y);
+            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+        }
+        else
+        if( ObjType == "Door_enter")
+        {
+            sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->doorData.ix, dynamic_cast<ItemDoor *>(it)->doorData.iy);
+            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+        }
+        else
+        if( ObjType == "Door_exit"){
+            sourcePos = QPoint(  dynamic_cast<ItemDoor *>(it)->doorData.ox, dynamic_cast<ItemDoor *>(it)->doorData.oy);
+            gridSize = qRound(qreal(pConfigs->default_grid)/2);
+        }
+        else
+        if( ObjType == "playerPoint" )
+        {
+            gridSize = 2 ;
+            sourcePos = QPoint(dynamic_cast<ItemPlayerPoint *>(it)->pointData.x, dynamic_cast<ItemPlayerPoint *>(it)->pointData.y);
+        }
+
+        if(gridSize>gridSizeMax)
+        {
+            offsetXMax = offsetX;
+            offsetYMax = offsetY;
+            gridSizeMax = gridSize;
+            sourcePosMax = sourcePos;
+            lead = it;
+        }
+    }
+
+    QPoint offset;
+    if(lead)
+    {
+        if( sourcePosMax==lead->scenePos().toPoint() && !force )
+            return;
+
+        offset=lead->scenePos().toPoint();
+        lead->setPos(QPointF(applyGrid(lead->scenePos().toPoint(), gridSizeMax, QPoint(offsetXMax,offsetYMax) ) ) );
+
+        offset.setX( offset.x() - lead->scenePos().toPoint().x() );
+        offset.setY( offset.y() - lead->scenePos().toPoint().y() );
+
+        if(items.size()>1)
+        {
+            foreach(QGraphicsItem * it, items)
+            {
+                if(it!=lead)
+                {
+                    QPoint target;
+                    target.setX( it->scenePos().toPoint().x()-offset.x() );
+                    target.setY( it->scenePos().toPoint().y()-offset.y() );
+                    it->setPos(target);
+                    if(force) applyArrayForItem(it);
+                }
+            }
+        }
+    }
+}
+
+
+void LvlScene::applyArrayForItemGroup(QList<QGraphicsItem * >items)
+{
+    foreach(QGraphicsItem * it, items)
+    {
+        if(it) applyArrayForItem(it);
+    }
+}
+
+void LvlScene::applyArrayForItem(QGraphicsItem * item)
+{
+    if(!item) return;
+
+    QString ObjType = item->data(0).toString();
+    if( ObjType == "NPC")
+    {
+        dynamic_cast<ItemNPC *>(item)->arrayApply();
+    }
+    else
+    if( ObjType == "Block")
+    {
+        dynamic_cast<ItemBlock *>(item)->arrayApply();
+    }
+    else
+    if( ObjType == "BGO")
+    {
+        dynamic_cast<ItemBGO *>(item)->arrayApply();
+    }
+    else
+    if( ObjType == "Water")
+    {
+        dynamic_cast<ItemWater *>(item)->arrayApply();
+    }
+    else
+    if(( ObjType == "Door_enter")||( ObjType == "Door_exit"))
+    {
+        dynamic_cast<ItemDoor *>(item)->arrayApply();
+    }
+    else
+    if( ObjType == "playerPoint" )
+    {
+        dynamic_cast<ItemPlayerPoint *>(item)->arrayApply();
+    }
+
+}
+
+
+
+void LvlScene::returnItemBackGroup(QList<QGraphicsItem * >items)
+{
+    foreach(QGraphicsItem * it, items)
+    {
+        if(it) returnItemBack(it);
+    }
+}
+
+void LvlScene::returnItemBack(QGraphicsItem * item)
+{
+    if(!item) return;
+
+    QString ObjType = item->data(0).toString();
+    if( ObjType == "NPC")
+    {
+        ItemNPC * it = dynamic_cast<ItemNPC *>(item);
+        it->setPos(it->npcData.x, it->npcData.y);
+    }
+    else
+    if( ObjType == "Block")
+    {
+        ItemBlock * it = dynamic_cast<ItemBlock *>(item);
+        it->setPos(it->blockData.x, it->blockData.y);
+    }
+    else
+    if( ObjType == "BGO")
+    {
+        ItemBGO * it = dynamic_cast<ItemBGO *>(item);
+        it->setPos(it->bgoData.x, it->bgoData.y);
+    }
+    else
+    if( ObjType == "Water")
+    {
+        ItemWater * it = dynamic_cast<ItemWater *>(item);
+        it->setPos(it->waterData.x, it->waterData.y);
+    }
+    else
+    if(ObjType == "Door_enter")
+    {
+        ItemDoor * it = dynamic_cast<ItemDoor *>(item);
+        it->setPos(it->doorData.ix, it->doorData.iy);
+    }
+    else
+    if(ObjType == "Door_exit")
+    {
+        ItemDoor * it = dynamic_cast<ItemDoor *>(item);
+        it->setPos(it->doorData.ox, it->doorData.oy);
+    }
+    else
+    if( ObjType == "playerPoint" )
+    {
+        ItemPlayerPoint * it = dynamic_cast<ItemPlayerPoint *>(item);
+        it->setPos(it->pointData.x, it->pointData.y);
+    }
 }
 
 
@@ -135,15 +344,15 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     if(pConfigs->main_block[j].sizable)
     {
         BlockImage->setMainPixmap();
-        BlockImage->setZValue( blockZs + ((double)block.y/(double)100000000000) + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
+        BlockImage->setZValue( Z_blockSizable + ((double)block.y/(double)100000000000) + 1 - ((double)block.w * (double)0.0000000000000001) ); // applay sizable block Z
         //sbZ += 0.0000000001;
     }
     else
     {
         if(pConfigs->main_block[j].view==1)
-            BlockImage->setZValue(blockZl); // applay lava block Z
+            BlockImage->setZValue(Z_BlockFore); // applay lava block Z
         else
-            BlockImage->setZValue(blockZ); // applay standart block Z
+            BlockImage->setZValue(Z_Block); // applay standart block Z
     }
 
     BlockImage->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_block));
@@ -260,11 +469,10 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     BGOItem->setData(1, QString::number(bgo.id) );
     BGOItem->setData(2, QString::number(bgo.array_id) );
 
+    BGOItem->zMode = pConfigs->main_bgo[j].view;
+    BGOItem->zOffset = pConfigs->main_bgo[j].zOffset;
+    BGOItem->setZMode(bgo.z_mode, bgo.z_offset, true);
 
-    if(pConfigs->main_bgo[j].view!=0)
-        BGOItem->setZValue(bgoZf + pConfigs->main_bgo[j].zOffset);
-    else
-        BGOItem->setZValue(bgoZb + pConfigs->main_bgo[j].zOffset);
     if(PasteFromBuffer) BGOItem->setSelected(true);
 }
 
@@ -279,15 +487,18 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 
     ItemNPC *NPCItem = new ItemNPC;
 
+    long animator=0;
+
     //Check Index exists
     if(npc.id < (unsigned int)index_npc.size())
     {
         j = index_npc[npc.id].gi;
+        animator  = index_npc[npc.id].ai;
 
         if(j<pConfigs->main_npc.size())
         {
-        if(pConfigs->main_npc[j].id == npc.id)
-            found=true;
+            if(pConfigs->main_npc[j].id == npc.id)
+                found=true;
         }
     }
 
@@ -376,7 +587,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     NPCItem->setData(8, QString::number((int)mergedSet.no_npc_collions));
 
         //WriteToLog(QtDebugMsg, "NPC place -> set Pixmap");
-    NPCItem->setMainPixmap(tImg);
+    //NPCItem->setMainPixmap(tImg);
 
         //WriteToLog(QtDebugMsg, "NPC place -> set ContextMenu");
     NPCItem->setContextMenu(npcMenu);
@@ -388,12 +599,12 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     addItem(NPCItem);
 
     if(NPCItem->localProps.foreground)
-        NPCItem->setZValue(npcZf);
+        NPCItem->setZValue(Z_npcFore);
     else
     if(NPCItem->localProps.background)
-        NPCItem->setZValue(npcZb);
+        NPCItem->setZValue(Z_npcBack);
     else
-        NPCItem->setZValue(npcZs);
+        NPCItem->setZValue(Z_npcStd);
 
     #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set Generator");
@@ -428,15 +639,17 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         WriteToLog(QtDebugMsg, "NPC place -> set animation");
     #endif
 
-    NPCItem->setAnimation(NPCItem->localProps.frames,
-                          NPCItem->localProps.framespeed,
-                          NPCItem->localProps.framestyle,
-                          npc.direct,
-                          NPCItem->localProps.custom_animate,
-                          NPCItem->localProps.custom_ani_fl,
-                          NPCItem->localProps.custom_ani_el,
-                          NPCItem->localProps.custom_ani_fr,
-                          NPCItem->localProps.custom_ani_er);
+    NPCItem->setAnimator(animator);
+    NPCItem->changeDirection(npc.direct);
+//    NPCItem->setAnimation(NPCItem->localProps.frames,
+//                          NPCItem->localProps.framespeed,
+//                          NPCItem->localProps.framestyle,
+//                          npc.direct,
+//                          NPCItem->localProps.custom_animate,
+//                          NPCItem->localProps.custom_ani_fl,
+//                          NPCItem->localProps.custom_ani_el,
+//                          NPCItem->localProps.custom_ani_fr,
+//                          NPCItem->localProps.custom_ani_er);
 
     #ifdef _DEBUG_
         WriteToLog(QtDebugMsg, "NPC place -> set flags");
@@ -469,7 +682,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     #endif
 }
 
-void LvlScene::placeWater(LevelWater &water, bool toGrid)
+void LvlScene::placeWater(LevelPhysEnv &water, bool toGrid)
 {
     ItemWater *WATERItem = new ItemWater();
     //QGraphicsPolygonItem *	WATERItem;
@@ -499,7 +712,7 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
     WATERItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_water));
     WATERItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_water));
 
-    WATERItem->setZValue(waterZ);
+    WATERItem->setZValue(Z_sys_PhysEnv);
 
     WATERItem->setData(0, "Water"); // ObjType
     WATERItem->setData(1, QString::number(0) );
@@ -509,15 +722,15 @@ void LvlScene::placeWater(LevelWater &water, bool toGrid)
 
 void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 {
-    QGraphicsItem *	player = NULL;
+    ItemPlayerPoint *	player = NULL;
     bool found=false;
     if(!init)
     {
         foreach(QGraphicsItem * plrt, this->items())
         {
-            if( plrt->data(0).toString()=="player"+QString::number(plr.id) )
+            if( (plrt->data(0).toString()=="playerPoint")&&((unsigned int)plrt->data(2).toInt()==plr.id) )
             {
-                player = plrt;
+                player = dynamic_cast<ItemPlayerPoint *>(plrt);
                 found=true;
                 break;
             }
@@ -527,31 +740,17 @@ void LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
     if(found)
     {
         player->setPos(plr.x, plr.y);
-        for(int i=0; i<LvlData->players.size(); i++)
-        {
-         if(LvlData->players[i].id == plr.id)
-         { LvlData->players[i] = plr; break; }
-        }
+        player->pointData = plr;
+        player->arrayApply();
     }
     else
     {
         if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
         {
-            player = addPixmap(QPixmap(":/player"+QString::number(plr.id)+".png"));
-            player->setPos(plr.x, plr.y);
-            player->setZValue(playerZ);
-            player->setData(0, "player"+QString::number(plr.id) );
-            player->setData(2, QString::number(plr.id));
-            player->setFlag(QGraphicsItem::ItemIsSelectable, true);
-            player->setFlag(QGraphicsItem::ItemIsMovable, true);
-            if(!init)
-            {
-                for(int i=0; i<LvlData->players.size(); i++)
-                {
-                 if(LvlData->players[i].id == plr.id)
-                 { LvlData->players[i] = plr; break; }
-                }
-            }
+            player = new ItemPlayerPoint();
+            player->setScenePoint(this);
+            this->addItem(player);
+            player->setPointData(plr, init);
         }
     }
 

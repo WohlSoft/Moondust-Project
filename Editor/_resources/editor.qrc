@@ -7,27 +7,6 @@
         <file>images/mushroom.png</file>
         <file>images/arrow.png</file>
         <file>images/rubber.png</file>
-        <file>images/01.png</file>
-        <file>images/02.png</file>
-        <file>images/03.png</file>
-        <file>images/04.png</file>
-        <file>images/05.png</file>
-        <file>images/06.png</file>
-        <file>images/07.png</file>
-        <file>images/08.png</file>
-        <file>images/09.png</file>
-        <file>images/10.png</file>
-        <file>images/11.png</file>
-        <file>images/12.png</file>
-        <file>images/13.png</file>
-        <file>images/14.png</file>
-        <file>images/15.png</file>
-        <file>images/16.png</file>
-        <file>images/17.png</file>
-        <file>images/18.png</file>
-        <file>images/19.png</file>
-        <file>images/20.png</file>
-        <file>images/21.png</file>
         <file>images/level.png</file>
         <file>images/world.png</file>
         <file>mushroom.ico</file>
@@ -105,9 +84,6 @@
         <file>images/resize_accept.png</file>
         <file>images/line_fill.png</file>
         <file>images/set_point.png</file>
-        <file>images/extermal_tools/cat_gif2png_128.png</file>
-        <file>images/extermal_tools/cat_glasses_128.png</file>
-        <file>images/extermal_tools/cat_png2gif_128.png</file>
         <file>cat_builder.icns</file>
         <file>cat_builder.ico</file>
         <file>cat_builder.hqx</file>
@@ -116,5 +92,60 @@
         <file>images/cat_builder/cat_builder_48.png</file>
         <file>images/cat_builder/cat_builder_128.png</file>
         <file>images/cat_builder/cat_builder_256.png</file>
+        <file>images/zoom_in.png</file>
+        <file>images/zoom_out.png</file>
+        <file>images/zoom_reset.png</file>
+        <file>images/external_tools/cat_gif2png_128.png</file>
+        <file>images/external_tools/cat_glasses_128.png</file>
+        <file>images/external_tools/cat_png2gif_128.png</file>
+        <file alias="fonts/degits.png">images/font_degits.png</file>
+        <file>images/bug.png</file>
+        <file>images/pencil_16x16.png</file>
+        <file>images/copy_16x16.png</file>
+        <file alias="player.png">images/player_point.png</file>
+    </qresource>
+    <qresource prefix="/sections">
+        <file>sections/01.png</file>
+        <file>sections/01_n.png</file>
+        <file>sections/02.png</file>
+        <file>sections/02_n.png</file>
+        <file>sections/03.png</file>
+        <file>sections/03_n.png</file>
+        <file>sections/04.png</file>
+        <file>sections/04_n.png</file>
+        <file>sections/05.png</file>
+        <file>sections/05_n.png</file>
+        <file>sections/06.png</file>
+        <file>sections/06_n.png</file>
+        <file>sections/07.png</file>
+        <file>sections/07_n.png</file>
+        <file>sections/08.png</file>
+        <file>sections/08_n.png</file>
+        <file>sections/09.png</file>
+        <file>sections/09_n.png</file>
+        <file>sections/10.png</file>
+        <file>sections/10_n.png</file>
+        <file>sections/11.png</file>
+        <file>sections/11_n.png</file>
+        <file>sections/12.png</file>
+        <file>sections/12_n.png</file>
+        <file>sections/13.png</file>
+        <file>sections/13_n.png</file>
+        <file>sections/14.png</file>
+        <file>sections/14_n.png</file>
+        <file>sections/15.png</file>
+        <file>sections/15_n.png</file>
+        <file>sections/16.png</file>
+        <file>sections/16_n.png</file>
+        <file>sections/17.png</file>
+        <file>sections/17_n.png</file>
+        <file>sections/18.png</file>
+        <file>sections/18_n.png</file>
+        <file>sections/19.png</file>
+        <file>sections/19_n.png</file>
+        <file>sections/20.png</file>
+        <file>sections/20_n.png</file>
+        <file>sections/21.png</file>
+        <file>sections/21_n.png</file>
     </qresource>
 </RCC>

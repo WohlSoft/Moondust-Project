@@ -76,7 +76,7 @@ void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
                    level.right_exit = -1;
                 }
             }
-            ui->WLD_PROPS_ExitRight->setCurrentIndex( level.left_exit+1 );
+            ui->WLD_PROPS_ExitRight->setCurrentIndex( level.right_exit+1 );
 
             if(newItem)
             {//Reset value to min, if it out of range

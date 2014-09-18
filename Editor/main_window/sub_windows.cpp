@@ -18,6 +18,7 @@
 
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
+#include "../common_features/graphicsworkspace.h"
 
 
 //Edit NPC
@@ -69,6 +70,9 @@ leveledit *MainWindow::createLvlChild()
     levelWindowP->updateGeometry();
     levelWindowP->update();
     ui->centralWidget->updateGeometry();
+
+    GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
+    connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
 
     return child;
 }
@@ -139,7 +143,7 @@ WorldEdit *MainWindow::activeWldEditWin()
 
 
 
-QMdiSubWindow *MainWindow::findMdiChild(const QString &fileName)
+QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
 {
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
     leveledit *ChildWindow0;

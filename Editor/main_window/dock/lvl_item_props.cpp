@@ -113,8 +113,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->PROPS_BlockSquareFill->setChecked(LvlPlacingItems::fillingMode);
 
         ui->PROPS_BlockIncludes->setText(
-                    ((block.npc_id>0)?
-                         ((block.npc_id>1000)?QString("NPC-%1").arg(block.npc_id-1000):tr("%1 coins").arg(block.npc_id))
+                    ((block.npc_id!=0)?
+                         ((block.npc_id>0)?QString("NPC-%1").arg(block.npc_id):tr("%1 coins").arg(block.npc_id*-1))
                        :tr("[empty]")
                          ) );
 
@@ -379,7 +379,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
             npcmsg.resize(18);
             npcmsg.push_back("...");
         }
-        ui->PROPS_NpcTMsg->setText( npcmsg );
+        ui->PROPS_NpcTMsg->setText( npcmsg.replace("&", "&&&") );
 
         ui->PROPS_NpcFri->setChecked( npc.friendly );
         ui->PROPS_NPCNoMove->setChecked( npc.nomove );
@@ -725,8 +725,8 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
 
     //NpcDialog * npcList = new NpcDialog(&configs);
     ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,
-                                                   ItemSelectDialog::NPCEXTRA_WITHCOINS | (npcID < 1000 && npcID != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
-                                                   (npcID < 1000 && npcID != 0 ? npcID : npcID-1000));
+                                                   ItemSelectDialog::NPCEXTRA_WITHCOINS | (npcID < 0 && npcID != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0),0,0,
+                                                   (npcID < 0 && npcID != 0 ? npcID*-1 : npcID));
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
     //npcList->setState(npcID);
@@ -744,15 +744,15 @@ void MainWindow::on_PROPS_BlockIncludes_clicked()
 //            selected_npc = npcList->selectedNPC+1000;
         if(npcList->npcID!=0){
                     if(npcList->isCoin)
-                        selected_npc = npcList->npcID;
+                        selected_npc = npcList->npcID*-1;
                     else
-                        selected_npc = npcList->npcID+1000;
+                        selected_npc = npcList->npcID;
                 }
 
 
         ui->PROPS_BlockIncludes->setText(
-                    ((selected_npc>0)?
-                         ((selected_npc>1000)?QString("NPC-%1").arg(selected_npc-1000):tr("%1 coins").arg(selected_npc))
+                    ((selected_npc!=0)?
+                         ((selected_npc>0)?QString("NPC-%1").arg(selected_npc):tr("%1 coins").arg(selected_npc*-1))
                        :tr("[empty]")
                          ) );
 
@@ -1248,7 +1248,7 @@ void MainWindow::on_PROPS_NpcTMsg_clicked()
             npcmsg.resize(18);
             npcmsg.push_back("...");
         }
-        ui->PROPS_NpcTMsg->setText( npcmsg );
+        ui->PROPS_NpcTMsg->setText( npcmsg.replace("&", "&&&") );
     }
     delete msgBox;
 
