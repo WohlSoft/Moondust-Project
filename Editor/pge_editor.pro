@@ -284,7 +284,8 @@ HEADERS  += mainwindow.h \
     data_configs/config_manager.h \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h \
-    level_scene/item_playerpoint.h
+    level_scene/item_playerpoint.h \
+    common_features/sdl_music_player.h
 
 FORMS    += \
     mainwindow.ui \

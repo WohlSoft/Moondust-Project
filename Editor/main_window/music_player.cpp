@@ -20,11 +20,12 @@
 #include "../mainwindow.h"
 #include "music_player.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
-#include <QThread>
-#include <QtConcurrent/QtConcurrentRun>
-#include <iostream>
+#include "../common_features/sdl_music_player.h"
+
+void PGE_MusPlayer::setVolume(int volume)
+{
+    PGE_MusicPlayer::MUS_changeVolume(volume);
+}
 
 namespace PGE_MusicPlayer
 {
@@ -41,7 +42,7 @@ Mix_Music *play_mus = NULL;
         {
             if(Mix_PlayMusic(play_mus, -1)==-1)
             {
-                qDebug() << QString("Mix_PlayMusic: %1\n").arg(Mix_GetError());
+                qDebug() << QString("Mix_PlayMusic: %1").arg(Mix_GetError());
                 // well, there's no music, but most games don't break without music...
             }
 
@@ -49,7 +50,7 @@ Mix_Music *play_mus = NULL;
         }
         else
         {
-            qDebug() << QString("Play nothing: Mix_PlayMusic: %1\n").arg(Mix_GetError());
+            qDebug() << QString("Play nothing: Mix_PlayMusic: %1").arg(Mix_GetError());
         }
     }
 
@@ -61,7 +62,7 @@ Mix_Music *play_mus = NULL;
     void MUS_openFile(QString musFile)
     {
         if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}
-        play_mus = Mix_LoadMUS( musFile.toLocal8Bit() );
+        play_mus = Mix_LoadMUS( musFile.toUtf8() );
         if(!play_mus) {
             qDebug() << QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError());
         }
@@ -70,7 +71,7 @@ Mix_Music *play_mus = NULL;
         //qDebug() << "Pointer is " << static_cast<void*>(&play_mus);
 
         Mix_MusicType type=Mix_GetMusicType(play_mus);
-        qDebug() << QString("Music type: %1\n").arg(
+        qDebug() << QString("Music type: %1").arg(
                 type==MUS_NONE?"MUS_NONE":
                 type==MUS_CMD?"MUS_CMD":
                 type==MUS_WAV?"MUS_WAV":

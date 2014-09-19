@@ -19,6 +19,7 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 #include "../common_features/logger_sets.h"
+#include "../common_features/sdl_music_player.h"
 
 #include "appsettings.h"
 
@@ -68,6 +69,8 @@ long LvlMusPlay::currentSpcMusicId=0;
 bool LvlMusPlay::musicButtonChecked;
 bool LvlMusPlay::musicForceReset=false;
 int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
+
+PGE_MusPlayer MusPlayer;
 
 void MainWindow::setDefaults()
 {
@@ -279,9 +282,10 @@ void MainWindow::setUiDefults()
     muVol->setMaximumWidth(70);
     muVol->setMinimumWidth(70);
     muVol->setMinimum(0);
-    muVol->setMaximum(100);
+    muVol->setMaximum(MIX_MAX_VOLUME);
     muVol->setValue(GlobalSettings::musicVolume);
-    MusicPlayer->setVolume(GlobalSettings::musicVolume);
+    //MusicPlayer->setVolume(GlobalSettings::musicVolume);
+    MusPlayer.setVolume(muVol->value());
     ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
     ui->EditionToolBar->insertSeparator(ui->actionAnimation);
 
@@ -294,7 +298,7 @@ void MainWindow::setUiDefults()
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
     connect(zoom, SIGNAL(editingFinished()), this, SLOT(applyTextZoom()));
 
-    connect(muVol, SIGNAL(valueChanged(int)), MusicPlayer, SLOT(setVolume(int)));
+    connect(muVol, SIGNAL(valueChanged(int)), &MusPlayer, SLOT(setVolume(int)));
 
     curSearchBlock.id = 0;
     curSearchBlock.index = 0;

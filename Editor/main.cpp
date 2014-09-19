@@ -29,9 +29,10 @@
 
 #include <iostream>
 #include <stdlib.h>
+
+#undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
-
 #undef main
 
 namespace PGECrashHandler {
