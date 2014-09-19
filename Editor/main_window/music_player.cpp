@@ -24,6 +24,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <QThread>
 #include <QtConcurrent/QtConcurrentRun>
+#include <iostream>
 
 namespace PGE_MusicPlayer
 {
@@ -43,6 +44,12 @@ Mix_Music *play_mus = NULL;
                 qDebug() << QString("Mix_PlayMusic: %1\n").arg(Mix_GetError());
                 // well, there's no music, but most games don't break without music...
             }
+
+            qDebug() << QString("Music is %1").arg(Mix_PlayingMusic()==1?"Playing":"Silence");
+        }
+        else
+        {
+            qDebug() << QString("Play nothing: Mix_PlayMusic: %1\n").arg(Mix_GetError());
         }
     }
 
@@ -53,13 +60,29 @@ Mix_Music *play_mus = NULL;
 
     void MUS_openFile(QString musFile)
     {
-        if(play_mus!=NULL) Mix_FreeMusic(play_mus);
+        if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}
         play_mus = Mix_LoadMUS( musFile.toLocal8Bit() );
         if(!play_mus) {
             qDebug() << QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError());
         }
-    }
 
+        //Print memory address of pointer
+        //qDebug() << "Pointer is " << static_cast<void*>(&play_mus);
+
+        Mix_MusicType type=Mix_GetMusicType(play_mus);
+        qDebug() << QString("Music type: %1\n").arg(
+                type==MUS_NONE?"MUS_NONE":
+                type==MUS_CMD?"MUS_CMD":
+                type==MUS_WAV?"MUS_WAV":
+                /*type==MUS_MOD_MODPLUG?"MUS_MOD_MODPLUG":*/
+                type==MUS_MOD?"MUS_MOD":
+                type==MUS_MID?"MUS_MID":
+                type==MUS_OGG?"MUS_OGG":
+                type==MUS_MP3?"MUS_MP3":
+                type==MUS_MP3_MAD?"MUS_MP3_MAD":
+                type==MUS_FLAC?"MUS_FLAC":
+                "Unknown");
+    }
 }
 
 //QMediaPlaylist GlobalMusicPlayer::CurrentMusic;
