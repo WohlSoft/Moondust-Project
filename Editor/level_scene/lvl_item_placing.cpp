@@ -67,6 +67,8 @@ bool LvlPlacingItems::fillingMode=false;
 bool LvlPlacingItems::lineMode=false;
 bool LvlPlacingItems::overwriteMode=false;
 
+QString LvlPlacingItems::layer="";
+
 QList<QPair<int, QVariant > > LvlPlacingItems::flags;
 
 void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
