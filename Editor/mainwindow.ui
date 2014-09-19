@@ -246,6 +246,7 @@
     <addaction name="separator"/>
     <addaction name="actionAnimation"/>
     <addaction name="actionCollisions"/>
+    <addaction name="actionSemi_transparent_paths"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -4040,8 +4041,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>115</height>
+          <width>272</width>
+          <height>500</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4122,8 +4123,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>216</width>
-          <height>93</height>
+          <width>272</width>
+          <height>500</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4216,8 +4217,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>461</height>
+          <width>272</width>
+          <height>500</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4514,8 +4515,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>272</width>
+          <height>500</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4630,8 +4631,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>272</width>
+          <height>500</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4728,8 +4729,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>272</width>
+          <height>500</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5111,8 +5112,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>146</height>
+          <width>300</width>
+          <height>543</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5260,8 +5261,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>289</height>
+          <width>300</width>
+          <height>543</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6200,8 +6201,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>454</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6322,8 +6323,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>454</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6444,8 +6445,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>229</width>
-          <height>220</height>
+          <width>300</width>
+          <height>454</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6691,8 +6692,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>454</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6968,8 +6969,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>98</width>
-              <height>28</height>
+              <width>1470</width>
+              <height>128</height>
              </rect>
             </property>
            </widget>
@@ -8863,6 +8864,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionChangeConfig">
    <property name="text">
     <string>Change configuration...</string>
+   </property>
+  </action>
+  <action name="actionSemi_transparent_paths">
+   <property name="text">
+    <string>Semi-transparent paths</string>
    </property>
   </action>
  </widget>
