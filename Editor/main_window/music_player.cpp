@@ -19,75 +19,9 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 #include "music_player.h"
+#include "../common_features/mainwinconnect.h"
 
 #include "../common_features/sdl_music_player.h"
-
-void PGE_MusPlayer::setVolume(int volume)
-{
-    PGE_MusicPlayer::MUS_changeVolume(volume);
-}
-
-namespace PGE_MusicPlayer
-{
-Mix_Music *play_mus = NULL;
-
-    void MUS_stopMusic()
-    {
-        Mix_HaltMusic();
-    }
-
-    void MUS_playMusic()
-    {
-        if(play_mus)
-        {
-            if(Mix_PlayMusic(play_mus, -1)==-1)
-            {
-                qDebug() << QString("Mix_PlayMusic: %1").arg(Mix_GetError());
-                // well, there's no music, but most games don't break without music...
-            }
-
-            qDebug() << QString("Music is %1").arg(Mix_PlayingMusic()==1?"Playing":"Silence");
-        }
-        else
-        {
-            qDebug() << QString("Play nothing: Mix_PlayMusic: %1").arg(Mix_GetError());
-        }
-    }
-
-    void MUS_changeVolume(int volume)
-    {
-        Mix_VolumeMusic(volume);
-    }
-
-    void MUS_openFile(QString musFile)
-    {
-        if(play_mus!=NULL) {Mix_FreeMusic(play_mus);play_mus=NULL;}
-        play_mus = Mix_LoadMUS( musFile.toUtf8() );
-        if(!play_mus) {
-            qDebug() << QString("Mix_LoadMUS(\"%1\"): %2").arg(musFile).arg(Mix_GetError());
-        }
-
-        //Print memory address of pointer
-        //qDebug() << "Pointer is " << static_cast<void*>(&play_mus);
-
-        Mix_MusicType type=Mix_GetMusicType(play_mus);
-        qDebug() << QString("Music type: %1").arg(
-                type==MUS_NONE?"MUS_NONE":
-                type==MUS_CMD?"MUS_CMD":
-                type==MUS_WAV?"MUS_WAV":
-                /*type==MUS_MOD_MODPLUG?"MUS_MOD_MODPLUG":*/
-                type==MUS_MOD?"MUS_MOD":
-                type==MUS_MID?"MUS_MID":
-                type==MUS_OGG?"MUS_OGG":
-                type==MUS_MP3?"MUS_MP3":
-                type==MUS_MP3_MAD?"MUS_MP3_MAD":
-                type==MUS_FLAC?"MUS_FLAC":
-                "Unknown");
-    }
-}
-
-//QMediaPlaylist GlobalMusicPlayer::CurrentMusic;
-
 
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
 {
@@ -100,7 +34,6 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
 
 void MainWindow::setMusic(bool checked=false)
 {
-    //using namespace PGE_MusicPlayer;
     QString dirPath;
     QString musicFile;
     QString musicFilePath;
@@ -137,10 +70,6 @@ void MainWindow::setMusic(bool checked=false)
     } else LvlMusPlay::musicForceReset=false;
 
 
-    WriteToLog(QtDebugMsg, "-> New MediaPlayList");
-    CurrentMusic.clear();
-
-
     if((LvlMusPlay::musicType==LvlMusPlay::LevelMusic)&&(activeChildWindow()!=1))
     {
         if(checked)
@@ -157,7 +86,7 @@ void MainWindow::setMusic(bool checked=false)
               )
             {
                 //MusicPlayer->play();
-                PGE_MusicPlayer::MUS_playMusic();
+                PGE_MusPlayer::MUS_playMusic();
                 silent=false;
             }
             else
@@ -168,8 +97,7 @@ void MainWindow::setMusic(bool checked=false)
         else
         {
             WriteToLog(QtDebugMsg, QString("Set music player -> Stop by Checked"));
-                //MusicPlayer->stop();
-            PGE_MusicPlayer::MUS_stopMusic();
+            PGE_MusPlayer::MUS_stopMusic();
             silent=true;
         }
         return;
@@ -191,7 +119,7 @@ void MainWindow::setMusic(bool checked=false)
               )
             {
                 //MusicPlayer->play();
-                PGE_MusicPlayer::MUS_playMusic();
+                PGE_MusPlayer::MUS_playMusic();
                 silent=false;
             }
             else
@@ -202,8 +130,7 @@ void MainWindow::setMusic(bool checked=false)
         else
         {
             WriteToLog(QtDebugMsg, QString("Set music player -> Stop by Checked"));
-                //MusicPlayer->stop();
-                PGE_MusicPlayer::MUS_stopMusic();
+            PGE_MusPlayer::MUS_stopMusic();
             silent=true;
         }
         return;
@@ -304,37 +231,26 @@ void MainWindow::setMusic(bool checked=false)
         {
             if( (QFile::exists(musicFilePath)) && (QFileInfo(musicFilePath)).isFile() )
             {
-                WriteToLog(QtDebugMsg, QString("Set music player -> addMedia"));
-                //CurrentMusic.addMedia(QUrl::fromLocalFile( musicFilePath ));
-                //CurrentMusic.setPlaybackMode(QMediaPlaylist::Loop);
-                WriteToLog(QtDebugMsg, QString("Set music player -> stop Current"));
-                //MusicPlayer->stop();
-                PGE_MusicPlayer::MUS_stopMusic();
-                WriteToLog(QtDebugMsg, QString("Set music player -> set PlayList"));
-                //MusicPlayer->setPlaylist(&(CurrentMusic));
-                PGE_MusicPlayer::MUS_openFile( musicFilePath );
+                PGE_MusPlayer::MUS_stopMusic();
+                WriteToLog(QtDebugMsg, QString("Set music player -> set MusicFile"));
+                PGE_MusPlayer::MUS_openFile( musicFilePath );
                 WriteToLog(QtDebugMsg, QString("Set music player -> setVolme and play"));
-                //MusicPlayer->setVolume(muVol->value());
-                PGE_MusicPlayer::MUS_changeVolume(muVol->value());
-                PGE_MusicPlayer::MUS_playMusic();
-                //MusicPlayer->play();
+                PGE_MusPlayer::MUS_changeVolume(muVol->value());
+                PGE_MusPlayer::MUS_playMusic();
             }
             else
-                PGE_MusicPlayer::MUS_stopMusic();
-                //MusicPlayer->stop();
+                PGE_MusPlayer::MUS_stopMusic();
         }
         else
         {
             WriteToLog(QtDebugMsg, QString("Set music player -> Stop by checker"));
-            //MusicPlayer->stop();
-            PGE_MusicPlayer::MUS_stopMusic();
+            PGE_MusPlayer::MUS_stopMusic();
         }
     }
     else
     {
         WriteToLog(QtDebugMsg, QString("Set music player -> Stop by sielent"));
-        //MusicPlayer->stop();
-        PGE_MusicPlayer::MUS_stopMusic();
+        PGE_MusPlayer::MUS_stopMusic();
     }
 
     if(LvlMusPlay::musicType==LvlMusPlay::LevelMusic)

@@ -21,27 +21,36 @@
 
 #include <QString>
 #include <QObject>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QUrl>
+
 #undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 
+#include <mpg123.h>
+
 class PGE_MusPlayer : public QObject
 {
     Q_OBJECT
+public:
+    static void MUS_stopMusic();
+
+    static void MUS_playMusic();
+
+    static void MUS_changeVolume(int vlm);
+    static void MUS_openFile(QString musFile);
+
 public slots:
     void setVolume(int volume);
 
+private:
+    static Mix_Music *play_mus;
+    static bool isMediaPlayer;
+    static QMediaPlayer *musicPlayer;
+    static QMediaPlaylist *playList;
+    static int volume;
 };
-
-namespace PGE_MusicPlayer
-{
-    void MUS_stopMusic();
-
-    void MUS_playMusic();
-
-    void MUS_changeVolume(int volume);
-    void MUS_openFile(QString musFile);
-}
-
 
 #endif // MUSIC_PLAYER_H
