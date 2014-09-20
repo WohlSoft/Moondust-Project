@@ -198,7 +198,8 @@ SOURCES += main.cpp\
     file_formats/pge_x.cpp \
     SingleApplication/localserver.cpp \
     SingleApplication/singleapplication.cpp \
-    level_scene/item_playerpoint.cpp
+    level_scene/item_playerpoint.cpp \
+    common_features/sdl_music_player.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
