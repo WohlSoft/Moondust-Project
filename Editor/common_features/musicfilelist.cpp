@@ -29,7 +29,7 @@ MusicFileList::MusicFileList(QString Folder, QString current, QWidget *parent) :
 {
     QStringList filters;
     QDir musicDir(Folder);
-    filters << "*.mp3" << "*.ogg" << "*.wav" << "*.flac";
+    filters << "*.mp3" << "*.ogg" << "*.wav" << "*.flac" << "*.mid" << "*.mod";
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);
 
