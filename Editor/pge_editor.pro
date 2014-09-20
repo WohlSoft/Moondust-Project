@@ -43,6 +43,11 @@ LIBS += -lSDL2 -lSDL2_mixer
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 
+win32: static: {
+    DEFINES += MIKMOD_STATIC MP3_MAD_MUSIC
+    LIBS +=  -lvorbisfile -lvorbis -lmad -lmikmod.dll -lflac -logg
+}
+
 TRANSLATIONS += languages/editor_en.ts \
     languages/editor_ru.ts \
     languages/editor_uk.ts \

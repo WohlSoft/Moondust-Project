@@ -36,18 +36,22 @@ QMediaPlaylist * PGE_MusPlayer::playList=NULL;
 
 void PGE_MusPlayer::MUS_stopMusic()
 {
+    #ifndef MP3_MAD_MUSIC
     if(isMediaPlayer)
         musicPlayer->stop();
     else
+    #endif
         Mix_HaltMusic();
 }
 
 void PGE_MusPlayer::MUS_playMusic()
 {
+    #ifndef MP3_MAD_MUSIC
     if(isMediaPlayer)
         musicPlayer->play();
     else
     {
+    #endif
         if(play_mus)
         {
             if(Mix_PlayMusic(play_mus, -1)==-1)
@@ -62,19 +66,24 @@ void PGE_MusPlayer::MUS_playMusic()
         {
             qDebug() << QString("Play nothing: Mix_PlayMusic: %1").arg(Mix_GetError());
         }
+    #ifndef MP3_MAD_MUSIC
     }
+    #endif
 }
 
 void PGE_MusPlayer::MUS_changeVolume(int vlm)
 {
     volume = vlm;
+    #ifndef MP3_MAD_MUSIC
     if(isMediaPlayer)
     {
         if(volume>100) volume=100;
         musicPlayer->setVolume(volume);
     }
     else
+    #endif
         Mix_VolumeMusic(volume);
+
 
 }
 
@@ -86,6 +95,7 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
         play_mus=NULL;
     }
 
+    #ifndef MP3_MAD_MUSIC
     if(isMediaPlayer) if(musicPlayer!=NULL)
     {
         musicPlayer->stop();
@@ -93,7 +103,9 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
         delete playList;
         isMediaPlayer=false;
     }
+    #endif
 
+    #ifndef MP3_MAD_MUSIC
     //Play MP3-filed with QMediaPlayer
     if(musFile.endsWith(".mp3", Qt::CaseInsensitive))
     {
@@ -107,6 +119,7 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
     }
     else
     {
+    #endif
         isMediaPlayer=false;
 
         play_mus = Mix_LoadMUS( musFile.toUtf8() );
@@ -130,7 +143,9 @@ void PGE_MusPlayer::MUS_openFile(QString musFile)
                 type==MUS_MP3_MAD?"MUS_MP3_MAD":
                 type==MUS_FLAC?"MUS_FLAC":
                 "Unknown");
+    #ifndef MP3_MAD_MUSIC
     }
+    #endif
 }
 
 
