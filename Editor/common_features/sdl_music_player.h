@@ -29,8 +29,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 
-#include <mpg123.h>
-
 class PGE_MusPlayer : public QObject
 {
     Q_OBJECT

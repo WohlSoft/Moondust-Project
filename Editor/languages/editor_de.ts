@@ -2305,7 +2305,7 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../mainwindow.ui" line="6957"/>
         <source>New tileset</source>
-        <translation>Neuer Tileset</translation>
+        <translation>Neues Tileset</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7000"/>

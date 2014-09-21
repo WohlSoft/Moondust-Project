@@ -442,6 +442,9 @@ void MainWindow::setUiDefults()
     //for tileset dock
     //connect(ui->TileSetsCategories, SIGNAL(currentChanged(int)), this, SLOT(makeCurrentTileset()));
 
+    //for tileset
+    connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
+
     updateWindowMenu();
 }
 

@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1478</width>
-     <height>20</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -2674,9 +2674,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-690</y>
-          <width>279</width>
-          <height>1319</height>
+          <y>0</y>
+          <width>275</width>
+          <height>1462</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3858,8 +3858,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>500</height>
+          <width>285</width>
+          <height>498</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4041,8 +4041,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>115</height>
+          <width>255</width>
+          <height>132</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4123,8 +4123,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>216</width>
-          <height>93</height>
+          <width>251</width>
+          <height>103</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4217,8 +4217,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>461</height>
+          <width>260</width>
+          <height>475</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4515,8 +4515,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>213</width>
+          <height>190</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4631,8 +4631,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>226</width>
+          <height>130</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4729,8 +4729,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>118</width>
+          <height>80</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4885,7 +4885,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>543</height>
+          <height>481</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5112,8 +5112,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>146</height>
+          <width>224</width>
+          <height>168</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5261,8 +5261,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>289</height>
+          <width>258</width>
+          <height>335</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5858,8 +5858,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6080,7 +6080,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>454</height>
+          <height>433</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6201,8 +6201,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>183</width>
+          <height>122</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6323,8 +6323,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>183</width>
+          <height>122</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6445,8 +6445,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>229</width>
-          <height>220</height>
+          <width>267</width>
+          <height>254</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6692,8 +6692,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>183</width>
+          <height>122</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6817,7 +6817,7 @@ p, li { white-space: pre-wrap; }
   <widget class="TilesetItemBox" name="Tileset_Item_Box">
    <property name="minimumSize">
     <size>
-     <width>200</width>
+     <width>210</width>
      <height>200</height>
     </size>
    </property>
@@ -6939,27 +6939,24 @@ p, li { white-space: pre-wrap; }
          <property name="spacing">
           <number>0</number>
          </property>
-         <item row="0" column="0">
-          <spacer name="horizontalSpacer_8">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>1386</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
          <item row="0" column="1">
+          <widget class="QLineEdit" name="customTilesetSearchEdit"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_87">
+           <property name="text">
+            <string>Search: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
           <widget class="QPushButton" name="newTileset">
            <property name="text">
             <string>New tileset</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="0" colspan="2">
+         <item row="1" column="0" colspan="3">
           <widget class="QScrollArea" name="customTilesets">
            <property name="widgetResizable">
             <bool>true</bool>
@@ -6969,8 +6966,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>98</width>
-              <height>28</height>
+              <width>1470</width>
+              <height>115</height>
              </rect>
             </property>
            </widget>

@@ -40,7 +40,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
     ui->customOnly->setVisible(mode!=GFX_Staff);
     ui->specific->setVisible(mode!=GFX_Staff);
 
-    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,ItemTypes::LVL_Block,0,64,3,3, scn)));
+    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,ItemTypes::LVL_Block,0,32,3,3, scn)));
 
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);
