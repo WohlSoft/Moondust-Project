@@ -158,6 +158,8 @@ void MainWindow::updateMenus(bool force)
     ui->actionWorld_settings->setVisible( (WinType==3) );
     ui->actionWLD_SearchBox->setVisible( (WinType==3) );
 
+    ui->actionSemi_transparent_paths->setVisible( (WinType==3) );
+
     ui->menuLevel->setEnabled( (WinType==1) );
 
 
