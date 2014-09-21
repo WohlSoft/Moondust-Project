@@ -189,7 +189,6 @@ void MainWindow::editSelectedTileset()
     setTileSetBox();
 }
 
-
 QScrollArea* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
 {
     WriteToLog(QtDebugMsg, "TilesetBox -> find QScroll Area");
@@ -432,6 +431,8 @@ void MainWindow::makeSelectedTileset(int tabIndex)
             {
                 unsigned int mostRighter = 0;
                 SimpleTileset &s = ctsets[j];
+                if(!s.tileSetName.contains(ui->customTilesetSearchEdit->text()))
+                    continue;
                 QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, scrollWid);
                 ((FlowLayout*)scrollWid->layout())->addWidget(tilesetNameWrapper);
                 QGridLayout* l = new QGridLayout(tilesetNameWrapper);
