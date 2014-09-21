@@ -41,6 +41,8 @@ public:
 
     static void MUS_changeVolume(int vlm);
     static void MUS_openFile(QString musFile);
+    static void setSampleRate(int sampleRate);
+    static int sampleRate();
 
 public slots:
     void setVolume(int volume);
@@ -51,6 +53,7 @@ private:
     static QMediaPlayer *musicPlayer;
     static QMediaPlaylist *playList;
     static int volume;
+    static int sRate;
 };
 
 #endif // MUSIC_PLAYER_H

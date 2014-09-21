@@ -29,6 +29,7 @@ void PGE_MusPlayer::setVolume(int volume)
 Mix_Music *PGE_MusPlayer::play_mus = NULL;
 
 int PGE_MusPlayer::volume=100;
+int PGE_MusPlayer::sRate=44100;
 
 bool PGE_MusPlayer::isMediaPlayer=false;
 QMediaPlayer * PGE_MusPlayer::musicPlayer=NULL;
@@ -86,6 +87,18 @@ void PGE_MusPlayer::MUS_changeVolume(int vlm)
 
 
 }
+
+void PGE_MusPlayer::setSampleRate(int sampleRate=44100)
+{
+    sRate=sampleRate;
+    Mix_CloseAudio();
+    Mix_OpenAudio(sRate, AUDIO_S16, 2, 4096);
+}
+int PGE_MusPlayer::sampleRate()
+{
+    return sRate;
+}
+
 
 void PGE_MusPlayer::MUS_openFile(QString musFile)
 {
