@@ -177,6 +177,10 @@ void ItemScene::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 void ItemScene::arrayApply()
 {
     bool found=false;
+
+    sceneData.x = qRound(this->scenePos().x());
+    sceneData.y = qRound(this->scenePos().y());
+
     if(sceneData.index < (unsigned int)scene->WldData->scenery.size())
     { //Check index
         if(sceneData.array_id == scene->WldData->scenery[sceneData.index].array_id)

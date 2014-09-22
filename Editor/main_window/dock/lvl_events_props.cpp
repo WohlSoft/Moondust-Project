@@ -16,11 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QMediaPlayer>
-
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
-
 
 #include "../../level_scene/item_bgo.h"
 #include "../../level_scene/item_block.h"
@@ -32,6 +29,7 @@
 #include "../../file_formats/file_formats.h"
 
 #include "../../common_features/util.h"
+#include "../../common_features/sdl_music_player.h"
 
 long currentEventArrayID=0;
 bool lockSetEventSettings=false;
@@ -1798,9 +1796,7 @@ void MainWindow::on_LVLEvent_playSnd_clicked()
     if(!found) return;
     if(!QFileInfo::exists(sndPath)) return;
 
-    playSnd.setMedia(QMediaContent(QUrl(sndPath)));
-    playSnd.setVolume(100);
-    playSnd.play();
+    PGE_Sounds::SND_PlaySnd(sndPath);
 }
 
 

@@ -136,22 +136,26 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
                     target.setX( it->scenePos().toPoint().x()-offset.x() );
                     target.setY( it->scenePos().toPoint().y()-offset.y() );
                     it->setPos(target);
-                    if(force) applyArrayForItem(it);
                 }
+                if(force) applyArrayForItem(it);
             }
-        }
+        } else if(force) applyArrayForItem(lead);
     }
 }
 
 
-void LvlScene::applyArrayForItemGroup(QList<QGraphicsItem * >items, bool force)
+void LvlScene::applyArrayForItemGroup(QList<QGraphicsItem * >items)
 {
     foreach(QGraphicsItem * it, items)
-        applyArrayForItem(it, force);
+    {
+        if(it) applyArrayForItem(it);
+    }
 }
 
 void LvlScene::applyArrayForItem(QGraphicsItem * item)
 {
+    if(!item) return;
+
     QString ObjType = item->data(0).toString();
     if( ObjType == "NPC")
     {
@@ -181,6 +185,65 @@ void LvlScene::applyArrayForItem(QGraphicsItem * item)
     if( ObjType == "playerPoint" )
     {
         dynamic_cast<ItemPlayerPoint *>(item)->arrayApply();
+    }
+
+}
+
+
+
+void LvlScene::returnItemBackGroup(QList<QGraphicsItem * >items)
+{
+    foreach(QGraphicsItem * it, items)
+    {
+        if(it) returnItemBack(it);
+    }
+}
+
+void LvlScene::returnItemBack(QGraphicsItem * item)
+{
+    if(!item) return;
+
+    QString ObjType = item->data(0).toString();
+    if( ObjType == "NPC")
+    {
+        ItemNPC * it = dynamic_cast<ItemNPC *>(item);
+        it->setPos(it->npcData.x, it->npcData.y);
+    }
+    else
+    if( ObjType == "Block")
+    {
+        ItemBlock * it = dynamic_cast<ItemBlock *>(item);
+        it->setPos(it->blockData.x, it->blockData.y);
+    }
+    else
+    if( ObjType == "BGO")
+    {
+        ItemBGO * it = dynamic_cast<ItemBGO *>(item);
+        it->setPos(it->bgoData.x, it->bgoData.y);
+    }
+    else
+    if( ObjType == "Water")
+    {
+        ItemWater * it = dynamic_cast<ItemWater *>(item);
+        it->setPos(it->waterData.x, it->waterData.y);
+    }
+    else
+    if(ObjType == "Door_enter")
+    {
+        ItemDoor * it = dynamic_cast<ItemDoor *>(item);
+        it->setPos(it->doorData.ix, it->doorData.iy);
+    }
+    else
+    if(ObjType == "Door_exit")
+    {
+        ItemDoor * it = dynamic_cast<ItemDoor *>(item);
+        it->setPos(it->doorData.ox, it->doorData.oy);
+    }
+    else
+    if( ObjType == "playerPoint" )
+    {
+        ItemPlayerPoint * it = dynamic_cast<ItemPlayerPoint *>(item);
+        it->setPos(it->pointData.x, it->pointData.y);
     }
 }
 

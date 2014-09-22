@@ -19,6 +19,7 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 #include "../common_features/logger_sets.h"
+#include "../common_features/sdl_music_player.h"
 
 #include "appsettings.h"
 
@@ -69,11 +70,11 @@ bool LvlMusPlay::musicButtonChecked;
 bool LvlMusPlay::musicForceReset=false;
 int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
 
+PGE_MusPlayer MusPlayer;
+
 void MainWindow::setDefaults()
 {
     setPointer();
-
-    MusicPlayer = new QMediaPlayer;
 
     GlobalSettings::LvlOpts.animationEnabled = true;
     GlobalSettings::LvlOpts.collisionsEnabled = true;
@@ -279,9 +280,10 @@ void MainWindow::setUiDefults()
     muVol->setMaximumWidth(70);
     muVol->setMinimumWidth(70);
     muVol->setMinimum(0);
-    muVol->setMaximum(100);
+    muVol->setMaximum(MIX_MAX_VOLUME);
     muVol->setValue(GlobalSettings::musicVolume);
-    MusicPlayer->setVolume(GlobalSettings::musicVolume);
+    //MusicPlayer->setVolume(GlobalSettings::musicVolume);
+    MusPlayer.setVolume(muVol->value());
     ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
     ui->EditionToolBar->insertSeparator(ui->actionAnimation);
 
@@ -294,7 +296,7 @@ void MainWindow::setUiDefults()
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset,zoom);
     connect(zoom, SIGNAL(editingFinished()), this, SLOT(applyTextZoom()));
 
-    connect(muVol, SIGNAL(valueChanged(int)), MusicPlayer, SLOT(setVolume(int)));
+    connect(muVol, SIGNAL(valueChanged(int)), &MusPlayer, SLOT(setVolume(int)));
 
     curSearchBlock.id = 0;
     curSearchBlock.index = 0;
@@ -438,6 +440,9 @@ void MainWindow::setUiDefults()
     //for tileset dock
     //connect(ui->TileSetsCategories, SIGNAL(currentChanged(int)), this, SLOT(makeCurrentTileset()));
 
+    //for tileset
+    connect(ui->customTilesetSearchEdit, SIGNAL(textChanged(QString)), this, SLOT(makeCurrentTileset()));
+
     updateWindowMenu();
 }
 
@@ -483,6 +488,7 @@ void MainWindow::loadSettings()
         GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
         GlobalSettings::WLDToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("world-toolbox-pos", static_cast<int>(QTabWidget::West)).toInt());
 
+        PGE_MusPlayer::setSampleRate(settings.value("sdl-sample-rate", PGE_MusPlayer::sampleRate()).toInt());
 
         ui->DoorsToolbox->setFloating(settings.value("doors-tool-box-float", true).toBool());
         ui->LevelSectionSettings->setFloating(settings.value("level-section-set-float", true).toBool());
@@ -581,7 +587,7 @@ void MainWindow::saveSettings()
     settings.setValue("windowState", saveState());
 
     settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
-    settings.setValue("music-volume", MusicPlayer->volume());
+    settings.setValue("music-volume", PGE_MusPlayer::currentVolume());
 
     settings.setValue("editor-midmouse-allowdupe", GlobalSettings::MidMouse_allowDuplicate);
     settings.setValue("editor-midmouse-allowplace", GlobalSettings::MidMouse_allowSwitchToPlace);
@@ -598,6 +604,8 @@ void MainWindow::saveSettings()
     settings.setValue("language", GlobalSettings::locale);
 
     settings.setValue("current-config", currentConfigDir);
+
+    settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
 
     settings.endGroup();
 
