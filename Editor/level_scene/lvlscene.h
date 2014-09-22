@@ -165,6 +165,7 @@ public:
     QVector<SimpleAnimator * > animates_Blocks;
     QVector<AdvNpcAnimator * > animates_NPC;
 
+    bool checkGroupCollisions(QList<QGraphicsItem *> *items);
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp = 0);
 
     LevelData  * LvlData;
@@ -571,9 +572,12 @@ private:
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
     void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
-    void applyArrayForItemGroup(QList<QGraphicsItem * >items, bool force=false);
 
+    void applyArrayForItemGroup(QList<QGraphicsItem * >items);
     void applyArrayForItem(QGraphicsItem * item);
+
+    void returnItemBackGroup(QList<QGraphicsItem * >items);
+    void returnItemBack(QGraphicsItem * item);
 
     void setSectionBG(LevelSection section, bool forceTiled=false);
 

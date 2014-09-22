@@ -101,6 +101,9 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
             LvlPlacingItems::blockSet.npc_id = configs.main_block[j].default_content_value;
             block.npc_id = configs.main_block[j].default_content_value;
+
+            LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
+            block.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
         }
 
 
@@ -166,6 +169,12 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         else
             bgoPtr = bgo.array_id;
 
+
+        if(bgoPtr<0)
+        {
+            LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
+            bgo.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
+        }
 
         ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.array_id));
 
@@ -267,6 +276,9 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 LvlPlacingItems::npcSet.special_data = configs.main_npc[j].default_special_value;
                 npc.special_data = configs.main_npc[j].default_special_value;
             }
+
+            LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
+            npc.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
         }
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );

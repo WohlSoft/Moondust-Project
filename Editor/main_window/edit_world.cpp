@@ -91,4 +91,12 @@ void MainWindow::on_actionLockMusicBoxes_triggered(bool checked)
     }
 }
 
+
+
+void MainWindow::on_actionSemi_transparent_paths_triggered(bool checked)
+{
+
+}
+
+
 // //////////////////////// Locks End //////////////////////////////

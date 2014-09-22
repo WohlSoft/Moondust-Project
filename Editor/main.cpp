@@ -20,6 +20,7 @@
 
 #include <QSharedMemory>
 #include <QSystemSemaphore>
+#include <QDesktopWidget>
 
 
 #include "common_features/logger.h"
@@ -29,6 +30,11 @@
 
 #include <iostream>
 #include <stdlib.h>
+
+#undef main
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#undef main
 
 namespace PGECrashHandler {
     void crashByFlood(){
@@ -54,45 +60,9 @@ int main(int argc, char *argv[])
         return 0;
     }
 
+    SDL_Init(SDL_INIT_AUDIO);
+
     a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
-
-//    //Check if application is already running//////////////////
-//    QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
-//    bool isRunning;
-
-//    if(sema.acquire())
-//    {
-//        QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-//        shmem.attach();
-//    }
-
-//    QString sendToMem;
-//    foreach(QString str, a->arguments())
-//    {
-//        sendToMem+= str + "|";
-//    }
-
-//    QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-//    if (shmem.attach())
-//    {
-//        isRunning = true;
-//    }
-//    else
-//    {
-//        shmem.create(1);
-//        isRunning = false;
-//    }
-//    sema.release();
-
-//    shmem.disconnect();
-
-//    if(isRunning)
-//    {
-//        QApplication::quit();
-//        QApplication::exit();
-//        delete a;
-//        return 0;
-//    }
 
     LoadLogSettings();
 
@@ -101,7 +71,11 @@ int main(int argc, char *argv[])
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
     MainWindow *w = new MainWindow;
-    w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, QSize(qApp->desktop()->width()-100, qApp->desktop()->height()-100), qApp->desktop()->availableGeometry()));
+
+    QRect screenSize = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+                                       QSize(screenSize.width()-100,\
+                                             screenSize.height()-100), screenSize));
 
     a->connect( a, SIGNAL(lastWindowClosed()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( quit() ) );
@@ -121,5 +95,7 @@ int main(int argc, char *argv[])
     QApplication::exit();
     delete a;
     delete as;
+
+    SDL_Quit();
     return ret;
 }

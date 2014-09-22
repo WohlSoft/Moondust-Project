@@ -29,6 +29,8 @@
 
 #include "../../common_features/util.h"
 
+#include "../../level_scene/lvl_item_placing.h"
+
 
 static bool lockLayerEdit=false;
 
@@ -36,6 +38,8 @@ void MainWindow::setLayersBox()
 {
     int WinType = activeChildWindow();
     QListWidgetItem * item;
+
+    LvlPlacingItems::layer="";
 
 
     util::memclear(ui->LvlLayerList);
@@ -60,6 +64,27 @@ void MainWindow::setLayersBox()
         }
 
     }
+}
+
+
+void MainWindow::on_LvlLayerList_itemClicked(QListWidgetItem *item)
+{
+    LvlPlacingItems::layer=item->text();
+    LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
+}
+
+void MainWindow::on_LvlLayerList_itemSelectionChanged()
+{
+    if(ui->LvlLayerList->selectedItems().isEmpty())
+        LvlPlacingItems::layer="";
+    else
+        LvlPlacingItems::layer= ui->LvlLayerList->selectedItems().first()->text();
+
+    LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
 }
 
 void MainWindow::setLayerLists()

@@ -28,8 +28,6 @@
 #include <QPoint>
 #include <QString>
 #include <QStringList>
-#include <QtMultimedia/QMediaPlayer>
-#include <QMediaPlaylist>
 #include <QFileDialog>
 #include <QFile>
 #include <QSettings>
@@ -441,9 +439,6 @@ public:
         void on_actionPlayMusic_triggered(bool checked);
 
     private:
-        QMediaPlayer * MusicPlayer;
-        QMediaPlayer playSnd;
-        QMediaPlaylist CurrentMusic;
         QSlider* muVol;
 // ///////////////////////////////////////////////////////
 
@@ -648,6 +643,9 @@ public:
 
         void on_RemoveLayer_clicked();
         void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
+
+        void on_LvlLayerList_itemClicked(QListWidgetItem *item);
+        void on_LvlLayerList_itemSelectionChanged();
 
     private:
         void RemoveCurrentLayer(bool moveToDefault);
@@ -869,6 +867,8 @@ public:
         void on_WLD_DoCountStars_clicked();
         void on_WLD_Credirs_textChanged();
         void characterActivated(bool checked);
+
+        void on_actionSemi_transparent_paths_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
 // ////////////////////World Item toolbox /////////////////
@@ -979,7 +979,6 @@ private slots:
         void on_actionLockLevels_triggered(bool checked);
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
-
 
 signals:
     void closeEditor();

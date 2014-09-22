@@ -48,6 +48,7 @@ public:
         DOOR_Exit
     };
 
+    static QString layer;
 
     static int c_offset_x;
     static int c_offset_y;

@@ -19,9 +19,9 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 #include "music_player.h"
+#include "../common_features/mainwinconnect.h"
 
-//QMediaPlaylist GlobalMusicPlayer::CurrentMusic;
-
+#include "../common_features/sdl_music_player.h"
 
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
 {
@@ -70,10 +70,6 @@ void MainWindow::setMusic(bool checked=false)
     } else LvlMusPlay::musicForceReset=false;
 
 
-    WriteToLog(QtDebugMsg, "-> New MediaPlayList");
-    CurrentMusic.clear();
-
-
     if((LvlMusPlay::musicType==LvlMusPlay::LevelMusic)&&(activeChildWindow()!=1))
     {
         if(checked)
@@ -89,7 +85,8 @@ void MainWindow::setMusic(bool checked=false)
                      )
               )
             {
-                MusicPlayer->play();
+                //MusicPlayer->play();
+                PGE_MusPlayer::MUS_playMusic();
                 silent=false;
             }
             else
@@ -100,7 +97,7 @@ void MainWindow::setMusic(bool checked=false)
         else
         {
             WriteToLog(QtDebugMsg, QString("Set music player -> Stop by Checked"));
-                MusicPlayer->stop();
+            PGE_MusPlayer::MUS_stopMusic();
             silent=true;
         }
         return;
@@ -121,7 +118,8 @@ void MainWindow::setMusic(bool checked=false)
                      )
               )
             {
-                MusicPlayer->play();
+                //MusicPlayer->play();
+                PGE_MusPlayer::MUS_playMusic();
                 silent=false;
             }
             else
@@ -132,7 +130,7 @@ void MainWindow::setMusic(bool checked=false)
         else
         {
             WriteToLog(QtDebugMsg, QString("Set music player -> Stop by Checked"));
-                MusicPlayer->stop();
+            PGE_MusPlayer::MUS_stopMusic();
             silent=true;
         }
         return;
@@ -233,30 +231,26 @@ void MainWindow::setMusic(bool checked=false)
         {
             if( (QFile::exists(musicFilePath)) && (QFileInfo(musicFilePath)).isFile() )
             {
-                WriteToLog(QtDebugMsg, QString("Set music player -> addMedia"));
-                CurrentMusic.addMedia(QUrl::fromLocalFile( musicFilePath ));
-                CurrentMusic.setPlaybackMode(QMediaPlaylist::Loop);
-                WriteToLog(QtDebugMsg, QString("Set music player -> stop Current"));
-                MusicPlayer->stop();
-                WriteToLog(QtDebugMsg, QString("Set music player -> set PlayList"));
-                MusicPlayer->setPlaylist(&(CurrentMusic));
+                PGE_MusPlayer::MUS_stopMusic();
+                WriteToLog(QtDebugMsg, QString("Set music player -> set MusicFile"));
+                PGE_MusPlayer::MUS_openFile( musicFilePath );
                 WriteToLog(QtDebugMsg, QString("Set music player -> setVolme and play"));
-                MusicPlayer->setVolume(muVol->value());
-                MusicPlayer->play();
+                PGE_MusPlayer::MUS_changeVolume(muVol->value());
+                PGE_MusPlayer::MUS_playMusic();
             }
             else
-                MusicPlayer->stop();
+                PGE_MusPlayer::MUS_stopMusic();
         }
         else
         {
             WriteToLog(QtDebugMsg, QString("Set music player -> Stop by checker"));
-            MusicPlayer->stop();
+            PGE_MusPlayer::MUS_stopMusic();
         }
     }
     else
     {
         WriteToLog(QtDebugMsg, QString("Set music player -> Stop by sielent"));
-        MusicPlayer->stop();
+        PGE_MusPlayer::MUS_stopMusic();
     }
 
     if(LvlMusPlay::musicType==LvlMusPlay::LevelMusic)

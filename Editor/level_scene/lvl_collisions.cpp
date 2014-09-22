@@ -29,7 +29,69 @@
 
 #include "../common_features/timecounter.h"
 
-//static bool xxx=false;
+//Checking group collisions. Return true if was found even one passed collision in this group
+bool LvlScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
+{
+    if(!items)
+        return false;
+    if(items->empty())
+        return false;
+    if(items->size()==1)
+    {
+        WriteToLog(QtDebugMsg, QString("Collision check: single item"));
+        return (itemCollidesWith(items->first(), NULL)!=NULL);
+    }
+
+    //9 - width, 10 - height
+    QRectF findZone = QRectF(items->first()->scenePos(),
+                      QSizeF(items->first()->data(9).toInt(),
+                            items->first()->data(10).toInt()) );
+    //get Zone
+    foreach(QGraphicsItem * it, *items)
+    {
+        if(!it) continue;
+        if(it->scenePos().x()-10 < findZone.left()) findZone.setLeft(it->scenePos().x());
+        if(it->scenePos().y()-10 < findZone.top()) findZone.setTop(it->scenePos().y());
+
+        if(it->scenePos().x()+it->data(9).toInt() > findZone.right())
+            findZone.setRight(it->scenePos().x()+it->data(9).toInt());
+        if(it->scenePos().y()+it->data(10).toInt() > findZone.bottom())
+            findZone.setBottom(it->scenePos().y()+it->data(10).toInt());
+    }
+
+    findZone.setLeft(findZone.left()-10);
+    findZone.setRight(findZone.right()+10);
+    findZone.setTop(findZone.top()-10);
+    findZone.setBottom(findZone.bottom()+10);
+
+    QList<QGraphicsItem *> CheckZone;
+    CheckZone = this->items( findZone, Qt::IntersectsItemBoundingRect);
+    WriteToLog(QtDebugMsg, QString("Collision check: found items for check %1").arg(CheckZone.size()));
+    WriteToLog(QtDebugMsg, QString("Collision rect: x%1 y%2 w%3 h%4").arg(findZone.x())
+               .arg(findZone.y()).arg(findZone.width()).arg(findZone.height()));
+
+    //Don't collide with items which in the group
+    for(int i=0;i<CheckZone.size(); i++)
+    {
+        for(int j=0;j<(*items).size(); j++)
+        {
+            if(CheckZone[i] == (*items)[j])
+            {
+                CheckZone.removeOne(CheckZone[i]);
+                i--;
+            }
+        }
+    }
+
+    foreach(QGraphicsItem * it, *items)
+    {
+        if(itemCollidesWith(it, &CheckZone)!=NULL)
+            return true;
+    }
+    return false;
+
+}
+
 QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp)
 {
     qreal leftA, leftB;
@@ -40,12 +102,25 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
     //xxx=!xxx;
 
+    if(item==NULL)
+        return NULL;
+
+    if(item->data(0).toString()=="YellowRectangle")
+        return NULL;
+    if(item->data(0).toString()=="Water")
+        return NULL;
+    if(item->data(0).toString()=="Door_exit")
+        return NULL;
+    if(item->data(0).toString()=="Door_enter")
+        return NULL;
+
     QList<QGraphicsItem *> collisions;
 
     //TimeCounter t;
     //t.start();
     //if(xxx)
     // ~15 ms on big maps
+
     if(itemgrp && !itemgrp->isEmpty())
         collisions = *itemgrp;
     else
@@ -66,16 +141,27 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
     foreach (QGraphicsItem * it, collisions)
     {
+
             if(it == item)
+                continue;
+            if(it==NULL)
                  continue;
             if(!it->isVisible())
                 continue;
-            if(item->data(0).toString()=="Water")
-                return NULL;
-            if(item->data(0).toString()=="Door_exit")
-                return NULL;
-            if(item->data(0).toString()=="Door_enter")
-                return NULL;
+            if(it->data(0).isNull())
+                 continue;
+            if(it->data(0).toString()=="YellowRectangle")
+                continue;
+            if(it->data(0).toString()=="Space")
+                continue;
+            if(it->data(0).toString()=="Square")
+                continue;
+            if(it->data(0).toString()=="SectionBorder")
+                continue;
+            if(it->data(0).toString()=="PlayerPoint")
+                continue;
+            if(it->data(0).toString().startsWith("BackGround"))
+                continue;
 
             if(
                (it->data(0).toString()!="Block")&&
@@ -123,7 +209,6 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
           }
           else
                 if(item->data(0).toString()!=it->data(0).toString()) continue;
-
 
           if(item->data(3).toString()=="sizable")
           {   // Don't collide with sizable block
