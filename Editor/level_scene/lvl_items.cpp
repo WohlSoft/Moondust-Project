@@ -136,10 +136,10 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
                     target.setX( it->scenePos().toPoint().x()-offset.x() );
                     target.setY( it->scenePos().toPoint().y()-offset.y() );
                     it->setPos(target);
-                    if(force) applyArrayForItem(it);
                 }
+                if(force) applyArrayForItem(it);
             }
-        }
+        } else if(force) applyArrayForItem(lead);
     }
 }
 
