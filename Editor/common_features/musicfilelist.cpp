@@ -29,7 +29,19 @@ MusicFileList::MusicFileList(QString Folder, QString current, QWidget *parent) :
 {
     QStringList filters;
     QDir musicDir(Folder);
-    filters << "*.mp3" << "*.ogg" << "*.wav" << "*.flac" << "*.mid" << "*.mod";
+    filters //MPEG 1 Layer III (LibMAD)
+            << "*.mp3"
+            //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
+            << "*.ogg" << "*.flac"
+            //Uncompressed audio data
+            << "*.wav" << "*.voc" << "*.aiff"
+            //MIDI
+            << "*.mid"
+            //MikMod (Modules)
+            << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
+            << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
+            << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni";
+
     musicDir.setSorting(QDir::Name);
     musicDir.setNameFilters(filters);
 
