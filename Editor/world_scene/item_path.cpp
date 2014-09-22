@@ -180,6 +180,10 @@ void ItemPath::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 void ItemPath::arrayApply()
 {
     bool found=false;
+
+    pathData.x = qRound(this->scenePos().x());
+    pathData.y = qRound(this->scenePos().y());
+
     if(pathData.index < (unsigned int)scene->WldData->paths.size())
     { //Check index
         if(pathData.array_id == scene->WldData->paths[pathData.index].array_id)

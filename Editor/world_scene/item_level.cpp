@@ -271,6 +271,9 @@ void ItemLevel::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 void ItemLevel::arrayApply()
 {
     bool found=false;
+    levelData.x = qRound(this->scenePos().x());
+    levelData.y = qRound(this->scenePos().y());
+
     if(levelData.index < (unsigned int)scene->WldData->levels.size())
     { //Check index
         if(levelData.array_id == scene->WldData->levels[levelData.index].array_id)
