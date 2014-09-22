@@ -76,8 +76,6 @@ void MainWindow::setDefaults()
 {
     setPointer();
 
-    MusicPlayer = new QMediaPlayer;
-
     GlobalSettings::LvlOpts.animationEnabled = true;
     GlobalSettings::LvlOpts.collisionsEnabled = true;
 
@@ -589,7 +587,7 @@ void MainWindow::saveSettings()
     settings.setValue("windowState", saveState());
 
     settings.setValue("autoPlayMusic", GlobalSettings::autoPlayMusic);
-    settings.setValue("music-volume", MusicPlayer->volume());
+    settings.setValue("music-volume", PGE_MusPlayer::currentVolume());
 
     settings.setValue("editor-midmouse-allowdupe", GlobalSettings::MidMouse_allowDuplicate);
     settings.setValue("editor-midmouse-allowplace", GlobalSettings::MidMouse_allowSwitchToPlace);

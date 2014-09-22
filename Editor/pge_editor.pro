@@ -22,7 +22,8 @@
 #
 #----------------------------------------------------------------------------
 
-QT       += gui widgets multimedia
+QT       += gui widgets network
+QT       -= opengl
 
 DESTDIR = ../bin
 
@@ -43,9 +44,19 @@ LIBS += -lSDL2 -lSDL2_mixer
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 
+DEFINES += MP3_MAD_MUSIC
+
 win32: static: {
-    DEFINES += MIKMOD_STATIC MP3_MAD_MUSIC
+    DEFINES += MIKMOD_STATIC
     LIBS +=  -lvorbisfile -lvorbis -lmad -lmikmod.dll -lflac -logg
+}
+
+!MP3_MAD_MUSIC: {
+QT += multimedia
+}
+else
+{
+QT -= multimedia
 }
 
 TRANSLATIONS += languages/editor_en.ts \
