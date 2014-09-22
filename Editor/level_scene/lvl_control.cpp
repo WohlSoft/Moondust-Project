@@ -43,6 +43,42 @@ int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
 
 namespace lvl_control
 {
+    QList<QGraphicsItem *> collisionCheckBuffer;
+    bool emptyCollisionCheck = false;
+
+    ///
+    /// \brief cleanCollisionBuffer
+    /// Remove trash from collision buffer for crash protection
+    void prepareCollisionBuffer()
+    {
+        for(int i=0; i<collisionCheckBuffer.size(); i++ )
+        {
+            bool kick=false;
+            if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
+                kick=true;
+            else
+            if(collisionCheckBuffer[i]->data(0).toString()=="Space")
+                kick=true;
+            else
+            if(collisionCheckBuffer[i]->data(0).toString()=="Square")
+                kick=true;
+            else
+            if(collisionCheckBuffer[i]->data(0).toString()=="Line")
+                kick=true;
+            else
+            if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
+                kick=true;
+            else
+            if(collisionCheckBuffer[i]->data(0).toString()=="PlayerPoint")
+                kick=true;
+            else
+            if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))
+                kick=true;
+
+            if(kick) {collisionCheckBuffer.removeAt(i); i--;}
+        }
+    }
+
     bool mouseLeft=false; //Left mouse key is pressed
     bool mouseMid=false;  //Middle mouse key is pressed
     bool mouseRight=false;//Right mouse key is pressed
@@ -338,7 +374,9 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     MainWinConnect::pMainWin->Debugger_UpdateMousePosition(mouseEvent->scenePos().toPoint());
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Mouse moved -> [%1, %2]").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y()));
+    #endif
     //if(contextMenuOpened) return;
     contextMenuOpened=false;
     IsMoved = true;
@@ -580,13 +618,51 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                     else
                     {
+                        QPointF p = ((QGraphicsRectItem *)cursor)->scenePos();
+                        QSizeF s = ((QGraphicsRectItem *)cursor)->rect().size();
+
+                        WriteToLog(QtDebugMsg, "Get collision buffer");
+
+                        collisionCheckBuffer = this->items(QRectF(
+                                    p.x()-10, p.y()-10,
+                                    s.width()+20, s.height()+20),
+                                    Qt::IntersectsItemBoundingRect);
+                        if(collisionCheckBuffer.isEmpty())
+                            emptyCollisionCheck = true;
+                        else
+                            prepareCollisionBuffer();
+
+                        WriteToLog(QtDebugMsg, "Placing");
                         placeItemsByRectArray();
+
+                        WriteToLog(QtDebugMsg, "clear collision buffer");
+                        emptyCollisionCheck = false;
+                        collisionCheckBuffer.clear();
+                        WriteToLog(QtDebugMsg, "Done");
+
                         break;
                     }
                 }
             case PLC_BGO:
                 {
-                 placeItemsByRectArray();
+                    QPointF p = ((QGraphicsRectItem *)cursor)->scenePos();
+                    QSizeF s = ((QGraphicsRectItem *)cursor)->rect().size();
+
+                    collisionCheckBuffer = this->items(QRectF(
+                                p.x()-10, p.y()-10,
+                                s.width()+20, s.height()+20),
+                                Qt::IntersectsItemBoundingRect);
+
+                    if(collisionCheckBuffer.isEmpty())
+                        emptyCollisionCheck = true;
+                    else
+                        prepareCollisionBuffer();
+
+                    placeItemsByRectArray();
+
+                    emptyCollisionCheck = false;
+                    collisionCheckBuffer.clear();
+
                  break;
                 }
             }
@@ -1073,7 +1149,13 @@ void LvlScene::placeItemUnderCursor()
         }
     }
 
-    if( itemCollidesWith(cursor) )
+    QList<QGraphicsItem *> * checkZone;
+    if(collisionCheckBuffer.isEmpty())
+        checkZone = 0;
+    else
+        checkZone = &collisionCheckBuffer;
+
+    if( !emptyCollisionCheck && itemCollidesWith(cursor, checkZone) )
     {
         return;
     }
