@@ -21,7 +21,7 @@
 
 #include <QString>
 #include <QObject>
-#ifndef MP3_MAD_MUSIC
+#ifdef USE_QMEDIAPLAYER
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QUrl>
@@ -50,7 +50,7 @@ public slots:
 
 private:
     static Mix_Music *play_mus;
-    #ifndef MP3_MAD_MUSIC
+    #ifdef USE_QMEDIAPLAYER
     static bool isMediaPlayer;
     static QMediaPlayer *musicPlayer;
     static QMediaPlaylist *playList;
@@ -66,7 +66,7 @@ public:
     static void SND_PlaySnd(QString sndFile);
 
 private:
-    #ifndef MP3_MAD_MUSIC
+    #ifdef USE_QMEDIAPLAYER
     static QMediaPlayer *mp3Play;
     #else
     static Mix_Music *mp3_sound;
