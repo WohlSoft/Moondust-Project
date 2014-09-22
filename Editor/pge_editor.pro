@@ -44,14 +44,14 @@ LIBS += -lSDL2 -lSDL2_mixer
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 
-DEFINES += MP3_MAD_MUSIC
+#DEFINES += USE_QMEDIAPLAYER
 
 win32: static: {
     DEFINES += MIKMOD_STATIC
     LIBS +=  -lvorbisfile -lvorbis -lmad -lmikmod.dll -lflac -logg
 }
 
-!MP3_MAD_MUSIC: {
+USE_QMEDIAPLAYER: {
 QT += multimedia
 }
 else
