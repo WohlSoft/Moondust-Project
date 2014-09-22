@@ -102,12 +102,25 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
     //xxx=!xxx;
 
+    if(item==NULL)
+        return NULL;
+
+    if(item->data(0).toString()=="YellowRectangle")
+        return NULL;
+    if(item->data(0).toString()=="Water")
+        return NULL;
+    if(item->data(0).toString()=="Door_exit")
+        return NULL;
+    if(item->data(0).toString()=="Door_enter")
+        return NULL;
+
     QList<QGraphicsItem *> collisions;
 
     //TimeCounter t;
     //t.start();
     //if(xxx)
     // ~15 ms on big maps
+
     if(itemgrp && !itemgrp->isEmpty())
         collisions = *itemgrp;
     else
@@ -128,16 +141,27 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
     foreach (QGraphicsItem * it, collisions)
     {
+
             if(it == item)
+                continue;
+            if(it==NULL)
                  continue;
             if(!it->isVisible())
                 continue;
-            if(item->data(0).toString()=="Water")
-                return NULL;
-            if(item->data(0).toString()=="Door_exit")
-                return NULL;
-            if(item->data(0).toString()=="Door_enter")
-                return NULL;
+            if(it->data(0).isNull())
+                 continue;
+            if(it->data(0).toString()=="YellowRectangle")
+                continue;
+            if(it->data(0).toString()=="Space")
+                continue;
+            if(it->data(0).toString()=="Square")
+                continue;
+            if(it->data(0).toString()=="SectionBorder")
+                continue;
+            if(it->data(0).toString()=="PlayerPoint")
+                continue;
+            if(it->data(0).toString().startsWith("BackGround"))
+                continue;
 
             if(
                (it->data(0).toString()!="Block")&&
@@ -185,7 +209,6 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
           }
           else
                 if(item->data(0).toString()!=it->data(0).toString()) continue;
-
 
           if(item->data(3).toString()=="sizable")
           {   // Don't collide with sizable block
