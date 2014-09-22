@@ -28,8 +28,6 @@
 #include <QPoint>
 #include <QString>
 #include <QStringList>
-#include <QtMultimedia/QMediaPlayer>
-#include <QMediaPlaylist>
 #include <QFileDialog>
 #include <QFile>
 #include <QSettings>
@@ -441,9 +439,6 @@ public:
         void on_actionPlayMusic_triggered(bool checked);
 
     private:
-        QMediaPlayer * MusicPlayer;
-        QMediaPlayer playSnd;
-        QMediaPlaylist CurrentMusic;
         QSlider* muVol;
 // ///////////////////////////////////////////////////////
 

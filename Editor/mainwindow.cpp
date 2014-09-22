@@ -100,9 +100,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
 MainWindow::~MainWindow()
 {
-    MusicPlayer->stop();
     delete ui;
-    delete MusicPlayer;
     WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
 

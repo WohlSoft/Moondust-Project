@@ -21,9 +21,11 @@
 
 #include <QString>
 #include <QObject>
+#ifndef MP3_MAD_MUSIC
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QUrl>
+#endif
 
 #undef main
 #include <SDL2/SDL.h>
@@ -41,17 +43,37 @@ public:
     static void MUS_openFile(QString musFile);
     static void setSampleRate(int sampleRate);
     static int sampleRate();
+    static int currentVolume();
 
 public slots:
     void setVolume(int volume);
 
 private:
     static Mix_Music *play_mus;
+    #ifndef MP3_MAD_MUSIC
     static bool isMediaPlayer;
     static QMediaPlayer *musicPlayer;
     static QMediaPlaylist *playList;
+    #endif
     static int volume;
     static int sRate;
+};
+
+class PGE_Sounds : public QObject
+{
+    Q_OBJECT
+public:
+    static void SND_PlaySnd(QString sndFile);
+
+private:
+    #ifndef MP3_MAD_MUSIC
+    static QMediaPlayer *mp3Play;
+    #else
+    static Mix_Music *mp3_sound;
+    #endif
+    static bool isMp3;
+    static Mix_Chunk *sound;
+    static QString current;
 };
 
 #endif // MUSIC_PLAYER_H
