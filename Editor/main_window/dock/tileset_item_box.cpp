@@ -431,7 +431,7 @@ void MainWindow::makeSelectedTileset(int tabIndex)
             {
                 unsigned int mostRighter = 0;
                 SimpleTileset &s = ctsets[j];
-                if(!s.tileSetName.contains(ui->customTilesetSearchEdit->text()))
+                if(!s.tileSetName.contains(ui->customTilesetSearchEdit->text(), Qt::CaseInsensitive))
                     continue;
                 QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, scrollWid);
                 ((FlowLayout*)scrollWid->layout())->addWidget(tilesetNameWrapper);
