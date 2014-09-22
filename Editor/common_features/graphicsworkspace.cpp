@@ -119,19 +119,21 @@ void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
     {
     case Qt::Key_Left:
         lMover.start(keyTime);
-        break;
+        return;
     case Qt::Key_Right:
         rMover.start(keyTime);
-        break;
+        return;
     case Qt::Key_Up:
         uMover.start(keyTime);
-        break;
+        return;
     case Qt::Key_Down:
         dMover.start(keyTime);
-        break;
+        return;
     case Qt::Key_Shift:
         keyTime=5;
         updateTimerInterval();
+        return;
+    default:
         break;
     }
     event->accept();
@@ -152,19 +154,21 @@ void GraphicsWorkspace::keyReleaseEvent(QKeyEvent *event)
     {
     case Qt::Key_Left:
         lMover.stop();
-        break;
+        return;
     case Qt::Key_Right:
         rMover.stop();
-        break;
+        return;
     case Qt::Key_Up:
         uMover.stop();
-        break;
+        return;
     case Qt::Key_Down:
         dMover.stop();
-        break;
+        return;
     case Qt::Key_Shift:
         keyTime=25;
         updateTimerInterval();
+        return;
+    default:
         break;
     }
     event->accept();
