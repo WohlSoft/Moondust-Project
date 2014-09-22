@@ -202,6 +202,9 @@ void ItemMusic::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 void ItemMusic::arrayApply()
 {
     bool found=false;
+    musicData.x = qRound(this->scenePos().x());
+    musicData.y = qRound(this->scenePos().y());
+
     if(musicData.index < (unsigned int)scene->WldData->music.size())
     { //Check index
         if(musicData.array_id == scene->WldData->music[musicData.index].array_id)
