@@ -35,7 +35,7 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
 
-    setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    setTransformationAnchor(QGraphicsView::AnchorViewCenter);
 }
 
 GraphicsWorkspace::~GraphicsWorkspace()
@@ -115,6 +115,9 @@ void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
                return;
            }
 
+    event->accept();
+    replayLastMouseEvent();
+
     switch(event->key())
     {
     case Qt::Key_Left:
@@ -132,13 +135,11 @@ void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Shift:
         keyTime=5;
         updateTimerInterval();
-        return;
+        break;
     default:
         break;
     }
-    event->accept();
 
-    replayLastMouseEvent();
     QGraphicsView::keyPressEvent(event);
 }
 
@@ -149,6 +150,9 @@ void GraphicsWorkspace::keyReleaseEvent(QKeyEvent *event)
                event->ignore();
                return;
            }
+
+    event->accept();
+    replayLastMouseEvent();
 
     switch(event->key())
     {
@@ -167,12 +171,11 @@ void GraphicsWorkspace::keyReleaseEvent(QKeyEvent *event)
     case Qt::Key_Shift:
         keyTime=25;
         updateTimerInterval();
-        return;
+        break;
     default:
         break;
     }
-    event->accept();
-    replayLastMouseEvent();
+
     QGraphicsView::keyReleaseEvent(event);
 }
 
@@ -380,7 +383,9 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     updateRubberBand(event);
 #endif
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler start");
+    #endif
     storeMouseEvent(event);
     lastMouseEvent.setAccepted(false);
 
@@ -452,7 +457,9 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     }
 #endif
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler End");
+    #endif
 }
 
 
