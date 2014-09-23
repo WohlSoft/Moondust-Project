@@ -468,6 +468,7 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
     PathItem->setPos(QPointF(newPos));
 
     PathItem->setZValue(pathZ);
+    PathItem->setOpacity(opts.semiTransparentPaths ? 0.5 : 1);
 
     PathItem->setFlag(QGraphicsItem::ItemIsSelectable, (!lock_path));
     PathItem->setFlag(QGraphicsItem::ItemIsMovable, (!lock_path));

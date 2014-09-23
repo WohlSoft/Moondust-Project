@@ -262,8 +262,8 @@ void MainWindow::updateMenus(bool force)
 
             ui->actionGridEn->setChecked(activeLvlEditWin()->scene->grid);
 
-            GlobalSettings::LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
-            GlobalSettings::LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
+            GlobalSettings::LvlOpts = activeLvlEditWin()->scene->opts;
+
             ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
             ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
         }
@@ -303,8 +303,7 @@ void MainWindow::updateMenus(bool force)
             ui->actionGridEn->setChecked(activeWldEditWin()->scene->grid);
 
             WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
-            GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
-            GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
+            GlobalSettings::LvlOpts = activeWldEditWin()->scene->opts;
             ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
             ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
         }
@@ -313,6 +312,7 @@ void MainWindow::updateMenus(bool force)
 
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
+        ui->actionSemi_transparent_paths->setChecked( GlobalSettings::LvlOpts.semiTransparentPaths );
 
     }
     else

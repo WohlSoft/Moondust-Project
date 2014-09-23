@@ -95,6 +95,17 @@ void WldScene::hideMusicBoxes(bool visible)
     }
 }
 
+void WldScene::setSemiTransparentPaths(bool semiTransparent)
+{
+    foreach (QGraphicsItem* i, items())
+    {
+        if(i->data(0).toString()=="PATH"){
+            i->setOpacity(semiTransparent ? 0.5 : 1);
+        }
+    }
+    update();
+}
+
 void WldScene::hidePathAndLevels(bool visible)
 {
     foreach (QGraphicsItem* i, items())
