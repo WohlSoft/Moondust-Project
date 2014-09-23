@@ -95,6 +95,12 @@ void MainWindow::on_actionLockMusicBoxes_triggered(bool checked)
 
 void MainWindow::on_actionSemi_transparent_paths_triggered(bool checked)
 {
+    GlobalSettings::LvlOpts.semiTransparentPaths = checked;
+    if(activeChildWindow()==3)
+    {
+        activeWldEditWin()->scene->opts.semiTransparentPaths = GlobalSettings::LvlOpts.semiTransparentPaths;
+        activeWldEditWin()->scene->setSemiTransparentPaths(GlobalSettings::LvlOpts.semiTransparentPaths);
+    }
 
 }
 

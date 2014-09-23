@@ -144,6 +144,8 @@ public:
 
     void startAnimation();
     void stopAnimation();
+    void setSemiTransparentPaths(bool semiTransparent);
+
     //void hideWarpsAndDoors(bool visible);
     void hideMusicBoxes(bool visible);
     void hidePathAndLevels(bool visible);
