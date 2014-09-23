@@ -5,6 +5,7 @@ Editor 0.3.0
 - Clicking to layers in the list will define layer where you will place new items
 - Added SDL library to give better music and sound playback
 - Fixed grid aligning after duplicating/pasting
+- Added Semi-transparent paths view for world map
 
 Editor 0.2.0
 - Added support for World Maps
