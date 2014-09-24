@@ -53,6 +53,9 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     LevelEvents_layers events_layers;
     LevelEvents_Sets events_sets;
 
+    //Enable strict mode for SMBX LVL file format
+    FileData.smbx64strict = true;
+
     //Begin all ArrayID's here;
     FileData.blocks_array_id = 1;
     FileData.bgo_array_id = 1;

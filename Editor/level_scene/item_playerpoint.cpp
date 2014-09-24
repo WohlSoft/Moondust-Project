@@ -101,9 +101,12 @@ void ItemPlayerPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         this->setSelected(1);
         ItemMenu.clear();
 
+        bool isLvlx = !scene->LvlData->smbx64strict;
+
         QMenu * chDir = ItemMenu.addMenu(
                     tr("Set %1").arg(tr("Direction")) );
         chDir->deleteLater();
+        chDir->setEnabled(isLvlx);
 
         QAction *setLeft = chDir->addAction( tr("Left"));
             setLeft->setCheckable(true);
