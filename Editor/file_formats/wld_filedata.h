@@ -133,6 +133,7 @@ struct WorldData
     int currentMusic;
     bool modified;
     bool untitled;
+    bool smbx64strict;
     QString filename;
     QString path;
 

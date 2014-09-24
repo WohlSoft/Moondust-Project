@@ -110,6 +110,7 @@ WorldData FileFormats::dummyWldDataArray()
     NewFileData.ReadFileValid = true;
     NewFileData.modified = true;
     NewFileData.untitled = true;
+    NewFileData.smbx64strict = false;
 
     NewFileData.CurSection=0;
     NewFileData.playmusic=0;

@@ -44,6 +44,9 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
     FileData.untitled = false;
     FileData.modified = false;
 
+    //Enable strict mode for SMBX WLD file format
+    FileData.smbx64strict = true;
+
     WorldTiles tile;
     WorldScenery scen;
     WorldPaths pathitem;
