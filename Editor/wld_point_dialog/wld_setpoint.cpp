@@ -1,5 +1,7 @@
 #include "wld_setpoint.h"
 #include "ui_wld_setpoint.h"
+#include "../common_features/app_path.h"
+
 
 WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     QDialog(parent),
@@ -13,7 +15,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     mapPointIsNull=true;
     currentMusic = 0;
     isUntitled = true;
-    latest_export_path = QApplication::applicationDirPath();
+    latest_export_path = ApplicationPath;
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
 
     updateTimer=NULL;

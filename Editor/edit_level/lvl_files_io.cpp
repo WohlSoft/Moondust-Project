@@ -25,6 +25,8 @@
 #include "level_edit.h"
 #include "../ui_leveledit.h"
 
+#include "../common_features/app_path.h"
+
 #include "../file_formats/file_formats.h"
 #include "../level_scene/lvlscene.h"
 #include "saveimage.h"
@@ -44,10 +46,10 @@ void leveledit::ExportToImage_fn()
 
         bool proportion;
         bool forceTiled=false;
-        QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+        QString inifile = ApplicationPath + "/" + "pge_editor.ini";
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", QApplication::applicationDirPath()).toString();
+        latest_export_path = settings.value("export-path", ApplicationPath).toString();
         proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 

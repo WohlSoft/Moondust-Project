@@ -18,6 +18,7 @@
 
 #include "wld_scene.h"
 #include "../edit_world/world_edit.h"
+#include "../common_features/app_path.h"
 
 #include "item_tile.h"
 #include "item_scene.h"
@@ -73,12 +74,12 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
     resetCursor();
 
     //set dummy images if target not exist or wrong
-    uTileImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_tile.png");
-    uSceneImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_scene.png");
-    uPathImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_path.png");
-    uLevelImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_wlvl.png");
+    uTileImg=QPixmap(ApplicationPath + "/" + "data/unknown_tile.png");
+    uSceneImg=QPixmap(ApplicationPath + "/" + "data/unknown_scene.png");
+    uPathImg=QPixmap(ApplicationPath + "/" + "data/unknown_path.png");
+    uLevelImg=QPixmap(ApplicationPath + "/" + "data/unknown_wlvl.png");
 
-    musicBoxImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/music_box.png");
+    musicBoxImg=QPixmap(ApplicationPath + "/" + "data/music_box.png");
 
     //set Default Z Indexes
     tileZ=0; // tiles

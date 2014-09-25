@@ -1,5 +1,8 @@
 #include "config_manager.h"
 #include "ui_config_manager.h"
+
+#include "../common_features/app_path.h"
+
 #include "../common_features/util.h"
 #include "../common_features/graphics_funcs.h"
 
@@ -15,7 +18,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
     currentConfig = "";
 
-    QString configPath(QApplication::applicationDirPath()+"/configs/");
+    QString configPath(ApplicationPath+"/configs/");
     QDir configDir(configPath);
     QStringList configs = configDir.entryList(QDir::AllDirs);
 
@@ -38,7 +41,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
         guiset.beginGroup("main");
             data_dir = (guiset.value("application-dir", "0").toBool() ?
-                            QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+                            ApplicationPath + "/" : config_dir + "data/" );
             configName = guiset.value("config_name", QDir(config_dir).dirName()).toString();
         guiset.endGroup();
 
@@ -77,7 +80,7 @@ ConfigManager::~ConfigManager()
 ///
 QString ConfigManager::isPreLoaded()
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");

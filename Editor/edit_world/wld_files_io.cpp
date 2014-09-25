@@ -26,6 +26,8 @@
 #include "world_edit.h"
 #include "../ui_world_edit.h"
 
+#include "../common_features/app_path.h"
+
 #include "../file_formats/file_formats.h"
 #include "../world_scene/wld_scene.h"
 
@@ -71,10 +73,10 @@ void WorldEdit::ExportingReady() //slot
         bool proportion;
         bool hideMusic;
         bool hidePathLevels;
-        QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+        QString inifile = ApplicationPath + "/" + "pge_editor.ini";
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", QApplication::applicationDirPath()).toString();
+        latest_export_path = settings.value("export-path", ApplicationPath).toString();
         proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 

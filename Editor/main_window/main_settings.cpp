@@ -18,6 +18,8 @@
 
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
+#include "../common_features/app_path.h"
+
 #include "../common_features/logger_sets.h"
 #include "../common_features/sdl_music_player.h"
 
@@ -428,7 +430,7 @@ void MainWindow::setUiDefults()
 //////////Load settings from INI file///////////////
 void MainWindow::loadSettings()
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
@@ -509,7 +511,7 @@ void MainWindow::loadSettings()
 //////////Save settings into INI file///////////////
 void MainWindow::saveSettings()
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");

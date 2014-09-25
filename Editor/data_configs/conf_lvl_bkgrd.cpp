@@ -16,6 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "../common_features/app_path.h"
+
 #include "data_configs.h"
 
 #include "../main_window/global_settings.h"
@@ -153,7 +155,7 @@ void dataconfigs::loadLevelBackgrounds(QProgressDialog *prgs)
                     }
                     else
                     {
-                        sbg.second_image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
+                        sbg.second_image = QPixmap(ApplicationPath + "/" + "data/nobg.gif");
                     }
                     sbg.second_repeat_h = bgset.value("second-repeat-h", "2").toInt();
                     tmpstr = bgset.value("second-repeat-v", "NR").toString();

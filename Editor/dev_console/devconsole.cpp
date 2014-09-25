@@ -7,7 +7,10 @@
 
 #include "../version.h"
 
+#include "../common_features/app_path.h"
+
 #include "../common_features/mainwinconnect.h"
+
 
 #include "../file_formats/file_formats.h"
 
@@ -20,7 +23,7 @@ void DevConsole::init()
 
     currentDevConsole = new DevConsole();
 
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("DevConsole");
@@ -148,7 +151,7 @@ void DevConsole::clearCurrentLog()
 
 void DevConsole::closeEvent(QCloseEvent *event)
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("DevConsole");

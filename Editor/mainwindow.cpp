@@ -21,6 +21,7 @@
 
 #include "npc_dialog/npcdialog.h"
 #include "data_configs/config_manager.h"
+#include "common_features/app_path.h"
 
 #include <QDesktopServices>
 
@@ -35,8 +36,8 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setDefaults(); // Apply default common settings
 
     //Create empty config directory if not exists
-    if(!QDir(QApplication::applicationDirPath() + "/" +  "configs").exists())
-        QDir().mkdir(QApplication::applicationDirPath() + "/" +  "configs");
+    if(!QDir(ApplicationPath + "/" +  "configs").exists())
+        QDir().mkdir(ApplicationPath + "/" +  "configs");
 
     // Config manager
     ConfigManager *cmanager = new ConfigManager();
@@ -173,7 +174,7 @@ void MainWindow::refreshHistoryButtons()
 
 void MainWindow::on_actionContents_triggered()
 {
-    QDesktopServices::openUrl( QUrl::fromLocalFile( QApplication::applicationDirPath() + "/help/manual_editor.html" ) );
+    QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
 }
 
 void MainWindow::on_actionNew_triggered()
