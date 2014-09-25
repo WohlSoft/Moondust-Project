@@ -17,6 +17,8 @@
  */
 
 #include "lvlscene.h"
+#include "../common_features/app_path.h"
+
 #include "../edit_level/level_edit.h"
 
 #include "item_block.h"
@@ -71,9 +73,9 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     resetCursor();
 
     //set dummy images if target not exist or wrong
-    uBlockImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_block.png");
-    uNpcImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.png");
-    uBgoImg = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.png");
+    uBlockImg = QPixmap(ApplicationPath + "/" + "data/unknown_block.png");
+    uNpcImg = QPixmap(ApplicationPath + "/" + "data/unknown_npc.png");
+    uBgoImg = QPixmap(ApplicationPath + "/" + "data/unknown_bgo.png");
 
 
     //set Default Z Indexes

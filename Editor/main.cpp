@@ -31,10 +31,15 @@
 #include <iostream>
 #include <stdlib.h>
 
+#include "common_features/app_path.h"
+
 #undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #undef main
+
+QString ApplicationPath;
+QString ApplicationPath_x;
 
 namespace PGECrashHandler {
     void crashByFlood(){
@@ -59,6 +64,26 @@ int main(int argc, char *argv[])
         std::cout << "Editor already runned!\n";
         return 0;
     }
+
+
+    ApplicationPath = QApplication::applicationDirPath();
+    ApplicationPath_x = QApplication::applicationDirPath();
+
+    #ifdef __APPLE__
+    //Application path relative bundle folder of application
+    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
+    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
+        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
+    #endif
+
+    /*
+    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
+    QString test="/home/vasya/pge/"+osX_bundle;
+    qDebug() << test << " <- before";
+    if(test.endsWith(osX_bundle, Qt::CaseInsensitive))
+        test.remove(test.length()-osX_bundle.length()-1, osX_bundle.length()+1);
+    qDebug() << test << " <- after";
+    */
 
     SDL_Init(SDL_INIT_AUDIO);
 

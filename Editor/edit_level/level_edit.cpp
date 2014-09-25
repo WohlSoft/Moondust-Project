@@ -28,6 +28,7 @@
 #include "../file_formats/file_formats.h"
 #include "../level_scene/lvlscene.h"
 #include "saveimage.h"
+#include "../common_features/app_path.h"
 #include "../common_features/logger.h"
 
 //#include <QGLWidget>
@@ -44,7 +45,7 @@ leveledit::leveledit(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
     isModified = false;
-    latest_export_path = QApplication::applicationDirPath();
+    latest_export_path = ApplicationPath;
     setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
     ui->setupUi(this);
     updateTimer=NULL;

@@ -48,6 +48,13 @@ void MainWindow::Debugger_UpdateMousePosition(QPoint p, bool isOffScreen)
     }
 }
 
+void MainWindow::Debugger_UpdateItemList(QString list)
+{
+    if(!ui->actionDebugger->isVisible()) return; //SpeedUp
+
+    ui->DEBUG_Items->setText(list);
+}
+
 
 void MainWindow::on_DEBUG_GotoPoint_clicked()
 {
