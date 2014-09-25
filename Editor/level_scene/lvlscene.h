@@ -151,6 +151,9 @@ public:
     void setLayerToSelected();
     void setLayerToSelected(QString lName, bool isNew=false);
 
+    //Debugger box
+    void Debugger_updateItemList();
+
     //Array Sort functions
     void sortBlockArray(QVector<LevelBlock > &blocks);
     void sortBlockArrayByPos(QVector<LevelBlock > &blocks);
