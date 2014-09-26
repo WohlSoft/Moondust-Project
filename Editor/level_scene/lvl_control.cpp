@@ -364,7 +364,9 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             break;
         }
     }
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("mousePress -> done"));
+    #endif
     haveSelected=(!selectedItems().isEmpty());
 
 }
@@ -551,6 +553,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             clearSelection();
             paste( LvlBuffer, mouseEvent->scenePos().toPoint() );
+            Debugger_updateItemList();
             PasteFromBuffer = false;
         }
 
