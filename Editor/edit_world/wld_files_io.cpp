@@ -378,13 +378,13 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
             isSMBX64limit=true;
         }
         //Paths limit
-        if(WldData.scenery.size()>2000)
+        if(WldData.paths.size()>2000)
         {
             QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
              tr("SMBX64 standard isn't allow to save %1 Paths\n"
                 "The maximum number of Paths is %2.\n\n"
                 "Please remove excess Paths from this world map or save file into WLDX format.")
-             .arg(WldData.path.size()).arg(2000), QMessageBox::Ok);
+             .arg(WldData.paths.size()).arg(2000), QMessageBox::Ok);
             isSMBX64limit=true;
         }
         //Levels limit

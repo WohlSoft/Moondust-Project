@@ -128,6 +128,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
     QString uWLDDs = WldData->path + "/" + WldData->filename + "/";
     QString uWLDD = WldData->path + "/" + WldData->filename;
     QString uWLDs = WldData->path + "/";
+    CustomDirManager uWLD(WldData->path, WldData->filename);
 
     if(!progress.wasCanceled())
     {
@@ -144,39 +145,17 @@ void WldScene::loadUserData(QProgressDialog &progress)
     for(i=0; i<pConfigs->main_wtiles.size(); i++) //Add user images
     {
         bool custom=false;
-            if((QFile::exists(uWLDD) ) &&
-                  (QFile::exists(uWLDDs + pConfigs->main_wtiles[i].image_n)) )
+
+            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wtiles[i].image_n);
+            if(!CustomImg.isEmpty())
             {
-                if(QFile::exists(uWLDDs + pConfigs->main_wtiles[i].mask_n))
-                    uTile.mask = GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wtiles[i].mask_n );
+                QString CustomMask = uWLD.getCustomFile(pConfigs->main_wtiles[i].mask_n);
+                if(!CustomMask.isEmpty())
+                    uTile.mask = GraphicsHelps::loadPixmap( CustomMask );
                 else
                     uTile.mask = pConfigs->main_wtiles[i].mask;
 
-                uTile.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wtiles[i].image_n ), uTile.mask);
-                if(uTile.image.isNull()) WrongImagesDetected=true;
-
-                uTile.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
-
-                uTile.id = pConfigs->main_wtiles[i].id;
-                uTiles.push_back(uTile);
-                custom=true;
-
-                //Apply index;
-                if(uTile.id < (unsigned int)index_tiles.size())
-                {
-                    index_tiles[uTile.id].type = 1;
-                    index_tiles[uTile.id].i = (uTiles.size()-1);
-                }
-            }
-            else
-            if(QFile::exists(uWLDs + pConfigs->main_wtiles[i].image_n) )
-            {
-                if(QFile::exists(uWLDs + pConfigs->main_wtiles[i].mask_n))
-                    uTile.mask = GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wtiles[i].mask_n );
-                else
-                    uTile.mask = pConfigs->main_wtiles[i].mask;
-
-                uTile.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wtiles[i].image_n ), uTile.mask);
+                uTile.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uTile.mask);
                 if(uTile.image.isNull()) WrongImagesDetected=true;
 
                 uTile.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -239,39 +218,16 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
 
         bool custom=false;
-            if((QFile::exists(uWLDD) ) &&
-                  (QFile::exists(uWLDDs + pConfigs->main_wscene[i].image_n)) )
+            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wscene[i].image_n);
+            if(!CustomImg.isEmpty())
             {
-                if(QFile::exists(uWLDDs + pConfigs->main_wscene[i].mask_n))
-                    uScenery.mask = GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wscene[i].mask_n );
+                QString CustomMask = uWLD.getCustomFile(pConfigs->main_wscene[i].mask_n);
+                if(!CustomMask.isEmpty())
+                    uScenery.mask = GraphicsHelps::loadPixmap( CustomMask );
                 else
                     uScenery.mask = pConfigs->main_wscene[i].mask;
 
-                uScenery.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wscene[i].image_n ), uScenery.mask);
-                if(uScenery.image.isNull()) WrongImagesDetected=true;
-
-                uScenery.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
-
-                uScenery.id = pConfigs->main_wscene[i].id;
-                uScenes.push_back(uScenery);
-                custom=true;
-
-                //Apply index;
-                if(uScenery.id < (unsigned int)index_scenes.size())
-                {
-                    index_scenes[uScenery.id].type = 1;
-                    index_scenes[uScenery.id].i = (uScenes.size()-1);
-                }
-            }
-            else
-            if(QFile::exists(uWLDs + pConfigs->main_wscene[i].image_n) )
-            {
-                if(QFile::exists(uWLDs + pConfigs->main_wscene[i].mask_n))
-                    uScenery.mask = GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wscene[i].mask_n );
-                else
-                    uScenery.mask = pConfigs->main_wscene[i].mask;
-
-                uScenery.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wscene[i].image_n ), uScenery.mask);
+                uScenery.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uScenery.mask);
                 if(uScenery.image.isNull()) WrongImagesDetected=true;
 
                 uScenery.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -287,7 +243,6 @@ void WldScene::loadUserData(QProgressDialog &progress)
                     //index_scenes[uScenery.id].i = (uScenes.size()-1);
                 }
             }
-
 
             SimpleAnimator * aniScene = new SimpleAnimator(
                         ((custom)?
@@ -329,39 +284,16 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
 
         bool custom=false;
-            if((QFile::exists(uWLDD) ) &&
-                  (QFile::exists(uWLDDs + pConfigs->main_wpaths[i].image_n)) )
+            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wpaths[i].image_n);
+            if( !CustomImg.isEmpty() )
             {
-                if(QFile::exists(uWLDDs + pConfigs->main_wpaths[i].mask_n))
-                    uPath.mask = GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wpaths[i].mask_n );
+                QString CustomMask = uWLD.getCustomFile(pConfigs->main_wpaths[i].image_n);
+                if(!CustomMask.isEmpty())
+                    uPath.mask = GraphicsHelps::loadPixmap( CustomMask );
                 else
                     uPath.mask = pConfigs->main_wpaths[i].mask;
 
-                uPath.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wpaths[i].image_n ), uPath.mask);
-                if(uPath.image.isNull()) WrongImagesDetected=true;
-
-                uPath.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
-
-                uPath.id = pConfigs->main_wpaths[i].id;
-                uPaths.push_back(uPath);
-                custom=true;
-
-                //Apply index;
-                if(uPath.id < (unsigned int)index_paths.size())
-                {
-                    index_paths[uPath.id].type = 1;
-                    index_paths[uPath.id].i = (uPaths.size()-1);
-                }
-            }
-            else
-            if(QFile::exists(uWLDs + pConfigs->main_wpaths[i].image_n) )
-            {
-                if(QFile::exists(uWLDs + pConfigs->main_wpaths[i].mask_n))
-                    uPath.mask = GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wpaths[i].mask_n );
-                else
-                    uPath.mask = pConfigs->main_wpaths[i].mask;
-
-                uPath.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wpaths[i].image_n ), uPath.mask);
+                uPath.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uPath.mask);
                 if(uPath.image.isNull()) WrongImagesDetected=true;
 
                 uPath.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -377,7 +309,6 @@ void WldScene::loadUserData(QProgressDialog &progress)
                     //index_paths[uPath.id].i = (uPaths.size()-1);
                 }
             }
-
 
             SimpleAnimator * aniPath = new SimpleAnimator(
                         ((custom)?
@@ -419,39 +350,16 @@ void WldScene::loadUserData(QProgressDialog &progress)
     {
 
         bool custom=false;
-            if((QFile::exists(uWLDD) ) &&
-                  (QFile::exists(uWLDDs + pConfigs->main_wlevels[i].image_n)) )
+            QString CustomImg = uWLD.getCustomFile(pConfigs->main_wlevels[i].image_n);
+            if(!CustomImg.isEmpty())
             {
-                if(QFile::exists(uWLDDs + pConfigs->main_wlevels[i].mask_n))
-                    uLevel.mask = GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wlevels[i].mask_n );
+                QString CustomMask = uWLD.getCustomFile(pConfigs->main_wlevels[i].mask_n);
+                if(!CustomMask.isEmpty())
+                    uLevel.mask = GraphicsHelps::loadPixmap( CustomMask );
                 else
                     uLevel.mask = pConfigs->main_wlevels[i].mask;
 
-                uLevel.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDDs + pConfigs->main_wlevels[i].image_n ), uLevel.mask);
-                if(uLevel.image.isNull()) WrongImagesDetected=true;
-
-                uLevel.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
-
-                uLevel.id = pConfigs->main_wlevels[i].id;
-                uLevels.push_back(uLevel);
-                custom=true;
-
-                //Apply index;
-                if(uLevel.id < (unsigned int)index_levels.size())
-                {
-                    index_levels[uLevel.id].type = 1;
-                    index_levels[uLevel.id].i = (uLevels.size()-1);
-                }
-            }
-            else
-            if(QFile::exists(uWLDs + pConfigs->main_wlevels[i].image_n) )
-            {
-                if(QFile::exists(uWLDs + pConfigs->main_wlevels[i].mask_n))
-                    uLevel.mask = GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wlevels[i].mask_n );
-                else
-                    uLevel.mask = pConfigs->main_wlevels[i].mask;
-
-                uLevel.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap(uWLDs + pConfigs->main_wlevels[i].image_n ), uLevel.mask);
+                uLevel.image = GraphicsHelps::setAlphaMask(GraphicsHelps::loadPixmap( CustomImg ), uLevel.mask);
                 if(uLevel.image.isNull()) WrongImagesDetected=true;
 
                 uLevel.mask = QPixmap(); //!< Clear mask for save RAM space (for Huge images)
@@ -467,7 +375,6 @@ void WldScene::loadUserData(QProgressDialog &progress)
                     //index_levels[uLevel.id].i = (uLevels.size()-1);
                 }
             }
-
 
             SimpleAnimator * aniLevel = new SimpleAnimator(
                         ((custom)?

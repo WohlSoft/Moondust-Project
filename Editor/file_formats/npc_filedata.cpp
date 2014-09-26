@@ -16,10 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
-
 #include "file_formats.h"
-#include "../edit_npc/npcedit.h"
+
+#include "../common_features/logger.h"
 
 
 NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()

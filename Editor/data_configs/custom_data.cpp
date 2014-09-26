@@ -16,32 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../pge_version.h" //Global Project version file
+#include "custom_data.h"
+#include <QFile>
 
-#ifndef EDITOR_VERSION_H
-#define EDITOR_VERSION_H
+CustomDirManager::CustomDirManager()
+{}
 
-//Version of this program
-#define _FILE_VERSION "0.2.0.3-dev"
-#define _FILE_RELEASE " Beta"
+CustomDirManager::CustomDirManager(QString path, QString name)
+{
+    setCustomDirs(path, name);
+}
 
-#define _VF1 0
-#define _VF2 2
-#define _VF3 0
-#define _VF4 3
+QString CustomDirManager::getCustomFile(QString name)
+{
+    QString target="";
+    if((QFile::exists(dirCustom) ) &&
+            (QFile::exists(dirCustom+"/" + name)) )
+    {
+        target = dirCustom+"/"+name;
+    }
+    else
+    if(QFile::exists(dirEpisode + "/" + name) )
+    {
+        target = dirEpisode + "/" + name;
+    }
 
+    return target;
+}
 
-#define _FILE_DESC "Platformer Game Engine - Editor"
-
-#define _INTERNAL_NAME "pge_editor"
-
-#ifdef _WIN32
-	#define _ORIGINAL_NAME "pge_editor.exe" // for Windows platforms
-#else
-	#define _ORIGINAL_NAME "pge_editor" // for any other platforms
-#endif
-
-//Uncomment this for enable detal logging
-//#define _DEBUG_
-
-#endif
+void CustomDirManager::setCustomDirs(QString path, QString name)
+{
+    dirCustom = path + "/" + name;
+    dirEpisode = path;
+}

@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
 #include "file_formats.h"
+
+#include <QTranslator>
 
 /*
 if(myString.startsWith("\"") myString.remove(0,1);

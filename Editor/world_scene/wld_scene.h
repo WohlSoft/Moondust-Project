@@ -152,6 +152,9 @@ public:
 
     void setLocked(int type, bool lock);
 
+    //Debugger box
+    void Debugger_updateItemList();
+
     QVector<UserIMGs > uTiles;
     QVector<UserIMGs > uScenes;
     QVector<UserIMGs > uPaths;

@@ -222,6 +222,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                                    WldPlacingItems::gridOffset)));
             }
             placeItemUnderCursor();
+            Debugger_updateItemList();
             QGraphicsScene::mousePressEvent(mouseEvent);
             return;
             break;
@@ -322,6 +323,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if (!selectedList.isEmpty())
             {
                 removeItemUnderCursor();
+                Debugger_updateItemList();
                 EraserEnabled=true;
             }
             break;
@@ -432,7 +434,11 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                                          WldPlacingItems::gridOffset)));
                        cursor->show();
             }
-            if( mouseEvent->buttons() & Qt::LeftButton ) placeItemUnderCursor();
+            if( mouseEvent->buttons() & Qt::LeftButton )
+            {
+                placeItemUnderCursor();
+                Debugger_updateItemList();
+            }
             QGraphicsScene::mouseMoveEvent(mouseEvent);
             break;
         }
@@ -525,7 +531,10 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             if(cursor) cursor->setPos(mouseEvent->scenePos());
             if (EraserEnabled)// Remove All items, placed under Cursor
+            {
                 removeItemUnderCursor();
+                Debugger_updateItemList();
+            }
             break;
         }
     default:
@@ -599,6 +608,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             clearSelection();
             paste( WldBuffer, mouseEvent->scenePos().toPoint() );
+            Debugger_updateItemList();
             PasteFromBuffer = false;
         }
 
@@ -643,6 +653,8 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
             placeItemsByRectArray();
 
+            Debugger_updateItemList();
+
             emptyCollisionCheck = false;
             collisionCheckBuffer.clear();
 
@@ -657,6 +669,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         if(cursor)
         {
             placeItemsByRectArray();
+            Debugger_updateItemList();
             WldData->modified = true;
             cursor->hide();
         }
@@ -731,6 +744,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             if(PasteFromBuffer)
             {
                 paste( WldBuffer, mouseEvent->scenePos().toPoint() );
+                Debugger_updateItemList();
                 PasteFromBuffer = false;
                 mouseMoved=false;
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
@@ -748,6 +762,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 if(EditingMode==MODE_Erasing)
                 {
                     removeWldItems(selectedList);
+                    Debugger_updateItemList();
                 }
                 else
                     applyGroupGrid(selectedList);
@@ -791,6 +806,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 if((EditingMode==MODE_Erasing)&&(deleted))
                 {
                     addRemoveHistory(historyBuffer);
+                    Debugger_updateItemList();
                 }
                 EraserEnabled = false;
 
@@ -1203,6 +1219,7 @@ void WldScene::removeSelectedWldItems()
     QList<QGraphicsItem*> selectedList = selectedItems();
     if(selectedList.isEmpty()) return;
     removeWldItems(selectedList);
+    Debugger_updateItemList();
 }
 
 void WldScene::removeWldItem(QGraphicsItem * item, bool globalHistory)
