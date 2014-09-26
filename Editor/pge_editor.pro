@@ -216,7 +216,8 @@ SOURCES += main.cpp\
     SingleApplication/singleapplication.cpp \
     level_scene/item_playerpoint.cpp \
     common_features/sdl_music_player.cpp \
-    data_configs/custom_data.cpp
+    data_configs/custom_data.cpp \
+    file_formats/file_wldx.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
