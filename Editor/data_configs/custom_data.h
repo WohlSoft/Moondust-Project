@@ -66,4 +66,28 @@ struct UserBGs
 };
 
 
+///
+/// \brief The CustomDirManager class This is a capturer of custom files from level/world custom directories
+///
+class CustomDirManager
+{
+public:
+    CustomDirManager();
+    CustomDirManager(QString path, QString name);
+    ///
+    /// \brief getCustomFile Get custom file path if exist.
+    /// \param name Target file name which need to found
+    /// \return empty string if not exist
+    ///
+    QString getCustomFile(QString name);
+    void setCustomDirs(QString path, QString name);
+
+private:
+    QString dirEpisode;
+    QString dirCustom;
+
+};
+
+
+
 #endif // CUSTOM_DATA_H

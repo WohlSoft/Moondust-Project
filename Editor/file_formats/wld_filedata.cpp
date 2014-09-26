@@ -16,9 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
 #include "wld_filedata.h"
-
 #include "file_formats.h"
 
 

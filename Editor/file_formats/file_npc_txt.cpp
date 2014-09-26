@@ -16,11 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
-
 #include "file_formats.h"
-#include "../edit_npc/npcedit.h"
-
 
 
 //*********************************************************
@@ -477,7 +473,6 @@ NPCConfigFile FileFormats::ReadNpcTXTFile(QFile &inf, bool IgnoreBad)
     str_count++;line = in.readLine();
     }
 
-    WriteToLog(QtDebugMsg, "NPC.txt -> Successful loaded");
     FileData.ReadFileValid=true;
     return FileData;
 

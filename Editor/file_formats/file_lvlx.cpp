@@ -16,11 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
-#include "../edit_level/level_edit.h"
 #include "file_formats.h"
-
-#include <QMessageBox>
 
 
 //*********************************************************
@@ -64,10 +60,10 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
 
     QString errorString;
 
-    typedef QPair<QString, QStringList> LVLXSct;
-    LVLXSct LVLXsection;
+    typedef QPair<QString, QStringList> PGEXSct;
+    PGEXSct PGEXsection;
 
-    QList<LVLXSct > LVLXTree;
+    QList<PGEXSct > PGEXTree;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
     //Read Sections
@@ -76,39 +72,39 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     //Read PGE-X Tree
     while(!in.atEnd())
     {
-        LVLXsection.first = in.readLine();
-        LVLXsection.second.clear();
+        PGEXsection.first = in.readLine();
+        PGEXsection.second.clear();
 
-        if(QString(LVLXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
+        if(QString(PGEXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
 
         sectionOpened=true;
         QString data;
         while(!in.atEnd())
         {
             data = in.readLine();
-            if(data==LVLXsection.first+"_END") {sectionOpened=false; break;} // Close Section
-            LVLXsection.second.push_back(data);
+            if(data==PGEXsection.first+"_END") {sectionOpened=false; break;} // Close Section
+            PGEXsection.second.push_back(data);
         }
-        LVLXTree.push_back(LVLXsection);
+        PGEXTree.push_back(PGEXsection);
 
-        WriteToLog(QtDebugMsg, QString("Section %1, lines %2, %3")
-                   .arg(LVLXsection.first)
-                   .arg(LVLXsection.second.size())
-                   .arg(sectionOpened?"opened":"closed")
-                   );
+        // WriteToLog(QtDebugMsg, QString("Section %1, lines %2, %3")
+        //        .arg(PGEXsection.first)
+        //        .arg(PGEXsection.second.size())
+        //        .arg(sectionOpened?"opened":"closed")
+        //        );
     }
 
     if(sectionOpened)
     {
-        errorString=QString("Section [%1] is not closed").arg(LVLXsection.first);
+        errorString=QString("Section [%1] is not closed").arg(PGEXsection.first);
         goto badfile;
     }
 
-    foreach(LVLXSct sct, LVLXTree) //look sections
+    foreach(PGEXSct sct, PGEXTree) //look sections
     {
 
-        WriteToLog(QtDebugMsg, QString("Section %1")
-                   .arg(sct.first) );
+        //WriteToLog(QtDebugMsg, QString("Section %1")
+        //          .arg(sct.first) );
 
             bool good;
             for(i=0; i<sct.second.size();i++) //Look Entries
