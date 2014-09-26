@@ -29,6 +29,7 @@
 
 #include "../common_features/grid.h"
 
+#include "../common_features/mainwinconnect.h"
 
 QPoint WldScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
 {
@@ -209,6 +210,26 @@ void WldScene::returnItemBack(QGraphicsItem * item)
         ItemMusic * it = dynamic_cast<ItemMusic *>(item);
         it->setPos(it->musicData.x, it->musicData.y);
     }
+}
+
+
+void WldScene::Debugger_updateItemList()
+{
+    QString itemList=
+            tr("Tiles:\t\t%1\n"
+               "Sceneries:\t\t\t%2\n"
+               "Paths:\t%3\n"
+               "Levels:\t%4\n"
+               "Music boxes:\t\t%5\n");
+
+    itemList = itemList.arg(
+                WldData->tiles.size())
+            .arg(WldData->scenery.size())
+            .arg(WldData->paths.size())
+            .arg(WldData->levels.size())
+            .arg(WldData->music.size());
+
+    MainWinConnect::pMainWin->Debugger_UpdateItemList(itemList);
 }
 
 

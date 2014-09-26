@@ -28,6 +28,8 @@
 #include "music_player.h"
 #include "global_settings.h"
 
+#include <QFont>
+
 QString GlobalSettings::locale="";
 long GlobalSettings::animatorItemsLimit=25000;
 QString GlobalSettings::openPath=".";
@@ -188,6 +190,12 @@ void MainWindow::setUiDefults()
                 );
 
     ui->Tileset_Item_Box->hide();
+
+    QFont font("Monospace");
+    font.setStyleHint(QFont::TypeWriter);
+    font.setWeight(8);
+    ui->DEBUG_Items->setFont(font);
+
 
     loadSettings();
 
