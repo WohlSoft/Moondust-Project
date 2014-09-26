@@ -18,6 +18,8 @@
 
 #include "data_configs.h"
 
+#include "../common_features/app_path.h"
+
 #include "../main_window/global_settings.h"
 
 long ConfStatus::total_blocks=0;
@@ -65,7 +67,7 @@ void dataconfigs::addError(QString bug, QtMsgType level)
 
 void dataconfigs::setConfigPath(QString p)
 {
-    config_dir = QApplication::applicationDirPath() + "/" +  "configs/" + p + "/";
+    config_dir = ApplicationPath + "/" +  "configs/" + p + "/";
 }
 
 void dataconfigs::loadBasics()
@@ -80,7 +82,7 @@ void dataconfigs::loadBasics()
 
     guiset.beginGroup("main");
         data_dir = (guiset.value("application-dir", "0").toBool() ?
-                        QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+                        ApplicationPath + "/" : config_dir + "data/" );
     guiset.endGroup();
 
     //Default splash image
@@ -119,7 +121,7 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
     dirset.beginGroup("main");
 
         data_dir = (dirset.value("application-dir", false).toBool() ?
-                        QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+                        ApplicationPath + "/" : config_dir + "data/" );
 
         ConfStatus::configName = dirset.value("config_name", QDir(config_dir).dirName()).toString();
 

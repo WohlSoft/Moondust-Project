@@ -112,6 +112,8 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
 
     scene->applyLayersVisible();
 
+    scene->Debugger_updateItemList();
+
     if(!sceneCreated)
     {
         ui->graphicsView->setScene(scene);

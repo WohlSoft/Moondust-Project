@@ -2,6 +2,7 @@
 #include "ui_gifs2png_gui.h"
 #include <QMessageBox>
 #include <QFileDialog>
+#include "../common_features/app_path.h"
 #include "../dev_console/devconsole.h"
 
 gifs2png_gui::gifs2png_gui(QWidget *parent) :
@@ -21,7 +22,7 @@ gifs2png_gui::~gifs2png_gui()
 void gifs2png_gui::on_BrowseInput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Source Directory"),
-                                                 (ui->inputDir->text().isEmpty() ? QApplication::applicationDirPath() : ui->inputDir->text()),
+                                                 (ui->inputDir->text().isEmpty() ? ApplicationPath : ui->inputDir->text()),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
@@ -33,7 +34,7 @@ void gifs2png_gui::on_BrowseInput_clicked()
 void gifs2png_gui::on_BrowseOutput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Target Directory"),
-                                                 (ui->outputDir->text().isEmpty() ? QApplication::applicationDirPath():ui->outputDir->text() ),
+                                                 (ui->outputDir->text().isEmpty() ? ApplicationPath:ui->outputDir->text() ),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
@@ -52,9 +53,9 @@ void gifs2png_gui::on_startTool_clicked()
     QString command;
 
     #ifdef _WIN32
-    command = QApplication::applicationDirPath()+"/GIFs2PNG.exe";
+    command = ApplicationPath+"/GIFs2PNG.exe";
     #else
-    command = QApplication::applicationDirPath()+"/GIFs2PNG";
+    command = ApplicationPath+"/GIFs2PNG";
     #endif
 
     if(!QFile(command).exists())

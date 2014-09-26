@@ -2,6 +2,8 @@
 #include "ui_lazyfixtool_gui.h"
 #include <QMessageBox>
 #include <QFileDialog>
+#include "../common_features/app_path.h"
+
 #include "../dev_console/devconsole.h"
 
 LazyFixTool_gui::LazyFixTool_gui(QWidget *parent) :
@@ -21,7 +23,7 @@ LazyFixTool_gui::~LazyFixTool_gui()
 void LazyFixTool_gui::on_BrowseInput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Source Directory"),
-                                                 (ui->inputDir->text().isEmpty() ? QApplication::applicationDirPath() : ui->inputDir->text()),
+                                                 (ui->inputDir->text().isEmpty() ? ApplicationPath : ui->inputDir->text()),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
@@ -32,7 +34,7 @@ void LazyFixTool_gui::on_BrowseInput_clicked()
 void LazyFixTool_gui::on_BrowseOutput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Target Directory"),
-                                                 (ui->outputDir->text().isEmpty() ? QApplication::applicationDirPath() : ui->outputDir->text()),
+                                                 (ui->outputDir->text().isEmpty() ? ApplicationPath : ui->outputDir->text()),
                                                  QFileDialog::ShowDirsOnly
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
@@ -51,9 +53,9 @@ void LazyFixTool_gui::on_startTool_clicked()
     QString command;
 
     #ifdef _WIN32
-    command = QApplication::applicationDirPath()+"/LazyFixTool.exe";
+    command = ApplicationPath+"/LazyFixTool.exe";
     #else
-    command = QApplication::applicationDirPath()+"/LazyFixTool";
+    command = ApplicationPath+"/LazyFixTool";
     #endif
 
     if(!QFile(command).exists())

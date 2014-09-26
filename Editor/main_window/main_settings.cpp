@@ -18,6 +18,8 @@
 
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
+#include "../common_features/app_path.h"
+
 #include "../common_features/logger_sets.h"
 #include "../common_features/sdl_music_player.h"
 
@@ -78,20 +80,10 @@ void MainWindow::setDefaults()
 
     GlobalSettings::LvlOpts.animationEnabled = true;
     GlobalSettings::LvlOpts.collisionsEnabled = true;
-
-//    LastOpenDir = ".";
-//    lastWinType=0;
-//    LevelToolBoxVis = true; //Level toolbox
-//    SectionToolBoxVis = false; //Section Settings
-//    LevelDoorsBoxVis = false; //Doors box
-//    LevelLayersBoxVis = false; //Layers box
-//    LevelEventsBoxVis = false; //Events box
+    GlobalSettings::LvlOpts.semiTransparentPaths = false;
 
     LvlItemPropsLock=true;
     lockTilesetBox=false;
-
-//    WorldToolBoxVis = false;
-//    autoPlayMusic = false;
 
     LvlMusPlay::currentCustomMusic = "";
     LvlMusPlay::currentMusicId = 0;
@@ -264,25 +256,13 @@ void MainWindow::setUiDefults()
     ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 
-//    //Start event detector
-//    TickTackLock = false;
-
-//    //set timer for event detector loop
-//    TickTackTimer = new QTimer(this);
-//    connect(
-//            TickTackTimer, SIGNAL(timeout()),
-//            this,
-//            SLOT( TickTack() ) );
-
-//    //start event detection loop
-//    TickTackTimer->start(1);
     muVol = new QSlider(Qt::Horizontal);
     muVol->setMaximumWidth(70);
     muVol->setMinimumWidth(70);
     muVol->setMinimum(0);
     muVol->setMaximum(MIX_MAX_VOLUME);
     muVol->setValue(GlobalSettings::musicVolume);
-    //MusicPlayer->setVolume(GlobalSettings::musicVolume);
+
     MusPlayer.setVolume(muVol->value());
     ui->EditionToolBar->insertWidget(ui->actionAnimation, muVol);
     ui->EditionToolBar->insertSeparator(ui->actionAnimation);
@@ -450,7 +430,7 @@ void MainWindow::setUiDefults()
 //////////Load settings from INI file///////////////
 void MainWindow::loadSettings()
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
@@ -531,7 +511,7 @@ void MainWindow::loadSettings()
 //////////Save settings into INI file///////////////
 void MainWindow::saveSettings()
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
 
     QSettings settings(inifile, QSettings::IniFormat);
     settings.beginGroup("Main");

@@ -26,6 +26,8 @@
 #include "world_edit.h"
 #include "../ui_world_edit.h"
 
+#include "../common_features/app_path.h"
+
 #include "../file_formats/file_formats.h"
 #include "../world_scene/wld_scene.h"
 
@@ -71,10 +73,10 @@ void WorldEdit::ExportingReady() //slot
         bool proportion;
         bool hideMusic;
         bool hidePathLevels;
-        QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+        QString inifile = ApplicationPath + "/" + "pge_editor.ini";
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", QApplication::applicationDirPath()).toString();
+        latest_export_path = settings.value("export-path", ApplicationPath).toString();
         proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 
@@ -244,8 +246,16 @@ bool WorldEdit::save(bool savOptionsDialog)
     }
 }
 
+namespace wld_file_io
+{
+    bool isSMBX64limit=false;
+}
+
+
 bool WorldEdit::saveAs(bool savOptionsDialog)
 {
+    using namespace wld_file_io;
+
     if(savOptionsDialog){
         SavingNotificationDialog* sav = new SavingNotificationDialog(false);
         sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
@@ -266,6 +276,58 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
         }
     }
 
+    bool isNotDone=true;
+    QString fileName = (isUntitled)?GlobalSettings::savePath+QString("/")+
+                                    (WldData.EpisodeTitle.isEmpty()?curFile:util::filePath(WldData.EpisodeTitle)):curFile;
+
+    QString fileSMBX64="SMBX64 (1.3) World map file (*.wld)";
+    QString filePGEX="Extended World map file (*.wldx)";
+
+    QString selectedFilter;
+    if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
+        selectedFilter = filePGEX;
+    else
+        selectedFilter = fileSMBX64;
+
+    QString filter =
+            fileSMBX64/*+";;"+
+            filePGEX*/;//WLDX format was commented because is not implemented yet
+
+    bool ret;
+
+    RetrySave:
+
+    isSMBX64limit=false;
+    isNotDone=true;
+    while(isNotDone)
+    {
+        fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter);
+
+        if (fileName.isEmpty())
+            return false;
+
+        if( (!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)) )
+        {
+            QMessageBox::warning(this, tr("Extension is not set"),
+               tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
+            continue;
+        }
+
+        /*if(makeCustomFolder)
+        {
+            QDir dir = fileName.section("/",0,-2);
+            dir.mkdir(fileName.section("/",-1,-1).section(".",0,0));
+        }*/
+        isNotDone=false;
+    }
+
+    ret = saveFile(fileName);
+    if(isSMBX64limit) goto RetrySave;
+
+    return ret;
+
+    /*
+
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
         (isUntitled)?GlobalSettings::savePath+QString("/")+
                      (WldData.EpisodeTitle.isEmpty()?curFile:WldData.EpisodeTitle):curFile, QString("SMBX64 (1.3) World map file (*.wld)"));
@@ -273,28 +335,100 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
         return false;
 
     return saveFile(fileName);
+    */
 }
 
 bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 {
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("File save error"),
-                             tr("Cannot save file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
+    using namespace wld_file_io;
+
+    if( (!fileName.endsWith(".wld", Qt::CaseInsensitive)) && (!fileName.endsWith(".wldx", Qt::CaseInsensitive)) )
+    {
+        QMessageBox::warning(this, tr("Extension is not set"),
+           tr("File Extension isn't defined, please enter file extension!"), QMessageBox::Ok);
         return false;
     }
 
-    GlobalSettings::savePath = QFileInfo(fileName).path();
-
-    QTextStream out(&file);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
-
-
     // ////////////////////// Write SMBX64 WLD //////////////////////////////
-    out << FileFormats::WriteSMBX64WldFile(WldData);
+    if(fileName.endsWith(".wld", Qt::CaseInsensitive))
+    {
+        //SMBX64 Standard check
+
+        isSMBX64limit=false;
+        //Tiles limit
+        if(WldData.tiles.size()>20000)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Tiles\n"
+                "The maximum number of Tiles is %2.\n\n"
+                "Please remove excess Tiles from this world map or save file into WLDX format.")
+             .arg(WldData.tiles.size()).arg(20000), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //Sceneries limit
+        if(WldData.scenery.size()>5000)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Sceneries\n"
+                "The maximum number of Sceneries is %2.\n\n"
+                "Please remove excess Sceneries from this world map or save file into WLDX format.")
+             .arg(WldData.scenery.size()).arg(5000), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //Paths limit
+        if(WldData.scenery.size()>2000)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Paths\n"
+                "The maximum number of Paths is %2.\n\n"
+                "Please remove excess Paths from this world map or save file into WLDX format.")
+             .arg(WldData.path.size()).arg(2000), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //Levels limit
+        if(WldData.levels.size()>400)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Levels\n"
+                "The maximum number of Levels is %2.\n\n"
+                "Please remove excess Paths from this world map or save file into WLDX format.")
+             .arg(WldData.levels.size()).arg(400), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+
+        //Music boxes limit
+        if(WldData.music.size()>1000)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Music Boxes\n"
+                "The maximum number of Music Boxes is %2.\n\n"
+                "Please remove excess Music Boxes from this world map or save file into WLDX format.")
+             .arg(WldData.music.size()).arg(1000), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+
+        if(isSMBX64limit)
+        {
+            QApplication::restoreOverrideCursor();
+            return false;
+        }
+
+        QFile file(fileName);
+        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                 .arg(fileName)
+                                 .arg(file.errorString()));
+            return false;
+        }
+        QTextStream out(&file);
+        WldData.smbx64strict = true; //Enable SMBX64 standard strict mode
+        out << FileFormats::WriteSMBX64WldFile(WldData);
+        file.close();
+        GlobalSettings::savePath = QFileInfo(fileName).path();
+    }
     // //////////////////////////////////////////////////////////////////////
 
     QApplication::restoreOverrideCursor();

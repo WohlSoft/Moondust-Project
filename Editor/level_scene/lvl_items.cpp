@@ -29,6 +29,7 @@
 #include "item_playerpoint.h"
 
 #include "../common_features/grid.h"
+#include "../common_features/mainwinconnect.h"
 
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
@@ -246,6 +247,31 @@ void LvlScene::returnItemBack(QGraphicsItem * item)
         it->setPos(it->pointData.x, it->pointData.y);
     }
 }
+
+
+
+void LvlScene::Debugger_updateItemList()
+{
+    QString itemList=
+            tr("Player start points:\t\t%1\n"
+               "Blocks:\t\t\t%2\n"
+               "Background objects's:\t%3\n"
+               "Non-playable characters's:\t%4\n"
+               "Warp entries:\t\t%5\n"
+               "Physical env. zones:\t%6\n");
+
+    itemList = itemList.arg(LvlData->players.size())
+            .arg(LvlData->blocks.size())
+            .arg(LvlData->bgo.size())
+            .arg(LvlData->npc.size())
+            .arg(LvlData->doors.size())
+            .arg(LvlData->physez.size());
+
+    MainWinConnect::pMainWin->Debugger_UpdateItemList(itemList);
+}
+
+
+
 
 
 ////////////////////////////////// Place new ////////////////////////////////

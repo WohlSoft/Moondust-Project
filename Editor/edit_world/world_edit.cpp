@@ -20,6 +20,8 @@
 #include "world_edit.h"
 #include "ui_world_edit.h"
 
+#include "../common_features/app_path.h"
+
 WorldEdit::WorldEdit(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::WorldEdit)
@@ -29,7 +31,7 @@ WorldEdit::WorldEdit(QWidget *parent) :
     currentMusic = 0;
     setAttribute(Qt::WA_DeleteOnClose);
     isUntitled = true;
-    latest_export_path = QApplication::applicationDirPath();
+    latest_export_path = ApplicationPath;
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
     ui->setupUi(this);
     updateTimer=NULL;

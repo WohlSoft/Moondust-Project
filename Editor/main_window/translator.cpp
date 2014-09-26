@@ -21,6 +21,8 @@
 #include "../common_features/logger_sets.h"
 #include "../dev_console/devconsole.h"
 
+#include "../common_features/app_path.h"
+
 #include "global_settings.h"
 
 
@@ -35,7 +37,7 @@ void MainWindow::setDefLang()
     QString defaultLocale = QLocale::system().name();
     defaultLocale.truncate(defaultLocale.lastIndexOf('_'));
 
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
@@ -48,7 +50,7 @@ void MainWindow::setDefLang()
     connect(ui->menuLanguage, SIGNAL(triggered(QAction *)), this, SLOT(slotLanguageChanged(QAction *)));
     WriteToLog(QtDebugMsg, QString("Lang->set"));
 
-       m_langPath = QApplication::applicationDirPath();
+       m_langPath = ApplicationPath;
        m_langPath.append("/languages");
 
        langListSync();

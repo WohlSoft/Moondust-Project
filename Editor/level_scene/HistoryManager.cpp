@@ -1535,6 +1535,7 @@ void LvlScene::historyBack()
     }
     LvlData->modified = true;
 
+    Debugger_updateItemList();
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(getHistoryText(lastOperation)));
 }
@@ -2438,6 +2439,7 @@ void LvlScene::historyForward()
     }
     historyIndex++;
 
+    Debugger_updateItemList();
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(getHistoryText(lastOperation)));
 }

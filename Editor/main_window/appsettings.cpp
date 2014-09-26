@@ -25,6 +25,8 @@
 #include <QProcessEnvironment>
 #include <QByteArray>
 
+#include "../common_features/app_path.h"
+
 #include "../common_features/logger_sets.h"
 #include "../file_formats/file_formats.h"
 #include "../common_features/logger.h"
@@ -216,7 +218,7 @@ void AppSettings::on_AssociateFiles_clicked()
         registry_hkcu.setValue("Software/Classes/SMBX64.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
 
         // User variable(s)
-        registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\"");
+        registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QString(ApplicationPath).replace("/", "\\") + "\"");
 
     #elif defined __APPLE__
         // only useful when other apps have taken precedence over our file extensions and you want to reset it
