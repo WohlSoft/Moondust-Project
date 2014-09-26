@@ -300,6 +300,7 @@ void WldScene::historyBack()
     }
     WldData->modified = true;
 
+    Debugger_updateItemList();
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(getHistoryText(lastOperation)));
 }
@@ -496,6 +497,8 @@ void WldScene::historyForward()
 
     }
     historyIndex++;
+
+    Debugger_updateItemList();
 
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(getHistoryText(lastOperation)));

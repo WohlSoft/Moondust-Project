@@ -308,6 +308,8 @@ void MainWindow::updateMenus(bool force)
             GlobalSettings::LvlOpts = activeWldEditWin()->scene->opts;
             ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
             ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
+
+            activeWldEditWin()->scene->Debugger_updateItemList();
         }
 
         zoom->setText(QString::number(activeWldEditWin()->getZoom()));
