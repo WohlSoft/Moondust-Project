@@ -22,6 +22,9 @@
 #include <QRegExp>
 #include <QString>
 #include <QFile>
+#include <QTextStream>
+#include <QTextCodec>
+#include <QMessageBox>
 
 
 #include "lvl_filedata.h"
@@ -103,15 +106,25 @@ public:
 class FileFormats
 {
 public:
-    //File format read functions
+    //File format read/write functions
 
-    static LevelData dummyLvlDataArray();                   //Create new
+    static LevelData dummyLvlDataArray();                    //Create new
     // SMBX64 LVL File
-    static LevelData ReadLevelFile(QFile &inf);             //read
-    static QString WriteSMBX64LvlFile(LevelData FileData);  //write
+    static LevelData ReadLevelFile(QFile &inf);              //read
+    static QString WriteSMBX64LvlFile(LevelData FileData);   //write
     // PGE Extended Level File
-    static LevelData ReadExtendedLevelFile(QFile &inf);
+    static LevelData ReadExtendedLevelFile(QFile &inf);      //read
     static QString WriteExtendedLvlFile(LevelData FileData); //Write
+
+
+    static WorldData dummyWldDataArray();                    //Create new
+    // SMBX64 WLD File
+    static WorldData ReadWorldFile(QFile &inf);              //read
+    static QString WriteSMBX64WldFile(WorldData FileData);   //Write
+
+    // PGE Extended World map File
+    static WorldData ReadExtendedWorldFile(QFile &inf);      //read
+    static QString WriteExtendedWldFile(WorldData FileData); //Write
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
@@ -138,16 +151,10 @@ public:
     static NPCConfigFile CreateEmpytNpcTXTArray();
     static obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
-    // SMBX64 WLD File
-    static WorldData ReadWorldFile(QFile &inf);             //read
-    static QString WriteSMBX64WldFile(WorldData FileData);  //Write
-    static WorldData dummyWldDataArray();                   //Create new
-
 
     //common
     static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
     static QString removeQuotes(QString str); // Remove quotes from begin and end
-
 };
 
 #endif // FILE_FORMATS_H
