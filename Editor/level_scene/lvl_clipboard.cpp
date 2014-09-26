@@ -85,6 +85,7 @@ LevelData LvlScene::copy(bool cut)
         {
             LvlData->modified = true;
             addRemoveHistory(copyData);
+            Debugger_updateItemList();
         }
     }
 

@@ -18,6 +18,7 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     handScrollMotions=0;
     originalCursor = this->cursor();
     rubberBandSelectionMode = Qt::IntersectsItemBoundingRect;
+    this->setMouseTracking(true);
     this->setRubberBandSelectionMode(Qt::IntersectsItemBoundingRect);
     step=32;
     keyTime=25;

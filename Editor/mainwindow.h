@@ -383,8 +383,9 @@ public:
 // ////////////////////Debugger box////////////////////////
     public slots:
         void Debugger_UpdateMousePosition(QPoint p, bool isOffScreen=false);
+        void Debugger_UpdateItemList(QString list);
 
-        private slots:
+    private slots:
         void on_actionDebugger_triggered(bool checked);
 
         void on_debuggerBox_visibilityChanged(bool visible);

@@ -213,6 +213,7 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                                    LvlPlacingItems::gridOffset)));
             }
             placeItemUnderCursor();
+            Debugger_updateItemList();
             QGraphicsScene::mousePressEvent(mouseEvent);
             return;
             break;
@@ -395,7 +396,11 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                                          LvlPlacingItems::gridOffset)));
                        cursor->show();
             }
-            if( mouseEvent->buttons() & Qt::LeftButton ) placeItemUnderCursor();
+            if( mouseEvent->buttons() & Qt::LeftButton )
+            {
+                placeItemUnderCursor();
+                Debugger_updateItemList();
+            }
             //QGraphicsScene::mouseMoveEvent(mouseEvent);
             break;
         }
@@ -474,7 +479,10 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             if(cursor) cursor->setPos(mouseEvent->scenePos());
             if (EraserEnabled)// Remove All items, placed under Cursor
+            {
                 removeItemUnderCursor();
+                Debugger_updateItemList();
+            }
             break;
         }
     default:
@@ -593,6 +601,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     LevelData plWater;
                     plWater.physez.push_back(LvlPlacingItems::waterSet);
                     addPlaceHistory(plWater);
+                    Debugger_updateItemList();
                     break;
                 }
             case PLC_Block:
@@ -614,6 +623,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         LevelData plSzBlock;
                         plSzBlock.blocks.push_back(LvlPlacingItems::blockSet);
                         addPlaceHistory(plSzBlock);
+                        Debugger_updateItemList();
                         break;
                     }
                     else
@@ -640,6 +650,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         collisionCheckBuffer.clear();
                         WriteToLog(QtDebugMsg, "Done");
 
+                        Debugger_updateItemList();
                         break;
                     }
                 }
@@ -663,6 +674,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     emptyCollisionCheck = false;
                     collisionCheckBuffer.clear();
 
+                    Debugger_updateItemList();
                  break;
                 }
             }
@@ -679,6 +691,8 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             WriteToLog(QtDebugMsg, "Line tool -> Placing items");
             placeItemsByRectArray();
+
+            Debugger_updateItemList();
 
             LvlData->modified = true;
             cursor->hide();
@@ -759,6 +773,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 PasteFromBuffer = false;
                 IsMoved=false;
                 MainWinConnect::pMainWin->on_actionSelect_triggered();
+                Debugger_updateItemList();
             }
 
 
@@ -774,6 +789,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 {
                     removeLvlItems(selectedList);
                     selectedList = selectedItems();
+                    Debugger_updateItemList();
                 }
                 else
                     applyGroupGrid(selectedList);
@@ -1315,6 +1331,7 @@ void LvlScene::removeSelectedLvlItems()
     QList<QGraphicsItem*> selectedList = selectedItems();
     if(selectedList.isEmpty()) return;
     removeLvlItems(selectedList);
+    Debugger_updateItemList();
 }
 
 void LvlScene::removeLvlItem(QGraphicsItem * item, bool globalHistory)

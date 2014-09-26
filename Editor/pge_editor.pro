@@ -302,7 +302,8 @@ HEADERS  += mainwindow.h \
     SingleApplication/localserver.h \
     SingleApplication/singleapplication.h \
     level_scene/item_playerpoint.h \
-    common_features/sdl_music_player.h
+    common_features/sdl_music_player.h \
+    common_features/app_path.h
 
 FORMS    += \
     mainwindow.ui \

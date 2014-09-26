@@ -1,5 +1,5 @@
 #include "items.h"
-
+#include "app_path.h"
 
 QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  *confId, QGraphicsScene *scene)
 {
@@ -180,7 +180,7 @@ QPixmap Items::getItemGFX(int itemType, unsigned long ItemID, bool whole, long  
 
                 if((noimage)||(tImg.isNull()))
                 {
-                    tImg=QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_npc.png");
+                    tImg=QPixmap(ApplicationPath + "/" + "data/unknown_npc.png");
                 }
                 else
                 {
