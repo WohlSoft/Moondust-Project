@@ -1,4 +1,4 @@
-Editor 0.3.0
+Editor 0.2.1
 - Added support of multi-selection with holded shift key
 - Optimized total performance
 - More smart grid snapping of the selected items group
@@ -6,6 +6,9 @@ Editor 0.3.0
 - Added SDL library to give better music and sound playback
 - Fixed grid aligning after duplicating/pasting
 - Added Semi-transparent paths view for world map
+- Added displaying of the items statistics to the debugger box
+- Fixed config directory path on the MacOS X
+- Fixed bug with item boxed updating when you switch between other applications
 
 Editor 0.2.0
 - Added support for World Maps
