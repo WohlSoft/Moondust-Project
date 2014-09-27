@@ -104,12 +104,12 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
         str_count++;line = in.readLine();
         if( SMBX64::qStr(line) ) //Autostart level
             goto badfile;
-        else FileData.autolevel = removeQuotes(line);
+        else FileData.IntroLevel_file = removeQuotes(line);
 
         str_count++;line = in.readLine();
         if( SMBX64::wBool(line) ) //Don't use world map on this episode
             goto badfile;
-        else FileData.noworldmap = SMBX64::wBoolR(line);
+        else FileData.HubStyledWorld = SMBX64::wBoolR(line);
 
         str_count++;line = in.readLine();
         if( SMBX64::wBool(line) ) //Restart level on playable character's death
@@ -151,6 +151,13 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
         if( SMBX64::qStr(line) ) //Author 5
             goto badfile;
         else FileData.author5 = removeQuotes(line);
+
+        FileData.authors.clear();
+        FileData.authors += (FileData.author1.isEmpty())? "" : FileData.author1+"\n";
+        FileData.authors += (FileData.author2.isEmpty())? "" : FileData.author2+"\n";
+        FileData.authors += (FileData.author3.isEmpty())? "" : FileData.author3+"\n";
+        FileData.authors += (FileData.author4.isEmpty())? "" : FileData.author4+"\n";
+        FileData.authors += (FileData.author5.isEmpty())? "" : FileData.author5;
     }
 
 
@@ -408,10 +415,18 @@ QString FileFormats::WriteSMBX64WldFile(WorldData FileData)
     TextData += SMBX64::BoolS(FileData.nocharacter3);
     TextData += SMBX64::BoolS(FileData.nocharacter4);
     TextData += SMBX64::BoolS(FileData.nocharacter5);
-    TextData += SMBX64::qStrS(FileData.autolevel);
-    TextData += SMBX64::BoolS(FileData.noworldmap);
+    TextData += SMBX64::qStrS(FileData.IntroLevel_file);
+    TextData += SMBX64::BoolS(FileData.HubStyledWorld);
     TextData += SMBX64::BoolS(FileData.restartlevel);
     TextData += SMBX64::IntS(FileData.stars);
+
+    QStringList credits = FileData.authors.split(QChar('\n'));
+    FileData.author1 = (credits.size()>0) ? credits[0] : "";
+    FileData.author2 = (credits.size()>1) ? credits[1] : "";
+    FileData.author3 = (credits.size()>2) ? credits[2] : "";
+    FileData.author4 = (credits.size()>3) ? credits[3] : "";
+    FileData.author5 = (credits.size()>4) ? credits[4] : "";
+
     TextData += SMBX64::qStrS(FileData.author1);
     TextData += SMBX64::qStrS(FileData.author2);
     TextData += SMBX64::qStrS(FileData.author3);
