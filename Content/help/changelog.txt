@@ -1,5 +1,6 @@
 Editor 0.2.1
 - Added support of multi-selection with holded shift key
+- Added new own file formats LVLX and WLDX supports: without item number limits and with additional features
 - Optimized total performance
 - More smart grid snapping of the selected items group
 - Clicking to layers in the list will define layer where you will place new items
