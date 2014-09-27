@@ -374,6 +374,19 @@ void ItemDoor::setLayer(QString layer)
 void ItemDoor::arrayApply()
 {
     bool found=false;
+
+    if(direction==D_Entrance)
+    {
+        doorData.ix = qRound(this->scenePos().x());
+        doorData.iy = qRound(this->scenePos().y());
+    }
+    else
+    {
+        doorData.ox = qRound(this->scenePos().x());
+        doorData.oy = qRound(this->scenePos().y());
+    }
+
+
     if(doorData.index < (unsigned int)scene->LvlData->doors.size())
     { //Check index
         if(doorData.array_id == scene->LvlData->doors[doorData.index].array_id)
@@ -407,8 +420,6 @@ void ItemDoor::arrayApply()
             {
                 if((door->data(0).toString()=="Door_exit")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
                 {
-                    doorData.ox = qRound(this->scenePos().x());
-                    doorData.oy = qRound(this->scenePos().y());
                     ((ItemDoor *)door)->doorData = doorData;
                     break;
                 }
@@ -423,8 +434,6 @@ void ItemDoor::arrayApply()
             {
                 if((door->data(0).toString()=="Door_enter")&&((unsigned int)door->data(2).toInt()==doorData.array_id))
                 {
-                    doorData.ix = qRound(this->scenePos().x());
-                    doorData.iy = qRound(this->scenePos().y());
                     ((ItemDoor *)door)->doorData = doorData;
                     break;
                 }
