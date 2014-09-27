@@ -97,6 +97,7 @@ WorldMusic FileFormats::dummyWldMusic()
     dummyMusicBox.index = 0;
     dummyMusicBox.x = 0;
     dummyMusicBox.y = 0;
+    dummyMusicBox.music_file="";
 
     return dummyMusicBox;
 }
@@ -122,15 +123,16 @@ WorldData FileFormats::dummyWldDataArray()
     NewFileData.nocharacter4 = false;
     NewFileData.nocharacter5 = false;
 
+    NewFileData.authors = "";
     NewFileData.author1 = "";
     NewFileData.author2 = "";
     NewFileData.author3 = "";
     NewFileData.author4 = "";
     NewFileData.author5 = "";
 
-    NewFileData.autolevel = "";
+    NewFileData.IntroLevel_file = "";
 
-    NewFileData.noworldmap = false;
+    NewFileData.HubStyledWorld = false;
     NewFileData.restartlevel = false;
 
     NewFileData.tile_array_id = 0;

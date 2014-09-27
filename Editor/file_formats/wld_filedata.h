@@ -85,6 +85,7 @@ struct WorldMusic
     long x;
     long y;
     unsigned long id;
+    QString music_file;
 
     //editing
     unsigned int array_id;
@@ -104,12 +105,13 @@ struct WorldData
 
     QList<bool > nocharacter;
 
-    QString autolevel;
-    bool noworldmap;
+    QString IntroLevel_file;
+    bool HubStyledWorld;
     bool restartlevel;
 
     unsigned int stars;
 
+    QString authors;
     QString author1;
     QString author2;
     QString author3;
