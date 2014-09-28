@@ -10,6 +10,7 @@ Editor 0.2.1
 - Added displaying of the items statistics to the debugger box
 - Fixed config directory path on the MacOS X
 - Fixed bug with item boxed updating when you switch between other applications
+- Added export images of level level by selected pieces
 
 Editor 0.2.0
 - Added support for World Maps
