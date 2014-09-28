@@ -149,6 +149,7 @@
     <addaction name="actionSave_all"/>
     <addaction name="separator"/>
     <addaction name="actionExport_to_image"/>
+    <addaction name="actionExport_to_image_section"/>
     <addaction name="separator"/>
     <addaction name="Exit"/>
    </widget>
@@ -3859,7 +3860,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>500</height>
+          <height>447</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4041,8 +4042,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>500</height>
+          <width>219</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4123,8 +4124,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>500</height>
+          <width>216</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4217,8 +4218,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>500</height>
+          <width>231</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4515,8 +4516,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>500</height>
+          <width>188</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4631,8 +4632,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>500</height>
+          <width>190</width>
+          <height>110</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4729,8 +4730,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>500</height>
+          <width>104</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5112,8 +5113,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>543</height>
+          <width>190</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5261,8 +5262,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>543</height>
+          <width>219</width>
+          <height>289</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6201,8 +6202,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>454</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6323,8 +6324,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>454</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6445,8 +6446,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>454</height>
+          <width>229</width>
+          <height>220</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6692,8 +6693,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>454</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6966,8 +6967,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1470</width>
-              <height>128</height>
+              <width>98</width>
+              <height>28</height>
              </rect>
             </property>
            </widget>
@@ -8897,6 +8898,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Semi-transparent paths</string>
+   </property>
+  </action>
+  <action name="actionExport_to_image_section">
+   <property name="text">
+    <string>Export section to image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Export whole level section to image</string>
    </property>
   </action>
  </widget>

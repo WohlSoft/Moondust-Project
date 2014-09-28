@@ -78,6 +78,7 @@ public:
     void changeCursor(int mode);
 
     void ExportToImage_fn();
+    void ExportToImage_fn_piece();
 
     LvlScene * scene;
 
@@ -98,6 +99,8 @@ private slots:
     virtual void leaveEvent(QEvent * leaveEvent);
     virtual void focusInEvent(QFocusEvent *event);
     void updateScene();
+
+    void ExportingReady();
 
 private:
     void documentWasModified();

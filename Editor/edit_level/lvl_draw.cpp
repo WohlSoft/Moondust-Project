@@ -118,6 +118,7 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
+        connect(scene, SIGNAL(screenshotSizeCaptured()), this, SLOT(ExportingReady()));
     }
     if(!progress.wasCanceled())
         progress.setValue(DataSize);

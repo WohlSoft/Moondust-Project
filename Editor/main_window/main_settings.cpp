@@ -209,6 +209,8 @@ void MainWindow::setUiDefults()
 
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
 
+    ui->actionExport_to_image_section->setVisible(false);
+
     ui->centralWidget->cascadeSubWindows();
 
     ui->applyResize->setVisible(false);
