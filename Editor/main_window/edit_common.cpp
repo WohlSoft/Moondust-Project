@@ -186,12 +186,20 @@ void MainWindow::on_actionExport_to_image_triggered()
 
     if(activeChildWindow()==1)
     {
-        activeLvlEditWin()->ExportToImage_fn();
+        activeLvlEditWin()->ExportToImage_fn_piece();
     }
     else
     if(activeChildWindow()==3)
     {
         activeWldEditWin()->ExportToImage_fn();
+    }
+}
+
+void MainWindow::on_actionExport_to_image_section_triggered()
+{
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->ExportToImage_fn();
     }
 }
 

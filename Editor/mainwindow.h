@@ -981,6 +981,8 @@ private slots:
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+        void on_actionExport_to_image_section_triggered();
+
 signals:
     void closeEditor();
 
