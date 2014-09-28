@@ -361,7 +361,7 @@ void LvlScene::setScreenshotSelector(bool enabled, bool accept)
         this->addItem(pResizer);
         pResizer->setPos(captutedSize.x(), captutedSize.y());
         pResizer->type=4;
-        pResizer->_minSize = QSizeF(800, 600);
+        pResizer->_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(WorldEdit::MODE_Resizing);

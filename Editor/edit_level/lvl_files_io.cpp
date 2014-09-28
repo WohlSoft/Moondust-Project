@@ -129,7 +129,10 @@ void leveledit::ExportingReady() //slot
 
         QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
             latest_export_path + "/" +
-            QString("%1_Section_%2.png").arg( QFileInfo(curFile).baseName() ).arg(LvlData.CurSection+1), tr("PNG Image (*.png)"));
+            QString("%1_Section_%2%3.png").arg( QFileInfo(curFile).baseName() )
+                                                        .arg(LvlData.CurSection+1)
+                                                        .arg(scene->isFullSection?"":("_"+QString::number(qrand()))),
+                                                        tr("PNG Image (*.png)"));
         if (fileName.isEmpty())
             return;
 
