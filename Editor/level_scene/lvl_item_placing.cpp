@@ -475,7 +475,10 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
                 playerPixmap = Themes::Image(Themes::player_point); break;
         }
 
+        PlayerPoint x = FileFormats::dummyLvlPlayerPoint(itemID+1);
+
         cursor = addPixmap(playerPixmap);
+        dynamic_cast<QGraphicsPixmapItem *>(cursor)->setOffset(qRound(qreal(x.w-playerPixmap.width())/2.0), x.h-playerPixmap.height() );
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
