@@ -22,9 +22,12 @@
 #include <QString>
 #include <QIcon>
 #include <QMap>
+#include <QDir>
 #include <QVector>
 #include <QImage>
+#include <QSettings>
 #include "app_path.h"
+
 
 class Themes
 {
@@ -162,14 +165,21 @@ public:
     };
 
     static void init();
+    static QStringList availableThemes();
+    static QString currentTheme();
+    static void loadTheme(QString themeDir);
+
     static QIcon icon(Icons icn);
     static QPixmap icon(Images img);
 
 private:
     static bool isLoaded;
-    static QString currentTheme;
+    static QString currentThemeDir;
     static QVector<QIcon > icons;
     static QMap<Icons, QIcon > icons_map;
+    static void loadIcon(QSettings &s, QString value, Icons icn);
+    static void loadImage(QSettings &s, QString value, Images img);
+    static QString theme_dir;
 
     static QVector<QPixmap > images;
     static QMap<Images, QPixmap > images_map;
