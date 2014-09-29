@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http:/www.gnu.org/licenses/>.
  */
 
 #include "themes.h"
@@ -53,132 +53,132 @@ void Themes::init()
     icons.push_back(QIcon(":/images/level.png"));
     icons_map[level_24] = icons.last();
 
-    icons.push_back(QIcon("://images/world16.png"));
+    icons.push_back(QIcon(":/images/world16.png"));
     icons_map[world_16] = icons.last();
 
-    icons.push_back(QIcon("://images/world.png"));
+    icons.push_back(QIcon(":/images/world.png"));
     icons_map[world_24] = icons.last();
 
-    icons.push_back(QIcon("://images/coin.png"));
+    icons.push_back(QIcon(":/images/coin.png"));
     icons_map[npc_16] = icons.last();
 
 
-    icons.push_back(QIcon("://images/open.png"));
+    icons.push_back(QIcon(":/images/open.png"));
     icons_map[file_open] = icons.last();
 
-    icons.push_back(QIcon("://images/new.png"));
+    icons.push_back(QIcon(":/images/new.png"));
     icons_map[file_new] = icons.last();
 
-    icons.push_back(QIcon("://images/save.png"));
+    icons.push_back(QIcon(":/images/save.png"));
     icons_map[file_save] = icons.last();
 
-    icons.push_back(QIcon("://images/saveas.png"));
+    icons.push_back(QIcon(":/images/saveas.png"));
     icons_map[file_saveas] = icons.last();
 
-    icons.push_back(QIcon("://reload.png"));
+    icons.push_back(QIcon(":/reload.png"));
     icons_map[file_reload] = icons.last();
 
 
-    icons.push_back(QIcon("://images/bug.png"));
+    icons.push_back(QIcon(":/images/bug.png"));
     icons_map[debugger] = icons.last();
 
 
-    icons.push_back(QIcon("://images/playmusic.png"));
+    icons.push_back(QIcon(":/images/playmusic.png"));
     icons_map[playmusic] = icons.last();
 
-    icons.push_back(QIcon("://images/grid.png"));
+    icons.push_back(QIcon(":/images/grid.png"));
     icons_map[grid_snap] = icons.last();
 
-    icons.push_back(QIcon("://images/animation.png"));
+    icons.push_back(QIcon(":/images/animation.png"));
     icons_map[animation] = icons.last();
 
-    icons.push_back(QIcon("://images/search.png"));
+    icons.push_back(QIcon(":/images/search.png"));
     icons_map[search] = icons.last();
 
-    icons.push_back(QIcon("://images/pencil_16x16.png"));
+    icons.push_back(QIcon(":/images/pencil_16x16.png"));
     icons_map[pencil] = icons.last();
 
-    icons.push_back(QIcon("://images/edit_copy.png"));
+    icons.push_back(QIcon(":/images/edit_copy.png"));
     icons_map[copy] = icons.last();
 
-    icons.push_back(QIcon("://images/copy_16x16.png"));
+    icons.push_back(QIcon(":/images/copy_16x16.png"));
     icons_map[copy_16] = icons.last();
 
-    icons.push_back(QIcon("://images/edit_cut.png"));
+    icons.push_back(QIcon(":/images/edit_cut.png"));
     icons_map[cut] = icons.last();
 
-    icons.push_back(QIcon("://images/edit_paste.png"));
+    icons.push_back(QIcon(":/images/edit_paste.png"));
     icons_map[paste] = icons.last();
 
-    icons.push_back(QIcon("://images/edit_undo.png"));
+    icons.push_back(QIcon(":/images/edit_undo.png"));
     icons_map[undo] = icons.last();
 
-    icons.push_back(QIcon("://images/edit_redo.png"));
+    icons.push_back(QIcon(":/images/edit_redo.png"));
     icons_map[redo] = icons.last();
 
 
-    icons.push_back(QIcon("://images/arrow.png"));
+    icons.push_back(QIcon(":/images/arrow.png"));
     icons_map[selection] = icons.last();
 
-    icons.push_back(QIcon("://select_only.png"));
+    icons.push_back(QIcon(":/select_only.png"));
     icons_map[selection_only] = icons.last();
 
-    icons.push_back(QIcon("://hand.png"));
+    icons.push_back(QIcon(":/hand.png"));
     icons_map[hand_drag] = icons.last();
 
-    icons.push_back(QIcon("://images/rubber.png"));
+    icons.push_back(QIcon(":/images/rubber.png"));
     icons_map[erasing] = icons.last();
 
-    icons.push_back(QIcon("://images/resize_accept.png"));
+    icons.push_back(QIcon(":/images/resize_accept.png"));
     icons_map[accept] = icons.last();
 
-    icons.push_back(QIcon("://images/resize_cancel.png"));
+    icons.push_back(QIcon(":/images/resize_cancel.png"));
     icons_map[cancel] = icons.last();
 
 
-    icons.push_back(QIcon("://images/square_fill.png"));
+    icons.push_back(QIcon(":/images/square_fill.png"));
     icons_map[square_fill] = icons.last();
 
-    icons.push_back(QIcon("://images/line_fill.png"));
+    icons.push_back(QIcon(":/images/line_fill.png"));
     icons_map[line_tool] = icons.last();
 
-    icons.push_back(QIcon("://images/overwrite.png"));
+    icons.push_back(QIcon(":/images/overwrite.png"));
     icons_map[overwrite_mode] = icons.last();
 
-    icons.push_back(QIcon("://images/zoom_reset.png"));
+    icons.push_back(QIcon(":/images/zoom_reset.png"));
     icons_map[zoom_reset] = icons.last();
 
-    icons.push_back(QIcon("://images/zoom_in.png"));
+    icons.push_back(QIcon(":/images/zoom_in.png"));
     icons_map[zoom_in] = icons.last();
 
-    icons.push_back(QIcon("://images/zoom_out.png"));
+    icons.push_back(QIcon(":/images/zoom_out.png"));
     icons_map[zoom_out] = icons.last();
 
-    icons.push_back(QIcon("://images/section.png"));
+    icons.push_back(QIcon(":/images/section.png"));
     icons_map[section_settings] = icons.last();
 
-    icons.push_back(QIcon("://images/section16.png"));
+    icons.push_back(QIcon(":/images/section16.png"));
     icons_map[section_settings_16] = icons.last();
 
-    icons.push_back(QIcon("://doors.png"));
+    icons.push_back(QIcon(":/doors.png"));
     icons_map[doors] = icons.last();
 
-    icons.push_back(QIcon("://layers.png"));
+    icons.push_back(QIcon(":/layers.png"));
     icons_map[layers] = icons.last();
 
-    icons.push_back(QIcon("://images/events.png"));
+    icons.push_back(QIcon(":/images/events.png"));
     icons_map[events] = icons.last();
 
-    icons.push_back(QIcon("://drawWater.png"));
+    icons.push_back(QIcon(":/drawWater.png"));
     icons_map[water] = icons.last();
 
-    icons.push_back(QIcon("://drawQuickSand.png"));
+    icons.push_back(QIcon(":/drawQuickSand.png"));
     icons_map[quicksand] = icons.last();
 
-    icons.push_back(QIcon("://images/player1_start.png"));
+    icons.push_back(QIcon(":/images/player1_start.png"));
     icons_map[draw_player1] = icons.last();
 
-    icons.push_back(QIcon("://images/player2_start.png"));
+    icons.push_back(QIcon(":/images/player2_start.png"));
     icons_map[draw_player2] = icons.last();
 
 
@@ -221,138 +221,138 @@ void Themes::init()
     images_map[section_9_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/10.png"));
     images_map[section_10_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/010_n.png"));
+    images.push_back(QPixmap(":/sections/sections/10_n.png"));
     images_map[section_10_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/11.png"));
     images_map[section_11_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/011_n.png"));
+    images.push_back(QPixmap(":/sections/sections/11_n.png"));
     images_map[section_11_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/12.png"));
     images_map[section_12_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/012_n.png"));
+    images.push_back(QPixmap(":/sections/sections/12_n.png"));
     images_map[section_12_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/13.png"));
     images_map[section_13_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/013_n.png"));
+    images.push_back(QPixmap(":/sections/sections/13_n.png"));
     images_map[section_13_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/14.png"));
     images_map[section_14_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/014_n.png"));
+    images.push_back(QPixmap(":/sections/sections/14_n.png"));
     images_map[section_14_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/15.png"));
     images_map[section_15_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/015_n.png"));
+    images.push_back(QPixmap(":/sections/sections/15_n.png"));
     images_map[section_15_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/16.png"));
     images_map[section_16_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/016_n.png"));
+    images.push_back(QPixmap(":/sections/sections/16_n.png"));
     images_map[section_16_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/17.png"));
     images_map[section_17_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/017_n.png"));
+    images.push_back(QPixmap(":/sections/sections/17_n.png"));
     images_map[section_17_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/18.png"));
     images_map[section_18_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/018_n.png"));
+    images.push_back(QPixmap(":/sections/sections/18_n.png"));
     images_map[section_18_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/19.png"));
     images_map[section_19_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/019_n.png"));
+    images.push_back(QPixmap(":/sections/sections/19_n.png"));
     images_map[section_19_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/20.png"));
     images_map[section_20_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/020_n.png"));
+    images.push_back(QPixmap(":/sections/sections/20_n.png"));
     images_map[section_20_default] = images.last();
     images.push_back(QPixmap(":/sections/sections/21.png"));
     images_map[section_21_selected] = images.last();
-    images.push_back(QPixmap(":/sections/sections/021_n.png"));
+    images.push_back(QPixmap(":/sections/sections/21_n.png"));
     images_map[section_21_default] = images.last();
 
-    icons.push_back(QIcon("://images/reset_pos.png"));
+    icons.push_back(QIcon(":/images/reset_pos.png"));
     icons_map[section_reset_pos] = icons.last();
 
 
 
-    images.push_back(QPixmap("://locks/block_op.png"));
+    images.push_back(QPixmap(":/locks/block_op.png"));
     images_map[blocks_free] = images.last();
 
-    images.push_back(QPixmap("://locks/block_cl.png"));
+    images.push_back(QPixmap(":/locks/block_cl.png"));
     images_map[blocks_locked] = images.last();
 
-    images.push_back(QPixmap("://locks/bgo_op.png"));
+    images.push_back(QPixmap(":/locks/bgo_op.png"));
     images_map[bgo_free] = images.last();
 
-    images.push_back(QPixmap("://locks/bgo_cl.png"));
+    images.push_back(QPixmap(":/locks/bgo_cl.png"));
     images_map[bgo_locked] = images.last();
 
-    images.push_back(QPixmap("://locks/npc_op.png"));
+    images.push_back(QPixmap(":/locks/npc_op.png"));
     images_map[npc_free] = images.last();
 
-    images.push_back(QPixmap("://locks/npc_cl.png"));
+    images.push_back(QPixmap(":/locks/npc_cl.png"));
     images_map[npc_locked] = images.last();
 
-    images.push_back(QPixmap("://locks/door_op.png"));
+    images.push_back(QPixmap(":/locks/door_op.png"));
     images_map[warps_free] = images.last();
 
-    images.push_back(QPixmap("://locks/npc_cl.png"));
+    images.push_back(QPixmap(":/locks/npc_cl.png"));
     images_map[warps_locked] = images.last();
 
-    images.push_back(QPixmap("://locks/water_op.png"));
+    images.push_back(QPixmap(":/locks/water_op.png"));
     images_map[physenv_free] = images.last();
 
-    images.push_back(QPixmap("://locks/water_cl.png"));
+    images.push_back(QPixmap(":/locks/water_cl.png"));
     images_map[physenv_locked] = images.last();
 
 
 
-    images.push_back(QPixmap("://images/lock_tile_op.png"));
+    images.push_back(QPixmap(":/images/lock_tile_op.png"));
     images_map[tiles_free] = images.last();
 
-    images.push_back(QPixmap("://images/lock_tile_cl.png"));
+    images.push_back(QPixmap(":/images/lock_tile_cl.png"));
     images_map[tiles_locked] = images.last();
 
-    images.push_back(QPixmap("://images/lock_scenery_op.png"));
+    images.push_back(QPixmap(":/images/lock_scenery_op.png"));
     images_map[scenery_free] = images.last();
 
-    images.push_back(QPixmap("://images/lock_scenery_cl.png"));
+    images.push_back(QPixmap(":/images/lock_scenery_cl.png"));
     images_map[scenery_locked] = images.last();
 
-    images.push_back(QPixmap("://images/lock_paths_op.png"));
+    images.push_back(QPixmap(":/images/lock_paths_op.png"));
     images_map[paths_free] = images.last();
 
-    images.push_back(QPixmap("://images/lock_paths_cl.png"));
+    images.push_back(QPixmap(":/images/lock_paths_cl.png"));
     images_map[paths_locked] = images.last();
 
-    images.push_back(QPixmap("://images/lock_levels_op.png"));
+    images.push_back(QPixmap(":/images/lock_levels_op.png"));
     images_map[levels_free] = images.last();
 
-    images.push_back(QPixmap("://images/lock_levels_cl.png"));
+    images.push_back(QPixmap(":/images/lock_levels_cl.png"));
     images_map[levels_locked] = images.last();
 
-    images.push_back(QPixmap("://images/lock_musicbox_op.png"));
+    images.push_back(QPixmap(":/images/lock_musicbox_op.png"));
     images_map[musicboxes_free] = images.last();
 
-    images.push_back(QPixmap("://images/lock_musicbox_cl.png"));
+    images.push_back(QPixmap(":/images/lock_musicbox_cl.png"));
     images_map[musicboxes_locked] = images.last();
 
     //Load default images
 
-    images.push_back(QPixmap("://images/splash_editor.png"));
+    images.push_back(QPixmap(":/images/splash_editor.png"));
     images_map[splash] = images.last();
 
-    images.push_back(QPixmap("://cur_pasta.png"));
+    images.push_back(QPixmap(":/cur_pasta.png"));
     images_map[cursor_pasting] = images.last();
 
-    images.push_back(QPixmap("://cur_rubber.png"));
+    images.push_back(QPixmap(":/cur_rubber.png"));
     images_map[cursor_erasing] = images.last();
 
-    images.push_back(QPixmap("://player.png"));
+    images.push_back(QPixmap(":/player.png"));
     images_map[player_point] = images.last();
 
-    images.push_back(QPixmap("://player1.png"));
+    images.push_back(QPixmap(":/player1.png"));
     images_map[player1] = images.last();
 
-    images.push_back(QPixmap("://player2.png"));
+    images.push_back(QPixmap(":/player2.png"));
     images_map[player2] = images.last();
 
     currentThemeDir = "";
@@ -583,19 +583,25 @@ void Themes::loadTheme(QString themeDir)
 
 void Themes::loadIcon(QSettings &s, QString value, Themes::Icons icn)
 {
-    QIcon   tmpIcn;
-    tmpIcn = QIcon(theme_dir + s.value(value, "").toString());
-    if(!tmpIcn.isNull())
-        icons_map[icn] = tmpIcn;
+    if(!s.value(value, "").toString().isEmpty())
+    {
+        QIcon   tmpIcn;
+        tmpIcn = QIcon(theme_dir + s.value(value, "").toString());
+        if(!tmpIcn.isNull())
+            icons_map[icn] = tmpIcn;
+    }
 
 }
 
 void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
 {
-    QPixmap tmpImg;
-    tmpImg = QPixmap(theme_dir + s.value(value, "").toString());
-    if(!tmpImg.isNull())
-        images_map[img] = tmpImg;
+    if(!s.value(value, "").toString().isEmpty())
+    {
+        QPixmap tmpImg;
+        tmpImg = QPixmap(theme_dir + s.value(value, "").toString());
+        if(!tmpImg.isNull())
+            images_map[img] = tmpImg;
+    }
 }
 
 
