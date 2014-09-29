@@ -172,6 +172,13 @@ void ItemPlayerPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void ItemPlayerPoint::changeDirection(int dir)
 {
     pointData.direction = dir;
+
+    QPixmap mirrowed=QPixmap::fromImage(currentImage.toImage().mirrored(true,false));
+    if(pointData.direction<0)
+        setPixmap(mirrowed);
+    else
+        setPixmap(currentImage);
+
     arrayApply();
 }
 
@@ -214,7 +221,13 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
         currentImage = QPixmap(":/player.png");
         this->setOffset(0, pnt.h-currentImage.height() );
     }
-    setPixmap(currentImage);
+
+    QPixmap mirrowed=QPixmap::fromImage(currentImage.toImage().mirrored(true,false));
+    if(pointData.direction<0)
+        setPixmap(mirrowed);
+    else
+        setPixmap(currentImage);
+
 }
 
 
