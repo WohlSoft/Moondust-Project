@@ -19,13 +19,16 @@
 #include "themes.h"
 
 bool Themes::isLoaded=false;
-QString Themes::currentTheme="";
+QString Themes::currentThemeDir="";
 
 QVector<QIcon > Themes::icons;
 QMap<Themes::Icons, QIcon > Themes::icons_map;
 
 QVector<QPixmap > Themes::images;
 QMap<Themes::Images, QPixmap > Themes::images_map;
+
+QString Themes::theme_dir="";
+
 
 Themes::Themes()
 {
@@ -44,8 +47,6 @@ void Themes::init()
     }
 
     //init default icons
-
-    //icons.push_back(QIcon(":/images/"));
     icons.push_back(QIcon(":/lvl16.png"));
     icons_map[level_16] = icons.last();
 
@@ -347,8 +348,246 @@ void Themes::init()
     images.push_back(QPixmap("://player2.png"));
     images_map[player2] = images.last();
 
+    currentThemeDir = "";
     isLoaded=true;
 }
+
+///
+/// \brief Themes::availableThemes
+/// \return list of available themes in the /themes directory
+///
+QStringList Themes::availableThemes()
+{
+    QString themesPath(ApplicationPath+"/themes/");
+    QDir themesDir(themesPath);
+    QStringList allThemes = themesDir.entryList(QDir::AllDirs);
+
+    QStringList available_themes;
+
+    available_themes << "Default";
+
+    foreach(QString c, allThemes)
+    {
+        QString theme_dir = themesPath+c+"/";
+        QString themeName;
+
+        QString gui_ini = theme_dir + "theme.ini";
+
+        if(!QFileInfo(gui_ini).exists()) continue; //Skip if it is not a config
+        QSettings guiset(gui_ini, QSettings::IniFormat);
+        guiset.setIniCodec("UTF-8");
+
+        guiset.beginGroup("main");
+            themeName = guiset.value("theme-name", QDir(theme_dir).dirName()).toString().remove('|');
+        guiset.endGroup();
+
+        available_themes << QDir(theme_dir).dirName() + "|" + themeName;
+    }
+
+    available_themes.sort(Qt::CaseInsensitive);
+    available_themes.push_front("Default");
+
+    return available_themes;
+}
+
+QString Themes::currentTheme()
+{
+    return currentThemeDir;
+}
+
+void Themes::loadTheme(QString themeDir)
+{
+    init();
+
+    QString themesPath(ApplicationPath+"/themes/");
+    theme_dir = themesPath+themeDir+"/";
+
+
+    QString gui_ini = theme_dir + "theme.ini";
+    if(!QFileInfo(gui_ini).exists()) return;
+
+    QSettings guiset(gui_ini, QSettings::IniFormat);
+    guiset.setIniCodec("UTF-8");
+
+    guiset.beginGroup("main");
+        loadImage(guiset,"default-splash", splash );
+    guiset.endGroup();
+
+    guiset.beginGroup("file-icons");
+        loadIcon(guiset,"level-16", level_16 );
+        loadIcon(guiset,"level-24", level_24 );
+        loadIcon(guiset,"world-16", world_16 );
+        loadIcon(guiset,"world-24", world_24 );
+        loadIcon(guiset,"npc-16", npc_16 );
+    guiset.endGroup();
+
+    guiset.beginGroup("file-io");
+        loadIcon(guiset,"file-open", file_open );
+        loadIcon(guiset,"file-new", file_new );
+        loadIcon(guiset,"file-save", file_save );
+        loadIcon(guiset,"file-save-as", file_saveas );
+        loadIcon(guiset,"file-reload", file_reload );
+    guiset.endGroup();
+
+    guiset.beginGroup("cursors");
+        loadImage(guiset,"pasting", cursor_pasting );
+        loadImage(guiset,"erasing", cursor_erasing );
+    guiset.endGroup();
+
+    guiset.beginGroup("edit-common");
+        loadIcon(guiset,"playmusic", playmusic );
+        loadIcon(guiset,"grid-snap", grid_snap );
+        loadIcon(guiset,"animation", animation );
+        loadIcon(guiset,"search", search );
+        loadIcon(guiset,"pencil", pencil );
+    guiset.endGroup();
+
+    guiset.beginGroup("edit-clipboard");
+        loadIcon(guiset,"copy", copy );
+        loadIcon(guiset,"copy-16", copy_16 );
+        loadIcon(guiset,"cut", cut );
+        loadIcon(guiset,"paste", paste );
+    guiset.endGroup();
+
+    guiset.beginGroup("edit-history");
+        loadIcon(guiset,"undo", undo );
+        loadIcon(guiset,"redo", redo );
+    guiset.endGroup();
+
+    guiset.beginGroup("edit-mode");
+        loadIcon(guiset,"selection", selection );
+        loadIcon(guiset,"selection-only", selection_only );
+        loadIcon(guiset,"hand-drag", hand_drag );
+        loadIcon(guiset,"erasing", erasing );
+    guiset.endGroup();
+
+    guiset.beginGroup("edit-resizing");
+        loadIcon(guiset,"accept", accept );
+        loadIcon(guiset,"cancel", cancel );
+    guiset.endGroup();
+
+    guiset.beginGroup("edit-place");
+        loadIcon(guiset,"square-fill", square_fill );
+        loadIcon(guiset,"line-tool", line_tool );
+        loadIcon(guiset,"overwrite-mode", overwrite_mode );
+    guiset.endGroup();
+
+    guiset.beginGroup("edit-zoom");
+        loadIcon(guiset,"zoom-reset", square_fill );
+        loadIcon(guiset,"zoom-in", line_tool );
+        loadIcon(guiset,"zoom-out", overwrite_mode );
+    guiset.endGroup();
+
+    guiset.beginGroup("level");
+        loadIcon(guiset,"section-settings", section_settings );
+        loadIcon(guiset,"section-settings-16", section_settings_16 );
+        loadIcon(guiset,"doors", doors );
+        loadIcon(guiset,"layers", layers );
+        loadIcon(guiset,"events", events );
+        loadIcon(guiset,"water", water );
+        loadIcon(guiset,"quicksand", quicksand );
+        loadIcon(guiset,"player1", draw_player1 );
+        loadIcon(guiset,"player2", draw_player2 );
+    guiset.endGroup();
+
+    guiset.beginGroup("level-items");
+        loadImage(guiset,"player-point", player_point );
+        loadImage(guiset,"player1", player1 );
+        loadImage(guiset,"player2", player2 );
+    guiset.endGroup();
+
+    guiset.beginGroup("section-numbers");
+        loadIcon(guiset,"section-1-selected", section_1_selected );
+        loadIcon(guiset,"section-1-default", section_1_default );
+        loadIcon(guiset,"section-2-selected", section_2_selected );
+        loadIcon(guiset,"section-2-default", section_2_default );
+        loadIcon(guiset,"section-3-selected", section_3_selected );
+        loadIcon(guiset,"section-3-default", section_3_default );
+        loadIcon(guiset,"section-4-selected", section_4_selected );
+        loadIcon(guiset,"section-4-default", section_4_default );
+        loadIcon(guiset,"section-5-selected", section_5_selected );
+        loadIcon(guiset,"section-5-default", section_5_default );
+        loadIcon(guiset,"section-6-selected", section_6_selected );
+        loadIcon(guiset,"section-6-default", section_6_default );
+        loadIcon(guiset,"section-7-selected", section_7_selected );
+        loadIcon(guiset,"section-7-default", section_7_default );
+        loadIcon(guiset,"section-8-selected", section_8_selected );
+        loadIcon(guiset,"section-8-default", section_8_default );
+        loadIcon(guiset,"section-9-selected", section_9_selected );
+        loadIcon(guiset,"section-9-default", section_9_default );
+        loadIcon(guiset,"section-10-selected", section_10_selected );
+        loadIcon(guiset,"section-10-default", section_10_default );
+        loadIcon(guiset,"section-11-selected", section_11_selected );
+        loadIcon(guiset,"section-11-default", section_11_default );
+        loadIcon(guiset,"section-12-selected", section_12_selected );
+        loadIcon(guiset,"section-12-default", section_12_default );
+        loadIcon(guiset,"section-13-selected", section_13_selected );
+        loadIcon(guiset,"section-13-default", section_13_default );
+        loadIcon(guiset,"section-14-selected", section_14_selected );
+        loadIcon(guiset,"section-14-default", section_14_default );
+        loadIcon(guiset,"section-15-selected", section_15_selected );
+        loadIcon(guiset,"section-15-default", section_15_default );
+        loadIcon(guiset,"section-16-selected", section_16_selected );
+        loadIcon(guiset,"section-16-default", section_16_default );
+        loadIcon(guiset,"section-17-selected", section_17_selected );
+        loadIcon(guiset,"section-17-default", section_17_default );
+        loadIcon(guiset,"section-18-selected", section_18_selected );
+        loadIcon(guiset,"section-18-default", section_18_default );
+        loadIcon(guiset,"section-19-selected", section_19_selected );
+        loadIcon(guiset,"section-19-default", section_19_default );
+        loadIcon(guiset,"section-20-selected", section_20_selected );
+        loadIcon(guiset,"section-20-default", section_20_default );
+        loadIcon(guiset,"section-21-selected", section_21_selected );
+        loadIcon(guiset,"section-21-default", section_21_default );
+    guiset.endGroup();
+
+    guiset.beginGroup("locks-level");
+        loadIcon(guiset,"blocks-free", blocks_free );
+        loadIcon(guiset,"blocks-locked", blocks_locked );
+        loadIcon(guiset,"bgo-free", bgo_free );
+        loadIcon(guiset,"bgo-locked", bgo_locked );
+        loadIcon(guiset,"npc-free", npc_free );
+        loadIcon(guiset,"npc-locked", npc_locked );
+        loadIcon(guiset,"warps-free", warps_free );
+        loadIcon(guiset,"warps-locked", warps_locked );
+        loadIcon(guiset,"physenv-free", physenv_free );
+        loadIcon(guiset,"physenv-locked", physenv_locked );
+    guiset.endGroup();
+
+    guiset.beginGroup("locks-world");
+        loadIcon(guiset,"tiles-free", tiles_free );
+        loadIcon(guiset,"tiles-locked", tiles_locked );
+        loadIcon(guiset,"scenery-free", scenery_free );
+        loadIcon(guiset,"scenery-locked", scenery_locked );
+        loadIcon(guiset,"paths-free", paths_free );
+        loadIcon(guiset,"paths-locked", paths_locked );
+        loadIcon(guiset,"levels-free", levels_free );
+        loadIcon(guiset,"levels-locked", levels_locked );
+        loadIcon(guiset,"musicboxes-free", musicboxes_free );
+        loadIcon(guiset,"musicboxes-locked", musicboxes_locked );
+    guiset.endGroup();
+
+    currentThemeDir=themeDir;
+}
+
+
+void Themes::loadIcon(QSettings &s, QString value, Themes::Icons icn)
+{
+    QIcon   tmpIcn;
+    tmpIcn = QIcon(theme_dir + s.value(value, "").toString());
+    if(!tmpIcn.isNull())
+        icons_map[icn] = tmpIcn;
+
+}
+
+void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
+{
+    QPixmap tmpImg;
+    tmpImg = QPixmap(theme_dir + s.value(value, "").toString());
+    if(!tmpImg.isNull())
+        images_map[img] = tmpImg;
+}
+
 
 QIcon Themes::icon(Themes::Icons icn)
 {
