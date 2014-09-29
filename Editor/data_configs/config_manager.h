@@ -18,6 +18,7 @@ public:
     explicit ConfigManager(QWidget *parent = 0);
     ~ConfigManager();
     QString currentConfig;
+    QString themePack;
     QString isPreLoaded();
 
 private slots:

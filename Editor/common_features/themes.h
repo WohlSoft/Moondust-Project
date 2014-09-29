@@ -48,6 +48,8 @@ public:
         file_saveas,
         file_reload,
 
+        debugger,
+
         playmusic,
         grid_snap,
         animation,
@@ -87,6 +89,18 @@ public:
         quicksand,
         draw_player1,
         draw_player2,
+
+        section_reset_pos
+    };
+
+    enum Images
+    {
+        splash=0,
+        cursor_pasting,
+        cursor_erasing,
+        player_point,
+        player1,
+        player2,
 
         section_1_selected,
         section_1_default,
@@ -154,23 +168,13 @@ public:
         musicboxes_locked
     };
 
-    enum Images
-    {
-        splash=0,
-        cursor_pasting,
-        cursor_erasing,
-        player_point,
-        player1,
-        player2
-    };
-
     static void init();
     static QStringList availableThemes();
     static QString currentTheme();
     static void loadTheme(QString themeDir);
 
     static QIcon icon(Icons icn);
-    static QPixmap icon(Images img);
+    static QPixmap Image(Images img);
 
 private:
     static bool isLoaded;

@@ -129,6 +129,8 @@ public:
 
         void showStatusMsg(QString msg, int time=2000); //Send status message
 
+        void applyTheme(QString themeDir="");
+
         ///
         /// \brief loadSettings load settings from configuration file
         ///

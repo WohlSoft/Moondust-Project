@@ -78,9 +78,13 @@ void Themes::init()
     icons.push_back(QIcon("://reload.png"));
     icons_map[file_reload] = icons.last();
 
+
+    icons.push_back(QIcon("://images/bug.png"));
+    icons_map[debugger] = icons.last();
+
+
     icons.push_back(QIcon("://images/playmusic.png"));
     icons_map[playmusic] = icons.last();
-
 
     icons.push_back(QIcon("://images/grid.png"));
     icons_map[grid_snap] = icons.last();
@@ -179,154 +183,157 @@ void Themes::init()
 
 
 
-    icons.push_back(QIcon(":/sections/sections/01.png"));
-    icons_map[section_1_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/01_n.png"));
-    icons_map[section_1_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/02.png"));
-    icons_map[section_2_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/02_n.png"));
-    icons_map[section_2_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/03.png"));
-    icons_map[section_3_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/03_n.png"));
-    icons_map[section_3_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/04.png"));
-    icons_map[section_4_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/04_n.png"));
-    icons_map[section_4_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/05.png"));
-    icons_map[section_5_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/05_n.png"));
-    icons_map[section_5_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/06.png"));
-    icons_map[section_6_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/06_n.png"));
-    icons_map[section_6_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/07.png"));
-    icons_map[section_7_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/07_n.png"));
-    icons_map[section_7_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/08.png"));
-    icons_map[section_8_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/08_n.png"));
-    icons_map[section_8_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/09.png"));
-    icons_map[section_9_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/09_n.png"));
-    icons_map[section_9_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/10.png"));
-    icons_map[section_10_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/010_n.png"));
-    icons_map[section_10_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/11.png"));
-    icons_map[section_11_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/011_n.png"));
-    icons_map[section_11_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/12.png"));
-    icons_map[section_12_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/012_n.png"));
-    icons_map[section_12_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/13.png"));
-    icons_map[section_13_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/013_n.png"));
-    icons_map[section_13_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/14.png"));
-    icons_map[section_14_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/014_n.png"));
-    icons_map[section_14_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/15.png"));
-    icons_map[section_15_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/015_n.png"));
-    icons_map[section_15_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/16.png"));
-    icons_map[section_16_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/016_n.png"));
-    icons_map[section_16_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/17.png"));
-    icons_map[section_17_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/017_n.png"));
-    icons_map[section_17_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/18.png"));
-    icons_map[section_18_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/018_n.png"));
-    icons_map[section_18_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/19.png"));
-    icons_map[section_19_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/019_n.png"));
-    icons_map[section_19_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/20.png"));
-    icons_map[section_20_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/020_n.png"));
-    icons_map[section_20_default] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/21.png"));
-    icons_map[section_21_selected] = icons.last();
-    icons.push_back(QIcon(":/sections/sections/021_n.png"));
-    icons_map[section_21_default] = icons.last();
+    images.push_back(QPixmap(":/sections/sections/01.png"));
+    images_map[section_1_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/01_n.png"));
+    images_map[section_1_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/02.png"));
+    images_map[section_2_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/02_n.png"));
+    images_map[section_2_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/03.png"));
+    images_map[section_3_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/03_n.png"));
+    images_map[section_3_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/04.png"));
+    images_map[section_4_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/04_n.png"));
+    images_map[section_4_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/05.png"));
+    images_map[section_5_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/05_n.png"));
+    images_map[section_5_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/06.png"));
+    images_map[section_6_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/06_n.png"));
+    images_map[section_6_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/07.png"));
+    images_map[section_7_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/07_n.png"));
+    images_map[section_7_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/08.png"));
+    images_map[section_8_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/08_n.png"));
+    images_map[section_8_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/09.png"));
+    images_map[section_9_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/09_n.png"));
+    images_map[section_9_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/10.png"));
+    images_map[section_10_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/010_n.png"));
+    images_map[section_10_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/11.png"));
+    images_map[section_11_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/011_n.png"));
+    images_map[section_11_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/12.png"));
+    images_map[section_12_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/012_n.png"));
+    images_map[section_12_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/13.png"));
+    images_map[section_13_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/013_n.png"));
+    images_map[section_13_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/14.png"));
+    images_map[section_14_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/014_n.png"));
+    images_map[section_14_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/15.png"));
+    images_map[section_15_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/015_n.png"));
+    images_map[section_15_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/16.png"));
+    images_map[section_16_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/016_n.png"));
+    images_map[section_16_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/17.png"));
+    images_map[section_17_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/017_n.png"));
+    images_map[section_17_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/18.png"));
+    images_map[section_18_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/018_n.png"));
+    images_map[section_18_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/19.png"));
+    images_map[section_19_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/019_n.png"));
+    images_map[section_19_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/20.png"));
+    images_map[section_20_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/020_n.png"));
+    images_map[section_20_default] = images.last();
+    images.push_back(QPixmap(":/sections/sections/21.png"));
+    images_map[section_21_selected] = images.last();
+    images.push_back(QPixmap(":/sections/sections/021_n.png"));
+    images_map[section_21_default] = images.last();
+
+    icons.push_back(QIcon("://images/reset_pos.png"));
+    icons_map[section_reset_pos] = icons.last();
 
 
 
-    icons.push_back(QIcon("://locks/block_op.png"));
-    icons_map[blocks_free] = icons.last();
+    images.push_back(QPixmap("://locks/block_op.png"));
+    images_map[blocks_free] = images.last();
 
-    icons.push_back(QIcon("://locks/block_cl.png"));
-    icons_map[blocks_locked] = icons.last();
+    images.push_back(QPixmap("://locks/block_cl.png"));
+    images_map[blocks_locked] = images.last();
 
-    icons.push_back(QIcon("://locks/bgo_op.png"));
-    icons_map[bgo_free] = icons.last();
+    images.push_back(QPixmap("://locks/bgo_op.png"));
+    images_map[bgo_free] = images.last();
 
-    icons.push_back(QIcon("://locks/bgo_cl.png"));
-    icons_map[bgo_locked] = icons.last();
+    images.push_back(QPixmap("://locks/bgo_cl.png"));
+    images_map[bgo_locked] = images.last();
 
-    icons.push_back(QIcon("://locks/npc_op.png"));
-    icons_map[npc_free] = icons.last();
+    images.push_back(QPixmap("://locks/npc_op.png"));
+    images_map[npc_free] = images.last();
 
-    icons.push_back(QIcon("://locks/npc_cl.png"));
-    icons_map[npc_locked] = icons.last();
+    images.push_back(QPixmap("://locks/npc_cl.png"));
+    images_map[npc_locked] = images.last();
 
-    icons.push_back(QIcon("://locks/door_op.png"));
-    icons_map[warps_free] = icons.last();
+    images.push_back(QPixmap("://locks/door_op.png"));
+    images_map[warps_free] = images.last();
 
-    icons.push_back(QIcon("://locks/npc_cl.png"));
-    icons_map[warps_locked] = icons.last();
+    images.push_back(QPixmap("://locks/npc_cl.png"));
+    images_map[warps_locked] = images.last();
 
-    icons.push_back(QIcon("://locks/water_op.png"));
-    icons_map[physenv_free] = icons.last();
+    images.push_back(QPixmap("://locks/water_op.png"));
+    images_map[physenv_free] = images.last();
 
-    icons.push_back(QIcon("://locks/water_cl.png"));
-    icons_map[physenv_locked] = icons.last();
+    images.push_back(QPixmap("://locks/water_cl.png"));
+    images_map[physenv_locked] = images.last();
 
 
 
-    icons.push_back(QIcon("://images/lock_tile_op.png"));
-    icons_map[tiles_free] = icons.last();
+    images.push_back(QPixmap("://images/lock_tile_op.png"));
+    images_map[tiles_free] = images.last();
 
-    icons.push_back(QIcon("://images/lock_tile_cl.png"));
-    icons_map[tiles_locked] = icons.last();
+    images.push_back(QPixmap("://images/lock_tile_cl.png"));
+    images_map[tiles_locked] = images.last();
 
-    icons.push_back(QIcon("://images/lock_scenery_op.png"));
-    icons_map[scenery_free] = icons.last();
+    images.push_back(QPixmap("://images/lock_scenery_op.png"));
+    images_map[scenery_free] = images.last();
 
-    icons.push_back(QIcon("://images/lock_scenery_cl.png"));
-    icons_map[scenery_locked] = icons.last();
+    images.push_back(QPixmap("://images/lock_scenery_cl.png"));
+    images_map[scenery_locked] = images.last();
 
-    icons.push_back(QIcon("://images/lock_paths_op.png"));
-    icons_map[paths_free] = icons.last();
+    images.push_back(QPixmap("://images/lock_paths_op.png"));
+    images_map[paths_free] = images.last();
 
-    icons.push_back(QIcon("://images/lock_paths_cl.png"));
-    icons_map[paths_locked] = icons.last();
+    images.push_back(QPixmap("://images/lock_paths_cl.png"));
+    images_map[paths_locked] = images.last();
 
-    icons.push_back(QIcon("://images/lock_levels_op.png"));
-    icons_map[levels_free] = icons.last();
+    images.push_back(QPixmap("://images/lock_levels_op.png"));
+    images_map[levels_free] = images.last();
 
-    icons.push_back(QIcon("://images/lock_levels_cl.png"));
-    icons_map[levels_locked] = icons.last();
+    images.push_back(QPixmap("://images/lock_levels_cl.png"));
+    images_map[levels_locked] = images.last();
 
-    icons.push_back(QIcon("://images/lock_musicbox_op.png"));
-    icons_map[musicboxes_free] = icons.last();
+    images.push_back(QPixmap("://images/lock_musicbox_op.png"));
+    images_map[musicboxes_free] = images.last();
 
-    icons.push_back(QIcon("://images/lock_musicbox_cl.png"));
-    icons_map[musicboxes_locked] = icons.last();
+    images.push_back(QPixmap("://images/lock_musicbox_cl.png"));
+    images_map[musicboxes_locked] = images.last();
 
     //Load default images
 
@@ -364,8 +371,6 @@ QStringList Themes::availableThemes()
 
     QStringList available_themes;
 
-    available_themes << "Default";
-
     foreach(QString c, allThemes)
     {
         QString theme_dir = themesPath+c+"/";
@@ -385,7 +390,7 @@ QStringList Themes::availableThemes()
     }
 
     available_themes.sort(Qt::CaseInsensitive);
-    available_themes.push_front("Default");
+    available_themes.push_front("|Default");
 
     return available_themes;
 }
@@ -427,6 +432,10 @@ void Themes::loadTheme(QString themeDir)
         loadIcon(guiset,"file-save", file_save );
         loadIcon(guiset,"file-save-as", file_saveas );
         loadIcon(guiset,"file-reload", file_reload );
+    guiset.endGroup();
+
+    guiset.beginGroup("icons");
+        loadIcon(guiset,"debugger", debugger );
     guiset.endGroup();
 
     guiset.beginGroup("cursors");
@@ -497,74 +506,75 @@ void Themes::loadTheme(QString themeDir)
     guiset.endGroup();
 
     guiset.beginGroup("section-numbers");
-        loadIcon(guiset,"section-1-selected", section_1_selected );
-        loadIcon(guiset,"section-1-default", section_1_default );
-        loadIcon(guiset,"section-2-selected", section_2_selected );
-        loadIcon(guiset,"section-2-default", section_2_default );
-        loadIcon(guiset,"section-3-selected", section_3_selected );
-        loadIcon(guiset,"section-3-default", section_3_default );
-        loadIcon(guiset,"section-4-selected", section_4_selected );
-        loadIcon(guiset,"section-4-default", section_4_default );
-        loadIcon(guiset,"section-5-selected", section_5_selected );
-        loadIcon(guiset,"section-5-default", section_5_default );
-        loadIcon(guiset,"section-6-selected", section_6_selected );
-        loadIcon(guiset,"section-6-default", section_6_default );
-        loadIcon(guiset,"section-7-selected", section_7_selected );
-        loadIcon(guiset,"section-7-default", section_7_default );
-        loadIcon(guiset,"section-8-selected", section_8_selected );
-        loadIcon(guiset,"section-8-default", section_8_default );
-        loadIcon(guiset,"section-9-selected", section_9_selected );
-        loadIcon(guiset,"section-9-default", section_9_default );
-        loadIcon(guiset,"section-10-selected", section_10_selected );
-        loadIcon(guiset,"section-10-default", section_10_default );
-        loadIcon(guiset,"section-11-selected", section_11_selected );
-        loadIcon(guiset,"section-11-default", section_11_default );
-        loadIcon(guiset,"section-12-selected", section_12_selected );
-        loadIcon(guiset,"section-12-default", section_12_default );
-        loadIcon(guiset,"section-13-selected", section_13_selected );
-        loadIcon(guiset,"section-13-default", section_13_default );
-        loadIcon(guiset,"section-14-selected", section_14_selected );
-        loadIcon(guiset,"section-14-default", section_14_default );
-        loadIcon(guiset,"section-15-selected", section_15_selected );
-        loadIcon(guiset,"section-15-default", section_15_default );
-        loadIcon(guiset,"section-16-selected", section_16_selected );
-        loadIcon(guiset,"section-16-default", section_16_default );
-        loadIcon(guiset,"section-17-selected", section_17_selected );
-        loadIcon(guiset,"section-17-default", section_17_default );
-        loadIcon(guiset,"section-18-selected", section_18_selected );
-        loadIcon(guiset,"section-18-default", section_18_default );
-        loadIcon(guiset,"section-19-selected", section_19_selected );
-        loadIcon(guiset,"section-19-default", section_19_default );
-        loadIcon(guiset,"section-20-selected", section_20_selected );
-        loadIcon(guiset,"section-20-default", section_20_default );
-        loadIcon(guiset,"section-21-selected", section_21_selected );
-        loadIcon(guiset,"section-21-default", section_21_default );
+        loadImage(guiset,"section-1-selected", section_1_selected );
+        loadImage(guiset,"section-1-default", section_1_default );
+        loadImage(guiset,"section-2-selected", section_2_selected );
+        loadImage(guiset,"section-2-default", section_2_default );
+        loadImage(guiset,"section-3-selected", section_3_selected );
+        loadImage(guiset,"section-3-default", section_3_default );
+        loadImage(guiset,"section-4-selected", section_4_selected );
+        loadImage(guiset,"section-4-default", section_4_default );
+        loadImage(guiset,"section-5-selected", section_5_selected );
+        loadImage(guiset,"section-5-default", section_5_default );
+        loadImage(guiset,"section-6-selected", section_6_selected );
+        loadImage(guiset,"section-6-default", section_6_default );
+        loadImage(guiset,"section-7-selected", section_7_selected );
+        loadImage(guiset,"section-7-default", section_7_default );
+        loadImage(guiset,"section-8-selected", section_8_selected );
+        loadImage(guiset,"section-8-default", section_8_default );
+        loadImage(guiset,"section-9-selected", section_9_selected );
+        loadImage(guiset,"section-9-default", section_9_default );
+        loadImage(guiset,"section-10-selected", section_10_selected );
+        loadImage(guiset,"section-10-default", section_10_default );
+        loadImage(guiset,"section-11-selected", section_11_selected );
+        loadImage(guiset,"section-11-default", section_11_default );
+        loadImage(guiset,"section-12-selected", section_12_selected );
+        loadImage(guiset,"section-12-default", section_12_default );
+        loadImage(guiset,"section-13-selected", section_13_selected );
+        loadImage(guiset,"section-13-default", section_13_default );
+        loadImage(guiset,"section-14-selected", section_14_selected );
+        loadImage(guiset,"section-14-default", section_14_default );
+        loadImage(guiset,"section-15-selected", section_15_selected );
+        loadImage(guiset,"section-15-default", section_15_default );
+        loadImage(guiset,"section-16-selected", section_16_selected );
+        loadImage(guiset,"section-16-default", section_16_default );
+        loadImage(guiset,"section-17-selected", section_17_selected );
+        loadImage(guiset,"section-17-default", section_17_default );
+        loadImage(guiset,"section-18-selected", section_18_selected );
+        loadImage(guiset,"section-18-default", section_18_default );
+        loadImage(guiset,"section-19-selected", section_19_selected );
+        loadImage(guiset,"section-19-default", section_19_default );
+        loadImage(guiset,"section-20-selected", section_20_selected );
+        loadImage(guiset,"section-20-default", section_20_default );
+        loadImage(guiset,"section-21-selected", section_21_selected );
+        loadImage(guiset,"section-21-default", section_21_default );
+        loadIcon(guiset,"section-reset-pos", section_reset_pos );
     guiset.endGroup();
 
     guiset.beginGroup("locks-level");
-        loadIcon(guiset,"blocks-free", blocks_free );
-        loadIcon(guiset,"blocks-locked", blocks_locked );
-        loadIcon(guiset,"bgo-free", bgo_free );
-        loadIcon(guiset,"bgo-locked", bgo_locked );
-        loadIcon(guiset,"npc-free", npc_free );
-        loadIcon(guiset,"npc-locked", npc_locked );
-        loadIcon(guiset,"warps-free", warps_free );
-        loadIcon(guiset,"warps-locked", warps_locked );
-        loadIcon(guiset,"physenv-free", physenv_free );
-        loadIcon(guiset,"physenv-locked", physenv_locked );
+        loadImage(guiset,"blocks-free", blocks_free );
+        loadImage(guiset,"blocks-locked", blocks_locked );
+        loadImage(guiset,"bgo-free", bgo_free );
+        loadImage(guiset,"bgo-locked", bgo_locked );
+        loadImage(guiset,"npc-free", npc_free );
+        loadImage(guiset,"npc-locked", npc_locked );
+        loadImage(guiset,"warps-free", warps_free );
+        loadImage(guiset,"warps-locked", warps_locked );
+        loadImage(guiset,"physenv-free", physenv_free );
+        loadImage(guiset,"physenv-locked", physenv_locked );
     guiset.endGroup();
 
     guiset.beginGroup("locks-world");
-        loadIcon(guiset,"tiles-free", tiles_free );
-        loadIcon(guiset,"tiles-locked", tiles_locked );
-        loadIcon(guiset,"scenery-free", scenery_free );
-        loadIcon(guiset,"scenery-locked", scenery_locked );
-        loadIcon(guiset,"paths-free", paths_free );
-        loadIcon(guiset,"paths-locked", paths_locked );
-        loadIcon(guiset,"levels-free", levels_free );
-        loadIcon(guiset,"levels-locked", levels_locked );
-        loadIcon(guiset,"musicboxes-free", musicboxes_free );
-        loadIcon(guiset,"musicboxes-locked", musicboxes_locked );
+        loadImage(guiset,"tiles-free", tiles_free );
+        loadImage(guiset,"tiles-locked", tiles_locked );
+        loadImage(guiset,"scenery-free", scenery_free );
+        loadImage(guiset,"scenery-locked", scenery_locked );
+        loadImage(guiset,"paths-free", paths_free );
+        loadImage(guiset,"paths-locked", paths_locked );
+        loadImage(guiset,"levels-free", levels_free );
+        loadImage(guiset,"levels-locked", levels_locked );
+        loadImage(guiset,"musicboxes-free", musicboxes_free );
+        loadImage(guiset,"musicboxes-locked", musicboxes_locked );
     guiset.endGroup();
 
     currentThemeDir=themeDir;
@@ -597,7 +607,7 @@ QIcon Themes::icon(Themes::Icons icn)
         return QIcon();
 }
 
-QPixmap Themes::icon(Themes::Images img)
+QPixmap Themes::Image(Themes::Images img)
 {
     if(isLoaded)
         return images_map[img];

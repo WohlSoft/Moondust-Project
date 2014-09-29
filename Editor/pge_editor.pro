@@ -218,7 +218,8 @@ SOURCES += main.cpp\
     common_features/sdl_music_player.cpp \
     data_configs/custom_data.cpp \
     file_formats/file_wldx.cpp \
-    common_features/themes.cpp
+    common_features/themes.cpp \
+    main_window/mainw_themes.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
