@@ -28,6 +28,7 @@
 #include "../file_formats/wld_filedata.h"
 //#include "../level_scene/WldScene.h"
 #include "../common_features/logger.h"
+#include "../common_features/themes.h"
 
 #include "../common_features/mainwinconnect.h"
 
@@ -253,7 +254,7 @@ void WorldEdit::changeCursor(int mode)
         break;
     case MODE_Erasing://1    // Eriser
         ui->graphicsView->setInteractive(true);
-        ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_rubber.png"), 0, 0));
+        ui->graphicsView->setCursor(QCursor(Themes::Image(Themes::cursor_erasing), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
         if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_Erasing);
         break;
@@ -276,7 +277,7 @@ void WorldEdit::changeCursor(int mode)
     case MODE_Pasting://4    // paste from Buffer
         scene->clearSelection();
         ui->graphicsView->setInteractive(true);
-        ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_pasta.png"), 0, 0));
+        ui->graphicsView->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         if(sceneCreated) scene->SwitchEditingMode(WldScene::MODE_PasteFromClip);
         break;

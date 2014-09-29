@@ -28,6 +28,7 @@
 #include "lvl_item_placing.h"
 
 #include "../common_features/items.h"
+#include "../common_features/themes.h"
 
 /*
     static LevelNPC dummyLvlNpc();
@@ -453,6 +454,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         break;
     case 5: //PlayerPoint
+        {
         placingItem=PLC_PlayerPoint;
         LvlPlacingItems::playerID = itemID;
 
@@ -462,7 +464,18 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_x = 16;
         LvlPlacingItems::c_offset_y = 16;
 
-        cursor = addPixmap(QString(":/player%1.png").arg(itemID+1));
+        QPixmap playerPixmap;
+        switch(itemID+1)
+        {
+            case 1:
+                playerPixmap = Themes::Image(Themes::player1); break;
+            case 2:
+                playerPixmap = Themes::Image(Themes::player2); break;
+            default:
+                playerPixmap = Themes::Image(Themes::player_point); break;
+        }
+
+        cursor = addPixmap(playerPixmap);
         cursor->setData(25, "CURSOR");
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
@@ -470,6 +483,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setEnabled(true);
 
         break;
+        }
         default: break;
     }
 

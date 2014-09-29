@@ -17,6 +17,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
     QListWidgetItem * item;
 
     currentConfig = "";
+    themePack = "";
 
     QString configPath(ApplicationPath+"/configs/");
     QDir configDir(configPath);
@@ -37,6 +38,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
         guiset.beginGroup("gui");
             splash_logo = guiset.value("editor-splash", "").toString();
+            themePack = guiset.value("default-theme", "").toString();
         guiset.endGroup();
 
         guiset.beginGroup("main");
@@ -85,8 +87,11 @@ QString ConfigManager::isPreLoaded()
 
     settings.beginGroup("Main");
     QString configPath = settings.value("current-config", "").toString();
+    QString saved_theme = settings.value("current-theme", "").toString();;
     settings.endGroup();
 
+    if(!saved_theme.isEmpty())
+        themePack = saved_theme;
     //check exists of config in list
     foreach(QListWidgetItem * it, ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
     {
