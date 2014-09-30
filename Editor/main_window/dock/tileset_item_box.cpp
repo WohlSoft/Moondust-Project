@@ -27,6 +27,7 @@
 #include "../../common_features/logger.h"
 
 #include "../../tilesets/tilesetconfiguredialog.h"
+#include "../../common_features/themes.h"
 
 #include <QMessageBox>
 #include <QScrollArea>
@@ -450,7 +451,7 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                     }
                     connect(tbutton, SIGNAL(clicked(int,ulong)), this, SLOT(SwitchPlacingItem(int,ulong)));
                 }
-                QPushButton* b = new QPushButton(QIcon(":/images/pencil_16x16.png"),"",tilesetNameWrapper);
+                QPushButton* b = new QPushButton(Themes::icon(Themes::pencil),"",tilesetNameWrapper);
                 b->setMaximumSize(32,32);
                 b->setFlat(true);
                 l->addWidget(b, 0, mostRighter);

@@ -1,5 +1,6 @@
 Editor 0.2.1
 - Added support of multi-selection with holded shift key
+- Added new own file formats LVLX and WLDX supports: without item number limits and with additional features
 - Optimized total performance
 - More smart grid snapping of the selected items group
 - Clicking to layers in the list will define layer where you will place new items
@@ -9,6 +10,7 @@ Editor 0.2.1
 - Added displaying of the items statistics to the debugger box
 - Fixed config directory path on the MacOS X
 - Fixed bug with item boxed updating when you switch between other applications
+- Added export images of level level by selected pieces
 
 Editor 0.2.0
 - Added support for World Maps

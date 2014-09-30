@@ -32,6 +32,7 @@
 #include <stdlib.h>
 
 #include "common_features/app_path.h"
+#include "common_features/themes.h"
 
 #undef main
 #include <SDL2/SDL.h>
@@ -84,6 +85,8 @@ int main(int argc, char *argv[])
         test.remove(test.length()-osX_bundle.length()-1, osX_bundle.length()+1);
     qDebug() << test << " <- after";
     */
+
+    Themes::init();
 
     SDL_Init(SDL_INIT_AUDIO);
 

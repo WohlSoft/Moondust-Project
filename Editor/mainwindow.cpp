@@ -22,6 +22,7 @@
 #include "npc_dialog/npcdialog.h"
 #include "data_configs/config_manager.h"
 #include "common_features/app_path.h"
+#include "common_features/themes.h"
 
 #include <QDesktopServices>
 
@@ -44,6 +45,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath = cmanager->isPreLoaded();
+    QString tPack = cmanager->themePack;
     //If application runned first time or target configuration is not exist
     if(configPath.isEmpty())
     {
@@ -69,9 +71,13 @@ MainWindow::MainWindow(QMdiArea *parent) :
     delete cmanager;
 
     configs.setConfigPath(configPath);
-    configs.loadBasics();
 
-    QPixmap splashimg(configs.splash_logo);
+    configs.loadBasics();
+    Themes::loadTheme(tPack);
+
+    QPixmap splashimg(configs.splash_logo.isEmpty()?
+                      Themes::Image(Themes::splash) :
+                      configs.splash_logo);
 
     QSplashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
@@ -200,3 +206,5 @@ void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
         this->showNormal();
     }
 }
+
+

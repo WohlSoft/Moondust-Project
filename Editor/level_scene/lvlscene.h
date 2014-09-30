@@ -219,6 +219,11 @@ public:
     void setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept=false);
     void setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool accept=false);
 
+    void setScreenshotSelector();  //!<Capture full section size
+    void setScreenshotSelector(bool enabled, bool accept = false); //!<Capture fragment
+    QRectF captutedSize;  //!<Rectangle of scene
+    bool isFullSection;   //!<Selected fragment or whole section
+
     void resetResizers();
     void applyResizers();
 
@@ -549,6 +554,9 @@ public:
 
 public slots:
     void selectionChanged();
+
+signals:
+    void screenshotSizeCaptured();
 
 protected:
     //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);

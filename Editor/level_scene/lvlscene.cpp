@@ -57,18 +57,13 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     placingItem=0;
 
     pResizer = NULL;
+    isFullSection = false;
 
     contextMenuOpened = false;
 
     //Events flags
     resetPosition = false;
-    /*
-    wasPasted = false;  //call to cursor reset to normal select
-    doCopy = false;     //call to copy
-    doCut = false;      //call to cut
-    SyncLayerList = false; //Call to refresh layer list
-    resetResizingSection = false; //Reset resizing applying buttons
-    */
+
     cursor = NULL;
     resetCursor();
 

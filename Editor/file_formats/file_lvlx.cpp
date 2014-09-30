@@ -1199,12 +1199,6 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                     }
                 }//EVENTS_CLASSIC
 
-                //PGEFile::X2BollArr(value[1].toInt());
-                //PGEFile::X2STRArr(value[1]);
-                //PGEFile::X2STR(value[1]);
-                //value[1].toInt();
-                //(bool)value[1].toInt();
-
             }
 
         //}//Head Section end
@@ -1654,7 +1648,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
             addArray=false;
             foreach(bool x, controls)
             { if(x) addArray=true; }
-            if(addArray) TextData += PGEFile::value("PC", PGEFile::BoolArrayS(controls)); // Disable Smoke
+            if(addArray) TextData += PGEFile::value("PC", PGEFile::BoolArrayS(controls)); // Create boolean array
 
             if(!FileData.events[i].movelayer.isEmpty())
             {

@@ -40,6 +40,8 @@ long ConfStatus::total_sound=0;
 QString ConfStatus::configName="";
 QString ConfStatus::configPath="";
 
+QString ConfStatus::defaultTheme="";
+
 
 dataconfigs::dataconfigs()
 {
@@ -78,6 +80,7 @@ void dataconfigs::loadBasics()
 
     guiset.beginGroup("gui");
         splash_logo = guiset.value("editor-splash", "").toString();
+        ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
     guiset.endGroup();
 
     guiset.beginGroup("main");
@@ -85,16 +88,18 @@ void dataconfigs::loadBasics()
                         ApplicationPath + "/" : config_dir + "data/" );
     guiset.endGroup();
 
+
+
     //Default splash image
-    if(splash_logo .isEmpty())
-        splash_logo = ":/images/splash_editor.png";
-    else
+    //if(splash_logo .isEmpty())
+        //splash_logo = ;//Themes::Image(Themes::splash)
+    if(!splash_logo .isEmpty())
     {
         splash_logo = data_dir + splash_logo;
         if(QPixmap(splash_logo).isNull())
         {
             WriteToLog(QtWarningMsg, QString("Wrong splash image: %1").arg(splash_logo));
-            splash_logo = ":/images/splash_editor.png";
+            splash_logo = "";//Themes::Image(Themes::splash);
         }
     }
 }

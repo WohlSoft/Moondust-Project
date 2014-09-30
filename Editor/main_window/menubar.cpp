@@ -172,6 +172,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevelProp->setEnabled( (WinType==1) );
 
     ui->actionExport_to_image->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionExport_to_image_section->setVisible( (WinType==1) );
 
     ui->actionZoomIn->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionZoomOut->setEnabled( (WinType==1) || (WinType==3) );

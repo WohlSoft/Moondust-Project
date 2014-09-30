@@ -38,6 +38,9 @@ void LvlScene::applyResizers()
     {
         switch(pResizer->type)
         {
+        case 4:
+            setScreenshotSelector(false, true);
+            break;
         case 3:
             setPhysEnvResizer(NULL, false, true);
             break;
@@ -61,6 +64,9 @@ void LvlScene::resetResizers()
     {
         switch(pResizer->type)
         {
+        case 4:
+            setScreenshotSelector(false, false);
+            break;
         case 3:
             setPhysEnvResizer(NULL, false, false);
             break;
@@ -338,3 +344,54 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
     }
 }
 
+void LvlScene::setScreenshotSelector()
+{
+    isFullSection=true;
+    emit screenshotSizeCaptured();
+}
+
+void LvlScene::setScreenshotSelector(bool enabled, bool accept)
+{
+    bool do_signal=false;
+    if((enabled)&&(pResizer==NULL))
+    {
+        MainWinConnect::pMainWin->on_actionSelect_triggered(); //Reset mode
+
+        pResizer = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 2 );
+        this->addItem(pResizer);
+        pResizer->setPos(captutedSize.x(), captutedSize.y());
+        pResizer->type=4;
+        pResizer->_minSize = QSizeF(320, 200);
+        this->setFocus(Qt::ActiveWindowFocusReason);
+        //DrawMode=true;
+        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(WorldEdit::MODE_Resizing);
+        MainWinConnect::pMainWin->resizeToolbarVisible(true);
+    }
+    else
+    {
+        if(pResizer!=NULL)
+        {
+            if(accept)
+            {
+                #ifdef _DEBUG_
+                WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
+                #endif
+
+                captutedSize = QRectF( pResizer->pos().x(),
+                                       pResizer->pos().y(),
+                                       pResizer->_width,
+                                       pResizer->_height);
+                do_signal=true;
+            }
+            delete pResizer;
+            pResizer = NULL;
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            MainWinConnect::pMainWin->resizeToolbarVisible(false);
+            //resetResizingSection=true;
+        }
+        DrawMode=false;
+    }
+    isFullSection=false;
+
+    if(do_signal) emit screenshotSizeCaptured();
+}

@@ -17,6 +17,7 @@
  */
 
 #include "item_playerpoint.h"
+#include "../common_features/themes.h"
 
 ItemPlayerPoint::ItemPlayerPoint(QGraphicsItem *parent) :
     QGraphicsPixmapItem(parent)
@@ -163,7 +164,6 @@ void ItemPlayerPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                     //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(1));
                 }
-
     }
 
 }
@@ -172,6 +172,13 @@ void ItemPlayerPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void ItemPlayerPoint::changeDirection(int dir)
 {
     pointData.direction = dir;
+
+    QPixmap mirrowed=QPixmap::fromImage(currentImage.toImage().mirrored(true,false));
+    if(pointData.direction<0)
+        setPixmap(mirrowed);
+    else
+        setPixmap(currentImage);
+
     arrayApply();
 }
 
@@ -208,13 +215,24 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
     this->setFlag(QGraphicsItem::ItemIsSelectable, true);
     this->setFlag(QGraphicsItem::ItemIsMovable, true);
 
-    currentImage = QPixmap(":/player"+QString::number(pointData.id)+".png");
-    if(currentImage.isNull())
+    switch(pointData.id)
     {
-        currentImage = QPixmap(":/player.png");
-        this->setOffset(0, pnt.h-currentImage.height() );
+    case 1:
+        currentImage = Themes::Image(Themes::player1); break;
+    case 2:
+        currentImage = Themes::Image(Themes::player2); break;
+    default:
+        currentImage = Themes::Image(Themes::player_point); break;
     }
-    setPixmap(currentImage);
+
+    this->setOffset(qRound(qreal(pnt.w-currentImage.width())/2.0), pnt.h-currentImage.height() );
+
+    QPixmap mirrowed=QPixmap::fromImage(currentImage.toImage().mirrored(true,false));
+    if(pointData.direction<0)
+        setPixmap(mirrowed);
+    else
+        setPixmap(currentImage);
+
 }
 
 

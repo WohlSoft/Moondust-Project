@@ -41,22 +41,16 @@ void MainWindow::setCurrentWorldSettings()
         ui->WLD_Title->setText( edit->WldData.EpisodeTitle );
 
         WriteToLog(QtDebugMsg, "-> setText");
-        ui->WLD_AutostartLvl->setText( edit->WldData.autolevel );
+        ui->WLD_AutostartLvl->setText( edit->WldData.IntroLevel_file );
 
         ui->WLD_Stars->setValue( edit->WldData.stars );
 
-        ui->WLD_NoWorldMap->setChecked( edit->WldData.noworldmap );
-        ui->actionWLDDisableMap->setChecked( edit->WldData.noworldmap );
+        ui->WLD_NoWorldMap->setChecked( edit->WldData.HubStyledWorld );
+        ui->actionWLDDisableMap->setChecked( edit->WldData.HubStyledWorld );
         ui->WLD_RestartLevel->setChecked( edit->WldData.restartlevel );
         ui->actionWLDFailRestart->setChecked( edit->WldData.restartlevel );
 
-        QString credits;
-        credits += (edit->WldData.author1.isEmpty())? "" : edit->WldData.author1+"\n";
-        credits += (edit->WldData.author2.isEmpty())? "" : edit->WldData.author2+"\n";
-        credits += (edit->WldData.author3.isEmpty())? "" : edit->WldData.author3+"\n";
-        credits += (edit->WldData.author4.isEmpty())? "" : edit->WldData.author4+"\n";
-        credits += (edit->WldData.author5.isEmpty())? "" : edit->WldData.author5;
-        ui->WLD_Credirs->setText( credits );
+        ui->WLD_Credirs->setText( edit->WldData.authors );
 
         WriteToLog(QtDebugMsg, "-> Character List");
         //clear character list
@@ -148,7 +142,7 @@ void MainWindow::on_WLD_NoWorldMap_clicked(bool checked)
         activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_HUB, checked);
 
         ui->actionWLDDisableMap->setChecked(checked);
-        activeWldEditWin()->WldData.noworldmap = checked;
+        activeWldEditWin()->WldData.HubStyledWorld = checked;
         activeWldEditWin()->WldData.modified = true;
     }
 }
@@ -161,7 +155,7 @@ void MainWindow::on_actionWLDDisableMap_triggered(bool checked)
         activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_HUB, checked);
 
         ui->WLD_NoWorldMap->setChecked(checked);
-        activeWldEditWin()->WldData.noworldmap = checked;
+        activeWldEditWin()->WldData.HubStyledWorld = checked;
         activeWldEditWin()->WldData.modified = true;
     }
 }
@@ -215,9 +209,9 @@ void MainWindow::on_WLD_AutostartLvl_editingFinished()
     if (activeChildWindow()==3)
     {
         QList<QVariant> var;
-        var << activeWldEditWin()->WldData.autolevel << ui->WLD_AutostartLvl->text();
+        var << activeWldEditWin()->WldData.IntroLevel_file << ui->WLD_AutostartLvl->text();
         activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
-        activeWldEditWin()->WldData.autolevel = ui->WLD_AutostartLvl->text();
+        activeWldEditWin()->WldData.IntroLevel_file = ui->WLD_AutostartLvl->text();
         activeWldEditWin()->WldData.modified = true;
     }
 }
@@ -275,8 +269,9 @@ void MainWindow::on_WLD_DoCountStars_clicked()
         WorldEdit * edit = activeWldEditWin();
         dirPath = edit->WldData.path;
 
-        QRegExp lvlext = QRegExp("*.lvl");
-        lvlext.setPatternSyntax(QRegExp::Wildcard);
+        QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
+        //lvlext.setPatternSyntax(QRegExp::RegExp);
+        lvlext.setCaseSensitivity(Qt::CaseInsensitive);
 
         QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, edit->WldData.levels.size(), this);
              progress.setWindowTitle(tr("Counting stars..."));
@@ -296,12 +291,17 @@ void MainWindow::on_WLD_DoCountStars_clicked()
 
             QFile file(FilePath);
             if (!file.open(QIODevice::ReadOnly)) continue;
+            QFileInfo in_1(FilePath);
 
             LevelData getLevelHead;
             getLevelHead.stars = 0;
             if( lvlext.exactMatch(FilePath) )
             {
-                getLevelHead = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
+                if(in_1.suffix().toLower() == "lvl")
+                    getLevelHead = FileFormats::ReadLevelFile(file);         //Read SMBX LVL File
+                else
+                    getLevelHead = FileFormats::ReadExtendedLevelFile(file); //Read PGE LVLX File
+                //getLevelHead = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
                 if( !getLevelHead.ReadFileValid ) continue;
             }
             file.close();
@@ -322,15 +322,9 @@ void MainWindow::on_WLD_Credirs_textChanged()
 {
     if(world_settings_lock_fields) return;
 
-    QStringList credits = ui->WLD_Credirs->toPlainText().split(QChar('\n'));
-
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->WldData.author1 = (credits.size()>0) ? credits[0] : "";
-        activeWldEditWin()->WldData.author2 = (credits.size()>1) ? credits[1] : "";
-        activeWldEditWin()->WldData.author3 = (credits.size()>2) ? credits[2] : "";
-        activeWldEditWin()->WldData.author4 = (credits.size()>3) ? credits[3] : "";
-        activeWldEditWin()->WldData.author5 = (credits.size()>4) ? credits[4] : "";
+        activeWldEditWin()->WldData.authors = ui->WLD_Credirs->toPlainText();
         activeWldEditWin()->WldData.modified = true;
     }
 }
