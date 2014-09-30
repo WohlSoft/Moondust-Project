@@ -130,8 +130,8 @@ int main(int argc, char *argv[])
         glFlush();
         SDL_GL_SwapWindow(window);
 
-        if(1000.0/30>SDL_GetTicks()-start)
-                                SDL_Delay(1000.0/30-(SDL_GetTicks()-start));
+        if(1000.0/1000>SDL_GetTicks()-start)
+                                SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
     }
 
     SDL_Quit(); // Ending work of the SDL and exiting
