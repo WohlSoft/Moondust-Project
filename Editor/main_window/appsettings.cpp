@@ -17,7 +17,7 @@
  */
 
 #include "appsettings.h"
-#include "./ui_appsettings.h"
+#include "ui_appsettings.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
@@ -108,15 +108,23 @@ void AppSettings::applySettings()
         ui->WLDToolboxVertical->setChecked(true);
     }
 
-    for(int i=0; i< ui->Theme->count(); i++)
+    if(TSTToolboxPos == QTabWidget::North)
     {
-        if(ui->Theme->itemData(i).toString()==Themes::currentTheme())
-        {
-            ui->Theme->setCurrentIndex(i);
-            break;
-        }
+        ui->TSTToolboxHorizontal->setChecked(true);
+    }else
+    {
+        ui->TSTToolboxVertical->setChecked(true);
     }
 
+    if(!selectedTheme.isEmpty())
+        for(int i=0; i< ui->Theme->count(); i++)
+        {
+            if(ui->Theme->itemData(i).toString()==selectedTheme)
+            {
+                ui->Theme->setCurrentIndex(i);
+                break;
+            }
+        }
 }
 
 void AppSettings::on_setLogFile_clicked()
@@ -157,7 +165,13 @@ void AppSettings::on_buttonBox_accepted()
     else
         WLDToolboxPos = QTabWidget::West;
 
+    if(ui->TSTToolboxHorizontal->isChecked())
+        TSTToolboxPos = QTabWidget::North;
+    else
+        TSTToolboxPos = QTabWidget::West;
+
     Themes::loadTheme(ui->Theme->currentData().toString());
+    selectedTheme = ui->Theme->currentData().toString();
 
     logfile = ui->logFileName->text();
 
