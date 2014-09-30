@@ -129,6 +129,8 @@ public:
 
         void showStatusMsg(QString msg, int time=2000); //Send status message
 
+        void applyTheme(QString themeDir="");
+
         ///
         /// \brief loadSettings load settings from configuration file
         ///
@@ -980,6 +982,8 @@ private slots:
         void on_actionLockLevels_triggered(bool checked);
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
+
+        void on_actionExport_to_image_section_triggered();
 
 signals:
     void closeEditor();

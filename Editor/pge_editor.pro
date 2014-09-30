@@ -217,7 +217,9 @@ SOURCES += main.cpp\
     level_scene/item_playerpoint.cpp \
     common_features/sdl_music_player.cpp \
     data_configs/custom_data.cpp \
-    file_formats/file_wldx.cpp
+    file_formats/file_wldx.cpp \
+    common_features/themes.cpp \
+    main_window/mainw_themes.cpp
 
 HEADERS  += mainwindow.h \
     file_formats/file_formats.h \
@@ -305,7 +307,8 @@ HEADERS  += mainwindow.h \
     SingleApplication/singleapplication.h \
     level_scene/item_playerpoint.h \
     common_features/sdl_music_player.h \
-    common_features/app_path.h
+    common_features/app_path.h \
+    common_features/themes.h
 
 FORMS    += \
     mainwindow.ui \

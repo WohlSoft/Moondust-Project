@@ -96,11 +96,15 @@ void MainWindow::OpenFile(QString FilePath)
         }
     }
     else
-    if(in_1.suffix().toLower() == "wld")
+    if((in_1.suffix().toLower() == "wld")||(in_1.suffix().toLower() == "wldx"))
     {
-        WorldData FileData = FileFormats::ReadWorldFile(file);
-        if( !FileData.ReadFileValid ) return;
+        WorldData FileData;
+        if(in_1.suffix().toLower() == "wld")
+            FileData= FileFormats::ReadWorldFile(file);
+        else
+            FileData= FileFormats::ReadExtendedWorldFile(file);
 
+        if( !FileData.ReadFileValid ) return;
 
         WorldEdit *child = createWldChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
@@ -109,7 +113,7 @@ void MainWindow::OpenFile(QString FilePath)
             child->ResetPosition();
             updateMenus(true);            
             setCurrentWorldSettings();
-            if(FileData.noworldmap)
+            if(FileData.HubStyledWorld)
             {
                 ui->WorldSettings->setVisible(true);
                 ui->WorldSettings->raise();

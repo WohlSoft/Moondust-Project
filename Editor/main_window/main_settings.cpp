@@ -22,6 +22,7 @@
 
 #include "../common_features/logger_sets.h"
 #include "../common_features/sdl_music_player.h"
+#include "../common_features/themes.h"
 
 #include "appsettings.h"
 
@@ -108,6 +109,8 @@ void MainWindow::setUiDefults()
     setWldItemBoxes();
 
     setSoundList();
+
+    applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
     WldLvlExitTypeListReset();
 
@@ -208,6 +211,8 @@ void MainWindow::setUiDefults()
         this, SLOT(setActiveSubWindow(QWidget*)));
 
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
+
+    ui->actionExport_to_image_section->setVisible(false);
 
     ui->centralWidget->cascadeSubWindows();
 
@@ -592,6 +597,7 @@ void MainWindow::saveSettings()
     settings.setValue("language", GlobalSettings::locale);
 
     settings.setValue("current-config", currentConfigDir);
+    settings.setValue("current-theme", Themes::currentTheme());
 
     settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
 
@@ -669,6 +675,8 @@ void MainWindow::on_actionApplication_settings_triggered()
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+
+        applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
 
         saveSettings();
     }

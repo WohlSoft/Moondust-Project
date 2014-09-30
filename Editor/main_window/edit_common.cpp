@@ -35,13 +35,14 @@ void MainWindow::on_actionReload_triggered()
         filePath = activeLvlEditWin()->curFile;
 
         QFile fileIn(filePath);
-        QFileInfo in_1(filePath);
 
         if (!fileIn.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("File open error"),
         tr("Can't open the file."), QMessageBox::Ok);
             return;
         }
+
+        QFileInfo in_1(filePath);
 
         if(in_1.suffix().toLower() == "lvl")
             FileData = FileFormats::ReadLevelFile(fileIn);         //Read SMBX LVL File
@@ -128,7 +129,15 @@ void MainWindow::on_actionReload_triggered()
             return;
         }
 
-        FileData = FileFormats::ReadWorldFile(fileIn); //function in file_formats.cpp
+        QFileInfo in_1(filePath);
+
+        //FileData = FileFormats::ReadWorldFile(fileIn); //function in file_formats.cpp
+        if(in_1.suffix().toLower() == "wld")
+            FileData = FileFormats::ReadWorldFile(fileIn);         //Read SMBX WLD File
+        else
+            FileData = FileFormats::ReadExtendedWorldFile(fileIn); //Read PGE WLDX File
+
+
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
@@ -149,7 +158,7 @@ void MainWindow::on_actionReload_triggered()
             child->ResetPosition();
             updateMenus(true);
             setCurrentWorldSettings();
-            if(FileData.noworldmap)
+            if(FileData.HubStyledWorld)
             {
                 ui->WorldSettings->setVisible(true);
                 ui->WorldSettings->raise();
@@ -177,12 +186,20 @@ void MainWindow::on_actionExport_to_image_triggered()
 
     if(activeChildWindow()==1)
     {
-        activeLvlEditWin()->ExportToImage_fn();
+        activeLvlEditWin()->ExportToImage_fn_piece();
     }
     else
     if(activeChildWindow()==3)
     {
         activeWldEditWin()->ExportToImage_fn();
+    }
+}
+
+void MainWindow::on_actionExport_to_image_section_triggered()
+{
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->ExportToImage_fn();
     }
 }
 

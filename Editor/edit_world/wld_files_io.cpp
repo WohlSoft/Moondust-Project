@@ -290,8 +290,8 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
         selectedFilter = fileSMBX64;
 
     QString filter =
-            fileSMBX64/*+";;"+
-            filePGEX*/;//WLDX format was commented because is not implemented yet
+            fileSMBX64+";;"+
+            filePGEX;
 
     bool ret;
 
@@ -430,6 +430,28 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////
+
+    // ////////////////// Write Extended WLD file (WLDX)/////////////////////
+    else if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
+    {
+        WldData.smbx64strict = false; //Disable strict mode
+
+        QFile file(fileName);
+        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                 .arg(fileName)
+                                 .arg(file.errorString()));
+            return false;
+        }
+        QTextStream out(&file);
+        out.setCodec("UTF-8");
+        out << FileFormats::WriteExtendedWldFile(WldData);
+        file.close();
+        GlobalSettings::savePath = QFileInfo(fileName).path();
+    }
+    // //////////////////////////////////////////////////////////////////////
+
 
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);

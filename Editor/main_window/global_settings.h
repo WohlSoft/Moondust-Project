@@ -99,6 +99,7 @@ public:
     static long total_sound;
 
     static QString configName;
+    static QString defaultTheme;
     static QString configPath;
 
 };

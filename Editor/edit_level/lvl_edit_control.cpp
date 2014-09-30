@@ -28,6 +28,7 @@
 #include "../file_formats/lvl_filedata.h"
 #include "../level_scene/lvlscene.h"
 #include "../common_features/logger.h"
+#include "../common_features/themes.h"
 
 #include "../common_features/mainwinconnect.h"
 
@@ -249,7 +250,7 @@ void leveledit::changeCursor(int mode)
         break;
     case MODE_Erasing:    // Eriser
         ui->graphicsView->setInteractive(true);
-        ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_rubber.png"), 0, 0));
+        ui->graphicsView->setCursor(QCursor(Themes::Image(Themes::cursor_erasing), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Erasing);
         break;
@@ -272,7 +273,7 @@ void leveledit::changeCursor(int mode)
     case MODE_Pasting:    // paste from Buffer
         scene->clearSelection();
         ui->graphicsView->setInteractive(true);
-        ui->graphicsView->setCursor(QCursor(QPixmap(":/cur_pasta.png"), 0, 0));
+        ui->graphicsView->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
         ui->graphicsView->setDragMode(QGraphicsView::NoDrag);
         if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
         break;

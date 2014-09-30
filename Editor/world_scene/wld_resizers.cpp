@@ -72,7 +72,7 @@ void WldScene::setScreenshotSelector(bool enabled, bool accept)
         this->addItem(pResizer);
         pResizer->setPos(captutedSize.x(), captutedSize.y());
         pResizer->type=0;
-        pResizer->_minSize = QSizeF(800, 600);
+        pResizer->_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
         MainWinConnect::pMainWin->activeWldEditWin()->changeCursor(WorldEdit::MODE_Resizing);
