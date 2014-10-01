@@ -75,6 +75,8 @@ public:
     static QMdiArea::ViewMode MainWindowView;
     static QTabWidget::TabPosition LVLToolboxPos;
     static QTabWidget::TabPosition WLDToolboxPos;
+    static QTabWidget::TabPosition TSTToolboxPos;
+    static QString currentTheme;
 
 };
 

@@ -61,9 +61,12 @@ bool GlobalSettings::MidMouse_allowDuplicate=false;
 bool GlobalSettings::MidMouse_allowSwitchToPlace=false;
 bool GlobalSettings::MidMouse_allowSwitchToDrag=false;
 
+QString GlobalSettings::currentTheme="";
+
 QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
 QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
 QTabWidget::TabPosition GlobalSettings::WLDToolboxPos = QTabWidget::West;
+QTabWidget::TabPosition GlobalSettings::TSTToolboxPos = QTabWidget::North;
 
 int GlobalSettings::lastWinType=0;
 
@@ -267,6 +270,7 @@ void MainWindow::setUiDefults()
     ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
     ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
     ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+    ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 
     muVol = new QSlider(Qt::Horizontal);
@@ -480,6 +484,9 @@ void MainWindow::loadSettings()
         GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
         GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
         GlobalSettings::WLDToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("world-toolbox-pos", static_cast<int>(QTabWidget::West)).toInt());
+        GlobalSettings::TSTToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("tileset-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
+
+        GlobalSettings::currentTheme = settings.value("current-theme", "").toString();
 
         PGE_MusPlayer::setSampleRate(settings.value("sdl-sample-rate", PGE_MusPlayer::sampleRate()).toInt());
 
@@ -589,6 +596,7 @@ void MainWindow::saveSettings()
     settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
     settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
     settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
+    settings.setValue("tileset-toolbox-pos", static_cast<int>(GlobalSettings::TSTToolboxPos));
 
     settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
     settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
@@ -597,7 +605,7 @@ void MainWindow::saveSettings()
     settings.setValue("language", GlobalSettings::locale);
 
     settings.setValue("current-config", currentConfigDir);
-    settings.setValue("current-theme", Themes::currentTheme());
+    settings.setValue("current-theme", GlobalSettings::currentTheme);
 
     settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
 
@@ -646,10 +654,13 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->MainWindowView = GlobalSettings::MainWindowView;
     appSettings->LVLToolboxPos = GlobalSettings::LVLToolboxPos;
     appSettings->WLDToolboxPos = GlobalSettings::WLDToolboxPos;
+    appSettings->TSTToolboxPos = GlobalSettings::TSTToolboxPos;
 
     appSettings->midmouse_allowDupe = GlobalSettings::MidMouse_allowDuplicate;
     appSettings->midmouse_allowPlace = GlobalSettings::MidMouse_allowSwitchToPlace;
     appSettings->midmouse_allowDragMode = GlobalSettings::MidMouse_allowSwitchToDrag;
+
+    appSettings->selectedTheme = GlobalSettings::currentTheme;
 
     appSettings->applySettings();
 
@@ -668,6 +679,9 @@ void MainWindow::on_actionApplication_settings_triggered()
         GlobalSettings::MainWindowView = appSettings->MainWindowView;
         GlobalSettings::LVLToolboxPos = appSettings->LVLToolboxPos;
         GlobalSettings::WLDToolboxPos = appSettings->WLDToolboxPos;
+        GlobalSettings::TSTToolboxPos = appSettings->TSTToolboxPos;
+        GlobalSettings::currentTheme = appSettings->selectedTheme;
+
         GlobalSettings::MidMouse_allowDuplicate = appSettings->midmouse_allowDupe;
         GlobalSettings::MidMouse_allowSwitchToPlace = appSettings->midmouse_allowPlace;
         GlobalSettings::MidMouse_allowSwitchToDrag = appSettings->midmouse_allowDragMode;
@@ -675,8 +689,12 @@ void MainWindow::on_actionApplication_settings_triggered()
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
+        ui->TileSetsCategories->setTabPosition(GlobalSettings::TSTToolboxPos);
 
-        applyTheme(Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme());
+
+        applyTheme(GlobalSettings::currentTheme.isEmpty() ?
+                       ( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() )
+                     : GlobalSettings::currentTheme);
 
         saveSettings();
     }

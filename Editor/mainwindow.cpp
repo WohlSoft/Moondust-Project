@@ -159,6 +159,11 @@ void MainWindow::showStatusMsg(QString msg, int time)
 }
 
 
+void MainWindow::showToolTipMsg(QString msg, QPoint pos, int time)
+{
+    QToolTip::showText(pos, msg, this, QRect(), time);
+}
+
 void MainWindow::refreshHistoryButtons()
 {
     if(activeChildWindow()==1)

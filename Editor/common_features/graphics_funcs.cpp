@@ -19,7 +19,7 @@
 #include <QPixmap>
 #include <QImage>
 #include "graphics_funcs.h"
-#include "../libs/EasyBMP/EasyBMP.h"
+#include "../../_Libs/EasyBMP/EasyBMP.h"
 #include "logger.h"
 
 

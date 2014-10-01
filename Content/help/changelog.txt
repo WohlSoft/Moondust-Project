@@ -11,6 +11,7 @@ Editor 0.2.1
 - Fixed config directory path on the MacOS X
 - Fixed bug with item boxed updating when you switch between other applications
 - Added export images of level level by selected pieces
+- Added support of Themes system. You can customize UI GFX of editor by you own!
 
 Editor 0.2.0
 - Added support for World Maps
