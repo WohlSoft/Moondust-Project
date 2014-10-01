@@ -20,10 +20,10 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
-#include "../libs/EasyBMP/EasyBMP.h"
+#include "../../_Libs/EasyBMP/EasyBMP.h"
 extern "C"
 {
-    #include "../libs/giflib/gif_lib.h"
+    #include "../../_Libs/giflib/gif_lib.h"
 }
 
 #include <QFile>

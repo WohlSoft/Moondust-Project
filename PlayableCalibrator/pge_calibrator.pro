@@ -40,14 +40,14 @@ SOURCES += main.cpp\
     animator/animate.cpp \
     animator/animationedit.cpp \
     frame_matrix/MatrixScene.cpp \
-    libs/EasyBMP/EasyBMP.cpp \
-    libs/giflib/dgif_lib.c \
-    libs/giflib/egif_lib.c \
-    libs/giflib/gif_err.c \
-    libs/giflib/gif_font.c \
-    libs/giflib/gif_hash.c \
-    libs/giflib/gifalloc.c \
-    libs/giflib/quantize.c \
+    ../_Libs/EasyBMP/EasyBMP.cpp \
+    ../_Libs/giflib/dgif_lib.c \
+    ../_Libs/giflib/egif_lib.c \
+    ../_Libs/giflib/gif_err.c \
+    ../_Libs/giflib/gif_font.c \
+    ../_Libs/giflib/gif_hash.c \
+    ../_Libs/giflib/gifalloc.c \
+    ../_Libs/giflib/quantize.c \
     main/files_io.cpp \
     main/globals.cpp \
     main/graphics.cpp \
@@ -62,13 +62,13 @@ HEADERS  += calibrationmain.h \
     animator/AnimationScene.h \
     frame_matrix/MatrixScene.h \
     animator/SpriteScene.h \
-    libs/EasyBMP/EasyBMP.h \
-    libs/EasyBMP/EasyBMP_BMP.h \
-    libs/EasyBMP/EasyBMP_DataStructures.h \
-    libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
-    libs/giflib/gif_hash.h \
-    libs/giflib/gif_lib.h \
-    libs/giflib/gif_lib_private.h \
+    ../_Libs/EasyBMP/EasyBMP.h \
+    ../_Libs/EasyBMP/EasyBMP_BMP.h \
+    ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
+    ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
+    ../_Libs/giflib/gif_hash.h \
+    ../_Libs/giflib/gif_lib.h \
+    ../_Libs/giflib/gif_lib_private.h \
     main/globals.h \
     main/graphics.h \
     version.h

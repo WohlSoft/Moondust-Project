@@ -39,18 +39,18 @@ RC_FILE = _resources/png2gifs.rc
 
 SOURCES += \
     png2gifs.cpp \
-    libs/giflib/dgif_lib.c \
-    libs/giflib/egif_lib.c \
-    libs/giflib/gif_err.c \
-    libs/giflib/gif_font.c \
-    libs/giflib/gif_hash.c \
-    libs/giflib/gifalloc.c \
-    libs/giflib/quantize.c \
+    ../_Libs/giflib/dgif_lib.c \
+    ../_Libs/giflib/egif_lib.c \
+    ../_Libs/giflib/gif_err.c \
+    ../_Libs/giflib/gif_font.c \
+    ../_Libs/giflib/gif_hash.c \
+    ../_Libs/giflib/gifalloc.c \
+    ../_Libs/giflib/quantize.c \
 
 HEADERS += \
-    libs/giflib/gif_hash.h \
-    libs/giflib/gif_lib.h \
-    libs/giflib/gif_lib_private.h \
+    ../_Libs/giflib/gif_hash.h \
+    ../_Libs/giflib/gif_lib.h \
+    ../_Libs/giflib/gif_lib_private.h \
     version.h
 
 RESOURCES += \
