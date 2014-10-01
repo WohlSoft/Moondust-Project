@@ -429,6 +429,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::gridOffset = QPoint(0,0);
         LvlPlacingItems::c_offset_x= 0;
         LvlPlacingItems::c_offset_y= 0;
+        LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
         setSquareDrawer(); return;
         break;
     case 4: //doorPoint
@@ -441,6 +442,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         LvlPlacingItems::c_offset_x = 16;
         LvlPlacingItems::c_offset_y = 16;
+
+        LvlPlacingItems::layer = "";
 
         cursor = addRect(0,0, 32, 32);
 
@@ -463,6 +466,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         LvlPlacingItems::c_offset_x = 16;
         LvlPlacingItems::c_offset_y = 16;
+
+        LvlPlacingItems::layer = "";
 
         QPixmap playerPixmap;
         switch(itemID+1)

@@ -104,6 +104,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
             LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             block.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
+            LvlPlacingItems::layer = block.layer;
         }
 
 
@@ -174,6 +175,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         {
             LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             bgo.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
+            LvlPlacingItems::layer = bgo.layer;
         }
 
         ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.array_id));
@@ -279,6 +281,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
             LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
             npc.layer = LvlPlacingItems::layer.isEmpty()? "Default":LvlPlacingItems::layer;
+            LvlPlacingItems::layer = npc.layer;
         }
 
         ui->PROPS_NpcPos->setText( tr("Position: [%1, %2]").arg(npc.x).arg(npc.y) );
@@ -805,6 +808,7 @@ void MainWindow::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
     if(blockPtr<0)
     {
         LvlPlacingItems::blockSet.layer = arg1;
+        LvlPlacingItems::layer = arg1;
     }
     else
     if (activeChildWindow()==1)
@@ -960,6 +964,7 @@ void MainWindow::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
     if(bgoPtr<0)
     {
         LvlPlacingItems::bgoSet.layer = arg1;
+        LvlPlacingItems::layer = arg1;
     }
     else
     if (activeChildWindow()==1)
@@ -1907,6 +1912,7 @@ void MainWindow::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1)
     if(npcPtr<0)
     {
         LvlPlacingItems::npcSet.layer = arg1;
+        LvlPlacingItems::layer = arg1;
     }
     else
     if (activeChildWindow()==1)

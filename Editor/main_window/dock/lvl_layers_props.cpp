@@ -73,6 +73,7 @@ void MainWindow::on_LvlLayerList_itemClicked(QListWidgetItem *item)
     LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
 }
 
 void MainWindow::on_LvlLayerList_itemSelectionChanged()
