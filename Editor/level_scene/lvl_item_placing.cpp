@@ -149,6 +149,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::flags.push_back(flag);
 
 
+            LvlPlacingItems::layer = LvlPlacingItems::blockSet.layer;
+
             //Square fill mode
             if(LvlPlacingItems::fillingMode)
             {
@@ -275,6 +277,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             flag.first = 25;
             flag.second = "CURSOR";
         LvlPlacingItems::flags.push_back(flag);
+
+        LvlPlacingItems::layer = LvlPlacingItems::bgoSet.layer;
 
         //Square fill mode
         if(LvlPlacingItems::fillingMode)
@@ -415,6 +419,9 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.width) / 2);
         LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.height) / 2);
         cursor->setData(25, "CURSOR");
+
+        LvlPlacingItems::layer = LvlPlacingItems::npcSet.layer;
+
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
