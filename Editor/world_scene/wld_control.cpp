@@ -425,6 +425,15 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     case MODE_PlacingNew:
         {
             this->clearSelection();
+
+            if(mouseEvent->modifiers() & Qt::ControlModifier )
+            MainWinConnect::pMainWin->showToolTipMsg(
+                                       (cursor?
+                                            (
+                                       QString::number( cursor->scenePos().toPoint().x() ) + "x" +
+                                       QString::number( cursor->scenePos().toPoint().y() )
+                                            )
+                                                :""), mouseEvent->screenPos(), 5000);
             if(cursor)
             {
                         cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-

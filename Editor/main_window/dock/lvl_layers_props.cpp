@@ -69,10 +69,23 @@ void MainWindow::setLayersBox()
 
 void MainWindow::on_LvlLayerList_itemClicked(QListWidgetItem *item)
 {
-    LvlPlacingItems::layer=item->text();
+    int WinType = activeChildWindow();
+    int itemType=0;
+    bool allow = ( (WinType==1) && activeLvlEditWin()->sceneCreated );
+
+    if(allow) itemType = activeLvlEditWin()->scene->placingItem;
+
+    if( (allow) && (itemType==LvlScene::PLC_Block ||
+                    itemType==LvlScene::PLC_BGO ||
+                    itemType==LvlScene::PLC_NPC ||
+                    itemType==LvlScene::PLC_Water) )
+        LvlPlacingItems::layer=item->text();
+    else
+        LvlPlacingItems::layer="";
     LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
 }
 
 void MainWindow::on_LvlLayerList_itemSelectionChanged()

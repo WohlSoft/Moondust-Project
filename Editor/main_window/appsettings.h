@@ -50,8 +50,10 @@ public:
     QMdiArea::ViewMode   MainWindowView;
     QTabWidget::TabPosition LVLToolboxPos;
     QTabWidget::TabPosition WLDToolboxPos;
+    QTabWidget::TabPosition TSTToolboxPos;
 
     QString logfile;
+    QString selectedTheme;
 
     void applySettings();
 

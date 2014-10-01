@@ -4,10 +4,14 @@
 *.lo
 *.o
 *.a
+!_Libs/_builds/*/*/*.a
 *.la
+!_Libs/_builds/*/*/*.la
 *.lai
 *.so
+!_Libs/_builds/*/*/*.so
 *.dll
+!_Libs/_builds/*/*/*.dll
 *.dylib
 
 # Qt-es
@@ -20,7 +24,7 @@ qrc_*.cpp
 Makefile
 *-build-*
 *build-*
-bin
+./bin
 
 # ignore Qt-Makefile
 *.Debug
@@ -31,3 +35,6 @@ bin
 +*.swp
 *.db
 *_plugin_import.cpp
+
+#unpacked libraries sources
+_Libs/_sources/SDL*
