@@ -198,6 +198,7 @@ public:
         void on_actionSave_all_triggered();
 
         void on_actionExport_to_image_triggered();      //!< Export current workspace into image
+        void on_actionExport_to_image_section_triggered();
 
         void on_actionApplication_settings_triggered(); //!< Open application settings
 
@@ -563,6 +564,8 @@ public:
 
         void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
         void on_PROPS_BGOSquareFill_clicked(bool checked);
+        void on_PROPS_BGO_Z_Layer_currentIndexChanged(int index);
+        void on_PROPS_BGO_Z_Offset_valueChanged(double arg1);
         void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
 
         void on_PROPS_NPCDirLeft_clicked();
@@ -983,8 +986,6 @@ private slots:
         void on_actionLockLevels_triggered(bool checked);
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
-
-        void on_actionExport_to_image_section_triggered();
 
 signals:
     void closeEditor();
