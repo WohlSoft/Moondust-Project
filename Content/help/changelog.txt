@@ -1,17 +1,18 @@
 Editor 0.2.1
-- Added support of multi-selection with holded shift key
-- Added new own file formats LVLX and WLDX supports: without item number limits and with additional features
-- Optimized total performance
-- More smart grid snapping of the selected items group
-- Clicking to layers in the list will define layer where you will place new items
+- Added support for multi-selection by holding the shift key
+- Added new PGE-only file formats LVLX and WLDX, which support more features and have fewer limitations than the SMBX formats, such as the maximum number of items
+- Improved overall performance
+- Smarter grid snapping of the selected items group
+- Clicking a layer from the list will select  which layer new items will be placed on
 - Added SDL library to give better music and sound playback
-- Fixed grid aligning after duplicating/pasting
-- Added Semi-transparent paths view for world map
+- Fixed grid alignment after duplicating/pasting
+- Added semi-transparent paths view for world map
 - Added displaying of the items statistics to the debugger box
-- Fixed config directory path on the MacOS X
-- Fixed bug with item boxed updating when you switch between other applications
-- Added export images of level level by selected pieces
-- Added support of Themes system. You can customize UI GFX of editor by you own!
+- Fixed config directory path on Mac OS X
+- Fixed bug with item boxes updating when you switch between other applications
+- Added SMBX64 standard validator which prevents you from saving a file that would cause SMBX to crash, such as exceeding SMBX's maximum level size, etc.
+- Added ability to export images of only a selected portion of a level
+- Added support for a Themes system. You can customize the UI and GFX of editor on your own!
 
 Editor 0.2.0
 - Added support for World Maps
