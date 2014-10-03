@@ -462,42 +462,42 @@
     <message>
         <location filename="../dev_console/devconsole.cpp" line="177"/>
         <source>Prints the command help</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra la ayuda</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="178"/>
         <source>Prints a test command</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra un comando de prueba</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="179"/>
         <source>Prints the version</source>
-        <translation type="unfinished"></translation>
+        <translation>Muestra la versión</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="180"/>
         <source>Quits the program</source>
-        <translation type="unfinished"></translation>
+        <translation>Sale del programa</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="181"/>
         <source>Saves the application settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Guarda las opciones</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="182"/>
         <source>Args: {SomeString} Calculating MD5 hash of string</source>
-        <translation type="unfinished"></translation>
+        <translation>Args: {SomeString} Calculando hash MD5 of string</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="183"/>
         <source>Args: {String array} validating the PGE-X string array</source>
-        <translation type="unfinished"></translation>
+        <translation>Args: {String array} validando string array PGE-X</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="184"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Args: {[Number] gigabytes} | Fluye la memoria con megabytes</translation>
     </message>
 </context>
 <context>
@@ -579,37 +579,37 @@
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="155"/>
         <source>Change Z-Offset...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar ubicación Z...</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="157"/>
         <source>Z-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa Z</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="160"/>
         <source>Background-2</source>
-        <translation type="unfinished"></translation>
+        <translation>Fondo-2</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="163"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Fondo</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="166"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Predeterminado</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="169"/>
         <source>Foreground</source>
-        <translation type="unfinished">Primer plano</translation>
+        <translation>Primer plano</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="172"/>
         <source>Foreground-2</source>
-        <translation type="unfinished"></translation>
+        <translation>Primer plano-2</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="177"/>
@@ -634,12 +634,12 @@
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="273"/>
         <source>Z-Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ubicación Z</translation>
     </message>
     <message>
         <location filename="../level_scene/item_bgo.cpp" line="274"/>
         <source>Please enter the Z-value offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor diga un valor Z:</translation>
     </message>
 </context>
 <context>
@@ -720,12 +720,12 @@
     <message>
         <location filename="../level_scene/item_door.cpp" line="165"/>
         <source>Jump to exit</source>
-        <translation>Saltar para salir</translation>
+        <translation>Ir a salida</translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="172"/>
         <source>Jump to entrance</source>
-        <translation>Saltar para entrar</translation>
+        <translation>Ir a entrada</translation>
     </message>
     <message>
         <location filename="../level_scene/item_door.cpp" line="180"/>
@@ -959,27 +959,27 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/item_playerpoint.cpp" line="107"/>
         <source>Set %1</source>
-        <translation type="unfinished">Fijar %1</translation>
+        <translation>Fijar %1</translation>
     </message>
     <message>
         <location filename="../level_scene/item_playerpoint.cpp" line="107"/>
         <source>Direction</source>
-        <translation type="unfinished">Dirección</translation>
+        <translation>Dirección</translation>
     </message>
     <message>
         <location filename="../level_scene/item_playerpoint.cpp" line="111"/>
         <source>Left</source>
-        <translation type="unfinished">Izquierda</translation>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <location filename="../level_scene/item_playerpoint.cpp" line="116"/>
         <source>Right</source>
-        <translation type="unfinished">Derecha</translation>
+        <translation>Derecha</translation>
     </message>
     <message>
         <location filename="../level_scene/item_playerpoint.cpp" line="123"/>
         <source>Remove</source>
-        <translation type="unfinished">Remover</translation>
+        <translation>Remover</translation>
     </message>
 </context>
 <context>
@@ -1886,7 +1886,13 @@ Non-playable characters&apos;s:	%4
 Warp entries:		%5
 Physical env. zones:	%6
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Puntos de partida:		%1
+Bloques:			%2
+Objetos de fondo:	%3
+Personajes No Jugadores (PNJ):	%4
+Puntos de traslado:		%5
+Zonas físicas de ambiente:	%6
+</translation>
     </message>
 </context>
 <context>
@@ -3485,7 +3491,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="8899"/>
         <source>Semi-transparent paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminos semi-transparentes</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -3753,7 +3759,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="6948"/>
         <source>Search: </source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="6955"/>
@@ -3784,7 +3790,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="7163"/>
         <source>Items</source>
-        <translation type="unfinished">Items</translation>
+        <translation>Items</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7208"/>
@@ -4673,13 +4679,14 @@ Do you want to continue?</source>
     <message>
         <location filename="../main.cpp" line="46"/>
         <source>Crash</source>
-        <translation type="unfinished"></translation>
+        <translation>Crash</translation>
     </message>
     <message>
         <location filename="../main.cpp" line="46"/>
         <source>We&apos;re sorry, but PGE has crashed. Reason: Out of memory! :(
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lo sentimos, pero PGE falló. Razón: Falta de memoria. : (
+Para prevenir ésto, pruebe cerrando otros programas innecesarios para liberar memoria).</translation>
     </message>
 </context>
 <context>
@@ -5401,7 +5408,12 @@ Paths:	%3
 Levels:	%4
 Music boxes:		%5
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Azulejos:		%1
+Decoraciones:			%2
+Caminos:	%3
+Niveles:	%4
+Cajas de música:		%5
+</translation>
     </message>
 </context>
 <context>
@@ -5468,13 +5480,13 @@ Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.
         <location filename="../edit_world/wld_files_io.cpp" line="311"/>
         <location filename="../edit_world/wld_files_io.cpp" line="347"/>
         <source>Extension is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>La extensión no se definió</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="312"/>
         <location filename="../edit_world/wld_files_io.cpp" line="348"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La extensión no se definió, por favor ponga una extensión!</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="363"/>
@@ -5483,7 +5495,7 @@ Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.
         <location filename="../edit_world/wld_files_io.cpp" line="393"/>
         <location filename="../edit_world/wld_files_io.cpp" line="404"/>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation type="unfinished"></translation>
+        <translation>El límite SMBX64 fue excedido</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="364"/>
@@ -5491,7 +5503,10 @@ Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.
 The maximum number of Tiles is %2.
 
 Please remove excess Tiles from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 azulejos
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="374"/>
@@ -5499,7 +5514,10 @@ Please remove excess Tiles from this world map or save file into WLDX format.</s
 The maximum number of Sceneries is %2.
 
 Please remove excess Sceneries from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 decoraciones
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="384"/>
@@ -5507,7 +5525,10 @@ Please remove excess Sceneries from this world map or save file into WLDX format
 The maximum number of Paths is %2.
 
 Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 caminos
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="394"/>
@@ -5515,7 +5536,10 @@ Please remove excess Paths from this world map or save file into WLDX format.</s
 The maximum number of Levels is %2.
 
 Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 niveles
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="405"/>
@@ -5523,7 +5547,10 @@ Please remove excess Paths from this world map or save file into WLDX format.</s
 The maximum number of Music Boxes is %2.
 
 Please remove excess Music Boxes from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 cajas de música
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
     </message>
     <message>
         <location filename="../edit_world/wld_files_io.cpp" line="420"/>
@@ -5822,13 +5849,13 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
         <location filename="../edit_level/lvl_files_io.cpp" line="287"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="312"/>
         <source>Extension is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>La extensión no está definida</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="288"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="313"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La extensión no está definida, por favor indique una extensión!</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="327"/>
@@ -5839,7 +5866,7 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
         <location filename="../edit_level/lvl_files_io.cpp" line="377"/>
         <location filename="../edit_level/lvl_files_io.cpp" line="387"/>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation type="unfinished"></translation>
+        <translation>El límite de SMBX64 ha sido excedido</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="328"/>
@@ -5847,7 +5874,10 @@ Por favor controle que config/SMBX existe y contiene los archivos INI con objeto
 The maximum number of blocks is %2.
 
 Please remove excess blocks from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 bloques
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="338"/>
@@ -5855,7 +5885,10 @@ Please remove excess blocks from this level or save file into LVLX format.</sour
 The maximum number of Background Objects is %2.
 
 Please remove excess Background Objects from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 Objetos de Fondo
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="348"/>
@@ -5863,7 +5896,10 @@ Please remove excess Background Objects from this level or save file into LVLX f
 The maximum number of Non-Playable Characters is %2.
 
 Please remove excess Non-Playable Characters from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 Personajes No Jugadores (PNJ)
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="358"/>
@@ -5871,7 +5907,10 @@ Please remove excess Non-Playable Characters from this level or save file into L
 The maximum number of Warps is %2.
 
 Please remove excess Warps from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 Traslados
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="368"/>
@@ -5879,7 +5918,10 @@ Please remove excess Warps from this level or save file into LVLX format.</sourc
 The maximum number of Water Boxes is %2.
 
 Please remove excess Water Boxes from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 cajas de agua
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="378"/>
@@ -5887,7 +5929,10 @@ Please remove excess Water Boxes from this level or save file into LVLX format.<
 The maximum number of Layers is %2.
 
 Please remove excess Layers from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 capas
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="388"/>
@@ -5895,7 +5940,10 @@ Please remove excess Layers from this level or save file into LVLX format.</sour
 The maximum number of Events is %2.
 
 Please remove excess Events from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 standar no ésta habilitado para guardar %1 eventos
+El número máximo de objetos es %2.
+
+Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_files_io.cpp" line="418"/>
