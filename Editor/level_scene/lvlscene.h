@@ -197,8 +197,8 @@ public:
     int Z_BGOBack2; // backround BGO
     int Z_blockSizable; // sizeble block
     int Z_BGOBack1; // backround BGO
-    int Z_Block; // standart block
     int Z_npcBack; // background NPC (vines)
+    int Z_Block; // standart block
     int Z_npcStd; // standart NPC
     int Z_Player; //playerPointZ
     int Z_BGOFore1; // foreground BGO

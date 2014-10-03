@@ -84,8 +84,8 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     //Background-1
     Z_BGOBack1 = -100; // backround BGO
 
+    Z_npcBack = -10; // background NPC
     Z_Block = 1; // standart block
-    Z_npcBack = 20; // background NPC
     Z_npcStd = 30; // standart NPC
     Z_Player = 35; //player Point
 
