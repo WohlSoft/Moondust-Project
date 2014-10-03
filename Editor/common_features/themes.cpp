@@ -294,7 +294,7 @@ void Themes::init()
     images.push_back(QPixmap(":/locks/door_op.png"));
     images_map[warps_free] = images.last();
 
-    images.push_back(QPixmap(":/locks/npc_cl.png"));
+    images.push_back(QPixmap(":/locks/door_cl.png"));
     images_map[warps_locked] = images.last();
 
     images.push_back(QPixmap(":/locks/water_op.png"));
