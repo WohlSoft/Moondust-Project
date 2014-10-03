@@ -366,6 +366,16 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
     }
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    //Mark stars
+    for(int q=0; q< LvlData.npc.size(); q++)
+    {
+       if( LvlData.npc[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_npc.size() )
+           LvlData.npc[q].is_star =
+                   MainWinConnect::pMainWin->configs.
+                   main_npc[MainWinConnect::pMainWin->configs.index_npc[LvlData.npc[q].id].gi-1].is_star;
+    }
+
     // ////////////////////// Write SMBX64 LVL //////////////////////////////
     if(fileName.endsWith(".lvl", Qt::CaseInsensitive))
     {
@@ -413,13 +423,13 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
             isSMBX64limit=true;
         }
         //Physical Environment zones
-        if(LvlData.physez.size()>400)
+        if(LvlData.physez.size()>450)
         {
             QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
              tr("SMBX64 standard isn't allow to save %1 Water Boxes\n"
                 "The maximum number of Water Boxes is %2.\n\n"
                 "Please remove excess Water Boxes from this level or save file into LVLX format.")
-             .arg(LvlData.physez.size()).arg(400), QMessageBox::Ok);
+             .arg(LvlData.physez.size()).arg(450), QMessageBox::Ok);
             isSMBX64limit=true;
         }
         //Layers limits
