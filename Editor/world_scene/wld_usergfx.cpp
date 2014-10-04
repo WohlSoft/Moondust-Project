@@ -287,7 +287,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
             QString CustomImg = uWLD.getCustomFile(pConfigs->main_wpaths[i].image_n);
             if( !CustomImg.isEmpty() )
             {
-                QString CustomMask = uWLD.getCustomFile(pConfigs->main_wpaths[i].image_n);
+                QString CustomMask = uWLD.getCustomFile(pConfigs->main_wpaths[i].mask_n);
                 if(!CustomMask.isEmpty())
                     uPath.mask = GraphicsHelps::loadPixmap( CustomMask );
                 else
