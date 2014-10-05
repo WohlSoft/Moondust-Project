@@ -14,10 +14,23 @@ using namespace std;
 
 SDL_Window *window; // Creating window for SDL
 
-const int width = 800; // Width of Window
-const int height = 600; // Height of Window
+const int screen_width = 800; // Width of Window
+const int screen_height = 600; // Height of Window
 
-void drawCube(float xrf, float yrf, float zrf);
+//Viewport mode
+enum ViewPortMode
+{
+    VIEWPORT_MODE_FULL,
+    VIEWPORT_MODE_HALF_CENTER,
+    VIEWPORT_MODE_HALF_TOP,
+    VIEWPORT_MODE_QUAD,
+    VIEWPORT_MODE_RADAR
+};
+
+//Viewport mode
+int gViewportMode = VIEWPORT_MODE_FULL;
+
+void drawQuads();
 
 void init()
 {
@@ -39,7 +52,7 @@ void init()
     // Creating window with QString title, with size 800x600 and placing to screen center
 
     window = SDL_CreateWindow(QString("Title - is a QString from Qt, working in the SDL with OpenGL!!!").toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+                              screen_width, screen_height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
     SDL_GLContext glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
     Q_UNUSED(glcontext);
@@ -50,15 +63,39 @@ void init()
 
     // Initializing OpenGL
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
-    glClearDepth(1.0);
-    glDepthFunc(GL_LESS);
-    glEnable(GL_DEPTH_TEST); // Enabling depth test
-    glShadeModel(GL_SMOOTH);
-    glMatrixMode(GL_PROJECTION);
+    glViewport( 0.f, 0.f, screen_width, screen_height );
+
+    //Initialize Projection Matrix
+    glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    gluPerspective(45.0f, (float) width / (float) height, 0.1f, 100.0f); // Setting up 3D perspective
-    glMatrixMode(GL_MODELVIEW); // Gonna into 3D mode
+    glOrtho( 0.0, screen_width, screen_height, 0.0, 1.0, -1.0 );
+
+    //Initialize Modelview Matrix
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+
+    //Initialize clear color
+    glClearColor( 0.f, 0.f, 0.f, 1.f );
+
+    //Check for error
+    //GLenum error = glGetError();
+//    if( error != GL_NO_ERROR )
+//    {
+//        printf( "Error initializing OpenGL! %s\n", gluErrorString( error ) );
+//        //return false;
+//    }
+
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
+    //glClearDepth(1.0);
+    //glDepthFunc(GL_LESS);
+    //glEnable(GL_DEPTH_TEST); // Enabling depth test
+    //glShadeModel(GL_SMOOTH);
+    //glMatrixMode(GL_PROJECTION);
+    //glLoadIdentity();
+    //gluPerspective(45.0f, (float) screen_width / (float) screen_height, 0.1f, 100.0f); // Setting up 3D perspective
+    //glMatrixMode(GL_MODELVIEW);
+
+    //glViewport( 0.f, 0.f, screen_width, screen_height );
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 }
@@ -79,7 +116,7 @@ int main(int argc, char *argv[])
     init(); // Initializing
     bool running = true;
 
-    float xrf = 0, yrf = 0, zrf = 0; // Rotating angles
+    //float xrf = 0, yrf = 0, zrf = 0; // Rotating angles
 
     while(running)
     {
@@ -100,18 +137,26 @@ int main(int argc, char *argv[])
                             running = false; // End work of program
                         break;
                     case SDLK_LEFT:
-                            yrf -= 1.0;
+                            gViewportMode++;
+                            if( gViewportMode > VIEWPORT_MODE_RADAR )
+                            {
+                                gViewportMode = VIEWPORT_MODE_FULL;
+                            }
                         break;
                     case SDLK_RIGHT:
-                            yrf += 1.0;
+                            gViewportMode--;
+                            if( gViewportMode < VIEWPORT_MODE_FULL )
+                            {
+                                gViewportMode = VIEWPORT_MODE_RADAR;
+                            }
                         break;
 
-                    case SDLK_UP:
-                            zrf -= 1.0;
-                        break;
-                    case SDLK_DOWN:
-                            zrf += 1.0;
-                        break;
+                        //                    case SDLK_UP:
+                        //                            zrf -= 1.0;
+                        //                        break;
+                        //                    case SDLK_DOWN:
+                        //                            zrf += 1.0;
+                        //                        break;
                     }
                 break;
             }
@@ -119,11 +164,12 @@ int main(int argc, char *argv[])
 
         // While program is running, changing loop
 
-        xrf -= 1;
-        yrf -= 1;
-        zrf -= 1;
+        //xrf -= 1;
+        //yrf -= 1;
+        //zrf -= 1;
 
-        drawCube(xrf, yrf, zrf); // Draw cube with current rotating conrers
+        drawQuads();
+        //drawCube(xrf, yrf, zrf); // Draw cube with current rotating conrers
 
         // Updating screen
 
@@ -143,54 +189,135 @@ int main(int argc, char *argv[])
 
 //Cube draw (only test of the OpenGL works)
 
-void drawCube(float xrf, float yrf, float zrf){
+void drawQuads()
+{
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    //Reset modelview matrix
     glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -7.0f);	// Сдвинуть вглубь экрана
 
-    glRotatef(xrf, 1.0f, 0.0f, 0.0f);	// Вращение куба по X, Y, Z
-    glRotatef(yrf, 0.0f, 1.0f, 0.0f);	// Вращение куба по X, Y, Z
-    glRotatef(zrf, 0.0f, 0.0f, 1.0f);	// Вращение куба по X, Y, Z
+    //Move to center of the screen
+    glTranslatef( screen_width / 2.f, screen_height / 2.f, 0.f );
 
-    glBegin(GL_QUADS);					// Рисуем куб
+    //Full View
+    if( gViewportMode == VIEWPORT_MODE_FULL )
+    {
+        //Fill the screen
+        glViewport( 0.f, 0.f, screen_width, screen_height );
 
-    glColor3f(0.0f, 1.0f, 0.0f);		// Синяя сторона (Верхняя)
-    glVertex3f( 1.0f, 1.0f, -1.0f);		// Верхний правый угол квадрата
-    glVertex3f(-1.0f, 1.0f, -1.0f);		// Верхний левый
-    glVertex3f(-1.0f, 1.0f,  1.0f);		// Нижний левый
-    glVertex3f( 1.0f, 1.0f,  1.0f);		// Нижний правый
+        //Red quad
+        glBegin( GL_QUADS );
+            glColor3f( 1.f, 0.f, 0.f );
+            glVertex2f( -screen_width / 2.f, -screen_height / 2.f );
+            glVertex2f(  screen_width / 2.f, -screen_height / 2.f );
+            glVertex2f(  screen_width / 2.f,  screen_height / 2.f );
+            glVertex2f( -screen_width / 2.f,  screen_height / 2.f );
+        glEnd();
+    }
+    //View port at center of screen
+    else if( gViewportMode == VIEWPORT_MODE_HALF_CENTER )
+    {
+        //Center viewport
+        glViewport( screen_width / 4.f, screen_height / 4.f, screen_width / 2.f, screen_height / 2.f );
 
-    glColor3f(1.0f, 0.5f, 0.0f);		// Оранжевая сторона (Нижняя)
-    glVertex3f( 1.0f, -1.0f,  1.0f);	// Верхний правый угол квадрата
-    glVertex3f(-1.0f, -1.0f,  1.0f);	// Верхний левый
-    glVertex3f(-1.0f, -1.0f, -1.0f);	// Нижний левый
-    glVertex3f( 1.0f, -1.0f, -1.0f);	// Нижний правый
+        //Green quad
+        glBegin( GL_QUADS );
+            glColor3f( 0.f, 1.f, 0.f );
+            glVertex2f( -screen_width / 2.f, -screen_height / 2.f );
+            glVertex2f(  screen_width / 2.f, -screen_height / 2.f );
+            glVertex2f(  screen_width / 2.f,  screen_height / 2.f );
+            glVertex2f( -screen_width / 2.f,  screen_height / 2.f );
+        glEnd();
+    }
+    //Viewport centered at the top
+    else if( gViewportMode == VIEWPORT_MODE_HALF_TOP )
+    {
+        //Viewport at top
+        glViewport( screen_width / 4.f, screen_height / 2.f, screen_width / 2.f, screen_height / 2.f );
 
-    glColor3f(1.0f, 0.0f, 0.0f);		// Красная сторона (Передняя)
-    glVertex3f( 1.0f,  1.0f, 1.0f);		// Верхний правый угол квадрата
-    glVertex3f(-1.0f,  1.0f, 1.0f);		// Верхний левый
-    glVertex3f(-1.0f, -1.0f, 1.0f);		// Нижний левый
-    glVertex3f( 1.0f, -1.0f, 1.0f);		// Нижний правый
+        //Blue quad
+        glBegin( GL_QUADS );
+            glColor3f( 0.f, 0.f, 1.f );
+            glVertex2f( -screen_width / 2.f, -screen_height / 2.f );
+            glVertex2f(  screen_width / 2.f, -screen_height / 2.f );
+            glVertex2f(  screen_width / 2.f,  screen_height / 2.f );
+            glVertex2f( -screen_width / 2.f,  screen_height / 2.f );
+        glEnd();
+    }
+    //Four viewports
+    else if( gViewportMode == VIEWPORT_MODE_QUAD )
+    {
+        //Bottom left red quad
+        glViewport( 0.f, 0.f, screen_width / 2.f, screen_height / 2.f );
+        glBegin( GL_QUADS );
+            glColor3f( 1.f, 0.f, 0.f );
+            glVertex2f( -screen_width / 4.f, -screen_height / 4.f );
+            glVertex2f(  screen_width / 4.f, -screen_height / 4.f );
+            glVertex2f(  screen_width / 4.f,  screen_height / 4.f );
+            glVertex2f( -screen_width / 4.f,  screen_height / 4.f );
+        glEnd();
 
-    glColor3f(1.0f,1.0f,0.0f);			// Желтая сторона (Задняя)
-    glVertex3f( 1.0f, -1.0f, -1.0f);	// Верхний правый угол квадрата
-    glVertex3f(-1.0f, -1.0f, -1.0f);	// Верхний левый
-    glVertex3f(-1.0f,  1.0f, -1.0f);	// Нижний левый
-    glVertex3f( 1.0f,  1.0f, -1.0f);	// Нижний правый
+        //Bottom right green quad
+        glViewport( screen_width / 2.f, 0.f, screen_width / 2.f, screen_height / 2.f );
+        glBegin( GL_QUADS );
+            glColor3f( 0.f, 1.f, 0.f );
+            glVertex2f( -screen_width / 4.f, -screen_height / 4.f );
+            glVertex2f(  screen_width / 4.f, -screen_height / 4.f );
+            glVertex2f(  screen_width / 4.f,  screen_height / 4.f );
+            glVertex2f( -screen_width / 4.f,  screen_height / 4.f );
+        glEnd();
 
-    glColor3f(0.0f,0.0f,1.0f);			// Синяя сторона (Левая)
-    glVertex3f(-1.0f,  1.0f,  1.0f);	// Верхний правый угол квадрата
-    glVertex3f(-1.0f,  1.0f, -1.0f);	// Верхний левый
-    glVertex3f(-1.0f, -1.0f, -1.0f);	// Нижний левый
-    glVertex3f(-1.0f, -1.0f,  1.0f);	// Нижний правый
+        //Top left blue quad
+        glViewport( 0.f, screen_height / 2.f, screen_width / 2.f, screen_height / 2.f );
+        glBegin( GL_QUADS );
+            glColor3f( 0.f, 0.f, 1.f );
+            glVertex2f( -screen_width / 4.f, -screen_height / 4.f );
+            glVertex2f(  screen_width / 4.f, -screen_height / 4.f );
+            glVertex2f(  screen_width / 4.f,  screen_height / 4.f );
+            glVertex2f( -screen_width / 4.f,  screen_height / 4.f );
+        glEnd();
 
-    glColor3f(1.0f,0.0f,1.0f);			// Фиолетовая сторона (Правая)
-    glVertex3f( 1.0f,  1.0f, -1.0f);	// Верхний правый угол квадрата
-    glVertex3f( 1.0f,  1.0f,  1.0f);	// Верхний левый
-    glVertex3f( 1.0f, -1.0f,  1.0f);	// Нижний левый
-    glVertex3f( 1.0f, -1.0f, -1.0f);	// Нижний правый
+        //Top right yellow quad
+        glViewport( screen_width / 2.f, screen_height / 2.f, screen_width / 2.f, screen_height / 2.f );
+        glBegin( GL_QUADS );
+            glColor3f( 1.f, 1.f, 0.f );
+            glVertex2f( -screen_width / 4.f, -screen_height / 4.f );
+            glVertex2f(  screen_width / 4.f, -screen_height / 4.f );
+            glVertex2f(  screen_width / 4.f,  screen_height / 4.f );
+            glVertex2f( -screen_width / 4.f,  screen_height / 4.f );
+        glEnd();
+    }
+    //Viewport with radar subview port
+    else if( gViewportMode == VIEWPORT_MODE_RADAR )
+    {
+        //Full size quad
+        glViewport( 0.f, 0.f, screen_width, screen_height );
+        glBegin( GL_QUADS );
+            glColor3f( 1.f, 1.f, 1.f );
+            glVertex2f( -screen_width / 8.f, -screen_height / 8.f );
+            glVertex2f(  screen_width / 8.f, -screen_height / 8.f );
+            glVertex2f(  screen_width / 8.f,  screen_height / 8.f );
+            glVertex2f( -screen_width / 8.f,  screen_height / 8.f );
+            glColor3f( 0.f, 0.f, 0.f );
+            glVertex2f( -screen_width / 16.f, -screen_height / 16.f );
+            glVertex2f(  screen_width / 16.f, -screen_height / 16.f );
+            glVertex2f(  screen_width / 16.f,  screen_height / 16.f );
+            glVertex2f( -screen_width / 16.f,  screen_height / 16.f );
+        glEnd();
 
-    glEnd();							// Закончили квадраты
-
+        //Radar quad
+        glViewport( screen_width / 2.f, screen_height / 2.f, screen_width / 2.f, screen_height / 2.f );
+        glBegin( GL_QUADS );
+            glColor3f( 1.f, 1.f, 1.f );
+            glVertex2f( -screen_width / 8.f, -screen_height / 8.f );
+            glVertex2f(  screen_width / 8.f, -screen_height / 8.f );
+            glVertex2f(  screen_width / 8.f,  screen_height / 8.f );
+            glVertex2f( -screen_width / 8.f,  screen_height / 8.f );
+            glColor3f( 0.f, 0.f, 0.f );
+            glVertex2f( -screen_width / 16.f, -screen_height / 16.f );
+            glVertex2f(  screen_width / 16.f, -screen_height / 16.f );
+            glVertex2f(  screen_width / 16.f,  screen_height / 16.f );
+            glVertex2f( -screen_width / 16.f,  screen_height / 16.f );
+        glEnd();
+    }
 }
