@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>291</height>
+    <width>481</width>
+    <height>319</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,23 +17,12 @@
    <iconset resource="_resourses/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout" columnminimumwidth="0,30,30,0,0">
+  <layout class="QGridLayout" name="gridLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Height</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QSpinBox" name="FrameY">
-     <property name="maximum">
-      <number>9</number>
-     </property>
-    </widget>
+   <item row="1" column="3" rowspan="9" colspan="2">
+    <widget class="QGraphicsView" name="PreviewGraph"/>
    </item>
    <item row="10" column="3">
     <widget class="QPushButton" name="SaveConfigButton">
@@ -49,25 +38,8 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Width</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="1">
-    <widget class="QPushButton" name="CopyButton">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>copy</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1" colspan="2">
-    <widget class="QSpinBox" name="OffsetX">
+   <item row="9" column="1" colspan="2">
+    <widget class="QSpinBox" name="OffsetY">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -92,15 +64,32 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
-    <widget class="QLabel" name="label_4">
+   <item row="10" column="0">
+    <widget class="QPushButton" name="AboutButton">
      <property name="text">
-      <string>Offset Y</string>
+      <string>About</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="3" rowspan="9" colspan="2">
-    <widget class="QGraphicsView" name="PreviewGraph"/>
+   <item row="8" column="1" colspan="2">
+    <widget class="QSpinBox" name="OffsetX">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimum">
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Offset X</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_5">
@@ -109,20 +98,62 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="1" colspan="2">
-    <widget class="QSpinBox" name="FrameX">
-     <property name="maximum">
-      <number>9</number>
+   <item row="5" column="0" colspan="2">
+    <widget class="QLabel" name="label_8">
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Physics calibration:</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="2">
-    <widget class="QPushButton" name="PasteButton">
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Offset Y</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1" colspan="2">
+    <widget class="QSpinBox" name="Width">
      <property name="enabled">
       <bool>false</bool>
      </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="value">
+      <number>100</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Paste</string>
+      <string>Frame Y</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Height</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="3" colspan="2">
+    <widget class="QPushButton" name="MakeTemplateB">
+     <property name="toolTip">
+      <string>Useful for tests or for cration from scratch</string>
+     </property>
+     <property name="text">
+      <string>Generate &quot;Square Man&quot; template</string>
      </property>
     </widget>
    </item>
@@ -141,61 +172,57 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="1" colspan="2">
-    <widget class="QSpinBox" name="OffsetY">
+   <item row="10" column="1">
+    <widget class="QPushButton" name="CopyButton">
      <property name="enabled">
       <bool>false</bool>
      </property>
-     <property name="minimum">
-      <number>0</number>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Frame Y</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Offset X</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="1">
-    <widget class="QPushButton" name="applyToAll">
-     <property name="enabled">
-      <bool>false</bool>
+     <property name="toolTip">
+      <string>Copy this frame into internal clipboard</string>
      </property>
      <property name="text">
-      <string>Apply to all</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="2">
-    <widget class="QPushButton" name="Matrix">
-     <property name="text">
-      <string>Matrix</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="3" colspan="2">
-    <widget class="QPushButton" name="MakeTemplateB">
-     <property name="text">
-      <string>make template</string>
+      <string>copy</string>
      </property>
     </widget>
    </item>
    <item row="12" column="0">
     <widget class="QPushButton" name="AnimatorButton">
+     <property name="toolTip">
+      <string>Edit animations set</string>
+     </property>
      <property name="text">
       <string>Animator</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Width</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QPushButton" name="editSizes">
+     <property name="text">
+      <string>Edit</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QSpinBox" name="FrameY">
+     <property name="maximum">
+      <number>9</number>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="2">
+    <widget class="QPushButton" name="Matrix">
+     <property name="toolTip">
+      <string>Select frame from full sprite matrix</string>
+     </property>
+     <property name="text">
+      <string>Matrix</string>
      </property>
     </widget>
    </item>
@@ -209,45 +236,43 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1" colspan="2">
-    <widget class="QSpinBox" name="Width">
+   <item row="1" column="1" colspan="2">
+    <widget class="QSpinBox" name="FrameX">
+     <property name="maximum">
+      <number>9</number>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <widget class="QPushButton" name="applyToAll">
      <property name="enabled">
       <bool>false</bool>
      </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-     <property name="value">
-      <number>100</number>
+     <property name="text">
+      <string>Apply to all</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="0">
-    <widget class="QPushButton" name="AboutButton">
+   <item row="10" column="2">
+    <widget class="QPushButton" name="PasteButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="toolTip">
+      <string>Paste from internal clipboard</string>
+     </property>
      <property name="text">
-      <string>About</string>
+      <string>Paste</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="2">
-    <widget class="QPushButton" name="editSizes">
-     <property name="text">
-      <string>Edit</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="2">
-    <widget class="QLabel" name="label_8">
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
+   <item row="13" column="3" colspan="2">
+    <widget class="QPushButton" name="calibrateImage">
+     <property name="toolTip">
+      <string>Calibrating frames relative to exists physics (useful for SMBX where you can't edit physics)</string>
      </property>
      <property name="text">
-      <string>Frame calibration:</string>
+      <string>Image frames calibration</string>
      </property>
     </widget>
    </item>

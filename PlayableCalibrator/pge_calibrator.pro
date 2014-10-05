@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     main/files_io.cpp \
     main/globals.cpp \
     main/graphics.cpp \
-    main/settings.cpp
+    main/settings.cpp \
+    image_calibration/image_calibrator.cpp
 
 HEADERS  += calibrationmain.h \
     frame_matrix/matrix.h \
@@ -71,13 +72,15 @@ HEADERS  += calibrationmain.h \
     ../_Libs/giflib/gif_lib_private.h \
     main/globals.h \
     main/graphics.h \
-    version.h
+    version.h \
+    image_calibration/image_calibrator.h
 
 FORMS    += calibrationmain.ui \
     about/about.ui \
     animator/animate.ui \
     animator/animationedit.ui \
-    frame_matrix/matrix.ui
+    frame_matrix/matrix.ui \
+    image_calibration/image_calibrator.ui
 
 RESOURCES += \
     _resourses/images.qrc
