@@ -77,7 +77,9 @@ SOURCES += main.cpp \
     ../Editor/file_formats/npc_filedata.cpp \
     ../Editor/file_formats/pge_x.cpp \
     ../Editor/file_formats/smbx64.cpp \
-    ../Editor/file_formats/wld_filedata.cpp
+    ../Editor/file_formats/wld_filedata.cpp \
+    graphics.cpp \
+    init.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -130,6 +132,7 @@ HEADERS  += \
     ../Editor/file_formats/file_formats.h \
     ../Editor/file_formats/lvl_filedata.h \
     ../Editor/file_formats/npc_filedata.h \
-    ../Editor/file_formats/wld_filedata.h
+    ../Editor/file_formats/wld_filedata.h \
+    graphics.h
 
 FORMS    +=

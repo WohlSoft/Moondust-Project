@@ -12,6 +12,8 @@
 
 #include <file_formats.h>
 
+#include "graphics.h"
+
 #include <iostream>
 using namespace std;
 
@@ -32,41 +34,7 @@ LevelData level;
 
 void drawQuads();
 
-QPointF mapToOpengl(QPoint s)
-{
-    qreal nx  =  s.x() - qreal(screen_width)  /  2;
-    qreal ny  =  s.y() - qreal(screen_height)  /  2;
-    //qreal( qreal(screen_height) - qreal(s.y())  -  1)  /  qreal(screen_height  /  2  -  1;
-    return QPointF(nx, ny);
-}
-
-
-SDL_Surface *load_image( std::string filename )
-{
-    //Temporary storage for the image that's loaded
-    SDL_Surface* loadedImage = NULL;
-
-    //The optimized image that will be used
-    SDL_Surface* optimizedImage = NULL;
-
-    //Load the image
-    loadedImage = SDL_LoadBMP( filename.c_str() );
-
-    //If nothing went wrong in loading the image
-    if( loadedImage != NULL )
-    {
-        //Create an optimized image
-        optimizedImage = SDL_ConvertSurfaceFormat( loadedImage, SDL_PIXELFORMAT_ARGB8888, 0 );
-
-        //Free the old image
-        SDL_FreeSurface( loadedImage );
-    }
-
-    //Return the optimized image
-    return optimizedImage;
-}
-
-
+PGE_Texture TextureBuffer[3];
 
 struct keysForTest
 {
@@ -82,80 +50,41 @@ void resetKeys()
     myKeys.move_l = false;
 }
 
-void init()
+
+SDL_bool IsFullScreen(SDL_Window *win)
 {
+   Uint32 flags = SDL_GetWindowFlags(win);
 
-    // Initalizing SDL
+    if (flags & SDL_WINDOW_FULLSCREEN) return SDL_TRUE; // return SDL_TRUE if fullscreen
 
-    if ( SDL_Init(SDL_INIT_VIDEO) < 0 ){
-        cout << "Unable to init SDL, error: " << SDL_GetError() << endl;
-        exit(1);
-    }
-
-    // Enabling double buffer, setting up colors...
-
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    //SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-    //SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
-    //SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-
-    // Creating window with QString title, with size 800x600 and placing to screen center
-
-    window = SDL_CreateWindow(QString("Title - is a QString from Qt, working in the SDL with OpenGL!!!").toStdString().c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              screen_width, screen_height, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
-
-    SDL_GLContext glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
-    Q_UNUSED(glcontext);
-
-    if(window == NULL){	// If failed to create window - exiting
-        exit(1);
-    }
-
-    // Initializing OpenGL
-
-    glEnable( GL_TEXTURE_2D ); // Need this to display a texture
-
-    glViewport( 0.f, 0.f, screen_width, screen_height );
-
-    glMatrixMode( GL_PROJECTION );
-    glPushMatrix();
-    glLoadIdentity();
-
-    glOrtho( 0.0, screen_width, screen_height, 0.0, 1.0, -1.0 );
-
-    //Initialize Modelview Matrix
-    glMatrixMode( GL_MODELVIEW );
-    glPushMatrix();
-    glLoadIdentity();
-
-    //Initialize clear color
-    glClearColor( 0.f, 0.f, 0.f, 1.f );
-
-    glEnable( GL_BLEND );
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-
-    //Check for error
-    //GLenum error = glGetError();
-//    if( error != GL_NO_ERROR )
-//    {
-//        printf( "Error initializing OpenGL! %s\n", gluErrorString( error ) );
-//        //return false;
-//    }
-
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black background color
-
-
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+   return SDL_FALSE; // Return SDL_FALSE if windowed
 }
 
+/// Toggles On/Off FullScreen
+/// @returns -1 on error, 1 on Set fullscreen successful, 0 on Set Windowed successful
+int SDL_ToggleFS(SDL_Window *win)
+{
+    if (IsFullScreen(win))
+    {
+        // Swith to WINDOWED mode
+        if (SDL_SetWindowFullscreen(win, SDL_FALSE) < 0)
+      {
+         std::cout<<"Setting windowed failed : "<<SDL_GetError()<<std::endl;
+         return -1;
+      }
 
-SDL_Surface *surface;
-GLuint texture; // Texture object handle
-int texture_height; //Height of the texture.
-int texture_width; //Width of the texture.
-GLubyte *texture_layout;
-GLenum texture_format;
-GLint  nOfColors;
+        return 0;
+    }
+
+    // Swith to FULLSCREEN mode
+    if (SDL_SetWindowFullscreen(win, SDL_TRUE) < 0)
+   {
+      std::cout<<"Setting fullscreen failed : "<<SDL_GetError()<<std::endl;
+      return -1;
+   }
+
+   return 1;
+}
 
 int main(int argc, char *argv[])
 {
@@ -166,6 +95,9 @@ int main(int argc, char *argv[])
     //w.show();
 
     //a.exec();
+    initSDL();
+    initOpenGL();
+
 
     QString fileToPpen = a.applicationDirPath()+"/physics.lvl";
 
@@ -189,89 +121,15 @@ int main(int argc, char *argv[])
         qDebug() << "blocks "<< level.blocks.size();
     }
 
-
-    // Load the OpenGL texture
-    surface = load_image(a.applicationDirPath().toStdString()+"/block-223.bmp"); // Gives us the information to make the texture
-
-
-    if ( surface )
-    {
-
-        // Check that the image's width is a power of 2
-        if ( (surface->w & (surface->w - 1)) != 0 ) {
-            printf("warning: image.bmp's width is not a power of 2\n");
-        }
-
-        // Also check if the height is a power of 2
-        if ( (surface->h & (surface->h - 1)) != 0 )
-        {
-            printf("warning: image.bmp's height is not a power of 2\n");
-        }
-
-            // get the number of channels in the SDL surface
-            nOfColors = surface->format->BytesPerPixel;
-            if (nOfColors == 4)     // contains an alpha channel
-            {
-                    if (surface->format->Rmask == 0x000000ff)
-                            texture_format = GL_RGBA;
-                    else
-                            texture_format = GL_BGRA;
-            } else if (nOfColors == 3)     // no alpha channel
-            {
-                    if (surface->format->Rmask == 0x000000ff)
-                            texture_format = GL_RGB;
-                    else
-                            texture_format = GL_BGR;
-            } else {
-                    printf("warning: the image is not truecolor..  this will probably break\n");
-                    // this error should not go unhandled
-            }
-
-        // Have OpenGL generate a texture object handle for us
-        glGenTextures( 1, &texture );
-
-        // Bind the texture object
-        glBindTexture( GL_TEXTURE_2D, texture );
-
-        // Edit the texture object's image data using the information SDL_Surface gives us
-        texture_width = surface->w;
-        texture_height = surface->h;
-        // Set the texture's stretching properties
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-        glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, surface->w, surface->h, 0,
-                          texture_format, GL_UNSIGNED_BYTE, surface->pixels );
-
-        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-
-        qDebug() << "width " << texture_width << " height " << texture_height;
-
-    }
-    else
-    {
-        printf("SDL could not load image.bmp: %s\n", SDL_GetError());
-        SDL_Quit();
-        return 1;
-    }
-
-
-    if ( surface )
-    {
-        SDL_FreeSurface( surface );
-    }
-
-
-
+    TextureBuffer[0] = loadTexture(a.applicationDirPath().toStdString()+"/block-223.bmp");
+    TextureBuffer[1] = loadTexture(a.applicationDirPath().toStdString()+"/bg.bmp");
+    TextureBuffer[2] = loadTexture(a.applicationDirPath().toStdString()+"/bgo.bmp");
 
     //b2Vec2 gravity(0.0f, 1.0f);
     //b2World world(gravity);
 
-
-
     Uint32 start;
 
-    init(); // Initializing
     bool running = true;
 
     //float xrf = 0, yrf = 0, zrf = 0; // Rotating angles
@@ -296,12 +154,20 @@ int main(int argc, char *argv[])
                         running = false;
                     break;
 
+                    //case SDL_WINDOWEVENT_RESIZED:
+                        //screen_width = ;
+                        //screen_height = event.resize.h;
+                    //break;
+
                     case SDL_KEYDOWN: // If pressed key
                         switch(event.key.keysym.sym)
                         { // Check which
                         case SDLK_ESCAPE: // ESC
                                 running = false; // End work of program
                             break;
+                        case SDLK_t:
+                            SDL_ToggleFS(window);
+                        break;
                         case SDLK_m:
                             myKeys.move_r = true;
                         break;
@@ -352,7 +218,6 @@ int main(int argc, char *argv[])
         //zrf -= 1;
 
             drawQuads();
-            //drawCube(xrf, yrf, zrf); // Draw cube with current rotating conrers
             // Updating screen
             glFlush();
             SDL_GL_SwapWindow(window);
@@ -368,7 +233,9 @@ int main(int argc, char *argv[])
     }
 
     // Now we can delete the OpenGL texture and close down SDL
-    glDeleteTextures( 1, &texture );
+    glDeleteTextures( 1, &TextureBuffer[0].texture );
+    glDeleteTextures( 1, &TextureBuffer[1].texture );
+    glDeleteTextures( 1, &TextureBuffer[2].texture );
 
     SDL_Quit(); // Ending work of the SDL and exiting
     return 0;
@@ -389,25 +256,78 @@ void drawQuads()
     //Move to center of the screen
     glTranslatef( screen_width / 2.f, screen_height / 2.f, 0.f );
 
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_REPLACE);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
+
+    int imgPos = ((level.sections[0].size_left+pos_x)/2) % TextureBuffer[1].w;
+    QRectF blockG = QRectF(mapToOpengl(QPoint(imgPos, 0)), mapToOpengl(QPoint(imgPos+TextureBuffer[1].w,TextureBuffer[1].h)) );
+
+    glColor4f( 1.f, 1.f, 1.f, 1.f);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, TextureBuffer[1].texture );
+    glBegin( GL_QUADS );
+        glTexCoord2i( 0, 0 );
+        glVertex2f( blockG.left(), blockG.top());
+
+        glTexCoord2i( 1, 0 );
+        glVertex2f(  blockG.right(), blockG.top());
+
+        glTexCoord2i( 1, 1 );
+        glVertex2f(  blockG.right(),  blockG.bottom());
+
+        glTexCoord2i( 0, 1 );
+        glVertex2f( blockG.left(),  blockG.bottom());
+    glEnd();
+
+    imgPos += TextureBuffer[1].w;
+
+    blockG = QRectF(mapToOpengl(QPoint(imgPos, 0)), mapToOpengl(QPoint(imgPos+TextureBuffer[1].w,TextureBuffer[1].h)) );
+    glBindTexture( GL_TEXTURE_2D, TextureBuffer[1].texture );
+    glBegin( GL_QUADS );
+        glTexCoord2i( 0, 0 );
+        glVertex2f( blockG.left(), blockG.top());
+
+        glTexCoord2i( 1, 0 );
+        glVertex2f(  blockG.right(), blockG.top());
+
+        glTexCoord2i( 1, 1 );
+        glVertex2f(  blockG.right(),  blockG.bottom());
+
+        glTexCoord2i( 0, 1 );
+        glVertex2f( blockG.left(),  blockG.bottom());
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+
+
+
 
     foreach(LevelBGO b, level.bgo)
     {
-        QRect bgo = QRect(b.x+pos_x, b.y+pos_y, 32, 32);
+        QRect bgo = QRect(b.x+pos_x, b.y+pos_y, TextureBuffer[2].w, TextureBuffer[2].h);
 
         QRectF bgoG = QRectF(mapToOpengl(QPoint(bgo.x(), bgo.y())),
-                               mapToOpengl(QPoint(bgo.x()+32, bgo.y()+32)) );
+                               mapToOpengl(QPoint(bgo.x()+TextureBuffer[2].w,bgo.y()+TextureBuffer[2].h)) );
 
         //            qDebug() << "Point " << blockG.topLeft() << " size "
         //                     << blockG.bottomRight();
-
-        glColor4f( 0.f, 1.f, 0.f, 0.3f);
+        glColor4f( 1.f, 1.f, 1.f, 0.3f);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture( GL_TEXTURE_2D, TextureBuffer[2].texture );
+        //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
         glBegin( GL_QUADS );
+            glTexCoord2i( 0, 0 );
             glVertex3f( bgoG.left(), bgoG.top(), 0 );
+
+            glTexCoord2i( 1, 0 );
             glVertex3f(  bgoG.right(), bgoG.top(), 0 );
+
+            glTexCoord2i( 1, 1 );
             glVertex3f(  bgoG.right(),  bgoG.bottom(), 0 );
+
+            glTexCoord2i( 0, 1 );
             glVertex3f( bgoG.left(),  bgoG.bottom(), 0 );
         glEnd();
+        glDisable(GL_TEXTURE_2D);
     }
 
     foreach(LevelBlock b, level.blocks)
@@ -422,23 +342,22 @@ void drawQuads()
 
         // Bind the texture to which subsequent calls refer to
 
-        glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_REPLACE);
-        glColor4f( 1.f, 0.f, 0.f, 1.f);
-        glBindTexture( GL_TEXTURE_2D, texture );
-
+        glColor4f( 1.f, 1.f, 1.f, 1.f);
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture( GL_TEXTURE_2D, TextureBuffer[0].texture );
         glBegin( GL_QUADS );
             glTexCoord2i( 0, 0 );
-            glVertex3f( blockG.left(), blockG.top(), 0);
+            glVertex2f( blockG.left(), blockG.top());
 
-            glTexCoord2i( blockG.width(), 0 );
-            glVertex3f(  blockG.right(), blockG.top(), 0 );
+            glTexCoord2i( 1, 0 );
+            glVertex2f(  blockG.right(), blockG.top());
 
-            glTexCoord2i( blockG.width(), blockG.height() );
-            glVertex3f(  blockG.right(),  blockG.bottom(), 0);
+            glTexCoord2i( 1, 1 );
+            glVertex2f(  blockG.right(),  blockG.bottom());
 
-            glTexCoord2i( 0, blockG.height() );
-            glVertex3f( blockG.left(),  blockG.bottom(), 0 );
+            glTexCoord2i( 0, 1 );
+            glVertex2f( blockG.left(),  blockG.bottom());
         glEnd();
+        glDisable(GL_TEXTURE_2D);
     }
-
 }
