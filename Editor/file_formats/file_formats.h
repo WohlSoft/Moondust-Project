@@ -24,7 +24,10 @@
 #include <QFile>
 #include <QTextStream>
 #include <QTextCodec>
+#ifndef PGE_ENGINE
 #include <QMessageBox>
+#endif
+
 
 
 #include "lvl_filedata.h"
