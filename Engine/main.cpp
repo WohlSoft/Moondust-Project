@@ -348,6 +348,23 @@ int main(int argc, char *argv[])
 
 void drawQuads()
 {
+
+
+    //Change camera position
+    pos_x = -1*(met2pix(playerBody->GetPosition().x) - screen_width/2);
+    pos_y = -1*(met2pix(playerBody->GetPosition().y) - screen_height/2);
+
+    if(-pos_x < level.sections[0].size_left)
+        pos_x = -level.sections[0].size_left;
+    if(-(pos_x-screen_width) > level.sections[0].size_right)
+        pos_x = -level.sections[0].size_right+screen_width;
+
+    if(-pos_y < level.sections[0].size_top)
+        pos_y = -level.sections[0].size_top;
+    if(-(pos_y-screen_height) > level.sections[0].size_bottom)
+        pos_y = -level.sections[0].size_bottom+screen_height;
+
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //Reset modelview matrix
@@ -359,8 +376,23 @@ void drawQuads()
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
     int imgPos_X = ((level.sections[0].size_left+pos_x)/2) % TextureBuffer[1].w;
-    int imgPos_Y = (level.sections[0].size_top+pos_y)-screen_height*
-            (fabs(level.sections[0].size_top-level.sections[0].size_bottom)/ TextureBuffer[1].h);
+
+
+    int imgPos_Y;
+
+
+    if(fabs(level.sections[0].size_top-level.sections[0].size_bottom) > TextureBuffer[1].h)
+        imgPos_Y =
+                (level.sections[0].size_top+pos_y)
+                /
+                (
+                    (fabs(level.sections[0].size_top-level.sections[0].size_bottom) - screen_height)/
+                    (TextureBuffer[1].h - screen_height)
+                );
+    else
+        imgPos_Y =
+                level.sections[0].size_top+pos_y
+                - (TextureBuffer[1].h-screen_height);
 
     //fabs(level.sections[0].size_top-level.sections[0].size_bottom)
     //TextureBuffer[1].h
@@ -470,9 +502,6 @@ void drawQuads()
     }
 
     //qDebug()<< playerBody->GetPosition().x<< "x" << playerBody->GetPosition().y;
-    pos_x = -1*(met2pix(playerBody->GetPosition().x) - screen_width/2);
-    pos_y = -1*(met2pix(playerBody->GetPosition().y) - screen_height/2);
-
     QRect pl = QRect( met2pix(playerBody->GetPosition().x)-(level.players[0].w/2) +pos_x, met2pix(playerBody->GetPosition().y)-(level.players[0].h/2)+pos_y,
                       level.players[0].w, level.players[0].h);
 
@@ -485,4 +514,5 @@ void drawQuads()
         glVertex2f(  player.right(),  player.bottom());
         glVertex2f( player.left(),  player.bottom());
     glEnd();
+
 }
