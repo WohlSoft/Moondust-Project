@@ -40,6 +40,9 @@ struct keysForTest
 {
     bool move_r = false;
     bool move_l = false;
+    bool go_r = false;
+    bool go_l = false;
+    bool jump = false;
 };
 
 keysForTest myKeys;
@@ -48,6 +51,9 @@ void resetKeys()
 {
     myKeys.move_r = false;
     myKeys.move_l = false;
+    myKeys.go_r = false;
+    myKeys.go_l = false;
+    myKeys.jump = false;
 }
 
 
@@ -86,6 +92,20 @@ int SDL_ToggleFS(SDL_Window *win)
    return 1;
 }
 
+b2Body* playerBody;
+b2World* world;
+
+const float pixMeter=10.0f; // Pixels per meter
+float met2pix(float met)
+{
+    return met * pixMeter;
+}
+float pix2met(float pix)
+{
+    return pix / pixMeter;
+}
+
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
@@ -100,6 +120,9 @@ int main(int argc, char *argv[])
 
 
     QString fileToPpen = a.applicationDirPath()+"/physics.lvl";
+
+    if(a.arguments().size()>1)
+        fileToPpen = a.arguments()[1];
 
     QFile file(fileToPpen );
 
@@ -125,8 +148,56 @@ int main(int argc, char *argv[])
     TextureBuffer[1] = loadTexture(a.applicationDirPath().toStdString()+"/bg.bmp");
     TextureBuffer[2] = loadTexture(a.applicationDirPath().toStdString()+"/bgo.bmp");
 
-    //b2Vec2 gravity(0.0f, 1.0f);
-    //b2World world(gravity);
+
+    b2Vec2 gravity(0.0f, 150.0f);
+    world = new b2World(gravity);
+
+    for(int i=0; i<level.blocks.size(); i++)
+    {
+        b2BodyDef bodyDef;
+        bodyDef.type = b2_staticBody;
+        bodyDef.position.Set( pix2met(level.blocks[i].x+(level.blocks[i].w/2) ),
+            pix2met(level.blocks[i].y + (level.blocks[i].h/2)) );
+        //bodyDef.userData <- I will use them as Pointer to array with settings
+        b2Body* body = world->CreateBody(&bodyDef);
+        b2PolygonShape shape;
+        shape.SetAsBox(pix2met(level.blocks[i].w+1)/2, pix2met(level.blocks[i].h+1)/2);
+        b2Fixture * block = body->CreateFixture(&shape, 1.0f);
+        block->SetFriction(level.blocks[i].slippery? 0.04f : 0.25f );
+    }
+
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(pix2met(level.players[0].x + (level.players[0].w/2)),
+            pix2met(level.players[0].y + (level.players[0].h/2) ) );
+    bodyDef.fixedRotation = true;
+    bodyDef.bullet = true;
+    //bodyDef.userData <- I will use them as Pointer to array with settings
+    playerBody = world->CreateBody(&bodyDef);
+
+//    int32 polygonCount = 8;
+//    b2Vec2 polygonArray[polygonCount];
+//    float pW = pix2met(level.players[0].w)/2;
+//    float pH = pix2met(level.players[0].h)/2;
+
+//    polygonArray[0].Set(-pW, -pH+0.5f);
+//    polygonArray[1].Set(-pW+0.5f, -pH);
+//    polygonArray[2].Set(pW-0.5f, -pH);
+//    polygonArray[3].Set(pW, -pH+0.5f);
+
+//    polygonArray[4].Set(pW, pH-0.5f);
+//    polygonArray[5].Set(pW-0.5f, pH);
+//    polygonArray[6].Set(-pW+0.5f, pH);
+//    polygonArray[7].Set(-pW, pH-0.5f);
+
+    b2PolygonShape shape;
+    shape.SetAsBox(pix2met(level.players[0].w)/2, pix2met(level.players[0].h)/2);
+    //shape.Set(polygonArray,polygonCount);
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &shape;
+    fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
+    playerBody->CreateFixture(&fixtureDef);
+
 
     Uint32 start;
 
@@ -160,8 +231,8 @@ int main(int argc, char *argv[])
                     //break;
 
                     case SDL_KEYDOWN: // If pressed key
-                        switch(event.key.keysym.sym)
-                        { // Check which
+                      switch(event.key.keysym.sym)
+                      { // Check which
                         case SDLK_ESCAPE: // ESC
                                 running = false; // End work of program
                             break;
@@ -175,23 +246,21 @@ int main(int argc, char *argv[])
                             myKeys.move_l = true;
                         break;
 
-                        case SDLK_LEFT:
-                        case SDLK_a:
-                            pos_x += 32;
-                            break;
+                        case SDLK_SPACE:
+                            if(!myKeys.jump)
+                             playerBody->SetLinearVelocity(b2Vec2(playerBody->GetLinearVelocity().x, -65.0f-fabs(playerBody->GetLinearVelocity().x/5)));
+                            myKeys.jump=true;
+                        break;
+
                         case SDLK_RIGHT:
-                        case SDLK_d:
-                            pos_x -= 32;
-                            break;
-                        case SDLK_UP:
-                        case SDLK_w:
-                                pos_y += 32;
-                            break;
-                        case SDLK_DOWN:
-                        case SDLK_s:
-                                pos_y -= 32;
-                            break;
-                        }
+                                myKeys.go_r=true;
+                        break;
+
+                        case SDLK_LEFT:
+                                myKeys.go_l=true;
+                        break;
+
+                      }
                     break;
 
                     case SDL_KEYUP:
@@ -203,6 +272,17 @@ int main(int argc, char *argv[])
                             case SDLK_n:
                                 myKeys.move_l = false;
                             break;
+
+                            case SDLK_SPACE:
+                                myKeys.jump=false;
+                            break;
+
+                            case SDLK_RIGHT:
+                                myKeys.go_r=false;
+                                break;
+                            case SDLK_LEFT:
+                                myKeys.go_l=false;
+                                break;
                         }
                     break;
                 }
@@ -223,14 +303,34 @@ int main(int argc, char *argv[])
             SDL_GL_SwapWindow(window);
 
         }
-        doUpdate--;
+        doUpdate-=10;
+
+        world->Step(1.0f / 100.0f, 1, 1);
 
         if(myKeys.move_r && ! myKeys.move_l)
             pos_x-=1;
         if(myKeys.move_l && ! myKeys.move_r)
             pos_x+=1;
-        SDL_Delay(1);
+
+
+        //playerBody->SetLinearVelocity(b2Vec2(30,playerBody->GetLinearVelocity().y));
+        //if(playerBody->GetLinearVelocity().x < -30)
+        //playerBody->SetLinearVelocity(b2Vec2(-30,playerBody->GetLinearVelocity().y));
+
+        if(playerBody->GetLinearVelocity().y > 72)
+            playerBody->SetLinearVelocity(b2Vec2(playerBody->GetLinearVelocity().x, 72));
+
+        if(myKeys.go_r)
+            if(playerBody->GetLinearVelocity().x <= 24)
+                playerBody->ApplyForceToCenter(b2Vec2(1000.0f, 0.0f), true);
+        if(myKeys.go_l)
+            if(playerBody->GetLinearVelocity().x >= -24)
+                playerBody->ApplyForceToCenter(b2Vec2(-1000.0f, 0.0f), true);
+
+        SDL_Delay(10);
     }
+
+    delete world;
 
     // Now we can delete the OpenGL texture and close down SDL
     glDeleteTextures( 1, &TextureBuffer[0].texture );
@@ -258,8 +358,16 @@ void drawQuads()
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
-    int imgPos = ((level.sections[0].size_left+pos_x)/2) % TextureBuffer[1].w;
-    QRectF blockG = QRectF(mapToOpengl(QPoint(imgPos, 0)), mapToOpengl(QPoint(imgPos+TextureBuffer[1].w,TextureBuffer[1].h)) );
+    int imgPos_X = ((level.sections[0].size_left+pos_x)/2) % TextureBuffer[1].w;
+    int imgPos_Y = (level.sections[0].size_top+pos_y)-screen_height*
+            (fabs(level.sections[0].size_top-level.sections[0].size_bottom)/ TextureBuffer[1].h);
+
+    //fabs(level.sections[0].size_top-level.sections[0].size_bottom)
+    //TextureBuffer[1].h
+    //screen_height
+    //pos_y
+
+    QRectF blockG = QRectF(mapToOpengl(QPoint(imgPos_X, imgPos_Y)), mapToOpengl(QPoint(imgPos_X+TextureBuffer[1].w, imgPos_Y+TextureBuffer[1].h)) );
 
     glColor4f( 1.f, 1.f, 1.f, 1.f);
     glEnable(GL_TEXTURE_2D);
@@ -278,9 +386,9 @@ void drawQuads()
         glVertex2f( blockG.left(),  blockG.bottom());
     glEnd();
 
-    imgPos += TextureBuffer[1].w;
+    imgPos_X += TextureBuffer[1].w;
 
-    blockG = QRectF(mapToOpengl(QPoint(imgPos, 0)), mapToOpengl(QPoint(imgPos+TextureBuffer[1].w,TextureBuffer[1].h)) );
+    blockG = QRectF(mapToOpengl(QPoint(imgPos_X, imgPos_Y)), mapToOpengl(QPoint(imgPos_X+TextureBuffer[1].w,imgPos_Y+TextureBuffer[1].h)) );
     glBindTexture( GL_TEXTURE_2D, TextureBuffer[1].texture );
     glBegin( GL_QUADS );
         glTexCoord2i( 0, 0 );
@@ -310,7 +418,7 @@ void drawQuads()
 
         //            qDebug() << "Point " << blockG.topLeft() << " size "
         //                     << blockG.bottomRight();
-        glColor4f( 1.f, 1.f, 1.f, 0.3f);
+        glColor4f( 1.f, 1.f, 1.f, 1.0f);
         glEnable(GL_TEXTURE_2D);
         glBindTexture( GL_TEXTURE_2D, TextureBuffer[2].texture );
         //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -360,4 +468,21 @@ void drawQuads()
         glEnd();
         glDisable(GL_TEXTURE_2D);
     }
+
+    //qDebug()<< playerBody->GetPosition().x<< "x" << playerBody->GetPosition().y;
+    pos_x = -1*(met2pix(playerBody->GetPosition().x) - screen_width/2);
+    pos_y = -1*(met2pix(playerBody->GetPosition().y) - screen_height/2);
+
+    QRect pl = QRect( met2pix(playerBody->GetPosition().x)-(level.players[0].w/2) +pos_x, met2pix(playerBody->GetPosition().y)-(level.players[0].h/2)+pos_y,
+                      level.players[0].w, level.players[0].h);
+
+    QRectF player = QRectF(mapToOpengl(QPoint(pl.x(), pl.y())),
+                           mapToOpengl(QPoint(pl.x()+pl.width(), pl.y()+pl.height())) );
+    glColor4f( 0.f, 0.f, 1.f, 1.f);
+    glBegin( GL_QUADS );
+        glVertex2f( player.left(), player.top());
+        glVertex2f(  player.right(), player.top());
+        glVertex2f(  player.right(),  player.bottom());
+        glVertex2f( player.left(),  player.bottom());
+    glEnd();
 }
