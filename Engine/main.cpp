@@ -327,6 +327,24 @@ int main(int argc, char *argv[])
             if(playerBody->GetLinearVelocity().x >= -24)
                 playerBody->ApplyForceToCenter(b2Vec2(-1000.0f, 0.0f), true);
 
+        if(met2pix(playerBody->GetPosition().y) > level.sections[0].size_bottom+30)
+            playerBody->SetTransform(b2Vec2(pix2met(level.players[0].x + (level.players[0].w/2)),
+                    pix2met(level.players[0].y + (level.players[0].h/2) )), 0.0f);
+
+        if(level.sections[0].IsWarp)
+        {
+            if(met2pix(playerBody->GetPosition().x) < level.sections[0].size_left-29)
+                playerBody->SetTransform(b2Vec2(
+                     pix2met(level.sections[0].size_right + (level.players[0].w/2)),
+                        playerBody->GetPosition().y), 0.0f);
+            else
+            if(met2pix(playerBody->GetPosition().x) > level.sections[0].size_right+30)
+                playerBody->SetTransform(b2Vec2(
+                     pix2met(level.sections[0].size_left-29 + (level.players[0].w/2)),
+                        playerBody->GetPosition().y), 0.0f);
+        }
+
+
         SDL_Delay(10);
     }
 
@@ -380,19 +398,22 @@ void drawQuads()
 
     int imgPos_Y;
 
+    double sHeight = fabs(level.sections[0].size_top-level.sections[0].size_bottom);
 
-    if(fabs(level.sections[0].size_top-level.sections[0].size_bottom) > TextureBuffer[1].h)
+    if(sHeight > (double)TextureBuffer[1].h)
         imgPos_Y =
                 (level.sections[0].size_top+pos_y)
                 /
                 (
-                    (fabs(level.sections[0].size_top-level.sections[0].size_bottom) - screen_height)/
+                    (sHeight - screen_height)/
                     (TextureBuffer[1].h - screen_height)
                 );
+    else if(sHeight == (double)TextureBuffer[1].h)
+        imgPos_Y = level.sections[0].size_top+pos_y;
     else
         imgPos_Y =
-                level.sections[0].size_top+pos_y
-                - (TextureBuffer[1].h-screen_height);
+                level.sections[0].size_bottom+pos_y
+                - TextureBuffer[1].h;
 
     //fabs(level.sections[0].size_top-level.sections[0].size_bottom)
     //TextureBuffer[1].h
