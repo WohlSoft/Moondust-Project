@@ -25,6 +25,7 @@ void initSDL()
                               SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
     SDL_GLContext glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+    SDL_GL_SetSwapInterval(1);
     Q_UNUSED(glcontext);
 
     if(window == NULL){	// If failed to create window - exiting
