@@ -236,7 +236,12 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         {
             horizontalScrollBar()->setValue(horizontalScrollBar()->value()+modS);
         }
+        //event->accept();
         replayLastMouseEvent();
+        if(scene())
+        {
+            scene()->update();
+        }
         return;
     }
     else
@@ -248,7 +253,12 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         {
             verticalScrollBar()->setValue(verticalScrollBar()->value()+modS);
         }
+        //event->accept();
         replayLastMouseEvent();
+        if(scene())
+        {
+            scene()->update();
+        }
         return;
     }
     replayLastMouseEvent();
