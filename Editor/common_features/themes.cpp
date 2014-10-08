@@ -482,9 +482,9 @@ void Themes::loadTheme(QString themeDir)
     guiset.endGroup();
 
     guiset.beginGroup("edit-zoom");
-        loadIcon(guiset,"zoom-reset", square_fill );
-        loadIcon(guiset,"zoom-in", line_tool );
-        loadIcon(guiset,"zoom-out", overwrite_mode );
+        loadIcon(guiset,"zoom-reset", zoom_reset );
+        loadIcon(guiset,"zoom-in", zoom_in );
+        loadIcon(guiset,"zoom-out", zoom_out );
     guiset.endGroup();
 
     guiset.beginGroup("level");
