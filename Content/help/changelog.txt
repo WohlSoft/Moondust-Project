@@ -1,3 +1,6 @@
+Editor 0.2.2
+- Fixed zoom icons customization
+
 Editor 0.2.1
 - Added support for multi-selection by holding the shift key
 - Added new PGE-only file formats LVLX and WLDX, which support more features and have fewer limitations than the SMBX formats, such as the maximum number of items
