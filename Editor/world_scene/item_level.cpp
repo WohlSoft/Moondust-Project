@@ -49,6 +49,11 @@ ItemLevel::~ItemLevel()
 
 void ItemLevel::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
+    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
+    {
+        QGraphicsItem::mousePressEvent(mouseEvent); return;
+    }
+
     if(scene->DrawMode)
     {
         unsetCursor();
