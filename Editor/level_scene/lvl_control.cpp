@@ -533,7 +533,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
     }
     QGraphicsScene::mouseMoveEvent(mouseEvent);
-    WriteToLog(QtDebugMsg, QString("mouseMove -> done"));
+    //WriteToLog(QtDebugMsg, QString("mouseMove -> done"));
 }
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
