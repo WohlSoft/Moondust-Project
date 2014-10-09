@@ -436,7 +436,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::gridOffset = QPoint(0,0);
         LvlPlacingItems::c_offset_x= 0;
         LvlPlacingItems::c_offset_y= 0;
-        LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
+        LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer.isEmpty()? "Default" : LvlPlacingItems::layer;
         setSquareDrawer(); return;
         break;
     case 4: //doorPoint
