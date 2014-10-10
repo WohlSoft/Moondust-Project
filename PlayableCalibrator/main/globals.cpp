@@ -23,6 +23,8 @@ Globals::Globals()
 {
 }
 
+QList<QVector<QPair<int, int> > > imgOffsets;
+
 QList<QVector<frameOpts > > framesX;
 frameOpts buffer;
 QString LastOpenDir=".";
