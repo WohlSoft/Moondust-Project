@@ -28,7 +28,10 @@
 #include "frame_matrix/matrix.h"
 #include "animator/animate.h"
 #include "animator/aniFrames.h"
+#include "image_calibration/image_calibrator.h"
+
 #include "main/globals.h"
+#include "main/graphics.h"
 
 CalibrationMain::CalibrationMain(QWidget *parent) :
     QWidget(parent),
@@ -159,7 +162,7 @@ SpriteScene::SpriteScene(QObject *parent) : QGraphicsScene(parent)
     QList<QString > tmp;
     QFileInfo ourFile(currentFile);
     QString imgFileM;
-    QPixmap sprite, mask;
+    QPixmap sprite;
     croc = new QGraphicsPixmapItem;
     sizer = new QGraphicsRectItem;
 
@@ -169,17 +172,26 @@ SpriteScene::SpriteScene(QObject *parent) : QGraphicsScene(parent)
     x=0; y=0, dir=1;
     mPos = QPoint(0,0);
 
-    sprite = QPixmap(currentFile);
-
     tmp = ourFile.fileName().split(".", QString::SkipEmptyParts);
     if(tmp.size()==2)
         imgFileM = tmp[0] + "m." + tmp[1];
     else
         imgFileM = "";
-    mask = QPixmap( ourFile.absoluteDir().path() + "/" + imgFileM );
 
-    sprite.setMask(mask);
-    mSpriteImage = QPixmap(sprite);
+    QImage maskImg;
+    if(QFile::exists(ourFile.absoluteDir().path() + "/" + imgFileM))
+        maskImg = Graphics::loadQImage( ourFile.absoluteDir().path() + "/" + imgFileM );
+    else
+        maskImg = QImage();
+
+    sprite = QPixmap::fromImage(
+                    Graphics::setAlphaMask(
+                        Graphics::loadQImage( currentFile )
+                        , maskImg )
+                    );
+
+
+    mSpriteImage = sprite;
 
     draw();
 
@@ -452,7 +464,8 @@ void CalibrationMain::on_editSizes_clicked()
       reply = QMessageBox::question(this, "Warning",
         "This is a physical settings for a sprite, this need only for creation of new character sprite\nIf you want to use this sprite in SMBX, please, don't edit this settings.\nDo you want to continue?",
                                     QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes) {
+      if (reply == QMessageBox::Yes)
+      {
             ui->EnableFrame->setEnabled(true);
             ui->Height->setEnabled(true);
             ui->Width->setEnabled(true);
@@ -462,10 +475,19 @@ void CalibrationMain::on_editSizes_clicked()
             ui->PasteButton->setEnabled(true);
             ui->applyToAll->setEnabled(true);
             ui->editSizes->setVisible(false);
-          }
+      }
 }
 
 void CalibrationMain::on_calibrateImage_clicked()
 {
+    ImageCalibrator imgCalibrator;
+    imgCalibrator.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    if(!imgCalibrator.init(currentFile)) return;
 
+    imgCalibrator.Scene = Scene;
+
+    this->hide();
+    imgCalibrator.exec();
+    this->show();
+    OpenFile(imgCalibrator.targetPath);
 }

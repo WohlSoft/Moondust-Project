@@ -21,6 +21,7 @@
 #define GLOBALS_H
 
 #include <QList>
+#include <QPair>
 #include "animator/aniFrames.h"
 #include "animator/AnimationScene.h"
 
@@ -29,6 +30,8 @@ class Globals
 public:
     Globals();
 };
+
+extern QList<QVector<QPair<int, int> > > imgOffsets; // Image offsets
 
 extern QList<QVector<frameOpts > > framesX;
 extern frameOpts buffer;

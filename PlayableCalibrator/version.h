@@ -23,11 +23,11 @@
 #define EDITOR_VERSION_H
 
 //Version of this program
-#define _FILE_VERSION "0.5.0"
+#define _FILE_VERSION "0.9.0"
 #define _FILE_RELEASE " Alpha"
 
 #define _VF1 0
-#define _VF2 5
+#define _VF2 9
 #define _VF3 0
 #define _VF4 0
 
