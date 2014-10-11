@@ -31,7 +31,7 @@ public:
     Globals();
 };
 
-extern QList<QVector<QPair<int, int> > > imgOffsets; // Image offsets
+extern QList<QVector<frameOpts > > imgOffsets; // Image offsets
 
 extern QList<QVector<frameOpts > > framesX;
 extern frameOpts buffer;
