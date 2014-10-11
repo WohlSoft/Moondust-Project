@@ -77,14 +77,35 @@ bool ImageCalibrator::init(QString imgPath)
     frmX=0;
     frmY=0;
 
-    imgOffsets.clear();
+    //    imgOffsets.clear();
+    //    for(int i=0; i<10; i++)
+    //    {
+    //        QVector<QPair<int, int > > xRow;
+    //        for(int j=0; j<10; j++)
+    //        {
+    //            xRow.push_back(  );
+    //        }
+    //        imgOffsets.push_back(xRow);
+    //    }
+
+    frameOpts xyCell;
+    xyCell.offsetX=0;
+    xyCell.offsetY=0;
+    xyCell.W=0;
+    xyCell.H=0;
+    xyCell.used=false;
+    // Write default values
+    QVector<frameOpts > xRow;
     for(int i=0; i<10; i++)
     {
-        QVector<QPair<int, int > > xRow;
+        xRow.clear();
         for(int j=0; j<10; j++)
-            xRow.push_back( QPair<int, int >(0,0) );
+        {
+            xRow.push_back(xyCell);
+        }
         imgOffsets.push_back(xRow);
     }
+
 
     loadCalibrates();
 
@@ -111,8 +132,10 @@ void ImageCalibrator::on_FrameX_valueChanged(int arg1)
     if(ImgCalibratorLock) return;
     frmX = arg1;
     ImgCalibratorLock = true;
-    ui->OffsetX->setValue(imgOffsets[frmX][frmY].first);
-    ui->OffsetY->setValue(imgOffsets[frmX][frmY].second);
+    ui->OffsetX->setValue(imgOffsets[frmX][frmY].offsetX);
+    ui->OffsetY->setValue(imgOffsets[frmX][frmY].offsetY);
+    ui->CropW->setValue(imgOffsets[frmX][frmY].W);
+    ui->CropH->setValue(imgOffsets[frmX][frmY].H);
     ImgCalibratorLock = false;
     updateScene();
 
@@ -123,8 +146,10 @@ void ImageCalibrator::on_FrameY_valueChanged(int arg1)
     if(ImgCalibratorLock) return;
     frmY = arg1;
     ImgCalibratorLock = true;
-    ui->OffsetX->setValue(imgOffsets[frmX][frmY].first);
-    ui->OffsetY->setValue(imgOffsets[frmX][frmY].second);
+    ui->OffsetX->setValue(imgOffsets[frmX][frmY].offsetX);
+    ui->OffsetY->setValue(imgOffsets[frmX][frmY].offsetY);
+    ui->CropW->setValue(imgOffsets[frmX][frmY].W);
+    ui->CropH->setValue(imgOffsets[frmX][frmY].H);
     ImgCalibratorLock = false;
     updateScene();
 }
@@ -132,14 +157,29 @@ void ImageCalibrator::on_FrameY_valueChanged(int arg1)
 void ImageCalibrator::on_OffsetX_valueChanged(int arg1)
 {
     if(ImgCalibratorLock) return;
-    imgOffsets[frmX][frmY].first = arg1;
+    imgOffsets[frmX][frmY].offsetX = arg1;
     updateScene();
 }
 
 void ImageCalibrator::on_OffsetY_valueChanged(int arg1)
 {
     if(ImgCalibratorLock) return;
-    imgOffsets[frmX][frmY].second = arg1;
+    imgOffsets[frmX][frmY].offsetY = arg1;
+    updateScene();
+}
+
+void ImageCalibrator::on_CropW_valueChanged(int arg1)
+{
+    if(ImgCalibratorLock) return;
+    imgOffsets[frmX][frmY].W = arg1;
+    updateScene();
+
+}
+
+void ImageCalibrator::on_CropH_valueChanged(int arg1)
+{
+    if(ImgCalibratorLock) return;
+    imgOffsets[frmX][frmY].H = arg1;
     updateScene();
 }
 
@@ -154,8 +194,10 @@ void ImageCalibrator::on_Matrix_clicked()
         frmY = dialog.frameY;
         ui->FrameX->setValue(frmX);
         ui->FrameY->setValue(frmY);
-        ui->OffsetX->setValue(imgOffsets[frmX][frmY].first);
-        ui->OffsetY->setValue(imgOffsets[frmX][frmY].second);
+        ui->OffsetX->setValue(imgOffsets[frmX][frmY].offsetX);
+        ui->OffsetY->setValue(imgOffsets[frmX][frmY].offsetY);
+        ui->CropW->setValue(imgOffsets[frmX][frmY].W);
+        ui->CropH->setValue(imgOffsets[frmX][frmY].H);
         ImgCalibratorLock=false;
     }
     updateScene();
@@ -163,11 +205,15 @@ void ImageCalibrator::on_Matrix_clicked()
 
 void ImageCalibrator::on_Reset_clicked()
 {
-    imgOffsets[frmX][frmY].first = 0;
-    imgOffsets[frmX][frmY].second = 0;
+    imgOffsets[frmX][frmY].offsetX = 0;
+    imgOffsets[frmX][frmY].offsetY = 0;
+    imgOffsets[frmX][frmY].W = 0;
+    imgOffsets[frmX][frmY].H = 0;
     ImgCalibratorLock = true;
     ui->OffsetX->setValue(0);
     ui->OffsetY->setValue(0);
+    ui->CropW->setValue(0);
+    ui->CropH->setValue(0);
     ImgCalibratorLock = false;
     updateScene();
 }
@@ -227,7 +273,8 @@ void ImageCalibrator::on_WriteGIF_clicked()
 void ImageCalibrator::updateScene()
 {
     imgFrame->setPixmap(
-                getFrame(frmX, frmY, imgOffsets[frmX][frmY].first, imgOffsets[frmX][frmY].second)
+                getFrame(frmX, frmY, imgOffsets[frmX][frmY].offsetX, imgOffsets[frmX][frmY].offsetY,
+                         imgOffsets[frmX][frmY].W, imgOffsets[frmX][frmY].H)
                 );
     physics->setRect(framesX[frmX][frmY].offsetX, framesX[frmX][frmY].offsetY,
                      framesX[frmX][frmY].W-1, framesX[frmX][frmY].H-1);
@@ -242,8 +289,10 @@ void ImageCalibrator::saveCalibrates()
         for(int j=0; j<10; j++)
         {
             conf.beginGroup(QString::number(i)+"-"+QString::number(j));
-            conf.setValue("x", imgOffsets[i][j].first);
-            conf.setValue("y", imgOffsets[i][j].second);
+            conf.setValue("x", imgOffsets[i][j].offsetX);
+            conf.setValue("y", imgOffsets[i][j].offsetY);
+            conf.setValue("w", imgOffsets[i][j].W);
+            conf.setValue("h", imgOffsets[i][j].H);
             conf.endGroup();
         }
     }
@@ -259,8 +308,10 @@ void ImageCalibrator::loadCalibrates()
         for(int j=0; j<10; j++)
         {
             conf.beginGroup(QString::number(i)+"-"+QString::number(j));
-            imgOffsets[i][j].first = conf.value("x", 0).toInt();
-            imgOffsets[i][j].second = conf.value("y", 0).toInt();
+            imgOffsets[i][j].offsetX = conf.value("x", 0).toInt();
+            imgOffsets[i][j].offsetY = conf.value("y", 0).toInt();
+            imgOffsets[i][j].W = conf.value("w", 0).toInt();
+            imgOffsets[i][j].H = conf.value("h", 0).toInt();
             conf.endGroup();
         }
     }
@@ -276,7 +327,8 @@ QPixmap ImageCalibrator::generateTarget()
         for(int j=0; j<10; j++)
         {
             x.drawPixmap(i*100, j*100, 100, 100,
-                         getFrame(i, j, imgOffsets[i][j].first, imgOffsets[i][j].second)
+                         getFrame(i, j, imgOffsets[i][j].offsetX, imgOffsets[i][j].offsetY,
+                                  imgOffsets[i][j].W, imgOffsets[i][j].H)
                          );
         }
     }
@@ -284,7 +336,7 @@ QPixmap ImageCalibrator::generateTarget()
     return target;
 }
 
-QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY)
+QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY, int cW, int cH)
 {
     int pX=0, pY=0, pXo=0, pYo=0;
     int X, Y;
@@ -317,10 +369,12 @@ QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY)
     QPixmap frame(100,100);
     frame.fill(Qt::transparent);
     QPainter pt(&frame);
-    pt.drawPixmap(-pX, -pY, 100-pXo, 100-pYo,
+    pt.drawPixmap(-pX, -pY, 100-pXo-cW, 100-pYo-cH,
                  sprite.copy(X-pX,
-                             Y-pY, 100-pXo,100-pYo));
+                             Y-pY, 100-pXo-cW,100-pYo-cH));
     pt.end();
 
     return frame;
 }
+
+

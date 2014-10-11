@@ -43,7 +43,11 @@ private slots:
     void saveCalibrates();
     void loadCalibrates();
     QPixmap generateTarget();
-    QPixmap getFrame(int x, int y, int oX, int oY);
+    QPixmap getFrame(int x, int y, int oX, int oY, int cW, int cH);
+
+    void on_CropW_valueChanged(int arg1);
+
+    void on_CropH_valueChanged(int arg1);
 
 private:
     Ui::ImageCalibrator *ui;
