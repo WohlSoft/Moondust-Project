@@ -39,17 +39,16 @@ struct obj_block{
     bool slopeslide;
     int phys_shape;
     bool lava;
-    bool destruct;
-    bool dest_bomb;
-    bool dest_fire;
+    bool destroyable;
+    bool destroyable_by_bomb;
+    bool destroyable_by_fireball;
     bool spawn; //split string by "-" in != "0"
         int spawn_obj; // 1 - NPC, 2 - block, 3 - BGO
         unsigned long spawn_obj_id;
     unsigned long effect;
     bool bounce;
     bool hitable;
-    bool onhit;
-    unsigned long onhit_block;
+    unsigned long transfororm_on_hit_into;
     unsigned long algorithm;
 
     unsigned int view;
