@@ -427,13 +427,16 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->clearSelection();
 
             if(mouseEvent->modifiers() & Qt::ControlModifier )
-            MainWinConnect::pMainWin->showToolTipMsg(
+                setMessageBoxItem(true, mouseEvent->scenePos(),
                                        (cursor?
                                             (
                                        QString::number( cursor->scenePos().toPoint().x() ) + "x" +
                                        QString::number( cursor->scenePos().toPoint().y() )
                                             )
-                                                :""), mouseEvent->screenPos(), 5000);
+                                                :""));
+            else
+                setMessageBoxItem(false);
+
             if(cursor)
             {
                         cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
@@ -455,12 +458,22 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if(cursor)
         {
+
                     cursor->setPos( QPointF(applyGrid( mouseEvent->scenePos().toPoint()-
                                                        QPoint(WldPlacingItems::c_offset_x,
                                                               WldPlacingItems::c_offset_y),
                                                      WldPlacingItems::gridSz,
                                                      WldPlacingItems::gridOffset)));
                    cursor->show();
+
+                   setMessageBoxItem(true, mouseEvent->scenePos(),
+                                          (cursor?
+                                               (
+                                          QString::number( cursor->scenePos().toPoint().x() ) + "x" +
+                                          QString::number( cursor->scenePos().toPoint().y() )
+                                               )
+                                                   :""));
+
         }
         QGraphicsScene::mouseMoveEvent(mouseEvent);
         break;

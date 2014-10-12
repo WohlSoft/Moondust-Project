@@ -72,6 +72,7 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
 
     cursor = NULL;
     resetCursor();
+    messageBox = NULL;
 
     //set dummy images if target not exist or wrong
     uTileImg=QPixmap(ApplicationPath + "/" + "data/unknown_tile.png");
@@ -109,6 +110,7 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
 
 WldScene::~WldScene()
 {
+    if(messageBox) delete messageBox;
     uTiles.clear();
     uScenes.clear();
     uPaths.clear();
