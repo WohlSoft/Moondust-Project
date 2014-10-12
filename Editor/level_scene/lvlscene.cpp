@@ -65,6 +65,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     resetPosition = false;
 
     cursor = NULL;
+    messageBox = NULL;
     resetCursor();
 
     //set dummy images if target not exist or wrong
@@ -119,6 +120,7 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
 LvlScene::~LvlScene()
 {
+    if(messageBox) delete messageBox;
     uBGs.clear();
     uBGOs.clear();
     uBlocks.clear();
