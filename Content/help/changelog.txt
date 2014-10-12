@@ -1,6 +1,7 @@
 Editor 0.2.1.1
 - Fixed zoom icons customization
 - Fixed tiny mouse events of locked items bug
+- Fixed mouse wheel artifacts while placing mode is enabled
 
 Editor 0.2.1
 - Added support for multi-selection by holding the shift key
