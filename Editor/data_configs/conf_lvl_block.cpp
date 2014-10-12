@@ -161,9 +161,9 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
                 sblock.phys_shape = blockset.value("fixture-type", "0").toInt();// Leaved for compatibility
                 sblock.phys_shape = blockset.value("shape-type", sblock.phys_shape).toInt();//new value-name
                 sblock.lava = blockset.value("lava", "0").toBool();
-                sblock.destruct = blockset.value("destruct", "0").toBool();
-                sblock.dest_bomb = blockset.value("destruct-bomb", "0").toBool();
-                sblock.dest_fire = blockset.value("destruct-fireball", "0").toBool();
+                sblock.destroyable = blockset.value("destroyable", "0").toBool();
+                sblock.destroyable_by_bomb = blockset.value("destroyable-by-bomb", "0").toBool();
+                sblock.destroyable_by_fireball = blockset.value("destroyable-by-fireball", "0").toBool();
 
                 Temp01 = blockset.value("spawn-on-destroy", "0").toString();
                 if(Temp01!="0")
@@ -196,12 +196,11 @@ void dataconfigs::loadLevelBlocks(QProgressDialog *prgs)
                     sblock.spawn_obj_id = 0;
                 }
 
-                sblock.effect= blockset.value("destruct-effect", "1").toInt();
+                sblock.effect= blockset.value("destroy-effect", "1").toInt();
 
                 sblock.bounce = blockset.value("bounce", "0").toBool();
                 sblock.hitable = blockset.value("hitable", "0").toBool();
-                sblock.onhit = blockset.value("hitable", "0").toBool();
-                sblock.onhit_block= blockset.value("onhit-block", "2").toInt();
+                sblock.transfororm_on_hit_into = blockset.value("transform-onhit-into", "2").toInt();
                 sblock.algorithm= blockset.value("algorithm", "2").toInt();
                 sblock.view = (int)(blockset.value("view", "background").toString()=="foreground");
                 sblock.animated = blockset.value("animated", "0").toBool();
