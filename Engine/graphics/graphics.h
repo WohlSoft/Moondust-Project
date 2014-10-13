@@ -4,22 +4,35 @@
 #include <QPoint>
 #include <QPointF>
 #include <QString>
+
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
 
-struct PGE_Texture
+#undef main
+
+#include "../common_features/pge_texture.h"
+
+class LVL_Background
 {
-    GLuint texture; // Texture object handle
-    int w; //Width of the texture.
-    int h; //Height of the texture.
-    GLubyte *texture_layout;
-    GLenum format;
-    GLint  nOfColors;
+public:
+    LVL_Background();
+    ~LVL_Background();
+    enum type
+    {
+        single_row=0,
+        double_row,
+        tiled,
+        multi_layered
+    };
+
+    std::vector<PGE_Texture* > bg_textures;
 };
 
-PGE_Texture loadTexture(std::string path);
+
+//PGE_Texture loadTexture(std::string path);
+//SDL_Surface *load_image( std::string filename );
 
 QPointF mapToOpengl(QPoint s);
-SDL_Surface *load_image( std::string filename );
+
 
 #endif // GRAPHICS_H

@@ -1,5 +1,6 @@
 #include "window.h"
 #include <iostream>
+#include "../common_features/graphics_funcs.h"
 
 int PGE_Window::Width=800;
 int PGE_Window::Height=600;
@@ -32,6 +33,11 @@ bool PGE_Window::init(QString WindowTitle)
                               SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
     SDL_GLContext glcontext = SDL_GL_CreateContext(window); // Creating of the OpenGL Context
+
+    SDL_SetWindowIcon(window,
+                           GraphicsHelps::QImage_toSDLSurface(QImage(":/icon/cat_16.png")));
+
+
     SDL_GL_SetSwapInterval(1);
     Q_UNUSED(glcontext);
 

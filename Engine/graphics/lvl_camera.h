@@ -3,7 +3,10 @@
 
 #include <Box2D/Box2D.h>
 #include "../physics/base_object.h"
+#include "graphics.h"
 #include <vector>
+
+#include <file_formats.h>
 
 
 typedef std::vector<PGE_Phys_Object *>  PGE_RenderList;
@@ -24,12 +27,32 @@ public:
     void setPos(int x, int y);
     void setSize(int w, int h);
     void update();
+    void drawBackground();
+
+    void changeSectionBorders(long left, long top, long right, long bottom);
     PGE_RenderList renderObjects();
+
+    LevelSection *section;
+
+    LVL_Background background;
+
+    bool isWarp;
+
+    /// Limits of section motion
+    int s_top;
+    int s_bottom;
+    int s_left;
+    int s_right;
 
 private:
     PGE_RenderList objects_to_render;
+
     int width;
     int height;
+
+    int pos_x;
+    int pos_y;
+
     b2World * worldPtr;
     b2Body* sensor;
 };
