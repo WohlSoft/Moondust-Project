@@ -3,34 +3,29 @@
 #include <QElapsedTimer>
 #include <QFileInfo>
 #include <QDir>
-#include <SDL2/SDL.h> // SDL 2 Library
-#include <SDL2/SDL_opengl.h>
 
+#include "graphics/window.h"
+#include "graphics/gl_renderer.h"
 #undef main
 
 #include <Box2D/Box2D.h>
 
 #include <file_formats.h>
 
-#include "graphics.h"
+#include "graphics/graphics.h"
 
 #include <iostream>
 using namespace std;
 
 #include <QtDebug>
 
-SDL_Window *window; // Creating window for SDL
-
-const int screen_width = 800; // Width of Window
-const int screen_height = 600; // Height of Window
-
 int pos;
 
 int pos_x=199200;
 int pos_y=200600;
 
-
 LevelData level;
+
 
 void drawQuads();
 
@@ -109,14 +104,13 @@ float pix2met(float pix)
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-
     Q_UNUSED(a);
-    //MainWindow w;
-    //w.show();
 
-    //a.exec();
-    initSDL();
-    initOpenGL();
+
+    if(!PGE_Window::init("PGE Engine - dummy tester")) exit(1);
+    if(!GlRenderer::init()) exit(1);
+
+
 
 
     QString fileToPpen = a.applicationDirPath()+"/physics.lvl";
@@ -191,7 +185,7 @@ int main(int argc, char *argv[])
 //    polygonArray[7].Set(-pW, pH-0.5f);
 
     b2PolygonShape shape;
-    shape.SetAsBox(pix2met(level.players[0].w)/2, pix2met(level.players[0].h)/2);
+    shape.SetAsBox(pix2met(level.players[0].w)/2-0.1, pix2met(level.players[0].h)/2-0.1);
     //shape.Set(polygonArray,polygonCount);
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -226,8 +220,8 @@ int main(int argc, char *argv[])
                     break;
 
                     //case SDL_WINDOWEVENT_RESIZED:
-                        //screen_width = ;
-                        //screen_height = event.resize.h;
+                        //PGE_Window::Width = ;
+                        //PGE_Window::Height = event.resize.h;
                     //break;
 
                     case SDL_KEYDOWN: // If pressed key
@@ -237,7 +231,7 @@ int main(int argc, char *argv[])
                                 running = false; // End work of program
                             break;
                         case SDLK_t:
-                            SDL_ToggleFS(window);
+                            SDL_ToggleFS(PGE_Window::window);
                         break;
                         case SDLK_m:
                             myKeys.move_r = true;
@@ -300,7 +294,7 @@ int main(int argc, char *argv[])
             drawQuads();
             // Updating screen
             glFlush();
-            SDL_GL_SwapWindow(window);
+            SDL_GL_SwapWindow(PGE_Window::window);
 
         }
         doUpdate-=10;
@@ -355,7 +349,9 @@ int main(int argc, char *argv[])
     glDeleteTextures( 1, &TextureBuffer[1].texture );
     glDeleteTextures( 1, &TextureBuffer[2].texture );
 
-    SDL_Quit(); // Ending work of the SDL and exiting
+
+    PGE_Window::uninit();
+
     return 0;
     //return
 }
@@ -369,18 +365,18 @@ void drawQuads()
 
 
     //Change camera position
-    pos_x = -1*(met2pix(playerBody->GetPosition().x) - screen_width/2);
-    pos_y = -1*(met2pix(playerBody->GetPosition().y) - screen_height/2);
+    pos_x = -1*(met2pix(playerBody->GetPosition().x) - PGE_Window::Width/2);
+    pos_y = -1*(met2pix(playerBody->GetPosition().y) - PGE_Window::Height/2);
 
     if(-pos_x < level.sections[0].size_left)
         pos_x = -level.sections[0].size_left;
-    if(-(pos_x-screen_width) > level.sections[0].size_right)
-        pos_x = -level.sections[0].size_right+screen_width;
+    if(-(pos_x-PGE_Window::Width) > level.sections[0].size_right)
+        pos_x = -level.sections[0].size_right+PGE_Window::Width;
 
     if(-pos_y < level.sections[0].size_top)
         pos_y = -level.sections[0].size_top;
-    if(-(pos_y-screen_height) > level.sections[0].size_bottom)
-        pos_y = -level.sections[0].size_bottom+screen_height;
+    if(-(pos_y-PGE_Window::Height) > level.sections[0].size_bottom)
+        pos_y = -level.sections[0].size_bottom+PGE_Window::Height;
 
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -389,7 +385,7 @@ void drawQuads()
     glLoadIdentity();
 
     //Move to center of the screen
-    glTranslatef( screen_width / 2.f, screen_height / 2.f, 0.f );
+    glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
@@ -405,8 +401,8 @@ void drawQuads()
                 (level.sections[0].size_top+pos_y)
                 /
                 (
-                    (sHeight - screen_height)/
-                    (TextureBuffer[1].h - screen_height)
+                    (sHeight - PGE_Window::Height)/
+                    (TextureBuffer[1].h - PGE_Window::Height)
                 );
     else if(sHeight == (double)TextureBuffer[1].h)
         imgPos_Y = level.sections[0].size_top+pos_y;
@@ -417,7 +413,7 @@ void drawQuads()
 
     //fabs(level.sections[0].size_top-level.sections[0].size_bottom)
     //TextureBuffer[1].h
-    //screen_height
+    //PGE_Window::Height
     //pos_y
 
     QRectF blockG = QRectF(mapToOpengl(QPoint(imgPos_X, imgPos_Y)), mapToOpengl(QPoint(imgPos_X+TextureBuffer[1].w, imgPos_Y+TextureBuffer[1].h)) );

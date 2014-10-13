@@ -78,8 +78,19 @@ SOURCES += main.cpp \
     ../Editor/file_formats/pge_x.cpp \
     ../Editor/file_formats/smbx64.cpp \
     ../Editor/file_formats/wld_filedata.cpp \
-    graphics.cpp \
-    init.cpp
+    physics/base_object.cpp \
+    physics/phys_util.cpp \
+    graphics/lvl_camera.cpp \
+    graphics/graphics.cpp \
+    scenes/scene_title.cpp \
+    scenes/scene_level.cpp \
+    scenes/scene.cpp \
+    scenes/scene_world.cpp \
+    scenes/scene_credits.cpp \
+    scenes/scene_gameover.cpp \
+    scenes/scene_intro.cpp \
+    graphics/gl_renderer.cpp \
+    graphics/window.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -133,6 +144,18 @@ HEADERS  += \
     ../Editor/file_formats/lvl_filedata.h \
     ../Editor/file_formats/npc_filedata.h \
     ../Editor/file_formats/wld_filedata.h \
-    graphics.h
+    physics/base_object.h \
+    physics/phys_util.h \
+    graphics/lvl_camera.h \
+    graphics/graphics.h \
+    scenes/scene_title.h \
+    scenes/scene_level.h \
+    scenes/scene.h \
+    scenes/scene_world.h \
+    scenes/scene_credits.h \
+    scenes/scene_gameover.h \
+    scenes/scene_intro.h \
+    graphics/gl_renderer.h \
+    graphics/window.h
 
 FORMS    +=
