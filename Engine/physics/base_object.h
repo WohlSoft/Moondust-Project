@@ -16,7 +16,8 @@ public:
     ~PGE_Phys_Object();
     long posX(); //!< Position X
     long posY(); //!< Position Y
-    long setSize(float w, float h);
+    void setSize(float w, float h);
+    void setPos(long x, long y);
 
     float width;  //!< Width
     float height; //!< Height

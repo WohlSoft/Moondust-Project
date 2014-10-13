@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui
+QT += core gui opengl
 #QT += widgets
 
 TARGET = pge_engine
@@ -19,6 +19,8 @@ LIBS += -lSDL2
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
 unix:  LIBS += -lglut -lGLU
+
+RC_FILE = _resources/engine.rc
 
 SOURCES += main.cpp \
     ../_Libs/Box2D/Collision/Shapes/b2ChainShape.cpp \
@@ -90,7 +92,20 @@ SOURCES += main.cpp \
     scenes/scene_gameover.cpp \
     scenes/scene_intro.cpp \
     graphics/gl_renderer.cpp \
-    graphics/window.cpp
+    graphics/window.cpp \
+    graphics/graphics_lvl_backgrnd.cpp \
+    controls/controllable_object.cpp \
+    controls/controller.cpp \
+    scenes/level/lvl_player.cpp \
+    controls/control_keys.cpp \
+    data_configs/config_manager.cpp \
+    common_features/app_path.cpp \
+    common_features/graphics_funcs.cpp \
+    ../_Libs/EasyBMP/EasyBMP.cpp \
+    scenes/level/lvl_init.cpp \
+    scenes/level/lvl_sections.cpp \
+    data_configs/obj_block.cpp \
+    controls/controller_keyboard.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -156,6 +171,23 @@ HEADERS  += \
     scenes/scene_gameover.h \
     scenes/scene_intro.h \
     graphics/gl_renderer.h \
-    graphics/window.h
+    graphics/window.h \
+    controls/controllable_object.h \
+    controls/controller.h \
+    scenes/level/lvl_player.h \
+    controls/control_keys.h \
+    data_configs/config_manager.h \
+    data_configs/obj_block.h \
+    common_features/app_path.h \
+    common_features/graphics_funcs.h \
+    common_features/pge_texture.h \
+    ../_Libs/EasyBMP/EasyBMP.h \
+    ../_Libs/EasyBMP/EasyBMP_BMP.h \
+    ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
+    ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
+    controls/controller_keyboard.h
 
 FORMS    +=
+
+RESOURCES += \
+    _resources/engine.qrc

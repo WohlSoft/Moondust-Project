@@ -4,6 +4,9 @@
 #include <QFileInfo>
 #include <QDir>
 
+#include "common_features/app_path.h"
+#include "common_features/graphics_funcs.h"
+
 #include "graphics/window.h"
 #include "graphics/gl_renderer.h"
 #undef main
@@ -38,6 +41,7 @@ struct keysForTest
     bool go_r = false;
     bool go_l = false;
     bool jump = false;
+    bool run= false;
 };
 
 keysForTest myKeys;
@@ -49,6 +53,7 @@ void resetKeys()
     myKeys.go_r = false;
     myKeys.go_l = false;
     myKeys.jump = false;
+    myKeys.run = false;
 }
 
 
@@ -104,7 +109,21 @@ float pix2met(float pix)
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    Q_UNUSED(a);
+
+
+    ApplicationPath = QCoreApplication::applicationDirPath();
+    ApplicationPath_x = QCoreApplication::applicationDirPath();
+
+    #ifdef __APPLE__
+    //Application path relative bundle folder of application
+    QString osX_bundle = QCoreApplication::applicationName()+".app/Contents/MacOS";
+    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
+        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
+    #endif
+
+
+
+
 
 
     if(!PGE_Window::init("PGE Engine - dummy tester")) exit(1);
@@ -113,10 +132,13 @@ int main(int argc, char *argv[])
 
 
 
-    QString fileToPpen = a.applicationDirPath()+"/physics.lvl";
 
+
+
+    QString fileToPpen = ApplicationPath+"/physics.lvl";
     if(a.arguments().size()>1)
         fileToPpen = a.arguments()[1];
+
 
     QFile file(fileToPpen );
 
@@ -138,14 +160,27 @@ int main(int argc, char *argv[])
         qDebug() << "blocks "<< level.blocks.size();
     }
 
-    TextureBuffer[0] = loadTexture(a.applicationDirPath().toStdString()+"/block-223.bmp");
-    TextureBuffer[1] = loadTexture(a.applicationDirPath().toStdString()+"/bg.bmp");
-    TextureBuffer[2] = loadTexture(a.applicationDirPath().toStdString()+"/bgo.bmp");
+
+
+
+    TextureBuffer[0] = GraphicsHelps::loadTexture(ApplicationPath+"/block-223.bmp");
+    TextureBuffer[1] = GraphicsHelps::loadTexture(ApplicationPath+"/background2-14.png");
+    TextureBuffer[2] = GraphicsHelps::loadTexture(ApplicationPath+"/background-103.gif",
+                                                  ApplicationPath+"/background-103m.gif");
+
+
+
+
 
 
     b2Vec2 gravity(0.0f, 150.0f);
     world = new b2World(gravity);
 
+
+
+
+
+    //blocks
     for(int i=0; i<level.blocks.size(); i++)
     {
         b2BodyDef bodyDef;
@@ -159,6 +194,13 @@ int main(int argc, char *argv[])
         b2Fixture * block = body->CreateFixture(&shape, 1.0f);
         block->SetFriction(level.blocks[i].slippery? 0.04f : 0.25f );
     }
+
+
+
+
+
+
+    //players
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -193,12 +235,16 @@ int main(int argc, char *argv[])
     playerBody->CreateFixture(&fixtureDef);
 
 
+
+
+
+
+
+    //Main Loop
+
+
     Uint32 start;
-
     bool running = true;
-
-    //float xrf = 0, yrf = 0, zrf = 0; // Rotating angles
-
     int doUpdate=0;
     while(running)
     {
@@ -240,10 +286,14 @@ int main(int argc, char *argv[])
                             myKeys.move_l = true;
                         break;
 
-                        case SDLK_SPACE:
+                        case SDLK_z:
                             if(!myKeys.jump)
                              playerBody->SetLinearVelocity(b2Vec2(playerBody->GetLinearVelocity().x, -65.0f-fabs(playerBody->GetLinearVelocity().x/5)));
                             myKeys.jump=true;
+                        break;
+
+                        case SDLK_x:
+                             myKeys.run=true;
                         break;
 
                         case SDLK_RIGHT:
@@ -267,8 +317,12 @@ int main(int argc, char *argv[])
                                 myKeys.move_l = false;
                             break;
 
-                            case SDLK_SPACE:
+                            case SDLK_z:
                                 myKeys.jump=false;
+                            break;
+
+                            case SDLK_x:
+                                 myKeys.run=false;
                             break;
 
                             case SDLK_RIGHT:
@@ -311,20 +365,41 @@ int main(int argc, char *argv[])
         //if(playerBody->GetLinearVelocity().x < -30)
         //playerBody->SetLinearVelocity(b2Vec2(-30,playerBody->GetLinearVelocity().y));
 
-        if(playerBody->GetLinearVelocity().y > 72)
-            playerBody->SetLinearVelocity(b2Vec2(playerBody->GetLinearVelocity().x, 72));
+
+        float32 force=950.0f;
+        float32 hMaxSpeed=24.0f;
+        float32 hRunningMaxSpeed=48.0f;
+        float32 fallMaxSpeed=720.0f;
+
+        float32 curHMaxSpeed=hMaxSpeed;
+
+
+        if(myKeys.run)
+        {
+            curHMaxSpeed = hRunningMaxSpeed;
+        }
+        else
+        {
+            curHMaxSpeed = hMaxSpeed;
+        }
+
+        if(playerBody->GetLinearVelocity().y > fallMaxSpeed/2)
+            playerBody->SetLinearVelocity(b2Vec2(playerBody->GetLinearVelocity().x, fallMaxSpeed/2));
 
         if(myKeys.go_r)
-            if(playerBody->GetLinearVelocity().x <= 24)
-                playerBody->ApplyForceToCenter(b2Vec2(1000.0f, 0.0f), true);
+            if(playerBody->GetLinearVelocity().x <= curHMaxSpeed)
+                playerBody->ApplyForceToCenter(b2Vec2(force, 0.0f), true);
         if(myKeys.go_l)
-            if(playerBody->GetLinearVelocity().x >= -24)
-                playerBody->ApplyForceToCenter(b2Vec2(-1000.0f, 0.0f), true);
+            if(playerBody->GetLinearVelocity().x >= -curHMaxSpeed)
+                playerBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
 
+        //Return to start if player was fall
         if(met2pix(playerBody->GetPosition().y) > level.sections[0].size_bottom+30)
             playerBody->SetTransform(b2Vec2(pix2met(level.players[0].x + (level.players[0].w/2)),
                     pix2met(level.players[0].y + (level.players[0].h/2) )), 0.0f);
 
+
+        //Connect sized
         if(level.sections[0].IsWarp)
         {
             if(met2pix(playerBody->GetPosition().x) < level.sections[0].size_left-29)
@@ -342,7 +417,12 @@ int main(int argc, char *argv[])
         SDL_Delay(10);
     }
 
+
+
+
     delete world;
+
+
 
     // Now we can delete the OpenGL texture and close down SDL
     glDeleteTextures( 1, &TextureBuffer[0].texture );
@@ -350,7 +430,13 @@ int main(int argc, char *argv[])
     glDeleteTextures( 1, &TextureBuffer[2].texture );
 
 
+
+
     PGE_Window::uninit();
+
+
+
+
 
     return 0;
     //return
