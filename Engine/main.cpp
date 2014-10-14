@@ -1,11 +1,17 @@
 //#include "mainwindow.h"
-#include <QCoreApplication>
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QElapsedTimer>
 #include <QFileInfo>
 #include <QDir>
 
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
+
+#include "data_configs/select_config.h"
+#include "data_configs/config_manager.h"
+
+#include "physics/phys_util.h"
 
 #include "graphics/window.h"
 #include "graphics/gl_renderer.h"
@@ -57,62 +63,21 @@ void resetKeys()
 }
 
 
-SDL_bool IsFullScreen(SDL_Window *win)
-{
-   Uint32 flags = SDL_GetWindowFlags(win);
-
-    if (flags & SDL_WINDOW_FULLSCREEN) return SDL_TRUE; // return SDL_TRUE if fullscreen
-
-   return SDL_FALSE; // Return SDL_FALSE if windowed
-}
-
-/// Toggles On/Off FullScreen
-/// @returns -1 on error, 1 on Set fullscreen successful, 0 on Set Windowed successful
-int SDL_ToggleFS(SDL_Window *win)
-{
-    if (IsFullScreen(win))
-    {
-        // Swith to WINDOWED mode
-        if (SDL_SetWindowFullscreen(win, SDL_FALSE) < 0)
-      {
-         std::cout<<"Setting windowed failed : "<<SDL_GetError()<<std::endl;
-         return -1;
-      }
-
-        return 0;
-    }
-
-    // Swith to FULLSCREEN mode
-    if (SDL_SetWindowFullscreen(win, SDL_TRUE) < 0)
-   {
-      std::cout<<"Setting fullscreen failed : "<<SDL_GetError()<<std::endl;
-      return -1;
-   }
-
-   return 1;
-}
-
 b2Body* playerBody;
 b2World* world;
 
-const float pixMeter=10.0f; // Pixels per meter
-float met2pix(float met)
-{
-    return met * pixMeter;
-}
-float pix2met(float pix)
-{
-    return pix / pixMeter;
-}
+
 
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
 
 
-    ApplicationPath = QCoreApplication::applicationDirPath();
-    ApplicationPath_x = QCoreApplication::applicationDirPath();
+    ///Generating application path
+
+    ApplicationPath = QApplication::applicationDirPath();
+    ApplicationPath_x = QApplication::applicationDirPath();
 
     #ifdef __APPLE__
     //Application path relative bundle folder of application
@@ -126,11 +91,60 @@ int main(int argc, char *argv[])
 
 
 
+
+
+    ////Check & ask for configuration pack
+
+
+    //Create empty config directory if not exists
+    if(!QDir(ApplicationPath + "/" +  "configs").exists())
+        QDir().mkdir(ApplicationPath + "/" +  "configs");
+
+    // Config manager
+    SelectConfig *cmanager = new SelectConfig();
+    cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), a.desktop()->availableGeometry() ));
+    QString configPath = cmanager->isPreLoaded();
+
+    //If application runned first time or target configuration is not exist
+    if(configPath.isEmpty())
+    {
+        //Ask for configuration
+        if(cmanager->exec()==QDialog::Accepted)
+        {
+            configPath = cmanager->currentConfig;
+        }
+        else
+        {
+            delete cmanager;
+            exit(0);
+        }
+    }
+
+    delete cmanager;
+
+
+
+    //Load selected configuration pack
+
+
+
+
+
+    ConfigManager::setConfigPath(configPath);
+    if(!ConfigManager::loadBasics()) exit(1);
+
+
+    //Init Window
     if(!PGE_Window::init("PGE Engine - dummy tester")) exit(1);
+
+    //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
 
 
 
+    //Load level Block's settings
+    if(!ConfigManager::loadLevelBlocks()) exit(1);
 
 
 
@@ -185,12 +199,12 @@ int main(int argc, char *argv[])
     {
         b2BodyDef bodyDef;
         bodyDef.type = b2_staticBody;
-        bodyDef.position.Set( pix2met(level.blocks[i].x+(level.blocks[i].w/2) ),
-            pix2met(level.blocks[i].y + (level.blocks[i].h/2)) );
+        bodyDef.position.Set( PhysUtil::pix2met(level.blocks[i].x+(level.blocks[i].w/2) ),
+            PhysUtil::pix2met(level.blocks[i].y + (level.blocks[i].h/2)) );
         //bodyDef.userData <- I will use them as Pointer to array with settings
         b2Body* body = world->CreateBody(&bodyDef);
         b2PolygonShape shape;
-        shape.SetAsBox(pix2met(level.blocks[i].w+1)/2, pix2met(level.blocks[i].h+1)/2);
+        shape.SetAsBox(PhysUtil::pix2met(level.blocks[i].w+1)/2, PhysUtil::pix2met(level.blocks[i].h+1)/2);
         b2Fixture * block = body->CreateFixture(&shape, 1.0f);
         block->SetFriction(level.blocks[i].slippery? 0.04f : 0.25f );
     }
@@ -204,8 +218,8 @@ int main(int argc, char *argv[])
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(pix2met(level.players[0].x + (level.players[0].w/2)),
-            pix2met(level.players[0].y + (level.players[0].h/2) ) );
+    bodyDef.position.Set(PhysUtil::pix2met(level.players[0].x + (level.players[0].w/2)),
+            PhysUtil::pix2met(level.players[0].y + (level.players[0].h/2) ) );
     bodyDef.fixedRotation = true;
     bodyDef.bullet = true;
     //bodyDef.userData <- I will use them as Pointer to array with settings
@@ -213,8 +227,8 @@ int main(int argc, char *argv[])
 
 //    int32 polygonCount = 8;
 //    b2Vec2 polygonArray[polygonCount];
-//    float pW = pix2met(level.players[0].w)/2;
-//    float pH = pix2met(level.players[0].h)/2;
+//    float pW = PhysUtil::pix2met(level.players[0].w)/2;
+//    float pH = PhysUtil::pix2met(level.players[0].h)/2;
 
 //    polygonArray[0].Set(-pW, -pH+0.5f);
 //    polygonArray[1].Set(-pW+0.5f, -pH);
@@ -227,7 +241,7 @@ int main(int argc, char *argv[])
 //    polygonArray[7].Set(-pW, pH-0.5f);
 
     b2PolygonShape shape;
-    shape.SetAsBox(pix2met(level.players[0].w)/2-0.1, pix2met(level.players[0].h)/2-0.1);
+    shape.SetAsBox(PhysUtil::pix2met(level.players[0].w)/2-0.1, PhysUtil::pix2met(level.players[0].h)/2-0.1);
     //shape.Set(polygonArray,polygonCount);
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
@@ -277,7 +291,7 @@ int main(int argc, char *argv[])
                                 running = false; // End work of program
                             break;
                         case SDLK_t:
-                            SDL_ToggleFS(PGE_Window::window);
+                            PGE_Window::SDL_ToggleFS(PGE_Window::window);
                         break;
                         case SDLK_m:
                             myKeys.move_r = true;
@@ -394,22 +408,22 @@ int main(int argc, char *argv[])
                 playerBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
 
         //Return to start if player was fall
-        if(met2pix(playerBody->GetPosition().y) > level.sections[0].size_bottom+30)
-            playerBody->SetTransform(b2Vec2(pix2met(level.players[0].x + (level.players[0].w/2)),
-                    pix2met(level.players[0].y + (level.players[0].h/2) )), 0.0f);
+        if(PhysUtil::met2pix(playerBody->GetPosition().y) > level.sections[0].size_bottom+30)
+            playerBody->SetTransform(b2Vec2(PhysUtil::pix2met(level.players[0].x + (level.players[0].w/2)),
+                    PhysUtil::pix2met(level.players[0].y + (level.players[0].h/2) )), 0.0f);
 
 
         //Connect sized
         if(level.sections[0].IsWarp)
         {
-            if(met2pix(playerBody->GetPosition().x) < level.sections[0].size_left-29)
+            if(PhysUtil::met2pix(playerBody->GetPosition().x) < level.sections[0].size_left-29)
                 playerBody->SetTransform(b2Vec2(
-                     pix2met(level.sections[0].size_right + (level.players[0].w/2)),
+                     PhysUtil::pix2met(level.sections[0].size_right + (level.players[0].w/2)),
                         playerBody->GetPosition().y), 0.0f);
             else
-            if(met2pix(playerBody->GetPosition().x) > level.sections[0].size_right+30)
+            if(PhysUtil::met2pix(playerBody->GetPosition().x) > level.sections[0].size_right+30)
                 playerBody->SetTransform(b2Vec2(
-                     pix2met(level.sections[0].size_left-29 + (level.players[0].w/2)),
+                     PhysUtil::pix2met(level.sections[0].size_left-29 + (level.players[0].w/2)),
                         playerBody->GetPosition().y), 0.0f);
         }
 
@@ -451,8 +465,8 @@ void drawQuads()
 
 
     //Change camera position
-    pos_x = -1*(met2pix(playerBody->GetPosition().x) - PGE_Window::Width/2);
-    pos_y = -1*(met2pix(playerBody->GetPosition().y) - PGE_Window::Height/2);
+    pos_x = -1*(PhysUtil::met2pix(playerBody->GetPosition().x) - PGE_Window::Width/2);
+    pos_y = -1*(PhysUtil::met2pix(playerBody->GetPosition().y) - PGE_Window::Height/2);
 
     if(-pos_x < level.sections[0].size_left)
         pos_x = -level.sections[0].size_left;
@@ -605,7 +619,7 @@ void drawQuads()
     }
 
     //qDebug()<< playerBody->GetPosition().x<< "x" << playerBody->GetPosition().y;
-    QRect pl = QRect( met2pix(playerBody->GetPosition().x)-(level.players[0].w/2) +pos_x, met2pix(playerBody->GetPosition().y)-(level.players[0].h/2)+pos_y,
+    QRect pl = QRect( PhysUtil::met2pix(playerBody->GetPosition().x)-(level.players[0].w/2) +pos_x, PhysUtil::met2pix(playerBody->GetPosition().y)-(level.players[0].h/2)+pos_y,
                       level.players[0].w, level.players[0].h);
 
     QRectF player = QRectF(mapToOpengl(QPoint(pl.x(), pl.y())),

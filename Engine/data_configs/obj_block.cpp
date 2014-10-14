@@ -1,4 +1,5 @@
 #include "config_manager.h"
+#include <QMessageBox>
 
 static QString Temp01="";
 
@@ -15,7 +16,10 @@ bool ConfigManager::loadLevelBlocks()
     if(!QFile::exists(block_ini))
     {
         addError(QString("ERROR LOADING lvl_blocks.ini: file does not exist"), QtCriticalMsg);
-          return false;
+        QMessageBox::critical(NULL, "Config error",
+                              QString("ERROR LOADING lvl_blocks.ini: file does not exist"),
+                              QMessageBox::Ok);
+        return false;
     }
 
     QSettings blockset(block_ini, QSettings::IniFormat);
@@ -36,6 +40,9 @@ bool ConfigManager::loadLevelBlocks()
     if(block_total==0)
     {
         addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), QtCriticalMsg);
+        QMessageBox::critical(NULL, "Config error",
+                              QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"),
+                              QMessageBox::Ok);
         return false;
     }
 
@@ -159,6 +166,9 @@ bool ConfigManager::loadLevelBlocks()
           if( blockset.status()!=QSettings::NoError)
           {
             addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), QtCriticalMsg);
+            QMessageBox::critical(NULL, "Config error",
+                                  QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i),
+                                  QMessageBox::Ok);
             break;
           }
        }
