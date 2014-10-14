@@ -82,6 +82,11 @@ ItemNPC::~ItemNPC()
 
 void ItemNPC::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
+    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
+    {
+        QGraphicsItem::mousePressEvent(mouseEvent); return;
+    }
+
     if(!DisableScene)
         if(scene->DrawMode)
         {

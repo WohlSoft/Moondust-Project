@@ -125,12 +125,12 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="305"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="317"/>
         <source>Tilesets Item Toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilesets desde caja de herramientas</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="341"/>
@@ -1352,62 +1352,62 @@ Por favor, controle la ruta de aplicación.</translation>
     <message>
         <location filename="../edit_level/levelprops.ui" line="61"/>
         <source>Disable player controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Deshabilitar controles</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="67"/>
         <source>Drop</source>
-        <translation type="unfinished">Soltar</translation>
+        <translation>Soltar</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="74"/>
         <source>Jump</source>
-        <translation type="unfinished">Salto</translation>
+        <translation>Salto</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="81"/>
         <source>Left</source>
-        <translation type="unfinished">Izquierda</translation>
+        <translation>Izquierda</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="88"/>
         <source>Alt-Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Salto secundario</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="95"/>
         <source>Right</source>
-        <translation type="unfinished">Derecha</translation>
+        <translation>Derecha</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="102"/>
         <source>Start</source>
-        <translation type="unfinished">Comenzar</translation>
+        <translation>Comenzar</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="109"/>
         <source>Alt-Run</source>
-        <translation type="unfinished"></translation>
+        <translation>Run secundario</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="116"/>
         <source>Run</source>
-        <translation type="unfinished">Correr</translation>
+        <translation>Correr</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="123"/>
         <source>Up</source>
-        <translation type="unfinished">Arriba</translation>
+        <translation>Arriba</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="130"/>
         <source>Down</source>
-        <translation type="unfinished">Abajo</translation>
+        <translation>Abajo</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="153"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Título</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="159"/>
@@ -1417,57 +1417,57 @@ Por favor, controle la ruta de aplicación.</translation>
     <message>
         <location filename="../edit_level/levelprops.ui" line="185"/>
         <source>Physics</source>
-        <translation type="unfinished">Física</translation>
+        <translation>Física</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="192"/>
         <source>Default</source>
-        <translation type="unfinished">Predeterminado</translation>
+        <translation>Predeterminado</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="200"/>
         <source>Physics type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Típo de físicas:</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="213"/>
         <source>Timer</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporizador</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="250"/>
         <source>Time limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>Límite:</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="257"/>
         <source>Timer type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="264"/>
         <source>Event:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento:</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="219"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="226"/>
         <source> sec.</source>
-        <translation type="unfinished"></translation>
+        <translation> seg.</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="237"/>
         <source>Kill all players</source>
-        <translation type="unfinished"></translation>
+        <translation>Matar a todos los jugadores</translation>
     </message>
     <message>
         <location filename="../edit_level/levelprops.ui" line="242"/>
         <source>Trigger event</source>
-        <translation type="unfinished">Evento seguido</translation>
+        <translation>Evento seguido</translation>
     </message>
 </context>
 <context>
@@ -2858,42 +2858,42 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="3073"/>
         <source>Z-Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Posición Z</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3079"/>
         <source>Z-Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-Offset:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3086"/>
         <source>Z-Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa Z:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3097"/>
         <source>Background-2</source>
-        <translation type="unfinished">Fondo-2</translation>
+        <translation>Fondo-2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3102"/>
         <source>Background</source>
-        <translation type="unfinished">Fondo</translation>
+        <translation>Fondo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3107"/>
         <source>Default</source>
-        <translation type="unfinished">Predeterminado</translation>
+        <translation>Predeterminado</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3112"/>
         <source>Foreground</source>
-        <translation type="unfinished">Primer plano</translation>
+        <translation>Primer plano</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3117"/>
         <source>Foreground-2</source>
-        <translation type="unfinished">Primer plano-2</translation>
+        <translation>Primer plano-2</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="3421"/>
@@ -3663,12 +3663,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="8973"/>
         <source>Export section to image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar sección a imagen...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8976"/>
         <source>Export whole level section to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar sección entera a imagen</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>

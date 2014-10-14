@@ -98,6 +98,8 @@ public:
     };
     int placingItem;
     QGraphicsItem * cursor;
+    QGraphicsSimpleTextItem * messageBox;
+    void setMessageBoxItem(bool show=false, QPointF pos=QPointF(), QString text="");
     void placeItemUnderCursor();
     void placeItemsByRectArray();
     LevelData placingItems;

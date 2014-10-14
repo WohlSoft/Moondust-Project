@@ -67,6 +67,12 @@ void MainWindow::resetEditmodeButtons()
 
     ui->PlacingToolbar->setVisible(false);
     ui->ResizingToolbar->setVisible(false);
+
+    if(activeChildWindow()==1)
+       activeLvlEditWin()->scene->setMessageBoxItem(false);
+    else if(activeChildWindow()==3)
+       activeWldEditWin()->scene->setMessageBoxItem(false);
+
 }
 
 

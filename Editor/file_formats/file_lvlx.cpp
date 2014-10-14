@@ -113,9 +113,12 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
 
                 if(sct.first=="JOKES")
                 {
+                    #ifndef PGE_ENGINE
                     QMessageBox::information(nullptr, "Jokes", sct.second[i], QMessageBox::Ok);
+                    #endif
                     continue;
                 }
+
 
 
                 QList<QStringList > sectData = PGEFile::splitDataLine(sct.second[i], &good);

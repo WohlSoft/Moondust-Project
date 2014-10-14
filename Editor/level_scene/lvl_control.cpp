@@ -37,8 +37,6 @@
 
 #include "../defines.h"
 
-#include <QToolTip>
-
 
 QPoint sourcePos=QPoint(0,0);
 int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
@@ -393,7 +391,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
             this->clearSelection();
 
             if((!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")||(mouseEvent->modifiers() & Qt::ControlModifier) )
-                MainWinConnect::pMainWin->showToolTipMsg(
+                setMessageBoxItem(true, mouseEvent->scenePos(),
                                            ((!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")?
                                 LvlPlacingItems::layer + ", ":"") +
                                            (cursor?
@@ -401,8 +399,10 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
                                            QString::number( cursor->scenePos().toPoint().x() ) + "x" +
                                            QString::number( cursor->scenePos().toPoint().y() )
                                                 )
-                                                    :""), mouseEvent->screenPos(), 5000
+                                                    :"")
                                            );
+            else
+                setMessageBoxItem(false);
 
             if(cursor)
             {
@@ -426,10 +426,12 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
         if(!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")
-            MainWinConnect::pMainWin->showToolTipMsg(LvlPlacingItems::layer + ", " +
+            setMessageBoxItem(true, mouseEvent->scenePos(), LvlPlacingItems::layer + ", " +
                          QString::number( mouseEvent->scenePos().toPoint().x() ) + "x" +
-                         QString::number( mouseEvent->scenePos().toPoint().y() ),
-                          mouseEvent->screenPos(), 5000);
+                         QString::number( mouseEvent->scenePos().toPoint().y() )
+                          );
+        else
+            setMessageBoxItem(false);
 
             if(cursor)
             {
@@ -466,10 +468,12 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
 
         if(!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")
-            MainWinConnect::pMainWin->showToolTipMsg(LvlPlacingItems::layer + ", " +
+            setMessageBoxItem(true, mouseEvent->scenePos(), LvlPlacingItems::layer + ", " +
                          QString::number( mouseEvent->scenePos().toPoint().x() ) + "x" +
-                         QString::number( mouseEvent->scenePos().toPoint().y() ),
-                          mouseEvent->screenPos(), 5000);
+                         QString::number( mouseEvent->scenePos().toPoint().y() )
+                          );
+        else
+            setMessageBoxItem(false);
 
             if(cursor)
             {
@@ -533,7 +537,7 @@ void LvlScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
     }
     QGraphicsScene::mouseMoveEvent(mouseEvent);
-    WriteToLog(QtDebugMsg, QString("mouseMove -> done"));
+    //WriteToLog(QtDebugMsg, QString("mouseMove -> done"));
 }
 
 void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
