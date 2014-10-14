@@ -436,7 +436,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::gridOffset = QPoint(0,0);
         LvlPlacingItems::c_offset_x= 0;
         LvlPlacingItems::c_offset_y= 0;
-        LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
+        LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer.isEmpty()? "Default" : LvlPlacingItems::layer;
         setSquareDrawer(); return;
         break;
     case 4: //doorPoint
@@ -621,4 +621,40 @@ void LvlScene::resetCursor()
     ((QGraphicsPixmapItem*)cursor)->setShapeMode(QGraphicsPixmapItem::BoundingRectShape);
     cursor->setZValue(1000);
     cursor->hide();
+}
+
+void LvlScene::setMessageBoxItem(bool show, QPointF pos, QString text)
+{
+    if(messageBox)
+    {
+        if(!show)
+        {
+            delete messageBox;
+            messageBox = NULL;
+            return;
+        }
+
+        if(text!=messageBox->text())
+            messageBox->setText(text);
+        messageBox->setPos(pos);
+    }
+    else
+    {
+        if(!show)
+            return;
+
+        QFont font;
+        font.setFamily("Times");
+        font.setWeight(100);
+        font.setPointSize(25);
+        messageBox = new QGraphicsSimpleTextItem(text);
+        messageBox->setPen(QPen(QBrush(Qt::black), 2));
+        messageBox->setBrush(QBrush(Qt::white));
+        messageBox->setBoundingRegionGranularity(1);
+        messageBox->setZValue(10000);
+        messageBox->setFont(font);
+        this->addItem(messageBox);
+        messageBox->setPos(pos);
+    }
+
 }

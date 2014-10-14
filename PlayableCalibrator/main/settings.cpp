@@ -59,7 +59,7 @@ void CalibrationMain::loadConfig(QString fileName)
             framesX[i][j].W = conf.value("width", "100").toInt();
             framesX[i][j].offsetX = conf.value("offsetX", "0").toInt();
             framesX[i][j].offsetY = conf.value("offsetY", "0").toInt();
-            framesX[i][j].used = conf.value("used", "true").toBool();
+            framesX[i][j].used = conf.value("used", "false").toBool();
             conf.endGroup();
         }
     }
@@ -132,23 +132,29 @@ void CalibrationMain::setSpriteAniData(QSettings &set)
 
     for(j=0;j<AnimationFrames.set.size();j++)
     {
-        set.beginGroup("Animation"+AnimationFrames.set[j].name+"_L");
-            set.setValue("frames", AnimationFrames.set[j].L.size());
-            for(i=0;i<AnimationFrames.set[j].L.size();i++)
-            {
-                set.setValue("frame"+QString::number(i)+"x", AnimationFrames.set[j].L[i].x);
-                set.setValue("frame"+QString::number(i)+"y", AnimationFrames.set[j].L[i].y);
-            }
-        set.endGroup();
+        if(AnimationFrames.set[j].L.size()>0)
+        {
+            set.beginGroup("Animation"+AnimationFrames.set[j].name+"_L");
+                set.setValue("frames", AnimationFrames.set[j].L.size());
+                for(i=0;i<AnimationFrames.set[j].L.size();i++)
+                {
+                    set.setValue("frame"+QString::number(i)+"x", AnimationFrames.set[j].L[i].x);
+                    set.setValue("frame"+QString::number(i)+"y", AnimationFrames.set[j].L[i].y);
+                }
+            set.endGroup();
+        }
 
-        set.beginGroup("Animation"+AnimationFrames.set[j].name+"_R");
-            set.setValue("frames", AnimationFrames.set[j].R.size());
-            for(i=0;i<AnimationFrames.set[j].R.size();i++)
-            {
-                set.setValue("frame"+QString::number(i)+"x", AnimationFrames.set[j].R[i].x);
-                set.setValue("frame"+QString::number(i)+"y", AnimationFrames.set[j].R[i].y);
-            }
-        set.endGroup();
+        if(AnimationFrames.set[j].R.size()>0)
+        {
+            set.beginGroup("Animation"+AnimationFrames.set[j].name+"_R");
+                set.setValue("frames", AnimationFrames.set[j].R.size());
+                for(i=0;i<AnimationFrames.set[j].R.size();i++)
+                {
+                    set.setValue("frame"+QString::number(i)+"x", AnimationFrames.set[j].R[i].x);
+                    set.setValue("frame"+QString::number(i)+"y", AnimationFrames.set[j].R[i].y);
+                }
+            set.endGroup();
+        }
     }
 }
 
@@ -165,13 +171,16 @@ void CalibrationMain::saveConfig(QString fileName)
     {
         for(j=0; j<10;j++)
         {
-            conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
-            conf.setValue("height", framesX[i][j].H);
-            conf.setValue("width", framesX[i][j].W);
-            conf.setValue("offsetX", framesX[i][j].offsetX);
-            conf.setValue("offsetY", framesX[i][j].offsetY);
-            conf.setValue("used", framesX[i][j].used);
-            conf.endGroup();
+            if(framesX[i][j].used)
+            {
+                conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
+                conf.setValue("height", framesX[i][j].H);
+                conf.setValue("width", framesX[i][j].W);
+                conf.setValue("offsetX", framesX[i][j].offsetX);
+                conf.setValue("offsetY", framesX[i][j].offsetY);
+                conf.setValue("used", framesX[i][j].used);
+                conf.endGroup();
+            }
         }
     }
 

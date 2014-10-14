@@ -42,6 +42,7 @@ QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
 
 void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
 {
+    #ifndef PGE_ENGINE
     QMessageBox * box = new QMessageBox();
     box->setWindowTitle( QTranslator::tr("Bad File") );
     box->setText(
@@ -52,6 +53,11 @@ void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)
     box->setStandardButtons(QMessageBox::Ok);
     box->setIcon(QMessageBox::Warning);
     box->exec();
+    #else
+    Q_UNUSED(fileName_DATA);
+    Q_UNUSED(str_count);
+    Q_UNUSED(line);
+    #endif
 }
 
 
