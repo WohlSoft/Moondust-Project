@@ -1,8 +1,10 @@
 #include "gl_renderer.h"
 #include "window.h"
 
+#undef main
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
+#undef main
 
 bool GlRenderer::init()
 {

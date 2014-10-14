@@ -16,8 +16,11 @@ public:
     static bool isReady();
 
     static SDL_Window *window;
+    static int SDL_ToggleFS(SDL_Window *win=NULL);
+
 private:
     static bool IsInit;
+    static SDL_bool IsFullScreen(SDL_Window *win);
 };
 
 #endif // WINDOW_H

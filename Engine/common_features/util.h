@@ -16,30 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QPixmap>
-#include <QPainter>
-#include <QImage>
 
-#undef main
-#include <SDL2/SDL.h> // SDL 2 Library
-#include <SDL2/SDL_opengl.h>
-#undef main
+#ifndef UTIL_H
+#define UTIL_H
 
-#include "pge_texture.h"
+#include <qlineedit.h>
+#include <qlistwidget.h>
+#include <qcombobox.h>
+#include <QListWidget>
+#include <qtablewidget.h>
 
-#ifndef GRAPHICS_FUNCS_H
-#define GRAPHICS_FUNCS_H
-
-
-class GraphicsHelps
+class util
 {
 public:
-    static QImage setAlphaMask(QImage image, QImage mask);
-    static QImage fromBMP(QString& file);
-    static QImage loadQImage(QString file);
-    static PGE_Texture loadTexture(QString path, QString maskPath="");
-    static QPixmap squareImage(QPixmap image, QSize targetSize);
-    static SDL_Surface *QImage_toSDLSurface(const QImage &sourceImage);
+    static void updateFilter(QLineEdit* searchEdit, QListWidget* itemList, QComboBox* typeBox);
+    static void memclear(QListWidget* wid);
+    static void memclear(QTableWidget* wid);
+    static void clearLayoutItems(QLayout* layout);
+    static bool contains(const QComboBox* b, const QString &s);
+    static QString filePath(QString s);
 };
 
-#endif // GRAPHICS_FUNCS_H
+#endif // UTIL_H

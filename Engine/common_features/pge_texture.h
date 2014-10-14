@@ -2,6 +2,7 @@
 #define PGE_TEXTURE_H
 
 #include <SDL2/SDL_opengl.h>
+#undef main
 
 struct PGE_Texture
 {

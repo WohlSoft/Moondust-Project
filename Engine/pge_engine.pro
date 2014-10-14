@@ -7,6 +7,8 @@
 QT += core gui opengl
 #QT += widgets
 
+DESTDIR = ../bin
+
 TARGET = pge_engine
 TEMPLATE = app
 CONFIG += c++11
@@ -105,7 +107,9 @@ SOURCES += main.cpp \
     scenes/level/lvl_init.cpp \
     scenes/level/lvl_sections.cpp \
     data_configs/obj_block.cpp \
-    controls/controller_keyboard.cpp
+    controls/controller_keyboard.cpp \
+    data_configs/select_config.cpp \
+    common_features/util.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -185,9 +189,12 @@ HEADERS  += \
     ../_Libs/EasyBMP/EasyBMP_BMP.h \
     ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
     ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
-    controls/controller_keyboard.h
+    controls/controller_keyboard.h \
+    data_configs/select_config.h \
+    common_features/util.h
 
-FORMS    +=
+FORMS    += \
+    data_configs/select_config.ui
 
 RESOURCES += \
     _resources/engine.qrc

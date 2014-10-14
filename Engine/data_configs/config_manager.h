@@ -21,6 +21,8 @@ struct DataFolders
     QString gworld;
     QString gplayble;
 
+    QString gcommon;
+
     QString gcustom;
 };
 
@@ -77,7 +79,7 @@ public:
 
 
     static void setConfigPath(QString p);
-    static void loadBasics();
+    static bool loadBasics();
 
     static bool loadLevelBlocks();
 
@@ -102,6 +104,8 @@ private:
     static QString scenePath;
     static QString pathPath;
     static QString wlvlPath;
+
+    static QString commonGPath;
 
 
 };
