@@ -179,6 +179,10 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 setAsQuicksand->setChecked(waterData.quicksand);
                 setAsQuicksand->deleteLater();
 
+
+            QAction *showRectangleValues = ItemMenu->addAction(tr("Show zone range data"));
+                showRectangleValues->deleteLater();
+
             QAction *resize = ItemMenu->addAction(tr("Resize"));
                 resize->deleteLater();
 
@@ -238,6 +242,29 @@ void ItemWater::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
                 scene->addChangeSettingsHistory(modData, LvlScene::SETTING_WATERTYPE, QVariant(false));
+            }
+            else
+            if(selected==showRectangleValues)
+            {
+                QInputDialog rectangle;
+                rectangle.setInputMode(QInputDialog::TextInput);
+                rectangle.setOption(QInputDialog::NoButtons, true);
+                rectangle.setWindowTitle(tr("Physical environment range"));
+                rectangle.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+                      QSize(400, 150), qApp->desktop()->availableGeometry()));
+                rectangle.setLabelText(tr("Rectangle X(left), Y(top), Width, Height, Right, Bottom"));
+                rectangle.setTextEchoMode(QLineEdit::Normal);
+                rectangle.setTextValue(
+                                    QString("X=%1; Y=%2; W=%3; H=%4; Right: %5; Bottom %6;")
+                                       .arg(waterData.x)
+                                       .arg(waterData.y)
+                                       .arg(waterData.w)
+                                       .arg(waterData.h)
+                                       .arg(waterData.x+waterData.w)
+                                       .arg(waterData.y+waterData.h)
+                                       );
+                rectangle.exec();
+
             }
             else
             if(selected==resize)
