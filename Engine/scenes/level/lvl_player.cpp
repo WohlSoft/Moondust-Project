@@ -1,11 +1,15 @@
 #include "lvl_player.h"
 #include "../../graphics/window.h"
 
+#include <QtDebug>
+
 LVL_Player::LVL_Player()
 {
     camera = NULL;
     worldPtr = NULL;
     playerID = 0;
+
+    type = LVLPlayer;
 
     force=1000.0f;
     hMaxSpeed=24.0f;
@@ -16,23 +20,40 @@ LVL_Player::LVL_Player()
     isRunning = false;
 }
 
+LVL_Player::~LVL_Player()
+{
+    qDebug() << "Destroy player";
+
+    if(physBody && worldPtr)
+    {
+        worldPtr->DestroyBody(physBody);
+        physBody->SetUserData(NULL);
+        physBody = NULL;
+    }
+}
+
 void LVL_Player::init()
 {
     if(!worldPtr) return;
 
     setSize(data->w, data->h);
 
+    playerID = data->id;
+
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set
             (
-                PhysUtil::pix2met(data->x + posX_coefficient),
-                PhysUtil::pix2met(data->y + posY_coefficient)
+                PhysUtil::pix2met((float)data->x + posX_coefficient),
+                PhysUtil::pix2met((float)data->y + posY_coefficient)
             );
+
+//    bodyDef.position.Set(PhysUtil::pix2met((float)data->x + ((float)data->w/2)),
+//            PhysUtil::pix2met((float)data->y + ((float)data->w/2) ) );
 
     bodyDef.fixedRotation = true;
     bodyDef.bullet = true;
-    bodyDef.userData = (void*)this;
+    bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
 
     physBody = worldPtr->CreateBody(&bodyDef);
 
@@ -44,6 +65,8 @@ void LVL_Player::init()
     fixtureDef.shape = &shape;
     fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
     physBody->CreateFixture(&fixtureDef);
+
+    //qDebug() <<"Start position is " << posX() << posY();
 }
 
 
@@ -87,10 +110,13 @@ void LVL_Player::update()
         if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
             physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
 
+    if(keys.jump)
+        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/5)));
+
 
     if( posY() > camera->s_bottom+30 )
         physBody->SetTransform(b2Vec2(
-                PhysUtil::pix2met(data->x+(width) ),
+                PhysUtil::pix2met(data->x + (width) ),
                 PhysUtil::pix2met(data->y + (data->h/2) )), 0.0f);
 
 
@@ -109,7 +135,7 @@ void LVL_Player::update()
                                    );
     }
 
-    camera->setPos( PhysUtil::met2pix(physBody->GetPosition().x) - PGE_Window::Width/2,
-                    PhysUtil::met2pix(physBody->GetPosition().y) - PGE_Window::Height/2 );
+    camera->setPos( posX() - PGE_Window::Width/2,
+                    posY() - PGE_Window::Height/2 );
 
 }

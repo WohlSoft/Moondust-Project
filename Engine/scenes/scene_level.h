@@ -3,12 +3,18 @@
 
 #include "scene.h"
 #include "../graphics/graphics.h"
+
+#include "../common_features/pge_texture.h"
 #include "level/lvl_player.h"
+#include "level/lvl_block.h"
 #include "../graphics/window.h"
 
 #include <file_formats.h>
 #include <Box2D/Box2D.h>
 #include <QString>
+#include <QVector>
+
+#include <SDL2/SDL_opengl.h>
 
 class LevelScene : public Scene
 {
@@ -27,6 +33,7 @@ public:
     QPoint cameraStart;
 
     //Init 3 -> load Configs
+    bool loadConfigs();
 
     //Init 4 -> build animators
 
@@ -59,15 +66,25 @@ public:
 
     int exitType();
 
+    //Flags
+    bool isPauseMenu;
+    bool isTimeStopped;
+    bool isLevelContinues;
+    int exitLevelDelay;
+    int exitLevelCode;
+
+
+
 private:
     LevelData data;
 
-    std::vector<PGE_LevelCamera > cameras;
-    std::vector<LVL_Player > players;
+    QVector<PGE_LevelCamera* > cameras;
+    QVector<LVL_Player* > players;
+    QVector<LVL_Block* > blocks;
 
 
     b2World *world;
-    std::vector<PGE_Texture > textures_bank;
+    QVector<PGE_Texture > textures_bank;
 };
 
 #endif // SCENE_LEVEL_H

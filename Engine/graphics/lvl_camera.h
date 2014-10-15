@@ -9,7 +9,7 @@
 #include <file_formats.h>
 
 
-typedef std::vector<PGE_Phys_Object *>  PGE_RenderList;
+typedef QVector<PGE_Phys_Object *>  PGE_RenderList;
 
 class PGE_LevelCamera
 {
@@ -44,14 +44,14 @@ public:
     int s_left;
     int s_right;
 
+    int pos_x;
+    int pos_y;
+
 private:
     PGE_RenderList objects_to_render;
 
     int width;
     int height;
-
-    int pos_x;
-    int pos_y;
 
     b2World * worldPtr;
     b2Body* sensor;

@@ -12,8 +12,12 @@ PGE_Phys_Object::PGE_Phys_Object()
 
 PGE_Phys_Object::~PGE_Phys_Object()
 {
-    if(physBody && worldPtr)
+    if((physBody!=NULL) && (worldPtr!=NULL))
+    {
         worldPtr->DestroyBody(physBody);
+        physBody->SetUserData(NULL);
+        physBody = NULL;
+    }
 
 }
 

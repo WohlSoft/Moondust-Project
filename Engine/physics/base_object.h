@@ -13,7 +13,7 @@ class PGE_Phys_Object
 {
 public:
     PGE_Phys_Object();
-    ~PGE_Phys_Object();
+    virtual ~PGE_Phys_Object();
     long posX(); //!< Position X
     long posY(); //!< Position Y
     void setSize(float w, float h);
@@ -34,13 +34,13 @@ public:
 
     enum types
     {
-        LVL_Unknown=0,
-        LVL_Block,
-        LVL_BGO,
-        LVL_NPC,
-        LVL_Player,
-        LVL_Effect,
-        LVL_Special
+        LVLUnknown=0,
+        LVLBlock,
+        LVLBGO,
+        LVLNPC,
+        LVLPlayer,
+        LVLEffect,
+        LVLSpecial
     };
 
     virtual void update();

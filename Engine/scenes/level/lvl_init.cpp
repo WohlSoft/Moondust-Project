@@ -1,4 +1,5 @@
 #include "../scene_level.h"
+#include "../../data_configs/config_manager.h"
 
 
 bool LevelScene::setEntrance(int entr)
@@ -24,7 +25,7 @@ bool LevelScene::setEntrance(int entr)
     {
         for(int i=0;i<data.doors.size(); i++)
         {
-            if(data.doors[i].array_id==entr)
+            if(data.doors[i].array_id==(unsigned int)entr)
             {
                 isWarpEntrance = true;
                 cameraStart.setX(data.doors[i].ox);
@@ -39,6 +40,15 @@ bool LevelScene::setEntrance(int entr)
 
     //Error, sections is not found
     return false;
+}
+
+bool LevelScene::loadConfigs()
+{
+    bool success=true;
+    success = ConfigManager::loadLevelBlocks();
+    //if(success) success = ...
+
+    return success;
 }
 
 

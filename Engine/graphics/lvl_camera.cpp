@@ -1,18 +1,30 @@
 #include "lvl_camera.h"
 #include "window.h"
 
+#include <QtDebug>
+
 PGE_LevelCamera::PGE_LevelCamera()
 {
     worldPtr = NULL;
     sensor = NULL;
     section = 0;
     isWarp = false;
+    width=800;
+    height=600;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
 {
+
+    qDebug() << "Destroy camera";
+
     if(sensor && worldPtr)
+    {
         worldPtr->DestroyBody(sensor);
+        sensor->SetUserData(NULL);
+        sensor = NULL;
+    }
+
 }
 
 
@@ -26,17 +38,23 @@ void PGE_LevelCamera::init(float x, float y, float w, float h)
 {
     if(!worldPtr) return;
 
+    pos_x = x;
+    pos_y = y;
+    width = w;
+    height = h;
+
     if(!sensor)
     {
         b2BodyDef bodyDef;
-        bodyDef.type = b2_staticBody;
+        bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(PhysUtil::pix2met(x + (w/2)),
                              PhysUtil::pix2met(y + (h/2) ) );
         bodyDef.fixedRotation = true;
+        bodyDef.gravityScale = 0;
         sensor = worldPtr->CreateBody(&bodyDef);
 
         b2PolygonShape shape;
-        shape.SetAsBox(PhysUtil::pix2met(w)/2-0.1, PhysUtil::pix2met(h)/2-0.1);
+        shape.SetAsBox(PhysUtil::pix2met(w)/2, PhysUtil::pix2met(h)/2);
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &shape;
         fixtureDef.isSensor = true;
@@ -69,20 +87,22 @@ int PGE_LevelCamera::posY()
 
 void PGE_LevelCamera::setPos(int x, int y)
 {
-    pos_x = -x;
-    pos_y = -y;
+    pos_x = x;
+    pos_y = y;
 
-    if(-pos_x < s_left)
-        pos_x = -s_left;
-    if(-(pos_x-PGE_Window::Width) > s_right)
-        pos_x = -s_right+PGE_Window::Width;
+    if(pos_x < s_left)
+        pos_x = s_left;
+    if((pos_x+width) > s_right)
+        pos_x = s_right-width;
 
-    if(-pos_y < s_top)
-        pos_y = -s_top;
-    if(-(pos_y-PGE_Window::Height) > s_bottom)
-        pos_y = -s_bottom+PGE_Window::Height;
+    if(pos_y < s_top)
+        pos_y = s_top;
+    if((pos_y+height) > s_bottom)
+        pos_y = s_bottom-height;
 
-    sensor->SetTransform(b2Vec2( PhysUtil::pix2met(-pos_x), PhysUtil::pix2met(-pos_y)), 0);
+    sensor->SetTransform(b2Vec2( PhysUtil::pix2met(pos_x+width/2),
+                                 PhysUtil::pix2met(pos_y+height/2)), 0);
+    sensor->SetLinearVelocity(b2Vec2(0,0));
 }
 
 void PGE_LevelCamera::setSize(int w, int h)
@@ -102,20 +122,34 @@ void PGE_LevelCamera::update()
     objects_to_render.clear();
 
     if(!sensor) return;
+    int contacts = 0;
 
     for(b2ContactEdge* ce = sensor->GetContactList(); ce; ce = ce->next)
     {
         b2Contact* c = ce->contact;
-        PGE_Phys_Object * visibleBody = static_cast<PGE_Phys_Object *>(c->GetFixtureA()->GetBody()->GetUserData());
+
+        contacts++;
+
+        PGE_Phys_Object * visibleBody;
+        visibleBody = static_cast<PGE_Phys_Object *>(c->GetFixtureA()->GetBody()->GetUserData());
+
+        if(visibleBody==NULL)
+            visibleBody = static_cast<PGE_Phys_Object *>(c->GetFixtureB()->GetBody()->GetUserData());
+
+        if(visibleBody==NULL)
+            continue;
+
         switch(visibleBody->type)
         {
-        case PGE_Phys_Object::LVL_Block:
-        case PGE_Phys_Object::LVL_BGO:
-        case PGE_Phys_Object::LVL_NPC:
-        case PGE_Phys_Object::LVL_Effect:
+        case PGE_Phys_Object::LVLBlock:
+        case PGE_Phys_Object::LVLBGO:
+        case PGE_Phys_Object::LVLNPC:
+        case PGE_Phys_Object::LVLPlayer:
+        case PGE_Phys_Object::LVLEffect:
             objects_to_render.push_back(visibleBody);
         }
     }
+    //qDebug() << "Contacts" << contacts;
 }
 
 
