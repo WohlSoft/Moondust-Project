@@ -23,22 +23,13 @@
 
 #include "graphics/graphics.h"
 
+#include "scenes/scene_level.h"
+
 #include <iostream>
 using namespace std;
 
 #include <QtDebug>
 
-int pos;
-
-int pos_x=199200;
-int pos_y=200600;
-
-LevelData level;
-
-
-void drawQuads();
-
-PGE_Texture TextureBuffer[3];
 
 struct keysForTest
 {
@@ -62,12 +53,7 @@ void resetKeys()
     myKeys.run = false;
 }
 
-
-b2Body* playerBody;
-b2World* world;
-
-
-
+LevelScene* lScene;
 
 int main(int argc, char *argv[])
 {
@@ -143,39 +129,140 @@ int main(int argc, char *argv[])
 
 
 
-    //Load level Block's settings
-    if(!ConfigManager::loadLevelBlocks()) exit(1);
-
-
-
 
     QString fileToPpen = ApplicationPath+"/physics.lvl";
     if(a.arguments().size()>1)
         fileToPpen = a.arguments()[1];
 
 
-    QFile file(fileToPpen );
+    lScene = new LevelScene();
 
-    QFileInfo in_1(fileToPpen);
+    lScene->loadFile(fileToPpen);
 
-    if (file.open(QIODevice::ReadOnly))
+    lScene->setEntrance(0);
+
+    lScene->init();
+
+
+    Uint32 start;
+    bool running = true;
+    int doUpdate=0;
+    while(running)
     {
-        level = FileFormats::ReadLevelFile(file);
-        level.filename = in_1.baseName();
-        level.path = in_1.absoluteDir().absolutePath();
-        if(level.ReadFileValid)
-            qDebug() << "Opened!";
-        else
-            qDebug() << "Wrong!";
 
-        pos_x = level.sections[0].size_left * -1;
-        pos_y = level.sections[0].size_top * -1;
 
-        qDebug() << "blocks "<< level.blocks.size();
+        //UPDATE Events
+        if(doUpdate<=0)
+        {
+
+            start=SDL_GetTicks();
+
+            SDL_Event event; //  Events of SDL
+            while ( SDL_PollEvent(&event) )
+            {
+
+                switch(event.type)
+                {
+                    case SDL_QUIT:
+                        running = false;
+                    break;
+
+                    //case SDL_WINDOWEVENT_RESIZED:
+                        //PGE_Window::Width = ;
+                        //PGE_Window::Height = event.resize.h;
+                    //break;
+
+                    case SDL_KEYDOWN: // If pressed key
+                      switch(event.key.keysym.sym)
+                      { // Check which
+                        case SDLK_ESCAPE: // ESC
+                                running = false; // End work of program
+                            break;
+                        case SDLK_t:
+                            PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                        break;
+                        case SDLK_m:
+                            myKeys.move_r = true;
+                        break;
+                        case SDLK_n:
+                            myKeys.move_l = true;
+                        break;
+
+                        case SDLK_z:
+                            if(!myKeys.jump)
+                             //playerBody->SetLinearVelocity(b2Vec2(playerBody->GetLinearVelocity().x, -65.0f-fabs(playerBody->GetLinearVelocity().x/5)));
+                            myKeys.jump=true;
+                        break;
+
+                        case SDLK_x:
+                             myKeys.run=true;
+                        break;
+
+                        case SDLK_RIGHT:
+                                myKeys.go_r=true;
+                        break;
+
+                        case SDLK_LEFT:
+                                myKeys.go_l=true;
+                        break;
+
+                      }
+                    break;
+
+                    case SDL_KEYUP:
+                        switch(event.key.keysym.sym)
+                        { // Check which
+                            case SDLK_m:
+                                myKeys.move_r = false;
+                            break;
+                            case SDLK_n:
+                                myKeys.move_l = false;
+                            break;
+
+                            case SDLK_z:
+                                myKeys.jump=false;
+                            break;
+
+                            case SDLK_x:
+                                 myKeys.run=false;
+                            break;
+
+                            case SDLK_RIGHT:
+                                myKeys.go_r=false;
+                                break;
+                            case SDLK_LEFT:
+                                myKeys.go_l=false;
+                                break;
+                        }
+                    break;
+                }
+            }
+
+            if(1000.0/1000>SDL_GetTicks()-start)
+                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
+                    doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
+
+            lScene->render();
+
+            glFlush();
+            SDL_GL_SwapWindow(PGE_Window::window);
+
+        }
+        doUpdate-=10;
+
+        //Update physics
+        lScene->update();
+
+        SDL_Delay(10);
     }
 
+    delete lScene;
 
+    PGE_Window::uninit();
+    return 0;
 
+    /////////////////////////////////////////////////////////////////
+/* Closed for test our class!!!!!
 
     TextureBuffer[0] = GraphicsHelps::loadTexture(ApplicationPath+"/block-223.bmp");
     TextureBuffer[1] = GraphicsHelps::loadTexture(ApplicationPath+"/background2-14.png");
@@ -262,6 +349,11 @@ int main(int argc, char *argv[])
     int doUpdate=0;
     while(running)
     {
+
+
+
+
+        //UPDATE Events
 
 
         if(doUpdate<=0)
@@ -367,6 +459,10 @@ int main(int argc, char *argv[])
         }
         doUpdate-=10;
 
+
+        //Update physics
+
+
         world->Step(1.0f / 100.0f, 1, 1);
 
         if(myKeys.move_r && ! myKeys.move_l)
@@ -452,7 +548,7 @@ int main(int argc, char *argv[])
 
 
 
-    return 0;
+    return 0;*/
     //return
 }
 
@@ -460,176 +556,175 @@ int main(int argc, char *argv[])
 
 //Cube draw (only test of the OpenGL works)
 
-void drawQuads()
-{
+//void drawQuads()
+//{
 
 
-    //Change camera position
-    pos_x = -1*(PhysUtil::met2pix(playerBody->GetPosition().x) - PGE_Window::Width/2);
-    pos_y = -1*(PhysUtil::met2pix(playerBody->GetPosition().y) - PGE_Window::Height/2);
+//    //Change camera position
+//    pos_x = -1*(PhysUtil::met2pix(playerBody->GetPosition().x) - PGE_Window::Width/2);
+//    pos_y = -1*(PhysUtil::met2pix(playerBody->GetPosition().y) - PGE_Window::Height/2);
 
-    if(-pos_x < level.sections[0].size_left)
-        pos_x = -level.sections[0].size_left;
-    if(-(pos_x-PGE_Window::Width) > level.sections[0].size_right)
-        pos_x = -level.sections[0].size_right+PGE_Window::Width;
+//    if(-pos_x < level.sections[0].size_left)
+//        pos_x = -level.sections[0].size_left;
+//    if(-(pos_x-PGE_Window::Width) > level.sections[0].size_right)
+//        pos_x = -level.sections[0].size_right+PGE_Window::Width;
 
-    if(-pos_y < level.sections[0].size_top)
-        pos_y = -level.sections[0].size_top;
-    if(-(pos_y-PGE_Window::Height) > level.sections[0].size_bottom)
-        pos_y = -level.sections[0].size_bottom+PGE_Window::Height;
-
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    //Reset modelview matrix
-    glLoadIdentity();
-
-    //Move to center of the screen
-    glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
-
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
-
-    int imgPos_X = ((level.sections[0].size_left+pos_x)/2) % TextureBuffer[1].w;
+//    if(-pos_y < level.sections[0].size_top)
+//        pos_y = -level.sections[0].size_top;
+//    if(-(pos_y-PGE_Window::Height) > level.sections[0].size_bottom)
+//        pos_y = -level.sections[0].size_bottom+PGE_Window::Height;
 
 
-    int imgPos_Y;
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    //Reset modelview matrix
+//    glLoadIdentity();
 
-    double sHeight = fabs(level.sections[0].size_top-level.sections[0].size_bottom);
+//    //Move to center of the screen
+//    //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
-    if(sHeight > (double)TextureBuffer[1].h)
-        imgPos_Y =
-                (level.sections[0].size_top+pos_y)
-                /
-                (
-                    (sHeight - PGE_Window::Height)/
-                    (TextureBuffer[1].h - PGE_Window::Height)
-                );
-    else if(sHeight == (double)TextureBuffer[1].h)
-        imgPos_Y = level.sections[0].size_top+pos_y;
-    else
-        imgPos_Y =
-                level.sections[0].size_bottom+pos_y
-                - TextureBuffer[1].h;
+//    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
-    //fabs(level.sections[0].size_top-level.sections[0].size_bottom)
-    //TextureBuffer[1].h
-    //PGE_Window::Height
-    //pos_y
-
-    QRectF blockG = QRectF(mapToOpengl(QPoint(imgPos_X, imgPos_Y)), mapToOpengl(QPoint(imgPos_X+TextureBuffer[1].w, imgPos_Y+TextureBuffer[1].h)) );
-
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture( GL_TEXTURE_2D, TextureBuffer[1].texture );
-    glBegin( GL_QUADS );
-        glTexCoord2i( 0, 0 );
-        glVertex2f( blockG.left(), blockG.top());
-
-        glTexCoord2i( 1, 0 );
-        glVertex2f(  blockG.right(), blockG.top());
-
-        glTexCoord2i( 1, 1 );
-        glVertex2f(  blockG.right(),  blockG.bottom());
-
-        glTexCoord2i( 0, 1 );
-        glVertex2f( blockG.left(),  blockG.bottom());
-    glEnd();
-
-    imgPos_X += TextureBuffer[1].w;
-
-    blockG = QRectF(mapToOpengl(QPoint(imgPos_X, imgPos_Y)), mapToOpengl(QPoint(imgPos_X+TextureBuffer[1].w,imgPos_Y+TextureBuffer[1].h)) );
-    glBindTexture( GL_TEXTURE_2D, TextureBuffer[1].texture );
-    glBegin( GL_QUADS );
-        glTexCoord2i( 0, 0 );
-        glVertex2f( blockG.left(), blockG.top());
-
-        glTexCoord2i( 1, 0 );
-        glVertex2f(  blockG.right(), blockG.top());
-
-        glTexCoord2i( 1, 1 );
-        glVertex2f(  blockG.right(),  blockG.bottom());
-
-        glTexCoord2i( 0, 1 );
-        glVertex2f( blockG.left(),  blockG.bottom());
-    glEnd();
-    glDisable(GL_TEXTURE_2D);
+//    int imgPos_X = ((level.sections[0].size_left+pos_x)/2) % TextureBuffer[1].w;
 
 
+//    int imgPos_Y;
+
+//    double sHeight = fabs(level.sections[0].size_top-level.sections[0].size_bottom);
+
+//    if(sHeight > (double)TextureBuffer[1].h)
+//        imgPos_Y =
+//                (level.sections[0].size_top+pos_y)
+//                /
+//                (
+//                    (sHeight - PGE_Window::Height)/
+//                    (TextureBuffer[1].h - PGE_Window::Height)
+//                );
+//    else if(sHeight == (double)TextureBuffer[1].h)
+//        imgPos_Y = level.sections[0].size_top+pos_y;
+//    else
+//        imgPos_Y =
+//                level.sections[0].size_bottom+pos_y
+//                - TextureBuffer[1].h;
+
+//    //fabs(level.sections[0].size_top-level.sections[0].size_bottom)
+//    //TextureBuffer[1].h
+//    //PGE_Window::Height
+//    //pos_y
+
+//    QRectF blockG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+TextureBuffer[1].w, imgPos_Y+TextureBuffer[1].h) );
+
+//    glColor4f( 1.f, 1.f, 1.f, 1.f);
+//    glEnable(GL_TEXTURE_2D);
+//    glBindTexture( GL_TEXTURE_2D, TextureBuffer[1].texture );
+//    glBegin( GL_QUADS );
+//        glTexCoord2i( 0, 0 );
+//        glVertex2f( blockG.left(), blockG.top());
+
+//        glTexCoord2i( 1, 0 );
+//        glVertex2f(  blockG.right(), blockG.top());
+
+//        glTexCoord2i( 1, 1 );
+//        glVertex2f(  blockG.right(),  blockG.bottom());
+
+//        glTexCoord2i( 0, 1 );
+//        glVertex2f( blockG.left(),  blockG.bottom());
+//    glEnd();
+
+//    imgPos_X += TextureBuffer[1].w;
+
+//    blockG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+TextureBuffer[1].w,imgPos_Y+TextureBuffer[1].h) );
+//    glBindTexture( GL_TEXTURE_2D, TextureBuffer[1].texture );
+//    glBegin( GL_QUADS );
+//        glTexCoord2i( 0, 0 );
+//        glVertex2f( blockG.left(), blockG.top());
+
+//        glTexCoord2i( 1, 0 );
+//        glVertex2f(  blockG.right(), blockG.top());
+
+//        glTexCoord2i( 1, 1 );
+//        glVertex2f(  blockG.right(),  blockG.bottom());
+
+//        glTexCoord2i( 0, 1 );
+//        glVertex2f( blockG.left(),  blockG.bottom());
+//    glEnd();
+//    glDisable(GL_TEXTURE_2D);
 
 
 
-    foreach(LevelBGO b, level.bgo)
-    {
-        QRect bgo = QRect(b.x+pos_x, b.y+pos_y, TextureBuffer[2].w, TextureBuffer[2].h);
 
-        QRectF bgoG = QRectF(mapToOpengl(QPoint(bgo.x(), bgo.y())),
-                               mapToOpengl(QPoint(bgo.x()+TextureBuffer[2].w,bgo.y()+TextureBuffer[2].h)) );
 
-        //            qDebug() << "Point " << blockG.topLeft() << " size "
-        //                     << blockG.bottomRight();
-        glColor4f( 1.f, 1.f, 1.f, 1.0f);
-        glEnable(GL_TEXTURE_2D);
-        glBindTexture( GL_TEXTURE_2D, TextureBuffer[2].texture );
-        //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-        glBegin( GL_QUADS );
-            glTexCoord2i( 0, 0 );
-            glVertex3f( bgoG.left(), bgoG.top(), 0 );
+//    foreach(LevelBGO b, level.bgo)
+//    {
+//        QRect bgo = QRect(b.x+pos_x, b.y+pos_y, TextureBuffer[2].w, TextureBuffer[2].h);
 
-            glTexCoord2i( 1, 0 );
-            glVertex3f(  bgoG.right(), bgoG.top(), 0 );
+//        QRectF bgoG = QRectF(QPointF(bgo.x(), bgo.y()),
+//                               QPointF(bgo.x()+TextureBuffer[2].w,bgo.y()+TextureBuffer[2].h) );
 
-            glTexCoord2i( 1, 1 );
-            glVertex3f(  bgoG.right(),  bgoG.bottom(), 0 );
+//        //            qDebug() << "Point " << blockG.topLeft() << " size "
+//        //                     << blockG.bottomRight();
+//        glColor4f( 1.f, 1.f, 1.f, 1.0f);
+//        glEnable(GL_TEXTURE_2D);
+//        glBindTexture( GL_TEXTURE_2D, TextureBuffer[2].texture );
+//        //glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+//        glBegin( GL_QUADS );
+//            glTexCoord2i( 0, 0 );
+//            glVertex3f( bgoG.left(), bgoG.top(), 0 );
 
-            glTexCoord2i( 0, 1 );
-            glVertex3f( bgoG.left(),  bgoG.bottom(), 0 );
-        glEnd();
-        glDisable(GL_TEXTURE_2D);
-    }
+//            glTexCoord2i( 1, 0 );
+//            glVertex3f(  bgoG.right(), bgoG.top(), 0 );
 
-    foreach(LevelBlock b, level.blocks)
-    {
-        QRect block = QRect(b.x+pos_x, b.y+pos_y, b.w, b.h);
+//            glTexCoord2i( 1, 1 );
+//            glVertex3f(  bgoG.right(),  bgoG.bottom(), 0 );
 
-        QRectF blockG = QRectF(mapToOpengl(QPoint(block.x(), block.y())),
-                               mapToOpengl(QPoint(block.x()+b.w, block.y()+b.h)) );
+//            glTexCoord2i( 0, 1 );
+//            glVertex3f( bgoG.left(),  bgoG.bottom(), 0 );
+//        glEnd();
+//        glDisable(GL_TEXTURE_2D);
+//    }
 
-        //            qDebug() << "Point " << blockG.topLeft() << " size "
-        //                     << blockG.bottomRight();
+//    foreach(LevelBlock b, level.blocks)
+//    {
+//        QRect block = QRect(b.x+pos_x, b.y+pos_y, b.w, b.h);
 
-        // Bind the texture to which subsequent calls refer to
+//        QRectF blockG = QRectF(QPointF(block.x(), block.y()),
+//                               QPointF(block.x()+b.w, block.y()+b.h) );
 
-        glColor4f( 1.f, 1.f, 1.f, 1.f);
-        glEnable(GL_TEXTURE_2D);
-        glBindTexture( GL_TEXTURE_2D, TextureBuffer[0].texture );
-        glBegin( GL_QUADS );
-            glTexCoord2i( 0, 0 );
-            glVertex2f( blockG.left(), blockG.top());
+//        //            qDebug() << "Point " << blockG.topLeft() << " size "
+//        //                     << blockG.bottomRight();
 
-            glTexCoord2i( 1, 0 );
-            glVertex2f(  blockG.right(), blockG.top());
+//        // Bind the texture to which subsequent calls refer to
 
-            glTexCoord2i( 1, 1 );
-            glVertex2f(  blockG.right(),  blockG.bottom());
+//        glColor4f( 1.f, 1.f, 1.f, 1.f);
+//        glEnable(GL_TEXTURE_2D);
+//        glBindTexture( GL_TEXTURE_2D, TextureBuffer[0].texture );
+//        glBegin( GL_QUADS );
+//            glTexCoord2i( 0, 0 );
+//            glVertex2f( blockG.left(), blockG.top());
 
-            glTexCoord2i( 0, 1 );
-            glVertex2f( blockG.left(),  blockG.bottom());
-        glEnd();
-        glDisable(GL_TEXTURE_2D);
-    }
+//            glTexCoord2i( 1, 0 );
+//            glVertex2f(  blockG.right(), blockG.top());
 
-    //qDebug()<< playerBody->GetPosition().x<< "x" << playerBody->GetPosition().y;
-    QRect pl = QRect( PhysUtil::met2pix(playerBody->GetPosition().x)-(level.players[0].w/2) +pos_x, PhysUtil::met2pix(playerBody->GetPosition().y)-(level.players[0].h/2)+pos_y,
-                      level.players[0].w, level.players[0].h);
+//            glTexCoord2i( 1, 1 );
+//            glVertex2f(  blockG.right(),  blockG.bottom());
 
-    QRectF player = QRectF(mapToOpengl(QPoint(pl.x(), pl.y())),
-                           mapToOpengl(QPoint(pl.x()+pl.width(), pl.y()+pl.height())) );
-    glColor4f( 0.f, 0.f, 1.f, 1.f);
-    glBegin( GL_QUADS );
-        glVertex2f( player.left(), player.top());
-        glVertex2f(  player.right(), player.top());
-        glVertex2f(  player.right(),  player.bottom());
-        glVertex2f( player.left(),  player.bottom());
-    glEnd();
+//            glTexCoord2i( 0, 1 );
+//            glVertex2f( blockG.left(),  blockG.bottom());
+//        glEnd();
+//        glDisable(GL_TEXTURE_2D);
+//    }
 
-}
+//    //qDebug()<< playerBody->GetPosition().x<< "x" << playerBody->GetPosition().y;
+//    QRect pl = QRect( PhysUtil::met2pix(playerBody->GetPosition().x)-(level.players[0].w/2) +pos_x, PhysUtil::met2pix(playerBody->GetPosition().y)-(level.players[0].h/2)+pos_y,
+//                      level.players[0].w, level.players[0].h);
+
+//    QRectF player = QRectF(QPointF(pl.x(), pl.y()),
+//                           QPointF(pl.x()+pl.width(), pl.y()+pl.height()) );
+//    glColor4f( 0.f, 0.f, 1.f, 1.f);
+//    glBegin( GL_QUADS );
+//        glVertex2f( player.left(), player.top());
+//        glVertex2f(  player.right(), player.top());
+//        glVertex2f(  player.right(),  player.bottom());
+//        glVertex2f( player.left(),  player.bottom());
+//    glEnd();
+
+//}

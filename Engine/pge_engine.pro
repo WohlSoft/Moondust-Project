@@ -109,7 +109,8 @@ SOURCES += main.cpp \
     data_configs/obj_block.cpp \
     controls/controller_keyboard.cpp \
     data_configs/select_config.cpp \
-    common_features/util.cpp
+    common_features/util.cpp \
+    scenes/level/lvl_block.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -191,7 +192,8 @@ HEADERS  += \
     ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
     controls/controller_keyboard.h \
     data_configs/select_config.h \
-    common_features/util.h
+    common_features/util.h \
+    scenes/level/lvl_block.h
 
 FORMS    += \
     data_configs/select_config.ui

@@ -13,6 +13,7 @@ class LVL_Player :
 {
     public:
         LVL_Player();
+        ~LVL_Player();
         void init();
         void update();
 
