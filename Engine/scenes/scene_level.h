@@ -9,6 +9,8 @@
 #include "level/lvl_block.h"
 #include "../graphics/window.h"
 
+#include "../controls/controller_keyboard.h"
+
 #include <file_formats.h>
 #include <Box2D/Box2D.h>
 #include <QString>
@@ -53,7 +55,7 @@ public:
 
     bool prepareLevel();
 
-    void update();
+    void update(float step=10);
     void render();
 
 
@@ -72,8 +74,9 @@ public:
     bool isLevelContinues;
     int exitLevelDelay;
     int exitLevelCode;
+    int numberOfPlayers;
 
-
+    KeyboardController keyboard1;
 
 private:
     LevelData data;

@@ -147,6 +147,7 @@ int main(int argc, char *argv[])
     Uint32 start;
     bool running = true;
     int doUpdate=0;
+    float doUpdateP=0;
     while(running)
     {
 
@@ -157,103 +158,62 @@ int main(int argc, char *argv[])
 
             start=SDL_GetTicks();
 
-            SDL_Event event; //  Events of SDL
-            while ( SDL_PollEvent(&event) )
-            {
-
-                switch(event.type)
-                {
-                    case SDL_QUIT:
-                        running = false;
-                    break;
-
-                    //case SDL_WINDOWEVENT_RESIZED:
-                        //PGE_Window::Width = ;
-                        //PGE_Window::Height = event.resize.h;
-                    //break;
-
-                    case SDL_KEYDOWN: // If pressed key
-                      switch(event.key.keysym.sym)
-                      { // Check which
-                        case SDLK_ESCAPE: // ESC
-                                running = false; // End work of program
-                            break;
-                        case SDLK_t:
-                            PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                        break;
-                        case SDLK_m:
-                            myKeys.move_r = true;
-                        break;
-                        case SDLK_n:
-                            myKeys.move_l = true;
-                        break;
-
-                        case SDLK_z:
-                            if(!myKeys.jump)
-                             //playerBody->SetLinearVelocity(b2Vec2(playerBody->GetLinearVelocity().x, -65.0f-fabs(playerBody->GetLinearVelocity().x/5)));
-                            myKeys.jump=true;
-                        break;
-
-                        case SDLK_x:
-                             myKeys.run=true;
-                        break;
-
-                        case SDLK_RIGHT:
-                                myKeys.go_r=true;
-                        break;
-
-                        case SDLK_LEFT:
-                                myKeys.go_l=true;
-                        break;
-
-                      }
-                    break;
-
-                    case SDL_KEYUP:
-                        switch(event.key.keysym.sym)
-                        { // Check which
-                            case SDLK_m:
-                                myKeys.move_r = false;
-                            break;
-                            case SDLK_n:
-                                myKeys.move_l = false;
-                            break;
-
-                            case SDLK_z:
-                                myKeys.jump=false;
-                            break;
-
-                            case SDLK_x:
-                                 myKeys.run=false;
-                            break;
-
-                            case SDLK_RIGHT:
-                                myKeys.go_r=false;
-                                break;
-                            case SDLK_LEFT:
-                                myKeys.go_l=false;
-                                break;
-                        }
-                    break;
-                }
-            }
-
-            if(1000.0/1000>SDL_GetTicks()-start)
-                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                    doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
-
             lScene->render();
 
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
 
+            if(1000.0/1000>SDL_GetTicks()-start)
+                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
+                    doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
         }
         doUpdate-=10;
+
+
+        start=SDL_GetTicks();
+
+        SDL_Event event; //  Events of SDL
+        while ( SDL_PollEvent(&event) )
+        {
+            lScene->keyboard1.update(event);
+
+            switch(event.type)
+            {
+                case SDL_QUIT:
+                    running = false;
+                break;
+
+                case SDL_KEYDOWN: // If pressed key
+                  switch(event.key.keysym.sym)
+                  { // Check which
+                    case SDLK_ESCAPE: // ESC
+                            running = false; // End work of program
+                        break;
+                    case SDLK_t:
+                        PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    break;
+                    default:
+                      break;
+
+                  }
+                break;
+
+                // case SDL_KEYUP:
+                //  switch(event.key.keysym.sym)
+                //  { }
+                //  break;
+            }
+        }
+
 
         //Update physics
         lScene->update();
 
-        SDL_Delay(10);
+        if(1000.0/100>SDL_GetTicks()-start)
+        {
+            doUpdateP = 1000.0/100-(SDL_GetTicks()-start);
+            SDL_Delay( doUpdateP );
+        }
     }
 
     delete lScene;

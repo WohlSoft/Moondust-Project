@@ -1,7 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <vector>
+#include <QVector>
 #include "control_keys.h"
 #include "controllable_object.h"
 
@@ -27,8 +27,12 @@ public:
     void resetControls();
     void sendControls();
 
+    virtual void update();
+    void registerInControl(ControllableObject* obj);
+    void removeFromControl(ControllableObject* obj);
+
     controller_keys keys;
-    std::vector<ControllableObject* > objects;
+    QVector<ControllableObject* > objects;
 };
 
 #endif // CONTROLLER_H

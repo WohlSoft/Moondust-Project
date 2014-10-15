@@ -21,6 +21,8 @@ LevelScene::LevelScene()
     exitLevelDelay=false;
     exitLevelCode=false;
 
+    numberOfPlayers=1;
+
     world=NULL;
 }
 
@@ -56,6 +58,7 @@ LevelScene::~LevelScene()
         LVL_Player* tmp;
         tmp = players.first();
         players.pop_front();
+        keyboard1.removeFromControl(tmp);
         if(tmp) delete tmp;
     }
 
@@ -103,6 +106,7 @@ void LevelScene::init()
     //Init Physics
     b2Vec2 gravity(0.0f, 150.0f);
     world = new b2World(gravity);
+    world->SetAllowSleeping(true);
 
 
     int sID = findNearSection(cameraStart.x(), cameraStart.y());
@@ -145,7 +149,8 @@ void LevelScene::init()
 
     qDebug()<<"Add players";
 
-    for(int i=0; i<data.players.size(); i++)
+    int getPlayers = numberOfPlayers;
+    for(int i=0; i<data.players.size() && getPlayers>0 ; i++)
     {
         if(data.players[i].w==0 && data.players[i].h==0) continue;
 
@@ -157,6 +162,8 @@ void LevelScene::init()
         player->data = &(data.players[i]);
         player->init();
         players.push_back(player);
+        keyboard1.registerInControl(player);
+        getPlayers--;
     }
 
 
@@ -193,12 +200,15 @@ bool LevelScene::prepareLevel()
 
 int i;
 
-void LevelScene::update()
+void LevelScene::update(float step)
 {
+    if(step<=0) step=10.0f;
+
     //Make world step
-    world->Step(1.0f / 100.0f, 1, 1);
+    world->Step(1.0f / 100.f, 3, 3);
 
     //Update controllers
+    keyboard1.sendControls();
 
     //update players
 
