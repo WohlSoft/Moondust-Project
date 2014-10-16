@@ -16,6 +16,16 @@ LVL_Block::~LVL_Block()
     }
 }
 
+//float LVL_Block::posX()
+//{
+//    return data->x;
+//}
+
+//float LVL_Block::posY()
+//{
+//    return data->y;
+//}
+
 void LVL_Block::init()
 {
     if(!worldPtr) return;

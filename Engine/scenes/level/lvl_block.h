@@ -14,6 +14,9 @@ public:
 
     LevelBlock* data;
     bool slippery;
+
+    //float posX();
+    //float posY();
 };
 
 #endif // LVL_BLOCK_H
