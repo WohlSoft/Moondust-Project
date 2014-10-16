@@ -21,7 +21,7 @@ LevelScene::LevelScene()
     exitLevelDelay=false;
     exitLevelCode=false;
 
-    numberOfPlayers=1;
+    numberOfPlayers=2;
 
     world=NULL;
 }
@@ -162,7 +162,8 @@ void LevelScene::init()
         player->data = &(data.players[i]);
         player->init();
         players.push_back(player);
-        keyboard1.registerInControl(player);
+        if(player->playerID==1)
+            keyboard1.registerInControl(player);
         getPlayers--;
     }
 
@@ -260,11 +261,11 @@ void LevelScene::render()
 
                     QRectF blockG = QRectF(b->posX()-cam->posX(),
                                            b->posY()-cam->posY(),
-                                           b->width, b->height );
-
-                    //qDebug() << blockG.x() << blockG.y() << blockG.width() << blockG.height();
+                                           b->width,
+                                           b->height);
 
                     glColor4f( 1.f, 1.f, 1.f, 1.f);
+
                     glEnable(GL_TEXTURE_2D);
                     glBindTexture( GL_TEXTURE_2D, textures_bank[0].texture );
                     glBegin( GL_QUADS );
@@ -302,8 +303,8 @@ void LevelScene::render()
                     glColor4f( 0.f, 0.f, 1.f, 1.f);
                     glBegin( GL_QUADS );
                         glVertex2f( player.left(), player.top());
-                        glVertex2f(  player.right(), player.top());
-                        glVertex2f(  player.right(),  player.bottom());
+                        glVertex2f( player.right(), player.top());
+                        glVertex2f( player.right(),  player.bottom());
                         glVertex2f( player.left(),  player.bottom());
                     glEnd();
 
