@@ -75,12 +75,12 @@ int PGE_LevelCamera::h()
     return height;
 }
 
-int PGE_LevelCamera::posX()
+qreal PGE_LevelCamera::posX()
 {
     return PhysUtil::met2pix(sensor->GetPosition().x) - width/2;
 }
 
-int PGE_LevelCamera::posY()
+qreal PGE_LevelCamera::posY()
 {
     return PhysUtil::met2pix(sensor->GetPosition().y) - height/2;
 }
@@ -122,13 +122,12 @@ void PGE_LevelCamera::update()
     objects_to_render.clear();
 
     if(!sensor) return;
-    int contacts = 0;
+    //int contacts = 0;
 
     for(b2ContactEdge* ce = sensor->GetContactList(); ce; ce = ce->next)
     {
         b2Contact* c = ce->contact;
-
-        contacts++;
+        //contacts++;
 
         PGE_Phys_Object * visibleBody;
         visibleBody = static_cast<PGE_Phys_Object *>(c->GetFixtureA()->GetBody()->GetUserData());

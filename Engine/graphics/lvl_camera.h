@@ -18,8 +18,8 @@ public:
     ~PGE_LevelCamera();
     int w(); //!< Width
     int h(); //!< Height
-    int posX(); //!< Position X
-    int posY(); //!< Position Y
+    qreal posX(); //!< Position X
+    qreal posY(); //!< Position Y
 
     void setWorld(b2World * wld);
     void init(float x, float y, float w, float h);
@@ -44,8 +44,8 @@ public:
     int s_left;
     int s_right;
 
-    int pos_x;
-    int pos_y;
+    float pos_x;
+    float pos_y;
 
 private:
     PGE_RenderList objects_to_render;
