@@ -21,7 +21,7 @@ LevelScene::LevelScene()
     exitLevelDelay=false;
     exitLevelCode=false;
 
-    numberOfPlayers=2;
+    numberOfPlayers=1;
 
     world=NULL;
 }
@@ -124,6 +124,8 @@ void LevelScene::init()
                 data.sections[sID].size_right,
                 data.sections[sID].size_bottom
                 );
+
+    camera->isWarp = data.sections[sID].IsWarp;
 
     camera->init(
                     (float)cameraStart.x(),

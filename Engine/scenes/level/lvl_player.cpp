@@ -140,16 +140,37 @@ void LVL_Player::update()
     //Connection of section opposite sides
     if(camera->isWarp)
     {
-        if(PhysUtil::met2pix(physBody->GetPosition().x) < camera->s_left-29)
+        if(posX() < camera->s_left-width-1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_right + (data->w/2)),
+                 PhysUtil::pix2met(camera->s_right+posX_coefficient),
                     physBody->GetPosition().y), 0.0f);
         else
-        if(PhysUtil::met2pix(physBody->GetPosition().x) > camera->s_right+30)
+        if(posX() > camera->s_right + 1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_left-29 + (data->w/2) ),
+                 PhysUtil::pix2met(camera->s_left-posX_coefficient ),
                     physBody->GetPosition().y), 0.0f
                                    );
+    }
+    else
+    {
+        //Prevent moving of player away from screen
+        if( posX() < camera->s_left)
+        {
+            physBody->SetTransform(b2Vec2(
+                 PhysUtil::pix2met(camera->s_left + posX_coefficient),
+                    physBody->GetPosition().y), 0.0f);
+            physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+        }
+        else
+        if( posX()+width > camera->s_right)
+        {
+            physBody->SetTransform(b2Vec2(
+                 PhysUtil::pix2met(camera->s_right-posX_coefficient ),
+                    physBody->GetPosition().y), 0.0f
+                                   );
+            physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+        }
+
     }
 
     camera->setPos( posX() - PGE_Window::Width/2,
