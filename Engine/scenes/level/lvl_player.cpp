@@ -16,6 +16,10 @@ LVL_Player::LVL_Player()
     hRunningMaxSpeed=48.0f;
     fallMaxSpeed=720.0f;
 
+    JumpPressed=false;
+    allowJump=true;
+    jumpForce=0;
+
     curHMaxSpeed = hMaxSpeed;
     isRunning = false;
 }
@@ -110,8 +114,21 @@ void LVL_Player::update()
         if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
             physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
 
-    if(keys.jump)
-        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/5)));
+    if( keys.jump)
+    {
+        if(!JumpPressed)
+        {
+            JumpPressed=true;
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/5)));
+        }
+    }
+    else
+    {
+        if(JumpPressed)
+        {
+            JumpPressed=false;
+        }
+    }
 
 
     if( posY() > camera->s_bottom+30 )
