@@ -131,10 +131,11 @@ void LVL_Player::update()
     }
 
 
-    if( posY() > camera->s_bottom+30 )
+    //Return player to start position on fall down
+    if( posY() > camera->s_bottom+height )
         physBody->SetTransform(b2Vec2(
-                PhysUtil::pix2met(data->x + (width) ),
-                PhysUtil::pix2met(data->y + (data->h/2) )), 0.0f);
+                PhysUtil::pix2met(data->x + (posX_coefficient) ),
+                PhysUtil::pix2met(data->y + (posY_coefficient) )), 0.0f);
 
 
     //Connection of section opposite sides
@@ -143,12 +144,12 @@ void LVL_Player::update()
         if(posX() < camera->s_left-width-1 )
             physBody->SetTransform(b2Vec2(
                  PhysUtil::pix2met(camera->s_right+posX_coefficient),
-                    physBody->GetPosition().y), 0.0f);
+                 physBody->GetPosition().y), 0.0f);
         else
         if(posX() > camera->s_right + 1 )
             physBody->SetTransform(b2Vec2(
                  PhysUtil::pix2met(camera->s_left-posX_coefficient ),
-                    physBody->GetPosition().y), 0.0f
+                 physBody->GetPosition().y), 0.0f
                                    );
     }
     else
