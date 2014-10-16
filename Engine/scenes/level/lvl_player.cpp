@@ -44,8 +44,8 @@ void LVL_Player::init()
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set
             (
-                PhysUtil::pix2met((float)data->x + posX_coefficient-1),
-                PhysUtil::pix2met((float)data->y + posY_coefficient-1)
+                PhysUtil::pix2met((float)data->x + posX_coefficient),
+                PhysUtil::pix2met((float)data->y + posY_coefficient)
             );
 
 //    bodyDef.position.Set(PhysUtil::pix2met((float)data->x + ((float)data->w/2)),
@@ -58,8 +58,8 @@ void LVL_Player::init()
     physBody = worldPtr->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient-1),
-                   PhysUtil::pix2met(posY_coefficient-1));
+    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
+                   PhysUtil::pix2met(posY_coefficient));
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
