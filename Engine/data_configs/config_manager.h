@@ -27,6 +27,64 @@ struct DataFolders
 };
 
 
+struct WorldMapData
+{
+    QString backgroundImg;
+    int viewport_x; //World map view port
+    int viewport_y;
+    int viewport_w;
+    int viewport_h;
+    enum titleAlign{
+        align_left=0,
+        align_center,
+        align_right
+    };
+
+    int title_x; //Title of level
+    int title_y;
+    int title_w; //max width of title
+    titleAlign title_align;
+
+    bool points_en;
+    int points_x;
+    int points_y;
+
+    bool health_en;
+    int health_x;
+    int health_y;
+
+    bool star_en;
+    int star_x;
+    int star_y;
+
+    bool coin_en;
+    int coin_x;
+    int coin_y;
+
+    bool portrait_en;
+    int portrait_x;
+    int portrait_y;
+};
+
+struct LoadingScreenAdditionalImage
+{
+    QString imgFile;
+    bool animated;
+    int frames;
+    int x;
+    int y;
+};
+
+struct LoadingScreenData
+{
+    int bg_color_r;
+    int bg_color_g;
+    int bg_color_b;
+    QString backgroundImg;
+    int updateDelay;
+    QVector<LoadingScreenAdditionalImage > AdditionalImages;
+};
+
 
 ////////////////////Common items///////////////////////////
 struct obj_music
@@ -58,6 +116,22 @@ public:
 
     //Common Data
     static QVector<PGE_Texture > common_textures;
+
+    static unsigned int screen_width;
+    static unsigned int screen_height;
+
+    enum screenType{
+        SCR_Static=0, //Static / Scalable screen
+        SCR_Dynamic   //Dynamic screen
+    };
+    static screenType screen_type;
+
+    //LoadingScreen
+    static LoadingScreenData LoadingScreen;
+
+    //World map data
+    static WorldMapData WorldMap;
+
 
     static unsigned long music_custom_id;
     static unsigned long music_w_custom_id;
