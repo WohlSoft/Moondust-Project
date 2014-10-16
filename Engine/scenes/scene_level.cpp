@@ -257,11 +257,12 @@ void LevelScene::render()
             case PGE_Phys_Object::LVLBlock:
                 {
                     LVL_Block * b = static_cast<LVL_Block*>(item);
-                    QRect block = QRect(b->posX()-cam->posX(),
-                                        b->posY()-cam->posY(), b->width, b->height);
 
-                    QRectF blockG = QRectF(QPointF(block.x(), block.y()),
-                                           QPointF(block.x()+b->width, block.y()+b->height) );
+                    QRectF blockG = QRectF(b->posX()-cam->posX(),
+                                           b->posY()-cam->posY(),
+                                           b->width, b->height );
+
+                    //qDebug() << blockG.x() << blockG.y() << blockG.width() << blockG.height();
 
                     glColor4f( 1.f, 1.f, 1.f, 1.f);
                     glEnable(GL_TEXTURE_2D);
@@ -286,17 +287,14 @@ void LevelScene::render()
                 {
                     LVL_Player * p = static_cast<LVL_Player*>(item);
 
-                    QRect pl = QRect( p->posX()
-                                        -cam->posX(),
+                    QRectF player = QRectF( p->posX()
+                                            -cam->posX(),
 
-                                        p->posY()
-                                        -cam->posY(),
+                                            p->posY()
+                                            -cam->posY(),
 
-                                        p->width, p->height
-                                     );
-
-                    QRectF player = QRectF(QPointF(pl.x(), pl.y()),
-                                           QPointF(pl.x()+pl.width(), pl.y()+pl.height()) );
+                                            p->width, p->height
+                                         );
 
             //        qDebug() << "PlPos" << pl.left() << pl.top() << player.right() << player.bottom();
 
