@@ -126,6 +126,7 @@ void LevelScene::init()
                 );
 
     camera->isWarp = data.sections[sID].IsWarp;
+    camera->section = &(data.sections[sID]);
 
     camera->init(
                     (float)cameraStart.x(),
@@ -208,7 +209,7 @@ void LevelScene::update(float step)
     if(step<=0) step=10.0f;
 
     //Make world step
-    world->Step(1.0f / 100.f, 3, 3);
+    world->Step(1.0f / 100.f, 1, 1);
 
     //Update controllers
     keyboard1.sendControls();
