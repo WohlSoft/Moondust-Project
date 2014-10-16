@@ -24,7 +24,7 @@ public:
     void setWorld(b2World * wld);
     void init(float x, float y, float w, float h);
 
-    void setPos(int x, int y);
+    void setPos(float x, float y);
     void setSize(int w, int h);
     void update();
     void drawBackground();

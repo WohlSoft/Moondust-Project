@@ -77,15 +77,15 @@ int PGE_LevelCamera::h()
 
 qreal PGE_LevelCamera::posX()
 {
-    return PhysUtil::met2pix(sensor->GetPosition().x) - width/2;
+    return pos_x;
 }
 
 qreal PGE_LevelCamera::posY()
 {
-    return PhysUtil::met2pix(sensor->GetPosition().y) - height/2;
+    return pos_y;
 }
 
-void PGE_LevelCamera::setPos(int x, int y)
+void PGE_LevelCamera::setPos(float x, float y)
 {
     pos_x = x;
     pos_y = y;
@@ -103,6 +103,9 @@ void PGE_LevelCamera::setPos(int x, int y)
     sensor->SetTransform(b2Vec2( PhysUtil::pix2met(pos_x+width/2),
                                  PhysUtil::pix2met(pos_y+height/2)), 0);
     sensor->SetLinearVelocity(b2Vec2(0,0));
+
+    pos_x = round(pos_x);
+    pos_y = round(pos_y);
 }
 
 void PGE_LevelCamera::setSize(int w, int h)
