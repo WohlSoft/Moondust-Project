@@ -14,10 +14,10 @@ class PGE_Phys_Object
 public:
     PGE_Phys_Object();
     virtual ~PGE_Phys_Object();
-    long posX(); //!< Position X
-    long posY(); //!< Position Y
+    virtual float posX(); //!< Position X
+    virtual float posY(); //!< Position Y
     void setSize(float w, float h);
-    void setPos(long x, long y);
+    virtual void setPos(long x, long y);
 
     float width;  //!< Width
     float height; //!< Height

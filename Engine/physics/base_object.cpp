@@ -21,7 +21,7 @@ PGE_Phys_Object::~PGE_Phys_Object()
 
 }
 
-long PGE_Phys_Object::posX()
+float PGE_Phys_Object::posX()
 {
     if(physBody)
     {//PhysUtil::pixMeter
@@ -31,7 +31,7 @@ long PGE_Phys_Object::posX()
         return 0;
 }
 
-long PGE_Phys_Object::posY()
+float PGE_Phys_Object::posY()
 {
     if(physBody)
     {
