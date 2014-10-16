@@ -27,6 +27,10 @@ class LVL_Player :
         float32 curHMaxSpeed; //!< Current moving max speed
         bool isRunning;
 
+        bool JumpPressed;
+        bool allowJump;
+        int jumpForce;
+
 
         PlayerPoint * data;
 
