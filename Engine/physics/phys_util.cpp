@@ -1,7 +1,7 @@
 #include "phys_util.h"
 
 
-float PhysUtil::pixMeter = 10.0f; // Pixels per meter;
+float PhysUtil::pixMeter = 10.0000000f; // Pixels per meter;
 
 
 float PhysUtil::met2pix(float met)
