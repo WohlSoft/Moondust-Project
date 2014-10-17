@@ -24,6 +24,8 @@
 #include "graphics_funcs.h"
 #include "../../_Libs/EasyBMP/EasyBMP.h"
 
+#include <QtDebug>
+
 QImage GraphicsHelps::setAlphaMask(QImage image, QImage mask)
 {
     if(mask.isNull())
@@ -81,10 +83,8 @@ QImage GraphicsHelps::loadQImage(QString file)
     return image;
 }
 
-PGE_Texture GraphicsHelps::loadTexture(QString path, QString maskPath)
+PGE_Texture GraphicsHelps::loadTexture(PGE_Texture &target, QString path, QString maskPath)
 {
-    PGE_Texture target;
-
     QImage sourceImage;
     // Load the OpenGL texture
     sourceImage = loadQImage(path); // Gives us the information to make the texture
@@ -105,6 +105,10 @@ PGE_Texture GraphicsHelps::loadTexture(QString path, QString maskPath)
         sourceImage = setAlphaMask(sourceImage, maskImage);
     }
 
+    sourceImage.convertToFormat(QImage::Format_ARGB32);
+
+    qDebug() << path << sourceImage.size();
+
     sourceImage = QGLWidget::convertToGLFormat(sourceImage).mirrored(false, true);
 
     target.nOfColors = 4;
@@ -112,7 +116,7 @@ PGE_Texture GraphicsHelps::loadTexture(QString path, QString maskPath)
 
     glEnable(GL_TEXTURE_2D);
     // Have OpenGL generate a texture object handle for us
-    glGenTextures( 1, &target.texture );
+    glGenTextures( 1, &(target.texture) );
 
     // Bind the texture object
     glBindTexture( GL_TEXTURE_2D, target.texture );
@@ -134,7 +138,6 @@ PGE_Texture GraphicsHelps::loadTexture(QString path, QString maskPath)
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
     glDisable(GL_TEXTURE_2D);
-
 
     return target;
 }

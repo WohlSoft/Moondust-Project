@@ -37,7 +37,7 @@ public:
     static QImage setAlphaMask(QImage image, QImage mask);
     static QImage fromBMP(QString& file);
     static QImage loadQImage(QString file);
-    static PGE_Texture loadTexture(QString path, QString maskPath="");
+    static PGE_Texture loadTexture(PGE_Texture &target, QString path, QString maskPath="");
     static QPixmap squareImage(QPixmap image, QSize targetSize);
     static SDL_Surface *QImage_toSDLSurface(const QImage &sourceImage);
 };

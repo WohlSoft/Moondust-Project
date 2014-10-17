@@ -110,7 +110,9 @@ SOURCES += main.cpp \
     controls/controller_keyboard.cpp \
     data_configs/select_config.cpp \
     common_features/util.cpp \
-    scenes/level/lvl_block.cpp
+    scenes/level/lvl_block.cpp \
+    data_configs/custom_data.cpp \
+    data_configs/config_paths.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -193,7 +195,8 @@ HEADERS  += \
     controls/controller_keyboard.h \
     data_configs/select_config.h \
     common_features/util.h \
-    scenes/level/lvl_block.h
+    scenes/level/lvl_block.h \
+    data_configs/custom_data.h
 
 FORMS    += \
     data_configs/select_config.ui

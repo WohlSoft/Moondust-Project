@@ -34,6 +34,8 @@ struct obj_block
 
     bool isInit;
     PGE_Texture * image;
+    GLuint textureID;
+    long textureArrayId;
 
     QString name;
     //    grid=32				; 32 | 16 Default="32"

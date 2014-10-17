@@ -31,27 +31,27 @@ using namespace std;
 #include <QtDebug>
 
 
-struct keysForTest
-{
-    bool move_r = false;
-    bool move_l = false;
-    bool go_r = false;
-    bool go_l = false;
-    bool jump = false;
-    bool run= false;
-};
+//struct keysForTest
+//{
+//    bool move_r = false;
+//    bool move_l = false;
+//    bool go_r = false;
+//    bool go_l = false;
+//    bool jump = false;
+//    bool run= false;
+//};
 
-keysForTest myKeys;
+//keysForTest myKeys;
 
-void resetKeys()
-{
-    myKeys.move_r = false;
-    myKeys.move_l = false;
-    myKeys.go_r = false;
-    myKeys.go_l = false;
-    myKeys.jump = false;
-    myKeys.run = false;
-}
+//void resetKeys()
+//{
+//    myKeys.move_r = false;
+//    myKeys.move_l = false;
+//    myKeys.go_r = false;
+//    myKeys.go_l = false;
+//    myKeys.jump = false;
+//    myKeys.run = false;
+//}
 
 LevelScene* lScene;
 
@@ -106,7 +106,6 @@ int main(int argc, char *argv[])
             exit(0);
         }
     }
-
     delete cmanager;
 
 

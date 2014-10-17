@@ -31,6 +31,25 @@ public:
     b2World * worldPtr;
 
     PGE_Texture * texture;
+    GLuint texId;
+
+    virtual void nextFrame();
+    //Later add animator here
+    /*
+    glTexCoord2i( 0, AnimationPos );
+    glVertex2f( blockG.left(), blockG.top());
+
+    glTexCoord2i( 1, 0 );
+    glVertex2f(  blockG.right(), blockG.top());
+
+    glTexCoord2i( 1, AnimationPos+1/frames );
+    glVertex2f(  blockG.right(),  blockG.bottom());
+
+    glTexCoord2i( 0, AnimationPos+1/frames );
+    glVertex2f( blockG.left(),  blockG.bottom());
+    */
+
+public:
 
     enum types
     {

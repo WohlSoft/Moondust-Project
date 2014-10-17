@@ -11,6 +11,8 @@
 
 #include "../controls/controller_keyboard.h"
 
+#include "../data_configs/custom_data.h"
+
 #include <file_formats.h>
 #include <Box2D/Box2D.h>
 #include <QString>
