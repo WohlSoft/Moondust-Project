@@ -65,6 +65,8 @@ bool ConfigManager::loadLevelBlocks()
                 imgFile = blockset.value("image", "").toString();
 
                 sblock.isInit=false;
+                sblock.image = NULL;
+                sblock.textureArrayId = 0;
 
                 sblock.image_n = imgFile;
                 if( (imgFile!="") )
@@ -180,5 +182,6 @@ bool ConfigManager::loadLevelBlocks()
 
        return true;
 }
+
 
 

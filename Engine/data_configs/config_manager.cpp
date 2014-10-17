@@ -7,6 +7,7 @@
 #include <QDir>
 #include <QFileInfo>
 
+#include <QtDebug>
 
 ConfigManager::ConfigManager()
 {
@@ -44,7 +45,12 @@ QVector<obj_sound > ConfigManager::main_sound;
 //Level config Data
 QVector<obj_block >     ConfigManager::lvl_blocks;
 QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
+CustomDirManager ConfigManager::Dir_Blocks;
+
+
 QVector<PGE_Texture >   ConfigManager::level_textures; //Texture bank
+
+
 
 QVector<PGE_Texture > ConfigManager::world_textures;
 
@@ -58,6 +64,7 @@ QString ConfigManager::bgoPath;
 QString ConfigManager::BGPath;
 QString ConfigManager::blockPath;
 QString ConfigManager::npcPath;
+QString ConfigManager::effectPath;
 
 QString ConfigManager::tilePath;
 QString ConfigManager::scenePath;
@@ -68,26 +75,53 @@ QString ConfigManager::commonGPath;
 
 
 
-
-PGE_Texture*           ConfigManager::getBlockTexture(long blockID)
+long  ConfigManager::getBlockTexture(long blockID)
 {
-    PGE_Texture* target=NULL;
     if(!lvl_block_indexes.contains(blockID))
-        return target;
-
-    if(lvl_block_indexes[blockID].isInit)
-        return lvl_block_indexes[blockID].image;
-    else
     {
-        PGE_Texture texture = GraphicsHelps::loadTexture(
-                    blockPath + lvl_block_indexes[blockID].image_n,
-                    blockPath + lvl_block_indexes[blockID].mask_n
-                    );
-        level_textures.push_back(texture);
-        lvl_block_indexes[blockID].image = &(level_textures.last());
-        return lvl_block_indexes[blockID].image;
+        return -1;
     }
 
+    if(lvl_block_indexes[blockID].isInit)
+    {
+
+        if(lvl_block_indexes[blockID].textureArrayId < level_textures.size())
+            return lvl_block_indexes[blockID].textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        QString imgFile = Dir_Blocks.getCustomFile(lvl_block_indexes[blockID].image_n);
+        QString maskFile = Dir_Blocks.getCustomFile(lvl_block_indexes[blockID].mask_n);
+
+        PGE_Texture texture;
+        texture.w = 0;
+        texture.h = 0;
+        texture.texture = 0;
+        texture.texture_layout = NULL;
+        texture.format = 0;
+        texture.nOfColors = 0;
+
+        long id = level_textures.size();
+
+        lvl_block_indexes[blockID].textureArrayId = id;
+
+        level_textures.push_back(texture);
+
+        GraphicsHelps::loadTexture( level_textures[id],
+             imgFile,
+             maskFile
+             );
+
+        //qDebug()<< blockID << "Loading..." << level_textures[id].texture;
+
+        lvl_block_indexes[blockID].image = &(level_textures[id]);
+        lvl_block_indexes[blockID].textureID = level_textures[id].texture;
+        lvl_block_indexes[blockID].isInit = true;
+
+        return id;
+    }
 }
 
 
@@ -168,13 +202,14 @@ bool ConfigManager::loadBasics()
     BGPath =    dirs.glevel +  "background2/";
     blockPath = dirs.glevel +  "block/";
     npcPath =   dirs.glevel +  "npc/";
+    effectPath= dirs.glevel +  "effect/";
 
     tilePath =  dirs.gworld +  "tile/";
     scenePath = dirs.gworld +  "scene/";
     pathPath =  dirs.gworld +  "path/";
     wlvlPath =  dirs.gworld +  "level/";
 
-    commonGPath = dirs.gcommon;
+    commonGPath = dirs.gcommon + "/";
     //////////////////////////////////////////////////////////////////////////////////
 
     QString engine_ini = config_dir + "engine.ini";
@@ -291,3 +326,20 @@ void ConfigManager::addError(QString bug, QtMsgType level)
     errorsList<<bug;
 }
 
+
+
+bool ConfigManager::unloadLevelConfigs()
+{
+
+    lvl_block_indexes.clear();
+    lvl_blocks.clear();
+
+    while(!level_textures.isEmpty())
+    {
+        glDeleteTextures( 1, &(level_textures.first().texture) );
+        level_textures.pop_front();
+    }
+
+    //level_textures.clear();
+    return true;
+}

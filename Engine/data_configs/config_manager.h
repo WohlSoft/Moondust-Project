@@ -8,6 +8,8 @@
 #include <QSettings>
 #include <QFile>
 
+#include "custom_data.h"
+
 
 
 struct DataFolders
@@ -143,23 +145,50 @@ public:
 
 
     //Level config Data
+    //Level blocks
     static QVector<obj_block >     lvl_blocks;
     static QMap<long, obj_block>   lvl_block_indexes;
-    static QVector<PGE_Texture >   level_textures; //Texture bank
-    static PGE_Texture* getBlockTexture(long blockID);
+    static long getBlockTexture(long blockID);
+
+    static CustomDirManager Dir_Blocks;
+
+    //Texture bank
+    static QVector<PGE_Texture > level_textures; //Texture bank
+
 
 
     static QVector<PGE_Texture > world_textures;
 
 
     static void setConfigPath(QString p);
+    //Load settings
     static bool loadBasics();
 
     static bool loadLevelBlocks();
 
+    static bool unloadLevelConfigs();
+
+
+
     static void addError(QString bug, QtMsgType level=QtWarningMsg);
 
     static QStringList errorsList;
+
+    static QString PathLevelBGO();
+    static QString PathLevelBG();
+    static QString PathLevelBlock();
+    static QString PathLevelNPC();
+    static QString PathLevelEffect();
+
+    static QString PathCommonGFX();
+
+    static QString PathWorldTiles();
+    static QString PathWorldScenery();
+    static QString PathWorldPaths();
+    static QString PathWorldLevels();
+
+    static QString PathWorldMusic();
+    static QString PathWorldSound();
 
 
 private:
@@ -173,6 +202,7 @@ private:
     static QString BGPath;
     static QString blockPath;
     static QString npcPath;
+    static QString effectPath;
 
     static QString tilePath;
     static QString scenePath;

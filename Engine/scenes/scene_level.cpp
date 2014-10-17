@@ -6,6 +6,8 @@
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
 
+#include "../data_configs/config_manager.h"
+
 #include <QtDebug>
 
 LevelScene::LevelScene()
@@ -91,16 +93,22 @@ void LevelScene::init()
     //Set Entrance  (int entr=0)
 
     //Load configs
+    ConfigManager::loadLevelBlocks();
+
+    //Prepare to texture bank creation
+    ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
+
+
 
     //Create Animators
     //look for necessary textures and load them into bank
 
 
     //Generate texture bank
-    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath + "/block-223.bmp") );
-    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath + "/background2-14.png") );
-    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath+"/background-103.gif",
-                                                        ApplicationPath+"/background-103m.gif") );
+//    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath + "/block-223.bmp") );
+//    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath + "/background2-14.png") );
+//    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath+"/background-103.gif",
+//                                                        ApplicationPath+"/background-103m.gif") );
 
 
     //Init Physics
@@ -147,8 +155,17 @@ void LevelScene::init()
         block->worldPtr = world;
         block->data = &(data.blocks[i]);
         block->init();
+        long tID = ConfigManager::getBlockTexture(data.blocks[i].id);
+        if( tID >= 0 )
+        {
+            block->texId = ConfigManager::level_textures[tID].texture;
+            block->texture = &(ConfigManager::level_textures[tID]);
+        }
         blocks.push_back(block);
     }
+
+    qDebug() << "textures " << ConfigManager::level_textures.size();
+
 
     qDebug()<<"Add players";
 
@@ -260,17 +277,18 @@ void LevelScene::render()
             {
             case PGE_Phys_Object::LVLBlock:
                 {
-                    LVL_Block * b = static_cast<LVL_Block*>(item);
+                    LVL_Block * b = dynamic_cast<LVL_Block*>(item);
 
                     QRectF blockG = QRectF(b->posX()-cam->posX(),
                                            b->posY()-cam->posY(),
                                            b->width,
                                            b->height);
 
+                    glEnable(GL_TEXTURE_2D);
                     glColor4f( 1.f, 1.f, 1.f, 1.f);
 
-                    glEnable(GL_TEXTURE_2D);
-                    glBindTexture( GL_TEXTURE_2D, textures_bank[0].texture );
+                    glBindTexture( GL_TEXTURE_2D, b->texId );
+
                     glBegin( GL_QUADS );
                         glTexCoord2i( 0, 0 );
                         glVertex2f( blockG.left(), blockG.top());

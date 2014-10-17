@@ -8,6 +8,7 @@ PGE_Phys_Object::PGE_Phys_Object()
     posY_coefficient = 0.0f;
     width = 0.0f;
     height = 0.0f;
+    texture = NULL;
 }
 
 PGE_Phys_Object::~PGE_Phys_Object()
@@ -62,10 +63,8 @@ void PGE_Phys_Object::setPos(long x, long y)
 
 }
 
-void PGE_Phys_Object::update()
-{
-}
+void PGE_Phys_Object::nextFrame() {}
 
-void PGE_Phys_Object::render()
-{
-}
+void PGE_Phys_Object::update() {}
+
+void PGE_Phys_Object::render() {}
