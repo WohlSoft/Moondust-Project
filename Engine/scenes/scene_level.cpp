@@ -154,6 +154,13 @@ void LevelScene::init()
         block = new LVL_Block();
         block->worldPtr = world;
         block->data = &(data.blocks[i]);
+
+        if(ConfigManager::lvl_block_indexes.contains(data.blocks[i].id))
+            block->setup = &(ConfigManager::lvl_block_indexes[data.blocks[i].id]);
+        else
+        {
+             //Wrong block!
+        }
         block->init();
         long tID = ConfigManager::getBlockTexture(data.blocks[i].id);
         if( tID >= 0 )
