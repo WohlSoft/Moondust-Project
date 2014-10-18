@@ -177,6 +177,8 @@ void LevelScene::init()
 
 
     qDebug()<<"Init blocks";
+
+    double zCounter = 0;
     //blocks
     for(int i=0; i<data.blocks.size(); i++)
     {
@@ -199,10 +201,13 @@ void LevelScene::init()
         }
         else
         {
+
             if(block->setup->view==1)
                 block->z_index = Z_BlockFore;
             else
                 block->z_index = Z_Block;
+            zCounter += 0.0000000000001;
+            block->z_index += zCounter;
         }
 
         block->worldPtr = world;
