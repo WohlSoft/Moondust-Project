@@ -23,12 +23,12 @@
 
 SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
 {
-    timer=NULL;
-    //mainImage = sprite;
     animated = enables;
     frameFirst = First;
     frameLast = Last;
     CurrentFrame = 0;
+
+    isEnabled=false;
 
     pos1 = 0.0d;
     pos2 = 1.0f;
@@ -40,18 +40,10 @@ SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First,
     framesQ = framesq;
 
     setFrame(frameFirst);
-
-    timer = new QTimer(this);
-    connect(
-                timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
 }
 
 SimpleAnimator::~SimpleAnimator()
-{
-    delete timer;
-}
+{}
 
 //Returns images
 
@@ -66,8 +58,6 @@ AniPos SimpleAnimator::image(double frame)
 //Animation process
 void SimpleAnimator::nextFrame()
 {
-
-    //qDebug() << "tick" << CurrentFrame;
     if(reverce)
     { // Reverce animation
         CurrentFrame--;
@@ -110,6 +100,10 @@ void SimpleAnimator::nextFrame()
     pos1 = CurrentFrame/framesQ;
     pos2 = CurrentFrame/framesQ + 1.0d/framesQ;
 
+    SDL_RemoveTimer(timer_id);
+    if(isEnabled)
+    SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
+
 }
 
 
@@ -127,15 +121,24 @@ void SimpleAnimator::start()
 {
     if(!animated) return;
     if((frameLast>0)&&((frameLast-frameFirst)<=1)) return; //Don't start singleFrame animation
-
-    timer->start(speed);
+    isEnabled=true;
+    timer_id = SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
 }
 
 void SimpleAnimator::stop()
 {
     if(!animated) return;
-    timer->stop();
+    isEnabled=false;
+    SDL_RemoveTimer(timer_id);
     setFrame(frameFirst);
+}
+
+unsigned int SimpleAnimator::TickAnimation(unsigned int x, void *p)
+{
+    Q_UNUSED(x);
+    SimpleAnimator *self = reinterpret_cast<SimpleAnimator *>(p);
+    self->nextFrame();
+    return 0;
 }
 
 
