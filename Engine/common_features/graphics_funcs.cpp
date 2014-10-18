@@ -107,7 +107,7 @@ PGE_Texture GraphicsHelps::loadTexture(PGE_Texture &target, QString path, QStrin
 
     sourceImage.convertToFormat(QImage::Format_ARGB32);
 
-    qDebug() << path << sourceImage.size();
+    //qDebug() << path << sourceImage.size();
 
     sourceImage = QGLWidget::convertToGLFormat(sourceImage).mirrored(false, true);
 
