@@ -19,19 +19,13 @@
 #ifndef SIMPLE_ANIMATOR_H
 #define SIMPLE_ANIMATOR_H
 
-#include <QObject>
-#include <QTimer>
-//#include <QPixmap>
-//#include <QMutex>
-#include <QVector>
-//#include <QMutexLocker>
-#include <QPair>
+#include <SDL2/SDL_timer.h>
+#include <utility>
 
-typedef QPair<double, double > AniPos;
+typedef std::pair<double, double > AniPos;
 
-class SimpleAnimator : public QObject
+class SimpleAnimator
 {
-    Q_OBJECT
 public:
     SimpleAnimator(bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
                     bool rev=false, bool bid=false);
@@ -45,7 +39,9 @@ public:
 
     int speed;
 
-private slots:
+    static unsigned int TickAnimation(unsigned int x, void *p);
+
+public:
     void nextFrame();
 
 private:
@@ -60,7 +56,10 @@ private:
     bool reverce;
 
     int frameCurrent;
-    QTimer * timer;
+
+    bool isEnabled;
+    SDL_TimerID timer_id;
+
     double framesQ;
     int frameSize; // size of one frame
     int frameWidth; // sprite width
