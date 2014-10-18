@@ -46,6 +46,7 @@ QVector<obj_sound > ConfigManager::main_sound;
 QVector<obj_block >     ConfigManager::lvl_blocks;
 QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
 CustomDirManager ConfigManager::Dir_Blocks;
+QVector<SimpleAnimator *> ConfigManager::Animator_Blocks;
 
 
 QVector<PGE_Texture >   ConfigManager::level_textures; //Texture bank
@@ -114,11 +115,62 @@ long  ConfigManager::getBlockTexture(long blockID)
              maskFile
              );
 
-        //qDebug()<< blockID << "Loading..." << level_textures[id].texture;
+
 
         lvl_block_indexes[blockID].image = &(level_textures[id]);
         lvl_block_indexes[blockID].textureID = level_textures[id].texture;
         lvl_block_indexes[blockID].isInit = true;
+
+        //Also, load and init animator
+        if(lvl_block_indexes[blockID].animated)
+        {
+            int frameFirst;
+            int frameLast;
+
+            switch(lvl_block_indexes[blockID].algorithm)
+            {
+                case 1: // Invisible block
+                {
+                    frameFirst = 5;
+                    frameLast = 6;
+                    break;
+                }
+                case 3: //Player's character block
+                {
+                    frameFirst = 0;
+                    frameLast = 1;
+                    break;
+                }
+                case 4: //Player's character switch
+                {
+                    frameFirst = 0;
+                    frameLast = 3;
+                    break;
+                }
+                default: //Default block
+                {
+                    frameFirst = 0;
+                    frameLast = -1;
+                    break;
+                }
+            }
+
+
+            SimpleAnimator * animator = new SimpleAnimator
+                        (
+                            true,
+                            lvl_block_indexes[blockID].frames,
+                            lvl_block_indexes[blockID].framespeed,
+                            frameFirst,
+                            frameLast,
+                            lvl_block_indexes[blockID].animation_rev,
+                            lvl_block_indexes[blockID].animation_bid
+                        );
+
+            Animator_Blocks.push_back(animator);
+            lvl_block_indexes[blockID].animator_ID = Animator_Blocks.size()-1;
+
+        }
 
         return id;
     }
@@ -339,6 +391,19 @@ bool ConfigManager::unloadLevelConfigs()
         glDeleteTextures( 1, &(level_textures.first().texture) );
         level_textures.pop_front();
     }
+
+
+    foreach(SimpleAnimator * x, Animator_Blocks)
+        x->stop();
+    while(!Animator_Blocks.isEmpty())
+    {
+        SimpleAnimator * x = Animator_Blocks.first();
+        Animator_Blocks.pop_front();
+        delete x;
+    }
+
+    lvl_blocks.clear();   //Clear old
+    lvl_block_indexes.clear();
 
     //level_textures.clear();
     return true;

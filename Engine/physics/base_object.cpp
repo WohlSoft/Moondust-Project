@@ -9,6 +9,7 @@ PGE_Phys_Object::PGE_Phys_Object()
     width = 0.0f;
     height = 0.0f;
     texture = NULL;
+    z_index = 0.0d;
 }
 
 PGE_Phys_Object::~PGE_Phys_Object()

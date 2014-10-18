@@ -16,6 +16,10 @@ public:
     LevelBlock* data; //Local settings
     bool slippery;
 
+    bool animated;
+    bool sizable;
+    long animator_ID;
+
     obj_block * setup;//Global config
 
     //float posX();

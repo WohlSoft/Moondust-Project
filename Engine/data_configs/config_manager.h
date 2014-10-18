@@ -3,13 +3,14 @@
 
 #include "../common_features/app_path.h"
 #include "../common_features/pge_texture.h"
+#include "../common_features/simple_animator.h"
+
 #include "obj_block.h"
 #include <QMap>
 #include <QSettings>
 #include <QFile>
 
 #include "custom_data.h"
-
 
 
 struct DataFolders
@@ -149,8 +150,8 @@ public:
     static QVector<obj_block >     lvl_blocks;
     static QMap<long, obj_block>   lvl_block_indexes;
     static long getBlockTexture(long blockID);
-
     static CustomDirManager Dir_Blocks;
+    static QVector<SimpleAnimator *> Animator_Blocks;
 
     //Texture bank
     static QVector<PGE_Texture > level_textures; //Texture bank
