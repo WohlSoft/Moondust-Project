@@ -4,6 +4,9 @@ LVL_Block::LVL_Block()
 {
     type = LVLBlock;
     data = NULL;
+    animated=false;
+    sizable=false;
+    animator_ID=0;
 }
 
 LVL_Block::~LVL_Block()

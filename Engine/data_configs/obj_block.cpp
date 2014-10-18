@@ -67,6 +67,7 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.isInit=false;
                 sblock.image = NULL;
                 sblock.textureArrayId = 0;
+                sblock.animator_ID = 0;
 
                 sblock.image_n = imgFile;
                 if( (imgFile!="") )

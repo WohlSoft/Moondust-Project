@@ -117,7 +117,8 @@ SOURCES += main.cpp \
     common_features/util.cpp \
     scenes/level/lvl_block.cpp \
     data_configs/custom_data.cpp \
-    data_configs/config_paths.cpp
+    data_configs/config_paths.cpp \
+    common_features/simple_animator.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -201,7 +202,8 @@ HEADERS  += \
     data_configs/select_config.h \
     common_features/util.h \
     scenes/level/lvl_block.h \
-    data_configs/custom_data.h
+    data_configs/custom_data.h \
+    common_features/simple_animator.h
 
 FORMS    += \
     data_configs/select_config.ui

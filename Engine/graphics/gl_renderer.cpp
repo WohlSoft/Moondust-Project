@@ -38,6 +38,7 @@ bool GlRenderer::init()
 
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
+    glDepthFunc(GL_NEVER);// Ignore depth values (Z) to cause drawing bottom to top
 
 
 

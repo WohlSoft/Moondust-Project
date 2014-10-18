@@ -166,6 +166,35 @@ void PGE_LevelCamera::update()
             objects_to_render.push_back(visibleBody);
         }
     }
+
+
+    //Sort array
+    PGE_Phys_Object * tmp1;
+    int total = objects_to_render.size();
+    long i;
+    double ymin;
+    long ymini;
+    long sorted = 0;
+
+
+        while(sorted < objects_to_render.size())
+        {
+            ymin = objects_to_render[sorted]->z_index;
+            ymini = sorted;
+
+            for(i = sorted; i < total; i++)
+            {
+                if( objects_to_render[i]->z_index < ymin )
+                {
+                    ymin = objects_to_render[i]->z_index; ymini = i;
+                }
+            }
+            tmp1 = objects_to_render[ymini];
+            objects_to_render[ymini] = objects_to_render[sorted];
+            objects_to_render[sorted] = tmp1;
+            sorted++;
+        }
+
     //qDebug() << "VisibleItems" << objects_to_render.size()  << contacts;
 }
 

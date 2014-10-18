@@ -32,6 +32,7 @@ public:
 
     PGE_Texture * texture;
     GLuint texId;
+    GLdouble z_index;
 
     virtual void nextFrame();
     //Later add animator here
