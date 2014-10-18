@@ -23,7 +23,7 @@
 
 //Version of this program
 #define _FILE_VERSION "0.2.1.1"
-#define _FILE_RELEASE " Beta"
+#define _FILE_RELEASE ""
 
 #define _VF1 0
 #define _VF2 2
