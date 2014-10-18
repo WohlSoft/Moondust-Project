@@ -17,6 +17,11 @@ DEFINES += PGE_ENGINE
 
 INCLUDEPATH += "../_Libs/" "../Editor/file_formats"
 
+win32: {
+    LIBS += -L../_Libs/_builds/win32/lib
+    INCLUDEPATH += ../_Libs/_builds/win32/include
+}
+
 LIBS += -lSDL2
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
