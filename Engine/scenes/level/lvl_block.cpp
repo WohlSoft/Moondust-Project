@@ -106,7 +106,7 @@ void LVL_Block::init()
 
     b2Fixture * block = physBody->CreateFixture(&shape, 1.0f);
 
-    if((setup->sizable) || (setup->collision==0))
+    if((setup->sizable) || (setup->collision==0) || (setup->collision==2))
         block->SetSensor(true);
 
 
