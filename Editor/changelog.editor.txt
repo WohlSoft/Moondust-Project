@@ -3,7 +3,8 @@ Editor 0.2.1.1
 - Fixed tiny mouse events of locked items bug
 - Fixed mouse wheel artifacts while placing mode is enabled
 - Added "Show zone range data" which will show X, Y, Width and Height of physical environment zone
-- Fixed multiline messages of NPC and events parsing error for SMBX64 level file format (found in Talkhaus's levels)
+- Fixed multi-line messages of NPC and events parsing error for SMBX64 level file format (found in Talkhaus's levels)
+- Fixed crash on range erasing on world map
 
 Editor 0.2.1
 - Added support for multi-selection by holding the shift key

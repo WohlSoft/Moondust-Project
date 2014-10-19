@@ -784,51 +784,15 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 if(EditingMode==MODE_Erasing)
                 {
                     removeWldItems(selectedList);
+                    selectedList = selectedItems();
                     Debugger_updateItemList();
                 }
                 else
                     applyGroupGrid(selectedList);
-                /*
-                // correct selected items' coordinates
-                for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-                { ////////////////////////FIRST FETCH///////////////////////
-
-
-                    /////////////////////////GET DATA///////////////
-
-                    setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
-
-                    /////////////////////////GET DATA/////////////////////
-
-                    //Check position
-                    if( (WsourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
-                    {
-                        ///SKIP NON-MOVED ITEMS
-                        mouseMoved=false;
-                        #ifdef _DEBUG_
-                        WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
-                        #endif
-                        continue;
-                    }
-
-                    ////////////////////Apply to GRID/////////////////////////////////
-                    (*it)->setPos( QPointF(
-                                       applyGrid( (*it)->scenePos().toPoint(),
-                                                      WgridSize,
-                                                      QPoint(WoffsetX, WoffsetY)
-                                                  )
-                                           )
-                                  );
-                    //////////////////////////////////////////////////////////////////
-
-                } ////////////////////////FIRST FETCH///////////////////////
-                */
-                //selectedList = selectedItems();
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
                 {
                     addRemoveHistory(historyBuffer);
-                    Debugger_updateItemList();
                 }
                 EraserEnabled = false;
 
@@ -848,120 +812,79 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                         WldData->modified=true;
                     }
                 }
-                /*
+
+                if((collisionPassed) || (!opts.collisionsEnabled))
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
                 { ////////////////////////SECOND FETCH///////////////////////
-                    ObjType = (*it)->data(0).toString();
+                   ObjType = (*it)->data(0).toString();
 
-                    #ifdef _DEBUG_
-                    WriteToLog(QtDebugMsg, QString(" >>Check collision with \"%1\"").arg(ObjType));
-                    #endif
-
-                    setItemSourceData((*it), ObjType); //Set Grid Size/Offset, sourcePosition
+                   /////////////////////////GET DATA///////////////
+                    setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
+                   /////////////////////////GET DATA/////////////////////
 
                     //Check position
                     if( (WsourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
                     {
-                        ///SKIP NON-MOVED ITEMS
                         mouseMoved=false;
-                        #ifdef _DEBUG_
-                        WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
-                        #endif
-                        continue;
+                        break; //break fetch when items is not moved
                     }
 
-                    if(opts.collisionsEnabled)
-                    { //check Available to collisions checking
-                        if( itemCollidesWith((*it)) )
-                        {
-                            collisionPassed = false;
-                            (*it)->setPos(QPointF(WsourcePos));
-                            (*it)->setSelected(false);
-
-                            WriteToLog(QtDebugMsg, QString("Moved back %1 %2")
-                                       .arg((long)(*it)->scenePos().x())
-                                       .arg((long)(*it)->scenePos().y()) );
-                        }
-                        else
-                        {
-                            collisionPassed = true;
-                        }
+                    if( ObjType == "TILE")
+                    {
+                        //Applay move into main array
+                        historySourceBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
+                        ((ItemTile *)(*it))->tileData.x = (long)(*it)->scenePos().x();
+                        ((ItemTile *)(*it))->tileData.y = (long)(*it)->scenePos().y();
+                        ((ItemTile *)(*it))->arrayApply();
+                        historyBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
+                        WldData->modified = true;
                     }
-                    */
-
-                    if((collisionPassed) || (!opts.collisionsEnabled))
-                    for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-                    { ////////////////////////SECOND FETCH///////////////////////
-                       ObjType = (*it)->data(0).toString();
-
-                       /////////////////////////GET DATA///////////////
-                        setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
-                       /////////////////////////GET DATA/////////////////////
-
-                        //Check position
-                        if( (WsourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
-                        {
-                            mouseMoved=false;
-                            break; //break fetch when items is not moved
-                        }
-
-                        if( ObjType == "TILE")
-                        {
-                            //Applay move into main array
-                            historySourceBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
-                            ((ItemTile *)(*it))->tileData.x = (long)(*it)->scenePos().x();
-                            ((ItemTile *)(*it))->tileData.y = (long)(*it)->scenePos().y();
-                            ((ItemTile *)(*it))->arrayApply();
-                            historyBuffer.tiles.push_back(((ItemTile *)(*it))->tileData);
-                            WldData->modified = true;
-                        }
-                        else
-                        if( ObjType == "SCENERY")
-                        {
-                            //Applay move into main array
-                            historySourceBuffer.scenery.push_back(((ItemScene *)(*it))->sceneData);
-                            ((ItemScene *)(*it))->sceneData.x = (long)(*it)->scenePos().x();
-                            ((ItemScene *)(*it))->sceneData.y = (long)(*it)->scenePos().y();
-                            ((ItemScene *)(*it))->arrayApply();
-                            historyBuffer.scenery.push_back(((ItemScene *)(*it))->sceneData);
-                            WldData->modified = true;
-                        }
-                        else
-                        if( ObjType == "PATH")
-                        {
-                            //Applay move into main array
-                            historySourceBuffer.paths.push_back(((ItemPath*)(*it))->pathData);
-                            ((ItemPath *)(*it))->pathData.x = (long)(*it)->scenePos().x();
-                            ((ItemPath *)(*it))->pathData.y = (long)(*it)->scenePos().y();
-                            ((ItemPath *)(*it))->arrayApply();
-                            historyBuffer.paths.push_back(((ItemPath *)(*it))->pathData);
-                            WldData->modified = true;
-                        }
-                        else
-                        if( ObjType == "LEVEL")
-                        {
-                            //Applay move into main array
-                            historySourceBuffer.levels.push_back(((ItemLevel *)(*it))->levelData);
-                            ((ItemLevel *)(*it))->levelData.x = (long)(*it)->scenePos().x();
-                            ((ItemLevel *)(*it))->levelData.y = (long)(*it)->scenePos().y();
-                            ((ItemLevel *)(*it))->arrayApply();
-                            historyBuffer.levels.push_back(((ItemLevel *)(*it))->levelData);
-                            WldData->modified = true;
-                        }
-                        else
-                        if( ObjType == "MUSICBOX")
-                        {
-                            //Applay move into main array
-                            historySourceBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
-                            ((ItemMusic *)(*it))->musicData.x = (long)(*it)->scenePos().x();
-                            ((ItemMusic *)(*it))->musicData.y = (long)(*it)->scenePos().y();
-                            ((ItemMusic *)(*it))->arrayApply();
-                            historyBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
-                            WldData->modified = true;
-                        }
-
+                    else
+                    if( ObjType == "SCENERY")
+                    {
+                        //Applay move into main array
+                        historySourceBuffer.scenery.push_back(((ItemScene *)(*it))->sceneData);
+                        ((ItemScene *)(*it))->sceneData.x = (long)(*it)->scenePos().x();
+                        ((ItemScene *)(*it))->sceneData.y = (long)(*it)->scenePos().y();
+                        ((ItemScene *)(*it))->arrayApply();
+                        historyBuffer.scenery.push_back(((ItemScene *)(*it))->sceneData);
+                        WldData->modified = true;
                     }
-                //}
+                    else
+                    if( ObjType == "PATH")
+                    {
+                        //Applay move into main array
+                        historySourceBuffer.paths.push_back(((ItemPath*)(*it))->pathData);
+                        ((ItemPath *)(*it))->pathData.x = (long)(*it)->scenePos().x();
+                        ((ItemPath *)(*it))->pathData.y = (long)(*it)->scenePos().y();
+                        ((ItemPath *)(*it))->arrayApply();
+                        historyBuffer.paths.push_back(((ItemPath *)(*it))->pathData);
+                        WldData->modified = true;
+                    }
+                    else
+                    if( ObjType == "LEVEL")
+                    {
+                        //Applay move into main array
+                        historySourceBuffer.levels.push_back(((ItemLevel *)(*it))->levelData);
+                        ((ItemLevel *)(*it))->levelData.x = (long)(*it)->scenePos().x();
+                        ((ItemLevel *)(*it))->levelData.y = (long)(*it)->scenePos().y();
+                        ((ItemLevel *)(*it))->arrayApply();
+                        historyBuffer.levels.push_back(((ItemLevel *)(*it))->levelData);
+                        WldData->modified = true;
+                    }
+                    else
+                    if( ObjType == "MUSICBOX")
+                    {
+                        //Applay move into main array
+                        historySourceBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
+                        ((ItemMusic *)(*it))->musicData.x = (long)(*it)->scenePos().x();
+                        ((ItemMusic *)(*it))->musicData.y = (long)(*it)->scenePos().y();
+                        ((ItemMusic *)(*it))->arrayApply();
+                        historyBuffer.music.push_back(((ItemMusic *)(*it))->musicData);
+                        WldData->modified = true;
+                    }
+
+                }
                 ////////////////////////SECOND FETCH///////////////////////
 
                 if((EditingMode==MODE_Selecting)&&(mouseMoved)) addMoveHistory(historySourceBuffer, historyBuffer);
