@@ -1209,7 +1209,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/item_water.cpp" line="183"/>
         <source>Show zone range data</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar zona de rango</translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="186"/>
@@ -1234,12 +1234,12 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <location filename="../level_scene/item_water.cpp" line="252"/>
         <source>Physical environment range</source>
-        <translation type="unfinished"></translation>
+        <translation>Rango de entorno físico</translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="255"/>
         <source>Rectangle X(left), Y(top), Width, Height, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Rectángulo X(izquierda), Y(arriba), Ancho, Alto, Derecha, Abajo</translation>
     </message>
 </context>
 <context>
