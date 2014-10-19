@@ -830,37 +830,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 }
                 else
                     applyGroupGrid(selectedList);
-                // correct selected items' coordinates
-                    /*
-                for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-                { ////////////////////////FIRST FETCH///////////////////////
 
-                    /////////////////////////GET DATA///////////////
-                    setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
-                    /////////////////////////GET DATA/////////////////////
-
-                    //Check position
-                    if( (sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
-                    {
-                        ///SKIP NON-MOVED ITEMS
-                        mouseMoved=false;
-                        #ifdef _DEBUG_
-                        WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
-                        #endif
-                        continue;
-                    }
-                    ////////////////////Apply to GRID/////////////////////////////////
-                    (*it)->setPos( QPointF(
-                                       applyGrid( (*it)->scenePos().toPoint(),
-                                                      gridSize,
-                                                      QPoint(offsetX, offsetY)
-                                                  )
-                                           )
-                                  );
-                    //////////////////////////////////////////////////////////////////
-
-                } ////////////////////////FIRST FETCH///////////////////////
-                */
 
                 if((EditingMode==MODE_Erasing)&&(deleted))
                 {
@@ -885,46 +855,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                     }
                 }
 
-                /*
-                for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
-                { ////////////////////////SECOND FETCH///////////////////////
-                    ObjType = (*it)->data(0).toString();
-
-                    #ifdef _DEBUG_
-                    WriteToLog(QtDebugMsg, QString(" >>Check collision with \"%1\"").arg(ObjType));
-                    #endif
-
-                    setItemSourceData((*it), ObjType); //Set Grid Size/Offset, sourcePosition
-
-                    //Check position
-                    if( (sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
-                    {
-                        ///SKIP NON-MOVED ITEMS
-                        mouseMoved=false;
-                        #ifdef _DEBUG_
-                        WriteToLog(QtDebugMsg, QString(" >>Collision skiped, posSource=posCurrent"));
-                        #endif
-                        continue;
-                    }
-
-                    if(opts.collisionsEnabled)
-                    { //check Available to collisions checking
-                        if( itemCollidesWith((*it)) )
-                        {
-                            collisionPassed = false;
-                            (*it)->setPos(QPointF(sourcePos));
-                            (*it)->setSelected(false);
-
-                            //WriteToLog(QtDebugMsg, QString("Moved back %1 %2")
-                            //           .arg((long)(*it)->scenePos().x())
-                            //           .arg((long)(*it)->scenePos().y()) );
-                        }
-                        else
-                        {
-                            collisionPassed = true;
-                        }
-                    }
-                     */
 
                 if((collisionPassed) || (!opts.collisionsEnabled))
                 for (QList<QGraphicsItem*>::iterator it = selectedList.begin(); it != selectedList.end(); it++)
