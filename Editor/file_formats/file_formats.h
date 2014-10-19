@@ -60,6 +60,7 @@ public:
     static QString BoolS(bool input);
     static QString qStrS(QString input);
     static QString FloatS(float input);
+    static QString qStrS_multiline(QString input);
 };
 
 class PGEFile
