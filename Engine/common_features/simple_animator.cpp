@@ -100,9 +100,10 @@ void SimpleAnimator::nextFrame()
     pos1 = CurrentFrame/framesQ;
     pos2 = CurrentFrame/framesQ + 1.0d/framesQ;
 
-    SDL_RemoveTimer(timer_id);
     if(isEnabled)
-    SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
+        timer_id = SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
+    else
+        SDL_RemoveTimer(timer_id);
 
 }
 
