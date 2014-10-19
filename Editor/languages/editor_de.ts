@@ -1217,7 +1217,7 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/item_water.cpp" line="183"/>
         <source>Show zone range data</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Zonenbereichsdaten</translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="186"/>
@@ -1242,12 +1242,12 @@ Maximale Länge: 28 Zeichen pro Zeile</translation>
     <message>
         <location filename="../level_scene/item_water.cpp" line="252"/>
         <source>Physical environment range</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Zonenbereichsdaten</translation>
     </message>
     <message>
         <location filename="../level_scene/item_water.cpp" line="255"/>
         <source>Rectangle X(left), Y(top), Width, Height, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechteck: X(links), Y(oben), Breite, Höhe, Rechts, Unten</translation>
     </message>
 </context>
 <context>
