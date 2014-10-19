@@ -9,6 +9,7 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    scene = NULL;
     sceneCreated = false;
     FileType = 0;
     mapPoint = QPoint(-1,-1);
@@ -355,10 +356,14 @@ void WLD_SetPoint::closeEvent(QCloseEvent *event)
 
 void WLD_SetPoint::unloadData()
 {
+    if(!sceneCreated) return;
+
     stopAutoUpdateTimer();
     //LvlMusPlay::musicForceReset = true;
     //MainWinConnect::pMainWin->setMusicButton(false);
     //MainWinConnect::pMainWin->setMusic(false);
+
+    scene->setMessageBoxItem(false);
 
     scene->clear();
     WriteToLog(QtDebugMsg, "!<-Cleared->!");
@@ -397,7 +402,6 @@ void WLD_SetPoint::unloadData()
     delete scene;
     sceneCreated=false;
     WriteToLog(QtDebugMsg, "!<-Deleted->!");
-    //ui->graphicsView->cl
 }
 
 QWidget *WLD_SetPoint::gViewPort()
