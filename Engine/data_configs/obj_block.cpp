@@ -1,10 +1,22 @@
 #include "config_manager.h"
 #include <QMessageBox>
 
-static QString Temp01="";
+/*****Level blocks************/
+QVector<obj_block >     ConfigManager::lvl_blocks;
+QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
+CustomDirManager ConfigManager::Dir_Blocks;
+QVector<SimpleAnimator *> ConfigManager::Animator_Blocks;
+/*****Level blocks************/
+
+namespace loadLevelBlocks_fnc
+{
+    static QString Temp01="";
+}
 
 bool ConfigManager::loadLevelBlocks()
 {
+    using namespace loadLevelBlocks_fnc;
+
     unsigned int i;
 
     obj_block sblock;
@@ -33,8 +45,6 @@ bool ConfigManager::loadLevelBlocks()
         total_data +=block_total;
     blockset.endGroup();
 
-
-    //creation of empty indexes of arrayElements
 
 
     if(block_total==0)
