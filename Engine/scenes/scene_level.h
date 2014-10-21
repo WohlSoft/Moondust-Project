@@ -7,6 +7,7 @@
 #include "../common_features/pge_texture.h"
 #include "level/lvl_player.h"
 #include "level/lvl_block.h"
+#include "level/lvl_bgo.h"
 #include "../graphics/window.h"
 
 #include "../controls/controller_keyboard.h"
@@ -113,6 +114,7 @@ private:
     QVector<PGE_LevelCamera* > cameras;
     QVector<LVL_Player* > players;
     QVector<LVL_Block* > blocks;
+    QVector<LVL_Bgo* > bgos;
 
 
     b2World *world;

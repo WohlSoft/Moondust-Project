@@ -118,7 +118,10 @@ SOURCES += main.cpp \
     scenes/level/lvl_block.cpp \
     data_configs/custom_data.cpp \
     data_configs/config_paths.cpp \
-    common_features/simple_animator.cpp
+    common_features/simple_animator.cpp \
+    data_configs/config_textures.cpp \
+    data_configs/obj_bgo.cpp \
+    scenes/level/lvl_bgo.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -203,7 +206,9 @@ HEADERS  += \
     common_features/util.h \
     scenes/level/lvl_block.h \
     data_configs/custom_data.h \
-    common_features/simple_animator.h
+    common_features/simple_animator.h \
+    data_configs/obj_bgo.h \
+    scenes/level/lvl_bgo.h
 
 FORMS    += \
     data_configs/select_config.ui
