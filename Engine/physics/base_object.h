@@ -13,11 +13,11 @@ class PGE_Phys_Object
 {
 public:
     PGE_Phys_Object();
-    ~PGE_Phys_Object();
-    long posX(); //!< Position X
-    long posY(); //!< Position Y
+    virtual ~PGE_Phys_Object();
+    virtual float posX(); //!< Position X
+    virtual float posY(); //!< Position Y
     void setSize(float w, float h);
-    void setPos(long x, long y);
+    virtual void setPos(long x, long y);
 
     float width;  //!< Width
     float height; //!< Height
@@ -31,16 +31,36 @@ public:
     b2World * worldPtr;
 
     PGE_Texture * texture;
+    GLuint texId;
+    GLdouble z_index;
+
+    virtual void nextFrame();
+    //Later add animator here
+    /*
+    glTexCoord2i( 0, AnimationPos );
+    glVertex2f( blockG.left(), blockG.top());
+
+    glTexCoord2i( 1, 0 );
+    glVertex2f(  blockG.right(), blockG.top());
+
+    glTexCoord2i( 1, AnimationPos+1/frames );
+    glVertex2f(  blockG.right(),  blockG.bottom());
+
+    glTexCoord2i( 0, AnimationPos+1/frames );
+    glVertex2f( blockG.left(),  blockG.bottom());
+    */
+
+public:
 
     enum types
     {
-        LVL_Unknown=0,
-        LVL_Block,
-        LVL_BGO,
-        LVL_NPC,
-        LVL_Player,
-        LVL_Effect,
-        LVL_Special
+        LVLUnknown=0,
+        LVLBlock,
+        LVLBGO,
+        LVLNPC,
+        LVLPlayer,
+        LVLEffect,
+        LVLSpecial
     };
 
     virtual void update();

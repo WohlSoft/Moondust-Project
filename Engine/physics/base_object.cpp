@@ -8,27 +8,40 @@ PGE_Phys_Object::PGE_Phys_Object()
     posY_coefficient = 0.0f;
     width = 0.0f;
     height = 0.0f;
+    texture = NULL;
+    z_index = 0.0d;
 }
 
 PGE_Phys_Object::~PGE_Phys_Object()
 {
-    if(physBody && worldPtr)
+    if((physBody!=NULL) && (worldPtr!=NULL))
+    {
         worldPtr->DestroyBody(physBody);
+        physBody->SetUserData(NULL);
+        physBody = NULL;
+    }
 
 }
 
-long PGE_Phys_Object::posX()
+float PGE_Phys_Object::posX()
 {
     if(physBody)
+    {//PhysUtil::pixMeter
         return PhysUtil::met2pix(physBody->GetPosition().x) - posX_coefficient;
+    }
     else
         return 0;
 }
 
-long PGE_Phys_Object::posY()
+float PGE_Phys_Object::posY()
 {
     if(physBody)
+    {
+//        b2Vec2 offset = b2Vec2(posX_coefficient, posY_coefficient);
+//        b2Vec2 position = physBody->GetPosition().cpy().scl(PhysUtil::pixMeter).sub(offset);
+//        return position.y;//PhysUtil::met2pix(physBody->GetPosition().x) - posX_coefficient;
         return PhysUtil::met2pix(physBody->GetPosition().y) - posY_coefficient;
+    }
     else
         return 0;
 }
@@ -37,24 +50,22 @@ void PGE_Phys_Object::setSize(float w, float h)
 {
     width = w;
     height = h;
-    posX_coefficient = width/2;
-    posY_coefficient = height/2;
+    posX_coefficient = width/2.0f;
+    posY_coefficient = height/2.0f;
 }
 
 void PGE_Phys_Object::setPos(long x, long y)
 {
     physBody->SetTransform(
                 b2Vec2(
-                 PhysUtil::pix2met( x+posX_coefficient),
+                PhysUtil::pix2met( x+posX_coefficient),
                 PhysUtil::pix2met( y+posY_coefficient)
                     ), 0.0f);
 
 }
 
-void PGE_Phys_Object::update()
-{
-}
+void PGE_Phys_Object::nextFrame() {}
 
-void PGE_Phys_Object::render()
-{
-}
+void PGE_Phys_Object::update() {}
+
+void PGE_Phys_Object::render() {}

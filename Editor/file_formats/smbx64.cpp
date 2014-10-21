@@ -88,3 +88,6 @@ QString SMBX64::BoolS(bool input)
 
 QString SMBX64::qStrS(QString input)
 { return QString("\"%1\"\n").arg(input.remove('\n').remove('\r').remove('\t').remove('\"') ); }
+
+QString SMBX64::qStrS_multiline(QString input)
+{ return QString("\"%1\"\n").arg(input.remove('\t').remove('\"') ); }

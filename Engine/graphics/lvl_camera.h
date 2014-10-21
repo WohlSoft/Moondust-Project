@@ -9,7 +9,7 @@
 #include <file_formats.h>
 
 
-typedef std::vector<PGE_Phys_Object *>  PGE_RenderList;
+typedef QVector<PGE_Phys_Object *>  PGE_RenderList;
 
 class PGE_LevelCamera
 {
@@ -18,13 +18,13 @@ public:
     ~PGE_LevelCamera();
     int w(); //!< Width
     int h(); //!< Height
-    int posX(); //!< Position X
-    int posY(); //!< Position Y
+    qreal posX(); //!< Position X
+    qreal posY(); //!< Position Y
 
     void setWorld(b2World * wld);
     void init(float x, float y, float w, float h);
 
-    void setPos(int x, int y);
+    void setPos(float x, float y);
     void setSize(int w, int h);
     void update();
     void drawBackground();
@@ -44,14 +44,14 @@ public:
     int s_left;
     int s_right;
 
+    float pos_x;
+    float pos_y;
+
 private:
     PGE_RenderList objects_to_render;
 
     int width;
     int height;
-
-    int pos_x;
-    int pos_y;
 
     b2World * worldPtr;
     b2Body* sensor;

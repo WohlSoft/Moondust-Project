@@ -48,7 +48,7 @@ win32: LIBS += libversion
 
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
-    INCLUDEPATH += -I../_Libs/_builds/win32/include
+    INCLUDEPATH += ../_Libs/_builds/win32/include
 }
 
 win32: static: {

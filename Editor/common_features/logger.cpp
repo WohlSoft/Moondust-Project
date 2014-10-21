@@ -35,7 +35,7 @@ bool        LogWriter::enabled;
 
 void LogWriter::LoadLogSettings()
 {
-    DebugLogFile="PGE_debug_log.txt";
+    DebugLogFile="PGE_Editor_log.txt";
     logLevel = QtDebugMsg;
 
     QString mainIniFile = ApplicationPath + "/" + "pge_editor.ini";
@@ -43,9 +43,9 @@ void LogWriter::LoadLogSettings()
 
 
     logSettings.beginGroup("logging");
-        DebugLogFile = logSettings.value("log-path", ApplicationPath+"/PGE_debug_log.txt").toString();
+        DebugLogFile = logSettings.value("log-path", ApplicationPath+"/"+DebugLogFile).toString();
         enabled = true;
-        switch( logSettings.value("log-level", "4").toInt() )
+        switch( logSettings.value("log-level", "3").toInt() )
         {
             case 4:
                 logLevel=QtDebugMsg; break;
