@@ -7,6 +7,8 @@
 QT += core gui opengl
 #QT += widgets
 
+DESTDIR = ../bin
+
 TARGET = pge_engine
 TEMPLATE = app
 CONFIG += c++11
@@ -14,6 +16,11 @@ CONFIG += c++11
 DEFINES += PGE_ENGINE
 
 INCLUDEPATH += "../_Libs/" "../Editor/file_formats"
+
+win32: {
+    LIBS += -L../_Libs/_builds/win32/lib
+    INCLUDEPATH += ../_Libs/_builds/win32/include
+}
 
 LIBS += -lSDL2
 win32: LIBS += -lSDL2main
@@ -105,7 +112,13 @@ SOURCES += main.cpp \
     scenes/level/lvl_init.cpp \
     scenes/level/lvl_sections.cpp \
     data_configs/obj_block.cpp \
-    controls/controller_keyboard.cpp
+    controls/controller_keyboard.cpp \
+    data_configs/select_config.cpp \
+    common_features/util.cpp \
+    scenes/level/lvl_block.cpp \
+    data_configs/custom_data.cpp \
+    data_configs/config_paths.cpp \
+    common_features/simple_animator.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -185,9 +198,15 @@ HEADERS  += \
     ../_Libs/EasyBMP/EasyBMP_BMP.h \
     ../_Libs/EasyBMP/EasyBMP_DataStructures.h \
     ../_Libs/EasyBMP/EasyBMP_VariousBMPutilities.h \
-    controls/controller_keyboard.h
+    controls/controller_keyboard.h \
+    data_configs/select_config.h \
+    common_features/util.h \
+    scenes/level/lvl_block.h \
+    data_configs/custom_data.h \
+    common_features/simple_animator.h
 
-FORMS    +=
+FORMS    += \
+    data_configs/select_config.ui
 
 RESOURCES += \
     _resources/engine.qrc

@@ -30,6 +30,7 @@ int LevelScene::findNearSection(long x, long y)
                 continue;
 
             found=true;
+            result=i;
         }
 
     return result;

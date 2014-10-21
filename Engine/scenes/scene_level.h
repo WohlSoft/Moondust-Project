@@ -3,12 +3,22 @@
 
 #include "scene.h"
 #include "../graphics/graphics.h"
+
+#include "../common_features/pge_texture.h"
 #include "level/lvl_player.h"
+#include "level/lvl_block.h"
 #include "../graphics/window.h"
+
+#include "../controls/controller_keyboard.h"
+
+#include "../data_configs/custom_data.h"
 
 #include <file_formats.h>
 #include <Box2D/Box2D.h>
 #include <QString>
+#include <QVector>
+
+#include <SDL2/SDL_opengl.h>
 
 class LevelScene : public Scene
 {
@@ -27,6 +37,7 @@ public:
     QPoint cameraStart;
 
     //Init 3 -> load Configs
+    bool loadConfigs();
 
     //Init 4 -> build animators
 
@@ -46,7 +57,7 @@ public:
 
     bool prepareLevel();
 
-    void update();
+    void update(float step=10);
     void render();
 
 
@@ -59,15 +70,53 @@ public:
 
     int exitType();
 
+    //Flags
+    bool isPauseMenu;
+    bool isTimeStopped;
+    bool isLevelContinues;
+    int exitLevelDelay;
+    int exitLevelCode;
+    int numberOfPlayers;
+
+    KeyboardController keyboard1;
+
+    double Z_backImage; //Background
+
+    //Background-2
+    double Z_BGOBack2; // backround BGO
+
+    double Z_blockSizable; // sizable blocks
+
+    //Background-1
+    double Z_BGOBack1; // backround BGO
+
+    double Z_npcBack; // background NPC
+    double Z_Block; // standart block
+    double Z_npcStd; // standart NPC
+    double Z_Player; //player Point
+
+    //Foreground-1
+    double Z_BGOFore1; // foreground BGO
+    double Z_BlockFore; //LavaBlock
+    double Z_npcFore; // foreground NPC
+    //Foreground-2
+    double Z_BGOFore2; // foreground BGO
+
+    double Z_sys_PhysEnv;
+    double Z_sys_door;
+    double Z_sys_interspace1; // interSection space layer
+    double Z_sys_sctBorder; // section Border
+
 private:
     LevelData data;
 
-    std::vector<PGE_LevelCamera > cameras;
-    std::vector<LVL_Player > players;
+    QVector<PGE_LevelCamera* > cameras;
+    QVector<LVL_Player* > players;
+    QVector<LVL_Block* > blocks;
 
 
     b2World *world;
-    std::vector<PGE_Texture > textures_bank;
+    QVector<PGE_Texture > textures_bank;
 };
 
 #endif // SCENE_LEVEL_H

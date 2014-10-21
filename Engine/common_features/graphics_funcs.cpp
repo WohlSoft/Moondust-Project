@@ -19,9 +19,12 @@
 #include <QPixmap>
 #include <QImage>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QtOpenGL/QGLWidget>
 #include "graphics_funcs.h"
 #include "../../_Libs/EasyBMP/EasyBMP.h"
+
+#include <QtDebug>
 
 QImage GraphicsHelps::setAlphaMask(QImage image, QImage mask)
 {
@@ -80,13 +83,20 @@ QImage GraphicsHelps::loadQImage(QString file)
     return image;
 }
 
-PGE_Texture GraphicsHelps::loadTexture(QString path, QString maskPath)
+PGE_Texture GraphicsHelps::loadTexture(PGE_Texture &target, QString path, QString maskPath)
 {
-    PGE_Texture target;
-
     QImage sourceImage;
     // Load the OpenGL texture
     sourceImage = loadQImage(path); // Gives us the information to make the texture
+
+    if(sourceImage.isNull())
+    {
+        SDL_Quit();
+        QMessageBox::critical(NULL, "Texture error",
+            QString("Error loading of image file: \n%1\nReason: %2.")
+            .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"), QMessageBox::Ok);
+        exit(1);
+    }
 
     //Apply Alpha mask
     if(!maskPath.isEmpty() && QFileInfo(maskPath).exists())
@@ -95,6 +105,10 @@ PGE_Texture GraphicsHelps::loadTexture(QString path, QString maskPath)
         sourceImage = setAlphaMask(sourceImage, maskImage);
     }
 
+    sourceImage.convertToFormat(QImage::Format_ARGB32);
+
+    //qDebug() << path << sourceImage.size();
+
     sourceImage = QGLWidget::convertToGLFormat(sourceImage).mirrored(false, true);
 
     target.nOfColors = 4;
@@ -102,7 +116,7 @@ PGE_Texture GraphicsHelps::loadTexture(QString path, QString maskPath)
 
     glEnable(GL_TEXTURE_2D);
     // Have OpenGL generate a texture object handle for us
-    glGenTextures( 1, &target.texture );
+    glGenTextures( 1, &(target.texture) );
 
     // Bind the texture object
     glBindTexture( GL_TEXTURE_2D, target.texture );
@@ -125,11 +139,31 @@ PGE_Texture GraphicsHelps::loadTexture(QString path, QString maskPath)
 
     glDisable(GL_TEXTURE_2D);
 
-
     return target;
 }
 
 
+QPixmap GraphicsHelps::squareImage(QPixmap image, QSize targetSize=QSize(0,0) )
+{
+    QPixmap target = QPixmap(targetSize);
+    target.fill(Qt::transparent);
+    QPixmap source;
+
+    if( ( targetSize.width() < image.width() ) || ( targetSize.height() < image.height() ))
+        source = image.scaled(targetSize, Qt::KeepAspectRatio);
+    else
+        source = image;
+
+    QPainter p(&target);
+
+    int targetX = qRound( ( ( qreal(target.width()) - qreal(source.width()) ) / 2 ) );
+    int targetY = qRound( ( ( qreal(target.height()) - qreal(source.height()) ) / 2 ) );
+
+    p.drawPixmap( targetX, targetY,source.width(),source.height(), source );
+
+    p.end();
+    return target;
+}
 
 SDL_Surface* GraphicsHelps::QImage_toSDLSurface(const QImage &sourceImage)
 {

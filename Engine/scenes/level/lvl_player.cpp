@@ -1,19 +1,39 @@
 #include "lvl_player.h"
 #include "../../graphics/window.h"
 
+#include <QtDebug>
+
 LVL_Player::LVL_Player()
 {
     camera = NULL;
     worldPtr = NULL;
     playerID = 0;
 
+    type = LVLPlayer;
+
     force=1000.0f;
     hMaxSpeed=24.0f;
     hRunningMaxSpeed=48.0f;
     fallMaxSpeed=720.0f;
 
+    JumpPressed=false;
+    allowJump=true;
+    jumpForce=0;
+
     curHMaxSpeed = hMaxSpeed;
     isRunning = false;
+}
+
+LVL_Player::~LVL_Player()
+{
+    qDebug() << "Destroy player";
+
+    if(physBody && worldPtr)
+    {
+        worldPtr->DestroyBody(physBody);
+        physBody->SetUserData(NULL);
+        physBody = NULL;
+    }
 }
 
 void LVL_Player::init()
@@ -22,28 +42,35 @@ void LVL_Player::init()
 
     setSize(data->w, data->h);
 
+    playerID = data->id;
+
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set
             (
-                PhysUtil::pix2met(data->x + posX_coefficient),
-                PhysUtil::pix2met(data->y + posY_coefficient)
+                PhysUtil::pix2met((float)data->x + posX_coefficient),
+                PhysUtil::pix2met((float)data->y + posY_coefficient)
             );
+
+//    bodyDef.position.Set(PhysUtil::pix2met((float)data->x + ((float)data->w/2)),
+//            PhysUtil::pix2met((float)data->y + ((float)data->w/2) ) );
 
     bodyDef.fixedRotation = true;
     bodyDef.bullet = true;
-    bodyDef.userData = (void*)this;
+    bodyDef.userData = (void*)dynamic_cast<PGE_Phys_Object *>(this);
 
     physBody = worldPtr->CreateBody(&bodyDef);
 
     b2PolygonShape shape;
-    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient)-0.1,
-                   PhysUtil::pix2met(posY_coefficient)-0.1);
+    shape.SetAsBox(PhysUtil::pix2met(posX_coefficient),
+                   PhysUtil::pix2met(posY_coefficient));
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
     fixtureDef.density = 1.0f; fixtureDef.friction = 0.3f;
     physBody->CreateFixture(&fixtureDef);
+
+    //qDebug() <<"Start position is " << posX() << posY();
 }
 
 
@@ -87,29 +114,67 @@ void LVL_Player::update()
         if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
             physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
 
+    if( keys.jump)
+    {
+        if(!JumpPressed)
+        {
+            JumpPressed=true;
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/5)));
+        }
+    }
+    else
+    {
+        if(JumpPressed)
+        {
+            JumpPressed=false;
+        }
+    }
 
-    if( posY() > camera->s_bottom+30 )
+
+    //Return player to start position on fall down
+    if( posY() > camera->s_bottom+height )
         physBody->SetTransform(b2Vec2(
-                PhysUtil::pix2met(data->x+(width) ),
-                PhysUtil::pix2met(data->y + (data->h/2) )), 0.0f);
+                PhysUtil::pix2met(data->x + (posX_coefficient) ),
+                PhysUtil::pix2met(data->y + (posY_coefficient) )), 0.0f);
 
 
     //Connection of section opposite sides
     if(camera->isWarp)
     {
-        if(PhysUtil::met2pix(physBody->GetPosition().x) < camera->s_left-29)
+        if(posX() < camera->s_left-width-1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_right + (data->w/2)),
-                    physBody->GetPosition().y), 0.0f);
+                 PhysUtil::pix2met(camera->s_right+posX_coefficient),
+                 physBody->GetPosition().y), 0.0f);
         else
-        if(PhysUtil::met2pix(physBody->GetPosition().x) > camera->s_right+30)
+        if(posX() > camera->s_right + 1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_left-29 + (data->w/2) ),
-                    physBody->GetPosition().y), 0.0f
+                 PhysUtil::pix2met(camera->s_left-posX_coefficient ),
+                 physBody->GetPosition().y), 0.0f
                                    );
     }
+    else
+    {
+        //Prevent moving of player away from screen
+        if( posX() < camera->s_left)
+        {
+            physBody->SetTransform(b2Vec2(
+                 PhysUtil::pix2met(camera->s_left + posX_coefficient),
+                    physBody->GetPosition().y), 0.0f);
+            physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+        }
+        else
+        if( posX()+width > camera->s_right)
+        {
+            physBody->SetTransform(b2Vec2(
+                 PhysUtil::pix2met(camera->s_right-posX_coefficient ),
+                    physBody->GetPosition().y), 0.0f
+                                   );
+            physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+        }
 
-    camera->setPos( PhysUtil::met2pix(physBody->GetPosition().x) - PGE_Window::Width/2,
-                    PhysUtil::met2pix(physBody->GetPosition().y) - PGE_Window::Height/2 );
+    }
+
+    camera->setPos( posX() - PGE_Window::Width/2,
+                    posY() - PGE_Window::Height/2 );
 
 }

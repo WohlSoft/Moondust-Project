@@ -13,6 +13,7 @@ class LVL_Player :
 {
     public:
         LVL_Player();
+        ~LVL_Player();
         void init();
         void update();
 
@@ -25,6 +26,10 @@ class LVL_Player :
 
         float32 curHMaxSpeed; //!< Current moving max speed
         bool isRunning;
+
+        bool JumpPressed;
+        bool allowJump;
+        int jumpForce;
 
 
         PlayerPoint * data;

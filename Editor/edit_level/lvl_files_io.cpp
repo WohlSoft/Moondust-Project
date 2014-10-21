@@ -675,6 +675,7 @@ void leveledit::closeEvent(QCloseEvent *event)
             MainWinConnect::pMainWin->setMusic(false);
         }
 
+        scene->setMessageBoxItem(false);
         scene->clear();
         WriteToLog(QtDebugMsg, "!<-Cleared->!");
         scene->uBGOs.clear();

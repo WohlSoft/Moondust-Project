@@ -579,77 +579,77 @@
 <context>
     <name>ItemBGO</name>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="129"/>
+        <location filename="../level_scene/item_bgo.cpp" line="134"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="135"/>
+        <location filename="../level_scene/item_bgo.cpp" line="140"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="155"/>
+        <location filename="../level_scene/item_bgo.cpp" line="160"/>
         <source>Change Z-Offset...</source>
         <translation>Change Z-Offset...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="157"/>
+        <location filename="../level_scene/item_bgo.cpp" line="162"/>
         <source>Z-Layer</source>
         <translation>Z-Layer</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="160"/>
+        <location filename="../level_scene/item_bgo.cpp" line="165"/>
         <source>Background-2</source>
         <translation>Background-2</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="163"/>
+        <location filename="../level_scene/item_bgo.cpp" line="168"/>
         <source>Background</source>
         <translation>Background</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="166"/>
+        <location filename="../level_scene/item_bgo.cpp" line="171"/>
         <source>Default</source>
         <translation>Default</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="169"/>
+        <location filename="../level_scene/item_bgo.cpp" line="174"/>
         <source>Foreground</source>
         <translation>Foreground</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="172"/>
+        <location filename="../level_scene/item_bgo.cpp" line="177"/>
         <source>Foreground-2</source>
         <translation>Foreground-2</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="177"/>
+        <location filename="../level_scene/item_bgo.cpp" line="182"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="179"/>
+        <location filename="../level_scene/item_bgo.cpp" line="184"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="182"/>
+        <location filename="../level_scene/item_bgo.cpp" line="187"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="185"/>
+        <location filename="../level_scene/item_bgo.cpp" line="190"/>
         <source>Properties...</source>
         <translation>Properties...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="273"/>
+        <location filename="../level_scene/item_bgo.cpp" line="278"/>
         <source>Z-Offset</source>
         <translation>Z-Offset</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_bgo.cpp" line="274"/>
+        <location filename="../level_scene/item_bgo.cpp" line="279"/>
         <source>Please enter the Z-value offset:</source>
         <translation>Please enter the Z-value offset:</translation>
     </message>
@@ -657,57 +657,57 @@
 <context>
     <name>ItemBlock</name>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="131"/>
+        <location filename="../level_scene/item_block.cpp" line="136"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="136"/>
+        <location filename="../level_scene/item_block.cpp" line="141"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="145"/>
+        <location filename="../level_scene/item_block.cpp" line="150"/>
         <source> [hidden]</source>
         <translation> [hidden]</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="156"/>
+        <location filename="../level_scene/item_block.cpp" line="161"/>
         <source>Invisible</source>
         <translation>Invisible</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="161"/>
+        <location filename="../level_scene/item_block.cpp" line="166"/>
         <source>Slippery</source>
         <translation>Slippery</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="166"/>
+        <location filename="../level_scene/item_block.cpp" line="171"/>
         <source>Resize</source>
         <translation>Resize</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="171"/>
+        <location filename="../level_scene/item_block.cpp" line="176"/>
         <source>Change included NPC...</source>
         <translation>Change contained NPC...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="175"/>
+        <location filename="../level_scene/item_block.cpp" line="180"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="177"/>
+        <location filename="../level_scene/item_block.cpp" line="182"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="180"/>
+        <location filename="../level_scene/item_block.cpp" line="185"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_block.cpp" line="183"/>
+        <location filename="../level_scene/item_block.cpp" line="188"/>
         <source>Properties...</source>
         <translation>Properties...</translation>
     </message>
@@ -715,32 +715,32 @@
 <context>
     <name>ItemDoor</name>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="132"/>
+        <location filename="../level_scene/item_door.cpp" line="137"/>
         <source>Open target level: %1</source>
         <translation>Open target level: %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="136"/>
+        <location filename="../level_scene/item_door.cpp" line="141"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="142"/>
+        <location filename="../level_scene/item_door.cpp" line="147"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="165"/>
+        <location filename="../level_scene/item_door.cpp" line="170"/>
         <source>Jump to exit</source>
         <translation>Jump to exit</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="172"/>
+        <location filename="../level_scene/item_door.cpp" line="177"/>
         <source>Jump to entrance</source>
         <translation>Jump to entrance</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="180"/>
+        <location filename="../level_scene/item_door.cpp" line="185"/>
         <source>No Vehicles</source>
         <translation>Deny vehicles</translation>
     </message>
@@ -749,17 +749,17 @@
         <translation type="vanished">Deny vehicles</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="185"/>
+        <location filename="../level_scene/item_door.cpp" line="190"/>
         <source>Allow NPC</source>
         <translation>Allow items</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="190"/>
+        <location filename="../level_scene/item_door.cpp" line="195"/>
         <source>Locked</source>
         <translation>Locked</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="208"/>
+        <location filename="../level_scene/item_door.cpp" line="213"/>
         <source>Properties...</source>
         <translation>Properties...</translation>
     </message>
@@ -772,7 +772,7 @@
         <translation type="vanished">Cut</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_door.cpp" line="204"/>
+        <location filename="../level_scene/item_door.cpp" line="209"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -780,42 +780,42 @@
 <context>
     <name>ItemLevel</name>
     <message>
-        <location filename="../world_scene/item_level.cpp" line="126"/>
+        <location filename="../world_scene/item_level.cpp" line="131"/>
         <source>Open target file: %1</source>
         <translation>Open target file: %1</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_level.cpp" line="133"/>
+        <location filename="../world_scene/item_level.cpp" line="138"/>
         <source>Path background</source>
         <translation>Background Path</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_level.cpp" line="138"/>
+        <location filename="../world_scene/item_level.cpp" line="143"/>
         <source>Big Path background</source>
         <translation>Big Background Path</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_level.cpp" line="143"/>
+        <location filename="../world_scene/item_level.cpp" line="148"/>
         <source>Always Visible</source>
         <translation>Always Visible</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_level.cpp" line="149"/>
+        <location filename="../world_scene/item_level.cpp" line="154"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_level.cpp" line="151"/>
+        <location filename="../world_scene/item_level.cpp" line="156"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_level.cpp" line="154"/>
+        <location filename="../world_scene/item_level.cpp" line="159"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_level.cpp" line="157"/>
+        <location filename="../world_scene/item_level.cpp" line="162"/>
         <source>Properties...</source>
         <translation>Properties...</translation>
     </message>
@@ -844,22 +844,22 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemMusic</name>
     <message>
-        <location filename="../world_scene/item_music.cpp" line="132"/>
+        <location filename="../world_scene/item_music.cpp" line="137"/>
         <source>Play this</source>
         <translation>Play this</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_music.cpp" line="135"/>
+        <location filename="../world_scene/item_music.cpp" line="140"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_music.cpp" line="137"/>
+        <location filename="../world_scene/item_music.cpp" line="142"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_music.cpp" line="140"/>
+        <location filename="../world_scene/item_music.cpp" line="145"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -867,57 +867,57 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="159"/>
+        <location filename="../level_scene/item_npc.cpp" line="164"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="165"/>
+        <location filename="../level_scene/item_npc.cpp" line="170"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="191"/>
+        <location filename="../level_scene/item_npc.cpp" line="196"/>
         <source>Edit NPC-Configuration</source>
         <translation>Edit NPC-Configuration</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="193"/>
+        <location filename="../level_scene/item_npc.cpp" line="198"/>
         <source>New NPC-Configuration</source>
         <translation>New NPC-Configuration</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="199"/>
+        <location filename="../level_scene/item_npc.cpp" line="204"/>
         <source>Set %1</source>
         <translation>Set %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="201"/>
+        <location filename="../level_scene/item_npc.cpp" line="206"/>
         <source>Direction</source>
         <translation>Direction</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="204"/>
+        <location filename="../level_scene/item_npc.cpp" line="209"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="209"/>
+        <location filename="../level_scene/item_npc.cpp" line="214"/>
         <source>Random</source>
         <translation>Random</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="215"/>
+        <location filename="../level_scene/item_npc.cpp" line="220"/>
         <source>Right</source>
         <translation>Right</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="222"/>
+        <location filename="../level_scene/item_npc.cpp" line="227"/>
         <source>Friendly</source>
         <translation>Friendly</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="227"/>
+        <location filename="../level_scene/item_npc.cpp" line="232"/>
         <source>Doesn&apos;t move</source>
         <translation>Doesn&apos;t move</translation>
     </message>
@@ -926,17 +926,17 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Not movable</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="233"/>
+        <location filename="../level_scene/item_npc.cpp" line="238"/>
         <source>Set message...</source>
         <translation>Set message...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="238"/>
+        <location filename="../level_scene/item_npc.cpp" line="243"/>
         <source>Set as Boss</source>
         <translation>Set as Boss</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="252"/>
+        <location filename="../level_scene/item_npc.cpp" line="257"/>
         <source>Properties...</source>
         <translation>Properties...</translation>
     </message>
@@ -945,17 +945,17 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Legacy boss</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="244"/>
+        <location filename="../level_scene/item_npc.cpp" line="249"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="246"/>
+        <location filename="../level_scene/item_npc.cpp" line="251"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_npc.cpp" line="249"/>
+        <location filename="../level_scene/item_npc.cpp" line="254"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -963,17 +963,17 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemPath</name>
     <message>
-        <location filename="../world_scene/item_path.cpp" line="122"/>
+        <location filename="../world_scene/item_path.cpp" line="127"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_path.cpp" line="124"/>
+        <location filename="../world_scene/item_path.cpp" line="129"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_path.cpp" line="127"/>
+        <location filename="../world_scene/item_path.cpp" line="132"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -981,27 +981,27 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemPlayerPoint</name>
     <message>
-        <location filename="../level_scene/item_playerpoint.cpp" line="108"/>
+        <location filename="../level_scene/item_playerpoint.cpp" line="113"/>
         <source>Set %1</source>
         <translation>Set %1</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_playerpoint.cpp" line="108"/>
+        <location filename="../level_scene/item_playerpoint.cpp" line="113"/>
         <source>Direction</source>
         <translation>Direction</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_playerpoint.cpp" line="112"/>
+        <location filename="../level_scene/item_playerpoint.cpp" line="117"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_playerpoint.cpp" line="117"/>
+        <location filename="../level_scene/item_playerpoint.cpp" line="122"/>
         <source>Right</source>
         <translation>Right</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_playerpoint.cpp" line="124"/>
+        <location filename="../level_scene/item_playerpoint.cpp" line="129"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -1009,17 +1009,17 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemScene</name>
     <message>
-        <location filename="../world_scene/item_scene.cpp" line="120"/>
+        <location filename="../world_scene/item_scene.cpp" line="125"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_scene.cpp" line="122"/>
+        <location filename="../world_scene/item_scene.cpp" line="127"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../world_scene/item_scene.cpp" line="125"/>
+        <location filename="../world_scene/item_scene.cpp" line="130"/>
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
@@ -1194,49 +1194,64 @@ Message limits: max line lenth is 28 characters</source>
 <context>
     <name>ItemWater</name>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="138"/>
+        <location filename="../level_scene/item_water.cpp" line="143"/>
         <source>Layer: </source>
         <translation>Layer: </translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="144"/>
+        <location filename="../level_scene/item_water.cpp" line="149"/>
         <source>Add to new layer...</source>
         <translation>Add to new layer...</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="164"/>
+        <location filename="../level_scene/item_water.cpp" line="169"/>
         <source>Environment type</source>
         <translation>Environment type</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="167"/>
+        <location filename="../level_scene/item_water.cpp" line="172"/>
         <source>Water</source>
         <translation>Water</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="172"/>
+        <location filename="../level_scene/item_water.cpp" line="177"/>
         <source>Quicksand</source>
         <translation>Quicksand</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="177"/>
+        <location filename="../level_scene/item_water.cpp" line="183"/>
+        <source>Show zone range data</source>
+        <translation>Show zone range data</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="186"/>
         <source>Resize</source>
         <translation>Resize</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="181"/>
+        <location filename="../level_scene/item_water.cpp" line="190"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="183"/>
+        <location filename="../level_scene/item_water.cpp" line="192"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../level_scene/item_water.cpp" line="187"/>
+        <location filename="../level_scene/item_water.cpp" line="196"/>
         <source>Remove</source>
         <translation>Remove</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="252"/>
+        <source>Physical environment range</source>
+        <translation>Physical environment range</translation>
+    </message>
+    <message>
+        <location filename="../level_scene/item_water.cpp" line="255"/>
+        <source>Rectangle X(left), Y(top), Width, Height, Right, Bottom</source>
+        <translation>Rectangle X(left), Y(top), Width, Height, Right, Bottom</translation>
     </message>
 </context>
 <context>
@@ -4973,12 +4988,12 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
 <context>
     <name>QTranslator</name>
     <message>
-        <location filename="../file_formats/file_formats.cpp" line="46"/>
+        <location filename="../file_formats/file_formats.cpp" line="47"/>
         <source>Bad File</source>
         <translation>Bad File</translation>
     </message>
     <message>
-        <location filename="../file_formats/file_formats.cpp" line="48"/>
+        <location filename="../file_formats/file_formats.cpp" line="49"/>
         <source>Bad file format
 File: %1
 </source>
@@ -4987,14 +5002,14 @@ File: %1
 </translation>
     </message>
     <message>
-        <location filename="../file_formats/file_formats.cpp" line="49"/>
+        <location filename="../file_formats/file_formats.cpp" line="50"/>
         <source>Line Number: %1
 </source>
         <translation>Line Number: %1
 </translation>
     </message>
     <message>
-        <location filename="../file_formats/file_formats.cpp" line="50"/>
+        <location filename="../file_formats/file_formats.cpp" line="51"/>
         <source>Line Data: %1</source>
         <translation>Line Data: %1</translation>
     </message>

@@ -603,7 +603,7 @@ void WorldEdit::closeEvent(QCloseEvent *event)
         //LvlMusPlay::musicForceReset = true;
         //MainWinConnect::pMainWin->setMusicButton(false);
         //MainWinConnect::pMainWin->setMusic(false);
-
+        scene->setMessageBoxItem(false);
         scene->clear();
         WriteToLog(QtDebugMsg, "!<-Cleared->!");
         scene->uTiles.clear();

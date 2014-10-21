@@ -22,8 +22,11 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       -= opengl
 
 DESTDIR = ../bin
+
+DEFINES += QT_NO_TRANSLATION
 
 TARGET = GIFs2PNG
 CONFIG   += console

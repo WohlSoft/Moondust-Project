@@ -4,6 +4,8 @@
 #include <vector>
 #include "control_keys.h"
 
+#include "controllable_object.h"
+
 class ControllableObject
 {
 public:
