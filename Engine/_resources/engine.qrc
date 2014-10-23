@@ -9,5 +9,6 @@
         <file>icon/cat_48.png</file>
         <file>icon/cat_128.png</file>
         <file>icon/cat_256.png</file>
+        <file>images/cat_splash.png</file>
     </qresource>
 </RCC>

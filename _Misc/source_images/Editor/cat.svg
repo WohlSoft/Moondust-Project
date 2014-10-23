@@ -17,9 +17,9 @@
    inkscape:version="0.48.5 r10040"
    sodipodi:docname="cat.svg"
    style="enable-background:new"
-   inkscape:export-filename="D:\Developer\PlatfornerGameEngine\Editor\_resources\images\src\cat_16.png"
-   inkscape:export-xdpi="2.9907784"
-   inkscape:export-ydpi="2.9907784">
+   inkscape:export-filename="D:\Developer\PlatfornerGameEngine\Engine\_resources\images\cat_splash.png"
+   inkscape:export-xdpi="76.440002"
+   inkscape:export-ydpi="76.440002">
   <defs
      id="defs4">
     <linearGradient
@@ -175,13 +175,13 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="326.41791"
-     inkscape:cy="186.33076"
+     inkscape:cx="308.70198"
+     inkscape:cy="186.37704"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:window-width="1280"
-     inkscape:window-height="949"
+     inkscape:window-height="940"
      inkscape:window-x="-4"
      inkscape:window-y="24"
      inkscape:window-maximized="1"
