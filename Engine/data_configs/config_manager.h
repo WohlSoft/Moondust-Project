@@ -7,6 +7,9 @@
 
 #include "obj_block.h"
 #include "obj_bgo.h"
+#include "obj_bg.h"
+
+
 #include <QMap>
 #include <QSettings>
 #include <QFile>
@@ -174,6 +177,16 @@ public:
     static QVector<SimpleAnimator *> Animator_BGO;
     /*****Level BGO************/
 
+
+    /*****Level Backgrounds************/
+    static bool loadLevelBackG();
+    static long getBGTexture(long bgID);
+    /*****************************/
+    static QVector<obj_BG >     lvl_bg;
+    static QMap<long, obj_BG>   lvl_bg_indexes;
+    static CustomDirManager Dir_BG;
+    static QVector<SimpleAnimator *> Animator_BG;
+    /*****Level Backgrounds************/
 
 
     /***********Texture banks*************/

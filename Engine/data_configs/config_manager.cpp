@@ -274,9 +274,7 @@ void ConfigManager::addError(QString bug, QtMsgType level)
 bool ConfigManager::unloadLevelConfigs()
 {
 
-    lvl_block_indexes.clear();
-    lvl_blocks.clear();
-
+    ///Clear texture bank
     while(!level_textures.isEmpty())
     {
         glDeleteTextures( 1, &(level_textures.last().texture) );
@@ -284,6 +282,8 @@ bool ConfigManager::unloadLevelConfigs()
     }
 
 
+
+    /***************Clear animators*************/
     foreach(SimpleAnimator * x, Animator_Blocks)
         x->stop();
     while(!Animator_Blocks.isEmpty())
@@ -303,11 +303,24 @@ bool ConfigManager::unloadLevelConfigs()
         delete x;
     }
 
-    lvl_blocks.clear();
-    lvl_block_indexes.clear();
+    foreach(SimpleAnimator * x, Animator_BG)
+        x->stop();
+    while(!Animator_BG.isEmpty())
+    {
+        SimpleAnimator * x = Animator_BG.first();
+        Animator_BG.pop_front();
+        delete x;
+    }
 
-    lvl_bgo.clear();
+    /***************Clear settings*************/
+    lvl_block_indexes.clear();
+    lvl_blocks.clear();
+
     lvl_bgo_indexes.clear();
+    lvl_bgo.clear();
+
+    lvl_bg_indexes.clear();
+    lvl_bg.clear();
 
     //level_textures.clear();
     return true;
