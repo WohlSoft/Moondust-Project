@@ -27,7 +27,7 @@ public:
     LevelScene();
     ~LevelScene();
 
-    void init();
+    bool init();
 
     //Init 1
     bool loadFile(QString filePath);

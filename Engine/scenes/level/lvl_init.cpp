@@ -45,8 +45,16 @@ bool LevelScene::setEntrance(int entr)
 bool LevelScene::loadConfigs()
 {
     bool success=true;
-    success = ConfigManager::loadLevelBlocks();
-    //if(success) success = ...
+
+    //Load INI-files
+    success = ConfigManager::loadLevelBlocks(); //!< Blocks
+    success = ConfigManager::loadLevelBGO();    //!< BGO
+    success = ConfigManager::loadLevelBackG();  //!< Backgrounds
+
+    //Set paths
+    ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
+    ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
+    ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
 
     return success;
 }
