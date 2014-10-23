@@ -59,7 +59,14 @@ bool ConfigManager::loadLevelBlocks()
 
         for(i=1; i<=block_total; i++)
         {
-            blockset.beginGroup( QString("block-%1").arg(i) );
+
+            sblock.isInit=false;
+            sblock.image = NULL;
+            sblock.textureArrayId = 0;
+            sblock.animator_ID = 0;
+
+
+                blockset.beginGroup( QString("block-%1").arg(i) );
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
 
@@ -73,11 +80,6 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.category = blockset.value("category", "_Other").toString();
                 //sblock.grid = blockset.value("grid", default_grid).toInt();
                 imgFile = blockset.value("image", "").toString();
-
-                sblock.isInit=false;
-                sblock.image = NULL;
-                sblock.textureArrayId = 0;
-                sblock.animator_ID = 0;
 
                 sblock.image_n = imgFile;
                 if( (imgFile!="") )

@@ -35,7 +35,14 @@ bool ConfigManager::loadLevelBGO()
 
     for(i=1; i<=bgo_total; i++)
     {
+
+        sbgo.isInit = false;
+        sbgo.image = NULL;
+        sbgo.textureArrayId = 0;
+        sbgo.animator_ID = 0;
+
         bgoset.beginGroup( QString("background-"+QString::number(i)) );
+
             sbgo.name = bgoset.value("name", "").toString();
 
                 if(sbgo.name=="")
