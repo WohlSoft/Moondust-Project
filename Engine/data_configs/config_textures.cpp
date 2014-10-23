@@ -182,3 +182,85 @@ long  ConfigManager::getBgoTexture(long bgoID)
         return id;
     }
 }
+
+
+
+
+
+
+
+
+
+
+long  ConfigManager::getBGTexture(long bgID)
+{
+    if(!lvl_bg_indexes.contains(bgID))
+    {
+        return -1;
+    }
+
+    if(lvl_bg_indexes[bgID].isInit)
+    {
+
+        if(lvl_bg_indexes[bgID].textureArrayId < level_textures.size())
+            return lvl_bg_indexes[bgID].textureArrayId;
+        else
+            return -1;
+    }
+    else
+    {
+        QString imgFile = Dir_BG.getCustomFile(lvl_bg_indexes[bgID].image_n);
+
+        PGE_Texture texture;
+        texture.w = 0;
+        texture.h = 0;
+        texture.texture = 0;
+        texture.texture_layout = NULL;
+        texture.format = 0;
+        texture.nOfColors = 0;
+
+        long id = level_textures.size();
+
+        lvl_bg_indexes[bgID].textureArrayId = id;
+
+        level_textures.push_back(texture);
+
+        GraphicsHelps::loadTexture( level_textures[id], imgFile );
+
+        lvl_bg_indexes[bgID].image = &(level_textures[id]);
+        lvl_bg_indexes[bgID].textureID = level_textures[id].texture;
+        lvl_bg_indexes[bgID].isInit = true;
+
+        //Also, load and init animator
+        if(lvl_bg_indexes[bgID].animated)
+        {
+            int frameFirst = 0;
+            int frameLast = -1;
+
+            //calculate height of frame
+            lvl_bg_indexes[bgID].frame_h =
+                    (int)round(double(level_textures[id].h)
+                               /double(lvl_bg_indexes[bgID].frames));
+
+            //store animated texture value back
+            level_textures[id].h = lvl_bg_indexes[bgID].frame_h;
+
+            SimpleAnimator * animator = new SimpleAnimator
+                        (
+                            true,
+                            lvl_bg_indexes[bgID].frames,
+                            128, //lvl_bg_indexes[bgID].framespeed, //Ouch, forgot made framespeed value for background :P Will add later
+                            frameFirst,
+                            frameLast,
+                            false,
+                            false
+                        );
+
+            Animator_BG.push_back(animator);
+            lvl_bg_indexes[bgID].animator_ID = Animator_BG.size()-1;
+
+        }
+
+        return id;
+    }
+}
