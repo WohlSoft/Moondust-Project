@@ -124,42 +124,19 @@ LevelScene::~LevelScene()
     textures_bank.clear();
 }
 
-void LevelScene::init()
+bool LevelScene::init()
 {
 
     //Load File
 
     //Set Entrance  (int entr=0)
 
-    //Load configs
-    ConfigManager::loadLevelBlocks();
-    ConfigManager::loadLevelBGO();
-
-    //Prepare to texture bank creation
-    ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
-    ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
-
-
-
-    //Create Animators
-    //look for necessary textures and load them into bank
-
-
-    //Generate texture bank
-//    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath + "/block-223.bmp") );
-//    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath + "/background2-14.png") );
-//    textures_bank.push_back( GraphicsHelps::loadTexture(ApplicationPath+"/background-103.gif",
-//                                                        ApplicationPath+"/background-103m.gif") );
-
-
     //Init Physics
     b2Vec2 gravity(0.0f, 150.0f);
     world = new b2World(gravity);
     world->SetAllowSleeping(true);
 
-
     int sID = findNearSection(cameraStart.x(), cameraStart.y());
-
 
     qDebug()<<"Create cameras";
     //Init Cameras
@@ -298,26 +275,33 @@ void LevelScene::init()
     qDebug()<<"Add players";
 
     int getPlayers = numberOfPlayers;
-    for(int i=0; i<data.players.size() && getPlayers>0 ; i++)
+    int players_count=0;
+
+    if(!isWarpEntrance) //Dont place players if entered through warp
+        for(players_count=0; players_count<data.players.size() && getPlayers>0 ; players_count++)
+        {
+            int i = players_count;
+            if(data.players[i].w==0 && data.players[i].h==0) continue;
+
+            LVL_Player * player;
+            player = new LVL_Player();
+            player->camera = cameras[0];
+            player->worldPtr = world;
+            player->setSize(data.players[i].w, data.players[i].h);
+            player->data = &(data.players[i]);
+            player->z_index = Z_Player;
+            player->init();
+            players.push_back(player);
+            if(player->playerID==1)
+                keyboard1.registerInControl(player);
+            getPlayers--;
+        }
+
+    if(players_count<0 && !isWarpEntrance)
     {
-        if(data.players[i].w==0 && data.players[i].h==0) continue;
-
-        LVL_Player * player;
-        player = new LVL_Player();
-        player->camera = cameras[0];
-        player->worldPtr = world;
-        player->setSize(data.players[i].w, data.players[i].h);
-        player->data = &(data.players[i]);
-        player->z_index = Z_Player;
-        player->init();
-        players.push_back(player);
-        if(player->playerID==1)
-            keyboard1.registerInControl(player);
-        getPlayers--;
+        qDebug()<<"No defined players!";
+        return false;
     }
-
-
-
 
     //start animation
     for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
@@ -326,8 +310,8 @@ void LevelScene::init()
     for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
         ConfigManager::Animator_BGO[i]->start();
 
-
-    qDebug()<<"done!";
+    //qDebug()<<"done!";
+    return true;
 }
 
 
