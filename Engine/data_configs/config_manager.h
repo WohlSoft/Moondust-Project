@@ -6,6 +6,10 @@
 #include "../common_features/simple_animator.h"
 
 #include "obj_block.h"
+#include "obj_bgo.h"
+#include "obj_bg.h"
+
+
 #include <QMap>
 #include <QSettings>
 #include <QFile>
@@ -145,29 +149,50 @@ public:
     static QVector<obj_sound > main_sound;
 
 
-    //Level config Data
-    //Level blocks
-    static QVector<obj_block >     lvl_blocks;
-    static QMap<long, obj_block>   lvl_block_indexes;
-    static long getBlockTexture(long blockID);
-    static CustomDirManager Dir_Blocks;
-    static QVector<SimpleAnimator *> Animator_Blocks;
-
-    //Texture bank
-    static QVector<PGE_Texture > level_textures; //Texture bank
-
-
-
-    static QVector<PGE_Texture > world_textures;
-
-
     static void setConfigPath(QString p);
     //Load settings
     static bool loadBasics();
-
-    static bool loadLevelBlocks();
-
     static bool unloadLevelConfigs();
+
+
+    //Level config Data
+
+    /*****Level blocks************/
+    static bool loadLevelBlocks();
+    static long getBlockTexture(long blockID);
+    /*****************************/
+    static QVector<obj_block >     lvl_blocks;
+    static QMap<long, obj_block>   lvl_block_indexes;
+    static CustomDirManager Dir_Blocks;
+    static QVector<SimpleAnimator *> Animator_Blocks;
+    /*****Level blocks************/
+
+    /*****Level BGO************/
+    static bool loadLevelBGO();
+    static long getBgoTexture(long bgoID);
+    /*****************************/
+    static QVector<obj_bgo >     lvl_bgo;
+    static QMap<long, obj_bgo>   lvl_bgo_indexes;
+    static CustomDirManager Dir_BGO;
+    static QVector<SimpleAnimator *> Animator_BGO;
+    /*****Level BGO************/
+
+
+    /*****Level Backgrounds************/
+    static bool loadLevelBackG();
+    static long getBGTexture(long bgID);
+    /*****************************/
+    static QVector<obj_BG >     lvl_bg;
+    static QMap<long, obj_BG>   lvl_bg_indexes;
+    static CustomDirManager Dir_BG;
+    static QVector<SimpleAnimator *> Animator_BG;
+    /*****Level Backgrounds************/
+
+
+    /***********Texture banks*************/
+    static QVector<PGE_Texture > level_textures;
+    static QVector<PGE_Texture > world_textures;
+    /***********Texture banks*************/
 
 
 

@@ -43,12 +43,6 @@ QVector<obj_sound > ConfigManager::main_sound;
 
 
 //Level config Data
-QVector<obj_block >     ConfigManager::lvl_blocks;
-QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
-CustomDirManager ConfigManager::Dir_Blocks;
-QVector<SimpleAnimator *> ConfigManager::Animator_Blocks;
-
-
 QVector<PGE_Texture >   ConfigManager::level_textures; //Texture bank
 
 
@@ -73,109 +67,6 @@ QString ConfigManager::pathPath;
 QString ConfigManager::wlvlPath;
 
 QString ConfigManager::commonGPath;
-
-
-
-long  ConfigManager::getBlockTexture(long blockID)
-{
-    if(!lvl_block_indexes.contains(blockID))
-    {
-        return -1;
-    }
-
-    if(lvl_block_indexes[blockID].isInit)
-    {
-
-        if(lvl_block_indexes[blockID].textureArrayId < level_textures.size())
-            return lvl_block_indexes[blockID].textureArrayId;
-        else
-            return -1;
-    }
-    else
-    {
-        QString imgFile = Dir_Blocks.getCustomFile(lvl_block_indexes[blockID].image_n);
-        QString maskFile = Dir_Blocks.getCustomFile(lvl_block_indexes[blockID].mask_n);
-
-        PGE_Texture texture;
-        texture.w = 0;
-        texture.h = 0;
-        texture.texture = 0;
-        texture.texture_layout = NULL;
-        texture.format = 0;
-        texture.nOfColors = 0;
-
-        long id = level_textures.size();
-
-        lvl_block_indexes[blockID].textureArrayId = id;
-
-        level_textures.push_back(texture);
-
-        GraphicsHelps::loadTexture( level_textures[id],
-             imgFile,
-             maskFile
-             );
-
-
-
-        lvl_block_indexes[blockID].image = &(level_textures[id]);
-        lvl_block_indexes[blockID].textureID = level_textures[id].texture;
-        lvl_block_indexes[blockID].isInit = true;
-
-        //Also, load and init animator
-        if(lvl_block_indexes[blockID].animated)
-        {
-            int frameFirst;
-            int frameLast;
-
-            switch(lvl_block_indexes[blockID].algorithm)
-            {
-                case 1: // Invisible block
-                {
-                    frameFirst = 5;
-                    frameLast = 6;
-                    break;
-                }
-                case 3: //Player's character block
-                {
-                    frameFirst = 0;
-                    frameLast = 1;
-                    break;
-                }
-                case 4: //Player's character switch
-                {
-                    frameFirst = 0;
-                    frameLast = 3;
-                    break;
-                }
-                default: //Default block
-                {
-                    frameFirst = 0;
-                    frameLast = -1;
-                    break;
-                }
-            }
-
-
-            SimpleAnimator * animator = new SimpleAnimator
-                        (
-                            true,
-                            lvl_block_indexes[blockID].frames,
-                            lvl_block_indexes[blockID].framespeed,
-                            frameFirst,
-                            frameLast,
-                            lvl_block_indexes[blockID].animation_rev,
-                            lvl_block_indexes[blockID].animation_bid
-                        );
-
-            Animator_Blocks.push_back(animator);
-            lvl_block_indexes[blockID].animator_ID = Animator_Blocks.size()-1;
-
-        }
-
-        return id;
-    }
-}
-
 
 
 
@@ -383,16 +274,16 @@ void ConfigManager::addError(QString bug, QtMsgType level)
 bool ConfigManager::unloadLevelConfigs()
 {
 
-    lvl_block_indexes.clear();
-    lvl_blocks.clear();
-
+    ///Clear texture bank
     while(!level_textures.isEmpty())
     {
-        glDeleteTextures( 1, &(level_textures.first().texture) );
-        level_textures.pop_front();
+        glDeleteTextures( 1, &(level_textures.last().texture) );
+        level_textures.pop_back();
     }
 
 
+
+    /***************Clear animators*************/
     foreach(SimpleAnimator * x, Animator_Blocks)
         x->stop();
     while(!Animator_Blocks.isEmpty())
@@ -402,8 +293,34 @@ bool ConfigManager::unloadLevelConfigs()
         delete x;
     }
 
-    lvl_blocks.clear();   //Clear old
+
+    foreach(SimpleAnimator * x, Animator_BGO)
+        x->stop();
+    while(!Animator_BGO.isEmpty())
+    {
+        SimpleAnimator * x = Animator_BGO.first();
+        Animator_BGO.pop_front();
+        delete x;
+    }
+
+    foreach(SimpleAnimator * x, Animator_BG)
+        x->stop();
+    while(!Animator_BG.isEmpty())
+    {
+        SimpleAnimator * x = Animator_BG.first();
+        Animator_BG.pop_front();
+        delete x;
+    }
+
+    /***************Clear settings*************/
     lvl_block_indexes.clear();
+    lvl_blocks.clear();
+
+    lvl_bgo_indexes.clear();
+    lvl_bgo.clear();
+
+    lvl_bg_indexes.clear();
+    lvl_bg.clear();
 
     //level_textures.clear();
     return true;

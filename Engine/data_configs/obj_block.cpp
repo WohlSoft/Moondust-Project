@@ -1,10 +1,22 @@
 #include "config_manager.h"
 #include <QMessageBox>
 
-static QString Temp01="";
+/*****Level blocks************/
+QVector<obj_block >     ConfigManager::lvl_blocks;
+QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
+CustomDirManager ConfigManager::Dir_Blocks;
+QVector<SimpleAnimator *> ConfigManager::Animator_Blocks;
+/*****Level blocks************/
+
+namespace loadLevelBlocks_fnc
+{
+    static QString Temp01="";
+}
 
 bool ConfigManager::loadLevelBlocks()
 {
+    using namespace loadLevelBlocks_fnc;
+
     unsigned int i;
 
     obj_block sblock;
@@ -34,8 +46,6 @@ bool ConfigManager::loadLevelBlocks()
     blockset.endGroup();
 
 
-    //creation of empty indexes of arrayElements
-
 
     if(block_total==0)
     {
@@ -49,7 +59,14 @@ bool ConfigManager::loadLevelBlocks()
 
         for(i=1; i<=block_total; i++)
         {
-            blockset.beginGroup( QString("block-%1").arg(i) );
+
+            sblock.isInit=false;
+            sblock.image = NULL;
+            sblock.textureArrayId = 0;
+            sblock.animator_ID = 0;
+
+
+                blockset.beginGroup( QString("block-%1").arg(i) );
 
                 sblock.name = blockset.value("name", QString("block %1").arg(i) ).toString();
 
@@ -63,11 +80,6 @@ bool ConfigManager::loadLevelBlocks()
                 sblock.category = blockset.value("category", "_Other").toString();
                 //sblock.grid = blockset.value("grid", default_grid).toInt();
                 imgFile = blockset.value("image", "").toString();
-
-                sblock.isInit=false;
-                sblock.image = NULL;
-                sblock.textureArrayId = 0;
-                sblock.animator_ID = 0;
 
                 sblock.image_n = imgFile;
                 if( (imgFile!="") )
