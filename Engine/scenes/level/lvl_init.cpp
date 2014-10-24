@@ -47,8 +47,11 @@ bool LevelScene::loadConfigs()
     bool success=true;
 
     //Load INI-files
+        loaderStep();
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
+        loaderStep();
     success = ConfigManager::loadLevelBGO();    //!< BGO
+        loaderStep();
     success = ConfigManager::loadLevelBackG();  //!< Backgrounds
 
     //Set paths

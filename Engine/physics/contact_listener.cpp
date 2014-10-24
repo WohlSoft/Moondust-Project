@@ -177,7 +177,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
 
         if(platformFixture)
         {
-            if (bodyChar->bottom() > bodyBlock->top()+2 )
+            if (bodyChar->bottom() > bodyBlock->top() )
             {
                 contact->SetEnabled(false);
             }

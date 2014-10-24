@@ -46,6 +46,7 @@ void LVL_Background::setBg(obj_BG &bg)
     switch(bgType)
     {
         case single_row:
+        case tiled:
             {
                 long tID = ConfigManager::getBGTexture(bg.id);
                 if( tID >= 0 )
@@ -100,10 +101,6 @@ void LVL_Background::setBg(obj_BG &bg)
                     qDebug()<<"DoubleRow";
             }
             break;
-        case tiled:
-
-            qDebug()<<"Tiled";
-            break;
         default:
             break;
     }
@@ -129,157 +126,190 @@ void LVL_Background::draw(float x, float y)
         double sHeight = fabs(pCamera->s_top-pCamera->s_bottom);
         double sWidth = fabs(pCamera->s_left-pCamera->s_right);
 
-        switch(bgType)
+        int imgPos_X;
+        int imgPos_Y;
+        if(setup->repeat_h>0)
         {
-        case single_row:
-        case double_row:
-            {
-                int imgPos_X;
-                int imgPos_Y;
-                if(setup->repeat_h>0)
-                {
-                    imgPos_X = (int)round((pCamera->s_left-x)/setup->repeat_h) % (int)round(txData1.w);
-                }
-                else
-                {
-                    imgPos_X = (int)round((pCamera->s_left-x)/setup->repeat_h) % (int)round(txData1.w);
-
-                    if(txData1.w < PGE_Window::Width) //If image height less than screen
-                        imgPos_X = 0;
-                    else
-
-                    if( sWidth > (double)txData1.h )
-                        imgPos_X =
-                                (pCamera->s_left-x)
-                                /
-                                (
-                                    (sWidth - PGE_Window::Width)/
-                                    (txData1.w - PGE_Window::Width)
-                                );
-                    else
-                        imgPos_X = pCamera->s_left-x;
-                }
-
-
-                //     tmpstr = bgset.value("repeat-v", "NR").toString();
-                //   if(tmpstr=="NR") //Without repeat, parallax is proportional to section height
-                //      sbg.repead_v = 0;
-                //    else if(tmpstr=="ZR") //Static: without repeat and without parallax
-                //       sbg.repead_v = 1;
-                //   else if(tmpstr=="RP") //Repeat with coefficient x2
-                //    sbg.repead_v = 2;
-                //   else if(tmpstr=="RZ") //repeat without parallax
-                //          sbg.repead_v = 3;
-                //    else sbg.repead_v = 0;
-
-                switch(setup->repead_v)
-                {
-                    case 1: //Zero Repeat
-                        imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
-                        break;
-                    case 0: //Proportional repeat
-                    default:
-
-                        if(txData1.h < PGE_Window::Height) //If image height less than screen
-                            imgPos_Y = (setup->attached==1) ? 0 : (PGE_Window::Height-txData1.h);
-                        else
-
-                        if( sHeight > (double)txData1.h )
-                            imgPos_Y =
-                                    (pCamera->s_top-y)
-                                    /
-                                    (
-                                        (sHeight - PGE_Window::Height)/
-                                        (txData1.h - PGE_Window::Height)
-                                    );
-                        else if(sHeight == (double)txData1.h)
-                            imgPos_Y = pCamera->s_top-y;
-                        else
-                            imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
-                        break;
-                }
-
-                //((setup->attached==1)? pCamera->s_top-y : pCamera->s_bottom)
-
-                //fabs(pCamera->s_top-pCamera->s_bottom)
-                //txData1.h
-                //PGE_Window::Height
-                //pos_y
-
-                QRectF blockG;
-                //draw!
-
-
-                AniPos ani_x(0,1);
-
-                if(isAnimated) //Get current animated frame
-                    ani_x = ConfigManager::Animator_BG[animator_ID]->image();
-                int lenght=0;
-                while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
-                {
-                    blockG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+txData1.w, imgPos_Y+txData1.h) );
-                    glColor4f( 1.f, 1.f, 1.f, 1.f);
-                    glEnable(GL_TEXTURE_2D);
-                    glBindTexture( GL_TEXTURE_2D, txData1.texture );
-                    glBegin( GL_QUADS );
-                        glTexCoord2f( 0, ani_x.first );
-                        glVertex2f( blockG.left(), blockG.top());
-
-                        glTexCoord2f( 1, ani_x.first );
-                        glVertex2f(  blockG.right(), blockG.top());
-
-                        glTexCoord2f( 1, ani_x.second );
-                        glVertex2f(  blockG.right(),  blockG.bottom());
-
-                        glTexCoord2f( 0, ani_x.second );
-                        glVertex2f( blockG.left(),  blockG.bottom());
-
-                    glEnd();
-                    lenght += txData1.w;
-                    imgPos_X += txData1.w;
-                }
-
-                if(bgType==double_row)
-                {
-                    ani_x = AniPos(0,1);
-
-
-                    if(setup->second_attached==0)
-                        imgPos_Y = pCamera->s_bottom-y-txData1.h - txData2.h;
-
-                    int imgPos_X = (int)round((pCamera->s_left-x)/setup->second_repeat_h) % (int)round(txData2.w);
-
-                    lenght = 0;
-                    while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
-                    {
-                        blockG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+txData2.w, imgPos_Y+txData2.h) );
-                        glColor4f( 1.f, 1.f, 1.f, 1.f);
-                        glEnable(GL_TEXTURE_2D);
-                        glBindTexture( GL_TEXTURE_2D, txData2.texture );
-                        glBegin( GL_QUADS );
-                            glTexCoord2f( 0, ani_x.first );
-                            glVertex2f( blockG.left(), blockG.top());
-
-                            glTexCoord2f( 1, ani_x.first );
-                            glVertex2f(  blockG.right(), blockG.top());
-
-                            glTexCoord2f( 1, ani_x.second );
-                            glVertex2f(  blockG.right(),  blockG.bottom());
-
-                            glTexCoord2f( 0, ani_x.second );
-                            glVertex2f( blockG.left(),  blockG.bottom());
-
-                        glEnd();
-                        lenght += txData2.w;
-                        imgPos_X += txData2.w;
-                    }
-                }
-            }
-            break;
-        default:
-            break;
-
+            imgPos_X = (int)round((pCamera->s_left-x)/setup->repeat_h) % (int)round(txData1.w);
         }
+        else
+        {
+            if(txData1.w < PGE_Window::Width) //If image height less than screen
+                imgPos_X = 0;
+            else
+
+            if( sWidth > (double)txData1.w )
+            {
+                imgPos_X =
+                        (pCamera->s_left-x)
+                        /
+                        (
+                            (sWidth - PGE_Window::Width)/
+                            (txData1.w - PGE_Window::Width)
+                        );
+            }
+            else
+            {
+                imgPos_X = pCamera->s_left-x;
+            }
+        }
+
+
+        //     tmpstr = bgset.value("repeat-v", "NR").toString();
+        //   if(tmpstr=="NR") //Without repeat, parallax is proportional to section height
+        //      sbg.repead_v = 0;
+        //    else if(tmpstr=="ZR") //Static: without repeat and without parallax
+        //       sbg.repead_v = 1;
+        //   else if(tmpstr=="RP") //paralax with coefficient x2
+        //    sbg.repead_v = 2;
+        //   else if(tmpstr=="RZ") //repeat without parallax
+        //          sbg.repead_v = 3;
+        //    else sbg.repead_v = 0;
+
+        switch(setup->repead_v)
+        {
+            case 2: //Repeat vertical with paralax coefficient =2
+                imgPos_Y = (setup->attached==1)?
+                        (int)round((pCamera->s_top-y)/2) % (int)round(txData1.h):
+                        (int)round((pCamera->s_bottom+pCamera->h()-y)/2) % (int)round(txData1.h);
+                break;
+            case 1: //Zero Repeat
+                imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
+                break;
+            case 0: //Proportional repeat
+            default:
+
+                if(txData1.h < PGE_Window::Height) //If image height less than screen
+                    imgPos_Y = (setup->attached==1) ? 0 : (PGE_Window::Height-txData1.h);
+                else
+
+                if( sHeight > (double)txData1.h )
+                    imgPos_Y =
+                            (pCamera->s_top-y)
+                            /
+                            (
+                                (sHeight - PGE_Window::Height)/
+                                (txData1.h - PGE_Window::Height)
+                            );
+                else if(sHeight == (double)txData1.h)
+                    imgPos_Y = pCamera->s_top-y;
+                else
+                    imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
+                break;
+        }
+
+        //((setup->attached==1)? pCamera->s_top-y : pCamera->s_bottom)
+
+        //fabs(pCamera->s_top-pCamera->s_bottom)
+        //txData1.h
+        //PGE_Window::Height
+        //pos_y
+
+        QRectF backgrndG;
+        //draw!
+
+
+        AniPos ani_x(0,1);
+
+        if(isAnimated) //Get current animated frame
+            ani_x = ConfigManager::Animator_BG[animator_ID]->image();
+        int lenght=0;
+        int lenght_v=0;
+        //for Tiled repeats
+        int verticalRepeats=1;
+
+        if(bgType==tiled)
+        {
+            verticalRepeats=0;
+            lenght_v -= txData1.h;
+            imgPos_Y -= txData1.h * ( (setup->attached==0)? -1 : 1 );
+            while(lenght_v <= PGE_Window::Height*2  ||  (lenght_v <=txData1.h*2))
+            {
+                verticalRepeats++;
+                lenght_v += txData1.h;
+            }
+        }
+
+        int draw_x = imgPos_X;
+        while(verticalRepeats>0)
+        {
+            draw_x = imgPos_X;
+            lenght = 0;
+            while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
+            {
+                backgrndG = QRectF(QPointF(draw_x, imgPos_Y), QPointF(draw_x+txData1.w, imgPos_Y+txData1.h) );
+
+                glColor4f( 1.f, 1.f, 1.f, 1.f);
+                glEnable(GL_TEXTURE_2D);
+                glBindTexture( GL_TEXTURE_2D, txData1.texture );
+                glBegin( GL_QUADS );
+                    glTexCoord2f( 0, ani_x.first );
+                    glVertex2f( backgrndG.left(), backgrndG.top());
+
+                    glTexCoord2f( 1, ani_x.first );
+                    glVertex2f(  backgrndG.right(), backgrndG.top());
+
+                    glTexCoord2f( 1, ani_x.second );
+                    glVertex2f(  backgrndG.right(),  backgrndG.bottom());
+
+                    glTexCoord2f( 0, ani_x.second );
+                    glVertex2f( backgrndG.left(),  backgrndG.bottom());
+
+                glEnd();
+                lenght += txData1.w;
+                draw_x += txData1.w;
+            }
+
+            verticalRepeats--;
+            if(verticalRepeats>0)
+            {
+                imgPos_Y += txData1.h * ( (setup->attached==0)? -1 : 1 );
+            }
+        }
+
+
+
+        if(bgType==double_row)
+        {
+            ani_x = AniPos(0,1);
+
+            if(setup->second_attached==0) // over first
+                imgPos_Y = pCamera->s_bottom-y-txData1.h - txData2.h;
+            else
+            if(setup->second_attached==1) //bottom
+                imgPos_Y = pCamera->s_bottom-y - txData2.h;
+                else
+            if(setup->second_attached==2) //top
+                imgPos_Y = 0; pCamera->s_bottom-y-txData1.h - txData2.h;
+
+            int imgPos_X = (int)round((pCamera->s_left-x)/setup->second_repeat_h) % (int)round(txData2.w);
+
+            lenght = 0;
+            while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
+            {
+                backgrndG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+txData2.w, imgPos_Y+txData2.h) );
+                glColor4f( 1.f, 1.f, 1.f, 1.f);
+                glEnable(GL_TEXTURE_2D);
+                glBindTexture( GL_TEXTURE_2D, txData2.texture );
+                glBegin( GL_QUADS );
+                    glTexCoord2f( 0, ani_x.first );
+                    glVertex2f( backgrndG.left(), backgrndG.top());
+
+                    glTexCoord2f( 1, ani_x.first );
+                    glVertex2f(  backgrndG.right(), backgrndG.top());
+
+                    glTexCoord2f( 1, ani_x.second );
+                    glVertex2f(  backgrndG.right(),  backgrndG.bottom());
+
+                    glTexCoord2f( 0, ani_x.second );
+                    glVertex2f( backgrndG.left(),  backgrndG.bottom());
+
+                glEnd();
+                lenght += txData2.w;
+                imgPos_X += txData2.w;
+            }
+        }
+
     }
 }
 

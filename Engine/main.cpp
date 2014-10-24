@@ -122,13 +122,18 @@ int main(int argc, char *argv[])
     ConfigManager::setConfigPath(configPath);
     if(!ConfigManager::loadBasics()) exit(1);
 
-
     //Init Window
     if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
 
+    glFlush();
+    SDL_GL_SwapWindow(PGE_Window::window);
+
+    SDL_Event event; //  Events of SDL
+    while ( SDL_PollEvent(&event) )
+    {}
 
 
 
@@ -138,6 +143,14 @@ int main(int argc, char *argv[])
 
 
     lScene = new LevelScene();
+
+    lScene->setLoaderAnimation(62);
+    lScene->drawLoader();
+
+    glFlush();
+    SDL_GL_SwapWindow(PGE_Window::window);
+    while ( SDL_PollEvent(&event) )
+    {}
 
     bool sceneResult=true;
 
@@ -151,6 +164,9 @@ int main(int argc, char *argv[])
 
     if(sceneResult)
         sceneResult = lScene->init();
+    lScene->stopLoaderAnimation();
+
+    lScene->setFade(25, 0.0f, 0.05f);
 
     if(sceneResult)
     {
@@ -200,6 +216,9 @@ int main(int argc, char *argv[])
                         case SDLK_ESCAPE: // ESC
                                 running = false; // End work of program
                             break;
+                        case SDLK_RETURN:// Enter
+                              lScene->isPauseMenu = !lScene->isPauseMenu;
+                        break;
                         case SDLK_t:
                             PGE_Window::SDL_ToggleFS(PGE_Window::window);
                         break;
@@ -209,10 +228,15 @@ int main(int argc, char *argv[])
                       }
                     break;
 
-                    // case SDL_KEYUP:
-                    //  switch(event.key.keysym.sym)
-                    //  { }
-                    //  break;
+                    case SDL_KEYUP:
+                    switch(event.key.keysym.sym)
+                    {
+                    case SDLK_RETURN:// Enter
+                        break;
+                    default:
+                        break;
+                    }
+                    break;
                 }
             }
 
