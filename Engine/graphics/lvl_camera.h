@@ -4,10 +4,9 @@
 #include <Box2D/Box2D.h>
 #include "../physics/base_object.h"
 #include "graphics.h"
+
 #include <vector>
-
 #include <file_formats.h>
-
 
 typedef QVector<PGE_Phys_Object *>  PGE_RenderList;
 
@@ -29,20 +28,19 @@ public:
     void update();
     void drawBackground();
 
+    void changeSection(LevelSection &sct);
     void changeSectionBorders(long left, long top, long right, long bottom);
     PGE_RenderList renderObjects();
 
     LevelSection *section;
 
-    LVL_Background background;
-
     bool isWarp;
-
     /// Limits of section motion
     int s_top;
     int s_bottom;
     int s_left;
     int s_right;
+    long BackgroundID;
 
     float pos_x;
     float pos_y;

@@ -180,7 +180,7 @@ public:
 
     /*****Level Backgrounds************/
     static bool loadLevelBackG();
-    static long getBGTexture(long bgID);
+    static long getBGTexture(long bgID, bool isSecond=false);
     /*****************************/
     static QVector<obj_BG >     lvl_bg;
     static QMap<long, obj_BG>   lvl_bg_indexes;

@@ -11,6 +11,7 @@ PGE_LevelCamera::PGE_LevelCamera()
     isWarp = false;
     width=800;
     height=600;
+    BackgroundID = 0;
 }
 
 PGE_LevelCamera::~PGE_LevelCamera()
@@ -216,4 +217,11 @@ PGE_RenderList PGE_LevelCamera::renderObjects()
 void PGE_LevelCamera::drawBackground()
 {
 
+}
+
+void PGE_LevelCamera::changeSection(LevelSection &sct)
+{
+    section = &sct;
+    BackgroundID = sct.background;
+    changeSectionBorders(sct.size_left, sct.size_top, sct.size_right, sct.size_bottom);
 }

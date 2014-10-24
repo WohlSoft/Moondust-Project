@@ -74,6 +74,16 @@ LevelScene::~LevelScene()
         textures_bank.pop_front();
     }
 
+
+    qDebug() << "Destroy backgrounds";
+    while(!backgrounds.isEmpty())
+    {
+        LVL_Background* tmp;
+        tmp = backgrounds.first();
+        backgrounds.pop_front();
+        if(tmp) delete tmp;
+    }
+
     qDebug() << "Destroy cameras";
     while(!cameras.isEmpty())
     {
@@ -82,7 +92,6 @@ LevelScene::~LevelScene()
         cameras.pop_front();
         if(tmp) delete tmp;
     }
-
 
     qDebug() << "Destroy players";
     while(!players.isEmpty())
@@ -144,12 +153,8 @@ bool LevelScene::init()
     camera = new PGE_LevelCamera();
     camera->setWorld(world);
 
-    camera->changeSectionBorders(
-                data.sections[sID].size_left,
-                data.sections[sID].size_top,
-                data.sections[sID].size_right,
-                data.sections[sID].size_bottom
-                );
+
+    camera->changeSection(data.sections[sID]);
 
     camera->isWarp = data.sections[sID].IsWarp;
     camera->section = &(data.sections[sID]);
@@ -160,6 +165,20 @@ bool LevelScene::init()
                     (float)PGE_Window::Width, (float)PGE_Window::Height
                 );
     cameras.push_back(camera);
+
+
+    LVL_Background * CurBack = new LVL_Background(cameras.last());
+
+    if(ConfigManager::lvl_bg_indexes.contains(camera->BackgroundID))
+    {
+        CurBack->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
+        qDebug() << "Backgroubnd ID:" << camera->BackgroundID;
+    }
+    else
+        CurBack->setNone();
+
+    backgrounds.push_back(CurBack);
+
 
     //Init data
 
@@ -310,6 +329,10 @@ bool LevelScene::init()
     for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
         ConfigManager::Animator_BGO[i]->start();
 
+    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
+        ConfigManager::Animator_BG[i]->start();
+
+
     //qDebug()<<"done!";
     return true;
 }
@@ -338,7 +361,6 @@ bool LevelScene::loadFile(QString filePath)
 
 bool LevelScene::prepareLevel()
 {
-
     return true;
 }
 
@@ -394,6 +416,9 @@ void LevelScene::render()
 
     foreach(PGE_LevelCamera* cam, cameras)
     {
+
+        backgrounds.last()->draw(cam->posX(), cam->posY());
+
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
             switch(item->type)
@@ -488,8 +513,9 @@ void LevelScene::render()
             //        qDebug() << "PlPos" << pl.left() << pl.top() << player.right() << player.bottom();
 
 
+                    glDisable(GL_TEXTURE_2D);
                     glColor4f( 0.f, 0.f, 1.f, 1.f);
-                    glBegin( GL_QUADS );
+                    glBegin( GL_QUADS );                        
                         glVertex2f( player.left(), player.top());
                         glVertex2f( player.right(), player.top());
                         glVertex2f( player.right(),  player.bottom());
