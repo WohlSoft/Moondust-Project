@@ -4,6 +4,13 @@
 #include <SDL2/SDL_opengl.h>
 #undef main
 
+struct PGEColor
+{
+    float r;
+    float g;
+    float b;
+};
+
 struct PGE_Texture
 {
     GLuint texture; // Texture object handle
@@ -12,6 +19,9 @@ struct PGE_Texture
     GLubyte *texture_layout;
     GLenum format;
     GLint  nOfColors;
+
+    PGEColor ColorUpper;
+    PGEColor ColorLower;
 };
 
 

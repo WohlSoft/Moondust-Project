@@ -17,6 +17,8 @@ struct obj_BG{
     GLuint textureID;
     long textureArrayId;
     long animator_ID;
+    PGEColor Color_upper;
+    PGEColor Color_lower;
     /*   OpenGL    */
 
     unsigned int type;//convert from string
@@ -44,6 +46,8 @@ struct obj_BG{
     GLuint second_textureID;
     long second_textureArrayId;
     long second_animator_ID;
+    PGEColor second_Color_upper;
+    PGEColor second_Color_lower;
     /*   OpenGL    */
 
 

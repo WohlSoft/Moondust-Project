@@ -8,6 +8,8 @@
 #include "level/lvl_player.h"
 #include "level/lvl_block.h"
 #include "level/lvl_bgo.h"
+#include "../graphics/graphics_lvl_backgrnd.h"
+
 #include "../graphics/window.h"
 
 #include "../controls/controller_keyboard.h"
@@ -115,6 +117,8 @@ private:
     QVector<LVL_Player* > players;
     QVector<LVL_Block* > blocks;
     QVector<LVL_Bgo* > bgos;
+
+    QVector<LVL_Background *> backgrounds;
 
 
     b2World *world;

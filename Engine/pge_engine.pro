@@ -210,7 +210,8 @@ HEADERS  += \
     common_features/simple_animator.h \
     data_configs/obj_bgo.h \
     scenes/level/lvl_bgo.h \
-    data_configs/obj_bg.h
+    data_configs/obj_bg.h \
+    graphics/graphics_lvl_backgrnd.h
 
 FORMS    += \
     data_configs/select_config.ui
