@@ -17,7 +17,7 @@ LVL_Player::LVL_Player()
     fallMaxSpeed=720.0f;
 
     JumpPressed=false;
-    allowJump=true;
+    onGround=true;
     jumpForce=0;
 
     curHMaxSpeed = hMaxSpeed;
@@ -80,6 +80,12 @@ void LVL_Player::update()
 {
     if(!physBody) return;
     if(!camera) return;
+
+    if(_player_moveup)
+    {
+        setPos(posX(), posY()-2 );
+        _player_moveup = false;
+    }
 
     if(physBody->GetLinearVelocity().y > 72)
         physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 72));
@@ -174,7 +180,36 @@ void LVL_Player::update()
 
     }
 
-    camera->setPos( posX() - PGE_Window::Width/2,
-                    posY() - PGE_Window::Height/2 );
+    camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
+                    posY() - PGE_Window::Height/2 + posY_coefficient );
+
+
 
 }
+
+
+
+void LVL_Player::render(float camX, float camY)
+{
+    QRectF player = QRectF( posX()
+                            -camX,
+
+                            posY()
+                            -camY,
+
+                            width,
+                            height
+                         );
+//        qDebug() << "PlPos" << pl.left() << pl.top() << player.right() << player.bottom();
+
+    glDisable(GL_TEXTURE_2D);
+    glColor4f( 0.f, 0.f, 1.f, 1.f);
+    glBegin( GL_QUADS );
+        glVertex2f( player.left(), player.top());
+        glVertex2f( player.right(), player.top());
+        glVertex2f( player.right(),  player.bottom());
+        glVertex2f( player.left(),  player.bottom());
+    glEnd();
+
+}
+

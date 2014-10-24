@@ -16,6 +16,12 @@ public:
     virtual ~PGE_Phys_Object();
     virtual float posX(); //!< Position X
     virtual float posY(); //!< Position Y
+
+    float top();
+    float bottom();
+    float left();
+    float right();
+
     void setSize(float w, float h);
     virtual void setPos(long x, long y);
 
@@ -27,10 +33,22 @@ public:
 
     int type;
 
+    enum CollisionType{
+        COLLISION_NONE = 0,
+        COLLISION_ANY = 1,
+        COLLISION_TOP = 2,
+        COLLISION_BOTTOM = 3
+    };
+
+    int collide;
+
+    bool isRectangle;
+    bool _player_moveup; //Protection from wrong collision
+
     b2Body* physBody;
     b2World * worldPtr;
 
-    PGE_Texture * texture;
+    PGE_Texture texture;
     GLuint texId;
     GLdouble z_index;
 
@@ -64,7 +82,7 @@ public:
     };
 
     virtual void update();
-    virtual void render();
+    virtual void render(float x, float y);
 };
 
 #endif // BASE_OBJECT_H

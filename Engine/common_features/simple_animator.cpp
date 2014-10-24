@@ -118,6 +118,14 @@ void SimpleAnimator::setFrame(int y)
     pos2 = CurrentFrame/framesQ + 1.0d/framesQ;
 }
 
+void SimpleAnimator::setFrames(int first, int last)
+{
+    if((frameFirst == first) && (frameLast == last)) return;
+        frameFirst = first;
+        frameLast = last;
+        setFrame(frameFirst);
+}
+
 void SimpleAnimator::start()
 {
     if(!animated) return;
