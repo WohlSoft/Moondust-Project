@@ -22,6 +22,7 @@
 #include <QVector>
 
 #include <SDL2/SDL_opengl.h>
+#include <SDL2/SDL_timer.h>
 
 class LevelScene : public Scene
 {
@@ -30,6 +31,7 @@ public:
     ~LevelScene();
 
     bool init();
+    bool isInit;
 
     //Init 1
     bool loadFile(QString filePath);
@@ -109,6 +111,30 @@ public:
     double Z_sys_door;
     double Z_sys_interspace1; // interSection space layer
     double Z_sys_sctBorder; // section Border
+
+    /**************Fader**************/
+    float fader_opacity;
+    float target_opacity;
+    float fade_step;
+    int fadeSpeed;
+    void setFade(int speed, float target, float step);
+    static unsigned int nextOpacity(unsigned int x, void *p);
+    void fadeStep();
+    SDL_TimerID fader_timer_id;
+    /**************Fader**************/
+
+    /**************LoadScreen**************/
+    int loaderSpeed;
+    bool IsLoaderWorks;
+    void drawLoader();
+    void setLoaderAnimation(int speed);
+    void stopLoaderAnimation();
+    static unsigned int nextLoadAniFrame(unsigned int x, void *p);
+    void loaderTick();
+    bool doLoaderStep;
+    void loaderStep();
+    SDL_TimerID loader_timer_id;
+    /**************LoadScreen**************/
 
 private:
     LevelData data;

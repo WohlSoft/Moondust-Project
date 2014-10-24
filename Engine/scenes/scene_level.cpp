@@ -17,17 +17,26 @@ LevelScene::LevelScene()
     data = FileFormats::dummyLvlDataArray();
     data.ReadFileValid = false;
 
+    isInit=false;
+
+    IsLoaderWorks=false;
+
     isWarpEntrance=false;
 
     isPauseMenu=false;
     isTimeStopped=false;
     isLevelContinues=false;
+
     exitLevelDelay=false;
     exitLevelCode=false;
 
     numberOfPlayers=1;
 
     world=NULL;
+
+    fader_opacity=1.0f;
+    target_opacity=1.0f;
+    fade_step=0.0f;
 
 
     //Default Z-Indexes
@@ -137,7 +146,6 @@ LevelScene::~LevelScene()
 
 bool LevelScene::init()
 {
-
     //Load File
 
     //Set Entrance  (int entr=0)
@@ -155,6 +163,9 @@ bool LevelScene::init()
     int sID = findNearSection(cameraStart.x(), cameraStart.y());
 
     qDebug()<<"Create cameras";
+
+    loaderStep();
+
     //Init Cameras
     PGE_LevelCamera* camera;
     camera = new PGE_LevelCamera();
@@ -196,6 +207,8 @@ bool LevelScene::init()
     //blocks
     for(int i=0; i<data.blocks.size(); i++)
     {
+        loaderStep();
+
         LVL_Block * block;
         block = new LVL_Block();
         if(ConfigManager::lvl_block_indexes.contains(data.blocks[i].id))
@@ -244,6 +257,8 @@ bool LevelScene::init()
     //BGO
     for(int i=0; i<data.bgo.size(); i++)
     {
+        loaderStep();
+
         LVL_Bgo * bgo;
         bgo = new LVL_Bgo();
         if(ConfigManager::lvl_bgo_indexes.contains(data.bgo[i].id))
@@ -308,6 +323,8 @@ bool LevelScene::init()
     if(!isWarpEntrance) //Dont place players if entered through warp
         for(players_count=0; players_count<data.players.size() && getPlayers>0 ; players_count++)
         {
+            loaderStep();
+
             int i = players_count;
             if(data.players[i].w==0 && data.players[i].h==0) continue;
 
@@ -341,8 +358,9 @@ bool LevelScene::init()
     for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
         ConfigManager::Animator_BG[i]->start();
 
+    stopLoaderAnimation();
+    isInit = true;
 
-    //qDebug()<<"done!";
     return true;
 }
 
@@ -379,16 +397,15 @@ void LevelScene::update(float step)
 {
     if(step<=0) step=10.0f;
 
-    //Make world step
-    world->Step(1.0f / 100.f, 1, 1);
-
-    //Update controllers
-    keyboard1.sendControls();
-
-    //update players
-
     if(!isPauseMenu) //Update physics is not pause menu
     {
+        //Make world step
+        world->Step(1.0f / 100.f, 1, 1);
+
+        //Update controllers
+        keyboard1.sendControls();
+
+        //update players
         for(i=0; i<players.size(); i++)
             players[i]->update();
 
@@ -420,6 +437,8 @@ void LevelScene::render()
     //Move to center of the screen
     //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
+    if(!isInit) goto renderBlack;
+
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
     foreach(PGE_LevelCamera* cam, cameras)
@@ -441,6 +460,21 @@ void LevelScene::render()
         }
     }
 
+    renderBlack:
+
+    if(fader_opacity>0.0f)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( 0.f, 0.f, 0.f, fader_opacity);
+        glBegin( GL_QUADS );
+            glVertex2f( 0, 0);
+            glVertex2f( PGE_Window::Width, 0);
+            glVertex2f( PGE_Window::Width, PGE_Window::Height);
+            glVertex2f( 0, PGE_Window::Height);
+        glEnd();
+    }
+
+    if(IsLoaderWorks) drawLoader();
 }
 
 
@@ -454,6 +488,153 @@ bool LevelScene::isExit()
 
 int LevelScene::exitType()
 {
-
     return exitLevelCode;
+}
+
+
+
+/**************************Fader*******************************/
+
+void LevelScene::setFade(int speed, float target, float step)
+{
+    fade_step = fabs(step);
+    target_opacity = target;
+    fadeSpeed = speed;
+    fader_timer_id = SDL_AddTimer(speed, &LevelScene::nextOpacity, this);
+}
+
+unsigned int LevelScene::nextOpacity(unsigned int x, void *p)
+{
+    Q_UNUSED(x);
+    LevelScene *self = reinterpret_cast<LevelScene *>(p);
+    self->fadeStep();
+    return 0;
+}
+
+void LevelScene::fadeStep()
+{
+    if(fader_opacity < target_opacity)
+        fader_opacity+=fade_step;
+    else
+        fader_opacity-=fade_step;
+
+    if(fader_opacity>=1.0 || fader_opacity<=0.0)
+        SDL_RemoveTimer(fader_timer_id);
+    else
+        fader_timer_id = SDL_AddTimer(fadeSpeed, &LevelScene::nextOpacity, this);
+}
+
+
+/**************************LoadAnimation*******************************/
+
+namespace lvl_scene_loader
+{
+    SimpleAnimator * loading_Ani = NULL;
+    PGE_Texture loading_texture;
+}
+
+void LevelScene::drawLoader()
+{
+    using namespace lvl_scene_loader;
+
+    if(!loading_Ani) return;
+
+    QRectF loadAniG = QRectF(PGE_Window::Width/2 - loading_texture.w/2,
+                           PGE_Window::Height/2 - (loading_texture.h/4)/2,
+                           loading_texture.w,
+                           loading_texture.h/4);
+
+    glEnable(GL_TEXTURE_2D);
+    glColor4f( 1.f, 1.f, 1.f, 1.f);
+
+    AniPos x(0,1);
+            x = loading_Ani->image();
+
+    glBindTexture( GL_TEXTURE_2D, loading_texture.texture );
+
+    glBegin( GL_QUADS );
+        glTexCoord2f( 0, x.first );
+        glVertex2f( loadAniG.left(), loadAniG.top());
+
+        glTexCoord2f( 1, x.first );
+        glVertex2f(  loadAniG.right(), loadAniG.top());
+
+        glTexCoord2f( 1, x.second );
+        glVertex2f(  loadAniG.right(),  loadAniG.bottom());
+
+        glTexCoord2f( 0, x.second );
+        glVertex2f( loadAniG.left(),  loadAniG.bottom());
+        glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
+
+void LevelScene::setLoaderAnimation(int speed)
+{
+    using namespace lvl_scene_loader;
+    loaderSpeed = speed;
+    loading_texture = GraphicsHelps::loadTexture(loading_texture, ":/images/shell.png");
+
+    loading_Ani = new SimpleAnimator(true,
+                                     4,
+                                     70,
+                                     0, -1, false, false);
+    loading_Ani->start();
+
+    loader_timer_id = SDL_AddTimer(speed, &LevelScene::nextLoadAniFrame, this);
+    IsLoaderWorks = true;
+}
+
+void LevelScene::stopLoaderAnimation()
+{
+    using namespace lvl_scene_loader;
+
+    doLoaderStep = false;
+    IsLoaderWorks = false;
+    SDL_RemoveTimer(loader_timer_id);
+
+    if(loading_Ani)
+    {
+        loading_Ani->stop();
+        delete loading_Ani;
+        loading_Ani = NULL;
+        glDeleteTextures( 1, &(loading_texture.texture) );
+    }
+
+}
+
+unsigned int LevelScene::nextLoadAniFrame(unsigned int x, void *p)
+{
+    Q_UNUSED(x);
+    LevelScene *self = reinterpret_cast<LevelScene *>(p);
+    self->loaderTick();
+    return 0;
+}
+
+void LevelScene::loaderTick()
+{
+    doLoaderStep = true;
+}
+
+void LevelScene::loaderStep()
+{
+    if(!IsLoaderWorks) return;
+    if(!doLoaderStep) return;
+
+    SDL_Event event; //  Events of SDL
+    while ( SDL_PollEvent(&event) )
+    {
+        switch(event.type)
+        {
+            case SDL_QUIT:
+            break;
+        }
+    }
+
+    render();
+    glFlush();
+    SDL_GL_SwapWindow(PGE_Window::window);
+
+    loader_timer_id = SDL_AddTimer(loaderSpeed, &LevelScene::nextLoadAniFrame, this);
+    doLoaderStep = false;
 }
