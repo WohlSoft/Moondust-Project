@@ -10,6 +10,8 @@
 
 #include <QtDebug>
 
+#include "../physics/contact_listener.h"
+
 LevelScene::LevelScene()
 {
     data = FileFormats::dummyLvlDataArray();
@@ -145,6 +147,11 @@ bool LevelScene::init()
     world = new b2World(gravity);
     world->SetAllowSleeping(true);
 
+    PGEContactListener *contactListener;
+
+    contactListener = new PGEContactListener();
+    world->SetContactListener(contactListener);
+
     int sID = findNearSection(cameraStart.x(), cameraStart.y());
 
     qDebug()<<"Create cameras";
@@ -219,15 +226,17 @@ bool LevelScene::init()
 
         block->worldPtr = world;
         block->data = &(data.blocks[i]);
-        block->init();
         long tID = ConfigManager::getBlockTexture(data.blocks[i].id);
         if( tID >= 0 )
         {
             block->texId = ConfigManager::level_textures[tID].texture;
-            block->texture = &(ConfigManager::level_textures[tID]);
+            block->texture = ConfigManager::level_textures[tID];
             block->animated = ConfigManager::lvl_block_indexes[data.blocks[i].id].animated;
             block->animator_ID = ConfigManager::lvl_block_indexes[data.blocks[i].id].animator_ID;
         }
+
+        block->init();
+
         blocks.push_back(block);
     }
 
@@ -278,7 +287,7 @@ bool LevelScene::init()
         if( tID >= 0 )
         {
             bgo->texId = ConfigManager::level_textures[tID].texture;
-            bgo->texture = &(ConfigManager::level_textures[tID]);
+            bgo->texture = ConfigManager::level_textures[tID];
             bgo->animated = ConfigManager::lvl_bgo_indexes[data.bgo[i].id].animated;
             bgo->animator_ID = ConfigManager::lvl_bgo_indexes[data.bgo[i].id].animator_ID;
         }
@@ -413,10 +422,8 @@ void LevelScene::render()
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
-
     foreach(PGE_LevelCamera* cam, cameras)
     {
-
         backgrounds.last()->draw(cam->posX(), cam->posY());
 
         foreach(PGE_Phys_Object * item, cam->renderObjects())
@@ -424,105 +431,10 @@ void LevelScene::render()
             switch(item->type)
             {
             case PGE_Phys_Object::LVLBlock:
-                {
-                    LVL_Block * b = dynamic_cast<LVL_Block*>(item);
-
-                    QRectF blockG = QRectF(b->posX()-cam->posX(),
-                                           b->posY()-cam->posY(),
-                                           b->width,
-                                           b->height);
-
-
-                    AniPos x(0,1);
-
-                    if(b->animated) //Get current animated frame
-                        x = ConfigManager::Animator_Blocks[b->animator_ID]->image();
-
-                    glEnable(GL_TEXTURE_2D);
-                    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-                    glBindTexture( GL_TEXTURE_2D, b->texId );
-
-                    glBegin( GL_QUADS );
-                        glTexCoord2f( 0, x.first );
-                        glVertex2f( blockG.left(), blockG.top());
-
-                        glTexCoord2f( 1, x.first );
-                        glVertex2f(  blockG.right(), blockG.top());
-
-                        glTexCoord2f( 1, x.second );
-                        glVertex2f(  blockG.right(),  blockG.bottom());
-
-                        glTexCoord2f( 0, x.second );
-                        glVertex2f( blockG.left(),  blockG.bottom());
-                    glEnd();
-                    glDisable(GL_TEXTURE_2D);
-                    //glTranslated(0, 0, -b->z_index);
-                }
-                break;
             case PGE_Phys_Object::LVLBGO:
-                {
-                    LVL_Bgo * b = dynamic_cast<LVL_Bgo*>(item);
-
-                    QRectF bgoG = QRectF(b->posX()-cam->posX(),
-                                           b->posY()-cam->posY(),
-                                           b->width,
-                                           b->height);
-
-
-                    AniPos x(0,1);
-
-                    if(b->animated) //Get current animated frame
-                        x = ConfigManager::Animator_BGO[b->animator_ID]->image();
-
-                    glEnable(GL_TEXTURE_2D);
-                    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-                    glBindTexture( GL_TEXTURE_2D, b->texId );
-
-                    glBegin( GL_QUADS );
-                        glTexCoord2f( 0, x.first );
-                        glVertex2f( bgoG.left(), bgoG.top());
-
-                        glTexCoord2f( 1, x.first );
-                        glVertex2f(  bgoG.right(), bgoG.top());
-
-                        glTexCoord2f( 1, x.second );
-                        glVertex2f(  bgoG.right(),  bgoG.bottom());
-
-                        glTexCoord2f( 0, x.second );
-                        glVertex2f( bgoG.left(),  bgoG.bottom());
-                    glEnd();
-                    glDisable(GL_TEXTURE_2D);
-                    //glTranslated(0, 0, -b->z_index);
-                }
-                break;
             case PGE_Phys_Object::LVLPlayer:
-                {
-                    LVL_Player * p = static_cast<LVL_Player*>(item);
-
-                    QRectF player = QRectF( p->posX()
-                                            -cam->posX(),
-
-                                            p->posY()
-                                            -cam->posY(),
-
-                                            p->width, p->height
-                                         );
-
-            //        qDebug() << "PlPos" << pl.left() << pl.top() << player.right() << player.bottom();
-
-
-                    glDisable(GL_TEXTURE_2D);
-                    glColor4f( 0.f, 0.f, 1.f, 1.f);
-                    glBegin( GL_QUADS );                        
-                        glVertex2f( player.left(), player.top());
-                        glVertex2f( player.right(), player.top());
-                        glVertex2f( player.right(),  player.bottom());
-                        glVertex2f( player.left(),  player.bottom());
-                    glEnd();
-
-                }
+                item->render(cam->posX(), cam->posY());
+                break;
             default:
                 break;
             }

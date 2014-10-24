@@ -22,6 +22,7 @@ public:
 
     //float posX();
     //float posY();
+    void render(float camX, float camY);
 };
 
 

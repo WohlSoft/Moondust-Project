@@ -126,13 +126,39 @@ void LVL_Background::draw(float x, float y)
 {
     if(setup && pCamera) //draw BG if is set
     {
+        double sHeight = fabs(pCamera->s_top-pCamera->s_bottom);
+        double sWidth = fabs(pCamera->s_left-pCamera->s_right);
+
         switch(bgType)
         {
         case single_row:
         case double_row:
             {
-                int imgPos_X = (int)round((pCamera->s_left-x)/setup->repeat_h) % (int)round(txData1.w);
+                int imgPos_X;
                 int imgPos_Y;
+                if(setup->repeat_h>0)
+                {
+                    imgPos_X = (int)round((pCamera->s_left-x)/setup->repeat_h) % (int)round(txData1.w);
+                }
+                else
+                {
+                    imgPos_X = (int)round((pCamera->s_left-x)/setup->repeat_h) % (int)round(txData1.w);
+
+                    if(txData1.w < PGE_Window::Width) //If image height less than screen
+                        imgPos_X = 0;
+                    else
+
+                    if( sWidth > (double)txData1.h )
+                        imgPos_X =
+                                (pCamera->s_left-x)
+                                /
+                                (
+                                    (sWidth - PGE_Window::Width)/
+                                    (txData1.w - PGE_Window::Width)
+                                );
+                    else
+                        imgPos_X = pCamera->s_left-x;
+                }
 
 
                 //     tmpstr = bgset.value("repeat-v", "NR").toString();
@@ -146,28 +172,31 @@ void LVL_Background::draw(float x, float y)
                 //          sbg.repead_v = 3;
                 //    else sbg.repead_v = 0;
 
-                double sHeight = fabs(pCamera->s_top-pCamera->s_bottom);
-
                 switch(setup->repead_v)
                 {
-                case 1:
-                    imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
-                    break;
-                case 0:
-                default:
-                    if(sHeight > (double)txData1.h)
-                        imgPos_Y =
-                                (pCamera->s_top-y)
-                                /
-                                (
-                                    (sHeight - PGE_Window::Height)/
-                                    (txData1.h - PGE_Window::Height)
-                                );
-                    else if(sHeight == (double)txData1.h)
-                        imgPos_Y = pCamera->s_top-y;
-                    else
+                    case 1: //Zero Repeat
                         imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
-                    break;
+                        break;
+                    case 0: //Proportional repeat
+                    default:
+
+                        if(txData1.h < PGE_Window::Height) //If image height less than screen
+                            imgPos_Y = (setup->attached==1) ? 0 : (PGE_Window::Height-txData1.h);
+                        else
+
+                        if( sHeight > (double)txData1.h )
+                            imgPos_Y =
+                                    (pCamera->s_top-y)
+                                    /
+                                    (
+                                        (sHeight - PGE_Window::Height)/
+                                        (txData1.h - PGE_Window::Height)
+                                    );
+                        else if(sHeight == (double)txData1.h)
+                            imgPos_Y = pCamera->s_top-y;
+                        else
+                            imgPos_Y = (setup->attached==1) ? pCamera->s_top-y : (pCamera->s_bottom-y-txData1.h);
+                        break;
                 }
 
                 //((setup->attached==1)? pCamera->s_top-y : pCamera->s_bottom)
@@ -186,7 +215,7 @@ void LVL_Background::draw(float x, float y)
                 if(isAnimated) //Get current animated frame
                     ani_x = ConfigManager::Animator_BG[animator_ID]->image();
                 int lenght=0;
-                while(lenght <= PGE_Window::Width*2 )
+                while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
                 {
                     blockG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+txData1.w, imgPos_Y+txData1.h) );
                     glColor4f( 1.f, 1.f, 1.f, 1.f);
@@ -221,7 +250,7 @@ void LVL_Background::draw(float x, float y)
                     int imgPos_X = (int)round((pCamera->s_left-x)/setup->second_repeat_h) % (int)round(txData2.w);
 
                     lenght = 0;
-                    while(lenght <= PGE_Window::Width*2 )
+                    while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
                     {
                         blockG = QRectF(QPointF(imgPos_X, imgPos_Y), QPointF(imgPos_X+txData2.w, imgPos_Y+txData2.h) );
                         glColor4f( 1.f, 1.f, 1.f, 1.f);

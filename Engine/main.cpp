@@ -5,6 +5,11 @@
 #include <QFileInfo>
 #include <QDir>
 
+#include <QtDebug>
+
+
+#include "version.h"
+
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
 
@@ -27,8 +32,6 @@
 
 #include <iostream>
 using namespace std;
-
-#include <QtDebug>
 
 
 //struct keysForTest
@@ -121,7 +124,7 @@ int main(int argc, char *argv[])
 
 
     //Init Window
-    if(!PGE_Window::init("PGE Engine - dummy tester")) exit(1);
+    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);

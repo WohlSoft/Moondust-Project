@@ -8,8 +8,10 @@ PGE_Phys_Object::PGE_Phys_Object()
     posY_coefficient = 0.0f;
     width = 0.0f;
     height = 0.0f;
-    texture = NULL;
     z_index = 0.0d;
+    isRectangle = true;
+    _player_moveup = true;
+    collide = COLLISION_ANY;
 }
 
 PGE_Phys_Object::~PGE_Phys_Object()
@@ -46,6 +48,26 @@ float PGE_Phys_Object::posY()
         return 0;
 }
 
+float PGE_Phys_Object::top()
+{
+    return posY();
+}
+
+float PGE_Phys_Object::bottom()
+{
+    return posY()+height;
+}
+
+float PGE_Phys_Object::left()
+{
+    return posX();
+}
+
+float PGE_Phys_Object::right()
+{
+    return posX()+width;
+}
+
 void PGE_Phys_Object::setSize(float w, float h)
 {
     width = w;
@@ -68,4 +90,4 @@ void PGE_Phys_Object::nextFrame() {}
 
 void PGE_Phys_Object::update() {}
 
-void PGE_Phys_Object::render() {}
+void PGE_Phys_Object::render(float x, float y) {Q_UNUSED(x); Q_UNUSED(y);}

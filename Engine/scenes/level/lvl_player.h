@@ -28,13 +28,15 @@ class LVL_Player :
         bool isRunning;
 
         bool JumpPressed;
-        bool allowJump;
+        bool onGround;
         int jumpForce;
 
 
         PlayerPoint * data;
 
         PGE_LevelCamera * camera;
+
+        void render(float camX, float camY);
 };
 
 #endif // LVL_PLAYER_H

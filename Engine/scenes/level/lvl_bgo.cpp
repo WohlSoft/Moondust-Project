@@ -1,5 +1,5 @@
-
 #include "lvl_bgo.h"
+#include "../../data_configs/config_manager.h"
 
 LVL_Bgo::LVL_Bgo()
 {
@@ -32,7 +32,7 @@ LVL_Bgo::~LVL_Bgo()
 void LVL_Bgo::init()
 {
     if(!worldPtr) return;
-    setSize(texture->w, texture->h);
+    setSize(texture.w, texture.h);
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_staticBody;
@@ -48,4 +48,38 @@ void LVL_Bgo::init()
     b2Fixture * bgo = physBody->CreateFixture(&shape, 1.0f);
     bgo->SetSensor(true);
     bgo->SetFriction( 0 );
+}
+
+void LVL_Bgo::render(float camX, float camY)
+{
+    QRectF bgoG = QRectF(posX()-camX,
+                           posY()-camY,
+                           width,
+                           height);
+
+    AniPos x(0,1);
+
+    if(animated) //Get current animated frame
+        x = ConfigManager::Animator_BGO[animator_ID]->image();
+
+    glEnable(GL_TEXTURE_2D);
+    glColor4f( 1.f, 1.f, 1.f, 1.f);
+
+    glBindTexture( GL_TEXTURE_2D, texId );
+
+    glBegin( GL_QUADS );
+        glTexCoord2f( 0, x.first );
+        glVertex2f( bgoG.left(), bgoG.top());
+
+        glTexCoord2f( 1, x.first );
+        glVertex2f(  bgoG.right(), bgoG.top());
+
+        glTexCoord2f( 1, x.second );
+        glVertex2f(  bgoG.right(),  bgoG.bottom());
+
+        glTexCoord2f( 0, x.second );
+        glVertex2f( bgoG.left(),  bgoG.bottom());
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
 }

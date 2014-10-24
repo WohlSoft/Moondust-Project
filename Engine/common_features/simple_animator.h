@@ -33,6 +33,7 @@ public:
     AniPos image(double frame=-1);
 
     void setFrame(int y);
+    void setFrames(int first, int last);
 
     void start();
     void stop();

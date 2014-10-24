@@ -54,8 +54,8 @@ long  ConfigManager::getBlockTexture(long blockID)
             {
                 case 1: // Invisible block
                 {
-                    frameFirst = 5;
-                    frameLast = 6;
+                    frameFirst = 0;
+                    frameLast = 0;
                     break;
                 }
                 case 3: //Player's character block
