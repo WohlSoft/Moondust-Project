@@ -16,8 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "scene_world.h"
+#ifndef LVL_WARP_H
+#define LVL_WARP_H
 
-WorldScene::WorldScene()
+#include "../../physics/base_object.h"
+#include "../../data_configs/obj_bgo.h"
+
+#include <file_formats.h>
+
+class LVL_Warp : public PGE_Phys_Object
 {
-}
+public:
+    LVL_Warp();
+    ~LVL_Warp();
+    void init();
+
+    LevelDoors data; //Local settings
+};
+
+#endif // LVL_WARP_H
