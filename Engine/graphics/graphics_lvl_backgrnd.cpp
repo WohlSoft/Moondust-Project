@@ -298,7 +298,7 @@ void LVL_Background::draw(float x, float y)
                 imgPos_Y = pCamera->s_bottom-y - txData2.h;
                 else
             if(setup->second_attached==2) //top
-                imgPos_Y = 0; pCamera->s_bottom-y-txData1.h - txData2.h;
+                imgPos_Y = 0; //pCamera->s_bottom-y-txData1.h - txData2.h;
 
             int imgPos_X = (int)round((pCamera->s_left-x)/setup->second_repeat_h) % (int)round(txData2.w);
 

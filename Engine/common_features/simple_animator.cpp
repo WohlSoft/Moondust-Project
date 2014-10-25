@@ -129,6 +129,8 @@ void SimpleAnimator::setFrames(int first, int last)
 void SimpleAnimator::start()
 {
     if(!animated) return;
+    if(isEnabled) return;
+
     if((frameLast>0)&&((frameLast-frameFirst)<=1)) return; //Don't start singleFrame animation
     isEnabled=true;
     timer_id = SDL_AddTimer(speed, &SimpleAnimator::TickAnimation, this);
@@ -137,6 +139,7 @@ void SimpleAnimator::start()
 void SimpleAnimator::stop()
 {
     if(!animated) return;
+    if(!isEnabled) return;
     isEnabled=false;
     SDL_RemoveTimer(timer_id);
     setFrame(frameFirst);
