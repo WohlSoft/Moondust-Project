@@ -101,9 +101,49 @@ public:
     //Flags
     bool isPauseMenu;
     bool isTimeStopped;
+
+    /****************Level Running State*****************/
     bool isLevelContinues;
+    enum exitLevelCodes
+    {
+        EXIT_Error=-2,
+        EXIT_PlayerDeath=-1,
+        EXIT_Closed=0,
+        EXIT_Card=1,
+        EXIT_Ball=2,
+        EXIT_OffScreen=3,
+        EXIT_Key=4,
+        EXIT_Crystal=5,
+        EXIT_Warp=6,
+        EXIT_Star=7,
+        EXIT_Tape=8
+    };
+
+    bool doExit;
+
+    void checkPlayers();
+    void setExiting(int delay, int reason);
+
+    QString toAnotherLevel();
+    QString warpToLevelFile;
+
     int exitLevelDelay;
     int exitLevelCode;
+    /****************Level Running State*****************/
+
+    /*
+    LevelExitType.push_back(tr("* - Any"));
+    LevelExitType.push_back(tr("0 - None"));
+    LevelExitType.push_back(tr("1 - SMB3 Standard Exit"));
+    LevelExitType.push_back(tr("2 - SMB3 Boss Exit"));
+    LevelExitType.push_back(tr("3 - Walked Offscreen"));
+    LevelExitType.push_back(tr("4 - Secret Exit"));
+    LevelExitType.push_back(tr("5 - SMB2 Boss Exit"));
+    LevelExitType.push_back(tr("6 - Warp Exit"));
+    LevelExitType.push_back(tr("7 - Star Exit"));
+    LevelExitType.push_back(tr("8 - SMW Exit"));
+    */
+
     int numberOfPlayers;
 
     KeyboardController keyboard1;

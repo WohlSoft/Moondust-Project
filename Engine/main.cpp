@@ -154,43 +154,55 @@ int main(int argc, char *argv[])
     {}
 
 
-
     QString fileToPpen = ApplicationPath+"/physics.lvl";
     if(a.arguments().size()>1)
         fileToPpen = a.arguments()[1];
 
+    bool playAgain = true;
+    while(playAgain)
+    {
+        int ExitCode=0;
+            lScene = new LevelScene();
 
-    lScene = new LevelScene();
+            lScene->setLoaderAnimation(62);
+            lScene->drawLoader();
+            glFlush();
+            SDL_GL_SwapWindow(PGE_Window::window);
+            while ( SDL_PollEvent(&event) )
+            {}
+            bool sceneResult=true;
 
-    lScene->setLoaderAnimation(62);
-    lScene->drawLoader();
+                sceneResult = lScene->loadFile(fileToPpen);
 
-    glFlush();
-    SDL_GL_SwapWindow(PGE_Window::window);
-    while ( SDL_PollEvent(&event) )
-    {}
+            if(sceneResult)
+                sceneResult = lScene->setEntrance(0);
 
-    bool sceneResult=true;
+            if(sceneResult)
+                sceneResult = lScene->loadConfigs();
 
-        sceneResult = lScene->loadFile(fileToPpen);
+            if(sceneResult)
+                sceneResult = lScene->init();
+            lScene->stopLoaderAnimation();
 
-    if(sceneResult)
-        sceneResult = lScene->setEntrance(0);
+            lScene->setFade(25, 0.0f, 0.05f);
 
-    if(sceneResult)
-        sceneResult = lScene->loadConfigs();
+            if(sceneResult)
+                ExitCode = lScene->exec();
 
-    if(sceneResult)
-        sceneResult = lScene->init();
-    lScene->stopLoaderAnimation();
+            if(ExitCode==LevelScene::EXIT_Warp)
+            {
+                fileToPpen = lScene->toAnotherLevel();
+                if(fileToPpen.isEmpty()) playAgain = false;
+            }
+            else
+            if(ExitCode!= LevelScene::EXIT_PlayerDeath)
+            {
+                playAgain = false;
+            }
 
-    lScene->setFade(25, 0.0f, 0.05f);
+            delete lScene;
+    }
 
-    if(sceneResult)
-        lScene->exec();
-
-
-    delete lScene;
 
     PGE_Window::uninit();
     return 0;

@@ -39,7 +39,10 @@ LVL_Player::LVL_Player()
 
     JumpPressed=false;
     onGround=true;
+    foot_contacts=0;
     jumpForce=0;
+
+    isLive = true;
 
     curHMaxSpeed = hMaxSpeed;
     isRunning = false;
@@ -174,46 +177,56 @@ void LVL_Player::update()
 
 
     //Return player to start position on fall down
-    if( posY() > camera->s_bottom+height )
+    if( posY() > camera->limitBottom+height )
     {
-        physBody->SetLinearVelocity(b2Vec2(0,0));
-        teleport(data->x, data->y);
+        kill();
     }
 
 
     //Connection of section opposite sides
     if(camera->isWarp)
     {
-        if(posX() < camera->s_left-width-1 )
+        if(posX() < camera->limitLeft-width-1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_right+posX_coefficient-1),
+                 PhysUtil::pix2met(camera->limitRight+posX_coefficient-1),
                  physBody->GetPosition().y), 0.0f);
         else
-        if(posX() > camera->s_right + 1 )
+        if(posX() > camera->limitRight + 1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_left-posX_coefficient+1 ),
+                 PhysUtil::pix2met(camera->limitLeft-posX_coefficient+1 ),
                  physBody->GetPosition().y), 0.0f
                                    );
     }
     else
     {
-        //Prevent moving of player away from screen
-        if( posX() < camera->s_left)
-        {
-            physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_left + posX_coefficient),
-                    physBody->GetPosition().y), 0.0f);
 
-            physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+        if(camera->ExitOffscreen)
+        {
+            if((posX() < camera->limitLeft-width-1 ) || (posX() > camera->limitRight + 1 ))
+            {
+                LvlSceneP::s->setExiting(1000, LevelScene::EXIT_OffScreen);
+            }
         }
         else
-        if( posX()+width > camera->s_right)
         {
-            physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_right-posX_coefficient ),
-                    physBody->GetPosition().y), 0.0f
-                                   );
-            physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+            //Prevent moving of player away from screen
+            if( posX() < camera->limitLeft)
+            {
+                physBody->SetTransform(b2Vec2(
+                     PhysUtil::pix2met(camera->limitLeft + posX_coefficient),
+                        physBody->GetPosition().y), 0.0f);
+
+                physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+            }
+            else
+            if( posX()+width > camera->limitRight)
+            {
+                physBody->SetTransform(b2Vec2(
+                     PhysUtil::pix2met(camera->limitRight-posX_coefficient ),
+                        physBody->GetPosition().y), 0.0f
+                                       );
+                physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+            }
         }
     }
 
@@ -277,29 +290,46 @@ void LVL_Player::update()
                         }
 
                         if(doTeleport)
-                        {// Exit direction: [1] down [3] up [4] left [2] right
-                            physBody->SetLinearVelocity(b2Vec2(0, 0));
-                            switch(contactedWarp->data.odirect)
+                        {
+
+                            if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
                             {
-                                case 2://right
-                                    teleport(contactedWarp->data.ox,
-                                                 contactedWarp->data.oy+32-height);
-                                    break;
-                                case 1://down
-                                    teleport(contactedWarp->data.ox+16-posX_coefficient,
-                                                 contactedWarp->data.oy);
-                                    break;
-                                case 4://left
-                                    teleport(contactedWarp->data.ox+32-width,
-                                                 contactedWarp->data.oy+32-height);
-                                    if(keys.left && !wasEntered) doTeleport=true;
-                                    break;
-                                case 3://up
-                                    teleport(contactedWarp->data.ox+16-posX_coefficient,
-                                                 contactedWarp->data.oy+32-height);
-                                    break;
-                                default:
-                                    break;
+                                isLive = false;
+                                //physBody->SetActive(false);
+                                if(!contactedWarp->data.lname.isEmpty())
+                                {
+                                    LvlSceneP::s->warpToLevelFile =
+                                            LvlSceneP::s->levelData()->path+"/"+
+                                            contactedWarp->data.lname;
+                                }
+                                LvlSceneP::s->setExiting(300, LevelScene::EXIT_Warp);
+                            }
+                            else
+                            {
+                                // Exit direction: [1] down [3] up [4] left [2] right
+                                physBody->SetLinearVelocity(b2Vec2(0, 0));
+                                switch(contactedWarp->data.odirect)
+                                {
+                                    case 2://right
+                                        teleport(contactedWarp->data.ox,
+                                                     contactedWarp->data.oy+32-height);
+                                        break;
+                                    case 1://down
+                                        teleport(contactedWarp->data.ox+16-posX_coefficient,
+                                                     contactedWarp->data.oy);
+                                        break;
+                                    case 4://left
+                                        teleport(contactedWarp->data.ox+32-width,
+                                                     contactedWarp->data.oy+32-height);
+                                        if(keys.left && !wasEntered) doTeleport=true;
+                                        break;
+                                    case 3://up
+                                        teleport(contactedWarp->data.ox+16-posX_coefficient,
+                                                     contactedWarp->data.oy+32-height);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                             wasEntered = true;
                         }
@@ -313,9 +343,24 @@ void LVL_Player::update()
                 {
                     if(!wasTeleported)
                     {
-                        physBody->SetLinearVelocity(b2Vec2(0, 0));
-                        teleport(contactedWarp->data.ox+16-posX_coefficient,
-                                     contactedWarp->data.oy+32-height);
+                        if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
+                        {
+                            isLive = false;
+                            //physBody->SetActive(false);
+                            if(!contactedWarp->data.lname.isEmpty())
+                            {
+                                LvlSceneP::s->warpToLevelFile =
+                                        LvlSceneP::s->levelData()->path+"/"+
+                                        contactedWarp->data.lname;
+                            }
+                            LvlSceneP::s->setExiting(300, LevelScene::EXIT_Warp);
+                        }
+                        else
+                        {
+                            physBody->SetLinearVelocity(b2Vec2(0, 0));
+                            teleport(contactedWarp->data.ox+16-posX_coefficient,
+                                         contactedWarp->data.oy+32-height);
+                        }
                         wasEntered = true;
                     }
                 }
@@ -350,6 +395,16 @@ void LVL_Player::update()
 
 }
 
+void LVL_Player::kill()
+{
+
+    isLive = false;
+    physBody->SetActive(false);
+    LvlSceneP::s->checkPlayers();
+    //physBody->SetLinearVelocity(b2Vec2(0,0));
+    //teleport(data->x, data->y);
+}
+
 void LVL_Player::teleport(float x, float y)
 {
     if(!LvlSceneP::s) return;
@@ -365,9 +420,16 @@ void LVL_Player::teleport(float x, float y)
         if(ConfigManager::lvl_bg_indexes.contains(camera->BackgroundID))
         {
             LvlSceneP::s->bgList()->last()->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
+
+            if(ConfigManager::lvl_bg_indexes[camera->BackgroundID].animated)
+                ConfigManager::Animator_BG[ConfigManager::lvl_bg_indexes[camera->BackgroundID].animator_ID]->start();
         }
         else
             LvlSceneP::s->bgList()->last()->setNone();
+    }
+    else
+    {
+        camera->resetLimits();
     }
 }
 
@@ -375,6 +437,9 @@ void LVL_Player::teleport(float x, float y)
 
 void LVL_Player::render(float camX, float camY)
 {
+
+    if(!isLive) return;
+
     QRectF player = QRectF( posX()
                             -camX,
 

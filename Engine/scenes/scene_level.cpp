@@ -47,10 +47,15 @@ LevelScene::LevelScene()
 
     isPauseMenu=false;
     isTimeStopped=false;
-    isLevelContinues=false;
 
-    exitLevelDelay=5000;
-    exitLevelCode=0;
+    /**********************/
+    isLevelContinues=true;
+
+    doExit = false;
+    exitLevelDelay=3000;
+    exitLevelCode = EXIT_Closed;
+    warpToLevelFile = "";
+    /**********************/
 
     numberOfPlayers=1;
 
@@ -443,6 +448,18 @@ void LevelScene::update(float step)
 {
     if(step<=0) step=10.0f;
 
+    if(doExit)
+    {
+        if(exitLevelDelay>=0)
+            exitLevelDelay -= 10;
+        else
+        {
+            if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
+            if(fader_opacity>=1.0)
+                isLevelContinues=false;
+        }
+    }
+    else
     if(!isPauseMenu) //Update physics is not pause menu
     {
         //Make world step
@@ -562,14 +579,18 @@ int LevelScene::exec()
             switch(event.type)
             {
                 case SDL_QUIT:
-                    running = false;
+                    {
+                        setExiting(0, EXIT_Closed);
+                    }   // End work of program
                 break;
 
                 case SDL_KEYDOWN: // If pressed key
                   switch(event.key.keysym.sym)
                   { // Check which
                     case SDLK_ESCAPE: // ESC
-                            running = false; // End work of program
+                            {
+                                setExiting(0, EXIT_Closed);
+                            }   // End work of program
                         break;
                     case SDLK_RETURN:// Enter
                           isPauseMenu = !isPauseMenu;
@@ -604,6 +625,9 @@ int LevelScene::exec()
             doUpdateP = 1000.0/100-(SDL_GetTicks()-start);
             SDL_Delay( doUpdateP );
         }
+
+        if(isExit())
+            running = false;
     }
 
     return exitLevelCode;
@@ -613,14 +637,44 @@ int LevelScene::exec()
 
 bool LevelScene::isExit()
 {
-
-    return true;
+    return !isLevelContinues;
 }
 
 
 int LevelScene::exitType()
 {
     return exitLevelCode;
+}
+
+void LevelScene::checkPlayers()
+{
+    bool haveLivePlayers=false;
+    for(int i=0; i<players.size(); i++)
+    {
+        if(players[i]->isLive)
+            haveLivePlayers = true;
+    }
+
+    if(!haveLivePlayers)
+    {
+        setExiting(3000, EXIT_PlayerDeath);
+    }
+}
+
+void LevelScene::setExiting(int delay, int reason)
+{
+    exitLevelDelay = delay;
+    exitLevelCode = reason;
+    doExit = true;
+}
+
+QString LevelScene::toAnotherLevel()
+{
+    if(!warpToLevelFile.endsWith(".lvl", Qt::CaseInsensitive) &&
+       !warpToLevelFile.endsWith(".lvlx", Qt::CaseInsensitive))
+        warpToLevelFile.append(".lvl");
+
+    return warpToLevelFile;
 }
 
 

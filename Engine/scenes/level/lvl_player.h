@@ -48,7 +48,12 @@ class LVL_Player :
 
         bool JumpPressed;
         bool onGround;
+        int foot_contacts;
         int jumpForce;
+
+        bool isLive;
+
+        void kill();
 
         bool contactedWithWarp;
         LVL_Warp * contactedWarp;

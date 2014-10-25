@@ -57,6 +57,7 @@ bool LevelScene::setEntrance(int entr)
     isWarpEntrance=false;
 
     //Error, sections is not found
+    exitLevelCode = EXIT_Error;
     return false;
 }
 
@@ -76,6 +77,8 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_Blocks.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBlock() );
     ConfigManager::Dir_BGO.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBGO() );
     ConfigManager::Dir_BG.setCustomDirs(data.path, data.filename, ConfigManager::PathLevelBG() );
+
+    if(!success) exitLevelCode = EXIT_Error;
 
     return success;
 }
