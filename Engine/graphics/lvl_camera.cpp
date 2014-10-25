@@ -28,6 +28,7 @@ PGE_LevelCamera::PGE_LevelCamera()
     section = 0;
     isWarp = false;
     RightOnly = false;
+    ExitOffscreen = false;
     width=800;
     height=600;
     BackgroundID = 0;
@@ -110,20 +111,22 @@ void PGE_LevelCamera::setPos(float x, float y)
     pos_x = x;
     pos_y = y;
 
-    if(pos_x < s_left)
-        pos_x = s_left;
-    if((pos_x+width) > s_right)
-        pos_x = s_right-width;
+    if(pos_x < limitLeft)
+        pos_x = limitLeft;
 
-    if(pos_y < s_top)
-        pos_y = s_top;
-    if((pos_y+height) > s_bottom)
-        pos_y = s_bottom-height;
+    if((pos_x+width) > limitRight)
+        pos_x = limitRight-width;
+
+    if(pos_y < limitTop)
+        pos_y = limitTop;
+
+    if((pos_y+height) > limitBottom)
+        pos_y = limitBottom-height;
 
     if(RightOnly)
     {
-        if(pos_x>s_left)
-            s_left = pos_x;
+        if(pos_x>limitLeft)
+            limitLeft = pos_x;
     }
 
     //    sensor->SetTransform(b2Vec2( PhysUtil::pix2met(pos_x+width/2),
@@ -228,9 +231,24 @@ void PGE_LevelCamera::update()
 void PGE_LevelCamera::changeSectionBorders(long left, long top, long right, long bottom)
 {
     s_left = left;
+    limitLeft = left;
+
     s_top = top;
+    limitTop = top;
+
     s_right = right;
+    limitRight = right;
+
     s_bottom = bottom;
+    limitBottom = bottom;
+}
+
+void PGE_LevelCamera::resetLimits()
+{
+    limitLeft = s_left;
+    limitTop = s_top;
+    limitRight = s_right;
+    limitBottom = s_bottom;
 }
 
 PGE_RenderList PGE_LevelCamera::renderObjects()
@@ -250,6 +268,8 @@ void PGE_LevelCamera::changeSection(LevelSection &sct)
     BackgroundID = sct.background;
     isWarp = section->IsWarp;
     RightOnly = section->noback;
+    ExitOffscreen = section->OffScreenEn;
+
     changeSectionBorders(sct.size_left, sct.size_top, sct.size_right, sct.size_bottom);
 }
 
