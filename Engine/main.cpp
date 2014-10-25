@@ -1,4 +1,22 @@
-//#include "mainwindow.h"
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QElapsedTimer>
@@ -169,88 +187,8 @@ int main(int argc, char *argv[])
     lScene->setFade(25, 0.0f, 0.05f);
 
     if(sceneResult)
-    {
+        lScene->exec();
 
-        //Level scene's Loop
-        Uint32 start;
-        bool running = true;
-        int doUpdate=0;
-        float doUpdateP=0;
-        while(running)
-        {
-
-            //UPDATE Events
-            if(doUpdate<=0)
-            {
-
-                start=SDL_GetTicks();
-
-                lScene->render();
-
-                glFlush();
-                SDL_GL_SwapWindow(PGE_Window::window);
-
-                if(1000.0/1000>SDL_GetTicks()-start)
-                        //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                        doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
-            }
-            doUpdate-=10;
-
-
-            start=SDL_GetTicks();
-
-            SDL_Event event; //  Events of SDL
-            while ( SDL_PollEvent(&event) )
-            {
-                lScene->keyboard1.update(event);
-
-                switch(event.type)
-                {
-                    case SDL_QUIT:
-                        running = false;
-                    break;
-
-                    case SDL_KEYDOWN: // If pressed key
-                      switch(event.key.keysym.sym)
-                      { // Check which
-                        case SDLK_ESCAPE: // ESC
-                                running = false; // End work of program
-                            break;
-                        case SDLK_RETURN:// Enter
-                              lScene->isPauseMenu = !lScene->isPauseMenu;
-                        break;
-                        case SDLK_t:
-                            PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                        break;
-                        default:
-                          break;
-
-                      }
-                    break;
-
-                    case SDL_KEYUP:
-                    switch(event.key.keysym.sym)
-                    {
-                    case SDLK_RETURN:// Enter
-                        break;
-                    default:
-                        break;
-                    }
-                    break;
-                }
-            }
-
-
-            //Update physics
-            lScene->update();
-
-            if(1000.0/100>SDL_GetTicks()-start)
-            {
-                doUpdateP = 1000.0/100-(SDL_GetTicks()-start);
-                SDL_Delay( doUpdateP );
-            }
-        }
-    }
 
     delete lScene;
 

@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "lvl_camera.h"
 #include "window.h"
 
@@ -9,6 +27,7 @@ PGE_LevelCamera::PGE_LevelCamera()
     sensor = NULL;
     section = 0;
     isWarp = false;
+    RightOnly = false;
     width=800;
     height=600;
     BackgroundID = 0;
@@ -100,6 +119,12 @@ void PGE_LevelCamera::setPos(float x, float y)
         pos_y = s_top;
     if((pos_y+height) > s_bottom)
         pos_y = s_bottom-height;
+
+    if(RightOnly)
+    {
+        if(pos_x>s_left)
+            s_left = pos_x;
+    }
 
     //    sensor->SetTransform(b2Vec2( PhysUtil::pix2met(pos_x+width/2),
     //                                 PhysUtil::pix2met(pos_y+height/2)), 0);
@@ -223,5 +248,40 @@ void PGE_LevelCamera::changeSection(LevelSection &sct)
 {
     section = &sct;
     BackgroundID = sct.background;
+    isWarp = section->IsWarp;
+    RightOnly = section->noback;
     changeSectionBorders(sct.size_left, sct.size_top, sct.size_right, sct.size_bottom);
 }
+
+
+/**************************Fader*******************************/
+
+void PGE_LevelCamera::setFade(int speed, float target, float step)
+{
+    fade_step = fabs(step);
+    target_opacity = target;
+    fadeSpeed = speed;
+    fader_timer_id = SDL_AddTimer(speed, &PGE_LevelCamera::nextOpacity, this);
+}
+
+unsigned int PGE_LevelCamera::nextOpacity(unsigned int x, void *p)
+{
+    Q_UNUSED(x);
+    PGE_LevelCamera *self = reinterpret_cast<PGE_LevelCamera *>(p);
+    self->fadeStep();
+    return 0;
+}
+
+void PGE_LevelCamera::fadeStep()
+{
+    if(fader_opacity < target_opacity)
+        fader_opacity+=fade_step;
+    else
+        fader_opacity-=fade_step;
+
+    if(fader_opacity>=1.0 || fader_opacity<=0.0)
+        SDL_RemoveTimer(fader_timer_id);
+    else
+        fader_timer_id = SDL_AddTimer(fadeSpeed, &PGE_LevelCamera::nextOpacity, this);
+}
+/**************************Fader**end**************************/

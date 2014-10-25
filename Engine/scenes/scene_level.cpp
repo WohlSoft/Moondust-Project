@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "scene_level.h"
 
 #include <QFile>
@@ -5,6 +23,8 @@
 #include <QFileInfo>
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
+
+#include "level/lvl_scene_ptr.h"
 
 #include "../data_configs/config_manager.h"
 
@@ -14,6 +34,8 @@
 
 LevelScene::LevelScene()
 {
+    LvlSceneP::s = this;
+
     data = FileFormats::dummyLvlDataArray();
     data.ReadFileValid = false;
 
@@ -27,8 +49,8 @@ LevelScene::LevelScene()
     isTimeStopped=false;
     isLevelContinues=false;
 
-    exitLevelDelay=false;
-    exitLevelCode=false;
+    exitLevelDelay=5000;
+    exitLevelCode=0;
 
     numberOfPlayers=1;
 
@@ -71,8 +93,8 @@ LevelScene::LevelScene()
 
 LevelScene::~LevelScene()
 {
+    LvlSceneP::s = NULL;
     //stop animators
-
 
     //desroy animators
 
@@ -129,6 +151,16 @@ LevelScene::~LevelScene()
         LVL_Bgo* tmp;
         tmp = bgos.first();
         bgos.pop_front();
+        if(tmp) delete tmp;
+    }
+
+
+    qDebug() << "Destroy Warps";
+    while(!warps.isEmpty())
+    {
+        LVL_Warp* tmp;
+        tmp = warps.first();
+        warps.pop_front();
         if(tmp) delete tmp;
     }
 
@@ -311,6 +343,20 @@ bool LevelScene::init()
         bgos.push_back(bgo);
     }
 
+    qDebug()<<"Init Warps";
+    //BGO
+    for(int i=0; i<data.doors.size(); i++)
+    {
+        loaderStep();
+
+        LVL_Warp * warpP;
+        warpP = new LVL_Warp();
+        warpP->worldPtr = world;
+        warpP->data = data.doors[i];
+        warpP->init();
+        warps.push_back(warpP);
+    }
+
 
     qDebug() << "textures " << ConfigManager::level_textures.size();
 
@@ -400,7 +446,7 @@ void LevelScene::update(float step)
     if(!isPauseMenu) //Update physics is not pause menu
     {
         //Make world step
-        world->Step(1.0f / 100.f, 1, 1);
+        world->Step(1.0f / 100.f, 5, 5);
 
         //Update controllers
         keyboard1.sendControls();
@@ -479,6 +525,92 @@ void LevelScene::render()
 
 
 
+int LevelScene::exec()
+{
+    //Level scene's Loop
+    Uint32 start;
+    bool running = true;
+    int doUpdate=0;
+    float doUpdateP=0;
+    while(running)
+    {
+
+        //UPDATE Events
+        if(doUpdate<=0)
+        {
+
+            start=SDL_GetTicks();
+
+            render();
+
+            glFlush();
+            SDL_GL_SwapWindow(PGE_Window::window);
+
+            if(1000.0/1000>SDL_GetTicks()-start)
+                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
+                    doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
+        }
+        doUpdate-=10;
+
+
+        start=SDL_GetTicks();
+
+        SDL_Event event; //  Events of SDL
+        while ( SDL_PollEvent(&event) )
+        {
+            keyboard1.update(event);
+            switch(event.type)
+            {
+                case SDL_QUIT:
+                    running = false;
+                break;
+
+                case SDL_KEYDOWN: // If pressed key
+                  switch(event.key.keysym.sym)
+                  { // Check which
+                    case SDLK_ESCAPE: // ESC
+                            running = false; // End work of program
+                        break;
+                    case SDLK_RETURN:// Enter
+                          isPauseMenu = !isPauseMenu;
+                    break;
+                    case SDLK_t:
+                        PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    break;
+                    default:
+                      break;
+
+                  }
+                break;
+
+                case SDL_KEYUP:
+                switch(event.key.keysym.sym)
+                {
+                case SDLK_RETURN:// Enter
+                    break;
+                default:
+                    break;
+                }
+                break;
+            }
+        }
+
+
+        //Update physics
+        update();
+
+        if(1000.0/100>SDL_GetTicks()-start)
+        {
+            doUpdateP = 1000.0/100-(SDL_GetTicks()-start);
+            SDL_Delay( doUpdateP );
+        }
+    }
+
+    return exitLevelCode;
+}
+
+
+
 bool LevelScene::isExit()
 {
 
@@ -523,10 +655,10 @@ void LevelScene::fadeStep()
     else
         fader_timer_id = SDL_AddTimer(fadeSpeed, &LevelScene::nextOpacity, this);
 }
+/**************************Fader**end**************************/
 
 
 /**************************LoadAnimation*******************************/
-
 namespace lvl_scene_loader
 {
     SimpleAnimator * loading_Ani = NULL;
@@ -638,3 +770,15 @@ void LevelScene::loaderStep()
     loader_timer_id = SDL_AddTimer(loaderSpeed, &LevelScene::nextLoadAniFrame, this);
     doLoaderStep = false;
 }
+
+QVector<LVL_Background *> *LevelScene::bgList()
+{
+    return &backgrounds;
+}
+
+LevelData *LevelScene::levelData()
+{
+    return &data;
+}
+/**************************LoadAnimation**end**************************/
+

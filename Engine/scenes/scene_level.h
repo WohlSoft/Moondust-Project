@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef SCENE_LEVEL_H
 #define SCENE_LEVEL_H
 
@@ -8,6 +26,10 @@
 #include "level/lvl_player.h"
 #include "level/lvl_block.h"
 #include "level/lvl_bgo.h"
+
+#include "level/lvl_warp.h"
+
+
 #include "../graphics/graphics_lvl_backgrnd.h"
 
 #include "../graphics/window.h"
@@ -64,6 +86,7 @@ public:
 
     void update(float step=10);
     void render();
+    int exec();
 
 
     int findNearSection(long x, long y);
@@ -136,6 +159,10 @@ public:
     SDL_TimerID loader_timer_id;
     /**************LoadScreen**************/
 
+
+    QVector<LVL_Background *> * bgList();
+    LevelData *levelData();
+
 private:
     LevelData data;
 
@@ -143,6 +170,7 @@ private:
     QVector<LVL_Player* > players;
     QVector<LVL_Block* > blocks;
     QVector<LVL_Bgo* > bgos;
+    QVector<LVL_Warp* > warps;
 
     QVector<LVL_Background *> backgrounds;
 

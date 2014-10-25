@@ -123,7 +123,9 @@ SOURCES += main.cpp \
     data_configs/obj_bgo.cpp \
     scenes/level/lvl_bgo.cpp \
     data_configs/obj_bg.cpp \
-    physics/contact_listener.cpp
+    physics/contact_listener.cpp \
+    scenes/level/lvl_warp.cpp \
+    scenes/level/lvl_scene_ptr.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -214,7 +216,9 @@ HEADERS  += \
     data_configs/obj_bg.h \
     graphics/graphics_lvl_backgrnd.h \
     version.h \
-    physics/contact_listener.h
+    physics/contact_listener.h \
+    scenes/level/lvl_warp.h \
+    scenes/level/lvl_scene_ptr.h
 
 FORMS    += \
     data_configs/select_config.ui
