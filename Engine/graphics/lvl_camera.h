@@ -48,12 +48,21 @@ public:
 
     void changeSection(LevelSection &sct);
     void changeSectionBorders(long left, long top, long right, long bottom);
+    void resetLimits();
+
     PGE_RenderList renderObjects();
 
     LevelSection *section;
 
     bool isWarp;
     bool RightOnly;
+    bool ExitOffscreen;
+
+    int limitLeft;
+    int limitRight;
+    int limitTop;
+    int limitBottom;
+
     /// Limits of section motion
     int s_top;
     int s_bottom;
