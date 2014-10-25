@@ -62,11 +62,12 @@ class LVL_Player :
         int warpsTouched;
 
 
-        PlayerPoint * data;
+        PlayerPoint data;
 
         PGE_LevelCamera * camera;
 
         void teleport(float x, float y);
+        void exitFromLevel(QString levelFile, int targetWarp);
 
         void render(float camX, float camY);
 };

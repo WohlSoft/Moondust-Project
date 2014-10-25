@@ -62,6 +62,8 @@ public:
     bool setEntrance(int entr);
     bool isWarpEntrance;
     QPoint cameraStart;
+    LevelDoors startWarp;
+    int NewPlayerID;
 
     //Init 3 -> load Configs
     bool loadConfigs();
@@ -81,8 +83,6 @@ public:
     //Init 10 -> Init BGOs
 
     //Init 11 -> Init NPCs
-
-    bool prepareLevel();
 
     void update(float step=10);
     void render();
@@ -127,27 +127,19 @@ public:
     QString toAnotherLevel();
     QString warpToLevelFile;
 
+    int toAnotherEntrance();
+    int warpToArrayID;
+
     int exitLevelDelay;
     int exitLevelCode;
     /****************Level Running State*****************/
-
-    /*
-    LevelExitType.push_back(tr("* - Any"));
-    LevelExitType.push_back(tr("0 - None"));
-    LevelExitType.push_back(tr("1 - SMB3 Standard Exit"));
-    LevelExitType.push_back(tr("2 - SMB3 Boss Exit"));
-    LevelExitType.push_back(tr("3 - Walked Offscreen"));
-    LevelExitType.push_back(tr("4 - Secret Exit"));
-    LevelExitType.push_back(tr("5 - SMB2 Boss Exit"));
-    LevelExitType.push_back(tr("6 - Warp Exit"));
-    LevelExitType.push_back(tr("7 - Star Exit"));
-    LevelExitType.push_back(tr("8 - SMW Exit"));
-    */
 
     int numberOfPlayers;
 
     KeyboardController keyboard1;
 
+
+    /**************Z-Layers**************/
     double Z_backImage; //Background
 
     //Background-2
@@ -174,6 +166,7 @@ public:
     double Z_sys_door;
     double Z_sys_interspace1; // interSection space layer
     double Z_sys_sctBorder; // section Border
+    /**************Z-Layers**************/
 
     /**************Fader**************/
     float fader_opacity;
@@ -202,6 +195,13 @@ public:
 
     QVector<LVL_Background *> * bgList();
     LevelData *levelData();
+
+    /*********************Item placing**********************/
+    void placeBlock(LevelBlock blockData);
+    void placeBGO(LevelBGO bgoData);
+
+    void addPlayer(PlayerPoint playerData, bool byWarp=false);
+    /*********************Item placing**********************/
 
 private:
     LevelData data;
