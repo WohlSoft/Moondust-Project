@@ -32,7 +32,7 @@ void PGEContactListener::BeginContact(b2Contact *contact)
     b2Fixture* fixtureB = contact->GetFixtureB();
 
     b2Fixture* platformFixture = NULL;
-    b2Fixture* otherFixture = NULL;
+    //b2Fixture* otherFixture = NULL;
 
     PGE_Phys_Object * bodyA = NULL;
     PGE_Phys_Object * bodyB = NULL;
@@ -50,14 +50,14 @@ void PGEContactListener::BeginContact(b2Contact *contact)
     if ( bodyA->type == PGE_Phys_Object::LVLWarp && bodyB->type == PGE_Phys_Object::LVLPlayer )
     {
         platformFixture = fixtureA;
-        otherFixture = fixtureB;
+        //otherFixture = fixtureB;
         bodyBlock = bodyA;
         bodyChar = bodyB;
     }
     else if ( bodyB->type == PGE_Phys_Object::LVLWarp && bodyA->type == PGE_Phys_Object::LVLPlayer )
     {
         platformFixture = fixtureB;
-        otherFixture = fixtureA;
+        //otherFixture = fixtureA;
         bodyBlock = bodyB;
         bodyChar = bodyA;
     }
@@ -82,12 +82,12 @@ void PGEContactListener::EndContact(b2Contact *contact)
     b2Fixture* fixtureB = contact->GetFixtureB();
 
     b2Fixture* platformFixture = NULL;
-    b2Fixture* otherFixture = NULL;
+    //b2Fixture* otherFixture = NULL;
 
     PGE_Phys_Object * bodyA = NULL;
     PGE_Phys_Object * bodyB = NULL;
 
-    PGE_Phys_Object * bodyBlock = NULL;
+    //PGE_Phys_Object * bodyBlock = NULL;
     PGE_Phys_Object * bodyChar = NULL;
 
     bodyA = static_cast<PGE_Phys_Object *>(fixtureA->GetBody()->GetUserData());
@@ -100,15 +100,15 @@ void PGEContactListener::EndContact(b2Contact *contact)
     if ( bodyA->type == PGE_Phys_Object::LVLWarp && bodyB->type == PGE_Phys_Object::LVLPlayer )
     {
         platformFixture = fixtureA;
-        otherFixture = fixtureB;
-        bodyBlock = bodyA;
+        //otherFixture = fixtureB;
+        //bodyBlock = bodyA;
         bodyChar = bodyB;
     }
     else if ( bodyB->type == PGE_Phys_Object::LVLWarp && bodyA->type == PGE_Phys_Object::LVLPlayer )
     {
         platformFixture = fixtureB;
-        otherFixture = fixtureA;
-        bodyBlock = bodyB;
+        //otherFixture = fixtureA;
+        //bodyBlock = bodyB;
         bodyChar = bodyA;
     }
 
@@ -135,7 +135,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
 
         /****************** Top collision************************/
         b2Fixture* platformFixture = NULL;
-        b2Fixture* otherFixture = NULL;
+        //b2Fixture* otherFixture = NULL;
 
         PGE_Phys_Object * bodyA = NULL;
         PGE_Phys_Object * bodyB = NULL;
@@ -153,14 +153,14 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
         if ( bodyA->collide == PGE_Phys_Object::COLLISION_TOP )
         {
             platformFixture = fixtureA;
-            otherFixture = fixtureB;
+            //otherFixture = fixtureB;
             bodyBlock = bodyA;
             bodyChar = bodyB;
         }
         else if ( bodyB->collide == PGE_Phys_Object::COLLISION_TOP )
         {
             platformFixture = fixtureB;
-            otherFixture = fixtureA;
+            //otherFixture = fixtureA;
             bodyBlock = bodyB;
             bodyChar = bodyA;
         }
@@ -181,7 +181,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             if ( bodyA->type == PGE_Phys_Object::LVLBlock && bodyA->collide == PGE_Phys_Object::COLLISION_ANY )
             {
                 platformFixture = fixtureA;
-                otherFixture = fixtureB;
+                //otherFixture = fixtureB;
                 bodyBlock = bodyA;
                 bodyChar = bodyB;
             }
@@ -189,7 +189,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             if (  bodyB->type == PGE_Phys_Object::LVLBlock && bodyB->collide == PGE_Phys_Object::COLLISION_ANY )
             {
                 platformFixture = fixtureB;
-                otherFixture = fixtureA;
+                //otherFixture = fixtureA;
                 bodyBlock = bodyB;
                 bodyChar = bodyA;
             }
