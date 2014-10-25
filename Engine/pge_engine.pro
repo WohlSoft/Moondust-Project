@@ -109,8 +109,6 @@ SOURCES += main.cpp \
     common_features/app_path.cpp \
     common_features/graphics_funcs.cpp \
     ../_Libs/EasyBMP/EasyBMP.cpp \
-    scenes/level/lvl_init.cpp \
-    scenes/level/lvl_sections.cpp \
     data_configs/obj_block.cpp \
     controls/controller_keyboard.cpp \
     data_configs/select_config.cpp \
@@ -125,7 +123,12 @@ SOURCES += main.cpp \
     data_configs/obj_bg.cpp \
     physics/contact_listener.cpp \
     scenes/level/lvl_warp.cpp \
-    scenes/level/lvl_scene_ptr.cpp
+    scenes/level/lvl_scene_ptr.cpp \
+    scenes/level/lvl_scene_items.cpp \
+    scenes/level/lvl_scene_sections.cpp \
+    scenes/level/lvl_scene_timers.cpp \
+    scenes/level/lvl_scene_files_io.cpp \
+    scenes/level/lvl_scene_init.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \

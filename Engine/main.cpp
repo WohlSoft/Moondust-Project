@@ -159,6 +159,7 @@ int main(int argc, char *argv[])
         fileToPpen = a.arguments()[1];
 
     bool playAgain = true;
+    int entranceID = 0;
     while(playAgain)
     {
         int ExitCode=0;
@@ -175,7 +176,7 @@ int main(int argc, char *argv[])
                 sceneResult = lScene->loadFile(fileToPpen);
 
             if(sceneResult)
-                sceneResult = lScene->setEntrance(0);
+                sceneResult = lScene->setEntrance(entranceID);
 
             if(sceneResult)
                 sceneResult = lScene->loadConfigs();
@@ -192,6 +193,7 @@ int main(int argc, char *argv[])
             if(ExitCode==LevelScene::EXIT_Warp)
             {
                 fileToPpen = lScene->toAnotherLevel();
+                entranceID = lScene->toAnotherEntrance();
                 if(fileToPpen.isEmpty()) playAgain = false;
             }
             else

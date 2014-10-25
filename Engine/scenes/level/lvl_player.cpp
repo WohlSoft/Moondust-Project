@@ -70,20 +70,20 @@ void LVL_Player::init()
 {
     if(!worldPtr) return;
 
-    setSize(data->w, data->h);
+    setSize(data.w, data.h);
 
-    playerID = data->id;
+    playerID = data.id;
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set
             (
-                PhysUtil::pix2met((float)data->x + posX_coefficient),
-                PhysUtil::pix2met((float)data->y + posY_coefficient)
+                PhysUtil::pix2met((float)data.x + posX_coefficient),
+                PhysUtil::pix2met((float)data.y + posY_coefficient)
             );
 
-//    bodyDef.position.Set(PhysUtil::pix2met((float)data->x + ((float)data->w/2)),
-//            PhysUtil::pix2met((float)data->y + ((float)data->w/2) ) );
+//    bodyDef.position.Set(PhysUtil::pix2met((float)data.x + ((float)data.w/2)),
+//            PhysUtil::pix2met((float)data.y + ((float)data.w/2) ) );
 
     bodyDef.fixedRotation = true;
     bodyDef.bullet = true;
@@ -294,15 +294,7 @@ void LVL_Player::update()
 
                             if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
                             {
-                                isLive = false;
-                                //physBody->SetActive(false);
-                                if(!contactedWarp->data.lname.isEmpty())
-                                {
-                                    LvlSceneP::s->warpToLevelFile =
-                                            LvlSceneP::s->levelData()->path+"/"+
-                                            contactedWarp->data.lname;
-                                }
-                                LvlSceneP::s->setExiting(300, LevelScene::EXIT_Warp);
+                                exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto);
                             }
                             else
                             {
@@ -345,15 +337,7 @@ void LVL_Player::update()
                     {
                         if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
                         {
-                            isLive = false;
-                            //physBody->SetActive(false);
-                            if(!contactedWarp->data.lname.isEmpty())
-                            {
-                                LvlSceneP::s->warpToLevelFile =
-                                        LvlSceneP::s->levelData()->path+"/"+
-                                        contactedWarp->data.lname;
-                            }
-                            LvlSceneP::s->setExiting(300, LevelScene::EXIT_Warp);
+                            exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto);
                         }
                         else
                         {
@@ -402,7 +386,7 @@ void LVL_Player::kill()
     physBody->SetActive(false);
     LvlSceneP::s->checkPlayers();
     //physBody->SetLinearVelocity(b2Vec2(0,0));
-    //teleport(data->x, data->y);
+    //teleport(data.x, data.y);
 }
 
 void LVL_Player::teleport(float x, float y)
@@ -431,6 +415,19 @@ void LVL_Player::teleport(float x, float y)
     {
         camera->resetLimits();
     }
+}
+
+void LVL_Player::exitFromLevel(QString levelFile, int targetWarp)
+{
+    isLive = false;
+    //physBody->SetActive(false);
+    if(!levelFile.isEmpty())
+    {
+        LvlSceneP::s->warpToLevelFile =
+                LvlSceneP::s->levelData()->path+"/"+levelFile;
+        LvlSceneP::s->warpToArrayID = targetWarp;
+    }
+    LvlSceneP::s->setExiting(300, LevelScene::EXIT_Warp);
 }
 
 

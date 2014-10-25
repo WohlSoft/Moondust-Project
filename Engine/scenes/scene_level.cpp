@@ -18,9 +18,6 @@
 
 #include "scene_level.h"
 
-#include <QFile>
-#include <QDir>
-#include <QFileInfo>
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
 
@@ -30,8 +27,6 @@
 
 #include <QtDebug>
 
-#include "../physics/contact_listener.h"
-
 LevelScene::LevelScene()
 {
     LvlSceneP::s = this;
@@ -40,32 +35,40 @@ LevelScene::LevelScene()
     data.ReadFileValid = false;
 
     isInit=false;
-
-    IsLoaderWorks=false;
-
     isWarpEntrance=false;
 
     isPauseMenu=false;
     isTimeStopped=false;
 
-    /**********************/
+    /*********Exit*************/
     isLevelContinues=true;
 
     doExit = false;
     exitLevelDelay=3000;
     exitLevelCode = EXIT_Closed;
     warpToLevelFile = "";
-    /**********************/
+    warpToArrayID = 0;
+    NewPlayerID = 1;
+    /**************************/
 
+    /*********Default players number*************/
     numberOfPlayers=1;
+    /*********Default players number*************/
 
     world=NULL;
 
+    /*********Loader*************/
+    IsLoaderWorks=false;
+    /*********Loader*************/
+
+    /*********Fader*************/
     fader_opacity=1.0f;
     target_opacity=1.0f;
     fade_step=0.0f;
+    /*********Fader*************/
 
 
+    /*********Z-Layers*************/
     //Default Z-Indexes
     //set Default Z Indexes
     Z_backImage = -1000; //Background
@@ -94,6 +97,7 @@ LevelScene::LevelScene()
     Z_sys_door = 700;
     Z_sys_interspace1 = 1000; // interSection space layer
     Z_sys_sctBorder = 1020; // section Border
+    /*********Z-Layers*************/
 }
 
 LevelScene::~LevelScene()
@@ -181,269 +185,12 @@ LevelScene::~LevelScene()
     textures_bank.clear();
 }
 
-bool LevelScene::init()
-{
-    //Load File
-
-    //Set Entrance  (int entr=0)
-
-    //Init Physics
-    b2Vec2 gravity(0.0f, 150.0f);
-    world = new b2World(gravity);
-    world->SetAllowSleeping(true);
-
-    PGEContactListener *contactListener;
-
-    contactListener = new PGEContactListener();
-    world->SetContactListener(contactListener);
-
-    int sID = findNearSection(cameraStart.x(), cameraStart.y());
-
-    qDebug()<<"Create cameras";
-
-    loaderStep();
-
-    //Init Cameras
-    PGE_LevelCamera* camera;
-    camera = new PGE_LevelCamera();
-    camera->setWorld(world);
-
-
-    camera->changeSection(data.sections[sID]);
-
-    camera->isWarp = data.sections[sID].IsWarp;
-    camera->section = &(data.sections[sID]);
-
-    camera->init(
-                    (float)cameraStart.x(),
-                    (float)cameraStart.y(),
-                    (float)PGE_Window::Width, (float)PGE_Window::Height
-                );
-    cameras.push_back(camera);
-
-
-    LVL_Background * CurBack = new LVL_Background(cameras.last());
-
-    if(ConfigManager::lvl_bg_indexes.contains(camera->BackgroundID))
-    {
-        CurBack->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
-        qDebug() << "Backgroubnd ID:" << camera->BackgroundID;
-    }
-    else
-        CurBack->setNone();
-
-    backgrounds.push_back(CurBack);
-
-
-    //Init data
-
-
-    qDebug()<<"Init blocks";
-
-    double zCounter = 0;
-    //blocks
-    for(int i=0; i<data.blocks.size(); i++)
-    {
-        loaderStep();
-
-        LVL_Block * block;
-        block = new LVL_Block();
-        if(ConfigManager::lvl_block_indexes.contains(data.blocks[i].id))
-            block->setup = &(ConfigManager::lvl_block_indexes[data.blocks[i].id]);
-        else
-        {
-            //Wrong block!
-            delete block;
-            continue;
-        }
-
-        if(block->setup->sizable)
-        {
-            block->z_index = Z_blockSizable +
-                    ((double)data.blocks[i].y/(double)100000000000) + 1 -
-                    ((double)data.blocks[i].w * (double)0.0000000000000001);
-        }
-        else
-        {
-
-            if(block->setup->view==1)
-                block->z_index = Z_BlockFore;
-            else
-                block->z_index = Z_Block;
-            zCounter += 0.0000000000001;
-            block->z_index += zCounter;
-        }
-
-        block->worldPtr = world;
-        block->data = &(data.blocks[i]);
-        long tID = ConfigManager::getBlockTexture(data.blocks[i].id);
-        if( tID >= 0 )
-        {
-            block->texId = ConfigManager::level_textures[tID].texture;
-            block->texture = ConfigManager::level_textures[tID];
-            block->animated = ConfigManager::lvl_block_indexes[data.blocks[i].id].animated;
-            block->animator_ID = ConfigManager::lvl_block_indexes[data.blocks[i].id].animator_ID;
-        }
-
-        block->init();
-
-        blocks.push_back(block);
-    }
-
-    qDebug()<<"Init BGOs";
-    //BGO
-    for(int i=0; i<data.bgo.size(); i++)
-    {
-        loaderStep();
-
-        LVL_Bgo * bgo;
-        bgo = new LVL_Bgo();
-        if(ConfigManager::lvl_bgo_indexes.contains(data.bgo[i].id))
-            bgo->setup = &(ConfigManager::lvl_bgo_indexes[data.bgo[i].id]);
-        else
-        {
-            //Wrong BGO!
-            delete bgo;
-            continue;
-        }
-
-        bgo->worldPtr = world;
-        bgo->data = &(data.bgo[i]);
-
-        double targetZ = 0;
-        double zOffset = bgo->setup->zOffset;
-        int zMode = bgo->data->z_mode;
-
-        if(zMode==LevelBGO::ZDefault)
-            zMode = bgo->setup->view;
-        switch(zMode)
-        {
-            case LevelBGO::Background2:
-                targetZ = Z_BGOBack2 + zOffset + bgo->data->z_offset; break;
-            case LevelBGO::Background1:
-                targetZ = Z_BGOBack1 + zOffset + bgo->data->z_offset; break;
-            case LevelBGO::Foreground1:
-                targetZ = Z_BGOFore1 + zOffset + bgo->data->z_offset; break;
-            case LevelBGO::Foreground2:
-                targetZ = Z_BGOFore2 + zOffset + bgo->data->z_offset; break;
-            default:
-                targetZ = Z_BGOBack1 + zOffset + bgo->data->z_offset; break;
-        }
-
-        bgo->z_index += targetZ;
-
-        zCounter += 0.0000000000001;
-        bgo->z_index += zCounter;
-
-        long tID = ConfigManager::getBgoTexture(data.bgo[i].id);
-        if( tID >= 0 )
-        {
-            bgo->texId = ConfigManager::level_textures[tID].texture;
-            bgo->texture = ConfigManager::level_textures[tID];
-            bgo->animated = ConfigManager::lvl_bgo_indexes[data.bgo[i].id].animated;
-            bgo->animator_ID = ConfigManager::lvl_bgo_indexes[data.bgo[i].id].animator_ID;
-        }
-        bgo->init();
-
-        bgos.push_back(bgo);
-    }
-
-    qDebug()<<"Init Warps";
-    //BGO
-    for(int i=0; i<data.doors.size(); i++)
-    {
-        loaderStep();
-
-        LVL_Warp * warpP;
-        warpP = new LVL_Warp();
-        warpP->worldPtr = world;
-        warpP->data = data.doors[i];
-        warpP->init();
-        warps.push_back(warpP);
-    }
-
-
-    qDebug() << "textures " << ConfigManager::level_textures.size();
-
-
-    qDebug()<<"Add players";
-
-    int getPlayers = numberOfPlayers;
-    int players_count=0;
-
-    if(!isWarpEntrance) //Dont place players if entered through warp
-        for(players_count=0; players_count<data.players.size() && getPlayers>0 ; players_count++)
-        {
-            loaderStep();
-
-            int i = players_count;
-            if(data.players[i].w==0 && data.players[i].h==0) continue;
-
-            LVL_Player * player;
-            player = new LVL_Player();
-            player->camera = cameras[0];
-            player->worldPtr = world;
-            player->setSize(data.players[i].w, data.players[i].h);
-            player->data = &(data.players[i]);
-            player->z_index = Z_Player;
-            player->init();
-            players.push_back(player);
-            if(player->playerID==1)
-                keyboard1.registerInControl(player);
-            getPlayers--;
-        }
-
-    if(players_count<0 && !isWarpEntrance)
-    {
-        qDebug()<<"No defined players!";
-        return false;
-    }
-
-    //start animation
-    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
-        ConfigManager::Animator_Blocks[i]->start();
-
-    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
-        ConfigManager::Animator_BGO[i]->start();
-
-    for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
-        ConfigManager::Animator_BG[i]->start();
-
-    stopLoaderAnimation();
-    isInit = true;
-
-    return true;
-}
 
 
 
-bool LevelScene::loadFile(QString filePath)
-{
-    QFile file(filePath );
-    QFileInfo in_1(filePath);
-
-    if (file.open(QIODevice::ReadOnly))
-    {
-        if(filePath.endsWith(".lvl", Qt::CaseInsensitive))
-            data = FileFormats::ReadLevelFile(file);
-        else
-            data = FileFormats::ReadExtendedLevelFile(file);
-        data.filename = in_1.baseName();
-        data.path = in_1.absoluteDir().absolutePath();
-    }
-    return data.ReadFileValid;
-}
-
-
-
-
-bool LevelScene::prepareLevel()
-{
-    return true;
-}
 
 int i;
-
+int delayToEnter = 1000;
 void LevelScene::update(float step)
 {
     if(step<=0) step=10.0f;
@@ -471,6 +218,35 @@ void LevelScene::update(float step)
         //update players
         for(i=0; i<players.size(); i++)
             players[i]->update();
+
+
+        //Enter players via warp
+        if(isWarpEntrance)
+        {
+            if(delayToEnter<=0)
+            {
+                PlayerPoint newPoint;
+
+                    newPoint.id = NewPlayerID;
+                    newPoint.x=0;
+                    newPoint.y=0;
+                    newPoint.w=24;
+                    newPoint.h=54;
+                    newPoint.direction=1;
+
+                addPlayer(newPoint, true);
+
+                    NewPlayerID++;
+                    numberOfPlayers--;
+                    delayToEnter = 1000;
+                    if(numberOfPlayers<=0)
+                        isWarpEntrance = false;
+            }
+            else
+            {
+                delayToEnter-= 10;
+            }
+        }
 
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
@@ -635,11 +411,27 @@ int LevelScene::exec()
 
 
 
+
+
+
 bool LevelScene::isExit()
 {
     return !isLevelContinues;
 }
 
+QString LevelScene::toAnotherLevel()
+{
+    if(!warpToLevelFile.endsWith(".lvl", Qt::CaseInsensitive) &&
+       !warpToLevelFile.endsWith(".lvlx", Qt::CaseInsensitive))
+        warpToLevelFile.append(".lvl");
+
+    return warpToLevelFile;
+}
+
+int LevelScene::toAnotherEntrance()
+{
+    return warpToArrayID;
+}
 
 int LevelScene::exitType()
 {
@@ -668,171 +460,5 @@ void LevelScene::setExiting(int delay, int reason)
     doExit = true;
 }
 
-QString LevelScene::toAnotherLevel()
-{
-    if(!warpToLevelFile.endsWith(".lvl", Qt::CaseInsensitive) &&
-       !warpToLevelFile.endsWith(".lvlx", Qt::CaseInsensitive))
-        warpToLevelFile.append(".lvl");
 
-    return warpToLevelFile;
-}
-
-
-
-/**************************Fader*******************************/
-
-void LevelScene::setFade(int speed, float target, float step)
-{
-    fade_step = fabs(step);
-    target_opacity = target;
-    fadeSpeed = speed;
-    fader_timer_id = SDL_AddTimer(speed, &LevelScene::nextOpacity, this);
-}
-
-unsigned int LevelScene::nextOpacity(unsigned int x, void *p)
-{
-    Q_UNUSED(x);
-    LevelScene *self = reinterpret_cast<LevelScene *>(p);
-    self->fadeStep();
-    return 0;
-}
-
-void LevelScene::fadeStep()
-{
-    if(fader_opacity < target_opacity)
-        fader_opacity+=fade_step;
-    else
-        fader_opacity-=fade_step;
-
-    if(fader_opacity>=1.0 || fader_opacity<=0.0)
-        SDL_RemoveTimer(fader_timer_id);
-    else
-        fader_timer_id = SDL_AddTimer(fadeSpeed, &LevelScene::nextOpacity, this);
-}
-/**************************Fader**end**************************/
-
-
-/**************************LoadAnimation*******************************/
-namespace lvl_scene_loader
-{
-    SimpleAnimator * loading_Ani = NULL;
-    PGE_Texture loading_texture;
-}
-
-void LevelScene::drawLoader()
-{
-    using namespace lvl_scene_loader;
-
-    if(!loading_Ani) return;
-
-    QRectF loadAniG = QRectF(PGE_Window::Width/2 - loading_texture.w/2,
-                           PGE_Window::Height/2 - (loading_texture.h/4)/2,
-                           loading_texture.w,
-                           loading_texture.h/4);
-
-    glEnable(GL_TEXTURE_2D);
-    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-    AniPos x(0,1);
-            x = loading_Ani->image();
-
-    glBindTexture( GL_TEXTURE_2D, loading_texture.texture );
-
-    glBegin( GL_QUADS );
-        glTexCoord2f( 0, x.first );
-        glVertex2f( loadAniG.left(), loadAniG.top());
-
-        glTexCoord2f( 1, x.first );
-        glVertex2f(  loadAniG.right(), loadAniG.top());
-
-        glTexCoord2f( 1, x.second );
-        glVertex2f(  loadAniG.right(),  loadAniG.bottom());
-
-        glTexCoord2f( 0, x.second );
-        glVertex2f( loadAniG.left(),  loadAniG.bottom());
-        glEnd();
-    glDisable(GL_TEXTURE_2D);
-}
-
-
-void LevelScene::setLoaderAnimation(int speed)
-{
-    using namespace lvl_scene_loader;
-    loaderSpeed = speed;
-    loading_texture = GraphicsHelps::loadTexture(loading_texture, ":/images/shell.png");
-
-    loading_Ani = new SimpleAnimator(true,
-                                     4,
-                                     70,
-                                     0, -1, false, false);
-    loading_Ani->start();
-
-    loader_timer_id = SDL_AddTimer(speed, &LevelScene::nextLoadAniFrame, this);
-    IsLoaderWorks = true;
-}
-
-void LevelScene::stopLoaderAnimation()
-{
-    using namespace lvl_scene_loader;
-
-    doLoaderStep = false;
-    IsLoaderWorks = false;
-    SDL_RemoveTimer(loader_timer_id);
-
-    if(loading_Ani)
-    {
-        loading_Ani->stop();
-        delete loading_Ani;
-        loading_Ani = NULL;
-        glDeleteTextures( 1, &(loading_texture.texture) );
-    }
-
-}
-
-unsigned int LevelScene::nextLoadAniFrame(unsigned int x, void *p)
-{
-    Q_UNUSED(x);
-    LevelScene *self = reinterpret_cast<LevelScene *>(p);
-    self->loaderTick();
-    return 0;
-}
-
-void LevelScene::loaderTick()
-{
-    doLoaderStep = true;
-}
-
-void LevelScene::loaderStep()
-{
-    if(!IsLoaderWorks) return;
-    if(!doLoaderStep) return;
-
-    SDL_Event event; //  Events of SDL
-    while ( SDL_PollEvent(&event) )
-    {
-        switch(event.type)
-        {
-            case SDL_QUIT:
-            break;
-        }
-    }
-
-    render();
-    glFlush();
-    SDL_GL_SwapWindow(PGE_Window::window);
-
-    loader_timer_id = SDL_AddTimer(loaderSpeed, &LevelScene::nextLoadAniFrame, this);
-    doLoaderStep = false;
-}
-
-QVector<LVL_Background *> *LevelScene::bgList()
-{
-    return &backgrounds;
-}
-
-LevelData *LevelScene::levelData()
-{
-    return &data;
-}
-/**************************LoadAnimation**end**************************/
 
