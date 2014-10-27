@@ -49,5 +49,7 @@
 	#define OPERATION_SYSTEM "Other"
 #endif
 
+#define _DATE_OF_BUILD __DATE__ " " __TIME__
+
 
 #endif
