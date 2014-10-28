@@ -18,6 +18,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
     currentConfig = "";
     themePack = "";
+    askAgain = false;
 
     QString configPath(ApplicationPath+"/configs/");
     QDir configDir(configPath);
@@ -108,6 +109,11 @@ QString ConfigManager::isPreLoaded()
     return currentConfig;
 }
 
+void ConfigManager::hideAskAgain()
+{
+    ui->AskAgain->setVisible(false);
+}
+
 void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
     currentConfig = item->data(3).toString();
@@ -118,5 +124,6 @@ void ConfigManager::on_buttonBox_accepted()
 {
     if(ui->configList->selectedItems().isEmpty()) return;
     currentConfig = ui->configList->selectedItems().first()->data(3).toString();
+    askAgain = ui->AskAgain->isChecked();
     this->accept();
 }
