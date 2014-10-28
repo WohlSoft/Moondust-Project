@@ -61,12 +61,14 @@ MainWindow::MainWindow(QMdiArea *parent) :
             setDefLang();
             setUiDefults(); //Apply default UI settings
             WriteToLog(QtWarningMsg, "<Configuration is not selected>");
+            continueLoad = false;
             this->close();
             return;
         }
     }
+    continueLoad = true;
 
-    currentConfigDir = configPath;
+    currentConfigDir = (cmanager->askAgain) ? "" : configPath;
 
     delete cmanager;
 

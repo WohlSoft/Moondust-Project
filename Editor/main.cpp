@@ -56,15 +56,21 @@ int main(int argc, char *argv[])
     std::set_new_handler(PGECrashHandler::crashByFlood);
     QApplication::addLibraryPath(".");
 
+
+
     QApplication *a = new QApplication(argc, argv);
 
-    SingleApplication *as = new SingleApplication(argc, argv);
 
+
+    SingleApplication *as = new SingleApplication(argc, argv);
     if(!as->shouldContinue())
     {
         std::cout << "Editor already runned!\n";
         return 0;
     }
+
+
+
 
 
     ApplicationPath = QApplication::applicationDirPath();
@@ -98,9 +104,17 @@ int main(int argc, char *argv[])
     a->setStyle(new PGE_ProxyStyle);
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
-    MainWindow *w = new MainWindow;
+    int ret=0;
+    QRect screenSize;
 
-    QRect screenSize = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    MainWindow *w = new MainWindow;
+    if(!w->continueLoad)
+    {
+        delete w;
+        goto QuitFromEditor;
+    }
+
+    screenSize = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
     w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
                                        QSize(screenSize.width()-100,\
                                              screenSize.height()-100), screenSize));
@@ -117,8 +131,9 @@ int main(int argc, char *argv[])
 
     w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
 
-    int ret=a->exec();
+    ret=a->exec();
 
+QuitFromEditor:
     QApplication::quit();
     QApplication::exit();
     delete a;

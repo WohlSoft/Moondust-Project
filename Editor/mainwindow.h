@@ -132,6 +132,8 @@ public:
 
         void applyTheme(QString themeDir="");
 
+        bool continueLoad; //!< Is need to continue or abort loading operation and close editor
+
         ///
         /// \brief loadSettings load settings from configuration file
         ///
