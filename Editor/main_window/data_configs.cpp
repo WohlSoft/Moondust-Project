@@ -90,7 +90,7 @@ void MainWindow::on_actionChangeConfig_triggered()
     if(cmanager->exec()==QDialog::Accepted)
     {
         configPath = cmanager->currentConfig;
-        currentConfigDir = configPath;
+        currentConfigDir = (cmanager->askAgain)?"":configPath;
         QMessageBox::information(this, tr("Configuration changed"), tr("The Configuration was switched!\nTo start work with new configuration, please restart application."), QMessageBox::Ok);
     }
     delete cmanager;
