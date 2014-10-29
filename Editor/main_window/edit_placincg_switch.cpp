@@ -53,6 +53,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 ui->actionLine->setEnabled(true);
 
                 ui->PlacingToolbar->setVisible(true);
+                qApp->setActiveWindow(this);
                 activeLvlEditWin()->setFocus();
            default:;
        }
@@ -121,7 +122,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  WldPlacingItems::lineMode = false;
                  ui->actionLine->setChecked(false);
                  ui->actionLine->setEnabled(true);
-
+                 qApp->setActiveWindow(this);
                  activeWldEditWin()->setFocus();
             default:;
         }

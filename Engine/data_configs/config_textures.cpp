@@ -1,3 +1,21 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "config_manager.h"
 #include "../common_features/graphics_funcs.h"
 
@@ -54,8 +72,8 @@ long  ConfigManager::getBlockTexture(long blockID)
             {
                 case 1: // Invisible block
                 {
-                    frameFirst = 5;
-                    frameLast = 6;
+                    frameFirst = 0;
+                    frameLast = 0;
                     break;
                 }
                 case 3: //Player's character block
@@ -192,24 +210,39 @@ long  ConfigManager::getBgoTexture(long bgoID)
 
 
 
-long  ConfigManager::getBGTexture(long bgID)
+long  ConfigManager::getBGTexture(long bgID, bool isSecond)
 {
     if(!lvl_bg_indexes.contains(bgID))
     {
         return -1;
     }
 
-    if(lvl_bg_indexes[bgID].isInit)
+    if( (lvl_bg_indexes[bgID].isInit && !isSecond) || (lvl_bg_indexes[bgID].second_isInit && isSecond) )
     {
 
-        if(lvl_bg_indexes[bgID].textureArrayId < level_textures.size())
-            return lvl_bg_indexes[bgID].textureArrayId;
+        if(isSecond)
+        {
+            if(lvl_bg_indexes[bgID].second_textureArrayId < level_textures.size())
+                return lvl_bg_indexes[bgID].second_textureArrayId;
+            else
+                return -1;
+        }
         else
-            return -1;
+        {
+            if(lvl_bg_indexes[bgID].textureArrayId < level_textures.size())
+                return lvl_bg_indexes[bgID].textureArrayId;
+            else
+                return -1;
+        }
     }
     else
     {
-        QString imgFile = Dir_BG.getCustomFile(lvl_bg_indexes[bgID].image_n);
+        QString imgFile ="";
+
+        if(isSecond)
+            imgFile = Dir_BG.getCustomFile(lvl_bg_indexes[bgID].second_image_n);
+        else
+            imgFile = Dir_BG.getCustomFile(lvl_bg_indexes[bgID].image_n);
 
         PGE_Texture texture;
         texture.w = 0;
@@ -221,18 +254,34 @@ long  ConfigManager::getBGTexture(long bgID)
 
         long id = level_textures.size();
 
-        lvl_bg_indexes[bgID].textureArrayId = id;
+        if(isSecond)
+            lvl_bg_indexes[bgID].second_textureArrayId = id;
+        else
+            lvl_bg_indexes[bgID].textureArrayId = id;
 
         level_textures.push_back(texture);
 
         GraphicsHelps::loadTexture( level_textures[id], imgFile );
 
-        lvl_bg_indexes[bgID].image = &(level_textures[id]);
-        lvl_bg_indexes[bgID].textureID = level_textures[id].texture;
-        lvl_bg_indexes[bgID].isInit = true;
+        if(isSecond)
+        {
+            lvl_bg_indexes[bgID].second_image = &(level_textures[id]);
+            lvl_bg_indexes[bgID].second_textureID = level_textures[id].texture;
+            lvl_bg_indexes[bgID].second_isInit = true;
+            lvl_bg_indexes[bgID].second_Color_upper = level_textures[id].ColorUpper;
+            lvl_bg_indexes[bgID].second_Color_lower = level_textures[id].ColorLower;
+        }
+        else
+        {
+            lvl_bg_indexes[bgID].image = &(level_textures[id]);
+            lvl_bg_indexes[bgID].textureID = level_textures[id].texture;
+            lvl_bg_indexes[bgID].Color_upper = level_textures[id].ColorUpper;
+            lvl_bg_indexes[bgID].Color_lower = level_textures[id].ColorLower;
+            lvl_bg_indexes[bgID].isInit = true;
+        }
 
         //Also, load and init animator
-        if(lvl_bg_indexes[bgID].animated)
+        if(lvl_bg_indexes[bgID].animated && !isSecond)
         {
             int frameFirst = 0;
             int frameLast = -1;
@@ -258,7 +307,6 @@ long  ConfigManager::getBGTexture(long bgID)
 
             Animator_BG.push_back(animator);
             lvl_bg_indexes[bgID].animator_ID = Animator_BG.size()-1;
-
         }
 
         return id;

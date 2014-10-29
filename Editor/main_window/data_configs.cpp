@@ -82,15 +82,19 @@ void MainWindow::on_actionCurConfig_triggered()
 void MainWindow::on_actionChangeConfig_triggered()
 {
     // Config manager
-    ConfigManager *cmanager = new ConfigManager();
+    ConfigManager * cmanager;
+    cmanager = new ConfigManager();
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath;
-
+    configPath = cmanager->isPreLoaded();
+    cmanager->setAskAgain(askConfigAgain);
     if(cmanager->exec()==QDialog::Accepted)
     {
         configPath = cmanager->currentConfig;
-        currentConfigDir = configPath;
+        askConfigAgain = cmanager->askAgain;
+        currentConfigDir = (cmanager->askAgain)?"":configPath;
+        saveSettings();
         QMessageBox::information(this, tr("Configuration changed"), tr("The Configuration was switched!\nTo start work with new configuration, please restart application."), QMessageBox::Ok);
     }
     delete cmanager;

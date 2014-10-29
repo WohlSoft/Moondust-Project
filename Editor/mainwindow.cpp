@@ -41,13 +41,16 @@ MainWindow::MainWindow(QMdiArea *parent) :
         QDir().mkdir(ApplicationPath + "/" +  "configs");
 
     // Config manager
-    ConfigManager *cmanager = new ConfigManager();
+    ConfigManager *cmanager;
+    cmanager = new ConfigManager();
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath = cmanager->isPreLoaded();
+    askConfigAgain = cmanager->askAgain;
+
     QString tPack = cmanager->themePack;
     //If application runned first time or target configuration is not exist
-    if(configPath.isEmpty())
+    if( (askConfigAgain) || ( configPath.isEmpty() ) )
     {
         //Ask for configuration
         if(cmanager->exec()==QDialog::Accepted)
@@ -61,10 +64,13 @@ MainWindow::MainWindow(QMdiArea *parent) :
             setDefLang();
             setUiDefults(); //Apply default UI settings
             WriteToLog(QtWarningMsg, "<Configuration is not selected>");
+            continueLoad = false;
             this->close();
             return;
         }
     }
+    continueLoad = true;
+    askConfigAgain = cmanager->askAgain;
 
     currentConfigDir = configPath;
 

@@ -10,5 +10,7 @@
         <file>icon/cat_128.png</file>
         <file>icon/cat_256.png</file>
         <file>images/cat_splash.png</file>
+        <file>images/shell.png</file>
+        <file>images/coin.png</file>
     </qresource>
 </RCC>

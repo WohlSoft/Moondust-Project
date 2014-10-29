@@ -18,6 +18,7 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
     currentConfig = "";
     themePack = "";
+    askAgain = false;
 
     QString configPath(ApplicationPath+"/configs/");
     QDir configDir(configPath);
@@ -67,7 +68,6 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
         ui->configList->addItem( item );
     }
-
 }
 
 ConfigManager::~ConfigManager()
@@ -88,6 +88,7 @@ QString ConfigManager::isPreLoaded()
     settings.beginGroup("Main");
     QString configPath = settings.value("current-config", "").toString();
     QString saved_theme = settings.value("current-theme", "").toString();;
+    askAgain = settings.value("ask-config-again", false).toBool();
     settings.endGroup();
 
     if(!saved_theme.isEmpty())
@@ -101,16 +102,28 @@ QString ConfigManager::isPreLoaded()
         }
         if(it->data(3).toString()==configPath)
         {
-            currentConfig = configPath; break;
+            currentConfig = configPath;
+            it->setSelected(true);
+            ui->configList->scrollToItem(it);
+            break;
         }
     }
 
+    ui->AskAgain->setChecked(askAgain);
+
     return currentConfig;
+}
+
+void ConfigManager::setAskAgain(bool _x)
+{
+    askAgain = _x;
+    ui->AskAgain->setChecked(_x);
 }
 
 void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
     currentConfig = item->data(3).toString();
+    askAgain = ui->AskAgain->isChecked();
     this->accept();
 }
 
@@ -118,5 +131,6 @@ void ConfigManager::on_buttonBox_accepted()
 {
     if(ui->configList->selectedItems().isEmpty()) return;
     currentConfig = ui->configList->selectedItems().first()->data(3).toString();
+    askAgain = ui->AskAgain->isChecked();
     this->accept();
 }

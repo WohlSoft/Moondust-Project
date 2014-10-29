@@ -20,6 +20,8 @@ public:
     QString currentConfig;
     QString themePack;
     QString isPreLoaded();
+    void setAskAgain(bool _x);
+    bool askAgain;
 
 private slots:
     void on_configList_itemDoubleClicked(QListWidgetItem *item);

@@ -1,10 +1,27 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "scene_level.h"
 
-#include <QFile>
-#include <QDir>
-#include <QFileInfo>
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
+
+#include "level/lvl_scene_ptr.h"
 
 #include "../data_configs/config_manager.h"
 
@@ -12,22 +29,46 @@
 
 LevelScene::LevelScene()
 {
+    LvlSceneP::s = this;
+
     data = FileFormats::dummyLvlDataArray();
     data.ReadFileValid = false;
 
+    isInit=false;
     isWarpEntrance=false;
 
     isPauseMenu=false;
     isTimeStopped=false;
-    isLevelContinues=false;
-    exitLevelDelay=false;
-    exitLevelCode=false;
 
+    /*********Exit*************/
+    isLevelContinues=true;
+
+    doExit = false;
+    exitLevelDelay=3000;
+    exitLevelCode = EXIT_Closed;
+    warpToLevelFile = "";
+    warpToArrayID = 0;
+    NewPlayerID = 1;
+    /**************************/
+
+    /*********Default players number*************/
     numberOfPlayers=1;
+    /*********Default players number*************/
 
     world=NULL;
 
+    /*********Loader*************/
+    IsLoaderWorks=false;
+    /*********Loader*************/
 
+    /*********Fader*************/
+    fader_opacity=1.0f;
+    target_opacity=1.0f;
+    fade_step=0.0f;
+    /*********Fader*************/
+
+
+    /*********Z-Layers*************/
     //Default Z-Indexes
     //set Default Z Indexes
     Z_backImage = -1000; //Background
@@ -56,12 +97,13 @@ LevelScene::LevelScene()
     Z_sys_door = 700;
     Z_sys_interspace1 = 1000; // interSection space layer
     Z_sys_sctBorder = 1020; // section Border
+    /*********Z-Layers*************/
 }
 
 LevelScene::~LevelScene()
 {
+    LvlSceneP::s = NULL;
     //stop animators
-
 
     //desroy animators
 
@@ -74,6 +116,16 @@ LevelScene::~LevelScene()
         textures_bank.pop_front();
     }
 
+
+    qDebug() << "Destroy backgrounds";
+    while(!backgrounds.isEmpty())
+    {
+        LVL_Background* tmp;
+        tmp = backgrounds.first();
+        backgrounds.pop_front();
+        if(tmp) delete tmp;
+    }
+
     qDebug() << "Destroy cameras";
     while(!cameras.isEmpty())
     {
@@ -82,7 +134,6 @@ LevelScene::~LevelScene()
         cameras.pop_front();
         if(tmp) delete tmp;
     }
-
 
     qDebug() << "Destroy players";
     while(!players.isEmpty())
@@ -112,6 +163,16 @@ LevelScene::~LevelScene()
         if(tmp) delete tmp;
     }
 
+
+    qDebug() << "Destroy Warps";
+    while(!warps.isEmpty())
+    {
+        LVL_Warp* tmp;
+        tmp = warps.first();
+        warps.pop_front();
+        if(tmp) delete tmp;
+    }
+
     qDebug() << "Destroy world";
     if(world) delete world; //!< Destroy annoying world, mu-ha-ha-ha >:-D
     world = NULL;
@@ -124,242 +185,68 @@ LevelScene::~LevelScene()
     textures_bank.clear();
 }
 
-bool LevelScene::init()
-{
-
-    //Load File
-
-    //Set Entrance  (int entr=0)
-
-    //Init Physics
-    b2Vec2 gravity(0.0f, 150.0f);
-    world = new b2World(gravity);
-    world->SetAllowSleeping(true);
-
-    int sID = findNearSection(cameraStart.x(), cameraStart.y());
-
-    qDebug()<<"Create cameras";
-    //Init Cameras
-    PGE_LevelCamera* camera;
-    camera = new PGE_LevelCamera();
-    camera->setWorld(world);
-
-    camera->changeSectionBorders(
-                data.sections[sID].size_left,
-                data.sections[sID].size_top,
-                data.sections[sID].size_right,
-                data.sections[sID].size_bottom
-                );
-
-    camera->isWarp = data.sections[sID].IsWarp;
-    camera->section = &(data.sections[sID]);
-
-    camera->init(
-                    (float)cameraStart.x(),
-                    (float)cameraStart.y(),
-                    (float)PGE_Window::Width, (float)PGE_Window::Height
-                );
-    cameras.push_back(camera);
-
-    //Init data
-
-
-    qDebug()<<"Init blocks";
-
-    double zCounter = 0;
-    //blocks
-    for(int i=0; i<data.blocks.size(); i++)
-    {
-        LVL_Block * block;
-        block = new LVL_Block();
-        if(ConfigManager::lvl_block_indexes.contains(data.blocks[i].id))
-            block->setup = &(ConfigManager::lvl_block_indexes[data.blocks[i].id]);
-        else
-        {
-            //Wrong block!
-            delete block;
-            continue;
-        }
-
-        if(block->setup->sizable)
-        {
-            block->z_index = Z_blockSizable +
-                    ((double)data.blocks[i].y/(double)100000000000) + 1 -
-                    ((double)data.blocks[i].w * (double)0.0000000000000001);
-        }
-        else
-        {
-
-            if(block->setup->view==1)
-                block->z_index = Z_BlockFore;
-            else
-                block->z_index = Z_Block;
-            zCounter += 0.0000000000001;
-            block->z_index += zCounter;
-        }
-
-        block->worldPtr = world;
-        block->data = &(data.blocks[i]);
-        block->init();
-        long tID = ConfigManager::getBlockTexture(data.blocks[i].id);
-        if( tID >= 0 )
-        {
-            block->texId = ConfigManager::level_textures[tID].texture;
-            block->texture = &(ConfigManager::level_textures[tID]);
-            block->animated = ConfigManager::lvl_block_indexes[data.blocks[i].id].animated;
-            block->animator_ID = ConfigManager::lvl_block_indexes[data.blocks[i].id].animator_ID;
-        }
-        blocks.push_back(block);
-    }
-
-    qDebug()<<"Init BGOs";
-    //BGO
-    for(int i=0; i<data.bgo.size(); i++)
-    {
-        LVL_Bgo * bgo;
-        bgo = new LVL_Bgo();
-        if(ConfigManager::lvl_bgo_indexes.contains(data.bgo[i].id))
-            bgo->setup = &(ConfigManager::lvl_bgo_indexes[data.bgo[i].id]);
-        else
-        {
-            //Wrong BGO!
-            delete bgo;
-            continue;
-        }
-
-        bgo->worldPtr = world;
-        bgo->data = &(data.bgo[i]);
-
-        double targetZ = 0;
-        double zOffset = bgo->setup->zOffset;
-        int zMode = bgo->data->z_mode;
-
-        if(zMode==LevelBGO::ZDefault)
-            zMode = bgo->setup->view;
-        switch(zMode)
-        {
-            case LevelBGO::Background2:
-                targetZ = Z_BGOBack2 + zOffset + bgo->data->z_offset; break;
-            case LevelBGO::Background1:
-                targetZ = Z_BGOBack1 + zOffset + bgo->data->z_offset; break;
-            case LevelBGO::Foreground1:
-                targetZ = Z_BGOFore1 + zOffset + bgo->data->z_offset; break;
-            case LevelBGO::Foreground2:
-                targetZ = Z_BGOFore2 + zOffset + bgo->data->z_offset; break;
-            default:
-                targetZ = Z_BGOBack1 + zOffset + bgo->data->z_offset; break;
-        }
-
-        bgo->z_index += targetZ;
-
-        zCounter += 0.0000000000001;
-        bgo->z_index += zCounter;
-
-        long tID = ConfigManager::getBgoTexture(data.bgo[i].id);
-        if( tID >= 0 )
-        {
-            bgo->texId = ConfigManager::level_textures[tID].texture;
-            bgo->texture = &(ConfigManager::level_textures[tID]);
-            bgo->animated = ConfigManager::lvl_bgo_indexes[data.bgo[i].id].animated;
-            bgo->animator_ID = ConfigManager::lvl_bgo_indexes[data.bgo[i].id].animator_ID;
-        }
-        bgo->init();
-
-        bgos.push_back(bgo);
-    }
-
-
-    qDebug() << "textures " << ConfigManager::level_textures.size();
-
-
-    qDebug()<<"Add players";
-
-    int getPlayers = numberOfPlayers;
-    int players_count=0;
-
-    if(!isWarpEntrance) //Dont place players if entered through warp
-        for(players_count=0; players_count<data.players.size() && getPlayers>0 ; players_count++)
-        {
-            int i = players_count;
-            if(data.players[i].w==0 && data.players[i].h==0) continue;
-
-            LVL_Player * player;
-            player = new LVL_Player();
-            player->camera = cameras[0];
-            player->worldPtr = world;
-            player->setSize(data.players[i].w, data.players[i].h);
-            player->data = &(data.players[i]);
-            player->z_index = Z_Player;
-            player->init();
-            players.push_back(player);
-            if(player->playerID==1)
-                keyboard1.registerInControl(player);
-            getPlayers--;
-        }
-
-    if(players_count<0 && !isWarpEntrance)
-    {
-        qDebug()<<"No defined players!";
-        return false;
-    }
-
-    //start animation
-    for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
-        ConfigManager::Animator_Blocks[i]->start();
-
-    for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
-        ConfigManager::Animator_BGO[i]->start();
-
-    //qDebug()<<"done!";
-    return true;
-}
 
 
 
-bool LevelScene::loadFile(QString filePath)
-{
-    QFile file(filePath );
-    QFileInfo in_1(filePath);
-
-    if (file.open(QIODevice::ReadOnly))
-    {
-        if(filePath.endsWith(".lvl", Qt::CaseInsensitive))
-            data = FileFormats::ReadLevelFile(file);
-        else
-            data = FileFormats::ReadExtendedLevelFile(file);
-        data.filename = in_1.baseName();
-        data.path = in_1.absoluteDir().absolutePath();
-    }
-    return data.ReadFileValid;
-}
-
-
-
-
-bool LevelScene::prepareLevel()
-{
-
-    return true;
-}
 
 int i;
-
+int delayToEnter = 1000;
 void LevelScene::update(float step)
 {
     if(step<=0) step=10.0f;
 
-    //Make world step
-    world->Step(1.0f / 100.f, 1, 1);
-
-    //Update controllers
-    keyboard1.sendControls();
-
-    //update players
-
+    if(doExit)
+    {
+        if(exitLevelDelay>=0)
+            exitLevelDelay -= 10;
+        else
+        {
+            if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
+            if(fader_opacity>=1.0)
+                isLevelContinues=false;
+        }
+    }
+    else
     if(!isPauseMenu) //Update physics is not pause menu
     {
+        //Make world step
+        world->Step(1.0f / 100.f, 5, 5);
+
+        //Update controllers
+        keyboard1.sendControls();
+
+        //update players
         for(i=0; i<players.size(); i++)
             players[i]->update();
+
+
+        //Enter players via warp
+        if(isWarpEntrance)
+        {
+            if(delayToEnter<=0)
+            {
+                PlayerPoint newPoint;
+
+                    newPoint.id = NewPlayerID;
+                    newPoint.x=0;
+                    newPoint.y=0;
+                    newPoint.w=24;
+                    newPoint.h=54;
+                    newPoint.direction=1;
+
+                addPlayer(newPoint, true);
+
+                    NewPlayerID++;
+                    numberOfPlayers--;
+                    delayToEnter = 1000;
+                    if(numberOfPlayers<=0)
+                        isWarpEntrance = false;
+            }
+            else
+            {
+                delayToEnter-= 10;
+            }
+        }
 
 
         if(!isTimeStopped) //if activated Time stop bonus or time disabled by special event
@@ -389,133 +276,189 @@ void LevelScene::render()
     //Move to center of the screen
     //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
+    if(!isInit) goto renderBlack;
 
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
 
     foreach(PGE_LevelCamera* cam, cameras)
     {
+        backgrounds.last()->draw(cam->posX(), cam->posY());
+
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
             switch(item->type)
             {
             case PGE_Phys_Object::LVLBlock:
-                {
-                    LVL_Block * b = dynamic_cast<LVL_Block*>(item);
-
-                    QRectF blockG = QRectF(b->posX()-cam->posX(),
-                                           b->posY()-cam->posY(),
-                                           b->width,
-                                           b->height);
-
-
-                    AniPos x(0,1);
-
-                    if(b->animated) //Get current animated frame
-                        x = ConfigManager::Animator_Blocks[b->animator_ID]->image();
-
-                    glEnable(GL_TEXTURE_2D);
-                    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-                    glBindTexture( GL_TEXTURE_2D, b->texId );
-
-                    glBegin( GL_QUADS );
-                        glTexCoord2f( 0, x.first );
-                        glVertex2f( blockG.left(), blockG.top());
-
-                        glTexCoord2f( 1, x.first );
-                        glVertex2f(  blockG.right(), blockG.top());
-
-                        glTexCoord2f( 1, x.second );
-                        glVertex2f(  blockG.right(),  blockG.bottom());
-
-                        glTexCoord2f( 0, x.second );
-                        glVertex2f( blockG.left(),  blockG.bottom());
-                    glEnd();
-                    glDisable(GL_TEXTURE_2D);
-                    //glTranslated(0, 0, -b->z_index);
-                }
-                break;
             case PGE_Phys_Object::LVLBGO:
-                {
-                    LVL_Bgo * b = dynamic_cast<LVL_Bgo*>(item);
-
-                    QRectF bgoG = QRectF(b->posX()-cam->posX(),
-                                           b->posY()-cam->posY(),
-                                           b->width,
-                                           b->height);
-
-
-                    AniPos x(0,1);
-
-                    if(b->animated) //Get current animated frame
-                        x = ConfigManager::Animator_BGO[b->animator_ID]->image();
-
-                    glEnable(GL_TEXTURE_2D);
-                    glColor4f( 1.f, 1.f, 1.f, 1.f);
-
-                    glBindTexture( GL_TEXTURE_2D, b->texId );
-
-                    glBegin( GL_QUADS );
-                        glTexCoord2f( 0, x.first );
-                        glVertex2f( bgoG.left(), bgoG.top());
-
-                        glTexCoord2f( 1, x.first );
-                        glVertex2f(  bgoG.right(), bgoG.top());
-
-                        glTexCoord2f( 1, x.second );
-                        glVertex2f(  bgoG.right(),  bgoG.bottom());
-
-                        glTexCoord2f( 0, x.second );
-                        glVertex2f( bgoG.left(),  bgoG.bottom());
-                    glEnd();
-                    glDisable(GL_TEXTURE_2D);
-                    //glTranslated(0, 0, -b->z_index);
-                }
-                break;
             case PGE_Phys_Object::LVLPlayer:
-                {
-                    LVL_Player * p = static_cast<LVL_Player*>(item);
-
-                    QRectF player = QRectF( p->posX()
-                                            -cam->posX(),
-
-                                            p->posY()
-                                            -cam->posY(),
-
-                                            p->width, p->height
-                                         );
-
-            //        qDebug() << "PlPos" << pl.left() << pl.top() << player.right() << player.bottom();
-
-
-                    glColor4f( 0.f, 0.f, 1.f, 1.f);
-                    glBegin( GL_QUADS );
-                        glVertex2f( player.left(), player.top());
-                        glVertex2f( player.right(), player.top());
-                        glVertex2f( player.right(),  player.bottom());
-                        glVertex2f( player.left(),  player.bottom());
-                    glEnd();
-
-                }
+                item->render(cam->posX(), cam->posY());
+                break;
             default:
                 break;
             }
         }
     }
 
+    renderBlack:
+
+    if(fader_opacity>0.0f)
+    {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f( 0.f, 0.f, 0.f, fader_opacity);
+        glBegin( GL_QUADS );
+            glVertex2f( 0, 0);
+            glVertex2f( PGE_Window::Width, 0);
+            glVertex2f( PGE_Window::Width, PGE_Window::Height);
+            glVertex2f( 0, PGE_Window::Height);
+        glEnd();
+    }
+
+    if(IsLoaderWorks) drawLoader();
 }
+
+
+
+int LevelScene::exec()
+{
+    //Level scene's Loop
+    Uint32 start;
+    bool running = true;
+    int doUpdate=0;
+    float doUpdateP=0;
+    while(running)
+    {
+
+        //UPDATE Events
+        if(doUpdate<=0)
+        {
+
+            start=SDL_GetTicks();
+
+            render();
+
+            glFlush();
+            SDL_GL_SwapWindow(PGE_Window::window);
+
+            if(1000.0/1000>SDL_GetTicks()-start)
+                    //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
+                    doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
+        }
+        doUpdate-=10;
+
+
+        start=SDL_GetTicks();
+
+        SDL_Event event; //  Events of SDL
+        while ( SDL_PollEvent(&event) )
+        {
+            keyboard1.update(event);
+            switch(event.type)
+            {
+                case SDL_QUIT:
+                    {
+                        setExiting(0, EXIT_Closed);
+                    }   // End work of program
+                break;
+
+                case SDL_KEYDOWN: // If pressed key
+                  switch(event.key.keysym.sym)
+                  { // Check which
+                    case SDLK_ESCAPE: // ESC
+                            {
+                                setExiting(0, EXIT_Closed);
+                            }   // End work of program
+                        break;
+                    case SDLK_RETURN:// Enter
+                          isPauseMenu = !isPauseMenu;
+                    break;
+                    case SDLK_t:
+                        PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    break;
+                    default:
+                      break;
+
+                  }
+                break;
+
+                case SDL_KEYUP:
+                switch(event.key.keysym.sym)
+                {
+                case SDLK_RETURN:// Enter
+                    break;
+                default:
+                    break;
+                }
+                break;
+            }
+        }
+
+
+        //Update physics
+        update();
+
+        if(1000.0/100>SDL_GetTicks()-start)
+        {
+            doUpdateP = 1000.0/100-(SDL_GetTicks()-start);
+            SDL_Delay( doUpdateP );
+        }
+
+        if(isExit())
+            running = false;
+    }
+
+    return exitLevelCode;
+}
+
+
+
 
 
 
 bool LevelScene::isExit()
 {
-
-    return true;
+    return !isLevelContinues;
 }
 
+QString LevelScene::toAnotherLevel()
+{
+    if(!warpToLevelFile.endsWith(".lvl", Qt::CaseInsensitive) &&
+       !warpToLevelFile.endsWith(".lvlx", Qt::CaseInsensitive))
+        warpToLevelFile.append(".lvl");
+
+    return warpToLevelFile;
+}
+
+int LevelScene::toAnotherEntrance()
+{
+    return warpToArrayID;
+}
 
 int LevelScene::exitType()
 {
-
     return exitLevelCode;
 }
+
+void LevelScene::checkPlayers()
+{
+    bool haveLivePlayers=false;
+    for(int i=0; i<players.size(); i++)
+    {
+        if(players[i]->isLive)
+            haveLivePlayers = true;
+    }
+
+    if(!haveLivePlayers)
+    {
+        setExiting(3000, EXIT_PlayerDeath);
+    }
+}
+
+void LevelScene::setExiting(int delay, int reason)
+{
+    exitLevelDelay = delay;
+    exitLevelCode = reason;
+    doExit = true;
+}
+
+
+

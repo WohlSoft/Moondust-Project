@@ -1,9 +1,32 @@
-//#include "mainwindow.h"
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QElapsedTimer>
 #include <QFileInfo>
 #include <QDir>
+
+#include <QtDebug>
+
+
+#include "version.h"
 
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
@@ -27,8 +50,6 @@
 
 #include <iostream>
 using namespace std;
-
-#include <QtDebug>
 
 
 //struct keysForTest
@@ -119,113 +140,71 @@ int main(int argc, char *argv[])
     ConfigManager::setConfigPath(configPath);
     if(!ConfigManager::loadBasics()) exit(1);
 
-
     //Init Window
-    if(!PGE_Window::init("PGE Engine - dummy tester")) exit(1);
+    if(!PGE_Window::init(QString("Platformer Game Engine - v")+_FILE_VERSION+_FILE_RELEASE)) exit(1);
 
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
 
+    glFlush();
+    SDL_GL_SwapWindow(PGE_Window::window);
 
+    SDL_Event event; //  Events of SDL
+    while ( SDL_PollEvent(&event) )
+    {}
 
 
     QString fileToPpen = ApplicationPath+"/physics.lvl";
     if(a.arguments().size()>1)
         fileToPpen = a.arguments()[1];
 
-
-    lScene = new LevelScene();
-
-    bool sceneResult=true;
-
-        sceneResult = lScene->loadFile(fileToPpen);
-
-    if(sceneResult)
-        sceneResult = lScene->setEntrance(0);
-
-    if(sceneResult)
-        sceneResult = lScene->loadConfigs();
-
-    if(sceneResult)
-        sceneResult = lScene->init();
-
-    if(sceneResult)
+    bool playAgain = true;
+    int entranceID = 0;
+    while(playAgain)
     {
+        int ExitCode=0;
+            lScene = new LevelScene();
 
-        //Level scene's Loop
-        Uint32 start;
-        bool running = true;
-        int doUpdate=0;
-        float doUpdateP=0;
-        while(running)
-        {
-
-            //UPDATE Events
-            if(doUpdate<=0)
-            {
-
-                start=SDL_GetTicks();
-
-                lScene->render();
-
-                glFlush();
-                SDL_GL_SwapWindow(PGE_Window::window);
-
-                if(1000.0/1000>SDL_GetTicks()-start)
-                        //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                        doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
-            }
-            doUpdate-=10;
-
-
-            start=SDL_GetTicks();
-
-            SDL_Event event; //  Events of SDL
+            lScene->setLoaderAnimation(62);
+            lScene->drawLoader();
+            glFlush();
+            SDL_GL_SwapWindow(PGE_Window::window);
             while ( SDL_PollEvent(&event) )
+            {}
+            bool sceneResult=true;
+
+                sceneResult = lScene->loadFile(fileToPpen);
+
+            if(sceneResult)
+                sceneResult = lScene->setEntrance(entranceID);
+
+            if(sceneResult)
+                sceneResult = lScene->loadConfigs();
+
+            if(sceneResult)
+                sceneResult = lScene->init();
+            lScene->stopLoaderAnimation();
+
+            lScene->setFade(25, 0.0f, 0.05f);
+
+            if(sceneResult)
+                ExitCode = lScene->exec();
+
+            if(ExitCode==LevelScene::EXIT_Warp)
             {
-                lScene->keyboard1.update(event);
-
-                switch(event.type)
-                {
-                    case SDL_QUIT:
-                        running = false;
-                    break;
-
-                    case SDL_KEYDOWN: // If pressed key
-                      switch(event.key.keysym.sym)
-                      { // Check which
-                        case SDLK_ESCAPE: // ESC
-                                running = false; // End work of program
-                            break;
-                        case SDLK_t:
-                            PGE_Window::SDL_ToggleFS(PGE_Window::window);
-                        break;
-                        default:
-                          break;
-
-                      }
-                    break;
-
-                    // case SDL_KEYUP:
-                    //  switch(event.key.keysym.sym)
-                    //  { }
-                    //  break;
-                }
+                fileToPpen = lScene->toAnotherLevel();
+                entranceID = lScene->toAnotherEntrance();
+                if(fileToPpen.isEmpty()) playAgain = false;
+            }
+            else
+            if(ExitCode!= LevelScene::EXIT_PlayerDeath)
+            {
+                playAgain = false;
             }
 
-
-            //Update physics
-            lScene->update();
-
-            if(1000.0/100>SDL_GetTicks()-start)
-            {
-                doUpdateP = 1000.0/100-(SDL_GetTicks()-start);
-                SDL_Delay( doUpdateP );
-            }
-        }
+            delete lScene;
     }
 
-    delete lScene;
 
     PGE_Window::uninit();
     return 0;
