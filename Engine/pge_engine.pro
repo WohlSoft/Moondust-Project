@@ -109,8 +109,6 @@ SOURCES += main.cpp \
     common_features/app_path.cpp \
     common_features/graphics_funcs.cpp \
     ../_Libs/EasyBMP/EasyBMP.cpp \
-    scenes/level/lvl_init.cpp \
-    scenes/level/lvl_sections.cpp \
     data_configs/obj_block.cpp \
     controls/controller_keyboard.cpp \
     data_configs/select_config.cpp \
@@ -122,7 +120,15 @@ SOURCES += main.cpp \
     data_configs/config_textures.cpp \
     data_configs/obj_bgo.cpp \
     scenes/level/lvl_bgo.cpp \
-    data_configs/obj_bg.cpp
+    data_configs/obj_bg.cpp \
+    physics/contact_listener.cpp \
+    scenes/level/lvl_warp.cpp \
+    scenes/level/lvl_scene_ptr.cpp \
+    scenes/level/lvl_scene_items.cpp \
+    scenes/level/lvl_scene_sections.cpp \
+    scenes/level/lvl_scene_timers.cpp \
+    scenes/level/lvl_scene_files_io.cpp \
+    scenes/level/lvl_scene_init.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -210,7 +216,12 @@ HEADERS  += \
     common_features/simple_animator.h \
     data_configs/obj_bgo.h \
     scenes/level/lvl_bgo.h \
-    data_configs/obj_bg.h
+    data_configs/obj_bg.h \
+    graphics/graphics_lvl_backgrnd.h \
+    version.h \
+    physics/contact_listener.h \
+    scenes/level/lvl_warp.h \
+    scenes/level/lvl_scene_ptr.h
 
 FORMS    += \
     data_configs/select_config.ui

@@ -18,9 +18,12 @@
 
 #include <QPixmap>
 #include <QImage>
+#include <QRgb>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QtOpenGL/QGLWidget>
+
+
 #include "graphics_funcs.h"
 #include "../../_Libs/EasyBMP/EasyBMP.h"
 
@@ -92,10 +95,14 @@ PGE_Texture GraphicsHelps::loadTexture(PGE_Texture &target, QString path, QStrin
     if(sourceImage.isNull())
     {
         SDL_Quit();
-        QMessageBox::critical(NULL, "Texture error",
-            QString("Error loading of image file: \n%1\nReason: %2.")
-            .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"), QMessageBox::Ok);
-        exit(1);
+        //if(ErrorCheck::hardMode)
+        //{
+            QMessageBox::critical(NULL, "Texture error",
+                QString("Error loading of image file: \n%1\nReason: %2.")
+                .arg(path).arg(QFileInfo(path).exists()?"wrong image format":"file not exist"), QMessageBox::Ok);
+            exit(1);
+        //}
+        return target;
     }
 
     //Apply Alpha mask
@@ -106,6 +113,15 @@ PGE_Texture GraphicsHelps::loadTexture(PGE_Texture &target, QString path, QStrin
     }
 
     sourceImage.convertToFormat(QImage::Format_ARGB32);
+    QRgb upperColor = sourceImage.pixel(0,0);
+    target.ColorUpper.r = float(qRed(upperColor))/255.0f;
+    target.ColorUpper.g = float(qGreen(upperColor))/255.0f;
+    target.ColorUpper.b = float(qBlue(upperColor))/255.0f;
+
+    QRgb lowerColor = sourceImage.pixel(0, sourceImage.height()-1);
+    target.ColorLower.r = float(qRed(lowerColor))/255.0f;
+    target.ColorLower.g = float(qGreen(lowerColor))/255.0f;
+    target.ColorLower.b = float(qBlue(lowerColor))/255.0f;
 
     //qDebug() << path << sourceImage.size();
 

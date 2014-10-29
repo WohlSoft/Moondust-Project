@@ -112,6 +112,7 @@ void MainWindow::setLayerLists()
 
     int WinType = activeChildWindow();
     LvlItemPropsLock = true;
+    LvlEventBoxLock = true;
     ui->PROPS_BGOLayer->clear();
     ui->PROPS_NpcLayer->clear();
     ui->PROPS_BlockLayer->clear();
@@ -144,7 +145,7 @@ void MainWindow::setLayerLists()
     ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
     ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
     LvlItemPropsLock = false;
-
+    LvlEventBoxLock = false;
 }
 
 void MainWindow::setLayerToolsLocked(bool locked)

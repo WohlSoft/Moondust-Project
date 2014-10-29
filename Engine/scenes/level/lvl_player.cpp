@@ -1,5 +1,26 @@
+/*
+ * Platformer Game Engine by Wohlstand, a free platform for game making
+ * Copyright (c) 2014 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "lvl_player.h"
 #include "../../graphics/window.h"
+#include "../../data_configs/config_manager.h"
+
+#include "lvl_scene_ptr.h"
 
 #include <QtDebug>
 
@@ -17,11 +38,20 @@ LVL_Player::LVL_Player()
     fallMaxSpeed=720.0f;
 
     JumpPressed=false;
-    allowJump=true;
+    onGround=true;
+    foot_contacts=0;
     jumpForce=0;
+
+    isLive = true;
 
     curHMaxSpeed = hMaxSpeed;
     isRunning = false;
+
+    contactedWithWarp = false;
+    contactedWarp = NULL;
+    wasTeleported = false;
+    wasEntered = false;
+    warpsTouched = 0;
 }
 
 LVL_Player::~LVL_Player()
@@ -40,20 +70,20 @@ void LVL_Player::init()
 {
     if(!worldPtr) return;
 
-    setSize(data->w, data->h);
+    setSize(data.w, data.h);
 
-    playerID = data->id;
+    playerID = data.id;
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set
             (
-                PhysUtil::pix2met((float)data->x + posX_coefficient),
-                PhysUtil::pix2met((float)data->y + posY_coefficient)
+                PhysUtil::pix2met((float)data.x + posX_coefficient),
+                PhysUtil::pix2met((float)data.y + posY_coefficient)
             );
 
-//    bodyDef.position.Set(PhysUtil::pix2met((float)data->x + ((float)data->w/2)),
-//            PhysUtil::pix2met((float)data->y + ((float)data->w/2) ) );
+//    bodyDef.position.Set(PhysUtil::pix2met((float)data.x + ((float)data.w/2)),
+//            PhysUtil::pix2met((float)data.y + ((float)data.w/2) ) );
 
     bodyDef.fixedRotation = true;
     bodyDef.bullet = true;
@@ -81,6 +111,14 @@ void LVL_Player::update()
     if(!physBody) return;
     if(!camera) return;
 
+    if(_player_moveup)
+    {
+        physBody->SetTransform(b2Vec2(
+             physBody->GetPosition().x,
+             physBody->GetPosition().y-0.2), 0.0f);
+        _player_moveup = false;
+    }
+
     if(physBody->GetLinearVelocity().y > 72)
         physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, 72));
 
@@ -101,6 +139,13 @@ void LVL_Player::update()
             curHMaxSpeed = hMaxSpeed;
             isRunning=false;
         }
+    }
+
+
+    //if
+    if(!keys.up && !keys.down && !keys.left && !keys.right)
+    {
+        if(wasEntered) wasEntered = false;
     }
 
 
@@ -132,49 +177,284 @@ void LVL_Player::update()
 
 
     //Return player to start position on fall down
-    if( posY() > camera->s_bottom+height )
-        physBody->SetTransform(b2Vec2(
-                PhysUtil::pix2met(data->x + (posX_coefficient) ),
-                PhysUtil::pix2met(data->y + (posY_coefficient) )), 0.0f);
+    if( posY() > camera->limitBottom+height )
+    {
+        kill();
+    }
 
 
     //Connection of section opposite sides
     if(camera->isWarp)
     {
-        if(posX() < camera->s_left-width-1 )
+        if(posX() < camera->limitLeft-width-1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_right+posX_coefficient),
+                 PhysUtil::pix2met(camera->limitRight+posX_coefficient-1),
                  physBody->GetPosition().y), 0.0f);
         else
-        if(posX() > camera->s_right + 1 )
+        if(posX() > camera->limitRight + 1 )
             physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_left-posX_coefficient ),
+                 PhysUtil::pix2met(camera->limitLeft-posX_coefficient+1 ),
                  physBody->GetPosition().y), 0.0f
                                    );
     }
     else
     {
-        //Prevent moving of player away from screen
-        if( posX() < camera->s_left)
+
+        if(camera->ExitOffscreen)
         {
-            physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_left + posX_coefficient),
-                    physBody->GetPosition().y), 0.0f);
-            physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+            if((posX() < camera->limitLeft-width-1 ) || (posX() > camera->limitRight + 1 ))
+            {
+                LvlSceneP::s->setExiting(1000, LevelScene::EXIT_OffScreen);
+            }
         }
         else
-        if( posX()+width > camera->s_right)
         {
-            physBody->SetTransform(b2Vec2(
-                 PhysUtil::pix2met(camera->s_right-posX_coefficient ),
-                    physBody->GetPosition().y), 0.0f
-                                   );
-            physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
-        }
+            //Prevent moving of player away from screen
+            if( posX() < camera->limitLeft)
+            {
+                physBody->SetTransform(b2Vec2(
+                     PhysUtil::pix2met(camera->limitLeft + posX_coefficient),
+                        physBody->GetPosition().y), 0.0f);
 
+                physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+            }
+            else
+            if( posX()+width > camera->limitRight)
+            {
+                physBody->SetTransform(b2Vec2(
+                     PhysUtil::pix2met(camera->limitRight-posX_coefficient ),
+                        physBody->GetPosition().y), 0.0f
+                                       );
+                physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+            }
+        }
     }
 
-    camera->setPos( posX() - PGE_Window::Width/2,
-                    posY() - PGE_Window::Height/2 );
+    if(contactedWithWarp)
+    {
+        if(contactedWarp)
+        {
+
+            switch( contactedWarp->data.type )
+            {
+            case 1://pipe
+                {
+                    bool isContacted=false;
+               // Entrance direction: [3] down, [1] up, [2] left, [4] right
+
+                    switch(contactedWarp->data.idirect)
+                    {
+                        case 4://right
+                            if(this->right() >= contactedWarp->right()-1 &&
+                               this->right() <= contactedWarp->right() &&
+                               this->bottom() >= contactedWarp->bottom()-1 &&
+                               this->bottom() <= contactedWarp->bottom()  ) isContacted = true;
+                            break;
+                        case 3://down
+                            if(this->bottom() >= contactedWarp->bottom()-1 &&
+                               this->bottom() <= contactedWarp->bottom()) isContacted = true;
+                            break;
+                        case 2://left
+                            if(this->left() <= contactedWarp->left()+1 &&
+                               this->left() >= contactedWarp->left() &&
+                               this->bottom() >= contactedWarp->bottom()-1 &&
+                               this->bottom() <= contactedWarp->bottom()  ) isContacted = true;
+                            break;
+                        case 1://up
+                            if(this->top() <= contactedWarp->top()+1 &&
+                               this->top() >= contactedWarp->top()) isContacted = true;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if(isContacted)
+                    {
+                        bool doTeleport=false;
+                        switch(contactedWarp->data.idirect)
+                        {
+                            case 4://right
+                                if(keys.right && !wasEntered) doTeleport=true;
+                                break;
+                            case 3://down
+                                if(keys.down && !wasEntered) doTeleport=true;
+                                break;
+                            case 2://left
+                                if(keys.left && !wasEntered) doTeleport=true;
+                                break;
+                            case 1://up
+                                if(keys.up && !wasEntered) doTeleport=true;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        if(doTeleport)
+                        {
+
+                            if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
+                            {
+                                exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto);
+                            }
+                            else
+                            {
+                                // Exit direction: [1] down [3] up [4] left [2] right
+                                physBody->SetLinearVelocity(b2Vec2(0, 0));
+                                switch(contactedWarp->data.odirect)
+                                {
+                                    case 2://right
+                                        teleport(contactedWarp->data.ox,
+                                                     contactedWarp->data.oy+32-height);
+                                        break;
+                                    case 1://down
+                                        teleport(contactedWarp->data.ox+16-posX_coefficient,
+                                                     contactedWarp->data.oy);
+                                        break;
+                                    case 4://left
+                                        teleport(contactedWarp->data.ox+32-width,
+                                                     contactedWarp->data.oy+32-height);
+                                        if(keys.left && !wasEntered) doTeleport=true;
+                                        break;
+                                    case 3://up
+                                        teleport(contactedWarp->data.ox+16-posX_coefficient,
+                                                     contactedWarp->data.oy+32-height);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            wasEntered = true;
+                        }
+                    }
+
+                }
+
+                break;
+            case 2://door
+                if(keys.up && !wasEntered)
+                {
+                    if(!wasTeleported)
+                    {
+                        if( (contactedWarp->data.lvl_o) || (!contactedWarp->data.lname.isEmpty()) )
+                        {
+                            exitFromLevel(contactedWarp->data.lname, contactedWarp->data.warpto);
+                        }
+                        else
+                        {
+                            physBody->SetLinearVelocity(b2Vec2(0, 0));
+                            teleport(contactedWarp->data.ox+16-posX_coefficient,
+                                         contactedWarp->data.oy+32-height);
+                        }
+                        wasEntered = true;
+                    }
+                }
+                break;
+            case 0://Instant
+            default:
+                if(!wasTeleported && !wasEntered)
+                {
+                    teleport(contactedWarp->data.ox+16-posX_coefficient,
+                                 contactedWarp->data.oy+32-height);
+                    wasTeleported = true;
+                    wasEntered = true;
+                }
+                break;
+            }
+            //qDebug()<< "Warp!!!" << contactedWarp->data.ox << contactedWarp->data.oy;
+        }
+        //contactedWithWarp = false;
+        //contactedWarp = NULL;
+    }
+    else
+    {
+        if(wasTeleported)
+        {
+            if(warpsTouched==0)
+                wasTeleported = false;
+        }
+    }
+
+    camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
+                    posY() - PGE_Window::Height/2 + posY_coefficient );
 
 }
+
+void LVL_Player::kill()
+{
+
+    isLive = false;
+    physBody->SetActive(false);
+    LvlSceneP::s->checkPlayers();
+    //physBody->SetLinearVelocity(b2Vec2(0,0));
+    //teleport(data.x, data.y);
+}
+
+void LVL_Player::teleport(float x, float y)
+{
+    if(!LvlSceneP::s) return;
+
+    this->setPos(x, y);
+
+    int sID = LvlSceneP::s->findNearSection(x, y);
+
+    if(camera->section->id != LvlSceneP::s->levelData()->sections[sID].id)
+    {
+        camera->changeSection(LvlSceneP::s->levelData()->sections[sID]);
+
+        if(ConfigManager::lvl_bg_indexes.contains(camera->BackgroundID))
+        {
+            LvlSceneP::s->bgList()->last()->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
+
+            if(ConfigManager::lvl_bg_indexes[camera->BackgroundID].animated)
+                ConfigManager::Animator_BG[ConfigManager::lvl_bg_indexes[camera->BackgroundID].animator_ID]->start();
+        }
+        else
+            LvlSceneP::s->bgList()->last()->setNone();
+    }
+    else
+    {
+        camera->resetLimits();
+    }
+}
+
+void LVL_Player::exitFromLevel(QString levelFile, int targetWarp)
+{
+    isLive = false;
+    //physBody->SetActive(false);
+    if(!levelFile.isEmpty())
+    {
+        LvlSceneP::s->warpToLevelFile =
+                LvlSceneP::s->levelData()->path+"/"+levelFile;
+        LvlSceneP::s->warpToArrayID = targetWarp;
+    }
+    LvlSceneP::s->setExiting(300, LevelScene::EXIT_Warp);
+}
+
+
+
+void LVL_Player::render(float camX, float camY)
+{
+
+    if(!isLive) return;
+
+    QRectF player = QRectF( posX()
+                            -camX,
+
+                            posY()
+                            -camY,
+
+                            width,
+                            height
+                         );
+//        qDebug() << "PlPos" << pl.left() << pl.top() << player.right() << player.bottom();
+
+    glDisable(GL_TEXTURE_2D);
+    glColor4f( 0.f, 0.f, 1.f, 1.f);
+    glBegin( GL_QUADS );
+        glVertex2f( player.left(), player.top());
+        glVertex2f( player.right(), player.top());
+        glVertex2f( player.right(),  player.bottom());
+        glVertex2f( player.left(),  player.bottom());
+    glEnd();
+}
+
