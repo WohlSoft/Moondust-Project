@@ -412,6 +412,7 @@ public:
         void on_actionChangeConfig_triggered(); //!< Change configuration
     private:
         QString currentConfigDir;
+        bool askConfigAgain;
 // ////////////////////////////////////////////////////////
 
 // //////////////////External tools////////////////////////
@@ -679,7 +680,9 @@ public:
         void EventListsSync();
         void setEventsBox();
         void setEventData(long index=-1);
-
+    public:
+        bool LvlEventBoxLock;
+    public slots:
         void ModifyEvent(QString eventName, QString newEventName);
 
         QListWidget* getEventList();

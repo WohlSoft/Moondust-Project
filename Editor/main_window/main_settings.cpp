@@ -90,6 +90,9 @@ void MainWindow::setDefaults()
 
     LvlItemPropsLock=true;
     lockTilesetBox=false;
+    LvlEventBoxLock=false;
+
+    askConfigAgain=false;
 
     LvlMusPlay::currentCustomMusic = "";
     LvlMusPlay::currentMusicId = 0;
@@ -605,6 +608,7 @@ void MainWindow::saveSettings()
     settings.setValue("language", GlobalSettings::locale);
 
     settings.setValue("current-config", currentConfigDir);
+    settings.setValue("ask-config-again", askConfigAgain);
     settings.setValue("current-theme", GlobalSettings::currentTheme);
 
     settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
