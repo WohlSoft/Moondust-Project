@@ -20,7 +20,7 @@ public:
     QString currentConfig;
     QString themePack;
     QString isPreLoaded();
-    void hideAskAgain();
+    void setAskAgain(bool _x);
     bool askAgain;
 
 private slots:

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>332</width>
-    <height>319</height>
+    <width>415</width>
+    <height>382</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,7 +60,7 @@
    <item row="2" column="0">
     <widget class="QCheckBox" name="AskAgain">
      <property name="text">
-      <string>Ask in next time</string>
+      <string>Ask every Startup</string>
      </property>
     </widget>
    </item>
