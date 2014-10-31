@@ -35,15 +35,14 @@ void MainWindow::openFilesByArgs(QStringList args)
 void MainWindow::OpenFile(QString FilePath)
 {
 
-    QFile file(FilePath);
-
-
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
             if (existing) {
                 ui->centralWidget->setActiveSubWindow(existing);
                 return;
             }
 
+
+    QFile file(FilePath);
 
     if (!file.open(QIODevice::ReadOnly)) {
     QMessageBox::critical(this, tr("File open error"),
