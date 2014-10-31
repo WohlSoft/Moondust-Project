@@ -277,13 +277,14 @@ LevelData FileFormats::dummyLvlDataArray()
     NewFileData.LevelName = "";
     NewFileData.stars = 0;
 
-    NewFileData.bgo_array_id = 0;
-    NewFileData.blocks_array_id = 0;
+    NewFileData.bgo_array_id = 1;
+    NewFileData.blocks_array_id = 1;
     NewFileData.doors_array_id = 1;
-    NewFileData.events_array_id = 0;
-    NewFileData.layers_array_id = 0;
-    NewFileData.npc_array_id = 0;
-    NewFileData.physenv_array_id = 0;
+    NewFileData.events_array_id = 1;
+    NewFileData.layers_array_id = 1;
+    NewFileData.npc_array_id = 1;
+    NewFileData.physenv_array_id = 1;
+
 
     //Create Section array
     LevelSection section;

@@ -18,19 +18,19 @@
 
 #include "file_formats.h"
 
+#include <QFileInfo>
+#include <QDir>
+
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
 //Level File Read
-LevelData FileFormats::ReadLevelFile(QFile &inf)
+LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
 {
-    QTextStream in(&inf);   //Read File
-
-    in.setAutoDetectUnicode(true); //Test Fix for MacOS
-    in.setLocale(QLocale::system());   //Test Fix for MacOS
-    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+    FileStringList in;
+    in.addData( RawData );
 
     int str_count=0;        //Line Counter
     int i;                  //counters
@@ -50,6 +50,14 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     LevelEvents events;
     LevelEvents_layers events_layers;
     LevelEvents_Sets events_sets;
+
+    //Add path data
+    if(!filePath.isEmpty())
+    {
+        QFileInfo in_1(filePath);
+        FileData.filename = in_1.baseName();
+        FileData.path = in_1.absoluteDir().absolutePath();
+    }
 
     //Enable strict mode for SMBX LVL file format
     FileData.smbx64strict = true;
@@ -1120,7 +1128,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(inf.fileName()+"\nFile format "+QString::number(file_format), str_count, line);
+    BadFileMsg(filePath+"\nFile format "+QString::number(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }
