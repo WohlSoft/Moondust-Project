@@ -3,6 +3,7 @@ Editor 0.2.1.2
 - Fixed window focus on switch into placing mode
 - Fixed 'Trigger event' and 'Set moving layer' comboboxes on switch into placing mode
 - Fixed crash in protector for 'out of range' inside NPC animator
+- Improved stars counter tool: now it counts accurate and everywhere
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
