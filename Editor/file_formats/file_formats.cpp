@@ -19,25 +19,112 @@
 #include "file_formats.h"
 
 #include <QTranslator>
+#include <QRegExp>
+#include <QFileInfo>
 
-/*
-if(myString.startsWith("\"") myString.remove(0,1);
-if(myString.endsWith("\"") myString.remove(myString.size()-1,1);
-*/
+#include <QtDebug>
 
-/*
-//Regs
-QRegExp isint("\\d+");     //Check "Is Numeric"
-QRegExp boolwords("^(#TRUE#|#FALSE#)$");
-QRegExp issint("^[\\-0]?\\d*$");     //Check "Is signed Numeric"
-QRegExp issfloat("^[\\-]?(\\d*)?[\\.]?\\d*[Ee]?[\\-\\+]?\\d*$");     //Check "Is signed Float Numeric"
-QRegExp booldeg("^(1|0)$");
-QRegExp qstr("^\"(?:[^\"\\\\]|\\\\.)*\"$");
-QString Quotes1 = "^\"(?:[^\"\\\\]|\\\\.)*\"$";
-QString Quotes2 = "^(?:[^\"\\\\]|\\\\.)*$";
-*/
+FileStringList::FileStringList()
+{
+    lineID=0;
+}
 
-//Errror for file parsing
+FileStringList::FileStringList(QString fileData)
+{
+    addData(fileData);
+}
+
+FileStringList::~FileStringList()
+{
+    buffer.clear();
+}
+
+void FileStringList::addData(QString fileData)
+{
+    buffer.clear();
+    buffer = fileData.split(QRegExp("[\r\n]"), QString::SkipEmptyParts);
+    lineID=0;
+}
+
+QString FileStringList::readLine()
+{
+    QString sent;
+
+    if(!isEOF())
+    {
+        sent = buffer[lineID];
+        lineID++;
+    }
+    return sent;
+}
+
+bool FileStringList::isEOF()
+{
+    return (lineID >= buffer.size());
+}
+
+bool FileStringList::atEnd()
+{
+    return isEOF();
+}
+
+LevelData FileFormats::ReadLevelFile(QFile &inf)
+{
+    QTextStream in(&inf);   //Read File
+
+    in.setAutoDetectUnicode(true);
+    in.setLocale(QLocale::system());
+    in.setCodec(QTextCodec::codecForLocale());
+
+    return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
+}
+
+LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
+{
+    QTextStream in(&inf);   //Read File
+
+    in.setCodec("UTF-8");
+
+    return ReadExtendedLvlFile( in.readAll(), inf.fileName() );
+}
+
+
+
+LevelData FileFormats::OpenLevelFile(QString filePath)
+{
+    QFile file(filePath);
+    LevelData data;
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        #ifndef PGE_ENGINE
+        QMessageBox::critical(NULL, QTranslator::tr("File open error"),
+                QTranslator::tr("Can't open the file."), QMessageBox::Ok);
+        data.ReadFileValid = false;
+        #endif
+        return data;
+    }
+
+    QTextStream in(&file);   //Read File
+
+    QFileInfo in_1(filePath);
+
+    if(in_1.suffix().toLower() == "lvl")
+        {   //Read SMBX LVL File
+            in.setAutoDetectUnicode(true);
+            in.setLocale(QLocale::system());
+            in.setCodec(QTextCodec::codecForLocale());
+            data = ReadSMBX64LvlFile( in.readAll(), filePath );
+        }
+    else
+        {   //Read PGE LVLX File
+            in.setCodec("UTF-8");
+            data = ReadExtendedLvlFile( in.readAll(), filePath );
+        }
+
+    return data;
+}
+
 
 
 void FileFormats::BadFileMsg(QString fileName_DATA, int str_count, QString line)

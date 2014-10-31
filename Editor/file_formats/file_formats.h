@@ -107,17 +107,41 @@ public:
 };
 
 
+class FileStringList
+{
+public:
+    FileStringList();
+
+    FileStringList(QString fileData);
+    ~FileStringList();
+
+    void addData(QString fileData);
+    QString readLine();
+    bool isEOF();
+    bool atEnd();
+private:
+    QStringList buffer;
+    long lineID;
+};
+
+
 class FileFormats
 {
 public:
     //File format read/write functions
 
-    static LevelData dummyLvlDataArray();                    //Create new
-    // SMBX64 LVL File
-    static LevelData ReadLevelFile(QFile &inf);              //read
-    static QString WriteSMBX64LvlFile(LevelData FileData);   //write
-    // PGE Extended Level File
+    static LevelData OpenLevelFile(QString filePath);
+    static LevelData ReadLevelFile(QFile &inf);
     static LevelData ReadExtendedLevelFile(QFile &inf);      //read
+
+    static LevelData dummyLvlDataArray();                    //Create new
+
+    // SMBX64 LVL File
+    static LevelData ReadSMBX64LvlFile(QString RawData, QString filePath="");
+    static QString WriteSMBX64LvlFile(LevelData FileData);   //write
+
+    // PGE Extended Level File
+    static LevelData ReadExtendedLvlFile(QString RawData, QString filePath="");
     static QString WriteExtendedLvlFile(LevelData FileData); //Write
 
 
