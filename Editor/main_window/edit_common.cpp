@@ -34,28 +34,19 @@ void MainWindow::on_actionReload_triggered()
         LevelData FileData;
         filePath = activeLvlEditWin()->curFile;
 
-        QFile fileIn(filePath);
-
-        if (!fileIn.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(this, tr("File open error"),
-        tr("Can't open the file."), QMessageBox::Ok);
-            return;
+        if (!QFileInfo(filePath).exists() ) {
+            QMessageBox::critical(this, tr("File open error"),
+            tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+                return;
         }
 
-        QFileInfo in_1(filePath);
+        //Open level file
+        FileData = FileFormats::OpenLevelFile(filePath);
 
-        if(in_1.suffix().toLower() == "lvl")
-            FileData = FileFormats::ReadLevelFile(fileIn);         //Read SMBX LVL File
-        else
-            FileData = FileFormats::ReadExtendedLevelFile(fileIn); //Read PGE LVLX File
-
-        //FileData = FileFormats::ReadLevelFile(fileIn); //function in file_formats.cpp
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
 
-        FileData.filename = QFileInfo(filePath).baseName();
-        FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeLvlEditWin()->LvlData.modified = false;
         activeLvlEditWin()->close();
