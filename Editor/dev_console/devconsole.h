@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPlainTextEdit>
+#include <initializer_list>
 
 namespace Ui {
 class DevConsole;
