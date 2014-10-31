@@ -295,6 +295,8 @@ namespace starCounter
                     //qDebug() << "warp "<<getLevelHead.stars << getLevelHead.filename;
 
                     starCount += checkLevelFile(FilePath_W, exists);
+
+                    qApp->processEvents();
                     //qDebug() << "starCount "<<starCount;
                 }
             }
@@ -312,6 +314,7 @@ void MainWindow::on_WLD_DoCountStars_clicked()
 
     QString dirPath;
     long starzzz=0;
+    bool introCounted=false;
 
     if (activeChildWindow()==3)
     {
@@ -328,15 +331,27 @@ void MainWindow::on_WLD_DoCountStars_clicked()
 
         QStringList LevelAlreadyChecked;
 
-        qDebug() << "total " << starzzz;
+        //qDebug() << "total " << starzzz;
 
-        for(int i=0;i<edit->WldData.levels.size();i++)
+        for(int i=0; i<edit->WldData.levels.size() || !introCounted; i++)
         {
             //Attempt to read stars quantity of level:
 
-            if(edit->WldData.levels[i].lvlfile.isEmpty()) continue;
+            QString FilePath;
 
-            QString FilePath = dirPath+"/"+edit->WldData.levels[i].lvlfile;
+            if(introCounted)
+            {
+                FilePath = dirPath+"/"+edit->WldData.levels[i].lvlfile;
+                if(edit->WldData.levels[i].lvlfile.isEmpty()) continue;
+            }
+            else
+            {
+                FilePath = dirPath+"/"+edit->WldData.IntroLevel_file;
+                i--;
+                introCounted=true;
+                if(FilePath.isEmpty()) continue;
+            }
+
             if(!FilePath.endsWith(".lvl", Qt::CaseInsensitive)&&
                !FilePath.endsWith(".lvlx", Qt::CaseInsensitive))
                FilePath.append(".lvl");
@@ -349,11 +364,11 @@ void MainWindow::on_WLD_DoCountStars_clicked()
             }
             else continue;
 
+            progress.setValue(i<0?1:i);
             starzzz += checkLevelFile(FilePath, LevelAlreadyChecked);
             //qDebug() << "starzzz " << starzzz;
 
             if(progress.wasCanceled()) break;
-            progress.setValue(i);
             qApp->processEvents();
         }
 
