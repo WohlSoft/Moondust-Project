@@ -35,15 +35,9 @@ class Animate : public QDialog
     Q_OBJECT
     
 public:
-    explicit Animate(QList<QVector<frameOpts > >  &framesX, FrameSets &frameConf, SpriteScene * Scene, QWidget *parent = 0);
+    explicit Animate(QWidget *parent = 0);
     ~Animate();
     AnimationScene *AniScene;
-
-    FrameSets AniFrames;
-
-    QList<QVector<frameOpts> > SrcFrames;
-
-    SpriteScene * SrcScene;
 
     QString aniStyle;
     int aniDir;

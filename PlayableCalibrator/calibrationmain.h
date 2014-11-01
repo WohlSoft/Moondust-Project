@@ -62,6 +62,8 @@ public:
 
     bool wasCanceled;
 
+    QPixmap x_imageSprite;
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -97,7 +99,6 @@ private slots:
 private:
     Ui::CalibrationMain *ui;
     QString titleCache;
-
 };
 
 

@@ -24,9 +24,11 @@ Globals::Globals()
 }
 
 QList<QVector<frameOpts > > imgOffsets;
-
 QList<QVector<frameOpts > > framesX;
+FrameSets AniFrames;
+
 frameOpts buffer;
 QString LastOpenDir=".";
 QString currentFile;
-int CurFRMx=0, CurFRMy=0;
+
+int CurFrame_X=0, CurFrame_Y=0;

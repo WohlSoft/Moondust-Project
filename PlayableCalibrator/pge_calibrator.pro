@@ -52,7 +52,10 @@ SOURCES += main.cpp\
     main/globals.cpp \
     main/graphics.cpp \
     main/settings.cpp \
-    image_calibration/image_calibrator.cpp
+    image_calibration/image_calibrator.cpp \
+    animator/SpriteScene.cpp \
+    main/mw.cpp \
+    animator/AnimationScene.cpp
 
 HEADERS  += calibrationmain.h \
     frame_matrix/matrix.h \
@@ -73,7 +76,8 @@ HEADERS  += calibrationmain.h \
     main/globals.h \
     main/graphics.h \
     version.h \
-    image_calibration/image_calibrator.h
+    image_calibration/image_calibrator.h \
+    main/mw.h
 
 FORMS    += calibrationmain.ui \
     about/about.ui \
