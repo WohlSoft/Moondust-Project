@@ -34,7 +34,7 @@ class Matrix : public QDialog
     Q_OBJECT
     
 public:
-    explicit Matrix(QList<QVector<frameOpts> > &framesX, SpriteScene *Scene, QWidget *parent = 0);
+    explicit Matrix(QWidget *parent = 0);
     ~Matrix();
     MatrixScene * MatrixS;
     QList<QVector<frameOpts > > FrameConfig;

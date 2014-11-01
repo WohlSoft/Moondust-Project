@@ -27,8 +27,8 @@ class SpriteScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    int mCurrentFrameX;
-    int mCurrentFrameY;
+    int m_CurrentFrameX;
+    int m_CurrentFrameY;
 
     SpriteScene(QObject *parent = 0);
     void draw( );
@@ -38,11 +38,10 @@ public:
     QPixmap mSpriteImage;
 
 private:
-    QGraphicsPixmapItem * croc;
-    QGraphicsRectItem * sizer;
-    QPoint mPos;
-    int mXDir;
-    int x, y, dir;
+    QGraphicsPixmapItem * ImageFrame;
+    QGraphicsRectItem * SizerBox;
+    QPoint m_FramePos;
+    //int x, y, dir;
     QPixmap currentImage;
 };
 

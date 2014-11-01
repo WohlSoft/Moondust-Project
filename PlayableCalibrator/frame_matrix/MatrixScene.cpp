@@ -19,15 +19,17 @@
 
 #include "MatrixScene.h"
 #include <QPixmap>
+#include "../main/globals.h"
+#include "../main/mw.h"
 
 MatrixScene::MatrixScene(QObject *parent) : QGraphicsScene(parent)
 {
 
 }
 
-void MatrixScene::draw(QPixmap spriteMatix)
+void MatrixScene::draw()
 {
     QGraphicsItem * sprite;
-    sprite = addPixmap(QPixmap(spriteMatix).scaled(QSize(595,595),Qt::KeepAspectRatio));
+    sprite = addPixmap(QPixmap(MW::sprite()).scaled(QSize(595,595),Qt::KeepAspectRatio));
     sprite->setData(0, "sprite");
 }

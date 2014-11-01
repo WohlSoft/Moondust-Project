@@ -51,13 +51,13 @@ void CalibrationMain::OpenFile(QString fileName)
     else
         maskImg = QImage();
 
-    //Scene->mSpriteImage = QPixmap(fileName);
-    Scene->mSpriteImage = QPixmap::fromImage(
-                    Graphics::setAlphaMask(
-                        Graphics::loadQImage( fileName )
-                        , maskImg )
-                    );
-    //Scene->mSpriteImage.setMask(mask);
+    x_imageSprite = QPixmap::fromImage(
+                Graphics::setAlphaMask(
+                    Graphics::loadQImage( fileName )
+                    , maskImg )
+                );
+
+    Scene->mSpriteImage = x_imageSprite;
 
     loadConfig(fileName);
 
