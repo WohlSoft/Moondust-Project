@@ -21,7 +21,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Please, select the game configuration which defining the game settings and stuff</string>
+      <string>Please select the game configuration with which you wish to start the Editor with </string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
