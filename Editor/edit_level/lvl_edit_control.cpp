@@ -240,7 +240,7 @@ void leveledit::changeCursor(int mode)
         ui->graphicsView->setCursor(Qt::ArrowCursor);
         ui->graphicsView->setInteractive(false);
         ui->graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
-        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_Selecting);
+        if(sceneCreated) scene->SwitchEditingMode(LvlScene::MODE_HandScroll);
         break;
     case MODE_Selecting:    // Selector
         ui->graphicsView->setInteractive(true);

@@ -42,6 +42,7 @@ void ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
+        dontCallEvent = true;
         return;
     }
 
@@ -60,6 +61,10 @@ void ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 
     s->placeItemUnderCursor();
     s->Debugger_updateItemList();
+
+    s->MousePressEventOnly = true;
+    s->mousePressEvent(mouseEvent);
+    dontCallEvent = true;
 }
 
 void ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
@@ -98,7 +103,6 @@ void ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
         s->placeItemUnderCursor();
         s->Debugger_updateItemList();
     }
-
 }
 
 void ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
@@ -110,6 +114,7 @@ void ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if(s->placingItem == LvlScene::PLC_Door)
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
+        dontCallEvent = true;
         return;
     }
     else

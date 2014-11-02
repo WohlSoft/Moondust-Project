@@ -19,7 +19,7 @@
 #include "edit_mode_base.h"
 
 EditMode::EditMode(QString toolTitle, QGraphicsScene *ParentScene, QObject *parent) :
-    QObject(parent), toolName(toolTitle), scene(ParentScene)
+    QObject(parent), toolName(toolTitle), scene(ParentScene), dontCallEvent(false)
 {}
 
 EditMode::~EditMode()
@@ -47,3 +47,10 @@ void EditMode::keyPress(QKeyEvent *keyEvent)
 
 void EditMode::keyRelease(QKeyEvent *keyEvent)
 {Q_UNUSED(keyEvent);}
+
+bool EditMode::noEvent()
+{
+    bool state = dontCallEvent;
+    dontCallEvent = false;
+    return state;
+}
