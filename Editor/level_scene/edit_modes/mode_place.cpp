@@ -6,14 +6,14 @@
 #include "../lvl_item_placing.h"
 
 
-ModePlace::ModePlace(QGraphicsScene *parentScene, QObject *parent)
+LVL_ModePlace::LVL_ModePlace(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Placing", parentScene, parent)
 {}
 
-ModePlace::~ModePlace()
+LVL_ModePlace::~LVL_ModePlace()
 {}
 
-void ModePlace::set()
+void LVL_ModePlace::set()
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -33,7 +33,7 @@ void ModePlace::set()
     s->_viewPort->viewport()->setMouseTracking(true);
 }
 
-void ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -67,7 +67,7 @@ void ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     dontCallEvent = true;
 }
 
-void ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -105,7 +105,7 @@ void ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
     if(!scene) return;
@@ -144,12 +144,12 @@ void ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModePlace::keyPress(QKeyEvent *keyEvent)
+void LVL_ModePlace::keyPress(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 }
 
-void ModePlace::keyRelease(QKeyEvent *keyEvent)
+void LVL_ModePlace::keyRelease(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
     switch(keyEvent->key())

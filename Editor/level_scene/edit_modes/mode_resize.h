@@ -1,13 +1,13 @@
-#ifndef MODE_RESIZE_H
-#define MODE_RESIZE_H
+#ifndef LVL_MODE_RESIZE_H
+#define LVL_MODE_RESIZE_H
 
 #include "../../common_features/edit_mode_base.h"
 
-class ModeResize : public EditMode
+class LVL_ModeResize : public EditMode
 {
 public:
-    ModeResize(QGraphicsScene * parentScene = 0, QObject *parent = 0);
-    ~ModeResize();
+    LVL_ModeResize(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~LVL_ModeResize();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
@@ -17,4 +17,4 @@ public:
     void keyRelease(QKeyEvent *keyEvent);
 };
 
-#endif // MODE_RESIZE_H
+#endif // LVL_MODE_RESIZE_H

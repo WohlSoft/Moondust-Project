@@ -1,13 +1,13 @@
-#ifndef MODE_PLACING_H
-#define MODE_PLACING_H
+#ifndef LVL_MODE_PLACING_H
+#define LVL_MODE_PLACING_H
 
 #include "../../common_features/edit_mode_base.h"
 
-class ModePlace : public EditMode
+class LVL_ModePlace : public EditMode
 {
 public:
-    ModePlace(QGraphicsScene * parentScene = 0, QObject *parent = 0);
-    ~ModePlace();
+    LVL_ModePlace(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~LVL_ModePlace();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
@@ -17,4 +17,4 @@ public:
     void keyRelease(QKeyEvent *keyEvent);
 };
 
-#endif // MODE_PLACING_H
+#endif // LVL_MODE_PLACING_H

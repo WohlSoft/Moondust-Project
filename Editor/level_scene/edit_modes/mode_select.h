@@ -1,13 +1,13 @@
-#ifndef MODE_SELECT_H
-#define MODE_SELECT_H
+#ifndef LVL_MODE_SELECT_H
+#define LVL_MODE_SELECT_H
 
 #include "../../common_features/edit_mode_base.h"
 
-class ModeSelect : public EditMode
+class LVL_ModeSelect : public EditMode
 {
 public:
-    ModeSelect(QGraphicsScene * parentScene = 0, QObject *parent = 0);
-    ~ModeSelect();
+    LVL_ModeSelect(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~LVL_ModeSelect();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
@@ -24,4 +24,4 @@ private:
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
 };
 
-#endif // MODE_SELECT_H
+#endif // LVL_MODE_SELECT_H

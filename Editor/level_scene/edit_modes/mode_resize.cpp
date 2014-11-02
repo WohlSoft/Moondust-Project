@@ -4,14 +4,14 @@
 #include "../../common_features/mainwinconnect.h"
 #include "../../common_features/item_rectangles.h"
 
-ModeResize::ModeResize(QGraphicsScene *parentScene, QObject *parent)
+LVL_ModeResize::LVL_ModeResize(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Resize", parentScene, parent)
 {}
 
-ModeResize::~ModeResize()
+LVL_ModeResize::~LVL_ModeResize()
 {}
 
-void ModeResize::set()
+void LVL_ModeResize::set()
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -29,7 +29,7 @@ void ModeResize::set()
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
 }
 
-void ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
     if(!scene) return;
@@ -40,7 +40,7 @@ void ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     dontCallEvent = true;
 }
 
-void ModeResize::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeResize::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
     if(!scene) return;
@@ -52,18 +52,18 @@ void ModeResize::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     dontCallEvent = true;
 }
 
-void ModeResize::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeResize::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
 }
 
-void ModeResize::keyPress(QKeyEvent *keyEvent)
+void LVL_ModeResize::keyPress(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 
 }
 
-void ModeResize::keyRelease(QKeyEvent *keyEvent)
+void LVL_ModeResize::keyRelease(QKeyEvent *keyEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);

@@ -12,16 +12,16 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
-ModeSquare::ModeSquare(QGraphicsScene *parentScene, QObject *parent)
+LVL_ModeSquare::LVL_ModeSquare(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Square", parentScene, parent)
 {
     drawStartPos = QPointF(0,0);
 }
 
-ModeSquare::~ModeSquare()
+LVL_ModeSquare::~LVL_ModeSquare()
 {}
 
-void ModeSquare::set()
+void LVL_ModeSquare::set()
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -41,7 +41,7 @@ void ModeSquare::set()
     s->_viewPort->viewport()->setMouseTracking(true);
 }
 
-void ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -74,7 +74,7 @@ void ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModeSquare::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeSquare::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -119,7 +119,7 @@ void ModeSquare::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
 }
 
-void ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
 
@@ -242,12 +242,12 @@ void ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModeSquare::keyPress(QKeyEvent *keyEvent)
+void LVL_ModeSquare::keyPress(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 }
 
-void ModeSquare::keyRelease(QKeyEvent *keyEvent)
+void LVL_ModeSquare::keyRelease(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
     switch(keyEvent->key())

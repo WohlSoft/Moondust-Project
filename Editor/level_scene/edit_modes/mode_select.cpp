@@ -10,7 +10,7 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
-ModeSelect::ModeSelect(QGraphicsScene *parentScene, QObject *parent)
+LVL_ModeSelect::LVL_ModeSelect(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Select", parentScene, parent)
 {
     sourcePos=QPoint(0,0);
@@ -19,11 +19,11 @@ ModeSelect::ModeSelect(QGraphicsScene *parentScene, QObject *parent)
     offsetY=0;//, gridX, gridY, i=0;
 }
 
-ModeSelect::~ModeSelect()
+LVL_ModeSelect::~LVL_ModeSelect()
 {}
 
 
-void ModeSelect::set()
+void LVL_ModeSelect::set()
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -42,7 +42,7 @@ void ModeSelect::set()
 }
 
 
-void ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -93,7 +93,7 @@ void ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 }
 
 
-void ModeSelect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeSelect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -102,7 +102,7 @@ void ModeSelect::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(s->cursor) s->cursor->setPos(mouseEvent->scenePos());
 }
 
-void ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -288,12 +288,12 @@ void ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModeSelect::keyPress(QKeyEvent *keyEvent)
+void LVL_ModeSelect::keyPress(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 }
 
-void ModeSelect::keyRelease(QKeyEvent *keyEvent)
+void LVL_ModeSelect::keyRelease(QKeyEvent *keyEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -314,7 +314,7 @@ void ModeSelect::keyRelease(QKeyEvent *keyEvent)
 
 
 
-void ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
+void LVL_ModeSelect::setItemSourceData(QGraphicsItem * it, QString ObjType)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
