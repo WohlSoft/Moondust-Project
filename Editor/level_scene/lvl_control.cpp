@@ -43,54 +43,7 @@ int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
 
 namespace lvl_control
 {
-    QList<QGraphicsItem *> collisionCheckBuffer;
-    bool emptyCollisionCheck = false;
-
-    ///
-    /// \brief cleanCollisionBuffer
-    /// Remove trash from collision buffer for crash protection
-    void prepareCollisionBuffer()
-    {
-        for(int i=0; i<collisionCheckBuffer.size(); i++ )
-        {
-            bool kick=false;
-            if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString()=="Space")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString()=="Square")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString()=="Line")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString()=="PlayerPoint")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))
-                kick=true;
-
-            if(kick) {collisionCheckBuffer.removeAt(i); i--;}
-        }
-    }
-
-    bool mouseLeft=false; //Left mouse key is pressed
-    bool mouseMid=false;  //Middle mouse key is pressed
-    bool mouseRight=false;//Right mouse key is pressed
-
-    bool mouseMoved=false; //Mouse was moved with right mouseKey
-
     static QPointF drawStartPos = QPoint(0,0); // Stored start point of mouse movement with pressed key
-
-    //the last Array ID's, which used before hold mouse key
-    static qlonglong last_block_arrayID=0;
-    static qlonglong last_bgo_arrayID=0;
-    static qlonglong last_npc_arrayID=0;
 }
 
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
@@ -798,7 +751,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             haveSelected = false;
 
             QString ObjType;
-            int collisionPassed = false;
+            bool collisionPassed = false;
 
             //History
             LevelData historyBuffer; bool deleted=false;
@@ -814,8 +767,6 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             }
 
 
-            QList<QGraphicsItem*> deleteList;
-            deleteList.clear();
             QList<QGraphicsItem*> selectedList = selectedItems();
 
             // check for grid snap
@@ -984,7 +935,7 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
                 QGraphicsScene::mouseReleaseEvent(mouseEvent);
                 return;
-           }
+            }
      EraserEnabled = false;
      QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
