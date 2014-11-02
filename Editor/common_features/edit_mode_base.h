@@ -16,23 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "edit_mode_base.h"
+#ifndef EDITMODE_H
+#define EDITMODE_H
 
-EditMode::EditMode(QString toolTitle, LvlScene *ParentScene, QObject *parent) :
-    QObject(parent), toolName(toolTitle), scene(ParentScene)
-{}
+#include <QGraphicsScene>
+#include <QObject>
+#include <QGraphicsSceneMouseEvent>
+#include <QKeyEvent>
 
-void EditMode::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
-{Q_UNUSED(mouseEvent);}
+class EditMode : public QObject
+{
+    Q_OBJECT
+public:
+    explicit EditMode(QString toolTitle, QGraphicsScene *ParentScene = 0, QObject *parent = 0);
+    virtual ~EditMode();
+    virtual void set();
+    QString name() const;
+    virtual void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
+    virtual void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent);
 
-void EditMode::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
-{Q_UNUSED(mouseEvent);}
+    virtual void keyPress(QKeyEvent *keyEvent);
+    virtual void keyRelease(QKeyEvent *keyEvent);
 
-void EditMode::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
-{Q_UNUSED(mouseEvent);}
+signals:
 
-void EditMode::keyPress(QKeyEvent *keyEvent)
-{Q_UNUSED(keyEvent);}
+public slots:
 
-void EditMode::keyRelease(QKeyEvent *keyEvent)
-{Q_UNUSED(keyEvent);}
+protected:
+    QString toolName;
+    QGraphicsScene *scene;
+};
+
+#endif // EDITMODE_H
