@@ -1,13 +1,13 @@
-#ifndef MODE_ERASE_H
-#define MODE_ERASE_H
+#ifndef LVL_MODE_ERASE_H
+#define LVL_MODE_ERASE_H
 
 #include "../../common_features/edit_mode_base.h"
 
-class ModeErase : public EditMode
+class LVL_ModeErase : public EditMode
 {
 public:
-    ModeErase(QGraphicsScene * parentScene = 0, QObject *parent = 0);
-    ~ModeErase();
+    LVL_ModeErase(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~LVL_ModeErase();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
@@ -18,4 +18,4 @@ public:
 
 };
 
-#endif // MODE_ERASE_H
+#endif // LVL_MODE_ERASE_H

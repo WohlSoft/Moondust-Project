@@ -2,14 +2,14 @@
 #include "../lvlscene.h"
 #include "../../common_features/mainwinconnect.h"
 
-ModeHand::ModeHand(QGraphicsScene *parentScene, QObject *parent)
+LVL_ModeHand::LVL_ModeHand(QGraphicsScene *parentScene, QObject *parent)
 : EditMode("HandScroll", parentScene, parent)
 {}
 
-ModeHand::~ModeHand()
+LVL_ModeHand::~LVL_ModeHand()
 {}
 
-void ModeHand::set()
+void LVL_ModeHand::set()
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -28,27 +28,27 @@ void ModeHand::set()
     s->_viewPort->setDragMode(QGraphicsView::ScrollHandDrag);
 }
 
-void ModeHand::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeHand::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
 }
 
-void ModeHand::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeHand::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
 }
 
-void ModeHand::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeHand::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
 }
 
-void ModeHand::keyPress(QKeyEvent *keyEvent)
+void LVL_ModeHand::keyPress(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 }
 
-void ModeHand::keyRelease(QKeyEvent *keyEvent)
+void LVL_ModeHand::keyRelease(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 }

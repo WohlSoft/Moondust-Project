@@ -1,13 +1,13 @@
-#ifndef MODE_LINE_H
-#define MODE_LINE_H
+#ifndef LVL_MODE_LINE_H
+#define LVL_MODE_LINE_H
 
 #include "../../common_features/edit_mode_base.h"
 
-class ModeLine : public EditMode
+class LVL_ModeLine : public EditMode
 {
 public:
-    ModeLine(QGraphicsScene * parentScene = 0, QObject *parent = 0);
-    ~ModeLine();
+    LVL_ModeLine(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~LVL_ModeLine();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
@@ -21,4 +21,4 @@ private:
 
 };
 
-#endif // MODE_SQUARE_H
+#endif // LVL_MODE_SQUARE_H

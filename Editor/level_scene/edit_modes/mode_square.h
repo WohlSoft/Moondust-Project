@@ -1,13 +1,13 @@
-#ifndef MODE_SQUARE_H
-#define MODE_SQUARE_H
+#ifndef LVL_MODE_SQUARE_H
+#define LVL_MODE_SQUARE_H
 
 #include "../../common_features/edit_mode_base.h"
 
-class ModeSquare : public EditMode
+class LVL_ModeSquare : public EditMode
 {
 public:
-    ModeSquare(QGraphicsScene * parentScene = 0, QObject *parent = 0);
-    ~ModeSquare();
+    LVL_ModeSquare(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~LVL_ModeSquare();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
     void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
@@ -21,4 +21,4 @@ private:
 
 };
 
-#endif // MODE_SQUARE_H
+#endif // LVL_MODE_SQUARE_H

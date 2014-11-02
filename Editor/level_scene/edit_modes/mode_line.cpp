@@ -12,16 +12,16 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
-ModeLine::ModeLine(QGraphicsScene *parentScene, QObject *parent)
+LVL_ModeLine::LVL_ModeLine(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Line", parentScene, parent)
 {
     drawStartPos = QPointF(0,0);
 }
 
-ModeLine::~ModeLine()
+LVL_ModeLine::~LVL_ModeLine()
 {}
 
-void ModeLine::set()
+void LVL_ModeLine::set()
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -41,7 +41,7 @@ void ModeLine::set()
     s->_viewPort->viewport()->setMouseTracking(true);
 }
 
-void ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -80,7 +80,7 @@ void ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -122,7 +122,7 @@ void ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
 }
 
-void ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
 
@@ -141,12 +141,12 @@ void ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModeLine::keyPress(QKeyEvent *keyEvent)
+void LVL_ModeLine::keyPress(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 }
 
-void ModeLine::keyRelease(QKeyEvent *keyEvent)
+void LVL_ModeLine::keyRelease(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
     switch(keyEvent->key())

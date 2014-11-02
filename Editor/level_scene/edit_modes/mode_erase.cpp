@@ -13,16 +13,16 @@
 
 #include "../../common_features/themes.h"
 
-ModeErase::ModeErase(QGraphicsScene *parentScene, QObject *parent)
+LVL_ModeErase::LVL_ModeErase(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Erase", parentScene, parent)
 {}
 
 
-ModeErase::~ModeErase()
+LVL_ModeErase::~LVL_ModeErase()
 {}
 
 
-void ModeErase::set()
+void LVL_ModeErase::set()
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -41,7 +41,7 @@ void ModeErase::set()
     s->_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
-void ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -71,7 +71,7 @@ void ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -84,7 +84,7 @@ void ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
-void ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void LVL_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
     if(!scene) return;
@@ -112,13 +112,13 @@ void ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     s->EraserEnabled = false;
 }
 
-void ModeErase::keyPress(QKeyEvent *keyEvent)
+void LVL_ModeErase::keyPress(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
 }
 
 
-void ModeErase::keyRelease(QKeyEvent *keyEvent)
+void LVL_ModeErase::keyRelease(QKeyEvent *keyEvent)
 {
     switch(keyEvent->key())
     {

@@ -143,25 +143,25 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
 
     //Build edit mode classes
-    ModeHand * modeHand = new ModeHand(this);
+    LVL_ModeHand * modeHand = new LVL_ModeHand(this);
     EditModes.push_back(modeHand);
 
-    ModeSelect * modeSelect = new ModeSelect(this);
+    LVL_ModeSelect * modeSelect = new LVL_ModeSelect(this);
     EditModes.push_back(modeSelect);
 
-    ModeResize * modeResize = new ModeResize(this);
+    LVL_ModeResize * modeResize = new LVL_ModeResize(this);
     EditModes.push_back(modeResize);
 
-    ModeErase * modeErase = new ModeErase(this);
+    LVL_ModeErase * modeErase = new LVL_ModeErase(this);
     EditModes.push_back(modeErase);
 
-    ModePlace * modePlace = new ModePlace(this);
+    LVL_ModePlace * modePlace = new LVL_ModePlace(this);
     EditModes.push_back(modePlace);
 
-    ModeSquare * modeSquare = new ModeSquare(this);
+    LVL_ModeSquare * modeSquare = new LVL_ModeSquare(this);
     EditModes.push_back(modeSquare);
 
-    ModeLine * modeLine = new ModeLine(this);
+    LVL_ModeLine * modeLine = new LVL_ModeLine(this);
     EditModes.push_back(modeLine);
 
     CurrentMode = modeSelect;
