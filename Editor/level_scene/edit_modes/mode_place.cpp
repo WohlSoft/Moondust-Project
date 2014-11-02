@@ -5,13 +5,6 @@
 #include "../../common_features/item_rectangles.h"
 #include "../lvl_item_placing.h"
 
-#include "../item_bgo.h"
-#include "../item_block.h"
-#include "../item_npc.h"
-#include "../item_water.h"
-#include "../item_playerpoint.h"
-#include "../item_door.h"
-
 
 ModePlace::ModePlace(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Placing", parentScene, parent)
