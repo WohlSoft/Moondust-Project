@@ -79,6 +79,7 @@ public:
     enum EditModeID
     {
         MODE_Selecting=0,
+        MODE_HandScroll,
         MODE_Erasing,
         MODE_PlacingNew,
         MODE_DrawSquare,
@@ -87,6 +88,7 @@ public:
         MODE_SelectingOnly,
         MODE_Line
     };
+    void switchMode(QString title);
 
 
     // ////////////ItemPlacers///////////
@@ -120,6 +122,17 @@ public:
     bool mouseRight;//Right mouse key is pressed
 
     bool mouseMoved; //Mouse was moved with right mouseKey
+
+    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    bool MousePressEventOnly;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    bool MouseMoveEventOnly;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    bool MouseReleaseEventOnly;
+    void keyPressEvent ( QKeyEvent * keyEvent );
+    void keyReleaseEvent ( QKeyEvent * keyEvent );
+
     // //////////////////////////////////
 
     // //////////////////////////////////
@@ -609,13 +622,6 @@ public slots:
 
 signals:
     void screenshotSizeCaptured();
-
-protected:
-    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void keyReleaseEvent ( QKeyEvent * keyEvent );
 
 private:
 

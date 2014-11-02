@@ -134,6 +134,7 @@ void ModeSquare::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
           (dynamic_cast<QGraphicsRectItem *>(s->cursor)->rect().height()==0))
         {
             s->cursor->hide();
+            dontCallEvent = true;
             return;
         }
         // ///////////////////////////////////////////////////////////////

@@ -39,6 +39,8 @@ public:
     virtual void keyPress(QKeyEvent *keyEvent);
     virtual void keyRelease(QKeyEvent *keyEvent);
 
+    bool noEvent();
+
 signals:
 
 public slots:
@@ -46,6 +48,7 @@ public slots:
 protected:
     QString toolName;
     QGraphicsScene *scene;
+    bool dontCallEvent;
 };
 
 #endif // EDITMODE_H

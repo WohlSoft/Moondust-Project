@@ -25,6 +25,14 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 
+#include "edit_modes/mode_hand.h"
+#include "edit_modes/mode_select.h"
+#include "edit_modes/mode_erase.h"
+#include "edit_modes/mode_place.h"
+#include "edit_modes/mode_square.h"
+#include "edit_modes/mode_line.h"
+#include "edit_modes/mode_resize.h"
+
 LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -56,6 +64,10 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     mouseRight=false;//Right mouse key is pressed
 
     mouseMoved=false; //Mouse was moved with right mouseKey
+
+    MousePressEventOnly=false;
+    MouseMoveEventOnly=false;
+    MouseReleaseEventOnly=false;
 
     last_block_arrayID = 0;
     last_bgo_arrayID = 0;
@@ -129,6 +141,31 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
+
+    //Build edit mode classes
+    ModeHand * modeHand = new ModeHand(this);
+    EditModes.push_back(modeHand);
+
+    ModeSelect * modeSelect = new ModeSelect(this);
+    EditModes.push_back(modeSelect);
+
+    ModeResize * modeResize = new ModeResize(this);
+    EditModes.push_back(modeResize);
+
+    ModeErase * modeErase = new ModeErase(this);
+    EditModes.push_back(modeErase);
+
+    ModePlace * modePlace = new ModePlace(this);
+    EditModes.push_back(modePlace);
+
+    ModeSquare * modeSquare = new ModeSquare(this);
+    EditModes.push_back(modeSquare);
+
+    ModeLine * modeLine = new ModeLine(this);
+    EditModes.push_back(modeLine);
+
+    CurrentMode = modeSelect;
+    CurrentMode->set();
 }
 
 LvlScene::~LvlScene()
@@ -138,6 +175,13 @@ LvlScene::~LvlScene()
     uBGOs.clear();
     uBlocks.clear();
     uNPCs.clear();
+
+    while(!EditModes.isEmpty())
+    {
+        EditMode *tmp = EditModes.first();
+        EditModes.pop_front();
+        delete tmp;
+    }
 }
 
 

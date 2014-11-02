@@ -44,7 +44,52 @@ void ModeSelect::set()
 
 void ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    if(!scene) return;
+    LvlScene *s = dynamic_cast<LvlScene *>(scene);
+
+    if(s->EditingMode == LvlScene::MODE_PasteFromClip)
+    {
+        if( mouseEvent->buttons() & Qt::RightButton )
+        {
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            dontCallEvent = true;
+            return;
+        }
+        s->PasteFromBuffer = true;
+        dontCallEvent = true;
+        return;
+    }
+
+    if((s->disableMoveItems) && (mouseEvent->buttons() & Qt::LeftButton)
+        && (Qt::ControlModifier != QApplication::keyboardModifiers()))
+    { dontCallEvent = true; return; }
+
+    if( mouseEvent->buttons() & Qt::MiddleButton )
+    {
+        if(GlobalSettings::MidMouse_allowSwitchToPlace)
+        {
+            if(s->selectedItems().size()==1)
+            {
+                QGraphicsItem * it = s->selectedItems().first();
+                QString itp = it->data(0).toString();
+                long itd = it->data(1).toInt();
+                if(itp=="Block")
+                {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_Block, itd); return;}
+                else if(itp=="BGO")
+                {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_BGO, itd); return;}
+                else if(itp=="NPC")
+                {MainWinConnect::pMainWin->SwitchPlacingItem(ItemTypes::LVL_NPC, itd); return;}
+            }
+        }
+        if(GlobalSettings::MidMouse_allowDuplicate)
+        {
+            if(!s->selectedItems().isEmpty())
+            {
+                s->LvlBuffer=s->copy();
+                s->PasteFromBuffer=true;
+            }
+        }
+    }
 }
 
 
@@ -62,13 +107,31 @@ void ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
-    if( mouseEvent->button() != Qt::LeftButton ) return;
+    if( mouseEvent->button() != Qt::LeftButton )
+    {
+        dontCallEvent = true;
+        return;
+    }
+
+    s->cursor->hide();
+
+    s->haveSelected = false;
 
     QString ObjType;
     bool collisionPassed = false;
+
     //History
     LevelData historyBuffer;
     LevelData historySourceBuffer;
+
+    if(s->PasteFromBuffer)
+    {
+        s->paste( s->LvlBuffer, mouseEvent->scenePos().toPoint() );
+        s->PasteFromBuffer = false;
+        s->IsMoved=false;
+        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        s->Debugger_updateItemList();
+    }
 
     QList<QGraphicsItem*> selectedList = s->selectedItems();
 

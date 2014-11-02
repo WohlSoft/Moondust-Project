@@ -32,6 +32,7 @@ void ModeErase::set()
     s->DrawMode=false;
     s->disableMoveItems=false;
 
+    s->clearSelection();
     s->resetCursor();
     s->resetResizers();
 
@@ -48,6 +49,7 @@ void ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if( mouseEvent->buttons() & Qt::RightButton )
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
+        dontCallEvent = true;
         return;
     }
 
@@ -55,6 +57,10 @@ void ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
        s->cursor->show();
        s->cursor->setPos(mouseEvent->scenePos());
     }
+
+    s->MousePressEventOnly = true;
+    s->mousePressEvent(mouseEvent);
+    dontCallEvent = true;
 
     QList<QGraphicsItem*> selectedList = s->selectedItems();
     if (!selectedList.isEmpty())
