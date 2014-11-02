@@ -226,7 +226,10 @@ SOURCES += main.cpp\
     world_scene/wld_scene.cpp \
     world_scene/wld_setup.cpp \
     world_scene/wld_usergfx.cpp \
-    level_scene/edit_modes/edit_mode_base.cpp
+    level_scene/edit_modes/mode_select.cpp \
+    common_features/edit_mode_base.cpp \
+    level_scene/edit_modes/mode_erase.cpp \
+    level_scene/edit_modes/mode_place.cpp
 
 
 HEADERS  += defines.h \
@@ -317,7 +320,10 @@ HEADERS  += defines.h \
     world_scene/item_tile.h \
     world_scene/wld_item_placing.h \
     world_scene/wld_scene.h \
-    level_scene/edit_modes/edit_mode_base.h
+    level_scene/edit_modes/mode_select.h \
+    common_features/edit_mode_base.h \
+    level_scene/edit_modes/mode_erase.h \
+    level_scene/edit_modes/mode_place.h
 
 
 FORMS    += \

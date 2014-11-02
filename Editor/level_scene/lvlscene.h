@@ -49,11 +49,17 @@
 #include "../data_configs/custom_data.h"
 #include "../main_window/global_settings.h"
 
+#include "../common_features/graphicsworkspace.h"
+
+#include "../common_features/edit_mode_base.h"
+
 class LvlScene : public QGraphicsScene
 {
     Q_OBJECT
+    friend class EditMode;
+    friend class leveledit;
 public:
-    LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
+    LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
     ~LvlScene();
 
     bool grid;
@@ -68,7 +74,9 @@ public:
     bool disableMoveItems;
     bool contextMenuOpened;
 
-    enum EditMode
+    QList<EditMode *> EditModes;
+    EditMode * CurrentMode;
+    enum EditModeID
     {
         MODE_Selecting=0,
         MODE_Erasing,
@@ -106,10 +114,54 @@ public:
     LevelData overwritedItems;
     void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
+
+    bool mouseLeft; //Left mouse key is pressed
+    bool mouseMid;  //Middle mouse key is pressed
+    bool mouseRight;//Right mouse key is pressed
+
+    bool mouseMoved; //Mouse was moved with right mouseKey
     // //////////////////////////////////
 
+    // //////////////////////////////////
     bool historyChanged;
     bool resetPosition;
+
+    // //////////////////////////////////
+    QList<QGraphicsItem *> collisionCheckBuffer;
+    bool emptyCollisionCheck;
+    void prepareCollisionBuffer();
+
+    bool checkGroupCollisions(QList<QGraphicsItem *> *items);
+    QGraphicsItem * itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp = 0);
+    QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
+    // //////////////////////////////////
+
+    // //////////////////////////////////
+    void placeBlock(LevelBlock &block, bool toGrid=false);
+    void placeBGO(LevelBGO &bgo, bool toGrid=false);
+    void placeNPC(LevelNPC &npc, bool toGrid=false);
+    void placeWater(LevelPhysEnv &water, bool toGrid=false);
+    void placePlayerPoint(PlayerPoint plr, bool init=false);
+
+    void placeDoor(LevelDoors &door, bool toGrid=false);
+    void placeDoorEnter(LevelDoors &door, bool toGrid=false, bool init=false);
+    void placeDoorExit(LevelDoors &door, bool toGrid=false, bool init=false);
+
+    qlonglong last_block_arrayID;
+    qlonglong last_bgo_arrayID;
+    qlonglong last_npc_arrayID;
+
+    void removeItemUnderCursor();
+
+    QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
+    void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
+
+    void applyArrayForItemGroup(QList<QGraphicsItem * >items);
+    void applyArrayForItem(QGraphicsItem * item);
+
+    void returnItemBackGroup(QList<QGraphicsItem * >items);
+    void returnItemBack(QGraphicsItem * item);
+    // //////////////////////////////////
 
     //Copy function
     LevelData copy(bool cut = false);
@@ -170,14 +222,12 @@ public:
     QVector<SimpleAnimator * > animates_Blocks;
     QVector<AdvNpcAnimator * > animates_NPC;
 
-    bool checkGroupCollisions(QList<QGraphicsItem *> *items);
-    QGraphicsItem * itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp = 0);
-
     LevelData  * LvlData;
 
     LevelData LvlBuffer;
 
     dataconfigs * pConfigs;
+    GraphicsWorkspace *_viewPort;
 
     //Object Indexing:
     QVector<blocksIndexes > index_blocks;
@@ -568,29 +618,6 @@ protected:
     void keyReleaseEvent ( QKeyEvent * keyEvent );
 
 private:
-
-    QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
-
-    void placeBlock(LevelBlock &block, bool toGrid=false);
-    void placeBGO(LevelBGO &bgo, bool toGrid=false);
-    void placeNPC(LevelNPC &npc, bool toGrid=false);
-    void placeWater(LevelPhysEnv &water, bool toGrid=false);
-    void placePlayerPoint(PlayerPoint plr, bool init=false);
-
-    void placeDoor(LevelDoors &door, bool toGrid=false);
-    void placeDoorEnter(LevelDoors &door, bool toGrid=false, bool init=false);
-    void placeDoorExit(LevelDoors &door, bool toGrid=false, bool init=false);
-
-    void removeItemUnderCursor();
-
-    QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
-    void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
-
-    void applyArrayForItemGroup(QList<QGraphicsItem * >items);
-    void applyArrayForItem(QGraphicsItem * item);
-
-    void returnItemBackGroup(QList<QGraphicsItem * >items);
-    void returnItemBack(QGraphicsItem * item);
 
     void setSectionBG(LevelSection section, bool forceTiled=false);
 

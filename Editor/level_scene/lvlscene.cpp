@@ -25,13 +25,14 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 
-LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
+LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
 
     //Pointerss
     pConfigs = &configs; // Pointer to Main Configs
     LvlData = &FileData; //Ad pointer to level data
+    _viewPort = parentView;
 
     //Options
     opts.animationEnabled = true;
@@ -50,9 +51,21 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     disableMoveItems = false;
     DrawMode=false;
 
+    mouseLeft=false; //Left mouse key is pressed
+    mouseMid=false;  //Middle mouse key is pressed
+    mouseRight=false;//Right mouse key is pressed
+
+    mouseMoved=false; //Mouse was moved with right mouseKey
+
+    last_block_arrayID = 0;
+    last_bgo_arrayID = 0;
+    last_npc_arrayID = 0;
+
     //Editing process flags
     IsMoved = false;
     haveSelected = false;
+
+    emptyCollisionCheck = false;
 
     placingItem=0;
 
