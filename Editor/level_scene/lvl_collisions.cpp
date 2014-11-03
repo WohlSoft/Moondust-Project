@@ -29,6 +29,39 @@
 
 #include "../common_features/timecounter.h"
 
+///
+/// \brief cleanCollisionBuffer
+/// Remove trash from collision buffer for crash protection
+void LvlScene::prepareCollisionBuffer()
+{
+    for(int i=0; i<collisionCheckBuffer.size(); i++ )
+    {
+        bool kick=false;
+        if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="Space")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="Square")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="Line")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="PlayerPoint")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))
+            kick=true;
+
+        if(kick) {collisionCheckBuffer.removeAt(i); i--;}
+    }
+}
+
 //Checking group collisions. Return true if was found even one passed collision in this group
 bool LvlScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
 {

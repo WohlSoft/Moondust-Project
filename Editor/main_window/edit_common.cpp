@@ -34,28 +34,26 @@ void MainWindow::on_actionReload_triggered()
         LevelData FileData;
         filePath = activeLvlEditWin()->curFile;
 
-        QFile fileIn(filePath);
-
-        if (!fileIn.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(this, tr("File open error"),
-        tr("Can't open the file."), QMessageBox::Ok);
-            return;
+        if(activeLvlEditWin()->isUntitled)
+        {
+                    QMessageBox::warning(this, tr("File not saved"),
+                    tr("File doesn't saved on disk."), QMessageBox::Ok);
+                        return;
         }
 
-        QFileInfo in_1(filePath);
+        if (!QFileInfo(filePath).exists() ) {
+            QMessageBox::critical(this, tr("File open error"),
+            tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+                return;
+        }
 
-        if(in_1.suffix().toLower() == "lvl")
-            FileData = FileFormats::ReadLevelFile(fileIn);         //Read SMBX LVL File
-        else
-            FileData = FileFormats::ReadExtendedLevelFile(fileIn); //Read PGE LVLX File
+        //Open level file
+        FileData = FileFormats::OpenLevelFile(filePath);
 
-        //FileData = FileFormats::ReadLevelFile(fileIn); //function in file_formats.cpp
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
 
-        FileData.filename = QFileInfo(filePath).baseName();
-        FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeLvlEditWin()->LvlData.modified = false;
         activeLvlEditWin()->close();
@@ -92,6 +90,13 @@ void MainWindow::on_actionReload_triggered()
         filePath = activeNpcEditWin()->curFile;
         QFile fileIn(filePath);
 
+        if(activeNpcEditWin()->isUntitled)
+        {
+                    QMessageBox::warning(this, tr("File not saved"),
+                    tr("File doesn't saved on disk."), QMessageBox::Ok);
+                        return;
+        }
+
         if (!fileIn.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("File open error"),
         tr("Can't open the file."), QMessageBox::Ok);
@@ -121,22 +126,20 @@ void MainWindow::on_actionReload_triggered()
         WorldData FileData;
         filePath = activeWldEditWin()->curFile;
 
-        QFile fileIn(filePath);
-
-        if (!fileIn.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(this, tr("File open error"),
-        tr("Can't open the file."), QMessageBox::Ok);
-            return;
+        if(activeWldEditWin()->isUntitled)
+        {
+                    QMessageBox::warning(this, tr("File not saved"),
+                    tr("File doesn't saved on disk."), QMessageBox::Ok);
+                        return;
         }
 
-        QFileInfo in_1(filePath);
+        if (!QFileInfo(filePath).exists() ) {
+            QMessageBox::critical(this, tr("File open error"),
+            tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+                return;
+        }
 
-        //FileData = FileFormats::ReadWorldFile(fileIn); //function in file_formats.cpp
-        if(in_1.suffix().toLower() == "wld")
-            FileData = FileFormats::ReadWorldFile(fileIn);         //Read SMBX WLD File
-        else
-            FileData = FileFormats::ReadExtendedWorldFile(fileIn); //Read PGE WLDX File
-
+        FileData = FileFormats::OpenWorldFile(filePath);
 
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);

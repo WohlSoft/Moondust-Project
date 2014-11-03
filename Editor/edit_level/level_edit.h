@@ -36,7 +36,7 @@ class leveledit;
 class leveledit : public QWidget
 {
     Q_OBJECT
-    
+    friend class LvlScene;
 public:
     explicit leveledit(QWidget *parent = 0);
     ~leveledit();

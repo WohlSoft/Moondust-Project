@@ -35,7 +35,7 @@ class AnimationEdit : public QDialog
     Q_OBJECT
     
 public:
-    explicit AnimationEdit(QList<QVector<frameOpts > >  &framesX, SpriteScene * Scene, FrameSets &frmConfs, QWidget *parent = 0);
+    explicit AnimationEdit(FrameSets &frmConfs, QWidget *parent = 0);
     ~AnimationEdit();
     QList<QVector<frameOpts> > SrcFrames;
 
@@ -45,8 +45,6 @@ public:
 
     AniFrameSet currentFrameSet;
     FrameSets   frameList;
-
-    SpriteScene *SrcScene;
     
 private slots:
     void on_AddLeft_clicked();
@@ -59,8 +57,14 @@ private slots:
 
     void on_FramesSets_itemClicked(QListWidgetItem *item);
 
+    void on_FramesL_itemSelectionChanged();
+    void on_FramesR_itemSelectionChanged();
+    void on_FramesL_itemClicked(QListWidgetItem *item);
+    void on_FramesR_itemClicked(QListWidgetItem *item);
 
 private:
+    void showFrame(int x, int y);
+    QPixmap current_frame;
     Ui::AnimationEdit *ui;
 };
 

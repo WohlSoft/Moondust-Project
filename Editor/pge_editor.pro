@@ -225,7 +225,15 @@ SOURCES += main.cpp\
     world_scene/wld_resizers.cpp \
     world_scene/wld_scene.cpp \
     world_scene/wld_setup.cpp \
-    world_scene/wld_usergfx.cpp
+    world_scene/wld_usergfx.cpp \
+    level_scene/edit_modes/mode_select.cpp \
+    common_features/edit_mode_base.cpp \
+    level_scene/edit_modes/mode_erase.cpp \
+    level_scene/edit_modes/mode_place.cpp \
+    level_scene/edit_modes/mode_square.cpp \
+    level_scene/edit_modes/mode_line.cpp \
+    level_scene/edit_modes/mode_hand.cpp \
+    level_scene/edit_modes/mode_resize.cpp
 
 
 HEADERS  += defines.h \
@@ -315,7 +323,15 @@ HEADERS  += defines.h \
     world_scene/item_scene.h \
     world_scene/item_tile.h \
     world_scene/wld_item_placing.h \
-    world_scene/wld_scene.h
+    world_scene/wld_scene.h \
+    level_scene/edit_modes/mode_select.h \
+    common_features/edit_mode_base.h \
+    level_scene/edit_modes/mode_erase.h \
+    level_scene/edit_modes/mode_place.h \
+    level_scene/edit_modes/mode_square.h \
+    level_scene/edit_modes/mode_line.h \
+    level_scene/edit_modes/mode_hand.h \
+    level_scene/edit_modes/mode_resize.h
 
 
 FORMS    += \

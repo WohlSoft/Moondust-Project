@@ -103,7 +103,7 @@ void LvlScene::setSectionResizer(bool enabled, bool accept)
         pResizer->_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
+        SwitchEditingMode(MODE_Resizing);
         MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
@@ -166,7 +166,8 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
         pResizer->_minSize = QSizeF(800, 600);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
+        //MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
+        SwitchEditingMode(MODE_Resizing);
         MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
@@ -239,7 +240,8 @@ void LvlScene::setBlockResizer(QGraphicsItem * targetBlock, bool enabled, bool a
         pResizer->_minSize = QSizeF(64, 64);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
+        //MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
+        SwitchEditingMode(MODE_Resizing);
         MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
@@ -301,7 +303,8 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem * targetRect, bool enabled, bool 
         pResizer->_minSize = QSizeF(16, 16);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
+        //MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(leveledit::MODE_Resizing);
+        SwitchEditingMode(MODE_Resizing);
         MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else
@@ -364,7 +367,8 @@ void LvlScene::setScreenshotSelector(bool enabled, bool accept)
         pResizer->_minSize = QSizeF(320, 200);
         this->setFocus(Qt::ActiveWindowFocusReason);
         //DrawMode=true;
-        MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(WorldEdit::MODE_Resizing);
+        //MainWinConnect::pMainWin->activeLvlEditWin()->changeCursor(WorldEdit::MODE_Resizing);
+        SwitchEditingMode(MODE_Resizing);
         MainWinConnect::pMainWin->resizeToolbarVisible(true);
     }
     else

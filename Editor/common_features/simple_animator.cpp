@@ -74,6 +74,13 @@ SimpleAnimator::~SimpleAnimator()
 
 QPixmap SimpleAnimator::image(int frame)
 {
+    if(frames.isEmpty())
+    {   //If animator haven't frames, return red sqare
+        QPixmap tmp = QPixmap(QSize(32,32));
+        tmp.fill(QColor(Qt::red));
+        return tmp;
+    }
+
     // QMutexLocker locker(&mutex); //Glitch protection
     if((frame<0)||(frame>=frames.size()))
         return frames[CurrentFrame];//mainImage.copy(QRect(framePos.x(), framePos.y(), frameWidth, frameSize ));

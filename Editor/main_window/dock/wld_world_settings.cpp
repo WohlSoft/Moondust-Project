@@ -255,23 +255,71 @@ void MainWindow::on_WLD_Stars_valueChanged(int arg1)
 
 }
 
+
+namespace starCounter
+{
+    static long checkLevelFile(QString FilePath, QStringList &exists)
+    {
+        QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
+        lvlext.setCaseSensitivity(Qt::CaseInsensitive);
+        LevelData getLevelHead;
+        long starCount = 0;
+        getLevelHead.stars = 0;
+
+        if( lvlext.exactMatch(FilePath) )
+        {
+            getLevelHead = FileFormats::OpenLevelFile(FilePath);
+            if( !getLevelHead.ReadFileValid ) return 0;
+
+            //qDebug() << "world "<< getLevelHead.stars << getLevelHead.filename;
+            starCount += getLevelHead.stars;
+            //qDebug() << "starCount "<<starCount;
+
+            for(int i=0;i<getLevelHead.doors.size(); i++)
+            {
+                if(!getLevelHead.doors[i].lname.isEmpty())
+                {
+                    QString FilePath_W = getLevelHead.path+"/"+getLevelHead.doors[i].lname;
+
+                    if(!FilePath_W.endsWith(".lvl", Qt::CaseInsensitive)&&
+                       !FilePath_W.endsWith(".lvlx", Qt::CaseInsensitive))
+                       FilePath_W.append(".lvl");
+
+                    if(!QFileInfo(FilePath_W).exists()) continue;
+
+                    if(!exists.contains(FilePath_W))
+                    {
+                        exists.push_back(FilePath_W);
+                    }
+                    else continue;
+                    //qDebug() << "warp "<<getLevelHead.stars << getLevelHead.filename;
+
+                    starCount += checkLevelFile(FilePath_W, exists);
+
+                    qApp->processEvents();
+                    //qDebug() << "starCount "<<starCount;
+                }
+            }
+        }
+        return starCount;
+    }
+}
+
 void MainWindow::on_WLD_DoCountStars_clicked()
 {
     if(world_settings_lock_fields) return;
+    using namespace starCounter;
 
     //Count stars of all used levels on this world map
 
     QString dirPath;
     long starzzz=0;
+    bool introCounted=false;
 
     if (activeChildWindow()==3)
     {
         WorldEdit * edit = activeWldEditWin();
         dirPath = edit->WldData.path;
-
-        QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
-        //lvlext.setPatternSyntax(QRegExp::RegExp);
-        lvlext.setCaseSensitivity(Qt::CaseInsensitive);
 
         QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, edit->WldData.levels.size(), this);
              progress.setWindowTitle(tr("Counting stars..."));
@@ -281,37 +329,50 @@ void MainWindow::on_WLD_DoCountStars_clicked()
              progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
              progress.setMinimumDuration(0);
 
-        for(int i=0;i<edit->WldData.levels.size();i++)
+        QStringList LevelAlreadyChecked;
+
+        //qDebug() << "total " << starzzz;
+
+        for(int i=0; i<edit->WldData.levels.size() || !introCounted; i++)
         {
             //Attempt to read stars quantity of level:
 
-            if(edit->WldData.levels[i].lvlfile.isEmpty()) continue;
-            QString FilePath = dirPath+"/"+edit->WldData.levels[i].lvlfile;
-            if(!QFile(FilePath).exists()) continue;
+            QString FilePath;
 
-            QFile file(FilePath);
-            if (!file.open(QIODevice::ReadOnly)) continue;
-            QFileInfo in_1(FilePath);
-
-            LevelData getLevelHead;
-            getLevelHead.stars = 0;
-            if( lvlext.exactMatch(FilePath) )
+            if(introCounted)
             {
-                if(in_1.suffix().toLower() == "lvl")
-                    getLevelHead = FileFormats::ReadLevelFile(file);         //Read SMBX LVL File
-                else
-                    getLevelHead = FileFormats::ReadExtendedLevelFile(file); //Read PGE LVLX File
-                //getLevelHead = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
-                if( !getLevelHead.ReadFileValid ) continue;
+                FilePath = dirPath+"/"+edit->WldData.levels[i].lvlfile;
+                if(edit->WldData.levels[i].lvlfile.isEmpty()) continue;
             }
-            file.close();
-            starzzz+=getLevelHead.stars;
+            else
+            {
+                FilePath = dirPath+"/"+edit->WldData.IntroLevel_file;
+                i--;
+                introCounted=true;
+                if(FilePath.isEmpty()) continue;
+            }
+
+            if(!FilePath.endsWith(".lvl", Qt::CaseInsensitive)&&
+               !FilePath.endsWith(".lvlx", Qt::CaseInsensitive))
+               FilePath.append(".lvl");
+
+            if(!QFileInfo(FilePath).exists()) continue;
+
+            if(!LevelAlreadyChecked.contains(FilePath))
+            {
+                LevelAlreadyChecked.push_back(FilePath);
+            }
+            else continue;
+
+            progress.setValue(i<0?1:i);
+            starzzz += checkLevelFile(FilePath, LevelAlreadyChecked);
+            //qDebug() << "starzzz " << starzzz;
 
             if(progress.wasCanceled()) break;
-            progress.setValue(i);
             qApp->processEvents();
         }
 
+        //qDebug() << "total " << starzzz;
         if(progress.wasCanceled()) return;
         ui->WLD_Stars->setValue(starzzz);
         progress.close();
