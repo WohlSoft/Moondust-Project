@@ -25,13 +25,22 @@
 #include "item_bgo.h"
 #include "item_npc.h"
 
-LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
+#include "edit_modes/mode_hand.h"
+#include "edit_modes/mode_select.h"
+#include "edit_modes/mode_erase.h"
+#include "edit_modes/mode_place.h"
+#include "edit_modes/mode_square.h"
+#include "edit_modes/mode_line.h"
+#include "edit_modes/mode_resize.h"
+
+LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
 
     //Pointerss
     pConfigs = &configs; // Pointer to Main Configs
     LvlData = &FileData; //Ad pointer to level data
+    _viewPort = parentView;
 
     //Options
     opts.animationEnabled = true;
@@ -50,9 +59,25 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
     disableMoveItems = false;
     DrawMode=false;
 
+    mouseLeft=false; //Left mouse key is pressed
+    mouseMid=false;  //Middle mouse key is pressed
+    mouseRight=false;//Right mouse key is pressed
+
+    mouseMoved=false; //Mouse was moved with right mouseKey
+
+    MousePressEventOnly=false;
+    MouseMoveEventOnly=false;
+    MouseReleaseEventOnly=false;
+
+    last_block_arrayID = 0;
+    last_bgo_arrayID = 0;
+    last_npc_arrayID = 0;
+
     //Editing process flags
     IsMoved = false;
     haveSelected = false;
+
+    emptyCollisionCheck = false;
 
     placingItem=0;
 
@@ -116,6 +141,31 @@ LvlScene::LvlScene(dataconfigs &configs, LevelData &FileData, QObject *parent) :
 
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
+
+    //Build edit mode classes
+    LVL_ModeHand * modeHand = new LVL_ModeHand(this);
+    EditModes.push_back(modeHand);
+
+    LVL_ModeSelect * modeSelect = new LVL_ModeSelect(this);
+    EditModes.push_back(modeSelect);
+
+    LVL_ModeResize * modeResize = new LVL_ModeResize(this);
+    EditModes.push_back(modeResize);
+
+    LVL_ModeErase * modeErase = new LVL_ModeErase(this);
+    EditModes.push_back(modeErase);
+
+    LVL_ModePlace * modePlace = new LVL_ModePlace(this);
+    EditModes.push_back(modePlace);
+
+    LVL_ModeSquare * modeSquare = new LVL_ModeSquare(this);
+    EditModes.push_back(modeSquare);
+
+    LVL_ModeLine * modeLine = new LVL_ModeLine(this);
+    EditModes.push_back(modeLine);
+
+    CurrentMode = modeSelect;
+    CurrentMode->set();
 }
 
 LvlScene::~LvlScene()
@@ -125,6 +175,13 @@ LvlScene::~LvlScene()
     uBGOs.clear();
     uBlocks.clear();
     uNPCs.clear();
+
+    while(!EditModes.isEmpty())
+    {
+        EditMode *tmp = EditModes.first();
+        EditModes.pop_front();
+        delete tmp;
+    }
 }
 
 

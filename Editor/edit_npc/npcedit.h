@@ -53,6 +53,7 @@ public:
     QString curFile;
 
     bool isModyfied;
+    bool isUntitled;
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -160,7 +161,6 @@ private:
     void setCurrentFile(const QString &fileName);
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
-    bool isUntitled;
     unsigned int FileType;
 };
 

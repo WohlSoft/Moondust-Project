@@ -22,21 +22,9 @@
 #include <QDir>
 #include <QFileInfo>
 
-
 bool LevelScene::loadFile(QString filePath)
 {
-    QFile file(filePath );
-    QFileInfo in_1(filePath);
-
-    if (file.open(QIODevice::ReadOnly))
-    {
-        if(filePath.endsWith(".lvl", Qt::CaseInsensitive))
-            data = FileFormats::ReadLevelFile(file);
-        else
-            data = FileFormats::ReadExtendedLevelFile(file);
-        data.filename = in_1.baseName();
-        data.path = in_1.absoluteDir().absolutePath();
-    }
+    data = FileFormats::OpenLevelFile(filePath);
     return data.ReadFileValid;
 }
 

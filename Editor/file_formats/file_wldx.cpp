@@ -19,20 +19,39 @@
 
 #include "file_formats.h"
 
+#include <QFileInfo>
+#include <QDir>
+
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
 WorldData FileFormats::ReadExtendedWorldFile(QFile &inf)
 {
-     QTextStream in(&inf);   //Read File
-     in.setCodec("UTF-8");
+    QTextStream in(&inf);   //Read File
+    in.setCodec("UTF-8");
+
+    return ReadExtendedWldFile( in.readAll(), inf.fileName() );
+}
+
+WorldData FileFormats::ReadExtendedWldFile(QString RawData, QString filePath)
+{
+     FileStringList in;
+     in.addData( RawData );
 
      int str_count=0;        //Line Counter
      int i;                  //counters
      QString line;           //Current Line data
 
      WorldData FileData = dummyWldDataArray();
+
+     //Add path data
+     if(!filePath.isEmpty())
+     {
+         QFileInfo in_1(filePath);
+         FileData.filename = in_1.baseName();
+         FileData.path = in_1.absoluteDir().absolutePath();
+     }
 
      FileData.untitled = false;
      FileData.modified = false;
@@ -488,7 +507,7 @@ WorldData FileFormats::ReadExtendedWorldFile(QFile &inf)
      return FileData;
 
      badfile:    //If file format not corrects
-         BadFileMsg(inf.fileName(), str_count, line);
+         BadFileMsg(FileData.path, str_count, line);
          FileData.ReadFileValid=false;
      return FileData;
 }

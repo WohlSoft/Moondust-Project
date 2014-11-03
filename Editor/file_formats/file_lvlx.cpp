@@ -18,15 +18,25 @@
 
 #include "file_formats.h"
 
+#include <QFileInfo>
+#include <QDir>
+
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-
 LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
 {
     QTextStream in(&inf);   //Read File
     in.setCodec("UTF-8");
+
+    return ReadExtendedLvlFile( in.readAll(), inf.fileName() );
+}
+
+LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
+{
+    FileStringList in;
+    in.addData( RawData );
 
     int str_count=0;        //Line Counter
     int i;                  //counters
@@ -47,16 +57,15 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     //LevelEvents_layers events_layers;
     //LevelEvents_Sets events_sets;
 
-    //Begin all ArrayID's here;
-    FileData.blocks_array_id = 1;
-    FileData.bgo_array_id = 1;
-    FileData.npc_array_id = 1;
-    FileData.doors_array_id = 1;
-    FileData.physenv_array_id = 1;
-    FileData.layers_array_id = 1;
-    FileData.events_array_id = 1;
-
     FileData = dummyLvlDataArray();
+
+    //Add path data
+    if(!filePath.isEmpty())
+    {
+        QFileInfo in_1(filePath);
+        FileData.filename = in_1.baseName();
+        FileData.path = in_1.absoluteDir().absolutePath();
+    }
 
     QString errorString;
 
@@ -1214,7 +1223,7 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(inf.fileName()+"\nError message: "+errorString, str_count, line);
+    BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }

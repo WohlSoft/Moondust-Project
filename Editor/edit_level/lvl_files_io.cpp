@@ -239,7 +239,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
         return;
     }
 
-    scene = new LvlScene(configs, LvlData);
+    scene = new LvlScene(ui->graphicsView, configs, LvlData);
     scene->opts = options;
 
     scene->InitSection(0);
@@ -566,7 +566,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new LvlScene(configs, LvlData);
+    scene = new LvlScene(ui->graphicsView, configs, LvlData);
 
     scene->opts = options;
 
@@ -622,7 +622,8 @@ void leveledit::documentWasModified()
 
 bool leveledit::maybeSave()
 {
-    if (LvlData.modified) {
+    if (LvlData.modified)
+    {
         SavingNotificationDialog* sav = new SavingNotificationDialog(true);
         sav->setSavingTitle(tr("'%1' has been modified.\n"
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
