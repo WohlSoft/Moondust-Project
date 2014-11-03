@@ -68,28 +68,6 @@ bool FileStringList::atEnd()
     return isEOF();
 }
 
-LevelData FileFormats::ReadLevelFile(QFile &inf)
-{
-    QTextStream in(&inf);   //Read File
-
-    in.setAutoDetectUnicode(true);
-    in.setLocale(QLocale::system());
-    in.setCodec(QTextCodec::codecForLocale());
-
-    return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
-}
-
-LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
-{
-    QTextStream in(&inf);   //Read File
-
-    in.setCodec("UTF-8");
-
-    return ReadExtendedLvlFile( in.readAll(), inf.fileName() );
-}
-
-
-
 LevelData FileFormats::OpenLevelFile(QString filePath)
 {
     QFile file(filePath);
@@ -120,6 +98,42 @@ LevelData FileFormats::OpenLevelFile(QString filePath)
         {   //Read PGE LVLX File
             in.setCodec("UTF-8");
             data = ReadExtendedLvlFile( in.readAll(), filePath );
+        }
+
+    return data;
+}
+
+
+WorldData FileFormats::OpenWorldFile(QString filePath)
+{
+    QFile file(filePath);
+    WorldData data;
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        #ifndef PGE_ENGINE
+        QMessageBox::critical(NULL, QTranslator::tr("File open error"),
+                QTranslator::tr("Can't open the file."), QMessageBox::Ok);
+        data.ReadFileValid = false;
+        #endif
+        return data;
+    }
+
+    QTextStream in(&file);   //Read File
+
+    QFileInfo in_1(filePath);
+
+    if(in_1.suffix().toLower() == "wld")
+        {   //Read SMBX WLD File
+            in.setAutoDetectUnicode(true);
+            in.setLocale(QLocale::system());
+            in.setCodec(QTextCodec::codecForLocale());
+            data = ReadSMBX64WldFile( in.readAll(), filePath );
+        }
+    else
+        {   //Read PGE WLDX File
+            in.setCodec("UTF-8");
+            data = ReadExtendedWldFile( in.readAll(), filePath );
         }
 
     return data;

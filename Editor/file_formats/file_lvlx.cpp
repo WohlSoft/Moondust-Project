@@ -25,6 +25,13 @@
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
+LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
+{
+    QTextStream in(&inf);   //Read File
+    in.setCodec("UTF-8");
+
+    return ReadExtendedLvlFile( in.readAll(), inf.fileName() );
+}
 
 LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
 {

@@ -25,8 +25,17 @@
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
+LevelData FileFormats::ReadLevelFile(QFile &inf)
+{
+    QTextStream in(&inf);   //Read File
 
-//Level File Read
+    in.setAutoDetectUnicode(true);
+    in.setLocale(QLocale::system());
+    in.setCodec(QTextCodec::codecForLocale());
+
+    return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
+}
+
 LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
 {
     FileStringList in;
