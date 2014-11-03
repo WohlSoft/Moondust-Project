@@ -182,6 +182,7 @@ void DevConsole::registerCommands()
     registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculating MD5 hash of string"));
     registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Args: {String array} validating the PGE-X string array"));
     registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
+    registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
 }
 
 void DevConsole::doCommand()
@@ -269,5 +270,10 @@ void DevConsole::doFlood(QStringList args)
             log("No memory assigned");
         Q_UNUSED(fl)
     }
+}
+
+void DevConsole::doThrowUnhandledException(QStringList /*args*/)
+{
+    throw std::runtime_error("Test Exception of Toast!");
 }
 
