@@ -57,6 +57,7 @@ private:
     void doMd5(QStringList args);
     void doFlood(QStringList args);
     void doValidateStrArray(QStringList args);
+    void doThrowUnhandledException(QStringList);
 };
 
 #endif // DEVCONSOLE_H
