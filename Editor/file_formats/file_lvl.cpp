@@ -404,13 +404,13 @@ LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
 
          if(SMBX64::sFloat(line)) //NPC x
              goto badfile;
-         else npcdata.x = round(line.toDouble());
+         else npcdata.x = qRound(line.toDouble());
 
          str_count++;line = in.readLine();
 
          if(SMBX64::sFloat(line)) //NPC y
              goto badfile;
-         else npcdata.y = round(line.toDouble());
+         else npcdata.y = qRound(line.toDouble());
 
          str_count++;line = in.readLine();
          if(SMBX64::sInt(line)) //NPC direction
