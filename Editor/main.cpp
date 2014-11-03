@@ -49,13 +49,31 @@ namespace PGECrashHandler {
 
         std::exit(1);
     }
+
+    void crashByUnhandledException(){
+        std::exception_ptr unhandledException = std::current_exception();
+        try{
+            std::rethrow_exception(unhandledException);
+        }
+        catch(const std::exception& e){
+            std::string s1 = "We're sorry, but PGE has crashed. Reason: ";
+            std::string s2 = e.what();
+            std::string s3 = " :(\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum";
+
+            QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr((s1 + s2 + s3).c_str()));
+            std::cout << e.what() << std::endl;
+        }
+
+        std::exit(2);
+    }
 }
 
 int main(int argc, char *argv[])
 {
     std::set_new_handler(PGECrashHandler::crashByFlood);
-    QApplication::addLibraryPath(".");
+    std::set_terminate(PGECrashHandler::crashByUnhandledException);
 
+    QApplication::addLibraryPath(".");
 
 
     QApplication *a = new QApplication(argc, argv);
