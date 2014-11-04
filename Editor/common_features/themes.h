@@ -179,15 +179,13 @@ public:
 private:
     static bool isLoaded;
     static QString currentThemeDir;
-    static QVector<QIcon > icons;
+
     static QMap<Icons, QIcon > icons_map;
+    static QMap<Images, QPixmap > images_map;
+
     static void loadIcon(QSettings &s, QString value, Icons icn);
     static void loadImage(QSettings &s, QString value, Images img);
     static QString theme_dir;
-
-    static QVector<QPixmap > images;
-    static QMap<Images, QPixmap > images_map;
-
 };
 
 #endif // THEMES_H
