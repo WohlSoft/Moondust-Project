@@ -149,7 +149,6 @@ void WLD_ModePlace::keyPress(QKeyEvent *keyEvent)
 
 void WLD_ModePlace::keyRelease(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
     switch(keyEvent->key())
     {
         case (Qt::Key_Escape):
