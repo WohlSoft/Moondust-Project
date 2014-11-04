@@ -26,13 +26,14 @@
 #include "item_level.h"
 #include "item_music.h"
 
-WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) : QGraphicsScene(parent)
+WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
 
     //Pointerss
     pConfigs = &configs; // Pointer to Main Configs
     WldData = &FileData; //Ad pointer to level data
+    _viewPort = parentView;
 
     //Options
     opts.animationEnabled = true;
@@ -52,11 +53,29 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
     disableMoveItems = false;
     DrawMode=false;
 
+    mouseLeft=false; //Left mouse key is pressed
+    mouseMid=false;  //Middle mouse key is pressed
+    mouseRight=false;//Right mouse key is pressed
+
+    mouseMoved=false; //Mouse was moved with right mouseKey
+
+    MousePressEventOnly=false;
+    MouseMoveEventOnly=false;
+    MouseReleaseEventOnly=false;
+
+    last_tile_arrayID=0;
+    last_scene_arrayID=0;
+    last_path_arrayID=0;
+    last_level_arrayID=0;
+    last_musicbox_arrayID=0;
+
     isSelectionDialog=false;
 
     //Editing process flags
     IsMoved = false;
     haveSelected = false;
+
+    emptyCollisionCheck = false;
 
     placingItem=0;
 
@@ -106,6 +125,8 @@ WldScene::WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent) :
     QGraphicsRectItem * bigRect = addRect(-padding, -padding, padding*2, padding*2, QPen(Qt::transparent), QBrush(Qt::transparent));
     bigRect->setZValue(-10000000000);
 
+
+    CurrentMode = NULL;
 }
 
 WldScene::~WldScene()
