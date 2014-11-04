@@ -240,7 +240,8 @@ SOURCES += main.cpp\
     world_scene/edit_modes/wld_mode_place.cpp \
     world_scene/edit_modes/wld_mode_resize.cpp \
     world_scene/edit_modes/wld_mode_select.cpp \
-    world_scene/edit_modes/wld_mode_square.cpp
+    world_scene/edit_modes/wld_mode_square.cpp \
+    world_scene/edit_modes/wld_mode_setpoint.cpp
 
 
 HEADERS  += defines.h \
@@ -345,7 +346,8 @@ HEADERS  += defines.h \
     world_scene/edit_modes/wld_mode_place.h \
     world_scene/edit_modes/wld_mode_resize.h \
     world_scene/edit_modes/wld_mode_select.h \
-    world_scene/edit_modes/wld_mode_square.h
+    world_scene/edit_modes/wld_mode_square.h \
+    world_scene/edit_modes/wld_mode_setpoint.h
 
 
 FORMS    += \
