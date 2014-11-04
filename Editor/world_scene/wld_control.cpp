@@ -38,59 +38,21 @@
 
 #include "../defines.h"
 
-QPoint WsourcePos=QPoint(0,0);
-int WgridSize=0, WoffsetX=0, WoffsetY=0;//, gridX, gridY, i=0;
+QPoint sourcePos=QPoint(0,0);
+int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
 
 namespace wld_control
 {
-    QList<QGraphicsItem *> collisionCheckBuffer;
-    bool emptyCollisionCheck = false;
-
-    ///
-    /// \brief cleanCollisionBuffer
-    /// Remove trash from collision buffer for crash protection
-    void prepareCollisionBuffer()
-    {
-        for(int i=0; i<collisionCheckBuffer.size(); i++ )
-        {
-            bool kick=false;
-            if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString()=="Space")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString()=="Square")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString()=="Line")
-                kick=true;
-            else
-            if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))
-                kick=true;
-
-            if(kick) {collisionCheckBuffer.removeAt(i); i--;}
-        }
-    }
-
-
-    bool mouseLeft=false; //Left mouse key is pressed
-    bool mouseMid=false;  //Middle mouse key is pressed
-    bool mouseRight=false;//Right mouse key is pressed
-
-    bool mouseMoved=false; //Mouse was moved with right mouseKey
-
     static QPointF drawStartPos = QPoint(0,0);
-
-    //the last Array ID's, which used before hold mouse key
-    static qlonglong last_tile_arrayID=0;
-    static qlonglong last_scene_arrayID=0;
-    static qlonglong last_path_arrayID=0;
-    static qlonglong last_level_arrayID=0;
-    static qlonglong last_musicbox_arrayID=0;
 }
 
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
+void WldScene::keyPressEvent ( QKeyEvent * keyEvent )
+{
+    if(CurrentMode) CurrentMode->keyPress(keyEvent);
+    QGraphicsScene::keyPressEvent(keyEvent);
+}
+
 void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
 {
     using namespace wld_control;
@@ -100,6 +62,7 @@ void WldScene::keyReleaseEvent ( QKeyEvent * keyEvent )
         removeSelectedWldItems();
         break;
     case (Qt::Key_Escape):
+        if(isSelectionDialog) break; //Disable this key in the point selection dialog
 
         if(EditingMode != MODE_SetPoint)
         {
@@ -151,6 +114,13 @@ void WldScene::selectionChanged()
 
 void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    if(MousePressEventOnly)
+    {
+        QGraphicsScene::mousePressEvent(mouseEvent);
+        MousePressEventOnly = false;
+        return;
+    }
+
     using namespace wld_control;
     #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, QString("Mouse pressed -> [%1, %2] contextMenuOpened=%3, DrawMode=%4").arg(mouseEvent->scenePos().x()).arg(mouseEvent->scenePos().y())
@@ -410,6 +380,13 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    if(MouseMoveEventOnly)
+    {
+        QGraphicsScene::mousePressEvent(mouseEvent);
+        MouseMoveEventOnly = false;
+        return;
+    }
+
     using namespace wld_control;
 
     MainWinConnect::pMainWin->Debugger_UpdateMousePosition(mouseEvent->scenePos().toPoint());
@@ -578,6 +555,13 @@ void WldScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    if(MouseReleaseEventOnly)
+    {
+        QGraphicsScene::mousePressEvent(mouseEvent);
+        MouseReleaseEventOnly = false;
+        return;
+    }
+
     using namespace wld_control;
 
 //    int multimouse=0;
@@ -741,6 +725,24 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             QGraphicsScene::mouseReleaseEvent(mouseEvent);
             return;
         }
+        break;
+    case MODE_Erasing:
+        {
+            if(!overwritedItems.tiles.isEmpty()||
+                !overwritedItems.scenery.isEmpty()||
+                !overwritedItems.paths.isEmpty()||
+                !overwritedItems.levels.isEmpty()||
+                !overwritedItems.music.isEmpty() )
+            {
+                addRemoveHistory(overwritedItems);
+                overwritedItems.tiles.clear();
+                overwritedItems.scenery.clear();
+                overwritedItems.paths.clear();
+                overwritedItems.levels.clear();
+                overwritedItems.music.clear();
+            }
+            break;
+        }
     default:
         break;
     }
@@ -823,7 +825,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                    /////////////////////////GET DATA/////////////////////
 
                     //Check position
-                    if( (WsourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
+                    if( (sourcePos == QPoint((long)((*it)->scenePos().x()), ((long)(*it)->scenePos().y()))))
                     {
                         mouseMoved=false;
                         break; //break fetch when items is not moved
@@ -904,48 +906,48 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 {
-    WgridSize = pConfigs->default_grid;
-    WoffsetX = 0;
-    WoffsetY = 0;
+    gridSize = pConfigs->default_grid;
+    offsetX = 0;
+    offsetY = 0;
 
     if( ObjType == "TILE")
     {
-        WsourcePos = QPoint(  ((ItemTile *)it)->tileData.x, ((ItemTile *)it)->tileData.y);
-        WgridSize = ((ItemTile *)it)->gridSize;
-        WoffsetX = 0;
-        WoffsetY = 0;
+        sourcePos = QPoint(  ((ItemTile *)it)->tileData.x, ((ItemTile *)it)->tileData.y);
+        gridSize = ((ItemTile *)it)->gridSize;
+        offsetX = 0;
+        offsetY = 0;
     }
     else
     if( ObjType == "SCENERY")
     {
-        WsourcePos = QPoint(  ((ItemScene *)it)->sceneData.x, ((ItemScene *)it)->sceneData.y);
-        WgridSize = ((ItemScene *)it)->gridSize;
-        WoffsetX = 0;
-        WoffsetY = 0;
+        sourcePos = QPoint(  ((ItemScene *)it)->sceneData.x, ((ItemScene *)it)->sceneData.y);
+        gridSize = ((ItemScene *)it)->gridSize;
+        offsetX = 0;
+        offsetY = 0;
     }
     else
     if( ObjType == "PATH")
     {
-        WsourcePos = QPoint(  ((ItemPath *)it)->pathData.x, ((ItemPath *)it)->pathData.y);
-        WgridSize = ((ItemPath *)it)->gridSize;
-        WoffsetX = 0;
-        WoffsetY = 0;
+        sourcePos = QPoint(  ((ItemPath *)it)->pathData.x, ((ItemPath *)it)->pathData.y);
+        gridSize = ((ItemPath *)it)->gridSize;
+        offsetX = 0;
+        offsetY = 0;
     }
     else
     if( ObjType == "LEVEL")
     {
-        WsourcePos = QPoint(  ((ItemLevel *)it)->levelData.x, ((ItemLevel*)it)->levelData.y);
-        WgridSize = ((ItemLevel *)it)->gridSize;
-        WoffsetX = 0;
-        WoffsetY = 0;
+        sourcePos = QPoint(  ((ItemLevel *)it)->levelData.x, ((ItemLevel*)it)->levelData.y);
+        gridSize = ((ItemLevel *)it)->gridSize;
+        offsetX = 0;
+        offsetY = 0;
     }
     else
     if( ObjType == "MUSICBOX")
     {
-        WsourcePos = QPoint(  ((ItemMusic *)it)->musicData.x, ((ItemMusic*)it)->musicData.y);
-        WgridSize = ((ItemMusic *)it)->gridSize;
-        WoffsetX = 0;
-        WoffsetY = 0;
+        sourcePos = QPoint(  ((ItemMusic *)it)->musicData.x, ((ItemMusic*)it)->musicData.y);
+        gridSize = ((ItemMusic *)it)->gridSize;
+        offsetX = 0;
+        offsetY = 0;
     }
 }
 
