@@ -27,6 +27,7 @@
 
 #include "../main_window/global_settings.h"
 
+#include "../common_features/themes.h"
 
 
 
@@ -40,60 +41,78 @@ void WldScene::SwitchEditingMode(int EdtMode)
     switch(EdtMode)
     {
     case MODE_PlacingNew:
-        resetResizers();
-        unserPointSelector();
-        DrawMode=true;
+//        resetResizers();
+//        unserPointSelector();
+//        DrawMode=true;
+        switchMode("Placing");
         break;
 
     case MODE_DrawSquare:
-        resetResizers();
-        unserPointSelector();
-        DrawMode=true;
+//        resetResizers();
+//        unserPointSelector();
+//        DrawMode=true;
+        switchMode("Square");
         break;
 
     case MODE_Line:
-        resetResizers();
-        unserPointSelector();
-        DrawMode=true;
+//        resetResizers();
+//        unserPointSelector();
+//        DrawMode=true;
+        switchMode("Line");
         break;
 
     case MODE_SetPoint:
-        resetResizers();
-        DrawMode=true;
+//        resetResizers();
+//        DrawMode=true;
+        switchMode("SetPoint");
         break;
 
     case MODE_Resizing:
-        resetCursor();
-        unserPointSelector();
-        DrawMode=true;
-        disableMoveItems=true;
+//        resetCursor();
+//        unserPointSelector();
+//        DrawMode=true;
+//        disableMoveItems=true;
+        switchMode("Resize");
         break;
 
     case MODE_PasteFromClip:
-        resetCursor();
-        resetResizers();
-        unserPointSelector();
+//        resetCursor();
+//        resetResizers();
+//        unserPointSelector();
+//        disableMoveItems=true;
+        switchMode("Select");
+        clearSelection();
         disableMoveItems=true;
+        _viewPort->setInteractive(true);
+        _viewPort->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
+        _viewPort->setDragMode(QGraphicsView::NoDrag);
         break;
 
     case MODE_Erasing:
-        resetCursor();
-        resetResizers();
-        unserPointSelector();
+//        resetCursor();
+//        resetResizers();
+//        unserPointSelector();
+        switchMode("Erase");
         break;
 
     case MODE_SelectingOnly:
-        resetCursor();
-        resetResizers();
-        unserPointSelector();
+//        resetCursor();
+//        resetResizers();
+//        unserPointSelector();
+        switchMode("Select");
         disableMoveItems=true;
+        break;
+
+    case MODE_HandScroll:
+        switchMode("HandScroll");
         break;
 
     case MODE_Selecting:
     default:
-        resetCursor();
-        resetResizers();
-        unserPointSelector();
+//        resetCursor();
+//        resetResizers();
+//        unserPointSelector();
+        switchMode("Select");
         break;
 
     }

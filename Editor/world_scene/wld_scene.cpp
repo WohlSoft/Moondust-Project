@@ -26,6 +26,15 @@
 #include "item_level.h"
 #include "item_music.h"
 
+#include "edit_modes/wld_mode_hand.h"
+#include "edit_modes/wld_mode_select.h"
+#include "edit_modes/wld_mode_erase.h"
+#include "edit_modes/wld_mode_place.h"
+#include "edit_modes/wld_mode_square.h"
+#include "edit_modes/wld_mode_line.h"
+#include "edit_modes/wld_mode_resize.h"
+#include "edit_modes/wld_mode_setpoint.h"
+
 WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -126,7 +135,33 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
     bigRect->setZValue(-10000000000);
 
 
-    CurrentMode = NULL;
+    //Build edit mode classes
+    WLD_ModeHand * modeHand = new WLD_ModeHand(this);
+    EditModes.push_back(modeHand);
+
+    WLD_ModeSelect * modeSelect = new WLD_ModeSelect(this);
+    EditModes.push_back(modeSelect);
+
+    WLD_ModeResize * modeResize = new WLD_ModeResize(this);
+    EditModes.push_back(modeResize);
+
+    WLD_ModeErase * modeErase = new WLD_ModeErase(this);
+    EditModes.push_back(modeErase);
+
+    WLD_ModePlace * modePlace = new WLD_ModePlace(this);
+    EditModes.push_back(modePlace);
+
+    WLD_ModeSquare * modeSquare = new WLD_ModeSquare(this);
+    EditModes.push_back(modeSquare);
+
+    WLD_ModeLine * modeLine = new WLD_ModeLine(this);
+    EditModes.push_back(modeLine);
+
+    WLD_ModeSetPoint * modeSetPoint = new WLD_ModeSetPoint(this);
+    EditModes.push_back(modeSetPoint);
+
+    CurrentMode = modeSelect;
+    CurrentMode->set();
 }
 
 WldScene::~WldScene()
@@ -136,4 +171,11 @@ WldScene::~WldScene()
     uScenes.clear();
     uPaths.clear();
     uLevels.clear();
+
+    while(!EditModes.isEmpty())
+    {
+        EditMode *tmp = EditModes.first();
+        EditModes.pop_front();
+        delete tmp;
+    }
 }
