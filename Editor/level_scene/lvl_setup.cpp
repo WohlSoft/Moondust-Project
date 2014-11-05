@@ -69,6 +69,7 @@ void LvlScene::SwitchEditingMode(int EdtMode)
 
     case MODE_PasteFromClip:
         switchMode("Select");
+        clearSelection();
         disableMoveItems=true;
         _viewPort->setInteractive(true);
         _viewPort->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
