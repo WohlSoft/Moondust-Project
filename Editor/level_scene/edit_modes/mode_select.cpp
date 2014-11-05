@@ -138,6 +138,18 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     // check for grid snap
     if ((!selectedList.isEmpty())&&(s->mouseMoved))
     {
+        //Set Grid Size/Offset, sourcePosition
+        setItemSourceData(selectedList.first(), selectedList.first()->data(0).toString());
+        //Check first selected element is it was moved
+        if( (sourcePos == QPoint(
+                 (long)(selectedList.first()->scenePos().x()),
+                 ((long)selectedList.first()->scenePos().y())
+                 ) ) )
+        {
+            s->mouseMoved=false;
+            return; //break fetch when items is not moved
+        }
+
         s->applyGroupGrid(selectedList);
 
         // Check collisions
@@ -165,7 +177,7 @@ void LVL_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
            ObjType = (*it)->data(0).toString();
 
            /////////////////////////GET DATA///////////////
-           s->setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
+           setItemSourceData((*it), (*it)->data(0).toString()); //Set Grid Size/Offset, sourcePosition
            /////////////////////////GET DATA/////////////////////
 
            //Check position
