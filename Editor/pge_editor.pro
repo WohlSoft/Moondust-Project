@@ -165,7 +165,6 @@ SOURCES += main.cpp\
     level_scene/lvl_section.cpp \
     level_scene/lvl_setup.cpp \
     level_scene/lvl_usergfx.cpp \
-    level_scene/lvlscene.cpp \
     level_scene/newlayerbox.cpp \
     main_window/appsettings.cpp \
     main_window/clipboard.cpp \
@@ -242,7 +241,8 @@ SOURCES += main.cpp\
     world_scene/edit_modes/wld_mode_resize.cpp \
     world_scene/edit_modes/wld_mode_select.cpp \
     world_scene/edit_modes/wld_mode_square.cpp \
-    world_scene/edit_modes/wld_mode_setpoint.cpp
+    world_scene/edit_modes/wld_mode_setpoint.cpp \
+    level_scene/lvl_scene.cpp
 
 
 HEADERS  += defines.h \
@@ -309,7 +309,6 @@ HEADERS  += defines.h \
     level_scene/item_water.h \
     level_scene/itemmsgbox.h \
     level_scene/lvl_item_placing.h \
-    level_scene/lvlscene.h \
     level_scene/newlayerbox.h \
     main_window/appsettings.h \
     main_window/dock/tileset_item_box.h \
@@ -349,7 +348,8 @@ HEADERS  += defines.h \
     world_scene/edit_modes/wld_mode_resize.h \
     world_scene/edit_modes/wld_mode_select.h \
     world_scene/edit_modes/wld_mode_square.h \
-    world_scene/edit_modes/wld_mode_setpoint.h
+    world_scene/edit_modes/wld_mode_setpoint.h \
+    level_scene/lvl_scene.h
 
 
 FORMS    += \

@@ -1,6 +1,6 @@
 #include "mode_square.h"
 
-#include "../lvlscene.h"
+#include "../lvl_scene.h"
 #include "../../common_features/mainwinconnect.h"
 #include "../../common_features/item_rectangles.h"
 #include "../lvl_item_placing.h"

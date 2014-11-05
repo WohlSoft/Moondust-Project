@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 #include <QtMath>
 
@@ -972,10 +972,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 // //////////////////////////////////////////////EVENTS END/////////////////////////////////////////////////
 
 
-void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
-{
-    Q_UNUSED(it);
-    Q_UNUSED(ObjType);
+//void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
+//{
+//    Q_UNUSED(it);
+//    Q_UNUSED(ObjType);
 //    gridSize = pConfigs->default_grid;
 //    offsetX = 0;
 //    offsetY = 0;
@@ -1025,7 +1025,7 @@ void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 //        gridSize = 2 ;
 //        sourcePos = QPoint(dynamic_cast<ItemPlayerPoint *>(it)->pointData.x, dynamic_cast<ItemPlayerPoint *>(it)->pointData.y);
 //    }
-}
+//}
 
 void LvlScene::placeItemsByRectArray()
 {
