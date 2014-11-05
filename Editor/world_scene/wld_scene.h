@@ -128,7 +128,7 @@ public:
     void placeItemsByRectArray();
     WorldData placingItems;
     WorldData overwritedItems;
-    void setItemSourceData(QGraphicsItem *it, QString ObjType);
+    //void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
 
     bool mouseLeft; //Left mouse key is pressed

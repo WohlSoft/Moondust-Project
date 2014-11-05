@@ -280,7 +280,7 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
         }
     }
 
-    TileItem->gridSize = pConfigs->default_grid;
+    TileItem->gridSize = pConfigs->main_wtiles[j].grid;
 
     addItem(TileItem);
 
@@ -369,7 +369,7 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
         }
     }
 
-    SceneItem->gridSize = qRound(qreal(pConfigs->default_grid)/2);
+    SceneItem->gridSize = pConfigs->main_wscene[j].grid;
 
     addItem(SceneItem);
 
@@ -458,7 +458,7 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
         }
     }
 
-    PathItem->gridSize = pConfigs->default_grid;
+    PathItem->gridSize = pConfigs->main_wpaths[j].grid;
 
     addItem(PathItem);
 
@@ -547,7 +547,7 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
         }
     }
 
-    LevelItem->gridSize = pConfigs->default_grid;
+    LevelItem->gridSize = pConfigs->main_wlevels[j].grid;
 
     addItem(LevelItem);
 

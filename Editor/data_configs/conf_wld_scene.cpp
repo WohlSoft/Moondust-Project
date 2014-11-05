@@ -148,6 +148,8 @@ void dataconfigs::loadWorldScene(QProgressDialog *prgs)
                 goto skipScene;
             }
 
+            sScene.grid = sceneset.value("grid", qRound(qreal(default_grid)/2)).toInt();
+
             sScene.animated = (sceneset.value("animated", "0").toString()=="1");
             sScene.frames = sceneset.value("frames", "1").toInt();
             sScene.framespeed = sceneset.value("frame-speed", "125").toInt();
