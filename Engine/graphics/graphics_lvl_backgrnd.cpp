@@ -43,6 +43,7 @@ void LVL_Background::construct()
     color.b = 0.0f;
     bgType = single_row;
     isAnimated = false;
+    isMagic = false;
     animator_ID = 0;
     glClearColor(color.r, color.g, color.b, 1.0f);
 }
@@ -77,8 +78,45 @@ void LVL_Background::setBg(obj_BG &bg)
 
                     isAnimated = bg.animated;
                     animator_ID = bg.animator_ID;
+
+                    if(bg.magic)
+                    {
+                        for(int i=0; (unsigned int)i < bg.magic_strips; i++)
+                        {
+                            LVL_Background_strip x;
+                            if( i-1 <  bg.magic_splits_i.size())
+                                x.top = (i==0 ? 0.0 : ((double)bg.magic_splits_i[i-1]/(double)txData1.h) );
+                            else
+                                x.top = 0.0;
+
+                            if( i <  bg.magic_splits_i.size())
+                                x.bottom = (double)bg.magic_splits_i[i] / (double)txData1.h;
+                            else
+                                x.bottom = 1.0;
+
+                            x.height = ( (i<bg.magic_splits_i.size()) ? bg.magic_splits_i[i] : txData1.h)
+                                                 - (i==0 ? 0.0 : (bg.magic_splits_i[i-1]) );
+
+                            if( i <  bg.magic_speeds_i.size())
+                                x.repeat_h = bg.magic_speeds_i[i];
+                            else
+                                x.repeat_h = bg.repeat_h;
+
+//                            qDebug() << "Magic " << (i==0 ? 0 : bg.magic_splits_i[i-1] )
+//                                    << (( i <  bg.magic_splits_i.size())
+//                                       ? bg.magic_splits_i[i]: txData1.h )
+//                                    << x.height
+//                                    << x.repeat_h
+//                                    << x.top << x.bottom;
+
+                            strips.push_back(x);
+                        }
+                        //qDebug() <<  bg.magic_splits_i.size() << bg.magic_speeds_i.size();
+                        isMagic = bg.magic;
+                    }
+
                 }
-                qDebug()<<"SingleRow";
+                //qDebug()<<"SingleRow";
             }
             break;
         case double_row:
