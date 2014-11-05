@@ -25,7 +25,7 @@
 
 #include "../file_formats/lvl_filedata.h"
 
-#include "../level_scene/lvlscene.h"
+#include "../level_scene/lvl_scene.h"
 
 #include "../data_configs/data_configs.h"
 

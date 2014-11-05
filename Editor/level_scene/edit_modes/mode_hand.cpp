@@ -1,5 +1,5 @@
 #include "mode_hand.h"
-#include "../lvlscene.h"
+#include "../lvl_scene.h"
 #include "../../common_features/mainwinconnect.h"
 
 LVL_ModeHand::LVL_ModeHand(QGraphicsScene *parentScene, QObject *parent)

@@ -26,7 +26,7 @@
 #include "../ui_leveledit.h"
 
 #include "../file_formats/file_formats.h"
-#include "../level_scene/lvlscene.h"
+#include "../level_scene/lvl_scene.h"
 #include "saveimage.h"
 #include "../common_features/app_path.h"
 #include "../common_features/logger.h"

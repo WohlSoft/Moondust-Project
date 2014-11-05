@@ -20,7 +20,7 @@
 #define ITEM_PLAYERPOINT_H
 
 #include <QGraphicsPixmapItem>
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../file_formats/lvl_filedata.h"
 
 class ItemPlayerPoint : public QObject, public QGraphicsPixmapItem
