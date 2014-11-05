@@ -699,3 +699,39 @@ void WldScene::resetCursor()
     cursor->setZValue(1000);
     cursor->hide();
 }
+
+void WldScene::setMessageBoxItem(bool show, QPointF pos, QString text)
+{
+    if(messageBox)
+    {
+        if(!show)
+        {
+            delete messageBox;
+            messageBox = NULL;
+            return;
+        }
+
+        if(text!=messageBox->text())
+            messageBox->setText(text);
+        messageBox->setPos(pos);
+    }
+    else
+    {
+        if(!show)
+            return;
+
+        QFont font;
+        font.setFamily("Times");
+        font.setWeight(100);
+        font.setPointSize(25);
+        messageBox = new QGraphicsSimpleTextItem(text);
+        messageBox->setPen(QPen(QBrush(Qt::black), 2));
+        messageBox->setBrush(QBrush(Qt::white));
+        messageBox->setBoundingRegionGranularity(1);
+        messageBox->setZValue(10000);
+        messageBox->setFont(font);
+        this->addItem(messageBox);
+        messageBox->setPos(pos);
+    }
+
+}

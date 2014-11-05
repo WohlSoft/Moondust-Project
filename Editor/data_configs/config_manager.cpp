@@ -1,5 +1,8 @@
 #include "config_manager.h"
 #include "ui_config_manager.h"
+
+#include "../common_features/app_path.h"
+
 #include "../common_features/util.h"
 #include "../common_features/graphics_funcs.h"
 
@@ -14,8 +17,10 @@ ConfigManager::ConfigManager(QWidget *parent) :
     QListWidgetItem * item;
 
     currentConfig = "";
+    themePack = "";
+    askAgain = false;
 
-    QString configPath(QApplication::applicationDirPath()+"/configs/");
+    QString configPath(ApplicationPath+"/configs/");
     QDir configDir(configPath);
     QStringList configs = configDir.entryList(QDir::AllDirs);
 
@@ -34,11 +39,12 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
         guiset.beginGroup("gui");
             splash_logo = guiset.value("editor-splash", "").toString();
+            themePack = guiset.value("default-theme", "").toString();
         guiset.endGroup();
 
         guiset.beginGroup("main");
             data_dir = (guiset.value("application-dir", "0").toBool() ?
-                            QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+                            ApplicationPath + "/" : config_dir + "data/" );
             configName = guiset.value("config_name", QDir(config_dir).dirName()).toString();
         guiset.endGroup();
 
@@ -62,7 +68,6 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
         ui->configList->addItem( item );
     }
-
 }
 
 ConfigManager::~ConfigManager()
@@ -77,13 +82,17 @@ ConfigManager::~ConfigManager()
 ///
 QString ConfigManager::isPreLoaded()
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
     QString configPath = settings.value("current-config", "").toString();
+    QString saved_theme = settings.value("current-theme", "").toString();;
+    askAgain = settings.value("ask-config-again", false).toBool();
     settings.endGroup();
 
+    if(!saved_theme.isEmpty())
+        themePack = saved_theme;
     //check exists of config in list
     foreach(QListWidgetItem * it, ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard))
     {
@@ -93,16 +102,28 @@ QString ConfigManager::isPreLoaded()
         }
         if(it->data(3).toString()==configPath)
         {
-            currentConfig = configPath; break;
+            currentConfig = configPath;
+            it->setSelected(true);
+            ui->configList->scrollToItem(it);
+            break;
         }
     }
 
+    ui->AskAgain->setChecked(askAgain);
+
     return currentConfig;
+}
+
+void ConfigManager::setAskAgain(bool _x)
+{
+    askAgain = _x;
+    ui->AskAgain->setChecked(_x);
 }
 
 void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
     currentConfig = item->data(3).toString();
+    askAgain = ui->AskAgain->isChecked();
     this->accept();
 }
 
@@ -110,5 +131,6 @@ void ConfigManager::on_buttonBox_accepted()
 {
     if(ui->configList->selectedItems().isEmpty()) return;
     currentConfig = ui->configList->selectedItems().first()->data(3).toString();
+    askAgain = ui->AskAgain->isChecked();
     this->accept();
 }

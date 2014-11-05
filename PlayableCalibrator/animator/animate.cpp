@@ -21,21 +21,18 @@
 #include "ui_animate.h"
 #include "animationedit.h"
 #include "aniFrames.h"
+#include "../main/globals.h"
+#include "../main/mw.h"
 
-Animate::Animate(QList<QVector<frameOpts> > &framesX, FrameSets &frameConf, SpriteScene *Scene, QWidget *parent) :
+Animate::Animate(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Animate)
 {
-    SrcFrames = framesX;
-    SrcScene = Scene;
-
     ui->setupUi(this);
-
-    AniFrames = frameConf;
 
     //Here will be read AniFrames from INI
 
-    AniScene = new AnimationScene(SrcScene->mSpriteImage, SrcFrames, AniFrames);
+    AniScene = new AnimationScene();
     AniScene->setSceneRect(0,0, ui->AnimateView->width()-20, ui->AnimateView->height()-20);
 
     ui->AnimateView->setScene(AniScene);
@@ -66,100 +63,13 @@ void Animate::aniFindSet()
     }
 }
 
-////////////////Scene//////////////////////
-AnimationScene::AnimationScene(QPixmap SourceSprite, QList<QVector<frameOpts> > &framesX,
-                               FrameSets AniFrames, QObject *parent) : QGraphicsScene(parent)
-{
-    croc = new QGraphicsPixmapItem;
-    x=0; y=0, dir=1;
-    FullFrames = AniFrames;
-    framesTable = framesX;
-    mCurFrN = 0;
-    mPos = QPoint(0,0);
-    mSpriteImage = SourceSprite;
-    NoAnimate = QPixmap(":/images/NoAni.png");
-    draw();
-    currentImage=NoAnimate;
-    croc->setPixmap(QPixmap(currentImage));
-    addItem(croc);
-    croc->setPos(100, 200);
-
-    timer = new QTimer(this);
-    connect(
-                    timer, SIGNAL(timeout()),
-                    this,
-                    SLOT( nextFrame() ) );
-}
-
-void AnimationScene::setAnimation(QVector<AniFrame > frameS)
-{
-    timer->stop();
-    currentFrameSet = frameS;
-    mCurFrN = 0;
-    setFrame(0);
-    timer->start(128);
-}
-
-
-
-void AnimationScene::draw()
-{
-    currentImage =  mSpriteImage.copy(QRect(mPos.x(), mPos.y(), 100, 100 ));
-            // mPos.x(),mPos.y(), *mSpriteImage, mCurrentFrame, 0, 100,100 );
-}
-
-QPoint AnimationScene::pos() const
-{
-    return mPos;
-}
-
-void AnimationScene::setFrame(int frame)
-{
-    int /*w,*/h,x,y, posX, posY;
-
-    if((currentFrameSet.size()==0) || (frame >= currentFrameSet.size()))
-    {
-        currentImage=NoAnimate;
-        croc->setPixmap(QPixmap(currentImage));
-        return;
-    }
-
-    //following variable keeps track which
-    //frame to show from sprite sheet
-    mCurrentFrameX = 100 * currentFrameSet[frame].x;
-        mPos.setX( mCurrentFrameX );
-
-    mCurrentFrameY = 100 * currentFrameSet[frame].y;
-        mPos.setY( mCurrentFrameY );
-
-
-    //w = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].W;
-    h = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].H;
-    x = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].offsetX;
-    y = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].offsetY;
-
-    posX = 100 - x ;
-    posY = 200 - h - y;
-
-    draw();
-    croc->setPos( posX, posY );
-    croc->setPixmap(QPixmap(currentImage));
-}
-
-void AnimationScene::nextFrame()
-{
-    mCurFrN++;
-    if(mCurFrN >= currentFrameSet.size())
-        mCurFrN=0;
-    setFrame(mCurFrN);
-}
 
 
 /////////////////Slots//////////////////////////
 
 void Animate::on_EditAnimationBtn_clicked()
 {
-    AnimationEdit dialog(SrcFrames, SrcScene, AniFrames);
+    AnimationEdit dialog(AniFrames);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
     AniFrames = dialog.frameList;

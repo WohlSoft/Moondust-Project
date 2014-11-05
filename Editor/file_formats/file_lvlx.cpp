@@ -16,21 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
-#include "../edit_level/level_edit.h"
 #include "file_formats.h"
 
-#include <QMessageBox>
+#include <QFileInfo>
+#include <QDir>
 
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-
 LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
 {
     QTextStream in(&inf);   //Read File
     in.setCodec("UTF-8");
+
+    return ReadExtendedLvlFile( in.readAll(), inf.fileName() );
+}
+
+LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
+{
+    FileStringList in;
+    in.addData( RawData );
 
     int str_count=0;        //Line Counter
     int i;                  //counters
@@ -51,23 +57,22 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     //LevelEvents_layers events_layers;
     //LevelEvents_Sets events_sets;
 
-    //Begin all ArrayID's here;
-    FileData.blocks_array_id = 1;
-    FileData.bgo_array_id = 1;
-    FileData.npc_array_id = 1;
-    FileData.doors_array_id = 1;
-    FileData.physenv_array_id = 1;
-    FileData.layers_array_id = 1;
-    FileData.events_array_id = 1;
-
     FileData = dummyLvlDataArray();
+
+    //Add path data
+    if(!filePath.isEmpty())
+    {
+        QFileInfo in_1(filePath);
+        FileData.filename = in_1.baseName();
+        FileData.path = in_1.absoluteDir().absolutePath();
+    }
 
     QString errorString;
 
-    typedef QPair<QString, QStringList> LVLXSct;
-    LVLXSct LVLXsection;
+    typedef QPair<QString, QStringList> PGEXSct;
+    PGEXSct PGEXsection;
 
-    QList<LVLXSct > LVLXTree;
+    QList<PGEXSct > PGEXTree;
 
     ///////////////////////////////////////Begin file///////////////////////////////////////
     //Read Sections
@@ -76,39 +81,39 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     //Read PGE-X Tree
     while(!in.atEnd())
     {
-        LVLXsection.first = in.readLine();
-        LVLXsection.second.clear();
+        PGEXsection.first = in.readLine();
+        PGEXsection.second.clear();
 
-        if(QString(LVLXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
+        if(QString(PGEXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
 
         sectionOpened=true;
         QString data;
         while(!in.atEnd())
         {
             data = in.readLine();
-            if(data==LVLXsection.first+"_END") {sectionOpened=false; break;} // Close Section
-            LVLXsection.second.push_back(data);
+            if(data==PGEXsection.first+"_END") {sectionOpened=false; break;} // Close Section
+            PGEXsection.second.push_back(data);
         }
-        LVLXTree.push_back(LVLXsection);
+        PGEXTree.push_back(PGEXsection);
 
-        WriteToLog(QtDebugMsg, QString("Section %1, lines %2, %3")
-                   .arg(LVLXsection.first)
-                   .arg(LVLXsection.second.size())
-                   .arg(sectionOpened?"opened":"closed")
-                   );
+        // WriteToLog(QtDebugMsg, QString("Section %1, lines %2, %3")
+        //        .arg(PGEXsection.first)
+        //        .arg(PGEXsection.second.size())
+        //        .arg(sectionOpened?"opened":"closed")
+        //        );
     }
 
     if(sectionOpened)
     {
-        errorString=QString("Section [%1] is not closed").arg(LVLXsection.first);
+        errorString=QString("Section [%1] is not closed").arg(PGEXsection.first);
         goto badfile;
     }
 
-    foreach(LVLXSct sct, LVLXTree) //look sections
+    foreach(PGEXSct sct, PGEXTree) //look sections
     {
 
-        WriteToLog(QtDebugMsg, QString("Section %1")
-                   .arg(sct.first) );
+        //WriteToLog(QtDebugMsg, QString("Section %1")
+        //          .arg(sct.first) );
 
             bool good;
             for(i=0; i<sct.second.size();i++) //Look Entries
@@ -117,9 +122,12 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
 
                 if(sct.first=="JOKES")
                 {
+                    #ifndef PGE_ENGINE
                     QMessageBox::information(nullptr, "Jokes", sct.second[i], QMessageBox::Ok);
+                    #endif
                     continue;
                 }
+
 
 
                 QList<QStringList > sectData = PGEFile::splitDataLine(sct.second[i], &good);
@@ -1203,12 +1211,6 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
                     }
                 }//EVENTS_CLASSIC
 
-                //PGEFile::X2BollArr(value[1].toInt());
-                //PGEFile::X2STRArr(value[1]);
-                //PGEFile::X2STR(value[1]);
-                //value[1].toInt();
-                //(bool)value[1].toInt();
-
             }
 
         //}//Head Section end
@@ -1221,7 +1223,7 @@ LevelData FileFormats::ReadExtendedLevelFile(QFile &inf)
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(inf.fileName()+"\nError message: "+errorString, str_count, line);
+    BadFileMsg(filePath+"\nError message: "+errorString, str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }
@@ -1658,7 +1660,7 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
             addArray=false;
             foreach(bool x, controls)
             { if(x) addArray=true; }
-            if(addArray) TextData += PGEFile::value("PC", PGEFile::BoolArrayS(controls)); // Disable Smoke
+            if(addArray) TextData += PGEFile::value("PC", PGEFile::BoolArrayS(controls)); // Create boolean array
 
             if(!FileData.events[i].movelayer.isEmpty())
             {

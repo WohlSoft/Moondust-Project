@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "item_block.h"
 #include "item_bgo.h"
 #include "item_npc.h"
@@ -1535,6 +1535,7 @@ void LvlScene::historyBack()
     }
     LvlData->modified = true;
 
+    Debugger_updateItemList();
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(getHistoryText(lastOperation)));
 }
@@ -2438,6 +2439,7 @@ void LvlScene::historyForward()
     }
     historyIndex++;
 
+    Debugger_updateItemList();
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(getHistoryText(lastOperation)));
 }

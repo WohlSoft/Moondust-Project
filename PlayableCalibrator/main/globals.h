@@ -21,6 +21,8 @@
 #define GLOBALS_H
 
 #include <QList>
+#include <QPair>
+#include <QPixmap>
 #include "animator/aniFrames.h"
 #include "animator/AnimationScene.h"
 
@@ -30,10 +32,14 @@ public:
     Globals();
 };
 
-extern QList<QVector<frameOpts > > framesX;
+extern QList<QVector<frameOpts > > imgOffsets; //!< Image offsets
+extern QList<QVector<frameOpts > > framesX;    //!< Collision boxes settings
+extern FrameSets AniFrames;                    //!< Animation settings
+
 extern frameOpts buffer;
+
 extern QString LastOpenDir;
 extern QString currentFile;
-extern int CurFRMx, CurFRMy;
+extern int CurFrame_X, CurFrame_Y;
 
 #endif // GLOBALS_H

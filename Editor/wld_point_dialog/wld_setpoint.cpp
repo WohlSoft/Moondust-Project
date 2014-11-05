@@ -1,5 +1,7 @@
 #include "wld_setpoint.h"
 #include "ui_wld_setpoint.h"
+#include "../common_features/app_path.h"
+
 
 WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
     QDialog(parent),
@@ -7,13 +9,14 @@ WLD_SetPoint::WLD_SetPoint(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    scene = NULL;
     sceneCreated = false;
     FileType = 0;
     mapPoint = QPoint(-1,-1);
     mapPointIsNull=true;
     currentMusic = 0;
     isUntitled = true;
-    latest_export_path = QApplication::applicationDirPath();
+    latest_export_path = ApplicationPath;
     setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
 
     updateTimer=NULL;
@@ -173,7 +176,7 @@ bool WLD_SetPoint::loadFile(const QString &fileName, WorldData FileData, datacon
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new WldScene(configs, WldData);
+    scene = new WldScene(ui->graphicsView, configs, WldData);
 
     scene->opts = options;
     scene->isSelectionDialog = true;
@@ -353,10 +356,14 @@ void WLD_SetPoint::closeEvent(QCloseEvent *event)
 
 void WLD_SetPoint::unloadData()
 {
+    if(!sceneCreated) return;
+
     stopAutoUpdateTimer();
     //LvlMusPlay::musicForceReset = true;
     //MainWinConnect::pMainWin->setMusicButton(false);
     //MainWinConnect::pMainWin->setMusic(false);
+
+    scene->setMessageBoxItem(false);
 
     scene->clear();
     WriteToLog(QtDebugMsg, "!<-Cleared->!");
@@ -395,7 +402,6 @@ void WLD_SetPoint::unloadData()
     delete scene;
     sceneCreated=false;
     WriteToLog(QtDebugMsg, "!<-Deleted->!");
-    //ui->graphicsView->cl
 }
 
 QWidget *WLD_SetPoint::gViewPort()

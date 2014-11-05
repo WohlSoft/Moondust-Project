@@ -20,6 +20,7 @@
 
 #include <QSharedMemory>
 #include <QSystemSemaphore>
+#include <QDesktopWidget>
 
 
 #include "common_features/logger.h"
@@ -30,69 +31,64 @@
 #include <iostream>
 #include <stdlib.h>
 
-namespace PGECrashHandler {
-    void crashByFlood(){
-        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("We're sorry, but PGE has crashed. Reason: Out of memory! :(\n"
-                                                                                  "To prevent this, try closing other uneccessary programs to free up more memory."));
+#include "common_features/app_path.h"
+#include "common_features/themes.h"
+#include "common_features/crashhandler.h"
 
-        std::exit(1);
-    }
-}
+#undef main
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#undef main
+
+QString ApplicationPath;
+QString ApplicationPath_x;
 
 int main(int argc, char *argv[])
 {
-    std::set_new_handler(PGECrashHandler::crashByFlood);
+    CrashHandler::initCrashHandlers();
+
     QApplication::addLibraryPath(".");
+
 
     QApplication *a = new QApplication(argc, argv);
 
-    SingleApplication *as = new SingleApplication(argc, argv);
 
+
+    SingleApplication *as = new SingleApplication(argc, argv);
     if(!as->shouldContinue())
     {
         std::cout << "Editor already runned!\n";
         return 0;
     }
 
+
+
+
+
+    ApplicationPath = QApplication::applicationDirPath();
+    ApplicationPath_x = QApplication::applicationDirPath();
+
+    #ifdef __APPLE__
+    //Application path relative bundle folder of application
+    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
+    if(ApplicationPath.endsWith(osX_bundle, Qt::CaseInsensitive))
+        ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
+    #endif
+
+    /*
+    QString osX_bundle = QApplication::applicationName()+".app/Contents/MacOS";
+    QString test="/home/vasya/pge/"+osX_bundle;
+    qDebug() << test << " <- before";
+    if(test.endsWith(osX_bundle, Qt::CaseInsensitive))
+        test.remove(test.length()-osX_bundle.length()-1, osX_bundle.length()+1);
+    qDebug() << test << " <- after";
+    */
+
+    Themes::init();
+
+    SDL_Init(SDL_INIT_AUDIO);
+
     a->setApplicationName("Editor - Platformer Game Engine by Wohlstand");
-
-//    //Check if application is already running//////////////////
-//    QSystemSemaphore sema("Platformer Game Engine by Wohlstand 457h6329c2h32h744i", 1);
-//    bool isRunning;
-
-//    if(sema.acquire())
-//    {
-//        QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-//        shmem.attach();
-//    }
-
-//    QString sendToMem;
-//    foreach(QString str, a->arguments())
-//    {
-//        sendToMem+= str + "|";
-//    }
-
-//    QSharedMemory shmem("Platformer Game Engine by Wohlstand fyhj246h46y46836u");
-//    if (shmem.attach())
-//    {
-//        isRunning = true;
-//    }
-//    else
-//    {
-//        shmem.create(1);
-//        isRunning = false;
-//    }
-//    sema.release();
-
-//    shmem.disconnect();
-
-//    if(isRunning)
-//    {
-//        QApplication::quit();
-//        QApplication::exit();
-//        delete a;
-//        return 0;
-//    }
 
     LoadLogSettings();
 
@@ -100,8 +96,20 @@ int main(int argc, char *argv[])
     a->setStyle(new PGE_ProxyStyle);
     WriteToLog(QtDebugMsg, "--> Application started <--");
 
+    int ret=0;
+    QRect screenSize;
+
     MainWindow *w = new MainWindow;
-    w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, QSize(qApp->desktop()->width()-100, qApp->desktop()->height()-100), qApp->desktop()->availableGeometry()));
+    if(!w->continueLoad)
+    {
+        delete w;
+        goto QuitFromEditor;
+    }
+
+    screenSize = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    w->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
+                                       QSize(screenSize.width()-100,\
+                                             screenSize.height()-100), screenSize));
 
     a->connect( a, SIGNAL(lastWindowClosed()), a, SLOT( quit() ) );
     a->connect( w, SIGNAL( closeEditor()), a, SLOT( quit() ) );
@@ -115,11 +123,14 @@ int main(int argc, char *argv[])
 
     w->connect(as, SIGNAL(openFile(QString)), w, SLOT(OpenFile(QString)));
 
-    int ret=a->exec();
+    ret=a->exec();
 
+QuitFromEditor:
     QApplication::quit();
     QApplication::exit();
     delete a;
     delete as;
+
+    SDL_Quit();
     return ret;
 }

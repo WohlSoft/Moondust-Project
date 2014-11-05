@@ -18,6 +18,8 @@
 
 #include "data_configs.h"
 
+#include "../common_features/app_path.h"
+
 #include "../main_window/global_settings.h"
 
 long ConfStatus::total_blocks=0;
@@ -37,6 +39,8 @@ long ConfStatus::total_sound=0;
 
 QString ConfStatus::configName="";
 QString ConfStatus::configPath="";
+
+QString ConfStatus::defaultTheme="";
 
 
 dataconfigs::dataconfigs()
@@ -65,7 +69,7 @@ void dataconfigs::addError(QString bug, QtMsgType level)
 
 void dataconfigs::setConfigPath(QString p)
 {
-    config_dir = QApplication::applicationDirPath() + "/" +  "configs/" + p + "/";
+    config_dir = ApplicationPath + "/" +  "configs/" + p + "/";
 }
 
 void dataconfigs::loadBasics()
@@ -76,23 +80,26 @@ void dataconfigs::loadBasics()
 
     guiset.beginGroup("gui");
         splash_logo = guiset.value("editor-splash", "").toString();
+        ConfStatus::defaultTheme = guiset.value("default-theme", "").toString();
     guiset.endGroup();
 
     guiset.beginGroup("main");
         data_dir = (guiset.value("application-dir", "0").toBool() ?
-                        QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+                        ApplicationPath + "/" : config_dir + "data/" );
     guiset.endGroup();
 
+
+
     //Default splash image
-    if(splash_logo .isEmpty())
-        splash_logo = ":/images/splash_editor.png";
-    else
+    //if(splash_logo .isEmpty())
+        //splash_logo = ;//Themes::Image(Themes::splash)
+    if(!splash_logo .isEmpty())
     {
         splash_logo = data_dir + splash_logo;
         if(QPixmap(splash_logo).isNull())
         {
             WriteToLog(QtWarningMsg, QString("Wrong splash image: %1").arg(splash_logo));
-            splash_logo = ":/images/splash_editor.png";
+            splash_logo = "";//Themes::Image(Themes::splash);
         }
     }
 }
@@ -119,7 +126,7 @@ bool dataconfigs::loadconfigs(QProgressDialog *prgs)
     dirset.beginGroup("main");
 
         data_dir = (dirset.value("application-dir", false).toBool() ?
-                        QApplication::applicationDirPath() + "/" : config_dir + "data/" );
+                        ApplicationPath + "/" : config_dir + "data/" );
 
         ConfStatus::configName = dirset.value("config_name", QDir(config_dir).dirName()).toString();
 

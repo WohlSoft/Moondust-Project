@@ -16,7 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "../common_features/app_path.h"
+
+#include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 
 
@@ -152,7 +154,7 @@ void LvlScene::setSectionBG(LevelSection section, bool forceTiled)
     QGraphicsRectItem * itemRect=NULL;
     QBrush brush;
     QPen pen;
-    QPixmap image = QPixmap(QApplication::applicationDirPath() + "/" + "data/nobg.gif");
+    QPixmap image = QPixmap(ApplicationPath + "/" + "data/nobg.gif");
     QPixmap img;
     QPixmap img2; //Second image buffer
     //need a BGitem

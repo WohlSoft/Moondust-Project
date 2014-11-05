@@ -193,16 +193,23 @@ AdvNpcAnimator::~AdvNpcAnimator()
 
 QPixmap AdvNpcAnimator::image(int dir, int frame)
 {
-   if((frame<0)||(frame>=frames.size()))
-   {
+    if(frames.isEmpty())
+    {   //If animator haven't frames, return red sqare
+        QPixmap tmp = QPixmap(QSize(32,32));
+        tmp.fill(QColor(Qt::red));
+        return tmp;
+    }
+
+    if((frame<0)||(frame>=frames.size()))
+    {
         if(dir<0)
             return frames[CurrentFrameL];
         else if(dir==0)
             return frames[CurrentFrameL];
         else
             return frames[CurrentFrameR];
-   }
-   else return frames[frame];
+    }
+    else return frames[frame];
 }
 
 QPixmap AdvNpcAnimator::wholeImage()
@@ -213,21 +220,22 @@ QPixmap AdvNpcAnimator::wholeImage()
 void AdvNpcAnimator::setFrameL(int y)
 {
     if(frames.isEmpty()) return;
-    //frameCurrent = frameSize * y;
-    CurrentFrameL = y;
+
     //Out of range protection
-    if( CurrentFrameL >= frames.size()) CurrentFrameL = (frameFirstL<frames.size()) ? frameFirstL : 0;
-    if( CurrentFrameL < frameFirstL) CurrentFrameL = (frameLastL<0)? frames.size()-1 : frameLastL;
+    if( y < frameFirstL) y = (frameLastL<0)? frames.size()-1 : frameLastL;
+    if( y >= frames.size()) y = (frameFirstL<frames.size()) ? frameFirstL : 0;
+    CurrentFrameL = y;
 }
 
 void AdvNpcAnimator::setFrameR(int y)
 {
     if(frames.isEmpty()) return;
-    //frameCurrent = frameSize * y;
-    CurrentFrameR = y;
+
     //Out of range protection
-    if( CurrentFrameR >= frames.size()) CurrentFrameR = (frameFirstR<frames.size()) ? frameFirstR : 0;
-    if( CurrentFrameR < frameFirstR) CurrentFrameR = (frameLastR<0)? frames.size()-1 : frameLastR;
+    if( y < frameFirstR) y = (frameLastR<0)? frames.size()-1 : frameLastR;
+    if( y >= frames.size()) y = (frameFirstR<frames.size()) ? frameFirstR : 0;
+
+    CurrentFrameR = y;
 }
 
 void AdvNpcAnimator::start()

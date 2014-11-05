@@ -35,15 +35,14 @@ void MainWindow::openFilesByArgs(QStringList args)
 void MainWindow::OpenFile(QString FilePath)
 {
 
-    QFile file(FilePath);
-
-
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
             if (existing) {
                 ui->centralWidget->setActiveSubWindow(existing);
                 return;
             }
 
+
+    QFile file(FilePath);
 
     if (!file.open(QIODevice::ReadOnly)) {
     QMessageBox::critical(this, tr("File open error"),
@@ -96,11 +95,15 @@ void MainWindow::OpenFile(QString FilePath)
         }
     }
     else
-    if(in_1.suffix().toLower() == "wld")
+    if((in_1.suffix().toLower() == "wld")||(in_1.suffix().toLower() == "wldx"))
     {
-        WorldData FileData = FileFormats::ReadWorldFile(file);
-        if( !FileData.ReadFileValid ) return;
+        WorldData FileData;
+        if(in_1.suffix().toLower() == "wld")
+            FileData= FileFormats::ReadWorldFile(file);
+        else
+            FileData= FileFormats::ReadExtendedWorldFile(file);
 
+        if( !FileData.ReadFileValid ) return;
 
         WorldEdit *child = createWldChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
@@ -109,7 +112,7 @@ void MainWindow::OpenFile(QString FilePath)
             child->ResetPosition();
             updateMenus(true);            
             setCurrentWorldSettings();
-            if(FileData.noworldmap)
+            if(FileData.HubStyledWorld)
             {
                 ui->WorldSettings->setVisible(true);
                 ui->WorldSettings->raise();
@@ -261,9 +264,13 @@ void MainWindow::on_OpenFile_triggered()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
         trUtf8("Open file"),GlobalSettings::openPath,
-        QString("All SMBX files (*.LVL *.WLD npc-*.TXT *.INI)\n"
+        QString("All supported formats (*.LVLX *.WLDX *.INI *.LVL *.WLD npc-*.TXT)\n"
+        "All SMBX files (*.LVL *.WLD npc-*.TXT)\n"
+        "All PGE files (*.LVLX *.WLDX npc-*.TXT *.INI)\n"
         "SMBX Level (*.LVL)\n"
+        "PGE Level (*.LVLX)\n"
         "SMBX World (*.WLD)\n"
+        "PGE World (*.WLDX)\n"
         "SMBX NPC Config (npc-*.TXT)\n"
         "All Files (*.*)"),0);
 

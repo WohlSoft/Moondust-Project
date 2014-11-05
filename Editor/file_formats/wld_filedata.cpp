@@ -16,9 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
 #include "wld_filedata.h"
-
 #include "file_formats.h"
 
 
@@ -99,6 +97,7 @@ WorldMusic FileFormats::dummyWldMusic()
     dummyMusicBox.index = 0;
     dummyMusicBox.x = 0;
     dummyMusicBox.y = 0;
+    dummyMusicBox.music_file="";
 
     return dummyMusicBox;
 }
@@ -110,6 +109,7 @@ WorldData FileFormats::dummyWldDataArray()
     NewFileData.ReadFileValid = true;
     NewFileData.modified = true;
     NewFileData.untitled = true;
+    NewFileData.smbx64strict = false;
 
     NewFileData.CurSection=0;
     NewFileData.playmusic=0;
@@ -123,15 +123,16 @@ WorldData FileFormats::dummyWldDataArray()
     NewFileData.nocharacter4 = false;
     NewFileData.nocharacter5 = false;
 
+    NewFileData.authors = "";
     NewFileData.author1 = "";
     NewFileData.author2 = "";
     NewFileData.author3 = "";
     NewFileData.author4 = "";
     NewFileData.author5 = "";
 
-    NewFileData.autolevel = "";
+    NewFileData.IntroLevel_file = "";
 
-    NewFileData.noworldmap = false;
+    NewFileData.HubStyledWorld = false;
     NewFileData.restartlevel = false;
 
     NewFileData.tile_array_id = 0;

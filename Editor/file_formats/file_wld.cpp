@@ -16,17 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
 #include "wld_filedata.h"
-
 #include "file_formats.h"
 
+#include <QFileInfo>
+#include <QDir>
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
 
-//World file Read
 WorldData FileFormats::ReadWorldFile(QFile &inf)
 {
     QTextStream in(&inf);   //Read File
@@ -35,14 +34,33 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
     in.setLocale(QLocale::system());
     in.setCodec(QTextCodec::codecForLocale());
 
+    return ReadSMBX64WldFile( in.readAll(), inf.fileName() );
+}
+
+WorldData FileFormats::ReadSMBX64WldFile(QString RawData, QString filePath)
+{
+    FileStringList in;
+    in.addData( RawData );
+
     int str_count=0;        //Line Counter
     int file_format=0;        //File format number
     QString line;           //Current Line data
 
     WorldData FileData = dummyWldDataArray();
 
+    //Add path data
+    if(!filePath.isEmpty())
+    {
+        QFileInfo in_1(filePath);
+        FileData.filename = in_1.baseName();
+        FileData.path = in_1.absoluteDir().absolutePath();
+    }
+
     FileData.untitled = false;
     FileData.modified = false;
+
+    //Enable strict mode for SMBX WLD file format
+    FileData.smbx64strict = true;
 
     WorldTiles tile;
     WorldScenery scen;
@@ -103,12 +121,12 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
         str_count++;line = in.readLine();
         if( SMBX64::qStr(line) ) //Autostart level
             goto badfile;
-        else FileData.autolevel = removeQuotes(line);
+        else FileData.IntroLevel_file = removeQuotes(line);
 
         str_count++;line = in.readLine();
         if( SMBX64::wBool(line) ) //Don't use world map on this episode
             goto badfile;
-        else FileData.noworldmap = SMBX64::wBoolR(line);
+        else FileData.HubStyledWorld = SMBX64::wBoolR(line);
 
         str_count++;line = in.readLine();
         if( SMBX64::wBool(line) ) //Restart level on playable character's death
@@ -150,6 +168,13 @@ WorldData FileFormats::ReadWorldFile(QFile &inf)
         if( SMBX64::qStr(line) ) //Author 5
             goto badfile;
         else FileData.author5 = removeQuotes(line);
+
+        FileData.authors.clear();
+        FileData.authors += (FileData.author1.isEmpty())? "" : FileData.author1+"\n";
+        FileData.authors += (FileData.author2.isEmpty())? "" : FileData.author2+"\n";
+        FileData.authors += (FileData.author3.isEmpty())? "" : FileData.author3+"\n";
+        FileData.authors += (FileData.author4.isEmpty())? "" : FileData.author4+"\n";
+        FileData.authors += (FileData.author5.isEmpty())? "" : FileData.author5;
     }
 
 
@@ -377,7 +402,7 @@ FileData.ReadFileValid=true;
 return FileData;
 
 badfile:    //If file format not corrects
-    BadFileMsg(inf.fileName(), str_count, line);
+    BadFileMsg(FileData.path, str_count, line);
     FileData.ReadFileValid=false;
 return FileData;
 }
@@ -407,10 +432,18 @@ QString FileFormats::WriteSMBX64WldFile(WorldData FileData)
     TextData += SMBX64::BoolS(FileData.nocharacter3);
     TextData += SMBX64::BoolS(FileData.nocharacter4);
     TextData += SMBX64::BoolS(FileData.nocharacter5);
-    TextData += SMBX64::qStrS(FileData.autolevel);
-    TextData += SMBX64::BoolS(FileData.noworldmap);
+    TextData += SMBX64::qStrS(FileData.IntroLevel_file);
+    TextData += SMBX64::BoolS(FileData.HubStyledWorld);
     TextData += SMBX64::BoolS(FileData.restartlevel);
     TextData += SMBX64::IntS(FileData.stars);
+
+    QStringList credits = FileData.authors.split(QChar('\n'));
+    FileData.author1 = (credits.size()>0) ? credits[0] : "";
+    FileData.author2 = (credits.size()>1) ? credits[1] : "";
+    FileData.author3 = (credits.size()>2) ? credits[2] : "";
+    FileData.author4 = (credits.size()>3) ? credits[3] : "";
+    FileData.author5 = (credits.size()>4) ? credits[4] : "";
+
     TextData += SMBX64::qStrS(FileData.author1);
     TextData += SMBX64::qStrS(FileData.author2);
     TextData += SMBX64::qStrS(FileData.author3);

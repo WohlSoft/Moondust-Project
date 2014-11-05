@@ -34,27 +34,26 @@ void MainWindow::on_actionReload_triggered()
         LevelData FileData;
         filePath = activeLvlEditWin()->curFile;
 
-        QFile fileIn(filePath);
-        QFileInfo in_1(filePath);
-
-        if (!fileIn.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(this, tr("File open error"),
-        tr("Can't open the file."), QMessageBox::Ok);
-            return;
+        if(activeLvlEditWin()->isUntitled)
+        {
+                    QMessageBox::warning(this, tr("File not saved"),
+                    tr("File doesn't saved on disk."), QMessageBox::Ok);
+                        return;
         }
 
-        if(in_1.suffix().toLower() == "lvl")
-            FileData = FileFormats::ReadLevelFile(fileIn);         //Read SMBX LVL File
-        else
-            FileData = FileFormats::ReadExtendedLevelFile(fileIn); //Read PGE LVLX File
+        if (!QFileInfo(filePath).exists() ) {
+            QMessageBox::critical(this, tr("File open error"),
+            tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+                return;
+        }
 
-        //FileData = FileFormats::ReadLevelFile(fileIn); //function in file_formats.cpp
+        //Open level file
+        FileData = FileFormats::OpenLevelFile(filePath);
+
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
 
-        FileData.filename = QFileInfo(filePath).baseName();
-        FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeLvlEditWin()->LvlData.modified = false;
         activeLvlEditWin()->close();
@@ -91,6 +90,13 @@ void MainWindow::on_actionReload_triggered()
         filePath = activeNpcEditWin()->curFile;
         QFile fileIn(filePath);
 
+        if(activeNpcEditWin()->isUntitled)
+        {
+                    QMessageBox::warning(this, tr("File not saved"),
+                    tr("File doesn't saved on disk."), QMessageBox::Ok);
+                        return;
+        }
+
         if (!fileIn.open(QIODevice::ReadOnly)) {
         QMessageBox::critical(this, tr("File open error"),
         tr("Can't open the file."), QMessageBox::Ok);
@@ -120,15 +126,21 @@ void MainWindow::on_actionReload_triggered()
         WorldData FileData;
         filePath = activeWldEditWin()->curFile;
 
-        QFile fileIn(filePath);
-
-        if (!fileIn.open(QIODevice::ReadOnly)) {
-        QMessageBox::critical(this, tr("File open error"),
-        tr("Can't open the file."), QMessageBox::Ok);
-            return;
+        if(activeWldEditWin()->isUntitled)
+        {
+                    QMessageBox::warning(this, tr("File not saved"),
+                    tr("File doesn't saved on disk."), QMessageBox::Ok);
+                        return;
         }
 
-        FileData = FileFormats::ReadWorldFile(fileIn); //function in file_formats.cpp
+        if (!QFileInfo(filePath).exists() ) {
+            QMessageBox::critical(this, tr("File open error"),
+            tr("Can't open the file.\nFile not exist."), QMessageBox::Ok);
+                return;
+        }
+
+        FileData = FileFormats::OpenWorldFile(filePath);
+
         if( !FileData.ReadFileValid ){
             statusBar()->showMessage(tr("Reloading error"), 2000);
             return;}
@@ -149,7 +161,7 @@ void MainWindow::on_actionReload_triggered()
             child->ResetPosition();
             updateMenus(true);
             setCurrentWorldSettings();
-            if(FileData.noworldmap)
+            if(FileData.HubStyledWorld)
             {
                 ui->WorldSettings->setVisible(true);
                 ui->WorldSettings->raise();
@@ -177,12 +189,20 @@ void MainWindow::on_actionExport_to_image_triggered()
 
     if(activeChildWindow()==1)
     {
-        activeLvlEditWin()->ExportToImage_fn();
+        activeLvlEditWin()->ExportToImage_fn_piece();
     }
     else
     if(activeChildWindow()==3)
     {
         activeWldEditWin()->ExportToImage_fn();
+    }
+}
+
+void MainWindow::on_actionExport_to_image_section_triggered()
+{
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->ExportToImage_fn();
     }
 }
 

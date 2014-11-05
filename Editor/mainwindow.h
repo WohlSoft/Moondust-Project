@@ -28,8 +28,6 @@
 #include <QPoint>
 #include <QString>
 #include <QStringList>
-#include <QtMultimedia/QMediaPlayer>
-#include <QMediaPlaylist>
 #include <QFileDialog>
 #include <QFile>
 #include <QSettings>
@@ -130,6 +128,11 @@ public:
         void openFilesByArgs(QStringList args);
 
         void showStatusMsg(QString msg, int time=2000); //Send status message
+        void showToolTipMsg(QString msg, QPoint pos, int time); //Show tooltip msg
+
+        void applyTheme(QString themeDir="");
+
+        bool continueLoad; //!< Is need to continue or abort loading operation and close editor
 
         ///
         /// \brief loadSettings load settings from configuration file
@@ -197,6 +200,7 @@ public:
         void on_actionSave_all_triggered();
 
         void on_actionExport_to_image_triggered();      //!< Export current workspace into image
+        void on_actionExport_to_image_section_triggered();
 
         void on_actionApplication_settings_triggered(); //!< Open application settings
 
@@ -385,8 +389,9 @@ public:
 // ////////////////////Debugger box////////////////////////
     public slots:
         void Debugger_UpdateMousePosition(QPoint p, bool isOffScreen=false);
+        void Debugger_UpdateItemList(QString list);
 
-        private slots:
+    private slots:
         void on_actionDebugger_triggered(bool checked);
 
         void on_debuggerBox_visibilityChanged(bool visible);
@@ -407,6 +412,7 @@ public:
         void on_actionChangeConfig_triggered(); //!< Change configuration
     private:
         QString currentConfigDir;
+        bool askConfigAgain;
 // ////////////////////////////////////////////////////////
 
 // //////////////////External tools////////////////////////
@@ -441,9 +447,6 @@ public:
         void on_actionPlayMusic_triggered(bool checked);
 
     private:
-        QMediaPlayer * MusicPlayer;
-        QMediaPlayer playSnd;
-        QMediaPlaylist CurrentMusic;
         QSlider* muVol;
 // ///////////////////////////////////////////////////////
 
@@ -564,6 +567,8 @@ public:
 
         void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
         void on_PROPS_BGOSquareFill_clicked(bool checked);
+        void on_PROPS_BGO_Z_Layer_currentIndexChanged(int index);
+        void on_PROPS_BGO_Z_Offset_valueChanged(double arg1);
         void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
 
         void on_PROPS_NPCDirLeft_clicked();
@@ -649,6 +654,9 @@ public:
         void on_RemoveLayer_clicked();
         void on_LvlLayerList_customContextMenuRequested(const QPoint &pos);
 
+        void on_LvlLayerList_itemClicked(QListWidgetItem *item);
+        void on_LvlLayerList_itemSelectionChanged();
+
     private:
         void RemoveCurrentLayer(bool moveToDefault);
         void RemoveLayerItems(QString layerName);
@@ -672,7 +680,9 @@ public:
         void EventListsSync();
         void setEventsBox();
         void setEventData(long index=-1);
-
+    public:
+        bool LvlEventBoxLock;
+    public slots:
         void ModifyEvent(QString eventName, QString newEventName);
 
         QListWidget* getEventList();
@@ -869,6 +879,8 @@ public:
         void on_WLD_DoCountStars_clicked();
         void on_WLD_Credirs_textChanged();
         void characterActivated(bool checked);
+
+        void on_actionSemi_transparent_paths_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
 // ////////////////////World Item toolbox /////////////////
@@ -979,7 +991,6 @@ private slots:
         void on_actionLockLevels_triggered(bool checked);
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
-
 
 signals:
     void closeEditor();

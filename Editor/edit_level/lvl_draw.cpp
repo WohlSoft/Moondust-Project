@@ -26,7 +26,7 @@
 #include "../ui_leveledit.h"
 
 #include "../file_formats/lvl_filedata.h"
-#include "../level_scene/lvlscene.h"
+#include "../level_scene/lvl_scene.h"
 #include "../common_features/logger.h"
 
 
@@ -112,10 +112,13 @@ bool leveledit::DrawObjects(QProgressDialog &progress)
 
     scene->applyLayersVisible();
 
+    scene->Debugger_updateItemList();
+
     if(!sceneCreated)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
+        connect(scene, SIGNAL(screenshotSizeCaptured()), this, SLOT(ExportingReady()));
     }
     if(!progress.wasCanceled())
         progress.setValue(DataSize);

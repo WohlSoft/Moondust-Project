@@ -23,9 +23,23 @@
 #include "music_player.h"
 #include "../common_features/graphicsworkspace.h"
 
+namespace mainwindowMenuBar
+{
+    QMdiSubWindow *LastActiveSubWindow = NULL;
+}
+
 void MainWindow::updateMenus(bool force)
 {
-    if(!force) if(!this->isActiveWindow()) return;
+    using namespace mainwindowMenuBar;
+    if(!force)
+    {
+        //Don't update if window is not active
+        if(!this->isActiveWindow()) return;
+         //Don't update if this is - same subWindow
+        if(LastActiveSubWindow==ui->centralWidget->activeSubWindow()) return;
+    }
+
+    LastActiveSubWindow = ui->centralWidget->activeSubWindow();
 
     WriteToLog(QtDebugMsg, QString("Update menus"));
 
@@ -144,6 +158,8 @@ void MainWindow::updateMenus(bool force)
     ui->actionWorld_settings->setVisible( (WinType==3) );
     ui->actionWLD_SearchBox->setVisible( (WinType==3) );
 
+    ui->actionSemi_transparent_paths->setVisible( (WinType==3) );
+
     ui->menuLevel->setEnabled( (WinType==1) );
 
 
@@ -156,6 +172,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevelProp->setEnabled( (WinType==1) );
 
     ui->actionExport_to_image->setEnabled( (WinType==1) || (WinType==3) );
+    ui->actionExport_to_image_section->setVisible( (WinType==1) );
 
     ui->actionZoomIn->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionZoomOut->setEnabled( (WinType==1) || (WinType==3) );
@@ -246,10 +263,12 @@ void MainWindow::updateMenus(bool force)
 
             ui->actionGridEn->setChecked(activeLvlEditWin()->scene->grid);
 
-            GlobalSettings::LvlOpts.animationEnabled = activeLvlEditWin()->scene->opts.animationEnabled;
-            GlobalSettings::LvlOpts.collisionsEnabled = activeLvlEditWin()->scene->opts.collisionsEnabled;
+            GlobalSettings::LvlOpts = activeLvlEditWin()->scene->opts;
+
             ui->actionUndo->setEnabled(activeLvlEditWin()->scene->canUndo());
             ui->actionRedo->setEnabled(activeLvlEditWin()->scene->canRedo());
+
+            activeLvlEditWin()->scene->Debugger_updateItemList();
         }
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
@@ -287,16 +306,18 @@ void MainWindow::updateMenus(bool force)
             ui->actionGridEn->setChecked(activeWldEditWin()->scene->grid);
 
             WriteToLog(QtDebugMsg, "-> Get scene flags: animation and collision");
-            GlobalSettings::LvlOpts.animationEnabled = activeWldEditWin()->scene->opts.animationEnabled;
-            GlobalSettings::LvlOpts.collisionsEnabled = activeWldEditWin()->scene->opts.collisionsEnabled;
+            GlobalSettings::LvlOpts = activeWldEditWin()->scene->opts;
             ui->actionUndo->setEnabled(activeWldEditWin()->scene->canUndo());
             ui->actionRedo->setEnabled(activeWldEditWin()->scene->canRedo());
+
+            activeWldEditWin()->scene->Debugger_updateItemList();
         }
 
         zoom->setText(QString::number(activeWldEditWin()->getZoom()));
 
         ui->actionAnimation->setChecked( GlobalSettings::LvlOpts.animationEnabled );
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
+        ui->actionSemi_transparent_paths->setChecked( GlobalSettings::LvlOpts.semiTransparentPaths );
 
     }
     else

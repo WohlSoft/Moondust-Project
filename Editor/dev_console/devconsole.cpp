@@ -7,7 +7,10 @@
 
 #include "../version.h"
 
+#include "../common_features/app_path.h"
+
 #include "../common_features/mainwinconnect.h"
+
 
 #include "../file_formats/file_formats.h"
 
@@ -20,7 +23,7 @@ void DevConsole::init()
 
     currentDevConsole = new DevConsole();
 
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("DevConsole");
@@ -148,7 +151,7 @@ void DevConsole::clearCurrentLog()
 
 void DevConsole::closeEvent(QCloseEvent *event)
 {
-    QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+    QString inifile = ApplicationPath + "/" + "pge_editor.ini";
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("DevConsole");
@@ -179,6 +182,7 @@ void DevConsole::registerCommands()
     registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculating MD5 hash of string"));
     registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Args: {String array} validating the PGE-X string array"));
     registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
+    registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
 }
 
 void DevConsole::doCommand()
@@ -266,5 +270,10 @@ void DevConsole::doFlood(QStringList args)
             log("No memory assigned");
         Q_UNUSED(fl)
     }
+}
+
+void DevConsole::doThrowUnhandledException(QStringList /*args*/)
+{
+    throw std::runtime_error("Test Exception of Toast!");
 }
 

@@ -25,8 +25,10 @@
 #include "level_edit.h"
 #include "../ui_leveledit.h"
 
+#include "../common_features/app_path.h"
+
 #include "../file_formats/file_formats.h"
-#include "../level_scene/lvlscene.h"
+#include "../level_scene/lvl_scene.h"
 #include "saveimage.h"
 #include "../common_features/logger.h"
 #include "../common_features/util.h"
@@ -38,26 +40,73 @@
 
 #include <QDebug>
 
+
+//Export whole section
 void leveledit::ExportToImage_fn()
 {
+    if(!sceneCreated) return;
+    if(!scene) return;
+
+    scene->setScreenshotSelector();
+}
+
+
+//Export piece
+void leveledit::ExportToImage_fn_piece()
+{
+    if(!sceneCreated) return;
+    if(!scene) return;
+
+    MainWinConnect::pMainWin->on_actionSelect_triggered();
+
+    qreal zoom=1.0;
+    if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
+    {
+        zoom = static_cast<GraphicsWorkspace *>(ui->graphicsView)->zoom();
+    }
+
+    scene->captutedSize.setX(qRound(qreal(ui->graphicsView->horizontalScrollBar()->value())/zoom)+10 );
+    scene->captutedSize.setY(qRound(qreal(ui->graphicsView->verticalScrollBar()->value())/zoom)+10 );
+    scene->captutedSize.setWidth(qRound(qreal(ui->graphicsView->viewport()->width())/zoom)-20);
+    scene->captutedSize.setHeight(qRound(qreal(ui->graphicsView->viewport()->height())/zoom)-20);
+
+    scene->setScreenshotSelector(true);
+}
+
+
+void leveledit::ExportingReady() //slot
+{
+    if(!sceneCreated) return;
+    if(!scene) return;
+
         long x, y, h, w, th, tw;
 
         bool proportion;
         bool forceTiled=false;
-        QString inifile = QApplication::applicationDirPath() + "/" + "pge_editor.ini";
+        QString inifile = ApplicationPath + "/" + "pge_editor.ini";
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-        latest_export_path = settings.value("export-path", QApplication::applicationDirPath()).toString();
+        latest_export_path = settings.value("export-path", ApplicationPath).toString();
         proportion = settings.value("export-proportions", true).toBool();
         settings.endGroup();
 
 
-        x=LvlData.sections[LvlData.CurSection].size_left;
-        y=LvlData.sections[LvlData.CurSection].size_top;
-        w=LvlData.sections[LvlData.CurSection].size_right;
-        h=LvlData.sections[LvlData.CurSection].size_bottom;
-        w=(long)fabs(x-w);
-        h=(long)fabs(y-h);
+        if(scene->isFullSection)
+        {
+            x=LvlData.sections[LvlData.CurSection].size_left;
+            y=LvlData.sections[LvlData.CurSection].size_top;
+            w=LvlData.sections[LvlData.CurSection].size_right;
+            h=LvlData.sections[LvlData.CurSection].size_bottom;
+            w=(long)fabs(x-w);
+            h=(long)fabs(y-h);
+        }
+        else
+        {
+            x=qRound(scene->captutedSize.x());
+            y=qRound(scene->captutedSize.y());
+            w=qRound(scene->captutedSize.width());
+            h=qRound(scene->captutedSize.height());
+        }
 
         tw=w;
         th=h;
@@ -80,7 +129,10 @@ void leveledit::ExportToImage_fn()
 
         QString fileName = QFileDialog::getSaveFileName(this, tr("Export current section to image"),
             latest_export_path + "/" +
-            QString("%1_Section_%2.png").arg( QFileInfo(curFile).baseName() ).arg(LvlData.CurSection+1), tr("PNG Image (*.png)"));
+            QString("%1_Section_%2%3.png").arg( QFileInfo(curFile).baseName() )
+                                                        .arg(LvlData.CurSection+1)
+                                                        .arg(scene->isFullSection?"":("_"+QString::number(qrand()))),
+                                                        tr("PNG Image (*.png)"));
         if (fileName.isEmpty())
             return;
 
@@ -187,7 +239,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
         return;
     }
 
-    scene = new LvlScene(configs, LvlData);
+    scene = new LvlScene(ui->graphicsView, configs, LvlData);
     scene->opts = options;
 
     scene->InitSection(0);
@@ -199,6 +251,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
     {
         ui->graphicsView->setScene(scene);
         sceneCreated = true;
+        connect(scene, SIGNAL(screenshotSizeCaptured()), this, SLOT(ExportingReady()));
     }
 
     if(options.animationEnabled) scene->startBlockAnimation();
@@ -215,8 +268,14 @@ bool leveledit::save(bool savOptionsDialog)
     }
 }
 
+namespace lvl_file_io
+{
+    bool isSMBX64limit=false;
+}
+
 bool leveledit::saveAs(bool savOptionsDialog)
 {
+    using namespace lvl_file_io;
     bool makeCustomFolder = false;
 
     if(savOptionsDialog){
@@ -248,15 +307,25 @@ bool leveledit::saveAs(bool savOptionsDialog)
     QString fileName = (isUntitled)?GlobalSettings::savePath+QString("/")+
                                     (LvlData.LevelName.isEmpty()?curFile:util::filePath(LvlData.LevelName)):curFile;
 
+    QString fileSMBX64="SMBX64 (1.3) Level file (*.lvl)";
+    QString filePGEX="Extended Level file (*.lvlx)";
 
     QString selectedFilter;
     if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
-        selectedFilter = "Extended Level file (*.lvlx)";
+        selectedFilter = filePGEX;
     else
-        selectedFilter = "SMBX64 (1.3) Level file (*.lvl)";
+        selectedFilter = fileSMBX64;
 
-    QString filter = QString("SMBX64 (1.3) Level file (*.lvl);;"
-                             "Extended Level file (*.lvlx)");
+    QString filter =
+            fileSMBX64+";;"+
+            filePGEX;
+
+    bool ret;
+
+    RetrySave:
+
+    isSMBX64limit=false;
+    isNotDone=true;
     while(isNotDone)
     {
         fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter);
@@ -279,22 +348,15 @@ bool leveledit::saveAs(bool savOptionsDialog)
         isNotDone=false;
     }
 
-    return saveFile(fileName);
+    ret = saveFile(fileName);
+    if(isSMBX64limit) goto RetrySave;
+
+    return ret;
 }
 
 bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
 {
-    QFile file(fileName);
-    if (!file.open(QFile::WriteOnly | QFile::Text)) {
-        QMessageBox::warning(this, tr("File save error"),
-                             tr("Cannot save file %1:\n%2.")
-                             .arg(fileName)
-                             .arg(file.errorString()));
-        return false;
-    }
-
-    GlobalSettings::savePath = QFileInfo(fileName).path();
-
+    using namespace lvl_file_io;
 
     if( (!fileName.endsWith(".lvl", Qt::CaseInsensitive)) && (!fileName.endsWith(".lvlx", Qt::CaseInsensitive)) )
     {
@@ -303,12 +365,100 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
         return false;
     }
 
-    QTextStream out(&file);
-
     QApplication::setOverrideCursor(Qt::WaitCursor);
+
+    //Mark stars
+    for(int q=0; q< LvlData.npc.size(); q++)
+    {
+       if( LvlData.npc[q].id < (unsigned long) MainWinConnect::pMainWin->configs.index_npc.size() )
+           LvlData.npc[q].is_star =
+                   MainWinConnect::pMainWin->configs.
+                   main_npc[MainWinConnect::pMainWin->configs.index_npc[LvlData.npc[q].id].gi-1].is_star;
+    }
+
     // ////////////////////// Write SMBX64 LVL //////////////////////////////
     if(fileName.endsWith(".lvl", Qt::CaseInsensitive))
     {
+        //SMBX64 Standard check
+
+        isSMBX64limit=false;
+        //Blocks limit
+        if(LvlData.blocks.size()>16384)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 blocks\n"
+                "The maximum number of blocks is %2.\n\n"
+                "Please remove excess blocks from this level or save file into LVLX format.")
+             .arg(LvlData.blocks.size()).arg(16384), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //BGO limits
+        if(LvlData.bgo.size()>8000)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Background Objects\n"
+                "The maximum number of Background Objects is %2.\n\n"
+                "Please remove excess Background Objects from this level or save file into LVLX format.")
+             .arg(LvlData.bgo.size()).arg(8000), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //NPC limits
+        if(LvlData.npc.size()>5000)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Non-Playable Characters\n"
+                "The maximum number of Non-Playable Characters is %2.\n\n"
+                "Please remove excess Non-Playable Characters from this level or save file into LVLX format.")
+             .arg(LvlData.npc.size()).arg(5000), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //Warps limits
+        if(LvlData.doors.size()>199)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Warps\n"
+                "The maximum number of Warps is %2.\n\n"
+                "Please remove excess Warps from this level or save file into LVLX format.")
+             .arg(LvlData.doors.size()).arg(199), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //Physical Environment zones
+        if(LvlData.physez.size()>450)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Water Boxes\n"
+                "The maximum number of Water Boxes is %2.\n\n"
+                "Please remove excess Water Boxes from this level or save file into LVLX format.")
+             .arg(LvlData.physez.size()).arg(450), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //Layers limits
+        if(LvlData.layers.size()>100)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Layers\n"
+                "The maximum number of Layers is %2.\n\n"
+                "Please remove excess Layers from this level or save file into LVLX format.")
+             .arg(LvlData.layers.size()).arg(100), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+        //Events limits
+        if(LvlData.events.size()>100)
+        {
+            QMessageBox::warning(this, tr("The SMBX64 limit has been exceeded"),
+             tr("SMBX64 standard isn't allow to save %1 Events\n"
+                "The maximum number of Events is %2.\n\n"
+                "Please remove excess Events from this level or save file into LVLX format.")
+             .arg(LvlData.events.size()).arg(100), QMessageBox::Ok);
+            isSMBX64limit=true;
+        }
+
+        if(isSMBX64limit)
+        {
+            QApplication::restoreOverrideCursor();
+            return false;
+        }
+
         //set SMBX64 specified option to BGO
         for(int q=0; q< LvlData.bgo.size(); q++)
         {
@@ -321,15 +471,43 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
                 LvlData.bgo[q].smbx64_sp_apply = LvlData.bgo[q].smbx64_sp;
             //WriteToLog(QtDebugMsg, QString("BGO SMBX64 sort -> ID-%1 SORT-%2").arg(LvlData.bgo[q].id).arg(LvlData.bgo[q].smbx64_sp) );
         }
+        LvlData.smbx64strict = true; //Enable SMBX64 standard strict mode
+
+        QFile file(fileName);
+        if (!file.open(QFile::WriteOnly | QFile::Text))
+        {
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                 .arg(fileName)
+                                 .arg(file.errorString()));
+            return false;
+        }
+
+        QTextStream out(&file);
         out << FileFormats::WriteSMBX64LvlFile(LvlData);
+        file.close();
+        GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////
 
     // ////////////////// Write Extended LVL file (LVLX)/////////////////////
     else if(fileName.endsWith(".lvlx", Qt::CaseInsensitive))
     {
+        LvlData.smbx64strict = false; //Disable strict mode
+
+        QFile file(fileName);
+        if (!file.open(QFile::WriteOnly | QFile::Text)) {
+            QMessageBox::warning(this, tr("File save error"),
+                                 tr("Cannot save file %1:\n%2.")
+                                 .arg(fileName)
+                                 .arg(file.errorString()));
+            return false;
+        }
+        QTextStream out(&file);
         out.setCodec("UTF-8");
         out << FileFormats::WriteExtendedLvlFile(LvlData);
+        file.close();
+        GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////
 
@@ -388,7 +566,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new LvlScene(configs, LvlData);
+    scene = new LvlScene(ui->graphicsView, configs, LvlData);
 
     scene->opts = options;
 
@@ -444,7 +622,8 @@ void leveledit::documentWasModified()
 
 bool leveledit::maybeSave()
 {
-    if (LvlData.modified) {
+    if (LvlData.modified)
+    {
         SavingNotificationDialog* sav = new SavingNotificationDialog(true);
         sav->setSavingTitle(tr("'%1' has been modified.\n"
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
@@ -497,6 +676,7 @@ void leveledit::closeEvent(QCloseEvent *event)
             MainWinConnect::pMainWin->setMusic(false);
         }
 
+        scene->setMessageBoxItem(false);
         scene->clear();
         WriteToLog(QtDebugMsg, "!<-Cleared->!");
         scene->uBGOs.clear();

@@ -1,0 +1,47 @@
+Level scene loop
+=================================================================
+
+UpdatePhysics()
+{
+
+	updateControllers();
+	{
+	    //Get events state and apply controller's flags
+
+	    //Send controller flags list into controllable objects
+	}
+
+        if(!PauseMenu)
+	{
+		updatePlayers();
+		{
+		   //Apply accepted controller flags
+		   //Apply camera
+		}
+
+		updateNPCs();
+		{
+		    //update NPC's activated "activated"
+		    //If time stopped, don't update algorithms, update events only
+		}
+
+		if(!timeStopped) updateEffects();
+	}
+
+
+}
+
+
+
+Render()
+{
+	drawBackground();
+
+	drawRenderItems();
+
+	drawForeground();
+
+	if(PauseMenu)
+		drawMenu();
+}
+

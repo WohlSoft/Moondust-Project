@@ -19,7 +19,7 @@
 #include "tilesetconfiguredialog.h"
 #include "ui_tilesetconfiguredialog.h"
 
-#include "../level_scene/lvlscene.h"
+#include "../level_scene/lvl_scene.h"
 #include "../world_scene/wld_scene.h"
 
 TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene *scene, QWidget *parent) :
@@ -40,7 +40,7 @@ TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene
     ui->customOnly->setVisible(mode!=GFX_Staff);
     ui->specific->setVisible(mode!=GFX_Staff);
 
-    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,ItemTypes::LVL_Block,0,64,3,3, scn)));
+    ui->tilesetLayoutWidgetContainer->insertWidget(0,m_tileset = (new tileset(conf,ItemTypes::LVL_Block,0,32,3,3, scn)));
 
     ui->listView->setAcceptDrops(true);
     ui->listView->setDropIndicatorShown(true);

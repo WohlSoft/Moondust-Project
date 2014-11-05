@@ -22,6 +22,12 @@
 #include <QRegExp>
 #include <QString>
 #include <QFile>
+#include <QTextStream>
+#include <QTextCodec>
+#ifndef PGE_ENGINE
+#include <QMessageBox>
+#endif
+
 
 
 #include "lvl_filedata.h"
@@ -54,6 +60,7 @@ public:
     static QString BoolS(bool input);
     static QString qStrS(QString input);
     static QString FloatS(float input);
+    static QString qStrS_multiline(QString input);
 };
 
 class PGEFile
@@ -100,18 +107,44 @@ public:
 };
 
 
+class FileStringList
+{
+public:
+    FileStringList();
+
+    FileStringList(QString fileData);
+    ~FileStringList();
+
+    void addData(QString fileData);
+    QString readLine();
+    bool isEOF();
+    bool atEnd();
+private:
+    QStringList buffer;
+    long lineID;
+};
+
+
 class FileFormats
 {
 public:
-    //File format read functions
+    //File format read/write functions
 
-    static LevelData dummyLvlDataArray();                   //Create new
+
+    /******************************Level files***********************************/
+    static LevelData OpenLevelFile(QString filePath); //!< Open supported level file via direct path
+
+    static LevelData ReadLevelFile(QFile &inf); //!< Parse SMBX64 Level file by file stream
+    static LevelData ReadExtendedLevelFile(QFile &inf); //!< Parse PGE-X level file by file stream
+    static LevelData dummyLvlDataArray(); //!< Generate empty level map
+
     // SMBX64 LVL File
-    static LevelData ReadLevelFile(QFile &inf);             //read
-    static QString WriteSMBX64LvlFile(LevelData FileData);  //write
+    static LevelData ReadSMBX64LvlFile(QString RawData, QString filePath=""); //!< Parse SMBX1-SMBX64 level
+    static QString WriteSMBX64LvlFile(LevelData FileData);  //!< Generate SMBX64 level raw data
+
     // PGE Extended Level File
-    static LevelData ReadExtendedLevelFile(QFile &inf);
-    static QString WriteExtendedLvlFile(LevelData FileData); //Write
+    static LevelData ReadExtendedLvlFile(QString RawData, QString filePath=""); //!< Parse PGE-X level file
+    static QString WriteExtendedLvlFile(LevelData FileData);  //!< Generate PGE-X level raw data
 
     // Lvl Data
     static LevelNPC dummyLvlNpc();
@@ -124,6 +157,22 @@ public:
     static PlayerPoint dummyLvlPlayerPoint(int id=0);
     static LevelSection dummyLvlSection();
 
+
+    /******************************World file***********************************/
+    static WorldData OpenWorldFile(QString filePath);
+
+    static WorldData ReadWorldFile(QFile &inf); //!< Parse SMBX64 World file by file stream
+    static WorldData ReadExtendedWorldFile(QFile &inf); //!< Parse PGE-X World file by file stream
+    static WorldData dummyWldDataArray(); //!< Generate empty world map
+
+    // SMBX64 WLD File
+    static WorldData ReadSMBX64WldFile(QString RawData, QString filePath); //!< Parse SMBX1-SMBX64 world
+    static QString WriteSMBX64WldFile(WorldData FileData);  //!< Generate SMBX64 world raw data
+
+    // PGE Extended World map File
+    static WorldData ReadExtendedWldFile(QString RawData, QString filePath); //!< Parse PGE-X world file
+    static QString WriteExtendedWldFile(WorldData FileData);  //!< Generate PGE-X world raw data
+
     //Wld Data
     static WorldTiles dummyWldTile();
     static WorldScenery dummyWldScen();
@@ -131,6 +180,8 @@ public:
     static WorldLevels dummyWldLevel();
     static WorldMusic dummyWldMusic();
 
+
+    /******************************NPC.txt file***********************************/
     // SMBX64 NPC.TXT File
     static NPCConfigFile ReadNpcTXTFile(QFile &inf, bool IgnoreBad=false); //read
     static QString WriteNPCTxtFile(NPCConfigFile FileData);                //write
@@ -138,16 +189,10 @@ public:
     static NPCConfigFile CreateEmpytNpcTXTArray();
     static obj_npc mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSize captured=QSize(0,0));
 
-    // SMBX64 WLD File
-    static WorldData ReadWorldFile(QFile &inf);             //read
-    static QString WriteSMBX64WldFile(WorldData FileData);  //Write
-    static WorldData dummyWldDataArray();                   //Create new
-
 
     //common
     static void BadFileMsg(QString fileName_DATA, int str_count, QString line);
     static QString removeQuotes(QString str); // Remove quotes from begin and end
-
 };
 
 #endif // FILE_FORMATS_H
