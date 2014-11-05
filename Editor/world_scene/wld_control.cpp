@@ -934,10 +934,10 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 
 
-void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
-{
-    Q_UNUSED(it);
-    Q_UNUSED(ObjType);
+//void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
+//{
+//    Q_UNUSED(it);
+//    Q_UNUSED(ObjType);
 //    gridSize = pConfigs->default_grid;
 //    offsetX = 0;
 //    offsetY = 0;
@@ -981,7 +981,7 @@ void WldScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 //        offsetX = 0;
 //        offsetY = 0;
 //    }
-}
+//}
 
 void WldScene::placeItemsByRectArray()
 {
