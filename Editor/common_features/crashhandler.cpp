@@ -43,7 +43,7 @@ CrashHandler::~CrashHandler()
 
 void CrashHandler::crashByFlood()
 {
-    QString crashMsg = QApplication::tr("We're sorry, but PGE has crashed. Reason: Out of memory! :(\n"
+    QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. Reason: Out of memory! :(\n"
                                         "To prevent this, try closing other uneccessary programs to free up more memory.");
 #ifdef _WIN32
     unsigned int   i;
@@ -67,7 +67,7 @@ void CrashHandler::crashByFlood()
         char buf[500];
         SymFromAddr( process, ( DWORD64 )( stack[ i ] ), 0, symbol );
 
-        sprintf(buf, "%i: %s - 0x%0X\n", frames - i - 1, symbol->Name, symbol->Address );
+        sprintf(buf, "%i: %s - 0x%0llx\n", frames - i - 1, symbol->Name, symbol->Address );
         bkTrace += buf;
     }
     crashMsg = crashMsg + QString("\n\n") + bkTrace;
@@ -89,7 +89,7 @@ void CrashHandler::crashByUnhandledException()
     }
     catch(const std::exception& e)
     {
-        std::string s1 = "We're sorry, but PGE has crashed. Reason: ";
+        std::string s1 = "We're sorry, but PGE Editor has crashed. Reason: ";
         std::string s2 = e.what();
         std::string s3 = " :(\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum";
 
@@ -116,7 +116,7 @@ void CrashHandler::crashByUnhandledException()
             char buf[500];
             SymFromAddr( process, ( DWORD64 )( stack[ i ] ), 0, symbol );
 
-            sprintf(buf, "%i: %s - 0x%0X\n", frames - i - 1, symbol->Name, symbol->Address );
+            sprintf(buf, "%i: %s - 0x%0llx\n", frames - i - 1, symbol->Name, symbol->Address );
             bkTrace += buf;
         }
         crashMsg = crashMsg + QString("\n\n") + bkTrace;
