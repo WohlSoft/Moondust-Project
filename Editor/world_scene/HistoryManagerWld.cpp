@@ -238,13 +238,13 @@ void WldScene::historyBack()
         QVariant extraData = lastOperation.extraData;
 
         if(subtype == SETTING_HUB){
-            WldData->noworldmap = !extraData.toBool();
+            WldData->HubStyledWorld = !extraData.toBool();
         }else if(subtype == SETTING_RESTARTAFTERFAIL){
             WldData->restartlevel = !extraData.toBool();
         }else if(subtype == SETTING_TOTALSTARS){
             WldData->stars = extraData.toList()[0].toInt();
         }else if(subtype == SETTING_INTROLEVEL){
-            WldData->autolevel = extraData.toList()[0].toString();
+            WldData->IntroLevel_file = extraData.toList()[0].toString();
         }else if(subtype == SETTING_CHARACTER){
             int ind = MainWinConnect::pMainWin->configs.getCharacterI(extraData.toList()[0].toInt());
             if(ind!=-1)
@@ -300,6 +300,7 @@ void WldScene::historyBack()
     }
     WldData->modified = true;
 
+    Debugger_updateItemList();
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Undone: %1").arg(getHistoryText(lastOperation)));
 }
@@ -434,13 +435,13 @@ void WldScene::historyForward()
         QVariant extraData = lastOperation.extraData;
 
         if(subtype == SETTING_HUB){
-            WldData->noworldmap = extraData.toBool();
+            WldData->HubStyledWorld = extraData.toBool();
         }else if(subtype == SETTING_RESTARTAFTERFAIL){
             WldData->restartlevel = extraData.toBool();
         }else if(subtype == SETTING_TOTALSTARS){
             WldData->stars = extraData.toList()[1].toInt();
         }else if(subtype == SETTING_INTROLEVEL){
-            WldData->autolevel = extraData.toList()[1].toString();
+            WldData->IntroLevel_file = extraData.toList()[1].toString();
         }else if(subtype == SETTING_CHARACTER){
             int ind = MainWinConnect::pMainWin->configs.getCharacterI(extraData.toList()[0].toInt());
             if(ind!=-1)
@@ -496,6 +497,8 @@ void WldScene::historyForward()
 
     }
     historyIndex++;
+
+    Debugger_updateItemList();
 
     MainWinConnect::pMainWin->refreshHistoryButtons();
     MainWinConnect::pMainWin->showStatusMsg(tr("Redone: %1").arg(getHistoryText(lastOperation)));

@@ -29,8 +29,7 @@ class AnimationScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    AnimationScene(QPixmap SourceSprite, QList<QVector<frameOpts > >  &framesX,
-                   FrameSets AniFrames, QObject *parent = 0);
+    AnimationScene(QObject *parent = 0);
     QPainter test;
     int mCurrentFrameX;
     int mCurrentFrameY;
@@ -57,7 +56,7 @@ public slots:
     void nextFrame();
 
 private:
-    QGraphicsPixmapItem * croc;
+    QGraphicsPixmapItem * ImageFrame;
     QGraphicsRectItem * sizer;
     QPoint mPos;
     int mXDir;

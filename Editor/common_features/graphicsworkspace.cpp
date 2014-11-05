@@ -18,6 +18,7 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     handScrollMotions=0;
     originalCursor = this->cursor();
     rubberBandSelectionMode = Qt::IntersectsItemBoundingRect;
+    this->setMouseTracking(true);
     this->setRubberBandSelectionMode(Qt::IntersectsItemBoundingRect);
     step=32;
     keyTime=25;
@@ -35,7 +36,7 @@ GraphicsWorkspace::GraphicsWorkspace(QWidget *parent) :
     connect(horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
     connect(verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(replayLastMouseEvent(int)));
 
-    setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    setTransformationAnchor(QGraphicsView::AnchorViewCenter);
 }
 
 GraphicsWorkspace::~GraphicsWorkspace()
@@ -115,28 +116,31 @@ void GraphicsWorkspace::keyPressEvent(QKeyEvent *event)
                return;
            }
 
+    event->accept();
+    replayLastMouseEvent();
+
     switch(event->key())
     {
     case Qt::Key_Left:
         lMover.start(keyTime);
-        break;
+        return;
     case Qt::Key_Right:
         rMover.start(keyTime);
-        break;
+        return;
     case Qt::Key_Up:
         uMover.start(keyTime);
-        break;
+        return;
     case Qt::Key_Down:
         dMover.start(keyTime);
-        break;
+        return;
     case Qt::Key_Shift:
         keyTime=5;
         updateTimerInterval();
         break;
+    default:
+        break;
     }
-    event->accept();
 
-    replayLastMouseEvent();
     QGraphicsView::keyPressEvent(event);
 }
 
@@ -148,27 +152,31 @@ void GraphicsWorkspace::keyReleaseEvent(QKeyEvent *event)
                return;
            }
 
+    event->accept();
+    replayLastMouseEvent();
+
     switch(event->key())
     {
     case Qt::Key_Left:
         lMover.stop();
-        break;
+        return;
     case Qt::Key_Right:
         rMover.stop();
-        break;
+        return;
     case Qt::Key_Up:
         uMover.stop();
-        break;
+        return;
     case Qt::Key_Down:
         dMover.stop();
-        break;
+        return;
     case Qt::Key_Shift:
         keyTime=25;
         updateTimerInterval();
         break;
+    default:
+        break;
     }
-    event->accept();
-    replayLastMouseEvent();
+
     QGraphicsView::keyReleaseEvent(event);
 }
 
@@ -228,7 +236,12 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         {
             horizontalScrollBar()->setValue(horizontalScrollBar()->value()+modS);
         }
+        //event->accept();
         replayLastMouseEvent();
+        if(scene())
+        {
+            scene()->update();
+        }
         return;
     }
     else
@@ -240,7 +253,12 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         {
             verticalScrollBar()->setValue(verticalScrollBar()->value()+modS);
         }
+        //event->accept();
         replayLastMouseEvent();
+        if(scene())
+        {
+            scene()->update();
+        }
         return;
     }
     replayLastMouseEvent();
@@ -376,7 +394,9 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     updateRubberBand(event);
 #endif
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler start");
+    #endif
     storeMouseEvent(event);
     lastMouseEvent.setAccepted(false);
 
@@ -448,7 +468,9 @@ void GraphicsWorkspace::mouseMoveEventHandler(QMouseEvent *event)
     }
 #endif
 
+    #ifdef _DEBUG_
     WriteToLog(QtDebugMsg, "GraphicsView -> MouseMoveHandler End");
+    #endif
 }
 
 

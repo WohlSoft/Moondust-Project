@@ -21,6 +21,8 @@
 
 #include "npc_dialog/npcdialog.h"
 #include "data_configs/config_manager.h"
+#include "common_features/app_path.h"
+#include "common_features/themes.h"
 
 #include <QDesktopServices>
 
@@ -35,16 +37,20 @@ MainWindow::MainWindow(QMdiArea *parent) :
     setDefaults(); // Apply default common settings
 
     //Create empty config directory if not exists
-    if(!QDir(QApplication::applicationDirPath() + "/" +  "configs").exists())
-        QDir().mkdir(QApplication::applicationDirPath() + "/" +  "configs");
+    if(!QDir(ApplicationPath + "/" +  "configs").exists())
+        QDir().mkdir(ApplicationPath + "/" +  "configs");
 
     // Config manager
-    ConfigManager *cmanager = new ConfigManager();
+    ConfigManager *cmanager;
+    cmanager = new ConfigManager();
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), qApp->desktop()->availableGeometry()));
     QString configPath = cmanager->isPreLoaded();
+    askConfigAgain = cmanager->askAgain;
+
+    QString tPack = cmanager->themePack;
     //If application runned first time or target configuration is not exist
-    if(configPath.isEmpty())
+    if( (askConfigAgain) || ( configPath.isEmpty() ) )
     {
         //Ask for configuration
         if(cmanager->exec()==QDialog::Accepted)
@@ -58,19 +64,26 @@ MainWindow::MainWindow(QMdiArea *parent) :
             setDefLang();
             setUiDefults(); //Apply default UI settings
             WriteToLog(QtWarningMsg, "<Configuration is not selected>");
+            continueLoad = false;
             this->close();
             return;
         }
     }
+    continueLoad = true;
+    askConfigAgain = cmanager->askAgain;
 
     currentConfigDir = configPath;
 
     delete cmanager;
 
     configs.setConfigPath(configPath);
-    configs.loadBasics();
 
-    QPixmap splashimg(configs.splash_logo);
+    configs.loadBasics();
+    Themes::loadTheme(tPack);
+
+    QPixmap splashimg(configs.splash_logo.isEmpty()?
+                      Themes::Image(Themes::splash) :
+                      configs.splash_logo);
 
     QSplashScreen splash(splashimg);
     splash.setCursor(Qt::ArrowCursor);
@@ -100,9 +113,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
 MainWindow::~MainWindow()
 {
-    MusicPlayer->stop();
     delete ui;
-    delete MusicPlayer;
     WriteToLog(QtDebugMsg, "--> Application closed <--");
 }
 
@@ -154,6 +165,11 @@ void MainWindow::showStatusMsg(QString msg, int time)
 }
 
 
+void MainWindow::showToolTipMsg(QString msg, QPoint pos, int time)
+{
+    QToolTip::showText(pos, msg, this, QRect(), time);
+}
+
 void MainWindow::refreshHistoryButtons()
 {
     if(activeChildWindow()==1)
@@ -175,7 +191,7 @@ void MainWindow::refreshHistoryButtons()
 
 void MainWindow::on_actionContents_triggered()
 {
-    QDesktopServices::openUrl( QUrl::fromLocalFile( QApplication::applicationDirPath() + "/help/manual_editor.html" ) );
+    QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
 }
 
 void MainWindow::on_actionNew_triggered()
@@ -201,5 +217,3 @@ void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
         this->showNormal();
     }
 }
-
-

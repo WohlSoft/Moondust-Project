@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 
 #include "../file_formats/file_formats.h"
@@ -29,6 +29,7 @@
 #include "item_playerpoint.h"
 
 #include "../common_features/grid.h"
+#include "../common_features/mainwinconnect.h"
 
 
 QPoint LvlScene::applyGrid(QPoint source, int gridSize, QPoint gridOffset)
@@ -136,10 +137,10 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
                     target.setX( it->scenePos().toPoint().x()-offset.x() );
                     target.setY( it->scenePos().toPoint().y()-offset.y() );
                     it->setPos(target);
-                    if(force) applyArrayForItem(it);
                 }
+                if(force) applyArrayForItem(it);
             }
-        }
+        } else if(force) applyArrayForItem(lead);
     }
 }
 
@@ -246,6 +247,31 @@ void LvlScene::returnItemBack(QGraphicsItem * item)
         it->setPos(it->pointData.x, it->pointData.y);
     }
 }
+
+
+
+void LvlScene::Debugger_updateItemList()
+{
+    QString itemList=
+            tr("Player start points:\t\t%1\n"
+               "Blocks:\t\t\t%2\n"
+               "Background objects's:\t%3\n"
+               "Non-playable characters's:\t%4\n"
+               "Warp entries:\t\t%5\n"
+               "Physical env. zones:\t%6\n");
+
+    itemList = itemList.arg(LvlData->players.size())
+            .arg(LvlData->blocks.size())
+            .arg(LvlData->bgo.size())
+            .arg(LvlData->npc.size())
+            .arg(LvlData->doors.size())
+            .arg(LvlData->physez.size());
+
+    MainWinConnect::pMainWin->Debugger_UpdateItemList(itemList);
+}
+
+
+
 
 
 ////////////////////////////////// Place new ////////////////////////////////

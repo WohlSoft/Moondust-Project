@@ -25,7 +25,7 @@
 
 #include "../file_formats/lvl_filedata.h"
 
-#include "../level_scene/lvlscene.h"
+#include "../level_scene/lvl_scene.h"
 
 #include "../data_configs/data_configs.h"
 
@@ -36,7 +36,7 @@ class leveledit;
 class leveledit : public QWidget
 {
     Q_OBJECT
-    
+    friend class LvlScene;
 public:
     explicit leveledit(QWidget *parent = 0);
     ~leveledit();
@@ -78,6 +78,7 @@ public:
     void changeCursor(int mode);
 
     void ExportToImage_fn();
+    void ExportToImage_fn_piece();
 
     LvlScene * scene;
 
@@ -98,6 +99,8 @@ private slots:
     virtual void leaveEvent(QEvent * leaveEvent);
     virtual void focusInEvent(QFocusEvent *event);
     void updateScene();
+
+    void ExportingReady();
 
 private:
     void documentWasModified();

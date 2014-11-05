@@ -67,6 +67,12 @@ void MainWindow::resetEditmodeButtons()
 
     ui->PlacingToolbar->setVisible(false);
     ui->ResizingToolbar->setVisible(false);
+
+    if(activeChildWindow()==1)
+       activeLvlEditWin()->scene->setMessageBoxItem(false);
+    else if(activeChildWindow()==3)
+       activeWldEditWin()->scene->setMessageBoxItem(false);
+
 }
 
 
@@ -80,13 +86,13 @@ void MainWindow::on_actionSelect_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
     {
-       activeLvlEditWin()->changeCursor(leveledit::MODE_Selecting);
+       //activeLvlEditWin()->changeCursor(leveledit::MODE_Selecting);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Selecting);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionSelect->isChecked()))
     {
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
+       //activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
     }
 }
@@ -102,13 +108,13 @@ void MainWindow::on_actionSelectOnly_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionSelectOnly->isChecked()))
     {
-       activeLvlEditWin()->changeCursor(leveledit::MODE_Selecting);
+       //activeLvlEditWin()->changeCursor(leveledit::MODE_Selecting);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_SelectingOnly);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionSelectOnly->isChecked()))
     {
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
+       //activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SelectingOnly);
     }
 }
@@ -123,13 +129,13 @@ void MainWindow::on_actionEriser_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
     {
-       activeLvlEditWin()->changeCursor(leveledit::MODE_Erasing);
+       //activeLvlEditWin()->changeCursor(leveledit::MODE_Erasing);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Erasing);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionEriser->isChecked()))
     {
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_Erasing);
+       //activeWldEditWin()->changeCursor(WorldEdit::MODE_Erasing);
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Erasing);
     }
 
@@ -145,15 +151,15 @@ void MainWindow::on_actionHandScroll_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
     {
-       activeLvlEditWin()->scene->clearSelection();
-       activeLvlEditWin()->changeCursor(leveledit::MODE_HandDrag);
-       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Selecting);
+       //activeLvlEditWin()->scene->clearSelection();
+       //activeLvlEditWin()->changeCursor(leveledit::MODE_HandDrag);
+       activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_HandScroll);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionHandScroll->isChecked()))
     {
-       activeWldEditWin()->scene->clearSelection();
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_HandDrag);
+       //activeWldEditWin()->scene->clearSelection();
+       //activeWldEditWin()->changeCursor(WorldEdit::MODE_HandDrag);
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
     }
 }
@@ -168,7 +174,7 @@ void MainWindow::on_actionSetFirstPlayer_triggered()
 
     if((activeChildWindow()==1))
     {
-        activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
+        //activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
         activeLvlEditWin()->scene->setItemPlacer( 5, 0 );
     }
 
@@ -183,7 +189,7 @@ void MainWindow::on_actionSetSecondPlayer_triggered()
 
     if((activeChildWindow()==1))
     {
-        activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
+        //activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
         activeLvlEditWin()->scene->setItemPlacer( 5, 1 );
     }
 
@@ -198,7 +204,7 @@ void MainWindow::on_actionDrawWater_triggered()
 
     if((activeChildWindow()==1))
     {
-        activeLvlEditWin()->changeCursor(leveledit::MODE_DrawSquares);
+        //activeLvlEditWin()->changeCursor(leveledit::MODE_DrawSquares);
         activeLvlEditWin()->scene->setItemPlacer( 3, 0 );
     }
 }
@@ -212,7 +218,7 @@ void MainWindow::on_actionDrawSand_triggered()
 
     if((activeChildWindow()==1))
     {
-        activeLvlEditWin()->changeCursor(leveledit::MODE_DrawSquares);
+        //activeLvlEditWin()->changeCursor(leveledit::MODE_DrawSquares);
         activeLvlEditWin()->scene->setItemPlacer( 3, 1 );
     }
 }
@@ -230,9 +236,9 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         {
             leveledit * edit = activeLvlEditWin();
 
-            edit->scene->clearSelection();
-            edit->changeCursor(leveledit::MODE_PlaceItem);
-            activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+            //edit->scene->clearSelection();
+            //edit->changeCursor(leveledit::MODE_PlaceItem);
+            //activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
 
             LvlPlacingItems::fillingMode = checked;
             LvlPlacingItems::lineMode = false;
@@ -262,9 +268,9 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         {
             WorldEdit * edit = activeWldEditWin();
 
-            edit->scene->clearSelection();
-            edit->changeCursor(WorldEdit::MODE_PlaceItem);
-            activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+            //edit->scene->clearSelection();
+            //edit->changeCursor(WorldEdit::MODE_PlaceItem);
+            //activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
 
             WldPlacingItems::fillingMode = checked;
             WldPlacingItems::lineMode = false;
@@ -308,9 +314,9 @@ void MainWindow::on_actionLine_triggered(bool checked)
     {
         leveledit * edit = activeLvlEditWin();
 
-        edit->scene->clearSelection();
-        edit->changeCursor(leveledit::MODE_PlaceItem);
-        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+        //edit->scene->clearSelection();
+        //edit->changeCursor(leveledit::MODE_PlaceItem);
+        //activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
 
         LvlPlacingItems::fillingMode = false;
         LvlPlacingItems::lineMode = checked;
@@ -341,9 +347,9 @@ void MainWindow::on_actionLine_triggered(bool checked)
     {
         WorldEdit * edit = activeWldEditWin();
 
-        edit->scene->clearSelection();
-        edit->changeCursor(WorldEdit::MODE_PlaceItem);
-        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+        //edit->scene->clearSelection();
+        //edit->changeCursor(WorldEdit::MODE_PlaceItem);
+        //activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
 
         WldPlacingItems::fillingMode = false;
         WldPlacingItems::lineMode = checked;

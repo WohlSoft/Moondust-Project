@@ -16,10 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
-
 #include "file_formats.h"
-#include "../edit_npc/npcedit.h"
+
+#ifndef PGE_ENGINE
+#include "../common_features/logger.h"
+#endif
 
 
 NPCConfigFile FileFormats::CreateEmpytNpcTXTArray()
@@ -156,6 +157,7 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     merged.kill_hammer = (local.en_nohammer)?(!local.nohammer):global.kill_hammer;
     merged.kill_by_npc = (local.en_noshell)?(!local.noshell):global.kill_by_npc;
 
+    #ifndef PGE_ENGINE
     WriteToLog(QtDebugMsg, QString("-------------------------------------"));
     WriteToLog(QtDebugMsg, QString("NPC-Merge for NPC-ID=%1").arg(merged.id));
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> Height:   %1").arg(merged.height));
@@ -171,6 +173,7 @@ obj_npc FileFormats::mergeNPCConfigs(obj_npc &global, NPCConfigFile &local, QSiz
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> FrStyle:  %1").arg(merged.framestyle));
     WriteToLog(QtDebugMsg, QString("NPC-Merge -> Frames:   %1").arg((int)merged.frames));
     WriteToLog(QtDebugMsg, QString("-------------------------------------"));
+    #endif
 
     return merged;
 }

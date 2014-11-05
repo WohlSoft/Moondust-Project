@@ -57,6 +57,11 @@ ItemBGO::~ItemBGO()
 
 void ItemBGO::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
+    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
+    {
+        QGraphicsItem::mousePressEvent(mouseEvent); return;
+    }
+
     if(scene->DrawMode)
     {
         unsetCursor();
@@ -149,8 +154,13 @@ void ItemBGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
                 layerItems.push_back(setLayer);
             }
             ItemMenu->addSeparator()->deleteLater();
+
+            bool isLvlx = !scene->LvlData->smbx64strict;
+
             QAction *ZOffset = ItemMenu->addAction(tr("Change Z-Offset..."));
+            ZOffset->setEnabled(isLvlx);
             QMenu *ZMode = ItemMenu->addMenu(tr("Z-Layer"));
+            ZMode->setEnabled(isLvlx);
 
             QAction *ZMode_bg2 = ZMode->addAction(tr("Background-2"));
             ZMode_bg2->setCheckable(true);

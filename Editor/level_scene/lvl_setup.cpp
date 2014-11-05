@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 
 #include "item_block.h"
@@ -27,6 +27,7 @@
 #include "../main_window/global_settings.h"
 
 #include "../common_features/mainwinconnect.h"
+#include "../common_features/themes.h"
 
 #include "newlayerbox.h"
 
@@ -51,51 +52,63 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     switch(EdtMode)
     {
     case MODE_PlacingNew:
-        DrawMode=true;
-        resetResizers();
-
+        switchMode("Placing");
         break;
+
     case MODE_DrawSquare:
-        resetResizers();
-        DrawMode=true;
+        switchMode("Square");
         break;
 
     case MODE_Line:
-        resetResizers();
-        DrawMode=true;
+        switchMode("Line");
         break;
 
     case MODE_Resizing:
-        resetCursor();
-        DrawMode=true;
-        disableMoveItems=true;
+        switchMode("Resize");
         break;
 
     case MODE_PasteFromClip:
-        resetCursor();
-        resetResizers();
+        switchMode("Select");
+        clearSelection();
         disableMoveItems=true;
+        _viewPort->setInteractive(true);
+        _viewPort->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
+        _viewPort->setDragMode(QGraphicsView::NoDrag);
         break;
 
     case MODE_Erasing:
-        resetCursor();
-        resetResizers();
+        switchMode("Erase");
         break;
 
     case MODE_SelectingOnly:
-        resetCursor();
-        resetResizers();
+        switchMode("Select");
         disableMoveItems=true;
+        break;
+
+    case MODE_HandScroll:
+        switchMode("HandScroll");
         break;
 
     case MODE_Selecting:
     default:
-        resetCursor();
-        resetResizers();
+        switchMode("Select");
         break;
     }
     EditingMode = EdtMode;
 
+}
+
+void LvlScene::switchMode(QString title)
+{
+    for(int i=0; i<EditModes.size(); i++)
+    {
+        if(EditModes[i]->name()==title)
+        {
+            CurrentMode = EditModes[i];
+            CurrentMode->set();
+            break;
+        }
+    }
 }
 
 

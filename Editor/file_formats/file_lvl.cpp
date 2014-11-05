@@ -16,23 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
-#include "../edit_level/level_edit.h"
 #include "file_formats.h"
+
+#include <QFileInfo>
+#include <QDir>
 
 
 //*********************************************************
 //****************READ FILE FORMAT*************************
 //*********************************************************
-
-//Level File Read
 LevelData FileFormats::ReadLevelFile(QFile &inf)
 {
     QTextStream in(&inf);   //Read File
 
-    in.setAutoDetectUnicode(true); //Test Fix for MacOS
-    in.setLocale(QLocale::system());   //Test Fix for MacOS
-    in.setCodec(QTextCodec::codecForLocale()); //Test Fix for MacOS
+    in.setAutoDetectUnicode(true);
+    in.setLocale(QLocale::system());
+    in.setCodec(QTextCodec::codecForLocale());
+
+    return ReadSMBX64LvlFile( in.readAll(), inf.fileName() );
+}
+
+LevelData FileFormats::ReadSMBX64LvlFile(QString RawData, QString filePath)
+{
+    FileStringList in;
+    in.addData( RawData );
 
     int str_count=0;        //Line Counter
     int i;                  //counters
@@ -52,6 +59,17 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     LevelEvents events;
     LevelEvents_layers events_layers;
     LevelEvents_Sets events_sets;
+
+    //Add path data
+    if(!filePath.isEmpty())
+    {
+        QFileInfo in_1(filePath);
+        FileData.filename = in_1.baseName();
+        FileData.path = in_1.absoluteDir().absolutePath();
+    }
+
+    //Enable strict mode for SMBX LVL file format
+    FileData.smbx64strict = true;
 
     //Begin all ArrayID's here;
     FileData.blocks_array_id = 1;
@@ -395,13 +413,13 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
 
          if(SMBX64::sFloat(line)) //NPC x
              goto badfile;
-         else npcdata.x = round(line.toDouble());
+         else npcdata.x = qRound(line.toDouble());
 
          str_count++;line = in.readLine();
 
          if(SMBX64::sFloat(line)) //NPC y
              goto badfile;
-         else npcdata.y = round(line.toDouble());
+         else npcdata.y = qRound(line.toDouble());
 
          str_count++;line = in.readLine();
          if(SMBX64::sInt(line)) //NPC direction
@@ -476,9 +494,17 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
                  else npcdata.generator_period = line.toInt();
              }
 
+
              str_count++;line = in.readLine();
+             while(!line.endsWith('\"')) //Read multilined string
+             {
+                 line.append('\n');
+                 str_count++;line.append(in.readLine());
+             }
+
              if(SMBX64::qStr(line)) //Message
                  goto badfile;
+
              else npcdata.msg = removeQuotes(line);
 
              str_count++;line = in.readLine();
@@ -789,6 +815,12 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
             else events.name=removeQuotes(line);
 
             str_count++;line = in.readLine();
+            while(!line.endsWith('\"')) //Read multilined string
+            {
+                line.append('\n');
+                str_count++;line.append(in.readLine());
+            }
+
             if(SMBX64::qStr(line)) //Event message
                 goto badfile;
             else events.msg=removeQuotes(line);
@@ -1105,7 +1137,7 @@ LevelData FileFormats::ReadLevelFile(QFile &inf)
     return FileData;
 
     badfile:    //If file format is not correct
-    BadFileMsg(inf.fileName()+"\nFile format "+QString::number(file_format), str_count, line);
+    BadFileMsg(filePath+"\nFile format "+QString::number(file_format), str_count, line);
     FileData.ReadFileValid=false;
     return FileData;
 }
@@ -1289,7 +1321,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
             TextData += SMBX64::IntS(FileData.npc[i].generator_type);
             TextData += SMBX64::IntS(FileData.npc[i].generator_period);
         }
-        TextData += SMBX64::qStrS(FileData.npc[i].msg);
+        TextData += SMBX64::qStrS_multiline(FileData.npc[i].msg);
 
         TextData += SMBX64::BoolS(FileData.npc[i].friendly);
         TextData += SMBX64::BoolS(FileData.npc[i].nomove);
@@ -1361,7 +1393,7 @@ QString FileFormats::WriteSMBX64LvlFile(LevelData FileData)
     for(i=0; i<FileData.events.size(); i++)
     {
         TextData += SMBX64::qStrS(FileData.events[i].name);
-        TextData += SMBX64::qStrS(FileData.events[i].msg);
+        TextData += SMBX64::qStrS_multiline(FileData.events[i].msg);
         TextData += SMBX64::IntS(FileData.events[i].sound_id);
         TextData += SMBX64::IntS(FileData.events[i].end_game);
 

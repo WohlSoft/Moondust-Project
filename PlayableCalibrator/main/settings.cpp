@@ -46,7 +46,14 @@ void CalibrationMain::loadConfig(QString fileName)
     createDirs();
     currentConfig = fileName;
     QFileInfo ourFile(fileName);
-    QString ini_sprite =  QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+    QString ini_sprite;
+    //Load Customized
+    if(QFileInfo(ourFile.absoluteDir().path()+"/"+ourFile.baseName() + ".ini").exists())
+        //Load Customized
+        ini_sprite = ourFile.absoluteDir().path()+"/"+ourFile.baseName() + ".ini";
+    else
+        //Load Default
+        ini_sprite = QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QSettings conf(ini_sprite, QSettings::IniFormat);
     int i, j;
 
@@ -59,12 +66,12 @@ void CalibrationMain::loadConfig(QString fileName)
             framesX[i][j].W = conf.value("width", "100").toInt();
             framesX[i][j].offsetX = conf.value("offsetX", "0").toInt();
             framesX[i][j].offsetY = conf.value("offsetY", "0").toInt();
-            framesX[i][j].used = conf.value("used", "true").toBool();
+            framesX[i][j].used = conf.value("used", "false").toBool();
             conf.endGroup();
         }
     }
 
-    AnimationFrames.set.clear();
+    AniFrames.set.clear();
     //get Animation frameSets
     getSpriteAniData(conf, "Idle");
     getSpriteAniData(conf, "Run");
@@ -122,7 +129,7 @@ void CalibrationMain::getSpriteAniData(QSettings &set, QString name)
         }
     set.endGroup();
     frameSet.name = name;
-    AnimationFrames.set.push_back(frameSet);
+    AniFrames.set.push_back(frameSet);
 }
 
 
@@ -130,25 +137,31 @@ void CalibrationMain::setSpriteAniData(QSettings &set)
 {
     int i, j;
 
-    for(j=0;j<AnimationFrames.set.size();j++)
+    for(j=0;j<AniFrames.set.size();j++)
     {
-        set.beginGroup("Animation"+AnimationFrames.set[j].name+"_L");
-            set.setValue("frames", AnimationFrames.set[j].L.size());
-            for(i=0;i<AnimationFrames.set[j].L.size();i++)
-            {
-                set.setValue("frame"+QString::number(i)+"x", AnimationFrames.set[j].L[i].x);
-                set.setValue("frame"+QString::number(i)+"y", AnimationFrames.set[j].L[i].y);
-            }
-        set.endGroup();
+        if(AniFrames.set[j].L.size()>0)
+        {
+            set.beginGroup("Animation"+AniFrames.set[j].name+"_L");
+                set.setValue("frames", AniFrames.set[j].L.size());
+                for(i=0;i<AniFrames.set[j].L.size();i++)
+                {
+                    set.setValue("frame"+QString::number(i)+"x", AniFrames.set[j].L[i].x);
+                    set.setValue("frame"+QString::number(i)+"y", AniFrames.set[j].L[i].y);
+                }
+            set.endGroup();
+        }
 
-        set.beginGroup("Animation"+AnimationFrames.set[j].name+"_R");
-            set.setValue("frames", AnimationFrames.set[j].R.size());
-            for(i=0;i<AnimationFrames.set[j].R.size();i++)
-            {
-                set.setValue("frame"+QString::number(i)+"x", AnimationFrames.set[j].R[i].x);
-                set.setValue("frame"+QString::number(i)+"y", AnimationFrames.set[j].R[i].y);
-            }
-        set.endGroup();
+        if(AniFrames.set[j].R.size()>0)
+        {
+            set.beginGroup("Animation"+AniFrames.set[j].name+"_R");
+                set.setValue("frames", AniFrames.set[j].R.size());
+                for(i=0;i<AniFrames.set[j].R.size();i++)
+                {
+                    set.setValue("frame"+QString::number(i)+"x", AniFrames.set[j].R[i].x);
+                    set.setValue("frame"+QString::number(i)+"y", AniFrames.set[j].R[i].y);
+                }
+            set.endGroup();
+        }
     }
 }
 
@@ -157,7 +170,9 @@ void CalibrationMain::saveConfig(QString fileName)
 {
     createDirs();
     QFileInfo ourFile(fileName);
-    QString ini_sprite =  QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+    QString ini_sprite;
+    ini_sprite = ourFile.absoluteDir().path()+"/"+ourFile.baseName() + ".ini";
+    //ini_sprite = QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QSettings conf(ini_sprite, QSettings::IniFormat);
     int i, j;
 
@@ -165,13 +180,16 @@ void CalibrationMain::saveConfig(QString fileName)
     {
         for(j=0; j<10;j++)
         {
-            conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
-            conf.setValue("height", framesX[i][j].H);
-            conf.setValue("width", framesX[i][j].W);
-            conf.setValue("offsetX", framesX[i][j].offsetX);
-            conf.setValue("offsetY", framesX[i][j].offsetY);
-            conf.setValue("used", framesX[i][j].used);
-            conf.endGroup();
+            if(framesX[i][j].used)
+            {
+                conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
+                conf.setValue("height", framesX[i][j].H);
+                conf.setValue("width", framesX[i][j].W);
+                conf.setValue("offsetX", framesX[i][j].offsetX);
+                conf.setValue("offsetY", framesX[i][j].offsetY);
+                conf.setValue("used", framesX[i][j].used);
+                conf.endGroup();
+            }
         }
     }
 

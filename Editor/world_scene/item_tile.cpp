@@ -179,6 +179,9 @@ void ItemTile::contextMenuEvent( QGraphicsSceneContextMenuEvent * event )
 void ItemTile::arrayApply()
 {
     bool found=false;
+    tileData.x = qRound(this->scenePos().x());
+    tileData.y = qRound(this->scenePos().y());
+
     if(tileData.index < (unsigned int)scene->WldData->tiles.size())
     { //Check index
         if(tileData.array_id == scene->WldData->tiles[tileData.index].array_id)

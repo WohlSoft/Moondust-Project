@@ -17,7 +17,7 @@
  */
 
 #include "appsettings.h"
-#include "./ui_appsettings.h"
+#include "ui_appsettings.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
@@ -25,15 +25,31 @@
 #include <QProcessEnvironment>
 #include <QByteArray>
 
+#include "../common_features/app_path.h"
+
 #include "../common_features/logger_sets.h"
 #include "../file_formats/file_formats.h"
 #include "../common_features/logger.h"
+
+#include "../common_features/themes.h"
 
 AppSettings::AppSettings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AppSettings)
 {
     ui->setupUi(this);
+    QStringList themes=Themes::availableThemes();
+
+    ui->Theme->clear();
+
+    while(!themes.isEmpty())
+    {
+        QStringList theme = themes.first().split('|');
+        themes.pop_front();
+        QString data = theme.size()>=1 ? theme[0] : "[untitled theme]";
+        QString title = theme.size()>=2 ? theme[1] : "";
+        ui->Theme->addItem(title, data);
+    }
 }
 
 AppSettings::~AppSettings()
@@ -92,6 +108,23 @@ void AppSettings::applySettings()
         ui->WLDToolboxVertical->setChecked(true);
     }
 
+    if(TSTToolboxPos == QTabWidget::North)
+    {
+        ui->TSTToolboxHorizontal->setChecked(true);
+    }else
+    {
+        ui->TSTToolboxVertical->setChecked(true);
+    }
+
+    if(!selectedTheme.isEmpty())
+        for(int i=0; i< ui->Theme->count(); i++)
+        {
+            if(ui->Theme->itemData(i).toString()==selectedTheme)
+            {
+                ui->Theme->setCurrentIndex(i);
+                break;
+            }
+        }
 }
 
 void AppSettings::on_setLogFile_clicked()
@@ -131,6 +164,14 @@ void AppSettings::on_buttonBox_accepted()
         WLDToolboxPos = QTabWidget::North;
     else
         WLDToolboxPos = QTabWidget::West;
+
+    if(ui->TSTToolboxHorizontal->isChecked())
+        TSTToolboxPos = QTabWidget::North;
+    else
+        TSTToolboxPos = QTabWidget::West;
+
+    Themes::loadTheme(ui->Theme->currentData().toString());
+    selectedTheme = ui->Theme->currentData().toString();
 
     logfile = ui->logFileName->text();
 
@@ -216,7 +257,7 @@ void AppSettings::on_AssociateFiles_clicked()
         registry_hkcu.setValue("Software/Classes/SMBX64.World/Shell/Open/Command/Default", "\"" + QApplication::applicationFilePath().replace("/", "\\") + "\" \"%1\"");
 
         // User variable(s)
-        registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QApplication::applicationDirPath().replace("/", "\\") + "\"");
+        registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QString(ApplicationPath).replace("/", "\\") + "\"");
 
     #elif defined __APPLE__
         // only useful when other apps have taken precedence over our file extensions and you want to reset it

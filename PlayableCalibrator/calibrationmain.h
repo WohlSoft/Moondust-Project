@@ -60,6 +60,10 @@ public:
 
     void createDirs();
 
+    bool wasCanceled;
+
+    QPixmap x_imageSprite;
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -72,7 +76,7 @@ private slots:
     void on_OffsetY_valueChanged(int arg1);
     void on_CopyButton_clicked();
     void on_PasteButton_clicked();
-    void on_OpenSprite_clicked();
+    bool on_OpenSprite_clicked();
 
     void on_AboutButton_clicked();
 
@@ -90,8 +94,11 @@ private slots:
 
     void on_editSizes_clicked();
 
+    void on_calibrateImage_clicked();
+
 private:
     Ui::CalibrationMain *ui;
+    QString titleCache;
 };
 
 

@@ -27,24 +27,8 @@ class MatrixScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-/*
-    QPainter test;
-    int mCurrentFrameX;
-    int mCurrentFrameY;
-    */
-
     MatrixScene(QObject *parent = 0);
-    void draw(QPixmap spriteMatix );
-
-//private:
-    /*
-    QGraphicsPixmapItem * croc;
-    QGraphicsRectItem * sizer;
-    QPoint mPos;
-    int mXDir;
-    int x, y, dir;
-    QPixmap currentImage;
-    */
+    void draw();
 };
 
 #endif // MATRIXSCENE_H

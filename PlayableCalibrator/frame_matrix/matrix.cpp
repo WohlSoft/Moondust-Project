@@ -20,14 +20,16 @@
 #include "matrix.h"
 #include "ui_matrix.h"
 #include "MatrixScene.h"
+#include "../main/globals.h"
 
-Matrix::Matrix(QList<QVector<frameOpts > >  &framesX, SpriteScene * Scene, QWidget *parent) :
+
+Matrix::Matrix(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Matrix)
 {
     ui->setupUi(this);
     MatrixS = new MatrixScene;
-    MatrixS->draw(Scene->mSpriteImage);
+    MatrixS->draw();
     ui->SpriteMatrix->setScene(MatrixS);
 
     FrameConfig = framesX;

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 
 #include "item_block.h"
@@ -28,6 +28,39 @@
 #include "../common_features/logger.h"
 
 #include "../common_features/timecounter.h"
+
+///
+/// \brief cleanCollisionBuffer
+/// Remove trash from collision buffer for crash protection
+void LvlScene::prepareCollisionBuffer()
+{
+    for(int i=0; i<collisionCheckBuffer.size(); i++ )
+    {
+        bool kick=false;
+        if(collisionCheckBuffer[i]->data(0).toString()=="YellowRectangle")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="Space")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="Square")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="Line")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="SectionBorder")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString()=="PlayerPoint")
+            kick=true;
+        else
+        if(collisionCheckBuffer[i]->data(0).toString().startsWith("BackGround"))
+            kick=true;
+
+        if(kick) {collisionCheckBuffer.removeAt(i); i--;}
+    }
+}
 
 //Checking group collisions. Return true if was found even one passed collision in this group
 bool LvlScene::checkGroupCollisions(QList<QGraphicsItem *> *items)
@@ -102,12 +135,25 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
     //xxx=!xxx;
 
+    if(item==NULL)
+        return NULL;
+
+    if(item->data(0).toString()=="YellowRectangle")
+        return NULL;
+    if(item->data(0).toString()=="Water")
+        return NULL;
+    if(item->data(0).toString()=="Door_exit")
+        return NULL;
+    if(item->data(0).toString()=="Door_enter")
+        return NULL;
+
     QList<QGraphicsItem *> collisions;
 
     //TimeCounter t;
     //t.start();
     //if(xxx)
     // ~15 ms on big maps
+
     if(itemgrp && !itemgrp->isEmpty())
         collisions = *itemgrp;
     else
@@ -128,16 +174,27 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
 
     foreach (QGraphicsItem * it, collisions)
     {
+
             if(it == item)
+                continue;
+            if(it==NULL)
                  continue;
             if(!it->isVisible())
                 continue;
-            if(item->data(0).toString()=="Water")
-                return NULL;
-            if(item->data(0).toString()=="Door_exit")
-                return NULL;
-            if(item->data(0).toString()=="Door_enter")
-                return NULL;
+            if(it->data(0).isNull())
+                 continue;
+            if(it->data(0).toString()=="YellowRectangle")
+                continue;
+            if(it->data(0).toString()=="Space")
+                continue;
+            if(it->data(0).toString()=="Square")
+                continue;
+            if(it->data(0).toString()=="SectionBorder")
+                continue;
+            if(it->data(0).toString()=="PlayerPoint")
+                continue;
+            if(it->data(0).toString().startsWith("BackGround"))
+                continue;
 
             if(
                (it->data(0).toString()!="Block")&&
@@ -185,7 +242,6 @@ QGraphicsItem * LvlScene::itemCollidesWith(QGraphicsItem * item, QList<QGraphics
           }
           else
                 if(item->data(0).toString()!=it->data(0).toString()) continue;
-
 
           if(item->data(3).toString()=="sizable")
           {   // Don't collide with sizable block

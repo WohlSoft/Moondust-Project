@@ -28,7 +28,7 @@
 #include "version.h"
 
 extern "C"{
-#include "libs/giflib/gif_lib.h"
+	#include "../_Libs/giflib/gif_lib.h"
 }
 
 bool removeSource=false;

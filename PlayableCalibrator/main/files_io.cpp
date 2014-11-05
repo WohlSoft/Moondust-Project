@@ -44,13 +44,20 @@ void CalibrationMain::OpenFile(QString fileName)
         imgFileM = "";
     //mask = ;
 
-    //Scene->mSpriteImage = QPixmap(fileName);
-    Scene->mSpriteImage = QPixmap::fromImage(
-                    Graphics::setAlphaMask(
-                        Graphics::loadQImage( fileName )
-                        ,Graphics::loadQImage( ourFile.absoluteDir().path() + "/" + imgFileM ))
-                    );
-    //Scene->mSpriteImage.setMask(mask);
+    QImage maskImg;
+
+    if(QFile::exists(ourFile.absoluteDir().path() + "/" + imgFileM))
+        maskImg = Graphics::loadQImage( ourFile.absoluteDir().path() + "/" + imgFileM );
+    else
+        maskImg = QImage();
+
+    x_imageSprite = QPixmap::fromImage(
+                Graphics::setAlphaMask(
+                    Graphics::loadQImage( fileName )
+                    , maskImg )
+                );
+
+    Scene->mSpriteImage = x_imageSprite;
 
     loadConfig(fileName);
 

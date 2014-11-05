@@ -16,11 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QMediaPlayer>
-
 #include "../../ui_mainwindow.h"
 #include "../../mainwindow.h"
-
 
 #include "../../level_scene/item_bgo.h"
 #include "../../level_scene/item_block.h"
@@ -32,6 +29,7 @@
 #include "../../file_formats/file_formats.h"
 
 #include "../../common_features/util.h"
+#include "../../common_features/sdl_music_player.h"
 
 long currentEventArrayID=0;
 bool lockSetEventSettings=false;
@@ -133,6 +131,9 @@ void MainWindow::EventListsSync()
     ui->Find_Combo_EventLayerEmptyBlock->setCurrentText(curLayerEmptyBlock);
 
     lockSetEventSettings=false;
+
+    if(currentEventArrayID>0)
+        setEventData(currentEventArrayID);
 }
 
 void MainWindow::setSoundList()
@@ -502,7 +503,7 @@ void MainWindow::on_LVLEvents_List_itemSelectionChanged()
 
 void MainWindow::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     lockSetEventSettings=true;
     int WinType = activeChildWindow();
 
@@ -862,7 +863,7 @@ void MainWindow::on_LVLEvents_duplicate_clicked()
 
 void MainWindow::on_LVLEvent_AutoStart_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -886,7 +887,7 @@ void MainWindow::on_LVLEvent_AutoStart_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -908,7 +909,7 @@ void MainWindow::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Layer_HideAdd_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -931,7 +932,7 @@ void MainWindow::on_LVLEvent_Layer_HideAdd_clicked()
 
 void MainWindow::on_LVLEvent_Layer_HideDel_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -960,7 +961,7 @@ void MainWindow::on_LVLEvent_Layer_HideDel_clicked()
 
 void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -982,7 +983,7 @@ void MainWindow::on_LVLEvent_Layer_ShowAdd_clicked()
 
 void MainWindow::on_LVLEvent_Layer_ShowDel_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1012,7 +1013,7 @@ void MainWindow::on_LVLEvent_Layer_ShowDel_clicked()
 
 void MainWindow::on_LVLEvent_Layer_TogAdd_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1034,7 +1035,7 @@ void MainWindow::on_LVLEvent_Layer_TogAdd_clicked()
 
 void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1068,7 +1069,7 @@ void MainWindow::on_LVLEvent_Layer_TogDel_clicked()
 
 void MainWindow::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     if(index<0) return;
 
@@ -1091,7 +1092,7 @@ void MainWindow::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
 
 void MainWindow::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1113,7 +1114,7 @@ void MainWindow::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 
 void MainWindow::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1141,7 +1142,7 @@ void MainWindow::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 
 void MainWindow::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1162,7 +1163,7 @@ void MainWindow::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
 
 void MainWindow::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1184,7 +1185,7 @@ void MainWindow::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 
 void MainWindow::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1208,7 +1209,7 @@ void MainWindow::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 
 void MainWindow::on_LVLEvent_Sct_list_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(index<0) return;
     curSectionField = index;
     eventSectionSettingsSync();
@@ -1216,7 +1217,7 @@ void MainWindow::on_LVLEvent_Sct_list_currentIndexChanged(int index)
 
 void MainWindow::on_LVLEvent_SctSize_none_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1261,7 +1262,7 @@ void MainWindow::on_LVLEvent_SctSize_none_clicked()
 
 void MainWindow::on_LVLEvent_SctSize_reset_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1306,7 +1307,7 @@ void MainWindow::on_LVLEvent_SctSize_reset_clicked()
 
 void MainWindow::on_LVLEvent_SctSize_define_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1351,7 +1352,7 @@ void MainWindow::on_LVLEvent_SctSize_define_clicked()
 
 void MainWindow::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1382,7 +1383,7 @@ void MainWindow::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
 
 void MainWindow::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
 
@@ -1415,7 +1416,7 @@ void MainWindow::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
 
 void MainWindow::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1446,7 +1447,7 @@ void MainWindow::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
 
 void MainWindow::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1478,7 +1479,7 @@ void MainWindow::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
 
 void MainWindow::on_LVLEvent_SctSize_Set_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1512,7 +1513,7 @@ void MainWindow::on_LVLEvent_SctSize_Set_clicked()
 
 void MainWindow::on_LVLEvent_SctMus_none_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1538,7 +1539,7 @@ void MainWindow::on_LVLEvent_SctMus_none_clicked()
 
 void MainWindow::on_LVLEvent_SctMus_reset_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1563,7 +1564,7 @@ void MainWindow::on_LVLEvent_SctMus_reset_clicked()
 
 void MainWindow::on_LVLEvent_SctMus_define_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1588,7 +1589,7 @@ void MainWindow::on_LVLEvent_SctMus_define_clicked()
 
 void MainWindow::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
     if(index<0) return;
 
@@ -1613,7 +1614,7 @@ void MainWindow::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
 
 void MainWindow::on_LVLEvent_SctBg_none_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1639,7 +1640,7 @@ void MainWindow::on_LVLEvent_SctBg_none_clicked()
 
 void MainWindow::on_LVLEvent_SctBg_reset_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1665,7 +1666,7 @@ void MainWindow::on_LVLEvent_SctBg_reset_clicked()
 
 void MainWindow::on_LVLEvent_SctBg_define_clicked()
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
 
     int WinType = activeChildWindow();
@@ -1691,7 +1692,7 @@ void MainWindow::on_LVLEvent_SctBg_define_clicked()
 
 void MainWindow::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(lockEventSectionDataList) return;
     if(index<0) return;
 
@@ -1759,7 +1760,7 @@ void MainWindow::on_LVLEvent_Cmn_Msg_clicked()
 
 void MainWindow::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(index<0) return;
 
     int WinType = activeChildWindow();
@@ -1798,16 +1799,14 @@ void MainWindow::on_LVLEvent_playSnd_clicked()
     if(!found) return;
     if(!QFileInfo::exists(sndPath)) return;
 
-    playSnd.setMedia(QMediaContent(QUrl(sndPath)));
-    playSnd.setVolume(100);
-    playSnd.play();
+    PGE_Sounds::SND_PlaySnd(sndPath);
 }
 
 
 
 void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(index<0) return;
 
     int WinType = activeChildWindow();
@@ -1833,7 +1832,7 @@ void MainWindow::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
 void MainWindow::on_LVLEvent_Key_Up_clicked(bool checked)
 {
 
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1852,7 +1851,7 @@ void MainWindow::on_LVLEvent_Key_Up_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_Down_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1870,7 +1869,7 @@ void MainWindow::on_LVLEvent_Key_Down_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_Left_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1888,7 +1887,7 @@ void MainWindow::on_LVLEvent_Key_Left_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_Right_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1906,7 +1905,7 @@ void MainWindow::on_LVLEvent_Key_Right_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_Run_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1924,7 +1923,7 @@ void MainWindow::on_LVLEvent_Key_Run_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_AltRun_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1942,7 +1941,7 @@ void MainWindow::on_LVLEvent_Key_AltRun_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_Jump_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1960,7 +1959,7 @@ void MainWindow::on_LVLEvent_Key_Jump_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_AltJump_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1978,7 +1977,7 @@ void MainWindow::on_LVLEvent_Key_AltJump_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_Drop_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -1996,7 +1995,7 @@ void MainWindow::on_LVLEvent_Key_Drop_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 
@@ -2017,7 +2016,7 @@ void MainWindow::on_LVLEvent_Key_Start_clicked(bool checked)
 
 void MainWindow::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
     if(index<0) return;
 
     int WinType = activeChildWindow();
@@ -2041,7 +2040,7 @@ void MainWindow::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 
 void MainWindow::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
 {
-    if(lockSetEventSettings) return;
+    if(lockSetEventSettings || LvlEventBoxLock) return;
 
     int WinType = activeChildWindow();
 

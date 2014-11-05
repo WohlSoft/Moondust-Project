@@ -169,11 +169,6 @@ void dataconfigs::loadLevelBGO(QProgressDialog *prgs)
                 addError(QString("BGO-%1 Image filename isn't defined").arg(i));
                 goto skipBGO;
             }
-                /*
-                {
-                    sbgo.image = QPixmap(QApplication::applicationDirPath() + "/" + "data/unknown_bgo.gif");
-                    sbgo.mask_n = "";
-                }*/
             sbgo.climbing = (bgoset.value("climbing", "0").toString()=="1");
             sbgo.animated = (bgoset.value("animated", "0").toString()=="1");
             sbgo.frames = bgoset.value("frames", "1").toInt();

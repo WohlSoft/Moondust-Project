@@ -29,6 +29,8 @@
 
 #include "../../common_features/util.h"
 
+#include "../../level_scene/lvl_item_placing.h"
+
 
 static bool lockLayerEdit=false;
 
@@ -36,6 +38,8 @@ void MainWindow::setLayersBox()
 {
     int WinType = activeChildWindow();
     QListWidgetItem * item;
+
+    LvlPlacingItems::layer="";
 
 
     util::memclear(ui->LvlLayerList);
@@ -62,6 +66,40 @@ void MainWindow::setLayersBox()
     }
 }
 
+
+void MainWindow::on_LvlLayerList_itemClicked(QListWidgetItem *item)
+{
+    int WinType = activeChildWindow();
+    int itemType=0;
+    bool allow = ( (WinType==1) && activeLvlEditWin()->sceneCreated );
+
+    if(allow) itemType = activeLvlEditWin()->scene->placingItem;
+
+    if( (allow) && (itemType==LvlScene::PLC_Block ||
+                    itemType==LvlScene::PLC_BGO ||
+                    itemType==LvlScene::PLC_NPC ||
+                    itemType==LvlScene::PLC_Water) )
+        LvlPlacingItems::layer=item->text();
+    else
+        LvlPlacingItems::layer="";
+    LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
+}
+
+void MainWindow::on_LvlLayerList_itemSelectionChanged()
+{
+    if(ui->LvlLayerList->selectedItems().isEmpty())
+        LvlPlacingItems::layer="";
+    else
+        LvlPlacingItems::layer= ui->LvlLayerList->selectedItems().first()->text();
+
+    LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
+    LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
+}
+
 void MainWindow::setLayerLists()
 {
     ui->ItemProperties->hide();
@@ -74,6 +112,7 @@ void MainWindow::setLayerLists()
 
     int WinType = activeChildWindow();
     LvlItemPropsLock = true;
+    LvlEventBoxLock = true;
     ui->PROPS_BGOLayer->clear();
     ui->PROPS_NpcLayer->clear();
     ui->PROPS_BlockLayer->clear();
@@ -106,7 +145,7 @@ void MainWindow::setLayerLists()
     ui->Find_Combo_LayerBGO->setCurrentText(curSearchLayerBGO);
     ui->Find_Combo_LayerNPC->setCurrentText(curSearchLayerNPC);
     LvlItemPropsLock = false;
-
+    LvlEventBoxLock = false;
 }
 
 void MainWindow::setLayerToolsLocked(bool locked)

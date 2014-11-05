@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../mainwindow.h"
-#include "../edit_level/level_edit.h"
 #include "file_formats.h"
 
 
@@ -271,6 +269,7 @@ LevelData FileFormats::dummyLvlDataArray()
     NewFileData.ReadFileValid = true;
     NewFileData.modified = true;
     NewFileData.untitled = true;
+    NewFileData.smbx64strict = false;
 
     NewFileData.CurSection=0;
     NewFileData.playmusic=0;
@@ -278,13 +277,14 @@ LevelData FileFormats::dummyLvlDataArray()
     NewFileData.LevelName = "";
     NewFileData.stars = 0;
 
-    NewFileData.bgo_array_id = 0;
-    NewFileData.blocks_array_id = 0;
+    NewFileData.bgo_array_id = 1;
+    NewFileData.blocks_array_id = 1;
     NewFileData.doors_array_id = 1;
-    NewFileData.events_array_id = 0;
-    NewFileData.layers_array_id = 0;
-    NewFileData.npc_array_id = 0;
-    NewFileData.physenv_array_id = 0;
+    NewFileData.events_array_id = 1;
+    NewFileData.layers_array_id = 1;
+    NewFileData.npc_array_id = 1;
+    NewFileData.physenv_array_id = 1;
+
 
     //Create Section array
     LevelSection section;

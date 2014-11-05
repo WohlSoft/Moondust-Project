@@ -27,6 +27,7 @@
 #include "../../common_features/logger.h"
 
 #include "../../tilesets/tilesetconfiguredialog.h"
+#include "../../common_features/themes.h"
 
 #include <QMessageBox>
 #include <QScrollArea>
@@ -188,7 +189,6 @@ void MainWindow::editSelectedTileset()
     configs.loadTilesets();
     setTileSetBox();
 }
-
 
 QScrollArea* MainWindow::getFrameTilesetOfTab(QWidget* catTab)
 {
@@ -432,6 +432,8 @@ void MainWindow::makeSelectedTileset(int tabIndex)
             {
                 unsigned int mostRighter = 0;
                 SimpleTileset &s = ctsets[j];
+                if(!s.tileSetName.contains(ui->customTilesetSearchEdit->text(), Qt::CaseInsensitive))
+                    continue;
                 QGroupBox* tilesetNameWrapper = new QGroupBox(s.tileSetName, scrollWid);
                 ((FlowLayout*)scrollWid->layout())->addWidget(tilesetNameWrapper);
                 QGridLayout* l = new QGridLayout(tilesetNameWrapper);
@@ -449,7 +451,7 @@ void MainWindow::makeSelectedTileset(int tabIndex)
                     }
                     connect(tbutton, SIGNAL(clicked(int,ulong)), this, SLOT(SwitchPlacingItem(int,ulong)));
                 }
-                QPushButton* b = new QPushButton(QIcon(":/images/pencil_16x16.png"),"",tilesetNameWrapper);
+                QPushButton* b = new QPushButton(Themes::icon(Themes::pencil),"",tilesetNameWrapper);
                 b->setMaximumSize(32,32);
                 b->setFlat(true);
                 l->addWidget(b, 0, mostRighter);

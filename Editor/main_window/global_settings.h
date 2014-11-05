@@ -24,8 +24,11 @@
 
 struct LevelEditingSettings
 {
+    //Common
     bool animationEnabled;
     bool collisionsEnabled;
+    //World map only
+    bool semiTransparentPaths;
 };
 
 class GlobalSettings
@@ -72,6 +75,8 @@ public:
     static QMdiArea::ViewMode MainWindowView;
     static QTabWidget::TabPosition LVLToolboxPos;
     static QTabWidget::TabPosition WLDToolboxPos;
+    static QTabWidget::TabPosition TSTToolboxPos;
+    static QString currentTheme;
 
 };
 
@@ -96,6 +101,7 @@ public:
     static long total_sound;
 
     static QString configName;
+    static QString defaultTheme;
     static QString configPath;
 
 };

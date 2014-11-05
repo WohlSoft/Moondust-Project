@@ -28,44 +28,39 @@
 #include "frame_matrix/matrix.h"
 #include "animator/animate.h"
 #include "animator/aniFrames.h"
+#include "image_calibration/image_calibrator.h"
+
 #include "main/globals.h"
+#include "main/graphics.h"
+
+#include "main/mw.h"
 
 CalibrationMain::CalibrationMain(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CalibrationMain)
 {
-    //qDebug() << "Loaded";
+    MW::p = this;
 
     buffer.W=100;
     buffer.H=100;
     buffer.offsetX=0;
     buffer.offsetY=0;
     buffer.used=true;
+    wasCanceled=false;
 
-    //qDebug() << "Struct set";
-
-    currentFile = QApplication::applicationDirPath()+"/peach-2.gif";
-
-    //qDebug() << "set filename";
+    currentFile = "";//QApplication::applicationDirPath()+"/peach-2.gif";
 
     ui->setupUi(this);
 
-    //qDebug() << "set ui";
-
-        QString inifile = QApplication::applicationDirPath() + "/" + "pge_calibrator.ini";
-        QSettings settings(inifile, QSettings::IniFormat);
+    QString inifile = QApplication::applicationDirPath() + "/" + "pge_calibrator.ini";
+    QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
-            LastOpenDir = settings.value("lastpath", ".").toString();
-            currentFile = settings.value("lastfile", currentFile).toString();
+          LastOpenDir = settings.value("lastpath", ".").toString();
+          currentFile = settings.value("lastfile", currentFile).toString();
         settings.endGroup();
-
-    //qDebug() << "set settings";
 
     QVector<frameOpts > framesY;
     frameOpts spriteData;
-
-    //qDebug() << "set struct and vectors";
-
     // Write default values
     for(int i=0; i<10; i++)
     {
@@ -78,45 +73,22 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
         framesX.push_back(framesY);
     }
 
-    //qDebug() << "load config";
-
-    loadConfig(currentFile);
-
     //qDebug() << "create scene";
-
     Scene = new SpriteScene;
 
     //qDebug() << "set scene";
     ui->PreviewGraph->setScene(Scene);
 
-
-    //qDebug() << "set options 1 " + QString::number(CurFRMx) + "-"  + QString::number(CurFRMy);
-
-    ui->Height->setValue(framesX[CurFRMx][CurFRMy].H);
-
-    //qDebug() << "set options 2";
-    ui->Width->setValue(framesX[CurFRMx][CurFRMy].W);
-
-    //qDebug() << "set options 3";
-    ui->OffsetX->setValue(framesX[CurFRMx][CurFRMy].offsetX);
-
-   // qDebug() << "set options 4";
-    ui->OffsetY->setValue(framesX[CurFRMx][CurFRMy].offsetY);
-
-    //qDebug() << "set options 5";
-    ui->EnableFrame->setChecked(framesX[CurFRMx][CurFRMy].used);
-
-    //qDebug() << "seted";
-
-    //Animation timer
-  /*
-  QTimer *timer = new QTimer(this);
-    connect(
-                timer, SIGNAL(timeout()),
-                this,
-                SLOT( nextFrame() ) );
-    timer->start(128);
-    */
+    if(currentFile.isEmpty())
+    {
+        if(!on_OpenSprite_clicked())
+        {
+            wasCanceled=true;
+            return;
+        }
+    }
+    else
+        OpenFile(currentFile);
 
 }
 
@@ -140,89 +112,6 @@ CalibrationMain::~CalibrationMain()
     delete ui;
 }
 
-SpriteScene::SpriteScene(QObject *parent) : QGraphicsScene(parent)
-{
-    QGraphicsItem * dragon;
-    QGraphicsItem * Frame;
-    QGraphicsItem * Square;
-    QList<QString > tmp;
-    QFileInfo ourFile(currentFile);
-    QString imgFileM;
-    QPixmap sprite, mask;
-    croc = new QGraphicsPixmapItem;
-    sizer = new QGraphicsRectItem;
-
-    mCurrentFrameX = 0;
-    mCurrentFrameY = 0;
-
-    x=0; y=0, dir=1;
-    mPos = QPoint(0,0);
-
-    sprite = QPixmap(currentFile);
-
-    tmp = ourFile.fileName().split(".", QString::SkipEmptyParts);
-    if(tmp.size()==2)
-        imgFileM = tmp[0] + "m." + tmp[1];
-    else
-        imgFileM = "";
-    mask = QPixmap( ourFile.absoluteDir().path() + "/" + imgFileM );
-
-    sprite.setMask(mask);
-    mSpriteImage = QPixmap(sprite);
-
-    draw();
-
-    Frame = addRect(0,0,100,100, QPen(Qt::gray, 1), Qt::transparent);
-    Frame->setZValue(-10);
-
-    croc->setPixmap(QPixmap(currentImage));
-    dragon = addPixmap(QPixmap(currentImage));
-    croc->setParentItem(dragon);
-    dragon->setZValue(0);
-
-    Square = addRect(0,0,0,0, QPen(Qt::NoPen), Qt::transparent);
-    sizer->setRect(0,0,100,100);
-    sizer->setPen(QPen(Qt::green));
-    sizer->setParentItem(Square);
-    sizer->setZValue(3);
-
-    //qDebug() << "Scene created";
-}
-
-void SpriteScene::draw()
-{
-    currentImage =  mSpriteImage.copy(QRect(mPos.x(), mPos.y(), 100, 100));
-            // mPos.x(),mPos.y(), *mSpriteImage, mCurrentFrame, 0, 100,100 );
-}
-
-QPoint SpriteScene::pos() const
-{
-    return mPos;
-}
-
-void SpriteScene::setFrame(int x, int y)
-{
-    CurFRMx=x;
-    CurFRMy=y;
-    mCurrentFrameX = 100 * x;
-    mCurrentFrameY = 100 * y;
-
-    mPos.setX( mCurrentFrameX );
-    mPos.setY( mCurrentFrameY );
-
-    draw();
-
-    croc->setPixmap(QPixmap(currentImage));
-}
-
-
-void SpriteScene::setSquare(int x, int y, int h, int w)
-{
-    //following variable keeps track which
-    //frame to show from sprite sheet
-    sizer->setRect(x,y,w-1,h-1);
-}
-
 
 void CalibrationMain::on_FrameX_valueChanged(int arg1)
 {
@@ -239,6 +128,7 @@ void CalibrationMain::on_FrameX_valueChanged(int arg1)
     }
 }
 
+
 void CalibrationMain::on_FrameY_valueChanged(int arg1)
 {
     int x=ui->FrameX->value(), y=arg1;
@@ -253,12 +143,14 @@ void CalibrationMain::on_FrameY_valueChanged(int arg1)
     }
 }
 
+
+
 void CalibrationMain::on_Height_valueChanged(int arg1)
 {
     int x,y,h,w, ax, ay;
 
-    ax = Scene->mCurrentFrameX/100;
-    ay = Scene->mCurrentFrameY/100;
+    ax = Scene->m_CurrentFrameX/100;
+    ay = Scene->m_CurrentFrameY/100;
 
     x = framesX[ax][ay].offsetX;
     y = framesX[ax][ay].offsetY;
@@ -270,12 +162,14 @@ void CalibrationMain::on_Height_valueChanged(int arg1)
         framesX[ax][ay].H = h;
 }
 
+
+
 void CalibrationMain::on_Width_valueChanged(int arg1)
 {
     int x,y,h,w, ax, ay;
 
-    ax = Scene->mCurrentFrameX/100;
-    ay = Scene->mCurrentFrameY/100;
+    ax = Scene->m_CurrentFrameX/100;
+    ay = Scene->m_CurrentFrameY/100;
 
     x = framesX[ax][ay].offsetX;
     y = framesX[ax][ay].offsetY;
@@ -287,12 +181,13 @@ void CalibrationMain::on_Width_valueChanged(int arg1)
         framesX[ax][ay].W = w;
 }
 
+
 void CalibrationMain::on_OffsetX_valueChanged(int arg1)
 {
     int x,y,h,w, ax, ay;
 
-    ax = Scene->mCurrentFrameX/100;
-    ay = Scene->mCurrentFrameY/100;
+    ax = Scene->m_CurrentFrameX/100;
+    ay = Scene->m_CurrentFrameY/100;
 
     x = framesX[ax][ay].offsetX;
     y = framesX[ax][ay].offsetY;
@@ -304,12 +199,13 @@ void CalibrationMain::on_OffsetX_valueChanged(int arg1)
         framesX[ax][ay].offsetX = x;
 }
 
+
 void CalibrationMain::on_OffsetY_valueChanged(int arg1)
 {
     int x,y,h,w, ax, ay;
 
-    ax = Scene->mCurrentFrameX/100;
-    ay = Scene->mCurrentFrameY/100;
+    ax = Scene->m_CurrentFrameX/100;
+    ay = Scene->m_CurrentFrameY/100;
 
     x = framesX[ax][ay].offsetX;
     y = framesX[ax][ay].offsetY;
@@ -321,6 +217,7 @@ void CalibrationMain::on_OffsetY_valueChanged(int arg1)
         framesX[ax][ay].offsetY = y;
 }
 
+
 void CalibrationMain::on_CopyButton_clicked()
 {
     buffer.H=ui->Height->value();
@@ -330,11 +227,12 @@ void CalibrationMain::on_CopyButton_clicked()
     buffer.used=ui->EnableFrame->isChecked();
 }
 
+
 void CalibrationMain::on_PasteButton_clicked()
 {
     int ax, ay;
-    ax = Scene->mCurrentFrameX/100;
-    ay = Scene->mCurrentFrameY/100;
+    ax = Scene->m_CurrentFrameX/100;
+    ay = Scene->m_CurrentFrameY/100;
     framesX[ax][ay] = buffer;
 
     ui->Height->setValue(buffer.H);
@@ -344,17 +242,23 @@ void CalibrationMain::on_PasteButton_clicked()
     ui->EnableFrame->setChecked(buffer.used);
 }
 
-void CalibrationMain::on_OpenSprite_clicked()
+
+bool CalibrationMain::on_OpenSprite_clicked()
 {
      QString fileName_DATA = QFileDialog::getOpenFileName(this,
-            trUtf8("Open file"),LastOpenDir,
-            tr("SMBX playble sprite (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif)\n"
-            "All Files (*.*)"));
+            trUtf8("Open sprite file"),(LastOpenDir.isEmpty()? QApplication::applicationDirPath() : LastOpenDir),
+            tr("SMBX playble sprite (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;"
+               "GIF images (*.gif);;"
+               "PNG images (*.png);;"
+                "All Files (*.*)"));
 
-     if(fileName_DATA==NULL) return;
+     if(fileName_DATA==NULL) return false;
 
      OpenFile(fileName_DATA);
+
+     return true;
 }
+
 
 void CalibrationMain::on_AboutButton_clicked()
 {
@@ -363,10 +267,12 @@ void CalibrationMain::on_AboutButton_clicked()
     dialog.exec();
 }
 
+
 void CalibrationMain::on_SaveConfigButton_clicked()
 {
     saveConfig(currentFile);
 }
+
 
 // Copy current sizes and offsets to ALL frames
 void CalibrationMain::on_applyToAll_clicked()
@@ -387,8 +293,8 @@ void CalibrationMain::on_EnableFrame_clicked(bool checked)
     int ax, ay;
     if(ui->EnableFrame->hasFocus())
     {
-        ax = Scene->mCurrentFrameX/100;
-        ay = Scene->mCurrentFrameY/100;
+        ax = Scene->m_CurrentFrameX/100;
+        ay = Scene->m_CurrentFrameY/100;
         framesX[ax][ay].used = checked;
     }
 }
@@ -396,13 +302,15 @@ void CalibrationMain::on_EnableFrame_clicked(bool checked)
 
 void CalibrationMain::on_Matrix_clicked()
 {
-    Matrix dialog(framesX, Scene);
+    Matrix dialog;
+    this->hide();
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     if(dialog.exec()==QDialog::Accepted)
     {
         ui->FrameX->setValue(dialog.frameX);
         ui->FrameY->setValue(dialog.frameY);
     }
+    this->show();
 
     framesX = dialog.FrameConfig;
 
@@ -419,12 +327,15 @@ void CalibrationMain::on_Matrix_clicked()
     }
 }
 
+
 void CalibrationMain::on_AnimatorButton_clicked()
 {
-    Animate dialog(framesX, AnimationFrames, Scene);
+    this->hide();
+    Animate dialog;
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
-    AnimationFrames = dialog.AniFrames;
+    this->show();
+    //AnimationFrames = dialog.AniFrames;
 }
 
 void CalibrationMain::on_editSizes_clicked()
@@ -433,7 +344,8 @@ void CalibrationMain::on_editSizes_clicked()
       reply = QMessageBox::question(this, "Warning",
         "This is a physical settings for a sprite, this need only for creation of new character sprite\nIf you want to use this sprite in SMBX, please, don't edit this settings.\nDo you want to continue?",
                                     QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes) {
+      if (reply == QMessageBox::Yes)
+      {
             ui->EnableFrame->setEnabled(true);
             ui->Height->setEnabled(true);
             ui->Width->setEnabled(true);
@@ -443,5 +355,19 @@ void CalibrationMain::on_editSizes_clicked()
             ui->PasteButton->setEnabled(true);
             ui->applyToAll->setEnabled(true);
             ui->editSizes->setVisible(false);
-          }
+      }
+}
+
+void CalibrationMain::on_calibrateImage_clicked()
+{
+    ImageCalibrator imgCalibrator;
+    imgCalibrator.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    if(!imgCalibrator.init(currentFile)) return;
+
+    imgCalibrator.Scene = Scene;
+
+    this->hide();
+    imgCalibrator.exec();
+    this->show();
+    OpenFile(imgCalibrator.targetPath);
 }

@@ -19,6 +19,7 @@
 #include "../ui_mainwindow.h"
 #include "../mainwindow.h"
 #include "../common_features/graphicsworkspace.h"
+#include "../common_features/themes.h"
 
 
 //Edit NPC
@@ -32,6 +33,7 @@ npcedit *MainWindow::createNPCChild()
     QMdiSubWindow * npcWindowP = ui->centralWidget->addSubWindow(npcWindow);
     npcWindowP->setAttribute(Qt::WA_DeleteOnClose);
 
+    npcWindowP->setWindowIcon(Themes::icon(Themes::npc_16));
 
     npcWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
@@ -66,7 +68,7 @@ leveledit *MainWindow::createLvlChild()
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                              800, 610);
-    levelWindowP->setWindowIcon(QIcon(QPixmap(":/lvl16.png")));
+    levelWindowP->setWindowIcon(Themes::icon(Themes::level_16));
     levelWindowP->updateGeometry();
     levelWindowP->update();
     ui->centralWidget->updateGeometry();
@@ -93,7 +95,7 @@ WorldEdit *MainWindow::createWldChild()
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().height()/4),
                              800, 610);
-    levelWindowP->setWindowIcon(QIcon(QPixmap(":/images/world16.png")));
+    levelWindowP->setWindowIcon(Themes::icon(Themes::world_16));
     levelWindowP->updateGeometry();
     levelWindowP->update();
     ui->centralWidget->updateGeometry();

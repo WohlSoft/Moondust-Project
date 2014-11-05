@@ -25,7 +25,14 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath(".");
     QApplication a(argc, argv);
     CalibrationMain w;
-    w.show();
+    if(!w.wasCanceled)
+        w.show();
+    else
+    {
+        w.close();
+        a.quit();
+        return 0;
+    }
     
     return a.exec();
 }

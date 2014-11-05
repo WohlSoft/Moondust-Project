@@ -41,22 +41,16 @@ void MainWindow::setCurrentWorldSettings()
         ui->WLD_Title->setText( edit->WldData.EpisodeTitle );
 
         WriteToLog(QtDebugMsg, "-> setText");
-        ui->WLD_AutostartLvl->setText( edit->WldData.autolevel );
+        ui->WLD_AutostartLvl->setText( edit->WldData.IntroLevel_file );
 
         ui->WLD_Stars->setValue( edit->WldData.stars );
 
-        ui->WLD_NoWorldMap->setChecked( edit->WldData.noworldmap );
-        ui->actionWLDDisableMap->setChecked( edit->WldData.noworldmap );
+        ui->WLD_NoWorldMap->setChecked( edit->WldData.HubStyledWorld );
+        ui->actionWLDDisableMap->setChecked( edit->WldData.HubStyledWorld );
         ui->WLD_RestartLevel->setChecked( edit->WldData.restartlevel );
         ui->actionWLDFailRestart->setChecked( edit->WldData.restartlevel );
 
-        QString credits;
-        credits += (edit->WldData.author1.isEmpty())? "" : edit->WldData.author1+"\n";
-        credits += (edit->WldData.author2.isEmpty())? "" : edit->WldData.author2+"\n";
-        credits += (edit->WldData.author3.isEmpty())? "" : edit->WldData.author3+"\n";
-        credits += (edit->WldData.author4.isEmpty())? "" : edit->WldData.author4+"\n";
-        credits += (edit->WldData.author5.isEmpty())? "" : edit->WldData.author5;
-        ui->WLD_Credirs->setText( credits );
+        ui->WLD_Credirs->setText( edit->WldData.authors );
 
         WriteToLog(QtDebugMsg, "-> Character List");
         //clear character list
@@ -148,7 +142,7 @@ void MainWindow::on_WLD_NoWorldMap_clicked(bool checked)
         activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_HUB, checked);
 
         ui->actionWLDDisableMap->setChecked(checked);
-        activeWldEditWin()->WldData.noworldmap = checked;
+        activeWldEditWin()->WldData.HubStyledWorld = checked;
         activeWldEditWin()->WldData.modified = true;
     }
 }
@@ -161,7 +155,7 @@ void MainWindow::on_actionWLDDisableMap_triggered(bool checked)
         activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_HUB, checked);
 
         ui->WLD_NoWorldMap->setChecked(checked);
-        activeWldEditWin()->WldData.noworldmap = checked;
+        activeWldEditWin()->WldData.HubStyledWorld = checked;
         activeWldEditWin()->WldData.modified = true;
     }
 }
@@ -215,9 +209,9 @@ void MainWindow::on_WLD_AutostartLvl_editingFinished()
     if (activeChildWindow()==3)
     {
         QList<QVariant> var;
-        var << activeWldEditWin()->WldData.autolevel << ui->WLD_AutostartLvl->text();
+        var << activeWldEditWin()->WldData.IntroLevel_file << ui->WLD_AutostartLvl->text();
         activeWldEditWin()->scene->addChangeWorldSettingsHistory(WldScene::SETTING_INTROLEVEL, var);
-        activeWldEditWin()->WldData.autolevel = ui->WLD_AutostartLvl->text();
+        activeWldEditWin()->WldData.IntroLevel_file = ui->WLD_AutostartLvl->text();
         activeWldEditWin()->WldData.modified = true;
     }
 }
@@ -261,22 +255,71 @@ void MainWindow::on_WLD_Stars_valueChanged(int arg1)
 
 }
 
+
+namespace starCounter
+{
+    static long checkLevelFile(QString FilePath, QStringList &exists)
+    {
+        QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
+        lvlext.setCaseSensitivity(Qt::CaseInsensitive);
+        LevelData getLevelHead;
+        long starCount = 0;
+        getLevelHead.stars = 0;
+
+        if( lvlext.exactMatch(FilePath) )
+        {
+            getLevelHead = FileFormats::OpenLevelFile(FilePath);
+            if( !getLevelHead.ReadFileValid ) return 0;
+
+            //qDebug() << "world "<< getLevelHead.stars << getLevelHead.filename;
+            starCount += getLevelHead.stars;
+            //qDebug() << "starCount "<<starCount;
+
+            for(int i=0;i<getLevelHead.doors.size(); i++)
+            {
+                if(!getLevelHead.doors[i].lname.isEmpty())
+                {
+                    QString FilePath_W = getLevelHead.path+"/"+getLevelHead.doors[i].lname;
+
+                    if(!FilePath_W.endsWith(".lvl", Qt::CaseInsensitive)&&
+                       !FilePath_W.endsWith(".lvlx", Qt::CaseInsensitive))
+                       FilePath_W.append(".lvl");
+
+                    if(!QFileInfo(FilePath_W).exists()) continue;
+
+                    if(!exists.contains(FilePath_W))
+                    {
+                        exists.push_back(FilePath_W);
+                    }
+                    else continue;
+                    //qDebug() << "warp "<<getLevelHead.stars << getLevelHead.filename;
+
+                    starCount += checkLevelFile(FilePath_W, exists);
+
+                    qApp->processEvents();
+                    //qDebug() << "starCount "<<starCount;
+                }
+            }
+        }
+        return starCount;
+    }
+}
+
 void MainWindow::on_WLD_DoCountStars_clicked()
 {
     if(world_settings_lock_fields) return;
+    using namespace starCounter;
 
     //Count stars of all used levels on this world map
 
     QString dirPath;
     long starzzz=0;
+    bool introCounted=false;
 
     if (activeChildWindow()==3)
     {
         WorldEdit * edit = activeWldEditWin();
         dirPath = edit->WldData.path;
-
-        QRegExp lvlext = QRegExp("*.lvl");
-        lvlext.setPatternSyntax(QRegExp::Wildcard);
 
         QProgressDialog progress(tr("Counting stars of placed levels"), tr("Abort"), 0, edit->WldData.levels.size(), this);
              progress.setWindowTitle(tr("Counting stars..."));
@@ -286,32 +329,50 @@ void MainWindow::on_WLD_DoCountStars_clicked()
              progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
              progress.setMinimumDuration(0);
 
-        for(int i=0;i<edit->WldData.levels.size();i++)
+        QStringList LevelAlreadyChecked;
+
+        //qDebug() << "total " << starzzz;
+
+        for(int i=0; i<edit->WldData.levels.size() || !introCounted; i++)
         {
             //Attempt to read stars quantity of level:
 
-            if(edit->WldData.levels[i].lvlfile.isEmpty()) continue;
-            QString FilePath = dirPath+"/"+edit->WldData.levels[i].lvlfile;
-            if(!QFile(FilePath).exists()) continue;
+            QString FilePath;
 
-            QFile file(FilePath);
-            if (!file.open(QIODevice::ReadOnly)) continue;
-
-            LevelData getLevelHead;
-            getLevelHead.stars = 0;
-            if( lvlext.exactMatch(FilePath) )
+            if(introCounted)
             {
-                getLevelHead = FileFormats::ReadLevelFile(file); //function in file_formats.cpp
-                if( !getLevelHead.ReadFileValid ) continue;
+                FilePath = dirPath+"/"+edit->WldData.levels[i].lvlfile;
+                if(edit->WldData.levels[i].lvlfile.isEmpty()) continue;
             }
-            file.close();
-            starzzz+=getLevelHead.stars;
+            else
+            {
+                FilePath = dirPath+"/"+edit->WldData.IntroLevel_file;
+                i--;
+                introCounted=true;
+                if(FilePath.isEmpty()) continue;
+            }
+
+            if(!FilePath.endsWith(".lvl", Qt::CaseInsensitive)&&
+               !FilePath.endsWith(".lvlx", Qt::CaseInsensitive))
+               FilePath.append(".lvl");
+
+            if(!QFileInfo(FilePath).exists()) continue;
+
+            if(!LevelAlreadyChecked.contains(FilePath))
+            {
+                LevelAlreadyChecked.push_back(FilePath);
+            }
+            else continue;
+
+            progress.setValue(i<0?1:i);
+            starzzz += checkLevelFile(FilePath, LevelAlreadyChecked);
+            //qDebug() << "starzzz " << starzzz;
 
             if(progress.wasCanceled()) break;
-            progress.setValue(i);
             qApp->processEvents();
         }
 
+        //qDebug() << "total " << starzzz;
         if(progress.wasCanceled()) return;
         ui->WLD_Stars->setValue(starzzz);
         progress.close();
@@ -322,15 +383,9 @@ void MainWindow::on_WLD_Credirs_textChanged()
 {
     if(world_settings_lock_fields) return;
 
-    QStringList credits = ui->WLD_Credirs->toPlainText().split(QChar('\n'));
-
     if (activeChildWindow()==3)
     {
-        activeWldEditWin()->WldData.author1 = (credits.size()>0) ? credits[0] : "";
-        activeWldEditWin()->WldData.author2 = (credits.size()>1) ? credits[1] : "";
-        activeWldEditWin()->WldData.author3 = (credits.size()>2) ? credits[2] : "";
-        activeWldEditWin()->WldData.author4 = (credits.size()>3) ? credits[3] : "";
-        activeWldEditWin()->WldData.author5 = (credits.size()>4) ? credits[4] : "";
+        activeWldEditWin()->WldData.authors = ui->WLD_Credirs->toPlainText();
         activeWldEditWin()->WldData.modified = true;
     }
 }

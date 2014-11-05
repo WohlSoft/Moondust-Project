@@ -275,6 +275,7 @@ struct LevelData
     bool playmusic;
     bool modified;
     bool untitled;
+    bool smbx64strict;
     QString filename;
     QString path;
 };

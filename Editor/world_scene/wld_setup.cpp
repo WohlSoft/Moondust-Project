@@ -27,6 +27,114 @@
 
 #include "../main_window/global_settings.h"
 
+#include "../common_features/themes.h"
+
+
+
+void WldScene::SwitchEditingMode(int EdtMode)
+{
+    EraserEnabled=false; //All just selected items will be removed
+    PasteFromBuffer=false;
+    DrawMode=false; //Placing/drawing on map, disable selecting and dragging items
+    disableMoveItems=false; // You can do anything with items, but can't move them
+
+    switch(EdtMode)
+    {
+    case MODE_PlacingNew:
+//        resetResizers();
+//        unserPointSelector();
+//        DrawMode=true;
+        switchMode("Placing");
+        break;
+
+    case MODE_DrawSquare:
+//        resetResizers();
+//        unserPointSelector();
+//        DrawMode=true;
+        switchMode("Square");
+        break;
+
+    case MODE_Line:
+//        resetResizers();
+//        unserPointSelector();
+//        DrawMode=true;
+        switchMode("Line");
+        break;
+
+    case MODE_SetPoint:
+//        resetResizers();
+//        DrawMode=true;
+        switchMode("SetPoint");
+        break;
+
+    case MODE_Resizing:
+//        resetCursor();
+//        unserPointSelector();
+//        DrawMode=true;
+//        disableMoveItems=true;
+        switchMode("Resize");
+        break;
+
+    case MODE_PasteFromClip:
+//        resetCursor();
+//        resetResizers();
+//        unserPointSelector();
+//        disableMoveItems=true;
+        switchMode("Select");
+        clearSelection();
+        disableMoveItems=true;
+        _viewPort->setInteractive(true);
+        _viewPort->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
+        _viewPort->setDragMode(QGraphicsView::NoDrag);
+        break;
+
+    case MODE_Erasing:
+//        resetCursor();
+//        resetResizers();
+//        unserPointSelector();
+        switchMode("Erase");
+        break;
+
+    case MODE_SelectingOnly:
+//        resetCursor();
+//        resetResizers();
+//        unserPointSelector();
+        switchMode("Select");
+        disableMoveItems=true;
+        break;
+
+    case MODE_HandScroll:
+        switchMode("HandScroll");
+        break;
+
+    case MODE_Selecting:
+    default:
+//        resetCursor();
+//        resetResizers();
+//        unserPointSelector();
+        switchMode("Select");
+        break;
+
+    }
+    EditingMode = EdtMode;
+
+}
+
+void WldScene::switchMode(QString title)
+{
+    for(int i=0; i<EditModes.size(); i++)
+    {
+        if(EditModes[i]->name()==title)
+        {
+            CurrentMode = EditModes[i];
+            CurrentMode->set();
+            break;
+        }
+    }
+}
+
+
+
 ////////////////////////////////////Animator////////////////////////////////
 void WldScene::startAnimation()
 {
@@ -93,6 +201,17 @@ void WldScene::hideMusicBoxes(bool visible)
             i->setVisible(visible);
         }
     }
+}
+
+void WldScene::setSemiTransparentPaths(bool semiTransparent)
+{
+    foreach (QGraphicsItem* i, items())
+    {
+        if(i->data(0).toString()=="PATH"){
+            i->setOpacity(semiTransparent ? 0.5 : 1);
+        }
+    }
+    update();
 }
 
 void WldScene::hidePathAndLevels(bool visible)
@@ -256,75 +375,3 @@ void WldScene::setLocked(int type, bool lock)
 
 
 
-
-
-void WldScene::SwitchEditingMode(int EdtMode)
-{
-    EraserEnabled=false; //All just selected items will be removed
-    PasteFromBuffer=false;
-    DrawMode=false; //Placing/drawing on map, disable selecting and dragging items
-    disableMoveItems=false; // You can do anything with items, but can't move them
-
-    switch(EdtMode)
-    {
-    case MODE_PlacingNew:
-        resetResizers();
-        unserPointSelector();
-        DrawMode=true;
-        break;
-
-    case MODE_DrawSquare:
-        resetResizers();
-        unserPointSelector();
-        DrawMode=true;
-        break;
-
-    case MODE_Line:
-        resetResizers();
-        unserPointSelector();
-        DrawMode=true;
-        break;
-
-    case MODE_SetPoint:
-        resetResizers();
-        DrawMode=true;
-        break;
-
-    case MODE_Resizing:
-        resetCursor();
-        unserPointSelector();
-        DrawMode=true;
-        disableMoveItems=true;
-        break;
-
-    case MODE_PasteFromClip:
-        resetCursor();
-        resetResizers();
-        unserPointSelector();
-        disableMoveItems=true;
-        break;
-
-    case MODE_Erasing:
-        resetCursor();
-        resetResizers();
-        unserPointSelector();
-        break;
-
-    case MODE_SelectingOnly:
-        resetCursor();
-        resetResizers();
-        unserPointSelector();
-        disableMoveItems=true;
-        break;
-
-    case MODE_Selecting:
-    default:
-        resetCursor();
-        resetResizers();
-        unserPointSelector();
-        break;
-
-    }
-    EditingMode = EdtMode;
-
-}
