@@ -43,6 +43,7 @@ CONFIG += thread
 LIBS += -lSDL2 -lSDL2_mixer
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
+win32: LIBS += -lDbghelp
 
 #DEFINES += USE_QMEDIAPLAYER
 

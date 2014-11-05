@@ -12,7 +12,7 @@ class CrashHandler : public QDialog
     Q_OBJECT
 
 public:
-    explicit CrashHandler(QWidget *parent = 0);
+    explicit CrashHandler(QString& crashText, QWidget *parent = 0);
     ~CrashHandler();
 
     //Crash Handlers
