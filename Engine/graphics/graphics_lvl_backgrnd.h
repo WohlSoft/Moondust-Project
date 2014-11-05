@@ -24,6 +24,15 @@
 #include "lvl_camera.h"
 
 
+//Magic background strip value
+struct LVL_Background_strip
+{
+    double repeat_h;
+    double top;
+    double bottom;
+    int height;
+};
+
 class LVL_Background
 {
 public:
@@ -49,6 +58,9 @@ public:
 
     bool isAnimated;
     long animator_ID;
+
+    bool isMagic;
+    QVector<LVL_Background_strip > strips;
 
     PGEColor color;
 
