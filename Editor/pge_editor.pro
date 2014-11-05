@@ -233,7 +233,16 @@ SOURCES += main.cpp\
     level_scene/edit_modes/mode_square.cpp \
     level_scene/edit_modes/mode_line.cpp \
     level_scene/edit_modes/mode_hand.cpp \
-    level_scene/edit_modes/mode_resize.cpp
+    level_scene/edit_modes/mode_resize.cpp \
+    common_features/crashhandler.cpp \
+    world_scene/edit_modes/wld_mode_erase.cpp \
+    world_scene/edit_modes/wld_mode_hand.cpp \
+    world_scene/edit_modes/wld_mode_line.cpp \
+    world_scene/edit_modes/wld_mode_place.cpp \
+    world_scene/edit_modes/wld_mode_resize.cpp \
+    world_scene/edit_modes/wld_mode_select.cpp \
+    world_scene/edit_modes/wld_mode_square.cpp \
+    world_scene/edit_modes/wld_mode_setpoint.cpp
 
 
 HEADERS  += defines.h \
@@ -331,7 +340,16 @@ HEADERS  += defines.h \
     level_scene/edit_modes/mode_square.h \
     level_scene/edit_modes/mode_line.h \
     level_scene/edit_modes/mode_hand.h \
-    level_scene/edit_modes/mode_resize.h
+    level_scene/edit_modes/mode_resize.h \
+    common_features/crashhandler.h \
+    world_scene/edit_modes/wld_mode_erase.h \
+    world_scene/edit_modes/wld_mode_hand.h \
+    world_scene/edit_modes/wld_mode_line.h \
+    world_scene/edit_modes/wld_mode_place.h \
+    world_scene/edit_modes/wld_mode_resize.h \
+    world_scene/edit_modes/wld_mode_select.h \
+    world_scene/edit_modes/wld_mode_square.h \
+    world_scene/edit_modes/wld_mode_setpoint.h
 
 
 FORMS    += \
@@ -359,7 +377,8 @@ FORMS    += \
     npc_dialog/npcdialog.ui \
     tilesets/tilesetconfiguredialog.ui \
     tilesets/tilesetgroupeditor.ui \
-    wld_point_dialog/wld_setpoint.ui
+    wld_point_dialog/wld_setpoint.ui \
+    common_features/crashhandler.ui
 
 
 RC_FILE = _resources/pge_editor.rc

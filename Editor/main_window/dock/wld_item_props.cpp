@@ -604,8 +604,8 @@ void MainWindow::on_WLD_PROPS_GetPoint_clicked()
             ui->WLD_PROPS_GetPoint->setChecked(false);
             ui->WLD_PROPS_GetPoint->setCheckable(false);
 
-            activeWldEditWin()->scene->unserPointSelector();
-            activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
+            //activeWldEditWin()->scene->unserPointSelector();
+            //activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
             activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
         }
         else
@@ -613,7 +613,7 @@ void MainWindow::on_WLD_PROPS_GetPoint_clicked()
             ui->WLD_PROPS_GetPoint->setCheckable(true);
             ui->WLD_PROPS_GetPoint->setChecked(true);
 
-            activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
+            //activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
             activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
 
             WldPlacingItems::fillingMode = false;
