@@ -62,6 +62,10 @@ void LVL_Background::setBg(obj_BG &bg)
 
     qDebug()<< "BG Type" << bgType;
 
+    //Reset magic background parameters
+    isMagic = false;
+    strips.clear();
+
     switch(bgType)
     {
         case single_row:
@@ -79,7 +83,6 @@ void LVL_Background::setBg(obj_BG &bg)
                     isAnimated = bg.animated;
                     animator_ID = bg.animator_ID;
 
-                    strips.clear();
                     if(bg.magic)
                     {
                         for(int i=0; (unsigned int)i < bg.magic_strips; i++)
@@ -114,13 +117,8 @@ void LVL_Background::setBg(obj_BG &bg)
                             strips.push_back(x);
                         }
                         //qDebug() <<  bg.magic_splits_i.size() << bg.magic_speeds_i.size();
-                        isMagic = bg.magic;
+                        isMagic = true;
                     }
-                    else
-                    {
-                        isMagic = false;
-                    }
-
                 }
                 //qDebug()<<"SingleRow";
             }
@@ -190,6 +188,7 @@ void LVL_Background::draw(float x, float y)
 
         int imgPos_X;
         int imgPos_Y;
+
         if(setup->repeat_h>0)
         {
             imgPos_X = (int)round((pCamera->s_left-x)/setup->repeat_h) % (int)round(txData1.w);
