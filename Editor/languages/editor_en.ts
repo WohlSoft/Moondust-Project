@@ -237,7 +237,7 @@
     <message>
         <location filename="../data_configs/config_manager.ui" line="24"/>
         <source>Please, select the game configuration which defining the game settings and stuff</source>
-        <translation>Please, select the game configuration which defining the game settings and stuff</translation>
+        <translation>Please select the game configuration which you want to start the editor with</translation>
     </message>
 </context>
 <context>
@@ -255,7 +255,7 @@
     <message>
         <location filename="../data_configs/configstatus.ui" line="49"/>
         <source>Item types:</source>
-        <translation>Objects defines:</translation>
+        <translation>Objects defined:</translation>
     </message>
     <message>
         <location filename="../data_configs/configstatus.ui" line="76"/>
@@ -474,7 +474,7 @@
     <message>
         <location filename="../dev_console/devconsole.cpp" line="177"/>
         <source>Prints the command help</source>
-        <translation>Prints the command help</translation>
+        <translation>Prints this help text</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="178"/>
@@ -484,7 +484,7 @@
     <message>
         <location filename="../dev_console/devconsole.cpp" line="179"/>
         <source>Prints the version</source>
-        <translation>Prints the version</translation>
+        <translation>Prints the editor version</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="180"/>
@@ -499,12 +499,12 @@
     <message>
         <location filename="../dev_console/devconsole.cpp" line="182"/>
         <source>Args: {SomeString} Calculating MD5 hash of string</source>
-        <translation>Args: {SomeString} Calculating MD5 hash of string</translation>
+        <translation>Args: {SomeString} Calculates MD5 hash of string</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="183"/>
         <source>Args: {String array} validating the PGE-X string array</source>
-        <translation>Args: {String array} validating the PGE-X string array</translation>
+        <translation>Args: {String array} validates the PGE-X string array</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="184"/>
@@ -522,7 +522,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="99"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of the target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="35"/>
@@ -543,7 +543,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="112"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When checked, this will calculate the size of the opposite dimension (height or width) to make a target image with the correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="115"/>
@@ -553,7 +553,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="32"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of the target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../edit_level/saveimage.ui" line="45"/>
@@ -573,7 +573,7 @@
     <message>
         <location filename="../edit_level/saveimage.ui" line="137"/>
         <source>Tiled background</source>
-        <translation>Tiled background </translation>
+        <translation>Tiled background</translation>
     </message>
 </context>
 <context>
@@ -831,7 +831,7 @@
         <location filename="../level_scene/itemmsgbox.ui" line="35"/>
         <location filename="../level_scene/itemmsgbox.ui" line="52"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the message which will be displayed if the player talks with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../level_scene/itemmsgbox.ui" line="38"/>
@@ -1375,12 +1375,12 @@ Please, check the application directory.</translation>
         <location filename="../common_features/levelfilelist.ui" line="30"/>
         <location filename="../common_features/levelfilelist.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, which placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files which are located with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../common_features/levelfilelist.ui" line="33"/>
         <source>Please, select level file from list for use them:</source>
-        <translation>Please select level file from list to use them:</translation>
+        <translation>Please select level file from list to use:</translation>
     </message>
 </context>
 <context>
