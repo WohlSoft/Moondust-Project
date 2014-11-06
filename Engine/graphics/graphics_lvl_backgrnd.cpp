@@ -79,6 +79,7 @@ void LVL_Background::setBg(obj_BG &bg)
                     isAnimated = bg.animated;
                     animator_ID = bg.animator_ID;
 
+                    strips.clear();
                     if(bg.magic)
                     {
                         for(int i=0; (unsigned int)i < bg.magic_strips; i++)
@@ -101,6 +102,7 @@ void LVL_Background::setBg(obj_BG &bg)
                                 x.repeat_h = bg.magic_speeds_i[i];
                             else
                                 x.repeat_h = bg.repeat_h;
+                            if(x.repeat_h<=0) x.repeat_h = 1;
 
 //                            qDebug() << "Magic " << (i==0 ? 0 : bg.magic_splits_i[i-1] )
 //                                    << (( i <  bg.magic_splits_i.size())
@@ -113,6 +115,10 @@ void LVL_Background::setBg(obj_BG &bg)
                         }
                         //qDebug() <<  bg.magic_splits_i.size() << bg.magic_speeds_i.size();
                         isMagic = bg.magic;
+                    }
+                    else
+                    {
+                        isMagic = false;
                     }
 
                 }
@@ -287,31 +293,56 @@ void LVL_Background::draw(float x, float y)
         }
 
         int draw_x = imgPos_X;
-        while(verticalRepeats>0)
+        while(verticalRepeats > 0)
         {
             draw_x = imgPos_X;
             lenght = 0;
             while((lenght <= PGE_Window::Width*2) || (lenght <=txData1.w*2))
             {
-                backgrndG = QRectF(QPointF(draw_x, imgPos_Y), QPointF(draw_x+txData1.w, imgPos_Y+txData1.h) );
+                int magicRepeat=1;
+                if(isMagic)
+                {
+                    magicRepeat = strips.size();
+                }
+                else
+                {
+                    backgrndG = QRectF(QPointF(draw_x, imgPos_Y), QPointF(draw_x+txData1.w, imgPos_Y+txData1.h) );
+                }
 
-                glColor4f( 1.f, 1.f, 1.f, 1.f);
-                glEnable(GL_TEXTURE_2D);
-                glBindTexture( GL_TEXTURE_2D, txData1.texture );
-                glBegin( GL_QUADS );
-                    glTexCoord2f( 0, ani_x.first );
-                    glVertex2f( backgrndG.left(), backgrndG.top());
+                int drawedHeight=0;
+                float d_top    = ani_x.first;
+                float d_bottom = ani_x.second;
+                for(int mg=0; mg < magicRepeat;mg++)
+                {
+                    if(isMagic)
+                    {
+                        draw_x = (int)round((pCamera->s_left-x)/strips[mg].repeat_h) % (int)round(txData1.w);
+                        draw_x += lenght;
+                        backgrndG = QRectF(QPointF(draw_x, imgPos_Y+drawedHeight),
+                                           QPointF(draw_x+txData1.w, imgPos_Y+drawedHeight+
+                                                                                           strips[mg].height) );
+                        drawedHeight += strips[mg].height;
+                        d_top = strips[mg].top;
+                        d_bottom = strips[mg].bottom;
+                    }
+                    glColor4f( 1.f, 1.f, 1.f, 1.f);
+                    glEnable(GL_TEXTURE_2D);
+                    glBindTexture( GL_TEXTURE_2D, txData1.texture );
+                    glBegin( GL_QUADS );
+                        glTexCoord2f( 0, d_top );
+                        glVertex2f( backgrndG.left(), backgrndG.top());
 
-                    glTexCoord2f( 1, ani_x.first );
-                    glVertex2f(  backgrndG.right(), backgrndG.top());
+                        glTexCoord2f( 1, d_top );
+                        glVertex2f(  backgrndG.right(), backgrndG.top());
 
-                    glTexCoord2f( 1, ani_x.second );
-                    glVertex2f(  backgrndG.right(),  backgrndG.bottom());
+                        glTexCoord2f( 1, d_bottom );
+                        glVertex2f(  backgrndG.right(),  backgrndG.bottom());
 
-                    glTexCoord2f( 0, ani_x.second );
-                    glVertex2f( backgrndG.left(),  backgrndG.bottom());
+                        glTexCoord2f( 0, d_bottom );
+                        glVertex2f( backgrndG.left(),  backgrndG.bottom());
 
-                glEnd();
+                    glEnd();
+                }
                 lenght += txData1.w;
                 draw_x += txData1.w;
             }
