@@ -78,7 +78,7 @@ void CrashHandler::crashByFlood()
 
 
 #endif
-    std::exit(1);
+    exit(1);
 }
 
 void CrashHandler::crashByUnhandledException()
@@ -127,7 +127,7 @@ void CrashHandler::crashByUnhandledException()
 #endif
     }
 
-    std::exit(2);
+    exit(2);
 }
 
 void CrashHandler::initCrashHandlers()

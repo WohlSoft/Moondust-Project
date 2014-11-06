@@ -52,6 +52,11 @@ win32: {
     INCLUDEPATH += ../_Libs/_builds/win32/include
 }
 
+macx: {
+    LIBS += -L ../_Libs/_builds/macos/lib
+    INCLUDEPATH += ../_Libs/_builds/macos/include
+}
+
 win32: static: {
     DEFINES += MIKMOD_STATIC
     LIBS +=  -lvorbisfile -lvorbis -lmad -lmikmod.dll -lflac -logg
