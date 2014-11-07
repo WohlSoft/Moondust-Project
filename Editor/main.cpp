@@ -40,6 +40,9 @@
 #include <SDL2/SDL_mixer.h>
 #undef main
 
+#include <QFileInfo>
+#include <QDir>
+
 QString ApplicationPath;
 QString ApplicationPath_x;
 
@@ -47,8 +50,7 @@ int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
 
-    QApplication::addLibraryPath(".");
-
+    QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
 
     QApplication *a = new QApplication(argc, argv);
 
