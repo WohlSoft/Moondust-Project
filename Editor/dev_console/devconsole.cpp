@@ -1,6 +1,8 @@
 #include "devconsole.h"
 #include "ui_devconsole.h"
 
+#include <stdexcept>
+
 #include <QScrollBar>
 #include <QSettings>
 #include <QCryptographicHash>
