@@ -21,7 +21,7 @@
 #include "../wld_scene.h"
 #include "../../common_features/mainwinconnect.h"
 #include "../../common_features/item_rectangles.h"
-#include "../WLD_item_placing.h"
+#include "../wld_item_placing.h"
 
 #include "../item_tile.h"
 #include "../item_scene.h"
