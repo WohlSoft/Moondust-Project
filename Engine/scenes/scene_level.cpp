@@ -321,32 +321,33 @@ void LevelScene::render()
 int LevelScene::exec()
 {
     //Level scene's Loop
-    Uint32 start;
+    Uint32 start_render;
+    Uint32 start_physics;
     bool running = true;
-    int doUpdate=0;
-    float doUpdateP=0;
+    int doUpdate_render=0;
+    float doUpdate_physics=0;
     while(running)
     {
 
         //UPDATE Events
-        if(doUpdate<=0)
+        if(doUpdate_render<=0)
         {
 
-            start=SDL_GetTicks();
+            start_render=SDL_GetTicks();
 
             render();
 
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
 
-            if(1000.0/1000>SDL_GetTicks()-start)
+            if(1000.0/1000>SDL_GetTicks()-start_render)
                     //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                    doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
+                    doUpdate_render = 1000.0/1000-(SDL_GetTicks()-start_render);
         }
-        doUpdate-=10;
+        doUpdate_render-=10;
 
 
-        start=SDL_GetTicks();
+        start_physics=SDL_GetTicks();
 
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
@@ -396,10 +397,10 @@ int LevelScene::exec()
         //Update physics
         update();
 
-        if(1000.0/100>SDL_GetTicks()-start)
+        if(1000.0/100>SDL_GetTicks()-start_physics)
         {
-            doUpdateP = 1000.0/100-(SDL_GetTicks()-start);
-            SDL_Delay( doUpdateP );
+            doUpdate_physics = 1000.0/100-(SDL_GetTicks()-start_physics);
+            SDL_Delay( doUpdate_physics );
         }
 
         if(isExit())
