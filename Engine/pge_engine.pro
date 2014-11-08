@@ -128,7 +128,10 @@ SOURCES += main.cpp \
     scenes/level/lvl_scene_sections.cpp \
     scenes/level/lvl_scene_timers.cpp \
     scenes/level/lvl_scene_files_io.cpp \
-    scenes/level/lvl_scene_init.cpp
+    scenes/level/lvl_scene_init.cpp \
+    physics/engine/pge_phys_world.cpp \
+    physics/engine/Quadtree.cpp \
+    physics/engine/pge_phys_body.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -221,7 +224,10 @@ HEADERS  += \
     version.h \
     physics/contact_listener.h \
     scenes/level/lvl_warp.h \
-    scenes/level/lvl_scene_ptr.h
+    scenes/level/lvl_scene_ptr.h \
+    physics/engine/pge_phys_world.h \
+    physics/engine/Quadtree.h \
+    physics/engine/pge_phys_body.h
 
 FORMS    += \
     data_configs/select_config.ui
