@@ -29,6 +29,8 @@ class PGE_Window
 public:
     static int Width;
     static int Height;
+    static int MaxFPS;
+    static int PhysStep;
     static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand");
     static bool uninit();
     static bool isReady();

@@ -65,6 +65,7 @@ LevelScene::LevelScene()
     fader_opacity=1.0f;
     target_opacity=1.0f;
     fade_step=0.0f;
+    fadeSpeed=25;
     /*********Fader*************/
 
 
@@ -98,6 +99,8 @@ LevelScene::LevelScene()
     Z_sys_interspace1 = 1000; // interSection space layer
     Z_sys_sctBorder = 1020; // section Border
     /*********Z-Layers*************/
+
+    qDebug() << 1000.0/(float)PGE_Window::PhysStep;
 }
 
 LevelScene::~LevelScene()
@@ -198,7 +201,7 @@ void LevelScene::update(float step)
     if(doExit)
     {
         if(exitLevelDelay>=0)
-            exitLevelDelay -= 10;
+            exitLevelDelay -= 1000.0/((float)PGE_Window::PhysStep * 2.0);
         else
         {
             if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
@@ -210,7 +213,7 @@ void LevelScene::update(float step)
     if(!isPauseMenu) //Update physics is not pause menu
     {
         //Make world step
-        world->Step(1.0f / 100.f, 5, 5);
+        world->Step(1.0f / (float)PGE_Window::PhysStep, 5, 5);
 
         //Update controllers
         keyboard1.sendControls();
@@ -244,7 +247,7 @@ void LevelScene::update(float step)
             }
             else
             {
-                delayToEnter-= 10;
+                delayToEnter-= 1000.0 / (float)PGE_Window::PhysStep;
             }
         }
 
@@ -340,12 +343,11 @@ int LevelScene::exec()
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
 
-            if(1000.0/1000>SDL_GetTicks()-start_render)
+            if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
                     //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                    doUpdate_render = 1000.0/1000-(SDL_GetTicks()-start_render);
+                    doUpdate_render = 1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render);
         }
-        doUpdate_render-=10;
-
+        doUpdate_render-= 1000.0 / (float)PGE_Window::PhysStep;
 
         start_physics=SDL_GetTicks();
 
@@ -397,9 +399,9 @@ int LevelScene::exec()
         //Update physics
         update();
 
-        if(1000.0/100>SDL_GetTicks()-start_physics)
+        if(1000.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_physics)
         {
-            doUpdate_physics = 1000.0/100-(SDL_GetTicks()-start_physics);
+            doUpdate_physics = 1000.0/(float)PGE_Window::PhysStep-(SDL_GetTicks()-start_physics);
             SDL_Delay( doUpdate_physics );
         }
 
