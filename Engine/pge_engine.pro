@@ -131,7 +131,9 @@ SOURCES += main.cpp \
     scenes/level/lvl_scene_init.cpp \
     physics/engine/pge_phys_world.cpp \
     physics/engine/Quadtree.cpp \
-    physics/engine/pge_phys_body.cpp
+    physics/engine/pge_phys_body.cpp \
+    gui/pge_msgbox.cpp \
+    gui/pge_boxbase.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -227,7 +229,9 @@ HEADERS  += \
     scenes/level/lvl_scene_ptr.h \
     physics/engine/pge_phys_world.h \
     physics/engine/Quadtree.h \
-    physics/engine/pge_phys_body.h
+    physics/engine/pge_phys_body.h \
+    gui/pge_msgbox.h \
+    gui/pge_boxbase.h
 
 FORMS    += \
     data_configs/select_config.ui
