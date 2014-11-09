@@ -62,6 +62,12 @@ if [ ! -d libmad-0.15.1b ]
 
 cp ../libmad-0.15.1b.patched_configure.txt .
 
+if [ ! -d SDL2_ttf-2.0.12 ]
+	then
+	tar -xvf ../SDL2_ttf-2.0.12.tar.gz
+	fi
+
+
 
 #############################Build libraries#####################
 
