@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../../mainwindow.h"
 #include "../../world_scene/wld_item_placing.h"
 #include "../../item_select_dialog/itemselectdialog.h"

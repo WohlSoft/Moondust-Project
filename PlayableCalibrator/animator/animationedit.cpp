@@ -18,7 +18,7 @@
  */
 
 #include "animationedit.h"
-#include "ui_animationedit.h"
+#include <ui_animationedit.h>
 #include "../frame_matrix/matrix.h"
 #include "../main/globals.h"
 #include "../main/mw.h"

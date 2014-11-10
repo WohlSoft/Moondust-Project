@@ -17,7 +17,7 @@
  */
 
 #include "select_config.h"
-#include "ui_select_config.h"
+#include <ui_select_config.h>
 
 #include <QDir>
 #include <QFileInfo>

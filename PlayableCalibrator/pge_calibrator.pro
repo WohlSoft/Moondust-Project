@@ -25,6 +25,16 @@ QT       += gui widgets
 
 DESTDIR = ../bin
 
+release:OBJECTS_DIR = ../bin/_build/calibrator/_release/.obj
+release:MOC_DIR     = ../bin/_build/calibrator/_release/.moc
+release:RCC_DIR     = ../bin/_build/calibrator/_release/.rcc
+release:UI_DIR      = ../bin/_build/calibrator/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/calibrator/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/calibrator/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/calibrator/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/calibrator/_debug/.ui
+
 TARGET = pge_calibrator
 TEMPLATE = app
 CONFIG += static

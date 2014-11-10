@@ -17,7 +17,7 @@
  */
 
 #include "musicfilelist.h"
-#include "ui_musicfilelist.h"
+#include <ui_musicfilelist.h>
 #include <QDir>
 #include <QDirIterator>
 #include <QMessageBox>

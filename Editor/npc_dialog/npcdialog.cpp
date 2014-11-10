@@ -17,7 +17,7 @@
  */
 
 #include "npcdialog.h"
-#include "ui_npcdialog.h"
+#include <ui_npcdialog.h>
 
 NpcDialog::NpcDialog(dataconfigs *configs, QWidget *parent) :
     QDialog(parent),
