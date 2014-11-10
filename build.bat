@@ -1,6 +1,8 @@
 @echo off
-set QtDir= D:\Qt\5.3.1_Static\5.3.1\bin
+set QtDir= D:\Qt\5.3.1_Static\5.3.2\bin
 set MinGW= D:\DevTools\Qt\5.3.0\Tools\mingw482_32\bin
+
+PATH=%QtDir%;%MinGW%;%PATH%
 
 cd %CD%\Editor
 %QtDir%\lrelease.exe *.pro

@@ -1,6 +1,8 @@
 del MakeFile
 del Editor\MakeFile
 del Editor\MakeFile*
+del Engine\MakeFile
+del Engine\MakeFile*
 del GIFs2PNG\MakeFile
 del GIFs2PNG\MakeFile*
 del LazyFixTool\MakeFile
