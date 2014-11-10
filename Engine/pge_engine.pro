@@ -23,7 +23,7 @@ win32: {
 }
 
 LIBS += -lSDL2
-win32: LIBS += -lSDL2main
+win32: LIBS += -lSDL2_ttf.dll -lSDL2main
 win32: LIBS += libversion
 unix:  LIBS += -lglut -lGLU
 
@@ -133,7 +133,8 @@ SOURCES += main.cpp \
     physics/engine/Quadtree.cpp \
     physics/engine/pge_phys_body.cpp \
     gui/pge_msgbox.cpp \
-    gui/pge_boxbase.cpp
+    gui/pge_boxbase.cpp \
+    fontman/font_manager.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -231,7 +232,8 @@ HEADERS  += \
     physics/engine/Quadtree.h \
     physics/engine/pge_phys_body.h \
     gui/pge_msgbox.h \
-    gui/pge_boxbase.h
+    gui/pge_boxbase.h \
+    fontman/font_manager.h
 
 FORMS    += \
     data_configs/select_config.ui
