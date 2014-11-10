@@ -36,6 +36,7 @@ public:
     //Crash Handlers
     static void crashByFlood();
     static void crashByUnhandledException();
+    static void crashBySIGSERV(int signalid);
 
     //Crash Handlers end
 
@@ -47,6 +48,7 @@ private slots:
     void on_exitButton_clicked();
 
 private:
+    static QString getStacktrace();
     Ui::CrashHandler *ui;
 };
 
