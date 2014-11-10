@@ -28,6 +28,8 @@
 #include <dbghelp.h>
 #endif
 
+#include <signal.h>
+
 CrashHandler::CrashHandler(QString &crashText, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CrashHandler)
