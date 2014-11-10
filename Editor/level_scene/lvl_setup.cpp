@@ -365,6 +365,8 @@ void LvlScene::setLayerToSelected()
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        MainWinConnect::pMainWin->setLayerLists();
+        MainWinConnect::pMainWin->setEventData();
         setLayerToSelected(lName, true);
     }
     delete layerBox;
