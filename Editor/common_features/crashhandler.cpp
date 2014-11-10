@@ -18,6 +18,7 @@
 
 #include "crashhandler.h"
 #include "ui_crashhandler.h"
+#include "dev_console/devconsole.h"
 #include <QDesktopServices>
 
 //temp
@@ -46,6 +47,9 @@ void CrashHandler::crashByFlood()
     QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. Reason: Out of memory! :(\n"
                                         "To prevent this, try closing other uneccessary programs to free up more memory.");
 #ifdef _WIN32
+    if(DevConsole::isConsoleShown())
+        DevConsole::closeIfPossible();
+
     unsigned int   i;
     void         * stack[ 100 ];
     unsigned short frames;
@@ -89,12 +93,10 @@ void CrashHandler::crashByUnhandledException()
     }
     catch(const std::exception& e)
     {
-        std::string s1 = "We're sorry, but PGE Editor has crashed. Reason: ";
-        std::string s2 = e.what();
-        std::string s3 = " :(\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum";
-
-        QString crashMsg = (s1 + s2 + s3).c_str();
+        QString crashMsg = QApplication::tr("We're sorry, but PGE Editor has crashed. Reason: \n%1\n :(\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum");
 #ifdef _WIN32
+        if(DevConsole::isConsoleShown())
+            DevConsole::closeIfPossible();
         unsigned int   i;
         void         * stack[ 100 ];
         unsigned short frames;
