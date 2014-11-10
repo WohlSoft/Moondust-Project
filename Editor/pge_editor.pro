@@ -27,6 +27,16 @@ QT       -= opengl
 
 DESTDIR = ../bin
 
+release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
+release:MOC_DIR     = ../bin/_build/editor/_release/.moc
+release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
+release:UI_DIR      = ../bin/_build/editor/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+
 translates.path = ../bin/languages
 translates.files += languages/*.qm
 translates.files += languages/*.png

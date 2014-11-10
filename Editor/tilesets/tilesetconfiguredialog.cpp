@@ -17,7 +17,7 @@
  */
 
 #include "tilesetconfiguredialog.h"
-#include "ui_tilesetconfiguredialog.h"
+#include <ui_tilesetconfiguredialog.h>
 
 #include "../level_scene/lvl_scene.h"
 #include "../world_scene/wld_scene.h"

@@ -1,5 +1,5 @@
 #include "wld_saveimage.h"
-#include "ui_wld_saveimage.h"
+#include <ui_wld_saveimage.h>
 
 bool WldSaveImage_lock=false;
 

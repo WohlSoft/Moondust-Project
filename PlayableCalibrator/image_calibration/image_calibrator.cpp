@@ -1,5 +1,5 @@
 #include "image_calibrator.h"
-#include "ui_image_calibrator.h"
+#include <ui_image_calibrator.h>
 #include "../main/graphics.h"
 #include "../main/globals.h"
 #include "../frame_matrix/matrix.h"

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
 #include "global_settings.h"

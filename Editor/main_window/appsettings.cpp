@@ -17,7 +17,7 @@
  */
 
 #include "appsettings.h"
-#include "ui_appsettings.h"
+#include <ui_appsettings.h>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>

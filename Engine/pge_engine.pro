@@ -9,6 +9,16 @@ QT += core gui opengl
 
 DESTDIR = ../bin
 
+release:OBJECTS_DIR = ../bin/_build/engine/_release/.obj
+release:MOC_DIR     = ../bin/_build/engine/_release/.moc
+release:RCC_DIR     = ../bin/_build/engine/_release/.rcc
+release:UI_DIR      = ../bin/_build/engine/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/engine/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/engine/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/engine/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/engine/_debug/.ui
+
 TARGET = pge_engine
 TEMPLATE = app
 CONFIG += c++11
@@ -24,6 +34,7 @@ win32: {
 
 LIBS += -lSDL2
 win32: LIBS += -lSDL2_ttf.dll -lSDL2main
+unix:  LIBS += -lSDL2_ttf
 win32: LIBS += libversion
 unix:  LIBS += -lglut -lGLU
 

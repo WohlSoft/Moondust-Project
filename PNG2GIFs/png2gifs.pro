@@ -26,6 +26,16 @@ QT       += core gui
 
 DESTDIR = ../bin
 
+release:OBJECTS_DIR = ../bin/_build/png2gifs/_release/.obj
+release:MOC_DIR     = ../bin/_build/png2gifs/_release/.moc
+release:RCC_DIR     = ../bin/_build/png2gifs/_release/.rcc
+release:UI_DIR      = ../bin/_build/png2gifs/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/png2gifs/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/png2gifs/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/png2gifs/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/png2gifs/_debug/.ui
+
 TARGET = PNG2GIFs
 CONFIG   += console
 CONFIG   -= app_bundle

@@ -1,5 +1,5 @@
 #include "png2gifs_gui.h"
-#include "ui_png2gifs_gui.h"
+#include <ui_png2gifs_gui.h>
 #include <QMessageBox>
 #include <QFileDialog>
 #include "../common_features/app_path.h"

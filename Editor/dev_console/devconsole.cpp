@@ -1,5 +1,5 @@
 #include "devconsole.h"
-#include "ui_devconsole.h"
+#include <ui_devconsole.h>
 
 #include <stdexcept>
 

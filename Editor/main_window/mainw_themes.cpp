@@ -18,7 +18,7 @@
 
 
 #include "../mainwindow.h"
-#include "../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../common_features/themes.h"
 #include "global_settings.h"
 

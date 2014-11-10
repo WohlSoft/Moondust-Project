@@ -18,7 +18,7 @@
  */
 
 #include "matrix.h"
-#include "ui_matrix.h"
+#include <ui_matrix.h>
 #include "MatrixScene.h"
 #include "../main/globals.h"
 
