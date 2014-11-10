@@ -59,6 +59,7 @@ private:
     void doFlood(QStringList args);
     void doValidateStrArray(QStringList args);
     void doThrowUnhandledException(QStringList);
+    void doSegmentationViolation(QStringList);
 };
 
 #endif // DEVCONSOLE_H
