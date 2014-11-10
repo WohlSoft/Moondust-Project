@@ -71,6 +71,12 @@ bool DevConsole::isConsoleShown()
     return !currentDevConsole->isHidden();
 }
 
+void DevConsole::closeIfPossible()
+{
+    if(isConsoleShown())
+        currentDevConsole->close();
+}
+
 DevConsole::DevConsole(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DevConsole)

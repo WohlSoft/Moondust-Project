@@ -18,6 +18,7 @@ public:
     static void show();
     static void log(const QString &logText, const QString &channel = QString("System"), bool raise=false);
     static bool isConsoleShown();
+    static void closeIfPossible();
 
     static void retranslate();
 
