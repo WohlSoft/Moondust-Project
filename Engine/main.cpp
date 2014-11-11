@@ -96,6 +96,28 @@ int main(int argc, char *argv[])
         ApplicationPath.remove(ApplicationPath.length()-osX_bundle.length()-1, osX_bundle.length()+1);
     #endif
 
+    QString configPath="";
+    QString fileToPpen = ApplicationPath+"/physics.lvl";
+
+    bool skipFirst=true;
+    foreach(QString param, a.arguments())
+    {
+        if(skipFirst) {skipFirst=false; continue;}
+        qDebug() << param;
+
+        if(param.startsWith("--config="))
+        {
+            QStringList tmp;
+            tmp = param.split('=');
+            if(tmp.size()>1)
+                configPath = tmp.last();
+        }
+        else
+        {
+            fileToPpen = param;
+        }
+    }
+
 
 
     ////Check & ask for configuration pack
@@ -109,10 +131,11 @@ int main(int argc, char *argv[])
     SelectConfig *cmanager = new SelectConfig();
     cmanager->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     cmanager->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, cmanager->size(), a.desktop()->availableGeometry() ));
-    QString configPath = cmanager->isPreLoaded();
+
+    QString configPath_manager = cmanager->isPreLoaded();
 
     //If application runned first time or target configuration is not exist
-    if(configPath.isEmpty())
+    if(configPath_manager.isEmpty() && configPath.isEmpty())
     {
         //Ask for configuration
         if(cmanager->exec()==QDialog::Accepted)
@@ -151,10 +174,6 @@ int main(int argc, char *argv[])
     while ( SDL_PollEvent(&event) )
     {}
 
-
-    QString fileToPpen = ApplicationPath+"/physics.lvl";
-    if(a.arguments().size()>1)
-        fileToPpen = a.arguments()[1];
 
     bool playAgain = true;
     int entranceID = 0;
