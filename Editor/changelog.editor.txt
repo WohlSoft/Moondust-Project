@@ -1,9 +1,11 @@
-Editor 0.2.1.2
+Editor 0.2.1.3
 - Added "Ask every startup" flag into config manager
 - Fixed window focus on switch into placing mode
 - Fixed 'Trigger event' and 'Set moving layer' comboboxes on switch into placing mode
 - Fixed crash in protector for 'out of range' inside NPC animator
 - Improved stars counter tool: now it counts accurate and everywhere
+- Fixed "Add to new layer" not updated layer lists
+- Added crash handlers which will display reason of editor crash
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
