@@ -273,7 +273,7 @@ void LVL_Background::draw(float x, float y)
         AniPos ani_x(0,1);
 
         if(isAnimated) //Get current animated frame
-            ani_x = ConfigManager::Animator_BG[animator_ID]->image();
+            ani_x = ConfigManager::Animator_BG[animator_ID].image();
         int lenght=0;
         int lenght_v=0;
         //for Tiled repeats

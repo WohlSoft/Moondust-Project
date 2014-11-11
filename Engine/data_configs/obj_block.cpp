@@ -23,7 +23,7 @@
 QVector<obj_block >     ConfigManager::lvl_blocks;
 QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
 CustomDirManager ConfigManager::Dir_Blocks;
-QVector<SimpleAnimator *> ConfigManager::Animator_Blocks;
+QVector<SimpleAnimator > ConfigManager::Animator_Blocks;
 /*****Level blocks************/
 
 namespace loadLevelBlocks_fnc

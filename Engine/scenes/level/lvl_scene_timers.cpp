@@ -127,6 +127,7 @@ void LevelScene::stopLoaderAnimation()
         loading_Ani->stop();
         delete loading_Ani;
         loading_Ani = NULL;
+        glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(loading_texture.texture) );
     }
 

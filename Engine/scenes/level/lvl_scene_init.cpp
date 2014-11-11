@@ -254,13 +254,13 @@ bool LevelScene::init()
 
     //start animation
     for(int i=0; i<ConfigManager::Animator_Blocks.size(); i++)
-        ConfigManager::Animator_Blocks[i]->start();
+        ConfigManager::Animator_Blocks[i].start();
 
     for(int i=0; i<ConfigManager::Animator_BGO.size(); i++)
-        ConfigManager::Animator_BGO[i]->start();
+        ConfigManager::Animator_BGO[i].start();
 
     for(int i=0; i<ConfigManager::Animator_BG.size(); i++)
-        ConfigManager::Animator_BG[i]->start();
+        ConfigManager::Animator_BG[i].start();
 
     stopLoaderAnimation();
     isInit = true;

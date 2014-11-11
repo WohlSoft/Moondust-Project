@@ -22,7 +22,7 @@
 QVector<obj_bgo >     ConfigManager::lvl_bgo;
 QMap<long, obj_bgo>   ConfigManager::lvl_bgo_indexes;
 CustomDirManager ConfigManager::Dir_BGO;
-QVector<SimpleAnimator *> ConfigManager::Animator_BGO;
+QVector<SimpleAnimator > ConfigManager::Animator_BGO;
 /*****Level BGO************/
 
 bool ConfigManager::loadLevelBGO()

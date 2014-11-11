@@ -406,7 +406,7 @@ void LVL_Player::teleport(float x, float y)
             LvlSceneP::s->bgList()->last()->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
 
             if(ConfigManager::lvl_bg_indexes[camera->BackgroundID].animated)
-                ConfigManager::Animator_BG[ConfigManager::lvl_bg_indexes[camera->BackgroundID].animator_ID]->start();
+                ConfigManager::Animator_BG[ConfigManager::lvl_bg_indexes[camera->BackgroundID].animator_ID].start();
         }
         else
             LvlSceneP::s->bgList()->last()->setNone();

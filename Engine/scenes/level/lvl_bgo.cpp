@@ -78,7 +78,7 @@ void LVL_Bgo::render(float camX, float camY)
     AniPos x(0,1);
 
     if(animated) //Get current animated frame
-        x = ConfigManager::Animator_BGO[animator_ID]->image();
+        x = ConfigManager::Animator_BGO[animator_ID].image();
 
     glEnable(GL_TEXTURE_2D);
     glColor4f( 1.f, 1.f, 1.f, 1.f);
