@@ -145,7 +145,7 @@ void LVL_Block::init()
     if(setup->algorithm==3)
         {
             block->SetSensor(true);
-            ConfigManager::Animator_Blocks[animator_ID]->setFrames(1, -1);
+            ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
         }
 
     if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
@@ -168,7 +168,7 @@ void LVL_Block::render(float camX, float camY)
     AniPos x(0,1);
 
     if(animated) //Get current animated frame
-        x = ConfigManager::Animator_Blocks[animator_ID]->image();
+        x = ConfigManager::Animator_Blocks[animator_ID].image();
 
     glEnable(GL_TEXTURE_2D);
     glColor4f( 1.f, 1.f, 1.f, 1.f);
