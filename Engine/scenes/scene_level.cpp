@@ -197,6 +197,7 @@ LevelScene::~LevelScene()
 
 int i;
 int delayToEnter = 1000;
+Uint32 lastTicks=0;
 void LevelScene::update(float step)
 {
     if(step<=0) step=10.0f;
@@ -204,7 +205,7 @@ void LevelScene::update(float step)
     if(doExit)
     {
         if(exitLevelDelay>=0)
-            exitLevelDelay -= 1000.0/((float)PGE_Window::PhysStep * 2.0);
+            exitLevelDelay -= lastTicks;//(1000.0/((float)PGE_Window::PhysStep))-lastTicks;
         else
         {
             if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
@@ -250,7 +251,7 @@ void LevelScene::update(float step)
             }
             else
             {
-                delayToEnter-= 1000.0 / (float)PGE_Window::PhysStep;
+                delayToEnter-= lastTicks;//(1000.0/(float)PGE_Window::PhysStep)-lastTicks;
             }
         }
 
@@ -282,6 +283,8 @@ void LevelScene::render()
     //Move to center of the screen
     //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
+    long cam_x=0, cam_y=0;
+
     if(!isInit) goto renderBlack;
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
@@ -290,6 +293,8 @@ void LevelScene::render()
     {
         backgrounds.last()->draw(cam->posX(), cam->posY());
 
+        cam_x = cam->posX();
+        cam_y = cam->posY();
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
             switch(item->type)
@@ -306,6 +311,13 @@ void LevelScene::render()
     }
 
     FontManager::printText("Hello world!\nПривет мир!", 10,10);
+
+    FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 300,10);
+
+    if(doExit)
+        FontManager::printText(QString("Exit delay %1, %2")
+                               .arg(exitLevelDelay)
+                               .arg(lastTicks), 10, 100);
 
     renderBlack:
 
@@ -407,6 +419,7 @@ int LevelScene::exec()
         if(1000.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_physics)
         {
             doUpdate_physics = 1000.0/(float)PGE_Window::PhysStep-(SDL_GetTicks()-start_physics);
+            lastTicks = doUpdate_physics;
             SDL_Delay( doUpdate_physics );
         }
 
@@ -457,7 +470,7 @@ void LevelScene::checkPlayers()
 
     if(!haveLivePlayers)
     {
-        setExiting(3000, EXIT_PlayerDeath);
+        setExiting(4000, EXIT_PlayerDeath);
     }
 }
 
