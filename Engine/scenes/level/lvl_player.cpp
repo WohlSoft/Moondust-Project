@@ -427,7 +427,7 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp)
                 LvlSceneP::s->levelData()->path+"/"+levelFile;
         LvlSceneP::s->warpToArrayID = targetWarp;
     }
-    LvlSceneP::s->setExiting(300, LevelScene::EXIT_Warp);
+    LvlSceneP::s->setExiting(2000, LevelScene::EXIT_Warp);
 }
 
 
