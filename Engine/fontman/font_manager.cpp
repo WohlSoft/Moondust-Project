@@ -26,6 +26,7 @@
 
 #include <QImage>
 #include <QPainter>
+#include <QFontMetrics>
 #include <QFontDatabase>
 #include <QGLWidget>
 
@@ -67,11 +68,7 @@ void FontManager::init()
 }
 
 void FontManager::quit()
-{
-    glDisable(GL_TEXTURE_2D);
-    glDeleteTextures(1, &textTexture );
-    //TTF_Quit();
-}
+{}
 
 //TTF_Font *FontManager::buildFont(QString _fontPath, GLint size)
 //{
@@ -139,8 +136,8 @@ void FontManager::SDL_string_texture_create(QFont &font, QString &text, GLuint *
     //      bg_color.r=(GLint) (b_color[0]*255);
     //      bg_color.g=(GLint) (b_color[1]*255);
     //      bg_color.b=(GLint) (b_color[2]*255);
-
-      QImage text_image = QImage(text.size()*16, 32, QImage::Format_ARGB32);
+      QFontMetrics meter(font);
+      QImage text_image = QImage(meter.width(text), meter.height()*text.split('\n').size(), QImage::Format_ARGB32);
       text_image.fill(Qt::transparent);
 
       QPainter x(&text_image);
@@ -168,8 +165,8 @@ void FontManager::SDL_string_texture_create(QFont &font, QString &text, GLuint *
 
 //      GraphicsHelps::flipVertically(temp_image);
 
-      if(*texture==0)
-      {
+//      if(*texture==0)
+//      {
         glGenTextures(1, texture);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glBindTexture(GL_TEXTURE_2D, *texture);
@@ -182,12 +179,12 @@ void FontManager::SDL_string_texture_create(QFont &font, QString &text, GLuint *
         glTexImage2D(GL_TEXTURE_2D, 0,  4, text_image.width(), text_image.height(), 0, GL_BGRA, GL_UNSIGNED_BYTE, text_image.bits() );
 
         glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-      }
-      else
-      {
-          glBindTexture(GL_TEXTURE_2D, *texture);
-          glTexSubImage2D(GL_TEXTURE_2D, 0,0,0, text_image.width(), text_image.height(), GL_BGRA, GL_UNSIGNED_BYTE, text_image.bits() );
-      }
+//      }
+//      else
+//      {
+//          glBindTexture(GL_TEXTURE_2D, *texture);
+//          glTexSubImage2D(GL_TEXTURE_2D, 0,0,0, text_image.width(), text_image.height(), GL_BGRA, GL_UNSIGNED_BYTE, text_image.bits() );
+//      }
       //SDL_FreeSurface(temp_image);
 }
 
@@ -220,5 +217,7 @@ void FontManager::printText(QString text, int x, int y)
     if(!isInit) return;
     SDL_string_texture_create(defaultFont, text, &textTexture);
     SDL_string_render2D(x, y, &textTexture );
+    glDisable(GL_TEXTURE_2D);
+    glDeleteTextures(1, &textTexture );
 }
 
