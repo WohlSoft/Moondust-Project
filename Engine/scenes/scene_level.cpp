@@ -25,6 +25,8 @@
 
 #include "../data_configs/config_manager.h"
 
+#include "../fontman/font_manager.h"
+
 #include <QtDebug>
 
 LevelScene::LevelScene()
@@ -115,6 +117,7 @@ LevelScene::~LevelScene()
     qDebug() << "clear textures";
     while(!textures_bank.isEmpty())
     {
+        glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(textures_bank[0].texture) );
         textures_bank.pop_front();
     }
@@ -213,7 +216,7 @@ void LevelScene::update(float step)
     if(!isPauseMenu) //Update physics is not pause menu
     {
         //Make world step
-        world->Step(1.0f / (float)PGE_Window::PhysStep, 5, 5);
+        world->Step(1.0f / (float)PGE_Window::PhysStep, 5, 1);
 
         //Update controllers
         keyboard1.sendControls();
@@ -301,6 +304,8 @@ void LevelScene::render()
             }
         }
     }
+
+    FontManager::printText("Hello world!\nПривет мир!", 10,10);
 
     renderBlack:
 
