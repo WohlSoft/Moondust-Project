@@ -40,6 +40,8 @@
 #include "graphics/gl_renderer.h"
 #undef main
 
+#include "fontman/font_manager.h"
+
 #include <Box2D/Box2D.h>
 
 #include <file_formats.h>
@@ -167,6 +169,9 @@ int main(int argc, char *argv[])
     //Init OpenGL (to work with textures, OpenGL should be load)
     if(!GlRenderer::init()) exit(1);
 
+    //Init font manager
+    FontManager::init();
+
     glFlush();
     SDL_GL_SwapWindow(PGE_Window::window);
 
@@ -218,6 +223,8 @@ int main(int argc, char *argv[])
             {
                 playAgain = false;
             }
+
+            ConfigManager::unloadLevelConfigs();
 
             delete lScene;
     }
