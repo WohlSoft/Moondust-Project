@@ -285,7 +285,7 @@ void LevelScene::render()
     //Move to center of the screen
     //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
-    long cam_x=0, cam_y=0;
+    //long cam_x=0, cam_y=0;
 
     if(!isInit) goto renderBlack;
 
@@ -295,8 +295,8 @@ void LevelScene::render()
     {
         backgrounds.last()->draw(cam->posX(), cam->posY());
 
-        cam_x = cam->posX();
-        cam_y = cam->posY();
+        //cam_x = cam->posX();
+        //cam_y = cam->posY();
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
             switch(item->type)
@@ -312,9 +312,9 @@ void LevelScene::render()
         }
     }
 
-    FontManager::printText("Hello world!\nПривет мир!", 10,10);
+    //FontManager::printText("Hello world!\nПривет мир!", 10,10);
 
-    FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 300,10);
+    //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 300,10);
 
     if(doExit)
         FontManager::printText(QString("Exit delay %1, %2")
@@ -368,8 +368,6 @@ int LevelScene::exec()
         }
         doUpdate_render-= 1000.0 / (float)PGE_Window::PhysStep;
 
-        start_physics=SDL_GetTicks();
-
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
@@ -378,6 +376,7 @@ int LevelScene::exec()
             {
                 case SDL_QUIT:
                     {
+                        if(doExit) break;
                         setExiting(0, EXIT_Closed);
                     }   // End work of program
                 break;
@@ -392,9 +391,7 @@ int LevelScene::exec()
                         break;
                     case SDLK_RETURN:// Enter
                         {
-                          //isPauseMenu = !isPauseMenu;
-                          PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D", PGE_MsgBox::msg_info);
-                          msgBox.exec();
+                          isPauseMenu = true;
                         }
                     break;
                     case SDLK_t:
@@ -418,7 +415,15 @@ int LevelScene::exec()
             }
         }
 
+        if(isPauseMenu)
+        {
+            PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D",
+                              PGE_MsgBox::msg_info);
+            msgBox.exec();
+            isPauseMenu=false;
+        }
 
+        start_physics=SDL_GetTicks();
         //Update physics
         update();
 

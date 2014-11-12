@@ -20,6 +20,7 @@
 #include "../../data_configs/config_manager.h"
 #include "../../physics/contact_listener.h"
 
+#include "../../gui/pge_msgbox.h"
 
 #include <QDebug>
 
@@ -41,7 +42,14 @@ bool LevelScene::setEntrance(int entr)
             break;
         }
 
-        if(!found) exitLevelCode = EXIT_Error;
+        if(!found)
+        {
+            exitLevelCode = EXIT_Error;
+
+            PGE_MsgBox msgBox(NULL, "ERROR:\nCan't start level without player's start point.\nPlease set a player's start point and start level again.",
+                              PGE_MsgBox::msg_error);
+            msgBox.exec();
+        }
 
         //Find available start points
         return found;
@@ -101,6 +109,10 @@ bool LevelScene::setEntrance(int entr)
     }
 
     isWarpEntrance=false;
+
+    PGE_MsgBox msgBox(NULL, "ERROR:\nTarget section is not found.\nMayby level is empty.",
+                      PGE_MsgBox::msg_error);
+    msgBox.exec();
 
     //Error, sections is not found
     exitLevelCode = EXIT_Error;
