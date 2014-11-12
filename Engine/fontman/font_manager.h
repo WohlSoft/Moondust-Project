@@ -23,6 +23,7 @@
 #include <SDL2/SDL_opengl.h>
 #include <QString>
 #include <QFont>
+#include <QRgb>
 
 class FontManager
 {
@@ -31,13 +32,22 @@ public:
     static void quit();
     //static TTF_Font *buildFont(QString _fontPath, GLint size);
     //static TTF_Font *buildFont_RW(QString _fontPath, GLint size);
-    static void SDL_string_texture_create(QFont &font, QString &text, GLuint *texture);
+    static void SDL_string_texture_create(QFont &font, QRgb color, QString &text, GLuint *texture);
+    static void SDL_string_texture_create(QFont &font, QRect limitRect, int fontFlags, QRgb color,
+                                          QString &text, GLuint *texture);
+
     static void SDL_string_render2D(GLuint x, GLuint y, GLuint *texture);
+    static GLuint TextToTexture(QString text, QRect rectangle, int alignFlags);
+
     static void printText(QString text, int x, int y);
+    static void printText(QString text, int x, int y, int pointSize, QRgb color=qRgba(255,255,255,255));
+
+
 private:
     static bool isInit;
     //static TTF_Font * defaultFont;
     static GLuint textTexture;
+    static int fontID;
 
     static QFont defaultFont;
 };
