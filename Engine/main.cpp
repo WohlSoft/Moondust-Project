@@ -42,6 +42,8 @@
 
 #include "fontman/font_manager.h"
 
+#include "gui/pge_msgbox.h"
+
 #include <Box2D/Box2D.h>
 
 #include <file_formats.h>
@@ -193,9 +195,16 @@ int main(int argc, char *argv[])
             SDL_GL_SwapWindow(PGE_Window::window);
             while ( SDL_PollEvent(&event) )
             {}
+
             bool sceneResult=true;
 
-                sceneResult = lScene->loadFile(fileToPpen);
+            sceneResult = lScene->loadFile(fileToPpen);
+            if(!sceneResult)
+            {
+                PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\nFile is wrong\nor not exists"),
+                                  PGE_MsgBox::msg_error);
+                msgBox.exec();
+            }
 
             if(sceneResult)
                 sceneResult = lScene->setEntrance(entranceID);

@@ -24,6 +24,7 @@
 
 bool LevelScene::loadFile(QString filePath)
 {
+    data.ReadFileValid = false;
     data = FileFormats::OpenLevelFile(filePath);
     return data.ReadFileValid;
 }

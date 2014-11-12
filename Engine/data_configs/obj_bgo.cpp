@@ -17,6 +17,7 @@
  */
 
 #include "config_manager.h"
+#include "../gui/pge_msgbox.h"
 
 /*****Level BGO************/
 QVector<obj_bgo >     ConfigManager::lvl_bgo;
@@ -36,6 +37,9 @@ bool ConfigManager::loadLevelBGO()
     if(!QFile::exists(bgo_ini))
     {
         addError(QString("ERROR LOADING lvl_bgo.ini: file does not exist"), QtCriticalMsg);
+        PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_bgo.ini: file does not exist"),
+                          PGE_MsgBox::msg_fatal);
+        msgBox.exec();
         return false;
     }
 
@@ -135,6 +139,9 @@ bool ConfigManager::loadLevelBGO()
     if((unsigned int)lvl_bgo.size()<bgo_total)
     {
         addError(QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo.size()));
+        PGE_MsgBox msgBox(NULL, QString("Not all BGOs loaded! Total: %1, Loaded: %2").arg(bgo_total).arg(lvl_bgo.size()),
+                          PGE_MsgBox::msg_error);
+        msgBox.exec();
     }
     return true;
 }
