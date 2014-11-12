@@ -1,5 +1,9 @@
 #include "pge_boxbase.h"
 
+#undef main
+#include <SDL2/SDL_opengl.h>
+#undef main
+
 PGE_BoxBase::PGE_BoxBase()
 {
     parentScene = 0;
@@ -25,6 +29,11 @@ void PGE_BoxBase::exec()
 {
     if(parentScene)
         parentScene->render();
+    else
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glLoadIdentity();
+    }
 }
 
 
