@@ -27,6 +27,8 @@
 
 #include "../fontman/font_manager.h"
 
+#include "../gui/pge_msgbox.h"
+
 #include <QtDebug>
 
 LevelScene::LevelScene()
@@ -317,7 +319,7 @@ void LevelScene::render()
     if(doExit)
         FontManager::printText(QString("Exit delay %1, %2")
                                .arg(exitLevelDelay)
-                               .arg(lastTicks), 10, 100);
+                               .arg(lastTicks), 10, 100, 10, qRgb(255,0,0));
 
     renderBlack:
 
@@ -389,7 +391,11 @@ int LevelScene::exec()
                             }   // End work of program
                         break;
                     case SDLK_RETURN:// Enter
-                          isPauseMenu = !isPauseMenu;
+                        {
+                          //isPauseMenu = !isPauseMenu;
+                          PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D", PGE_MsgBox::msg_info);
+                          msgBox.exec();
+                        }
                     break;
                     case SDLK_t:
                         PGE_Window::SDL_ToggleFS(PGE_Window::window);
