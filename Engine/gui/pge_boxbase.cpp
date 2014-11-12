@@ -3,6 +3,12 @@
 PGE_BoxBase::PGE_BoxBase()
 {
     parentScene = 0;
+
+    fader_opacity = 0.0f;
+
+    fade_step = 0.02f;
+    target_opacity=0.0f;
+    fadeSpeed=10;
 }
 
 PGE_BoxBase::PGE_BoxBase(Scene *_parentScene)

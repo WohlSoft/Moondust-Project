@@ -22,7 +22,12 @@
 #include "pge_boxbase.h"
 #include "../scenes/scene.h"
 
+#undef main
+#include <SDL2/SDL_opengl.h>
+#undef main
+
 #include <QString>
+#include <QSizeF>
 
 class PGE_MsgBox : public PGE_BoxBase
 {
@@ -36,16 +41,23 @@ public:
     };
 
     PGE_MsgBox();
-    PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!", msgType _type=msg_info);
+    PGE_MsgBox(Scene * _parentScene=NULL, QString msg="Message box is works!",
+               msgType _type=msg_info, QSizeF boxSize=QSizeF(400,250), float _padding=20);
     ~PGE_MsgBox();
 
-
+    void setBoxSize(float _Width, float _Height, float _padding);
     void exec();
+
+    void buildBox();
 
 private:
     Scene * parentScene;
     msgType type;
     QString message;
+    GLuint textTexture;
+    float width;
+    float height;
+    float padding;
 };
 
 #endif // PGE_MSGBOX_H
