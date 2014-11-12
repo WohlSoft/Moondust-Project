@@ -82,7 +82,6 @@ void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
 
 void PGE_MsgBox::exec()
 {
-    qDebug() << "Opening";
     setFade(20, 1.0, 0.1);
     Uint32 start_render;
 
@@ -113,7 +112,6 @@ void PGE_MsgBox::exec()
                 SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
     }
 
-    qDebug() << "Opened";
     bool running=true;
     while(running)
     {
@@ -147,6 +145,12 @@ void PGE_MsgBox::exec()
         {
             switch(event.type)
             {
+                case SDL_QUIT:
+                    {
+                        running=false;
+                    }
+                break;
+
                 case SDL_KEYDOWN: // If pressed key
                   switch(event.key.keysym.sym)
                   { // Check which
@@ -169,12 +173,10 @@ void PGE_MsgBox::exec()
             }
         }
 
-        if(1000.0 / (float)PGE_Window::MaxFPS > SDL_GetTicks() - start_render)
+        if(1000.0 / 75.0 > SDL_GetTicks() - start_render)
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
+                SDL_Delay(1000.0 / 75.0 - (SDL_GetTicks()-start_render) );
     }
-
-    qDebug() << "Closing";
 
     setFade(20, 0.0, 0.1);
     while(fader_opacity>=0)
@@ -207,7 +209,5 @@ void PGE_MsgBox::exec()
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
                 SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
     }
-
-    qDebug() << "closed";
 
 }

@@ -391,7 +391,8 @@ int LevelScene::exec()
                         break;
                     case SDLK_RETURN:// Enter
                         {
-                          isPauseMenu = true;
+                            if(doExit) break;
+                            isPauseMenu = true;
                         }
                     break;
                     case SDLK_t:
