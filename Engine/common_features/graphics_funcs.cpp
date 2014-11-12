@@ -23,7 +23,6 @@
 #include <QMessageBox>
 #include <QtOpenGL/QGLWidget>
 
-
 #include "graphics_funcs.h"
 #include "../../_Libs/EasyBMP/EasyBMP.h"
 
