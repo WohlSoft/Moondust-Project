@@ -30,6 +30,14 @@ PGE_MsgBox::PGE_MsgBox()
 {
     message = "Message box works fine!";
     type = msg_info;
+    switch(type)
+    {
+        case msg_info: bg_color = QColor(qRgb(0,0,0)); break;
+        case msg_warn: bg_color = QColor(qRgb(255,201,14)); break;
+        case msg_error: bg_color = QColor(qRgb(125,0,0)); break;
+        case msg_fatal: bg_color = QColor(qRgb(255,0,0)); break;
+        default:  bg_color = QColor(qRgb(0,0,0)); break;
+    }
     setBoxSize(200, 125, 20);
     buildBox();
 }
@@ -39,6 +47,14 @@ PGE_MsgBox::PGE_MsgBox(Scene *_parentScene, QString msg, msgType _type, QSizeF b
 {
     message = msg;
     type = _type;
+    switch(type)
+    {
+        case msg_info: bg_color = QColor(qRgb(0,0,0)); break;
+        case msg_warn: bg_color = QColor(qRgb(255,201,14)); break;
+        case msg_error: bg_color = QColor(qRgb(125,0,0)); break;
+        case msg_fatal: bg_color = QColor(qRgb(255,0,0)); break;
+        default:  bg_color = QColor(qRgb(0,0,0)); break;
+    }
     setBoxSize(boxSize.width()/2, boxSize.height()/2, _padding);
     buildBox();
 }
@@ -66,6 +82,7 @@ void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
 
 void PGE_MsgBox::exec()
 {
+    qDebug() << "Opening";
     setFade(20, 1.0, 0.1);
     Uint32 start_render;
 
@@ -76,7 +93,7 @@ void PGE_MsgBox::exec()
         PGE_BoxBase::exec();
 
         glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 0.f, 0.f, 1.0);
+        glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
         glBegin( GL_QUADS );
             glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding, PGE_Window::Height/2 - height*fader_opacity - padding);
             glVertex2f( PGE_Window::Width/2 + width*fader_opacity + padding, PGE_Window::Height/2 - height*fader_opacity - padding);
@@ -96,6 +113,7 @@ void PGE_MsgBox::exec()
                 SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
     }
 
+    qDebug() << "Opened";
     bool running=true;
     while(running)
     {
@@ -105,7 +123,7 @@ void PGE_MsgBox::exec()
         PGE_BoxBase::exec();
 
         glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 0.f, 0.f, 1.0);
+        glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
         glBegin( GL_QUADS );
             glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding,
                         PGE_Window::Height/2 - height*fader_opacity - padding);
@@ -134,6 +152,7 @@ void PGE_MsgBox::exec()
                   { // Check which
                     case SDLK_ESCAPE: // ESC
                     case SDLK_RETURN:// Enter
+                    case SDLK_KP_ENTER:
                         {
                             running=false;
                         }
@@ -150,13 +169,14 @@ void PGE_MsgBox::exec()
             }
         }
 
-        if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
+        if(1000.0 / (float)PGE_Window::MaxFPS > SDL_GetTicks() - start_render)
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
                 SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
     }
 
-    setFade(20, 0.0, 0.1);
+    qDebug() << "Closing";
 
+    setFade(20, 0.0, 0.1);
     while(fader_opacity>=0)
     {
         start_render=SDL_GetTicks();
@@ -164,7 +184,7 @@ void PGE_MsgBox::exec()
         PGE_BoxBase::exec();
 
         glDisable(GL_TEXTURE_2D);
-        glColor4f( 0.f, 0.f, 0.f, 1.0);
+        glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
         glBegin( GL_QUADS );
             glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding,
                         PGE_Window::Height/2 - height*fader_opacity - padding);
@@ -187,5 +207,7 @@ void PGE_MsgBox::exec()
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
                 SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
     }
+
+    qDebug() << "closed";
 
 }

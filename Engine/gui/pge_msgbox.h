@@ -28,6 +28,7 @@
 
 #include <QString>
 #include <QSizeF>
+#include <QColor>
 
 class PGE_MsgBox : public PGE_BoxBase
 {
@@ -58,6 +59,7 @@ private:
     float width;
     float height;
     float padding;
+    QColor bg_color;
 };
 
 #endif // PGE_MSGBOX_H
