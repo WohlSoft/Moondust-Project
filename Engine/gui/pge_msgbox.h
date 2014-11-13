@@ -52,7 +52,6 @@ public:
     void buildBox();
 
 private:
-    Scene * parentScene;
     msgType type;
     QString message;
     GLuint textTexture;
