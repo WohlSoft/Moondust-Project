@@ -18,16 +18,25 @@
 
 #include "gl_renderer.h"
 #include "window.h"
+#include "../common_features/app_path.h"
 
 #undef main
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
 #undef main
 
+#include <QDir>
+#include <QImage>
+#include <QDateTime>
+#include <QGLWidget>
+#include <QtDebug>
+
 bool GlRenderer::init()
 {
     if(!PGE_Window::isReady())
         return false;
+
+    ScreenshotPath = ApplicationPath+"/screenshots/";
 
     // Initializing OpenGL
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
@@ -85,4 +94,38 @@ QPointF GlRenderer::mapToOpengl(QPoint s)
     qreal nx  =  s.x() - qreal(PGE_Window::Width)  /  2;
     qreal ny  =  s.y() - qreal(PGE_Window::Height)  /  2;
     return QPointF(nx, ny);
+}
+
+
+QString GlRenderer::ScreenshotPath = ApplicationPath+"/screenshots/";
+
+void GlRenderer::makeShot()
+{
+    // Make the BYTE array, factor of 3 because it's RBG.
+    uchar* pixels = new uchar[ 3 * PGE_Window::Width * PGE_Window::Height];
+    glReadPixels(0, 0, PGE_Window::Width, PGE_Window::Height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
+
+    QImage shotImg = QImage(PGE_Window::Width, PGE_Window::Height, QImage::Format_ARGB32);
+    shotImg.fill(Qt::black);
+
+    for(int i=0, x=0, y=PGE_Window::Height-1; i<3*PGE_Window::Width*PGE_Window::Height; i+=3, x++)
+    {
+        if(x==PGE_Window::Width) {x=0; y--;}
+        shotImg.setPixel( QPoint(x,y), qRgb(pixels[i],pixels[i+1], pixels[i+2]) );
+    }
+
+    if(!QDir(ScreenshotPath).exists()) QDir().mkdir(ScreenshotPath);
+
+    QDate date = QDate::currentDate();
+    QTime time = QTime::currentTime();
+
+    QString saveTo = QString("%1Scr_%2_%3_%4_%5_%6_%7_%8.png").arg(ScreenshotPath)
+            .arg(date.year()).arg(date.month()).arg(date.day())
+            .arg(time.hour()).arg(time.minute()).arg(time.second()).arg(time.msec());
+
+    qDebug() << saveTo << shotImg.width() << shotImg.height() << pixels[0];
+
+    shotImg.save(saveTo, "PNG");
+
+    delete [] pixels;
 }
