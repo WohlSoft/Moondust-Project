@@ -21,6 +21,10 @@
 #include "../fontman/font_manager.h"
 #include "../graphics/window.h"
 
+#include "../graphics/gl_renderer.h"
+
+#include "../scenes/scene_level.h"
+
 #include <QRect>
 
 #include <QtDebug>
@@ -89,7 +93,20 @@ void PGE_MsgBox::exec()
 
     SDL_Event event; //  Events of SDL
 
-    while ( SDL_PollEvent(&event) ) {}
+    while ( SDL_PollEvent(&event) )
+    {
+        if(parentScene!=NULL)
+        {
+            if(parentScene->type()==Scene::Level)
+                dynamic_cast<LevelScene *>(parentScene)->keyboard1.update(event);
+        }
+    }
+
+    if(parentScene!=NULL)
+    {
+        if(parentScene->type()==Scene::Level)
+            dynamic_cast<LevelScene *>(parentScene)->keyboard1.sendControls();
+    }
 
     setFade(20, 1.0f, 0.09f);
 
@@ -116,7 +133,20 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        while ( SDL_PollEvent(&event) ){}
+        while ( SDL_PollEvent(&event) )
+        {
+            if(parentScene!=NULL)
+            {
+                if(parentScene->type()==Scene::Level)
+                    dynamic_cast<LevelScene *>(parentScene)->keyboard1.update(event);
+            }
+        }
+
+        if(parentScene!=NULL)
+        {
+            if(parentScene->type()==Scene::Level)
+                dynamic_cast<LevelScene *>(parentScene)->keyboard1.sendControls();
+        }
 
         if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
@@ -154,6 +184,12 @@ void PGE_MsgBox::exec()
 
         while ( SDL_PollEvent(&event) )
         {
+            if(parentScene!=NULL)
+            {
+                if(parentScene->type()==Scene::Level)
+                    dynamic_cast<LevelScene *>(parentScene)->keyboard1.update(event);
+            }
+
             switch(event.type)
             {
                 case SDL_QUIT:
@@ -175,6 +211,9 @@ void PGE_MsgBox::exec()
                     case SDLK_t:
                         PGE_Window::SDL_ToggleFS(PGE_Window::window);
                     break;
+                    case SDLK_F12:
+                        GlRenderer::makeShot();
+                    break;
                     default:
                       break;
                   }
@@ -182,6 +221,11 @@ void PGE_MsgBox::exec()
                 default:
                   break;
             }
+        }
+        if(parentScene!=NULL)
+        {
+            if(parentScene->type()==Scene::Level)
+                dynamic_cast<LevelScene *>(parentScene)->keyboard1.sendControls();
         }
 
         if(1000.0 / 75.0 > SDL_GetTicks() - start_render)
@@ -223,7 +267,18 @@ void PGE_MsgBox::exec()
         SDL_GL_SwapWindow(PGE_Window::window);
 
         while ( SDL_PollEvent(&event) )
-        {}
+        {
+            if(parentScene!=NULL)
+            {
+                if(parentScene->type()==Scene::Level)
+                    dynamic_cast<LevelScene *>(parentScene)->keyboard1.update(event);
+            }
+        }
+        if(parentScene!=NULL)
+        {
+            if(parentScene->type()==Scene::Level)
+                dynamic_cast<LevelScene *>(parentScene)->keyboard1.sendControls();
+        }
 
         if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
