@@ -36,13 +36,19 @@ SDL_Window *PGE_Window::window;
 bool PGE_Window::IsInit=false;
 
 
+#include <QMessageBox>
+
 
 bool PGE_Window::init(QString WindowTitle)
 {
     // Initalizing SDL
 
-    if ( SDL_Init(SDL_INIT_VIDEO) < 0 ){
-        std::cout << "Unable to init SDL, error: " << SDL_GetError() << '\n';
+    if ( SDL_Init(SDL_INIT_VIDEO) < 0 )
+    {
+        QMessageBox::critical(NULL, "SDL Error",
+            QString("Unable to init SDL!\n%1")
+            .arg( SDL_GetError() ), QMessageBox::Ok);
+            //std::cout << "Unable to init SDL, error: " << SDL_GetError() << '\n';
         return false;
     }
 
@@ -72,7 +78,12 @@ bool PGE_Window::init(QString WindowTitle)
     Q_UNUSED(glcontext);
 
     if(window == NULL)
-    {	// If failed to create window - exiting
+    {
+        // If failed to create window - exiting
+        QMessageBox::critical(NULL, "SDL Error",
+            QString("Unable to create window!\n%1")
+            .arg( SDL_GetError() ), QMessageBox::Ok);
+
         return false;
     }
 
@@ -99,7 +110,7 @@ SDL_bool PGE_Window::IsFullScreen(SDL_Window *win)
 {
    Uint32 flags = SDL_GetWindowFlags(win);
 
-    if (flags & SDL_WINDOW_FULLSCREEN) return SDL_TRUE; // return SDL_TRUE if fullscreen
+   if(flags & SDL_WINDOW_FULLSCREEN) return SDL_TRUE; // return SDL_TRUE if fullscreen
 
    return SDL_FALSE; // Return SDL_FALSE if windowed
 }

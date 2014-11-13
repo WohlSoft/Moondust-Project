@@ -23,20 +23,22 @@
 #undef main
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
+#include <GL/glu.h>
 #undef main
 
 #include <QDir>
 #include <QImage>
 #include <QDateTime>
+#include <QMessageBox>
 #include <QGLWidget>
 #include <QtDebug>
+
+bool GlRenderer::_isReady=false;
 
 bool GlRenderer::init()
 {
     if(!PGE_Window::isReady())
         return false;
-
-    ScreenshotPath = ApplicationPath+"/screenshots/";
 
     // Initializing OpenGL
     glViewport( 0.f, 0.f, PGE_Window::Width, PGE_Window::Height );
@@ -73,6 +75,9 @@ bool GlRenderer::init()
     GLenum error = glGetError();
     if( error != GL_NO_ERROR )
     {
+        QMessageBox::critical(NULL, "OpenGL Error",
+            QString("Error initializing OpenGL!\n%1")
+            .arg( (char*)gluErrorString( error ) ), QMessageBox::Ok);
        //printf( "Error initializing OpenGL! %s\n", gluErrorString( error ) );
        return false;
     }
@@ -81,12 +86,15 @@ bool GlRenderer::init()
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
+    ScreenshotPath = ApplicationPath+"/screenshots/";
+    _isReady=true;
+
     return true;
 }
 
 bool GlRenderer::uninit()
 {
- return false;
+    return false;
 }
 
 QPointF GlRenderer::mapToOpengl(QPoint s)
@@ -96,11 +104,12 @@ QPointF GlRenderer::mapToOpengl(QPoint s)
     return QPointF(nx, ny);
 }
 
-
-QString GlRenderer::ScreenshotPath = ApplicationPath+"/screenshots/";
+QString GlRenderer::ScreenshotPath = "";
 
 void GlRenderer::makeShot()
 {
+    if(!_isReady) return;
+
     // Make the BYTE array, factor of 3 because it's RBG.
     uchar* pixels = new uchar[ 3 * PGE_Window::Width * PGE_Window::Height];
     glReadPixels(0, 0, PGE_Window::Width, PGE_Window::Height, GL_RGB, GL_UNSIGNED_BYTE, pixels);
@@ -128,4 +137,9 @@ void GlRenderer::makeShot()
     shotImg.save(saveTo, "PNG");
 
     delete [] pixels;
+}
+
+bool GlRenderer::ready()
+{
+    return _isReady;
 }

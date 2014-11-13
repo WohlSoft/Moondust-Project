@@ -34,7 +34,6 @@ win32: {
 
 LIBS += -lSDL2
 win32: LIBS += -lSDL2main
-#unix:  LIBS += -lSDL2_ttf
 win32: LIBS += libversion
 unix:  LIBS += -lglut -lGLU
 
