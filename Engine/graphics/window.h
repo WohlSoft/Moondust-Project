@@ -31,6 +31,7 @@ public:
     static int Height;
     static int MaxFPS;
     static int PhysStep;
+    static bool showDebugInfo;
     static bool init(QString WindowTitle="Platformer Game Engine by Wohldtand");
     static bool uninit();
     static bool isReady();

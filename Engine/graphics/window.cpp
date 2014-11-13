@@ -29,6 +29,8 @@ int PGE_Window::Height=600;
 int PGE_Window::MaxFPS=250;
 int PGE_Window::PhysStep=75;
 
+bool PGE_Window::showDebugInfo=false;
+
 SDL_Window *PGE_Window::window;
 
 bool PGE_Window::IsInit=false;

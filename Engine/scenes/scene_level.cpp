@@ -21,6 +21,8 @@
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
 
+#include "../graphics/gl_renderer.h"
+
 #include "level/lvl_scene_ptr.h"
 
 #include "../data_configs/config_manager.h"
@@ -285,7 +287,7 @@ void LevelScene::render()
     //Move to center of the screen
     //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
-    //long cam_x=0, cam_y=0;
+    long cam_x=0, cam_y=0;
 
     if(!isInit) goto renderBlack;
 
@@ -295,8 +297,12 @@ void LevelScene::render()
     {
         backgrounds.last()->draw(cam->posX(), cam->posY());
 
-        //cam_x = cam->posX();
-        //cam_y = cam->posY();
+        if(PGE_Window::showDebugInfo)
+        {
+            cam_x = cam->posX();
+            cam_y = cam->posY();
+        }
+
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
             switch(item->type)
@@ -314,12 +320,15 @@ void LevelScene::render()
 
     //FontManager::printText("Hello world!\nПривет мир!", 10,10);
 
-    //FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 300,10);
+    if(PGE_Window::showDebugInfo)
+    {
+        FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 300,10);
 
-    if(doExit)
-        FontManager::printText(QString("Exit delay %1, %2")
-                               .arg(exitLevelDelay)
-                               .arg(lastTicks), 10, 100, 10, qRgb(255,0,0));
+        if(doExit)
+            FontManager::printText(QString("Exit delay %1, %2")
+                                   .arg(exitLevelDelay)
+                                   .arg(lastTicks), 10, 100, 10, qRgb(255,0,0));
+    }
 
     renderBlack:
 
@@ -397,6 +406,12 @@ int LevelScene::exec()
                     break;
                     case SDLK_t:
                         PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    break;
+                    case SDLK_F3:
+                        PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
+                    break;
+                    case SDLK_F12:
+                        GlRenderer::makeShot();
                     break;
                     default:
                       break;
