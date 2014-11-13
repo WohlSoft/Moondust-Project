@@ -34,6 +34,7 @@
 #include <QtDebug>
 
 LevelScene::LevelScene()
+    : Scene(Scene::Level)
 {
     LvlSceneP::s = this;
 
