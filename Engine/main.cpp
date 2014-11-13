@@ -227,6 +227,11 @@ int main(int argc, char *argv[])
                 fileToPpen = lScene->toAnotherLevel();
                 entranceID = lScene->toAnotherEntrance();
                 if(fileToPpen.isEmpty()) playAgain = false;
+
+                PGE_MsgBox msgBox(NULL, QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
+                                  .arg(fileToPpen).arg(entranceID),
+                                  PGE_MsgBox::msg_warn);
+                msgBox.exec();
             }
             else
             if(ExitCode!= LevelScene::EXIT_PlayerDeath)
