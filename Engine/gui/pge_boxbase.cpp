@@ -19,6 +19,7 @@ PGE_BoxBase::PGE_BoxBase()
 PGE_BoxBase::PGE_BoxBase(Scene *_parentScene)
 {
     parentScene = _parentScene;
+    if(!parentScene) glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 PGE_BoxBase::~PGE_BoxBase()

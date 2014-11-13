@@ -454,6 +454,7 @@ bool LevelScene::isExit()
 
 QString LevelScene::toAnotherLevel()
 {
+    if(!warpToLevelFile.isEmpty())
     if(!warpToLevelFile.endsWith(".lvl", Qt::CaseInsensitive) &&
        !warpToLevelFile.endsWith(".lvlx", Qt::CaseInsensitive))
         warpToLevelFile.append(".lvl");
