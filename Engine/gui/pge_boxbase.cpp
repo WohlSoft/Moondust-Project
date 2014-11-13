@@ -4,6 +4,7 @@
 #include <SDL2/SDL_opengl.h>
 #undef main
 
+
 PGE_BoxBase::PGE_BoxBase()
 {
     parentScene = 0;
@@ -44,7 +45,9 @@ void PGE_BoxBase::setFade(int speed, float target, float step)
     fade_step = fabs(step);
     target_opacity = target;
     fadeSpeed = speed;
+
     fader_timer_id = SDL_AddTimer(speed, &PGE_BoxBase::nextOpacity, this);
+    if(!fader_timer_id) fader_opacity = target_opacity;
 }
 
 unsigned int PGE_BoxBase::nextOpacity(unsigned int x, void *p)
@@ -62,9 +65,16 @@ void PGE_BoxBase::fadeStep()
     else
         fader_opacity-=fade_step;
 
-    if(fader_opacity>=1.0 || fader_opacity<=0.0)
+    if(fader_opacity>=1.0f || fader_opacity<=0.0f)
         SDL_RemoveTimer(fader_timer_id);
     else
-        fader_timer_id = SDL_AddTimer(fadeSpeed, &PGE_BoxBase::nextOpacity, this);
+        {
+            fader_timer_id = SDL_AddTimer(fadeSpeed, &PGE_BoxBase::nextOpacity, this);
+            if(!fader_timer_id) fader_opacity = target_opacity;
+        }
+
+    if(fader_opacity>1.0f) fader_opacity = 1.0f;
+    else
+    if(fader_opacity<0.0f) fader_opacity = 0.0f;
 }
 /**************************Fader**end**************************/

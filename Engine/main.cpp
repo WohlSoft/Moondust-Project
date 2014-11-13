@@ -201,6 +201,7 @@ int main(int argc, char *argv[])
             sceneResult = lScene->loadFile(fileToPpen);
             if(!sceneResult)
             {
+                SDL_Delay(50);
                 PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\nFile is wrong\nor not exists"),
                                   PGE_MsgBox::msg_error);
                 msgBox.exec();

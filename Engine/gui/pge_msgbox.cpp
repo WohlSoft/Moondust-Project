@@ -82,11 +82,24 @@ void PGE_MsgBox::setBoxSize(float _Width, float _Height, float _padding)
 
 void PGE_MsgBox::exec()
 {
-    setFade(20, 1.0, 0.1);
     Uint32 start_render;
+    Uint32 start_fade;
 
-    while(fader_opacity<=1)
+    Uint32 AntiFreeze_delay=3000; //Protecting from freezing if fading timer wasn't start
+
+    SDL_Event event; //  Events of SDL
+
+    while ( SDL_PollEvent(&event) ) {}
+
+    setFade(20, 1.0f, 0.09f);
+
+    start_fade = SDL_GetTicks();
+    while(fader_opacity<1.0f)
     {
+        if( start_fade+AntiFreeze_delay
+                < SDL_GetTicks()-start_fade)
+            fader_opacity = 1.0f;
+
         start_render=SDL_GetTicks();
 
         PGE_BoxBase::exec();
@@ -103,14 +116,13 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        SDL_Event event; //  Events of SDL
-        while ( SDL_PollEvent(&event) )
-        {}
+        while ( SDL_PollEvent(&event) ){}
 
         if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
                 //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
                 SDL_Delay(1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render) );
     }
+
 
     bool running=true;
     while(running)
@@ -123,14 +135,14 @@ void PGE_MsgBox::exec()
         glDisable(GL_TEXTURE_2D);
         glColor4f( bg_color.red()/255.0f, bg_color.green()/255.0f, bg_color.blue()/255.0f, 1.0);
         glBegin( GL_QUADS );
-            glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding,
-                        PGE_Window::Height/2 - height*fader_opacity - padding);
-            glVertex2f( PGE_Window::Width/2 + width*fader_opacity + padding,
-                        PGE_Window::Height/2 - height*fader_opacity - padding);
-            glVertex2f( PGE_Window::Width/2 + width*fader_opacity + padding,
-                        PGE_Window::Height/2 + height*fader_opacity + padding);
-            glVertex2f( PGE_Window::Width/2 - width*fader_opacity - padding,
-                        PGE_Window::Height/2 + height*fader_opacity + padding);
+            glVertex2f( PGE_Window::Width/2 - width - padding,
+                        PGE_Window::Height/2 - height - padding);
+            glVertex2f( PGE_Window::Width/2 + width + padding,
+                        PGE_Window::Height/2 - height - padding);
+            glVertex2f( PGE_Window::Width/2 + width + padding,
+                        PGE_Window::Height/2 + height + padding);
+            glVertex2f( PGE_Window::Width/2 - width - padding,
+                        PGE_Window::Height/2 + height + padding);
         glEnd();
 
         FontManager::SDL_string_render2D(PGE_Window::Width/2-width,
@@ -140,7 +152,6 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {
             switch(event.type)
@@ -178,9 +189,19 @@ void PGE_MsgBox::exec()
                 SDL_Delay(1000.0 / 75.0 - (SDL_GetTicks()-start_render) );
     }
 
-    setFade(20, 0.0, 0.1);
-    while(fader_opacity>=0)
+
+
+
+
+    setFade(20, 0.0f, 0.09f);
+
+    start_fade = SDL_GetTicks();
+    while(fader_opacity>0.0f)
     {
+        if( start_fade+AntiFreeze_delay
+                < SDL_GetTicks()-start_fade)
+            fader_opacity = 0.0f;
+
         start_render=SDL_GetTicks();
 
         PGE_BoxBase::exec();
@@ -201,7 +222,6 @@ void PGE_MsgBox::exec()
         glFlush();
         SDL_GL_SwapWindow(PGE_Window::window);
 
-        SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
         {}
 
