@@ -32,6 +32,9 @@ public:
 
     static QString ScreenshotPath;
     static void makeShot();
+    static bool ready();
+private:
+    static bool _isReady;
 };
 
 #endif // GL_RENDERER_H

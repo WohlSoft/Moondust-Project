@@ -27,7 +27,6 @@
 
 #include <QRect>
 
-#include <QtDebug>
 
 PGE_MsgBox::PGE_MsgBox()
     : PGE_BoxBase(0)
