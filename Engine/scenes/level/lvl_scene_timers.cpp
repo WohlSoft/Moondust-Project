@@ -68,6 +68,20 @@ void LevelScene::drawLoader()
 
     if(!loading_Ani) return;
 
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Reset modelview matrix
+    glLoadIdentity();
+
+
+    glDisable(GL_TEXTURE_2D);
+    glColor4f( 0.f, 0.f, 0.f, 1.0f);
+    glBegin( GL_QUADS );
+        glVertex2f( 0, 0);
+        glVertex2f( PGE_Window::Width, 0);
+        glVertex2f( PGE_Window::Width, PGE_Window::Height);
+        glVertex2f( 0, PGE_Window::Height);
+    glEnd();
+
     QRectF loadAniG = QRectF(PGE_Window::Width/2 - loading_texture.w/2,
                            PGE_Window::Height/2 - (loading_texture.h/4)/2,
                            loading_texture.w,
@@ -122,6 +136,7 @@ void LevelScene::stopLoaderAnimation()
     IsLoaderWorks = false;
     SDL_RemoveTimer(loader_timer_id);
 
+    render();
     if(loading_Ani)
     {
         loading_Ani->stop();
@@ -161,7 +176,8 @@ void LevelScene::loaderStep()
         }
     }
 
-    render();
+    drawLoader();
+
     glFlush();
     SDL_GL_SwapWindow(PGE_Window::window);
 
