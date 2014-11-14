@@ -379,6 +379,7 @@ void LVL_Block::hit(LVL_Block::directions _dir)
 
     if(setup->hitable)
     {
+        fadeOffset=0.f;
         setFade(20, 1.0f, 0.2f);
     }
 }
