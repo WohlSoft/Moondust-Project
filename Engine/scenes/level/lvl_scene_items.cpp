@@ -162,3 +162,11 @@ void LevelScene::addPlayer(PlayerPoint playerData, bool byWarp)
     if(player->playerID==1)
         keyboard1.registerInControl(player);
 }
+
+
+void LevelScene::destroyBlock(LVL_Block *_block)
+{
+    blocks.remove(blocks.indexOf(_block));
+    delete _block;
+    _block = NULL;
+}
