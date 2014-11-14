@@ -48,6 +48,8 @@ class LVL_Player :
 
         bool JumpPressed;
         bool onGround;
+        bool bumpDown;
+        float bumpVelocity;
         int foot_contacts;
         int jumpForce;
 
@@ -65,6 +67,8 @@ class LVL_Player :
         PlayerPoint data;
 
         PGE_LevelCamera * camera;
+
+        void bump();
 
         void teleport(float x, float y);
         void exitFromLevel(QString levelFile, int targetWarp);

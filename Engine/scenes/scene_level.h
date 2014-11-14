@@ -203,6 +203,8 @@ public:
     void addPlayer(PlayerPoint playerData, bool byWarp=false);
     /*********************Item placing**********************/
 
+    void destroyBlock(LVL_Block * _block);
+
 private:
     LevelData data;
 

@@ -39,6 +39,10 @@ LVL_Player::LVL_Player()
 
     JumpPressed=false;
     onGround=true;
+
+    bumpDown=false;
+    bumpVelocity=0.0f;
+
     foot_contacts=0;
     jumpForce=0;
 
@@ -182,6 +186,12 @@ void LVL_Player::update()
         kill();
     }
 
+    if(bumpDown)
+    {
+        bumpDown=false;
+        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, bumpVelocity));
+    }
+
 
     //Connection of section opposite sides
     if(camera->isWarp)
@@ -202,6 +212,18 @@ void LVL_Player::update()
 
         if(camera->ExitOffscreen)
         {
+            if(camera->RightOnly)
+            {
+                if( posX() < camera->limitLeft)
+                {
+                    physBody->SetTransform(b2Vec2(
+                         PhysUtil::pix2met(camera->limitLeft + posX_coefficient),
+                            physBody->GetPosition().y), 0.0f);
+
+                    physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+                }
+            }
+
             if((posX() < camera->limitLeft-width-1 ) || (posX() > camera->limitRight + 1 ))
             {
                 LvlSceneP::s->setExiting(1000, LevelScene::EXIT_OffScreen);
@@ -387,6 +409,13 @@ void LVL_Player::kill()
     LvlSceneP::s->checkPlayers();
     //physBody->SetLinearVelocity(b2Vec2(0,0));
     //teleport(data.x, data.y);
+}
+
+void LVL_Player::bump()
+{
+    bumpDown=true;
+    if(physBody)
+        bumpVelocity = fabs(physBody->GetLinearVelocity().y)/2;
 }
 
 void LVL_Player::teleport(float x, float y)

@@ -20,6 +20,7 @@
 #include "../physics/base_object.h"
 
 #include "../scenes/level/lvl_player.h"
+#include "../scenes/level/lvl_block.h"
 #include "../scenes/level/lvl_warp.h"
 
 #include <QtDebug>
@@ -196,6 +197,32 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
 
             if(platformFixture)
             {
+                if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+                {
+                        contact->SetEnabled(false);
+                        return;
+                }
+
+                if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
+                        && bodyChar->physBody->GetLinearVelocity().y < -0.05 )
+                {
+                    if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->hitable)
+                    {
+                        dynamic_cast<LVL_Player *>(bodyChar)->bump();
+                    }
+                    dynamic_cast<LVL_Block *>(bodyBlock)->hit();
+                }
+
+                if(dynamic_cast<LVL_Block *>(bodyBlock)->destroyed)
+                {
+                        dynamic_cast<LVL_Player *>(bodyChar)->bump();
+                        contact->SetEnabled(false);
+                        return;
+                }
+
+                if(dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
+                    contact->SetEnabled(false);
+
                 if(bodyBlock->isRectangle)
                 if( bodyChar->bottom() > bodyBlock->top() && bodyChar->bottom() < bodyBlock->top()+2 )
                 {
