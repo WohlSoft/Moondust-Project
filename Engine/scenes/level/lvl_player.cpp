@@ -41,6 +41,7 @@ LVL_Player::LVL_Player()
     onGround=true;
 
     bumpDown=false;
+    bumpUp=false;
     bumpVelocity=0.0f;
 
     foot_contacts=0;
@@ -168,7 +169,7 @@ void LVL_Player::update()
         if(!JumpPressed)
         {
             JumpPressed=true;
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/5)));
+            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/6)));
         }
     }
     else
@@ -190,6 +191,12 @@ void LVL_Player::update()
     {
         bumpDown=false;
         physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, bumpVelocity));
+    }
+    else
+    if(bumpUp)
+    {
+        bumpUp=false;
+        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -32.5f));
     }
 
 
@@ -411,9 +418,12 @@ void LVL_Player::kill()
     //teleport(data.x, data.y);
 }
 
-void LVL_Player::bump()
+void LVL_Player::bump(bool _up)
 {
-    bumpDown=true;
+    if(_up)
+        bumpUp=true;
+    else
+        bumpDown=true;
     if(physBody)
         bumpVelocity = fabs(physBody->GetLinearVelocity().y)/2;
 }
