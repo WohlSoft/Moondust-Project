@@ -204,7 +204,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                 }
 
                 if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
-                        && bodyChar->physBody->GetLinearVelocity().y < -0.05 )
+                        && bodyChar->physBody->GetLinearVelocity().y < -0.01 )
                 {
                     if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->hitable)
                     {
@@ -221,13 +221,27 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                 }
 
                 if(dynamic_cast<LVL_Block *>(bodyBlock)->isHidden)
+                {
                     contact->SetEnabled(false);
+                    return;
+                }
 
                 if(bodyBlock->isRectangle)
-                if( bodyChar->bottom() > bodyBlock->top() && bodyChar->bottom() < bodyBlock->top()+2 )
                 {
-                    bodyChar->_player_moveup = true;
-                    contact->SetEnabled(false);
+                    if( bodyChar->bottom() <= bodyBlock->top() && bodyChar->bottom() <= bodyBlock->top()+3 )
+                    {
+                        if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->bounce)
+                        {
+                            dynamic_cast<LVL_Player *>(bodyChar)->bump(true);
+                            dynamic_cast<LVL_Block *>(bodyBlock)->hit(LVL_Block::down);
+                        }
+                    }
+                    else
+                    if( bodyChar->bottom() > bodyBlock->top() && bodyChar->bottom() < bodyBlock->top()+2 )
+                    {
+                        bodyChar->_player_moveup = true;
+                        contact->SetEnabled(false);
+                    }
                 }
             }
         }
