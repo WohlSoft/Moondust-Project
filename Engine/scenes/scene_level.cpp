@@ -203,6 +203,10 @@ LevelScene::~LevelScene()
 int i;
 int delayToEnter = 1000;
 Uint32 lastTicks=0;
+bool debug_player_jumping=false;
+bool debug_player_onground=false;
+int  debug_player_foots=0;
+
 void LevelScene::update(float step)
 {
     if(step<=0) step=10.0f;
@@ -229,8 +233,15 @@ void LevelScene::update(float step)
 
         //update players
         for(i=0; i<players.size(); i++)
+        {
+            if(PGE_Window::showDebugInfo)
+            {
+                debug_player_jumping=players[i]->JumpPressed;
+                debug_player_onground=players[i]->onGround;
+                debug_player_foots=players[i]->foot_contacts;
+            }
             players[i]->update();
-
+        }
 
         //Enter players via warp
         if(isWarpEntrance)
@@ -324,6 +335,11 @@ void LevelScene::render()
     if(PGE_Window::showDebugInfo)
     {
         FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 300,10);
+
+        FontManager::printText(QString("Player J=%1 G=%2 F=%3")
+                               .arg(debug_player_jumping)
+                               .arg(debug_player_onground)
+                               .arg(debug_player_foots), 10,100);
 
         if(doExit)
             FontManager::printText(QString("Exit delay %1, %2")

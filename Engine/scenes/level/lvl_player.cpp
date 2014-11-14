@@ -164,16 +164,29 @@ void LVL_Player::update()
         if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
             physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
 
-    if( keys.jump)
+    if( keys.jump )
     {
         if(!JumpPressed)
         {
             JumpPressed=true;
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/6)));
+            if(onGround || foot_contacts>0)
+            {
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/6)));
+                jumpForce=3;
+            }
+        }
+        else
+        {
+            if(jumpForce>0)
+            {
+                jumpForce--;
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/6)));
+            }
         }
     }
     else
     {
+        jumpForce=0;
         if(JumpPressed)
         {
             JumpPressed=false;
@@ -196,7 +209,12 @@ void LVL_Player::update()
     if(bumpUp)
     {
         bumpUp=false;
-        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -32.5f));
+        physBody->SetLinearVelocity(
+                                b2Vec2(physBody->GetLinearVelocity().x,
+                                (keys.jump?(-65.f-fabs(physBody->GetLinearVelocity().x/6))
+                                                                                    :-32.5f)
+                                           )
+                                    );
     }
 
 
@@ -405,7 +423,6 @@ void LVL_Player::update()
 
     camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
                     posY() - PGE_Window::Height/2 + posY_coefficient );
-
 }
 
 void LVL_Player::kill()
@@ -425,7 +442,7 @@ void LVL_Player::bump(bool _up)
     else
         bumpDown=true;
     if(physBody)
-        bumpVelocity = fabs(physBody->GetLinearVelocity().y)/2;
+        bumpVelocity = fabs(physBody->GetLinearVelocity().y)/4;
 }
 
 void LVL_Player::teleport(float x, float y)

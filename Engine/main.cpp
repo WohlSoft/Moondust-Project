@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
 
     QString configPath="";
     QString fileToPpen = ApplicationPath+"/physics.lvl";
+    bool debugMode=false; //enable debug mode
 
     bool skipFirst=true;
     foreach(QString param, a.arguments())
@@ -115,6 +116,11 @@ int main(int argc, char *argv[])
             tmp = param.split('=');
             if(tmp.size()>1)
                 configPath = tmp.last();
+        }
+        else
+        if(param == ("--debug"))
+        {
+            debugMode=true;
         }
         else
         {

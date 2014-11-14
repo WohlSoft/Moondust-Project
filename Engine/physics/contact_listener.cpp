@@ -62,6 +62,10 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         bodyBlock = bodyB;
         bodyChar = bodyA;
     }
+    else
+    {
+        platformFixture=NULL;
+    }
 
     if(platformFixture)
     {
@@ -69,6 +73,35 @@ void PGEContactListener::BeginContact(b2Contact *contact)
         dynamic_cast<LVL_Player *>(bodyChar)->contactedWarp = dynamic_cast<LVL_Warp *>(bodyBlock);
         dynamic_cast<LVL_Player *>(bodyChar)->contactedWithWarp=true;
         dynamic_cast<LVL_Player *>(bodyChar)->warpsTouched++;
+    }
+
+    /***********************************Block & Player***********************************/
+    if ( bodyA->type == PGE_Phys_Object::LVLBlock && bodyB->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( bodyB->type == PGE_Phys_Object::LVLBlock && bodyA->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        if(bodyChar->bottom() > bodyBlock->top() && bodyChar->bottom() < bodyBlock->top()+2)
+        {
+            dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts++;
+            qDebug()<<dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts;
+        }
     }
 
 }
@@ -88,7 +121,7 @@ void PGEContactListener::EndContact(b2Contact *contact)
     PGE_Phys_Object * bodyA = NULL;
     PGE_Phys_Object * bodyB = NULL;
 
-    //PGE_Phys_Object * bodyBlock = NULL;
+    PGE_Phys_Object * bodyBlock = NULL;
     PGE_Phys_Object * bodyChar = NULL;
 
     bodyA = static_cast<PGE_Phys_Object *>(fixtureA->GetBody()->GetUserData());
@@ -112,6 +145,10 @@ void PGEContactListener::EndContact(b2Contact *contact)
         //bodyBlock = bodyB;
         bodyChar = bodyA;
     }
+    else
+    {
+        platformFixture=NULL;
+    }
 
     if(platformFixture)
     {
@@ -122,6 +159,32 @@ void PGEContactListener::EndContact(b2Contact *contact)
             dynamic_cast<LVL_Player *>(bodyChar)->contactedWithWarp=false;
             dynamic_cast<LVL_Player *>(bodyChar)->contactedWarp = NULL;
         }
+    }
+
+    /***********************************Block & Player***********************************/
+    if ( bodyA->type == PGE_Phys_Object::LVLBlock && bodyB->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureA;
+        //otherFixture = fixtureB;
+        bodyBlock = bodyA;
+        bodyChar = bodyB;
+    }
+    else if ( bodyB->type == PGE_Phys_Object::LVLBlock && bodyA->type == PGE_Phys_Object::LVLPlayer )
+    {
+        platformFixture = fixtureB;
+        //otherFixture = fixtureA;
+        bodyBlock = bodyB;
+        bodyChar = bodyA;
+    }
+    else
+    {
+        platformFixture=NULL;
+    }
+
+    if(platformFixture)
+    {
+        if(dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts>0)
+            dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts--;
     }
 
 }
@@ -171,6 +234,8 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
             if(bodyChar->physBody->GetLinearVelocity().y>10 && bodyChar->bottom() < bodyBlock->top()+10)
             {
                 contact->SetEnabled(true);
+                dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
+                dynamic_cast<LVL_Player *>(bodyChar)->foot_contacts++;
             }
             else if( (bodyChar->bottom() > bodyBlock->top()+2) )
             {
@@ -203,6 +268,7 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                         return;
                 }
 
+
                 if(bodyChar->top() >= bodyBlock->bottom() && bodyChar->top() <= bodyBlock->bottom()+3
                         && bodyChar->physBody->GetLinearVelocity().y < -0.01 )
                 {
@@ -230,6 +296,8 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                 {
                     if( bodyChar->bottom() <= bodyBlock->top() && bodyChar->bottom() <= bodyBlock->top()+3 )
                     {
+                        dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
+
                         if(dynamic_cast<LVL_Block *>(bodyBlock)->setup->bounce)
                         {
                             dynamic_cast<LVL_Player *>(bodyChar)->bump(true);
@@ -242,6 +310,10 @@ void PGEContactListener::PreSolve(b2Contact *contact, const b2Manifold *oldManif
                         bodyChar->_player_moveup = true;
                         contact->SetEnabled(false);
                     }
+                }
+                else
+                {
+                    dynamic_cast<LVL_Player *>(bodyChar)->onGround=true;
                 }
             }
         }
