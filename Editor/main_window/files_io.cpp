@@ -35,12 +35,13 @@ void MainWindow::openFilesByArgs(QStringList args)
 void MainWindow::OpenFile(QString FilePath)
 {
 
+    qApp->setActiveWindow(this);
+
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
             if (existing) {
                 ui->centralWidget->setActiveSubWindow(existing);
                 return;
             }
-
 
     QFile file(FilePath);
 
