@@ -91,7 +91,8 @@ TRANSLATIONS += languages/editor_en.ts \
     languages/editor_it.ts \
     languages/editor_fr.ts \
     languages/editor_pt.ts \
-    languages/editor_ja.ts
+    languages/editor_ja.ts \
+    languages/editor_zh.ts
 
 SOURCES += main.cpp\
     mainwindow.cpp \
