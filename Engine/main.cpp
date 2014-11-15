@@ -115,7 +115,13 @@ int main(int argc, char *argv[])
             QStringList tmp;
             tmp = param.split('=');
             if(tmp.size()>1)
+            {
                 configPath = tmp.last();
+                if(!SMBX64::qStr(configPath))
+                {
+                    configPath = FileFormats::removeQuotes(configPath);
+                }
+            }
         }
         else
         if(param == ("--debug"))
