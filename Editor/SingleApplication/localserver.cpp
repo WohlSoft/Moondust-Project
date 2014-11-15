@@ -77,6 +77,13 @@ void LocalServer::exec()
         QByteArray data = clients[i]->readAll();
         emit privateDataReceived(QString::fromUtf8(data));
       }
+      else
+      {
+          QLocalSocket* tmp = clients[i];
+          clients.removeAt(i);
+          delete tmp;
+          i--;
+      }
     }
   }
 }

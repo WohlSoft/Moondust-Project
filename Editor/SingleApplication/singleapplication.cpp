@@ -1,5 +1,6 @@
 #include "singleapplication.h"
 #include <QtDebug>
+
 /**
  * @brief SingleApplication::SingleApplication
  *  Constructor. Checks and fires up LocalServer or closes the program
