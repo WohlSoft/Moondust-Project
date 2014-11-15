@@ -69,6 +69,8 @@ void MainWindow::updateMenus(bool force)
     ui->actionPaste->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionCut->setEnabled( (WinType==1) || (WinType==3) );
 
+    ui->menuTest->setEnabled( (WinType==1) );
+
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
     ui->WorldObjectToolbar->setVisible( (WinType==3) );
 

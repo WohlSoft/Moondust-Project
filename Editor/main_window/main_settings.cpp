@@ -253,6 +253,7 @@ void MainWindow::setUiDefults()
 
     ui->menuLevel->setEnabled(false);
     ui->menuWorld->setEnabled(false);
+    ui->menuTest->setEnabled(false);
     ui->LevelObjectToolbar->setVisible(false);
     ui->WorldObjectToolbar->setVisible(false);
 
