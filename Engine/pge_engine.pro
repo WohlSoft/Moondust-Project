@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT += core gui opengl
+QT += core gui opengl network
 #QT += widgets
 
 DESTDIR = ../bin
@@ -22,6 +22,9 @@ debug:UI_DIR        = ../bin/_build/engine/_debug/.ui
 TARGET = pge_engine
 TEMPLATE = app
 CONFIG += c++11
+
+CONFIG += static
+CONFIG += thread
 
 DEFINES += PGE_ENGINE
 
@@ -144,7 +147,8 @@ SOURCES += main.cpp \
     physics/engine/pge_phys_body.cpp \
     gui/pge_msgbox.cpp \
     gui/pge_boxbase.cpp \
-    fontman/font_manager.cpp
+    fontman/font_manager.cpp \
+    networking/editor_pipe.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -243,7 +247,8 @@ HEADERS  += \
     physics/engine/pge_phys_body.h \
     gui/pge_msgbox.h \
     gui/pge_boxbase.h \
-    fontman/font_manager.h
+    fontman/font_manager.h \
+    networking/editor_pipe.h
 
 FORMS    += \
     data_configs/select_config.ui
