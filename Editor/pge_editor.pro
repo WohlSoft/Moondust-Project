@@ -258,7 +258,8 @@ SOURCES += main.cpp\
     world_scene/edit_modes/wld_mode_select.cpp \
     world_scene/edit_modes/wld_mode_square.cpp \
     world_scene/edit_modes/wld_mode_setpoint.cpp \
-    level_scene/lvl_scene.cpp
+    level_scene/lvl_scene.cpp \
+    main_window/main_testing.cpp
 
 
 HEADERS  += defines.h \

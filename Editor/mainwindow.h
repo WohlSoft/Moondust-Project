@@ -110,6 +110,9 @@ public:
  * - World Item Properties box
  * - World Search box
  * - Locks
+ *
+ * Testing
+ *
  */
 
 
@@ -991,6 +994,14 @@ private slots:
         void on_actionLockLevels_triggered(bool checked);
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////Testing////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////
+    private slots:
+        void on_action_doTest_triggered();
+        void on_action_testSettings_triggered();
+
 
 signals:
     void closeEditor();
