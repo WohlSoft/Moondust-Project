@@ -18,7 +18,6 @@
 
 #include <ui_mainwindow.h>
 #include "../mainwindow.h"
-#include "smart_import/smartimporter.h"
 
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *e)
@@ -33,28 +32,13 @@ void MainWindow::dropEvent(QDropEvent *e)
     this->raise();
     this->setFocus(Qt::ActiveWindowFocusReason);
 
-    bool requestReload = false;
-
     foreach (const QUrl &url, e->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
-        if(activeChildWindow()==1){
-            if(QFileInfo(fileName).isDir()){
-                SmartImporter * importer = new SmartImporter((QWidget*)this, fileName, (QWidget*)activeLvlEditWin());
-                if(importer->isValid()){
-                    if(importer->attemptFastImport()){
-                        requestReload = true;
-                        delete importer;
-                        continue;
-                    }
-                }
-                delete importer;
-            }
-        }
+
         //qDebug() << "Dropped file:" << fileName;
         OpenFile(fileName);
     }
-    if(requestReload)
-        on_actionReload_triggered();
+
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
