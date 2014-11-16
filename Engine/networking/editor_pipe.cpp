@@ -1,29 +1,43 @@
-#include "localserver.h"
+#include "editor_pipe.h"
 
 #include <QFile>
 #include <QStringList>
 #include <QtDebug>
 
+#include "../common_features/app_path.h"
+
 /**
- * @brief LocalServer::LocalServer
+ * @brief EditorPipe::LocalServer
  *  Constructor
  */
-LocalServer::LocalServer()
+EditorPipe::EditorPipe()
 {
+    do_acceptLevelData=false;
+    do_parseLevelData=false;
 
+    accepted_lvl_raw="";
+
+    levelAccepted=false;
 }
 
 /**
- * @brief LocalServer::~LocalServer
+ * @brief EditorPipe::~LocalServer
  *  Destructor
  */
-LocalServer::~LocalServer()
+EditorPipe::~EditorPipe()
 {
   server->close();
   for(int i = 0; i < clients.size(); ++i)
   {
     clients[i]->close();
   }
+}
+
+bool EditorPipe::levelIsLoad()
+{
+    bool state = levelAccepted;
+    levelAccepted=false;
+    return state;
 }
 
 /**
@@ -36,7 +50,7 @@ LocalServer::~LocalServer()
  * @brief run
  *  Initiate the thread.
  */
-void LocalServer::run()
+void EditorPipe::run()
 {
   server = new QLocalServer();
 
@@ -61,10 +75,10 @@ void LocalServer::run()
 }
 
 /**
- * @brief LocalServer::exec
+ * @brief EditorPipe::exec
  *  Keeps the thread alive. Waits for incomming connections
  */
-void LocalServer::exec()
+void EditorPipe::exec()
 {
   while(server->isListening())
   {
@@ -75,7 +89,32 @@ void LocalServer::exec()
       if(clients[i]->waitForReadyRead(100))
       {
         QByteArray data = clients[i]->readAll();
+        QString acceptedData = QString::fromUtf8(data);
         emit privateDataReceived(QString::fromUtf8(data));
+
+        if(do_acceptLevelData)
+        {
+            accepted_lvl_raw.append(acceptedData);
+            if(acceptedData.endsWith("\n\n"))
+                do_acceptLevelData=false;
+        }
+        else
+        if(acceptedData.startsWith("SEND_LVLX:", Qt::CaseSensitive))
+        {
+            acceptedData.remove("SEND_LVLX: ");
+            accepted_lvl_path = acceptedData;
+            do_acceptLevelData=true;
+            QByteArray toClient = QString("READY\n\n").toUtf8();
+            clients[i]->write(toClient);
+        }
+        else
+        if(acceptedData=="PARSE_LVLX\n\n")
+        {
+            do_parseLevelData=true;
+            accepted_lvl = FileFormats::ReadExtendedLvlFile(data, accepted_lvl_path);
+            levelAccepted=true;
+        }
+
       }
       else
       {
@@ -95,22 +134,28 @@ void LocalServer::exec()
  */
 
 /**
- * @brief LocalServer::slotNewConnection
+ * @brief EditorPipe::slotNewConnection
  *  Executed when a new connection is available
  */
-void LocalServer::slotNewConnection()
+void EditorPipe::slotNewConnection()
 {
   clients.push_front(server->nextPendingConnection());
 }
 
 /**
- * @brief LocalServer::slotOnData
+ * @brief EditorPipe::slotOnData
  *  Executed when data is received
  * @param data
  */
-void LocalServer::slotOnData(QString data)
+void EditorPipe::slotOnData(QString data)
 {
-  qDebug() << data;
+
+  if(do_acceptLevelData)
+  {
+      accepted_lvl = FileFormats::ReadExtendedLvlFile(data, accepted_lvl_path);
+      return;
+  }
+
   QStringList args = data.split('\n');
   foreach(QString c, args)
   {
@@ -130,8 +175,7 @@ void LocalServer::slotOnData(QString data)
  * Helper methods
  * -------
  */
-
-void LocalServer::onCMD(QString data)
+void EditorPipe::onCMD(QString data)
 {
   //  Trim the leading part from the command
   data.replace(0, 4, "");
