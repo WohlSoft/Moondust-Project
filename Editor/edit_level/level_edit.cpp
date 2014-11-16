@@ -30,6 +30,7 @@
 #include "saveimage.h"
 #include "../common_features/app_path.h"
 #include "../common_features/logger.h"
+#include "../smart_import/smartimporter.h"
 
 //#include <QGLWidget>
 
@@ -74,6 +75,38 @@ void leveledit::focusInEvent(QFocusEvent *event)
 {
     ui->graphicsView->setFocus();
     QWidget::focusInEvent(event);
+}
+
+void leveledit::dragEnterEvent(QDragEnterEvent *e)
+{
+    if (e->mimeData()->hasUrls()) {
+        e->acceptProposedAction();
+    }
+}
+
+void leveledit::dropEvent(QDropEvent *e)
+{
+    this->raise();
+    this->setFocus(Qt::ActiveWindowFocusReason);
+
+    bool requestReload = false;
+
+    foreach (const QUrl &url, e->mimeData()->urls()) {
+        const QString &fileName = url.toLocalFile();
+        if(QFileInfo(fileName).isDir()){
+            SmartImporter * importer = new SmartImporter((QWidget*)this, fileName, (QWidget*)this);
+            if(importer->isValid()){
+                if(importer->attemptFastImport()){
+                    requestReload = true;
+                    delete importer;
+                    break;
+                }
+            }
+            delete importer;
+        }
+    }
+    if(requestReload)
+        emit forceReload();
 }
 
 

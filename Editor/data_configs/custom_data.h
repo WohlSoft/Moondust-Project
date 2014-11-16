@@ -81,6 +81,8 @@ public:
     ///
     QString getCustomFile(QString name);
     void setCustomDirs(QString path, QString name);
+    void createDirIfNotExsist();
+    void import(QStringList &files, bool local = true);
 
 private:
     QString dirEpisode;
