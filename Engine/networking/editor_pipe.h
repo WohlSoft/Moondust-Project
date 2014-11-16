@@ -45,7 +45,6 @@ private slots:
 private:
     QLocalServer* server;
     QVector<QLocalSocket*> clients;
-    void onCMD(QString data);
 };
 
 #endif // EDITOR_PIPE_H

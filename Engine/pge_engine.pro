@@ -148,7 +148,8 @@ SOURCES += main.cpp \
     gui/pge_msgbox.cpp \
     gui/pge_boxbase.cpp \
     fontman/font_manager.cpp \
-    networking/editor_pipe.cpp
+    networking/editor_pipe.cpp \
+    networking/intproc.cpp
 
 HEADERS  += \
     ../_Libs/Box2D/Box2D.h \
@@ -248,7 +249,8 @@ HEADERS  += \
     gui/pge_msgbox.h \
     gui/pge_boxbase.h \
     fontman/font_manager.h \
-    networking/editor_pipe.h
+    networking/editor_pipe.h \
+    networking/intproc.h
 
 FORMS    += \
     data_configs/select_config.ui

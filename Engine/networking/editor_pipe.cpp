@@ -16,6 +16,7 @@ EditorPipe::EditorPipe()
     do_parseLevelData=false;
 
     accepted_lvl_raw="";
+    accepted_lvl.ReadFileValid = false;
 
     levelAccepted=false;
 }
@@ -159,32 +160,7 @@ void EditorPipe::slotOnData(QString data)
   QStringList args = data.split('\n');
   foreach(QString c, args)
   {
-      if(c.startsWith("CMD:", Qt::CaseInsensitive))
-      {
-        onCMD(c);
-      }
-      else
-      {
-        emit dataReceived(c);
-      }
+     emit dataReceived(c);
   }
 }
 
-/**
- * -------
- * Helper methods
- * -------
- */
-void EditorPipe::onCMD(QString data)
-{
-  //  Trim the leading part from the command
-  data.replace(0, 4, "");
-
-  QStringList commands;
-  commands << "showUp";
-
-  switch(commands.indexOf(data)){
-    case 0:
-      emit showUp();
-  }
-}

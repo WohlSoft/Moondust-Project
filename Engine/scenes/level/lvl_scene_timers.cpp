@@ -20,6 +20,8 @@
 #include "../../common_features/simple_animator.h"
 #include "../../common_features/graphics_funcs.h"
 
+#include "../../networking/intproc.h"
+
 
 /**************************Fader*******************************/
 void LevelScene::setFade(int speed, float target, float step)
@@ -116,11 +118,15 @@ void LevelScene::setLoaderAnimation(int speed)
 {
     using namespace lvl_scene_loader;
     loaderSpeed = speed;
-    loading_texture = GraphicsHelps::loadTexture(loading_texture, ":/images/shell.png");
+
+    if(IntProc::isEnabled())
+        loading_texture = GraphicsHelps::loadTexture(loading_texture, ":/images/coin.png");
+    else
+        loading_texture = GraphicsHelps::loadTexture(loading_texture, ":/images/shell.png");
 
     loading_Ani = new SimpleAnimator(true,
                                      4,
-                                     70,
+                                     128,
                                      0, -1, false, false);
     loading_Ani->start();
 
