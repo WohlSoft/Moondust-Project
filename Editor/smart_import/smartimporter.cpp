@@ -4,7 +4,8 @@ SmartImporter::SmartImporter(QObject *parent) :
     QObject(parent)
 {}
 
-SmartImporter::SmartImporter(QString importPath, QObject *parent)
+SmartImporter::SmartImporter(QString importPath, QObject *parent) :
+    QObject(parent)
 {
     this->importPath = importPath;
 }
