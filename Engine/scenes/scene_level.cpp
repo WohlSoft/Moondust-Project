@@ -107,6 +107,8 @@ LevelScene::LevelScene()
     Z_sys_sctBorder = 1020; // section Border
     /*********Z-Layers*************/
 
+    errorMsg = "";
+
     qDebug() << 1000.0/(float)PGE_Window::PhysStep;
 }
 
@@ -472,6 +474,11 @@ int LevelScene::exec()
     }
 
     return exitLevelCode;
+}
+
+QString LevelScene::getLastError()
+{
+    return errorMsg;
 }
 
 

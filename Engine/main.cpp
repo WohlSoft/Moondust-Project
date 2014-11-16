@@ -25,7 +25,6 @@
 
 #include <QtDebug>
 
-
 #include "version.h"
 
 #include "common_features/app_path.h"
@@ -40,43 +39,18 @@
 #include "graphics/gl_renderer.h"
 #undef main
 
+#include <file_formats.h>
 #include "fontman/font_manager.h"
-
 #include "gui/pge_msgbox.h"
+#include "networking/intproc.h"
+#include "graphics/graphics.h"
+#include "scenes/scene_level.h"
 
 #include <Box2D/Box2D.h>
-
-#include <file_formats.h>
-
-#include "graphics/graphics.h"
-
-#include "scenes/scene_level.h"
 
 #include <iostream>
 using namespace std;
 
-
-//struct keysForTest
-//{
-//    bool move_r = false;
-//    bool move_l = false;
-//    bool go_r = false;
-//    bool go_l = false;
-//    bool jump = false;
-//    bool run= false;
-//};
-
-//keysForTest myKeys;
-
-//void resetKeys()
-//{
-//    myKeys.move_r = false;
-//    myKeys.move_l = false;
-//    myKeys.go_r = false;
-//    myKeys.go_l = false;
-//    myKeys.jump = false;
-//    myKeys.run = false;
-//}
 
 LevelScene* lScene;
 
@@ -101,8 +75,9 @@ int main(int argc, char *argv[])
     #endif
 
     QString configPath="";
-    QString fileToPpen = ApplicationPath+"/physics.lvl";
+    QString fileToPpen = "";//ApplicationPath+"/physics.lvl";
     bool debugMode=false; //enable debug mode
+    bool interprocessing=false; //enable interprocessing
 
     bool skipFirst=true;
     foreach(QString param, a.arguments())
@@ -127,6 +102,12 @@ int main(int argc, char *argv[])
         if(param == ("--debug"))
         {
             debugMode=true;
+        }
+        else
+        if(param == ("--interprocessing"))
+        {
+            IntProc::init();
+            interprocessing=true;
         }
         else
         {
@@ -161,6 +142,7 @@ int main(int argc, char *argv[])
         else
         {
             delete cmanager;
+            IntProc::quit();
             exit(0);
         }
     }
@@ -210,13 +192,40 @@ int main(int argc, char *argv[])
 
             bool sceneResult=true;
 
-            sceneResult = lScene->loadFile(fileToPpen);
-            if(!sceneResult)
+            if(fileToPpen.isEmpty())
             {
-                SDL_Delay(50);
-                PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\nFile is wrong\nor not exists"),
-                                  PGE_MsgBox::msg_error);
-                msgBox.exec();
+                if(interprocessing && IntProc::isEnabled())
+                {
+                    sceneResult = lScene->loadFileIP();
+                    if(!sceneResult)
+                    {
+                        SDL_Delay(50);
+                        PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n%1")
+                                          .arg(lScene->getLastError()),
+                                          PGE_MsgBox::msg_error);
+                        msgBox.exec();
+                    }
+                }
+                else
+                {
+                    sceneResult = false;
+                    PGE_MsgBox msgBox(NULL, QString("No opened files"),
+                                      PGE_MsgBox::msg_warn);
+                    msgBox.exec();
+                }
+            }
+            else
+            {
+                sceneResult = lScene->loadFile(fileToPpen);
+                if(!sceneResult)
+                {
+                    SDL_Delay(50);
+                    PGE_MsgBox msgBox(NULL, QString("ERROR:\nFail to start level\n\n"
+                                                    "%1")
+                                      .arg(lScene->getLastError()),
+                                      PGE_MsgBox::msg_error);
+                    msgBox.exec();
+                }
             }
 
             if(sceneResult)
@@ -240,10 +249,17 @@ int main(int argc, char *argv[])
                 entranceID = lScene->toAnotherEntrance();
                 if(fileToPpen.isEmpty()) playAgain = false;
 
-                PGE_MsgBox msgBox(NULL, QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
-                                  .arg(fileToPpen).arg(entranceID),
-                                  PGE_MsgBox::msg_warn);
-                msgBox.exec();
+                if(debugMode)
+                {
+                    if(!fileToPpen.isEmpty())
+                    {
+                        PGE_MsgBox msgBox(NULL, QString("Warp exit\n\nExit to:\n%1\n\nEnter to: %2")
+                                      .arg(fileToPpen).arg(entranceID),
+                                      PGE_MsgBox::msg_warn);
+                        msgBox.exec();
+                    }
+                    playAgain = false;
+                }
             }
             else
             if(ExitCode!= LevelScene::EXIT_PlayerDeath)
@@ -256,9 +272,16 @@ int main(int argc, char *argv[])
             delete lScene;
     }
 
+    IntProc::quit();
+
+    FontManager::quit();
 
     PGE_Window::uninit();
     return 0;
+}
+
+
+
 
     /////////////////////////////////////////////////////////////////
 /* Closed for test our class!!!!!
@@ -549,8 +572,6 @@ int main(int argc, char *argv[])
 
     return 0;*/
     //return
-}
-
 
 
 //Cube draw (only test of the OpenGL works)
