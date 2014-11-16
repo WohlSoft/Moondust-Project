@@ -134,13 +134,20 @@ void LocalServer::slotOnData(QString data)
 void LocalServer::onCMD(QString data)
 {
   //  Trim the leading part from the command
-  data.replace(0, 4, "");
+  if(data.startsWith("CMD:"))
+  {
+    data.remove("CMD:");
 
-  QStringList commands;
-  commands << "showUp";
+    QStringList commands;
+    commands << "showUp";
 
-  switch(commands.indexOf(data)){
-    case 0:
-      emit showUp();
+      switch(commands.indexOf(data)){
+        case 0:
+          emit showUp();
+        default:
+          emit acceptedCommand(data);
+      }
   }
+  else
+      emit acceptedCommand(data);
 }

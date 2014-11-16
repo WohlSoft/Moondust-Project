@@ -22,10 +22,12 @@ public slots:
 signals:
   void showUp();
   void openFile(QString path);
+  void acceptedCommand(QString cmd);
 
 private slots:
   void slotShowUp();
   void slotOpenFile(QString path);
+  void slotAcceptedCommand(QString cmd);
   
 private:
   QLocalSocket* socket;

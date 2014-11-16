@@ -48,10 +48,13 @@ bool LevelScene::loadFileIP()
 
     data.ReadFileValid = false;
 
+    IntProc::editor->sendToEditor("CMD:CONNECT_TO_ENGINE");
+
     QElapsedTimer time;
     time.start();
     //wait for accepting of level data
     bool timeOut=false;
+
     while(!IntProc::editor->levelIsLoad())
     {
         loaderStep();
@@ -63,6 +66,7 @@ bool LevelScene::loadFileIP()
         }
         SDL_Delay(30);
     }
+
     data = IntProc::editor->accepted_lvl;
 
     if(!timeOut && !data.ReadFileValid)

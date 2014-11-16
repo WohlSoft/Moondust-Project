@@ -41,6 +41,28 @@ bool EditorPipe::levelIsLoad()
     return state;
 }
 
+void EditorPipe::sendToEditor(QString command)
+{
+    QLocalSocket * socket;
+    socket = new QLocalSocket();
+
+    // Attempt to connect to the LocalServer
+    socket->connectToServer("PGEEditor335jh3c3n8g7");
+
+    if(socket->waitForConnected(100))
+    {
+      QString str = QString(command);
+      QByteArray bytes;
+      bytes = str.toUtf8();
+      socket->write(bytes);
+      socket->flush();
+      QThread::msleep(100);
+      socket->close();
+    }
+
+    delete socket;
+}
+
 /**
  * -----------------------
  * QThread requred methods
