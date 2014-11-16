@@ -79,6 +79,7 @@ void leveledit::focusInEvent(QFocusEvent *event)
 
 void leveledit::dragEnterEvent(QDragEnterEvent *e)
 {
+    qDebug() << "Entered data into LevelEdit";
     if (e->mimeData()->hasUrls()) {
         e->acceptProposedAction();
     }
@@ -88,6 +89,7 @@ void leveledit::dropEvent(QDropEvent *e)
 {
     this->raise();
     this->setFocus(Qt::ActiveWindowFocusReason);
+    qApp->setActiveWindow(this);
 
     bool requestReload = false;
 

@@ -71,6 +71,9 @@
        <height>400</height>
       </size>
      </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
      <property name="autoFillBackground">
       <bool>true</bool>
      </property>

@@ -57,10 +57,14 @@ leveledit *MainWindow::createLvlChild()
 {
     leveledit *child = new leveledit;
     connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
+
     QMdiSubWindow *levelWindow = new QMdiSubWindow;
 
     levelWindow->setWidget(child);
     levelWindow->setAttribute(Qt::WA_DeleteOnClose);
+
+    child->setAcceptDrops(true);
+
     levelWindow->setAcceptDrops(true);
 
     QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(levelWindow);
