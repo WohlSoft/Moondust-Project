@@ -25,6 +25,8 @@ public:
     bool do_parseLevelData;
     LevelData accepted_lvl;    // When accepted PARSE_LVLX\n\n, parse data and call signal
     bool levelIsLoad();
+    void sendToEditor(QString command);
+
 private:
     bool levelAccepted;
 
