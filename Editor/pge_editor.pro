@@ -260,7 +260,8 @@ SOURCES += main.cpp\
     world_scene/edit_modes/wld_mode_square.cpp \
     world_scene/edit_modes/wld_mode_setpoint.cpp \
     level_scene/lvl_scene.cpp \
-    main_window/main_testing.cpp
+    main_window/main_testing.cpp \
+    smart_import/smartimporter.cpp
 
 
 HEADERS  += defines.h \
@@ -367,7 +368,8 @@ HEADERS  += defines.h \
     world_scene/edit_modes/wld_mode_select.h \
     world_scene/edit_modes/wld_mode_square.h \
     world_scene/edit_modes/wld_mode_setpoint.h \
-    level_scene/lvl_scene.h
+    level_scene/lvl_scene.h \
+    smart_import/smartimporter.h
 
 
 FORMS    += \
