@@ -8,7 +8,7 @@
 
 #include <file_formats.h>
 
-#define LOCAL_SERVER_NAME "PGEEngineSJvwetgerjh64"
+#define LOCAL_SERVER_NAME "PGEEngine42e3j"
 
 class EditorPipe : public QThread
 {
@@ -43,6 +43,7 @@ signals:
 private slots:
     void slotNewConnection();
     void slotOnData(QString data);
+    void displayError(QLocalSocket::LocalSocketError socketError);
 
 private:
     QLocalServer* server;
