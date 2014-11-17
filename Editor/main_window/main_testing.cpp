@@ -30,6 +30,8 @@
 
 #include <QProcess>
 
+#include "../networking/engine_intproc.h"
+
 void MainWindow::on_action_doTest_triggered()
 {
 
@@ -52,17 +54,30 @@ void MainWindow::on_action_doTest_triggered()
         return;
     }
 
+    if(IntEngine::isWorking())
+    {
+        QMessageBox::information(this, tr("Engine already runned"),
+                             tr("Engine is already testing another level.\n"
+                                "Please exit from engine and try again."),
+                             QMessageBox::Ok);
+        return;
+    }
+
     if(activeChildWindow()==1)
     {
-        if(activeLvlEditWin()->isUntitled) return;
+        //if(activeLvlEditWin()->isUntitled) return;
 
         QStringList args;
         args << "--debug";
         args << "--config=\""+QDir(configs.config_dir).dirName()+"\"";
-        args << activeLvlEditWin()->curFile;
+        args << "--interprocessing";//activeLvlEditWin()->curFile;
 
         QProcess::startDetached(command, args);
     }
+    else
+        return;
+
+    if(!IntEngine::isWorking()) IntEngine::init();
 }
 
 

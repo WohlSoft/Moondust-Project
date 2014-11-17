@@ -22,6 +22,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QElapsedTimer>
+#include <QApplication>
 
 #include "../../networking/intproc.h"
 
@@ -58,6 +59,7 @@ bool LevelScene::loadFileIP()
     while(!IntProc::editor->levelIsLoad())
     {
         loaderStep();
+        qApp->processEvents();
         if(time.elapsed()>10000)
         {
             errorMsg += "Wait timeout\n";
