@@ -471,6 +471,8 @@ int LevelScene::exec()
 
         if(isExit())
             running = false;
+
+        //qApp->processEvents();
     }
 
     return exitLevelCode;
