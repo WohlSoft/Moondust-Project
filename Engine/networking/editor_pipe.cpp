@@ -3,6 +3,8 @@
 #include <QFile>
 #include <QStringList>
 #include <QtDebug>
+#include <QElapsedTimer>
+#include <QApplication>
 
 #include "../common_features/app_path.h"
 
@@ -27,11 +29,16 @@ EditorPipe::EditorPipe()
  */
 EditorPipe::~EditorPipe()
 {
-  server->close();
-  for(int i = 0; i < clients.size(); ++i)
-  {
-    clients[i]->close();
-  }
+    server->close();
+    for(int i = 0; i < clients.size(); ++i)
+    {
+        clients[i]->close();
+    }
+}
+
+void EditorPipe::shut()
+{
+    sendToEditor("CMD:ENGINE_CLOSED");
 }
 
 bool EditorPipe::levelIsLoad()
@@ -41,26 +48,29 @@ bool EditorPipe::levelIsLoad()
     return state;
 }
 
+
+
 void EditorPipe::sendToEditor(QString command)
 {
-    QLocalSocket * socket;
-    socket = new QLocalSocket();
+    QLocalSocket socket;
 
     // Attempt to connect to the LocalServer
-    socket->connectToServer("PGEEditor335jh3c3n8g7");
+    socket.connectToServer("PGEEditor335jh3c3n8g7");
 
-    if(socket->waitForConnected(100))
+    if(socket.waitForConnected(100))
     {
-      QString str = QString(command);
-      QByteArray bytes;
-      bytes = str.toUtf8();
-      socket->write(bytes);
-      socket->flush();
-      QThread::msleep(100);
-      socket->close();
+        QString str = QString(command);
+        QByteArray bytes;
+        bytes = str.toUtf8();
+        socket.write(bytes);
+        socket.flush();
+        QThread::msleep(100);
+        socket.close();
     }
-
-    delete socket;
+    else
+    {
+        qDebug() << "sendToEditor(QString command)" << socket.errorString();
+    }
 }
 
 /**
@@ -90,12 +100,19 @@ void EditorPipe::run()
 
   QString serverName = QString(LOCAL_SERVER_NAME);
   server->listen(serverName);
-  while(server->isListening() == false){
+  while(server->isListening() == false)
+  {
     server->listen(serverName);
     msleep(100);
   }
+  qDebug() << "Listen " << server->isListening() << serverName;
+
   exec();
+
+  qDebug()<< "Server closed";
 }
+
+
 
 /**
  * @brief EditorPipe::exec
@@ -103,52 +120,89 @@ void EditorPipe::run()
  */
 void EditorPipe::exec()
 {
-  while(server->isListening())
-  {
-    msleep(100);
-    server->waitForNewConnection(100);
-    for(int i = 0; i < clients.size(); ++i)
+    loop:
+    while(server->isListening())
     {
-      if(clients[i]->waitForReadyRead(100))
-      {
-        QByteArray data = clients[i]->readAll();
-        QString acceptedData = QString::fromUtf8(data);
-        emit privateDataReceived(QString::fromUtf8(data));
+        msleep(100);
+        if(!server->waitForNewConnection(100))
+            {
+                QString msg = server->errorString();
+                if(!msg.isEmpty())
+                qDebug() << "exec()" << msg;
+            }
 
-        if(do_acceptLevelData)
-        {
-            accepted_lvl_raw.append(acceptedData);
-            if(acceptedData.endsWith("\n\n"))
-                do_acceptLevelData=false;
-        }
-        else
-        if(acceptedData.startsWith("SEND_LVLX:", Qt::CaseSensitive))
-        {
-            acceptedData.remove("SEND_LVLX: ");
-            accepted_lvl_path = acceptedData;
-            do_acceptLevelData=true;
-            QByteArray toClient = QString("READY\n\n").toUtf8();
-            clients[i]->write(toClient);
-        }
-        else
-        if(acceptedData=="PARSE_LVLX\n\n")
-        {
-            do_parseLevelData=true;
-            accepted_lvl = FileFormats::ReadExtendedLvlFile(data, accepted_lvl_path);
-            levelAccepted=true;
-        }
 
-      }
-      else
-      {
-          QLocalSocket* tmp = clients[i];
-          clients.removeAt(i);
-          delete tmp;
-          i--;
-      }
+        for(int i = 0; i < clients.size(); ++i)
+        {
+            if(clients[i]->waitForReadyRead(100))
+            {
+                QByteArray data = clients[i]->readAll();
+                QString acceptedData = QString::fromUtf8(data);
+                emit privateDataReceived(QString::fromUtf8(data));
+
+                if(do_acceptLevelData)
+                {
+                    accepted_lvl_raw.append(acceptedData);
+                    if(acceptedData.endsWith("\n\n"))
+                        do_acceptLevelData=false;
+                }
+                else
+                if(acceptedData.startsWith("SEND_LVLX: ", Qt::CaseSensitive))
+                {
+                    qDebug() << acceptedData;
+
+                    acceptedData.remove("SEND_LVLX: ");
+                    accepted_lvl_path = acceptedData;
+                    do_acceptLevelData=true;
+
+                    qDebug() << "sendReady";
+
+                    QByteArray toClient = QString("READY\n\n").toUtf8();
+                    clients[i]->write(toClient);
+                    clients[i]->flush();
+                    if(clients[i]->waitForBytesWritten(100))
+                        qDebug() << "sent";
+                    else
+                        qDebug() << "error";
+
+                }
+                else
+                if(acceptedData=="PARSE_LVLX\n\n")
+                {
+                    do_parseLevelData=true;
+                    accepted_lvl = FileFormats::ReadExtendedLvlFile(accepted_lvl_raw, accepted_lvl_path);
+                    levelAccepted=true;
+                }
+                else
+                if(acceptedData=="PING\n\n")
+                {
+                    QByteArray toClient = QString("PONG\n\n").toUtf8();
+                    clients[i]->write(toClient);
+                    clients[i]->flush();
+                    if(clients[i]->waitForBytesWritten(100))
+                        qDebug() << "sent";
+                    else
+                        qDebug() << "error";
+
+                    qDebug()<< "Ping-Pong!";
+                }
+            }
+        }
     }
-  }
+    qDebug() << "Listen " << server->isListening() << LOCAL_SERVER_NAME;
+    msleep(100);
+    goto loop;
 }
+
+
+
+
+
+
+
+
+
+
 
 /**
  * -------
@@ -156,20 +210,14 @@ void EditorPipe::exec()
  * -------
  */
 
-/**
- * @brief EditorPipe::slotNewConnection
- *  Executed when a new connection is available
- */
 void EditorPipe::slotNewConnection()
 {
-  clients.push_front(server->nextPendingConnection());
+    qDebug() << "New connection!";
+    clients.push_front(server->nextPendingConnection());
+    qDebug() << clients.size();
 }
 
-/**
- * @brief EditorPipe::slotOnData
- *  Executed when data is received
- * @param data
- */
+
 void EditorPipe::slotOnData(QString data)
 {
 
@@ -186,3 +234,14 @@ void EditorPipe::slotOnData(QString data)
   }
 }
 
+
+void EditorPipe::displayError(QLocalSocket::LocalSocketError socketError)
+{
+    switch (socketError)
+    {
+        default:
+            qDebug() << QString("The following error occurred: %1.")
+                                     .arg(server->errorString());
+    }
+
+}

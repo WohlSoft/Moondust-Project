@@ -272,6 +272,7 @@ int main(int argc, char *argv[])
             delete lScene;
     }
 
+    if(IntProc::isEnabled()) IntProc::editor->shut();
     IntProc::quit();
 
     FontManager::quit();
