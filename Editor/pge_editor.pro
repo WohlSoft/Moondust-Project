@@ -262,6 +262,7 @@ SOURCES += main.cpp\
     level_scene/lvl_scene.cpp \
     main_window/main_testing.cpp \
     smart_import/smartimporter.cpp \
+    level_scene/edit_modes/mode_fill.cpp \
     networking/engine_intproc.cpp \
     networking/engine_client.cpp
 
@@ -372,6 +373,7 @@ HEADERS  += defines.h \
     world_scene/edit_modes/wld_mode_setpoint.h \
     level_scene/lvl_scene.h \
     smart_import/smartimporter.h \
+    level_scene/edit_modes/mode_fill.h \
     networking/engine_intproc.h \
     networking/engine_client.h
 
