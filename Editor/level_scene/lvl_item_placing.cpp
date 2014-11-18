@@ -67,6 +67,7 @@ bool LvlPlacingItems::sizableBlock=false;
 bool LvlPlacingItems::fillingMode=false;
 bool LvlPlacingItems::lineMode=false;
 bool LvlPlacingItems::overwriteMode=false;
+bool LvlPlacingItems::floodFillingMode=false;
 
 QString LvlPlacingItems::layer="";
 
@@ -164,6 +165,11 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             if(LvlPlacingItems::lineMode)
             {
                 setLineDrawer(); return;
+            }
+
+            if(LvlPlacingItems::floodFillingMode)
+            {
+                setFloodFiller(); return;
             }
 
             //Single item placing
@@ -591,6 +597,11 @@ void LvlScene::setLineDrawer()
     cursor->setEnabled(true);
 
     SwitchEditingMode(MODE_Line);
+}
+
+void LvlScene::setFloodFiller()
+{
+    SwitchEditingMode(MODE_Fill);
 }
 
 
