@@ -20,7 +20,7 @@ void IntProc::init()
 
 void IntProc::quit()
 {
-    if(editor)
+    if(editor!=NULL)
     {
         editor->terminate();
         delete editor;

@@ -32,7 +32,7 @@ EditorPipe::~EditorPipe()
     server->close();
     for(int i = 0; i < clients.size(); ++i)
     {
-        clients[i]->close();
+        if(clients[i]) clients[i]->close();
     }
 }
 
@@ -155,15 +155,15 @@ void EditorPipe::exec()
                     accepted_lvl_path = acceptedData;
                     do_acceptLevelData=true;
 
-                    qDebug() << "sendReady";
+                    qDebug() << "Send 'Ready'";
 
                     QByteArray toClient = QString("READY\n\n").toUtf8();
                     clients[i]->write(toClient);
                     clients[i]->flush();
                     if(clients[i]->waitForBytesWritten(100))
-                        qDebug() << "sent";
+                        qDebug() << "'Ready' sent";
                     else
-                        qDebug() << "error";
+                        qDebug() << "Fail to send 'Ready'";
 
                 }
                 else
@@ -171,6 +171,7 @@ void EditorPipe::exec()
                 {
                     do_parseLevelData=true;
                     accepted_lvl = FileFormats::ReadExtendedLvlFile(accepted_lvl_raw, accepted_lvl_path);
+                    qDebug()<<"Level data parsed, Valid:" << accepted_lvl.ReadFileValid;
                     levelAccepted=true;
                 }
                 else
@@ -224,6 +225,7 @@ void EditorPipe::slotOnData(QString data)
   if(do_acceptLevelData)
   {
       accepted_lvl = FileFormats::ReadExtendedLvlFile(data, accepted_lvl_path);
+      qDebug() << "Accepted level data";
       return;
   }
 
