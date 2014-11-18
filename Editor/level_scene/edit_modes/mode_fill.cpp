@@ -76,8 +76,6 @@ void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
                                LvlPlacingItems::gridOffset);
         LvlPlacingItems::blockSet.x = hw.x();
         LvlPlacingItems::blockSet.y = hw.y();
-        LvlPlacingItems::blockSet.w = 42; //some random value
-        LvlPlacingItems::blockSet.h = 42; //some random value
 
         s->LvlData->blocks_array_id++;
 
