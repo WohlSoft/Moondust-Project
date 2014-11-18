@@ -44,7 +44,7 @@ bool SmartImporter::attemptFastImport()
                 filteredFiles << importPath + tarFile;
             if(tarFile.startsWith("background2-") && tarFile.endsWith(".gif"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("npc-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("npc-") && (tarFile.endsWith(".gif")||tarFile.endsWith(".txt")))
                 filteredFiles << importPath + tarFile;
             if(tarFile.startsWith("effect-") && tarFile.endsWith(".gif"))
                 filteredFiles << importPath + tarFile;
