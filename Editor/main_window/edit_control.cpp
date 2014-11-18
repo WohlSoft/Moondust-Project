@@ -244,6 +244,8 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
             LvlPlacingItems::lineMode = false;
             LvlPlacingItems::floodFillingMode = false;
             ui->actionLine->setChecked(false);
+            ui->actionFill->setChecked(false);
+
             switch(edit->scene->placingItem)
             {
                 case LvlScene::PLC_Block:
@@ -323,6 +325,8 @@ void MainWindow::on_actionLine_triggered(bool checked)
         LvlPlacingItems::lineMode = checked;
         LvlPlacingItems::floodFillingMode = false;
         ui->actionSquareFill->setChecked(false);
+        ui->actionFill->setChecked(false);
+
 
         switch(edit->scene->placingItem)
         {
@@ -399,6 +403,8 @@ void MainWindow::on_actionFill_triggered(bool checked)
         LvlPlacingItems::fillingMode = false;
         LvlPlacingItems::lineMode = false;
         LvlPlacingItems::floodFillingMode = checked;
+        ui->actionSquareFill->setChecked(false);
+        ui->actionLine->setChecked(false);
 
         switch(edit->scene->placingItem)
         {

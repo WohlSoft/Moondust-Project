@@ -84,21 +84,44 @@ void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 
         s->placeBlock(LvlPlacingItems::blockSet, true);
     }
-
-
-    Q_UNUSED(s)
 }
 
 void LVL_ModeFill::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    if(!scene) return;
+    LvlScene *s = dynamic_cast<LvlScene *>(scene);
 
+    s->clearSelection();
+
+    if((!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")||
+         (mouseEvent->modifiers() & Qt::ControlModifier) )
+        s->setMessageBoxItem(true, mouseEvent->scenePos(),
+         ((!LvlPlacingItems::layer.isEmpty() && LvlPlacingItems::layer!="Default")?
+            LvlPlacingItems::layer + ", ":"") +
+                                   (s->cursor?
+                                        (
+                                   QString::number( s->cursor->scenePos().toPoint().x() ) + "x" +
+                                   QString::number( s->cursor->scenePos().toPoint().y() )
+                                        )
+                                            :"")
+                                   );
+    else
+        s->setMessageBoxItem(false);
+
+    if(s->cursor)
+    {
+               s->cursor->setPos( QPointF(s->applyGrid( QPointF(mouseEvent->scenePos()-
+                                                   QPointF(LvlPlacingItems::c_offset_x,
+                                                          LvlPlacingItems::c_offset_y)).toPoint(),
+                                                 LvlPlacingItems::gridSz,
+                                                 LvlPlacingItems::gridOffset)));
+               s->cursor->show();
+    }
 }
 
 void LVL_ModeFill::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
     Q_UNUSED(mouseEvent);
-
 }
 
 void LVL_ModeFill::keyPress(QKeyEvent *keyEvent)
