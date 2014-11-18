@@ -20,13 +20,13 @@
 #define GLOBAL_PGE_VERSION
 
 //Version of whole project
-#define _VERSION "0.2.1"
+#define _VERSION "0.2.2"
 #define _RELEASE " Alpha" //Developing state (for release this field must be empty)
 
 #define _VP1 0
 #define _VP2 2
 #define _VP3 0
-#define _VP4 1
+#define _VP4 2
 
 
 #define _COPYRIGHT "2014 by Wohlstand"
