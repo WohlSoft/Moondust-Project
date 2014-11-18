@@ -31,7 +31,8 @@ bool LevelScene::loadFile(QString filePath)
     data.ReadFileValid = false;
     if(!QFileInfo(filePath).exists())
     {
-        errorMsg += "File not exist\n";
+        errorMsg += "File not exist\n\n";
+        errorMsg += filePath;
         return false;
     }
 
