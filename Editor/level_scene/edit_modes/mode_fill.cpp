@@ -60,9 +60,34 @@ void LVL_ModeFill::set()
 
 void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent)
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
+    if( mouseEvent->buttons() & Qt::RightButton )
+    {
+        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        return;
+    }
+    if(! mouseEvent->buttons() & Qt::LeftButton)
+        return;
+
+    if(s->placingItem == LvlScene::PLC_Block){
+        QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
+                               LvlPlacingItems::gridSz,
+                               LvlPlacingItems::gridOffset);
+        LvlPlacingItems::blockSet.x = hw.x();
+        LvlPlacingItems::blockSet.y = hw.y();
+        LvlPlacingItems::blockSet.w = 42; //some random value
+        LvlPlacingItems::blockSet.h = 42; //some random value
+
+        s->LvlData->blocks_array_id++;
+
+        LvlPlacingItems::blockSet.array_id = s->LvlData->blocks_array_id;
+        s->LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+
+        s->placeBlock(LvlPlacingItems::blockSet, true);
+    }
+
+
     Q_UNUSED(s)
 }
 
@@ -86,5 +111,13 @@ void LVL_ModeFill::keyPress(QKeyEvent *keyEvent)
 void LVL_ModeFill::keyRelease(QKeyEvent *keyEvent)
 {
     Q_UNUSED(keyEvent);
+    switch(keyEvent->key())
+    {
+        case (Qt::Key_Escape):
+            MainWinConnect::pMainWin->on_actionSelect_triggered();
+            break;
+        default:
+            break;
+    }
 
 }

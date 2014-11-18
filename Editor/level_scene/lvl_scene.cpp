@@ -32,6 +32,7 @@
 #include "edit_modes/mode_square.h"
 #include "edit_modes/mode_line.h"
 #include "edit_modes/mode_resize.h"
+#include "edit_modes/mode_fill.h"
 
 LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
@@ -163,6 +164,9 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
     LVL_ModeLine * modeLine = new LVL_ModeLine(this);
     EditModes.push_back(modeLine);
+
+    LVL_ModeFill * modeFill = new LVL_ModeFill(this);
+    EditModes.push_back(modeFill);
 
     CurrentMode = modeSelect;
     CurrentMode->set();

@@ -384,6 +384,33 @@ void MainWindow::on_actionLine_triggered(bool checked)
     }
 }
 
+void MainWindow::on_actionFill_triggered(bool checked)
+{
+    resetEditmodeButtons();
+    ui->PlacingToolbar->setVisible(true);
+
+    if (activeChildWindow()==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+
+        LvlPlacingItems::fillingMode = false;
+        LvlPlacingItems::lineMode = false;
+        LvlPlacingItems::floodFillingMode = checked;
+
+        switch(edit->scene->placingItem)
+        {
+            case LvlScene::PLC_Block:
+                edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
+                break;
+            case LvlScene::PLC_BGO:
+
+            default:
+                break;
+        }
+        edit->setFocus();
+    }
+}
+
 void MainWindow::on_actionOverwriteMode_triggered(bool checked)
 {
     LvlPlacingItems::overwriteMode = checked;

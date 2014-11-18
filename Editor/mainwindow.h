@@ -346,6 +346,7 @@ public:
         void on_actionSquareFill_triggered(bool checked);
         void on_actionLine_triggered(bool checked);
         void on_actionOverwriteMode_triggered(bool checked);
+        void on_actionFill_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
 // ////////////////// Resize ask //////////////////////////
@@ -1001,6 +1002,8 @@ private slots:
     private slots:
         void on_action_doTest_triggered();
         void on_action_testSettings_triggered();
+
+
 
 
 signals:

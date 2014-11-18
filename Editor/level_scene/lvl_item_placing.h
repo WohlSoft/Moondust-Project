@@ -37,6 +37,7 @@ public:
     static bool sizableBlock;
     static bool fillingMode;
     static bool lineMode;
+    static bool floodFillingMode;
 
     static bool overwriteMode;
 

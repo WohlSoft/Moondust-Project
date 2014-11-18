@@ -89,7 +89,13 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         switchMode("HandScroll");
         break;
 
+
+    case MODE_Fill:
+        switchMode("Fill");
+        break;
     case MODE_Selecting:
+
+
     default:
         switchMode("Select");
         break;
