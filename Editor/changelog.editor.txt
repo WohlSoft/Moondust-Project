@@ -6,6 +6,8 @@ Editor 0.2.1.3
 - Improved stars counter tool: now it counts accurate and everywhere
 - Fixed "Add to new layer" not updated layer lists
 - Added crash handlers which will display reason of editor crash
+- Added basic interprocessing features
+- Added smart custom data importing (when you drag&drop files or folders into the editing level file, they will be imported and level will restarted)
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
