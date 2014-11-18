@@ -152,24 +152,20 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
             LvlPlacingItems::layer = LvlPlacingItems::blockSet.layer;
 
-            //Square fill mode
+            //Square fill mode (uses own cursor item)
             if(LvlPlacingItems::fillingMode)
             {
                 setSquareDrawer(); return;
             }
 
+            //Offset relative to item center
             LvlPlacingItems::c_offset_x= qRound(qreal(LvlPlacingItems::blockSet.w) / 2);
             LvlPlacingItems::c_offset_y= qRound(qreal(LvlPlacingItems::blockSet.h) / 2);
 
-            //Line mode
+            //Line mode (uses own cursor item)
             if(LvlPlacingItems::lineMode)
             {
                 setLineDrawer(); return;
-            }
-
-            if(LvlPlacingItems::floodFillingMode)
-            {
-                setFloodFiller(); return;
             }
 
             //Single item placing
@@ -183,6 +179,12 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             cursor->setOpacity( 0.8 );
             cursor->setVisible(false);
             cursor->setEnabled(true);
+
+            //flood fill uses 'item' cursor
+            if(LvlPlacingItems::floodFillingMode)
+            {
+                setFloodFiller(); return;
+            }
 
             SwitchEditingMode(MODE_PlacingNew);
 
