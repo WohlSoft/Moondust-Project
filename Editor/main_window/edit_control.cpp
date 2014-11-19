@@ -363,7 +363,6 @@ void MainWindow::on_actionLine_triggered(bool checked)
         ui->actionSquareFill->setChecked(false);
         ui->actionFill->setChecked(false);
 
-
         switch(edit->scene->placingItem)
         {
             case WldScene::PLC_Tile:
@@ -414,7 +413,8 @@ void MainWindow::on_actionFill_triggered(bool checked)
                 edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
                 break;
             case LvlScene::PLC_BGO:
-
+                edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
+                break;
             default:
                 break;
         }
