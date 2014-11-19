@@ -534,6 +534,7 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
             if(pConfigs->main_wlevels[j].id==level.id)
             {
                 noimage=false;
+                break;
                 //if(!isUser)
             }
         }
