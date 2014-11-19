@@ -52,6 +52,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 ui->actionLine->setChecked(false);
                 ui->actionLine->setEnabled(true);
 
+                LvlPlacingItems::floodFillingMode = false;
+                ui->actionFill->setChecked(false);
+                ui->actionFill->setEnabled(true);
+
                 ui->PlacingToolbar->setVisible(true);
                 qApp->setActiveWindow(this);
                 activeLvlEditWin()->setFocus();
@@ -122,6 +126,11 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  WldPlacingItems::lineMode = false;
                  ui->actionLine->setChecked(false);
                  ui->actionLine->setEnabled(true);
+
+                 LvlPlacingItems::floodFillingMode = false;
+                 ui->actionFill->setChecked(false);
+                 ui->actionFill->setEnabled(true);
+
                  qApp->setActiveWindow(this);
                  activeWldEditWin()->setFocus();
             default:;

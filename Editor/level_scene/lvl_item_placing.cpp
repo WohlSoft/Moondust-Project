@@ -192,54 +192,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         }
     case 1: //bgos
     {
-//        bool noimage=true, found=false;
-//        bool isUser=false;
-
-//        noimage=true;
-//        isUser=false;
-
-//        //Check Index exists
-//        if(itemID < (unsigned int)index_bgo.size())
-//        {
-//            j = index_bgo[itemID].i;
-
-//            if(j<pConfigs->main_bgo.size())
-//            {
-//                if(pConfigs->main_bgo[j].id == itemID)
-//                    found=true;
-//            }
-//        }
-
-//        //if Index found
-//        if(found)
-//        {   //get neccesary element directly
-//            isUser=true;
-//            noimage=false;
-//            tImg = animates_BGO[index_bgo[itemID].ai]->wholeImage();
-//        }
-//        else
-//        {
-//            //fetching arrays
-//            for(j=0;j<uBGOs.size();j++)
-//            {
-//                if(uBGOs[j].id==itemID)
-//                {
-//                    isUser=true;
-//                    noimage=false;
-//                    tImg = uBGOs[j].image;
-//                    break;
-//                }
-//            }
-
-//            j=pConfigs->getBgoI(itemID);
-//            if(j>=0)
-//            {
-//                noimage=false;
-//                if(!isUser)
-//                tImg = pConfigs->main_bgo[j].image;
-//            }
-//        }
-
         long j;
 
         tImg = Items::getItemGFX(ItemTypes::LVL_BGO, itemID, false, &j);
@@ -318,6 +270,12 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         placingItem=PLC_BGO;
 
         LvlPlacingItems::bgoSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(LvlPlacingItems::floodFillingMode)
+        {
+            setFloodFiller(); return;
+        }
 
         SwitchEditingMode(MODE_PlacingNew);
         break;
@@ -434,6 +392,12 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
         cursor->setEnabled(true);
+
+        //flood fill uses 'item' cursor
+        if(LvlPlacingItems::floodFillingMode)
+        {
+            setFloodFiller(); return;
+        }
 
         break;
     }

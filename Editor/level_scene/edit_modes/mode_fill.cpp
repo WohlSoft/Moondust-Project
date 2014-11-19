@@ -31,6 +31,8 @@
 
 #include "../../common_features/themes.h"
 
+#include <QElapsedTimer>
+
 
 LVL_ModeFill::LVL_ModeFill(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Fill", parentScene, parent)
@@ -73,7 +75,8 @@ void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(! mouseEvent->buttons() & Qt::LeftButton)
         return;
 
-    if(s->cursor){
+    if(s->cursor)
+    {
         attemptFlood(s);
     }
 
@@ -140,41 +143,120 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
 {
     typedef QPair<qreal, qreal> CoorPair;
 
-    if(scene->placingItem == LvlScene::PLC_Block){
-        QList<CoorPair> blackList; //items which don't pass the test anymore
-        QList<CoorPair> nextList; //items to be checked next
-        nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
-        while(true){
-            QList<CoorPair> newList; //items to be checked next in the next loop
-            foreach (CoorPair coor, nextList) {
-                if(blackList.contains(coor)) //don't check block in blacklist
-                    continue;
+    //Stack overflow protection
+    QElapsedTimer timer;
+    timer.start();
+    qint64 timeout=3000;
 
-                scene->cursor->setPos(coor.first, coor.second);
+    LevelData historyBuffer;
 
-                if(!scene->itemCollidesWith(scene->cursor)){
-                    //place block if collision test
-                    LvlPlacingItems::blockSet.x = coor.first;
-                    LvlPlacingItems::blockSet.y = coor.second;
-                    scene->LvlData->blocks_array_id++;
+    QPointF backUpPos;
 
-                    LvlPlacingItems::blockSet.array_id = scene->LvlData->blocks_array_id;
-                    scene->LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+    backUpPos = scene->cursor->scenePos();
 
-                    scene->placeBlock(LvlPlacingItems::blockSet, true);
-                    //expand on all sides
-                    newList << qMakePair<qreal, qreal>(coor.first - LvlPlacingItems::blockSet.w,coor.second);
-                    newList << qMakePair<qreal, qreal>(coor.first,coor.second - LvlPlacingItems::blockSet.h);
-                    newList << qMakePair<qreal, qreal>(coor.first,coor.second + LvlPlacingItems::blockSet.h);
-                    newList << qMakePair<qreal, qreal>(coor.first + LvlPlacingItems::blockSet.w,coor.second);
+    switch(scene->placingItem)
+    {
+    case LvlScene::PLC_Block:
+        {
+            QList<CoorPair> blackList; //items which don't pass the test anymore
+            QList<CoorPair> nextList; //items to be checked next
+            nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+            while(true)
+            {
+                QList<CoorPair> newList; //items to be checked next in the next loop
+                foreach (CoorPair coor, nextList)
+                {
+                    if(blackList.contains(coor)) //don't check block in blacklist
+                        continue;
+
+                    scene->cursor->setPos(coor.first, coor.second);
+
+                    if(!scene->itemCollidesWith(scene->cursor))
+                    {
+                        //place block if collision test
+                        LvlPlacingItems::blockSet.x = coor.first;
+                        LvlPlacingItems::blockSet.y = coor.second;
+                        scene->LvlData->blocks_array_id++;
+
+                        LvlPlacingItems::blockSet.array_id = scene->LvlData->blocks_array_id;
+                        scene->LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+
+                        scene->placeBlock(LvlPlacingItems::blockSet, true);
+                        historyBuffer.blocks.push_back(LvlPlacingItems::blockSet);
+                        //expand on all sides
+                        newList << qMakePair<qreal, qreal>(coor.first - LvlPlacingItems::blockSet.w,coor.second);
+                        newList << qMakePair<qreal, qreal>(coor.first,coor.second - LvlPlacingItems::blockSet.h);
+                        newList << qMakePair<qreal, qreal>(coor.first,coor.second + LvlPlacingItems::blockSet.h);
+                        newList << qMakePair<qreal, qreal>(coor.first + LvlPlacingItems::blockSet.w,coor.second);
+                    }
+                    blackList << coor; //add current item to black list as it passed the test.
                 }
-                blackList << coor; //add current item to black list as it passed the test.
+
+                if(timer.elapsed() > timeout) break; //abort loop on time out
+
+                if(newList.empty()) //if no blocks to add then break;
+                    break;
+
+                nextList = newList; //update next list
             }
-            if(newList.empty()) //if no blocks to add then break;
-                break;
-
-            nextList = newList; //update next list
         }
+        break;
+    case LvlScene::PLC_BGO:
+        {
+            QList<CoorPair> blackList; //items which don't pass the test anymore
+            QList<CoorPair> nextList; //items to be checked next
+            nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+            while(true)
+            {
+                QList<CoorPair> newList; //items to be checked next in the next loop
+                foreach (CoorPair coor, nextList)
+                {
+                    if(blackList.contains(coor)) //don't check block in blacklist
+                        continue;
 
+                    scene->cursor->setPos(coor.first, coor.second);
+
+                    if(!scene->itemCollidesWith(scene->cursor))
+                    {
+                        //place BGO if collision test
+                        LvlPlacingItems::bgoSet.x = coor.first;
+                        LvlPlacingItems::bgoSet.y = coor.second;
+                        scene->LvlData->bgo_array_id++;
+
+                        LvlPlacingItems::bgoSet.array_id = scene->LvlData->bgo_array_id;
+                        scene->LvlData->bgo.push_back(LvlPlacingItems::bgoSet);
+
+                        scene->placeBGO(LvlPlacingItems::bgoSet);
+                        historyBuffer.bgo.push_back(LvlPlacingItems::bgoSet);
+                        //expand on all sides
+                        newList << qMakePair<qreal, qreal>(coor.first - LvlPlacingItems::itemW,coor.second);
+                        newList << qMakePair<qreal, qreal>(coor.first,coor.second - LvlPlacingItems::itemH);
+                        newList << qMakePair<qreal, qreal>(coor.first,coor.second + LvlPlacingItems::itemH);
+                        newList << qMakePair<qreal, qreal>(coor.first + LvlPlacingItems::itemW,coor.second);
+                    }
+                    blackList << coor; //add current item to black list as it passed the test.
+                }
+
+                if(timer.elapsed() > timeout) break; //abort loop on time out
+
+                if(newList.empty()) //if no blocks to add then break;
+                    break;
+
+                nextList = newList; //update next list
+            }
+        }
+        break;
+    default:
+        break;
     }
+
+    scene->cursor->setPos(backUpPos);
+
+    if(
+       historyBuffer.blocks.size()>0||
+       historyBuffer.bgo.size()>0
+            )
+
+        scene->addPlaceHistory(historyBuffer);
+
 }
