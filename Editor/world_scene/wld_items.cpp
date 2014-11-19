@@ -238,7 +238,7 @@ void WldScene::Debugger_updateItemList()
 void WldScene::placeTile(WorldTiles &tile, bool toGrid)
 {
     bool noimage=true, found=false;
-    int j;
+    int j, item_i = 0;
     long animator=0;
 
     ItemTile *TileItem = new ItemTile;
@@ -247,6 +247,7 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
     if(tile.id < (unsigned int)index_tiles.size())
     {
         j = index_tiles[tile.id].i;
+        item_i = j;
         animator = index_tiles[tile.id].ai;
 
         if(j<pConfigs->main_wtiles.size())
@@ -267,6 +268,8 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
             if(pConfigs->main_wtiles[j].id==tile.id)
             {
                 noimage=false;
+                item_i = j;
+                break;
                 //if(!isUser)
             }
         }
@@ -277,10 +280,11 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
         if(j >= pConfigs->main_wtiles.size())
         {
             j=0;
+            item_i = j;
         }
     }
 
-    TileItem->gridSize = pConfigs->main_wtiles[j].grid;
+    TileItem->gridSize = pConfigs->main_wtiles[item_i].grid;
 
     addItem(TileItem);
 
@@ -291,7 +295,7 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
 
     TileItem->setAnimator(animator);
 
-    if((!noimage) && (pConfigs->main_wtiles[j].animated))
+    if((!noimage) && (pConfigs->main_wtiles[item_i].animated))
     {
         TileItem->setData(4, "animated");
     }
@@ -327,7 +331,7 @@ void WldScene::placeTile(WorldTiles &tile, bool toGrid)
 void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 {
     bool noimage=true, found=false;
-    int j;
+    int j, item_i = 0;
     long animator=0;
 
     ItemScene *SceneItem = new ItemScene;
@@ -336,6 +340,7 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
     if(scenery.id < (unsigned int)index_scenes.size())
     {
         j = index_scenes[scenery.id].i;
+        item_i = j;
         animator = index_scenes[scenery.id].ai;
 
         if(j<pConfigs->main_wscene.size())
@@ -356,6 +361,8 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
             if(pConfigs->main_wscene[j].id==scenery.id)
             {
                 noimage=false;
+                item_i = j;
+                break;
                 //if(!isUser)
             }
         }
@@ -366,10 +373,11 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
         if(j >= pConfigs->main_wscene.size())
         {
             j=0;
+            item_i = j;
         }
     }
 
-    SceneItem->gridSize = pConfigs->main_wscene[j].grid;
+    SceneItem->gridSize = pConfigs->main_wscene[item_i].grid;
 
     addItem(SceneItem);
 
@@ -380,7 +388,7 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 
     SceneItem->setAnimator(animator);
 
-    if((!noimage) && (pConfigs->main_wscene[j].animated))
+    if((!noimage) && (pConfigs->main_wscene[item_i].animated))
     {
         SceneItem->setData(4, "animated");
     }
@@ -416,7 +424,7 @@ void WldScene::placeScenery(WorldScenery &scenery, bool toGrid)
 void WldScene::placePath(WorldPaths &path, bool toGrid)
 {
     bool noimage=true, found=false;
-    int j;
+    int j, item_i=0;
     long animator=0;
 
     ItemPath *PathItem = new ItemPath;
@@ -425,6 +433,7 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
     if(path.id < (unsigned int)index_paths.size())
     {
         j = index_paths[path.id].i;
+        item_i = j;
         animator = index_paths[path.id].ai;
 
         if(j<pConfigs->main_wpaths.size())
@@ -445,6 +454,8 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
             if(pConfigs->main_wpaths[j].id==path.id)
             {
                 noimage=false;
+                item_i = j;
+                break;
                 //if(!isUser)
             }
         }
@@ -455,10 +466,11 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
         if(j >= pConfigs->main_wpaths.size())
         {
             j=0;
+            item_i = 0;
         }
     }
 
-    PathItem->gridSize = pConfigs->main_wpaths[j].grid;
+    PathItem->gridSize = pConfigs->main_wpaths[item_i].grid;
 
     addItem(PathItem);
 
@@ -469,7 +481,7 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
 
     PathItem->setAnimator(animator);
 
-    if((!noimage) && (pConfigs->main_wpaths[j].animated))
+    if((!noimage) && (pConfigs->main_wpaths[item_i].animated))
     {
         PathItem->setData(4, "animated");
     }
@@ -505,7 +517,7 @@ void WldScene::placePath(WorldPaths &path, bool toGrid)
 void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 {
     bool noimage=true, found=false;
-    int j;
+    int j, item_i = 0;
     long animator=0;
 
     ItemLevel *LevelItem = new ItemLevel;
@@ -514,6 +526,7 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
     if(level.id < (unsigned int)index_levels.size())
     {
         j = index_levels[level.id].i;
+        item_i = j;
         animator = index_levels[level.id].ai;
 
         if(j<pConfigs->main_wlevels.size())
@@ -534,6 +547,7 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
             if(pConfigs->main_wlevels[j].id==level.id)
             {
                 noimage=false;
+                item_i = j;
                 break;
                 //if(!isUser)
             }
@@ -545,10 +559,11 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
         if(j >= pConfigs->main_wlevels.size())
         {
             j=0;
+            item_i = j;
         }
     }
 
-    LevelItem->gridSize = pConfigs->main_wlevels[j].grid;
+    LevelItem->gridSize = pConfigs->main_wlevels[item_i].grid;
 
     addItem(LevelItem);
 
@@ -557,7 +572,7 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
 
     LevelItem->setContextMenu(levelMenu);
 
-    if((!noimage) && (pConfigs->main_wlevels[j].animated))
+    if((!noimage) && (pConfigs->main_wlevels[item_i].animated))
     {
         LevelItem->setData(4, "animated");
     }
