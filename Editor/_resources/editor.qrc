@@ -109,6 +109,8 @@
         <file>images/cat_beaten/cat_beaten_48.png</file>
         <file>images/cat_beaten/cat_beaten_128.png</file>
         <file>images/cat_beaten/cat_beaten_256.png</file>
+        <file>images/cur_flood_fill.png</file>
+        <file>images/flood_fill.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>
