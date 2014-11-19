@@ -75,6 +75,7 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionSquareFill->setIcon(Themes::icon(Themes::square_fill));
     ui->actionLine->setIcon(Themes::icon(Themes::line_tool));
+    ui->actionFill->setIcon(Themes::icon(Themes::flood_fill));
     ui->actionOverwriteMode->setIcon(Themes::icon(Themes::overwrite_mode));
 
     ui->actionZoomReset->setIcon(Themes::icon(Themes::zoom_reset));

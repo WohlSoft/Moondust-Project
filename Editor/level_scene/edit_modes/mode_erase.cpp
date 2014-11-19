@@ -55,7 +55,7 @@ void LVL_ModeErase::set()
     s->resetResizers();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(QCursor(Themes::Image(Themes::cursor_erasing), 0, 0));
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
     s->_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
 }
 

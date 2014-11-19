@@ -29,6 +29,8 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
+#include "../../common_features/themes.h"
+
 LVL_ModeFill::LVL_ModeFill(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Fill", parentScene, parent)
 {
@@ -52,7 +54,7 @@ void LVL_ModeFill::set()
     s->resetResizers();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::CrossCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_flood_fill));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
     s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
     s->_viewPort->viewport()->setMouseTracking(true);

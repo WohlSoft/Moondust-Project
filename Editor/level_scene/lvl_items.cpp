@@ -279,7 +279,7 @@ void LvlScene::Debugger_updateItemList()
 void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 {
     bool noimage=true, found=false;
-    int j;
+    int j, item_i=0;
     long animator=0;
 
     ItemBlock *BlockImage = new ItemBlock;
@@ -288,6 +288,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
     if(block.id < (unsigned int)index_blocks.size())
     {
         j = index_blocks[block.id].i;
+        item_i = j;
         animator = index_blocks[block.id].ai;
 
         if(j<pConfigs->main_block.size())
@@ -309,7 +310,8 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
             if(pConfigs->main_block[j].id==block.id)
             {
                 noimage=false;
-                //if(!isUser)
+                item_i = j;
+                break;
             }
         }
     }
@@ -319,11 +321,12 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
         if(j >= pConfigs->main_block.size())
         {
             j=0;
+            item_i = j;
         }
     }
 
-    BlockImage->setBlockData(block, pConfigs->main_block[j].sizable);
-    BlockImage->gridSize = pConfigs->main_block[j].grid;
+    BlockImage->setBlockData(block, pConfigs->main_block[item_i].sizable);
+    BlockImage->gridSize = pConfigs->main_block[item_i].grid;
     //BlockImage->setMainPixmap(tImg);
     addItem(BlockImage);
 
@@ -335,7 +338,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
     BlockImage->setAnimator(animator);
 
-    if((!noimage) && (pConfigs->main_block[j].animated))
+    if((!noimage) && (pConfigs->main_block[item_i].animated))
     {
         //BlockImage->setAnimation(pConfigs->main_block[j].frames, pConfigs->main_block[j].framespeed, pConfigs->main_block[j].algorithm);
         BlockImage->setData(4, "animated");
@@ -404,7 +407,7 @@ void LvlScene::placeBlock(LevelBlock &block, bool toGrid)
 
 void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 {
-    int j;
+    int j,item_i = 0;
     bool noimage=true, found=false;
 
     ItemBGO *BGOItem = new ItemBGO;
@@ -418,6 +421,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     if(bgo.id < (unsigned int)index_bgo.size())
     {
         j = index_bgo[bgo.id].i;
+        item_i = j;
         animator = index_bgo[bgo.id].ai;
         if(j<pConfigs->main_bgo.size())
         {
@@ -434,6 +438,8 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
             if(pConfigs->main_bgo[j].id==bgo.id)
             {
                 noimage=false;
+                item_i = j;
+                break;
             }
         }
     }
@@ -443,14 +449,15 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
         if(j >= pConfigs->main_bgo.size())
         {
             j=0;
+            item_i = j;
         }
     }
 
     QPoint newPos = QPoint(bgo.x, bgo.y);
     if(toGrid)
     {
-        newPos = applyGrid(QPoint(bgo.x, bgo.y), pConfigs->main_bgo[j].grid,
-                           QPoint(pConfigs->main_bgo[j].offsetX, pConfigs->main_bgo[j].offsetY));
+        newPos = applyGrid(QPoint(bgo.x, bgo.y), pConfigs->main_bgo[item_i].grid,
+                           QPoint(pConfigs->main_bgo[j].offsetX, pConfigs->main_bgo[item_i].offsetY));
         bgo.x = newPos.x();
         bgo.y = newPos.y();
     }
@@ -458,9 +465,9 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     BGOItem->setScenePoint(this);
 
     BGOItem->setBGOData(bgo);
-    BGOItem->gridSize = pConfigs->main_bgo[j].grid;
-    BGOItem->gridOffsetX = pConfigs->main_bgo[j].offsetX;
-    BGOItem->gridOffsetY = pConfigs->main_bgo[j].offsetY;
+    BGOItem->gridSize = pConfigs->main_bgo[item_i].grid;
+    BGOItem->gridOffsetX = pConfigs->main_bgo[item_i].offsetX;
+    BGOItem->gridOffsetY = pConfigs->main_bgo[item_i].offsetY;
     BGOItem->setAnimator(animator);
     //BGOItem->setMainPixmap(tImg);
     BGOItem->setContextMenu(bgoMenu);
@@ -468,7 +475,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 
 
     #ifdef _DEBUG_
-        WriteToLog(QtDebugMsg, QString("BGO Item-> grid config value %1").arg(pConfigs->main_bgo[j].grid));
+        WriteToLog(QtDebugMsg, QString("BGO Item-> grid config value %1").arg(pConfigs->main_bgo[item_i].grid));
         WriteToLog(QtDebugMsg, QString("BGO Item-> grid value %1").arg(BGOItem->gridSize));
         WriteToLog(QtDebugMsg, QString("BGO Item-> j value %1").arg(j));
     #endif
@@ -481,7 +488,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
     //WriteToLog(QtDebugMsg, QString("BGO Item-> new data pos 3 %1 %2").arg(BGOItem->pos().x()).arg(BGOItem->pos().y()));
 
 
-    if((!noimage) && (pConfigs->main_bgo[j].animated))
+    if((!noimage) && (pConfigs->main_bgo[item_i].animated))
     {
         //tImg=tImg.copy(0, 0, tImg.width(), (int)round(tImg.height()/pConfigs->main_bgo[j].frames));
         //BGOItem->setAnimation(pConfigs->main_bgo[j].frames, pConfigs->main_bgo[j].framespeed);
@@ -505,7 +512,7 @@ void LvlScene::placeBGO(LevelBGO &bgo, bool toGrid)
 void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
 {
 
-    int j;
+    int j,item_i = 0;
     bool noimage=true, found=false;
     bool isUser=false;
     bool isUserTxt=false;
@@ -519,6 +526,7 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
     if(npc.id < (unsigned int)index_npc.size())
     {
         j = index_npc[npc.id].gi;
+        item_i = j;
         animator  = index_npc[npc.id].ai;
 
         if(j<pConfigs->main_npc.size())
@@ -583,10 +591,11 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
             if(pConfigs->main_npc[j].id==npc.id)
             {
                 noimage=false;
+                item_i = j;
                 if(!isUser)
                     tImg = pConfigs->main_npc[j].image;
                 if(!isUserTxt)
-                    mergedSet = pConfigs->main_npc[j];
+                    mergedSet = pConfigs->main_npc[item_i];
                 break;
             }
         }
@@ -598,7 +607,8 @@ void LvlScene::placeNPC(LevelNPC &npc, bool toGrid)
         if(j >= pConfigs->main_npc.size())
         {
             j=0;
-            mergedSet = pConfigs->main_npc[j];
+            item_i = j;
+            mergedSet = pConfigs->main_npc[item_i];
         }
     }
 
