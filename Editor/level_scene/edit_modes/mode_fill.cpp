@@ -29,6 +29,7 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
+
 LVL_ModeFill::LVL_ModeFill(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Fill", parentScene, parent)
 {
@@ -70,20 +71,10 @@ void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(! mouseEvent->buttons() & Qt::LeftButton)
         return;
 
-    if(s->placingItem == LvlScene::PLC_Block){
-        QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
-                               LvlPlacingItems::gridSz,
-                               LvlPlacingItems::gridOffset);
-        LvlPlacingItems::blockSet.x = hw.x();
-        LvlPlacingItems::blockSet.y = hw.y();
-
-        s->LvlData->blocks_array_id++;
-
-        LvlPlacingItems::blockSet.array_id = s->LvlData->blocks_array_id;
-        s->LvlData->blocks.push_back(LvlPlacingItems::blockSet);
-
-        s->placeBlock(LvlPlacingItems::blockSet, true);
+    if(s->cursor){
+        attemptFlood(s);
     }
+
 }
 
 void LVL_ModeFill::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
@@ -141,4 +132,47 @@ void LVL_ModeFill::keyRelease(QKeyEvent *keyEvent)
             break;
     }
 
+}
+
+void LVL_ModeFill::attemptFlood(LvlScene *scene)
+{
+    typedef QPair<qreal, qreal> CoorPair;
+
+    if(scene->placingItem == LvlScene::PLC_Block){
+        QList<CoorPair> blackList; //items which don't pass the test anymore
+        QList<CoorPair> nextList; //items to be checked next
+        nextList << qMakePair<qreal, qreal>(scene->cursor->x(),scene->cursor->y());
+        while(true){
+            QList<CoorPair> newList; //items to be checked next in the next loop
+            foreach (CoorPair coor, nextList) {
+                if(blackList.contains(coor)) //don't check block in blacklist
+                    continue;
+
+                scene->cursor->setPos(coor.first, coor.second);
+
+                if(!scene->itemCollidesWith(scene->cursor)){
+                    //place block if collision test
+                    LvlPlacingItems::blockSet.x = coor.first;
+                    LvlPlacingItems::blockSet.y = coor.second;
+                    scene->LvlData->blocks_array_id++;
+
+                    LvlPlacingItems::blockSet.array_id = scene->LvlData->blocks_array_id;
+                    scene->LvlData->blocks.push_back(LvlPlacingItems::blockSet);
+
+                    scene->placeBlock(LvlPlacingItems::blockSet, true);
+                    //expand on all sides
+                    newList << qMakePair<qreal, qreal>(coor.first - LvlPlacingItems::blockSet.w,coor.second);
+                    newList << qMakePair<qreal, qreal>(coor.first,coor.second - LvlPlacingItems::blockSet.h);
+                    newList << qMakePair<qreal, qreal>(coor.first,coor.second + LvlPlacingItems::blockSet.h);
+                    newList << qMakePair<qreal, qreal>(coor.first + LvlPlacingItems::blockSet.w,coor.second);
+                }
+                blackList << coor; //add current item to black list as it passed the test.
+            }
+            if(newList.empty()) //if no blocks to add then break;
+                break;
+
+            nextList = newList; //update next list
+        }
+
+    }
 }
