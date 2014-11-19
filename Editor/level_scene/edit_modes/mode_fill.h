@@ -20,6 +20,8 @@
 #define MODE_FILL_H
 
 #include "../../common_features/edit_mode_base.h"
+#include "../lvl_scene.h"
+
 
 class LVL_ModeFill : public EditMode
 {
@@ -33,6 +35,9 @@ public:
 
     void keyPress(QKeyEvent *keyEvent);
     void keyRelease(QKeyEvent *keyEvent);
+
+private:
+    void attemptFlood(LvlScene * scene);
 };
 
 #endif // MODE_FILL_H
