@@ -30,6 +30,8 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
+#include "../../common_features/themes.h"
+
 LVL_ModeLine::LVL_ModeLine(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Line", parentScene, parent)
 {
@@ -53,7 +55,7 @@ void LVL_ModeLine::set()
     s->resetResizers();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::CrossCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_line_fill));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
     s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
     s->_viewPort->viewport()->setMouseTracking(true);

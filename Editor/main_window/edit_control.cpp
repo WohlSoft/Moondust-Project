@@ -278,6 +278,7 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
             WldPlacingItems::fillingMode = checked;
             WldPlacingItems::lineMode = false;
             ui->actionLine->setChecked(false);
+            ui->actionFill->setChecked(false);
 
             switch(edit->scene->placingItem)
             {
@@ -360,6 +361,7 @@ void MainWindow::on_actionLine_triggered(bool checked)
         WldPlacingItems::fillingMode = false;
         WldPlacingItems::lineMode = checked;
         ui->actionSquareFill->setChecked(false);
+        ui->actionFill->setChecked(false);
 
 
         switch(edit->scene->placingItem)

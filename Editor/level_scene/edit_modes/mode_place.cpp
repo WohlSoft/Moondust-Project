@@ -23,6 +23,7 @@
 #include "../../common_features/item_rectangles.h"
 #include "../lvl_item_placing.h"
 
+#include "../../common_features/themes.h"
 
 LVL_ModePlace::LVL_ModePlace(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Placing", parentScene, parent)
@@ -45,7 +46,7 @@ void LVL_ModePlace::set()
     s->resetResizers();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::CrossCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
     s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
     s->_viewPort->viewport()->setMouseTracking(true);

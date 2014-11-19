@@ -22,6 +22,7 @@
 #include "../../common_features/mainwinconnect.h"
 #include "../wld_item_placing.h"
 
+#include "../../common_features/themes.h"
 
 WLD_ModeSetPoint::WLD_ModeSetPoint(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("SetPoint", parentScene, parent)
@@ -45,7 +46,7 @@ void WLD_ModeSetPoint::set()
     s->resetResizers();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::CrossCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
     s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
     s->_viewPort->viewport()->setMouseTracking(true);

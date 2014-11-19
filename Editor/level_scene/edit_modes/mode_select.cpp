@@ -28,6 +28,8 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
+#include "../../common_features/themes.h"
+
 LVL_ModeSelect::LVL_ModeSelect(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Select", parentScene, parent)
 {
@@ -55,7 +57,7 @@ void LVL_ModeSelect::set()
     s->resetResizers();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::ArrowCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
     s->_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
