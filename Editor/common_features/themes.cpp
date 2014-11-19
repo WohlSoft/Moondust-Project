@@ -25,6 +25,10 @@ QMap<Themes::Icons, QIcon > Themes::icons_map;
 
 QMap<Themes::Images, QPixmap > Themes::images_map;
 
+QMap<Themes::Images, int > Themes::int_map;
+
+QMap<Themes::Images, QCursor> Themes::cursor_map;
+
 QString Themes::theme_dir="";
 
 
@@ -35,10 +39,12 @@ Themes::Themes()
 
 void Themes::init()
 {
-    if( icons_map.size()>0 || images_map.size()>0 )
+    if( icons_map.size()>0 || images_map.size()>0 || int_map.size()>0 || cursor_map.size()>0)
     {
         icons_map.clear();
         images_map.clear();
+        int_map.clear();
+        cursor_map.clear();
     }
 
     //init default icons
@@ -75,9 +81,12 @@ void Themes::init()
     icons_map[erasing]      = QIcon(":/images/rubber.png");
     icons_map[accept]       = QIcon(":/images/resize_accept.png");
     icons_map[cancel]       = QIcon(":/images/resize_cancel.png");
+
     icons_map[square_fill]  = QIcon(":/images/square_fill.png");
     icons_map[line_tool]    = QIcon(":/images/line_fill.png");
+    icons_map[flood_fill]    = QIcon(":/images/flood_fill.png");
     icons_map[overwrite_mode]= QIcon(":/images/overwrite.png");
+
     icons_map[zoom_reset]   = QIcon(":/images/zoom_reset.png");
     icons_map[zoom_in]      = QIcon(":/images/zoom_in.png");
     icons_map[zoom_out]     = QIcon(":/images/zoom_out.png");
@@ -161,13 +170,26 @@ void Themes::init()
     //Load default images
 
     images_map[splash] = QPixmap(":/images/splash_editor.png");
+
     images_map[cursor_pasting] = QPixmap(":/cur_pasta.png");
+    int_map[cursor_pasting_x] = 0;
+    int_map[cursor_pasting_y] = 0;
+
     images_map[cursor_erasing] = QPixmap(":/cur_rubber.png");
+    int_map[cursor_erasing_x] = 0;
+    int_map[cursor_erasing_y] = 0;
+
+    images_map[cursor_flood_fill] = QPixmap(":/images/cur_flood_fill.png");
+    int_map[cursor_flood_fill_x] = 2;
+    int_map[cursor_flood_fill_y] = 21;
+
     images_map[player_point] = QPixmap(":/player.png");
     images_map[player1] = QPixmap(":/player1.png");
     images_map[player2] = QPixmap(":/player2.png");
 
     currentThemeDir = "";
+    //initCursors();
+
     isLoaded=true;
 }
 
@@ -251,8 +273,37 @@ void Themes::loadTheme(QString themeDir)
     guiset.endGroup();
 
     guiset.beginGroup("cursors");
+        loadImage(guiset,"normal", cursor_normal );
+        loadInteger(guiset,"normal-x", cursor_normal_x );
+        loadInteger(guiset,"normal-y", cursor_normal_y );
+
         loadImage(guiset,"pasting", cursor_pasting );
+        loadInteger(guiset,"pasting-x", cursor_pasting_x );
+        loadInteger(guiset,"pasting-y", cursor_pasting_y );
+
         loadImage(guiset,"erasing", cursor_erasing );
+        loadInteger(guiset,"erasing-x", cursor_erasing_x );
+        loadInteger(guiset,"erasing-y", cursor_erasing_y );
+
+        loadImage(guiset,"resizing", cursor_resizing );
+        loadInteger(guiset,"resizing-x", cursor_resizing_x );
+        loadInteger(guiset,"resizing-y", cursor_resizing_y );
+
+        loadImage(guiset,"placing", cursor_placing );
+        loadInteger(guiset,"placing-x", cursor_placing_x );
+        loadInteger(guiset,"placing-y", cursor_placing_y );
+
+        loadImage(guiset,"square-fill", cursor_square_fill );
+        loadInteger(guiset,"square-fill-x", cursor_square_fill_x );
+        loadInteger(guiset,"square-fill-y", cursor_square_fill_y );
+
+        loadImage(guiset,"line-fill", cursor_line_fill );
+        loadInteger(guiset,"line-fill-x", cursor_line_fill_x );
+        loadInteger(guiset,"line-fill-y", cursor_line_fill_y );
+
+        loadImage(guiset,"flood-fill", cursor_flood_fill );
+        loadInteger(guiset,"flood-fill-x", cursor_flood_fill_x );
+        loadInteger(guiset,"flood-fill-y", cursor_flood_fill_y );
     guiset.endGroup();
 
     guiset.beginGroup("edit-common");
@@ -290,6 +341,7 @@ void Themes::loadTheme(QString themeDir)
     guiset.beginGroup("edit-place");
         loadIcon(guiset,"square-fill", square_fill );
         loadIcon(guiset,"line-tool", line_tool );
+        loadIcon(guiset,"flood-fill", flood_fill );
         loadIcon(guiset,"overwrite-mode", overwrite_mode );
     guiset.endGroup();
 
@@ -390,6 +442,8 @@ void Themes::loadTheme(QString themeDir)
     guiset.endGroup();
 
     currentThemeDir=themeDir;
+
+    initCursors();
 }
 
 
@@ -416,10 +470,81 @@ void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
     }
 }
 
+void Themes::loadInteger(QSettings &s, QString value, Themes::Images intVal)
+{
+    if(!s.value(value, "").toString().isEmpty())
+    {
+        int tmpVal;
+        tmpVal = s.value(value, "-1").toInt();
+        if(tmpVal>=0)
+            int_map[intVal] = tmpVal;
+    }
+}
+
+void Themes::initCursors()
+{
+    cursor_map[cursor_pasting] = QCursor(images_map[cursor_pasting],
+                                         int_map[cursor_pasting_x],
+                                         int_map[cursor_pasting_y]
+                                         );
+
+    cursor_map[cursor_erasing] = QCursor(images_map[cursor_erasing],
+                                         int_map[cursor_erasing_x],
+                                         int_map[cursor_erasing_y]
+                                         );
+
+    cursor_map[cursor_flood_fill] = QCursor(images_map[cursor_flood_fill],
+                                         int_map[cursor_flood_fill_x],
+                                         int_map[cursor_flood_fill_y]
+                                         );
+
+    if(images_map.contains(cursor_normal))
+        cursor_map[cursor_normal] = QCursor(images_map[cursor_normal],
+                                            int_map[cursor_normal_x],
+                                            int_map[cursor_normal_y]
+                                            );
+    else
+        cursor_map[cursor_normal] = QCursor(Qt::ArrowCursor);
+
+
+    if(images_map.contains(cursor_resizing))
+        cursor_map[cursor_resizing] = QCursor(images_map[cursor_resizing],
+                                            int_map[cursor_resizing_x],
+                                            int_map[cursor_resizing_y]
+                                            );
+    else
+        cursor_map[cursor_resizing] = QCursor(Qt::CrossCursor);
+
+    if(images_map.contains(cursor_placing))
+        cursor_map[cursor_placing] = QCursor(images_map[cursor_placing],
+                                            int_map[cursor_placing_x],
+                                            int_map[cursor_placing_y]
+                                            );
+    else
+        cursor_map[cursor_placing] = QCursor(Qt::CrossCursor);
+
+
+    if(images_map.contains(cursor_square_fill))
+        cursor_map[cursor_square_fill] = QCursor(images_map[cursor_square_fill],
+                                            int_map[cursor_square_fill_x],
+                                            int_map[cursor_square_fill_y]
+                                            );
+    else
+        cursor_map[cursor_square_fill] = QCursor(Qt::CrossCursor);
+
+    if(images_map.contains(cursor_line_fill))
+        cursor_map[cursor_line_fill] = QCursor(images_map[cursor_line_fill],
+                                            int_map[cursor_line_fill_x],
+                                            int_map[cursor_line_fill_y]
+                                            );
+    else
+        cursor_map[cursor_line_fill] = QCursor(Qt::CrossCursor);
+}
+
 
 QIcon Themes::icon(Themes::Icons icn)
 {
-    if(isLoaded)
+    if(isLoaded && icons_map.contains(icn))
         return icons_map[icn];
     else
         return QIcon();
@@ -427,8 +552,24 @@ QIcon Themes::icon(Themes::Icons icn)
 
 QPixmap Themes::Image(Themes::Images img)
 {
-    if(isLoaded)
+    if(isLoaded && images_map.contains(img))
         return images_map[img];
     else
         return QPixmap();
+}
+
+int Themes::Integer(Themes::Images intval)
+{
+    if(isLoaded && int_map.contains(intval))
+        return int_map[intval];
+    else
+        return 0;
+}
+
+QCursor Themes::Cursor(Themes::Images intval)
+{
+    if(isLoaded && cursor_map.contains(intval))
+        return cursor_map[intval];
+    else
+        return QCursor(Qt::ArrowCursor);
 }
