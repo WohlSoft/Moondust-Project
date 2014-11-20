@@ -44,15 +44,19 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
                 activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
 
-                LvlPlacingItems::fillingMode = false;
+
+                LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
+
+
+                //LvlPlacingItems::squareFillingMode = false;
                 ui->actionSquareFill->setChecked(false);
                 ui->actionSquareFill->setEnabled(true);
 
-                LvlPlacingItems::lineMode = false;
+                //LvlPlacingItems::lineMode = false;
                 ui->actionLine->setChecked(false);
                 ui->actionLine->setEnabled(true);
 
-                LvlPlacingItems::floodFillingMode = false;
+                //LvlPlacingItems::floodFillingMode = false;
                 ui->actionFill->setChecked(false);
                 ui->actionFill->setEnabled(true);
 
@@ -89,7 +93,6 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
            case ItemTypes::LVL_NPC:
                {
                    ui->actionSquareFill->setEnabled(false);
-                   ui->actionLine->setEnabled(false);
 
                    activeLvlEditWin()->scene->setItemPlacer(2, itemID );
 
@@ -119,15 +122,17 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
                  activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
 
-                 WldPlacingItems::fillingMode = false;
+                 WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
+
+                 //WldPlacingItems::squarefillingMode = false;
                  ui->actionSquareFill->setChecked(false);
                  ui->actionSquareFill->setEnabled(true);
 
-                 WldPlacingItems::lineMode = false;
+                 //WldPlacingItems::lineMode = false;
                  ui->actionLine->setChecked(false);
                  ui->actionLine->setEnabled(true);
 
-                 LvlPlacingItems::floodFillingMode = false;
+                 //WldPlacingItems::floodFillingMode = false;
                  ui->actionFill->setChecked(false);
                  ui->actionFill->setEnabled(true);
 

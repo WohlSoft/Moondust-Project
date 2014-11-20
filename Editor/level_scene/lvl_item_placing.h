@@ -34,12 +34,20 @@ public:
 
     static LevelBlock blockSet;
 
-    static bool sizableBlock;
-    static bool fillingMode;
-    static bool lineMode;
-    static bool floodFillingMode;
+    enum PlaceMode
+    {
+        PMODE_Brush=0,
+        PMODE_Square,
+        PMODE_Line,
+        PMODE_FloodFill
+    };
 
+    static PlaceMode placingMode;
     static bool overwriteMode;
+
+    static bool sizableBlock;
+
+
 
     static LevelBGO bgoSet;
     static LevelPhysEnv waterSet;

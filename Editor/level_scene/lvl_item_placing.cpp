@@ -64,10 +64,13 @@ int LvlPlacingItems::gridSz=1;
 QPoint LvlPlacingItems::gridOffset=QPoint(0,0);
 
 bool LvlPlacingItems::sizableBlock=false;
-bool LvlPlacingItems::fillingMode=false;
-bool LvlPlacingItems::lineMode=false;
+
+//bool LvlPlacingItems::squareFillingMode=false;
+//bool LvlPlacingItems::lineMode=false;
+//bool LvlPlacingItems::floodFillingMode=false;
+
 bool LvlPlacingItems::overwriteMode=false;
-bool LvlPlacingItems::floodFillingMode=false;
+LvlPlacingItems::PlaceMode LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
 
 QString LvlPlacingItems::layer="";
 
@@ -111,8 +114,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             if(pConfigs->main_block[j].sizable)
             {
                 LvlPlacingItems::sizableBlock=true;
-                LvlPlacingItems::fillingMode=false;
-                LvlPlacingItems::lineMode=false;
+                LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
                 setSquareDrawer(); return;
             }
 
@@ -153,7 +155,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::layer = LvlPlacingItems::blockSet.layer;
 
             //Square fill mode (uses own cursor item)
-            if(LvlPlacingItems::fillingMode)
+            //if(LvlPlacingItems::squareFillingMode)
+            if(LvlPlacingItems::placingMode == LvlPlacingItems::PMODE_Square)
             {
                 setSquareDrawer(); return;
             }
@@ -163,7 +166,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             LvlPlacingItems::c_offset_y= qRound(qreal(LvlPlacingItems::blockSet.h) / 2);
 
             //Line mode (uses own cursor item)
-            if(LvlPlacingItems::lineMode)
+            //if(LvlPlacingItems::lineMode)
+            if(LvlPlacingItems::placingMode == LvlPlacingItems::PMODE_Line)
             {
                 setLineDrawer(); return;
             }
@@ -181,7 +185,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             cursor->setEnabled(true);
 
             //flood fill uses 'item' cursor
-            if(LvlPlacingItems::floodFillingMode)
+                //if(LvlPlacingItems::floodFillingMode)
+            if(LvlPlacingItems::placingMode == LvlPlacingItems::PMODE_FloodFill)
             {
                 setFloodFiller(); return;
             }
@@ -241,7 +246,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::layer = LvlPlacingItems::bgoSet.layer;
 
         //Square fill mode
-        if(LvlPlacingItems::fillingMode)
+        if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -250,7 +255,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
         //Line mode
-        if(LvlPlacingItems::lineMode)
+        if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
@@ -272,7 +277,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::bgoSet.id = itemID;
 
         //flood fill uses 'item' cursor
-        if(LvlPlacingItems::floodFillingMode)
+        if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_FloodFill)
         {
             setFloodFiller(); return;
         }
@@ -376,14 +381,21 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::itemW = mergedSet.width;
         LvlPlacingItems::itemH = mergedSet.height;
 
+        LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.width) / 2);
+        LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.height) / 2);
+
+        //Line mode
+        if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Line)
+        {
+            setLineDrawer(); return;
+        }
+
         cursor->setData(0, "NPC");
         cursor->setData(1, QString::number(itemID));
         cursor->setData(7, QString::number((int)mergedSet.collision_with_blocks));
         cursor->setData(8, QString::number((int)mergedSet.no_npc_collions));
         cursor->setData(9, QString::number(mergedSet.width));
         cursor->setData(10, QString::number(mergedSet.height));
-        LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.width) / 2);
-        LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.height) / 2);
         cursor->setData(25, "CURSOR");
 
         LvlPlacingItems::layer = LvlPlacingItems::npcSet.layer;
@@ -394,7 +406,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setEnabled(true);
 
         //flood fill uses 'item' cursor
-        if(LvlPlacingItems::floodFillingMode)
+        if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_FloodFill)
         {
             setFloodFiller(); return;
         }
@@ -543,6 +555,7 @@ void LvlScene::setLineDrawer()
     {
     case PLC_Block:
     case PLC_BGO:
+    case PLC_NPC:
     default:
         pen = QPen(Qt::transparent, 2);
         break;
