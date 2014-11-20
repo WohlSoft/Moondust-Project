@@ -60,7 +60,8 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if( (!s->isSelectionDialog) && (mouseEvent->buttons() & Qt::RightButton) )
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
-        dontCallEvent=true;
+        dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 

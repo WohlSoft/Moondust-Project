@@ -68,6 +68,7 @@ void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 

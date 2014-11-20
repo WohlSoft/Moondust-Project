@@ -73,10 +73,12 @@ void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         {
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             dontCallEvent = true;
+            s->IsMoved = true;
             return;
         }
         s->PasteFromBuffer = true;
         dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 
