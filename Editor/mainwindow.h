@@ -583,6 +583,8 @@ public:
         void on_PROPS_NpcBoss_clicked(bool checked);
         void on_PROPS_NpcTMsg_clicked();
         void on_PROPS_NPCSpecialSpin_valueChanged(int arg1);
+        void on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked);
+        void on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked);
         void on_PROPS_NPCContaiter_clicked();
         void on_PROPS_NPCSpecialBox_currentIndexChanged(int index);
         void on_PROPS_NPCSpecial2Spin_valueChanged(int arg1);
@@ -1002,9 +1004,6 @@ private slots:
     private slots:
         void on_action_doTest_triggered();
         void on_action_testSettings_triggered();
-
-
-
 
 signals:
     void closeEditor();

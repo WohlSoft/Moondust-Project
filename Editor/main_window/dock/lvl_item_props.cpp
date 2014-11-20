@@ -279,6 +279,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
         ui->PROPS_NpcSpinLabel->hide();
         ui->PROPS_NPCSpecialSpin->hide();
+        ui->PROPS_NPCSpecialSpin_Auto->hide();
 
         ui->line_6->hide();
 
@@ -380,6 +381,12 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 ui->PROPS_NpcSpinLabel->setText( configs.main_npc[j].special_name );
                 ui->PROPS_NPCSpecialSpin->show();
 
+                if(npcPtr<0)
+                {
+                    ui->PROPS_NPCSpecialSpin_Auto->show();
+                    ui->PROPS_NPCSpecialSpin_Auto->setChecked(false);
+                }
+
                 if(newItem)
                 { //Reset value to min, if it out of range
                     if((npc.special_data>configs.main_npc[j].special_spin_max)||
@@ -395,6 +402,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 ui->PROPS_NPCSpecialSpin->setMaximum( configs.main_npc[j].special_spin_max + npcSpecSpinOffset );
 
                 ui->PROPS_NPCSpecialSpin->setValue( npc.special_data + npcSpecSpinOffset );
+                LvlPlacingItems::npcSpecialAutoIncrement_begin = npc.special_data;
+
                 break;
             case 2:
                 if(configs.main_npc[j].container)
@@ -1380,6 +1389,8 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
 
+    LvlPlacingItems::npcSpecialAutoIncrement_begin = arg1 - npcSpecSpinOffset;
+
     if(npcPtr<0)
     {
         LvlPlacingItems::npcSet.special_data = arg1 - npcSpecSpinOffset;
@@ -1438,6 +1449,16 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
         activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset));
     }
 
+}
+
+void MainWindow::on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked)
+{
+    LvlPlacingItems::npcSpecialAutoIncrement=checked;
+}
+
+void MainWindow::on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked)
+{
+    LvlPlacingItems::npcSpecialAutoIncrement=checked;
 }
 
 void MainWindow::on_PROPS_NPCContaiter_clicked()

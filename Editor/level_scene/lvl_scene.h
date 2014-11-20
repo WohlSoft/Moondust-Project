@@ -166,6 +166,8 @@ public:
     qlonglong last_bgo_arrayID;
     qlonglong last_npc_arrayID;
 
+    long IncrementingNpcSpecialSpin;
+
     void removeItemUnderCursor();
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );

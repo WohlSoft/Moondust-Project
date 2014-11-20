@@ -93,6 +93,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
            case ItemTypes::LVL_NPC:
                {
                    ui->actionSquareFill->setEnabled(false);
+                   ui->actionFill->setEnabled(false);
 
                    activeLvlEditWin()->scene->setItemPlacer(2, itemID );
 
