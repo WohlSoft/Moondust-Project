@@ -232,13 +232,11 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
             switch(edit->scene->placingItem)
             {
                 case LvlScene::PLC_Block:
-                   ui->PROPS_BlockSquareFill->setChecked(checked);
                    edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
                    WriteToLog(QtDebugMsg, QString("Block Square draw -> %1").arg(checked));
 
                 break;
                 case LvlScene::PLC_BGO:
-                   ui->PROPS_BGOSquareFill->setChecked(checked);
                    edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
                    WriteToLog(QtDebugMsg, QString("BGO Square draw -> %1").arg(checked));
 
@@ -259,10 +257,6 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
 
             ui->actionLine->setChecked(false);
             ui->actionFill->setChecked(false);
-
-
-            ui->PROPS_BlockSquareFill->setChecked(false);
-            ui->PROPS_BGOSquareFill->setChecked(false);
 
             switch(edit->scene->placingItem)
             {

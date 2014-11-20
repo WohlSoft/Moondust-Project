@@ -113,8 +113,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->PROPS_BlockInvis->setChecked( block.invisible );
         ui->PROPS_BlkSlippery->setChecked( block.slippery );
 
-        ui->PROPS_BlockSquareFill->setVisible( newItem );
-        ui->PROPS_BlockSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
+        //ui->PROPS_BlockSquareFill->setVisible( newItem );
+        //ui->PROPS_BlockSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
 
         ui->PROPS_BlockIncludes->setText(
                     ((block.npc_id!=0)?
@@ -180,8 +180,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
         ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.array_id));
 
-        ui->PROPS_BGOSquareFill->setVisible( newItem );
-        ui->PROPS_BGOSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
+        //ui->PROPS_BGOSquareFill->setVisible( newItem );
+        //ui->PROPS_BGOSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
 
         ui->PROPS_bgoPos->setText( tr("Position: [%1, %2]").arg(bgo.x).arg(bgo.y) );
 
@@ -666,24 +666,24 @@ void MainWindow::on_PROPS_BlockResize_clicked()
 
 
 
-void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+//void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
+//{
+//    if(LvlItemPropsLock) return;
+//    if(LockItemProps) return;
 
-    on_actionSquareFill_triggered(checked);
-    ui->actionSquareFill->setChecked(checked);
-}
+//    on_actionSquareFill_triggered(checked);
+//    ui->actionSquareFill->setChecked(checked);
+//}
 
 
-void MainWindow::on_PROPS_BGOSquareFill_clicked(bool checked)
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+//void MainWindow::on_PROPS_BGOSquareFill_clicked(bool checked)
+//{
+//    if(LvlItemPropsLock) return;
+//    if(LockItemProps) return;
 
-    on_actionSquareFill_triggered(checked);
-    ui->actionSquareFill->setChecked(checked);
-}
+//    on_actionSquareFill_triggered(checked);
+//    ui->actionSquareFill->setChecked(checked);
+//}
 
 
 void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)

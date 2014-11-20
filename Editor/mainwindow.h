@@ -560,7 +560,7 @@ public:
     private slots:
         void on_PROPS_BlockResize_clicked();
 
-        void on_PROPS_BlockSquareFill_clicked(bool checked);
+        //void on_PROPS_BlockSquareFill_clicked(bool checked);
         void on_PROPS_BlockInvis_clicked(bool checked);
         void on_PROPS_BlkSlippery_clicked(bool checked);
         void on_PROPS_BlockIncludes_clicked();
@@ -570,7 +570,7 @@ public:
         void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1);
 
         void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
-        void on_PROPS_BGOSquareFill_clicked(bool checked);
+        //void on_PROPS_BGOSquareFill_clicked(bool checked);
         void on_PROPS_BGO_Z_Layer_currentIndexChanged(int index);
         void on_PROPS_BGO_Z_Offset_valueChanged(double arg1);
         void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);

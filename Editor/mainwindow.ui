@@ -2684,9 +2684,9 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>-242</y>
           <width>279</width>
-          <height>1364</height>
+          <height>1340</height>
          </rect>
         </property>
         <attribute name="label">
@@ -2739,16 +2739,6 @@ p, li { white-space: pre-wrap; }
              <widget class="QPushButton" name="PROPS_BlockResize">
               <property name="text">
                <string>Resize</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QPushButton" name="PROPS_BlockSquareFill">
-              <property name="text">
-               <string>Square fill</string>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -2953,130 +2943,7 @@ p, li { white-space: pre-wrap; }
             <property name="spacing">
              <number>1</number>
             </property>
-            <item row="8" column="0">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>58</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="6" column="0" colspan="2">
-             <widget class="QLabel" name="SMBX64title">
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>SMBX64 defines:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_bgoPos">
-              <property name="text">
-               <string notr="true">Pos: [x. y]</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QPushButton" name="PROPS_BGOSquareFill">
-              <property name="text">
-               <string>Square fill</string>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="0" colspan="2">
-             <spacer name="verticalSpacer_14">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="7" column="1">
-             <widget class="QSpinBox" name="PROPS_BGO_smbx64_sp">
-              <property name="minimum">
-               <number>-1</number>
-              </property>
-              <property name="maximum">
-               <number>999999999</number>
-              </property>
-              <property name="singleStep">
-               <number>1</number>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="0">
-             <widget class="QLabel" name="SortPriorityLabel">
-              <property name="text">
-               <string>Sort priority:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="PROPS_BgoID">
-              <property name="text">
-               <string notr="true">BgoID: [z]</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QLabel" name="SMBX64_SP_Help">
-              <property name="maximumSize">
-               <size>
-                <width>175</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
-This option using the SMBX's bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</string>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0" colspan="2">
-             <widget class="Line" name="line_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="BgoLayerLabel">
-              <property name="text">
-               <string>Layer:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QComboBox" name="PROPS_BGOLayer">
-              <item>
-               <property name="text">
-                <string notr="true">CurrentLayer</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="4" column="0" colspan="2">
+            <item row="3" column="0" colspan="2">
              <widget class="QGroupBox" name="PROPS_BGO_Z_Pos">
               <property name="title">
                <string>Z-Position</string>
@@ -3142,6 +3009,119 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                 </widget>
                </item>
               </layout>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>58</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="5" column="0" colspan="2">
+             <widget class="QLabel" name="SMBX64title">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>SMBX64 defines:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="PROPS_bgoPos">
+              <property name="text">
+               <string notr="true">Pos: [x. y]</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0" colspan="2">
+             <spacer name="verticalSpacer_14">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="6" column="1">
+             <widget class="QSpinBox" name="PROPS_BGO_smbx64_sp">
+              <property name="minimum">
+               <number>-1</number>
+              </property>
+              <property name="maximum">
+               <number>999999999</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="SortPriorityLabel">
+              <property name="text">
+               <string>Sort priority:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QLabel" name="PROPS_BgoID">
+              <property name="text">
+               <string notr="true">BgoID: [z]</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLabel" name="SMBX64_SP_Help">
+              <property name="maximumSize">
+               <size>
+                <width>175</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
+This option using the SMBX's bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0" colspan="2">
+             <widget class="Line" name="line_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="BgoLayerLabel">
+              <property name="text">
+               <string>Layer:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QComboBox" name="PROPS_BGOLayer">
+              <item>
+               <property name="text">
+                <string notr="true">CurrentLayer</string>
+               </property>
+              </item>
              </widget>
             </item>
            </layout>
