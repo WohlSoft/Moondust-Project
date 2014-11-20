@@ -38,29 +38,33 @@ bool SmartImporter::attemptFastImport()
         QStringList allFiles = sourceDir.entryList(QDir::Files | QDir::Readable, QDir::Name);
         QStringList filteredFiles;
         foreach (QString tarFile, allFiles) {
-            if(tarFile.startsWith("block-") && tarFile.endsWith(".gif"))
+            if(tarFile.endsWith(".tileset.ini", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("background-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("block-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("background2-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("background-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("npc-") && (tarFile.endsWith(".gif")||tarFile.endsWith(".txt")))
+            if(tarFile.startsWith("background2-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("effect-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("npc-", Qt::CaseInsensitive) &&
+                    (tarFile.endsWith(".gif", Qt::CaseInsensitive)||
+                    tarFile.endsWith(".txt", Qt::CaseInsensitive)))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("yoshib-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("effect-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("yoshit-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("yoshib-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("mario-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("yoshit-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("luigi-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("mario-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("peach-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("luigi-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("toad-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("peach-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("link-") && tarFile.endsWith(".gif"))
+            if(tarFile.startsWith("toad-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+                filteredFiles << importPath + tarFile;
+            if(tarFile.startsWith("link-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
         }
 
