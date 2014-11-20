@@ -63,6 +63,7 @@ void WLD_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 

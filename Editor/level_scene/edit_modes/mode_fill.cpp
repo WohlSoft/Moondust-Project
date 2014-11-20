@@ -70,6 +70,8 @@ void LVL_ModeFill::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if( mouseEvent->buttons() & Qt::RightButton )
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
+        dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
     if(! mouseEvent->buttons() & Qt::LeftButton)
