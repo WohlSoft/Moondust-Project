@@ -74,6 +74,8 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     last_bgo_arrayID = 0;
     last_npc_arrayID = 0;
 
+    IncrementingNpcSpecialSpin = 0;
+
     //Editing process flags
     IsMoved = false;
     haveSelected = false;

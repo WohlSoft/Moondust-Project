@@ -44,6 +44,8 @@ long        LvlPlacingItems::npcGfxOffsetX1=0;
 long        LvlPlacingItems::npcGfxOffsetX2=0;
 long        LvlPlacingItems::npcGfxOffsetY=0;
 long        LvlPlacingItems::npcGrid=0;
+bool        LvlPlacingItems::npcSpecialAutoIncrement=false;
+long        LvlPlacingItems::npcSpecialAutoIncrement_begin=0;
 LevelBlock  LvlPlacingItems::blockSet=FileFormats::dummyLvlBlock();
 LevelBGO    LvlPlacingItems::bgoSet=FileFormats::dummyLvlBgo();
 long        LvlPlacingItems::itemW = 0;
@@ -404,12 +406,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
         cursor->setEnabled(true);
-
-        //flood fill uses 'item' cursor
-        if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_FloodFill)
-        {
-            setFloodFiller(); return;
-        }
 
         break;
     }

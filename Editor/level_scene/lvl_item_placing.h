@@ -28,6 +28,8 @@ public:
     static long npcGfxOffsetX1;
     static long npcGfxOffsetX2;
     static long npcGfxOffsetY;
+    static bool npcSpecialAutoIncrement;
+    static long npcSpecialAutoIncrement_begin;
 
     static long itemW;
     static long itemH;

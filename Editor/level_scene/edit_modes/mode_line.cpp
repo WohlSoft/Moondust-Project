@@ -79,6 +79,9 @@ void LVL_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     s->last_bgo_arrayID=s->LvlData->bgo_array_id;
     s->last_npc_arrayID=s->LvlData->npc_array_id;
 
+    if(LvlPlacingItems::npcSpecialAutoIncrement)
+        s->IncrementingNpcSpecialSpin = LvlPlacingItems::npcSpecialAutoIncrement_begin;
+
     WriteToLog(QtDebugMsg, QString("Line mode %1").arg(s->EditingMode));
 
     if(s->cursor)
