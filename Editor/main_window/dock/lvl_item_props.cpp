@@ -114,7 +114,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->PROPS_BlkSlippery->setChecked( block.slippery );
 
         ui->PROPS_BlockSquareFill->setVisible( newItem );
-        ui->PROPS_BlockSquareFill->setChecked(LvlPlacingItems::fillingMode);
+        ui->PROPS_BlockSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
 
         ui->PROPS_BlockIncludes->setText(
                     ((block.npc_id!=0)?
@@ -181,7 +181,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.array_id));
 
         ui->PROPS_BGOSquareFill->setVisible( newItem );
-        ui->PROPS_BGOSquareFill->setChecked(LvlPlacingItems::fillingMode);
+        ui->PROPS_BGOSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
 
         ui->PROPS_bgoPos->setText( tr("Position: [%1, %2]").arg(bgo.x).arg(bgo.y) );
 

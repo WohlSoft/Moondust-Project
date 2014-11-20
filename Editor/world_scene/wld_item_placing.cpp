@@ -53,9 +53,8 @@ int WldPlacingItems::itemH=0;
 int WldPlacingItems::gridSz=1;
 QPoint WldPlacingItems::gridOffset=QPoint(0,0);
 
-bool WldPlacingItems::fillingMode=false;
-bool WldPlacingItems::lineMode=false;
 bool WldPlacingItems::overwriteMode=false;
+WldPlacingItems::PlaceMode WldPlacingItems::placingMode=WldPlacingItems::PMODE_Brush;
 
 QList<QPair<int, QVariant > > WldPlacingItems::flags;
 
@@ -161,7 +160,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
-        if(WldPlacingItems::fillingMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -169,7 +168,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::lineMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
@@ -284,7 +283,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.push_back(flag);
 
 
-        if(WldPlacingItems::fillingMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -292,7 +291,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::lineMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
@@ -405,7 +404,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
-        if(WldPlacingItems::fillingMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -413,7 +412,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::lineMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
@@ -531,7 +530,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.push_back(flag);
 
 
-        if(WldPlacingItems::fillingMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -539,7 +538,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::lineMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
