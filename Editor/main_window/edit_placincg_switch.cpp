@@ -26,6 +26,47 @@
 #include "../defines.h"
 
 
+void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
+{
+    if(activeChildWindow()==1) // Level editing window
+    {
+        switch(Placing_ShowProperties_lastType)
+        {
+        case ItemTypes::LVL_Block:
+        case ItemTypes::LVL_BGO:
+        case ItemTypes::LVL_NPC:
+            {
+                if(checked)
+                {
+                    ui->ItemProperties->show();
+                    ui->ItemProperties->raise();
+                }
+                else
+                    ui->ItemProperties->hide();
+                break;
+            }
+        }
+    }
+    else if(activeChildWindow()==3) // World editing window
+    {
+        switch(Placing_ShowProperties_lastType)
+        {
+            case ItemTypes::WLD_Level:
+            {
+                if(checked)
+                {
+                    ui->WLD_ItemProps->show();
+                    ui->WLD_ItemProps->raise();
+                }
+                else
+                    ui->WLD_ItemProps->hide();
+                break;
+            }
+        }
+    }
+}
+
+
 void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 {
     if(activeChildWindow()==1) // Level editing window
@@ -66,12 +107,16 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
            default:;
        }
 
+       Placing_ShowProperties_lastType = itemType;
+
        //Switch placing mode
        if(valid)
            switch(itemType)
            {
            case ItemTypes::LVL_Block:
                {
+                   ui->action_Placing_ShowProperties->setChecked(true);
+                   ui->action_Placing_ShowProperties->setEnabled(true);
                    //Switch scene to placing mode:
                    activeLvlEditWin()->scene->setItemPlacer(0, itemID);
 
@@ -83,6 +128,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                }
            case ItemTypes::LVL_BGO:
                {
+                   ui->action_Placing_ShowProperties->setChecked(true);
+                   ui->action_Placing_ShowProperties->setEnabled(true);
+
                    activeLvlEditWin()->scene->setItemPlacer(1, itemID );
 
                    LvlItemProps(1,FileFormats::dummyLvlBlock(),
@@ -92,6 +140,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                }
            case ItemTypes::LVL_NPC:
                {
+                   ui->action_Placing_ShowProperties->setChecked(true);
+                   ui->action_Placing_ShowProperties->setEnabled(true);
+
                    ui->actionSquareFill->setEnabled(false);
                    ui->actionFill->setEnabled(false);
 
@@ -107,6 +158,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
     else if(activeChildWindow()==3) // World editing window
     {
         bool valid=false;
+        ui->action_Placing_ShowProperties->setChecked(false);
+        ui->action_Placing_ShowProperties->setEnabled(false);
         switch(itemType)
         {
             case ItemTypes::WLD_Tile:
@@ -141,6 +194,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  activeWldEditWin()->setFocus();
             default:;
         }
+
+        Placing_ShowProperties_lastType = itemType;
+
         //Switch placing mode
         if(valid)
             switch(itemType)
@@ -165,6 +221,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                     }
                 case ItemTypes::WLD_Level:
                     {
+                        ui->action_Placing_ShowProperties->setChecked(true);
+                        ui->action_Placing_ShowProperties->setEnabled(true);
+
                         activeWldEditWin()->scene->setItemPlacer(3, itemID);
                         WldItemProps(0, WldPlacingItems::LevelSet, true);
                         break;

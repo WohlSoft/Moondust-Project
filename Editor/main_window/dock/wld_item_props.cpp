@@ -28,6 +28,13 @@
 bool wld_tools_lock=false;
 
 
+void MainWindow::on_WLD_ItemProps_visibilityChanged(bool visible)
+{
+    ui->action_Placing_ShowProperties->setChecked(visible);
+}
+
+
+
 void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
 {
     wld_tools_lock=true;
@@ -98,6 +105,7 @@ void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
             }
             ui->WLD_PROPS_ExitBottom->setCurrentIndex( level.bottom_exit+1 );
 
+            ui->action_Placing_ShowProperties->setChecked(true);
             ui->WLD_ItemProps->setVisible(true);
             ui->WLD_ItemProps->show();
             ui->WLD_ItemProps->raise();
@@ -111,6 +119,7 @@ void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
     case -1: //Nothing to edit
     default:
         ui->WLD_ItemProps->hide();
+        ui->action_Placing_ShowProperties->setChecked(false);
     }
     wld_tools_lock=false;
 }

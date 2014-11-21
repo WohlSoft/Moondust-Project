@@ -32,6 +32,13 @@ int npcSpecSpinOffset=0;
 int npcSpecSpinOffset_2=0;
 bool LockItemProps=true;
 
+
+void MainWindow::on_ItemProperties_visibilityChanged(bool visible)
+{
+    ui->action_Placing_ShowProperties->setChecked(visible);
+}
+
+
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
 
@@ -225,6 +232,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         LvlItemPropsLock=false;
         LockItemProps=false;
 
+        ui->action_Placing_ShowProperties->setChecked(true);
         ui->ItemProperties->show();
         ui->ItemProperties->raise();
         ui->bgoProps->show();
@@ -521,6 +529,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         LvlItemPropsLock=false;
         LockItemProps=false;
 
+        ui->action_Placing_ShowProperties->setChecked(true);
         ui->ItemProperties->show();
         ui->ItemProperties->raise();
         ui->npcProps->show();
@@ -532,6 +541,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     case -1: //Nothing to edit
     default:
         ui->ItemProperties->hide();
+        ui->action_Placing_ShowProperties->setChecked(false);
     }
 }
 
