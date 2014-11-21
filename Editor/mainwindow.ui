@@ -290,7 +290,7 @@
       <string>Custom data</string>
      </property>
      <addaction name="actionCDATA_clear_unused"/>
-     <addaction name="actionImport"/>
+     <addaction name="actionCDATA_Import"/>
     </widget>
     <addaction name="menuGlobal_configuration"/>
     <addaction name="actionRefresh_menu_and_toolboxes"/>
@@ -9022,7 +9022,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/images/properties.png</normaloff>:/images/properties.png</iconset>
    </property>
    <property name="text">
-    <string>Show properties box</string>
+    <string>Show properties</string>
+   </property>
+   <property name="toolTip">
+    <string>Show properties of item</string>
    </property>
   </action>
   <action name="actionSprite_editor">
@@ -9030,7 +9033,7 @@ p, li { white-space: pre-wrap; }
     <string>Sprite Editor</string>
    </property>
   </action>
-  <action name="actionImport">
+  <action name="actionCDATA_Import">
    <property name="text">
     <string>Import...</string>
    </property>

@@ -111,3 +111,21 @@ void MainWindow::on_actionPNG2GIFs_triggered()
     pngToGifGUI->show();
 }
 
+
+
+
+void MainWindow::on_actionCDATA_clear_unused_triggered()
+{
+    QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
+}
+
+
+void MainWindow::on_actionCDATA_Import_triggered()
+{
+    QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
+}
+
+void MainWindow::on_actionSprite_editor_triggered()
+{
+    QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
+}

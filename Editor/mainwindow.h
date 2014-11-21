@@ -89,6 +89,7 @@ public:
  * - Help
  * - Configuration manager
  * - External tools
+ * - Other Tools
  * - Search Boxes common
  * - Music Player
  *
@@ -430,6 +431,17 @@ public:
         void on_actionGIFs2PNG_triggered();
         void on_actionPNG2GIFs_triggered();
 // ////////////////////////////////////////////////////////
+
+
+
+// //////////////////Other Tools////////////////////////
+    private slots:
+        void on_actionCDATA_clear_unused_triggered();
+        void on_actionCDATA_Import_triggered();
+        void on_actionSprite_editor_triggered();
+// ////////////////////////////////////////////////////////
+
+
 
 
 // /////////////Search Boxes common ///////////////////////
@@ -1012,6 +1024,10 @@ private slots:
     private slots:
         void on_action_doTest_triggered();
         void on_action_testSettings_triggered();
+
+// ////////////////////Unsorted slots/////////////////////////////
+// ///////Please move them into it's category/////////////////////
+    private slots:
 
 signals:
     void closeEditor();
