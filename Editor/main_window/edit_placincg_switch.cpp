@@ -25,6 +25,8 @@
 
 #include "../defines.h"
 
+#include "global_settings.h"
+
 
 void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
 {
@@ -124,6 +126,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                    LvlItemProps(0,LvlPlacingItems::blockSet,
                                              FileFormats::dummyLvlBgo(),
                                              FileFormats::dummyLvlNpc(), true);
+
+                   if(GlobalSettings::Placing_dontShowPropertiesBox)
+                        ui->ItemProperties->hide();
+
                    break;
                }
            case ItemTypes::LVL_BGO:
@@ -136,6 +142,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                    LvlItemProps(1,FileFormats::dummyLvlBlock(),
                                              LvlPlacingItems::bgoSet,
                                              FileFormats::dummyLvlNpc(), true);
+
+                   if(GlobalSettings::Placing_dontShowPropertiesBox)
+                        ui->ItemProperties->hide();
+
                    break;
                }
            case ItemTypes::LVL_NPC:
@@ -151,6 +161,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                    LvlItemProps(2,FileFormats::dummyLvlBlock(),
                                              FileFormats::dummyLvlBgo(),
                                              LvlPlacingItems::npcSet, true);
+
+                   if(GlobalSettings::Placing_dontShowPropertiesBox)
+                        ui->ItemProperties->hide();
+
                    break;
                }
            }
@@ -226,6 +240,10 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
                         activeWldEditWin()->scene->setItemPlacer(3, itemID);
                         WldItemProps(0, WldPlacingItems::LevelSet, true);
+
+                        if(GlobalSettings::Placing_dontShowPropertiesBox)
+                             ui->WLD_ItemProps->hide();
+
                         break;
                     }
                 case ItemTypes::WLD_MusicBox:

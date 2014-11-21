@@ -264,7 +264,8 @@ SOURCES += main.cpp\
     smart_import/smartimporter.cpp \
     level_scene/edit_modes/mode_fill.cpp \
     networking/engine_intproc.cpp \
-    networking/engine_client.cpp
+    networking/engine_client.cpp \
+    main_window/global_settings.cpp
 
 
 HEADERS  += defines.h \

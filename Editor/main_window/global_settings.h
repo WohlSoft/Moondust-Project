@@ -69,6 +69,9 @@ public:
     static bool MidMouse_allowSwitchToPlace;
     static bool MidMouse_allowSwitchToDrag;
 
+    //Placing mode flahs
+    static bool Placing_dontShowPropertiesBox;
+
     //Last active file type state
     static int lastWinType;
 
