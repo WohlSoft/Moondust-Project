@@ -347,6 +347,11 @@ public:
         void on_actionLine_triggered(bool checked);
         void on_actionOverwriteMode_triggered(bool checked);
         void on_actionFill_triggered(bool checked);
+
+        void on_action_Placing_ShowProperties_triggered(bool checked);
+    private:
+        int  Placing_ShowProperties_lastType;
+
 // ////////////////////////////////////////////////////////
 
 // ////////////////// Resize ask //////////////////////////
@@ -558,6 +563,7 @@ public:
         bool LvlItemPropsLock; //!< Protector for allow apply changes only if filed was edit by human
 
     private slots:
+        void on_ItemProperties_visibilityChanged(bool visible);
         void on_PROPS_BlockResize_clicked();
 
         //void on_PROPS_BlockSquareFill_clicked(bool checked);
@@ -918,6 +924,8 @@ public:
         void WLD_returnPointToLevelProperties(QPoint p);
 
     private slots:
+        void on_WLD_ItemProps_visibilityChanged(bool visible);
+
         void on_WLD_PROPS_PathBG_clicked(bool checked);
         void on_WLD_PROPS_BigPathBG_clicked(bool checked);
         void on_WLD_PROPS_AlwaysVis_clicked(bool checked);

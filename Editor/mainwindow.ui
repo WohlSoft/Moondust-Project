@@ -274,6 +274,8 @@
      </property>
      <addaction name="actionConfigure_Tilesets"/>
      <addaction name="actionTileset_groups_editor"/>
+     <addaction name="separator"/>
+     <addaction name="actionSprite_editor"/>
     </widget>
     <widget class="QMenu" name="menuExternal_tools">
      <property name="title">
@@ -283,6 +285,13 @@
      <addaction name="actionGIFs2PNG"/>
      <addaction name="actionPNG2GIFs"/>
     </widget>
+    <widget class="QMenu" name="menuCustom_data">
+     <property name="title">
+      <string>Custom data</string>
+     </property>
+     <addaction name="actionCDATA_clear_unused"/>
+     <addaction name="actionImport"/>
+    </widget>
     <addaction name="menuGlobal_configuration"/>
     <addaction name="actionRefresh_menu_and_toolboxes"/>
     <addaction name="separator"/>
@@ -291,6 +300,8 @@
     <addaction name="menuExternal_tools"/>
     <addaction name="separator"/>
     <addaction name="menuPattles_and_tilesets"/>
+    <addaction name="separator"/>
+    <addaction name="menuCustom_data"/>
     <addaction name="separator"/>
     <addaction name="actionApplication_settings"/>
    </widget>
@@ -2684,7 +2695,7 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>-729</y>
+          <y>0</y>
           <width>279</width>
           <height>1358</height>
          </rect>
@@ -6081,6 +6092,8 @@ p, li { white-space: pre-wrap; }
    <addaction name="actionLine"/>
    <addaction name="actionFill"/>
    <addaction name="actionOverwriteMode"/>
+   <addaction name="separator"/>
+   <addaction name="action_Placing_ShowProperties"/>
   </widget>
   <widget class="QToolBar" name="ResizingToolbar">
    <property name="windowTitle">
@@ -8993,6 +9006,36 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Fill</string>
+   </property>
+  </action>
+  <action name="actionCDATA_clear_unused">
+   <property name="text">
+    <string>Clear unused data</string>
+   </property>
+  </action>
+  <action name="action_Placing_ShowProperties">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/properties.png</normaloff>:/images/properties.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show properties box</string>
+   </property>
+  </action>
+  <action name="actionSprite_editor">
+   <property name="text">
+    <string>Sprite Editor</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import</string>
    </property>
   </action>
  </widget>
