@@ -361,7 +361,8 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::gridOffset = QPoint(mergedSet.grid_offset_x,
                                              mergedSet.grid_offset_y);
 
-        cursor = addPixmap(tImg);
+        LvlPlacingItems::flags.clear();
+        QPair<int, QVariant > flag;
 
         long imgOffsetX = (int)round( - ( ( (double)mergedSet.gfx_w -
                                             (double)mergedSet.width ) / 2 ) );
@@ -374,11 +375,6 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::npcGfxOffsetX1 = imgOffsetX;
         LvlPlacingItems::npcGfxOffsetX2 = (-((double)mergedSet.gfx_offset_x));
         LvlPlacingItems::npcGfxOffsetY = imgOffsetY;
-        ((QGraphicsPixmapItem *)cursor)->setOffset(
-                    ( LvlPlacingItems::npcGfxOffsetX1 +
-                    ( LvlPlacingItems::npcGfxOffsetX2 *
-                      ((LvlPlacingItems::npcSet.direct==0)?-1:LvlPlacingItems::npcSet.direct))),
-                    LvlPlacingItems::npcGfxOffsetY );
 
         LvlPlacingItems::itemW = mergedSet.width;
         LvlPlacingItems::itemH = mergedSet.height;
@@ -386,21 +382,53 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::c_offset_x= qRound(qreal(mergedSet.width) / 2);
         LvlPlacingItems::c_offset_y= qRound(qreal(mergedSet.height) / 2);
 
+            flag.first=0;
+            flag.second="NPC";
+        LvlPlacingItems::flags.push_back(flag);
+
+            flag.first=1;
+            flag.second=QString::number(itemID);
+        LvlPlacingItems::flags.push_back(flag);
+
+            flag.first=7;
+            flag.second=QString::number((int)mergedSet.collision_with_blocks);
+        LvlPlacingItems::flags.push_back(flag);
+
+            flag.first=8;
+            flag.second=QString::number((int)mergedSet.no_npc_collions);
+        LvlPlacingItems::flags.push_back(flag);
+
+            flag.first=9;
+            flag.second=QString::number(mergedSet.width);
+        LvlPlacingItems::flags.push_back(flag);
+
+            flag.first=10;
+            flag.second=QString::number(mergedSet.height);
+        LvlPlacingItems::flags.push_back(flag);
+
+            flag.first=25;
+            flag.second="CURSOR";
+        LvlPlacingItems::flags.push_back(flag);
+
+        LvlPlacingItems::layer = LvlPlacingItems::npcSet.layer;
+
         //Line mode
         if(LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
 
-        cursor->setData(0, "NPC");
-        cursor->setData(1, QString::number(itemID));
-        cursor->setData(7, QString::number((int)mergedSet.collision_with_blocks));
-        cursor->setData(8, QString::number((int)mergedSet.no_npc_collions));
-        cursor->setData(9, QString::number(mergedSet.width));
-        cursor->setData(10, QString::number(mergedSet.height));
-        cursor->setData(25, "CURSOR");
+        cursor = addPixmap(tImg);
 
-        LvlPlacingItems::layer = LvlPlacingItems::npcSet.layer;
+        //set data flags
+        foreach(dataFlag flag, LvlPlacingItems::flags)
+            cursor->setData(flag.first, flag.second);
+
+        ((QGraphicsPixmapItem *)cursor)->setOffset(
+                    ( LvlPlacingItems::npcGfxOffsetX1 +
+                    ( LvlPlacingItems::npcGfxOffsetX2 *
+                      ((LvlPlacingItems::npcSet.direct==0)?-1:LvlPlacingItems::npcSet.direct))),
+                    LvlPlacingItems::npcGfxOffsetY );
 
         cursor->setZValue(7000);
         cursor->setOpacity( 0.8 );
