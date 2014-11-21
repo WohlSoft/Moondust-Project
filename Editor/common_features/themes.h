@@ -78,6 +78,8 @@ public:
         flood_fill,
         overwrite_mode,
 
+        properties,
+
         zoom_reset,
         zoom_in,
         zoom_out,

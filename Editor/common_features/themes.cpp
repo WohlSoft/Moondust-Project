@@ -87,6 +87,8 @@ void Themes::init()
     icons_map[flood_fill]    = QIcon(":/images/flood_fill.png");
     icons_map[overwrite_mode]= QIcon(":/images/overwrite.png");
 
+    icons_map[properties]   = QIcon(":/images/properties.png");
+
     icons_map[zoom_reset]   = QIcon(":/images/zoom_reset.png");
     icons_map[zoom_in]      = QIcon(":/images/zoom_in.png");
     icons_map[zoom_out]     = QIcon(":/images/zoom_out.png");
@@ -343,6 +345,7 @@ void Themes::loadTheme(QString themeDir)
         loadIcon(guiset,"line-tool", line_tool );
         loadIcon(guiset,"flood-fill", flood_fill );
         loadIcon(guiset,"overwrite-mode", overwrite_mode );
+        loadIcon(guiset,"properties", properties );
     guiset.endGroup();
 
     guiset.beginGroup("edit-zoom");
