@@ -78,6 +78,8 @@ void MainWindow::applyTheme(QString themeDir)
     ui->actionFill->setIcon(Themes::icon(Themes::flood_fill));
     ui->actionOverwriteMode->setIcon(Themes::icon(Themes::overwrite_mode));
 
+    ui->action_Placing_ShowProperties->setIcon(Themes::icon(Themes::properties));
+
     ui->actionZoomReset->setIcon(Themes::icon(Themes::zoom_reset));
     ui->actionZoomIn->setIcon(Themes::icon(Themes::zoom_in));
     ui->actionZoomOut->setIcon(Themes::icon(Themes::zoom_out));
