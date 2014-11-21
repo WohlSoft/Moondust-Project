@@ -23,6 +23,15 @@
 
 #include "../common_features/sdl_music_player.h"
 
+QString LvlMusPlay::currentCustomMusic;
+long LvlMusPlay::currentMusicId=0;
+long LvlMusPlay::currentWldMusicId=0;
+long LvlMusPlay::currentSpcMusicId=0;
+bool LvlMusPlay::musicButtonChecked;
+bool LvlMusPlay::musicForceReset=false;
+int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
+
+
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
 {
     WriteToLog(QtDebugMsg, "Clicked play music button");
