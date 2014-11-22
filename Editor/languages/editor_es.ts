@@ -237,12 +237,12 @@
     <message>
         <location filename="../data_configs/config_manager.ui" line="24"/>
         <source>Please select the game configuration with which you wish to start the Editor with </source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor seleccione el juego con el que deseas iniciar el editor</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.ui" line="63"/>
         <source>Ask every Startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Preguntar al inicio</translation>
     </message>
     <message>
         <source>Please, select the game configuration which defining the game settings and stuff</source>
@@ -448,27 +448,27 @@
     <message>
         <location filename="../common_features/crashhandler.ui" line="14"/>
         <source>Crash</source>
-        <translation type="unfinished">Crash</translation>
+        <translation>Crash</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="30"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;You might want to post this data at:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Querrá publicar estos datos en</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="55"/>
         <source>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouch, PGE colapsó D: Crash Data:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="79"/>
         <source>PGE Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>Foro de PGE</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="86"/>
         <source>Exit Application</source>
-        <translation type="unfinished"></translation>
+        <translation>Salir</translation>
     </message>
 </context>
 <context>
@@ -551,12 +551,12 @@
     <message>
         <location filename="../dev_console/devconsole.cpp" line="193"/>
         <source>Throws an unhandled exception to crash the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tira una excepción no controlada para colapsar el editor</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="194"/>
         <source>Does a segmentation violation</source>
-        <translation type="unfinished"></translation>
+        <translation>Hace una violación de segmentación</translation>
     </message>
 </context>
 <context>
@@ -3736,12 +3736,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="8990"/>
         <source>Run testing &lt;Alpha&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecutar prueba &lt;Alpha&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8995"/>
         <source>Settings</source>
-        <translation type="unfinished">Opciones</translation>
+        <translation>Opciones</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -4340,21 +4340,22 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <location filename="../main_window/edit_common.cpp" line="95"/>
         <location filename="../main_window/edit_common.cpp" line="131"/>
         <source>File not saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo no guardado</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="40"/>
         <location filename="../main_window/edit_common.cpp" line="96"/>
         <location filename="../main_window/edit_common.cpp" line="132"/>
         <source>File doesn&apos;t saved on disk.</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo no fue guardado en el disco.</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="46"/>
         <location filename="../main_window/edit_common.cpp" line="138"/>
         <source>Can&apos;t open the file.
 File not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede abrir el archivo.
+El archivo no existe.</translation>
     </message>
     <message>
         <location filename="../main_window/edit_common.cpp" line="54"/>
@@ -4817,14 +4818,16 @@ File not exist.</source>
     <message>
         <location filename="../main_window/main_testing.cpp" line="48"/>
         <source>Engine is not found</source>
-        <translation type="unfinished"></translation>
+        <translation>El motor no se encuentra</translation>
     </message>
     <message>
         <location filename="../main_window/main_testing.cpp" line="49"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, check the application directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede comenzar pruebas, el motor no se encuentra: 
+%1
+Por favor, compruebe el directorio de la aplicación.</translation>
     </message>
 </context>
 <context>
@@ -4973,7 +4976,10 @@ Para prevenir ésto, pruebe cerrando otros programas innecesarios para liberar m
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lo lamentamos, pero el editor ha colapsado.
+Razón: ¡memoria insuficiente!
+
+Para prevenir esto, pruebe cerrando otras aplicaciones innecesarias para despejar más memoria.</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="120"/>
@@ -4983,7 +4989,10 @@ Reason: %1
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: engine.wohlnet.ru/forum</source>
-        <translation type="unfinished"></translation>
+        <translation>Lo lamentamos, pero el editor ha colapsado.
+Razón: %1
+
+Enlace al foro: engine.wohlnet.ru/forum</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="136"/>
@@ -4991,7 +5000,10 @@ Forum link: engine.wohlnet.ru/forum</source>
 Reason: Signal Segmentation Violation [SIGSERV]
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Lo lamentamos, pero el editor ha colapsado.
+Razón: Violación de segmentación de señal [SIGSERV]
+
+</translation>
     </message>
 </context>
 <context>
@@ -5008,13 +5020,13 @@ Reason: Signal Segmentation Violation [SIGSERV]
         <location filename="../file_formats/file_formats.cpp" line="79"/>
         <location filename="../file_formats/file_formats.cpp" line="115"/>
         <source>File open error</source>
-        <translation type="unfinished">Error al abrir archivo</translation>
+        <translation>Error al abrir archivo</translation>
     </message>
     <message>
         <location filename="../file_formats/file_formats.cpp" line="80"/>
         <location filename="../file_formats/file_formats.cpp" line="116"/>
         <source>Can&apos;t open the file.</source>
-        <translation type="unfinished">No se puede abrir archivo.</translation>
+        <translation>No se puede abrir archivo.</translation>
     </message>
     <message>
         <location filename="../file_formats/file_formats.cpp" line="148"/>
