@@ -107,6 +107,10 @@ void WldScene::SwitchEditingMode(int EdtMode)
         switchMode("HandScroll");
         break;
 
+    case MODE_Fill:
+        switchMode("Fill");
+        break;
+
     case MODE_Selecting:
     default:
 //        resetCursor();

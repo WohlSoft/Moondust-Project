@@ -250,6 +250,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                     {
                         ui->actionSquareFill->setEnabled(false);
                         ui->actionLine->setEnabled(false);
+                        ui->actionFill->setEnabled(false);
                         activeWldEditWin()->scene->setItemPlacer(4, itemID);
                         WldItemProps(-1, FileFormats::dummyWldLevel(), true);
                         break;
