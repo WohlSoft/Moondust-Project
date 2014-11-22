@@ -23,10 +23,10 @@
 #include <QProgressDialog>
 
 #include "world_edit.h"
-#include "../ui_world_edit.h"
+#include <ui_world_edit.h>
 
 #include "../file_formats/wld_filedata.h"
-//#include "../level_scene/lvlscene.h"
+//#include "../level_scene/lvl_scene.h"
 #include "../common_features/logger.h"
 
 

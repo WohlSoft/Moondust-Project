@@ -18,7 +18,7 @@
  */
 
 #include "animate.h"
-#include "ui_animate.h"
+#include <ui_animate.h>
 #include "animationedit.h"
 #include "aniFrames.h"
 #include "../main/globals.h"

@@ -24,7 +24,7 @@
 #include <QProgressDialog>
 
 #include "world_edit.h"
-#include "../ui_world_edit.h"
+#include <ui_world_edit.h>
 
 #include "../common_features/app_path.h"
 
@@ -218,7 +218,7 @@ void WorldEdit::newFile(dataconfigs &configs, LevelEditingSettings options)
         return;
     }
 
-    scene = new WldScene(configs, WldData);
+    scene = new WldScene(ui->graphicsView, configs, WldData);
     scene->opts = options;
 
     //scene->InitSection(0);
@@ -506,7 +506,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     WriteToLog(QtDebugMsg, QString(">>Starting to load file"));
 
     //Declaring of the scene
-    scene = new WldScene(configs, WldData);
+    scene = new WldScene(ui->graphicsView, configs, WldData);
 
     scene->opts = options;
 

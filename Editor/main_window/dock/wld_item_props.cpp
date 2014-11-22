@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../../mainwindow.h"
 #include "../../world_scene/wld_item_placing.h"
 #include "../../item_select_dialog/itemselectdialog.h"
@@ -26,6 +26,13 @@
 #include "../../file_formats/file_formats.h"
 
 bool wld_tools_lock=false;
+
+
+void MainWindow::on_WLD_ItemProps_visibilityChanged(bool visible)
+{
+    ui->action_Placing_ShowProperties->setChecked(visible);
+}
+
 
 
 void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
@@ -98,6 +105,7 @@ void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
             }
             ui->WLD_PROPS_ExitBottom->setCurrentIndex( level.bottom_exit+1 );
 
+            ui->action_Placing_ShowProperties->setChecked(true);
             ui->WLD_ItemProps->setVisible(true);
             ui->WLD_ItemProps->show();
             ui->WLD_ItemProps->raise();
@@ -111,6 +119,7 @@ void MainWindow::WldItemProps(int Type, WorldLevels level, bool newItem)
     case -1: //Nothing to edit
     default:
         ui->WLD_ItemProps->hide();
+        ui->action_Placing_ShowProperties->setChecked(false);
     }
     wld_tools_lock=false;
 }
@@ -268,7 +277,6 @@ void MainWindow::on_WLD_PROPS_GameStart_clicked(bool checked)
 
 }
 
-//void MainWindow::on_WLD_PROPS_LVLFile_textEdited(const QString &arg1)
 void MainWindow::on_WLD_PROPS_LVLFile_editingFinished()
 {
     if(wld_tools_lock) return;
@@ -299,7 +307,6 @@ void MainWindow::on_WLD_PROPS_LVLFile_editingFinished()
 
 }
 
-//void MainWindow::on_WLD_PROPS_LVLTitle_textEdited(const QString &arg1)
 void MainWindow::on_WLD_PROPS_LVLTitle_editingFinished()
 {
     if(wld_tools_lock) return;
@@ -604,8 +611,6 @@ void MainWindow::on_WLD_PROPS_GetPoint_clicked()
             ui->WLD_PROPS_GetPoint->setChecked(false);
             ui->WLD_PROPS_GetPoint->setCheckable(false);
 
-            activeWldEditWin()->scene->unserPointSelector();
-            activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
             activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
         }
         else
@@ -613,14 +618,16 @@ void MainWindow::on_WLD_PROPS_GetPoint_clicked()
             ui->WLD_PROPS_GetPoint->setCheckable(true);
             ui->WLD_PROPS_GetPoint->setChecked(true);
 
-            activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
+            //activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
             activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SetPoint);
 
-            WldPlacingItems::fillingMode = false;
+            WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
+
+            //WldPlacingItems::squarefillingMode = false;
             ui->actionSquareFill->setChecked(false);
             ui->actionSquareFill->setEnabled(false);
 
-            WldPlacingItems::lineMode = false;
+            //WldPlacingItems::lineMode = false;
             ui->actionLine->setChecked(false);
             ui->actionLine->setEnabled(false);
             if(ui->WLD_PROPS_GotoX->text().isEmpty()||ui->WLD_PROPS_GotoY->text().isEmpty())

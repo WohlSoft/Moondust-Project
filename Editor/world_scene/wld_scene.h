@@ -46,11 +46,17 @@
 #include "../data_configs/custom_data.h"
 #include "../main_window/global_settings.h"
 
+#include "../common_features/graphicsworkspace.h"
+
+#include "../common_features/edit_mode_base.h"
+
 class WldScene : public QGraphicsScene
 {
     Q_OBJECT
+    friend class EditMode;
+    friend class WorldEdit;
 public:
-    WldScene(dataconfigs &configs, WorldData &FileData, QObject *parent = 0);
+    WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldData &FileData, QObject *parent = 0);
     ~WldScene();
 
     bool grid;
@@ -83,9 +89,12 @@ public:
 
     QGraphicsItem * pointTarget;
 
-    enum EditMode
+    QList<EditMode *> EditModes;
+    EditMode * CurrentMode;
+    enum EditModeID
     {
         MODE_Selecting=0,
+        MODE_HandScroll,
         MODE_Erasing,
         MODE_PlacingNew,
         MODE_DrawSquare,
@@ -95,6 +104,7 @@ public:
         MODE_Line,
         MODE_SetPoint
     };
+    void switchMode(QString title);
 
 
     // ////////////ItemPlacers/////////////////////////////
@@ -118,8 +128,24 @@ public:
     void placeItemsByRectArray();
     WorldData placingItems;
     WorldData overwritedItems;
-    void setItemSourceData(QGraphicsItem *it, QString ObjType);
+    //void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
+
+    bool mouseLeft; //Left mouse key is pressed
+    bool mouseMid;  //Middle mouse key is pressed
+    bool mouseRight;//Right mouse key is pressed
+
+    bool mouseMoved; //Mouse was moved with right mouseKey
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    bool MousePressEventOnly;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    bool MouseMoveEventOnly;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    bool MouseReleaseEventOnly;
+
+    void keyPressEvent ( QKeyEvent * keyEvent );
+    void keyReleaseEvent ( QKeyEvent * keyEvent );
+
     // ////////////ItemPlacers/////////////////////////////
 
     //Copy function
@@ -167,14 +193,46 @@ public:
     QVector<SimpleAnimator * > animates_Paths;
     QVector<SimpleAnimator * > animates_Levels;
 
+    // //////////////////////////////////
+    QList<QGraphicsItem *> collisionCheckBuffer;
+    bool emptyCollisionCheck;
+    void prepareCollisionBuffer();
+
     bool checkGroupCollisions(QList<QGraphicsItem *> *items);
     QGraphicsItem * itemCollidesWith(QGraphicsItem * item, QList<QGraphicsItem *> *itemgrp = 0);
+    QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
+
+    void placeTile(WorldTiles &tile, bool toGrid=false);
+    void placeScenery(WorldScenery &scenery, bool toGrid=false);
+    void placePath(WorldPaths &pathItem, bool toGrid=false);
+    void placeLevel(WorldLevels &level, bool toGrid=false);
+    void placeMusicbox(WorldMusic &musicbox, bool toGrid=false);
+
+    //the last Array ID's, which used before hold mouse key
+    qlonglong last_tile_arrayID;
+    qlonglong last_scene_arrayID;
+    qlonglong last_path_arrayID;
+    qlonglong last_level_arrayID;
+    qlonglong last_musicbox_arrayID;
+
+    void removeItemUnderCursor();
+
+    QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
+    void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
+
+    void applyArrayForItemGroup(QList<QGraphicsItem * >items);
+    void applyArrayForItem(QGraphicsItem * item);
+
+    void returnItemBackGroup(QList<QGraphicsItem * >items);
+    void returnItemBack(QGraphicsItem * item);
+    // //////////////////////////////////
 
     WorldData  * WldData;
 
     WorldData WldBuffer;
 
     dataconfigs * pConfigs;
+    GraphicsWorkspace *_viewPort;
 
     //Object Indexing:
     QVector<wTileIndexes > index_tiles;
@@ -351,33 +409,7 @@ signals:
     void pointSelected(QPoint point);
     void screenshotSizeCaptured();
 
-protected:
-    //void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
-    void keyReleaseEvent ( QKeyEvent * keyEvent );
-
 private:
-
-    QGraphicsItem * itemCollidesCursor(QGraphicsItem * item);
-
-    void placeTile(WorldTiles &tile, bool toGrid=false);
-    void placeScenery(WorldScenery &scenery, bool toGrid=false);
-    void placePath(WorldPaths &pathItem, bool toGrid=false);
-    void placeLevel(WorldLevels &level, bool toGrid=false);
-    void placeMusicbox(WorldMusic &musicbox, bool toGrid=false);
-
-    void removeItemUnderCursor();
-
-    QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
-    void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
-
-    void applyArrayForItemGroup(QList<QGraphicsItem * >items);
-    void applyArrayForItem(QGraphicsItem * item);
-
-    void returnItemBackGroup(QList<QGraphicsItem * >items);
-    void returnItemBack(QGraphicsItem * item);
 
     //void setSectionBG(LevelSection section);
 

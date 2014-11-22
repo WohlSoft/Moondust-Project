@@ -48,6 +48,12 @@ class LVL_Player :
 
         bool JumpPressed;
         bool onGround;
+
+        bool bumpDown;
+        bool bumpUp;
+        float bumpVelocity;
+        void bump(bool _up=false);
+
         int foot_contacts;
         int jumpForce;
 

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 
 #include "item_block.h"
@@ -69,9 +69,10 @@ void LvlScene::SwitchEditingMode(int EdtMode)
 
     case MODE_PasteFromClip:
         switchMode("Select");
+        clearSelection();
         disableMoveItems=true;
         _viewPort->setInteractive(true);
-        _viewPort->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
+        _viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
         _viewPort->setDragMode(QGraphicsView::NoDrag);
         break;
 
@@ -88,7 +89,13 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         switchMode("HandScroll");
         break;
 
+
+    case MODE_Fill:
+        switchMode("Fill");
+        break;
     case MODE_Selecting:
+
+
     default:
         switchMode("Select");
         break;
@@ -364,6 +371,8 @@ void LvlScene::setLayerToSelected()
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        MainWinConnect::pMainWin->setLayerLists();
+        MainWinConnect::pMainWin->setEventData();
         setLayerToSelected(lName, true);
     }
     delete layerBox;

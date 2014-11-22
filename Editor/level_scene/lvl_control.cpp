@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 #include <QtMath>
 
@@ -37,14 +37,6 @@
 
 #include "../defines.h"
 
-
-//QPoint sourcePos=QPoint(0,0);
-//int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
-
-//namespace lvl_control
-//{
-//    static QPointF drawStartPos = QPoint(0,0); // Stored start point of mouse movement with pressed key
-//}
 
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
 
@@ -972,10 +964,10 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 // //////////////////////////////////////////////EVENTS END/////////////////////////////////////////////////
 
 
-void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
-{
-    Q_UNUSED(it);
-    Q_UNUSED(ObjType);
+//void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
+//{
+//    Q_UNUSED(it);
+//    Q_UNUSED(ObjType);
 //    gridSize = pConfigs->default_grid;
 //    offsetX = 0;
 //    offsetY = 0;
@@ -1025,7 +1017,7 @@ void LvlScene::setItemSourceData(QGraphicsItem * it, QString ObjType)
 //        gridSize = 2 ;
 //        sourcePos = QPoint(dynamic_cast<ItemPlayerPoint *>(it)->pointData.x, dynamic_cast<ItemPlayerPoint *>(it)->pointData.y);
 //    }
-}
+//}
 
 void LvlScene::placeItemsByRectArray()
 {
@@ -1156,6 +1148,12 @@ void LvlScene::placeItemUnderCursor()
         {
             LvlPlacingItems::npcSet.x = cursor->scenePos().x();
             LvlPlacingItems::npcSet.y = cursor->scenePos().y();
+
+            if(LvlPlacingItems::npcSpecialAutoIncrement)
+            {
+                LvlPlacingItems::npcSet.special_data = IncrementingNpcSpecialSpin;
+                IncrementingNpcSpecialSpin++;
+            }
 
             LvlData->npc_array_id++;
             LvlPlacingItems::npcSet.array_id = LvlData->npc_array_id;

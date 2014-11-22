@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../common_features/app_path.h"
 
 #include "../edit_level/level_edit.h"
@@ -32,6 +32,7 @@
 #include "edit_modes/mode_square.h"
 #include "edit_modes/mode_line.h"
 #include "edit_modes/mode_resize.h"
+#include "edit_modes/mode_fill.h"
 
 LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
@@ -72,6 +73,8 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     last_block_arrayID = 0;
     last_bgo_arrayID = 0;
     last_npc_arrayID = 0;
+
+    IncrementingNpcSpecialSpin = 0;
 
     //Editing process flags
     IsMoved = false;
@@ -163,6 +166,9 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
 
     LVL_ModeLine * modeLine = new LVL_ModeLine(this);
     EditModes.push_back(modeLine);
+
+    LVL_ModeFill * modeFill = new LVL_ModeFill(this);
+    EditModes.push_back(modeFill);
 
     CurrentMode = modeSelect;
     CurrentMode->set();

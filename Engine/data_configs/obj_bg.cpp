@@ -18,12 +18,15 @@
 
 #include "config_manager.h"
 
-/*****Level BGO************/
+//#include <QtDebug>
+
+
+/*****Level BG************/
 QVector<obj_BG >     ConfigManager::lvl_bg;
 QMap<long, obj_BG>   ConfigManager::lvl_bg_indexes;
 CustomDirManager ConfigManager::Dir_BG;
-QVector<SimpleAnimator *> ConfigManager::Animator_BG;
-/*****Level BGO************/
+QVector<SimpleAnimator > ConfigManager::Animator_BG;
+/*****Level BG************/
 
 bool ConfigManager::loadLevelBackG()
 {
@@ -50,7 +53,7 @@ bool ConfigManager::loadLevelBackG()
         total_data +=bg_total;
     bgset.endGroup();
 
-
+    QStringList tmp;
     for(i=1; i<=bg_total; i++)
     {
 
@@ -103,8 +106,22 @@ bool ConfigManager::loadLevelBackG()
 
             sbg.magic = (bgset.value("magic", "0").toString()=="1");
             sbg.magic_strips = bgset.value("magic-strips", "1").toInt();
+
             sbg.magic_splits = bgset.value("magic-splits", "0").toString();
+            tmp.clear();
+            tmp = sbg.magic_splits.split(',');
+            sbg.magic_splits_i.clear();
+            foreach(QString x, tmp)
+                sbg.magic_splits_i.push_back(x.toInt());
+
+            //qDebug() << sbg.magic_splits << sbg.magic_splits_i.size();
+
             sbg.magic_speeds = bgset.value("magic-speeds", "0").toString();
+            tmp.clear();
+            tmp = sbg.magic_speeds.split(',');
+            sbg.magic_speeds_i.clear();
+            foreach(QString x, tmp)
+                sbg.magic_speeds_i.push_back(x.toDouble());
 
             sbg.animated = (bgset.value("animated", "0").toString()=="1");//animated
             sbg.frames = bgset.value("frames", "1").toInt();

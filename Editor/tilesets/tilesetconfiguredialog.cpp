@@ -17,9 +17,9 @@
  */
 
 #include "tilesetconfiguredialog.h"
-#include "ui_tilesetconfiguredialog.h"
+#include <ui_tilesetconfiguredialog.h>
 
-#include "../level_scene/lvlscene.h"
+#include "../level_scene/lvl_scene.h"
 #include "../world_scene/wld_scene.h"
 
 TilesetConfigureDialog::TilesetConfigureDialog(dataconfigs* conf, QGraphicsScene *scene, QWidget *parent) :

@@ -28,17 +28,28 @@ public:
     static long npcGfxOffsetX1;
     static long npcGfxOffsetX2;
     static long npcGfxOffsetY;
+    static bool npcSpecialAutoIncrement;
+    static long npcSpecialAutoIncrement_begin;
 
     static long itemW;
     static long itemH;
 
     static LevelBlock blockSet;
 
-    static bool sizableBlock;
-    static bool fillingMode;
-    static bool lineMode;
+    enum PlaceMode
+    {
+        PMODE_Brush=0,
+        PMODE_Square,
+        PMODE_Line,
+        PMODE_FloodFill
+    };
 
+    static PlaceMode placingMode;
     static bool overwriteMode;
+
+    static bool sizableBlock;
+
+
 
     static LevelBGO bgoSet;
     static LevelPhysEnv waterSet;

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
 
@@ -105,7 +105,7 @@ void MainWindow::on_actionPaste_triggered()
 
     if (activeChildWindow()==1)
     {
-       activeLvlEditWin()->changeCursor(leveledit::MODE_Pasting);
+       //activeLvlEditWin()->changeCursor(leveledit::MODE_Pasting);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
 
        activeLvlEditWin()->scene->LvlBuffer = LvlBuffer;
@@ -113,10 +113,11 @@ void MainWindow::on_actionPaste_triggered()
     else
     if (activeChildWindow()==3)
     {
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_Pasting);
-       activeWldEditWin()->scene->EditingMode = 4;
-       activeWldEditWin()->scene->EraserEnabled = false;
-       activeWldEditWin()->scene->disableMoveItems=true;
+       //activeWldEditWin()->changeCursor(WorldEdit::MODE_Pasting);
+       //activeWldEditWin()->scene->EditingMode = 4;
+       //activeWldEditWin()->scene->EraserEnabled = false;
+       //activeWldEditWin()->scene->disableMoveItems=true;
+        activeWldEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PasteFromClip);
 
        activeWldEditWin()->scene->WldBuffer = WldBuffer;
     }

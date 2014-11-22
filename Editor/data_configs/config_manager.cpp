@@ -1,5 +1,5 @@
 #include "config_manager.h"
-#include "ui_config_manager.h"
+#include <ui_config_manager.h>
 
 #include "../common_features/app_path.h"
 

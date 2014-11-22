@@ -86,7 +86,8 @@ public:
         MODE_PasteFromClip,
         MODE_Resizing,
         MODE_SelectingOnly,
-        MODE_Line
+        MODE_Line,
+        MODE_Fill
     };
     void switchMode(QString title);
 
@@ -96,6 +97,7 @@ public:
     void updateCursoredNpcDirection();
     void setSquareDrawer();
     void setLineDrawer();
+    void setFloodFiller();
     enum placingItemType
     {
         PLC_Block=0,
@@ -114,7 +116,7 @@ public:
     void placeItemsByRectArray();
     LevelData placingItems;
     LevelData overwritedItems;
-    void setItemSourceData(QGraphicsItem *it, QString ObjType);
+    //void setItemSourceData(QGraphicsItem *it, QString ObjType);
     void resetCursor();
 
     bool mouseLeft; //Left mouse key is pressed
@@ -163,6 +165,8 @@ public:
     qlonglong last_block_arrayID;
     qlonglong last_bgo_arrayID;
     qlonglong last_npc_arrayID;
+
+    long IncrementingNpcSpecialSpin;
 
     void removeItemUnderCursor();
 

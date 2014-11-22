@@ -32,7 +32,7 @@
 #include <math.h>
 #include <QMenu>
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../file_formats/lvl_filedata.h"
 
 class ItemBlock : public QObject, public QGraphicsItem

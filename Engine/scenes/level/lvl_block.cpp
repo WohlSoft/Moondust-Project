@@ -19,6 +19,8 @@
 #include "lvl_block.h"
 #include "../../data_configs/config_manager.h"
 
+#include "lvl_scene_ptr.h"
+
 LVL_Block::LVL_Block()
 {
     type = LVLBlock;
@@ -26,6 +28,12 @@ LVL_Block::LVL_Block()
     animated=false;
     sizable=false;
     animator_ID=0;
+
+    offset_x = 0.f;
+    offset_y = 0.f;
+
+    isHidden=false;
+    destroyed=false;
 }
 
 LVL_Block::~LVL_Block()
@@ -56,6 +64,8 @@ void LVL_Block::init()
     slippery = data->slippery;
 
     sizable = setup->sizable;
+
+    isHidden = data->invisible;
 
     if((setup->sizable) || (setup->collision==2))
     {
@@ -145,7 +155,7 @@ void LVL_Block::init()
     if(setup->algorithm==3)
         {
             block->SetSensor(true);
-            ConfigManager::Animator_Blocks[animator_ID]->setFrames(1, -1);
+            ConfigManager::Animator_Blocks[animator_ID].setFrames(1, -1);
         }
 
     if(collide==COLLISION_NONE)// || collide==COLLISION_TOP)
@@ -156,11 +166,14 @@ void LVL_Block::init()
 }
 
 
-
 void LVL_Block::render(float camX, float camY)
 {
-    QRectF blockG = QRectF(posX()-camX,
-                           posY()-camY,
+    //Don't draw hidden block before it will be hitten
+    if(isHidden) return;
+    if(destroyed) return;
+
+    QRectF blockG = QRectF(posX()-camX+offset_x,
+                           posY()-camY+offset_y,
                            width,
                            height);
 
@@ -168,7 +181,7 @@ void LVL_Block::render(float camX, float camY)
     AniPos x(0,1);
 
     if(animated) //Get current animated frame
-        x = ConfigManager::Animator_Blocks[animator_ID]->image();
+        x = ConfigManager::Animator_Blocks[animator_ID].image();
 
     glEnable(GL_TEXTURE_2D);
     glColor4f( 1.f, 1.f, 1.f, 1.f);
@@ -349,3 +362,79 @@ void LVL_Block::drawPiece(QRectF target, QRectF block, QRectF texture)
     glEnd();
 
 }
+
+
+
+
+void LVL_Block::hit(LVL_Block::directions _dir)
+{
+    hitDirection = _dir;
+    isHidden=false;
+
+    if(setup->destroyable)
+    {
+        destroyed=true;
+        return;
+    }
+
+    if(setup->hitable)
+    {
+        fadeOffset=0.f;
+        setFade(20, 1.0f, 0.2f);
+    }
+}
+
+
+/**************************Fader*******************************/
+void LVL_Block::setFade(int speed, float target, float step)
+{
+    fade_step = fabs(step);
+    targetOffset = target;
+    fadeSpeed = speed;
+
+    fader_timer_id = SDL_AddTimer(speed, &LVL_Block::nextOpacity, this);
+    if(!fader_timer_id) fadeOffset = targetOffset;
+}
+
+unsigned int LVL_Block::nextOpacity(unsigned int x, void *p)
+{
+    Q_UNUSED(x);
+    LVL_Block *self = reinterpret_cast<LVL_Block *>(p);
+    self->fadeStep();
+    return 0;
+}
+
+void LVL_Block::fadeStep()
+{
+    if(fadeOffset < targetOffset)
+        fadeOffset+=fade_step;
+    else
+        fadeOffset-=fade_step;
+
+    if(fadeOffset>=1.0f || fadeOffset<=0.0f)
+    {
+        SDL_RemoveTimer(fader_timer_id);
+        if(fadeOffset>=1.0f)
+            setFade(fadeSpeed, 0.0f, fade_step);
+    }
+    else
+        {
+            fader_timer_id = SDL_AddTimer(fadeSpeed, &LVL_Block::nextOpacity, this);
+            if(!fader_timer_id) fadeOffset = targetOffset;
+        }
+
+    if(fadeOffset>1.0f) fadeOffset = 1.0f;
+    else
+    if(fadeOffset<0.0f) fadeOffset = 0.0f;
+
+    switch(hitDirection)
+    {
+        case up:      offset_y = -16*fadeOffset; break;
+        case down:    offset_y = 16*fadeOffset; break;
+        case left:    offset_x = -16*fadeOffset; break;
+        case right:   offset_x = 16*fadeOffset; break;
+        default: break;
+    }
+
+}
+/**************************Fader**end**************************/

@@ -295,6 +295,7 @@ bool ConfigManager::unloadLevelConfigs()
     ///Clear texture bank
     while(!level_textures.isEmpty())
     {
+        glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(level_textures.last().texture) );
         level_textures.pop_back();
     }
@@ -302,33 +303,36 @@ bool ConfigManager::unloadLevelConfigs()
 
 
     /***************Clear animators*************/
-    foreach(SimpleAnimator * x, Animator_Blocks)
-        x->stop();
-    while(!Animator_Blocks.isEmpty())
-    {
-        SimpleAnimator * x = Animator_Blocks.first();
-        Animator_Blocks.pop_front();
-        delete x;
-    }
+//    foreach(SimpleAnimator x, Animator_Blocks)
+//        x->stop();
+    Animator_Blocks.clear();
+//    while(!Animator_Blocks.isEmpty())
+//    {
+//        SimpleAnimator * x = Animator_Blocks.first();
+//        Animator_Blocks.pop_front();
+//        delete x;
+//    }
 
 
-    foreach(SimpleAnimator * x, Animator_BGO)
-        x->stop();
-    while(!Animator_BGO.isEmpty())
-    {
-        SimpleAnimator * x = Animator_BGO.first();
-        Animator_BGO.pop_front();
-        delete x;
-    }
+//    foreach(SimpleAnimator * x, Animator_BGO)
+//        x->stop();
+    Animator_BGO.clear();
+//    while(!Animator_BGO.isEmpty())
+//    {
+//        SimpleAnimator * x = Animator_BGO.first();
+//        Animator_BGO.pop_front();
+//        delete x;
+//    }
 
-    foreach(SimpleAnimator * x, Animator_BG)
-        x->stop();
-    while(!Animator_BG.isEmpty())
-    {
-        SimpleAnimator * x = Animator_BG.first();
-        Animator_BG.pop_front();
-        delete x;
-    }
+//    foreach(SimpleAnimator * x, Animator_BG)
+//        x->stop();
+    Animator_BG.clear();
+//    while(!Animator_BG.isEmpty())
+//    {
+//        SimpleAnimator * x = Animator_BG.first();
+//        Animator_BG.pop_front();
+//        delete x;
+//    }
 
     /***************Clear settings*************/
     lvl_block_indexes.clear();
