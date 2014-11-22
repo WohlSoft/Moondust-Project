@@ -141,6 +141,15 @@ void LVL_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                 item_rectangles::drawLine(s, sz,
                        QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH)
                                             );
+
+                if(LvlPlacingItems::npcSpecialAutoIncrement)
+                { //Automatically set direction by line angle in auto-incrementing mode
+                    if(sz.angle()>=0 && sz.angle() < 180)
+                        LvlPlacingItems::npcSet.direct=1;   //top
+                    else
+                        LvlPlacingItems::npcSet.direct=-1;  //bottom
+                }
+
             }
         }
 

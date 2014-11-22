@@ -52,6 +52,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     LvlItemPropsLock=true;
     LockItemProps = true;
 
+    LvlPlacingItems::npcSpecialAutoIncrement=false;
+
     /*
     long blockPtr; //ArrayID of editing item (-1 - use system)
     long bgoPtr; //ArrayID of editing item
@@ -1464,11 +1466,39 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
 void MainWindow::on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked)
 {
     LvlPlacingItems::npcSpecialAutoIncrement=checked;
+    LvlPlacingItems::npcSet.special_data = ui->PROPS_NPCSpecialSpin->value() - npcSpecSpinOffset;
+
+    switch(LvlPlacingItems::npcSet.direct)
+    {
+    case -1:
+        ui->PROPS_NPCDirLeft->setChecked(true);
+        break;
+    case 0:
+        ui->PROPS_NPCDirRand->setChecked(true);
+        break;
+    case 1:
+        ui->PROPS_NPCDirRight->setChecked(true);
+        break;
+    }
 }
 
 void MainWindow::on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked)
 {
     LvlPlacingItems::npcSpecialAutoIncrement=checked;
+    LvlPlacingItems::npcSet.special_data = ui->PROPS_NPCSpecialSpin->value() - npcSpecSpinOffset;
+
+    switch(LvlPlacingItems::npcSet.direct)
+    {
+    case -1:
+        ui->PROPS_NPCDirLeft->setChecked(true);
+        break;
+    case 0:
+        ui->PROPS_NPCDirRand->setChecked(true);
+        break;
+    case 1:
+        ui->PROPS_NPCDirRight->setChecked(true);
+        break;
+    }
 }
 
 void MainWindow::on_PROPS_NPCContaiter_clicked()
