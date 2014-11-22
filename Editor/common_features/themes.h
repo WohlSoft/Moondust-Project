@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QIcon>
+#include <QCursor>
 #include <QMap>
 #include <QDir>
 #include <QVector>
@@ -74,7 +75,10 @@ public:
 
         square_fill,
         line_tool,
+        flood_fill,
         overwrite_mode,
+
+        properties,
 
         zoom_reset,
         zoom_in,
@@ -96,8 +100,38 @@ public:
     enum Images
     {
         splash=0,
+        cursor_normal,
+        cursor_normal_x,
+        cursor_normal_y,
+
         cursor_pasting,
+        cursor_pasting_x,
+        cursor_pasting_y,
+
         cursor_erasing,
+        cursor_erasing_x,
+        cursor_erasing_y,
+
+        cursor_resizing,
+        cursor_resizing_x,
+        cursor_resizing_y,
+
+        cursor_placing,
+        cursor_placing_x,
+        cursor_placing_y,
+
+        cursor_square_fill,
+        cursor_square_fill_x,
+        cursor_square_fill_y,
+
+        cursor_line_fill,
+        cursor_line_fill_x,
+        cursor_line_fill_y,
+
+        cursor_flood_fill,
+        cursor_flood_fill_x,
+        cursor_flood_fill_y,
+
         player_point,
         player1,
         player2,
@@ -175,19 +209,23 @@ public:
 
     static QIcon icon(Icons icn);
     static QPixmap Image(Images img);
+    static int Integer(Images intval);
+    static QCursor Cursor(Images intval);
 
 private:
     static bool isLoaded;
     static QString currentThemeDir;
-    static QVector<QIcon > icons;
+
     static QMap<Icons, QIcon > icons_map;
+    static QMap<Images, QPixmap > images_map;
+    static QMap<Images, int> int_map;
+    static QMap<Images, QCursor> cursor_map;
+
     static void loadIcon(QSettings &s, QString value, Icons icn);
     static void loadImage(QSettings &s, QString value, Images img);
+    static void loadInteger(QSettings &s, QString value, Images intVal);
+    static void initCursors();
     static QString theme_dir;
-
-    static QVector<QPixmap > images;
-    static QMap<Images, QPixmap > images_map;
-
 };
 
 #endif // THEMES_H

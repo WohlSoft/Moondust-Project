@@ -21,7 +21,28 @@
 //#include "logger.h"
 #include <QtDebug>
 
+SimpleAnimator::SimpleAnimator()
+{
+    construct(false, 1, 64, 0, -1, false, false);
+}
+
+SimpleAnimator::SimpleAnimator(const SimpleAnimator &animator)
+{
+    construct(animator.animated,
+              animator.framesQ,
+              animator.speed,
+              animator.frameFirst,
+              animator.frameLast,
+              animator.reverce,
+              animator.bidirectional);
+}
+
 SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
+{
+    construct(enables, framesq, fspeed, First, Last, rev, bid);
+}
+
+void SimpleAnimator::construct(bool enables, int framesq, int fspeed, int First, int Last, bool rev, bool bid)
 {
     animated = enables;
     frameFirst = First;
@@ -43,7 +64,38 @@ SimpleAnimator::SimpleAnimator(bool enables, int framesq, int fspeed, int First,
 }
 
 SimpleAnimator::~SimpleAnimator()
-{}
+{
+    this->stop();
+}
+
+bool SimpleAnimator::operator!=(const SimpleAnimator &animator) const
+{
+    return !(*this == animator);
+}
+
+bool SimpleAnimator::operator==(const SimpleAnimator &animator) const
+{
+    if(animator.speed != speed) return false;
+    if(animator.animated != animated) return false;
+    if(animator.framesQ != framesQ) return false;
+    if(animator.frameFirst != frameFirst) return false;
+    if(animator.frameLast != frameLast) return false;
+    if(animator.reverce != reverce) return false;
+    if(animator.bidirectional != bidirectional) return false;
+    return true;
+}
+
+SimpleAnimator &SimpleAnimator::operator=(const SimpleAnimator &animator)
+{
+    this->construct(animator.animated,
+              animator.framesQ,
+              animator.speed,
+              animator.frameFirst,
+              animator.frameLast,
+              animator.reverce,
+              animator.bidirectional);
+    return *this;
+}
 
 //Returns images
 

@@ -27,6 +27,16 @@ QT       -= opengl
 
 DESTDIR = ../bin
 
+release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
+release:MOC_DIR     = ../bin/_build/editor/_release/.moc
+release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
+release:UI_DIR      = ../bin/_build/editor/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+
 translates.path = ../bin/languages
 translates.files += languages/*.qm
 translates.files += languages/*.png
@@ -43,12 +53,18 @@ CONFIG += thread
 LIBS += -lSDL2 -lSDL2_mixer
 win32: LIBS += -lSDL2main
 win32: LIBS += libversion
+win32: LIBS += -lDbghelp
 
 #DEFINES += USE_QMEDIAPLAYER
 
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
+}
+
+macx: {
+    LIBS += -L ../_Libs/_builds/macos/lib
+    INCLUDEPATH += ../_Libs/_builds/macos/include
 }
 
 win32: static: {
@@ -75,7 +91,8 @@ TRANSLATIONS += languages/editor_en.ts \
     languages/editor_it.ts \
     languages/editor_fr.ts \
     languages/editor_pt.ts \
-    languages/editor_ja.ts
+    languages/editor_ja.ts \
+    languages/editor_zh.ts
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -165,7 +182,6 @@ SOURCES += main.cpp\
     level_scene/lvl_section.cpp \
     level_scene/lvl_setup.cpp \
     level_scene/lvl_usergfx.cpp \
-    level_scene/lvlscene.cpp \
     level_scene/newlayerbox.cpp \
     main_window/appsettings.cpp \
     main_window/clipboard.cpp \
@@ -233,7 +249,23 @@ SOURCES += main.cpp\
     level_scene/edit_modes/mode_square.cpp \
     level_scene/edit_modes/mode_line.cpp \
     level_scene/edit_modes/mode_hand.cpp \
-    level_scene/edit_modes/mode_resize.cpp
+    level_scene/edit_modes/mode_resize.cpp \
+    common_features/crashhandler.cpp \
+    world_scene/edit_modes/wld_mode_erase.cpp \
+    world_scene/edit_modes/wld_mode_hand.cpp \
+    world_scene/edit_modes/wld_mode_line.cpp \
+    world_scene/edit_modes/wld_mode_place.cpp \
+    world_scene/edit_modes/wld_mode_resize.cpp \
+    world_scene/edit_modes/wld_mode_select.cpp \
+    world_scene/edit_modes/wld_mode_square.cpp \
+    world_scene/edit_modes/wld_mode_setpoint.cpp \
+    level_scene/lvl_scene.cpp \
+    main_window/main_testing.cpp \
+    smart_import/smartimporter.cpp \
+    level_scene/edit_modes/mode_fill.cpp \
+    networking/engine_intproc.cpp \
+    networking/engine_client.cpp \
+    main_window/global_settings.cpp
 
 
 HEADERS  += defines.h \
@@ -300,7 +332,6 @@ HEADERS  += defines.h \
     level_scene/item_water.h \
     level_scene/itemmsgbox.h \
     level_scene/lvl_item_placing.h \
-    level_scene/lvlscene.h \
     level_scene/newlayerbox.h \
     main_window/appsettings.h \
     main_window/dock/tileset_item_box.h \
@@ -331,7 +362,21 @@ HEADERS  += defines.h \
     level_scene/edit_modes/mode_square.h \
     level_scene/edit_modes/mode_line.h \
     level_scene/edit_modes/mode_hand.h \
-    level_scene/edit_modes/mode_resize.h
+    level_scene/edit_modes/mode_resize.h \
+    common_features/crashhandler.h \
+    world_scene/edit_modes/wld_mode_erase.h \
+    world_scene/edit_modes/wld_mode_hand.h \
+    world_scene/edit_modes/wld_mode_line.h \
+    world_scene/edit_modes/wld_mode_place.h \
+    world_scene/edit_modes/wld_mode_resize.h \
+    world_scene/edit_modes/wld_mode_select.h \
+    world_scene/edit_modes/wld_mode_square.h \
+    world_scene/edit_modes/wld_mode_setpoint.h \
+    level_scene/lvl_scene.h \
+    smart_import/smartimporter.h \
+    level_scene/edit_modes/mode_fill.h \
+    networking/engine_intproc.h \
+    networking/engine_client.h
 
 
 FORMS    += \
@@ -359,7 +404,8 @@ FORMS    += \
     npc_dialog/npcdialog.ui \
     tilesets/tilesetconfiguredialog.ui \
     tilesets/tilesetgroupeditor.ui \
-    wld_point_dialog/wld_setpoint.ui
+    wld_point_dialog/wld_setpoint.ui \
+    common_features/crashhandler.ui
 
 
 RC_FILE = _resources/pge_editor.rc

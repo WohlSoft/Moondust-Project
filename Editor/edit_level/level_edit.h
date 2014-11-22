@@ -25,7 +25,7 @@
 
 #include "../file_formats/lvl_filedata.h"
 
-#include "../level_scene/lvlscene.h"
+#include "../level_scene/lvl_scene.h"
 
 #include "../data_configs/data_configs.h"
 
@@ -91,6 +91,10 @@ public:
     void setAutoUpdateTimer(int ms);
     void stopAutoUpdateTimer();
 
+signals:
+    void forceReload();
+
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -98,6 +102,9 @@ private slots:
     virtual void mouseReleaseEvent( QMouseEvent * event );
     virtual void leaveEvent(QEvent * leaveEvent);
     virtual void focusInEvent(QFocusEvent *event);
+    virtual void dragEnterEvent(QDragEnterEvent *e);
+    virtual void dropEvent(QDropEvent *e);
+
     void updateScene();
 
     void ExportingReady();

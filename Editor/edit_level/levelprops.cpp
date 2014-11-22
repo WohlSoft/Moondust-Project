@@ -18,7 +18,7 @@
 
 #include "levelprops.h"
 
-#include "../ui_levelprops.h"
+#include <ui_levelprops.h>
 #include "../file_formats/lvl_filedata.h"
 
 LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :

@@ -1,6 +1,5 @@
 IDI_ICON1               ICON    DISCARDABLE     "cat.ico"
 
-
 #include <windows.h>
 #include "../version.h"
 

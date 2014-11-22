@@ -89,6 +89,7 @@ public:
  * - Help
  * - Configuration manager
  * - External tools
+ * - Other Tools
  * - Search Boxes common
  * - Music Player
  *
@@ -110,6 +111,9 @@ public:
  * - World Item Properties box
  * - World Search box
  * - Locks
+ *
+ * Testing
+ *
  */
 
 
@@ -343,6 +347,12 @@ public:
         void on_actionSquareFill_triggered(bool checked);
         void on_actionLine_triggered(bool checked);
         void on_actionOverwriteMode_triggered(bool checked);
+        void on_actionFill_triggered(bool checked);
+
+        void on_action_Placing_ShowProperties_triggered(bool checked);
+    private:
+        int  Placing_ShowProperties_lastType;
+
 // ////////////////////////////////////////////////////////
 
 // ////////////////// Resize ask //////////////////////////
@@ -421,6 +431,17 @@ public:
         void on_actionGIFs2PNG_triggered();
         void on_actionPNG2GIFs_triggered();
 // ////////////////////////////////////////////////////////
+
+
+
+// //////////////////Other Tools////////////////////////
+    private slots:
+        void on_actionCDATA_clear_unused_triggered();
+        void on_actionCDATA_Import_triggered();
+        void on_actionSprite_editor_triggered();
+// ////////////////////////////////////////////////////////
+
+
 
 
 // /////////////Search Boxes common ///////////////////////
@@ -554,9 +575,10 @@ public:
         bool LvlItemPropsLock; //!< Protector for allow apply changes only if filed was edit by human
 
     private slots:
+        void on_ItemProperties_visibilityChanged(bool visible);
         void on_PROPS_BlockResize_clicked();
 
-        void on_PROPS_BlockSquareFill_clicked(bool checked);
+        //void on_PROPS_BlockSquareFill_clicked(bool checked);
         void on_PROPS_BlockInvis_clicked(bool checked);
         void on_PROPS_BlkSlippery_clicked(bool checked);
         void on_PROPS_BlockIncludes_clicked();
@@ -566,7 +588,7 @@ public:
         void on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1);
 
         void on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1);
-        void on_PROPS_BGOSquareFill_clicked(bool checked);
+        //void on_PROPS_BGOSquareFill_clicked(bool checked);
         void on_PROPS_BGO_Z_Layer_currentIndexChanged(int index);
         void on_PROPS_BGO_Z_Offset_valueChanged(double arg1);
         void on_PROPS_BGO_smbx64_sp_valueChanged(int arg1);
@@ -579,6 +601,8 @@ public:
         void on_PROPS_NpcBoss_clicked(bool checked);
         void on_PROPS_NpcTMsg_clicked();
         void on_PROPS_NPCSpecialSpin_valueChanged(int arg1);
+        void on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked);
+        void on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked);
         void on_PROPS_NPCContaiter_clicked();
         void on_PROPS_NPCSpecialBox_currentIndexChanged(int index);
         void on_PROPS_NPCSpecial2Spin_valueChanged(int arg1);
@@ -912,6 +936,8 @@ public:
         void WLD_returnPointToLevelProperties(QPoint p);
 
     private slots:
+        void on_WLD_ItemProps_visibilityChanged(bool visible);
+
         void on_WLD_PROPS_PathBG_clicked(bool checked);
         void on_WLD_PROPS_BigPathBG_clicked(bool checked);
         void on_WLD_PROPS_AlwaysVis_clicked(bool checked);
@@ -991,6 +1017,17 @@ private slots:
         void on_actionLockLevels_triggered(bool checked);
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
+
+// ////////////////////////////////////////////////////////////////////////////////
+// /////////////////////////////////Testing////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////////////////
+    private slots:
+        void on_action_doTest_triggered();
+        void on_action_testSettings_triggered();
+
+// ////////////////////Unsorted slots/////////////////////////////
+// ///////Please move them into it's category/////////////////////
+    private slots:
 
 signals:
     void closeEditor();

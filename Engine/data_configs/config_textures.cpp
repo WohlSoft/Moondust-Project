@@ -97,8 +97,7 @@ long  ConfigManager::getBlockTexture(long blockID)
             }
 
 
-            SimpleAnimator * animator = new SimpleAnimator
-                        (
+            SimpleAnimator animator(
                             true,
                             lvl_block_indexes[blockID].frames,
                             lvl_block_indexes[blockID].framespeed,
@@ -181,8 +180,7 @@ long  ConfigManager::getBgoTexture(long bgoID)
             //store animated texture value back
             level_textures[id].h = lvl_bgo_indexes[bgoID].frame_h;
 
-            SimpleAnimator * animator = new SimpleAnimator
-                        (
+            SimpleAnimator animator(
                             true,
                             lvl_bgo_indexes[bgoID].frames,
                             lvl_bgo_indexes[bgoID].framespeed,
@@ -294,8 +292,7 @@ long  ConfigManager::getBGTexture(long bgID, bool isSecond)
             //store animated texture value back
             level_textures[id].h = lvl_bg_indexes[bgID].frame_h;
 
-            SimpleAnimator * animator = new SimpleAnimator
-                        (
+            SimpleAnimator animator(
                             true,
                             lvl_bg_indexes[bgID].frames,
                             128, //lvl_bg_indexes[bgID].framespeed, //Ouch, forgot made framespeed value for background :P Will add later

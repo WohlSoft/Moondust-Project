@@ -103,6 +103,15 @@
         <file>images/pencil_16x16.png</file>
         <file>images/copy_16x16.png</file>
         <file alias="player.png">images/player_point.png</file>
+        <file>images/cat_beaten/cat_beaten_16.png</file>
+        <file>images/cat_beaten/cat_beaten_24.png</file>
+        <file>images/cat_beaten/cat_beaten_32.png</file>
+        <file>images/cat_beaten/cat_beaten_48.png</file>
+        <file>images/cat_beaten/cat_beaten_128.png</file>
+        <file>images/cat_beaten/cat_beaten_256.png</file>
+        <file>images/cur_flood_fill.png</file>
+        <file>images/flood_fill.png</file>
+        <file>images/properties.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>

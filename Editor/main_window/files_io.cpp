@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../mainwindow.h"
 #include "../file_formats/file_formats.h"
 
@@ -35,12 +35,13 @@ void MainWindow::openFilesByArgs(QStringList args)
 void MainWindow::OpenFile(QString FilePath)
 {
 
+    qApp->setActiveWindow(this);
+
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
             if (existing) {
                 ui->centralWidget->setActiveSubWindow(existing);
                 return;
             }
-
 
     QFile file(FilePath);
 

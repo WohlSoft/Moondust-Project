@@ -1,5 +1,5 @@
 #include "lazyfixtool_gui.h"
-#include "ui_lazyfixtool_gui.h"
+#include <ui_lazyfixtool_gui.h>
 #include <QMessageBox>
 #include <QFileDialog>
 #include "../common_features/app_path.h"

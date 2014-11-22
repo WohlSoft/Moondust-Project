@@ -17,13 +17,13 @@
  */
 
 #include "config_manager.h"
-#include <QMessageBox>
+#include "../gui/pge_msgbox.h"
 
 /*****Level blocks************/
 QVector<obj_block >     ConfigManager::lvl_blocks;
 QMap<long, obj_block>   ConfigManager::lvl_block_indexes;
 CustomDirManager ConfigManager::Dir_Blocks;
-QVector<SimpleAnimator *> ConfigManager::Animator_Blocks;
+QVector<SimpleAnimator > ConfigManager::Animator_Blocks;
 /*****Level blocks************/
 
 namespace loadLevelBlocks_fnc
@@ -46,9 +46,9 @@ bool ConfigManager::loadLevelBlocks()
     if(!QFile::exists(block_ini))
     {
         addError(QString("ERROR LOADING lvl_blocks.ini: file does not exist"), QtCriticalMsg);
-        QMessageBox::critical(NULL, "Config error",
-                              QString("ERROR LOADING lvl_blocks.ini: file does not exist"),
-                              QMessageBox::Ok);
+        PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_blocks.ini: file does not exist"),
+                          PGE_MsgBox::msg_fatal);
+        msgBox.exec();
         return false;
     }
 
@@ -68,9 +68,10 @@ bool ConfigManager::loadLevelBlocks()
     if(block_total==0)
     {
         addError(QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"), QtCriticalMsg);
-        QMessageBox::critical(NULL, "Config error",
-                              QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"),
-                              QMessageBox::Ok);
+        PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_blocks.ini: number of items not define, or empty config"),
+                          PGE_MsgBox::msg_fatal);
+        msgBox.exec();
+
         return false;
     }
 
@@ -199,10 +200,12 @@ bool ConfigManager::loadLevelBlocks()
           if( blockset.status()!=QSettings::NoError)
           {
             addError(QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i), QtCriticalMsg);
-            QMessageBox::critical(NULL, "Config error",
-                                  QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i),
-                                  QMessageBox::Ok);
-            break;
+
+            PGE_MsgBox msgBox(NULL, QString("ERROR LOADING lvl_blocks.ini N:%1 (block-%2)").arg(blockset.status()).arg(i),
+                              PGE_MsgBox::msg_error);
+            msgBox.exec();
+
+             break;
           }
        }
 

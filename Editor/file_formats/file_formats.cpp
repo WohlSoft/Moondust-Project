@@ -78,8 +78,8 @@ LevelData FileFormats::OpenLevelFile(QString filePath)
         #ifndef PGE_ENGINE
         QMessageBox::critical(NULL, QTranslator::tr("File open error"),
                 QTranslator::tr("Can't open the file."), QMessageBox::Ok);
-        data.ReadFileValid = false;
         #endif
+        data.ReadFileValid = false;
         return data;
     }
 

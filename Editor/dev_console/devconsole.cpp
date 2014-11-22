@@ -1,5 +1,7 @@
 #include "devconsole.h"
-#include "ui_devconsole.h"
+#include <ui_devconsole.h>
+
+#include <stdexcept>
 
 #include <QScrollBar>
 #include <QSettings>
@@ -67,6 +69,12 @@ bool DevConsole::isConsoleShown()
         return false;
 
     return !currentDevConsole->isHidden();
+}
+
+void DevConsole::closeIfPossible()
+{
+    if(isConsoleShown())
+        currentDevConsole->close();
 }
 
 DevConsole::DevConsole(QWidget *parent) :
@@ -183,6 +191,7 @@ void DevConsole::registerCommands()
     registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Args: {String array} validating the PGE-X string array"));
     registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
+    registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
 }
 
 void DevConsole::doCommand()
@@ -275,5 +284,11 @@ void DevConsole::doFlood(QStringList args)
 void DevConsole::doThrowUnhandledException(QStringList /*args*/)
 {
     throw std::runtime_error("Test Exception of Toast!");
+}
+
+void DevConsole::doSegmentationViolation(QStringList)
+{
+    int* my_nullptr = 0;
+    *my_nullptr = 42; //Answer to the Ultimate Question of Life, the Universe, and Everything will let you app crash >:D
 }
 

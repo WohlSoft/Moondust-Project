@@ -17,7 +17,7 @@
  */
 
 #include "levelfilelist.h"
-#include "ui_levelfilelist.h"
+#include <ui_levelfilelist.h>
 #include <QDir>
 
 LevelFileList::LevelFileList(QString Folder, QString current, QWidget *parent) :

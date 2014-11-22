@@ -33,48 +33,24 @@
 
 #include "common_features/app_path.h"
 #include "common_features/themes.h"
+#include "common_features/crashhandler.h"
 
 #undef main
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #undef main
 
+#include <QFileInfo>
+#include <QDir>
+
 QString ApplicationPath;
 QString ApplicationPath_x;
 
-namespace PGECrashHandler {
-    void crashByFlood(){
-        QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr("We're sorry, but PGE has crashed. Reason: Out of memory! :(\n"
-                                                                                  "To prevent this, try closing other uneccessary programs to free up more memory."));
-
-        std::exit(1);
-    }
-
-    void crashByUnhandledException(){
-        std::exception_ptr unhandledException = std::current_exception();
-        try{
-            std::rethrow_exception(unhandledException);
-        }
-        catch(const std::exception& e){
-            std::string s1 = "We're sorry, but PGE has crashed. Reason: ";
-            std::string s2 = e.what();
-            std::string s3 = " :(\nPlease inform our forum staff so we can try to fix this problem, Thank you\n\nForum link: engine.wohlnet.ru/forum";
-
-            QMessageBox::warning(nullptr, QApplication::tr("Crash"), QApplication::tr((s1 + s2 + s3).c_str()));
-            std::cout << e.what() << std::endl;
-        }
-
-        std::exit(2);
-    }
-}
-
 int main(int argc, char *argv[])
 {
-    std::set_new_handler(PGECrashHandler::crashByFlood);
-    std::set_terminate(PGECrashHandler::crashByUnhandledException);
+    CrashHandler::initCrashHandlers();
 
-    QApplication::addLibraryPath(".");
-
+    QApplication::addLibraryPath( QFileInfo(argv[0]).dir().path() );
 
     QApplication *a = new QApplication(argc, argv);
 

@@ -90,18 +90,18 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
     }
 
 
-    QSettings tileset(level_ini, QSettings::IniFormat);
-    tileset.setIniCodec("UTF-8");
+    QSettings levelset(level_ini, QSettings::IniFormat);
+    levelset.setIniCodec("UTF-8");
 
     main_wlevels.clear();   //Clear old
     index_wlvl.clear();
 
-    tileset.beginGroup("levels-main");
-        levels_total = tileset.value("total", "0").toInt();
-        marker_wlvl.path = tileset.value("path", "0").toInt();
-        marker_wlvl.bigpath = tileset.value("bigpath", "0").toInt();
+    levelset.beginGroup("levels-main");
+        levels_total = levelset.value("total", "0").toInt();
+        marker_wlvl.path = levelset.value("path", "0").toInt();
+        marker_wlvl.bigpath = levelset.value("bigpath", "0").toInt();
         total_data +=levels_total;
-    tileset.endGroup();
+    levelset.endGroup();
 
     if(prgs) prgs->setMaximum(levels_total);
     if(prgs) prgs->setLabelText(QApplication::tr("Loading Level images..."));
@@ -132,7 +132,7 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
             if(!prgs->wasCanceled()) prgs->setValue(i);
         }
 
-        tileset.beginGroup( QString("level-"+QString::number(i)) );
+        levelset.beginGroup( QString("level-"+QString::number(i)) );
             //slevel.name = tileset.value("name", "").toString();
 
             //   if(slevel.name=="")
@@ -140,10 +140,10 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
             //       addError(QString("TILE-%1 Item name isn't defined").arg(i));
             //       goto skipBGO;
             //   }
-            slevel.group = tileset.value("group", "_NoGroup").toString();
-            slevel.category = tileset.value("category", "_Other").toString();
+            slevel.group = levelset.value("group", "_NoGroup").toString();
+            slevel.category = levelset.value("category", "_Other").toString();
 
-            imgFile = tileset.value("image", "").toString();
+            imgFile = levelset.value("image", "").toString();
             slevel.image_n = imgFile;
             if( (imgFile!="") )
             {
@@ -170,13 +170,15 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
                 goto skipLevel;
             }
 
-            slevel.animated = (tileset.value("animated", "0").toString()=="1");
-            slevel.frames = tileset.value("frames", "1").toInt();
-            slevel.framespeed = tileset.value("frame-speed", "125").toInt();
+            slevel.grid = levelset.value("grid", default_grid).toInt();
+
+            slevel.animated = (levelset.value("animated", "0").toString()=="1");
+            slevel.frames = levelset.value("frames", "1").toInt();
+            slevel.framespeed = levelset.value("frame-speed", "125").toInt();
 
             slevel.frame_h = (slevel.animated? qRound(qreal(slevel.image.height())/slevel.frames) : slevel.image.height());
 
-            slevel.display_frame = tileset.value("display-frame", "0").toInt();
+            slevel.display_frame = levelset.value("display-frame", "0").toInt();
             slevel.id = i;
             main_wlevels.push_back(slevel);
 
@@ -187,11 +189,11 @@ void dataconfigs::loadWorldLevels(QProgressDialog *prgs)
             }
 
         skipLevel:
-        tileset.endGroup();
+        levelset.endGroup();
 
-        if( tileset.status() != QSettings::NoError )
+        if( levelset.status() != QSettings::NoError )
         {
-            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(tileset.status()).arg(i), QtCriticalMsg);
+            addError(QString("ERROR LOADING wld_levels.ini N:%1 (level-%2)").arg(levelset.status()).arg(i), QtCriticalMsg);
         }
     }
 

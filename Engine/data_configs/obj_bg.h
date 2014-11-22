@@ -53,7 +53,9 @@ struct obj_BG{
     bool magic;
     unsigned int magic_strips;
     QString magic_splits;
+    QList<int > magic_splits_i;
     QString magic_speeds;
+    QList<double > magic_speeds_i;
 
     QString second_image_n;
     //QPixmap second_image;

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../../mainwindow.h"
 
 #include "../../file_formats/file_formats.h"
@@ -743,6 +743,8 @@ void MainWindow::on_WarpToMapX_editingFinished()//_textEdited(const QString &arg
                     edit->LvlData.doors[i].world_x = -1;
                 else
                     edit->LvlData.doors[i].world_x = arg1.toInt();
+
+                edit->LvlData.modified = true;
                 break;
             }
         }
@@ -772,6 +774,8 @@ void MainWindow::on_WarpToMapY_editingFinished()//_textEdited(const QString &arg
                     edit->LvlData.doors[i].world_y = -1;
                 else
                     edit->LvlData.doors[i].world_y = arg1.toInt();
+
+                edit->LvlData.modified = true;
                 break;
             }
         }

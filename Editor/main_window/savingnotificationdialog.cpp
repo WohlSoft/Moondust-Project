@@ -1,5 +1,5 @@
 #include "savingnotificationdialog.h"
-#include "ui_savingnotificationdialog.h"
+#include <ui_savingnotificationdialog.h>
 
 SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, QWidget *parent) :
     QDialog(parent),

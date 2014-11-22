@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
 #include "../world_scene/wld_item_placing.h"
@@ -86,13 +86,11 @@ void MainWindow::on_actionSelect_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionSelect->isChecked()))
     {
-       //activeLvlEditWin()->changeCursor(leveledit::MODE_Selecting);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Selecting);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionSelect->isChecked()))
     {
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
     }
 }
@@ -108,13 +106,11 @@ void MainWindow::on_actionSelectOnly_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionSelectOnly->isChecked()))
     {
-       //activeLvlEditWin()->changeCursor(leveledit::MODE_Selecting);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_SelectingOnly);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionSelectOnly->isChecked()))
     {
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_Selecting);
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_SelectingOnly);
     }
 }
@@ -129,13 +125,11 @@ void MainWindow::on_actionEriser_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionEriser->isChecked()))
     {
-       //activeLvlEditWin()->changeCursor(leveledit::MODE_Erasing);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_Erasing);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionEriser->isChecked()))
     {
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_Erasing);
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Erasing);
     }
 
@@ -151,15 +145,11 @@ void MainWindow::on_actionHandScroll_triggered()
 
     if ((activeChildWindow()==1) && (ui->actionHandScroll->isChecked()))
     {
-       //activeLvlEditWin()->scene->clearSelection();
-       //activeLvlEditWin()->changeCursor(leveledit::MODE_HandDrag);
        activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_HandScroll);
     }
     else
     if ((activeChildWindow()==3) && (ui->actionHandScroll->isChecked()))
     {
-       activeWldEditWin()->scene->clearSelection();
-       activeWldEditWin()->changeCursor(WorldEdit::MODE_HandDrag);
        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_Selecting);
     }
 }
@@ -174,7 +164,6 @@ void MainWindow::on_actionSetFirstPlayer_triggered()
 
     if((activeChildWindow()==1))
     {
-        //activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
         activeLvlEditWin()->scene->setItemPlacer( 5, 0 );
     }
 
@@ -189,7 +178,6 @@ void MainWindow::on_actionSetSecondPlayer_triggered()
 
     if((activeChildWindow()==1))
     {
-        //activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
         activeLvlEditWin()->scene->setItemPlacer( 5, 1 );
     }
 
@@ -204,7 +192,6 @@ void MainWindow::on_actionDrawWater_triggered()
 
     if((activeChildWindow()==1))
     {
-        //activeLvlEditWin()->changeCursor(leveledit::MODE_DrawSquares);
         activeLvlEditWin()->scene->setItemPlacer( 3, 0 );
     }
 }
@@ -218,12 +205,12 @@ void MainWindow::on_actionDrawSand_triggered()
 
     if((activeChildWindow()==1))
     {
-        //activeLvlEditWin()->changeCursor(leveledit::MODE_DrawSquares);
         activeLvlEditWin()->scene->setItemPlacer( 3, 1 );
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -236,23 +223,20 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         {
             leveledit * edit = activeLvlEditWin();
 
-            //edit->scene->clearSelection();
-            //edit->changeCursor(leveledit::MODE_PlaceItem);
-            //activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+            LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Square
+                                                    : LvlPlacingItems::PMODE_Brush );
 
-            LvlPlacingItems::fillingMode = checked;
-            LvlPlacingItems::lineMode = false;
             ui->actionLine->setChecked(false);
+            ui->actionFill->setChecked(false);
+
             switch(edit->scene->placingItem)
             {
                 case LvlScene::PLC_Block:
-                   ui->PROPS_BlockSquareFill->setChecked(checked);
                    edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
                    WriteToLog(QtDebugMsg, QString("Block Square draw -> %1").arg(checked));
 
                 break;
                 case LvlScene::PLC_BGO:
-                   ui->PROPS_BGOSquareFill->setChecked(checked);
                    edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
                    WriteToLog(QtDebugMsg, QString("BGO Square draw -> %1").arg(checked));
 
@@ -268,13 +252,11 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         {
             WorldEdit * edit = activeWldEditWin();
 
-            edit->scene->clearSelection();
-            edit->changeCursor(WorldEdit::MODE_PlaceItem);
-            activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+            WldPlacingItems::placingMode = (checked ? WldPlacingItems::PMODE_Square
+                                                    : WldPlacingItems::PMODE_Brush );
 
-            WldPlacingItems::fillingMode = checked;
-            WldPlacingItems::lineMode = false;
             ui->actionLine->setChecked(false);
+            ui->actionFill->setChecked(false);
 
             switch(edit->scene->placingItem)
             {
@@ -314,26 +296,28 @@ void MainWindow::on_actionLine_triggered(bool checked)
     {
         leveledit * edit = activeLvlEditWin();
 
-        //edit->scene->clearSelection();
-        //edit->changeCursor(leveledit::MODE_PlaceItem);
-        //activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
+        LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Line
+                                                : LvlPlacingItems::PMODE_Brush );
 
-        LvlPlacingItems::fillingMode = false;
-        LvlPlacingItems::lineMode = checked;
         ui->actionSquareFill->setChecked(false);
+        ui->actionFill->setChecked(false);
+
 
         switch(edit->scene->placingItem)
         {
             case LvlScene::PLC_Block:
-               ui->PROPS_BlockSquareFill->setChecked(false);
                edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
-               WriteToLog(QtDebugMsg, QString("Block Square draw -> %1").arg(checked));
+               WriteToLog(QtDebugMsg, QString("Block Line draw -> %1").arg(checked));
 
             break;
             case LvlScene::PLC_BGO:
-               ui->PROPS_BlockSquareFill->setChecked(false);
                edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
-               WriteToLog(QtDebugMsg, QString("BGO Square draw -> %1").arg(checked));
+               WriteToLog(QtDebugMsg, QString("BGO Line draw -> %1").arg(checked));
+
+            break;
+            case LvlScene::PLC_NPC:
+               edit->scene->setItemPlacer(2, LvlPlacingItems::npcSet.id );
+               WriteToLog(QtDebugMsg, QString("NPC Line draw -> %1").arg(checked));
 
             break;
 
@@ -347,13 +331,11 @@ void MainWindow::on_actionLine_triggered(bool checked)
     {
         WorldEdit * edit = activeWldEditWin();
 
-        edit->scene->clearSelection();
-        edit->changeCursor(WorldEdit::MODE_PlaceItem);
-        activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
+        WldPlacingItems::placingMode = (checked ? WldPlacingItems::PMODE_Line
+                                                : WldPlacingItems::PMODE_Brush );
 
-        WldPlacingItems::fillingMode = false;
-        WldPlacingItems::lineMode = checked;
         ui->actionSquareFill->setChecked(false);
+        ui->actionFill->setChecked(false);
 
         switch(edit->scene->placingItem)
         {
@@ -379,6 +361,36 @@ void MainWindow::on_actionLine_triggered(bool checked)
             break;
 
             default: break;
+        }
+        edit->setFocus();
+    }
+}
+
+void MainWindow::on_actionFill_triggered(bool checked)
+{
+    resetEditmodeButtons();
+    ui->PlacingToolbar->setVisible(true);
+
+    if (activeChildWindow()==1)
+    {
+        leveledit * edit = activeLvlEditWin();
+
+        LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_FloodFill
+                                                : LvlPlacingItems::PMODE_Brush );
+
+        ui->actionSquareFill->setChecked(false);
+        ui->actionLine->setChecked(false);
+
+        switch(edit->scene->placingItem)
+        {
+            case LvlScene::PLC_Block:
+                edit->scene->setItemPlacer(0, LvlPlacingItems::blockSet.id );
+                break;
+            case LvlScene::PLC_BGO:
+                edit->scene->setItemPlacer(1, LvlPlacingItems::bgoSet.id );
+                break;
+            default:
+                break;
         }
         edit->setFocus();
     }

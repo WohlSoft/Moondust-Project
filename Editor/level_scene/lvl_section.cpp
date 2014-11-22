@@ -18,7 +18,7 @@
 
 #include "../common_features/app_path.h"
 
-#include "lvlscene.h"
+#include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 
 
