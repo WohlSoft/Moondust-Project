@@ -159,18 +159,27 @@ void LocalServer::onCMD(QString data)
 
       switch(commands.indexOf(data)){
         case 0:
-          emit showUp();
+        {
+              emit showUp();
+              qApp->setActiveWindow(MainWinConnect::pMainWin);
+              if(!MainWinConnect::pMainWin->isMaximized())
+                MainWinConnect::pMainWin->showNormal();
+              else
+                MainWinConnect::pMainWin->showMaximized();
+              MainWinConnect::pMainWin->raise();
+              break;
+        }
         case 1:
         {
-               MainWinConnect::pMainWin->showMinimized();
-               qApp->setActiveWindow(MainWinConnect::pMainWin);
-               if(MainWinConnect::pMainWin->activeChildWindow()==1)
-               {
-                   IntEngine::engineSocket->sendLevelData(
-                          MainWinConnect::pMainWin->activeLvlEditWin()->LvlData
-                      );
-               }
-               break;
+              MainWinConnect::pMainWin->showMinimized();
+              qApp->setActiveWindow(MainWinConnect::pMainWin);
+              if(MainWinConnect::pMainWin->activeChildWindow()==1)
+              {
+                  IntEngine::engineSocket->sendLevelData(
+                         MainWinConnect::pMainWin->activeLvlEditWin()->LvlData
+                     );
+              }
+              break;
         }
         case 2:
         {
