@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>394</height>
+    <height>371</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,10 +29,37 @@
    <iconset resource="../_resources/editor.qrc">
     <normaloff>:/images/external_tools/cat_glasses_128.png</normaloff>:/images/external_tools/cat_glasses_128.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="0,10,0,0,0,0,0,0,0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0,0">
    <property name="sizeConstraint">
     <enum>QLayout::SetFixedSize</enum>
    </property>
+   <item row="5" column="0" colspan="5">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Output dir, where will be saved fixed images
+(If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="label_2">
      <property name="font">
@@ -57,7 +84,7 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
+   <item row="10" column="0">
     <widget class="QPushButton" name="close">
      <property name="text">
       <string>Close</string>
@@ -68,13 +95,6 @@
     <widget class="QCheckBox" name="WalkSubDirs">
      <property name="text">
       <string>Look for images in subdirectories</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0" colspan="5">
-    <widget class="QCheckBox" name="grayMasks">
-     <property name="text">
-      <string>Make gray shades on masks is more dark</string>
      </property>
     </widget>
    </item>
@@ -129,7 +149,7 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="2" colspan="3">
+   <item row="10" column="2" colspan="3">
     <widget class="QPushButton" name="startTool">
      <property name="text">
       <string>Start</string>
@@ -158,33 +178,6 @@
       <bool>true</bool>
      </property>
     </widget>
-   </item>
-   <item row="5" column="0" colspan="5">
-    <widget class="QLabel" name="label_5">
-     <property name="text">
-      <string>Output dir, where will be saved fixed images
-(If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

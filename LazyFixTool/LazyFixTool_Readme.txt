@@ -17,7 +17,8 @@ Syntax:
  -O/path/to/out      - path to a directory where the new images will be saved
  -W                  - Also look for images in subdirectories
  -N                  - Don't create backup
- -G                  - Make gray shades on masks darker
+
+ -G                  - Make gray shades on masks darker (available before v.2.0)
 
 
 
@@ -37,6 +38,9 @@ LazyFixTool . ../npc_png
 --------------------------------------------------------------------------------
 
 Changelog:
+2.0.0
+-Implemented new better algorithm of fixing graphics which can mask more accurate mask
+
 1.3.0
 -Fixed backup directory creating
 -Added support for single-fine conversion
