@@ -265,7 +265,8 @@ SOURCES += main.cpp\
     level_scene/edit_modes/mode_fill.cpp \
     networking/engine_intproc.cpp \
     networking/engine_client.cpp \
-    main_window/global_settings.cpp
+    main_window/global_settings.cpp \
+    world_scene/edit_modes/wld_mode_fill.cpp
 
 
 HEADERS  += defines.h \
@@ -376,7 +377,8 @@ HEADERS  += defines.h \
     smart_import/smartimporter.h \
     level_scene/edit_modes/mode_fill.h \
     networking/engine_intproc.h \
-    networking/engine_client.h
+    networking/engine_client.h \
+    world_scene/edit_modes/wld_mode_fill.h
 
 
 FORMS    += \
