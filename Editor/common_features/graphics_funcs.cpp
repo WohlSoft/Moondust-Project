@@ -93,6 +93,17 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
             isWhiteMask &= ( (Spix.red()>240) //is almost White
                              &&(Spix.green()>240)
                              &&(Spix.blue()>240));
+
+            int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
+
+            if( (Spix.red()>240) //is almost White
+                            &&(Spix.green()>240)
+                            &&(Spix.blue()>240))
+            {
+                newAlpha = 0;
+            }
+
+            alphaChannel.setPixel(x,y, newAlpha);
         }
 
     //vbSrcPaint
@@ -108,41 +119,15 @@ QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
             Npix.setGreen( Dpix.green() | Spix.green());
             Npix.setBlue( Dpix.blue() | Spix.blue());
             target.setPixel(x, y, Npix.rgba());
-        }
 
-    //Apply alpha-channel
-    for(int y=0; y< image.height(); y++ )
-        for(int x=0; x < image.width(); x++ )
-        {
-            QColor Dpix = QColor(target.pixel(x,y));
-            QColor Spix = QColor(newmask.pixel(x,y));
+            //QColor curAlpha;
+            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
+            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
 
-            int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
-
-            //if pixels equal
-            if( Dpix.red() == Spix.red() &&
-                Dpix.green() == Spix.green() &&
-                Dpix.blue() == Spix.blue() ) newAlpha=255;
-            else
-
-            //if color is not black and white mask
-            if( ( (Dpix.red()>5) //Is not black
-                &&(Dpix.green()>5)
-                &&(Dpix.blue()>5))
-                    &&
-                isWhiteMask )
-                newAlpha = 128;
-            else
-                if( (Spix.red()>240) //is almost White
-                                &&(Spix.green()>240)
-                                &&(Spix.blue()>240))
-                {
-                    newAlpha = 0;
-                }
-
-
+            if(newAlpha>255) newAlpha=255;
             alphaChannel.setPixel(x,y, newAlpha);
         }
+
     target.setAlphaChannel(alphaChannel);
 
     return target;
