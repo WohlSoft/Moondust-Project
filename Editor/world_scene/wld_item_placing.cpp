@@ -186,6 +186,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         placingItem=PLC_Tile;
         WldPlacingItems::TileSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        {
+            setFloodFiller(); return;
+        }
+
+        SwitchEditingMode(MODE_PlacingNew);
+
         break;
     }
     case 1: //Sceneries
@@ -310,6 +319,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         placingItem=PLC_Scene;
         WldPlacingItems::SceneSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        {
+            setFloodFiller(); return;
+        }
+
+        SwitchEditingMode(MODE_PlacingNew);
+
         break;
     }
     case 2: //Path
@@ -431,6 +449,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         placingItem=PLC_Path;
         WldPlacingItems::PathSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        {
+            setFloodFiller(); return;
+        }
+
+        SwitchEditingMode(MODE_PlacingNew);
+
         break;
     }
 
@@ -564,6 +591,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         placingItem=PLC_Level;
         WldPlacingItems::LevelSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        {
+            setFloodFiller(); return;
+        }
+
+        SwitchEditingMode(MODE_PlacingNew);
+
         break;
     }
 
@@ -589,6 +625,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
         cursor->setEnabled(true);
+
+        SwitchEditingMode(MODE_PlacingNew);
 
         break;
     case 5: //Get point from a world map
@@ -684,6 +722,10 @@ void WldScene::setLineDrawer()
 
 }
 
+void WldScene::setFloodFiller()
+{
+    SwitchEditingMode(MODE_Fill);
+}
 
 void WldScene::resetCursor()
 {

@@ -143,7 +143,7 @@ void LVL_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                                             );
 
                 if(LvlPlacingItems::npcSpecialAutoIncrement)
-                { //Automatically set direction by line angle in auto-incrementing mode
+                {   //Automatically set direction by line angle in auto-incrementing mode
                     if(sz.angle()>=0 && sz.angle() < 180)
                         LvlPlacingItems::npcSet.direct=1;   //top
                     else

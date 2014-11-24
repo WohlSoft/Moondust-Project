@@ -248,6 +248,7 @@
     <addaction name="actionAnimation"/>
     <addaction name="actionCollisions"/>
     <addaction name="actionSemi_transparent_paths"/>
+    <addaction name="actionVBAlphaEmulate"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -4117,8 +4118,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>444</height>
+          <width>219</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4199,8 +4200,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>444</height>
+          <width>216</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4293,7 +4294,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>255</width>
+          <width>231</width>
           <height>461</height>
          </rect>
         </property>
@@ -4591,8 +4592,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>444</height>
+          <width>188</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4707,8 +4708,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>444</height>
+          <width>190</width>
+          <height>110</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4805,8 +4806,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>444</height>
+          <width>104</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5188,8 +5189,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>541</height>
+          <width>190</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5337,8 +5338,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>541</height>
+          <width>219</width>
+          <height>289</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6280,8 +6281,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>452</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6402,8 +6403,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>452</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6524,8 +6525,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>452</height>
+          <width>231</width>
+          <height>220</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6771,8 +6772,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>452</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7045,8 +7046,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1470</width>
-              <height>127</height>
+              <width>98</width>
+              <height>28</height>
              </rect>
             </property>
            </widget>
@@ -9039,6 +9040,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>Import</string>
+   </property>
+  </action>
+  <action name="actionVBAlphaEmulate">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable GFX fix (reload of the file required)</string>
+   </property>
+   <property name="toolTip">
+    <string>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</string>
    </property>
   </action>
  </widget>

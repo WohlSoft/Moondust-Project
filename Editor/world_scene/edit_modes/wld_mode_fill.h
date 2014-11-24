@@ -16,25 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QPixmap>
-#include <QPainter>
-#include <QImage>
+#ifndef MODE_FILL_H
+#define MODE_FILL_H
 
-#ifndef GRAPHICS_FUNCS_H
-#define GRAPHICS_FUNCS_H
+#include "../../common_features/edit_mode_base.h"
+#include "../wld_scene.h"
 
-class GraphicsHelps
+
+class WLD_ModeFill : public EditMode
 {
 public:
-    static QPixmap setAlphaMask(QPixmap image, QPixmap mask);
-    static QImage setAlphaMask_VB(QImage image, QImage mask);
-    static bool EnableVBEmulate;
+    WLD_ModeFill(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    ~WLD_ModeFill();
+    void set();
+    void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent);
 
-    static QImage fromBMP(QString& file);
-    static QPixmap loadPixmap(QString file);
-    static QImage loadQImage(QString file);
-    static QPixmap squareImage(QPixmap image, QSize targetSize);
-    static QPixmap drawDegitFont(int number);
+    void keyPress(QKeyEvent *keyEvent);
+    void keyRelease(QKeyEvent *keyEvent);
+
+private:
+    void attemptFlood(WldScene * scene);
 };
 
-#endif // GRAPHICS_FUNCS_H
+#endif // MODE_FILL_H

@@ -22,6 +22,7 @@
 #include "../../_Libs/EasyBMP/EasyBMP.h"
 #include "logger.h"
 
+bool GraphicsHelps::EnableVBEmulate=false;
 
 QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
 {
@@ -39,11 +40,97 @@ QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
         newmask = newmask.copy(0,0, target.width(), target.height());
     }
 
-    newmask.invertPixels();
-
-    target.setAlphaChannel(newmask);
-
+    if(EnableVBEmulate)
+        target = setAlphaMask_VB(target, newmask);
+    else
+        {
+                newmask.invertPixels();
+                target.setAlphaChannel(newmask);
+        }
     return QPixmap::fromImage(target);
+}
+
+//Implementation of VB similar transparency function
+QImage GraphicsHelps::setAlphaMask_VB(QImage image, QImage mask)
+{
+    if(mask.isNull())
+        return image;
+
+    if(image.isNull())
+        return image;
+
+    bool isWhiteMask = true;
+
+    QImage target;
+
+    target = QImage(image.width(), image.height(), QImage::Format_ARGB32);
+    target.fill(qRgb(128,128,128));
+
+    QImage newmask = mask;
+    target.convertToFormat(QImage::Format_ARGB32);
+
+    if(target.size()!= newmask.size())
+    {
+        newmask = newmask.copy(0, 0, target.width(), target.height());
+    }
+
+    QImage alphaChannel = image.alphaChannel();
+
+    //vbSrcAnd
+    for(int y=0; y< image.height(); y++ )
+        for(int x=0; x < image.width(); x++ )
+        {
+            QColor Dpix = QColor(target.pixel(x,y));
+            QColor Spix = QColor(newmask.pixel(x,y));
+            QColor Npix;
+
+            Npix.setAlpha(255);
+            Npix.setRed( Dpix.red() & Spix.red());
+            Npix.setGreen( Dpix.green() & Spix.green());
+            Npix.setBlue( Dpix.blue() & Spix.blue());
+            target.setPixel(x, y, Npix.rgba());
+
+            isWhiteMask &= ( (Spix.red()>240) //is almost White
+                             &&(Spix.green()>240)
+                             &&(Spix.blue()>240));
+
+            int newAlpha = 255-((Spix.red() + Spix.green() + Spix.blue())/3);
+
+            if( (Spix.red()>240) //is almost White
+                            &&(Spix.green()>240)
+                            &&(Spix.blue()>240))
+            {
+                newAlpha = 0;
+            }
+
+            alphaChannel.setPixel(x,y, newAlpha);
+        }
+
+    //vbSrcPaint
+    for(int y=0; y< image.height(); y++ )
+        for(int x=0; x < image.width(); x++ )
+        {
+            QColor Dpix = QColor(image.pixel(x,y));
+            QColor Spix = QColor(target.pixel(x,y));
+            QColor Npix;
+
+            Npix.setAlpha(255);
+            Npix.setRed( Dpix.red() | Spix.red());
+            Npix.setGreen( Dpix.green() | Spix.green());
+            Npix.setBlue( Dpix.blue() | Spix.blue());
+            target.setPixel(x, y, Npix.rgba());
+
+            //QColor curAlpha;
+            int curAlpha = QColor(alphaChannel.pixel(x,y)).red();
+            int newAlpha = curAlpha+((Dpix.red() + Dpix.green() + Dpix.blue())/3);
+
+            if(newAlpha>255) newAlpha=255;
+            alphaChannel.setPixel(x,y, newAlpha);
+        }
+
+    target.setAlphaChannel(alphaChannel);
+
+    return target;
 }
 
 QImage GraphicsHelps::fromBMP(QString &file)
