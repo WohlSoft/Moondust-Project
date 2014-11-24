@@ -29,6 +29,9 @@
 #include "music_player.h"
 #include "global_settings.h"
 
+#include "../common_features/graphics_funcs.h"
+
+
 #include <QFont>
 
 PGE_MusPlayer MusPlayer;
@@ -666,4 +669,9 @@ void MainWindow::on_actionApplication_settings_triggered()
     }
     delete appSettings;
 
+}
+
+void MainWindow::on_actionVBAlphaEmulate_toggled(bool arg1)
+{
+    GraphicsHelps::EnableVBEmulate = arg1;
 }
