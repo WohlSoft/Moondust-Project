@@ -7,6 +7,7 @@
 #include "../common_features/graphics_funcs.h"
 
 #include <QDir>
+#include <QMessageBox>
 
 ConfigManager::ConfigManager(QWidget *parent) :
     QDialog(parent),
@@ -68,6 +69,26 @@ ConfigManager::ConfigManager(QWidget *parent) :
 
         ui->configList->addItem( item );
     }
+
+    //Warning message: if no installed config packs
+    if(ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard).isEmpty())
+    {
+        QMessageBox msgBox(this);
+        msgBox.setWindowTitle(tr("Config packs are not found"));
+        msgBox.setTextFormat(Qt::RichText); //this is what makes the links clickable
+        msgBox.setText(
+                    tr("Available configuration packages are not found!<br>\n"
+                       "Please download and install them into directory<br>\n<br>\n%1<br>\n<br>\n"
+                       "You can take any configuration package here:<br>%2")
+                    .arg(ApplicationPath+"/configs")
+                    .arg("<a href=\"http://engine.wohlnet.ru/config_packs.php\">"
+                         "http://engine.wohlnet.ru/config_packs.php"
+                         "</a>")
+                    );
+        msgBox.setIcon(QMessageBox::Warning);
+        msgBox.exec();
+    }
+
 }
 
 ConfigManager::~ConfigManager()
