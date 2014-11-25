@@ -8,6 +8,7 @@
 
 #include <QDir>
 #include <QMessageBox>
+#include <QDesktopWidget>
 
 ConfigManager::ConfigManager(QWidget *parent) :
     QDialog(parent),
@@ -85,7 +86,12 @@ ConfigManager::ConfigManager(QWidget *parent) :
                          "http://engine.wohlnet.ru/config_packs.php"
                          "</a>")
                     );
+        QSize mSize = msgBox.sizeHint();
+        QRect screenRect = QDesktopWidget().screen()->rect();
+        msgBox.move( QPoint( screenRect.width()/2 - mSize.width()/2,
+            screenRect.height()/2 - mSize.height()/2 ) );
         msgBox.setIcon(QMessageBox::Warning);
+
         msgBox.exec();
     }
 
