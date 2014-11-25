@@ -67,7 +67,7 @@ void LazyFixTool_gui::on_startTool_clicked()
     QStringList args;
     if(ui->WalkSubDirs->isChecked()) args << "-W";
     if(ui->noBackUp->isChecked()) args << "-N";
-    if(ui->grayMasks->isChecked()) args << "-G";
+    //if(ui->grayMasks->isChecked()) args << "-G";
     args << "--nopause";
     args << ui->inputDir->text();
     if(!ui->outputDir->text().isEmpty()) args << QString("-O%1").arg(ui->outputDir->text());
