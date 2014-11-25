@@ -24,6 +24,8 @@
 
 #include <file_formats.h>
 
+#include <SDL2/SDL_timer.h>
+
 class LVL_Block : public PGE_Phys_Object
 {
 public:
@@ -37,8 +39,35 @@ public:
     bool animated;
     bool sizable;
     long animator_ID;
+    float offset_x;
+    float offset_y;
+
+    bool isHidden;
+
+    bool destroyed;
 
     obj_block * setup;//Global config
+
+    enum directions{
+        left=0,
+        right,
+        up,
+        down
+    };
+
+    void hit(directions _dir=up);
+    directions hitDirection;
+
+    /**************Fader**************/
+    float fadeOffset;
+    float targetOffset;
+    float fade_step;
+    int   fadeSpeed;
+    void setFade(int speed, float target, float step);
+    static unsigned int nextOpacity(unsigned int x, void *p);
+    void fadeStep();
+    SDL_TimerID fader_timer_id;
+    /**************Fader**************/
 
     //float posX();
     //float posY();

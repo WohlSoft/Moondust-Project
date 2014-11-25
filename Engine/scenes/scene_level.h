@@ -57,6 +57,7 @@ public:
 
     //Init 1
     bool loadFile(QString filePath);
+    bool loadFileIP(); //!< Load data via interprocessing
 
     //Init 2
     bool setEntrance(int entr);
@@ -87,6 +88,8 @@ public:
     void update(float step=10);
     void render();
     int exec();
+
+    QString getLastError();
 
 
     int findNearSection(long x, long y);
@@ -203,6 +206,8 @@ public:
     void addPlayer(PlayerPoint playerData, bool byWarp=false);
     /*********************Item placing**********************/
 
+    void destroyBlock(LVL_Block * _block);
+
 private:
     LevelData data;
 
@@ -213,6 +218,8 @@ private:
     QVector<LVL_Warp* > warps;
 
     QVector<LVL_Background *> backgrounds;
+
+    QString errorMsg;
 
 
     b2World *world;

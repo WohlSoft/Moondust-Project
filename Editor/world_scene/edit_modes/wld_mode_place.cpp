@@ -23,6 +23,7 @@
 #include "../../common_features/item_rectangles.h"
 #include "../wld_item_placing.h"
 
+#include "../../common_features/themes.h"
 
 WLD_ModePlace::WLD_ModePlace(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Placing", parentScene, parent)
@@ -46,7 +47,7 @@ void WLD_ModePlace::set()
     s->unserPointSelector();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::CrossCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
     s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
     s->_viewPort->viewport()->setMouseTracking(true);
@@ -62,6 +63,7 @@ void WLD_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 

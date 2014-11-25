@@ -38,14 +38,6 @@
 #include "../defines.h"
 
 
-//QPoint sourcePos=QPoint(0,0);
-//int gridSize=0, offsetX=0, offsetY=0;//, gridX, gridY, i=0;
-
-//namespace lvl_control
-//{
-//    static QPointF drawStartPos = QPoint(0,0); // Stored start point of mouse movement with pressed key
-//}
-
 // //////////////////////////////////////////////EVENTS START/////////////////////////////////////////////////
 
 void LvlScene::keyPressEvent ( QKeyEvent * keyEvent )
@@ -1156,6 +1148,12 @@ void LvlScene::placeItemUnderCursor()
         {
             LvlPlacingItems::npcSet.x = cursor->scenePos().x();
             LvlPlacingItems::npcSet.y = cursor->scenePos().y();
+
+            if(LvlPlacingItems::npcSpecialAutoIncrement)
+            {
+                LvlPlacingItems::npcSet.special_data = IncrementingNpcSpecialSpin;
+                IncrementingNpcSpecialSpin++;
+            }
 
             LvlData->npc_array_id++;
             LvlPlacingItems::npcSet.array_id = LvlData->npc_array_id;

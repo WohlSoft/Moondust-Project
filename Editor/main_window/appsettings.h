@@ -47,6 +47,8 @@ public:
     bool    midmouse_allowPlace;
     bool    midmouse_allowDragMode;
 
+    bool    placing_dont_show_props_box;
+
     QMdiArea::ViewMode   MainWindowView;
     QTabWidget::TabPosition LVLToolboxPos;
     QTabWidget::TabPosition WLDToolboxPos;

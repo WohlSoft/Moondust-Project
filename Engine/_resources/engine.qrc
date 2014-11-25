@@ -12,5 +12,6 @@
         <file>images/cat_splash.png</file>
         <file>images/shell.png</file>
         <file>images/coin.png</file>
+        <file>PressStart2P.ttf</file>
     </qresource>
 </RCC>

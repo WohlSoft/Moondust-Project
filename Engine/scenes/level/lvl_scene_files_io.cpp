@@ -21,11 +21,60 @@
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
+#include <QElapsedTimer>
+#include <QApplication>
+
+#include "../../networking/intproc.h"
 
 bool LevelScene::loadFile(QString filePath)
 {
+    data.ReadFileValid = false;
+    if(!QFileInfo(filePath).exists())
+    {
+        errorMsg += "File not exist\n\n";
+        errorMsg += filePath;
+        return false;
+    }
+
     data = FileFormats::OpenLevelFile(filePath);
+    if(!data.ReadFileValid)
+        errorMsg += "Bad file format\n";
     return data.ReadFileValid;
 }
 
+
+bool LevelScene::loadFileIP()
+{
+    if(!IntProc::isEnabled()) return false;
+    if(!IntProc::isWorking()) return false;
+
+    data.ReadFileValid = false;
+
+    IntProc::editor->sendToEditor("CMD:CONNECT_TO_ENGINE");
+
+    QElapsedTimer time;
+    time.start();
+    //wait for accepting of level data
+    bool timeOut=false;
+
+    while(!IntProc::editor->levelIsLoad())
+    {
+        loaderStep();
+        qApp->processEvents();
+        if(time.elapsed()>10000)
+        {
+            errorMsg += "Wait timeout\n";
+            timeOut=true;
+            break;
+        }
+        SDL_Delay(30);
+    }
+
+    data = IntProc::editor->accepted_lvl;
+
+    if(!timeOut && !data.ReadFileValid)
+        errorMsg += "Bad file format\n";
+
+    return data.ReadFileValid;
+}
 

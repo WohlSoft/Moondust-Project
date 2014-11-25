@@ -28,6 +28,9 @@
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Level edit</string>
   </property>
@@ -67,6 +70,9 @@
        <width>500</width>
        <height>400</height>
       </size>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
      </property>
      <property name="autoFillBackground">
       <bool>true</bool>

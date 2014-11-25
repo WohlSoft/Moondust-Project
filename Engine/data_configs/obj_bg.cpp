@@ -25,7 +25,7 @@
 QVector<obj_BG >     ConfigManager::lvl_bg;
 QMap<long, obj_BG>   ConfigManager::lvl_bg_indexes;
 CustomDirManager ConfigManager::Dir_BG;
-QVector<SimpleAnimator *> ConfigManager::Animator_BG;
+QVector<SimpleAnimator > ConfigManager::Animator_BG;
 /*****Level BG************/
 
 bool ConfigManager::loadLevelBackG()

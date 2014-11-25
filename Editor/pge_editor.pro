@@ -27,6 +27,16 @@ QT       -= opengl
 
 DESTDIR = ../bin
 
+release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
+release:MOC_DIR     = ../bin/_build/editor/_release/.moc
+release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
+release:UI_DIR      = ../bin/_build/editor/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+
 translates.path = ../bin/languages
 translates.files += languages/*.qm
 translates.files += languages/*.png
@@ -81,7 +91,8 @@ TRANSLATIONS += languages/editor_en.ts \
     languages/editor_it.ts \
     languages/editor_fr.ts \
     languages/editor_pt.ts \
-    languages/editor_ja.ts
+    languages/editor_ja.ts \
+    languages/editor_zh.ts
 
 SOURCES += main.cpp\
     mainwindow.cpp \
@@ -248,7 +259,14 @@ SOURCES += main.cpp\
     world_scene/edit_modes/wld_mode_select.cpp \
     world_scene/edit_modes/wld_mode_square.cpp \
     world_scene/edit_modes/wld_mode_setpoint.cpp \
-    level_scene/lvl_scene.cpp
+    level_scene/lvl_scene.cpp \
+    main_window/main_testing.cpp \
+    smart_import/smartimporter.cpp \
+    level_scene/edit_modes/mode_fill.cpp \
+    networking/engine_intproc.cpp \
+    networking/engine_client.cpp \
+    main_window/global_settings.cpp \
+    world_scene/edit_modes/wld_mode_fill.cpp
 
 
 HEADERS  += defines.h \
@@ -355,7 +373,12 @@ HEADERS  += defines.h \
     world_scene/edit_modes/wld_mode_select.h \
     world_scene/edit_modes/wld_mode_square.h \
     world_scene/edit_modes/wld_mode_setpoint.h \
-    level_scene/lvl_scene.h
+    level_scene/lvl_scene.h \
+    smart_import/smartimporter.h \
+    level_scene/edit_modes/mode_fill.h \
+    networking/engine_intproc.h \
+    networking/engine_client.h \
+    world_scene/edit_modes/wld_mode_fill.h
 
 
 FORMS    += \

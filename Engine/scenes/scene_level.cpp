@@ -21,13 +21,20 @@
 #include "common_features/app_path.h"
 #include "common_features/graphics_funcs.h"
 
+#include "../graphics/gl_renderer.h"
+
 #include "level/lvl_scene_ptr.h"
 
 #include "../data_configs/config_manager.h"
 
+#include "../fontman/font_manager.h"
+
+#include "../gui/pge_msgbox.h"
+
 #include <QtDebug>
 
 LevelScene::LevelScene()
+    : Scene(Level)
 {
     LvlSceneP::s = this;
 
@@ -65,6 +72,7 @@ LevelScene::LevelScene()
     fader_opacity=1.0f;
     target_opacity=1.0f;
     fade_step=0.0f;
+    fadeSpeed=25;
     /*********Fader*************/
 
 
@@ -98,6 +106,10 @@ LevelScene::LevelScene()
     Z_sys_interspace1 = 1000; // interSection space layer
     Z_sys_sctBorder = 1020; // section Border
     /*********Z-Layers*************/
+
+    errorMsg = "";
+
+    qDebug() << 1000.0/(float)PGE_Window::PhysStep;
 }
 
 LevelScene::~LevelScene()
@@ -112,6 +124,7 @@ LevelScene::~LevelScene()
     qDebug() << "clear textures";
     while(!textures_bank.isEmpty())
     {
+        glDisable(GL_TEXTURE_2D);
         glDeleteTextures( 1, &(textures_bank[0].texture) );
         textures_bank.pop_front();
     }
@@ -191,6 +204,11 @@ LevelScene::~LevelScene()
 
 int i;
 int delayToEnter = 1000;
+Uint32 lastTicks=0;
+bool debug_player_jumping=false;
+bool debug_player_onground=false;
+int  debug_player_foots=0;
+
 void LevelScene::update(float step)
 {
     if(step<=0) step=10.0f;
@@ -198,7 +216,7 @@ void LevelScene::update(float step)
     if(doExit)
     {
         if(exitLevelDelay>=0)
-            exitLevelDelay -= 10;
+            exitLevelDelay -= lastTicks;//(1000.0/((float)PGE_Window::PhysStep))-lastTicks;
         else
         {
             if(fader_opacity<=0.0f) setFade(25, 1.0f, 0.02f);
@@ -210,15 +228,22 @@ void LevelScene::update(float step)
     if(!isPauseMenu) //Update physics is not pause menu
     {
         //Make world step
-        world->Step(1.0f / 100.f, 5, 5);
+        world->Step(1.0f / (float)PGE_Window::PhysStep, 5, 1);
 
         //Update controllers
         keyboard1.sendControls();
 
         //update players
         for(i=0; i<players.size(); i++)
+        {
+            if(PGE_Window::showDebugInfo)
+            {
+                debug_player_jumping=players[i]->JumpPressed;
+                debug_player_onground=players[i]->onGround;
+                debug_player_foots=players[i]->foot_contacts;
+            }
             players[i]->update();
-
+        }
 
         //Enter players via warp
         if(isWarpEntrance)
@@ -244,7 +269,7 @@ void LevelScene::update(float step)
             }
             else
             {
-                delayToEnter-= 10;
+                delayToEnter-= lastTicks;//(1000.0/(float)PGE_Window::PhysStep)-lastTicks;
             }
         }
 
@@ -276,6 +301,8 @@ void LevelScene::render()
     //Move to center of the screen
     //glTranslatef( PGE_Window::Width / 2.f, PGE_Window::Height / 2.f, 0.f );
 
+    long cam_x=0, cam_y=0;
+
     if(!isInit) goto renderBlack;
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE);
@@ -283,6 +310,12 @@ void LevelScene::render()
     foreach(PGE_LevelCamera* cam, cameras)
     {
         backgrounds.last()->draw(cam->posX(), cam->posY());
+
+        if(PGE_Window::showDebugInfo)
+        {
+            cam_x = cam->posX();
+            cam_y = cam->posY();
+        }
 
         foreach(PGE_Phys_Object * item, cam->renderObjects())
         {
@@ -297,6 +330,23 @@ void LevelScene::render()
                 break;
             }
         }
+    }
+
+    //FontManager::printText("Hello world!\nПривет мир!", 10,10);
+
+    if(PGE_Window::showDebugInfo)
+    {
+        FontManager::printText(QString("Camera X=%1 Y=%2").arg(cam_x).arg(cam_y), 300,10);
+
+        FontManager::printText(QString("Player J=%1 G=%2 F=%3")
+                               .arg(debug_player_jumping)
+                               .arg(debug_player_onground)
+                               .arg(debug_player_foots), 10,100);
+
+        if(doExit)
+            FontManager::printText(QString("Exit delay %1, %2")
+                                   .arg(exitLevelDelay)
+                                   .arg(lastTicks), 10, 100, 10, qRgb(255,0,0));
     }
 
     renderBlack:
@@ -321,32 +371,30 @@ void LevelScene::render()
 int LevelScene::exec()
 {
     //Level scene's Loop
-    Uint32 start;
+    Uint32 start_render;
+    Uint32 start_physics;
     bool running = true;
-    int doUpdate=0;
-    float doUpdateP=0;
+    int doUpdate_render=0;
+    float doUpdate_physics=0;
     while(running)
     {
 
         //UPDATE Events
-        if(doUpdate<=0)
+        if(doUpdate_render<=0)
         {
 
-            start=SDL_GetTicks();
+            start_render=SDL_GetTicks();
 
             render();
 
             glFlush();
             SDL_GL_SwapWindow(PGE_Window::window);
 
-            if(1000.0/1000>SDL_GetTicks()-start)
+            if(1000.0 / (float)PGE_Window::MaxFPS >SDL_GetTicks() - start_render)
                     //SDL_Delay(1000.0/1000-(SDL_GetTicks()-start));
-                    doUpdate = 1000.0/1000-(SDL_GetTicks()-start);
+                    doUpdate_render = 1000.0 / (float)PGE_Window::MaxFPS - (SDL_GetTicks()-start_render);
         }
-        doUpdate-=10;
-
-
-        start=SDL_GetTicks();
+        doUpdate_render-= 1000.0 / (float)PGE_Window::PhysStep;
 
         SDL_Event event; //  Events of SDL
         while ( SDL_PollEvent(&event) )
@@ -356,6 +404,7 @@ int LevelScene::exec()
             {
                 case SDL_QUIT:
                     {
+                        if(doExit) break;
                         setExiting(0, EXIT_Closed);
                     }   // End work of program
                 break;
@@ -369,10 +418,19 @@ int LevelScene::exec()
                             }   // End work of program
                         break;
                     case SDLK_RETURN:// Enter
-                          isPauseMenu = !isPauseMenu;
+                        {
+                            if(doExit) break;
+                            isPauseMenu = true;
+                        }
                     break;
                     case SDLK_t:
                         PGE_Window::SDL_ToggleFS(PGE_Window::window);
+                    break;
+                    case SDLK_F3:
+                        PGE_Window::showDebugInfo=!PGE_Window::showDebugInfo;
+                    break;
+                    case SDLK_F12:
+                        GlRenderer::makeShot();
                     break;
                     default:
                       break;
@@ -392,21 +450,37 @@ int LevelScene::exec()
             }
         }
 
+        if(isPauseMenu)
+        {
+            PGE_MsgBox msgBox(this, "This is a dummy pause menu\nJust, for message box test\n\nHello! :D :D :D",
+                              PGE_MsgBox::msg_info);
+            msgBox.exec();
+            isPauseMenu=false;
+        }
 
+        start_physics=SDL_GetTicks();
         //Update physics
         update();
 
-        if(1000.0/100>SDL_GetTicks()-start)
+        if(1000.0 / (float)PGE_Window::PhysStep >SDL_GetTicks()-start_physics)
         {
-            doUpdateP = 1000.0/100-(SDL_GetTicks()-start);
-            SDL_Delay( doUpdateP );
+            doUpdate_physics = 1000.0/(float)PGE_Window::PhysStep-(SDL_GetTicks()-start_physics);
+            lastTicks = doUpdate_physics;
+            SDL_Delay( doUpdate_physics );
         }
 
         if(isExit())
             running = false;
+
+        //qApp->processEvents();
     }
 
     return exitLevelCode;
+}
+
+QString LevelScene::getLastError()
+{
+    return errorMsg;
 }
 
 
@@ -421,6 +495,7 @@ bool LevelScene::isExit()
 
 QString LevelScene::toAnotherLevel()
 {
+    if(!warpToLevelFile.isEmpty())
     if(!warpToLevelFile.endsWith(".lvl", Qt::CaseInsensitive) &&
        !warpToLevelFile.endsWith(".lvlx", Qt::CaseInsensitive))
         warpToLevelFile.append(".lvl");
@@ -449,7 +524,7 @@ void LevelScene::checkPlayers()
 
     if(!haveLivePlayers)
     {
-        setExiting(3000, EXIT_PlayerDeath);
+        setExiting(4000, EXIT_PlayerDeath);
     }
 }
 

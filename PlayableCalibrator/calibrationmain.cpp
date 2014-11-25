@@ -22,7 +22,7 @@
 #include <QSettings>
 
 #include "calibrationmain.h"
-#include "ui_calibrationmain.h"
+#include <ui_calibrationmain.h>
 #include "animator/SpriteScene.h"
 #include "about/about.h"
 #include "frame_matrix/matrix.h"

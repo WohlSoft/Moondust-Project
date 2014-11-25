@@ -17,7 +17,7 @@
  */
 
 #include "../../mainwindow.h"
-#include "../../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "tileset_item_box.h"
 #include "../../common_features/util.h"
 #include "../../data_configs/obj_tilesets.h"

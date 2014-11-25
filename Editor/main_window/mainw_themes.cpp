@@ -18,7 +18,7 @@
 
 
 #include "../mainwindow.h"
-#include "../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../common_features/themes.h"
 #include "global_settings.h"
 
@@ -75,7 +75,10 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionSquareFill->setIcon(Themes::icon(Themes::square_fill));
     ui->actionLine->setIcon(Themes::icon(Themes::line_tool));
+    ui->actionFill->setIcon(Themes::icon(Themes::flood_fill));
     ui->actionOverwriteMode->setIcon(Themes::icon(Themes::overwrite_mode));
+
+    ui->action_Placing_ShowProperties->setIcon(Themes::icon(Themes::properties));
 
     ui->actionZoomReset->setIcon(Themes::icon(Themes::zoom_reset));
     ui->actionZoomIn->setIcon(Themes::icon(Themes::zoom_in));

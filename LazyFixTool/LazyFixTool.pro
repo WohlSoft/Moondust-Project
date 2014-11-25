@@ -26,6 +26,17 @@ QT       += core gui
 
 DESTDIR = ../bin
 
+release:OBJECTS_DIR = ../bin/_build/lazyfix/_release/.obj
+release:MOC_DIR     = ../bin/_build/lazyfix/_release/.moc
+release:RCC_DIR     = ../bin/_build/lazyfix/_release/.rcc
+release:UI_DIR      = ../bin/_build/lazyfix/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/lazyfix/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/lazyfix/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/lazyfix/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/lazyfix/_debug/.ui
+
+
 TARGET = LazyFixTool
 CONFIG   += console
 CONFIG   -= app_bundle

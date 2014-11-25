@@ -39,6 +39,11 @@ LVL_Player::LVL_Player()
 
     JumpPressed=false;
     onGround=true;
+
+    bumpDown=false;
+    bumpUp=false;
+    bumpVelocity=0.0f;
+
     foot_contacts=0;
     jumpForce=0;
 
@@ -159,16 +164,29 @@ void LVL_Player::update()
         if(physBody->GetLinearVelocity().x >= -curHMaxSpeed)
             physBody->ApplyForceToCenter(b2Vec2(-force, 0.0f), true);
 
-    if( keys.jump)
+    if( keys.jump )
     {
         if(!JumpPressed)
         {
             JumpPressed=true;
-            physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/5)));
+            if(onGround || foot_contacts>0)
+            {
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/6)));
+                jumpForce=3;
+            }
+        }
+        else
+        {
+            if(jumpForce>0)
+            {
+                jumpForce--;
+                physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, -65.0f-fabs(physBody->GetLinearVelocity().x/6)));
+            }
         }
     }
     else
     {
+        jumpForce=0;
         if(JumpPressed)
         {
             JumpPressed=false;
@@ -180,6 +198,23 @@ void LVL_Player::update()
     if( posY() > camera->limitBottom+height )
     {
         kill();
+    }
+
+    if(bumpDown)
+    {
+        bumpDown=false;
+        physBody->SetLinearVelocity(b2Vec2(physBody->GetLinearVelocity().x, bumpVelocity));
+    }
+    else
+    if(bumpUp)
+    {
+        bumpUp=false;
+        physBody->SetLinearVelocity(
+                                b2Vec2(physBody->GetLinearVelocity().x,
+                                (keys.jump?(-65.f-fabs(physBody->GetLinearVelocity().x/6))
+                                                                                    :-32.5f)
+                                           )
+                                    );
     }
 
 
@@ -202,6 +237,18 @@ void LVL_Player::update()
 
         if(camera->ExitOffscreen)
         {
+            if(camera->RightOnly)
+            {
+                if( posX() < camera->limitLeft)
+                {
+                    physBody->SetTransform(b2Vec2(
+                         PhysUtil::pix2met(camera->limitLeft + posX_coefficient),
+                            physBody->GetPosition().y), 0.0f);
+
+                    physBody->SetLinearVelocity(b2Vec2(0, physBody->GetLinearVelocity().y));
+                }
+            }
+
             if((posX() < camera->limitLeft-width-1 ) || (posX() > camera->limitRight + 1 ))
             {
                 LvlSceneP::s->setExiting(1000, LevelScene::EXIT_OffScreen);
@@ -376,7 +423,6 @@ void LVL_Player::update()
 
     camera->setPos( posX() - PGE_Window::Width/2 + posX_coefficient,
                     posY() - PGE_Window::Height/2 + posY_coefficient );
-
 }
 
 void LVL_Player::kill()
@@ -387,6 +433,16 @@ void LVL_Player::kill()
     LvlSceneP::s->checkPlayers();
     //physBody->SetLinearVelocity(b2Vec2(0,0));
     //teleport(data.x, data.y);
+}
+
+void LVL_Player::bump(bool _up)
+{
+    if(_up)
+        bumpUp=true;
+    else
+        bumpDown=true;
+    if(physBody)
+        bumpVelocity = fabs(physBody->GetLinearVelocity().y)/4;
 }
 
 void LVL_Player::teleport(float x, float y)
@@ -406,7 +462,7 @@ void LVL_Player::teleport(float x, float y)
             LvlSceneP::s->bgList()->last()->setBg(ConfigManager::lvl_bg_indexes[camera->BackgroundID]);
 
             if(ConfigManager::lvl_bg_indexes[camera->BackgroundID].animated)
-                ConfigManager::Animator_BG[ConfigManager::lvl_bg_indexes[camera->BackgroundID].animator_ID]->start();
+                ConfigManager::Animator_BG[ConfigManager::lvl_bg_indexes[camera->BackgroundID].animator_ID].start();
         }
         else
             LvlSceneP::s->bgList()->last()->setNone();
@@ -427,7 +483,7 @@ void LVL_Player::exitFromLevel(QString levelFile, int targetWarp)
                 LvlSceneP::s->levelData()->path+"/"+levelFile;
         LvlSceneP::s->warpToArrayID = targetWarp;
     }
-    LvlSceneP::s->setExiting(300, LevelScene::EXIT_Warp);
+    LvlSceneP::s->setExiting(2000, LevelScene::EXIT_Warp);
 }
 
 

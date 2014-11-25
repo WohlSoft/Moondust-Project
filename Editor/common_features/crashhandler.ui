@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>432</width>
-    <height>325</height>
+    <width>800</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,10 +18,16 @@
     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="4" column="1">
-    <widget class="QPushButton" name="exitButton">
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="extraLabel">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Exit Application</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;You might want to post this data at:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
@@ -38,17 +44,15 @@
      </property>
     </spacer>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QPushButton" name="pgeForumButton">
-     <property name="text">
-      <string>PGE Forum</string>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="notifyLabel">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
      </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QLabel" name="extraLabel">
      <property name="text">
-      <string>You might want to post this data at:</string>
+      <string>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</string>
      </property>
     </widget>
    </item>
@@ -59,15 +63,27 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="notifyLabel">
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
+   <item row="0" column="2" rowspan="2">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../_resources/editor.qrc">:/images/cat_beaten/cat_beaten_128.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QPushButton" name="pgeForumButton">
+     <property name="text">
+      <string>PGE Forum</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1" colspan="2">
+    <widget class="QPushButton" name="exitButton">
+     <property name="text">
+      <string>Exit Application</string>
      </property>
     </widget>
    </item>

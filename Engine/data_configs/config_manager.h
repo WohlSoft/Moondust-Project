@@ -182,7 +182,7 @@ public:
     static QVector<obj_block >     lvl_blocks;
     static QMap<long, obj_block>   lvl_block_indexes;
     static CustomDirManager Dir_Blocks;
-    static QVector<SimpleAnimator *> Animator_Blocks;
+    static QVector<SimpleAnimator > Animator_Blocks;
     /*****Level blocks************/
 
     /*****Level BGO************/
@@ -192,7 +192,7 @@ public:
     static QVector<obj_bgo >     lvl_bgo;
     static QMap<long, obj_bgo>   lvl_bgo_indexes;
     static CustomDirManager Dir_BGO;
-    static QVector<SimpleAnimator *> Animator_BGO;
+    static QVector<SimpleAnimator > Animator_BGO;
     /*****Level BGO************/
 
 
@@ -203,7 +203,7 @@ public:
     static QVector<obj_BG >     lvl_bg;
     static QMap<long, obj_BG>   lvl_bg_indexes;
     static CustomDirManager Dir_BG;
-    static QVector<SimpleAnimator *> Animator_BG;
+    static QVector<SimpleAnimator > Animator_BG;
     /*****Level Backgrounds************/
 
 

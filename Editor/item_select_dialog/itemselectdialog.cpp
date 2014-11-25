@@ -17,7 +17,7 @@
  */
 
 #include "itemselectdialog.h"
-#include "ui_itemselectdialog.h"
+#include <ui_itemselectdialog.h>
 #include "../common_features/mainwinconnect.h"
 #include "../common_features/util.h"
 #include "../common_features/graphics_funcs.h"

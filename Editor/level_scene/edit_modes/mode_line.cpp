@@ -30,6 +30,8 @@
 #include "../item_playerpoint.h"
 #include "../item_door.h"
 
+#include "../../common_features/themes.h"
+
 LVL_ModeLine::LVL_ModeLine(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Line", parentScene, parent)
 {
@@ -53,7 +55,7 @@ void LVL_ModeLine::set()
     s->resetResizers();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::CrossCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_line_fill));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
     s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
     s->_viewPort->viewport()->setMouseTracking(true);
@@ -69,12 +71,16 @@ void LVL_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 
     s->last_block_arrayID=s->LvlData->blocks_array_id;
     s->last_bgo_arrayID=s->LvlData->bgo_array_id;
     s->last_npc_arrayID=s->LvlData->npc_array_id;
+
+    if(LvlPlacingItems::npcSpecialAutoIncrement)
+        s->IncrementingNpcSpecialSpin = LvlPlacingItems::npcSpecialAutoIncrement_begin;
 
     WriteToLog(QtDebugMsg, QString("Line mode %1").arg(s->EditingMode));
 
@@ -135,6 +141,15 @@ void LVL_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
                 item_rectangles::drawLine(s, sz,
                        QSize(LvlPlacingItems::itemW, LvlPlacingItems::itemH)
                                             );
+
+                if(LvlPlacingItems::npcSpecialAutoIncrement)
+                {   //Automatically set direction by line angle in auto-incrementing mode
+                    if(sz.angle()>=0 && sz.angle() < 180)
+                        LvlPlacingItems::npcSet.direct=1;   //top
+                    else
+                        LvlPlacingItems::npcSet.direct=-1;  //bottom
+                }
+
             }
         }
 

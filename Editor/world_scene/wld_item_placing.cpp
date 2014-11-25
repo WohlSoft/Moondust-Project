@@ -53,9 +53,8 @@ int WldPlacingItems::itemH=0;
 int WldPlacingItems::gridSz=1;
 QPoint WldPlacingItems::gridOffset=QPoint(0,0);
 
-bool WldPlacingItems::fillingMode=false;
-bool WldPlacingItems::lineMode=false;
 bool WldPlacingItems::overwriteMode=false;
+WldPlacingItems::PlaceMode WldPlacingItems::placingMode=WldPlacingItems::PMODE_Brush;
 
 QList<QPair<int, QVariant > > WldPlacingItems::flags;
 
@@ -161,7 +160,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
-        if(WldPlacingItems::fillingMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -169,7 +168,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::lineMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
@@ -187,6 +186,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         placingItem=PLC_Tile;
         WldPlacingItems::TileSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        {
+            setFloodFiller(); return;
+        }
+
+        SwitchEditingMode(MODE_PlacingNew);
+
         break;
     }
     case 1: //Sceneries
@@ -284,7 +292,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.push_back(flag);
 
 
-        if(WldPlacingItems::fillingMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -292,7 +300,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::lineMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
@@ -311,6 +319,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         placingItem=PLC_Scene;
         WldPlacingItems::SceneSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        {
+            setFloodFiller(); return;
+        }
+
+        SwitchEditingMode(MODE_PlacingNew);
+
         break;
     }
     case 2: //Path
@@ -405,7 +422,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
             flag.second = "CURSOR";
         WldPlacingItems::flags.push_back(flag);
 
-        if(WldPlacingItems::fillingMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -413,7 +430,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::lineMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
@@ -432,6 +449,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         placingItem=PLC_Path;
         WldPlacingItems::PathSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        {
+            setFloodFiller(); return;
+        }
+
+        SwitchEditingMode(MODE_PlacingNew);
+
         break;
     }
 
@@ -531,7 +557,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::flags.push_back(flag);
 
 
-        if(WldPlacingItems::fillingMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Square)
         {
             setSquareDrawer(); return;
         }
@@ -539,7 +565,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         WldPlacingItems::c_offset_x= qRound(qreal(w) / 2);
         WldPlacingItems::c_offset_y= qRound(qreal(h) / 2);
 
-        if(WldPlacingItems::lineMode)
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_Line)
         {
             setLineDrawer(); return;
         }
@@ -565,6 +591,15 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
 
         placingItem=PLC_Level;
         WldPlacingItems::LevelSet.id = itemID;
+
+        //flood fill uses 'item' cursor
+        if(WldPlacingItems::placingMode==WldPlacingItems::PMODE_FloodFill)
+        {
+            setFloodFiller(); return;
+        }
+
+        SwitchEditingMode(MODE_PlacingNew);
+
         break;
     }
 
@@ -590,6 +625,8 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         cursor->setOpacity( 0.8 );
         cursor->setVisible(false);
         cursor->setEnabled(true);
+
+        SwitchEditingMode(MODE_PlacingNew);
 
         break;
     case 5: //Get point from a world map
@@ -685,6 +722,10 @@ void WldScene::setLineDrawer()
 
 }
 
+void WldScene::setFloodFiller()
+{
+    SwitchEditingMode(MODE_Fill);
+}
 
 void WldScene::resetCursor()
 {

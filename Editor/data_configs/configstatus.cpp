@@ -1,5 +1,5 @@
 #include "configstatus.h"
-#include "ui_configstatus.h"
+#include <ui_configstatus.h>
 
 ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     QDialog(parent),

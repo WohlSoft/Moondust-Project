@@ -23,7 +23,7 @@
 #include <QProgressDialog>
 
 #include "level_edit.h"
-#include "../ui_leveledit.h"
+#include <ui_leveledit.h>
 
 #include "../common_features/app_path.h"
 

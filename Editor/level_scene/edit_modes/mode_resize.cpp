@@ -22,6 +22,8 @@
 #include "../../common_features/mainwinconnect.h"
 #include "../../common_features/item_rectangles.h"
 
+#include "../../common_features/themes.h"
+
 LVL_ModeResize::LVL_ModeResize(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Resize", parentScene, parent)
 {}
@@ -43,7 +45,7 @@ void LVL_ModeResize::set()
     s->resetCursor();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::ArrowCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_resizing));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
 }
 

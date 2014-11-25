@@ -72,7 +72,7 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         clearSelection();
         disableMoveItems=true;
         _viewPort->setInteractive(true);
-        _viewPort->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
+        _viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
         _viewPort->setDragMode(QGraphicsView::NoDrag);
         break;
 
@@ -89,7 +89,13 @@ void LvlScene::SwitchEditingMode(int EdtMode)
         switchMode("HandScroll");
         break;
 
+
+    case MODE_Fill:
+        switchMode("Fill");
+        break;
     case MODE_Selecting:
+
+
     default:
         switchMode("Select");
         break;
@@ -365,6 +371,8 @@ void LvlScene::setLayerToSelected()
         MainWinConnect::pMainWin->setLayerToolsLocked(true);
         MainWinConnect::pMainWin->setLayersBox();
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
+        MainWinConnect::pMainWin->setLayerLists();
+        MainWinConnect::pMainWin->setEventData();
         setLayerToSelected(lName, true);
     }
     delete layerBox;
