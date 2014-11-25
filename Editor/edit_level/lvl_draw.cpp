@@ -23,7 +23,7 @@
 #include <QProgressDialog>
 
 #include "level_edit.h"
-#include "../ui_leveledit.h"
+#include <ui_leveledit.h>
 
 #include "../file_formats/lvl_filedata.h"
 #include "../level_scene/lvl_scene.h"

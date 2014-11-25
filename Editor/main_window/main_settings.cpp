@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../mainwindow.h"
 #include "../common_features/app_path.h"
 
@@ -29,54 +29,10 @@
 #include "music_player.h"
 #include "global_settings.h"
 
+#include "../common_features/graphics_funcs.h"
+
+
 #include <QFont>
-
-QString GlobalSettings::locale="";
-long GlobalSettings::animatorItemsLimit=25000;
-QString GlobalSettings::openPath=".";
-QString GlobalSettings::savePath=".";
-QString GlobalSettings::savePath_npctxt=".";
-
-LevelEditingSettings GlobalSettings::LvlOpts;
-
-bool GlobalSettings::autoPlayMusic=false;
-int GlobalSettings::musicVolume=100;
-
-bool GlobalSettings::LevelToolBoxVis=true;
-bool GlobalSettings::WorldToolBoxVis=true;
-bool GlobalSettings::WorldSettingsToolboxVis=false;
-bool GlobalSettings::WorldSearchBoxVis=false;
-
-bool GlobalSettings::SectionToolBoxVis=false;
-bool GlobalSettings::LevelDoorsBoxVis=false;
-bool GlobalSettings::LevelLayersBoxVis=false;
-bool GlobalSettings::LevelEventsBoxVis=false;
-bool GlobalSettings::LevelSearchBoxVis=false;
-
-bool GlobalSettings::TilesetBoxVis=false;
-bool GlobalSettings::DebuggerBoxVis=false;
-
-
-bool GlobalSettings::MidMouse_allowDuplicate=false;
-bool GlobalSettings::MidMouse_allowSwitchToPlace=false;
-bool GlobalSettings::MidMouse_allowSwitchToDrag=false;
-
-QString GlobalSettings::currentTheme="";
-
-QMdiArea::ViewMode GlobalSettings::MainWindowView = QMdiArea::TabbedView;
-QTabWidget::TabPosition GlobalSettings::LVLToolboxPos = QTabWidget::North;
-QTabWidget::TabPosition GlobalSettings::WLDToolboxPos = QTabWidget::West;
-QTabWidget::TabPosition GlobalSettings::TSTToolboxPos = QTabWidget::North;
-
-int GlobalSettings::lastWinType=0;
-
-QString LvlMusPlay::currentCustomMusic;
-long LvlMusPlay::currentMusicId=0;
-long LvlMusPlay::currentWldMusicId=0;
-long LvlMusPlay::currentSpcMusicId=0;
-bool LvlMusPlay::musicButtonChecked;
-bool LvlMusPlay::musicForceReset=false;
-int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
 
 PGE_MusPlayer MusPlayer;
 
@@ -253,6 +209,7 @@ void MainWindow::setUiDefults()
 
     ui->menuLevel->setEnabled(false);
     ui->menuWorld->setEnabled(false);
+    ui->menuTest->setEnabled(false);
     ui->LevelObjectToolbar->setVisible(false);
     ui->WorldObjectToolbar->setVisible(false);
 
@@ -484,6 +441,8 @@ void MainWindow::loadSettings()
         GlobalSettings::MidMouse_allowSwitchToPlace = settings.value("editor-midmouse-allowplace", false).toBool();
         GlobalSettings::MidMouse_allowSwitchToDrag = settings.value("editor-midmouse-allowdrag", false).toBool();
 
+        GlobalSettings::Placing_dontShowPropertiesBox = settings.value("editor-placing-no-propsbox", false).toBool();
+
         GlobalSettings::MainWindowView = (settings.value("tab-view", true).toBool()) ? QMdiArea::TabbedView : QMdiArea::SubWindowView;
         GlobalSettings::LVLToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("level-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
         GlobalSettings::WLDToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("world-toolbox-pos", static_cast<int>(QTabWidget::West)).toInt());
@@ -596,6 +555,8 @@ void MainWindow::saveSettings()
     settings.setValue("editor-midmouse-allowplace", GlobalSettings::MidMouse_allowSwitchToPlace);
     settings.setValue("editor-midmouse-allowdrag", GlobalSettings::MidMouse_allowSwitchToDrag);
 
+    settings.setValue("editor-placing-no-propsbox", GlobalSettings::Placing_dontShowPropertiesBox);
+
     settings.setValue("tab-view", (GlobalSettings::MainWindowView==QMdiArea::TabbedView));
     settings.setValue("level-toolbox-pos", static_cast<int>(GlobalSettings::LVLToolboxPos));
     settings.setValue("world-toolbox-pos", static_cast<int>(GlobalSettings::WLDToolboxPos));
@@ -664,6 +625,8 @@ void MainWindow::on_actionApplication_settings_triggered()
     appSettings->midmouse_allowPlace = GlobalSettings::MidMouse_allowSwitchToPlace;
     appSettings->midmouse_allowDragMode = GlobalSettings::MidMouse_allowSwitchToDrag;
 
+    appSettings->placing_dont_show_props_box = GlobalSettings::Placing_dontShowPropertiesBox;
+
     appSettings->selectedTheme = GlobalSettings::currentTheme;
 
     appSettings->applySettings();
@@ -690,6 +653,8 @@ void MainWindow::on_actionApplication_settings_triggered()
         GlobalSettings::MidMouse_allowSwitchToPlace = appSettings->midmouse_allowPlace;
         GlobalSettings::MidMouse_allowSwitchToDrag = appSettings->midmouse_allowDragMode;
 
+        GlobalSettings::Placing_dontShowPropertiesBox = appSettings->placing_dont_show_props_box;
+
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         ui->LevelToolBoxTabs->setTabPosition(GlobalSettings::LVLToolboxPos);
         ui->WorldToolBoxTabs->setTabPosition(GlobalSettings::WLDToolboxPos);
@@ -704,4 +669,9 @@ void MainWindow::on_actionApplication_settings_triggered()
     }
     delete appSettings;
 
+}
+
+void MainWindow::on_actionVBAlphaEmulate_toggled(bool arg1)
+{
+    GraphicsHelps::EnableVBEmulate = arg1;
 }

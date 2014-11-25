@@ -29,6 +29,8 @@
 #include "../item_level.h"
 #include "../item_music.h"
 
+#include "../../common_features/themes.h"
+
 WLD_ModeLine::WLD_ModeLine(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Line", parentScene, parent)
 {
@@ -53,7 +55,7 @@ void WLD_ModeLine::set()
     s->unserPointSelector();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::CrossCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_line_fill));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
     s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
     s->_viewPort->viewport()->setMouseTracking(true);
@@ -69,6 +71,7 @@ void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 

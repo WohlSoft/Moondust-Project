@@ -19,7 +19,14 @@
 #include "scene.h"
 
 Scene::Scene()
-{}
+{
+    sceneType = _Unknown;
+}
+
+Scene::Scene(TypeOfScene _type)
+{
+    sceneType = _type;
+}
 
 Scene::~Scene()
 {}
@@ -31,4 +38,11 @@ void Scene::render()
 {}
 
 int Scene::exec()
-{}
+{
+    return 0;
+}
+
+Scene::TypeOfScene Scene::type()
+{
+    return sceneType;
+}

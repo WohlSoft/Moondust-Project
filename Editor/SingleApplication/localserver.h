@@ -25,6 +25,7 @@ signals:
   void privateDataReceived(QString data);
   void showUp();
   void openFile(QString path);
+  void acceptedCommand(QString cmd);
 
 private slots:
   void slotNewConnection();

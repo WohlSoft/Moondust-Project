@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
 #include "global_settings.h"
@@ -68,6 +68,8 @@ void MainWindow::updateMenus(bool force)
     ui->actionCopy->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionPaste->setEnabled( (WinType==1) || (WinType==3) );
     ui->actionCut->setEnabled( (WinType==1) || (WinType==3) );
+
+    ui->menuTest->setEnabled( (WinType==1) );
 
     ui->LevelObjectToolbar->setVisible( (WinType==1) );
     ui->WorldObjectToolbar->setVisible( (WinType==3) );

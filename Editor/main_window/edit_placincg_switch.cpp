@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
 #include "../level_scene/lvl_item_placing.h"
@@ -24,6 +24,49 @@
 #include "../file_formats/file_formats.h"
 
 #include "../defines.h"
+
+#include "global_settings.h"
+
+
+void MainWindow::on_action_Placing_ShowProperties_triggered(bool checked)
+{
+    if(activeChildWindow()==1) // Level editing window
+    {
+        switch(Placing_ShowProperties_lastType)
+        {
+        case ItemTypes::LVL_Block:
+        case ItemTypes::LVL_BGO:
+        case ItemTypes::LVL_NPC:
+            {
+                if(checked)
+                {
+                    ui->ItemProperties->show();
+                    ui->ItemProperties->raise();
+                }
+                else
+                    ui->ItemProperties->hide();
+                break;
+            }
+        }
+    }
+    else if(activeChildWindow()==3) // World editing window
+    {
+        switch(Placing_ShowProperties_lastType)
+        {
+            case ItemTypes::WLD_Level:
+            {
+                if(checked)
+                {
+                    ui->WLD_ItemProps->show();
+                    ui->WLD_ItemProps->raise();
+                }
+                else
+                    ui->WLD_ItemProps->hide();
+                break;
+            }
+        }
+    }
+}
 
 
 void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
@@ -44,13 +87,21 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
                 activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
 
-                LvlPlacingItems::fillingMode = false;
+
+                LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
+
+
+                //LvlPlacingItems::squareFillingMode = false;
                 ui->actionSquareFill->setChecked(false);
                 ui->actionSquareFill->setEnabled(true);
 
-                LvlPlacingItems::lineMode = false;
+                //LvlPlacingItems::lineMode = false;
                 ui->actionLine->setChecked(false);
                 ui->actionLine->setEnabled(true);
+
+                //LvlPlacingItems::floodFillingMode = false;
+                ui->actionFill->setChecked(false);
+                ui->actionFill->setEnabled(true);
 
                 ui->PlacingToolbar->setVisible(true);
                 qApp->setActiveWindow(this);
@@ -58,12 +109,16 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
            default:;
        }
 
+       Placing_ShowProperties_lastType = itemType;
+
        //Switch placing mode
        if(valid)
            switch(itemType)
            {
            case ItemTypes::LVL_Block:
                {
+                   ui->action_Placing_ShowProperties->setChecked(true);
+                   ui->action_Placing_ShowProperties->setEnabled(true);
                    //Switch scene to placing mode:
                    activeLvlEditWin()->scene->setItemPlacer(0, itemID);
 
@@ -71,27 +126,45 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                    LvlItemProps(0,LvlPlacingItems::blockSet,
                                              FileFormats::dummyLvlBgo(),
                                              FileFormats::dummyLvlNpc(), true);
+
+                   if(GlobalSettings::Placing_dontShowPropertiesBox)
+                        ui->ItemProperties->hide();
+
                    break;
                }
            case ItemTypes::LVL_BGO:
                {
+                   ui->action_Placing_ShowProperties->setChecked(true);
+                   ui->action_Placing_ShowProperties->setEnabled(true);
+
                    activeLvlEditWin()->scene->setItemPlacer(1, itemID );
 
                    LvlItemProps(1,FileFormats::dummyLvlBlock(),
                                              LvlPlacingItems::bgoSet,
                                              FileFormats::dummyLvlNpc(), true);
+
+                   if(GlobalSettings::Placing_dontShowPropertiesBox)
+                        ui->ItemProperties->hide();
+
                    break;
                }
            case ItemTypes::LVL_NPC:
                {
+                   ui->action_Placing_ShowProperties->setChecked(true);
+                   ui->action_Placing_ShowProperties->setEnabled(true);
+
                    ui->actionSquareFill->setEnabled(false);
-                   ui->actionLine->setEnabled(false);
+                   ui->actionFill->setEnabled(false);
 
                    activeLvlEditWin()->scene->setItemPlacer(2, itemID );
 
                    LvlItemProps(2,FileFormats::dummyLvlBlock(),
                                              FileFormats::dummyLvlBgo(),
                                              LvlPlacingItems::npcSet, true);
+
+                   if(GlobalSettings::Placing_dontShowPropertiesBox)
+                        ui->ItemProperties->hide();
+
                    break;
                }
            }
@@ -99,6 +172,8 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
     else if(activeChildWindow()==3) // World editing window
     {
         bool valid=false;
+        ui->action_Placing_ShowProperties->setChecked(false);
+        ui->action_Placing_ShowProperties->setEnabled(false);
         switch(itemType)
         {
             case ItemTypes::WLD_Tile:
@@ -115,17 +190,27 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
                  activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
 
-                 WldPlacingItems::fillingMode = false;
+                 WldPlacingItems::placingMode = WldPlacingItems::PMODE_Brush;
+
+                 //WldPlacingItems::squarefillingMode = false;
                  ui->actionSquareFill->setChecked(false);
                  ui->actionSquareFill->setEnabled(true);
 
-                 WldPlacingItems::lineMode = false;
+                 //WldPlacingItems::lineMode = false;
                  ui->actionLine->setChecked(false);
                  ui->actionLine->setEnabled(true);
+
+                 //WldPlacingItems::floodFillingMode = false;
+                 ui->actionFill->setChecked(false);
+                 ui->actionFill->setEnabled(true);
+
                  qApp->setActiveWindow(this);
                  activeWldEditWin()->setFocus();
             default:;
         }
+
+        Placing_ShowProperties_lastType = itemType;
+
         //Switch placing mode
         if(valid)
             switch(itemType)
@@ -150,14 +235,22 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                     }
                 case ItemTypes::WLD_Level:
                     {
+                        ui->action_Placing_ShowProperties->setChecked(true);
+                        ui->action_Placing_ShowProperties->setEnabled(true);
+
                         activeWldEditWin()->scene->setItemPlacer(3, itemID);
                         WldItemProps(0, WldPlacingItems::LevelSet, true);
+
+                        if(GlobalSettings::Placing_dontShowPropertiesBox)
+                             ui->WLD_ItemProps->hide();
+
                         break;
                     }
                 case ItemTypes::WLD_MusicBox:
                     {
                         ui->actionSquareFill->setEnabled(false);
                         ui->actionLine->setEnabled(false);
+                        ui->actionFill->setEnabled(false);
                         activeWldEditWin()->scene->setItemPlacer(4, itemID);
                         WldItemProps(-1, FileFormats::dummyWldLevel(), true);
                         break;

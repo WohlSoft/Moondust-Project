@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../mainwindow.h"
 #include "../common_features/graphicsworkspace.h"
 #include "../common_features/themes.h"
@@ -56,13 +56,20 @@ npcedit *MainWindow::createNPCChild()
 leveledit *MainWindow::createLvlChild()
 {
     leveledit *child = new leveledit;
+    connect(child, SIGNAL(forceReload()), this, SLOT(on_actionReload_triggered()));
+
     QMdiSubWindow *levelWindow = new QMdiSubWindow;
 
     levelWindow->setWidget(child);
     levelWindow->setAttribute(Qt::WA_DeleteOnClose);
 
+    child->setAcceptDrops(true);
+
+    levelWindow->setAcceptDrops(true);
+
     QMdiSubWindow * levelWindowP = ui->centralWidget->addSubWindow(levelWindow);
     levelWindowP->setAttribute(Qt::WA_DeleteOnClose);
+    levelWindowP->setAcceptDrops(true);
 
     levelWindowP->setGeometry(
                 (ui->centralWidget->subWindowList().size()*20)%(ui->centralWidget->size().width()/4),
@@ -75,6 +82,7 @@ leveledit *MainWindow::createLvlChild()
 
     GraphicsWorkspace* gr = static_cast<GraphicsWorkspace *>(child->getGraphicsView());
     connect(gr, SIGNAL(zoomValueChanged(QString)), zoom, SLOT(setText(QString)));
+
 
     return child;
 }

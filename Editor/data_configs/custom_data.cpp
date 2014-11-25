@@ -18,6 +18,7 @@
 
 #include "custom_data.h"
 #include <QFile>
+#include <QDir>
 
 CustomDirManager::CustomDirManager()
 {}
@@ -48,4 +49,22 @@ void CustomDirManager::setCustomDirs(QString path, QString name)
 {
     dirCustom = path + "/" + name;
     dirEpisode = path;
+}
+
+void CustomDirManager::createDirIfNotExsist()
+{
+    if(!QFile::exists(dirCustom)){
+        QDir tarDir(dirCustom);
+        tarDir.mkpath(".");
+    }
+}
+
+void CustomDirManager::import(QStringList &files, bool local)
+{
+    QString targetDir = (local ? dirCustom : dirEpisode);
+    targetDir = (!targetDir.endsWith("/") ? targetDir.append('/') : targetDir);
+    foreach (QString targetFile, files) {
+        QFile sourceFile(targetFile);
+        sourceFile.copy(targetDir + targetFile.section("/", -1));
+    }
 }

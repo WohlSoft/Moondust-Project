@@ -1,5 +1,6 @@
 #include "singleapplication.h"
 #include <QtDebug>
+
 /**
  * @brief SingleApplication::SingleApplication
  *  Constructor. Checks and fires up LocalServer or closes the program
@@ -30,13 +31,16 @@ SingleApplication::SingleApplication(int argc, char *argv[])
     socket->flush();
     QThread::msleep(100);
     socket->close();
-  } else {
+  }
+  else
+  {
     // The attempt was insuccessful, so we continue the program
     _shouldContinue = true;
     server = new LocalServer();
     server->start();
     QObject::connect(server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
     QObject::connect(server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
+    QObject::connect(server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
   }
 }
 
@@ -72,6 +76,11 @@ void SingleApplication::slotShowUp()
 
 void SingleApplication::slotOpenFile(QString path)
 {
-  emit openFile(path);
+    emit openFile(path);
+}
+
+void SingleApplication::slotAcceptedCommand(QString cmd)
+{
+    emit acceptedCommand(cmd);
 }
 

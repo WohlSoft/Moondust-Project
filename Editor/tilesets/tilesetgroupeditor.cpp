@@ -17,7 +17,7 @@
  */
 
 #include "tilesetgroupeditor.h"
-#include "ui_tilesetgroupeditor.h"
+#include <ui_tilesetgroupeditor.h>
 
 #include <QtDebug>
 

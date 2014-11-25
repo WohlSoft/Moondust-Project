@@ -40,6 +40,11 @@ public:
     static PGE_Texture loadTexture(PGE_Texture &target, QString path, QString maskPath="");
     static QPixmap squareImage(QPixmap image, QSize targetSize);
     static SDL_Surface *QImage_toSDLSurface(const QImage &sourceImage);
+
+    static void flipHorizontally(SDL_Surface *&image);
+    static void flipVertically(SDL_Surface *&image);
+    static Uint32 getpixel(SDL_Surface *surface, int x, int y);
+    static void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 };
 
 #endif // GRAPHICS_FUNCS_H

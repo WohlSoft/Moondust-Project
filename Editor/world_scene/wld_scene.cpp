@@ -32,6 +32,7 @@
 #include "edit_modes/wld_mode_place.h"
 #include "edit_modes/wld_mode_square.h"
 #include "edit_modes/wld_mode_line.h"
+#include "edit_modes/wld_mode_fill.h"
 #include "edit_modes/wld_mode_resize.h"
 #include "edit_modes/wld_mode_setpoint.h"
 
@@ -159,6 +160,9 @@ WldScene::WldScene(GraphicsWorkspace * parentView, dataconfigs &configs, WorldDa
 
     WLD_ModeSetPoint * modeSetPoint = new WLD_ModeSetPoint(this);
     EditModes.push_back(modeSetPoint);
+
+    WLD_ModeFill * modeFill = new WLD_ModeFill(this);
+    EditModes.push_back(modeFill);
 
     CurrentMode = modeSelect;
     CurrentMode->set();

@@ -21,6 +21,7 @@
 
 #include <QPoint>
 #include <QPointF>
+#include <QString>
 
 class GlRenderer
 {
@@ -28,6 +29,12 @@ public:
     static bool init();
     static bool uninit();
     static QPointF mapToOpengl(QPoint s);
+
+    static QString ScreenshotPath;
+    static void makeShot();
+    static bool ready();
+private:
+    static bool _isReady;
 };
 
 #endif // GL_RENDERER_H

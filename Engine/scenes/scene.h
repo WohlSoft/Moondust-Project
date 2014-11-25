@@ -22,11 +22,27 @@
 class Scene
 {
 public:
+    enum TypeOfScene
+    {
+        _Unknown=0,
+        Intro,
+        Title,
+        Level,
+        World,
+        Credits,
+        GameOver
+    };
+
     Scene();
+    Scene(TypeOfScene _type);
     virtual ~Scene();
     virtual void update();
     virtual void render();
     virtual int exec(); //scene's loop
+    TypeOfScene type();
+
+private:
+    TypeOfScene sceneType;
 };
 
 #endif // SCENE_H

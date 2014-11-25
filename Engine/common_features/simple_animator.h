@@ -27,9 +27,19 @@ typedef std::pair<double, double > AniPos;
 class SimpleAnimator
 {
 public:
-    SimpleAnimator(bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
+    SimpleAnimator();
+    SimpleAnimator(const SimpleAnimator &animator);
+    SimpleAnimator(bool enables, int framesq=1, int fspeed=64, int First=0, int Last=-1,
                     bool rev=false, bool bid=false);
     ~SimpleAnimator();
+
+    bool operator!=(const SimpleAnimator &animator) const;
+    bool operator==(const SimpleAnimator &animator) const;
+    SimpleAnimator &operator=(const SimpleAnimator &animator);
+
+    void construct(bool enables=false, int framesq=1, int fspeed=64, int First=0, int Last=-1,
+                   bool rev=false, bool bid=false);
+
     AniPos image(double frame=-1);
 
     void setFrame(int y);
@@ -69,6 +79,7 @@ private:
     //Animation alhorithm
     int frameFirst;
     int frameLast;
+
 
 };
 

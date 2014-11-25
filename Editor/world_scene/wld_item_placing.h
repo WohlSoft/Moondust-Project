@@ -31,8 +31,15 @@ public:
     static WorldLevels LevelSet;
     static WorldMusic MusicSet;
 
-    static bool fillingMode;
-    static bool lineMode;
+    enum PlaceMode
+    {
+        PMODE_Brush=0,
+        PMODE_Square,
+        PMODE_Line,
+        PMODE_FloodFill
+    };
+    static PlaceMode placingMode;
+
     static bool overwriteMode;
 
     static int c_offset_x;

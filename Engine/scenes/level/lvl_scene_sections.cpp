@@ -18,19 +18,19 @@
 
 #include "../scene_level.h"
 
+#include <QtDebug>
 
 int LevelScene::findNearSection(long x, long y)
 {
 
     bool found=false;
     int result=0;
-    int padding=-64;
+    int padding=0;
 
     while( (!found) && (padding < 1024) )
+    {
         for(int i=0; i<data.sections.size(); i++)
         {
-            padding+=64;
-
             if(
                     (data.sections[i].size_left==0)
                     &&(data.sections[i].size_right==0)
@@ -40,18 +40,20 @@ int LevelScene::findNearSection(long x, long y)
 
             if(data.sections[i].size_left-padding > x)
                 continue;
-            if(data.sections[i].size_right+padding < x)
+            if(data.sections[i].size_right + padding < x)
                 continue;
-            if(data.sections[i].size_top-padding > y)
+            if(data.sections[i].size_top - padding > y)
                 continue;
-            if(data.sections[i].size_bottom+padding < y)
+            if(data.sections[i].size_bottom + padding < y)
                 continue;
 
             found=true;
-            result=i;
+            result = i;
+
             break;
         }
-
+        padding+=64;
+    }
     return result;
 }
 

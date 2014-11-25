@@ -27,6 +27,8 @@
 #include "../item_level.h"
 #include "../item_music.h"
 
+#include "../../common_features/themes.h"
+
 WLD_ModeSelect::WLD_ModeSelect(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Select", parentScene, parent)
 {
@@ -55,7 +57,7 @@ void WLD_ModeSelect::set()
     s->unserPointSelector();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::ArrowCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_normal));
     s->_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
@@ -71,10 +73,12 @@ void WLD_ModeSelect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         {
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             dontCallEvent = true;
+            s->IsMoved = true;
             return;
         }
         s->PasteFromBuffer = true;
         dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 

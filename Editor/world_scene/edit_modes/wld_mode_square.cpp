@@ -21,13 +21,15 @@
 #include "../wld_scene.h"
 #include "../../common_features/mainwinconnect.h"
 #include "../../common_features/item_rectangles.h"
-#include "../WLD_item_placing.h"
+#include "../wld_item_placing.h"
 
 #include "../item_tile.h"
 #include "../item_scene.h"
 #include "../item_path.h"
 #include "../item_level.h"
 #include "../item_music.h"
+
+#include "../../common_features/themes.h"
 
 WLD_ModeSquare::WLD_ModeSquare(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Square", parentScene, parent)
@@ -53,7 +55,7 @@ void WLD_ModeSquare::set()
     s->unserPointSelector();
 
     s->_viewPort->setInteractive(true);
-    s->_viewPort->setCursor(Qt::CrossCursor);
+    s->_viewPort->setCursor(Themes::Cursor(Themes::cursor_square_fill));
     s->_viewPort->setDragMode(QGraphicsView::NoDrag);
     s->_viewPort->setRenderHint(QPainter::Antialiasing, true);
     s->_viewPort->viewport()->setMouseTracking(true);
@@ -68,6 +70,8 @@ void WLD_ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
+        dontCallEvent = true;
+        s->IsMoved = true;
         return;
     }
 

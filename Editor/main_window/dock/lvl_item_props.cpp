@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../../ui_mainwindow.h"
+#include <ui_mainwindow.h>
 #include "../../mainwindow.h"
 #include "../../level_scene/lvl_item_placing.h"
 //#include "../../npc_dialog/npcdialog.h"
@@ -32,6 +32,13 @@ int npcSpecSpinOffset=0;
 int npcSpecSpinOffset_2=0;
 bool LockItemProps=true;
 
+
+void MainWindow::on_ItemProperties_visibilityChanged(bool visible)
+{
+    ui->action_Placing_ShowProperties->setChecked(visible);
+}
+
+
 void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC npc, bool newItem)
 {
 
@@ -44,6 +51,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
     LvlItemPropsLock=true;
     LockItemProps = true;
+
+    LvlPlacingItems::npcSpecialAutoIncrement=false;
 
     /*
     long blockPtr; //ArrayID of editing item (-1 - use system)
@@ -113,8 +122,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         ui->PROPS_BlockInvis->setChecked( block.invisible );
         ui->PROPS_BlkSlippery->setChecked( block.slippery );
 
-        ui->PROPS_BlockSquareFill->setVisible( newItem );
-        ui->PROPS_BlockSquareFill->setChecked(LvlPlacingItems::fillingMode);
+        //ui->PROPS_BlockSquareFill->setVisible( newItem );
+        //ui->PROPS_BlockSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
 
         ui->PROPS_BlockIncludes->setText(
                     ((block.npc_id!=0)?
@@ -180,8 +189,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
         ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.array_id));
 
-        ui->PROPS_BGOSquareFill->setVisible( newItem );
-        ui->PROPS_BGOSquareFill->setChecked(LvlPlacingItems::fillingMode);
+        //ui->PROPS_BGOSquareFill->setVisible( newItem );
+        //ui->PROPS_BGOSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
 
         ui->PROPS_bgoPos->setText( tr("Position: [%1, %2]").arg(bgo.x).arg(bgo.y) );
 
@@ -225,6 +234,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         LvlItemPropsLock=false;
         LockItemProps=false;
 
+        ui->action_Placing_ShowProperties->setChecked(true);
         ui->ItemProperties->show();
         ui->ItemProperties->raise();
         ui->bgoProps->show();
@@ -279,6 +289,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
 
         ui->PROPS_NpcSpinLabel->hide();
         ui->PROPS_NPCSpecialSpin->hide();
+        ui->PROPS_NPCSpecialSpin_Auto->hide();
 
         ui->line_6->hide();
 
@@ -380,6 +391,12 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 ui->PROPS_NpcSpinLabel->setText( configs.main_npc[j].special_name );
                 ui->PROPS_NPCSpecialSpin->show();
 
+                if(npcPtr<0)
+                {
+                    ui->PROPS_NPCSpecialSpin_Auto->show();
+                    ui->PROPS_NPCSpecialSpin_Auto->setChecked(false);
+                }
+
                 if(newItem)
                 { //Reset value to min, if it out of range
                     if((npc.special_data>configs.main_npc[j].special_spin_max)||
@@ -395,6 +412,8 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
                 ui->PROPS_NPCSpecialSpin->setMaximum( configs.main_npc[j].special_spin_max + npcSpecSpinOffset );
 
                 ui->PROPS_NPCSpecialSpin->setValue( npc.special_data + npcSpecSpinOffset );
+                LvlPlacingItems::npcSpecialAutoIncrement_begin = npc.special_data;
+
                 break;
             case 2:
                 if(configs.main_npc[j].container)
@@ -512,6 +531,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
         LvlItemPropsLock=false;
         LockItemProps=false;
 
+        ui->action_Placing_ShowProperties->setChecked(true);
         ui->ItemProperties->show();
         ui->ItemProperties->raise();
         ui->npcProps->show();
@@ -523,6 +543,7 @@ void MainWindow::LvlItemProps(int Type, LevelBlock block, LevelBGO bgo, LevelNPC
     case -1: //Nothing to edit
     default:
         ui->ItemProperties->hide();
+        ui->action_Placing_ShowProperties->setChecked(false);
     }
 }
 
@@ -666,24 +687,24 @@ void MainWindow::on_PROPS_BlockResize_clicked()
 
 
 
-void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+//void MainWindow::on_PROPS_BlockSquareFill_clicked(bool checked)
+//{
+//    if(LvlItemPropsLock) return;
+//    if(LockItemProps) return;
 
-    on_actionSquareFill_triggered(checked);
-    ui->actionSquareFill->setChecked(checked);
-}
+//    on_actionSquareFill_triggered(checked);
+//    ui->actionSquareFill->setChecked(checked);
+//}
 
 
-void MainWindow::on_PROPS_BGOSquareFill_clicked(bool checked)
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+//void MainWindow::on_PROPS_BGOSquareFill_clicked(bool checked)
+//{
+//    if(LvlItemPropsLock) return;
+//    if(LockItemProps) return;
 
-    on_actionSquareFill_triggered(checked);
-    ui->actionSquareFill->setChecked(checked);
-}
+//    on_actionSquareFill_triggered(checked);
+//    ui->actionSquareFill->setChecked(checked);
+//}
 
 
 void MainWindow::on_PROPS_BlockInvis_clicked(bool checked)
@@ -1380,6 +1401,8 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
     if(LvlItemPropsLock) return;
     if(LockItemProps) return;
 
+    LvlPlacingItems::npcSpecialAutoIncrement_begin = arg1 - npcSpecSpinOffset;
+
     if(npcPtr<0)
     {
         LvlPlacingItems::npcSet.special_data = arg1 - npcSpecSpinOffset;
@@ -1438,6 +1461,44 @@ void MainWindow::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
         activeLvlEditWin()->scene->addChangeSettingsHistory(selData, LvlScene::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset));
     }
 
+}
+
+void MainWindow::on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked)
+{
+    LvlPlacingItems::npcSpecialAutoIncrement=checked;
+    LvlPlacingItems::npcSet.special_data = ui->PROPS_NPCSpecialSpin->value() - npcSpecSpinOffset;
+
+    switch(LvlPlacingItems::npcSet.direct)
+    {
+    case -1:
+        ui->PROPS_NPCDirLeft->setChecked(true);
+        break;
+    case 0:
+        ui->PROPS_NPCDirRand->setChecked(true);
+        break;
+    case 1:
+        ui->PROPS_NPCDirRight->setChecked(true);
+        break;
+    }
+}
+
+void MainWindow::on_PROPS_NPCSpecialSpin_Auto_toggled(bool checked)
+{
+    LvlPlacingItems::npcSpecialAutoIncrement=checked;
+    LvlPlacingItems::npcSet.special_data = ui->PROPS_NPCSpecialSpin->value() - npcSpecSpinOffset;
+
+    switch(LvlPlacingItems::npcSet.direct)
+    {
+    case -1:
+        ui->PROPS_NPCDirLeft->setChecked(true);
+        break;
+    case 0:
+        ui->PROPS_NPCDirRand->setChecked(true);
+        break;
+    case 1:
+        ui->PROPS_NPCDirRight->setChecked(true);
+        break;
+    }
 }
 
 void MainWindow::on_PROPS_NPCContaiter_clicked()

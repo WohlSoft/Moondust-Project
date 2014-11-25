@@ -17,7 +17,7 @@
  */
 
 #include "newlayerbox.h"
-#include "ui_tonewlayerbox.h"
+#include <ui_tonewlayerbox.h>
 #include <QMessageBox>
 
 ToNewLayerBox::ToNewLayerBox(LevelData * lData, QWidget *parent) :

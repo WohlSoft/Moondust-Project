@@ -84,7 +84,7 @@ void WldScene::SwitchEditingMode(int EdtMode)
         clearSelection();
         disableMoveItems=true;
         _viewPort->setInteractive(true);
-        _viewPort->setCursor(QCursor(Themes::Image(Themes::cursor_pasting), 0, 0));
+        _viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
         _viewPort->setDragMode(QGraphicsView::NoDrag);
         break;
 
@@ -105,6 +105,10 @@ void WldScene::SwitchEditingMode(int EdtMode)
 
     case MODE_HandScroll:
         switchMode("HandScroll");
+        break;
+
+    case MODE_Fill:
+        switchMode("Fill");
         break;
 
     case MODE_Selecting:
