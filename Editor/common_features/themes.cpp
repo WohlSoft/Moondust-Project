@@ -189,6 +189,18 @@ void Themes::init()
     images_map[player1] = QPixmap(":/player1.png");
     images_map[player2] = QPixmap(":/player2.png");
 
+
+    //dummy images
+    images_map[dummy_musicbox] = QPixmap(":/dummies/dummies/music_box.png");
+    images_map[dummy_bg] = QPixmap(":/dummies/dummies/dummy-bg.png");
+    images_map[dummy_bgo] = QPixmap(":/dummies/dummies/unknown_bgo.png");
+    images_map[dummy_block] = QPixmap(":/dummies/dummies/unknown_block.png");
+    images_map[dummy_npc] = QPixmap(":/dummies/dummies/unknown_npc.png");
+    images_map[dummy_path] = QPixmap(":/dummies/dummies/unknown_path.png");
+    images_map[dummy_scenery] = QPixmap(":/dummies/dummies/unknown_scene.png");
+    images_map[dummy_tile] = QPixmap(":/dummies/dummies/unknown_tile.png");
+    images_map[dummy_wlevel] = QPixmap(":/dummies/dummies/unknown_wlvl.png");
+
     currentThemeDir = "";
     //initCursors();
 
@@ -442,6 +454,18 @@ void Themes::loadTheme(QString themeDir)
         loadImage(guiset,"levels-locked", levels_locked );
         loadImage(guiset,"musicboxes-free", musicboxes_free );
         loadImage(guiset,"musicboxes-locked", musicboxes_locked );
+    guiset.endGroup();
+
+    guiset.beginGroup("items");
+        loadImage(guiset,"level-background", dummy_bg );
+        loadImage(guiset,"level-bgo", dummy_bgo );
+        loadImage(guiset,"level-block", dummy_block );
+        loadImage(guiset,"level-npc", dummy_npc );
+        loadImage(guiset,"world-path", dummy_path );
+        loadImage(guiset,"world-scenery", dummy_scenery );
+        loadImage(guiset,"world-tile", dummy_tile );
+        loadImage(guiset,"world-level", dummy_wlevel );
+        loadImage(guiset,"world-musicbox", dummy_musicbox );
     guiset.endGroup();
 
     currentThemeDir=themeDir;
