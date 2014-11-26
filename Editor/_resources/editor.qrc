@@ -157,4 +157,15 @@
         <file>sections/21.png</file>
         <file>sections/21_n.png</file>
     </qresource>
+    <qresource prefix="/dummies">
+        <file>dummies/dummy-bg.png</file>
+        <file>dummies/music_box.png</file>
+        <file>dummies/unknown_bgo.png</file>
+        <file>dummies/unknown_block.png</file>
+        <file>dummies/unknown_npc.png</file>
+        <file>dummies/unknown_path.png</file>
+        <file>dummies/unknown_scene.png</file>
+        <file>dummies/unknown_tile.png</file>
+        <file>dummies/unknown_wlvl.png</file>
+    </qresource>
 </RCC>

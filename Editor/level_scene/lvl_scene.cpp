@@ -34,6 +34,8 @@
 #include "edit_modes/mode_resize.h"
 #include "edit_modes/mode_fill.h"
 
+#include "../common_features/themes.h"
+
 LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelData &FileData, QObject *parent) : QGraphicsScene(parent)
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -97,9 +99,34 @@ LvlScene::LvlScene(GraphicsWorkspace * parentView, dataconfigs &configs, LevelDa
     resetCursor();
 
     //set dummy images if target not exist or wrong
-    uBlockImg = QPixmap(ApplicationPath + "/" + "data/unknown_block.png");
-    uNpcImg = QPixmap(ApplicationPath + "/" + "data/unknown_npc.png");
-    uBgoImg = QPixmap(ApplicationPath + "/" + "data/unknown_bgo.png");
+    uBlockImg = Themes::Image(Themes::dummy_block);
+    uNpcImg =   Themes::Image(Themes::dummy_npc);
+    uBgoImg =   Themes::Image(Themes::dummy_bgo);
+
+    //Build animators for dummies
+    SimpleAnimator * tmpAnimator;
+        tmpAnimator = new SimpleAnimator(uBlockImg, 0);
+    animates_Blocks.push_back( tmpAnimator );
+        tmpAnimator = new SimpleAnimator(uBgoImg, 0);
+    animates_BGO.push_back( tmpAnimator );
+
+        obj_npc dummyNpc;
+        dummyNpc.frames = 1;
+        dummyNpc.framestyle = 0;
+        dummyNpc.framespeed = 64;
+        dummyNpc.width = uNpcImg.width();
+        dummyNpc.height = uNpcImg.height();
+        dummyNpc.gfx_w = uNpcImg.width();
+        dummyNpc.gfx_h = uNpcImg.height();
+        dummyNpc.ani_bidir = false;
+        dummyNpc.ani_direct = false;
+        dummyNpc.ani_directed_direct = false;
+        dummyNpc.custom_animate = false;
+        dummyNpc.custom_physics_to_gfx = true;
+        AdvNpcAnimator * tmpNpcAnimator = new AdvNpcAnimator(uNpcImg, dummyNpc);
+    animates_NPC.push_back( tmpNpcAnimator );
+
+
 
 
     //set Default Z Indexes
