@@ -112,6 +112,8 @@
         <file>images/cur_flood_fill.png</file>
         <file>images/flood_fill.png</file>
         <file>images/properties.png</file>
+        <file>images/bookmarks.png</file>
+        <file>images/tileset_box.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/01.png</file>

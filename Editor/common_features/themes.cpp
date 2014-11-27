@@ -61,6 +61,9 @@ void Themes::init()
     icons_map[file_reload]  = QIcon(":/reload.png");
 
     icons_map[debugger]     = QIcon(":/images/bug.png");
+    icons_map[tileset_box]  = QIcon(":/images/tileset_box.png");
+    icons_map[bookmarks]    = QIcon(":/images/bookmarks.png");
+
     icons_map[playmusic]    = QIcon(":/images/playmusic.png");
     icons_map[grid_snap]    = QIcon(":/images/grid.png");
     icons_map[animation]    = QIcon(":/images/animation.png");
@@ -284,6 +287,8 @@ void Themes::loadTheme(QString themeDir)
 
     guiset.beginGroup("icons");
         loadIcon(guiset,"debugger", debugger );
+        loadIcon(guiset,"bookmarks", bookmarks );
+        loadIcon(guiset,"tileset-box", tileset_box );
     guiset.endGroup();
 
     guiset.beginGroup("cursors");
