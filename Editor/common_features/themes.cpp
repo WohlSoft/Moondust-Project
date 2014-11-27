@@ -139,7 +139,7 @@ void Themes::init()
     images_map[section_18_selected]= QPixmap(":/sections/sections/18.png");
     images_map[section_18_default] = QPixmap(":/sections/sections/18_n.png");
     images_map[section_19_selected]= QPixmap(":/sections/sections/19.png");
-    images_map[section_19_default] = QPixmap(":/sections/sections/19.png");
+    images_map[section_19_default] = QPixmap(":/sections/sections/19_n.png");
     images_map[section_20_selected]= QPixmap(":/sections/sections/20.png");
     images_map[section_20_default] = QPixmap(":/sections/sections/20_n.png");
     images_map[section_21_selected]= QPixmap(":/sections/sections/21.png");
