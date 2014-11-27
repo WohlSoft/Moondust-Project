@@ -22,6 +22,8 @@
 #include <QString>
 #include <QVector>
 
+#include "meta_filedata.h"
+
 //////////////////////World file Data//////////////////////
 struct WorldTiles
 {
@@ -128,6 +130,9 @@ struct WorldData
     unsigned int level_array_id;
     QVector<WorldMusic > music;
     unsigned int musicbox_array_id;
+
+    //meta:
+    MetaData metaData;
 
     //editing:
     int CurSection;

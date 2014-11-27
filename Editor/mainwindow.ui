@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1478</width>
-    <height>3235</height>
+    <width>1484</width>
+    <height>3287</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -105,8 +105,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1478</width>
-     <height>21</height>
+     <width>1484</width>
+     <height>26</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -1056,6 +1056,7 @@
    <addaction name="actionLayersBox"/>
    <addaction name="actionLevelEvents"/>
    <addaction name="actionLVLSearchBox"/>
+   <addaction name="actionBookmarkBox"/>
   </widget>
   <widget class="QToolBar" name="WorldObjectToolbar">
    <property name="windowTitle">
@@ -2697,8 +2698,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>279</width>
-          <height>1358</height>
+          <width>275</width>
+          <height>1546</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3935,8 +3936,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>272</width>
-          <height>444</height>
+          <width>264</width>
+          <height>436</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4118,8 +4119,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>115</height>
+          <width>285</width>
+          <height>350</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4200,8 +4201,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>216</width>
-          <height>93</height>
+          <width>285</width>
+          <height>350</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4294,8 +4295,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>461</height>
+          <width>264</width>
+          <height>475</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4592,8 +4593,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>188</width>
-          <height>159</height>
+          <width>285</width>
+          <height>350</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4708,8 +4709,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>110</height>
+          <width>285</width>
+          <height>350</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4806,8 +4807,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>104</width>
-          <height>70</height>
+          <width>285</width>
+          <height>350</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4962,7 +4963,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>541</height>
+          <height>494</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5189,8 +5190,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
-          <height>146</height>
+          <width>300</width>
+          <height>494</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5338,8 +5339,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>219</width>
-          <height>289</height>
+          <width>300</width>
+          <height>494</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5935,8 +5936,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6160,7 +6161,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>452</height>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6281,8 +6282,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6403,8 +6404,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6525,8 +6526,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>231</width>
-          <height>220</height>
+          <width>300</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6772,8 +6773,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>152</width>
-          <height>107</height>
+          <width>300</width>
+          <height>446</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7046,8 +7047,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>98</width>
-              <height>28</height>
+              <width>1476</width>
+              <height>115</height>
              </rect>
             </property>
            </widget>
@@ -7258,6 +7259,57 @@ p, li { white-space: pre-wrap; }
         </item>
        </layout>
       </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="bookmarkBox">
+   <property name="windowTitle">
+    <string>Bookmarks</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_7">
+    <layout class="QGridLayout" name="gridLayout_31">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="bookmarkRemove">
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="bookmarkAdd">
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="bookmarkGoto">
+       <property name="text">
+        <string>Go To...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="3">
+      <widget class="QListWidget" name="listWidget"/>
      </item>
     </layout>
    </widget>
@@ -9051,6 +9103,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</string>
+   </property>
+  </action>
+  <action name="actionBookmarkBox">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Bookmarks</string>
    </property>
   </action>
  </widget>

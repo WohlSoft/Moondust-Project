@@ -23,6 +23,8 @@
 #include <QString>
 #include <QStringList>
 
+#include "meta_filedata.h"
+
 //////////////////////Level file Data//////////////////////
 struct LevelSection
 {
@@ -269,6 +271,9 @@ struct LevelData
     unsigned int layers_array_id;   //latest array_id
     QVector<LevelEvents > events;          //Events
     unsigned int events_array_id;   //latest array_id
+
+    //meta:
+    MetaData metaData;
 
     //editing:
     int CurSection;
