@@ -50,6 +50,8 @@ public:
         file_reload,
 
         debugger,
+        tileset_box,
+        bookmarks,
 
         playmusic,
         grid_snap,
