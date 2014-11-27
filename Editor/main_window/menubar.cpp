@@ -155,6 +155,7 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevelEvents->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
     ui->actionLVLSearchBox->setVisible( (WinType==1) );
+    ui->actionBookmarkBox->setVisible( (WinType==1) || (WinType==3));
 
     ui->actionWLDToolBox->setVisible( (WinType==3) );
     ui->actionWorld_settings->setVisible( (WinType==3) );
