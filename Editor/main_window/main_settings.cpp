@@ -154,7 +154,13 @@ void MainWindow::setUiDefults()
                 ui->debuggerBox->height()
                 );
 
-    ui->Tileset_Item_Box->hide();
+
+    ui->bookmarkBox->setGeometry(
+                mwg.x()+mwg.width()-ui->bookmarkBox->width()-GOffset,
+                mwg.y()+120,
+                ui->bookmarkBox->width(),
+                ui->bookmarkBox->height()
+                );
 
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);
@@ -202,6 +208,7 @@ void MainWindow::setUiDefults()
 
     ui->Tileset_Item_Box->hide();
     ui->debuggerBox->hide();
+    ui->bookmarkBox->hide();
 
     ui->menuView->setEnabled(false);
 
@@ -219,6 +226,10 @@ void MainWindow::setUiDefults()
     ui->actionWarpsAndDoors->setVisible(false);
     ui->actionWLDToolBox->setVisible(false);
     ui->actionGridEn->setChecked(true);
+
+    ui->actionTilesetBox->setVisible(false);
+    ui->actionBookmarkBox->setVisible(false);
+    ui->actionDebugger->setVisible(false);
 
     ui->actionZoomReset->setEnabled(false);
     ui->actionZoomIn->setEnabled(false);
