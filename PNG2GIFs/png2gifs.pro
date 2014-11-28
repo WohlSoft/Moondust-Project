@@ -43,7 +43,7 @@ CONFIG   += static
 
 TEMPLATE = app
 
-QMAKE_CFLAGS += -Wno-sign-compare
+#QMAKE_CFLAGS += -Wno-sign-compare
 
 RC_FILE = _resources/png2gifs.rc
 
