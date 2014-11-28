@@ -129,3 +129,11 @@ void MainWindow::on_actionSprite_editor_triggered()
 {
     QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
 }
+
+
+
+
+void MainWindow::on_actionFixWrongMasks_triggered()
+{
+
+}
