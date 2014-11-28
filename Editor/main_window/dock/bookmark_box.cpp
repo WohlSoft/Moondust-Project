@@ -85,12 +85,16 @@ void MainWindow::on_bookmarkGoto_clicked()
     QListWidgetItem* item = ui->bookmarkList->selectedItems()[0];
     qreal x = item->data(Qt::UserRole+1).toReal();
     qreal y = item->data(Qt::UserRole+2).toReal();
-    long a = (long)x;
-    long b = (long)y;
-    if(activeChildWindow() == 1){
-        activeLvlEditWin()->goTo((long)x, (long)y, true);
-    }else if(activeChildWindow() == 3){
-        activeWldEditWin()->goTo((long)x, (long)y, true);
+    long a = qRound(x);
+    long b = qRound(y);
+    if(activeChildWindow() == 1)
+    {
+        activeLvlEditWin()->goTo(a, b, true);
+    }
+    else
+    if(activeChildWindow() == 3)
+    {
+        activeWldEditWin()->goTo(a, b, true);
     }
 }
 
