@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1484</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -205,7 +205,22 @@
      <addaction name="actionSection_20"/>
      <addaction name="actionSection_21"/>
     </widget>
+    <widget class="QMenu" name="menuSection_tools">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="title">
+      <string>Section modifications</string>
+     </property>
+     <addaction name="actionCloneSectionTo"/>
+     <addaction name="actionSCT_RotateLeft"/>
+     <addaction name="actionSCT_RotateRight"/>
+     <addaction name="actionSCT_FlipHorizontal"/>
+     <addaction name="actionSCT_FlipVertical"/>
+    </widget>
     <addaction name="menuCurrent_section"/>
+    <addaction name="separator"/>
+    <addaction name="menuSection_tools"/>
     <addaction name="separator"/>
     <addaction name="actionLevWarp"/>
     <addaction name="actionLevOffScr"/>
@@ -317,6 +332,12 @@
     <addaction name="actionCopy"/>
     <addaction name="actionCut"/>
     <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionAlign_selected"/>
+    <addaction name="actionRotateLeft"/>
+    <addaction name="actionRotateRight"/>
+    <addaction name="actionFlipHorizontal"/>
+    <addaction name="actionFlipVertical"/>
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
@@ -2702,8 +2723,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>275</width>
-          <height>1546</height>
+          <width>279</width>
+          <height>1358</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3940,8 +3961,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>436</height>
+          <width>272</width>
+          <height>361</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4123,8 +4144,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>272</width>
+          <height>361</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4205,8 +4226,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>272</width>
+          <height>361</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4299,8 +4320,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>475</height>
+          <width>255</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4597,8 +4618,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>272</width>
+          <height>361</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4713,8 +4734,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>272</width>
+          <height>361</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4811,8 +4832,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>272</width>
+          <height>361</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4967,7 +4988,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>494</height>
+          <height>555</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5195,7 +5216,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>494</height>
+          <height>555</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5344,7 +5365,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>494</height>
+          <height>555</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5940,8 +5961,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6165,7 +6186,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>446</height>
+          <height>465</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6287,7 +6308,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>446</height>
+          <height>465</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6409,7 +6430,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>446</height>
+          <height>465</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6531,7 +6552,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>446</height>
+          <height>465</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6778,7 +6799,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>446</height>
+          <height>465</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7052,7 +7073,7 @@ p, li { white-space: pre-wrap; }
               <x>0</x>
               <y>0</y>
               <width>1476</width>
-              <height>115</height>
+              <height>127</height>
              </rect>
             </property>
            </widget>
@@ -9016,6 +9037,10 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/tileset_box.png</normaloff>:/images/tileset_box.png</iconset>
+   </property>
    <property name="text">
     <string>Tileset Item Box</string>
    </property>
@@ -9123,8 +9148,92 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
+   </property>
    <property name="text">
     <string>Bookmarks</string>
+   </property>
+  </action>
+  <action name="actionCloneSectionTo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Clone section to...</string>
+   </property>
+  </action>
+  <action name="actionSCT_RotateLeft">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate left</string>
+   </property>
+  </action>
+  <action name="actionSCT_RotateRight">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate right</string>
+   </property>
+  </action>
+  <action name="actionSCT_FlipHorizontal">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Flip horizontal</string>
+   </property>
+  </action>
+  <action name="actionSCT_FlipVertical">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Flip vertical</string>
+   </property>
+  </action>
+  <action name="actionAlign_selected">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Align selected</string>
+   </property>
+  </action>
+  <action name="actionRotateLeft">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate left</string>
+   </property>
+  </action>
+  <action name="actionRotateRight">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate right</string>
+   </property>
+  </action>
+  <action name="actionFlipHorizontal">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Flip horizontal</string>
+   </property>
+  </action>
+  <action name="actionFlipVertical">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Flip vertical</string>
    </property>
   </action>
  </widget>
