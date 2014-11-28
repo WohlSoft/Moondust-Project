@@ -1254,6 +1254,11 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
     TextData += "\n";
     TextData += "HEAD_END\n";
 
+
+    //MetaData section
+
+
+
     //SECTION section
     TextData += "SECTION\n";
 
