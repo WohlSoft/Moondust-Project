@@ -148,6 +148,13 @@ public:
         ///
         void saveSettings();
 
+        ///
+        /// \brief getCurrentSceneCoordinates Returns the scene coordinates either from level window or world window
+        /// \param x The current x-coordinate.
+        /// \param y The current y-coordinate.
+        /// \return True, if the current window is either a level window or a world window.
+        ///
+        bool getCurrentSceneCoordinates(qreal &x, qreal &y);
     private:
         ///
         /// \brief setDefaults Init settings on start application
@@ -473,10 +480,19 @@ public:
 // ///////////////////////////////////////////////////////
 
 
-// ///////////////////// Bookmarks ////////////////////////
+// ///////////////////// Bookmarks ////////////////////////        
     private slots:
         void on_actionBookmarkBox_triggered(bool checked);
         void on_bookmarkBox_visibilityChanged(bool visible);
+    //Modificators:
+        void on_bookmarkAdd_clicked();
+        void on_bookmarkRemove_clicked();
+        void on_bookmarkList_itemChanged(QListWidgetItem *item);
+    //Go To...
+        void on_bookmarkGoto_clicked();
+    public:
+        void updateBookmarkBoxByList();
+        void updateBookmarkBoxByData();
 // ////////////////////////////////////////////////////////
 
 
@@ -1037,6 +1053,8 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
+
+
 
 
 

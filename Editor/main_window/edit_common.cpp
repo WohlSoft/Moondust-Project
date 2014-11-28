@@ -317,3 +317,25 @@ void MainWindow::on_actionRedo_triggered()
         ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
     }
 }
+
+
+bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
+{
+    if(activeChildWindow() == 1)
+    {
+        leveledit* edit = activeLvlEditWin();
+        QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
+        x = coor.x();
+        y = coor.y();
+        return true;
+    }
+    else if(activeChildWindow() == 3)
+    {
+        WorldEdit* edit = activeWldEditWin();
+        QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
+        x = coor.x();
+        y = coor.y();
+        return true;
+    }
+    return false;
+}

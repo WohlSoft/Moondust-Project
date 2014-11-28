@@ -250,6 +250,8 @@ void MainWindow::updateMenus(bool force)
         //Sync lists in properties windows
         EventListsSync();
         setLayerLists();
+        updateBookmarkBoxByData();
+
 
         setLevelSectionData();
 
@@ -291,6 +293,7 @@ void MainWindow::updateMenus(bool force)
         WriteToLog(QtDebugMsg, "-> Current world settings");
 
         setCurrentWorldSettings();
+        updateBookmarkBoxByData();
 
         WriteToLog(QtDebugMsg, "-> Music Player");
 

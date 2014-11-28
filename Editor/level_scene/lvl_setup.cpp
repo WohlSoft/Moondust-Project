@@ -373,6 +373,7 @@ void LvlScene::setLayerToSelected()
         MainWinConnect::pMainWin->setLayerToolsLocked(false);
         MainWinConnect::pMainWin->setLayerLists();
         MainWinConnect::pMainWin->setEventData();
+        MainWinConnect::pMainWin->updateBookmarkBoxByData();
         setLayerToSelected(lName, true);
     }
     delete layerBox;
