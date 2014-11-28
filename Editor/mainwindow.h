@@ -307,6 +307,12 @@ public:
 
         void refreshHistoryButtons(); //!< Refreshing state of history undo/redo buttons
 
+        void on_actionAlign_selected_triggered();
+        void on_actionRotateLeft_triggered();
+        void on_actionRotateRight_triggered();
+        void on_actionFlipHorizontal_triggered();
+        void on_actionFlipVertical_triggered();
+
     private slots:
         void on_actionZoomIn_triggered();    //!< Zoom in
         void on_actionZoomOut_triggered();   //!< Zoom Out
@@ -447,6 +453,8 @@ public:
         void on_actionCDATA_clear_unused_triggered();
         void on_actionCDATA_Import_triggered();
         void on_actionSprite_editor_triggered();
+
+        void on_actionFixWrongMasks_triggered();
 // ////////////////////////////////////////////////////////
 
 
@@ -539,6 +547,14 @@ public:
         void on_actionSection_19_triggered();
         void on_actionSection_20_triggered();
         void on_actionSection_21_triggered();
+
+        //Modify actions
+        void on_actionCloneSectionTo_triggered();
+        void on_actionSCT_RotateLeft_triggered();
+        void on_actionSCT_RotateRight_triggered();
+        void on_actionSCT_FlipHorizontal_triggered();
+        void on_actionSCT_FlipVertical_triggered();
+
 // ////////////////////////////////////////////////////////
 
 // ////////////////////Level Item toolbox /////////////////
@@ -1053,9 +1069,6 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
-
-
-
 
 
 

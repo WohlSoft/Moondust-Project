@@ -308,6 +308,8 @@
      </property>
      <addaction name="actionCDATA_clear_unused"/>
      <addaction name="actionCDATA_Import"/>
+     <addaction name="separator"/>
+     <addaction name="actionFixWrongMasks"/>
     </widget>
     <addaction name="menuGlobal_configuration"/>
     <addaction name="actionRefresh_menu_and_toolboxes"/>
@@ -9234,6 +9236,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Flip vertical</string>
+   </property>
+  </action>
+  <action name="actionFixWrongMasks">
+   <property name="text">
+    <string>Fix wrong masks</string>
+   </property>
+   <property name="toolTip">
+    <string>This tool will fix all wrong masks of images which causing display bugs</string>
    </property>
   </action>
  </widget>

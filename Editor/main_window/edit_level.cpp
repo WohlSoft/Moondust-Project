@@ -228,6 +228,37 @@ void MainWindow::on_actionGo_to_Section_triggered()
 }
 
 
+
+
+void MainWindow::on_actionCloneSectionTo_triggered()
+{
+
+}
+
+void MainWindow::on_actionSCT_RotateLeft_triggered()
+{
+
+}
+
+void MainWindow::on_actionSCT_RotateRight_triggered()
+{
+
+}
+
+void MainWindow::on_actionSCT_FlipHorizontal_triggered()
+{
+
+}
+
+void MainWindow::on_actionSCT_FlipVertical_triggered()
+{
+
+}
+
+
+
+
+
 // //////////////////////// Locks Begin //////////////////////////////
 void MainWindow::on_actionLockBlocks_triggered(bool checked)
 {
