@@ -5,8 +5,8 @@
 
 struct Bookmark{
     QString bookmarkName;
-    double x;
-    double y;
+    qreal x;
+    qreal y;
 };
 
 
