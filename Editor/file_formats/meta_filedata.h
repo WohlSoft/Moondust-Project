@@ -10,7 +10,8 @@ struct Bookmark{
 };
 
 
-struct MetaData{
+struct MetaData
+{
     QVector<Bookmark> bookmarks;
 };
 
