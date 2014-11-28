@@ -261,8 +261,31 @@ void MainWindow::on_actionFixWrongMasks_triggered()
     if(activeChildWindow()==1)
     {
         leveledit *e = activeLvlEditWin();
+        if(e->isUntitled)
+        {
+            QMessageBox::warning(this, tr("File is untitled"),
+                tr("File doesn't use custom graphics.\n"));
+            return;
+        }
         path = e->LvlData.path + "/";
         path_custom = e->LvlData.path+"/"+e->LvlData.filename+"/";
+
+        OPath = path;
+        OPath_custom = path_custom;
+        doIt=true;
+    }
+    else
+    if(activeChildWindow()==3)
+    {
+        WorldEdit *e = activeWldEditWin();
+        if(e->isUntitled)
+        {
+            QMessageBox::warning(this, tr("File is untitled"),
+                tr("File doesn't use custom graphics.\n"));
+            return;
+        }
+        path = e->WldData.path + "/";
+        path_custom = e->WldData.path+"/"+e->WldData.filename+"/";
 
         OPath = path;
         OPath_custom = path_custom;
@@ -289,6 +312,12 @@ void MainWindow::on_actionFixWrongMasks_triggered()
             fileList_custom << cImagesDir.entryList(filters);
 
         //qDebug() << fileList.size()+fileList_custom.size();
+        if(fileList.size()+fileList_custom.size() <= 0)
+        {
+            QMessageBox::warning(this, tr("Nothing to do"),
+                tr("This file is not use GIF graphics with transparent masks or haven't custom graphics."));
+            return;
+        }
 
         QProgressDialog progress(tr("Fixing of masks..."), tr("Abort"), 0, fileList.size()+fileList_custom.size(), this);
         progress.setWindowTitle(tr("Please wait..."));
