@@ -92,6 +92,7 @@ void MainWindow::updateMenus(bool force)
 
         GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
         ui->LevelSectionSettings->setVisible( 0 );
@@ -111,6 +112,7 @@ void MainWindow::updateMenus(bool force)
 
         ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
+        ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
@@ -120,6 +122,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
         GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
         ui->WorldToolBox->setVisible( 0 );
         ui->WorldSettings->setVisible( 0 );
@@ -133,14 +136,17 @@ void MainWindow::updateMenus(bool force)
 
         ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
+        ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
     {
         GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
         ui->Tileset_Item_Box->setVisible( 0 );
         ui->debuggerBox->setVisible( 0 );
+        ui->bookmarkBox->setVisible( 0 );
     }
 
 
@@ -211,6 +217,17 @@ void MainWindow::updateMenus(bool force)
     ui->actionSection_21->setEnabled( (WinType==1) );
 
     ui->actionGridEn->setEnabled( (WinType==1)|| (WinType==3) );
+
+    ui->actionFixWrongMasks->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionCDATA_clear_unused->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionCDATA_Import->setEnabled( (WinType==1)|| (WinType==3) );
+
+    ui->actionAlign_selected->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionFlipHorizontal->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionFlipVertical->setEnabled(  (WinType==1)|| (WinType==3)  );
+
+    ui->actionRotateLeft->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionRotateRight->setEnabled(  (WinType==1)|| (WinType==3)  );
 
     if(WinType==1)
     {
