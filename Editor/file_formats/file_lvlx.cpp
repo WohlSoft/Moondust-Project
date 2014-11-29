@@ -164,6 +164,47 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
                     }
                 }//Header
 
+                ///////////////////////////////MetaDATA/////////////////////////////////////////////
+                else //Bookmarks
+                if(sct.first=="META_BOOKMARKS") // Bookmarks
+                {
+                    Bookmark meta_bookmark;
+                    meta_bookmark.bookmarkName = "";
+                    meta_bookmark.x = 0;
+                    meta_bookmark.y = 0;
+
+                    foreach(QStringList value, sectData) //Look markers and values
+                    {
+                          if(value[0]=="BM") //Bookmark name
+                          {
+                              if(PGEFile::IsQStr(value[1]))
+                                  meta_bookmark.bookmarkName = PGEFile::X2STR(value[1]);
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="X") // Position X
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  meta_bookmark.x = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                          else
+                          if(value[0]=="Y") //Position Y
+                          {
+                              if(PGEFile::IsIntS(value[1]))
+                                  meta_bookmark.y = value[1].toInt();
+                              else
+                                  goto badfile;
+                          }
+                    }
+
+                    FileData.metaData.bookmarks.push_back(meta_bookmark);
+                }//Bookmarks
+
+                ///////////////////////////////MetaDATA//End////////////////////////////////////////
+
                 else
                 if(sct.first=="SECTION") //Level Sections
                 {
@@ -1253,6 +1294,25 @@ QString FileFormats::WriteExtendedLvlFile(LevelData FileData)
     TextData += PGEFile::value("SZ", PGEFile::IntS(FileData.stars));      // Stars number
     TextData += "\n";
     TextData += "HEAD_END\n";
+
+
+    //////////////////////////////////////MetaData////////////////////////////////////////////////
+    //Bookmarks
+    if(!FileData.metaData.bookmarks.isEmpty())
+    {
+        TextData += "META_BOOKMARKS\n";
+        for(i=0;i<FileData.metaData.bookmarks.size(); i++)
+        {
+            //Bookmark name
+            TextData += PGEFile::value("BM", PGEFile::qStrS(FileData.metaData.bookmarks[i].bookmarkName));
+            TextData += PGEFile::value("X", PGEFile::IntS(FileData.metaData.bookmarks[i].x));
+            TextData += PGEFile::value("Y", PGEFile::IntS(FileData.metaData.bookmarks[i].y));
+            TextData += "\n";
+        }
+        TextData += "META_BOOKMARKS_END\n";
+    }
+    //////////////////////////////////////MetaData///END//////////////////////////////////////////
+
 
     //SECTION section
     TextData += "SECTION\n";

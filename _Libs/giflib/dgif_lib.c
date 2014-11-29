@@ -30,7 +30,7 @@ two modules will be linked.  Preserve this property!
 #define READ(_gif,_buf,_len)                                     \
   (((GifFilePrivateType*)_gif->Private)->Read ?                   \
     ((GifFilePrivateType*)_gif->Private)->Read(_gif,_buf,_len) : \
-    fread(_buf,1,_len,((GifFilePrivateType*)_gif->Private)->File))
+    (long)fread(_buf,1,_len,((GifFilePrivateType*)_gif->Private)->File))
 
 static int DGifGetWord(GifFileType *GifFile, GifWord *Word);
 static int DGifSetupDecompress(GifFileType *GifFile);
@@ -362,7 +362,7 @@ DGifGetImageDesc(GifFileType *GifFile)
     }
     /* Does this image have local color map? */
     if (Buf[0] & 0x80) {
-	unsigned int i;
+    int i;
 
         GifFile->Image.ColorMap = GifMakeMapObject(1 << BitsPerPixel, NULL);
         if (GifFile->Image.ColorMap == NULL) {

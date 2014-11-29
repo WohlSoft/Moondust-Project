@@ -12,6 +12,8 @@ Editor 0.2.1.3
 - Added able to use line tool for NPC's.
 - Added auto-incrementing of special value (which a much useful for placing of, for example, firebars)
 - Added "Don't show properties box" feature for placing mode
+- Added position bookmarks. You can store current point into bookmark which give able to return back later
+- Added internal tools
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
