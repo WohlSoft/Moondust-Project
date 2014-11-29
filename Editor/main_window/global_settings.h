@@ -63,6 +63,7 @@ public:
 
     static bool TilesetBoxVis;
     static bool DebuggerBoxVis;
+    static bool BookmarksBoxVis;
 
     // Editor flags
     static bool MidMouse_allowDuplicate;

@@ -42,7 +42,7 @@ bool GlobalSettings::LevelSearchBoxVis=false;
 
 bool GlobalSettings::TilesetBoxVis=false;
 bool GlobalSettings::DebuggerBoxVis=false;
-
+bool GlobalSettings::BookmarksBoxVis=false;
 
 bool GlobalSettings::MidMouse_allowDuplicate=false;
 bool GlobalSettings::MidMouse_allowSwitchToPlace=false;
