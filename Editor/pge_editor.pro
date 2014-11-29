@@ -267,7 +267,14 @@ SOURCES += main.cpp\
     networking/engine_client.cpp \
     main_window/global_settings.cpp \
     world_scene/edit_modes/wld_mode_fill.cpp \
-    main_window/dock/bookmark_box.cpp
+    main_window/dock/bookmark_box.cpp \
+    ../_Libs/giflib/dgif_lib.c \
+    ../_Libs/giflib/egif_lib.c \
+    ../_Libs/giflib/gif_err.c \
+    ../_Libs/giflib/gif_font.c \
+    ../_Libs/giflib/gif_hash.c \
+    ../_Libs/giflib/gifalloc.c \
+    ../_Libs/giflib/quantize.c
 
 
 HEADERS  += defines.h \
@@ -380,7 +387,10 @@ HEADERS  += defines.h \
     networking/engine_intproc.h \
     networking/engine_client.h \
     world_scene/edit_modes/wld_mode_fill.h \
-    file_formats/meta_filedata.h
+    file_formats/meta_filedata.h \
+    ../_Libs/giflib/gif_hash.h \
+    ../_Libs/giflib/gif_lib.h \
+    ../_Libs/giflib/gif_lib_private.h
 
 
 FORMS    += \

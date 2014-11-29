@@ -590,8 +590,35 @@ void WldScene::placeLevel(WorldLevels &level, bool toGrid)
     LevelItem->setLevelData(level);
     LevelItem->setPos(QPointF(newPos));
 
-    LevelItem->setAnimator(animator, pConfigs->marker_wlvl.path, pConfigs->marker_wlvl.bigpath);
+    long pathAnimator=0;
+    long bPathAnimator=0;
+    long q=0;
 
+    if(pConfigs->marker_wlvl.path < (unsigned int)index_levels.size())
+    {
+        q = index_levels[pConfigs->marker_wlvl.path].i;
+        if(j<pConfigs->main_wlevels.size())
+        {
+            if(pConfigs->main_wlevels[q].id == pConfigs->marker_wlvl.path)
+            {
+                pathAnimator = index_levels[pConfigs->marker_wlvl.path].ai;
+            }
+        }
+    }
+
+    if(pConfigs->marker_wlvl.bigpath < (unsigned int)index_levels.size())
+    {
+        q = index_levels[pConfigs->marker_wlvl.bigpath].i;
+        if(j<pConfigs->main_wlevels.size())
+        {
+            if(pConfigs->main_wlevels[q].id == pConfigs->marker_wlvl.bigpath)
+            {
+                bPathAnimator = index_levels[pConfigs->marker_wlvl.bigpath].ai;
+            }
+        }
+    }
+
+    LevelItem->setAnimator(animator, pathAnimator, bPathAnimator);
 
     LevelItem->setZValue(levelZ);
 

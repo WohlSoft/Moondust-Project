@@ -440,6 +440,7 @@ void MainWindow::loadSettings()
 
         GlobalSettings::TilesetBoxVis = settings.value("tileset-box-visible", "false").toBool();
         GlobalSettings::DebuggerBoxVis = settings.value("debugger-box-visible", "false").toBool();
+        GlobalSettings::BookmarksBoxVis = settings.value("bookmarks-box-visible", "false").toBool();
 
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
@@ -486,8 +487,10 @@ void MainWindow::loadSettings()
         ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
         ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
         ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
+
         ui->Tileset_Item_Box->restoreGeometry(settings.value("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry()).toByteArray());
         ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
+        ui->bookmarkBox->restoreGeometry(settings.value("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "25000").toInt();
 
@@ -526,6 +529,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("tileset-box-visible", GlobalSettings::TilesetBoxVis);
     settings.setValue("debugger-box-visible", GlobalSettings::DebuggerBoxVis);
+    settings.setValue("bookmarks-box-visible", GlobalSettings::BookmarksBoxVis);
 
     settings.setValue("doors-tool-box-float", ui->DoorsToolbox->isFloating());
     settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
@@ -555,6 +559,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry());
     settings.setValue("debugger-box-geometry", ui->debuggerBox->saveGeometry());
+    settings.setValue("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());

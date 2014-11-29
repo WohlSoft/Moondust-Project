@@ -339,3 +339,32 @@ bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
     }
     return false;
 }
+
+
+
+
+void MainWindow::on_actionAlign_selected_triggered()
+{
+
+}
+
+void MainWindow::on_actionRotateLeft_triggered()
+{
+
+}
+
+void MainWindow::on_actionRotateRight_triggered()
+{
+
+}
+
+void MainWindow::on_actionFlipHorizontal_triggered()
+{
+
+}
+
+void MainWindow::on_actionFlipVertical_triggered()
+{
+
+}
+
