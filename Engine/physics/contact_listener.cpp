@@ -130,6 +130,8 @@ void PGEContactListener::EndContact(b2Contact *contact)
     if(!bodyA) return;
     if(!bodyB) return;
 
+    Q_UNUSED(bodyBlock);
+
     /***********************************Warp & Player***********************************/
     if ( bodyA->type == PGE_Phys_Object::LVLWarp && bodyB->type == PGE_Phys_Object::LVLPlayer )
     {
