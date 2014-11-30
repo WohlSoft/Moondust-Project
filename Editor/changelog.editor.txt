@@ -14,6 +14,7 @@ Editor 0.2.1.3
 - Added "Don't show properties box" feature for placing mode
 - Added position bookmarks. You can store current point into bookmark which give able to return back later
 - Added internal tools
+- All graphics issues prevented with implementing of alternate unmasking algorithm
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
