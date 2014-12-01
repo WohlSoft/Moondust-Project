@@ -144,6 +144,11 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         reg.setPatternSyntax(QRegExp::Wildcard);
         reg.setCaseSensitivity(Qt::CaseInsensitive);
 
+        QList<unsigned long > npcContainers;
+        npcContainers << 91;
+        npcContainers << 96;
+        npcContainers << 283;
+        npcContainers << 284;
 
         //SMBX64 entries
         QStringList whiteList;
@@ -169,30 +174,34 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         QList<bossNPC > bossNPCs;
 
         bossNPCs << bossNPC(15, npcFile.arg(16).split('|') ); //boom-boom
+
         bossNPCs << bossNPC(39, npcFile.arg(41).split('|') ); //Birdo
+        bossNPCs << bossNPC(39, npcFile.arg(40).split('|') );
 
         //giant coopa
         bossNPCs << bossNPC(72, npcFile.arg(73).split('|') );
 
-        //green parakoopa
+        //green parakoopa 1
         bossNPCs << bossNPC(76, npcFile.arg(4).split('|') );
         bossNPCs << bossNPC(76, npcFile.arg(5).split('|') );
         bossNPCs << bossNPC(4, npcFile.arg(5).split('|') );
 
+        //green parakoopa 2
         bossNPCs << bossNPC(176, npcFile.arg(173).split('|') );
         bossNPCs << bossNPC(176, npcFile.arg(172).split('|') );
         bossNPCs << bossNPC(173, npcFile.arg(172).split('|') );
 
-        //red parakoopa
+        //red parakoopa 1
         bossNPCs << bossNPC(161, npcFile.arg(6).split('|') );
         bossNPCs << bossNPC(161, npcFile.arg(7).split('|') );
         bossNPCs << bossNPC(6, npcFile.arg(7).split('|') );
 
+        //red parakoopa 2
         bossNPCs << bossNPC(177, npcFile.arg(175).split('|') );
         bossNPCs << bossNPC(177, npcFile.arg(174).split('|') );
         bossNPCs << bossNPC(175, npcFile.arg(174).split('|') );
 
-        //Blue parakoopa
+        //Blue parakoopa 3
         bossNPCs << bossNPC(111, npcFile.arg(115).split('|') );
         bossNPCs << bossNPC(111, npcFile.arg(55).split('|') );
         bossNPCs << bossNPC(111, npcFile.arg(119).split('|') );
@@ -202,7 +211,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         bossNPCs << bossNPC(123, npcFile.arg(55).split('|') );
         bossNPCs << bossNPC(123, npcFile.arg(119).split('|') );
 
-        //Red parakoopa
+        //Red parakoopa 3
         bossNPCs << bossNPC(110, npcFile.arg(118).split('|') );
         bossNPCs << bossNPC(110, npcFile.arg(114).split('|') );
 
@@ -210,7 +219,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         bossNPCs << bossNPC(123, npcFile.arg(118).split('|') );
         bossNPCs << bossNPC(123, npcFile.arg(114).split('|') );
 
-        //Green parakoopa
+        //Green parakoopa 3
         bossNPCs << bossNPC(109, npcFile.arg(113).split('|') );//shell
         bossNPCs << bossNPC(109, npcFile.arg(117).split('|') );//beach
 
@@ -218,7 +227,7 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         bossNPCs << bossNPC(121, npcFile.arg(113).split('|') );//shell
         bossNPCs << bossNPC(121, npcFile.arg(117).split('|') );//beach
 
-        //Yellow parakoopa
+        //Yellow parakoopa 3
         bossNPCs << bossNPC(112, npcFile.arg(116).split('|') );//shell
         bossNPCs << bossNPC(112, npcFile.arg(120).split('|') );//beach
 
@@ -230,12 +239,93 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
         bossNPCs << bossNPC(112, npcFile.arg(194).split('|') );
         bossNPCs << bossNPC(116, npcFile.arg(194).split('|') );
 
+        //rainbow shell
+        bossNPCs << bossNPC(194, npcFile.arg(195).split('|') );
+
+        //Parakoopas
+        bossNPCs << bossNPC(243, npcFile.arg(242).split('|') );
+        bossNPCs << bossNPC(244, npcFile.arg(1).split('|') );
+        bossNPCs << bossNPC(3, npcFile.arg(2).split('|') );
+
+        //random vegetable
+        bossNPCs << bossNPC(147, npcFile.arg(146).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(140).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(142).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(92).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(139).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(141).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(143).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(144).split('|') );
+        bossNPCs << bossNPC(147, npcFile.arg(145).split('|') );
+
+        //random powerup
+        bossNPCs << bossNPC(287, npcFile.arg(9).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(184).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(185).split('|') );
+
+        bossNPCs << bossNPC(287, npcFile.arg(14).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(182).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(183).split('|') );
+
+        bossNPCs << bossNPC(287, npcFile.arg(34).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(170).split('|') );
+
+        bossNPCs << bossNPC(287, npcFile.arg(264).split('|') );
+        bossNPCs << bossNPC(287, npcFile.arg(277).split('|') );
+
+        //bill blasters
+        bossNPCs << bossNPC(21, npcFile.arg(17).split('|') );
+        bossNPCs << bossNPC(22, npcFile.arg(17).split('|') );
+
+        //Toothy
+        bossNPCs << bossNPC(49, npcFile.arg(50).split('|') );
+
+        //Small Lakitu
+        bossNPCs << bossNPC(47, npcFile.arg(48).split('|') );
+
+        //Spiny
+        bossNPCs << bossNPC(286, npcFile.arg(285).split('|') );
+
+        //Magic potion
+        bossNPCs << bossNPC(288, npcFile.arg(289).split('|') );
+
+        //vined heads
+        bossNPCs << bossNPC(226, npcFile.arg(213).split('|') );
+        bossNPCs << bossNPC(225, npcFile.arg(214).split('|') );
+        bossNPCs << bossNPC(227, npcFile.arg(224).split('|') );
 
         //Add into white SMBX64 dependencied of exists ID
         for(int q=0;q<box->LvlData.npc.size();q++)
         {
+            bool isConainer=false;
+
+            foreach(unsigned long x, npcContainers)
+            {
+                if(box->LvlData.npc[q].id == x)
+                {
+                    qDebug() << "container!" <<  box->LvlData.npc[q].special_data;
+                    isConainer=true; break;
+                }
+            }
+
+            unsigned long npcID = (isConainer ? box->LvlData.npc[q].special_data : box->LvlData.npc[q].id);
             for(int r=0;r<bossNPCs.size();r++)
-                if(box->LvlData.npc[q].id==bossNPCs[r].first)
+            {
+                if( npcID == bossNPCs[r].first)
+                {
+                    whiteList.append(bossNPCs[r].second);
+                    bossNPCs.removeAt(r);
+                    r=-1;//reset loot to 0
+                }
+            }
+
+            if(bossNPCs.isEmpty()) break;
+        }
+        //into included into blocks
+        for(int q=0;q<box->LvlData.blocks.size();q++)
+        {
+            for(int r=0;r<bossNPCs.size();r++)
+                if( box->LvlData.blocks[q].npc_id == (signed)bossNPCs[r].first)
                 {
                     whiteList << bossNPCs[r].second;
                     bossNPCs.removeAt(r);
@@ -244,8 +334,9 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             if(bossNPCs.isEmpty()) break;
         }
 
-
         //SMBX64 system items
+        whiteList << npcFile.arg(10).split('|'); //coin
+
         whiteList << npcFile.arg(40).split('|'); //bullets
         whiteList << npcFile.arg(85).split('|');
         whiteList << npcFile.arg(87).split('|');
@@ -458,14 +549,39 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
             foreach(LevelNPC y, box->LvlData.npc)
             {
                 if(y.id==x.id)
-                    usedIDs.push_back(y.id);
+                {
+                    usedIDs.push_back(x.id);
+                    break;
+                }
+            }
+
+            //Used in NPC containers
+            foreach(LevelNPC y, box->LvlData.npc)
+            {
+                bool found=false;
+                foreach(unsigned long z, npcContainers)
+                {
+                    if(y.id == z)
+                    {
+                        if(y.special_data == (signed)x.id)
+                        {
+                            usedIDs.push_back(x.id);
+                            found=true;
+                        }
+                        break;
+                    }
+                }
+                if(found) break;
             }
 
             //included into blocks
             foreach(LevelBlock y, box->LvlData.blocks)
             {
                 if((y.npc_id>0) && ((unsigned long)y.npc_id == x.id))
-                    usedIDs.push_back(y.id);
+                {
+                    usedIDs.push_back(x.id);
+                    break;
+                }
             }
 
             foreach(unsigned long npcID, usedIDs)
@@ -531,12 +647,19 @@ void MainWindow::on_actionCDATA_clear_unused_triggered()
                               QMessageBox::Yes, QMessageBox::No ) != QMessageBox::Yes )
             return;
 
+
+        QDir unused_dir(levelCustomDirectory+"/_unused");
+        if(!unused_dir.exists()) unused_dir.mkdir(levelCustomDirectory+"/_unused");
+
         //Remove selected
         foreach(QString f, filesForRemove)
-        {
+        {\
             QFile x(f);
             if(x.exists())
+            {
+                x.copy(f, levelCustomDirectory+"/_unused/"+QFileInfo(f).fileName());
                 x.remove();
+            }
         }
 
         QMessageBox::information(this, "Unused files removed",
