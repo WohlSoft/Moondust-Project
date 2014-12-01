@@ -56,6 +56,25 @@ void MainWindow::on_actionReload_triggered()
 
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeLvlEditWin()->LvlData.modified = false;
+
+        QFile file(filePath+".meta");
+        if(QFileInfo(filePath+".meta").exists())
+        {
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QString metaRaw;
+                QTextStream meta(&file);
+                meta.setCodec("UTF-8");
+                metaRaw = meta.readAll();
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, filePath+".meta");
+            }
+            else
+            {
+                QMessageBox::critical(this, tr("File open error"),
+                tr("Can't open the file."), QMessageBox::Ok);
+            }
+        }
+
         activeLvlEditWin()->close();
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         ui->centralWidget->activeSubWindow()->close();
@@ -149,6 +168,25 @@ void MainWindow::on_actionReload_triggered()
         FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeWldEditWin()->WldData.modified = false;
+
+        QFile file(filePath+".meta");
+        if(QFileInfo(filePath+".meta").exists())
+        {
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QString metaRaw;
+                QTextStream meta(&file);
+                meta.setCodec("UTF-8");
+                metaRaw = meta.readAll();
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, filePath+".meta");
+            }
+            else
+            {
+                QMessageBox::critical(this, tr("File open error"),
+                tr("Can't open the file."), QMessageBox::Ok);
+            }
+        }
+
         activeWldEditWin()->close();
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         ui->centralWidget->activeSubWindow()->close();
