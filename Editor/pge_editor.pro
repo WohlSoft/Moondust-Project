@@ -294,7 +294,11 @@ SOURCES += main.cpp\
     script/commands/memorycommand.cpp \
     script/scriptholder.cpp \
     script/commands/eventcommand.cpp \
-    file_formats/file_meta.cpp
+    file_formats/file_meta.cpp \
+    main_window/tools/main_tool_cdata_cleaner.cpp \
+    main_window/tools/main_tool_cdata_lazyfix.cpp \
+    main_window/tools/main_tool_cdata_import.cpp \
+    main_window/tools/main_lvl_section_mods.cpp
 
 HEADERS  += defines.h \
     version.h \

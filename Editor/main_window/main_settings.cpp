@@ -448,8 +448,10 @@ void MainWindow::loadSettings()
 
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
+
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
+
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
         GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
 
@@ -480,6 +482,7 @@ void MainWindow::loadSettings()
         ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
         ui->Tileset_Item_Box->setFloating(settings.value("tileset-box-float", true).toBool());
         ui->debuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
+        ui->bookmarkBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
 
         ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
@@ -548,6 +551,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
     settings.setValue("tileset-box-float", ui->Tileset_Item_Box->isFloating());
     settings.setValue("debugger-box-float", ui->debuggerBox->isFloating());
+    settings.setValue("bookmarks-box-float", ui->bookmarkBox->isFloating());
 
     settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
