@@ -486,6 +486,25 @@ bool leveledit::saveFile(const QString &fileName, const bool addToRecent)
         QTextStream out(&file);
         out << FileFormats::WriteSMBX64LvlFile(LvlData);
         file.close();
+
+        //save additional meta data
+        if(!LvlData.metaData.bookmarks.isEmpty())
+        {
+            file.setFileName(fileName+".meta");
+            if (!file.open(QFile::WriteOnly | QFile::Text))
+            {
+                QMessageBox::warning(this, tr("File save error"),
+                                     tr("Cannot save file %1:\n%2.")
+                                     .arg(fileName+".meta")
+                                     .arg(file.errorString()));
+                return false;
+            }
+            QTextStream out(&file);
+            out.setCodec("UTF-8");
+            out << FileFormats::WriteNonSMBX64MetaData(LvlData.metaData);
+            file.close();
+        }
+
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
     // //////////////////////////////////////////////////////////////////////

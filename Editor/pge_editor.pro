@@ -293,8 +293,8 @@ SOURCES += main.cpp\
     script/commands/basiccommand.cpp \
     script/commands/memorycommand.cpp \
     script/scriptholder.cpp \
-    script/commands/eventcommand.cpp
-
+    script/commands/eventcommand.cpp \
+    file_formats/file_meta.cpp
 
 HEADERS  += defines.h \
     version.h \

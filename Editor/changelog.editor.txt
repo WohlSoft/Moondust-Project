@@ -16,6 +16,7 @@ Editor 0.2.1.3
 - Added internal tools
 - All graphics issues prevented with implementing of alternate unmasking algorithm
 - Easier way to fix lazily-made graphics added into [ Tools / Custom data / Fix wrong masks ]
+- Added Section modyfication features: Delete
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
