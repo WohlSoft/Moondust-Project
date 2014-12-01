@@ -287,7 +287,8 @@ SOURCES += main.cpp\
     ../_Libs/giflib/gif_font.c \
     ../_Libs/giflib/gif_hash.c \
     ../_Libs/giflib/gifalloc.c \
-    ../_Libs/giflib/quantize.c
+    ../_Libs/giflib/quantize.c \
+    file_formats/file_meta.cpp
 
 
 HEADERS  += defines.h \
