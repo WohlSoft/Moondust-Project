@@ -152,3 +152,39 @@ void MainWindow::updateBookmarkBoxByData()
         ui->bookmarkList->addItem(item);
     }
 }
+
+
+
+void MainWindow::on_bookmarkList_customContextMenuRequested(const QPoint &pos)
+{
+    if(ui->bookmarkList->selectedItems().isEmpty()) return;
+
+    QPoint globPos = ui->bookmarkList->mapToGlobal(pos);
+
+    WriteToLog(QtDebugMsg, QString("Main Menu's context menu called! %1 %2 -> %3 %4")
+               .arg(pos.x()).arg(pos.y())
+               .arg(globPos.x()).arg(globPos.y()));
+
+    QMenu *bookmark_menu = new QMenu(this);
+    QAction * rename = bookmark_menu->addAction(tr("Rename Bookmark"));
+
+    //bookmark_menu->addSeparator();
+    QAction *selected = bookmark_menu->exec( globPos );
+    if(selected==rename)
+    {
+        ui->bookmarkList->editItem(ui->bookmarkList->selectedItems()[0]);
+    }
+
+
+}
+
+void MainWindow::DragAndDroppedBookmark(QModelIndex /*sourceParent*/,int /*sourceStart*/,int /*sourceEnd*/,QModelIndex /*destinationParent*/,int /*destinationRow*/)
+{
+    updateBookmarkBoxByList();
+}
+
+void MainWindow::on_bookmarkList_doubleClicked(const QModelIndex &index)
+{
+    Q_UNUSED(index);
+    on_bookmarkGoto_clicked();
+}
