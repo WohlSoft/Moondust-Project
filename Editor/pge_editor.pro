@@ -287,7 +287,13 @@ SOURCES += main.cpp\
     ../_Libs/giflib/gif_font.c \
     ../_Libs/giflib/gif_hash.c \
     ../_Libs/giflib/gifalloc.c \
-    ../_Libs/giflib/quantize.c
+    ../_Libs/giflib/quantize.c \
+    script/command_compiler/basiccompiler.cpp \
+    script/command_compiler/lunaluacompiler.cpp \
+    script/commands/basiccommand.cpp \
+    script/commands/memorycommand.cpp \
+    script/scriptholder.cpp \
+    script/commands/eventcommand.cpp
 
 
 HEADERS  += defines.h \
@@ -403,7 +409,13 @@ HEADERS  += defines.h \
     file_formats/meta_filedata.h \
     ../_Libs/giflib/gif_hash.h \
     ../_Libs/giflib/gif_lib.h \
-    ../_Libs/giflib/gif_lib_private.h
+    ../_Libs/giflib/gif_lib_private.h \
+    script/command_compiler/basiccompiler.h \
+    script/command_compiler/lunaluacompiler.h \
+    script/commands/basiccommand.h \
+    script/commands/memorycommand.h \
+    script/scriptholder.h \
+    script/commands/eventcommand.h
 
 
 FORMS    += \
