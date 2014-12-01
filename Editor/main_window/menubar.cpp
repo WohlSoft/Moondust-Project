@@ -229,6 +229,13 @@ void MainWindow::updateMenus(bool force)
     ui->actionRotateLeft->setEnabled(  (WinType==1)|| (WinType==3)  );
     ui->actionRotateRight->setEnabled(  (WinType==1)|| (WinType==3)  );
 
+    ui->actionCloneSectionTo->setEnabled( (WinType==1) );
+    ui->actionSCT_Delete->setEnabled( (WinType==1) );
+    ui->actionSCT_FlipHorizontal->setEnabled( (WinType==1) );
+    ui->actionSCT_FlipVertical->setEnabled( (WinType==1) );
+    ui->actionSCT_RotateLeft->setEnabled( (WinType==1) );
+    ui->actionSCT_RotateRight->setEnabled( (WinType==1) );
+
     if(WinType==1)
     {
         if( configs.check() )

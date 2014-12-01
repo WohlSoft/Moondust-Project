@@ -29,7 +29,7 @@ extern "C"{
 
 #include <QtDebug>
 
-bool GraphicsHelps::EnableVBEmulate=false;
+bool GraphicsHelps::EnableVBEmulate=true;
 
 QPixmap GraphicsHelps::setAlphaMask(QPixmap image, QPixmap mask)
 {
