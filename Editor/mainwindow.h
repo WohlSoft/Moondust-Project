@@ -550,6 +550,7 @@ public:
 
         //Modify actions
         void on_actionCloneSectionTo_triggered();
+        void on_actionSCT_Delete_triggered();
         void on_actionSCT_RotateLeft_triggered();
         void on_actionSCT_RotateRight_triggered();
         void on_actionSCT_FlipHorizontal_triggered();
@@ -1069,7 +1070,6 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
-
 
 
 
