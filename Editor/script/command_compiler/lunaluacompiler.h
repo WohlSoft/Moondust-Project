@@ -8,6 +8,7 @@ class LunaLuaCompiler : public BasicCompiler
     Q_OBJECT
 public:
     explicit LunaLuaCompiler(QObject *parent = 0);
+    ~LunaLuaCompiler();
 
 signals:
 

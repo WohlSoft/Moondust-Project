@@ -11,6 +11,7 @@ class ScriptHolder : public QObject
     Q_OBJECT
 public:
     explicit ScriptHolder(QObject *parent = 0);
+    ~ScriptHolder();
 
 signals:
 

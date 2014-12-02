@@ -2,5 +2,8 @@
 
 LunaLuaCompiler::LunaLuaCompiler(QObject *parent) :
     BasicCompiler(parent)
-{
-}
+{}
+
+LunaLuaCompiler::~LunaLuaCompiler()
+{}
+
