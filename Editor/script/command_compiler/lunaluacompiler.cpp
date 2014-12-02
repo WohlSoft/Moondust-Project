@@ -17,6 +17,13 @@
  */
 #include "lunaluacompiler.h"
 
+
 LunaLuaCompiler::LunaLuaCompiler(QList<EventCommand>* commands, QObject *parent) :
     BasicCompiler(commands, parent)
 {}
+
+
+LunaLuaCompiler::~LunaLuaCompiler()
+{}
+
+

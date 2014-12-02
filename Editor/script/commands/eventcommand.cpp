@@ -20,8 +20,7 @@
 
 EventCommand::EventCommand(QObject *parent) :
     BasicCommand(parent)
-{
-}
+{}
 
 QString EventCommand::compileSegment(Script::CompilerType compiler, int tabOffset)
 {
@@ -32,3 +31,8 @@ bool EventCommand::supportCompiler(Script::CompilerType compiler)
 {
     return false;
 }
+
+
+EventCommand::~EventCommand()
+{}
+

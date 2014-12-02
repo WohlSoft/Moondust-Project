@@ -28,6 +28,9 @@ public:
     explicit MemoryCommand(QObject *parent = 0);
     virtual QString compileSegment(Script::CompilerType compiler, int tabOffset);
     static bool supportCompiler(Script::CompilerType compiler);
+
+    ~MemoryCommand();
+
 signals:
 
 public slots:

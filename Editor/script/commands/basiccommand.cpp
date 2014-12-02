@@ -23,6 +23,7 @@ BasicCommand::BasicCommand(QObject *parent) :
 {
 }
 
+
 QString BasicCommand::compileSegment(Script::CompilerType compiler, int tabOffset)
 {
     return QString("");
@@ -32,3 +33,7 @@ bool BasicCommand::supportCompiler(Script::CompilerType compiler)
 {
     return true;
 }
+
+BasicCommand::~BasicCommand()
+{}
+
