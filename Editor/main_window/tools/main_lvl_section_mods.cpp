@@ -20,12 +20,17 @@
 #include "../../mainwindow.h"
 
 #include "../../file_formats/file_formats.h"
-
+#include "../../edit_level/lvl_clone_section.h"
 
 
 
 void MainWindow::on_actionCloneSectionTo_triggered()
 {
+    LvlCloneSection box;
+    //box = new LazyFixTool_gui;
+    box.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    box.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, box.size(), qApp->desktop()->availableGeometry()));
+    box.exec();
 
 }
 

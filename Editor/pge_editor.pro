@@ -298,7 +298,8 @@ SOURCES += main.cpp\
     main_window/tools/main_tool_cdata_cleaner.cpp \
     main_window/tools/main_tool_cdata_lazyfix.cpp \
     main_window/tools/main_tool_cdata_import.cpp \
-    main_window/tools/main_lvl_section_mods.cpp
+    main_window/tools/main_lvl_section_mods.cpp \
+    edit_level/lvl_clone_section.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -419,7 +420,8 @@ HEADERS  += defines.h \
     script/commands/basiccommand.h \
     script/commands/memorycommand.h \
     script/scriptholder.h \
-    script/commands/eventcommand.h
+    script/commands/eventcommand.h \
+    edit_level/lvl_clone_section.h
 
 
 FORMS    += \
@@ -448,7 +450,8 @@ FORMS    += \
     tilesets/tilesetconfiguredialog.ui \
     tilesets/tilesetgroupeditor.ui \
     wld_point_dialog/wld_setpoint.ui \
-    common_features/crashhandler.ui
+    common_features/crashhandler.ui \
+    edit_level/lvl_clone_section.ui
 
 
 RC_FILE = _resources/pge_editor.rc
