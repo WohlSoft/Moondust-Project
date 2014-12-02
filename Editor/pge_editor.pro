@@ -27,6 +27,7 @@ QT       -= opengl
 
 DESTDIR = ../bin
 
+static: {
 release:OBJECTS_DIR = ../bin/_build/editor/_release/.obj
 release:MOC_DIR     = ../bin/_build/editor/_release/.moc
 release:RCC_DIR     = ../bin/_build/editor/_release/.rcc
@@ -36,6 +37,18 @@ debug:OBJECTS_DIR   = ../bin/_build/editor/_debug/.obj
 debug:MOC_DIR       = ../bin/_build/editor/_debug/.moc
 debug:RCC_DIR       = ../bin/_build/editor/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/editor/_debug/.ui
+} else {
+release:OBJECTS_DIR = ../bin/_build/_dynamic/editor/_release/.obj
+release:MOC_DIR     = ../bin/_build/_dynamic/editor/_release/.moc
+release:RCC_DIR     = ../bin/_build/_dynamic/editor/_release/.rcc
+release:UI_DIR      = ../bin/_build/_dynamic/editor/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/_dynamic/editor/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/_dynamic/editor/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/_dynamic/editor/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/_dynamic/editor/_debug/.ui
+}
+
 
 translates.path = ../bin/languages
 translates.files += languages/*.qm
@@ -266,8 +279,27 @@ SOURCES += main.cpp\
     networking/engine_intproc.cpp \
     networking/engine_client.cpp \
     main_window/global_settings.cpp \
-    world_scene/edit_modes/wld_mode_fill.cpp
-
+    world_scene/edit_modes/wld_mode_fill.cpp \
+    main_window/dock/bookmark_box.cpp \
+    ../_Libs/giflib/dgif_lib.c \
+    ../_Libs/giflib/egif_lib.c \
+    ../_Libs/giflib/gif_err.c \
+    ../_Libs/giflib/gif_font.c \
+    ../_Libs/giflib/gif_hash.c \
+    ../_Libs/giflib/gifalloc.c \
+    ../_Libs/giflib/quantize.c \
+    script/command_compiler/basiccompiler.cpp \
+    script/command_compiler/lunaluacompiler.cpp \
+    script/commands/basiccommand.cpp \
+    script/commands/memorycommand.cpp \
+    script/scriptholder.cpp \
+    script/commands/eventcommand.cpp \
+    file_formats/file_meta.cpp \
+    main_window/tools/main_tool_cdata_cleaner.cpp \
+    main_window/tools/main_tool_cdata_lazyfix.cpp \
+    main_window/tools/main_tool_cdata_import.cpp \
+    main_window/tools/main_lvl_section_mods.cpp \
+    edit_level/lvl_clone_section.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -378,7 +410,18 @@ HEADERS  += defines.h \
     level_scene/edit_modes/mode_fill.h \
     networking/engine_intproc.h \
     networking/engine_client.h \
-    world_scene/edit_modes/wld_mode_fill.h
+    world_scene/edit_modes/wld_mode_fill.h \
+    file_formats/meta_filedata.h \
+    ../_Libs/giflib/gif_hash.h \
+    ../_Libs/giflib/gif_lib.h \
+    ../_Libs/giflib/gif_lib_private.h \
+    script/command_compiler/basiccompiler.h \
+    script/command_compiler/lunaluacompiler.h \
+    script/commands/basiccommand.h \
+    script/commands/memorycommand.h \
+    script/scriptholder.h \
+    script/commands/eventcommand.h \
+    edit_level/lvl_clone_section.h
 
 
 FORMS    += \
@@ -407,7 +450,8 @@ FORMS    += \
     tilesets/tilesetconfiguredialog.ui \
     tilesets/tilesetgroupeditor.ui \
     wld_point_dialog/wld_setpoint.ui \
-    common_features/crashhandler.ui
+    common_features/crashhandler.ui \
+    edit_level/lvl_clone_section.ui
 
 
 RC_FILE = _resources/pge_editor.rc

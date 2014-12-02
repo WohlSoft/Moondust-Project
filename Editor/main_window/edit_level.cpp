@@ -19,7 +19,6 @@
 #include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
-
 //Open Level Properties
 void MainWindow::on_actionLevelProp_triggered()
 {
@@ -216,6 +215,7 @@ void MainWindow::on_actionSection_21_triggered()
 
 void MainWindow::on_actionGo_to_Section_triggered()
 {
+    qApp->setActiveWindow(this);
     int WinType = activeChildWindow();
     if(WinType==1)
     {
@@ -226,6 +226,8 @@ void MainWindow::on_actionGo_to_Section_triggered()
             edit->goTo(xb, yb, false, QPoint(-10, -10));
     }
 }
+
+
 
 
 // //////////////////////// Locks Begin //////////////////////////////

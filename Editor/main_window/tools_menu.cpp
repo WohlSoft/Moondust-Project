@@ -29,6 +29,7 @@
 #include "../external_tools/gifs2png_gui.h"
 #include "../external_tools/png2gifs_gui.h"
 
+
 void MainWindow::on_actionConfigure_Tilesets_triggered()
 {
     TilesetConfigureDialog* tilesetConfDia = new TilesetConfigureDialog(&configs, NULL);
@@ -113,19 +114,20 @@ void MainWindow::on_actionPNG2GIFs_triggered()
 
 
 
-
-void MainWindow::on_actionCDATA_clear_unused_triggered()
-{
-    QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
-}
-
-
-void MainWindow::on_actionCDATA_Import_triggered()
-{
-    QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
-}
-
 void MainWindow::on_actionSprite_editor_triggered()
 {
     QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

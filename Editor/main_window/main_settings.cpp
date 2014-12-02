@@ -154,7 +154,13 @@ void MainWindow::setUiDefults()
                 ui->debuggerBox->height()
                 );
 
-    ui->Tileset_Item_Box->hide();
+
+    ui->bookmarkBox->setGeometry(
+                mwg.x()+mwg.width()-ui->bookmarkBox->width()-GOffset,
+                mwg.y()+120,
+                ui->bookmarkBox->width(),
+                ui->bookmarkBox->height()
+                );
 
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);
@@ -175,6 +181,8 @@ void MainWindow::setUiDefults()
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
 
     ui->actionExport_to_image_section->setVisible(false);
+
+    ui->actionVBAlphaEmulate->setChecked(GraphicsHelps::EnableVBEmulate);
 
     ui->centralWidget->cascadeSubWindows();
 
@@ -202,6 +210,7 @@ void MainWindow::setUiDefults()
 
     ui->Tileset_Item_Box->hide();
     ui->debuggerBox->hide();
+    ui->bookmarkBox->hide();
 
     ui->menuView->setEnabled(false);
 
@@ -219,6 +228,10 @@ void MainWindow::setUiDefults()
     ui->actionWarpsAndDoors->setVisible(false);
     ui->actionWLDToolBox->setVisible(false);
     ui->actionGridEn->setChecked(true);
+
+    ui->actionTilesetBox->setVisible(false);
+    ui->actionBookmarkBox->setVisible(false);
+    ui->actionDebugger->setVisible(false);
 
     ui->actionZoomReset->setEnabled(false);
     ui->actionZoomIn->setEnabled(false);
@@ -282,6 +295,8 @@ void MainWindow::setUiDefults()
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedLayer(QModelIndex,int,int,QModelIndex,int)));
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedEvent(QModelIndex,int,int,QModelIndex,int)));
+    connect(ui->bookmarkList->model(), SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), this, SLOT(DragAndDroppedBookmark(QModelIndex,int,int,QModelIndex,int)));
+
     //enable & disable
     connect(ui->Find_Check_TypeBlock, SIGNAL(toggled(bool)), ui->Find_Button_TypeBlock, SLOT(setEnabled(bool)));
     connect(ui->Find_Check_TypeBGO, SIGNAL(toggled(bool)), ui->Find_Button_TypeBGO, SLOT(setEnabled(bool)));
@@ -429,11 +444,14 @@ void MainWindow::loadSettings()
 
         GlobalSettings::TilesetBoxVis = settings.value("tileset-box-visible", "false").toBool();
         GlobalSettings::DebuggerBoxVis = settings.value("debugger-box-visible", "false").toBool();
+        GlobalSettings::BookmarksBoxVis = settings.value("bookmarks-box-visible", "false").toBool();
 
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", "true").toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", "true").toBool();
+
         restoreGeometry(settings.value("geometry", saveGeometry() ).toByteArray());
         restoreState(settings.value("windowState", saveState() ).toByteArray());
+
         GlobalSettings::autoPlayMusic = settings.value("autoPlayMusic", false).toBool();
         GlobalSettings::musicVolume = settings.value("music-volume",100).toInt();
 
@@ -464,6 +482,7 @@ void MainWindow::loadSettings()
         ui->WorldFindDock->setFloating(settings.value("world-search-float", true).toBool());
         ui->Tileset_Item_Box->setFloating(settings.value("tileset-box-float", true).toBool());
         ui->debuggerBox->setFloating(settings.value("debugger-box-float", true).toBool());
+        ui->bookmarkBox->setFloating(settings.value("bookmarks-box-float", true).toBool());
 
         ui->DoorsToolbox->restoreGeometry(settings.value("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry()).toByteArray());
         ui->LevelSectionSettings->restoreGeometry(settings.value("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry()).toByteArray());
@@ -475,8 +494,10 @@ void MainWindow::loadSettings()
         ui->WorldSettings->restoreGeometry(settings.value("world-settings-box-geometry", ui->WorldSettings->saveGeometry()).toByteArray());
         ui->WLD_ItemProps->restoreGeometry(settings.value("world-itemprops-box-geometry", ui->WLD_ItemProps->saveGeometry()).toByteArray());
         ui->WorldFindDock->restoreGeometry(settings.value("world-search-geometry", ui->WorldFindDock->saveGeometry()).toByteArray());
+
         ui->Tileset_Item_Box->restoreGeometry(settings.value("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry()).toByteArray());
         ui->debuggerBox->restoreGeometry(settings.value("debugger-box-geometry", ui->debuggerBox->saveGeometry()).toByteArray());
+        ui->bookmarkBox->restoreGeometry(settings.value("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry()).toByteArray());
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "25000").toInt();
 
@@ -515,6 +536,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("tileset-box-visible", GlobalSettings::TilesetBoxVis);
     settings.setValue("debugger-box-visible", GlobalSettings::DebuggerBoxVis);
+    settings.setValue("bookmarks-box-visible", GlobalSettings::BookmarksBoxVis);
 
     settings.setValue("doors-tool-box-float", ui->DoorsToolbox->isFloating());
     settings.setValue("level-section-set-float", ui->LevelSectionSettings->isFloating());
@@ -529,6 +551,7 @@ void MainWindow::saveSettings()
     settings.setValue("world-search-float", ui->WorldFindDock->isFloating());
     settings.setValue("tileset-box-float", ui->Tileset_Item_Box->isFloating());
     settings.setValue("debugger-box-float", ui->debuggerBox->isFloating());
+    settings.setValue("bookmarks-box-float", ui->bookmarkBox->isFloating());
 
     settings.setValue("doors-tool-box-geometry", ui->DoorsToolbox->saveGeometry());
     settings.setValue("level-section-set-geometry", ui->LevelSectionSettings->saveGeometry());
@@ -544,6 +567,7 @@ void MainWindow::saveSettings()
 
     settings.setValue("tileset-itembox-geometry", ui->Tileset_Item_Box->saveGeometry());
     settings.setValue("debugger-box-geometry", ui->debuggerBox->saveGeometry());
+    settings.setValue("bookmarks-box-geometry", ui->bookmarkBox->saveGeometry());
 
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());

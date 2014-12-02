@@ -131,6 +131,9 @@ public:
     //File format read/write functions
 
 
+    static MetaData ReadNonSMBX64MetaData(QString RawData, QString filePath="");
+    static QString WriteNonSMBX64MetaData(MetaData metaData);
+
     /******************************Level files***********************************/
     static LevelData OpenLevelFile(QString filePath); //!< Open supported level file via direct path
 
