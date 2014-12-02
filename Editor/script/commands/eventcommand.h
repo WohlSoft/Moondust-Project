@@ -8,6 +8,7 @@ class EventCommand : public BasicCommand
     Q_OBJECT
 public:
     explicit EventCommand(QObject *parent = 0);
+    ~EventCommand();
 
 signals:
 

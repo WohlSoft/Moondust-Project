@@ -4,3 +4,6 @@ BasicCommand::BasicCommand(QObject *parent) :
     QObject(parent)
 {
 }
+
+BasicCommand::~BasicCommand()
+{}

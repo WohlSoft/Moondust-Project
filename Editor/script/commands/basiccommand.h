@@ -8,6 +8,7 @@ class BasicCommand : public QObject
     Q_OBJECT
 public:
     explicit BasicCommand(QObject *parent = 0);
+    ~BasicCommand();
 
 signals:
 

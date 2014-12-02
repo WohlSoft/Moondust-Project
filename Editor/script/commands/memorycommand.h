@@ -8,6 +8,7 @@ class MemoryCommand : public BasicCommand
     Q_OBJECT
 public:
     explicit MemoryCommand(QObject *parent = 0);
+    ~MemoryCommand();
 
 signals:
 

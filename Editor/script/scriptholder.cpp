@@ -4,3 +4,7 @@ ScriptHolder::ScriptHolder(QObject *parent) :
     QObject(parent)
 {
 }
+
+ScriptHolder::~ScriptHolder()
+{}
+

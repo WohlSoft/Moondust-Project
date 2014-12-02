@@ -2,5 +2,8 @@
 
 BasicCompiler::BasicCompiler(QObject *parent) :
     QObject(parent)
-{
-}
+{}
+
+BasicCompiler::~BasicCompiler()
+{}
+
