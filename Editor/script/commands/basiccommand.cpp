@@ -36,4 +36,14 @@ bool BasicCommand::supportCompiler(Script::CompilerType compiler)
 
 BasicCommand::~BasicCommand()
 {}
+QString BasicCommand::marker() const
+{
+    return m_marker;
+}
+
+void BasicCommand::setMarker(const QString &marker)
+{
+    m_marker = marker;
+}
+
 

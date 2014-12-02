@@ -32,9 +32,16 @@ public:
 
     ~BasicCommand();
 
+    QString marker() const;
+    void setMarker(const QString &marker);
+
 signals:
 
 public slots:
+
+private:
+    //additional info (i.e. for the additional Settings dialog)
+    QString m_marker;
 
 };
 
