@@ -28,3 +28,8 @@ QString BasicCompiler::compileCode()
 {
     return "";
 }
+
+
+BasicCompiler::~BasicCompiler()
+{}
+

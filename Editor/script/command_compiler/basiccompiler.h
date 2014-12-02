@@ -27,6 +27,9 @@ class BasicCompiler : public QObject
 public:
     explicit BasicCompiler(QList<EventCommand> *eventsToCompile, QObject *parent = 0);
     virtual QString compileCode();
+
+    ~BasicCompiler();
+
 signals:
 
 public slots:

@@ -26,8 +26,12 @@ class EventCommand : public BasicCommand
     Q_OBJECT
 public:
     explicit EventCommand(QObject *parent = 0);
+
     virtual QString compileSegment(Script::CompilerType compiler, int tabOffset);
     static bool supportCompiler(Script::CompilerType compiler);
+
+    ~EventCommand();
+
 signals:
 
 public slots:

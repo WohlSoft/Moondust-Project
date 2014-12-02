@@ -20,8 +20,7 @@
 
 MemoryCommand::MemoryCommand(QObject *parent) :
     BasicCommand(parent)
-{
-}
+{}
 
 QString MemoryCommand::compileSegment(Script::CompilerType compiler, int tabOffset)
 {
@@ -32,3 +31,7 @@ bool MemoryCommand::supportCompiler(Script::CompilerType compiler)
 {
     return false;
 }
+
+MemoryCommand::~MemoryCommand()
+{}
+

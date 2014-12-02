@@ -45,3 +45,7 @@ QString ScriptHolder::compileCode()
     return m_usingCompiler->compileCode();
 }
 
+ScriptHolder::~ScriptHolder()
+{}
+
+
