@@ -56,6 +56,25 @@ void MainWindow::on_actionReload_triggered()
 
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeLvlEditWin()->LvlData.modified = false;
+
+        QFile file(filePath+".meta");
+        if(QFileInfo(filePath+".meta").exists())
+        {
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QString metaRaw;
+                QTextStream meta(&file);
+                meta.setCodec("UTF-8");
+                metaRaw = meta.readAll();
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, filePath+".meta");
+            }
+            else
+            {
+                QMessageBox::critical(this, tr("File open error"),
+                tr("Can't open the file."), QMessageBox::Ok);
+            }
+        }
+
         activeLvlEditWin()->close();
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         ui->centralWidget->activeSubWindow()->close();
@@ -149,6 +168,25 @@ void MainWindow::on_actionReload_triggered()
         FileData.path = QFileInfo(filePath).absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
         activeWldEditWin()->WldData.modified = false;
+
+        QFile file(filePath+".meta");
+        if(QFileInfo(filePath+".meta").exists())
+        {
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QString metaRaw;
+                QTextStream meta(&file);
+                meta.setCodec("UTF-8");
+                metaRaw = meta.readAll();
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, filePath+".meta");
+            }
+            else
+            {
+                QMessageBox::critical(this, tr("File open error"),
+                tr("Can't open the file."), QMessageBox::Ok);
+            }
+        }
+
         activeWldEditWin()->close();
         wnGeom = ui->centralWidget->activeSubWindow()->geometry();
         ui->centralWidget->activeSubWindow()->close();
@@ -317,3 +355,54 @@ void MainWindow::on_actionRedo_triggered()
         ui->actionRedo->setEnabled( activeWldEditWin()->scene->canRedo() );
     }
 }
+
+
+bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
+{
+    if(activeChildWindow() == 1)
+    {
+        leveledit* edit = activeLvlEditWin();
+        QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
+        x = coor.x();
+        y = coor.y();
+        return true;
+    }
+    else if(activeChildWindow() == 3)
+    {
+        WorldEdit* edit = activeWldEditWin();
+        QPointF coor = edit->getGraphicsView()->mapToScene(0,0);
+        x = coor.x();
+        y = coor.y();
+        return true;
+    }
+    return false;
+}
+
+
+
+
+void MainWindow::on_actionAlign_selected_triggered()
+{
+
+}
+
+void MainWindow::on_actionRotateLeft_triggered()
+{
+
+}
+
+void MainWindow::on_actionRotateRight_triggered()
+{
+
+}
+
+void MainWindow::on_actionFlipHorizontal_triggered()
+{
+
+}
+
+void MainWindow::on_actionFlipVertical_triggered()
+{
+
+}
+

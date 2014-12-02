@@ -9,6 +9,7 @@ QT += core gui opengl network
 
 DESTDIR = ../bin
 
+static: {
 release:OBJECTS_DIR = ../bin/_build/engine/_release/.obj
 release:MOC_DIR     = ../bin/_build/engine/_release/.moc
 release:RCC_DIR     = ../bin/_build/engine/_release/.rcc
@@ -18,6 +19,17 @@ debug:OBJECTS_DIR   = ../bin/_build/engine/_debug/.obj
 debug:MOC_DIR       = ../bin/_build/engine/_debug/.moc
 debug:RCC_DIR       = ../bin/_build/engine/_debug/.rcc
 debug:UI_DIR        = ../bin/_build/engine/_debug/.ui
+} else {
+release:OBJECTS_DIR = ../bin/_build/_dynamic/engine/_release/.obj
+release:MOC_DIR     = ../bin/_build/_dynamic/engine/_release/.moc
+release:RCC_DIR     = ../bin/_build/_dynamic/engine/_release/.rcc
+release:UI_DIR      = ../bin/_build/_dynamic/engine/_release/.ui
+
+debug:OBJECTS_DIR   = ../bin/_build/_dynamic/engine/_debug/.obj
+debug:MOC_DIR       = ../bin/_build/_dynamic/engine/_debug/.moc
+debug:RCC_DIR       = ../bin/_build/_dynamic/engine/_debug/.rcc
+debug:UI_DIR        = ../bin/_build/_dynamic/engine/_debug/.ui
+}
 
 TARGET = pge_engine
 TEMPLATE = app

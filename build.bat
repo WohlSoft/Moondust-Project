@@ -1,6 +1,12 @@
 @echo off
+rem ===============================================================================================
+rem =========================EDIT THOSE PATHS BEFORE BUILD!!!======================================
+rem ===============================================================================================
 set QtDir= D:\Qt\5.3.1_Static\5.3.2\bin
 set MinGW= D:\DevTools\Qt\5.3.0\Tools\mingw482_32\bin
+rem ===============================================================================================
+rem ===============================================================================================
+rem ===============================================================================================
 
 PATH=%QtDir%;%MinGW%;%PATH%
 
@@ -12,7 +18,7 @@ rem build all components
 %QtDir%\qmake.exe CONFIG+=release CONFIG-=debug
 if ERRORLEVEL 1 goto error
 
-%MinGW%\mingw32-make release
+%MinGW%\mingw32-make
 if ERRORLEVEL 1 goto error
 
 rem copy data and configs into the build directory

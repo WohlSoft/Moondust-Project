@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1478</width>
-    <height>3235</height>
+    <width>1484</width>
+    <height>3287</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -105,7 +105,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1478</width>
+     <width>1484</width>
      <height>21</height>
     </rect>
    </property>
@@ -205,7 +205,24 @@
      <addaction name="actionSection_20"/>
      <addaction name="actionSection_21"/>
     </widget>
+    <widget class="QMenu" name="menuSection_tools">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="title">
+      <string>Section modifications</string>
+     </property>
+     <addaction name="actionCloneSectionTo"/>
+     <addaction name="actionSCT_Delete"/>
+     <addaction name="separator"/>
+     <addaction name="actionSCT_RotateLeft"/>
+     <addaction name="actionSCT_RotateRight"/>
+     <addaction name="actionSCT_FlipHorizontal"/>
+     <addaction name="actionSCT_FlipVertical"/>
+    </widget>
     <addaction name="menuCurrent_section"/>
+    <addaction name="separator"/>
+    <addaction name="menuSection_tools"/>
     <addaction name="separator"/>
     <addaction name="actionLevWarp"/>
     <addaction name="actionLevOffScr"/>
@@ -240,6 +257,7 @@
     <addaction name="actionLVLSearchBox"/>
     <addaction name="actionWLD_SearchBox"/>
     <addaction name="separator"/>
+    <addaction name="actionBookmarkBox"/>
     <addaction name="actionTilesetBox"/>
     <addaction name="actionDebugger"/>
     <addaction name="separator"/>
@@ -292,6 +310,8 @@
      </property>
      <addaction name="actionCDATA_clear_unused"/>
      <addaction name="actionCDATA_Import"/>
+     <addaction name="separator"/>
+     <addaction name="actionFixWrongMasks"/>
     </widget>
     <addaction name="menuGlobal_configuration"/>
     <addaction name="actionRefresh_menu_and_toolboxes"/>
@@ -316,6 +336,12 @@
     <addaction name="actionCopy"/>
     <addaction name="actionCut"/>
     <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionAlign_selected"/>
+    <addaction name="actionRotateLeft"/>
+    <addaction name="actionRotateRight"/>
+    <addaction name="actionFlipHorizontal"/>
+    <addaction name="actionFlipVertical"/>
    </widget>
    <widget class="QMenu" name="menuTest">
     <property name="title">
@@ -1022,6 +1048,10 @@
    <addaction name="actionGridEn"/>
    <addaction name="separator"/>
    <addaction name="actionReload"/>
+   <addaction name="separator"/>
+   <addaction name="actionTilesetBox"/>
+   <addaction name="actionDebugger"/>
+   <addaction name="actionBookmarkBox"/>
   </widget>
   <widget class="QToolBar" name="LevelObjectToolbar">
    <property name="contextMenuPolicy">
@@ -3936,7 +3966,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>272</width>
-          <height>444</height>
+          <height>361</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4962,7 +4992,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>541</height>
+          <height>555</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6160,7 +6190,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>452</height>
+          <height>465</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7257,6 +7287,79 @@ p, li { white-space: pre-wrap; }
          </widget>
         </item>
        </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="bookmarkBox">
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Bookmarks</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_7">
+    <layout class="QGridLayout" name="gridLayout_31">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="bookmarkRemove">
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="bookmarkAdd">
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QPushButton" name="bookmarkGoto">
+       <property name="text">
+        <string>Go To...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="3">
+      <widget class="QListWidget" name="bookmarkList">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::InternalMove</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -8950,6 +9053,10 @@ p, li { white-space: pre-wrap; }
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/tileset_box.png</normaloff>:/images/tileset_box.png</iconset>
+   </property>
    <property name="text">
     <string>Tileset Item Box</string>
    </property>
@@ -9051,6 +9158,114 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="toolTip">
     <string>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</string>
+   </property>
+  </action>
+  <action name="actionBookmarkBox">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bookmarks</string>
+   </property>
+  </action>
+  <action name="actionCloneSectionTo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Clone section to...</string>
+   </property>
+  </action>
+  <action name="actionSCT_RotateLeft">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate left</string>
+   </property>
+  </action>
+  <action name="actionSCT_RotateRight">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate right</string>
+   </property>
+  </action>
+  <action name="actionSCT_FlipHorizontal">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Flip horizontal</string>
+   </property>
+  </action>
+  <action name="actionSCT_FlipVertical">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Flip vertical</string>
+   </property>
+  </action>
+  <action name="actionAlign_selected">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Align selected</string>
+   </property>
+  </action>
+  <action name="actionRotateLeft">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate left</string>
+   </property>
+  </action>
+  <action name="actionRotateRight">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rotate right</string>
+   </property>
+  </action>
+  <action name="actionFlipHorizontal">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Flip horizontal</string>
+   </property>
+  </action>
+  <action name="actionFlipVertical">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Flip vertical</string>
+   </property>
+  </action>
+  <action name="actionFixWrongMasks">
+   <property name="text">
+    <string>Fix wrong masks</string>
+   </property>
+   <property name="toolTip">
+    <string>This tool will fix all wrong masks of images which causing display bugs</string>
+   </property>
+  </action>
+  <action name="actionSCT_Delete">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Delete section</string>
    </property>
   </action>
  </widget>

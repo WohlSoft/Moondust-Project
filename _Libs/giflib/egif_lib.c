@@ -281,7 +281,7 @@ EGifPutScreenDesc(GifFileType *GifFile,
     write_version = EGifGetGifVersion(GifFile);
 
     /* First write the version prefix into the file. */
-    if (InternalWrite(GifFile, (unsigned char *)write_version,
+    if ((unsigned int)InternalWrite(GifFile, (unsigned char *)write_version,
               strlen(write_version)) != strlen(write_version)) {
         GifFile->Error = E_GIF_ERR_WRITE_FAILED;
         return GIF_ERROR;
@@ -732,7 +732,7 @@ EGifPutCodeNext(GifFileType *GifFile, const GifByteType *CodeBlock)
     GifFilePrivateType *Private = (GifFilePrivateType *)GifFile->Private;
 
     if (CodeBlock != NULL) {
-        if (InternalWrite(GifFile, CodeBlock, CodeBlock[0] + 1)
+        if ((unsigned)InternalWrite(GifFile, CodeBlock, CodeBlock[0] + 1)
                != (unsigned)(CodeBlock[0] + 1)) {
             GifFile->Error = E_GIF_ERR_WRITE_FAILED;
             return GIF_ERROR;
@@ -1017,7 +1017,7 @@ EGifBufferedOutput(GifFileType *GifFile,
     if (c == FLUSH_OUTPUT) {
         /* Flush everything out. */
         if (Buf[0] != 0
-            && InternalWrite(GifFile, Buf, Buf[0] + 1) != (unsigned)(Buf[0] + 1)) {
+            && (unsigned)InternalWrite(GifFile, Buf, Buf[0] + 1) != (unsigned)(Buf[0] + 1)) {
             GifFile->Error = E_GIF_ERR_WRITE_FAILED;
             return GIF_ERROR;
         }
@@ -1030,7 +1030,7 @@ EGifBufferedOutput(GifFileType *GifFile,
     } else {
         if (Buf[0] == 255) {
             /* Dump out this buffer - it is full: */
-            if (InternalWrite(GifFile, Buf, Buf[0] + 1) != (unsigned)(Buf[0] + 1)) {
+            if ((unsigned)InternalWrite(GifFile, Buf, Buf[0] + 1) != (unsigned)(Buf[0] + 1)) {
                 GifFile->Error = E_GIF_ERR_WRITE_FAILED;
                 return GIF_ERROR;
             }

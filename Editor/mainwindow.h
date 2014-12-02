@@ -92,6 +92,7 @@ public:
  * - Other Tools
  * - Search Boxes common
  * - Music Player
+ * - Bookmarks
  *
  * Level Editing
  * - Level Properties
@@ -147,6 +148,13 @@ public:
         ///
         void saveSettings();
 
+        ///
+        /// \brief getCurrentSceneCoordinates Returns the scene coordinates either from level window or world window
+        /// \param x The current x-coordinate.
+        /// \param y The current y-coordinate.
+        /// \return True, if the current window is either a level window or a world window.
+        ///
+        bool getCurrentSceneCoordinates(qreal &x, qreal &y);
     private:
         ///
         /// \brief setDefaults Init settings on start application
@@ -299,6 +307,12 @@ public:
 
         void refreshHistoryButtons(); //!< Refreshing state of history undo/redo buttons
 
+        void on_actionAlign_selected_triggered();
+        void on_actionRotateLeft_triggered();
+        void on_actionRotateRight_triggered();
+        void on_actionFlipHorizontal_triggered();
+        void on_actionFlipVertical_triggered();
+
     private slots:
         void on_actionZoomIn_triggered();    //!< Zoom in
         void on_actionZoomOut_triggered();   //!< Zoom Out
@@ -439,6 +453,8 @@ public:
         void on_actionCDATA_clear_unused_triggered();
         void on_actionCDATA_Import_triggered();
         void on_actionSprite_editor_triggered();
+
+        void on_actionFixWrongMasks_triggered();
 // ////////////////////////////////////////////////////////
 
 
@@ -472,7 +488,23 @@ public:
 // ///////////////////////////////////////////////////////
 
 
-
+// ///////////////////// Bookmarks ////////////////////////        
+    private slots:
+        void on_actionBookmarkBox_triggered(bool checked);
+        void on_bookmarkBox_visibilityChanged(bool visible);
+        void on_bookmarkList_customContextMenuRequested(const QPoint &pos);
+        void DragAndDroppedBookmark(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow);
+        void on_bookmarkList_doubleClicked(const QModelIndex &index);
+    //Modificators:
+        void on_bookmarkAdd_clicked();
+        void on_bookmarkRemove_clicked();
+        void on_bookmarkList_itemChanged(QListWidgetItem *item);
+    //Go To...
+        void on_bookmarkGoto_clicked();
+    public:
+        void updateBookmarkBoxByList();
+        void updateBookmarkBoxByData();
+// ////////////////////////////////////////////////////////
 
 
 
@@ -518,6 +550,15 @@ public:
         void on_actionSection_19_triggered();
         void on_actionSection_20_triggered();
         void on_actionSection_21_triggered();
+
+        //Modify actions
+        void on_actionCloneSectionTo_triggered();
+        void on_actionSCT_Delete_triggered();
+        void on_actionSCT_RotateLeft_triggered();
+        void on_actionSCT_RotateRight_triggered();
+        void on_actionSCT_FlipHorizontal_triggered();
+        void on_actionSCT_FlipVertical_triggered();
+
 // ////////////////////////////////////////////////////////
 
 // ////////////////////Level Item toolbox /////////////////
@@ -1020,6 +1061,8 @@ private slots:
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+
+
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Testing////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////
@@ -1030,6 +1073,8 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
+
+
 
 signals:
     void closeEditor();

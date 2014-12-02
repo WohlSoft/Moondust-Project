@@ -95,7 +95,8 @@ void leveledit::dropEvent(QDropEvent *e)
 
     foreach (const QUrl &url, e->mimeData()->urls()) {
         const QString &fileName = url.toLocalFile();
-        if(QFileInfo(fileName).isDir()){
+        if(QFileInfo(fileName).isDir())
+        {
             SmartImporter * importer = new SmartImporter((QWidget*)this, fileName, (QWidget*)this);
             if(importer->isValid()){
                 if(importer->attemptFastImport()){
