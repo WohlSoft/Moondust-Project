@@ -27,9 +27,26 @@
 void MainWindow::on_actionCloneSectionTo_triggered()
 {
     LvlCloneSection box;
-    //box = new LazyFixTool_gui;
     box.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     box.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, box.size(), qApp->desktop()->availableGeometry()));
+
+
+    //Creating of level files list
+    QList<leveledit *> openedLeves;
+
+    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+    {
+        if(QString(window->widget()->metaObject()->className())=="leveledit")
+        {
+            openedLeves.push_back(qobject_cast<leveledit *>(window->widget()));
+        }
+    }
+
+    leveledit* activeLvlWin=NULL;
+    if(activeChildWindow()==1)
+        activeLvlWin = activeLvlEditWin();
+
+    box.addLevelList(openedLeves, activeLvlWin);
     box.exec();
 
 }
