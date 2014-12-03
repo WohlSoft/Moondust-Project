@@ -18,6 +18,15 @@ public:
     };
 };
 
+class Script{
+public:
+    enum CompilerType{
+        COMPILER_AUTOCODE = 0,
+        COMPILER_LUNALUA,
+        COMPILER_PGELUA
+    };
+
+};
 
 
 #endif // DEFINES_H
