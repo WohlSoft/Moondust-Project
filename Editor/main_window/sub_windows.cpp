@@ -158,6 +158,7 @@ QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
     leveledit *ChildWindow0;
     npcedit *ChildWindow2;
+    WorldEdit *ChildWindow3;
 
     foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
@@ -173,7 +174,12 @@ QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
         if (ChildWindow2->currentFile() == canonicalFilePath)
             return window;
         }
-
+        else if(QString(window->widget()->metaObject()->className())=="WorldEdit")
+        {
+        ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
+        if (ChildWindow3->currentFile() == canonicalFilePath)
+            return window;
+        }
     }
     return 0;
 }
