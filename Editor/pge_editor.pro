@@ -70,6 +70,8 @@ win32: LIBS += -lDbghelp
 
 #DEFINES += USE_QMEDIAPLAYER
 
+INCLUDEPATH += .
+
 win32: {
     LIBS += -L../_Libs/_builds/win32/lib
     INCLUDEPATH += ../_Libs/_builds/win32/include
@@ -105,7 +107,8 @@ TRANSLATIONS += languages/editor_en.ts \
     languages/editor_fr.ts \
     languages/editor_pt.ts \
     languages/editor_ja.ts \
-    languages/editor_zh.ts
+    languages/editor_zh.ts \
+    languages/editor_bg.ts
 
 SOURCES += main.cpp\
     mainwindow.cpp \

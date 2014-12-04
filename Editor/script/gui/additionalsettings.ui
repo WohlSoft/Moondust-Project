@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Additional settings</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../_resources/editor.qrc">
+    <normaloff>:/images/properties.png</normaloff>:/images/properties.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <property name="leftMargin">
@@ -101,7 +105,7 @@
      <item row="0" column="1">
       <widget class="QPushButton" name="btnReject">
        <property name="text">
-        <string>Cancle</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>
@@ -109,6 +113,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../_resources/editor.qrc"/>
+ </resources>
  <connections/>
 </ui>

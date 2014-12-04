@@ -172,6 +172,7 @@ public:
 
     QPoint applyGrid(QPoint source, int gridSize, QPoint gridOffset=QPoint(0,0) );
     void applyGroupGrid(QList<QGraphicsItem *> items, bool force=false);
+    void applyGridToEach(QList<QGraphicsItem *> items);
 
     void applyArrayForItemGroup(QList<QGraphicsItem * >items);
     void applyArrayForItem(QGraphicsItem * item);

@@ -21,6 +21,7 @@
 #include "lvl_scene.h"
 #include "../edit_level/level_edit.h"
 
+#include "../file_formats/file_formats.h"
 
 // /////////////////////////Init unused Section space as empty section///////////////////////////////
 void LvlScene::InitSection(int sect)
@@ -33,7 +34,18 @@ void LvlScene::InitSection(int sect)
     bool collided=true;
 
     if( (sect >= LvlData->sections.size()) && (sect<0) )
-        return; //Protector
+    {
+        //Expand sections
+        int needToAdd = (LvlData->sections.size()-1) - sect;
+        while(needToAdd > 0)
+        {
+            LevelSection dummySct = FileFormats::dummyLvlSection();
+            dummySct.id = LvlData->sections.size();
+            LvlData->sections.push_back(dummySct);
+            needToAdd--;
+        }
+    }
+
     long x,y,h,w;
 
     if(
