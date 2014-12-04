@@ -15,7 +15,7 @@ class AdditionalSettings : public QDialog
 
 public:
     explicit AdditionalSettings(QWidget *parent = 0);
-    explicit AdditionalSettings(const QString &name, const ScriptHolder &script, QWidget *parent = 0);
+    explicit AdditionalSettings(const QString &name, const ScriptHolder *script, QWidget *parent = 0);
     ~AdditionalSettings();
 
 
@@ -24,10 +24,16 @@ public:
         QVariant defaultValue;
         QString category;
         QString group;
+        QString labelTxt;
+        int controlType;
 
         //Optional
         int beginRange;
         int endRange;
+
+        //Binded Controls
+        QWidget* dataControl;
+        QPushButton* resetControl;
 
         //Actual data
         QVariant value;
@@ -36,9 +42,11 @@ public:
     static QList<SimpleAdditionalSetting> loadSimpleAdditionalSettings(const QString &path);
 private:
 
-    void configGUI(const QList<SimpleAdditionalSetting> &data);
+    void configGUI(QList<SimpleAdditionalSetting> &data);
+    void selectFirstValidItem();
 
     Ui::AdditionalSettings *ui;
+    /* Key: Pointer to Widget = Data Widget (i.e. QSpinBox) | Value: SimpleAdditionalSetting */
     QMap<QWidget*, SimpleAdditionalSetting> m_data;
     QMap<QTreeWidgetItem*, QWidget*> m_page;
 

@@ -2,6 +2,9 @@
 #include "ui_additionalsettings.h"
 
 #include <QSettings>
+#include <QSpinBox>
+#include <QLabel>
+#include <QPushButton>
 
 AdditionalSettings::AdditionalSettings(QWidget *parent) :
     QDialog(parent),
@@ -10,12 +13,14 @@ AdditionalSettings::AdditionalSettings(QWidget *parent) :
     ui->setupUi(this);
 }
 
-AdditionalSettings::AdditionalSettings(const QString &name, const ScriptHolder &script, QWidget *parent) :
+AdditionalSettings::AdditionalSettings(const QString &name, const ScriptHolder *script, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdditionalSettings)
 {
     ui->setupUi(this);
-    configGUI(loadSimpleAdditionalSettings(name));
+    QList<AdditionalSettings::SimpleAdditionalSetting> confSetting = loadSimpleAdditionalSettings(name);
+    configGUI(confSetting);
+    selectFirstValidItem();
 }
 
 AdditionalSettings::~AdditionalSettings()
@@ -51,7 +56,7 @@ QList<AdditionalSettings::SimpleAdditionalSetting> AdditionalSettings::loadSimpl
                 var_memaddr = memSetting.value("mem-address");
                 var_controlType = memSetting.value("control-type");
                 var_numRangeBegin = memSetting.value("range-begin", 0);
-                var_numRangeEnd = memSetting.value("range-end", 0);
+                var_numRangeEnd = memSetting.value("range-end", 20);
                 var_defaultVal = memSetting.value("default-value");
                 var_txtLabel = memSetting.value("txt-label");
 
@@ -68,9 +73,12 @@ QList<AdditionalSettings::SimpleAdditionalSetting> AdditionalSettings::loadSimpl
                 curSetting.category = category;
                 curSetting.group = group;
                 curSetting.defaultValue = var_defaultVal;
+                curSetting.controlType = var_controlType.toInt();
+                curSetting.labelTxt = var_txtLabel.toString();
 
                 curSetting.beginRange = var_numRangeBegin.toInt();
                 curSetting.endRange = var_numRangeEnd.toInt();
+
 
                 collectedSettings << curSetting;
 
@@ -88,10 +96,10 @@ QList<AdditionalSettings::SimpleAdditionalSetting> AdditionalSettings::loadSimpl
     return collectedSettings;
 }
 
-void AdditionalSettings::configGUI(const QList<AdditionalSettings::SimpleAdditionalSetting> &data)
+void AdditionalSettings::configGUI(QList<AdditionalSettings::SimpleAdditionalSetting> &data)
 {
     for(int i = 0; i < data.size(); ++i){
-        const AdditionalSettings::SimpleAdditionalSetting& selData = data[i];
+        AdditionalSettings::SimpleAdditionalSetting& selData = data[i];
 
         QTreeWidgetItem *selCatorgyItem = 0;
         for(int j = 0; j < ui->SettingList->topLevelItemCount(); ++j){
@@ -122,15 +130,52 @@ void AdditionalSettings::configGUI(const QList<AdditionalSettings::SimpleAdditio
             selGroupItem = new QTreeWidgetItem(selCatorgyItem);
         }
 
+        selGroupItem->setText(0, selData.group);
+
 
         QWidget *selWidget = 0;
         QGridLayout *selLayout = 0;
         if(!m_page.contains(selGroupItem)){
-            selWidget = new QWidget();;
+            selWidget = new QWidget();
             selWidget->setLayout(selLayout = new QGridLayout(selWidget));
+            m_page[selGroupItem] = selWidget;
+        }else{
+            selWidget = m_page[selGroupItem];
         }
 
-        selWidget = m_page[selGroupItem];
         selLayout = qobject_cast<QGridLayout*>(selWidget->layout());
+
+        int selNextRow = selLayout->count();
+
+
+        QWidget *targetWidget;
+        QLabel *targetLabel = new QLabel(selData.labelTxt, selWidget);
+        if(selData.controlType == 0){
+            QSpinBox *spinBox = new QSpinBox(selWidget);
+            spinBox->setMinimum(selData.beginRange);
+            spinBox->setMaximum(selData.endRange);
+            targetWidget = (QWidget*)spinBox;
+        }
+        QPushButton *targetReset = new QPushButton("Reset Value",selWidget);
+
+        selData.dataControl = targetWidget;
+        selData.resetControl = targetReset;
+        m_data[targetWidget] = selData;
+
+        selLayout->addWidget(targetLabel, selNextRow, 0);
+        selLayout->addWidget(targetWidget, selNextRow, 1);
+        selLayout->addWidget(targetReset, selNextRow, 2);
     }
+}
+
+void AdditionalSettings::selectFirstValidItem()
+{
+    for(int i = 0; i < ui->SettingList->topLevelItemCount(); ++i){
+        QTreeWidgetItem* baseItem = ui->SettingList->topLevelItem(i);
+        for(int j = 0; j < baseItem->childCount(); ++j){
+            baseItem->child(j)->setSelected(true);
+            return;
+        }
+    }
+
 }

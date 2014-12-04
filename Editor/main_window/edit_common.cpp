@@ -22,6 +22,7 @@
 #include "../file_formats/file_formats.h"
 #include "music_player.h"
 #include "global_settings.h"
+#include "../script/gui/additionalsettings.h"
 
 //Reload opened file data
 void MainWindow::on_actionReload_triggered()
@@ -412,3 +413,15 @@ void MainWindow::on_actionFlipVertical_triggered()
 
 }
 
+
+void MainWindow::on_actionAdditional_Settings_triggered()
+{
+    if(activeChildWindow() == 1){
+        AdditionalSettings *addSetting = new AdditionalSettings(configs.config_dir + "/lunadll_settings.ini", activeLvlEditWin()->LvlData.metaData.script);
+
+        addSetting->exec();
+
+        delete addSetting;
+    }
+
+}
