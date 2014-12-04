@@ -61,11 +61,11 @@ void LvlCloneSection::on_FileList_src_currentIndexChanged(int index)
     QListWidgetItem * item;
     foreach(LevelSection y, x->LvlData.sections)
     {
-        item = new QListWidgetItem(tr("Section")+QString(" %1 %2").arg(y.id)
+        item = new QListWidgetItem(tr("Section")+QString(" %1 %2").arg(y.id+1)
                                    .arg(
                                        ( (y.size_bottom==0) && (y.size_left==0) && (y.size_top==0) && (y.size_right==0))?
-                                           tr(""):
-                                           tr("[Busy]")
+                                           tr("[Uninitialized]"):
+                                           tr("")
                                        )
                                    );
         item->setData(3, QString::number(y.id));
@@ -136,7 +136,7 @@ void LvlCloneSection::on_buttonBox_accepted()
         return;
     }
 
-    clone_target = ui->FileList_src->currentData().value<leveledit *>();
+    clone_target = ui->FileList_dst->currentData().value<leveledit *>();
     clone_target_id = ui->SectionList_dst->selectedItems().first()->data(3).toInt();
 
     foreach(LevelSection x, clone_target->LvlData.sections)
