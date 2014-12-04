@@ -384,6 +384,12 @@ bool MainWindow::getCurrentSceneCoordinates(qreal &x, qreal &y)
 void MainWindow::on_actionAlign_selected_triggered()
 {
 
+    if(activeChildWindow()==1)
+    {
+        activeLvlEditWin()->scene->applyGridToEach(
+                    activeLvlEditWin()->scene->selectedItems()   );
+    }
+
 }
 
 void MainWindow::on_actionRotateLeft_triggered()
