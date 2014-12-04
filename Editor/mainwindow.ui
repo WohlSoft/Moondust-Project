@@ -7076,8 +7076,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>98</width>
-              <height>28</height>
+              <width>81</width>
+              <height>16</height>
              </rect>
             </property>
            </widget>
@@ -7303,7 +7303,7 @@ p, li { white-space: pre-wrap; }
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
    <property name="windowTitle">
-    <string>Bookmarks</string>
+    <string>Position bookmarks</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -9169,7 +9169,10 @@ p, li { white-space: pre-wrap; }
      <normaloff>:/images/bookmarks.png</normaloff>:/images/bookmarks.png</iconset>
    </property>
    <property name="text">
-    <string>Bookmarks</string>
+    <string>Position bookmarks</string>
+   </property>
+   <property name="toolTip">
+    <string>Bookmarks of position. Saving current camera position which giving able to quickly jump back.</string>
    </property>
   </action>
   <action name="actionCloneSectionTo">

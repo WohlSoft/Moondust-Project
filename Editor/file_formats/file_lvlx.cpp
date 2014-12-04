@@ -318,6 +318,19 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
                     //add captured value into array
                     bool found=false;
                     int q=0;
+
+                    if(section.id >= FileData.sections.size())
+                    {
+                        int needToAdd = (FileData.sections.size()-1) - section.id;
+                        while(needToAdd > 0)
+                        {
+                            LevelSection dummySct = dummyLvlSection();
+                            dummySct.id = FileData.sections.size();
+                            FileData.sections.push_back(dummySct);
+                            needToAdd--;
+                        }
+                    }
+
                     for(q=0; q<FileData.sections.size();q++)
                     {
                         if(FileData.sections[q].id==section.id){found=true; break;}
@@ -325,7 +338,9 @@ LevelData FileFormats::ReadExtendedLvlFile(QString RawData, QString filePath)
                     if(found)
                         FileData.sections[q] = section;
                     else
+                    {
                         FileData.sections.push_back(section);
+                    }
 
                 }//Level Section
 
