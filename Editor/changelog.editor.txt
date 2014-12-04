@@ -17,7 +17,8 @@ Editor 0.2.1.5
 - All graphics issues prevented with implementing of alternate unmasking algorithm
 - Easier way to fix lazily-made graphics added into [ Tools / Custom data / Fix wrong masks ]
 - Added unused custom data removal tool into [ Tools / Custom data / Clear unused data ]
-- Added Section modyfication features: Delete
+- Added Section modification features: Clone, Delete
+- Added more edit actions: align selected
 
 Editor 0.2.1.1
 - Fixed zoom icons customization
