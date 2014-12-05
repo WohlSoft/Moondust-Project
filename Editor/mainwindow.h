@@ -1074,7 +1074,7 @@ private slots:
 // ///////Please move them into it's category/////////////////////
     private slots:
 
-
+    void on_actionAdditional_Settings_triggered();
 
 signals:
     void closeEditor();
