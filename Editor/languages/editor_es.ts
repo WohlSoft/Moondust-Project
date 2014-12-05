@@ -6,17 +6,17 @@
     <message>
         <location filename="../script/gui/additionalsettings.ui" line="14"/>
         <source>Additional settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones adicionales</translation>
     </message>
     <message>
         <location filename="../script/gui/additionalsettings.ui" line="101"/>
         <source>Apply and Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar y guardar</translation>
     </message>
     <message>
         <location filename="../script/gui/additionalsettings.ui" line="108"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -114,12 +114,12 @@
     <message>
         <location filename="../main_window/appsettings.ui" line="239"/>
         <source>Placing mode</source>
-        <translation type="unfinished">Modo de colocado</translation>
+        <translation>Modo de colocado</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="245"/>
         <source>Don&apos;t show properties box on taking item to place</source>
-        <translation type="unfinished"></translation>
+        <translation>No mostrar caja de propiedades al tomar artículo a colocar</translation>
     </message>
     <message>
         <location filename="../main_window/appsettings.ui" line="256"/>
@@ -279,7 +279,7 @@
     <message>
         <location filename="../data_configs/config_manager.cpp" line="78"/>
         <source>Config packs are not found</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encuentran los packs</translation>
     </message>
     <message>
         <location filename="../data_configs/config_manager.cpp" line="81"/>
@@ -289,7 +289,12 @@ Please download and install them into directory&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 You can take any configuration package here:&lt;br&gt;%2</source>
-        <translation type="unfinished"></translation>
+        <translation>¡No se encuentran Paquetes de configuración disponibles!
+Por favor descárguelos e instálelos en directorio
+
+%1
+
+Puede tomar cualquier paquete aquí: %2</translation>
     </message>
 </context>
 <context>
@@ -1579,76 +1584,79 @@ Por favor, controle la ruta de aplicación.</translation>
     <message>
         <location filename="../edit_level/lvl_clone_section.ui" line="20"/>
         <source>Clone section</source>
-        <translation type="unfinished"></translation>
+        <translation>Clonar sección</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.ui" line="33"/>
         <source>Please select opened file and it&apos;s section which you want to clone and destination file and target section where you want to clone section.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor seleccione archivo abierto y su sección a clonar y su archivo y sección de destino donde desea clonar.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.ui" line="52"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuente</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.ui" line="62"/>
         <source>Destiation</source>
-        <translation type="unfinished"></translation>
+        <translation>Destino</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.ui" line="89"/>
         <source>Margin (How far out of section items should be copied, in pixels):</source>
-        <translation type="unfinished"></translation>
+        <translation>Márgen (hasta qué punto de la sección los items deberían copiarse, en píxeles):</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="64"/>
         <location filename="../edit_level/lvl_clone_section.cpp" line="89"/>
         <source>Section</source>
-        <translation type="unfinished">Sección</translation>
+        <translation>Sección</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="67"/>
         <source>[Uninitialized]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Sin iniciar]</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="93"/>
         <source>[Busy]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Ocupado]</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="111"/>
         <source>Sections aren&apos;t selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Las secciones no fueron seleccionadas</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="112"/>
         <source>Source and Destination sections should be selected!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Secciones fuente y destino deberían ser seleccionadas!</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="134"/>
         <source>Empty section</source>
-        <translation type="unfinished"></translation>
+        <translation>Sección vacía</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="135"/>
         <source>Source section is empty!
 Please select another section.</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Sección fuente está vacía!
+Por favor, seleccione otra.</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="152"/>
         <source>Section is busy</source>
-        <translation type="unfinished"></translation>
+        <translation>La sección está ocupada</translation>
     </message>
     <message>
         <location filename="../edit_level/lvl_clone_section.cpp" line="153"/>
         <source>Destination section is busy!
 Please select another section
 or delete them first with &apos;Delete Section&apos; option.</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La sección de destino está ocupada!
+Por favor seleccione otra
+o elimínela con su respectiva opción.</translation>
     </message>
 </context>
 <context>
@@ -2941,7 +2949,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="213"/>
         <source>Section modifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificaciones de sección</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="283"/>
@@ -2951,12 +2959,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="292"/>
         <source>Palettes and tilesets</source>
-        <translation>Paletas y tileses</translation>
+        <translation>Paletas y tilesets</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="309"/>
         <source>Custom data</source>
-        <translation type="unfinished">Datos personalizados</translation>
+        <translation>Datos personalizados</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="431"/>
@@ -3096,7 +3104,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="3705"/>
         <source>Auto-increment</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-incremento</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4238"/>
@@ -3735,7 +3743,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="8818"/>
         <source>Tilesets Editor</source>
-        <translation>Editor de baldozas</translation>
+        <translation>Editor de tilesets</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="8823"/>
@@ -3881,101 +3889,101 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../mainwindow.ui" line="9116"/>
         <source>Fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Llenar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9121"/>
         <source>Clear unused data</source>
-        <translation type="unfinished"></translation>
+        <translation>Limpiar datos sin usar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9133"/>
         <source>Show properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar propiedades</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9136"/>
         <source>Show properties of item</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar propiedades de artículo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9141"/>
         <source>Sprite Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de gráficos</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9146"/>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9149"/>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9157"/>
         <source>Enable GFX fix (reload of the file required)</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar arreglo de GFX (recargar el archivo requerido)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9160"/>
         <source>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Ésta función habilita máscara alternativa aplicando un algoritmo que permite la correcta visualización de máscaras mal hechas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9175"/>
         <source>Bookmarks of position. Saving current camera position which giving able to quickly jump back.</source>
-        <translation type="unfinished"></translation>
+        <translation>Marcadores de posición. Guardando posición de la cámara actual el cual permite saltar rápidamente.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9183"/>
         <source>Clone section to...</source>
-        <translation type="unfinished"></translation>
+        <translation>Clonar sección a...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9191"/>
         <location filename="../mainwindow.ui" line="9231"/>
         <source>Rotate left</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotar a izquierda</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9199"/>
         <location filename="../mainwindow.ui" line="9239"/>
         <source>Rotate right</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotar a la derecha</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9207"/>
         <location filename="../mainwindow.ui" line="9247"/>
         <source>Flip horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Voltear horizontalmente</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9215"/>
         <location filename="../mainwindow.ui" line="9255"/>
         <source>Flip vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Voltear verticalmente</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9223"/>
         <source>Align selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinear seleccionado</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9260"/>
         <source>Fix wrong masks</source>
-        <translation type="unfinished"></translation>
+        <translation>Arreglar máscaras mal hechas</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9263"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
-        <translation type="unfinished"></translation>
+        <translation>Ésta herramienta arreglará todas las máscaras de imágenes que causen errores visuales</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="9271"/>
         <source>Delete section</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar sección</translation>
     </message>
     <message>
         <source>Restart level after player&apos;s fail</source>
@@ -4280,7 +4288,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../mainwindow.ui" line="7306"/>
         <location filename="../mainwindow.ui" line="9172"/>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Marcadores de posición</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="7391"/>
@@ -5083,119 +5091,124 @@ Por favor, compruebe el directorio de la aplicación.</translation>
     <message>
         <location filename="../main_window/main_testing.cpp" line="59"/>
         <source>Engine already runned</source>
-        <translation type="unfinished"></translation>
+        <translation>El motor se está ejecutando</translation>
     </message>
     <message>
         <location filename="../main_window/main_testing.cpp" line="60"/>
         <source>Engine is already testing another level.
 Please exit from engine and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>El motor está probando otro nivel.
+Por favor, salga del mismo e intente de nuevo.</translation>
     </message>
     <message>
         <location filename="../main_window/main_testing.cpp" line="88"/>
         <source>Sorry, the testing feature is under construction.
 Settings will available soon.</source>
-        <translation type="unfinished"></translation>
+        <translation>Perdón, la función de pruebas está desarrollándose.
+Las opciones estarán disponibles pronto.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmark_box.cpp" line="169"/>
         <source>Rename Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Renombrar marcador</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="58"/>
         <source>Clonning of section...</source>
-        <translation type="unfinished"></translation>
+        <translation>Clonado de la sección...</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="216"/>
         <source>Section has been clonned</source>
-        <translation type="unfinished"></translation>
+        <translation>La sección se clonó</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="217"/>
         <source>Section has been successfully clonned!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La sección fue clonada exitosamente!</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="230"/>
         <source>Remove section</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover sección</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="231"/>
         <source>Do you want to remove all objects of this section?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Quiere remover todos los objetos de esta sección?</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="237"/>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>Margen de sección</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="238"/>
         <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="301"/>
         <source>Section has been removed</source>
-        <translation type="unfinished"></translation>
+        <translation>La sección fue removida</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="302"/>
         <source>Section %1 has been successfully deleted!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡La Sección %1 fue eliminada exitosamente!</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="37"/>
         <source>Select directory with custom data to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccione un directorio con datos personalizados para importar</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="144"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="161"/>
         <source>File is untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo no tiene título</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="145"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="162"/>
         <source>File doesn&apos;t use custom graphics.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>El archivo no usa gráficos personalizados.
+</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="195"/>
         <source>Nothing to do</source>
-        <translation type="unfinished"></translation>
+        <translation>Nada para hacer</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="196"/>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>In english this is present continuous. &quot;is not using&quot; instead of &quot;is not use&quot;.&quot;Have&quot; is for plural and &quot;has&quot; is singular. &quot;Hasn&apos;t&quot; instead of &quot;haven&apos;t&quot;. Yeah, you don&apos;t speak english natively but it&apos;s good for anybody who wants to translate it.</translatorcomment>
+        <translation>Este archivo no está usando gráficos GIF con máscaras transparentes o no tiene gráficos personalizados.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="200"/>
         <source>Fixing of masks...</source>
-        <translation type="unfinished"></translation>
+        <translation>Arreglando máscaras...</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_lvl_section_mods.cpp" line="59"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="201"/>
         <source>Please wait...</source>
-        <translation type="unfinished">Por favor, espere...</translation>
+        <translation>Por favor, espere...</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="230"/>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Listo</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="231"/>
         <source>Masks has been fixed!
 Please reload current file to apply result.</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Las máscaras fueron arregladas!
+Por favor recargue el archivo actual para aplicar el resultado.</translation>
     </message>
 </context>
 <context>
@@ -5444,12 +5457,12 @@ File: %1
     <message>
         <location filename="../smart_import/smartimporter.cpp" line="30"/>
         <source>File not saved</source>
-        <translation type="unfinished">Archivo no guardado</translation>
+        <translation>Archivo no guardado</translation>
     </message>
     <message>
         <location filename="../smart_import/smartimporter.cpp" line="30"/>
         <source>You need to save the level, so you can import custom graphics!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Necesita guardar el nivel, así puede importar gráficos personalizados!</translation>
     </message>
 </context>
 <context>
