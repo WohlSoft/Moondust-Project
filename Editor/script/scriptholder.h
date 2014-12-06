@@ -40,8 +40,15 @@ public:
 
     BasicCompiler *usingCompiler() const;
     void setUsingCompiler(BasicCompiler *usingCompiler);
+    Script::CompilerType usingCompilerType() const;
 
     QString compileCode();
+
+    QList<EventCommand *> events() const;
+    void setEvents(const QList<EventCommand *> &events);
+
+    QList<EventCommand *> &revents();
+    EventCommand* findEvent(EventCommand::EventType evType);
 
 signals:
 
@@ -49,7 +56,7 @@ public slots:
 
 private:
     BasicCompiler* m_usingCompiler;
-    QList<EventCommand> m_events;
+    QList<EventCommand *> m_events;
 };
 
 #endif // SCRIPTHOLDER_H

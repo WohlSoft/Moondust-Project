@@ -18,7 +18,7 @@
 
 #include "basiccompiler.h"
 
-BasicCompiler::BasicCompiler(QList<EventCommand> *eventsToCompile, QObject *parent) :
+BasicCompiler::BasicCompiler(QList<EventCommand *> eventsToCompile, QObject *parent) :
     QObject(parent)
 {
     m_events = eventsToCompile;
@@ -32,4 +32,14 @@ QString BasicCompiler::compileCode()
 
 BasicCompiler::~BasicCompiler()
 {}
+QList<EventCommand *> BasicCompiler::events() const
+{
+    return m_events;
+}
+
+void BasicCompiler::setEvents(const QList<EventCommand *> &events)
+{
+    m_events = events;
+}
+
 

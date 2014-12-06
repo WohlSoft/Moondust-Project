@@ -356,6 +356,7 @@
      <string>Script</string>
     </property>
     <addaction name="actionAdditional_Settings"/>
+    <addaction name="actionCompile_To"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuEdit"/>
@@ -9284,6 +9285,14 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Additional Settings</string>
+   </property>
+  </action>
+  <action name="actionCompile_To">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Compile To: </string>
    </property>
   </action>
  </widget>

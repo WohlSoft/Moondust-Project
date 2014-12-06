@@ -217,6 +217,7 @@ void leveledit::newFile(dataconfigs &configs, LevelEditingSettings options)
     curFile = tr("Untitled %1").arg(sequenceNumber++);
     setWindowTitle(QString(curFile).replace("&", "&&&"));
     LvlData = FileFormats::dummyLvlDataArray();
+    LvlData.metaData.script = new ScriptHolder;
     LvlData.untitled = true;
     StartLvlData = LvlData;
 
@@ -550,6 +551,7 @@ bool leveledit::loadFile(const QString &fileName, LevelData FileData, dataconfig
 {
     QFile file(fileName);
     LvlData = FileData;
+    LvlData.metaData.script = new ScriptHolder;
     LvlData.modified = false;
     LvlData.untitled = false;
     if (!file.open(QFile::ReadOnly | QFile::Text)) {

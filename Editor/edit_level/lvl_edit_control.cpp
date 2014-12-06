@@ -56,6 +56,8 @@ leveledit::~leveledit()
 {
     //free(scene);
     delete ui;
+    if(LvlData.metaData.script)
+        delete LvlData.metaData.script;
     MainWinConnect::pMainWin->updateMenus(true);
     WriteToLog(QtDebugMsg, "LevelEdit -> Class destroyed");
 }

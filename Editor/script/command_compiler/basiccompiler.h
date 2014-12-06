@@ -25,17 +25,21 @@ class BasicCompiler : public QObject
 {
     Q_OBJECT
 public:
-    explicit BasicCompiler(QList<EventCommand> *eventsToCompile, QObject *parent = 0);
+    explicit BasicCompiler(QList<EventCommand*> eventsToCompile, QObject *parent = 0);
     virtual QString compileCode();
 
+
     ~BasicCompiler();
+
+    QList<EventCommand *> events() const;
+    void setEvents(const QList<EventCommand *> &events);
 
 signals:
 
 public slots:
 
-private:
-    QList<EventCommand>* m_events;
+protected:
+    QList<EventCommand*> m_events;
 
 };
 

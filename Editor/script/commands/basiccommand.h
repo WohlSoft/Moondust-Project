@@ -28,12 +28,15 @@ public:
     explicit BasicCommand(QObject *parent = 0);
 
     virtual QString compileSegment(Script::CompilerType compiler, int tabOffset);
-    static bool supportCompiler(Script::CompilerType compiler);
+    virtual bool supportCompiler(Script::CompilerType compiler);
 
     ~BasicCommand();
 
     QString marker() const;
     void setMarker(const QString &marker);
+
+protected:
+    QString mkLine(int tab);
 
 signals:
 

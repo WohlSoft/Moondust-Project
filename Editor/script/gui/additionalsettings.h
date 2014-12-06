@@ -14,8 +14,7 @@ class AdditionalSettings : public QDialog
     Q_OBJECT
 
 public:
-    explicit AdditionalSettings(QWidget *parent = 0);
-    explicit AdditionalSettings(const QString &name, const ScriptHolder *script, QWidget *parent = 0);
+    explicit AdditionalSettings(const QString &name, ScriptHolder *script, QWidget *parent = 0);
     ~AdditionalSettings();
 
 
@@ -26,6 +25,7 @@ public:
         QString group;
         QString labelTxt;
         int controlType;
+        int memAddr;
 
         //Optional
         int beginRange;
@@ -40,15 +40,32 @@ public:
     };
 
     static QList<SimpleAdditionalSetting> loadSimpleAdditionalSettings(const QString &path);
+    ScriptHolder *scriptHolder() const;
+    void setScriptHolder(ScriptHolder *scriptHolder);
+
+    void cleanup();
+
+private slots:
+    void on_SettingList_itemSelectionChanged();
+    void resetValue();
+    void spinValChanged();
+    void on_btnReject_clicked();
+    void on_btnAccept_clicked();
+
 private:
+
+    void loadValuesByScriptHolder(QList<SimpleAdditionalSetting> &data);
 
     void configGUI(QList<SimpleAdditionalSetting> &data);
     void selectFirstValidItem();
+    void updateSelection();
 
     Ui::AdditionalSettings *ui;
     /* Key: Pointer to Widget = Data Widget (i.e. QSpinBox) | Value: SimpleAdditionalSetting */
     QMap<QWidget*, SimpleAdditionalSetting> m_data;
     QMap<QTreeWidgetItem*, QWidget*> m_page;
+
+    ScriptHolder* m_scriptHolder;
 
 };
 
