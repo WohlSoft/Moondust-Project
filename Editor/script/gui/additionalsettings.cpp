@@ -50,6 +50,7 @@ QList<AdditionalSettings::SimpleAdditionalSetting> AdditionalSettings::loadSimpl
                 QVariant var_numRangeEnd;
                 QVariant var_defaultVal;
                 QVariant var_txtLabel;
+                QVariant var_memAddrType;
 
                 memSetting.beginGroup(obj);
 
@@ -59,6 +60,7 @@ QList<AdditionalSettings::SimpleAdditionalSetting> AdditionalSettings::loadSimpl
                 var_numRangeEnd = memSetting.value("range-end", 20);
                 var_defaultVal = memSetting.value("default-value");
                 var_txtLabel = memSetting.value("txt-label");
+                var_memAddrType = memSetting.value("mem-address-type", static_cast<int>(MemoryCommand::FIELD_WORD));
 
                 if(var_memaddr.isNull() ||
                         var_controlType.isNull() ||
@@ -76,6 +78,7 @@ QList<AdditionalSettings::SimpleAdditionalSetting> AdditionalSettings::loadSimpl
                 curSetting.controlType = var_controlType.toInt();
                 curSetting.labelTxt = var_txtLabel.toString();
                 curSetting.memAddr = (int)var_memaddr.toString().toUInt(0, 16);
+                curSetting.memAddrType = var_memAddrType.toInt();
 
                 curSetting.beginRange = var_numRangeBegin.toInt();
                 curSetting.endRange = var_numRangeEnd.toInt();
@@ -301,7 +304,13 @@ void AdditionalSettings::on_btnAccept_clicked()
             continue;
         MemoryCommand* memCmd = new MemoryCommand(((SimpleAdditionalSetting)(*it)).memAddr, MemoryCommand::FIELD_WORD, (double)((SimpleAdditionalSetting)(*it)).value.toDouble());
         memCmd->setMarker("AdditionalSetting");
+        memCmd->setFieldType(static_cast<MemoryCommand::FieldType>(((SimpleAdditionalSetting)(*it)).memAddrType));
         evCmd->addBasicCommand(memCmd);
+    }
+
+    //Check if event list itself is empty and delete if necessary:
+    if(!evCmd->countCommands()){
+        m_scriptHolder->deleteEvent(evCmd);
     }
 
     this->accept();
