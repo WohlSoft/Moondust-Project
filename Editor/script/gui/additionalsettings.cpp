@@ -140,6 +140,9 @@ void AdditionalSettings::configGUI(QList<AdditionalSettings::SimpleAdditionalSet
         if(!m_page.contains(selGroupItem)){
             selWidget = new QWidget();
             selWidget->setLayout(selLayout = new QGridLayout(selWidget));
+            selLayout->setContentsMargins(3,3,3,3);
+            selLayout->setHorizontalSpacing(2);
+            selLayout->setVerticalSpacing(2);
             m_page[selGroupItem] = selWidget;
         }else{
             selWidget = m_page[selGroupItem];
