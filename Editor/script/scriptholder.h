@@ -49,6 +49,8 @@ public:
 
     QList<EventCommand *> &revents();
     EventCommand* findEvent(EventCommand::EventType evType);
+    bool deleteEvent(EventCommand* evCmd);
+
 
 signals:
 
