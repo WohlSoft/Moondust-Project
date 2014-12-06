@@ -77,23 +77,15 @@ bool ImageCalibrator::init(QString imgPath)
     frmX=0;
     frmY=0;
 
-    //    imgOffsets.clear();
-    //    for(int i=0; i<10; i++)
-    //    {
-    //        QVector<QPair<int, int > > xRow;
-    //        for(int j=0; j<10; j++)
-    //        {
-    //            xRow.push_back(  );
-    //        }
-    //        imgOffsets.push_back(xRow);
-    //    }
-
     frameOpts xyCell;
     xyCell.offsetX=0;
     xyCell.offsetY=0;
     xyCell.W=0;
     xyCell.H=0;
     xyCell.used=false;
+    xyCell.isDuck=false;
+    xyCell.isRightDir=false;
+    xyCell.showGrabItem=false;
     // Write default values
     QVector<frameOpts > xRow;
     for(int i=0; i<10; i++)
@@ -127,16 +119,12 @@ bool ImageCalibrator::init(QString imgPath)
     return true;
 }
 
+
 void ImageCalibrator::on_FrameX_valueChanged(int arg1)
 {
     if(ImgCalibratorLock) return;
     frmX = arg1;
-    ImgCalibratorLock = true;
-    ui->OffsetX->setValue(imgOffsets[frmX][frmY].offsetX);
-    ui->OffsetY->setValue(imgOffsets[frmX][frmY].offsetY);
-    ui->CropW->setValue(imgOffsets[frmX][frmY].W);
-    ui->CropH->setValue(imgOffsets[frmX][frmY].H);
-    ImgCalibratorLock = false;
+    updateControls();
     updateScene();
 
 }
@@ -145,12 +133,7 @@ void ImageCalibrator::on_FrameY_valueChanged(int arg1)
 {
     if(ImgCalibratorLock) return;
     frmY = arg1;
-    ImgCalibratorLock = true;
-    ui->OffsetX->setValue(imgOffsets[frmX][frmY].offsetX);
-    ui->OffsetY->setValue(imgOffsets[frmX][frmY].offsetY);
-    ui->CropW->setValue(imgOffsets[frmX][frmY].W);
-    ui->CropH->setValue(imgOffsets[frmX][frmY].H);
-    ImgCalibratorLock = false;
+    updateControls();
     updateScene();
 }
 
@@ -187,17 +170,15 @@ void ImageCalibrator::on_Matrix_clicked()
 {
     Matrix dialog;
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    dialog.setFrame(frmX, frmY);
     if(dialog.exec()==QDialog::Accepted)
     {
-        ImgCalibratorLock=true;
         frmX = dialog.frameX;
         frmY = dialog.frameY;
+        ImgCalibratorLock=true;
         ui->FrameX->setValue(frmX);
         ui->FrameY->setValue(frmY);
-        ui->OffsetX->setValue(imgOffsets[frmX][frmY].offsetX);
-        ui->OffsetY->setValue(imgOffsets[frmX][frmY].offsetY);
-        ui->CropW->setValue(imgOffsets[frmX][frmY].W);
-        ui->CropH->setValue(imgOffsets[frmX][frmY].H);
+        updateControls();
         ImgCalibratorLock=false;
     }
     updateScene();
@@ -209,12 +190,7 @@ void ImageCalibrator::on_Reset_clicked()
     imgOffsets[frmX][frmY].offsetY = 0;
     imgOffsets[frmX][frmY].W = 0;
     imgOffsets[frmX][frmY].H = 0;
-    ImgCalibratorLock = true;
-    ui->OffsetX->setValue(0);
-    ui->OffsetY->setValue(0);
-    ui->CropW->setValue(0);
-    ui->CropH->setValue(0);
-    ImgCalibratorLock = false;
+    updateControls();
     updateScene();
 }
 
@@ -270,6 +246,16 @@ void ImageCalibrator::on_WriteGIF_clicked()
 
 }
 
+void ImageCalibrator::updateControls()
+{
+    ImgCalibratorLock = true;
+    ui->OffsetX->setValue(imgOffsets[frmX][frmY].offsetX);
+    ui->OffsetY->setValue(imgOffsets[frmX][frmY].offsetY);
+    ui->CropW->setValue(imgOffsets[frmX][frmY].W);
+    ui->CropH->setValue(imgOffsets[frmX][frmY].H);
+    ImgCalibratorLock = false;
+}
+
 void ImageCalibrator::updateScene()
 {
     imgFrame->setPixmap(
@@ -277,7 +263,8 @@ void ImageCalibrator::updateScene()
                          imgOffsets[frmX][frmY].W, imgOffsets[frmX][frmY].H)
                 );
     physics->setRect(framesX[frmX][frmY].offsetX, framesX[frmX][frmY].offsetY,
-                     framesX[frmX][frmY].W-1, framesX[frmX][frmY].H-1);
+                     frameWidth-1, (framesX[frmX][frmY].isDuck?
+                                   frameHeightDuck:frameHeight)-1);
 }
 
 void ImageCalibrator::saveCalibrates()

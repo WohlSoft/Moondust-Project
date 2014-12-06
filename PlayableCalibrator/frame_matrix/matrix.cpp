@@ -19,8 +19,11 @@
 
 #include "matrix.h"
 #include <ui_matrix.h>
-#include "MatrixScene.h"
 #include "../main/globals.h"
+
+#include "../main/mw.h"
+
+#include <QPainter>
 
 
 Matrix::Matrix(QWidget *parent) :
@@ -28,14 +31,25 @@ Matrix::Matrix(QWidget *parent) :
     ui(new Ui::Matrix)
 {
     ui->setupUi(this);
-    MatrixS = new MatrixScene;
-    MatrixS->draw();
+    MatrixS = new QGraphicsScene;
     ui->SpriteMatrix->setScene(MatrixS);
+
+    this->updateGeometry();
+    //qApp->processEvents();
+    this->show();
+
+    scaledImage = QPixmap(MW::sprite()).scaled(ui->SpriteMatrix->viewport()->width(),
+                                               ui->SpriteMatrix->viewport()->height(),
+                                               Qt::KeepAspectRatio);
+
+    drawGrid();
+    image.setPixmap(scaledImage);
+    image.setPos(0.0, 0.0);
+    MatrixS->addItem(&image);
 
     FrameConfig = framesX;
 
     //Set data to matrix:
-
     // Set Y = 0
     ui->EnFrame_0_0->setChecked(framesX[0][0].used);
     ui->EnFrame_0_1->setChecked(framesX[1][0].used);
@@ -156,7 +170,6 @@ Matrix::Matrix(QWidget *parent) :
     ui->EnFrame_9_7->setChecked(framesX[7][9].used);
     ui->EnFrame_9_8->setChecked(framesX[8][9].used);
     ui->EnFrame_9_9->setChecked(framesX[9][9].used);
-
 }
 
 Matrix::~Matrix()
@@ -168,7 +181,42 @@ void Matrix::setFrame(int x, int y)
 {
     frameX = x;
     frameY = y;
+    QPainter painter(&scaledImage);
+        QColor color;
+        color.setRed(255);
+        color.setBlue(0);
+        color.setGreen(0);
+        color.setAlpha(128);
+        painter.setBrush(QBrush(color));
+        painter.drawEllipse(QPoint(
+                          (scaledImage.width()/10)*x+(scaledImage.width()/10)/2,
+                          (scaledImage.height()/10)*y+(scaledImage.height()/10)/2
+                                ), 30, 30);
+        painter.end();
+
+    image.setPixmap(scaledImage);
+
     accept();
+}
+
+void Matrix::drawGrid()
+{
+    int ws=scaledImage.width()/10;
+    int hs=scaledImage.height()/10;
+    int w=scaledImage.width();
+    int h=scaledImage.height();
+    QPainter painter(&scaledImage);
+    painter.setPen(QPen(Qt::black, 1));
+    for(int i=1;i<=9;i++)
+    {
+        painter.drawLine(ws*i, 0, ws*i, w);
+    }
+    for(int i=1;i<=9;i++)
+    {
+        painter.drawLine(0, hs*i, h, hs*i);
+    }
+    painter.end();
+    image.setPixmap(scaledImage);
 }
 
 
