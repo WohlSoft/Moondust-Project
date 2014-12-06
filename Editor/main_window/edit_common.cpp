@@ -67,6 +67,10 @@ void MainWindow::on_actionReload_triggered()
                 QTextStream meta(&file);
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
+                if(FileData.metaData.script){
+                    delete FileData.metaData.script;
+                    FileData.metaData.script = NULL;
+                }
                 FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, filePath+".meta");
             }
             else
@@ -417,11 +421,60 @@ void MainWindow::on_actionFlipVertical_triggered()
 void MainWindow::on_actionAdditional_Settings_triggered()
 {
     if(activeChildWindow() == 1){
-        AdditionalSettings *addSetting = new AdditionalSettings(configs.config_dir + "/lunadll_settings.ini", activeLvlEditWin()->LvlData.metaData.script);
+        if(!activeLvlEditWin()->LvlData.metaData.script)
+            return;
+
+        AdditionalSettings *addSetting = new AdditionalSettings(configs.config_dir + "lunadll_settings.ini", activeLvlEditWin()->LvlData.metaData.script);
 
         addSetting->exec();
+        addSetting->cleanup();
+
 
         delete addSetting;
     }
 
+}
+
+void MainWindow::on_actionCompile_To_triggered()
+{
+    if(activeChildWindow() == 1){
+        if(!activeLvlEditWin()->LvlData.metaData.script)
+            return;
+
+        LevelData *lvlData = &activeLvlEditWin()->LvlData;
+
+        QDir pathOfFile = QDir(lvlData->path);
+        if(!pathOfFile.exists(lvlData->filename)){
+            pathOfFile.mkdir(lvlData->filename);
+        }
+
+        if(lvlData->metaData.script->usingCompilerType() == Script::COMPILER_LUNALUA){
+
+
+
+            QFile lunaLuaFile(lvlData->path+"/"+lvlData->filename+"/"+"lunadll.lua");
+            if(lunaLuaFile.exists()){
+                if(QMessageBox::warning(this, tr("Already exsist"), tr("Lunadll.lua already exsist!\nOverwrite?"), QMessageBox::Yes|QMessageBox::No)==QMessageBox::No){
+                    return;
+                }
+                lunaLuaFile.remove();
+            }
+
+            if(!lunaLuaFile.open(QFile::WriteOnly | QFile::Text)){
+                QMessageBox::warning(this, tr("File save error"),
+                                     tr("Cannot save file %1:\n%2.")
+                                     .arg("lunadll.lua")
+                                     .arg(lunaLuaFile.errorString()));
+                return;
+            }
+
+            {
+                QTextStream out(&lunaLuaFile);
+                out << lvlData->metaData.script->compileCode();
+            }
+            lunaLuaFile.close();
+
+        }
+
+    }
 }

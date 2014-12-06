@@ -19,17 +19,18 @@
 #include "basiccommand.h"
 
 BasicCommand::BasicCommand(QObject *parent) :
-    QObject(parent)
+    QObject(parent),
+    m_marker("")
 {
 }
 
 
-QString BasicCommand::compileSegment(Script::CompilerType compiler, int tabOffset)
+QString BasicCommand::compileSegment(Script::CompilerType /*compiler*/, int /*tabOffset*/)
 {
     return QString("");
 }
 
-bool BasicCommand::supportCompiler(Script::CompilerType compiler)
+bool BasicCommand::supportCompiler(Script::CompilerType /*compiler*/)
 {
     return true;
 }
@@ -44,6 +45,15 @@ QString BasicCommand::marker() const
 void BasicCommand::setMarker(const QString &marker)
 {
     m_marker = marker;
+}
+
+QString BasicCommand::mkLine(int tab)
+{
+    QString t("");
+    for(int i = 0; i < tab; ++i){
+        t += "\t";
+    }
+    return t;
 }
 
 

@@ -1076,6 +1076,8 @@ private slots:
 
     void on_actionAdditional_Settings_triggered();
 
+    void on_actionCompile_To_triggered();
+
 signals:
     void closeEditor();
 

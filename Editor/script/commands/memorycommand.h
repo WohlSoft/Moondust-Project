@@ -25,16 +25,40 @@ class MemoryCommand : public BasicCommand
 {
     Q_OBJECT
 public:
-    explicit MemoryCommand(QObject *parent = 0);
+    enum FieldType{
+        FIELD_BYTE = 1,
+        FIELD_WORD,
+        FIELD_DWORD,
+        FIELD_FLOAT,
+        FIELD_DFLOAT
+    };
+
+    explicit MemoryCommand(int hexVal, FieldType ftype, double value, QObject *parent = 0);
     virtual QString compileSegment(Script::CompilerType compiler, int tabOffset);
-    static bool supportCompiler(Script::CompilerType compiler);
+    virtual bool supportCompiler(Script::CompilerType compiler);
 
     ~MemoryCommand();
+
+    int hexValue() const;
+    void setHexValue(int hexValue);
+
+    FieldType fieldType() const;
+    void setFieldType(const FieldType &fieldType);
+
+    double getValue() const;
+    void setValue(double value);
 
 signals:
 
 public slots:
 
+private:
+    int m_hexValue;
+    double m_value;
+    FieldType m_fieldType;
+
+    QString fieldTypeToString();
+    QString valueToString();
 };
 
 #endif // MEMORYCOMMAND_H

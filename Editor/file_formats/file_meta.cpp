@@ -33,6 +33,7 @@ MetaData FileFormats::ReadNonSMBX64MetaData(QString RawData, QString filePath)
 
 
     MetaData FileData;
+    FileData.script = new ScriptHolder();
 
     QString errorString;
 

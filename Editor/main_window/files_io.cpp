@@ -80,6 +80,11 @@ void MainWindow::OpenFile(QString FilePath)
                 QTextStream meta(&file);
                 meta.setCodec("UTF-8");
                 metaRaw = meta.readAll();
+                if(FileData.metaData.script){
+                    delete FileData.metaData.script;
+                    FileData.metaData.script = NULL;
+                }
+
                 FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, FilePath+".meta");
             }
             else

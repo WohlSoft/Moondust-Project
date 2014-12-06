@@ -238,6 +238,23 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionAdditional_Settings->setEnabled( (WinType==1) );
 
+    ui->actionCompile_To->setEnabled( false );
+    if(WinType==1){
+        if(activeLvlEditWin()->LvlData.metaData.script){
+            Script::CompilerType ct = activeLvlEditWin()->LvlData.metaData.script->usingCompilerType();
+            if(ct == Script::COMPILER_LUNALUA){
+                ui->actionCompile_To->setText(tr("Compile To: LunaLua"));
+                ui->actionCompile_To->setEnabled( true );
+            }else{
+                ui->actionCompile_To->setText(tr("Compile To:"));
+                ui->actionCompile_To->setEnabled( false );
+            }
+        }else{
+            ui->actionCompile_To->setText(tr("Compile To:"));
+            ui->actionCompile_To->setEnabled( false );
+        }
+    }
+
     if(WinType==1)
     {
         if( configs.check() )

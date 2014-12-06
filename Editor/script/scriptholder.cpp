@@ -18,11 +18,13 @@
 
 #include "scriptholder.h"
 #include "../common_features/logger.h"
+#include "command_compiler/lunaluacompiler.h"
 
 ScriptHolder::ScriptHolder(QObject *parent) :
     QObject(parent),
     m_usingCompiler(0)
 {
+    m_usingCompiler = new LunaLuaCompiler(m_events);
 }
 BasicCompiler *ScriptHolder::usingCompiler() const
 {
@@ -36,16 +38,53 @@ void ScriptHolder::setUsingCompiler(BasicCompiler *usingCompiler)
     m_usingCompiler = usingCompiler;
 }
 
+Script::CompilerType ScriptHolder::usingCompilerType() const
+{
+    if(qobject_cast<LunaLuaCompiler*>(m_usingCompiler))
+        return Script::COMPILER_LUNALUA;
+    return static_cast<Script::CompilerType>(-1);
+}
+
 QString ScriptHolder::compileCode()
 {
     if(!m_usingCompiler){
         WriteToLog(QtDebugMsg, "Failed to compile: No compiler is set!");
         return QString("");
     }
+    m_usingCompiler->setEvents(m_events);
     return m_usingCompiler->compileCode();
 }
+QList<EventCommand *> ScriptHolder::events() const
+{
+    return m_events;
+}
+
+void ScriptHolder::setEvents(const QList<EventCommand *> &events)
+{
+    m_events = events;
+}
+
+QList<EventCommand *> &ScriptHolder::revents()
+{
+    return m_events;
+}
+
+EventCommand *ScriptHolder::findEvent(EventCommand::EventType evType)
+{
+    foreach(EventCommand* evCmd, m_events){
+        if(evCmd->eventType() == evType){
+            return evCmd;
+        }
+    }
+    return NULL;
+}
+
 
 ScriptHolder::~ScriptHolder()
-{}
+{
+    if(m_usingCompiler)
+        delete m_usingCompiler;
+    qDeleteAll(m_events);
+}
 
 
