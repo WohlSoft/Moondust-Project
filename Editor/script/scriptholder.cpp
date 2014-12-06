@@ -79,6 +79,15 @@ EventCommand *ScriptHolder::findEvent(EventCommand::EventType evType)
     return NULL;
 }
 
+bool ScriptHolder::deleteEvent(EventCommand *evCmd)
+{
+    if(m_events.removeOne(evCmd)){
+        delete evCmd;
+        return true;
+    }
+    return false;
+}
+
 
 ScriptHolder::~ScriptHolder()
 {
