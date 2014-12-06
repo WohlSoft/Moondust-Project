@@ -23,7 +23,6 @@
 
 #include "calibrationmain.h"
 #include "ui_calibrationmain.h"
-#include "animator/SpriteScene.h"
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
 #include "animator/animate.h"
@@ -55,6 +54,14 @@ void CalibrationMain::loadConfig(QString fileName)
         //Load Default
         ini_sprite = QApplication::applicationDirPath() + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QSettings conf(ini_sprite, QSettings::IniFormat);
+
+    conf.beginGroup("common");
+        frameWidth = conf.value("width", "-1").toInt();
+        frameHeight = conf.value("height", "-1").toInt();
+        frameHeightDuck = conf.value("height-duck", "-1").toInt();
+        frameGrabOffsetX = conf.value("grab-offset-x", "0").toInt();
+        frameGrabOffsetY = conf.value("grab-offset-y", "0").toInt();
+    conf.endGroup();
     int i, j;
 
     for(i=0; i<10;i++)
@@ -67,7 +74,26 @@ void CalibrationMain::loadConfig(QString fileName)
             framesX[i][j].offsetX = conf.value("offsetX", "0").toInt();
             framesX[i][j].offsetY = conf.value("offsetY", "0").toInt();
             framesX[i][j].used = conf.value("used", "false").toBool();
+            framesX[i][j].isDuck = conf.value("duck", "false").toBool();
+            framesX[i][j].isRightDir = conf.value("isRightDir", "false").toBool();
+            framesX[i][j].showGrabItem = conf.value("showGrabItem", "false").toBool();
             conf.endGroup();
+
+            if(frameWidth < 0)
+            {
+                if(framesX[i][j].used)
+                    frameWidth=framesX[i][j].W;
+            }
+            if(frameHeight < 0)
+            {
+                if(framesX[i][j].used)
+                    frameHeight=framesX[i][j].H;
+            }
+            if(frameHeightDuck < 0)
+            {
+                if(framesX[i][j].used)
+                    frameHeightDuck=framesX[i][j].H;
+            }
         }
     }
 
@@ -176,6 +202,14 @@ void CalibrationMain::saveConfig(QString fileName)
     QSettings conf(ini_sprite, QSettings::IniFormat);
     int i, j;
 
+    conf.beginGroup("common");
+        conf.setValue("width", frameWidth);
+        conf.setValue("height", frameHeight);
+        conf.setValue("height-duck", frameHeightDuck);
+        conf.setValue("grab-offset-x", frameGrabOffsetX);
+        conf.setValue("grab-offset-y", frameGrabOffsetY);
+    conf.endGroup();
+
     for(i=0; i<10;i++)
     {
         for(j=0; j<10;j++)
@@ -188,6 +222,9 @@ void CalibrationMain::saveConfig(QString fileName)
                 conf.setValue("offsetX", framesX[i][j].offsetX);
                 conf.setValue("offsetY", framesX[i][j].offsetY);
                 conf.setValue("used", framesX[i][j].used);
+                if(framesX[i][j].isDuck) conf.setValue("duck", framesX[i][j].isDuck);
+                if(framesX[i][j].isRightDir) conf.setValue("isRightDir", framesX[i][j].isRightDir);
+                if(framesX[i][j].showGrabItem) conf.setValue("showGrabItem", framesX[i][j].showGrabItem);
                 conf.endGroup();
             }
         }

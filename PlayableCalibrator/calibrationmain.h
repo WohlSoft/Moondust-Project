@@ -21,7 +21,6 @@
 #define CALIBRATIONMAIN_H
 
 #include <QWidget>
-#include "animator/SpriteScene.h"
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QtWidgets>
@@ -34,6 +33,9 @@ struct frameOpts
     int offsetX;
     int offsetY;
     bool used;
+    bool isDuck;
+    bool isRightDir;
+    bool showGrabItem;
 };
 
 
@@ -48,7 +50,7 @@ class CalibrationMain : public QWidget
 public:
     explicit CalibrationMain(QWidget *parent = 0);
     ~CalibrationMain();
-    SpriteScene * Scene;
+    QGraphicsScene * Scene;
     FrameSets AnimationFrames;
     void getSpriteAniData(QSettings &set, QString name);
     void setSpriteAniData(QSettings &set);
@@ -68,35 +70,62 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void on_FrameX_valueChanged(int arg1);
-    void on_FrameY_valueChanged(int arg1);
+    void on_FrameX_valueChanged(int);
+    void on_FrameY_valueChanged(int);
     void on_Height_valueChanged(int arg1);
+    void on_Height_duck_valueChanged(int arg1);
     void on_Width_valueChanged(int arg1);
+
+    void on_grabOffsetX_valueChanged(int arg1);
+    void on_grabOffsetY_valueChanged(int arg1);
+
     void on_OffsetX_valueChanged(int arg1);
     void on_OffsetY_valueChanged(int arg1);
-    void on_CopyButton_clicked();
-    void on_PasteButton_clicked();
-    bool on_OpenSprite_clicked();
-
-    void on_AboutButton_clicked();
-
-    void on_SaveConfigButton_clicked();
-
-    void on_applyToAll_clicked();
-
-    void on_MakeTemplateB_clicked();
+    void on_isDuckFrame_clicked(bool checked);
 
     void on_EnableFrame_clicked(bool checked);
 
-    void on_Matrix_clicked();
+    void on_CopyButton_clicked();
+    void on_PasteButton_clicked();
 
+    bool on_OpenSprite_clicked();
+    void on_SaveConfigButton_clicked();
+
+    void on_applyToAll_clicked();
+    void on_MakeTemplateB_clicked();
+    void on_AboutButton_clicked();
+
+
+    void on_Matrix_clicked();
     void on_AnimatorButton_clicked();
 
     void on_editSizes_clicked();
-
     void on_calibrateImage_clicked();
 
+    void updateControls();
+    void updateScene();
+
+    void initScene();
+
+    void on_isRightDirect_clicked(bool checked);
+
+    void on_showGrabItem_clicked(bool checked);
+
 private:
+    int frmX;
+    int frmY;
+
+    bool lockControls;
+
+    QPoint m_FramePos;
+    QGraphicsPixmapItem currentImageItem;
+    QPixmap             currentPixmap;
+    QGraphicsRectItem FrameBox_gray;
+    QGraphicsRectItem CollisionBox_green;
+
+    QGraphicsLineItem grabLineX;
+    QGraphicsLineItem grabLineY;
+
     Ui::CalibrationMain *ui;
     QString titleCache;
 };
