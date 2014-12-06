@@ -30,6 +30,7 @@ public:
         //Optional
         int beginRange;
         int endRange;
+        int memAddrType;
 
         //Binded Controls
         QWidget* dataControl;

@@ -91,6 +91,11 @@ void EventCommand::addBasicCommand(BasicCommand *command)
     m_childCmds << command;
 }
 
+int EventCommand::countCommands()
+{
+    return m_childCmds.size();
+}
+
 void EventCommand::removeBasicCommand(int i)
 {
     m_childCmds.removeAt(i);
