@@ -288,3 +288,8 @@ void Animate::on_directRight_clicked()
     aniDir=1;
     aniFindSet();
 }
+
+void Animate::on_FrameSpeed_valueChanged(int arg1)
+{
+    AniScene->timer.setInterval(arg1);
+}

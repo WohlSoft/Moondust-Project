@@ -25,6 +25,9 @@ int main(int argc, char *argv[])
     QApplication::addLibraryPath(".");
     QApplication a(argc, argv);
     CalibrationMain w;
+
+    w.setWindowFlags(w.windowFlags() & ~(Qt::WindowMaximizeButtonHint));
+
     if(!w.wasCanceled)
         w.show();
     else

@@ -25,6 +25,11 @@ Globals::Globals()
 
 QList<QVector<frameOpts > > imgOffsets;
 QList<QVector<frameOpts > > framesX;
+int frameWidth=0;
+int frameHeight=0;
+int frameHeightDuck=0;
+int frameGrabOffsetX=0;
+int frameGrabOffsetY=0;
 FrameSets AniFrames;
 
 frameOpts buffer;
