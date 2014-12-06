@@ -236,6 +236,8 @@ void MainWindow::updateMenus(bool force)
     ui->actionSCT_RotateLeft->setEnabled( (WinType==1) );
     ui->actionSCT_RotateRight->setEnabled( (WinType==1) );
 
+    ui->actionAdditional_Settings->setEnabled( (WinType==1) );
+
     if(WinType==1)
     {
         if( configs.check() )
