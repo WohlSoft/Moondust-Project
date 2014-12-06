@@ -20,10 +20,10 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
 #include <QDialog>
-#include "../animator/SpriteScene.h"
 #include "../calibrationmain.h"
-#include "MatrixScene.h"
 
 namespace Ui {
 class Matrix;
@@ -36,11 +36,12 @@ class Matrix : public QDialog
 public:
     explicit Matrix(QWidget *parent = 0);
     ~Matrix();
-    MatrixScene * MatrixS;
+    QGraphicsScene *MatrixS;
     QList<QVector<frameOpts > > FrameConfig;
     int frameX;
     int frameY;
     void setFrame(int x, int y);
+    void drawGrid();
 
 private slots:
     void on_EnFrame_0_0_clicked(bool checked);
@@ -285,6 +286,8 @@ private slots:
 
 
 private:
+    QGraphicsPixmapItem image;
+    QPixmap scaledImage;
     Ui::Matrix *ui;
 };
 
