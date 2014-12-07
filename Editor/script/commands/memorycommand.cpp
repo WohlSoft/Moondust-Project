@@ -30,7 +30,9 @@ QString MemoryCommand::compileSegment(Script::CompilerType compiler, int tabOffs
 {
     QString compiledStr("");
     if(compiler == Script::COMPILER_LUNALUA){
-        compiledStr += mkLine(tabOffset) + "mem(" + "0x" + QString::number(hexValue(), 16).toUpper() + "," + fieldTypeToString() + "," + valueToString() + ")\n";
+        compiledStr += mkLine(tabOffset) + "mem(" + "0x" + QString::number(hexValue(), 16).toUpper() + "," + fieldTypeToString(compiler) + "," + valueToString() + ")\n";
+    }else if(compiler == Script::COMPILER_AUTOCODE){
+        compiledStr += mkLine(tabOffset) + "MemAssign," + "0x"+ QString::number(hexValue(), 16).toUpper() + "," + valueToString() + ",0,0,0," + fieldTypeToString(compiler)+"\n";
     }
     return compiledStr;
 }
@@ -71,13 +73,22 @@ void MemoryCommand::setValue(double value)
 }
 
 
-QString MemoryCommand::fieldTypeToString()
+QString MemoryCommand::fieldTypeToString(Script::CompilerType ct)
 {
-    if(m_fieldType == FIELD_BYTE) return "FIELD_BYTE";
-    if(m_fieldType == FIELD_WORD) return "FIELD_WORD";
-    if(m_fieldType == FIELD_DWORD) return "FIELD_DWORD";
-    if(m_fieldType == FIELD_FLOAT) return "FIELD_FLOAT";
-    if(m_fieldType == FIELD_DFLOAT) return "FIELD_DFLOAT";
+    if(ct == Script::COMPILER_LUNALUA){
+        if(m_fieldType == FIELD_BYTE) return "FIELD_BYTE";
+        if(m_fieldType == FIELD_WORD) return "FIELD_WORD";
+        if(m_fieldType == FIELD_DWORD) return "FIELD_DWORD";
+        if(m_fieldType == FIELD_FLOAT) return "FIELD_FLOAT";
+        if(m_fieldType == FIELD_DFLOAT) return "FIELD_DFLOAT";
+    }else if(ct == Script::COMPILER_AUTOCODE){
+        if(m_fieldType == FIELD_BYTE) return "b";
+        if(m_fieldType == FIELD_WORD) return "w";
+        if(m_fieldType == FIELD_DWORD) return "dw";
+        if(m_fieldType == FIELD_FLOAT) return "f";
+        if(m_fieldType == FIELD_DFLOAT) return "df";
+    }
+
     return "";
 }
 

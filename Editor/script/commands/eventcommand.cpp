@@ -42,6 +42,18 @@ QString EventCommand::compileSegment(Script::CompilerType compiler, int tabOffse
 
         tabOffset--;
         compiledStr += mkLine(tabOffset) + "end\n";
+    }else if(compiler == Script::COMPILER_AUTOCODE){
+        if(m_eventType == EVENTTYPE_LOAD){
+            compiledStr += mkLine(tabOffset) + "#-1\n";
+        }else if(m_eventType == EVENTTYPE_LOOP){
+            compiledStr += mkLine(tabOffset) + "#0\n";
+        }
+
+        for(int i = 0; i < m_childCmds.size(); ++i){
+            compiledStr += m_childCmds[i]->compileSegment(compiler, tabOffset);
+        }
+
+        compiledStr += mkLine(tabOffset) + "#END";
     }
     return compiledStr;
 }

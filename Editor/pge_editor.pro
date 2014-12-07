@@ -303,7 +303,9 @@ SOURCES += main.cpp\
     main_window/tools/main_tool_cdata_import.cpp \
     main_window/tools/main_lvl_section_mods.cpp \
     edit_level/lvl_clone_section.cpp \
-    script/gui/additionalsettings.cpp
+    script/gui/additionalsettings.cpp \
+    script/command_compiler/autocodecompiler.cpp \
+    main_window/edit_script.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -426,7 +428,8 @@ HEADERS  += defines.h \
     script/scriptholder.h \
     script/commands/eventcommand.h \
     edit_level/lvl_clone_section.h \
-    script/gui/additionalsettings.h
+    script/gui/additionalsettings.h \
+    script/command_compiler/autocodecompiler.h
 
 
 FORMS    += \

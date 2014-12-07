@@ -239,21 +239,32 @@ void MainWindow::updateMenus(bool force)
     ui->actionAdditional_Settings->setEnabled( (WinType==1) );
 
     ui->actionCompile_To->setEnabled( false );
+    ui->menuSwitch_Compiler->setEnabled( false );
     if(WinType==1){
         if(activeLvlEditWin()->LvlData.metaData.script){
             Script::CompilerType ct = activeLvlEditWin()->LvlData.metaData.script->usingCompilerType();
             if(ct == Script::COMPILER_LUNALUA){
                 ui->actionCompile_To->setText(tr("Compile To: LunaLua"));
                 ui->actionCompile_To->setEnabled( true );
+                ui->menuSwitch_Compiler->setEnabled( true );
+            }else if(ct == Script::COMPILER_AUTOCODE){
+                ui->actionCompile_To->setText(tr("Compile To: Autocode [Lunadll Original Language]"));
+                ui->actionCompile_To->setEnabled( true );
+                ui->menuSwitch_Compiler->setEnabled( true );
             }else{
                 ui->actionCompile_To->setText(tr("Compile To:"));
                 ui->actionCompile_To->setEnabled( false );
+                ui->menuSwitch_Compiler->setEnabled( true );
             }
+            ui->actionAutocode_Lunadll_Original_Language->setChecked(ct==Script::COMPILER_AUTOCODE);
+            ui->actionLunaLua->setChecked(ct==Script::COMPILER_LUNALUA);
         }else{
             ui->actionCompile_To->setText(tr("Compile To:"));
             ui->actionCompile_To->setEnabled( false );
         }
     }
+
+
 
     if(WinType==1)
     {

@@ -57,7 +57,7 @@ private:
     double m_value;
     FieldType m_fieldType;
 
-    QString fieldTypeToString();
+    QString fieldTypeToString(Script::CompilerType ct);
     QString valueToString();
 };
 

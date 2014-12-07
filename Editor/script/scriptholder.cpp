@@ -19,6 +19,7 @@
 #include "scriptholder.h"
 #include "../common_features/logger.h"
 #include "command_compiler/lunaluacompiler.h"
+#include "command_compiler/autocodecompiler.h"
 
 ScriptHolder::ScriptHolder(QObject *parent) :
     QObject(parent),
@@ -42,6 +43,8 @@ Script::CompilerType ScriptHolder::usingCompilerType() const
 {
     if(qobject_cast<LunaLuaCompiler*>(m_usingCompiler))
         return Script::COMPILER_LUNALUA;
+    if(qobject_cast<AutocodeCompiler*>(m_usingCompiler))
+        return Script::COMPILER_AUTOCODE;
     return static_cast<Script::CompilerType>(-1);
 }
 
