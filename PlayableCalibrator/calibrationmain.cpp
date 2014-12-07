@@ -301,6 +301,7 @@ void CalibrationMain::on_Matrix_clicked()
         ui->FrameY->setValue(dialog.frameY);
     }
     this->show();
+    this->raise();
 
     framesX = dialog.FrameConfig;
     initScene(); updateControls(); updateScene();
@@ -314,6 +315,7 @@ void CalibrationMain::on_AnimatorButton_clicked()
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
     this->show();
+    this->raise();
 }
 
 void CalibrationMain::on_editSizes_clicked()
@@ -358,6 +360,7 @@ void CalibrationMain::on_calibrateImage_clicked()
     this->hide();
     imgCalibrator.exec();
     this->show();
+    this->raise();
     OpenFile(imgCalibrator.targetPath);
 }
 

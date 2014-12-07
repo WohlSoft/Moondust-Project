@@ -181,6 +181,7 @@ void ImageCalibrator::on_Matrix_clicked()
         updateControls();
         ImgCalibratorLock=false;
     }
+    this->raise();
     updateScene();
 }
 
