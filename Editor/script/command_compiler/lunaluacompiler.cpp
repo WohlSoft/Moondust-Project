@@ -39,7 +39,6 @@ QString LunaLuaCompiler::compileCode()
         compiledCode += m_events[i]->compileSegment(Script::COMPILER_LUNALUA, 0);
         compiledCode += "\n\n\n";
     }
-
     return compiledCode;
 }
 

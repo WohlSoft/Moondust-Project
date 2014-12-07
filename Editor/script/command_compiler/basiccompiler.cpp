@@ -29,9 +29,9 @@ QString BasicCompiler::compileCode()
     return "";
 }
 
-
 BasicCompiler::~BasicCompiler()
 {}
+
 QList<EventCommand *> BasicCompiler::events() const
 {
     return m_events;

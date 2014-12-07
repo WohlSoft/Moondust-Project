@@ -105,6 +105,7 @@ public:
  * - Warps toolbox
  * - Level Search box
  * - Locks
+ * - Script
  *
  * World Editing
  * - World Settings toolbox
@@ -926,6 +927,13 @@ public:
         void on_actionLockDoors_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+// ///////////////////// Script ///////////////////////////
+    private slots:
+        void on_actionAdditional_Settings_triggered();
+        void on_actionCompile_To_triggered();
+        void on_actionAutocode_Lunadll_Original_Language_triggered();
+        void on_actionLunaLua_triggered();
+// ////////////////////////////////////////////////////////
 
 
 // ////////////////////////////////////////////////////////////////////////////////
@@ -1074,9 +1082,6 @@ private slots:
 // ///////Please move them into it's category/////////////////////
     private slots:
 
-    void on_actionAdditional_Settings_triggered();
-
-    void on_actionCompile_To_triggered();
 
 signals:
     void closeEditor();

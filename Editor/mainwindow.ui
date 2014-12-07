@@ -355,7 +355,19 @@
     <property name="title">
      <string>Script</string>
     </property>
+    <widget class="QMenu" name="menuSwitch_Compiler">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Switch Compiler</string>
+     </property>
+     <addaction name="actionAutocode_Lunadll_Original_Language"/>
+     <addaction name="actionLunaLua"/>
+    </widget>
     <addaction name="actionAdditional_Settings"/>
+    <addaction name="separator"/>
+    <addaction name="menuSwitch_Compiler"/>
     <addaction name="actionCompile_To"/>
    </widget>
    <addaction name="menu"/>
@@ -9293,6 +9305,28 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Compile To: </string>
+   </property>
+  </action>
+  <action name="actionAutocode_Lunadll_Original_Language">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Autocode [Lunadll Original Language]</string>
+   </property>
+  </action>
+  <action name="actionLunaLua">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>LunaLua</string>
    </property>
   </action>
  </widget>
