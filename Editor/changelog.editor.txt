@@ -19,6 +19,7 @@ Editor 0.2.1.5
 - Added unused custom data removal tool into [ Tools / Custom data / Clear unused data ]
 - Added Section modification features: Clone, Delete
 - Added more edit actions: align selected
+- Added basic scripts generation feature
 
 Editor 0.2.1.1
 - Fixed zoom icons customization

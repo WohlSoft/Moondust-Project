@@ -62,10 +62,10 @@ if [ ! -d libmad-0.15.1b ]
 
 cp ../libmad-0.15.1b.patched_configure.txt .
 
-if [ ! -d SDL2_ttf-2.0.12 ]
-	then
-	tar -xvf ../SDL2_ttf-2.0.12.tar.gz
-	fi
+#if [ ! -d SDL2_ttf-2.0.12 ]
+#	then
+#	tar -xvf ../SDL2_ttf-2.0.12.tar.gz
+#	fi
 
 
 
@@ -97,6 +97,10 @@ else
   errorofbuid
 fi
 cd ..
+
+#apply fix of SDL2 bug
+cp ../SDL_platform.h $InstallTo/include/SDL_platform.h
+
 
 ###########OGG###########
 cd libogg-1.3.2
@@ -238,7 +242,7 @@ cd ..
 
 ###########SDL2_mixer###########
 cd SDL2_mixer-2.0.0
-./configure --enable-music-mp3 --enable-music-mp3-mad-gpl --disable-music-mp3-smpeg  --enable-music-midi --enable-music-midi-timidity --disable-music-midi-fluidsynth --disable-music-mod-modplug --enable-music-mod --enable-music-mod-mikmod --disable-music-mod-mikmod-shared --enable-music-flac=yes --disable-music-flac-shared --with-gnu-ld --disable-sdltest
+./configure  --prefix=$InstallTo --enable-music-mp3 --enable-music-mp3-mad-gpl --disable-music-mp3-smpeg  --enable-music-midi --enable-music-midi-timidity --disable-music-midi-fluidsynth --disable-music-mod-modplug --enable-music-mod --enable-music-mod-mikmod --disable-music-mod-mikmod-shared --enable-music-flac=yes --disable-music-flac-shared --with-gnu-ld --disable-sdltest
 	if [ $? -eq 0 ]
 	then
 	  echo "[good]"
