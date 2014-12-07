@@ -202,6 +202,8 @@ void CalibrationMain::saveConfig(QString fileName)
     QSettings conf(ini_sprite, QSettings::IniFormat);
     int i, j;
 
+    conf.clear();
+
     conf.beginGroup("common");
         conf.setValue("width", frameWidth);
         conf.setValue("height", frameHeight);
@@ -217,8 +219,8 @@ void CalibrationMain::saveConfig(QString fileName)
             if(framesX[i][j].used)
             {
                 conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
-                conf.setValue("height", framesX[i][j].H);
-                conf.setValue("width", framesX[i][j].W);
+                conf.setValue("height", (framesX[i][j].isDuck?frameHeightDuck:frameHeight));
+                conf.setValue("width", frameHeight);
                 conf.setValue("offsetX", framesX[i][j].offsetX);
                 conf.setValue("offsetY", framesX[i][j].offsetY);
                 conf.setValue("used", framesX[i][j].used);
