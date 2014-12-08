@@ -15,7 +15,9 @@ rem SET packFull=%packFull% "%TESTDIR%\fix_music.bat"
 SET packFull=
 rem SET packFull=%packFull% "%TESTDIR%\calibrator"
 SET packFull=%packFull% "%TESTDIR%\pge_calibrator.exe"
+SET packFull=%packFull% "%TESTDIR%\calibrator"
 
+del /F /Q /S "%TESTDIR%\calibrator\templates\*.*"
 "%SEVENZIP%\7z" a -tzip V:\engine.wohlnet.ru\docs\docs\_builds\PGE_Calibrator\pge_calibrator.zip %packFull%
 
 IF NOT '%1'=='nopause' pause
