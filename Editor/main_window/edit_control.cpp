@@ -300,6 +300,11 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         }
 }
 
+void MainWindow::on_actionFloodSectionOnly_triggered(bool checked)
+{
+    LvlPlacingItems::noOutSectionFlood=checked;
+}
+
 void MainWindow::on_actionLine_triggered(bool checked)
 {
     resetEditmodeButtons();
