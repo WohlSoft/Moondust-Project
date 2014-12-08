@@ -72,6 +72,8 @@ bool LvlPlacingItems::sizableBlock=false;
 //bool LvlPlacingItems::floodFillingMode=false;
 
 bool LvlPlacingItems::overwriteMode=false;
+bool LvlPlacingItems::noOutSectionFlood=false;
+
 LvlPlacingItems::PlaceMode LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
 
 QString LvlPlacingItems::layer="";

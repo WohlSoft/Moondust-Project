@@ -363,6 +363,7 @@ public:
         void on_actionLine_triggered(bool checked);
         void on_actionOverwriteMode_triggered(bool checked);
         void on_actionFill_triggered(bool checked);
+        void on_actionFloodSectionOnly_triggered(bool checked);
 
         void on_action_Placing_ShowProperties_triggered(bool checked);
     private:

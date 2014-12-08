@@ -46,6 +46,7 @@ public:
 
     static PlaceMode placingMode;
     static bool overwriteMode;
+    static bool noOutSectionFlood;
 
     static bool sizableBlock;
 
