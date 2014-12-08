@@ -42,18 +42,25 @@ SET packConfig=%packConfig% "%TESTDIR%\configs\SMBX"
 SET packConfigLite=
 SET packConfigLite=%packConfigLite% "%TESTDIR%\lab\SMBX"
 
-rem delete undone languages
+rem Remove undone languages
 del "%TESTDIR%\languages\editor_fr.qm"
 del "%TESTDIR%\languages\editor_ja.qm"
 del "%TESTDIR%\languages\editor_nl.qm"
 del "%TESTDIR%\languages\editor_pt.qm"
 del "%TESTDIR%\languages\editor_uk.qm"
+del "%TESTDIR%\languages\editor_zh.qm"
+del "%TESTDIR%\languages\editor_pl.qm"
 
+rem Packing of editor data
 "%SEVENZIP%\7z" a -tzip %LabDir%\pge_editor_dev.zip %packFull%
-pause
+
+rem Packing of additional tools data
 "%SEVENZIP%\7z" a -tzip %LabDir%\pge_tools_dev.zip %packTools%
-pause
+
+rem Packing of standalone guide
 "%SEVENZIP%\7z" a -tzip %LabDir%\pge_help_standalone.zip %packHelp%
+
+rem Updating of basic config pack
 "%SEVENZIP%\7z" a -tzip %LabDir%\SMBX_config_pack_full.zip %packConfig%
 "%SEVENZIP%\7z" a -tzip %LabDir%\SMBX_config_pack_lite.zip %packConfigLite%
 
