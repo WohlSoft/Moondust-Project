@@ -1507,3 +1507,18 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
 
 
 }
+
+
+
+bool LvlScene::isInSection(long x, long y, int sectionIndex, int padding)
+{
+    return (x >= LvlData->sections[sectionIndex].size_left-padding) &&
+        (x <= LvlData->sections[sectionIndex].size_right+padding) &&
+        (y >= LvlData->sections[sectionIndex].size_top-padding) &&
+             (y <= LvlData->sections[sectionIndex].size_bottom+padding);
+}
+
+bool LvlScene::isInSection(long x, long y, int width, int height, int sectionIndex, int padding)
+{
+    return isInSection(x, y, sectionIndex, padding) && isInSection(x+width, y+height, sectionIndex, padding);
+}

@@ -133,10 +133,7 @@ void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool c
         int padding=128;
         for(int i=0; i<LvlData.sections.size(); i++)
         {
-            if( (x >= LvlData.sections[i].size_left-padding) &&
-                (x <= LvlData.sections[i].size_right+padding) &&
-                (y >= LvlData.sections[i].size_top-padding) &&
-                (y <= LvlData.sections[i].size_bottom+padding) )
+            if(scene->isInSection(x,y,i,padding))
             {
                     MainWinConnect::pMainWin->SetCurrentLevelSection(i);
                     break;
