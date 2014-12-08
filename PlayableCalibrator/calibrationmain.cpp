@@ -340,6 +340,8 @@ void CalibrationMain::on_editSizes_clicked()
             ui->isRightDirect->setEnabled(true);
             ui->showGrabItem->setEnabled(true);
 
+            ui->grabType->setEnabled(true);
+
             ui->OffsetX->setEnabled(true);
             ui->OffsetY->setEnabled(true);
 
@@ -392,6 +394,11 @@ void CalibrationMain::updateControls()
     ui->grabOffsetX->setValue(frameGrabOffsetX);
     ui->grabOffsetY->setValue(frameGrabOffsetY);
 
+    if(frameOverTopGrab)
+        ui->grabTop->setChecked(true);
+    else
+        ui->grabSide->setChecked(true);
+
     ui->EnableFrame->setChecked(framesX[frmX][frmY].used);
     ui->isDuckFrame->setChecked(framesX[frmX][frmY].isDuck);
     ui->isRightDirect->setChecked(framesX[frmX][frmY].isRightDir);
@@ -420,19 +427,38 @@ void CalibrationMain::updateScene()
     relX = CollisionBox_green.scenePos().x();
     relY = CollisionBox_green.scenePos().y();
 
-    grabLineX.setLine(relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
-                      relY+h/2+frameGrabOffsetY,
-                      relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1)+(isRight?20:-20),
-                                            relY+h/2+frameGrabOffsetY );
+    if(frameOverTopGrab)
+    {
+        grabLineX.setLine(relX,
+                          relY-1,
+                          relX+w, relY-1);
 
-    grabLineY.setLine(relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
-                      relY+h/2+frameGrabOffsetY,
+        grabLineY.setLine(relX+w/2,
+                          relY-1,
 
-                      relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
-                            relY+h/2+frameGrabOffsetY-20);
+                          relX+w/2,
+                                relY-21);
 
-    grabLineX.setVisible( framesX[frmX][frmY].showGrabItem );
-    grabLineY.setVisible( framesX[frmX][frmY].showGrabItem );
+        grabLineX.setVisible( framesX[frmX][frmY].showGrabItem );
+        grabLineY.setVisible( framesX[frmX][frmY].showGrabItem );
+
+    }
+    else
+    {
+        grabLineX.setLine(relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
+                          relY+h/2+frameGrabOffsetY,
+                          relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1)+(isRight?20:-20),
+                                                relY+h/2+frameGrabOffsetY );
+
+        grabLineY.setLine(relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
+                          relY+h/2+frameGrabOffsetY,
+
+                          relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
+                                relY+h/2+frameGrabOffsetY-20);
+
+        grabLineX.setVisible( framesX[frmX][frmY].showGrabItem );
+        grabLineY.setVisible( framesX[frmX][frmY].showGrabItem );
+    }
 
 }
 
@@ -453,3 +479,15 @@ void CalibrationMain::initScene()
 }
 
 
+
+void CalibrationMain::on_grabTop_clicked()
+{
+    frameOverTopGrab=true;
+    updateScene();
+}
+
+void CalibrationMain::on_grabSide_clicked()
+{
+    frameOverTopGrab=false;
+    updateScene();
+}
