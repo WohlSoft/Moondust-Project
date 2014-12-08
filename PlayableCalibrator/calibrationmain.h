@@ -70,6 +70,16 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
+    void on_AboutButton_clicked();
+    void on_Matrix_clicked();
+    void on_AnimatorButton_clicked();
+    void on_calibrateImage_clicked();
+    void on_MakeTemplateB_clicked();
+
+    void on_editSizes_clicked();
+
+    void on_EnableFrame_clicked(bool checked);
+
     void on_FrameX_valueChanged(int);
     void on_FrameY_valueChanged(int);
     void on_Height_valueChanged(int arg1);
@@ -79,11 +89,16 @@ private slots:
     void on_grabOffsetX_valueChanged(int arg1);
     void on_grabOffsetY_valueChanged(int arg1);
 
+    void on_grabTop_clicked();
+    void on_grabSide_clicked();
+
     void on_OffsetX_valueChanged(int arg1);
     void on_OffsetY_valueChanged(int arg1);
-    void on_isDuckFrame_clicked(bool checked);
 
-    void on_EnableFrame_clicked(bool checked);
+    void on_isDuckFrame_clicked(bool checked);
+    void on_isRightDirect_clicked(bool checked);
+    void on_showGrabItem_clicked(bool checked);
+
 
     void on_CopyButton_clicked();
     void on_PasteButton_clicked();
@@ -92,24 +107,13 @@ private slots:
     void on_SaveConfigButton_clicked();
 
     void on_applyToAll_clicked();
-    void on_MakeTemplateB_clicked();
-    void on_AboutButton_clicked();
 
-
-    void on_Matrix_clicked();
-    void on_AnimatorButton_clicked();
-
-    void on_editSizes_clicked();
-    void on_calibrateImage_clicked();
 
     void updateControls();
+    void initScene();
     void updateScene();
 
-    void initScene();
 
-    void on_isRightDirect_clicked(bool checked);
-
-    void on_showGrabItem_clicked(bool checked);
 
 private:
     int frmX;

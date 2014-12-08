@@ -61,6 +61,7 @@ void CalibrationMain::loadConfig(QString fileName)
         frameHeightDuck = conf.value("height-duck", "-1").toInt();
         frameGrabOffsetX = conf.value("grab-offset-x", "0").toInt();
         frameGrabOffsetY = conf.value("grab-offset-y", "0").toInt();
+        frameOverTopGrab = conf.value("over-top-grab", "false").toBool();
     conf.endGroup();
     int i, j;
 
@@ -210,6 +211,7 @@ void CalibrationMain::saveConfig(QString fileName)
         conf.setValue("height-duck", frameHeightDuck);
         conf.setValue("grab-offset-x", frameGrabOffsetX);
         conf.setValue("grab-offset-y", frameGrabOffsetY);
+        conf.setValue("over-top-grab", frameOverTopGrab);
     conf.endGroup();
 
     for(i=0; i<10;i++)
