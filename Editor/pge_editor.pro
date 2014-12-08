@@ -305,7 +305,8 @@ SOURCES += main.cpp\
     edit_level/lvl_clone_section.cpp \
     script/gui/additionalsettings.cpp \
     script/command_compiler/autocodecompiler.cpp \
-    main_window/edit_script.cpp
+    main_window/edit_script.cpp \
+    tools/math/blocksperseconddialog.cpp
 
 HEADERS  += defines.h \
     version.h \
@@ -429,7 +430,8 @@ HEADERS  += defines.h \
     script/commands/eventcommand.h \
     edit_level/lvl_clone_section.h \
     script/gui/additionalsettings.h \
-    script/command_compiler/autocodecompiler.h
+    script/command_compiler/autocodecompiler.h \
+    tools/math/blocksperseconddialog.h
 
 
 FORMS    += \
@@ -460,7 +462,8 @@ FORMS    += \
     wld_point_dialog/wld_setpoint.ui \
     common_features/crashhandler.ui \
     edit_level/lvl_clone_section.ui \
-    script/gui/additionalsettings.ui
+    script/gui/additionalsettings.ui \
+    tools/math/blocksperseconddialog.ui
 
 
 RC_FILE = _resources/pge_editor.rc
