@@ -21,7 +21,7 @@ SET packFull=%packFull% "%TESTDIR%\pge_editor.exe"
 SET packFull=%packFull% "%TESTDIR%\languages"
 SET packFull=%packFull% "%TESTDIR%\fonts"
 SET packFull=%packFull% "%TESTDIR%\icons"
-SET packFull=%packFull% "%TESTDIR%\empty\configs"
+SET packFull=%packFull% "%TESTDIR%\lab\empty\configs"
 
 rem PGE Additional Tools
 SET packTools=
@@ -50,10 +50,12 @@ del "%TESTDIR%\languages\editor_pt.qm"
 del "%TESTDIR%\languages\editor_uk.qm"
 
 "%SEVENZIP%\7z" a -tzip %LabDir%\pge_editor_dev.zip %packFull%
+pause
 "%SEVENZIP%\7z" a -tzip %LabDir%\pge_tools_dev.zip %packTools%
+pause
 "%SEVENZIP%\7z" a -tzip %LabDir%\pge_help_standalone.zip %packHelp%
-rem "%SEVENZIP%\7z" a -tzip %LabDir%\SMBX_config_pack_full.zip %packConfig%
-rem "%SEVENZIP%\7z" a -tzip %LabDir%\SMBX_config_pack_lite.zip %packConfigLite%
+"%SEVENZIP%\7z" a -tzip %LabDir%\SMBX_config_pack_full.zip %packConfig%
+"%SEVENZIP%\7z" a -tzip %LabDir%\SMBX_config_pack_lite.zip %packConfigLite%
 
 echo copy updated archives to Google Drive
 copy %LabDir%\pge_editor_dev.zip "%G_DRIVE%\_laboratory\"
