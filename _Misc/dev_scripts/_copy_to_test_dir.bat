@@ -18,6 +18,8 @@ copy %SOURCEDIR%\Content\configs\SMBX\*.txt "%TESTDIR%\lab\SMBX"
 copy %SOURCEDIR%\Content\configs\SMBX\*.ini "%TESTDIR%\configs\SMBX"
 copy %SOURCEDIR%\Content\configs\SMBX\*.ini "%TESTDIR%\lab\SMBX"
 
+copy %SOURCEDIR%\Content\calibrator\spriteconf\*.ini "%TESTDIR%\calibrator\spriteconf"
+
 if '%1'=='full' del /Q /F /S "%TESTDIR%\configs\SMBX\data\graphics"
 if '%1'=='full' md "%TESTDIR%\configs\SMBX\data\graphics"
 if '%1'=='full' xcopy /Y /E /I %SOURCEDIR%\Content\configs\SMBX\data\graphics\*.* "%TESTDIR%\configs\SMBX\data\graphics"
