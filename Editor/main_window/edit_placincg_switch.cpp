@@ -82,6 +82,13 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 valid=true;
 
                 resetEditmodeButtons();
+                ui->PlacingToolbar->setVisible(true);
+                    ui->actionOverwriteMode->setVisible(true);
+                    ui->actionSquareFill->setVisible(true);
+                    ui->actionLine->setVisible(true);
+                    ui->actionFill->setVisible(true);
+                    ui->actionFloodSectionOnly->setVisible(true);
+                    ui->actionFloodSectionOnly->setEnabled(ui->actionFill->isChecked());
 
                 activeLvlEditWin()->scene->clearSelection();
                 activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
@@ -89,7 +96,6 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
 
 
                 LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
-
 
                 //LvlPlacingItems::squareFillingMode = false;
                 ui->actionSquareFill->setChecked(false);
@@ -103,13 +109,6 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 ui->actionFill->setChecked(false);
                 ui->actionFill->setEnabled(true);
 
-                ui->PlacingToolbar->setVisible(true);
-
-                ui->actionSquareFill->setVisible(true);
-                ui->actionLine->setVisible(true);
-                ui->actionFill->setVisible(true);
-                ui->actionFloodSectionOnly->setVisible(true);
-                ui->actionFloodSectionOnly->setEnabled(ui->actionFill->isChecked());
 
                 qApp->setActiveWindow(this);
                 activeLvlEditWin()->setFocus();
@@ -193,6 +192,13 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  resetEditmodeButtons();
 
                  ui->PlacingToolbar->setVisible(true);
+                     ui->actionOverwriteMode->setVisible(true);
+                     ui->actionSquareFill->setVisible(true);
+                     ui->actionLine->setVisible(true);
+                     ui->actionFill->setVisible(true);
+                     ui->actionFloodSectionOnly->setVisible(true);
+                     ui->actionFloodSectionOnly->setEnabled(ui->actionFill->isChecked());
+
                  activeWldEditWin()->scene->clearSelection();
                  activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
                  activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);
@@ -210,12 +216,6 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  //WldPlacingItems::floodFillingMode = false;
                  ui->actionFill->setChecked(false);
                  ui->actionFill->setEnabled(true);
-
-                 ui->actionSquareFill->setVisible(true);
-                 ui->actionLine->setVisible(true);
-                 ui->actionFill->setVisible(true);
-                 ui->actionFloodSectionOnly->setVisible(true);
-                 ui->actionFloodSectionOnly->setEnabled(ui->actionFill->isChecked());
 
                  qApp->setActiveWindow(this);
                  activeWldEditWin()->setFocus();
