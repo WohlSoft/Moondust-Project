@@ -61,6 +61,7 @@ void CalibrationMain::loadConfig(QString fileName)
         frameHeightDuck = conf.value("height-duck", "-1").toInt();
         frameGrabOffsetX = conf.value("grab-offset-x", "0").toInt();
         frameGrabOffsetY = conf.value("grab-offset-y", "0").toInt();
+        frameOverTopGrab = conf.value("over-top-grab", "false").toBool();
     conf.endGroup();
     int i, j;
 
@@ -202,12 +203,15 @@ void CalibrationMain::saveConfig(QString fileName)
     QSettings conf(ini_sprite, QSettings::IniFormat);
     int i, j;
 
+    conf.clear();
+
     conf.beginGroup("common");
         conf.setValue("width", frameWidth);
         conf.setValue("height", frameHeight);
         conf.setValue("height-duck", frameHeightDuck);
         conf.setValue("grab-offset-x", frameGrabOffsetX);
         conf.setValue("grab-offset-y", frameGrabOffsetY);
+        conf.setValue("over-top-grab", frameOverTopGrab);
     conf.endGroup();
 
     for(i=0; i<10;i++)
@@ -217,8 +221,8 @@ void CalibrationMain::saveConfig(QString fileName)
             if(framesX[i][j].used)
             {
                 conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
-                conf.setValue("height", framesX[i][j].H);
-                conf.setValue("width", framesX[i][j].W);
+                conf.setValue("height", (framesX[i][j].isDuck?frameHeightDuck:frameHeight));
+                conf.setValue("width", frameWidth);
                 conf.setValue("offsetX", framesX[i][j].offsetX);
                 conf.setValue("offsetY", framesX[i][j].offsetY);
                 conf.setValue("used", framesX[i][j].used);

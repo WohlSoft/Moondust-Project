@@ -39,6 +39,7 @@ extern int frameHeight;
 extern int frameHeightDuck;
 extern int frameGrabOffsetX;
 extern int frameGrabOffsetY;
+extern bool frameOverTopGrab;
 extern FrameSets AniFrames;                    //!< Animation settings
 
 extern frameOpts buffer;
