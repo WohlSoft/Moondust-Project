@@ -295,6 +295,8 @@ void CalibrationMain::on_Matrix_clicked()
     this->hide();
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.setFrame(frmX, frmY);
+    dialog.show();
+    dialog.raise();
     if(dialog.exec()==QDialog::Accepted)
     {
         ui->FrameX->setValue(dialog.frameX);
