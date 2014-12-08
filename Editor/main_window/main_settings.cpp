@@ -195,6 +195,7 @@ void MainWindow::setUiDefults()
 
 
     ui->PlacingToolbar->setVisible(false);
+        ui->actionOverwriteMode->setVisible(false);
         ui->actionSquareFill->setVisible(false);
         ui->actionLine->setVisible(false);
         ui->actionFill->setVisible(false);
