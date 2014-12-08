@@ -143,6 +143,7 @@ call :ApplyDir script
 call :ApplyDir script\commands
 call :ApplyDir script\gui
 call :ApplyDir script\command_compiler
+call :ApplyDir tools\math
 rem call :ApplyDir libs
 rem call :ApplyDir libs\EasyBMP
 
