@@ -178,6 +178,8 @@ void MainWindow::setUiDefults()
     connect(windowMapper, SIGNAL(mapped(QWidget*)),
         this, SLOT(setActiveSubWindow(QWidget*)));
 
+
+
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
 
     ui->actionExport_to_image_section->setVisible(false);
@@ -186,11 +188,18 @@ void MainWindow::setUiDefults()
 
     ui->centralWidget->cascadeSubWindows();
 
-    ui->applyResize->setVisible(false);
-    ui->cancelResize->setVisible(false);
 
     ui->ResizingToolbar->setVisible(false);
+        ui->applyResize->setVisible(false);
+        ui->cancelResize->setVisible(false);
+
+
     ui->PlacingToolbar->setVisible(false);
+        ui->actionSquareFill->setVisible(false);
+        ui->actionLine->setVisible(false);
+        ui->actionFill->setVisible(false);
+        ui->actionFloodSectionOnly->setVisible(false);
+        ui->actionFloodSectionOnly->setEnabled(false);
 
     ui->LevelToolBox->hide();
 

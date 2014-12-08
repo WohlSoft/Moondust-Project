@@ -106,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>1484</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -263,6 +263,7 @@
     <addaction name="separator"/>
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
+    <addaction name="actionGridEn"/>
     <addaction name="actionAnimation"/>
     <addaction name="actionCollisions"/>
     <addaction name="actionSemi_transparent_paths"/>
@@ -336,6 +337,17 @@
     <addaction name="actionCopy"/>
     <addaction name="actionCut"/>
     <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionHandScroll"/>
+    <addaction name="actionSelect"/>
+    <addaction name="actionSelectOnly"/>
+    <addaction name="actionEriser"/>
+    <addaction name="separator"/>
+    <addaction name="actionOverwriteMode"/>
+    <addaction name="actionSquareFill"/>
+    <addaction name="actionLine"/>
+    <addaction name="actionFill"/>
+    <addaction name="actionFloodSectionOnly"/>
     <addaction name="separator"/>
     <addaction name="actionAlign_selected"/>
     <addaction name="actionRotateLeft"/>
@@ -2747,8 +2759,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>275</width>
-          <height>1546</height>
+          <width>279</width>
+          <height>1358</height>
          </rect>
         </property>
         <attribute name="label">
@@ -3985,8 +3997,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>436</height>
+          <width>272</width>
+          <height>361</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4168,8 +4180,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>219</width>
+          <height>115</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4250,8 +4262,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>216</width>
+          <height>93</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4344,8 +4356,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>264</width>
-          <height>475</height>
+          <width>231</width>
+          <height>461</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4642,8 +4654,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>188</width>
+          <height>159</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4758,8 +4770,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>190</width>
+          <height>110</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4856,8 +4868,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>285</width>
-          <height>350</height>
+          <width>104</width>
+          <height>70</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5012,7 +5024,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>494</height>
+          <height>555</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5239,8 +5251,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>494</height>
+          <width>190</width>
+          <height>146</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5388,8 +5400,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>494</height>
+          <width>219</width>
+          <height>289</height>
          </rect>
         </property>
         <attribute name="label">
@@ -5985,8 +5997,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8.25pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="acceptRichText">
         <bool>false</bool>
@@ -6210,7 +6222,7 @@ p, li { white-space: pre-wrap; }
           <x>0</x>
           <y>0</y>
           <width>300</width>
-          <height>446</height>
+          <height>465</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6331,8 +6343,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>446</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6453,8 +6465,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>446</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6575,8 +6587,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>446</height>
+          <width>231</width>
+          <height>220</height>
          </rect>
         </property>
         <attribute name="label">
@@ -6822,8 +6834,8 @@ p, li { white-space: pre-wrap; }
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>300</width>
-          <height>446</height>
+          <width>152</width>
+          <height>107</height>
          </rect>
         </property>
         <attribute name="label">
@@ -7096,8 +7108,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1476</width>
-              <height>115</height>
+              <width>98</width>
+              <height>28</height>
              </rect>
             </property>
            </widget>
@@ -8202,7 +8214,7 @@ p, li { white-space: pre-wrap; }
     <string notr="true">S</string>
    </property>
    <property name="iconVisibleInMenu">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </action>
   <action name="actionEriser">
@@ -9327,6 +9339,17 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>LunaLua</string>
+   </property>
+  </action>
+  <action name="actionFloodSectionOnly">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Don't fill out of section</string>
    </property>
   </action>
  </widget>
