@@ -66,6 +66,15 @@ void MainWindow::resetEditmodeButtons()
     ui->actionDrawSand->setChecked(0);
 
     ui->PlacingToolbar->setVisible(false);
+
+    ui->actionSquareFill->setVisible(false);
+    ui->actionLine->setVisible(false);
+    ui->actionFill->setVisible(false);
+    ui->actionFloodSectionOnly->setVisible(false);
+
+    ui->actionOverwriteMode->setVisible(false);
+
+
     ui->ResizingToolbar->setVisible(false);
 
     if(activeChildWindow()==1)
@@ -218,6 +227,11 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
 {
         resetEditmodeButtons();
         ui->PlacingToolbar->setVisible(true);
+            ui->actionSquareFill->setVisible(true);
+            ui->actionLine->setVisible(true);
+            ui->actionFill->setVisible(true);
+            ui->actionFloodSectionOnly->setVisible(true);
+            ui->actionFloodSectionOnly->setEnabled(false);
 
         if (activeChildWindow()==1)
         {
@@ -291,6 +305,11 @@ void MainWindow::on_actionLine_triggered(bool checked)
 {
     resetEditmodeButtons();
     ui->PlacingToolbar->setVisible(true);
+        ui->actionSquareFill->setVisible(true);
+        ui->actionLine->setVisible(true);
+        ui->actionFill->setVisible(true);
+        ui->actionFloodSectionOnly->setVisible(true);
+        ui->actionFloodSectionOnly->setEnabled(false);
 
     if (activeChildWindow()==1)
     {
@@ -370,6 +389,11 @@ void MainWindow::on_actionFill_triggered(bool checked)
 {
     resetEditmodeButtons();
     ui->PlacingToolbar->setVisible(true);
+        ui->actionSquareFill->setVisible(true);
+        ui->actionLine->setVisible(true);
+        ui->actionFill->setVisible(true);
+        ui->actionFloodSectionOnly->setVisible(true);
+        ui->actionFloodSectionOnly->setEnabled(checked);
 
     if (activeChildWindow()==1)
     {
