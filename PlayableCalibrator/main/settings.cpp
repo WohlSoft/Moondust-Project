@@ -220,7 +220,7 @@ void CalibrationMain::saveConfig(QString fileName)
             {
                 conf.beginGroup("frame-"+QString::number(i)+"-"+QString::number(j));
                 conf.setValue("height", (framesX[i][j].isDuck?frameHeightDuck:frameHeight));
-                conf.setValue("width", frameHeight);
+                conf.setValue("width", frameWidth);
                 conf.setValue("offsetX", framesX[i][j].offsetX);
                 conf.setValue("offsetY", framesX[i][j].offsetY);
                 conf.setValue("used", framesX[i][j].used);
