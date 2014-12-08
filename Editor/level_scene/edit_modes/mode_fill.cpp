@@ -175,6 +175,12 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
 
                     if(!scene->itemCollidesWith(scene->cursor))
                     {
+                        if(LvlPlacingItems::noOutSectionFlood){
+                            if(!scene->isInSection(coor.first, coor.second, LvlPlacingItems::blockSet.w, LvlPlacingItems::blockSet.h, scene->LvlData->CurSection)){
+                                blackList << coor;
+                                continue;
+                            }
+                        }
                         //place block if collision test
                         LvlPlacingItems::blockSet.x = coor.first;
                         LvlPlacingItems::blockSet.y = coor.second;
@@ -220,6 +226,13 @@ void LVL_ModeFill::attemptFlood(LvlScene *scene)
 
                     if(!scene->itemCollidesWith(scene->cursor))
                     {
+                        if(LvlPlacingItems::noOutSectionFlood){
+                            if(!scene->isInSection(coor.first, coor.second, LvlPlacingItems::itemW, LvlPlacingItems::itemH, scene->LvlData->CurSection)){
+                                blackList << coor;
+                                continue;
+                            }
+                        }
+
                         //place BGO if collision test
                         LvlPlacingItems::bgoSet.x = coor.first;
                         LvlPlacingItems::bgoSet.y = coor.second;

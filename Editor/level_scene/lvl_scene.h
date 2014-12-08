@@ -74,6 +74,9 @@ public:
     bool disableMoveItems;
     bool contextMenuOpened;
 
+    bool isInSection(long x, long y, int sectionIndex, int padding = 0);
+    bool isInSection(long x, long y, int width, int height, int sectionIndex, int padding = 0);
+
     QList<EditMode *> EditModes;
     EditMode * CurrentMode;
     enum EditModeID
