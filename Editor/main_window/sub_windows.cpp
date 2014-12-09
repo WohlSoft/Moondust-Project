@@ -119,11 +119,11 @@ int MainWindow::activeChildWindow()
 {
     if (QMdiSubWindow *activeSubWindow = ui->centralWidget->activeSubWindow())
     {
-        if(QString(activeSubWindow->widget()->metaObject()->className())=="leveledit")
+        if(QString(activeSubWindow->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
             return 1;
-        if(QString(activeSubWindow->widget()->metaObject()->className())=="npcedit")
+        if(QString(activeSubWindow->widget()->metaObject()->className())==NPC_EDIT_CLASS)
             return 2;
-        if(QString(activeSubWindow->widget()->metaObject()->className())=="WorldEdit")
+        if(QString(activeSubWindow->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
             return 3;
     }
 
@@ -162,19 +162,19 @@ QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
 
     foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
-        if(QString(window->widget()->metaObject()->className())=="leveledit")
+        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         {
         ChildWindow0 = qobject_cast<leveledit *>(window->widget());
         if (ChildWindow0->currentFile() == canonicalFilePath)
             return window;
         }
-        else if(QString(window->widget()->metaObject()->className())=="npcedit")
+        else if(QString(window->widget()->metaObject()->className())==NPC_EDIT_CLASS)
         {
         ChildWindow2 = qobject_cast<npcedit *>(window->widget());
         if (ChildWindow2->currentFile() == canonicalFilePath)
             return window;
         }
-        else if(QString(window->widget()->metaObject()->className())=="WorldEdit")
+        else if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
         {
         ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
         if (ChildWindow3->currentFile() == canonicalFilePath)
