@@ -20,7 +20,7 @@
 #include "../../mainwindow.h"
 
 #include "../../file_formats/file_formats.h"
-#include "../../edit_level/lvl_clone_section.h"
+#include "../../editing/edit_level/lvl_clone_section.h"
 
 
 

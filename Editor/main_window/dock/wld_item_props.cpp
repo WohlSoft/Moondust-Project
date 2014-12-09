@@ -18,11 +18,11 @@
 
 #include <ui_mainwindow.h>
 #include "../../mainwindow.h"
-#include "../../world_scene/wld_item_placing.h"
-#include "../../item_select_dialog/itemselectdialog.h"
+#include "../../editing/_scenes/world/wld_item_placing.h"
+#include "../../editing/_dialogs/itemselectdialog.h"
 
-#include "../../world_scene/item_level.h"
-#include "../../common_features/levelfilelist.h"
+#include "../../editing/_scenes/world/item_level.h"
+#include "../../editing/_dialogs/levelfilelist.h"
 #include "../../file_formats/file_formats.h"
 
 bool wld_tools_lock=false;

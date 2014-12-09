@@ -18,10 +18,10 @@
 
 #include <ui_mainwindow.h>
 #include "../../mainwindow.h"
-#include "../../item_select_dialog/itemselectdialog.h"
-#include "../../level_scene/item_block.h"
-#include "../../level_scene/item_bgo.h"
-#include "../../level_scene/item_npc.h"
+#include "../../editing/_dialogs/itemselectdialog.h"
+#include "../../editing/_scenes/level/item_block.h"
+#include "../../editing/_scenes/level/item_bgo.h"
+#include "../../editing/_scenes/level/item_npc.h"
 
 bool lockReset = false;
 

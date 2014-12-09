@@ -19,7 +19,7 @@
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
 
-#include "npc_dialog/npcdialog.h"
+#include "editing/_dialogs/npcdialog.h"
 #include "data_configs/config_manager.h"
 #include "common_features/app_path.h"
 #include "common_features/themes.h"

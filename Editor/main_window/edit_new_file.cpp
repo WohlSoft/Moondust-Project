@@ -19,8 +19,8 @@
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
 
-#include "npc_dialog/npcdialog.h"
-#include "item_select_dialog/itemselectdialog.h"
+#include "../editing/_dialogs/npcdialog.h"
+#include "../editing/_dialogs/itemselectdialog.h"
 #include "music_player.h"
 
 ////////////////////////New files templates///////////////////////////

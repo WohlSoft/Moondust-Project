@@ -19,17 +19,17 @@
 #include <ui_mainwindow.h>
 #include "../../mainwindow.h"
 
-#include "../../level_scene/item_bgo.h"
-#include "../../level_scene/item_block.h"
-#include "../../level_scene/item_npc.h"
-#include "../../level_scene/item_water.h"
+#include "../../editing/_scenes/level/item_bgo.h"
+#include "../../editing/_scenes/level/item_block.h"
+#include "../../editing/_scenes/level/item_npc.h"
+#include "../../editing/_scenes/level/item_water.h"
 
-#include "../../level_scene/itemmsgbox.h"
+#include "../../editing/_scenes/level/itemmsgbox.h"
 
 #include "../../file_formats/file_formats.h"
 
 #include "../../common_features/util.h"
-#include "../../common_features/sdl_music_player.h"
+#include "../../audio/sdl_music_player.h"
 
 long currentEventArrayID=0;
 bool lockSetEventSettings=false;

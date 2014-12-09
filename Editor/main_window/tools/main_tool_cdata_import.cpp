@@ -20,7 +20,7 @@
 #include "../../mainwindow.h"
 
 #include "../../common_features/app_path.h"
-#include "../../smart_import/smartimporter.h"
+#include "../../tools/smart_import/smartimporter.h"
 
 void MainWindow::on_actionCDATA_Import_triggered()
 {

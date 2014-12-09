@@ -22,11 +22,11 @@
 #include "../../common_features/util.h"
 #include "../../data_configs/obj_tilesets.h"
 #include "../../data_configs/data_configs.h"
-#include "../../tilesets/tilesetitembutton.h"
+#include "../../tools/tilesets/tilesetitembutton.h"
 #include "../../dev_console/devconsole.h"
 #include "../../common_features/logger.h"
 
-#include "../../tilesets/tilesetconfiguredialog.h"
+#include "../../tools/tilesets/tilesetconfiguredialog.h"
 #include "../../common_features/themes.h"
 
 #include <QMessageBox>

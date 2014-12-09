@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Blocks per second calculator</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../_resources/editor.qrc">
+    <normaloff>:/images/cat_builder/cat_builder_16.png</normaloff>:/images/cat_builder/cat_builder_16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="1">
@@ -84,7 +88,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../_resources/editor.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
