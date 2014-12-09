@@ -272,14 +272,14 @@ public:
         /// \return Active Window type (0 - nothing, 1 - level, 2 - NPC, 3 - World)
         ///
         int activeChildWindow();
-        leveledit   *activeLvlEditWin();    //!< Active Window type 1
-        npcedit     *activeNpcEditWin();    //!< Active Window type 2
+        LevelEdit   *activeLvlEditWin();    //!< Active Window type 1
+        NpcEdit     *activeNpcEditWin();    //!< Active Window type 2
         WorldEdit   *activeWldEditWin();    //!< Active Window type 3
         int subWins();              //!< Returns number of opened subwindows
 
     public slots:
-        leveledit   *createLvlChild();  //!< Create empty Level Editing subWindow
-        npcedit     *createNPCChild();  //!< Create empty NPC config Editing subWindow
+        LevelEdit   *createLvlChild();  //!< Create empty Level Editing subWindow
+        NpcEdit     *createNPCChild();  //!< Create empty NPC config Editing subWindow
         WorldEdit   *createWldChild();  //!< Create empty World map Editing subWindow
 
         void setActiveSubWindow(QWidget *window);  //!< Switch to target subWindow
@@ -914,9 +914,9 @@ public:
         LevelBGO curSearchBGO;
         LevelNPC curSearchNPC;
 
-        bool doSearchBlock(leveledit* edit);
-        bool doSearchBGO(leveledit* edit);
-        bool doSearchNPC(leveledit* edit);
+        bool doSearchBlock(LevelEdit* edit);
+        bool doSearchBGO(LevelEdit* edit);
+        bool doSearchNPC(LevelEdit* edit);
 // ///////////////////////////////////////////////////////////////
 
 

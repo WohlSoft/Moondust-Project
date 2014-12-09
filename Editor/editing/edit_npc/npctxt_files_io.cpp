@@ -25,7 +25,7 @@
 #include "./common_features/mainwinconnect.h"
 
 
-void npcedit::newFile(unsigned long npcID)
+void NpcEdit::newFile(unsigned long npcID)
 {
     npc_id = npcID;
     static int sequenceNumber = 1;
@@ -50,7 +50,7 @@ void npcedit::newFile(unsigned long npcID)
             this, SLOT(documentWasModified()));*/
 }
 
-bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
+bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
 {
     QFile file(fileName);
     NpcData = FileData;
@@ -90,7 +90,7 @@ bool npcedit::loadFile(const QString &fileName, NPCConfigFile FileData)
     return true;
 }
 
-bool npcedit::save()
+bool NpcEdit::save()
 {
     if (isUntitled) {
         return saveAs();
@@ -99,7 +99,7 @@ bool npcedit::save()
     }
 }
 
-bool npcedit::saveAs()
+bool NpcEdit::saveAs()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
       (isUntitled)?GlobalSettings::savePath_npctxt+QString("/")+curFile:curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
@@ -109,7 +109,7 @@ bool npcedit::saveAs()
     return saveFile(fileName);
 }
 
-bool npcedit::saveFile(const QString &fileName)
+bool NpcEdit::saveFile(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly | QFile::Text)) {
@@ -141,7 +141,7 @@ bool npcedit::saveFile(const QString &fileName)
 
 
 
-bool npcedit::maybeSave()
+bool NpcEdit::maybeSave()
 {
     if (isModyfied) {
     QMessageBox::StandardButton ret;
@@ -161,7 +161,7 @@ bool npcedit::maybeSave()
 }
 
 
-void npcedit::documentWasModified()
+void NpcEdit::documentWasModified()
 {
     QFont font;
     font.setWeight( QFont::Bold );
@@ -171,7 +171,7 @@ void npcedit::documentWasModified()
     ui->isModyfiedL->setFont( font );
 }
 
-void npcedit::documentNotModified()
+void NpcEdit::documentNotModified()
 {
     QFont font;
     font.setWeight( QFont::Normal );
@@ -182,7 +182,7 @@ void npcedit::documentNotModified()
     ui->isModyfiedL->setFont( font );
 }
 
-void npcedit::setCurrentFile(const QString &fileName)
+void NpcEdit::setCurrentFile(const QString &fileName)
 {
     curFile = QFileInfo(fileName).canonicalFilePath();
     isUntitled = false;
@@ -194,13 +194,13 @@ void npcedit::setCurrentFile(const QString &fileName)
 
 
 
-QString npcedit::userFriendlyCurrentFile()
+QString NpcEdit::userFriendlyCurrentFile()
 {
     return strippedName(curFile);
 }
 
 
-QString npcedit::strippedName(const QString &fullFileName)
+QString NpcEdit::strippedName(const QString &fullFileName)
 {
     return QFileInfo(fullFileName).fileName();
 }

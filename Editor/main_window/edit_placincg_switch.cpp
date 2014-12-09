@@ -91,7 +91,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                     ui->actionFloodSectionOnly->setEnabled(ui->actionFill->isChecked());
 
                 activeLvlEditWin()->scene->clearSelection();
-                activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
+                activeLvlEditWin()->changeCursor(LevelEdit::MODE_PlaceItem);
                 activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
 
 

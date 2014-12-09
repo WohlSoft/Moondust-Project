@@ -165,7 +165,7 @@ void MainWindow::RemoveCurrentLayer(bool moveToDefault)
     //Remove from List
     QList<QListWidgetItem * > selected = ui->LvlLayerList->selectedItems();
 
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
 
     //Sync layer name with events
     for(int j=0; j<edit->LvlData.events.size(); j++)
@@ -329,7 +329,7 @@ void MainWindow::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
 void MainWindow::ModifyLayer(QString layerName, bool visible)
 {
     //Apply layer's visibly to all items
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
     QList<QGraphicsItem*> ItemList = edit->scene->items();
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
@@ -383,7 +383,7 @@ void MainWindow::ModifyLayer(QString layerName, bool visible)
 void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
 {
     //Apply layer's name to all items
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
     QList<QGraphicsItem*> ItemList = edit->scene->items();
 
     for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
@@ -461,7 +461,7 @@ void MainWindow::ModifyLayer(QString layerName, QString newLayerName)
 void MainWindow::ModifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord)
 {
     //Apply layer's name/visibly to all items
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
     QList<QGraphicsItem*> ItemList = edit->scene->items();
 
 
@@ -641,7 +641,7 @@ void MainWindow::AddNewLayer(QString layerName, bool setEdited)
 void MainWindow::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible)
 {
     //Find layer enrty in array and apply settings
-    leveledit * edit = activeLvlEditWin();
+    LevelEdit * edit = activeLvlEditWin();
     for(int i=0; i < edit->LvlData.layers.size(); i++)
     {
         if( edit->LvlData.layers[i].array_id==(unsigned int)item->data(3).toInt() )

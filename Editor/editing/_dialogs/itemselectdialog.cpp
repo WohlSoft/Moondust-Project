@@ -328,7 +328,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
         {
             long j=0;
             bool isIndex=false;
-            leveledit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
+            LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
             foreach(UserBlocks block, edit->scene->uBlocks)
             {
 
@@ -455,7 +455,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
         {
             long j=0;
             bool isIndex=false;
-            leveledit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
+            LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
             foreach(UserBGOs bgo, edit->scene->uBGOs)
             {
 
@@ -582,7 +582,7 @@ void ItemSelectDialog::updateBoxes(bool setGrp, bool setCat)
         {
             //long j=0;
             //bool isIndex=false;
-            leveledit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
+            LevelEdit * edit = MainWinConnect::pMainWin->activeLvlEditWin();
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {
 

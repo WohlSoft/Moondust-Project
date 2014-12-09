@@ -94,7 +94,7 @@ void MainWindow::OpenFile(QString FilePath)
             }
         }
 
-        leveledit *child = createLvlChild();
+        LevelEdit *child = createLvlChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
             child->updateGeometry();
@@ -177,7 +177,7 @@ void MainWindow::OpenFile(QString FilePath)
         NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(file);
         if( !FileData.ReadFileValid ) return;
 
-        npcedit *child = createNPCChild();
+        NpcEdit *child = createNPCChild();
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
             child->show();
@@ -248,8 +248,8 @@ void MainWindow::save_as()
 
 void MainWindow::save_all()
 {
-    leveledit *ChildWindow0=NULL;
-    npcedit *ChildWindow2=NULL;
+    LevelEdit *ChildWindow0=NULL;
+    NpcEdit *ChildWindow2=NULL;
     WorldEdit *ChildWindow3=NULL;
 
     QProgressDialog progress(tr("Saving of files..."), tr("Abort"), 0, ui->centralWidget->subWindowList().size(), this);
@@ -274,12 +274,12 @@ void MainWindow::save_all()
         }
         if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         {
-        ChildWindow0 = qobject_cast<leveledit *>(window->widget());
+        ChildWindow0 = qobject_cast<LevelEdit *>(window->widget());
             ChildWindow0->save();
         }
         else if(QString(window->widget()->metaObject()->className())==NPC_EDIT_CLASS)
         {
-        ChildWindow2 = qobject_cast<npcedit *>(window->widget());
+        ChildWindow2 = qobject_cast<NpcEdit *>(window->widget());
             ChildWindow2->save();
         }
 

@@ -138,7 +138,7 @@ void MainWindow::on_actionFixWrongMasks_triggered()
 
     if(activeChildWindow()==1)
     {
-        leveledit *e = activeLvlEditWin();
+        LevelEdit *e = activeLvlEditWin();
         if(e->isUntitled)
         {
             QMessageBox::warning(this, tr("File is untitled"),

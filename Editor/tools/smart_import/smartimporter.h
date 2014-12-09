@@ -27,7 +27,7 @@ public slots:
 
 private:
 
-    leveledit* targetLevelWindow;
+    LevelEdit* targetLevelWindow;
     WorldEdit* targetWorldWindow;
     QString importPath;
     QWidget *parentWid;

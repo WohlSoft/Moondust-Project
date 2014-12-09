@@ -14,7 +14,7 @@ SmartImporter::SmartImporter(QWidget *parentWid, const QString &importPath, QWid
     else
         this->importPath = importPath + QString("/");
 
-    targetLevelWindow = qobject_cast<leveledit*>(targetImport);
+    targetLevelWindow = qobject_cast<LevelEdit*>(targetImport);
     targetWorldWindow = qobject_cast<WorldEdit*>(targetImport);
 }
 

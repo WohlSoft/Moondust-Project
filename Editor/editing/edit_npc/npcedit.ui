@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>npcedit</class>
- <widget class="QWidget" name="npcedit">
+ <class>NpcEdit</class>
+ <widget class="QWidget" name="NpcEdit">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>

@@ -95,7 +95,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         if(activeChildWindow()==1)
         {
             long j=0;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
 
             if(activeLvlEditWin()->sceneCreated)
             foreach(UserBlocks block, edit->scene->uBlocks)
@@ -193,7 +193,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         {
             long j=0;
             //bool isIndex=false;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
 
             if(edit->sceneCreated)
             foreach(UserBGOs bgo, edit->scene->uBGOs)
@@ -291,7 +291,7 @@ void MainWindow::setLvlItemBoxes(bool setGrp, bool setCat)
         {
             //long j=0;
             //bool isIndex=false;
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
             if(edit->sceneCreated)
             foreach(UserNPCs npc, edit->scene->uNPCs)
             {

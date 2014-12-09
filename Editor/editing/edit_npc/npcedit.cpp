@@ -24,9 +24,9 @@
 
 #include "./common_features/mainwinconnect.h"
 
-npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
+NpcEdit::NpcEdit(dataconfigs * configs, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::npcedit)
+    ui(new Ui::NpcEdit)
 {
     pConfigs = configs;
     PreviewScene=NULL;
@@ -40,7 +40,7 @@ npcedit::npcedit(dataconfigs * configs, QWidget *parent) :
     ui->setupUi(this);
 }
 
-npcedit::~npcedit()
+NpcEdit::~NpcEdit()
 {
     delete ui;
     MainWinConnect::pMainWin->updateMenus(true);
@@ -48,7 +48,7 @@ npcedit::~npcedit()
 
 
 
-void npcedit::closeEvent(QCloseEvent *event)
+void NpcEdit::closeEvent(QCloseEvent *event)
 {
     if (maybeSave()) {
         if(physics) delete physics;

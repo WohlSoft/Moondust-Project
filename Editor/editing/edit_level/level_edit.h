@@ -29,19 +29,19 @@
 
 #include "../../data_configs/data_configs.h"
 
-#define LEVEL_EDIT_CLASS "leveledit"
+#define LEVEL_EDIT_CLASS "LevelEdit"
 
 namespace Ui {
-class leveledit;
+class LevelEdit;
 }
 
-class leveledit : public QWidget
+class LevelEdit : public QWidget
 {
     Q_OBJECT
     friend class LvlScene;
 public:
-    explicit leveledit(QWidget *parent = 0);
-    ~leveledit();
+    explicit LevelEdit(QWidget *parent = 0);
+    ~LevelEdit();
 
     LevelData LvlData;
     //QGraphicsScene LvlScene;
@@ -113,7 +113,7 @@ private slots:
 
 private:
     void documentWasModified();
-    Ui::leveledit *ui;
+    Ui::LevelEdit *ui;
 
     LevelData StartLvlData;
     bool DrawObjects(QProgressDialog &progress);

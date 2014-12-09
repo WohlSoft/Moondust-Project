@@ -35,7 +35,7 @@
 #include <QDebug>
 
 
-void leveledit::mouseReleaseEvent( QMouseEvent * event )
+void LevelEdit::mouseReleaseEvent( QMouseEvent * event )
 {
     /*
     if(scene->PasteFromBuffer)
@@ -46,13 +46,13 @@ void leveledit::mouseReleaseEvent( QMouseEvent * event )
     QWidget::mouseReleaseEvent( event );
 }
 
-void leveledit::leaveEvent(QEvent * leaveEvent)
+void LevelEdit::leaveEvent(QEvent * leaveEvent)
 {
    // scene->setSectionResizer(false, false);
     leaveEvent->accept();
 }
 
-leveledit::~leveledit()
+LevelEdit::~LevelEdit()
 {
     //free(scene);
     delete ui;
@@ -64,7 +64,7 @@ leveledit::~leveledit()
 
 
 
-void leveledit::ResetPosition()
+void LevelEdit::ResetPosition()
 {
     LvlData.sections[LvlData.CurSection].PositionX =
             LvlData.sections[LvlData.CurSection].size_left;
@@ -74,7 +74,7 @@ void leveledit::ResetPosition()
     goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom-ui->graphicsView->viewport()->height()+25, false, QPoint(-10,10));
 }
 
-void leveledit::ResetZoom()
+void LevelEdit::ResetZoom()
 {
     if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
     {
@@ -82,7 +82,7 @@ void leveledit::ResetZoom()
     }
 }
 
-void leveledit::zoomIn()
+void LevelEdit::zoomIn()
 {
     if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
     {
@@ -90,7 +90,7 @@ void leveledit::zoomIn()
     }
 }
 
-void leveledit::zoomOut()
+void LevelEdit::zoomOut()
 {
     if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
     {
@@ -98,11 +98,11 @@ void leveledit::zoomOut()
     }
 }
 
-QGraphicsView *leveledit::getGraphicsView()
+QGraphicsView *LevelEdit::getGraphicsView()
 {
     return ui->graphicsView;
 }
-void leveledit::setZoom(int percent)
+void LevelEdit::setZoom(int percent)
 {
     if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
     {
@@ -110,7 +110,7 @@ void leveledit::setZoom(int percent)
     }
 }
 
-int leveledit::getZoom()
+int LevelEdit::getZoom()
 {
     if(QString(ui->graphicsView->metaObject()->className())=="GraphicsWorkspace")
     {
@@ -123,7 +123,7 @@ int leveledit::getZoom()
 }
 
 
-void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)
+void LevelEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)
 {
     if(center)
         offset= QPoint(-ui->graphicsView->viewport()->width()/2, -ui->graphicsView->viewport()->height()/2);
@@ -161,7 +161,7 @@ void leveledit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool c
 
 }
 
-void leveledit::setCurrentSection(int scId)
+void LevelEdit::setCurrentSection(int scId)
 {
     bool sIsNew=false;
     QPointF center = ui->graphicsView->viewport()->rect().center();
@@ -231,7 +231,7 @@ void leveledit::setCurrentSection(int scId)
 }
 
 
-void leveledit::changeCursor(int mode)
+void LevelEdit::changeCursor(int mode)
 {
     switch(mode)
     {

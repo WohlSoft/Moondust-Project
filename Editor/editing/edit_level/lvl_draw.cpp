@@ -32,7 +32,7 @@
 #include <QDebug>
 
 
-bool leveledit::DrawObjects(QProgressDialog &progress)
+bool LevelEdit::DrawObjects(QProgressDialog &progress)
 {
     int DataSize = progress.maximum();
     int TotalSteps = 6;
