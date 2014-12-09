@@ -20,6 +20,8 @@
 
 namespace PGEExtendedFormat
 {
+    QRegExp section_title = QRegExp("^[A-Z0-9_]*$");
+
     QRegExp qstr = QRegExp("^\"(?:[^\"\\\\]|\\\\.)*\"$");
     QRegExp heximal = QRegExp("^[0-9a-fA-F]+$");
 
@@ -34,6 +36,187 @@ namespace PGEExtendedFormat
     QRegExp boolArray = QRegExp("^[1|0]+$");
     QRegExp intArray = QRegExp("^\\[(\\-?\\d+,?)*\\]$"); // ^\[(\-?\d+,?)*\]$
 
+}
+
+PGEFile::PGEFile()
+{
+    _lastError = "";
+    rawData = "";
+}
+
+
+PGEFile::PGEFile(PGEFile &pgeFile)
+{
+    rawData = pgeFile.rawData;
+    rawDataTree = pgeFile.rawDataTree;
+    _lastError = pgeFile._lastError;
+}
+
+PGEFile::PGEFile(QString _rawData)
+{
+    rawData = _rawData;
+    _lastError = "";
+}
+
+void PGEFile::setRawData(QString _rawData)
+{
+    rawData = _rawData;
+}
+
+bool PGEFile::buildTreeFromRaw()
+{
+    PGEXSct PGEXsection;
+
+    FileStringList in;
+    in.addData( rawData );
+
+    //Read raw data sections
+    bool sectionOpened=false;
+    while(!in.atEnd())
+    {
+        PGEXsection.first = in.readLine();
+        PGEXsection.second.clear();
+
+        if(QString(PGEXsection.first).remove(' ').isEmpty()) continue; //Skip empty strings
+
+        sectionOpened=true;
+        QString data;
+        while(!in.atEnd())
+        {
+            data = in.readLine();
+            if(data==PGEXsection.first+"_END") {sectionOpened=false; break;} // Close Section
+            PGEXsection.second.push_back(data);
+        }
+        rawDataTree.push_back(PGEXsection);
+    }
+
+    if(sectionOpened)
+    {
+        _lastError=QString("Section [%1] is not closed").arg(PGEXsection.first);
+        return false;
+    }
+
+    //Building tree
+
+    for(int z=0; z< rawDataTree.size(); z++)
+    {
+        bool valid=true;
+        PGEX_Entry subTree = buildTree( rawDataTree[z].second, &valid );
+        if(valid)
+        {   //Store like subtree
+            subTree.type = PGEX_Struct;
+            subTree.name = rawDataTree[z].first;
+            dataTree.push_back( subTree );
+        }
+        else
+        {   //Store like plain text
+            PGEX_Item dataItem;
+            dataItem.type = PGEX_PlainText;
+            subTree.data.clear();
+            subTree.subTree.clear();
+            PGEX_Val dataValue;
+                dataValue.marker = "PlainText";
+                foreach(QString x, rawDataTree[z].second) dataValue.value += x+"\n";
+            dataItem.values.push_back(dataValue);
+            subTree.name = rawDataTree[z].first;
+            subTree.type = PGEX_PlainText;
+            subTree.data.push_back(dataItem);
+            dataTree.push_back( subTree );
+            valid = true;
+        }
+    }
+
+    return true;
+}
+
+
+PGEFile::PGEX_Entry PGEFile::buildTree(QStringList &src_data, bool *_valid)
+{
+    PGEX_Entry entryData;
+
+    bool valid=true;
+    for(int q=0; q<src_data.size(); q++)
+    {
+        if( IsSectionTitle(QString(src_data[q]).remove(' ') ) )
+        {//Build and store subTree
+            QString nameOfTree = QString(src_data[q]).remove(' ');
+            QStringList rawSubTree;
+            q++;
+            for(; q<src_data.size() && src_data[q] != nameOfTree+"_END" ;q++)
+            {
+                rawSubTree.push_back( src_data[q] );
+            }
+            PGEX_Entry subTree = buildTree( rawSubTree, &valid );
+            if(valid)
+            {   //Store like subtree
+                subTree.name = nameOfTree;
+                entryData.subTree.push_back( subTree );
+                entryData.type = PGEX_Struct;
+            }
+            else
+            {   //Store like plain text
+                subTree.name = nameOfTree;
+                subTree.subTree.clear();
+                subTree.type = PGEX_PlainText;
+                subTree.data.clear();
+
+                PGEX_Item dataItem; PGEX_Val dataValue;
+                dataItem.type = PGEX_PlainText;
+
+                dataValue.marker = nameOfTree;
+                foreach(QString x, rawSubTree) dataValue.value += x+"\n";
+                dataItem.values.push_back(dataValue);
+                subTree.data.push_back(dataItem);
+                entryData.subTree.push_back( subTree );
+                entryData.type = PGEX_Struct;
+                valid = true;
+            }
+
+        }
+        else
+        {
+            QStringList fields = encodeEscape(src_data[q]).split(';');
+            PGEX_Item dataItem;
+            dataItem.type = PGEX_Struct;
+            for(int i=0;i<fields.size();i++)
+            {
+                if(QString(fields[i]).remove(' ').isEmpty()) continue;
+
+                //Store data into list
+                QStringList value = fields[i].split(':');
+
+                if(value.size()!=2)
+                {
+                    valid=false; break;
+                }
+
+                PGEX_Val dataValue;
+                    dataValue.marker = value[0];
+                    dataValue.value = value[1];
+                dataItem.values.push_back(dataValue);
+            }
+            entryData.type = PGEX_Struct;
+            entryData.data.push_back(dataItem);
+        }
+        if(!valid) break;
+    }
+
+    if(_valid) *_valid = valid;
+    return entryData;
+}
+
+
+
+QString PGEFile::lastError()
+{
+    return _lastError;
+}
+
+
+bool PGEFile::IsSectionTitle(QString in)
+{
+    using namespace PGEExtendedFormat;
+    return section_title.exactMatch(in);
 }
 
 
@@ -170,7 +353,6 @@ QList<QStringList > PGEFile::splitDataLine(QString src_data, bool *valid)
     if(valid) * valid = (!wrong);
     return entryData;
 }
-
 
 
 QString PGEFile::IntS(long input)

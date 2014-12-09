@@ -192,6 +192,7 @@ void DevConsole::registerCommands()
     registerCommand("flood", &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv", &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
+    registerCommand("pgex", &DevConsole::doPgeXTest, tr("Does a PGE-X format testing"));
 }
 
 void DevConsole::doCommand()
@@ -290,5 +291,84 @@ void DevConsole::doSegmentationViolation(QStringList)
 {
     int* my_nullptr = 0;
     *my_nullptr = 42; //Answer to the Ultimate Question of Life, the Universe, and Everything will let you app crash >:D
+}
+
+
+QString ______recourseBuildPGEX_Tree(QList<PGEFile::PGEX_Entry > &entry, int depth=1)
+{
+    QString treeView="";
+
+    for(int i=0; i<entry.size(); i++)
+    {
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("=============\n");
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("SubTree name: %1\n").arg(entry[i].name);
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("Branch type: %1\n").arg(entry[i].type);
+        for(int k=0;k<depth;k++) treeView += "--";
+            treeView += QString("Entries: %1\n").arg(entry[i].data.size());
+        if(entry[i].subTree.size()>0)
+        {
+            treeView += ______recourseBuildPGEX_Tree(entry[i].subTree, depth+1);
+        }
+    }
+
+    return treeView;
+}
+
+
+
+void DevConsole::doPgeXTest(QStringList args)
+{
+    if(!args.isEmpty())
+    {
+        QFile file(args.first());
+
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            log(QString("-> Error: Can't open the file."));
+            return;
+        }
+
+        QTextStream in(&file);   //Read File
+        PGEFile pgeX_Data;
+        QString raw = in.readAll();
+        pgeX_Data.setRawData( raw );
+
+        if( pgeX_Data.buildTreeFromRaw() )
+        {
+            QString treeView="";
+            for(int i=0; i<pgeX_Data.dataTree.size(); i++)
+            {
+                treeView += QString("=============\n");
+                treeView += QString("Section Name %1\n").arg(pgeX_Data.dataTree[i].name);
+                treeView += QString("Section type: %1\n").arg(pgeX_Data.dataTree[i].type);
+                treeView += QString("Entries %1\n").arg(pgeX_Data.dataTree[i].data.size());
+
+//                foreach(PGEFile::PGEX_Item x, pgeX_Data.dataTree[i].data)
+//                {
+//                    if(x.values.size()>0)
+//                    {
+//                        treeView += x.values.first().marker + ":"+x.values.first().value + ";\n";
+//                    }
+//                }
+
+                if(pgeX_Data.dataTree[i].subTree.size()>0)
+                {
+                    treeView += ______recourseBuildPGEX_Tree(pgeX_Data.dataTree[i].subTree);
+                }
+            }
+            log(QString("-> File read:\nRaw size is %1\n%2").arg(raw.size()).arg(treeView),
+                ui->tabWidget->tabText(0));
+
+        }
+        else
+        {
+            log(QString("-> File invalid: %1").arg(pgeX_Data.lastError()), ui->tabWidget->tabText(0));
+        }
+
+    }
+
 }
 
