@@ -1,5 +1,5 @@
 call _paths.bat
-rem call _copy_to_test_dir.bat
+call _copy_to_test_dir.bat
 
 echo.
 echo.
