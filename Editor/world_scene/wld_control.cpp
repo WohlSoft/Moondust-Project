@@ -1049,12 +1049,13 @@ void WldScene::placeItemUnderCursor()
         QGraphicsItem * xxx;
         while( (xxx=itemCollidesWith(cursor)) != NULL )
         {
+            bool removed=false;
             if(xxx->data(0).toString()=="TILE")
             {
                 if(xxx->data(2).toLongLong()>last_tile_arrayID) break;
                 overwritedItems.tiles.push_back( ((ItemTile *)xxx)->tileData );
                 ((ItemTile *)xxx)->removeFromArray();
-                delete xxx;
+                delete xxx; removed=true;
             }
             else
             if(xxx->data(0).toString()=="SCENERY")
@@ -1062,7 +1063,7 @@ void WldScene::placeItemUnderCursor()
                 if(xxx->data(2).toLongLong()>last_scene_arrayID) break;
                 overwritedItems.scenery.push_back( ((ItemScene *)xxx)->sceneData );
                 ((ItemScene *)xxx)->removeFromArray();
-                delete xxx;
+                delete xxx; removed=true;
             }
             else
             if(xxx->data(0).toString()=="PATH")
@@ -1070,7 +1071,7 @@ void WldScene::placeItemUnderCursor()
                 if(xxx->data(2).toLongLong()>last_path_arrayID) break;
                 overwritedItems.paths.push_back( ((ItemPath *)xxx)->pathData );
                 ((ItemPath *)xxx)->removeFromArray();
-                delete xxx;
+                delete xxx; removed=true;
             }
             else
             if(xxx->data(0).toString()=="LEVEL")
@@ -1078,7 +1079,7 @@ void WldScene::placeItemUnderCursor()
                 if(xxx->data(2).toLongLong()>last_level_arrayID) break;
                 overwritedItems.levels.push_back( ((ItemLevel *)xxx)->levelData );
                 ((ItemLevel *)xxx)->removeFromArray();
-                delete xxx;
+                delete xxx; removed=true;
             }
             else
             if(xxx->data(0).toString()=="MUSICBOX")
@@ -1086,7 +1087,13 @@ void WldScene::placeItemUnderCursor()
                 if(xxx->data(2).toLongLong()>last_musicbox_arrayID) break;
                 overwritedItems.music.push_back( ((ItemMusic *)xxx)->musicData );
                 ((ItemMusic *)xxx)->removeFromArray();
-                delete xxx;
+                delete xxx; removed=true;
+            }
+
+            if(removed) //Remove pointer of deleted item
+            {
+                if(collisionCheckBuffer.contains(xxx))
+                    collisionCheckBuffer.removeAt(collisionCheckBuffer.indexOf(xxx));
             }
         }
     }
