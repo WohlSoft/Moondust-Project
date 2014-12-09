@@ -4,7 +4,8 @@
 
 AnimationScene::AnimationScene(QObject *parent) : QGraphicsScene(parent)
 {
-    ImageFrame = new QGraphicsPixmapItem;
+    //ImageFrame = new QGraphicsPixmapItem;
+
     x=0; y=0, dir=1;
     FullFrames = AniFrames;
     framesTable = framesX;
@@ -13,25 +14,33 @@ AnimationScene::AnimationScene(QObject *parent) : QGraphicsScene(parent)
     mSpriteImage = MW::p->x_imageSprite;
     NoAnimate = QPixmap(":/images/NoAni.png");
     draw();
-    currentImage=NoAnimate;
-    ImageFrame->setPixmap(QPixmap(currentImage));
-    addItem(ImageFrame);
-    ImageFrame->setPos(100, 200);
+    currentImage = NoAnimate;
+    ImageFrame.setPixmap( currentImage );
+    addItem(&ImageFrame);
 
-    timer = new QTimer(this);
+    ImageFrame.setPos(100, 200);
+    ImageFrame.setZValue(1.0);
+
+    GRound.setRect(1,1,200,20);
+    GRound.setBrush(QBrush(Qt::lightGray));
+    GRound.setPen( QPen(QBrush(Qt::gray),2,Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin ) );
+    GRound.setZValue(-5.0);
+    addItem(&GRound);
+
+    timer.setInterval(128);
     connect(
-                    timer, SIGNAL(timeout()),
+                    &timer, SIGNAL(timeout()),
                     this,
                     SLOT( nextFrame() ) );
 }
 
 void AnimationScene::setAnimation(QVector<AniFrame > frameS)
 {
-    timer->stop();
+    timer.stop();
     currentFrameSet = frameS;
     mCurFrN = 0;
     setFrame(0);
-    timer->start(128);
+    timer.start();
 }
 
 
@@ -49,12 +58,14 @@ QPoint AnimationScene::pos() const
 
 void AnimationScene::setFrame(int frame)
 {
-    int /*w,*/h,x,y, posX, posY;
+    int w,h,x,y;
 
     if((currentFrameSet.size()==0) || (frame >= currentFrameSet.size()))
     {
+        ImageFrame.setPos(this->sceneRect().width()/2-50.0, this->sceneRect().height()/2-50.0);
         currentImage=NoAnimate;
-        ImageFrame->setPixmap(QPixmap(currentImage));
+        ImageFrame.setPixmap(currentImage);
+        GRound.hide();
         return;
     }
 
@@ -66,18 +77,20 @@ void AnimationScene::setFrame(int frame)
     mCurrentFrameY = 100 * currentFrameSet[frame].y;
         mPos.setY( mCurrentFrameY );
 
-
-    //w = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].W;
-    h = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].H;
+    w = frameWidth;
+    h = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].isDuck?frameHeightDuck:frameHeight;
     x = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].offsetX;
     y = framesTable[currentFrameSet[frame].x][currentFrameSet[frame].y].offsetY;
 
-    posX = 100 - x ;
-    posY = 200 - h - y;
-
     draw();
-    ImageFrame->setPos( posX, posY );
-    ImageFrame->setPixmap(QPixmap(currentImage));
+
+    ImageFrame.setPos(this->sceneRect().width()/2-w/2, this->sceneRect().height()/2 + (100.0-h));
+    GRound.show();
+    GRound.setPos(this->sceneRect().width()/2-GRound.rect().width()/2,
+                  this->sceneRect().height()/2+100);
+
+    ImageFrame.setOffset( -x, -y );
+    ImageFrame.setPixmap(currentImage);
 }
 
 void AnimationScene::nextFrame()

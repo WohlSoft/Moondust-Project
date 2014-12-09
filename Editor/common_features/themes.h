@@ -50,6 +50,8 @@ public:
         file_reload,
 
         debugger,
+        tileset_box,
+        bookmarks,
 
         playmusic,
         grid_snap,
@@ -199,7 +201,17 @@ public:
         levels_free,
         levels_locked,
         musicboxes_free,
-        musicboxes_locked
+        musicboxes_locked,
+
+        dummy_musicbox,
+        dummy_bg,
+        dummy_bgo,
+        dummy_block,
+        dummy_npc,
+        dummy_path,
+        dummy_scenery,
+        dummy_tile,
+        dummy_wlevel
     };
 
     static void init();

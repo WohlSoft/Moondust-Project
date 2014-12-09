@@ -92,6 +92,7 @@ void MainWindow::updateMenus(bool force)
 
         GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
         ui->LevelToolBox->setVisible( 0 ); //Hide level toolbars
         ui->LevelSectionSettings->setVisible( 0 );
@@ -111,6 +112,7 @@ void MainWindow::updateMenus(bool force)
 
         ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
+        ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if((!(WinType==3))&& (GlobalSettings::lastWinType == 3) )
@@ -120,6 +122,7 @@ void MainWindow::updateMenus(bool force)
         GlobalSettings::WorldSearchBoxVis = ui->WorldFindDock->isVisible();
         GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
 
         ui->WorldToolBox->setVisible( 0 );
         ui->WorldSettings->setVisible( 0 );
@@ -133,14 +136,17 @@ void MainWindow::updateMenus(bool force)
 
         ui->Tileset_Item_Box->setVisible(GlobalSettings::TilesetBoxVis);
         ui->debuggerBox->setVisible(GlobalSettings::DebuggerBoxVis);
+        ui->bookmarkBox->setVisible(GlobalSettings::BookmarksBoxVis);
     }
 
     if( (!(WinType==1))&&(!(WinType==3)) && (GlobalSettings::lastWinType == 1 || GlobalSettings::lastWinType == 3) )
     {
         GlobalSettings::TilesetBoxVis = ui->Tileset_Item_Box->isVisible();
         GlobalSettings::DebuggerBoxVis = ui->debuggerBox->isVisible();
+        GlobalSettings::BookmarksBoxVis = ui->bookmarkBox->isVisible();
         ui->Tileset_Item_Box->setVisible( 0 );
         ui->debuggerBox->setVisible( 0 );
+        ui->bookmarkBox->setVisible( 0 );
     }
 
 
@@ -155,6 +161,10 @@ void MainWindow::updateMenus(bool force)
     ui->actionLevelEvents->setVisible( (WinType==1) );
     ui->actionWarpsAndDoors->setVisible( (WinType==1) );
     ui->actionLVLSearchBox->setVisible( (WinType==1) );
+
+    ui->actionTilesetBox->setVisible( (WinType==1) || (WinType==3));
+    ui->actionBookmarkBox->setVisible( (WinType==1) || (WinType==3));
+    ui->actionDebugger->setVisible( (WinType==1) || (WinType==3));
 
     ui->actionWLDToolBox->setVisible( (WinType==3) );
     ui->actionWorld_settings->setVisible( (WinType==3) );
@@ -208,6 +218,54 @@ void MainWindow::updateMenus(bool force)
 
     ui->actionGridEn->setEnabled( (WinType==1)|| (WinType==3) );
 
+    ui->actionFixWrongMasks->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionCDATA_clear_unused->setEnabled( (WinType==1)|| (WinType==3) );
+    ui->actionCDATA_Import->setEnabled( (WinType==1)|| (WinType==3) );
+
+    ui->actionAlign_selected->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionFlipHorizontal->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionFlipVertical->setEnabled(  (WinType==1)|| (WinType==3)  );
+
+    ui->actionRotateLeft->setEnabled(  (WinType==1)|| (WinType==3)  );
+    ui->actionRotateRight->setEnabled(  (WinType==1)|| (WinType==3)  );
+
+    ui->actionCloneSectionTo->setEnabled( (WinType==1) );
+    ui->actionSCT_Delete->setEnabled( (WinType==1) );
+    ui->actionSCT_FlipHorizontal->setEnabled( (WinType==1) );
+    ui->actionSCT_FlipVertical->setEnabled( (WinType==1) );
+    ui->actionSCT_RotateLeft->setEnabled( (WinType==1) );
+    ui->actionSCT_RotateRight->setEnabled( (WinType==1) );
+
+    ui->actionAdditional_Settings->setEnabled( (WinType==1) );
+
+    ui->actionCompile_To->setEnabled( false );
+    ui->menuSwitch_Compiler->setEnabled( false );
+    if(WinType==1){
+        if(activeLvlEditWin()->LvlData.metaData.script){
+            Script::CompilerType ct = activeLvlEditWin()->LvlData.metaData.script->usingCompilerType();
+            if(ct == Script::COMPILER_LUNALUA){
+                ui->actionCompile_To->setText(tr("Compile To: LunaLua"));
+                ui->actionCompile_To->setEnabled( true );
+                ui->menuSwitch_Compiler->setEnabled( true );
+            }else if(ct == Script::COMPILER_AUTOCODE){
+                ui->actionCompile_To->setText(tr("Compile To: Autocode [Lunadll Original Language]"));
+                ui->actionCompile_To->setEnabled( true );
+                ui->menuSwitch_Compiler->setEnabled( true );
+            }else{
+                ui->actionCompile_To->setText(tr("Compile To:"));
+                ui->actionCompile_To->setEnabled( false );
+                ui->menuSwitch_Compiler->setEnabled( true );
+            }
+            ui->actionAutocode_Lunadll_Original_Language->setChecked(ct==Script::COMPILER_AUTOCODE);
+            ui->actionLunaLua->setChecked(ct==Script::COMPILER_LUNALUA);
+        }else{
+            ui->actionCompile_To->setText(tr("Compile To:"));
+            ui->actionCompile_To->setEnabled( false );
+        }
+    }
+
+
+
     if(WinType==1)
     {
         if( configs.check() )
@@ -246,6 +304,8 @@ void MainWindow::updateMenus(bool force)
         //Sync lists in properties windows
         EventListsSync();
         setLayerLists();
+        updateBookmarkBoxByData();
+
 
         setLevelSectionData();
 
@@ -287,6 +347,7 @@ void MainWindow::updateMenus(bool force)
         WriteToLog(QtDebugMsg, "-> Current world settings");
 
         setCurrentWorldSettings();
+        updateBookmarkBoxByData();
 
         WriteToLog(QtDebugMsg, "-> Music Player");
 

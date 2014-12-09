@@ -21,7 +21,6 @@
 #define ANIMATE_H
 
 #include <QDialog>
-#include "SpriteScene.h"
 #include "calibrationmain.h"
 #include "AnimationScene.h"
 #include "aniFrames.h"
@@ -70,16 +69,13 @@ private slots:
     void on_Hurted_clicked();
 
     void on_directLeft_clicked();
-
     void on_directRight_clicked();
-
     void on_RideOnYoshi_clicked();
-
     void on_RideOnYoshiSit_clicked();
-
     void on_RideOnYoshiSit_2_clicked();
-
     void on_SlopeSlide_clicked();
+
+    void on_FrameSpeed_valueChanged(int arg1);
 
 private:
     Ui::Animate *ui;

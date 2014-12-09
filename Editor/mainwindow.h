@@ -39,20 +39,21 @@
 #include "file_formats/wld_filedata.h"
 #include "file_formats/npc_filedata.h"
 
-#include "edit_level/level_edit.h"
-#include "edit_npc/npcedit.h"
-#include "edit_world/world_edit.h"
+#include "editing/edit_level/level_edit.h"
+#include "editing/edit_npc/npcedit.h"
+#include "editing/edit_world/world_edit.h"
 
-#include "about_dialog/aboutdialog.h"
-#include "edit_level/levelprops.h"
+#include "editing/edit_level/levelprops.h"
+
+#include "main_window/about_dialog/aboutdialog.h"
 
 #include "data_configs/data_configs.h"
 
-#include "common_features/musicfilelist.h"
+#include "editing/_dialogs/musicfilelist.h"
 #include "common_features/logger.h"
 
-#include "tilesets/tileset.h"
-#include "tilesets/tilesetgroupeditor.h"
+#include "tools/tilesets/tileset.h"
+#include "tools/tilesets/tilesetgroupeditor.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -92,6 +93,7 @@ public:
  * - Other Tools
  * - Search Boxes common
  * - Music Player
+ * - Bookmarks
  *
  * Level Editing
  * - Level Properties
@@ -104,6 +106,7 @@ public:
  * - Warps toolbox
  * - Level Search box
  * - Locks
+ * - Script
  *
  * World Editing
  * - World Settings toolbox
@@ -147,6 +150,13 @@ public:
         ///
         void saveSettings();
 
+        ///
+        /// \brief getCurrentSceneCoordinates Returns the scene coordinates either from level window or world window
+        /// \param x The current x-coordinate.
+        /// \param y The current y-coordinate.
+        /// \return True, if the current window is either a level window or a world window.
+        ///
+        bool getCurrentSceneCoordinates(qreal &x, qreal &y);
     private:
         ///
         /// \brief setDefaults Init settings on start application
@@ -262,14 +272,14 @@ public:
         /// \return Active Window type (0 - nothing, 1 - level, 2 - NPC, 3 - World)
         ///
         int activeChildWindow();
-        leveledit   *activeLvlEditWin();    //!< Active Window type 1
-        npcedit     *activeNpcEditWin();    //!< Active Window type 2
+        LevelEdit   *activeLvlEditWin();    //!< Active Window type 1
+        NpcEdit     *activeNpcEditWin();    //!< Active Window type 2
         WorldEdit   *activeWldEditWin();    //!< Active Window type 3
         int subWins();              //!< Returns number of opened subwindows
 
     public slots:
-        leveledit   *createLvlChild();  //!< Create empty Level Editing subWindow
-        npcedit     *createNPCChild();  //!< Create empty NPC config Editing subWindow
+        LevelEdit   *createLvlChild();  //!< Create empty Level Editing subWindow
+        NpcEdit     *createNPCChild();  //!< Create empty NPC config Editing subWindow
         WorldEdit   *createWldChild();  //!< Create empty World map Editing subWindow
 
         void setActiveSubWindow(QWidget *window);  //!< Switch to target subWindow
@@ -298,6 +308,12 @@ public:
         void applyTextZoom();         //!< Set zoom which defined in the "zoom" field in percents
 
         void refreshHistoryButtons(); //!< Refreshing state of history undo/redo buttons
+
+        void on_actionAlign_selected_triggered();
+        void on_actionRotateLeft_triggered();
+        void on_actionRotateRight_triggered();
+        void on_actionFlipHorizontal_triggered();
+        void on_actionFlipVertical_triggered();
 
     private slots:
         void on_actionZoomIn_triggered();    //!< Zoom in
@@ -348,6 +364,7 @@ public:
         void on_actionLine_triggered(bool checked);
         void on_actionOverwriteMode_triggered(bool checked);
         void on_actionFill_triggered(bool checked);
+        void on_actionFloodSectionOnly_triggered(bool checked);
 
         void on_action_Placing_ShowProperties_triggered(bool checked);
     private:
@@ -439,6 +456,8 @@ public:
         void on_actionCDATA_clear_unused_triggered();
         void on_actionCDATA_Import_triggered();
         void on_actionSprite_editor_triggered();
+
+        void on_actionFixWrongMasks_triggered();
 // ////////////////////////////////////////////////////////
 
 
@@ -472,7 +491,23 @@ public:
 // ///////////////////////////////////////////////////////
 
 
-
+// ///////////////////// Bookmarks ////////////////////////        
+    private slots:
+        void on_actionBookmarkBox_triggered(bool checked);
+        void on_bookmarkBox_visibilityChanged(bool visible);
+        void on_bookmarkList_customContextMenuRequested(const QPoint &pos);
+        void DragAndDroppedBookmark(QModelIndex /*sourceParent*/,int sourceStart,int sourceEnd,QModelIndex /*destinationParent*/,int destinationRow);
+        void on_bookmarkList_doubleClicked(const QModelIndex &index);
+    //Modificators:
+        void on_bookmarkAdd_clicked();
+        void on_bookmarkRemove_clicked();
+        void on_bookmarkList_itemChanged(QListWidgetItem *item);
+    //Go To...
+        void on_bookmarkGoto_clicked();
+    public:
+        void updateBookmarkBoxByList();
+        void updateBookmarkBoxByData();
+// ////////////////////////////////////////////////////////
 
 
 
@@ -518,6 +553,15 @@ public:
         void on_actionSection_19_triggered();
         void on_actionSection_20_triggered();
         void on_actionSection_21_triggered();
+
+        //Modify actions
+        void on_actionCloneSectionTo_triggered();
+        void on_actionSCT_Delete_triggered();
+        void on_actionSCT_RotateLeft_triggered();
+        void on_actionSCT_RotateRight_triggered();
+        void on_actionSCT_FlipHorizontal_triggered();
+        void on_actionSCT_FlipVertical_triggered();
+
 // ////////////////////////////////////////////////////////
 
 // ////////////////////Level Item toolbox /////////////////
@@ -870,9 +914,9 @@ public:
         LevelBGO curSearchBGO;
         LevelNPC curSearchNPC;
 
-        bool doSearchBlock(leveledit* edit);
-        bool doSearchBGO(leveledit* edit);
-        bool doSearchNPC(leveledit* edit);
+        bool doSearchBlock(LevelEdit* edit);
+        bool doSearchBGO(LevelEdit* edit);
+        bool doSearchNPC(LevelEdit* edit);
 // ///////////////////////////////////////////////////////////////
 
 
@@ -885,6 +929,13 @@ public:
         void on_actionLockDoors_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+// ///////////////////// Script ///////////////////////////
+    private slots:
+        void on_actionAdditional_Settings_triggered();
+        void on_actionCompile_To_triggered();
+        void on_actionAutocode_Lunadll_Original_Language_triggered();
+        void on_actionLunaLua_triggered();
+// ////////////////////////////////////////////////////////
 
 
 // ////////////////////////////////////////////////////////////////////////////////
@@ -1020,6 +1071,8 @@ private slots:
         void on_actionLockMusicBoxes_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+
+
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Testing////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////
@@ -1030,6 +1083,7 @@ private slots:
 // ////////////////////Unsorted slots/////////////////////////////
 // ///////Please move them into it's category/////////////////////
     private slots:
+
 
 signals:
     void closeEditor();

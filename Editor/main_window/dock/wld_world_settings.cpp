@@ -19,7 +19,7 @@
 #include <ui_mainwindow.h>
 #include "../../mainwindow.h"
 
-#include "../../common_features/levelfilelist.h"
+#include "../../editing/_dialogs/levelfilelist.h"
 #include "../../file_formats/file_formats.h"
 
 bool world_settings_lock_fields=false;

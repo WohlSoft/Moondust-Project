@@ -19,7 +19,7 @@
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
 
-#include "npc_dialog/npcdialog.h"
+#include "editing/_dialogs/npcdialog.h"
 #include "data_configs/config_manager.h"
 #include "common_features/app_path.h"
 #include "common_features/themes.h"
@@ -217,3 +217,5 @@ void MainWindow::on_actionSwitch_to_Fullscreen_triggered(bool checked)
         this->showNormal();
     }
 }
+
+

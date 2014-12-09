@@ -1,4 +1,4 @@
-Editor 0.2.1.3
+Editor 0.2.1.5
 - Added "Ask every startup" flag into config manager
 - Fixed window focus on switch into placing mode
 - Fixed 'Trigger event' and 'Set moving layer' comboboxes on switch into placing mode
@@ -12,6 +12,14 @@ Editor 0.2.1.3
 - Added able to use line tool for NPC's.
 - Added auto-incrementing of special value (which a much useful for placing of, for example, firebars)
 - Added "Don't show properties box" feature for placing mode
+- Added position bookmarks. You can store current point into bookmark which give able to return back later
+- Added internal tools
+- All graphics issues prevented with implementing of alternate unmasking algorithm
+- Easier way to fix lazily-made graphics added into [ Tools / Custom data / Fix wrong masks ]
+- Added unused custom data removal tool into [ Tools / Custom data / Clear unused data ]
+- Added Section modification features: Clone, Delete
+- Added more edit actions: align selected
+- Added basic scripts generation feature
 
 Editor 0.2.1.1
 - Fixed zoom icons customization

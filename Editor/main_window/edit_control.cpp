@@ -19,8 +19,8 @@
 #include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
-#include "../world_scene/wld_item_placing.h"
-#include "../level_scene/lvl_item_placing.h"
+#include "../editing/_scenes/world/wld_item_placing.h"
+#include "../editing/_scenes/level/lvl_item_placing.h"
 
 
 void MainWindow::on_actionZoomIn_triggered()
@@ -66,6 +66,13 @@ void MainWindow::resetEditmodeButtons()
     ui->actionDrawSand->setChecked(0);
 
     ui->PlacingToolbar->setVisible(false);
+        ui->actionOverwriteMode->setVisible(false);
+        ui->actionSquareFill->setVisible(false);
+        ui->actionLine->setVisible(false);
+        ui->actionFill->setVisible(false);
+        ui->actionFloodSectionOnly->setVisible(false);
+
+
     ui->ResizingToolbar->setVisible(false);
 
     if(activeChildWindow()==1)
@@ -218,10 +225,16 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
 {
         resetEditmodeButtons();
         ui->PlacingToolbar->setVisible(true);
+            ui->actionOverwriteMode->setVisible(true);
+            ui->actionSquareFill->setVisible(true);
+            ui->actionLine->setVisible(true);
+            ui->actionFill->setVisible(true);
+            ui->actionFloodSectionOnly->setVisible(true);
+            ui->actionFloodSectionOnly->setEnabled(false);
 
         if (activeChildWindow()==1)
         {
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
 
             LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Square
                                                     : LvlPlacingItems::PMODE_Brush );
@@ -287,14 +300,25 @@ void MainWindow::on_actionSquareFill_triggered(bool checked)
         }
 }
 
+void MainWindow::on_actionFloodSectionOnly_triggered(bool checked)
+{
+    LvlPlacingItems::noOutSectionFlood=checked;
+}
+
 void MainWindow::on_actionLine_triggered(bool checked)
 {
     resetEditmodeButtons();
     ui->PlacingToolbar->setVisible(true);
+        ui->actionOverwriteMode->setVisible(true);
+        ui->actionSquareFill->setVisible(true);
+        ui->actionLine->setVisible(true);
+        ui->actionFill->setVisible(true);
+        ui->actionFloodSectionOnly->setVisible(true);
+        ui->actionFloodSectionOnly->setEnabled(false);
 
     if (activeChildWindow()==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
 
         LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_Line
                                                 : LvlPlacingItems::PMODE_Brush );
@@ -370,10 +394,16 @@ void MainWindow::on_actionFill_triggered(bool checked)
 {
     resetEditmodeButtons();
     ui->PlacingToolbar->setVisible(true);
+        ui->actionOverwriteMode->setVisible(true);
+        ui->actionSquareFill->setVisible(true);
+        ui->actionLine->setVisible(true);
+        ui->actionFill->setVisible(true);
+        ui->actionFloodSectionOnly->setVisible(true);
+        ui->actionFloodSectionOnly->setEnabled(checked);
 
     if (activeChildWindow()==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
 
         LvlPlacingItems::placingMode = (checked ? LvlPlacingItems::PMODE_FloodFill
                                                 : LvlPlacingItems::PMODE_Brush );

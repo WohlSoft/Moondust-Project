@@ -18,14 +18,14 @@
 
 #include <ui_mainwindow.h>
 #include "../../mainwindow.h"
-#include "../../level_scene/lvl_item_placing.h"
+#include "../../editing/_scenes/level/lvl_item_placing.h"
 //#include "../../npc_dialog/npcdialog.h"
-#include "../../item_select_dialog/itemselectdialog.h"
+#include "../../editing/_dialogs/itemselectdialog.h"
 
-#include "../../level_scene/item_block.h"
-#include "../../level_scene/item_bgo.h"
-#include "../../level_scene/item_npc.h"
-#include "../../level_scene/itemmsgbox.h"
+#include "../../editing/_scenes/level/item_block.h"
+#include "../../editing/_scenes/level/item_bgo.h"
+#include "../../editing/_scenes/level/item_npc.h"
+#include "../../editing/_scenes/level/itemmsgbox.h"
 
 
 int npcSpecSpinOffset=0;

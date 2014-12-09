@@ -8,11 +8,13 @@
 *.la
 !_Libs/_builds/*/*/*.la
 *.lai
+!_Libs/_builds/*/*/*.lai
 *.so
 !_Libs/_builds/*/*/*.so
 *.dll
 !_Libs/_builds/*/*/*.dll
 *.dylib
+!_Libs/_builds/*/*/*.dylib
 
 # Qt-es
 
@@ -27,6 +29,10 @@ Makefile.*
 *build-*
 /bin
 
+#compiled translation
+editor_*.qm
+
+
 # ignore Qt-Makefile
 *.Debug
 *.Release
@@ -38,4 +44,5 @@ Makefile.*
 *_plugin_import.cpp
 
 #unpacked libraries sources
-_Libs/_sources/SDL*
+/_Libs/_sources/SDL/*
+!/_Libs/_sources

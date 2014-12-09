@@ -19,8 +19,8 @@
 #include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
-#include "../level_scene/lvl_item_placing.h"
-#include "../world_scene/wld_item_placing.h"
+#include "../editing/_scenes/level/lvl_item_placing.h"
+#include "../editing/_scenes/world/wld_item_placing.h"
 #include "../file_formats/file_formats.h"
 
 #include "../defines.h"
@@ -82,14 +82,20 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 valid=true;
 
                 resetEditmodeButtons();
+                ui->PlacingToolbar->setVisible(true);
+                    ui->actionOverwriteMode->setVisible(true);
+                    ui->actionSquareFill->setVisible(true);
+                    ui->actionLine->setVisible(true);
+                    ui->actionFill->setVisible(true);
+                    ui->actionFloodSectionOnly->setVisible(true);
+                    ui->actionFloodSectionOnly->setEnabled(ui->actionFill->isChecked());
 
                 activeLvlEditWin()->scene->clearSelection();
-                activeLvlEditWin()->changeCursor(leveledit::MODE_PlaceItem);
+                activeLvlEditWin()->changeCursor(LevelEdit::MODE_PlaceItem);
                 activeLvlEditWin()->scene->SwitchEditingMode(LvlScene::MODE_PlacingNew);
 
 
                 LvlPlacingItems::placingMode = LvlPlacingItems::PMODE_Brush;
-
 
                 //LvlPlacingItems::squareFillingMode = false;
                 ui->actionSquareFill->setChecked(false);
@@ -103,7 +109,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                 ui->actionFill->setChecked(false);
                 ui->actionFill->setEnabled(true);
 
-                ui->PlacingToolbar->setVisible(true);
+
                 qApp->setActiveWindow(this);
                 activeLvlEditWin()->setFocus();
            default:;
@@ -186,6 +192,13 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID)
                  resetEditmodeButtons();
 
                  ui->PlacingToolbar->setVisible(true);
+                     ui->actionOverwriteMode->setVisible(true);
+                     ui->actionSquareFill->setVisible(true);
+                     ui->actionLine->setVisible(true);
+                     ui->actionFill->setVisible(true);
+                     ui->actionFloodSectionOnly->setVisible(true);
+                     ui->actionFloodSectionOnly->setEnabled(ui->actionFill->isChecked());
+
                  activeWldEditWin()->scene->clearSelection();
                  activeWldEditWin()->changeCursor(WorldEdit::MODE_PlaceItem);
                  activeWldEditWin()->scene->SwitchEditingMode(WldScene::MODE_PlacingNew);

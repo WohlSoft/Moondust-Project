@@ -79,13 +79,15 @@ void AnimationEdit::on_SetLeft_clicked()
     foreach(QListWidgetItem * item, selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+        dialog.setFrame(item->data(3).toPoint().x(), item->data(3).toPoint().y());
         if(dialog.exec()==QDialog::Accepted)
         {
             x = dialog.frameX;
             y = dialog.frameY;
-            item->setData(1, QPoint(x,y));
+            item->setData(3, QPoint(x,y));
             item->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
             applyFrameSet();
+            showFrame(x, y);
             return;
         }
         else
@@ -129,17 +131,18 @@ void AnimationEdit::on_SetRight_clicked()
     QList<QListWidgetItem *> selected = ui->FramesR->selectedItems();
 
     Matrix dialog;
-
     foreach(QListWidgetItem * item, selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+        dialog.setFrame(item->data(3).toPoint().x(), item->data(3).toPoint().y());
         if(dialog.exec()==QDialog::Accepted)
         {
             x = dialog.frameX;
             y = dialog.frameY;
-            item->setData(1, QPoint(x,y));
+            item->setData(3, QPoint(x,y));
             item->setText( QString("X"+QString::number(x)+"-Y"+QString::number(y)) );
             applyFrameSet();
+            showFrame(x, y);
             return;
         }
         else

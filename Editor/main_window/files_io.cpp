@@ -46,8 +46,8 @@ void MainWindow::OpenFile(QString FilePath)
     QFile file(FilePath);
 
     if (!file.open(QIODevice::ReadOnly)) {
-    QMessageBox::critical(this, tr("File open error"),
-    tr("Can't open the file."), QMessageBox::Ok);
+        QMessageBox::critical(this, tr("File open error"),
+        tr("Can't open the file."), QMessageBox::Ok);
         return;
     }
 
@@ -70,7 +70,31 @@ void MainWindow::OpenFile(QString FilePath)
         FileData.path = in_1.absoluteDir().absolutePath();
         FileData.playmusic = GlobalSettings::autoPlayMusic;
 
-        leveledit *child = createLvlChild();
+        file.close();
+        file.setFileName(FilePath+".meta");
+        if(QFileInfo(FilePath+".meta").exists())
+        {
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QString metaRaw;
+                QTextStream meta(&file);
+                meta.setCodec("UTF-8");
+                metaRaw = meta.readAll();
+                if(FileData.metaData.script){
+                    delete FileData.metaData.script;
+                    FileData.metaData.script = NULL;
+                }
+
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, FilePath+".meta");
+            }
+            else
+            {
+                QMessageBox::critical(this, tr("File open error"),
+                tr("Can't open the file."), QMessageBox::Ok);
+            }
+        }
+
+        LevelEdit *child = createLvlChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
             child->updateGeometry();
@@ -106,6 +130,25 @@ void MainWindow::OpenFile(QString FilePath)
 
         if( !FileData.ReadFileValid ) return;
 
+        file.close();
+        file.setFileName(FilePath+".meta");
+        if(QFileInfo(FilePath+".meta").exists())
+        {
+            if (file.open(QIODevice::ReadOnly))
+            {
+                QString metaRaw;
+                QTextStream meta(&file);
+                meta.setCodec("UTF-8");
+                metaRaw = meta.readAll();
+                FileData.metaData = FileFormats::ReadNonSMBX64MetaData(metaRaw, FilePath+".meta");
+            }
+            else
+            {
+                QMessageBox::critical(this, tr("File open error"),
+                tr("Can't open the file."), QMessageBox::Ok);
+            }
+        }
+
         WorldEdit *child = createWldChild();
         if ( (bool)(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts)) ) {
             child->show();
@@ -134,7 +177,7 @@ void MainWindow::OpenFile(QString FilePath)
         NPCConfigFile FileData = FileFormats::ReadNpcTXTFile(file);
         if( !FileData.ReadFileValid ) return;
 
-        npcedit *child = createNPCChild();
+        NpcEdit *child = createNPCChild();
         if (child->loadFile(FilePath, FileData)) {
             statusBar()->showMessage(tr("NPC Config loaded"), 2000);
             child->show();
@@ -205,8 +248,8 @@ void MainWindow::save_as()
 
 void MainWindow::save_all()
 {
-    leveledit *ChildWindow0=NULL;
-    npcedit *ChildWindow2=NULL;
+    LevelEdit *ChildWindow0=NULL;
+    NpcEdit *ChildWindow2=NULL;
     WorldEdit *ChildWindow3=NULL;
 
     QProgressDialog progress(tr("Saving of files..."), tr("Abort"), 0, ui->centralWidget->subWindowList().size(), this);
@@ -224,19 +267,19 @@ void MainWindow::save_all()
     int counter=0;
     foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
     {
-        if(QString(window->widget()->metaObject()->className())=="WorldEdit")
+        if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
         {
         ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
             ChildWindow3->save();
         }
-        if(QString(window->widget()->metaObject()->className())=="leveledit")
+        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
         {
-        ChildWindow0 = qobject_cast<leveledit *>(window->widget());
+        ChildWindow0 = qobject_cast<LevelEdit *>(window->widget());
             ChildWindow0->save();
         }
-        else if(QString(window->widget()->metaObject()->className())=="npcedit")
+        else if(QString(window->widget()->metaObject()->className())==NPC_EDIT_CLASS)
         {
-        ChildWindow2 = qobject_cast<npcedit *>(window->widget());
+        ChildWindow2 = qobject_cast<NpcEdit *>(window->widget());
             ChildWindow2->save();
         }
 

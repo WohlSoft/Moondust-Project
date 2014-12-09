@@ -257,7 +257,7 @@ void MainWindow::setLevelSectionData()
 
         if (activeChildWindow()==1)
         {
-            leveledit * edit = activeLvlEditWin();
+            LevelEdit * edit = activeLvlEditWin();
             for(int q=0; q<edit->scene->uBGs.size();q++)
             {
                 if(edit->scene->uBGs[q].id==configs.main_bg[i].id)
@@ -297,7 +297,7 @@ void MainWindow::setLevelSectionData()
     //Set current data
     if (activeChildWindow()==1)
     {
-        leveledit * edit = activeLvlEditWin();
+        LevelEdit * edit = activeLvlEditWin();
         //edit->LvlData.sections[edit->LvlData.CurSection].background
         //edit->LvlData.sections[edit->LvlData.CurSection].music_id
         ui->LVLPropsBackImage->setCurrentIndex(0);
