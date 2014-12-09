@@ -21,15 +21,15 @@
 
 #include "../../file_formats/file_formats.h"
 
-#include "../../level_scene/item_bgo.h"
-#include "../../level_scene/item_block.h"
-#include "../../level_scene/item_npc.h"
-#include "../../level_scene/item_water.h"
-#include "../../level_scene/item_door.h"
+#include "../../editing/_scenes/level/item_bgo.h"
+#include "../../editing/_scenes/level/item_block.h"
+#include "../../editing/_scenes/level/item_npc.h"
+#include "../../editing/_scenes/level/item_water.h"
+#include "../../editing/_scenes/level/item_door.h"
 
 #include "../../common_features/util.h"
 
-#include "../../level_scene/lvl_item_placing.h"
+#include "../../editing/_scenes/level/lvl_item_placing.h"
 
 
 static bool lockLayerEdit=false;

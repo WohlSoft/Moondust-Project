@@ -5,12 +5,29 @@ goto quit
 
 :good
 
+rem ============== COMMON ====================
+
 copy "%SOURCEDIR%\pge.pro" %TARGETDIR%
 copy "%SOURCEDIR%\pge_version.h" %TARGETDIR%
 
 rem del /Q /F %TARGETDIR%\_Libs
 rem md %TARGETDIR%\_Libs
 rem xcopy /Y /E /I "%SOURCEDIR%\_Libs" %TARGETDIR%\_Libs
+
+echo COPY HELP!!!
+del /Q /F /S %TARGETDIR%\Content\help
+xcopy /Y /E /I %SOURCEDIR%\Content\help %TARGETDIR%\Content\help
+
+echo COPY Calibrator data!!!
+xcopy /Y /E /I %SOURCEDIR%\Content\calibrator %TARGETDIR%\Content\calibrator
+
+del /F /Q %TARGETDIR%\_Misc
+md %TARGETDIR%\_Misc
+xcopy /Y /E /I "%SOURCEDIR%\_Misc" %TARGETDIR%\_Misc
+
+
+rem ============== GIFs2PNG ====================
+
 
 IF NOT EXIST %TARGETDIR%\GIFs2PNG\*.* md %TARGETDIR%\GIFs2PNG
 del %TARGETDIR%\GIFs2PNG\*.cpp
@@ -25,6 +42,8 @@ del /F /Q %TARGETDIR%\GIFs2PNG\_resources
 xcopy /Y /E /I "%SOURCEDIR%\GIFs2PNG\_resources" %TARGETDIR%\GIFs2PNG\_resources
 
 
+rem ============== PNG2GIFs ====================
+
 IF NOT EXIST %TARGETDIR%\PNG2GIFs\*.* md %TARGETDIR%\PNG2GIFs
 del %TARGETDIR%\PNG2GIFs\*.cpp
 del %TARGETDIR%\PNG2GIFs\*.pro
@@ -37,6 +56,10 @@ copy "%SOURCEDIR%\PNG2GIFs\*.txt" %TARGETDIR%\PNG2GIFs
 del /F /Q %TARGETDIR%\PNG2GIFs\libs
 del /F /Q %TARGETDIR%\PNG2GIFs\_resources
 xcopy /Y /E /I "%SOURCEDIR%\PNG2GIFs\_resources" %TARGETDIR%\PNG2GIFs\_resources
+
+
+
+rem ============== LazyFix Tool ====================
 
 IF NOT EXIST %TARGETDIR%\LazyFixTool\*.* md %TARGETDIR%\LazyFixTool
 del %TARGETDIR%\LazyFixTool\*.cpp
@@ -53,6 +76,9 @@ xcopy /Y /E /I "%SOURCEDIR%\LazyFixTool\libs" %TARGETDIR%\LazyFixTool\libs
 del /F /Q %TARGETDIR%\LazyFixTool\_resources
 xcopy /Y /E /I "%SOURCEDIR%\LazyFixTool\_resources" %TARGETDIR%\LazyFixTool\_resources
 
+
+rem ============== PlayableCalibrator ====================
+
 IF NOT EXIST %TARGETDIR%\PlayableCalibrator\*.* md %TARGETDIR%\PlayableCalibrator
 del %TARGETDIR%\PlayableCalibrator\*.cpp
 del %TARGETDIR%\PlayableCalibrator\*.pro
@@ -62,6 +88,23 @@ copy "%SOURCEDIR%\PlayableCalibrator\*.h" %TARGETDIR%\PlayableCalibrator
 copy "%SOURCEDIR%\PlayableCalibrator\*.ui" %TARGETDIR%\PlayableCalibrator
 copy "%SOURCEDIR%\PlayableCalibrator\*.pro" %TARGETDIR%\PlayableCalibrator
 copy "%SOURCEDIR%\PlayableCalibrator\*.txt" %TARGETDIR%\PlayableCalibrator
+
+call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\about" %TARGETDIR%\PlayableCalibrator\about
+call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\animator" %TARGETDIR%\PlayableCalibrator\animator
+call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\frame_matrix" %TARGETDIR%\PlayableCalibrator\frame_matrix
+call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\image_calibration" %TARGETDIR%\PlayableCalibrator\image_calibration
+call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\main" %TARGETDIR%\PlayableCalibrator\main
+del /F /Q %TARGETDIR%\PlayableCalibrator\_resourses
+xcopy /Y /E /I "%SOURCEDIR%\PlayableCalibrator\_resourses" %TARGETDIR%\PlayableCalibrator\_resourses
+rem del /F /Q %TARGETDIR%\PlayableCalibrator\libs
+rem rem xcopy /Y /E /I "%SOURCEDIR%\PlayableCalibrator\libs" %TARGETDIR%\PlayableCalibrator\libs
+
+
+
+
+
+
+rem ============== Engine ====================
 
 IF NOT EXIST %TARGETDIR%\Engine\*.* md %TARGETDIR%\Engine
 del %TARGETDIR%\Engine\*.cpp
@@ -87,15 +130,11 @@ del /F /Q %TARGETDIR%\Engine\_resources
 xcopy /Y /E /I "%SOURCEDIR%\Engine\_resources" %TARGETDIR%\Engine\_resources
 rem call :UpdateFilrsInDirDir "..\Engine\physics" %TARGETDIR%\Engine\physics
 
-call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\about" %TARGETDIR%\PlayableCalibrator\about
-call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\animator" %TARGETDIR%\PlayableCalibrator\animator
-call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\frame_matrix" %TARGETDIR%\PlayableCalibrator\frame_matrix
-call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\image_calibration" %TARGETDIR%\PlayableCalibrator\image_calibration
-call :UpdateFilrsInDirDir "%SOURCEDIR%\PlayableCalibrator\main" %TARGETDIR%\PlayableCalibrator\main
-del /F /Q %TARGETDIR%\PlayableCalibrator\_resourses
-xcopy /Y /E /I "%SOURCEDIR%\PlayableCalibrator\_resourses" %TARGETDIR%\PlayableCalibrator\_resourses
-rem del /F /Q %TARGETDIR%\PlayableCalibrator\libs
-rem rem xcopy /Y /E /I "%SOURCEDIR%\PlayableCalibrator\libs" %TARGETDIR%\PlayableCalibrator\libs
+
+
+
+rem ============== Editor ====================
+
 
 del %TARGETDIR%\Editor\*.cpp
 del %TARGETDIR%\Editor\*.ui
@@ -113,39 +152,43 @@ copy %SOURCEDIR%\Editor\version.txt %TARGETDIR%\Editor
 
 rem del %TARGETDIR%\Editor\ui_*.h
 
-call :ApplyDir file_formats
-call :ApplyDir dev_console
-call :ApplyDir main_window
-call :ApplyDir main_window\dock
-call :ApplyDir main_window\tools
-call :ApplyDir level_scene
-call :ApplyDir level_scene\edit_modes
-call :ApplyDir external_tools
-call :ApplyDir level_scene\resizer
-call :ApplyDir data_configs
-call :ApplyDir data_configs
-call :ApplyDir networking
-call :ApplyDir smart_import
+call :ApplyDir audio
 call :ApplyDir common_features
 call :ApplyDir common_features\resizer
-call :ApplyDir npc_dialog
-call :ApplyDir item_select_dialog
-call :ApplyDir tilesets
-call :ApplyDir edit_npc
-call :ApplyDir edit_world
-call :ApplyDir edit_level
-call :ApplyDir wld_point_dialog
-call :ApplyDir world_scene
-call :ApplyDir world_scene\edit_modes
-call :ApplyDir about_dialog
-call :ApplyDir SingleApplication
+call :ApplyDir data_configs
+call :ApplyDir dev_console
+call :ApplyDir editing
+call :ApplyDir editing\_dialogs
+call :ApplyDir editing\_scenes
+call :ApplyDir editing\_scenes\level
+call :ApplyDir editing\_scenes\level\edit_modes
+call :ApplyDir editing\_scenes\world
+call :ApplyDir editing\_scenes\world\edit_modes
+call :ApplyDir editing\edit_level
+call :ApplyDir editing\edit_npc
+call :ApplyDir editing\edit_world
+call :ApplyDir file_formats
+call :ApplyDir main_window
+call :ApplyDir main_window\about_dialog
+call :ApplyDir main_window\dock
+call :ApplyDir main_window\tools
+call :ApplyDir networking
 call :ApplyDir script
 call :ApplyDir script\commands
 call :ApplyDir script\gui
 call :ApplyDir script\command_compiler
+call :ApplyDir SingleApplication
+call :ApplyDir tools
 call :ApplyDir tools\math
-rem call :ApplyDir libs
-rem call :ApplyDir libs\EasyBMP
+call :ApplyDir tools\external_tools
+call :ApplyDir tools\math
+call :ApplyDir tools\smart_import
+call :ApplyDir tools\tilesets
+
+del /F /Q %TARGETDIR%\Editor\_resources
+xcopy /Y /E /I "%SOURCEDIR%\Editor\_resources" %TARGETDIR%\Editor\_resources
+
+rem ======= Editor translations ======= 
 
 del /F /Q %TARGETDIR%\Editor\languages
 
@@ -154,14 +197,6 @@ copy %SOURCEDIR%\Editor\languages\*.ts %TARGETDIR%\Editor\languages
 copy %SOURCEDIR%\Editor\languages\qt_*.qm %TARGETDIR%\Editor\languages
 copy %SOURCEDIR%\Editor\languages\*.png %TARGETDIR%\Editor\languages
 
-del /F /Q %TARGETDIR%\Editor\_resources
-xcopy /Y /E /I "%SOURCEDIR%\Editor\_resources" %TARGETDIR%\Editor\_resources
-
-del /F /Q %TARGETDIR%\_Misc
-md %TARGETDIR%\_Misc
-xcopy /Y /E /I "%SOURCEDIR%\_Misc" %TARGETDIR%\_Misc
-
-del /Q /F /S %TARGETDIR%\Content\help
 md %TARGETDIR%\Content\configs
 md %TARGETDIR%\Content\configs\SMBX
 md %TARGETDIR%\Content\configs\SMBX\group_tilesets
@@ -174,14 +209,10 @@ md %TARGETDIR%\Content\help
 copy /Y %SOURCEDIR%\Content\configs\SMBX\*.ini %TARGETDIR%\Content\configs\SMBX\
 copy /Y %SOURCEDIR%\Content\configs\SMBX\group_tilesets\*.ini %TARGETDIR%\Content\configs\SMBX\group_tilesets\
 copy /Y %SOURCEDIR%\Content\configs\SMBX\tilesets\*.ini %TARGETDIR%\Content\configs\SMBX\tilesets\
+
 rem IF EXIST %TARGETDIR%\Content\data\*.gif del /F /Q %TARGETDIR%\Content\data\*.gif
 rem copy /Y %SOURCEDIR%\Content\data\*.gif %TARGETDIR%\Content\data
 
-echo COPY HELP!!!
-xcopy /Y /E /I %SOURCEDIR%\Content\help %TARGETDIR%\Content\help
-
-echo COPY Calibrator data!!!
-xcopy /Y /E /I %SOURCEDIR%\Content\calibrator %TARGETDIR%\Content\calibrator
 
 echo Done!!!
 goto quit

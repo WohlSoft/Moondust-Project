@@ -21,7 +21,7 @@
 #include "../common_features/app_path.h"
 
 #include "../common_features/logger_sets.h"
-#include "../common_features/sdl_music_player.h"
+#include "../audio/sdl_music_player.h"
 #include "../common_features/themes.h"
 
 #include "appsettings.h"

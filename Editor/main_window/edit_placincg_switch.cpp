@@ -19,8 +19,8 @@
 #include <ui_mainwindow.h>
 #include "../mainwindow.h"
 
-#include "../level_scene/lvl_item_placing.h"
-#include "../world_scene/wld_item_placing.h"
+#include "../editing/_scenes/level/lvl_item_placing.h"
+#include "../editing/_scenes/world/wld_item_placing.h"
 #include "../file_formats/file_formats.h"
 
 #include "../defines.h"
