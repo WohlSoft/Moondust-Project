@@ -22,11 +22,11 @@ copy %SOURCEDIR%\Content\calibrator\spriteconf\*.ini "%TESTDIR%\calibrator\sprit
 
 if '%1'=='full' del /Q /F /S "%TESTDIR%\configs\SMBX\data\graphics"
 if '%1'=='full' md "%TESTDIR%\configs\SMBX\data\graphics"
-if '%1'=='full' xcopy /Y /E /I %SOURCEDIR%\Content\configs\SMBX\data\graphics\*.* "%TESTDIR%\configs\SMBX\data\graphics"
+if '%1'=='full' xcopy /Y /E /I %SOURCEDIR%\bin\SMBX_Data\graphics\*.* "%TESTDIR%\configs\SMBX\data\graphics"
 
 if '%1'=='full' del /Q /F /S "%TESTDIR%\lab\SMBX\data\graphics"
 if '%1'=='full' md "%TESTDIR%\lab\SMBX\data\graphics"
-if '%1'=='full' xcopy /Y /E /I %SOURCEDIR%\Content\configs\SMBX\data\graphics\*.* "%TESTDIR%\lab\SMBX\data\graphics"
+if '%1'=='full' xcopy /Y /E /I %SOURCEDIR%\bin\SMBX_Data\data\graphics\*.* "%TESTDIR%\lab\SMBX\data\graphics"
 
 rem del /Q /F "%TESTDIR%\data\*.*"
 rem copy %SOURCEDIR%\Content\data\*.png "%TESTDIR%\data"
